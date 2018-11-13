@@ -5,9 +5,15 @@
  */
 
 body {
-  background: url('http://placehold.it/1920x1080') no-repeat center center fixed;
+  /*background: url('http://placehold.it/1920x1080') no-repeat center center fixed;*/
+  background: url('20170409_212636.jpg') no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
   -o-background-size: cover;
+}
+
+.myTransparentBackground {
+  background-color: rgba(255,255,255, 0.5);
+  color: inherit;
 }
