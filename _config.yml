@@ -16,8 +16,7 @@
 title: Bruno Magalhaes
 email: bruno@magalhaes.pro
 description: >- # this means to ignore newlines until "baseurl:"
-  Topics on Distributed Computing, Parallel Computing, Simulation and Artificial Neural Networks.
-  See my about page to know more about me.
+  I'm a Neuroscience PhD with a Computer Science background. I enjoy researching Distributed Computing, Parallel Computing, Simulation and Artificial Neural Networks. See my <a href="https://brunomaga.github.io/about/">about</a> page to know more about me.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://bruno.magalhaes.pro" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: ibrunomaga
