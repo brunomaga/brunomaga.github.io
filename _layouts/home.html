@@ -10,44 +10,38 @@ layout: default
     <h1 class="page-heading">{{ page.title }}</h1>
   {%- endif -%}
 
-            <h1 class="display-4">{{ site.name }}</h1>
-            <p class="lead">
-            {{ site.description }}
-            </p>
 
-            <!--
-            <h1 class="mt-5">{{ site.name }}</h1>
-            <p>
-            {{ site.description }}
-            </p>
-            -->
+            <h1 class="display-4">{{ site.title }}</h1>
+            <p class="lead">{{ site.subtitle }}</p>
+            <p> {{ site.description }} </p>
 
             <div align="center">
-            <h3>
-            <a href="mailto:{{ site.email }}?subject=Hello" title="e-mail"><i class="far fa-envelope"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="{{ site.google_scholar }}" title="Google scholar"><i class="far fa-file-alt"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="https://github.com/{{ site.github_username }}" title="GitHub"><i class="fab light fa-github"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="https://twitter.com/{{ site.twitter_username }}" title="Twitter"><i class="fab fa-twitter"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="{{ "/feed.xml" | relative_url }}" title="RSS feed"><i class="fas fa-rss"></i></a>
-            <!--
-            <a href="mindmap.pdf" title="mindmap"><i class="fas fa-brain" alt="knowledge map"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>-->
+            <h4>
+              <a href="mailto:{{ site.email }}?subject=Hello" title="e-mail"><i class="far fa-envelope"></i></a>
+              <span style="display:inline-block; width:0.1cm;"></span>
+              <a href="{{ site.google_scholar }}" title="Google scholar"><i class="far fa-file-alt"></i></a>
+              <span style="display:inline-block; width:0.1cm;"></span>
+              <a href="https://github.com/{{ site.github_username }}" title="GitHub"><i class="fab light fa-github"></i></a>
+              <span style="display:inline-block; width:0.1cm;"></span>
+              <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+              <span style="display:inline-block; width:0.1cm;"></span>
+              <a href="https://twitter.com/{{ site.twitter_username }}" title="Twitter"><i class="fab fa-twitter"></i></a>
+              <span style="display:inline-block; width:0.1cm;"></span>
+              <a href="{{ "/feed.xml" | relative_url }}" title="RSS feed"><i class="fas fa-rss"></i></a>
+              <!--
+              <a href="mindmap.pdf" title="mindmap"><i class="fas fa-brain" alt="knowledge map"></i></a>
+              <span style="display:inline-block; width:0.1cm;"></span>
+              <span style="display:inline-block; width:0.1cm;"></span>
+              <a href="#"><i class="fab fa-instagram"></i></a>
+              <span style="display:inline-block; width:0.1cm;"></span>
+              <a href="#"><i class="fab fa-facebook-f"></i></a>-->
+            </h4>
             </div>
   </div>
 
-  <div class="col-lg-6 jumbotron myTransparentBackground">
   {%- if site.posts.size > 0 -%}
-    <!--<h6 class="mt-3">{{ page.list_title | default: "Posts" }}</h6>-->
+  <div class="col-lg-6 jumbotron myTransparentBackground">
+    <h3>{{ page.list_title | default: "Posts" }}</h3>
     <ul class="list-unstyled">
       {%- for post in site.posts -%}
       <li>
@@ -59,9 +53,12 @@ layout: default
       </li>
       {%- endfor -%}
     </ul>
+  </div>
   {%- endif -%}
 
-  </div>
+  <br/>
+  <br/>
+  <br/>
 
   {{ content }}
 </div>
