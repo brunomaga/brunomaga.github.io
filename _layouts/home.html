@@ -15,8 +15,38 @@ layout: default
             {{ site.description }}
             </p>
 
+            <!--
+            <h1 class="mt-5">{{ site.name }}</h1>
+            <p>
+            {{ site.description }}
+            </p>
+            -->
+
+            <div align="center">
+            <h3>
+            <a href="mailto:{{ site.email }}?subject=Hello" title="e-mail"><i class="far fa-envelope"></i></a>
+            <span style="display:inline-block; width:0.1cm;"></span>
+            <a href="{{ site.google_scholar }}" title="Google scholar"><i class="far fa-file-alt"></i></a>
+            <span style="display:inline-block; width:0.1cm;"></span>
+            <a href="https://github.com/{{ site.github_username }}" title="GitHub"><i class="fab light fa-github"></i></a>
+            <span style="display:inline-block; width:0.1cm;"></span>
+            <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+            <span style="display:inline-block; width:0.1cm;"></span>
+            <a href="https://twitter.com/{{ site.twitter_username }}" title="Twitter"><i class="fab fa-twitter"></i></a>
+            <span style="display:inline-block; width:0.1cm;"></span>
+            <a href="{{ "/feed.xml" | relative_url }}" title="RSS feed"><i class="fas fa-rss"></i></a>
+            <!--
+            <a href="mindmap.pdf" title="mindmap"><i class="fas fa-brain" alt="knowledge map"></i></a>
+            <span style="display:inline-block; width:0.1cm;"></span>
+            <span style="display:inline-block; width:0.1cm;"></span>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <span style="display:inline-block; width:0.1cm;"></span>
+            <a href="#"><i class="fab fa-facebook-f"></i></a>-->
+            </div>
+  </div>
+
+  <div class="col-lg-6 jumbotron myTransparentBackground">
   {%- if site.posts.size > 0 -%}
-    <hr class="my-4">
     <!--<h6 class="mt-3">{{ page.list_title | default: "Posts" }}</h6>-->
     <ul class="list-unstyled">
       {%- for post in site.posts -%}
@@ -31,29 +61,7 @@ layout: default
     </ul>
   {%- endif -%}
 
-            <hr class="my-4">
-            <div align="center">
-            <h3>
-            <a href="mailto:{{ site.email }}?subject=Hello" title="e-mail"><i class="far fa-envelope"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="{{ site.google_scholar }}" title="Google scholar"><i class="far fa-file-alt"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <!--<a href="mindmap.pdf" title="mindmap"><i class="fas fa-brain" alt="knowledge map"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>-->
-            <a href="https://github.com/{{ site.github_username }}" title="GitHub"><i class="fab light fa-github"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="https://twitter.com/{{ site.twitter_username }}" title="Twitter"><i class="fab fa-twitter"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="{{ "/feed.xml" | relative_url }}" title="RSS feed"><i class="fas fa-rss"></i></a>
-            <!--
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <span style="display:inline-block; width:0.1cm;"></span>
-            <a href="#"><i class="fab fa-facebook-f"></i></a>-->
-            </h3>
-          </div>
+  </div>
 
-    {{ content }}
+  {{ content }}
 </div>

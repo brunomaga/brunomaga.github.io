@@ -62,7 +62,7 @@
               <a class="nav-link" href="https://github.com/{{ site.github_username }}">GitHub</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="https://www.linkedin.com/in/{{ site.linkedin_username  }}">LinkedIn</a>
+              <a class="nav-link" href="https://www.linkedin.com/in/{{ site.linkedin_username  }}"><i class="fab fa-linkedin-in"><span style="display:inline-block; width:0.1cm;"></i>LinkedIn</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="https://twitter.com/{{ site.twitter_username }}">Twitter</a>
@@ -76,9 +76,13 @@
     </nav>
 
     <main>
+      <section>
       <div class="container">
+        <div class="row">
         {{ content }}
+        </div>
       </div>
+      </section>
     </main>
 
     <!-- Bootstrap core JavaScript -->
