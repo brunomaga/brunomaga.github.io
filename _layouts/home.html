@@ -11,12 +11,33 @@ layout: default
   {%- endif -%}
 
 
+            <!--
             <h1 class="display-4">{{ site.title }}</h1>
-            <p class="lead">{{ site.subtitle }}</p>
+            <p class="lead"> {{ site.description }} </p>
+            -->
+            <h1 class="mt-5">{{ site.title }}</h1>
             <p> {{ site.description }} </p>
 
+  <hr class="my-4">
+
+  {%- if site.posts.size > 0 -%}
+    <h5>{{ page.list_title | default: "Posts" }}</h5>
+    <ul class="list-unstyled">
+      {%- for post in site.posts -%}
+      <li>
+        {%- assign date_format = site.minima.date_format | default: "%b %Y" -%}
+        {{ post.date | date: date_format }} <span style="display:inline-block; width:0.1cm;"></span> <a class="mt-3" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        {%- if site.show_excerpts -%}
+          {{ post.excerpt }}
+        {%- endif -%}
+      </li>
+      {%- endfor -%}
+    </ul>
+  <hr class="my-4">
+  {%- endif -%}
+
             <div align="center">
-            <h4>
+            <h5>
               <a href="mailto:{{ site.email }}?subject=Hello" title="e-mail"><i class="far fa-envelope"></i></a>
               <span style="display:inline-block; width:0.1cm;"></span>
               <a href="{{ site.google_scholar }}" title="Google scholar"><i class="far fa-file-alt"></i></a>
@@ -35,28 +56,9 @@ layout: default
               <a href="#"><i class="fab fa-instagram"></i></a>
               <span style="display:inline-block; width:0.1cm;"></span>
               <a href="#"><i class="fab fa-facebook-f"></i></a>-->
-            </h4>
+            </h5>
             </div>
   </div>
-
-  {%- if site.posts.size > 0 -%}
-  <div class="col-lg-6 jumbotron myTransparentBackground">
-    <h3>{{ page.list_title | default: "Posts" }}</h3>
-    <ul class="list-unstyled">
-      {%- for post in site.posts -%}
-      <li>
-        {%- assign date_format = site.minima.date_format | default: "%b %Y" -%}
-        {{ post.date | date: date_format }} <span style="display:inline-block; width:0.1cm;"></span> <a class="mt-3" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
-        {%- if site.show_excerpts -%}
-          {{ post.excerpt }}
-        {%- endif -%}
-      </li>
-      {%- endfor -%}
-    </ul>
-  </div>
-  {%- endif -%}
-
-  <br/>
   <br/>
   <br/>
 

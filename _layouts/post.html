@@ -5,8 +5,9 @@ layout: default
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title display-4" itemprop="name headline">{{ page.title | escape }}</h1>
-    <p class="post-meta lead">
+    <h1 class="post-title mt-5" itemprop="name headline">{{ page.title | escape }}</h1>
+    <p class="post-meta">
+      <h6>
       <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {%- assign date_format = site.minima.date_format | default: "%-d %b %Y" -%}
         {{ page.date | date: date_format }}
@@ -14,6 +15,7 @@ layout: default
       {%- if page.author -%}
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
       {%- endif -%}
+      </h6>
     </p>
   </header>
 
@@ -29,9 +31,7 @@ layout: default
 </article>
 
 <hr> </hr>
-<div class="small">
-<a href="{{ site.url }}" title="back"><i class="fas fa-arrow-left"></i> back</a> <span style="display:inline-block; width:0.3cm;"></span>
-<a href="{{ "/feed.xml" | relative_url }}" title="RSS feed"><i class="fas fa-rss"></i> RSS feed</a> <span style="display:inline-block; width:0.3cm;"></span>
+<a href="{{ site.url }}" title="back"><i class="fas fa-arrow-left"></i> back</a> <span style="display:inline-block; width:0.5cm;"></span>
+<a href="{{ "/feed.xml" | relative_url }}" title="RSS feed"><i class="fas fa-rss"></i> RSS feed</a> <span style="display:inline-block; width:0.5cm;"></span>
 <a href="mailto:{{ site.email }}?subject="Feedback on post: {{ page.title }}"" title="e-mail me about this post"><i class="far fa-envelope"></i> email feedback</a>   
-</div>
 </div>
