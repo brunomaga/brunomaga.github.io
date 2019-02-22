@@ -26,16 +26,16 @@
     <title>{{ site.title }}</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ site.url }}/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ "/vendor/bootstrap/css/bootstrap.min.css" | relative_url }}" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="{{ site.url }}/css/the-big-picture.css" rel="stylesheet">
+    <link href="{{ "/css/the-big-picture.css" | relative_url }}" rel="stylesheet">
 
     <!-- font awesome for social media icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
     <!-- tab icon -->
-    <link href="{{ site.url }}/favicon.ico" rel="shortcut icon" />
+    <link href="{{ "/favicon.ico" | relative_url }}" rel="shortcut icon" />
 </head>
 
   <body>
@@ -82,9 +82,8 @@
     </main>
 
     <!-- Bootstrap core JavaScript -->
-    <script src="{{ site.url }}/vendor/jquery/jquery.min.js"></script>
-    <script src="{{ site.url }}/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
+    <script src="{{ "/vendor/jquery/jquery.min.js" | relative_url }}"></script>
+    <script src="{{ "/vendor/bootstrap/js/bootstrap.bundle.min.js" | relative_url }}"></script>
   </body>
 
 </html>
