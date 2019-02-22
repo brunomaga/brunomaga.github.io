@@ -22,7 +22,7 @@ layout: default
       {%- for post in site.posts -%}
       <li>
         {%- assign date_format = site.minima.date_format | default: "%b %Y" -%}
-        {{ post.date | date: date_format }}: <a class="mt-3" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
+        {{ post.date | date: date_format }} <span style="display:inline-block; width:0.1cm;"></span> <a class="mt-3" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a>
         {%- if site.show_excerpts -%}
           {{ post.excerpt }}
         {%- endif -%}
