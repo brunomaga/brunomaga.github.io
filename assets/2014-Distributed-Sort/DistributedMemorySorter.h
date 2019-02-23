@@ -2,9 +2,7 @@
  * @file DistributedMemorySorter.h
  * @brief Class responsible for algorithms used on distributed memmory
  * (eg: load balancing, sorters, etc)
- * @author bmagalha
  * @date 2012-07-18
- * @remark Copyright © BBP/EPFL 2005-2011; All rights reserved. Do not distribute without further notice.
  */
 
 #ifndef BBP_DISTRIBUTEDMEMORYSORTER_H
