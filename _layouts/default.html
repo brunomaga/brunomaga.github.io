@@ -6,9 +6,6 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  {%- seo -%}
-  <!-- <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}"> -->
-  {%- feed_meta -%}
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-129707365-1"></script>
@@ -36,6 +33,19 @@
 
     <!-- tab icon -->
     <link href="{{ "/favicon.ico" | relative_url }}" rel="shortcut icon" />
+
+    <!-- MathJax to render formulas -->
+<script type="text/x-mathjax-config"> MathJax.Hub.Config({ TeX: { equationNumbers: { autoNumber: "all" } } }); </script>
+       <script type="text/x-mathjax-config">
+         MathJax.Hub.Config({
+           tex2jax: {
+             inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+             processEscapes: true
+           }
+         });
+       </script>
+       <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
+       
 </head>
 
   <body>
