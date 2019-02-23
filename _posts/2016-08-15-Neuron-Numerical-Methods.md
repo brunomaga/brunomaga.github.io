@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Numerical Resolution of the Electrical Activity in Branched Neuron Models"
+title:  "Numerical Resolution of the Electrical Activity of Branched Neuron Models"
 date:   2016-08-15 
 categories: [numerical methods, simulation, biological neuron models]
 tags: [simulation]
