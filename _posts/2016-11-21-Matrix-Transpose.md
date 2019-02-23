@@ -112,4 +112,4 @@ The resolution of the transpose problem for the XCRS format follows by two steps
 2. adapt the view swap method to account for the new data structure;
    - hint: you need an extra `MPI_Alltoall` and `MPI_Alltoallv` to send the matrix structure with counts per cell, before sending the cell values;
 
-I will post the solution as soon as the related article is published, but if you are interested on details and the code `C++` implementation, email me and I'll be glad to help.
+I will post the solution as soon as the related article is published, but if you are interested on details and the `C++` code implementation, email me and I'll be glad to help.
