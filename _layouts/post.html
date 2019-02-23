@@ -7,19 +7,29 @@ layout: default
   <header class="post-header">
     <h1 class="post-title mt-5" itemprop="name headline">{{ page.title | escape }}</h1>
     <p class="post-meta">
-      <h6>
-      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+      <time class="dt-published badge badge-primary" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {%- assign date_format = site.minima.date_format | default: "%-d %b %Y" -%}
         {{ page.date | date: date_format }}
       </time>
       {%- if page.author -%}
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
       {%- endif -%}
-      </h6>
+      <span style="display:inline-block; width:0.2cm;"></span>
+      {%- for category in page.categories -%}
+        <span class="badge badge-secondary"> {{ category }} </span>
+        <span style="display:inline-block; width:0.05cm;"></span>
+      {%- endfor -%}
+      <!--
+      <span style="display:inline-block; width:0.15cm;"></span>
+      {%- for tag in page.tags -%}
+        <span class="badge badge-light"> #{{ tag }} </span>
+        <span style="display:inline-block; width:0.05cm;"></span>
+      {%- endfor -%}
+      -->
     </p>
   </header>
 
-  <div class="post-content e-content" itemprop="articleBody">
+  <div class="post-content e-content mt-5" itemprop="articleBody">
     {{ content }}
   </div>
 
