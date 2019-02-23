@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Distributed Matrix Transpose Algorithms"
-date:   2016-11-21 08:02:21 +0100
+date:   2016-04-21 08:02:21 +0100
 categories: [distributed algorithms, parallel algorithms]
 tags: [algorithms]
 ---
