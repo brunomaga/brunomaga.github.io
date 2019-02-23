@@ -1,9 +1,7 @@
 /**
  * @file DistributedMemorySorter.cxx
- * @brief 
+ * @brief See header file 
  * @author bmagalha
- * @date 2012-07-18
- * @remark Copyright © BBP/EPFL 2005-2011; All rights reserved. Do not distribute without further notice.
  */
 
 #include "DistributedMemorySorter.h"
