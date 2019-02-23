@@ -33,9 +33,26 @@ Most algorithms described allow for a multicore implementation and the underlyin
 
 However, if the list of elements is spread across a network of compute nodes --- i.e. a distributed memmory environment --- the resolution is not trivial. With that in mind, we present two algorithms for the sorting of distributed lists.
 
-The first one is the *Odd-Even sort*. Its rationale is similar to any swapping-based sort algorithm. to the afforementioned selec  
+The first one is the **Odd-Even sort**, a distributed swap based sort algorithm. Its rationale is the following:
+1. compute nodes (ranks) are numbered iteratively;
+2. at every iteration, every compute node sorts its elements, and sends the first half to a neighbor and the second half to the other neighbor;
+3. when a number of iterations equal to the number of compute nodes have been executed, the operation is completed.
+
+Note that condition (3) guarantees that all elements were allowed to traverse the network in order to reach its final rank. The algorithm is illustrated with a sample dataset in the following workflow: 
 
 <p align="center"><img width="60%" height="60%" src="/assets/2014-Distributed-Sort/odd_even_sort.png"></p>
 
+The algorithm has the advantage of being very *memory-stable* i.e. one can in advance predict the worst-case scenario in terms of memory consumption. Moreover, each compute node holds the same number of elements it started, therefore the data is *perfectly* balanced and sorted by default. However, for very large networks of compute nodes, it is efficient as it requires a high number of iterations.
+
+A faster alternative is based on a distributed implementation of the **sample sort**. The algorithm is as follows:
+1. Each compute node sorts their dataset and collects some a fixed number of equidistant samples;
+2. Samples are sent to the master rank, who will sort them and collect $c$ equidistant samples (for $c$ compute nodes) from the set of received elements;
+3. The master rank broadcasts the new samples to the network. The interval between 2 sample values delimit the interval of data to be sent to each compute; 
+4. Based on the intervals, the network of compute nodes perform a collective scatter-gather (or a selective all-to-all) where they sent each element they hold to its target rank;
+5. A final sorting of data at each memory region leads to a properly balanced dataset on the network.
+
+The concept may be a bit hard to grasp, so we provide  an illustrative workflow:
+
 <p align="center"><img width="60%" height="60%" src="/assets/2014-Distributed-Sort/sample_sort.png"></p>
 
+This method if computationally very efficient as the number of communication operations is constant, independently of the input size of network size. However, it may lead to a highly heterogeneous number of elements across number nodes. This may be a main drawback if elements are to be computed in parallel (as some ranks will take longer than others). In such cases, a network balance operation  may follow the sorting in order to equalize datasets across the network. This topic will be covered in the following post.
