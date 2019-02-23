@@ -2,7 +2,7 @@ title: "Bruno Magalhaes"
 name: "Bruno Magalhaes"
 location: Lausanne, Switzerland
 email: bruno@magalhaes.pro
-resume: ./assets/cv_short.pdf
+resume: /assets/cv_short.pdf
 google_scholar: https://scholar.google.ch/citations?user=pirWLLgAAAAJ
 description: >-
   I'm a PhD Neuroscience candidate at the EPFL in Lausanne, Switzerland. I research large scale computer algorithms to map and simulate neural networks in the brain. My fields of specialization are Parallel and Distributed Computing, Simulation and Machine Learning. Prior to this, I graduated with a MSc Advanced Computing from the Imperial College London, with distinction for my research project, and I worked in London, Sao Paulo, New York and Slovenia. I like to play waterpolo, travel and ski. To know more about me, read my <a href="assets/cv_short.pdf">resume</a>, <a href="https://scholar.google.ch/citations?user=pirWLLgAAAAJ">publications</a>, or send me an <a href="mailto:bruno@magalhaes.pro?subject=Hello">email</a>.
