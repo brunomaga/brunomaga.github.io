@@ -6,7 +6,9 @@ categories: [numerical methods, variable timestep, simulation, biological neuron
 tags: [simulation]
 ---
 
-Im a previous post I covered the simulation of the electrical activity of simple neuron models, and mentioned that an interleaved voltage-current resolution of linear unrelated state ODEs allows for the resolution of the problem as a system of linear equations. However, such resolution is only possible for those *simple* models. Neuron models with non-linear state variable OPDEs and correlation between states require a fully-implicit resolution, and is possible with Backward Euler with Newton iterations. This is a common use case, and underlies the resolution of extra-cellular mechanisms, capacitors between nodes, and other mechanisms that connect neurons' evolution over time.
+[neuron-methods-post]: {{ site.baseurl }}{% post_url 2016-08-15-Neuron-Numerical-Methods %}
+
+In my [previous post][neuron-methods-post], I detailed the mathematical background underlying neurons activity. Then I detailed the simulation of the electrical activity of simple neuron models, and mentioned that an interleaved voltage-current resolution of linear unrelated state ODEs allows for the resolution of the problem as a system of linear equations. However, such resolution is only possible for those *simple* models. Neuron models with non-linear state variable OPDEs and correlation between states require a fully-implicit resolution, and is possible with Backward Euler with Newton iterations. This is a common use case, and underlies the resolution of extra-cellular mechanisms, capacitors between nodes, and other mechanisms that connect neurons' evolution over time.
 
 A fully-implicit method that is commonly utilised to resolve this problem is the Backward (Implicit) Euler, where:
 
