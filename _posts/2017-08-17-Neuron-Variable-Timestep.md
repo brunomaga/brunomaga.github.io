@@ -135,16 +135,7 @@ In the following picture, we illustrate A time line (from A to D) of six cells r
 
 <p align="center"><img width="30%" height="30%" src="/assets/2017-Neuron-Variable-Timestep/local_variable_timestep_six_cell_example.png"><br/><small>source: [The NEURON book][neuron-book]</small></p>
 
-##### Previous Experiments
-
-The performance of *lvardt*'s integration model was tested [(Lytton et al. 2015)][lytton2005independent] on a connected homogeneous network of 100 inhibitory neurons on a single compute node. Due to their inhibitory features, the circuit presents rapid synchronization through mutual inhibition, where variable time steps integrators are likely to encounter problems. A fixed time step of $0.0025 ms$ yielded *closely comparable* results to those of *lvardt* with absolute error tolerance (atol) of $10^{-3}$ or $10^{-5}$. The event deliveries and the associated interpolations took about $12\%$ of total execution time. When using *lvardt*'s global time stepping, the author claims the large amount of events lead to an increase of execution time in the order of 60-fold. Another experiment featured a Thalamocortical simulation, featuring four cell types (cortical pyramidal neurons and interneurons, thalamocortical
-cells, and thalamic reticular neurons). The two thalamic cell types produced bursts with prolonged interburst intervals, therefore very suitable for the use of the *lvardt* algorithm. A simulation of $150 ms$ of simulation time, aiming at high-precision with an error tolerance (atol) of $10^{-6}$ for *lvardt* and $\Delta t = 10^{-4} ms$ for the fixed time step, yielded an execution time of 6 minute 13 seconds and 10 hour 20 minute, respectively, a 100-fold speed-up. For a standard-precision run, with an atol of $10^{-3}$ and $\Delta t = 10^{-2}$, the simulations took 2 minutes for *lvardt* and 5 minutes 53 seconds for fixed time step, a 3-fold speed-up.
-
-In the following picture we present the afforementioned results for the comparison of fixed and variable time step methods for the mutual-inhibition model. Execution time grows linearly with simulation time for the fixed-step integration (dashed lines). Variable-step methods have a reduction in CPU load at the onset of synchrony. The rationale behind the non-linearity of adaptive time stepping, is that *lvardt* produces time steps that jump around during the initial presynchrony phase of the simulation (fast uprising phase), and then slowly stabilizes to an alternation between large steps in the long intervals separating the population spikes and extremely short time steps during the population spike itself:
-
-<p align="center"><img width="30%" height="30%" src="/assets/2017-Neuron-Variable-Timestep/lvardt_exec_time_comparison.png"><br/><small>source: Lytton et al. 2015 </small></p>
-
-NEURON's default error setting for CVODE is $10 \mu M$ for membrane potential and $0.1 nM$ for internal free calcium concentration, allowing a HH-based action potential to have an accuracy equivalent of fixed time step with $\Delta t = 25 \mu s$. The default maximum order for BDF is $5$, although *it is recommended* to let CVODE decide the best order.
+##### Single Neuron Performance
 
 One can notice the difference in performance of the Backward Euler and Variable Timestep interpolators during a stiff trajectory of an Action Potential in the following picture.
 
@@ -162,11 +153,36 @@ After a second of simulation, the spike time phase-shifting is substantial, demo
 
 <p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/L5_neuron_pulse_1000ms_results.png"></p>
 
+To study wether these advantages are feasible, we measure the simulation runtime of both methods. Our first test measures the impact of the stiffness in terms of simulation steps and time to solution on an intel i5 2.6Ghz. Thedifferent current values are injected as proportional to the *action potential threshold* current, i.e. the minimum current that is required to be continuously injected for the neuron to spike.
+
+<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/cvode_dependency_on_variation_solution.png"></p>
+
+Results look promising, even at an extremelly high current value we have a significant speed-up. A second test enforces discontinuities and reset of the IVP problems by artificially injecting current pulses of $1 \mu s$ at given frequencies. 
+
+<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/cvode_dependency_on_events_arrival.png"></p>
+
+In this scenario, we see a high dependency on the number of discontinuities, and some yet minor dependency on the discontinuity value (i.e. amount of current injected). The holy grail is then in: How does this apply to the real behaviour of neurons?
+
+<div class="alert alert-warning" role="alert">
+In the future I will complete this information with a digital reconstruction of laboratorial experiment. For the time being, I must hold that information until it's published.
+</div>
+
+##### Previous Experiments
+
+The performance of *lvardt*'s integration model was tested [(Lytton et al. 2015)][lytton2005independent] on a connected homogeneous network of 100 inhibitory neurons on a single compute node. Due to their inhibitory features, the circuit presents rapid synchronization through mutual inhibition, where variable time steps integrators are likely to encounter problems. A fixed time step of $0.0025 ms$ yielded *closely comparable* results to those of *lvardt* with absolute error tolerance (atol) of $10^{-3}$ or $10^{-5}$. The event deliveries and the associated interpolations took about $12\%$ of total execution time. When using *lvardt*'s global time stepping, the author claims the large amount of events lead to an increase of execution time in the order of 60-fold. Another experiment featured a Thalamocortical simulation, featuring four cell types (cortical pyramidal neurons and interneurons, thalamocortical
+cells, and thalamic reticular neurons). The two thalamic cell types produced bursts with prolonged interburst intervals, therefore very suitable for the use of the *lvardt* algorithm. A simulation of $150 ms$ of simulation time, aiming at high-precision with an error tolerance (atol) of $10^{-6}$ for *lvardt* and $\Delta t = 10^{-4} ms$ for the fixed time step, yielded an execution time of 6 minute 13 seconds and 10 hour 20 minute, respectively, a 100-fold speed-up. For a standard-precision run, with an atol of $10^{-3}$ and $\Delta t = 10^{-2}$, the simulations took 2 minutes for *lvardt* and 5 minutes 53 seconds for fixed time step, a 3-fold speed-up.
+
+In the following picture we present the afforementioned results for the comparison of fixed and variable time step methods for the mutual-inhibition model. Execution time grows linearly with simulation time for the fixed-step integration (dashed lines). Variable-step methods have a reduction in CPU load at the onset of synchrony. The rationale behind the non-linearity of adaptive time stepping, is that *lvardt* produces time steps that jump around during the initial presynchrony phase of the simulation (fast uprising phase), and then slowly stabilizes to an alternation between large steps in the long intervals separating the population spikes and extremely short time steps during the population spike itself:
+
+<p align="center"><img width="30%" height="30%" src="/assets/2017-Neuron-Variable-Timestep/lvardt_exec_time_comparison.png"><br/><small>source: Lytton et al. 2015 </small></p>
+
+NEURON's default error setting for CVODE is $10 \mu M$ for membrane potential and $0.1 nM$ for internal free calcium concentration, allowing a HH-based action potential to have an accuracy equivalent of fixed time step with $\Delta t = 25 \mu s$. The default maximum order for BDF is $5$, although *it is recommended* to let CVODE decide the best order.
+
 ##### Distributed CVODE executions
 
 For parallel computing environments, the synchronization of cells spread across different computing nodes presents a bottleneck, due to the insufficient network latency for real-time message passing, and high amount of information to be actively transmitted (i.e. one per event per node). To tackle the mentioned issues, simulation is split equidistant time intervals equal to the shortest delay of any global event --- typically the minimal synaptic delay across all synapses, or (when applicable) the update frequency for extra-cellular mechanisms or gap junctions. On every time interval, all the nodes on the network perform a collective communication call and share the events to be sent on the next time frame. The downsides of such approach are that (a) no compute node can ever perform a CVODE time step that exceeds the limits of the current time frame, (b) all compute nodes must wait for the slowest to reach the end of the time frame, and (c) all compute nodes restart the CVODE at the initial instant of every time frame.
 
 <div class="alert alert-warning" role="alert">
-  In the future I will complete this post with a detailed analysis and a smarter approach for distributed variable time stepping. For the time being, I must hold that information until it's published in a scientific journal.
+  In the future I will detail a smarter approach for distributed variable time stepping. For the time being, I must hold that information until it's published.
 </div>
 
