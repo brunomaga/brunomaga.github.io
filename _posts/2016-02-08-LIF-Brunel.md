@@ -94,7 +94,7 @@ We can now adjust the stimuli parameters in order to regulate network activity. 
 
 <p align="center"><img width="30%" height="30%" src="/assets/2016-LIF-Brunel/frequencies.png"><br/><small>source: Brunel 2000</small></p>
 
-Notice the proximity of our simulated network model with the theoretical behaviour observed in real neurons.
+Notice the proximity of our simulated network model with the theoretical behaviour observed in real neurons. For that reason, although being a simple model of approximation, the Brunel Network provides a powerful tool for studying network dynamics. The model is particularly useful in very long simulations of large networks as it is computationally inexpensive compared to more detailed models such as the [Hodgkin-Huxley](https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model).
 
 ##### Output
 
