@@ -3,11 +3,11 @@ layout: post
 title:  "Unsupervised Learning: an overview of methods"
 date:   2017-11-01 12:01:42 +0100
 categories: [machine learning, unsupervised learning]
-tags: [machilelearning]
+tags: [machinelearning]
 ---
 
 <div class="alert alert-primary" role="alert">
-Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of unsupervised learning methods that I came across. Its content is continuously updated.
+Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of several unsupervised learning methods that I came across. Its content is continuously updated.
 </div>
 
 ### Foreword: Hebbian Learning
@@ -283,6 +283,16 @@ The input dataset and the `python` implementation are available in <a href="/ass
  
 For more examples, check the [wikipedia entry for Self Organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
 
-### The Curse of Dimensionality
+##### The Curse of Dimensionality
 
-As a final remark, distance-based methods struggle with high dimensionality data. This is particularly relevant on Euclidian distances. This is due to a phenomen denominated the [Curse of Dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality) that states that the distance between any two given elements in a multidimensional space becomes similar as we increase the number of dimensions, deeming the distance metric almost irrelevant. I will not detail the soundness of the claim, but check this [blogp post](https://towardsdatascience.com/that-cursing-dimensionality-ac317fb0fdcc) if you are interested in knowing the details.
+As a final remark, distance-based methods struggle with high dimensionality data. This is particularly relevant on Euclidian distances. This is due to a phenomen denominated the [Curse of Dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality) that states that the distance between any two given elements in a multidimensional space becomes similar as we increase the number of dimensions, deeming the distance metric almost irrelevant. I will not detail the soundness of the claim, but check this [blog post](https://towardsdatascience.com/that-cursing-dimensionality-ac317fb0fdcc) if you are interested in knowing the details.
+
+### Receptive fields in the Visual Cortex
+
+Neurons in the receptive fields in the visual cortex are [Gabor filters](https://en.wikipedia.org/wiki/Gabor_filter). In practice, it means that the output of a neuron depends on the texture being analysed --- e.g. a neuron fine-tuned for a recognizing lines displayed at 90 degrees, will fare less often for lines at zero degrees, with a spike rate increasing as the angle approaches 90 degrees. Besides the orientation sensitivy described, the same property is noticeable on colours, motion, forms, and so on.
+A Gaussian function is typically used to model the spatially limited receptive field of a V1 cell, with its mean at the best tuned input propert (in this case, rotation).
+
+<div class="alert alert-warning" role="alert">
+The model of visual cortex (V1) neurons training is presented on detail <a href="http://fourier.eng.hmc.edu/e180/lectures/v1/node14.html"> here</a>. I will continue this section once I acquire a good grasp on the subject.
+</div>
+
