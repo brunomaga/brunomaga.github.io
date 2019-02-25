@@ -1,4 +1,5 @@
 ---
+
 layout: post
 title:  "Reinforcement Learning: an overview of methods"
 date:   2018-04-27 12:01:42 +0100
@@ -10,7 +11,7 @@ tags: [machinelearning]
 Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of several reinforcement learning methods that I came across. Its content is continuously updated.
 </div>
 
-Reinforcement learning is a field of machine learning that --- roughly speaking --- encompasses learning by reward or prediction of reward. It is a topic of high interest as it's claimed to best represent human behaviour, mostly driven by stimuli. We eat because we are hungry, and after eating we are satisfied (positive reward). We feel pain as a negative *reward* of hurting our bodies, and we learn from previous painful experiences, to avoid repetition. We gamble because we predict a possible positive reward from a lucky play (the dopamine effect on the brain). The list of examples is endless. Here I describe some methods of RL that may be useful.
+Reinforcement learning is a field of machine learning that --- roughly speaking --- encompasses learning by reward or prediction of reward. It is a topic of high interest as it's claimed to best represent human behaviour, mostly driven by stimuli. We eat because we are hungry, and after eating we are satisfied (positive reward). We feel pain as a negative *reward* of hurting our bodies, and we learn from previous painful experiences, to avoid repetition. We gamble because we predict a possible positive reward from a lucky play (the dopamine effect on the brain). This phenomenon has been first studied by [Pavlov in 1927](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4116985/), and the list of examples is endless. Here I describe some methods of RL that may be useful.
 
 ### Restricted Boltzmann Machines
 
@@ -67,4 +68,55 @@ $$
 
 The most common algorithm to optimize the weight vector $W$ is the [Gibbs sampling](https://en.wikipedia.org/wiki/Gibbs_sampling) with [Gradient descent](https://en.wikipedia.org/wiki/Gradient_descent). An example of an application and resolution is provided in two blog posts from a colleague of mine, and are available [here](https://sharkovsky.github.io/2017/06/23/boltzmann-machine.html) and [here](https://sharkovsky.github.io/2017/06/30/practical-boltzmann.html).
 
-### SARSA 
+### Q-Learning and SARSA 
+
+The goal of Q-learning is to learn a policy, which tells an agent what action to take under what circumstances. Q-learning maximizes the expected value of the total reward over successive states, starting from the current state. It involves an agent, a set of states $S$, and a set of $A$ of actions that may be taken. By performing an action $a \in A$, the agent transitions between states. The algorithm has a function that calculates the quality (*expected reward*) of a state-action combination:
+
+$$
+Q : S \times A \rightarrow R
+$$
+
+In practice, at any given state $s$, taking the action $a$ gives the expected reward of:
+
+$$
+Q(s,a) = \sum_{s'} P_{s \rightarrow s'}^a R_{s \rightarrow s'}^a
+$$
+
+
+<p align="center">
+<img width="20%" height="20%" src="/assets/2018-Reinforcement-Learning/q-value.png"><br/>
+<small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
+</p>
+
+At every iteration, we take the action that is more *promising*, i.e. with the highest expected reward. We choose an action $$ a^{\star} $$ such that $$ Q(s,a^{\star}) \gt Q(s,a_j) $$ for all actions $a_j \in A$. The iterative update of Q-values is provided by the rule
+
+$$
+\Delta Q(s,a) = \eta [ r - Q(s,a) ]
+$$
+
+where $\eta$ is the learning rate. Convergence is expected in this model, when $ < Q(s,a) > = 0 >$.
+This models only has a single-step horizon as it only looks at the next possible state. A common multi-step horizon model is the **State–action–reward–state–action (SARSA)** and is formulated as:
+
+$$
+\Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma Q(s',a') ]
+\label{sarsa}
+$$
+
+where $s'$ and $a'$ and the state and action at the next step possibly taken.
+
+<p align="center">
+<img width="20%" height="20%" src="/assets/2018-Reinforcement-Learning/q-value-2.png"><br/>
+<small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
+</p>
+
+##### Theorem - Convergence in expectation of SARSA
+
+If the mean update has converged ( $ < \Delta Q (s,a) > =0 > $) with the update rule \ref{sarsa}, then the resulting Q-values solve the [Bellman equation](https://en.wikipedia.org/wiki/Bellman_equation), a necessary condition for optimality associated with the mathematical optimization method known as dynamic programming:
+
+$$
+Q (s,a) =  \sum_{s'} P^a_{s \rightarrow s'} [ R^a_{s \rightarrow s'} + \gamma \sum_{a'} \pi (s',a') Q(s',a') ]
+$$
+
+I'll omit the details. For further details on optimality in policies, check this <a href="/assets/2018-Reinforcement-Learning/Ag4-4x.pdf">Ag4-4x.pdf</a>.
+
+
