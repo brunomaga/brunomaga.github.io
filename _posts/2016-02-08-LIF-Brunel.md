@@ -13,7 +13,7 @@ tags: [neuraldynamics]
 [nest]:http://www.nest-simulator.org/
 [euler]: https://en.wikipedia.org/wiki/Euler_method
 
-The Leaky integrate-and-fire (IF) neuron model simplifies neurons complexity and assumes the neuron structure to be a single leaky compartment (*point neuron model*) with a membrane described by an RC circuit, as:
+The Leaky Integrate-and-Fire neuron model (IF, first described in 1907 by [Louis Lapicque](https://en.wikipedia.org/wiki/Louis_Lapicque)) simplifies neurons complexity and assumes the neuron structure to be a single leaky compartment (*point neuron model*) with a membrane described by an RC circuit, as:
 
 <p align="center"><img width="20%" height="20%" src="/assets/2016-LIF-Brunel/RC.png"><br/><small>source: Neuronal Dynamics, Gerstner et al., Cambridge University Press</small></p>
 
@@ -24,10 +24,10 @@ The main formulation of its electrical activity is given by the **current equati
 The law of conservation of energy states that the total energy of an isolated system remains constant. Thus the sum of all currents from the capacitor $I_C$, resistance $I_R$ and all remaining currents $I$ must be zero. Equivalently:
 
 $$
-C \frac{dV}{dt}(t) = -V(t)/R I(t) + I(t) 
+C \frac{dV}{dt}(t) = -\frac{V(t)}{R} + I(t) 
 $$
 
-It is common to multiply both terms by $R$, in order to display the time-constance $\tau = R C$. This a very important metric in the analysis of the behaviour of models, as it tells how *fast* are the dynamics of the neuron. The formulation becomes then:
+It is common to multiply all terms by $R$, in order to expose the time **constant** $\tau = R C$. This a very important metric in the analysis of the behaviour of models, as it tells how *fast* are the dynamics of the neuron. The formulation becomes then:
 
 $$
 \tau \frac{dV}{dt}(t) = -V(t) + RI(t) 
