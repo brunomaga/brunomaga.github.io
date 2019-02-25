@@ -155,7 +155,7 @@ After a second of simulation, the spike time phase-shifting is substantial, demo
 
 <p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/L5_neuron_pulse_1000ms_results.png"></p>
 
-To study wether these advantages are feasible, we measure the simulation runtime of both methods. Our first test measures the impact of the stiffness in terms of simulation steps and time to solution on an intel i5 2.6Ghz. Thedifferent current values are injected as proportional to the *action potential threshold* current, i.e. the minimum current that is required to be continuously injected for the neuron to spike.
+To study wether these advantages are feasible, we measure the simulation runtime of both methods. Our first test measures the impact of the stiffness in terms of simulation steps and time to solution on an intel i5 2.6Ghz. The different current values are injected as proportional to the *action potential threshold* current, i.e. the minimum current that is required to be continuously injected for the neuron to spike.
 
 <p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/cvode_dependency_on_variation_solution.png"></p>
 
