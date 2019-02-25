@@ -1,14 +1,18 @@
 ---
 layout: post
-title:  "Unsupervised Learning: an overview"
+title:  "Unsupervised Learning: an overview of methods"
 date:   2017-11-01 12:01:42 +0100
 categories: [machine learning, unsupervised learning]
 tags: [machilelearning]
 ---
 
+<div class="alert alert-primary" role="alert">
+  This post provides a very high level description of unsupervised methods I came across, and is continuously updated.
+</div>
+
 ### Hebbian Learning
 
-Among several *biologically-inspired* learning models, Hebbian learning is probably the oldest. Its rationale is based on the synaptic changes for neurons that spike in close instants in time (motto "*if they fire together, they wire together*"). It is knows from the Spike-Timing-Dependent Plasticity ([STDP, Markram et al. Frontiers](https://www.frontiersin.org/articles/10.3389/fnsyn.2012.00002/full)) that the increase/decrease of a given synaptic strenght is correlated with the time difference between a pre- and a post-synaptic neuron spike times. In essence, if a neuron spikes and if it leads to the firing of the output neuron, the synapse is strengthned.
+Among several *biologically-inspired* learning models, Hebbian learning is probably the oldest. Hebbian learning as a general concept forms the basis for many learning algorithms, including backpropagation. Its rationale is based on the synaptic changes for neurons that spike in close instants in time (motto "*if they fire together, they wire together*"). It is knows from the Spike-Timing-Dependent Plasticity ([STDP, Markram et al. Frontiers](https://www.frontiersin.org/articles/10.3389/fnsyn.2012.00002/full)) that the increase/decrease of a given synaptic strenght is correlated with the time difference between a pre- and a post-synaptic neuron spike times. In essence, if a neuron spikes and if it leads to the firing of the output neuron, the synapse is strengthned.
 
 In his own words:
 <blockquote class="blockquote text-right">
@@ -81,3 +85,7 @@ We can now discard the least significant dimensions of the final post-PCA data, 
 $$
 D_c = F^{-T} D_n = F D_n
 $$
+
+<div class="alert alert-warning" role="alert">
+An interesting related topic is the Independent Component Analysis (ICA), a technique that allows one to separate a multidimensional signal into additive subcomponents, under the assumption that (1) the input signals are independent and (2) the values of signals do not follow a Gaussian distributions. I will add information about this in the future.
+</div>
