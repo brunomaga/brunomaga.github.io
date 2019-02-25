@@ -128,7 +128,7 @@ E = \frac{RT}{zF} ln \frac{\text{[ion]}_{out}}{\text{[ion]}_{in}} \approx \frac{
 $$
 
 where $$ext{[ion]}_{out}$$ and $$\text{[ion]}_{ion}$$ denote the ionic concentration on the inside and outside of the cell, $T$ is the temperature (Kelvin) (assumed to be $307.15 K$ or $34 ^{\circ}\mathrm{C}$), $z$ is the charge of the ion, and $R$ and $F$ are the Gas ($8.3144621 J$ $K^{-1}$ $mol^{=1}$) and Faraday constants ($96485.33289(59)$ $C$ $mol-1$) respectively. The typical reversal potential for the most common ions are approximately: 
-- $$E_{Cl^-}=-70 mV$$ with $$[Cl^-]_{in}=5 mM$$ and $$[Cl^-]_{out}=120 mM$;
+- $$E_{Cl^-}=-70 mV$$ with $$[Cl^-]_{in}=5 mM$$ and $$[Cl^-]_{out}=120 mM$$;
 - $$E_{K^+}=-90 mV$$ with $$[K^-]_{in}=150 mM$$ and $$[K^-]_{out}=4 mM$$; 
 - $$E_{Na^+}=60 mV$$ with $$[Na^+]_{in}=12 mM$$ and $$[Na^+]_{out}=145 mM$$; and
 - $$E_{Ca^{2+}}=130 mV$$ with $$[Ca^{2+}]_{in}=0.1 mM$$ and $$[Ca^{2+}]_{out}=1 mM$$.
