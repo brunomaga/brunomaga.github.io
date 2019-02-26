@@ -103,7 +103,7 @@ $$
 
 ### Independent Component Analysis
 
-<small>This section was largely inspired by the lecture notes of Tatsuya Yokota, Assistant Professor at Nagoya Institute of Technology</small>
+<small>This section was largely inspired on the lecture notes of Tatsuya Yokota, Assistant Professor at Nagoya Institute of Technology</small>
 
 An interesting related topic is the Independent Component Analysis (ICA), a method for [Blind Source Separation](https://en.wikipedia.org/wiki/Blind_signal_separation), a technique that allows one to separate a multidimensional signal into additive subcomponents, under the assumption that:
 - the input signals $s_1$, ..., $s_n$ are statistically independent i.e. $$p(s_1, s_2, ..., s_n) = p(s_1)\text{ }p(s_2) \text{ } ... \text{ } p(s_n)$$ 
