@@ -68,9 +68,11 @@ $$
 
 The most common algorithm to optimize the weight vector $W$ is the [Gibbs sampling](https://en.wikipedia.org/wiki/Gibbs_sampling) with [Gradient descent](https://en.wikipedia.org/wiki/Gradient_descent). An example of an application and resolution is provided in two blog posts from a colleague of mine, and are available [here](https://sharkovsky.github.io/2017/06/23/boltzmann-machine.html) and [here](https://sharkovsky.github.io/2017/06/30/practical-boltzmann.html).
 
-### Q-Learning and SARSA 
+### TD-Learning and SARSA 
 
-The goal of Q-learning is to learn a policy, which tells an agent what action to take under what circumstances. Q-learning maximizes the expected value of the total reward over successive states, starting from the current state. It involves an agent, a set of states $S$, and a set of $A$ of actions that may be taken. By performing an action $a \in A$, the agent transitions between states. The algorithm has a function that calculates the quality (*expected reward*) of a state-action combination:
+[Temporal difference (TD) learning](https://en.wikipedia.org/wiki/Temporal_difference_learning) refers to a class of model-free reinforcement learning methods which learn by estimating the value function from the current state. These methods sample from the environment, and perform updates based on current estimates, like dynamic programming methods.
+
+ The goal of TD-learning is to learn a policy, which tells an agent what action to take under what circumstances. TD-learning maximizes the expected value of the total reward over successive states, starting from the current state. It involves an agent, a set of states $S$, and a set of $A$ of actions that may be taken. By performing an action $a \in A$, the agent transitions between states. The algorithm has a function that calculates the quality (*expected reward*) of a state-action combination:
 
 $$
 Q : S \times A \rightarrow R
@@ -80,6 +82,7 @@ In practice, at any given state $s$, taking the action $a$ gives the expected re
 
 $$
 Q(s,a) = \sum_{s'} P_{s \rightarrow s'}^a R_{s \rightarrow s'}^a
+\label{eq_q}
 $$
 
 
@@ -88,7 +91,7 @@ $$
 <small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
 </p>
 
-At every iteration, we take the action that is more *promising*, i.e. with the highest expected reward. We choose an action $$ a^{\star} $$ such that $$ Q(s,a^{\star}) \gt Q(s,a_j) $$ for all actions $a_j \in A$. The iterative update of Q-values is provided by the rule
+At every iteration, we take the action that is more *promising*, i.e. with the highest expected reward. We choose an action $$ a^{\star} $$ such that $$ Q(s,a^{\star}) \gt Q(s,a_j) $$ for all actions $a_j \in A$. The iterative update of Q values is provided by the rule
 
 $$
 \Delta Q(s,a) = \eta [ r - Q(s,a) ]
@@ -117,6 +120,98 @@ $$
 Q (s,a) =  \sum_{s'} P^a_{s \rightarrow s'} [ R^a_{s \rightarrow s'} + \gamma \sum_{a'} \pi (s',a') Q(s',a') ]
 $$
 
-I'll omit the details. For further details on optimality in policies, check this <a href="/assets/2018-Reinforcement-Learning/Ag4-4x.pdf">Ag4-4x.pdf</a>.
+where $\pi$ is the policy chosen --- covered next. I'll omit the remainin details. For further details on optimality in policies, check this <a href="/assets/2018-Reinforcement-Learning/Ag4-4x.pdf">Ag4-4x.pdf</a>.
 
+To summarize, the SARSA algorithm follows as:
+- Being in stat $s$ choose action $a$ according to the policy $\pi$;
+- Observe reward $r$ and next state $s'$;
+- Choose action $a'$ in state $s'$ according to policy;
+
+### Q-Learning
+
+Another method for TD learning is the Q-learning. It's very common to the SARSA method described:
+- SARSA, an on-policy method: $$ \Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma Q(s',a') ] e_{aij} $$
+  - The same policy is used to select the next action and to update the Q-values
+- Q-Learning, an off-policy method: $$ \Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma \text{ max } Q(s',a') ] e_{aij} $$
+  - the action is selected using policy A e.g. soft-max;
+  - the Q-values are updated using policy C e.g. greedy;
+
+##### Eligibility Trace
+
+A third term called the **eligibility trace** can be added to the model. An eligibility trace is a temporary record of the occurrence of an event, such as the visiting of a state or the taking of an action. The trace marks the memory parameters associated with the event as eligible for undergoing learning changes. In practice, it's a decay term on the expected reward of each state, based on the number of steps taken from the actual step to the one where the eligibility trace is computed from. This leads to the updated formulation \ref{sarsa}:
+
+$$
+\Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma Q(s',a') ] e_t(s,a)
+$$
+
+where the elegibility trace $e$ is given by
+
+$$
+e_t(s,a) = 
+\begin{cases}
+    \lambda e_{t-1} (s,a) + 1 ,& \text{if action $a$ was taken in state $s$ }\\
+    \lambda e_{t-1} (s,a),             & \text{otherwise}
+\end{cases}
+$$
+
+In practice, the eligibility decays the expected reward with a factor $\lambda$ and acts as a forget mechanism. If we imagine a 4x4 space and an action of moving up/down/left/right, the with and without eligibility trace models are illustrated as (green arrow is the expected reward of taking the green-arrow action at each state):
+
+<p align="center">
+<img width="20%" height="20%" src="/assets/2018-Reinforcement-Learning/eligibility2.png">
+<span style="display:inline-block; width:1cm;"></span>
+<img width="20%" height="20%" src="/assets/2018-Reinforcement-Learning/eligibility1.png">
+<br/>
+<small>source: Unsupervised and Reinforcement Learning lecture notes, MO Gewaltig, EPFL</small>
+</p>
+
+##### Policies
+
+Due to the existance of an eligibility trace, it's easy to see that once a first path is successfully taken to the state of reward, it will always be followed if we simply follow the history of steps with maximum reward. To overcome this, the problem of **exploration vs exploitation** of space relates how much a model sticks to the previous state analysis versus how much he's allowed to deviate and try new paths. Among several possible **policies**, common approaches are:
+- greedy strategy: always take action $$ a^\star $$ such that $$ Q(s, a^\star) = Q(s,a_j) $$;
+- Epsilon greedy: have a probability $$ P = 1 - \epsilon $$ of following the best known path, or $ \epsilon $ of exploring a new one;
+- [Softmax strategy](https://www.sciencedirect.com/science/article/pii/S0925231217310974): see [here](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-7-action-selection-strategies-for-exploration-d3a97b7cceaf)
+- Optimistic greedy: initializes the estimated reward for each action to a high value, in order to prevent locking to a sub-optimal action;
+
+##### Examples
+
+Take an extended version of the navigation problem mentioned above. We plan to probam a mouse in a dark room:
+- The room is made of 6x6 tiles (possible states);
+- The possible actions are: move up, down, left or right;
+- Hitting the wall of the room leads to a negative reward;
+- Stepping in the same tile as a cat leads to a highly negative reward, and a restart of the problem;
+  - In this training model we must assum that agents (mice) have memory after each restart;
+- Stepping on a tile that surrounds the cheese leads to a small positive (expectation of) reward;
+- Funding cheese is the ultimate reward and success; 
+
+<p align="center">
+<img width="30%" height="30%" src="/assets/2018-Reinforcement-Learning/problem.png">
+</p>
+
+The `python` source code that resolves this problem is available in <a href="/assets/2018-Reinforcement-Learning/gridworld.py">gridworld.py</a>. If you are keen to understand more, you can play with the eligibility constant, exploration (epsilon) constant, andlearning rates to fine tune the problem. 
+
+A more sophisticated example of TD-learning was provided by Gerry Tesauro for the backgammon game. The detailed explanation is available in <a href="/assets/2018-Reinforcement-Learning/td-gammon.pdf">td-gammon.pdf</a>. 
+
+<p align="center">                                                      
+<img width="30%" height="30%" src="/assets/2018-Reinforcement-Learning/gammon.png">
+</p>       
+
+##### Continuous State spaces
+
+Notice that the list of states $S$ described so far are represented on a discrete dataset. To properly represent a continuous space, we alter the state-action value function to 
+
+$$
+Q(s,a) = \sum_j w_{aj} r_j(s) = \sum_j w_{aj} \phi (s-s_j)
+$$
+
+where $\phi$ is the basis function ($s_j$ represents the centers of the BF shape), an approximation of reward based on the known rewards of the proximal discrete states. The eligibility trace follows accordingly, with $$ e=\phi(s-s_j) $$ if action $a$ taken, and $0$ otherwise. For the sake of clarity, in the following figure we illustrate a problem with 3 states and 3 actions per state, with known $Q$ labelled by the height of the blue bars, and the expected $Q$ on the continous space as blue curves.
+
+<p align="center">
+<img width="30%" height="30%" src="/assets/2018-Reinforcement-Learning/continuous_space.png"><br/>
+<small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
+</p>
+
+
+### Limitations
+
+A major limitation of the simple TD-learning methods we presented so far is that it requires memory to store the Q values for all combinations of states and actions. Moreover, it is a linear function approximation, therefore not commonly used. However, it is relevant to mention that its application with multiple neuron layer architectures provide an approximation for non-linear functions, such as the TD-gammon examples mentioned previously, and the deeply-reinforced learning model presented by [Google Deepmind ATARI player](https://www.nature.com/articles/nature14236) ( [pdf](/assets/2018-Reinforcement-Learning/MnihEtAlHassibis15NatureControlDeepRL.pdf) ). 
 
