@@ -7,7 +7,7 @@ tags: [machinelearning]
 ---
 
 <div class="alert alert-primary" role="alert">
-Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of several unsupervised learning methods that I came across. Its content is continuously updated.
+Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of several unsupervised learning methods that I came across. Its content may not be entirely correct and is continuously updated.
 </div>
 
 ### Foreword: Hebbian Learning
@@ -268,7 +268,7 @@ I found a very nice video demonstrating the iterative execution of the Kohonen m
 A good example is the detection of hand-written digits on a trained dataset of the [MNIST database](http://yann.lecun.com/exdb/mnist/). For simplicity, we will work only with digits from 0 to 9. 
 Each digit is a 28x28 (=784) pixel array, represented as data point on a 784-d dataspace. Each pixels is monochromatic, thus each dimension is limited to values between 0 and 256. Our task is to, given a database of 5000 handwritten digits, find the best 6x6 SOM that best represents 4 numbers from 0-9. We will study how choosing the right neighborhood width and learning rate affect the performance of the Kohonen map.
 
-The input dataset and the `python` implementation are available in <a href="/assets/2017-Unsupervised-Learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to find to fine tune the neighboring and learning rate $\eta$ parameters. A good solution would give you some visual perception of the numbers being identified (in this case 1, 2, 3 adn 4). Here I discuss three possible outputs:
+The input dataset and the `python` implementation are available in <a href="/assets/2017-Unsupervised-Learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to find to fine tune the neighboring and learning rate $\eta$ parameters. A good solution would give you some visual perception of the numbers being identified (in this case 0, 1, 2 and 3). Here I discuss three possible outputs:
 - left: a nicely tuned SOM, where each quadrant of neurons represents a digit;
 - center: a SOM with a high learning rate. The large step size makes neurons *step* for too long distances during trainig,  leading to a mixing of digits on proximal neurons and possibly a  *tangled* SOM web;
 - right: a SOM with a high neighborhood width. The high width causes all neurons to behave almost synchronously, due tot he very wide range of the udpate function. This leads to very similar outputs per neuron;

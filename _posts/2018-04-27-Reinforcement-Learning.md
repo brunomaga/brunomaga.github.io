@@ -2,13 +2,13 @@
 
 layout: post
 title:  "Reinforcement Learning: an overview of methods"
-date:   2018-04-27 12:01:42 +0100
+date:   2018-04-27
 categories: [machine learning, reinforcement learning]
 tags: [machinelearning]
 ---
 
 <div class="alert alert-primary" role="alert">
-Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of several reinforcement learning methods that I came across. Its content is continuously updated.
+Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of several reinforcement learning methods that I came across. Its content may not be entirely correct and is continuously updated.
 </div>
 
 Reinforcement learning is a field of machine learning that --- roughly speaking --- encompasses learning by reward or prediction of reward. It is a topic of high interest as it's claimed to best represent human behaviour, mostly driven by stimuli. We eat because we are hungry, and after eating we are satisfied (positive reward). We feel pain as a negative *reward* of hurting our bodies, and we learn from previous painful experiences, to avoid repetition. We gamble because we predict a possible positive reward from a lucky play (the dopamine effect on the brain). This phenomenon has been first studied by [Pavlov in 1927](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4116985/), and the list of examples is endless. Here I describe some methods of RL that may be useful.
@@ -68,7 +68,7 @@ $$
 
 The most common algorithm to optimize the weight vector $W$ is the [Gibbs sampling](https://en.wikipedia.org/wiki/Gibbs_sampling) with [Gradient descent](https://en.wikipedia.org/wiki/Gradient_descent). An example of an application and resolution is provided in two blog posts from a colleague of mine, and are available [here](https://sharkovsky.github.io/2017/06/23/boltzmann-machine.html) and [here](https://sharkovsky.github.io/2017/06/30/practical-boltzmann.html).
 
-### TD-Learning and SARSA 
+### TD-Learning, SARSA and Q-Learning 
 
 [Temporal difference (TD) learning](https://en.wikipedia.org/wiki/Temporal_difference_learning) refers to a class of model-free reinforcement learning methods which learn by estimating the value function from the current state. These methods sample from the environment, and perform updates based on current estimates, like dynamic programming methods.
 
@@ -120,16 +120,16 @@ $$
 Q (s,a) =  \sum_{s'} P^a_{s \rightarrow s'} [ R^a_{s \rightarrow s'} + \gamma \sum_{a'} \pi (s',a') Q(s',a') ]
 $$
 
-where $\pi$ is the policy chosen --- covered next. I'll omit the remainin details. For further details on optimality in policies, check this <a href="/assets/2018-Reinforcement-Learning/Ag4-4x.pdf">Ag4-4x.pdf</a>.
+where $\pi$ is the policy chosen --- covered next. I'll skip the details. A thorough cover on optimality in policies is provided by <a href="/assets/2018-Reinforcement-Learning/Ag4-4x.pdf">Ag4-4x.pdf</a>.
 
 To summarize, the SARSA algorithm follows as:
 - Being in stat $s$ choose action $a$ according to the policy $\pi$;
 - Observe reward $r$ and next state $s'$;
 - Choose action $a'$ in state $s'$ according to policy;
 
-### Q-Learning
+##### Q-Learning
 
-Another method for TD learning is the Q-learning. It's very common to the SARSA method described:
+Another method for TD learning is the Q-learning. It's very simillar to the SARSA method described:
 - SARSA, an on-policy method: $$ \Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma Q(s',a') ] e_{aij} $$
   - The same policy is used to select the next action and to update the Q-values
 - Q-Learning, an off-policy method: $$ \Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma \text{ max } Q(s',a') ] e_{aij} $$
