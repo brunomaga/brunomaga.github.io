@@ -211,7 +211,40 @@ where $\phi$ is the basis function ($s_j$ represents the centers of the BF shape
 </p>
 
 
-### Limitations
+##### Limitations
 
-A major limitation of the simple TD-learning methods we presented so far is that it requires memory to store the Q values for all combinations of states and actions. Moreover, it is a linear function approximation, therefore not commonly used. However, it is relevant to mention that its application with multiple neuron layer architectures provide an approximation for non-linear functions, such as the TD-gammon examples mentioned previously, and the deeply-reinforced learning model presented by [Google Deepmind ATARI player](https://www.nature.com/articles/nature14236) ( [pdf](/assets/2018-Reinforcement-Learning/MnihEtAlHassibis15NatureControlDeepRL.pdf) ). 
+A major limitation of the simple TD-learning methods we presented so far is that it requires memory to store the Q values for all combinations of states and actions. Moreover, it is a linear function approximation, therefore not commonly used. However, it is relevant to mention that its application with multiple neuron layer architectures provide an approximation for non-linear functions, such as the TD-gammon examples mentioned previously, and the deeply-reinforced  (deep Q-learning) learning model presented by [Google Deepmind ATARI player](https://www.nature.com/articles/nature14236) ( [pdf](/assets/2018-Reinforcement-Learning/MnihEtAlHassibis15NatureControlDeepRL.pdf) ). 
 
+### Policy Gradient
+
+<small>This section was largely inspired on the lecture notes of MO Gewaltig, EPFL</small>
+
+The main idea of policy gradient (PL) is to associate actions with stimuli in a stochastic fashion. While in Q-learning we store the table that provides a $Q$ value per state and action, in the Policy gradient we store the reward for an action given a stimulus and observation. PL makes a lot of sense, since we can only learn from states we visited (therefore requiring lot of storage and training iterations for large state sets), but we can learn from few observations that are common to many states, therefore providing learning for unseen states. As an example, while one could train a racing car in TD learning by navigating all locations in all existing tracks, with Policy graidient we need only to train the car for the observations (traffic signs), which are common to all tracks. 
+
+The main idea is to optimize the total expected reward:
+
+$$
+J = < < R >_a >_s = \sum_s P(s) \sum_a \pi (a \mid s) R (a \mid s)
+$$
+
+for a stimuli $s$ and actions $a$. Thus we compute the weight gradient as:
+
+$$
+\Delta w_i = \eta \frac{\partial}{\partial w_i} < < R >_a >_s \\
+= \eta \frac{\partial}{\partial w_i} \sum_s P(s) \sum_a \pi (a \mid s) R (a \mid s) \\
+= \eta \sum_s P(s) \sum_a \frac{\partial}{\partial w_i} \pi (a \mid s) R (a \mid s) \\
+= \eta \sum_s P(s) \sum_a \pi (a \mid s) \frac{\partial}{\partial w_i} ln (\pi (a \mid s)) R (a \mid s) \text{, the log-likelihood trick} \\
+= < < R \frac{\partial}{\partial w_i} ln (\pi (a \mid s)) > >
+$$
+
+Taking the sample average as Monte Carlo approximation of this expectation, by taking N trial histories, we get:
+
+$$
+\approx \eta \frac{1}{N} \sum_{n=1} \frac{\partial}{\partial w_i} \pi (s_n) R (a_n \mid s_n)
+$$
+
+which is a fast approximation of the policy gradient.
+
+<div class="alert alert-warning" role="alert">
+I am looking for a nice application of policy gradient, with coding examples. I will try to finish this section in the near future.
+</div>
