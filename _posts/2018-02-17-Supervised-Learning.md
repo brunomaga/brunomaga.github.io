@@ -2,7 +2,7 @@
 
 layout: post
 title:  "Supervised Learning: the basic concepts"
-date:   2018-06-17
+date:   2018-02-17
 categories: [machine learning, supervised learning]
 tags: [machinelearning]
 ---
