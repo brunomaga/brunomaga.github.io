@@ -114,6 +114,15 @@ $$
 
 I'll ommit the explanation of this formula, but email me if you are interested. As an important remark, this method is not commonly used. Although it can be faster when the second derivative is known and easy to compute, the analytic expression for the second derivative is often complicated or intractable, requiring a lot of computation. Numerical methods for computing the second derivative also require a lot of computation -- if *N* values are required to compute the first derivative, $N^2$ are required for the second derivative (source: [stack exchange](https://stats.stackexchange.com/questions/253632/why-is-newtons-method-not-widely-used-in-machine-learning)).
 
+Finally, another method is the [**gradient descent**](https://en.wikipedia.org/wiki/Coordinate_descent) that iterates over individual coordinates (keeping others fixed), in order to minimize the loss function. 
+
+<p align="center">
+<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/coordinate_descent.svg.png"><br/>
+<small>source: wikipedia</small>
+</p>
+
+The main advantage is that it is extremely simple to implement and doesn’t require any knowledge of the derivative of the function. It’s really useful for extremely complicated functions or functions whose derivatives are far more expensive to compute than the function itself. However, due to its iterative nature, it's not a good candidate for parallelism.
+
 ##### Probability Distributions 
 
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. Examples:
@@ -194,10 +203,57 @@ f_{S_t,k} = \frac{1}{k} \sum_{n : x_n \in neighbors_{S_t},k(x)} y_n
 $$
 
 where $$ neighbors_{S_t},k(x) $$ is the set of $k$ input points in $S_t$ that are closest to $x$. The classification is performed by assigning the label with the most *votes* across the neighbors.
-Similarly to the unsupervised learning methods described [previously]({{ site.baseurl }}{% post_url 2017-11-01-Unsupervised-Learning %}), the kNN method struggles with high dimensionality. This relates to the side-length required to capture a fraction of the data. In the picture below, when dimensionality is 10, we need 80\% of volume to reach 10\% of data. 
+Similarly to the unsupervised learning methods described [previously]({{ site.baseurl }}{% post_url 2017-11-01-Unsupervised-Learning %}), the kNN method struggles with high dimensionality. This relates to the side-length required to capture a fraction of the data. In the picture below, when dimensionality is 10, we need 80% of volume to reach 10% of data. 
 
 <p align="center">
 <img width="35%" height="35%" src="/assets/2018-Supervised-Learning/curse_dimensionality.png"><br/>
 <small>source: Machine Learning lecture notes, R Urbanke, EPFL</small>
 </p>
 
+##### Support Vector Machines
+
+The Support Vector Machine (SVM) is obtained by changing the loss function to Hinge, optimizing:
+
+$$
+min_w \sum_{n=1}^N [1 - y_n x_n^T w]_{+} + \frac{\lambda}{2} \| w \|^2
+$$
+
+where the **Hinge Loss** is defined by $$ [z]_{+} = max \{ 0, z \} $$
+
+<p align="center">
+<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/hinge_loss.png"><br/>
+<small>source: Machine Learning lecture notes, M Jaggi, EPFL</small>
+</p>
+
+SVM is a **maximum margin method**, it aims at maximizing the minimum distance between labels. Maximizing the margin seems good because points near the decision surface represent very uncertain classification decisions:
+
+
+<p align="center">
+<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/svm.png"><br/>
+<small>source:  Introduction to Information Retrieval, Manning et al.,  Cambridge University Press. 2008</small>
+</p>
+
+The SVM is not differentiable. The concept of **duality** allows one to optimize $$ min_w L(w) $$, by creating a function $$ G(w,\alpha) $$ such that $$ L(w) = max_\alpha G(w,\alpha) $$ so that we can choose to optimize either of
+
+$$
+min_w max_\alpha G(w, \alpha) = max_\alpha min_w G(w,\alpha)
+$$ 
+
+In the SVM problem, $$ [z]_{+} = max \{ 0, z \} = max_\alpha \text{ } \alpha \text{ } z$$ where $$ \alpha \in [0,1] $$, so we can rewite the problem as:
+
+$$
+min_w max_{\alpha \in [0,1]^N} \sum_{n=1}^N \alpha [1 - y_n x_n^T w]_{+} + \frac{\lambda}{2} \| w \|^2
+$$
+
+which is differentiable, convex in $w$ and **concave** in $\alpha$ (a **concave** or **concave downwards** function is the negative of a convex function).
+
+<p align="center">
+<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/svm_convex_concave.png"><br/>
+<small>source: Machine Learning lecture notes (annotated), M Jaggi, EPFL</small>
+</p>
+
+Finally:
+
+$$
+\triangledown_w G(w,\alpha) = - \sum_{n=1}^N \alpha_n y_n x_n + \lambda w
+$$
