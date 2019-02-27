@@ -114,14 +114,14 @@ $$
 
 I'll ommit the explanation of this formula, but email me if you are interested. As an important remark, this method is not commonly used. Although it can be faster when the second derivative is known and easy to compute, the analytic expression for the second derivative is often complicated or intractable, requiring a lot of computation. Numerical methods for computing the second derivative also require a lot of computation -- if *N* values are required to compute the first derivative, $N^2$ are required for the second derivative (source: [stack exchange](https://stats.stackexchange.com/questions/253632/why-is-newtons-method-not-widely-used-in-machine-learning)).
 
-Finally, another method is the [**gradient descent**](https://en.wikipedia.org/wiki/Coordinate_descent) that iterates over individual coordinates (keeping others fixed), in order to minimize the loss function. 
+Finally, another method is the [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) that iterates over individual coordinates (keeping others fixed), in order to minimize the loss function. 
 
 <p align="center">
 <img width="30%" height="30%" src="/assets/2018-Supervised-Learning/coordinate_descent.svg.png"><br/>
 <small>source: wikipedia</small>
 </p>
 
-The main advantage is that it is extremely simple to implement and doesn’t require any knowledge of the derivative of the function. It’s really useful for extremely complicated functions or functions whose derivatives are far more expensive to compute than the function itself. However, due to its iterative nature, it's not a good candidate for parallelism.
+The main advantage is that it is extremely simple to implement and doesn’t require any knowledge of the derivative of the function. It’s really useful for extremely complicated functions or functions whose derivatives are far more expensive to compute than the function itself. However, due to its iterative nature, it's not a good candidate for parallelism. Another issue is that it has a a non-smooth multivariable function, thus it may be stuck in non-stationary point if the level curves of a function are not smooth (source: [wikipedia](https://en.wikipedia.org/wiki/Coordinate_descent#Limitations)).
 
 ##### Probability Distributions 
 
@@ -257,3 +257,5 @@ Finally:
 $$
 \triangledown_w G(w,\alpha) = - \sum_{n=1}^N \alpha_n y_n x_n + \lambda w
 $$
+
+where we can find $a^\star \in R^N$ maximizing $g(n)$ using coordinate descent.
