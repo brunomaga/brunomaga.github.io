@@ -187,6 +187,17 @@ As a final note, Linear models can be made more powerful, by constructing better
 
 A **classifier** will divide the input space into a collection of regions belonging to each class. The boundaries of these regions are called **decision boundaries**. The aim of the classification problem is to build a predictor based on a training set and apply it to predict on *new* data. 
 
-A common method is the **nearest neighbor**, assigning the label of the majority of the closest $k$ datapoints.
+A common method is the **nearest neighbor**, assigning the label of the majority of the closest $k$ datapoints. A natural prediction for the *k-NN* is:
 
+$$
+f_{S_t,k} = \frac{1}{k} \sum_{n : x_n \in neighbors_{S_t},k(x)} y_n
+$$
+
+where $$ neighbors_{S_t},k(x) $$ is the set of $k$ input points in $S_t$ that are closest to $x$. The classification is performed by assigning the label with the most *votes* across the neighbors.
+Similarly to the unsupervised learning methods described [previously]({{ site.baseurl }}{% post_url 2017-11-01-Unsupervised-Learning %}), the kNN method struggles with high dimensionality. This relates to the side-length required to capture a fraction of the data. In the picture below, when dimensionality is 10, we need 80\% of volume to reach 10\% of data. 
+
+<p align="center">
+<img width="35%" height="35%" src="/assets/2018-Supervised-Learning/curse_dimensionality.png"><br/>
+<small>source: Machine Learning lecture notes, R Urbanke, EPFL</small>
+</p>
 
