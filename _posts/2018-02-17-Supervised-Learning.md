@@ -8,7 +8,7 @@ tags: [machinelearning]
 ---
 
 <div class="alert alert-primary" role="alert">
-This post is largely inspired by the lecture notes for Machine Learning, by M. Jaggi and R. Urbanke at EPFL. 
+This post is largely inspired by the lecture notes for Machine Learning, by M. E. Khan, M. Jaggi and R. Urbanke at EPFL. 
 </div>
 
 Supervised Learning is the field of machine learning that learns through supervision, or in practice, learns with the help of an external agent (human or automatic) that provides the solution for a given training set, in order to *provide an approximator* for the mechanics that relates the given input to the outputs (labels). We present the basic contents in the following sections. Advanced topics will be covered in individual posts.
@@ -259,3 +259,31 @@ $$
 $$
 
 where we can find $a^\star \in R^N$ maximizing $g(n)$ using coordinate descent.
+
+The **representer theorem** generalizes this problem: for a $$ w^\star $$ minimizing the following function:
+
+$$
+min_w \sum_{n=1}^N L_n (y_n, x_n^Tw) + \frac{\lambda}{2} \| w \|^2
+$$
+
+there exists $$ \alpha^\star $$ such that $$ w^\star = X \alpha^\star $$.
+
+##### Kernel Function
+
+A kernel is defined by $$ K = X^TX $$, or $$ K = \phi^T \phi $$ for basis functions. A big advantage of using kernels is that we do not need to specify $$ \phi(X) $$ as we can work with $K$ directly.
+
+If $$ K_{ij} = k(x_i, x_j) $$, then $$ k(x,x') = \phi(x)^T \phi(x') $$. Examples of kernels:
+- linear kernel: $$  k(x,x') = x^Tx' $$
+- polynomial kernel: $$ k(x,x') = x^2(x')^2 $$
+- Radial Basis Function (RBF) kernel: $$ k(x,x') = exp [-\frac{1}{2} (x-x')^T(x-x') ] $$
+
+How can we ensure that there exists a $$\phi$$ corresponding to a given kernnel $K$?  The answer is: as long as the kernel satisfies certain properties:
+- A kernel must be an inner product in some feature space. To ensure it, these properties must hold:
+  - $K$ should be symmetric: $$ k(x,x') = k(x',x) $$
+  - $K$ should be positive semi-definite. 
+
+<div class="alert alert-warning" role="alert">
+I did not come across any exercise using kernels, so I will continue this topic once I have a better grasp on the subject
+</div>
+
+##### 

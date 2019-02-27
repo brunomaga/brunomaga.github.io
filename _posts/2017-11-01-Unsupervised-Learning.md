@@ -236,6 +236,18 @@ $$
 
 which is the Oja's Hebbian learning rule.
 
+K-means has 2 main problems:
+- forces orces the clusters to be spherical, but sometimes it is desirable to have elliptical clusters;
+- each element can only belong to a cluster, but this may not always be a good choice;
+Both problems are fixed with Gaussian [Mixture Models](https://en.wikipedia.org/wiki/Mixture_model). a mixture model corresponds to the mixture distribution that represents the probability distribution of observations in the overall population. 
+
+<div class="alert alert-warning" role="alert">
+I will omit the details as I plan to create a separate post on the topic of Mixture Models.
+</div>
+
+[comment]: <>
+[comment]: <> TODO: lectures weeks 8 and 9 in PCML
+
 ### Self-Organizing Maps and Kohonen Maps
 
 A self-organizing map (SOM) is an unsupervised artificial neural network, typically applied on a 2D space, that represents a discretization of the input space (or the training set). Its main purpose is to represent training by localized regions (neurons) that represent agglomerates of inputs:
