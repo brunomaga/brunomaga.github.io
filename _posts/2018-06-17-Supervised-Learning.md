@@ -1,21 +1,17 @@
 ---
 
 layout: post
-title:  "Supervised Learning: an overview of methods"
+title:  "Supervised Learning: the basic concepts"
 date:   2018-06-17
 categories: [machine learning, supervised learning]
 tags: [machinelearning]
 ---
 
 <div class="alert alert-primary" role="alert">
-Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of several supervised learning methods that I came across. Its content may not be entirely correct and is continuously updated.
+This post is largely inspired by the lecture notes for Machine Learning, by M. Jaggi and R. Urbanke at EPFL. 
 </div>
 
-Supervised Learning is the field of machine learning that learns through supervision, or in practice, learns with the help of an external agent (human or automatic) that provides the solution for a given training set, in order to *provide an approximator* for the mechanics that relates the given input to the outputs (labels).
-
-### Foreword:The Basis
-
-<small>This section is largely inspired by the lecture notes for Machine Learning, by M. Jaggi, EPFL</small>
+Supervised Learning is the field of machine learning that learns through supervision, or in practice, learns with the help of an external agent (human or automatic) that provides the solution for a given training set, in order to *provide an approximator* for the mechanics that relates the given input to the outputs (labels). We present the basic contents in the following sections. Advanced topics will be covered in individual posts.
 
 ##### Regression
 
