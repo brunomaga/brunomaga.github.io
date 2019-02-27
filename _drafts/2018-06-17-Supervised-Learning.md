@@ -13,11 +13,16 @@ Unlike most posts that provide a thorough study on a particular subject, this po
 
 Supervised Learning is the field of machine learning that learns through supervision, or in practice, learns with the help of an external agent (human or automatic) that provides the solution for a given training set, in order to *provide an approximator* for the mechanics that relates the given input to the outputs (labels).
 
-### Foreword: Regression and Basic Stuff
+### Foreword:The Basis
+
+<small>This section is largely inspired by the lecture notes for Machine Learning, by M. Jaggi, EPFL</small>
+
+##### Regression
 
 Regression relates an input variable to an output, to either predict new outputs, or understand the effect of the input in the output. A regression dataset consists of a set of pairs $(x_n, y_n)$ of size $N$ with input $x_n$ and output/label $y_n$. For a new input $x_n$, the goal of regression is to find $f$ such that $$ y_n \approx f(x_n) $$. It does so by finding **weights** $w$ that approximate:
 - linear regression: $$ y_n \approx f(x_n) = w_0 + w_1 x_{n1} $$
 - multilinear regression: $$ y_n \approx f(x_n) = w_0 + w_1 x_{n1} + ... + + w_D x_{nD} $$
+- logistic regression: $$ y_n \approx f(x_n) = \frac{e^{x_n}}{1+e^{x_n}} = \frac{1}{1+ e^{-x_n}} $$ 
 
 If $$ D \gt N $$ is called the problem is [under-determined]().
 
@@ -70,10 +75,122 @@ For personal amusement, in this [website](https://lossfunctions.tumblr.com/) we 
 
 Given a cost function $L(w)$ we want to find the weights that mimimizes the cost, via:
 - Grid Search (brute-force);
+- Least Squates: analytical solution for linear MSE ( $$ \triangledown L(w) = 0 $$ is a system of D equations ); 
 - Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L (w^t) $$, for step size $\gamma$, and gradient $$ \triangledown L (w) = [ \frac{\partial L(w)}{\partial w_1}, ... , \frac{\partial L(w)}{\partial w_D}  ]^T $$;
 - Stochastic Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L_n (w^t) $$, for a random choice of inputs $n$. Computationally cheap but unbiased estimate of gradient;
 - Mini-batch SGD: $$ w^{t+1} = w^{t} - \gamma \frac{1}{\mid B \mid} \sum_{n \in B} \triangledown L_n (w^t) $$, for a random subset $ B \subseteq [N] $. For each sample $n$ , we compute the gradient at the same current point $w^{(t)}$;
+
+With some variants:
 - Subgradient Descent: $$ w^{t+1} = w^{t} - \gamma g $$, where $g$ is a [subgradient](https://en.wikipedia.org/wiki/Subderivative#The_subgradient) of $L$ (useful when function is not differentiable at $w^{(t)}$; 
-- Projected Gradient: when we solve a constrained optimization problem $min_w L(w)$ subject to $w \in C$, where $C \subset R^D$ is the constraint set;
-  - Note: Projections onto convex sets are unique;
+- Projected Gradient: useful to solve a constrained optimization problem $min_w L(w)$ subject to $w \in C$, where $C \subset R^D$ is the constraint set;
+  - projected gradient descent minimizes a function subject to a constraint. At each step we move in the direction of the negative gradient, and then "project" onto the feasible set.
+  - Projections onto convex sets are unique;
+  - Definition of projection: $$ P_c(w') = argmin_{v \in C} \| v - w' \| $$;
+  - Update rule: $$ w^{(t+1)} = P_C [ w^{(t)} - \gamma \triangledown L (w^{(t)}) ] $$
+  - alternatively, one can use penalty functions instead of projections, solving $$ min_${w \in R^D} L(w) + I_c(w) $$ where $I_c$ is the penalty function;
+
+<p align="center">
+<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/projection.png"><br/>
+<small>source: Machine Learning lecture notes, M Jaggi, EPFL</small>
+</p>
+
+When $$ \triangledown L (w) $$ is close to zero, we are close to an optimum. If second derivative is positive (semi-definite), then it may be a local minimum. If the function is convex, we are at a global minimum. 
+
+Gradient descent is very sensitive to ill-conditioning. Normalizing input dimensions allows the step size to properly adjust to high differences in features dimensionalities. Choosing step size can be tricky. See [MIT_252_Lecture04.pdf](/assets/2018-Supervised-Learning/MIT_252_Lecture04.pdf) and [optpart2.pdf](/assets/2018-Supervised-Learning/optpart2.pdf) for some guidance, and the famous **Armijos Rule**.
+
+Gradient descent is a first-order method (only looks at the gradient).  We get a more powerful optimization algorithm if we use also the second order terms. We need fewer steps to converge if we use second order terms, on the other hand every iteration is more costly. The **Newton's method** make use of the second order terms and takes steps in the direction that minimizes a quadratic approximation. We define the **Hessian** as 
+
+$$
+H_{i,j} = \frac{\partial^2 L(w)}{\partial w_{i} \partial w_j} 
+$$  
+
+and the update function of Newton's method as:
+
+$$
+w^{(t+1)} = w^{(t)} - \gamma ^{(t)} ( H^{(t)})^{-1} \triangledown L(w^{(t)}).
+$$
+
+[comment]: <>  This term comes from the second order Taylor approximation of a function around a point $$ w^{\star} $$:
+[comment]: <> 
+[comment]: <> $$
+[comment]: <> L(w) \approx L(w^{\star}) + \triangledown L(w^{\star})^T (w - w^{\star}) + \frac{1}{2}(w - w^{\star})^T H(w^{\star})(w - w^{\star}).
+[comment]: <> $$ 
+
+I'll ommit the explanation of this formula, but email me if you are interested. As an important remark, this method is not commonly used. Although it can be faster when the second derivative is known and easy to compute, the analytic expression for the second derivative is often complicated or intractable, requiring a lot of computation. Numerical methods for computing the second derivative also require a lot of computation -- if *N* values are required to compute the first derivative, $N^2$ are required for the second derivative (source: [stack exchange](https://stats.stackexchange.com/questions/253632/why-is-newtons-method-not-widely-used-in-machine-learning)).
+
+##### Probability Distributions 
+
+A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. Examples:
+- Gaussian: 
+ $$ p(y | \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } exp [ - \frac{(y - \mu)^2}{2 \sigma^2} ] $$, or in vector form $$ p(y | \mu, \Sigma ) = \frac{1}{ \sqrt{ (2 \pi)^D det(\Sigma)} } exp [ - \frac{1}{2}(y - \mu)^T \Sigma^{-1} (y-\mu)] $$
+
+- Laplace:
+ $$ p( y_n | x_n, w ) = \frac{1}{2b} e^{-\frac{1}{b} | y_n - X_n^T w | } $$
+
+- [TODO complete]
+
+The **log-likelihood** is the log of the [likelihood](https://www.statisticshowto.datasciencecentral.com/likelihood-function/) of observing --- given observed data --- a parameter value  of the statistical model used to describe that data. I.e.:
+
+$$
+L_{lik} (w) = log p (y | X, w)
+$$
+
+This can be used to estimate the cost. The log-likelihood if (typically?) convex in the weight vector $w$, as it's a sum of convex functions. The **Maximum likelihood estimator (MLE)** states that:
+
+$$
+argmin_w L_{MSE}(w) = argmax_w L_{lik} (w)
+$$
+
+MLE is a sample approximation of the *expected* log-likelihood i.e.
+
+$$
+L_{lik}(w) \approx E_{p(x,y)} [ log p(y | x,w ) ]
+$$
+
+##### Overfitting and Underfitting
+
+Overfitting is fitting the noise in ad- dition to the signal. Underfitting is not fitting the signal well. To reduce overfitting, increasing data *may help*. 
+
+<p align="center">
+<img width="35%" height="35%" src="/assets/2018-Supervised-Learning/overfitting.png"><br/>
+<small>source: Machine Learning lecture notes, M Jaggi, EPFL</small>
+</p>
+
+We can also use regularization, forcing the model to be not too complex.
+
+##### Regularization
+
+Occam’s Razor: "Plurality is not to be posited without necessity" or *simple models are better. To simplify the model, we can add a regulatization term $\Omega$ to penalize complex models:
+
+$$
+min_w L(w) + \Omega (w)
+$$
+
+Techniques:
+- L2 regularization (standard Euclidean norm): $$ \Omega(w) = \lambda \| w \|^2 $$, where $$ \| w \|^2 = \sum_{i=0}^M w_i^2 $$
+  - Large weights will be penalized, as they are *considered unlikely*;
+  - If $L$ is the MSE, this is called **Ridge Regression** ;
+  - the parameter $ \lambda \gt 0 $ can be tuned to reduce overfitting. This is the **model selection** problem: 
+- L1 regularization: $$ \Omega(w) = \lambda \| w \| $$, where $$
+ \| w \| = \sum_{i=0}^M | w_i | $$ 
+  - keeping L1-norm small forces some elements in $w$ to be strictly 0, thus enforcity sparcity. Some features will not be used since their weight is 0.
+  - If $L$ is the MSE, this is called **Lasso Regression**;
+- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a neural network. Several dropout neural networks are averaged to provide final weights. Useful to reduce overfitting.
+- [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_estimator); 
+
+
+As a final note, Linear models can be made more powerful, by constructing better fea- tures for your input data. One way is to use nonlinear **basis functions** $$ \phi(x_j) $$, which are nonlinear transformations applied to input variables $x_j$.
+
+[Tensorflow playground](https://playground.tensorflow.org) is a very useful resource to visualize the effects of regularization.
+
+##### Cross-validation
+
+**K-fold cross-validation** allows us to efficiently compute the error and are a better alternative to random data splits. We randomly partition the data into $K$ groups. We train on $K − 1$ groups and test on the remaining group. We repeat this until we have tested on all $K$ sets. We then average the results.
+
+##### Classification
+
+A **classifier** will divide the input space into a collection of regions belonging to each class. The boundaries of these regions are called **decision boundaries**. The aim of the classification problem is to build a predictor based on a training set and apply it to predict on *new* data. 
+
+A common method is the **nearest neighbor**, assigning the label of the majority of the closest $k$ datapoints.
+
 
