@@ -2,7 +2,7 @@
 
 layout: post
 title:  "Reinforcement Learning: an overview of methods"
-date:   2018-04-27
+date:   2017-11-27
 categories: [machine learning, reinforcement learning]
 tags: [machinelearning]
 ---
@@ -20,7 +20,7 @@ Reinforcement learning is a field of machine learning that --- roughly speaking 
 A Restricted Boltzmann Machine (RBM) is a neural network that learns a probability distribution over a set of inputs. RBMs are a special case of [Boltzmann Machines](https://en.wikipedia.org/wiki/Boltzmann_machine) a.k.a. a stochastic [Hopfield network](https://en.wikipedia.org/wiki/Hopfield_network) with hidden units. A BM is a network of neurons with an energy define for the overall network, producing binary results. Contrarily to Hopfield networks, BMs have stochastic neurons. A RBM is a BM whose neurons must form a [Bipartite Graph](https://en.wikipedia.org/wiki/Bipartite_graph): 
 
 <p align="center">
-<img width="20%" height="20%" src="/assets/2018-Reinforcement-Learning/Restricted_Boltzmann_machine.png"><br/>
+<img width="20%" height="20%" src="/assets/2017-Reinforcement-Learning/Restricted_Boltzmann_machine.png"><br/>
 <small>source: wikipedia</small>
 </p>
 
@@ -87,7 +87,7 @@ $$
 
 
 <p align="center">
-<img width="20%" height="20%" src="/assets/2018-Reinforcement-Learning/q-value.png"><br/>
+<img width="20%" height="20%" src="/assets/2017-Reinforcement-Learning/q-value.png"><br/>
 <small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
 </p>
 
@@ -108,7 +108,7 @@ $$
 where $s'$ and $a'$ and the state and action at the next step possibly taken.
 
 <p align="center">
-<img width="20%" height="20%" src="/assets/2018-Reinforcement-Learning/q-value-2.png"><br/>
+<img width="20%" height="20%" src="/assets/2017-Reinforcement-Learning/q-value-2.png"><br/>
 <small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
 </p>
 
@@ -120,7 +120,7 @@ $$
 Q (s,a) =  \sum_{s'} P^a_{s \rightarrow s'} [ R^a_{s \rightarrow s'} + \gamma \sum_{a'} \pi (s',a') Q(s',a') ]
 $$
 
-where $\pi$ is the policy chosen --- covered next. I'll skip the details. A thorough cover on optimality in policies is provided by <a href="/assets/2018-Reinforcement-Learning/Ag4-4x.pdf">Ag4-4x.pdf</a>.
+where $\pi$ is the policy chosen --- covered next. I'll skip the details. A thorough cover on optimality in policies is provided by <a href="/assets/2017-Reinforcement-Learning/Ag4-4x.pdf">Ag4-4x.pdf</a>.
 
 To summarize, the SARSA algorithm follows as:
 - Being in stat $s$ choose action $a$ according to the policy $\pi$;
@@ -157,9 +157,9 @@ $$
 In practice, the eligibility decays the expected reward with a factor $\lambda$ and acts as a forget mechanism. If we imagine a 4x4 space and an action of moving up/down/left/right, the with and without eligibility trace models are illustrated as (green arrow is the expected reward of taking the green-arrow action at each state):
 
 <p align="center">
-<img width="20%" height="20%" src="/assets/2018-Reinforcement-Learning/eligibility2.png">
+<img width="20%" height="20%" src="/assets/2017-Reinforcement-Learning/eligibility2.png">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="20%" height="20%" src="/assets/2018-Reinforcement-Learning/eligibility1.png">
+<img width="20%" height="20%" src="/assets/2017-Reinforcement-Learning/eligibility1.png">
 <br/>
 <small>source: Unsupervised and Reinforcement Learning lecture notes, MO Gewaltig, EPFL</small>
 </p>
@@ -184,15 +184,15 @@ Take an extended version of the navigation problem mentioned above. We plan to p
 - Funding cheese is the ultimate reward and success; 
 
 <p align="center">
-<img width="30%" height="30%" src="/assets/2018-Reinforcement-Learning/problem.png">
+<img width="30%" height="30%" src="/assets/2017-Reinforcement-Learning/problem.png">
 </p>
 
-The `python` source code that resolves this problem is available in <a href="/assets/2018-Reinforcement-Learning/gridworld.py">gridworld.py</a>. If you are keen to understand more, you can play with the eligibility constant, exploration (epsilon) constant, andlearning rates to fine tune the problem. 
+The `python` source code that resolves this problem is available in <a href="/assets/2017-Reinforcement-Learning/gridworld.py">gridworld.py</a>. If you are keen to understand more, you can play with the eligibility constant, exploration (epsilon) constant, andlearning rates to fine tune the problem. 
 
-A more sophisticated example of TD-learning was provided by Gerry Tesauro for the backgammon game. The detailed explanation is available in <a href="/assets/2018-Reinforcement-Learning/td-gammon.pdf">td-gammon.pdf</a>. 
+A more sophisticated example of TD-learning was provided by Gerry Tesauro for the backgammon game. The detailed explanation is available in <a href="/assets/2017-Reinforcement-Learning/td-gammon.pdf">td-gammon.pdf</a>. 
 
 <p align="center">                                                      
-<img width="30%" height="30%" src="/assets/2018-Reinforcement-Learning/gammon.png">
+<img width="30%" height="30%" src="/assets/2017-Reinforcement-Learning/gammon.png">
 </p>       
 
 ##### Continuous State spaces
@@ -206,14 +206,14 @@ $$
 where $\phi$ is the basis function ($s_j$ represents the centers of the BF shape), an approximation of reward based on the known rewards of the proximal discrete states. The eligibility trace follows accordingly, with $$ e=\phi(s-s_j) $$ if action $a$ taken, and $0$ otherwise. For the sake of clarity, in the following figure we illustrate a problem with 3 states and 3 actions per state, with known $Q$ labelled by the height of the blue bars, and the expected $Q$ on the continous space as blue curves.
 
 <p align="center">
-<img width="30%" height="30%" src="/assets/2018-Reinforcement-Learning/continuous_space.png"><br/>
+<img width="30%" height="30%" src="/assets/2017-Reinforcement-Learning/continuous_space.png"><br/>
 <small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
 </p>
 
 
 ##### Limitations
 
-A major limitation of the simple TD-learning methods we presented so far is that it requires memory to store the Q values for all combinations of states and actions. Moreover, it is a linear function approximation, therefore not commonly used. However, it is relevant to mention that its application with multiple neuron layer architectures provide an approximation for non-linear functions, such as the TD-gammon examples mentioned previously, and the deeply-reinforced  (deep Q-learning) learning model presented by [Google Deepmind ATARI player](https://www.nature.com/articles/nature14236) ( [pdf](/assets/2018-Reinforcement-Learning/MnihEtAlHassibis15NatureControlDeepRL.pdf) ). 
+A major limitation of the simple TD-learning methods we presented so far is that it requires memory to store the Q values for all combinations of states and actions. Moreover, it is a linear function approximation, therefore not commonly used. However, it is relevant to mention that its application with multiple neuron layer architectures provide an approximation for non-linear functions, such as the TD-gammon examples mentioned previously, and the deeply-reinforced  (deep Q-learning) learning model presented by [Google Deepmind ATARI player](https://www.nature.com/articles/nature14236) ( [pdf](/assets/2017-Reinforcement-Learning/MnihEtAlHassibis15NatureControlDeepRL.pdf) ). 
 
 ### Policy Gradient
 
