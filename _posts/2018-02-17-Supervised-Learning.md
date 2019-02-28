@@ -384,12 +384,12 @@ Another possibility is to use **binning**, a technique for data preparation wher
 
 This approach obviously falls short for high input dimensionality. For such use cases, deep neural networks is the solution, as it provides a non-linear approximator.
 
-##### (Deep) Neural Networks
+##### Deep Neural Networks
 
 Moved to a separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}).
 
 ##### Graphical Models, Bayesian Networks and Belief Propagation
 
 <div class="alert alert-warning" role="alert">
-25.02.2019: will be added soon.
+25.02.2019: information will be added soon.
 </div>

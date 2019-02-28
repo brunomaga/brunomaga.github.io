@@ -163,5 +163,5 @@ where $$\eta$$ is the step size, and  $$ \lambda $$ is the regularization consta
 LSTMs are neurons that are suitable for time based learning iterations as they control a *gate* that enables learning of signigicant signals, and also reduces the effect of the weight decay, by only learning relevant weight changes.
 
 <div class="alert alert-warning" role="alert">
-15.02.2019: I will update this chapter soon
+15.02.2019: I will update this section soon
 </div>
