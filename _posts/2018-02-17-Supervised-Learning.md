@@ -48,7 +48,7 @@ Intersections of convex sets are convex.
 ##### Loss
 
 The quality of the approximation is provided by the **loss** or **cost function**. Examples:
-- Mean Square Error: $$ MSE(w) = \frac{1}{N} \sum_{n=1}^N [ y_n - f(x_n)]^2 $$ , not good for outliers
+- Mean Square Error: $$ MSE(w) = \frac{1}{N} \sum_{n=1}^N [ y_n - f(x_n)]^2 $$ , large errors have relatively greater influence, so it is not good for outliers;
 - Mean Absolute Error: $$ MAE(w) = \frac{1}{N} \sum_{n=1}^N \mid y_n - f(x_n) \mid $$ 
 - Huber: $$ Huber(w) = 
 \begin{cases}
@@ -376,7 +376,9 @@ Several techniques to represent text:
 I'll ommit details as I plan to write an entire post dedicated to text representation, Natural Language Processing and context retrieving.
 </div>
 
-##### (Deep) Neural Networks
+### (Deep) Neural Networks
+
+##### Overview 
 
 We have seen that simple linear classification schemes like logistic regression:
 
@@ -384,7 +386,19 @@ $$
 p (y | x^T w) = \frac{e^{x^Tw_y}}{1+e^{x^Tw_y}}
 $$
 
-can work well but are limited. For some data representations that are non-linear, some classifiers (e.g. polynomial) may still be good, particularly when we know a priori which features are useful. A possible solution is to add as many features as possible i.e. add all polynomial terms up to some order, leading to overfitting.  That's where neural networks fill the gap. Neural networks allows us to learn not only the *weights* but also the *useful features*. In practice, they are what we call an **[universal approximator](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. an approximator to any function in a bounded continuous domain. I will omit the proof, email me if you are interested in knowing more.
+can work well but are limited. For some data representations that are non-linear, some classifiers (e.g. polynomial) may still be good, particularly when we know a priori which features are useful. A possible solution is to add as many features as possible i.e. add all polynomial terms up to some order, leading to overfitting.
+
+Another possibility is to use **binning**, a technique for data preparation where we represent input as combinations of input data intervals, allowing a non-linear combination of inputs. As a simple example, take a neural network to detect the house prices inSwitzerland for a given latitude and longitude. A regular neural net would be trained for a given *latitude* and *longitude* input, against an output price. This could only represent linear combinations of both parameters. Alternatively we can discretize the parameters space, and represent as input all the combinations of latitude and longitude intervals, allowing non-linearity in the model:  
+
+<p align="center">
+<img width="80%" height="80%" src="/assets/2018-Supervised-Learning/binning.png"><br/>
+</p> 
+
+This approach obviously falls short for high input dimensionality.
+
+That's where neural networks fill the gap. Neural networks allows us to learn not only the *weights* but also the *useful features*. In practice, they are what we call an **[universal approximator](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. an approximator to any function in a bounded continuous domain. I will omit the proof, email me if you are interested in knowing more.
+
+##### Structure
 
 The structure of a simple NN is the following: one input layer of size $D$, $L$ hidden layers of size $K$, and one output layer. It is a **feedfoward network**: the computation performed by the network starts with the input from the left and flows to the right. There is no feedback loop. It can be used for regression (when input and output are provided) and for classification (when input are provided and new output is the classifier).
 
@@ -405,7 +419,16 @@ $$
 x^{(l)} = f^{(l)} (x^{(l-1)}) = \phi ((W^{(l)})^T x^{(l-1)}+b^{(l)})
 $$
 
-where $f$ is the regression function of neurons, as previously. Similarly to previous regression use cases, we are required to minimize the loss in the system, using e.g. Stochastig Gradient Descent. As always when dealing with gradient descent we compute the gradient of the cost function for a particular input sample (with respect to all weights of the net and all bias terms) and then we take a small step in the direction opposite to this gradient. Computing the derivative with respect to a particular parameter is really just applying the chain rule of calculus. The cost function can be written as (details omitted):
+where $f$ is the regression function of neurons, as previously. Some popular choices of activation functions are:
+- [sigmoid function](https://www.wolframalpha.com/input/?i=1%2F(1%2Be%5E%7B-x%7D)): $$ \phi(x) = \frac{1}{1+e^{-x}} $$, positive and bounded;
+- [*tanh*](https://www.wolframalpha.com/input/?i=%5Cfrac%7Be%5Ex+-+e%5E%7B-x%7D%7D%7Be%5Ex%2Be%5E%7B-x%7D%7D) = $$ \phi(x) = \frac{e^x - e^{-x}}{e^x+e^{-x}} $$, balanced (positive and negative) and  bounded;
+- [Rectified linear Unit – ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)): $$\phi(x) = [x]_+ = maxo\{0,x\}$$, always positive and unbounded; 
+- Leaky ReLU: $$\phi(x) = max{\alpha x,x}$$. Fixes the problem of *dying* in Non-leaky rectified linear units;
+  - In brief, if the dot product of the input to a ReLU with its weights is negative, the output is 0. The gradient of $$ max\{ 0,x \} $$ is $0$ when the output is $0$. If for any reason the output is consistently $0$ (for example, if the ReLU has a large negative bias), then the gradient will be consistently 0. The error signal backpropagated from later layers gets multiplied by this 0, so no error signal ever passes to earlier layers. The ReLU has died.  With leaky ReLUs, the gradient is never 0, and this problem is avoided.  
+
+##### Back-propagation
+
+Similarly to previous regression use cases, we are required to minimize the loss in the system, using e.g. Stochastig Gradient Descent. As always when dealing with gradient descent we compute the gradient of the cost function for a particular input sample (with respect to all weights of the net and all bias terms) and then we take a small step in the direction opposite to this gradient. Computing the derivative with respect to a particular parameter is really just applying the chain rule of calculus. The cost function can be written as (details omitted):
 
 $$
 L = \frac{1}{N} \sum_{n=1}^N ( y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) ) ^2
