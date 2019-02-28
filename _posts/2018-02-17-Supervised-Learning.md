@@ -387,3 +387,9 @@ This approach obviously falls short for high input dimensionality. For such use 
 ##### (Deep) Neural Networks
 
 Moved to a separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}).
+
+##### Graphical Models, Bayesian Networks and Belief Propagation
+
+<div class="alert alert-warning" role="alert">
+25.02.2019: will be added soon.
+</div>
