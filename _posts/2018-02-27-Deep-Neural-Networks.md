@@ -40,7 +40,7 @@ where $f$ is the regression function of neurons, as previously. Some popular cho
 - [sigmoid function](https://www.wolframalpha.com/input/?i=1%2F(1%2Be%5E%7B-x%7D)): $$ \phi(x) = \frac{1}{1+e^{-x}} $$, positive and bounded;
 - [*tanh*](https://www.wolframalpha.com/input/?i=%5Cfrac%7Be%5Ex+-+e%5E%7B-x%7D%7D%7Be%5Ex%2Be%5E%7B-x%7D%7D) = $$ \phi(x) = \frac{e^x - e^{-x}}{e^x+e^{-x}} $$, balanced (positive and negative) and  bounded;
 - [Rectified linear Unit – ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)): $$\phi(x) = [x]_+ = maxo\{0,x\}$$, always positive and unbounded; often used as it's computationally *cheap*; 
-- Leaky ReLU: $$\phi(x) = max{\alpha x,x}$$. Fixes the problem of *dying* in Non-leaky rectified linear units;
+- Leaky ReLU: $$\phi(x) = max \{\alpha x,x\}$$. Fixes the problem of *dying* in Non-leaky rectified linear units;
   - In brief, if the dot product of the input to a ReLU with its weights is negative, the output is 0. The gradient of $$ max\{ 0,x \} $$ is $0$ when the output is $0$. If for any reason the output is consistently $0$ (for example, if the ReLU has a large negative bias), then the gradient will be consistently 0. The error signal backpropagated from later layers gets multiplied by this 0, so no error signal ever passes to earlier layers. The ReLU has died.  With leaky ReLUs, the gradient is never 0, and this problem is avoided.  
 
 ##### Back-propagation
@@ -138,7 +138,8 @@ If we add several channels we do not end up with a 2D output in the next level b
 </p>
 
 Notice the three types of operations involved:
-- convolutional layer: apples a convolution operation to the input, passing the result to the next layer. The convolution emulates the response of an individual neuron to visual stimuli;
+- convolutional layer: applies a convolution operation to the input, passing the result to the next layer. The convolution emulates the response of an individual neuron to visual stimuli;
+  - convolution is a mathematical operation on two functions to produce a third function that expresses how the shape of one is modified by the other. Convolution is similar to cross-correlation;
 - pooling: combine the outputs of neuron clusters at one layer into a single neuron in the next layer.
   - A very common operation is the max pooling, that uses the maximum value from each of a cluster of neurons at the prior layer;
 - fully connected: similar to multi-layer perceptron, providing the *universal approximator* effect;
@@ -151,6 +152,16 @@ An example with code will follow soon.
 
 ##### Long Short-Term Memory Neurons (LSTM)
  
+Let $$ w_{i,j}^{(l)} $$ be the weight of the edge going from node $i$ at layer $l−1$ to node $j$ at layer $l$, at time $t$. Assume we use the same constants in all levels i.e. $$ \lambda^{(l)} = \lambda $$. The update rule for the use case is:
+
+$$
+w_{i,j}^{(l)} [t+1] = w_{i,j}^{(l)}[t] - \eta ( \triangledown_w L + \lambda w_{i,j}^{(l)} [t] ) = w_{i,j}^{(l)} [t] ( 1 - \eta \lambda) - \eta \triangledown_w L
+$$ 
+
+where $$\eta$$ is the step size, and  $$ \lambda $$ is the regularization constant. We see that in one update step the weight is decreased by a factor $$ 1- \eta \lambda $$ and in addition we add a small step in the negative direction of the gradient. We say that regularization leads to **weight decay**.
+
+LSTMs are neurons that are suitable for time based learning iterations as they control a *gate* that enables learning of signigicant signals, and also reduces the effect of the weight decay, by only learning relevant weight changes.
+
 <div class="alert alert-warning" role="alert">
 15.02.2019: I will update this chapter soon
 </div>
