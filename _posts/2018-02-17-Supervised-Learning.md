@@ -1,14 +1,14 @@
 ---
 
 layout: post
-title:  "Supervised Learning: the basic concepts"
+title:  "Supervised Learning: basic concepts and methods"
 date:   2018-02-17
 categories: [machine learning, supervised learning]
 tags: [machinelearning]
 ---
 
 <div class="alert alert-primary" role="alert">
-This post is largely inspired by the lecture notes for Machine Learning, by M. E. Khan, M. Jaggi and R. Urbanke at EPFL. 
+This post is largely inspired by the lecture notes for Machine Learning, by M. E. Khan, M. Jaggi and R. Urbanke at EPFL. Its content is continuously updated.
 </div>
 
 Supervised Learning is the field of machine learning that learns through supervision, or in practice, learns with the help of an external agent (human or automatic) that provides the solution for a given training set, in order to *provide an approximator* for the mechanics that relates the given input to the outputs (labels). We present the basic contents in the following sections. Advanced topics will be covered in individual posts.
@@ -180,9 +180,12 @@ Techniques:
  \| w \| = \sum_{i=0}^M | w_i | $$ 
   - keeping L1-norm small forces some elements in $w$ to be strictly 0, thus enforcity sparcity. Some features will not be used since their weight is 0.
   - If $L$ is the MSE, this is called **Lasso Regression**;
-- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a neural network. Several dropout neural networks are averaged to provide final weights. Useful to reduce overfitting.
 - [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_estimator); 
+- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a neural network. Several dropout neural networks are averaged to provide final weights. Useful to reduce overfitting.
 
+<p align="center">
+<img width="35%" height="35%" src="/assets/2018-Supervised-Learning/dropout.png">
+</p>
 
 As a final note, Linear models can be made more powerful, by constructing better fea- tures for your input data. One way is to use nonlinear **basis functions** $$ \phi(x_j) $$, which are nonlinear transformations applied to input variables $x_j$.
 
@@ -310,7 +313,7 @@ $$
 
 where (again), $\lambda_z$ and  $\lambda_w$ are scalars. 
 
-We use stochastic gradient descent to optimize this problem. The training objective is a function over $| \Omega |$ terms (one per rating):
+We use stochastic gradient descent to optimize this problem. The training objective is a function over \|$\Omega$\| terms (one per rating):
 
 $$
 \frac{1}{| \Omega |} \sum_{(d,n) \in \Omega} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2
@@ -354,3 +357,108 @@ We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given 
   $$
 
 To finalize, the article [Matrix Factorization Techniques for Recommender Systems](/assets/2018-Supervised-Learning/Recommender-Systems-Netflix.pdf) might be of your interest. 
+
+##### Text Representation
+
+Several techniques to represent text:
+- [Bag of words](https://en.wikipedia.org/wiki/Bag-of-words_model). Each word is represented by an index in a vocabulary of words.
+- The Co-occurence Matrix, where $n_{ij}$ holds contexts where word $i$ is used along word $j$;
+  - We can use the previous method of matrix factorization to predict words co-occurence;
+- [word2vec](https://skymind.ai/wiki/word2vec): word is represented by the hidden layer of a trained 2-layer neural network;
+  - Very good explanation [here](http://mccormickml.com/2016/04/19/word2vec-tutorial-the-skip-gram-model/);
+- [GLOVE](https://nlp.stanford.edu/projects/glove/): similar as Word2Vec. While Word2Vec is a *predictive* model that predicts context given word, GLOVE learns by constructing a co-occurrence matrix (words $\times$ context) that counts how frequently a word appears in a context. Since it's going to be a gigantic matrix, we factorize this matrix to achieve a lower-dimension representation.
+  - Another good resource [here](https://towardsdatascience.com/emnlp-what-is-glove-part-i-3b6ce6a7f970);
+- Skip-Gram model: we train a neural network with pairs of words. We the utilized the network to retrieve the probability of every word in the dictionary to appear near the input word;
+  - Another good resource [here](https://towardsdatascience.com/word2vec-skip-gram-model-part-1-intuition-78614e4d6e0b)
+- [FastText (from facebook)](https://fasttext.cc/): no idea!
+
+<div class="alert alert-warning" role="alert">
+I'll ommit details as I plan to write an entire post dedicated to text representation, Natural Language Processing and context retrieving.
+</div>
+
+##### (Deep) Neural Networks
+
+We have seen that simple linear classification schemes like logistic regression:
+
+$$
+p (y | x^T w) = \frac{e^{x^Tw_y}}{1+e^{x^Tw_y}}
+$$
+
+can work well but are limited. For some data representations that are non-linear, some classifiers (e.g. polynomial) may still be good, particularly when we know a priori which features are useful. A possible solution is to add as many features as possible i.e. add all polynomial terms up to some order, leading to overfitting.  That's where neural networks fill the gap. Neural networks allows us to learn not only the *weights* but also the *useful features*. In practice, they are what we call an **[universal approximator](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. an approximator to any function in a bounded continuous domain. I will omit the proof, email me if you are interested in knowing more.
+
+The structure of a simple NN is the following: one input layer of size $D$, $L$ hidden layers of size $K$, and one output layer. It is a **feedfoward network**: the computation performed by the network starts with the input from the left and flows to the right. There is no feedback loop. It can be used for regression (when input and output are provided) and for classification (when input are provided and new output is the classifier).
+
+<p align="center">
+<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/dnn.png"><br/>
+<small>source: Machine Learning lecture notes, M Jaggi, EPFL</small>
+</p>
+
+Input and output layers work similarly to any previous regression method. Hidden layers are different. The output at the node $j$ in hidden layer $l$ is denoted by:
+
+$$
+x_j^{(l)} = \phi ( \sum_i w_{i,j}^{(l)} x_i^{(l-1)}+b_j^{(l)}). 
+$$
+
+where $b$ is the bias term, trained equally to any other weight. Note that, in order to compute the output we first compute the weighted sum of the inputs and then apply an **activation function** $\phi$ to this sum. We can equally describe the function that is implemented by each layer in the form:
+
+$$
+x^{(l)} = f^{(l)} (x^{(l-1)}) = \phi ((W^{(l)})^T x^{(l-1)}+b^{(l)})
+$$
+
+where $f$ is the regression function of neurons, as previously. Similarly to previous regression use cases, we are required to minimize the loss in the system, using e.g. Stochastig Gradient Descent. As always when dealing with gradient descent we compute the gradient of the cost function for a particular input sample (with respect to all weights of the net and all bias terms) and then we take a small step in the direction opposite to this gradient. Computing the derivative with respect to a particular parameter is really just applying the chain rule of calculus. The cost function can be written as (details omitted):
+
+$$
+L = \frac{1}{N} \sum_{n=1}^N ( y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) ) ^2
+$$
+
+Since in general there are many parameters it would not be efficient to do this for each parameter individually. However, the algorithm of **back propagation** alows us to do it more efficently. Our aim is to compute:
+
+$$
+\frac{\partial L_n}{\partial w_{i,j}^{(l)}}, l=1, ..., L+1 \text {, and } \frac{\partial L_n}{\partial b_{j}^{(l)}}, l=1, ..., L+1 
+\label{eq_gradient}
+$$
+
+For simplicity, we will represent the total input computed at the $l$-th layer as
+
+$$
+z^{(l)} = (W^{(l)})^T x^{(l-1)}+b^{(l)} .
+\label{eq_z}
+$$
+
+These quantities are easy to compute by a forward pass in the network, starting at $$ x^{(0)} = x_n $$ and then applying this recursion for $$ l=1,...,L+1 $$.
+
+Now, let
+
+$$
+\delta_j^{(l)} = \frac{\delta L_n}{\delta z_j^{(l)}}.
+\label{eq_delta}
+$$
+
+These quantities are easier to compute with a backward pass:
+
+$$
+\delta_j^{(l)} = \frac{\delta L_n}{\delta z_j^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\delta z_j^{(l)}} = \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
+$$
+
+We used the chain rule on the second equality operation. Going back to equation \ref{eq_gradient}:
+
+$$
+\frac{\partial L_n}{\partial w_{i,j}^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l)}} \frac{\partial z_k^{(l)}}{\partial w_{i,j}^{(l)}} = \delta_j^{(l)} x_j^{(l-1)}
+\label{eq_w}
+$$
+
+Here we used chain rule, equation \ref{eq_delta} on the definition of $\delta$, and the partial derivative of equation \ref{eq_z} over $w$. In a similar manner:
+
+$$
+\frac{\partial L_n}{\partial b_{j}^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l)}} \frac{\partial z_k^{(l)}}{\partial b_{j}^{(l)}} = \delta_j^{(l)} \cdot 1 = \delta_j^{(l)}
+\label{eq_b}
+$$
+
+The complete back propagation is then summarized as:
+- Forward pass: set $$ x^{(0)} = x_n $$. Compute $$ z^{(l)} $$ for $$ l=1,...,l+1 $$;
+- Backward pass: set $$ \delta ^{(L+1)} $$ using the appropriate loss and activation function. Compute $$ \delta ^{(L+1)} $$ for $$ l = L, ..., 1 $$;
+- Final computation: For all parameters compute $$ \frac{\partial L_n}{\partial w_{i,j}^{(l)}} $$ (eq. \ref{eq_w}) and $$ \frac{\partial L_n}{\partial b_{j}^{(l)}} $$ (eq. \ref{eq_b});
+
+<div class="alert alert-warning" role="alert">
+15.02.2019: I will update this chapter soon
+</div>
