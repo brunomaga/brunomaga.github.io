@@ -71,7 +71,7 @@ For personal amusement, in this [website](https://lossfunctions.tumblr.com/) we 
 
 Given a cost function $L(w)$ we want to find the weights that mimimizes the cost, via:
 - Grid Search (brute-force);
-- Least Squates: analytical solution for linear MSE ( $$ \triangledown L(w) = 0 $$ is a system of D equations ); 
+- Least Squares: analytical solution for linear MSE ( $$ \triangledown L(w) = 0 $$ is a system of D equations ); 
 - Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L (w^t) $$, for step size $\gamma$, and gradient $$ \triangledown L (w) = [ \frac{\partial L(w)}{\partial w_1}, ... , \frac{\partial L(w)}{\partial w_D}  ]^T $$;
 - Stochastic Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L_n (w^t) $$, for a random choice of inputs $n$. Computationally cheap but unbiased estimate of gradient;
 - Mini-batch SGD: $$ w^{t+1} = w^{t} - \gamma \frac{1}{\mid B \mid} \sum_{n \in B} \triangledown L_n (w^t) $$, for a random subset $ B \subseteq [N] $. For each sample $n$ , we compute the gradient at the same current point $w^{(t)}$;
@@ -83,7 +83,7 @@ With some variants:
   - Projections onto convex sets are unique;
   - Definition of projection: $$ P_c(w') = argmin_{v \in C} \| v - w' \| $$;
   - Update rule: $$ w^{(t+1)} = P_C [ w^{(t)} - \gamma \triangledown L (w^{(t)}) ] $$
-  - alternatively, one can use penalty functions instead of projections, solving $$ min_${w \in R^D} L(w) + I_c(w) $$ where $I_c$ is the penalty function;
+  - alternatively, one can use penalty functions instead of projections, solving $$ min_{w \in R^D} L(w) + I_c(w) $$ where $I_c$ is the penalty function;
 
 <p align="center">
 <img width="30%" height="30%" src="/assets/2018-Supervised-Learning/projection.png"><br/>
@@ -286,4 +286,71 @@ How can we ensure that there exists a $$\phi$$ corresponding to a given kernnel 
 I did not come across any exercise using kernels, so I will continue this topic once I have a better grasp on the subject
 </div>
 
-##### 
+##### Matrix Factorization
+
+Matrix factorization can be used to discover underling latent factors and/or to predict missing values of the matrix. We aim to find $W$, $Z$ such that $$ W \approx WZ^T $$. I.e. we aim to predict $x_{dn}$, where $d$ is an element in $Z$, and $n$ is an element in $W$. For movie rating, $Z$ could be users, $W$ could be movies, and $x_{dn}$ the star rating.
+
+We aim at optimizing:
+
+$$
+min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2
+$$
+
+where $$ D \in R^{D \times K} $$ and $$ Z \in R^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ collects the indices of the observed ratings of the input matrix $X$.
+
+<p align="center">
+<img width="60%"  src="/assets/2018-Supervised-Learning/matrix-factorization.png">
+</p>
+
+This cost function is not convex and not [identifiable](https://en.wikipedia.org/wiki/Identifiability). $K$ is the number of latent features (e.g. gender, age group, citizenship, etc). Large $K$ facilitates overfitting. We can add a regularizer to the function:
+
+$$
+min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2 + \frac{\lambda_w}{2} \| W \|^2 +  \frac{\lambda_z}{2} \| Z \|^2
+$$ 
+
+where (again), $\lambda_z$ and  $\lambda_w$ are scalars. 
+
+We use stochastic gradient descent to optimize this problem. The training objective is a function over $| \Omega |$ terms (one per rating):
+
+$$
+\frac{1}{| \Omega |} \sum_{(d,n) \in \Omega} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2
+$$
+
+For one fixed element $(d,n)$, we derive the gradient $(d',k)$ for $W$ and  $(n',k)$ for $Z$:
+
+$$
+(d',k) = \frac{\partial}{\partial w_{d',k}} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2 =
+\begin{cases}
+    -[x_n - (WZ^T)_{dn}] z_{n,k} & \text{, if } d'=d\\
+    0,              & \text{, otherwise}
+\end{cases}
+$$
+
+and
+
+$$
+(n',k) = \frac{\partial}{\partial w_{n',k}} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2 =
+\begin{cases}
+    -[x_n - (WZ^T)_{dn}] w_{d,k} & \text{, if } n'=n\\
+    0,              & \text{, otherwise}
+\end{cases} 
+$$
+
+Reminder: $z_{n,k}$ are user features, $w_{d,k}$ are movie features. The gradient has $(D+N)K$ entries.
+
+We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given matrix $R$ into two factors $U$ and $V$ such that $$ R \approx U^TV $$.
+
+- If there are **no** missing ratings in the matrix ie $$ \Omega = [D] \times [N] $$, then:
+
+  $$
+  min_{W,Z} L(W,Z) = \frac{1}{2} \sum_{d=1}^D \sum_{n=1}^N [x_{dn} - (WZ^T)_{dn}]^2 + \text{ (regularizer) } =  \frac{1}{2} \| X - WZ^T \| ^2 + \frac{\lambda_w}{2} \| W \|^2 +  \frac{\lambda_z}{2} \| Z \|^2
+  $$
+
+  - We can use coordinate descent (minimize $W$ for fixed $Z$ and vice-versa) to minimize cost plus regularizer;
+- If there are missing entries, the problem is harder, as only the ratings $$ (d,n) \in \Omega $$ contribute to the cost, i.e..;
+
+  $$
+  min_{W,Z} L(W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [x_{dn} - (WZ^T)_{dn}]^2 + ...
+  $$
+
+To finalize, the article [Matrix Factorization Techniques for Recommender Systems](/assets/2018-Supervised-Learning/Recommender-Systems-Netflix.pdf) might be of your interest. 
