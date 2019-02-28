@@ -181,11 +181,7 @@ Techniques:
   - keeping L1-norm small forces some elements in $w$ to be strictly 0, thus enforcity sparcity. Some features will not be used since their weight is 0.
   - If $L$ is the MSE, this is called **Lasso Regression**;
 - [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_estimator); 
-- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a neural network. Several dropout neural networks are averaged to provide final weights. Useful to reduce overfitting.
-
-<p align="center">
-<img width="35%" height="35%" src="/assets/2018-Supervised-Learning/dropout.png">
-</p>
+- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a (deep) [neural network]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) and retrieving the final model as an average of models (see separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) in Deep Neural Networks for details.
 
 As a final note, Linear models can be made more powerful, by constructing better fea- tures for your input data. One way is to use nonlinear **basis functions** $$ \phi(x_j) $$, which are nonlinear transformations applied to input variables $x_j$.
 
