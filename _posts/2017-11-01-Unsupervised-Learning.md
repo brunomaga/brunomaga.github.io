@@ -174,6 +174,12 @@ Or... because the algorithm converges when $w \propto \Delta w$, and  $w$ and $-
 
 As a final remark, it is relevant to mention that *kurtosis is very weak with outliers because is a fourth order function*. An alternative often used method is the Neg-entropy, robust for outliers. I'll ommit it for brevity. If you're interested on details, check the [original lecture notes](https://www.slideshare.net/yokotatsuya/independent-component-analysis-11359849).
 
+### Singular Value Decomposition
+
+<div class="alert alert-warning" role="alert">
+I will write this section once I acquire a good grasp on the subject.
+</div>
+
 ### Competitive Learning and k-means
 
 Competitive Learning underlies the self organization of the brain. In practice, neural network wiring is adaptive, not fixed. And competition drives wiring across all brain systems (motor cortex, neocortex, etc.).
