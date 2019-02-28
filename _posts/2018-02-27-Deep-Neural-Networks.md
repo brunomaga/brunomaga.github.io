@@ -3,7 +3,7 @@
 layout: post
 title:  "Deep Neural Networks"
 date:   2018-02-27
-categories: [machine learning, supervised learning]
+categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---
 
@@ -100,6 +100,16 @@ The complete back propagation is then summarized as:
 - Forward pass: set $$ x^{(0)} = x_n $$. Compute $$ z^{(l)} $$ for $$ l=1,...,l+1 $$;
 - Backward pass: set $$ \delta ^{(L+1)} $$ using the appropriate loss and activation function. Compute $$ \delta ^{(L+1)} $$ for $$ l = L, ..., 1 $$;
 - Final computation: For all parameters compute $$ \frac{\partial L_n}{\partial w_{i,j}^{(l)}} $$ (eq. \ref{eq_w}) and $$ \frac{\partial L_n}{\partial b_{j}^{(l)}} $$ (eq. \ref{eq_b});
+
+##### Regularization via Dropout
+
+[Dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5) is a method to *drop out* (ignore) neurons in neural network  and retrieving the final model as an average of models. The rationale is that the processing of the same problem in different neural networks prevents complex co-adaptations on training data. It performs model averaging, and reduces overfitting.
+
+From [wikipedia](https://en.wikipedia.org/wiki/Convolutional_neural_network#Dropout):  "Because a fully connected layer occupies most of the parameters, it is prone to overfitting. [...] At each training stage, individual nodes are either *dropped out* of the net with probability $$ 1-p $$ or kept with probability $p$, so that a reduced network is left; incoming and outgoing edges to a dropped-out node are also removed. Only the reduced network is trained on the data in that stage. The removed nodes are then reinserted into the network with their original weights. "
+
+<p align="center">
+<img width="35%" height="35%" src="/assets/2018-Deep-Neural-Networks/dropout.png">
+</p>
 
 ##### Convolutional Neural Networks
  
