@@ -7,8 +7,6 @@ categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---
 
-##### Overview 
-
 We have seen that simple linear classification schemes like logistic regression:
 
 $$
@@ -112,6 +110,46 @@ From [wikipedia](https://en.wikipedia.org/wiki/Convolutional_neural_network#Drop
 </p>
 
 ##### Convolutional Neural Networks
+ 
+The disadvantage of large neural networks is that it has a very high number of parameters so it may require lots of data to be trained. In some scenarios, local training should suffice: e.g. in an audio stream, it is natural to process an input stream $$ x^{(0)}[n] $$ stream by running it through a linear time-invariant filter, whose output $$ x^{(1)}[n] $$ is given by the convolution of the input $$ x^{(0)}[n] $$ and the $$ f [n] $$, as:
+
+$$
+x^{(1)}[n] = \sum_k f[k]x^{(0)} [n-k]
+$$
+
+
+The filter $f$ is local i.e. $$ f[k]=0 $$, for $$ k \ge K $$. By choosing an appropriate type of filter we can bring out various aspects of the underlying signal, e.g. we can smooth features by averaging, or we can enhance differences between neighboring elements by taking a *high-pass* filter. An analogous scenario is visible in case of a picture:
+
+$$
+x^{(1)}[n,m] = \sum_{k,l} f[k,l]x^{(0)} [n-k,m-l]
+$$
+
+We see that the output $$ x^{(1)} $$ at position $$ [n, m] $$ only depends on the value of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. So we no longer need a fully connected network but  only the one that representes the local strucure, leading to fewer parameters to deal with. This structure implies that we should use the same filter (e.g., not only the same connection-pattern but also the same weights) at every position! This is called **weight sharing**, drastically reducing the number of parameters further. The difference between a locally/sparse connected and a fully connected is obvious:
+
+<p align="center">
+<img width="25%" height="25%" src="/assets/2018-Deep-Neural-Networks/fully_sparse_connectivity.png">
+</p>
+
+It is common to not only compute the output of a single filter but to use multiple filters. The various outputs are called channels. This introduces some additional parameters into the model.
+If we add several channels we do not end up with a 2D output in the next level but in fact with a 3D output. Per layer we have increasingly more channels but a smaller “footprint.” In brief, applying the local connectivity to a 2D input dataset on a *deep* neural network, we have the final structure as:
+
+<p align="center">
+<img width="65%" height="65%" src="/assets/2018-Deep-Neural-Networks/cnn.png">
+</p>
+
+Notice the three types of operations involved:
+- convolutional layer: apples a convolution operation to the input, passing the result to the next layer. The convolution emulates the response of an individual neuron to visual stimuli;
+- pooling: combine the outputs of neuron clusters at one layer into a single neuron in the next layer.
+  - A very common operation is the max pooling, that uses the maximum value from each of a cluster of neurons at the prior layer;
+- fully connected: similar to multi-layer perceptron, providing the *universal approximator* effect;
+
+The size of each picture typically gets smaller and smaller as we proceed through the layers, either due to the handling of the boundary or because we might perform subsampling.
+
+Training follows from back-propagation, ignoring that some weights are shared, and considering each weight on each edge to be an independent variable. Once the gradient has been computed for this net- work with independent weights, just sum up the gradients of all edges that share the same weight. This gives us the gradient for the network with weight sharing. 
+
+An example with code will follow soon.
+
+##### Long Short-Term Memory Neurons (LSTM)
  
 <div class="alert alert-warning" role="alert">
 15.02.2019: I will update this chapter soon
