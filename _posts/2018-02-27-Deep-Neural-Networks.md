@@ -146,7 +146,7 @@ Notice the three types of operations involved:
 
 The size of each picture typically gets smaller and smaller as we proceed through the layers, either due to the handling of the boundary or because we might perform subsampling.
 
-Training follows from back-propagation, ignoring that some weights are shared, and considering each weight on each edge to be an independent variable. Once the gradient has been computed for this net- work with independent weights, just sum up the gradients of all edges that share the same weight. This gives us the gradient for the network with weight sharing. 
+Training follows from back-propagation, ignoring that some weights are shared, and considering each weight on each edge to be an independent variable. Once the gradient has been computed for this network with independent weights, just sum up the gradients of all edges that share the same weight. This gives us the gradient for the network with weight sharing. 
 
 An example with code will follow soon.
 
