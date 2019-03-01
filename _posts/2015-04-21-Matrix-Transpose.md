@@ -55,7 +55,7 @@ $$
   \end{array}\right.
 $$
 
-We refer to a \textbf{view} as the perspective of data storage: a row view describes the matrix as the vertical concatenation of the subsets of rows stored on each rank. The column view represents the horizontal concatenation of subsets of columns on each rank. It follows that $(M \| N)^T = (N^T // M^T)$ and $(M // N)^T = (N^T \| M^T)$, as both concatenations provide the same dataset described by two alternative views, and the transpose of a concatenated dataset yields the orthogonally-concatenated dataset. 
+We refer to a **view** as the perspective of data storage: a row view describes the matrix as the vertical concatenation of the subsets of rows stored on each rank. The column view represents the horizontal concatenation of subsets of columns on each rank. It follows that $(M \| N)^T = (N^T // M^T)$ and $(M // N)^T = (N^T \| M^T)$, as both concatenations provide the same dataset described by two alternative views, and the transpose of a concatenated dataset yields the orthogonally-concatenated dataset. 
 
 The **local transpose** of a matrix $M$ represented by the concatenation of $R$ submatrices in either view, is defined by the concatenation of the transpose of the individual matrices in the orthogonal view:
 
@@ -69,7 +69,7 @@ $$
 
 It is relevant to emphasize that the operation yields a transposed version of the original rank matrices that formed the initial dataset, thus no communication between ranks is necessary as the data $M_r$ of every rank is locally transposed into $M^T_r$. Moreover, it is an involutory function as $(LocalTranspose \cdot LocalTranspose) (M) = M$. 
 
-The \textbf{view swap} of a distributed matrix that alternates between a data representation on a view and its orthogonal (from row- to column-accessible and vice-versa), while maintaining the same matrix contents is defined by:
+The **view swap** of a distributed matrix that alternates between a data representation on a view and its orthogonal (from row- to column-accessible and vice-versa), while maintaining the same matrix contents is defined by:
 
 $$
 ViewSwap(M)_{i j} =\left\{
