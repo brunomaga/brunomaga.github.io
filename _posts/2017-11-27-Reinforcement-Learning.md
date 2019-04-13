@@ -17,7 +17,7 @@ Reinforcement learning is a field of machine learning that --- roughly speaking 
 
 <small> This section is heavily inspired in lecture notes from Prof. Gerstner at EPFL and the wikipedia entry to Restricted Boltzmann Machine</small> 
 
-A Restricted Boltzmann Machine (RBM) is a neural network that learns a probability distribution over a set of inputs. RBMs are a special case of [Boltzmann Machines](https://en.wikipedia.org/wiki/Boltzmann_machine) a.k.a. a stochastic [Hopfield network](https://en.wikipedia.org/wiki/Hopfield_network) with hidden units. A BM is a network of neurons with an energy define for the overall network, producing binary results. Contrarily to Hopfield networks, BMs have stochastic neurons. A RBM is a BM whose neurons must form a [Bipartite Graph](https://en.wikipedia.org/wiki/Bipartite_graph): 
+A Restricted Boltzmann Machine (RBM) is a neural network that learns a probability distribution over a set of inputs. RBMs are a special case of [Boltzmann Machines](https://en.wikipedia.org/wiki/Boltzmann_machine) a.k.a. a stochastic [Hopfield network](https://en.wikipedia.org/wiki/Hopfield_network) with hidden units. A BM is a network of neurons with an energy defined/ for the overall network, producing binary results. Contrarily to Hopfield networks, BMs have stochastic neurons. A RBM is a BM whose neurons must form a [Bipartite Graph](https://en.wikipedia.org/wiki/Bipartite_graph): 
 
 <p align="center">
 <img width="20%" height="20%" src="/assets/2017-Reinforcement-Learning/Restricted_Boltzmann_machine.png"><br/>
@@ -36,7 +36,7 @@ $$
 P(x,x) = \frac{1}{Z} exp(-E(x,y) )
 $$
 
-where $Z$ is the [partition function](https://en.wikipedia.org/wiki/Partition_function_(mathematics)). It is compute as the sum of $$ exp(-E(x,y) ) $$ over all possible configurations, i.e. is a normalizing term that ensure that the probability distribution sums to 1. Similarly, the [marginal probability](https://en.wikipedia.org/wiki/Marginal_distribution) of an input vector of booleans is:
+where $Z$ is the [partition function](https://en.wikipedia.org/wiki/Partition_function_(mathematics)). It is computed as the sum of $$ exp(-E(x,y) ) $$ over all possible configurations, i.e. is a normalizing term that ensure that the probability distribution sums to 1. Similarly, the [marginal probability](https://en.wikipedia.org/wiki/Marginal_distribution) of an input vector of booleans is:
 
 $$
 P(x) = \frac{1}{Z} \sum_y exp(-E(x,y) )
@@ -88,7 +88,7 @@ $$
 
 <p align="center">
 <img width="20%" height="20%" src="/assets/2017-Reinforcement-Learning/q-value.png"><br/>
-<small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
+<small>source: Lecture notes, Unsupervised and Reinf. Learning, M.O. Gewaltig, EPFL</small>
 </p>
 
 At every iteration, we take the action that is more *promising*, i.e. with the highest expected reward. We choose an action $$ a^{\star} $$ such that $$ Q(s,a^{\star}) \gt Q(s,a_j) $$ for all actions $a_j \in A$. The iterative update of Q values is provided by the rule
@@ -105,16 +105,16 @@ $$
 \label{sarsa}
 $$
 
-where $s'$ and $a'$ and the state and action at the next step possibly taken.
+where $s'$ and $a'$ are the state and action at the next step possibly taken.
 
 <p align="center">
 <img width="20%" height="20%" src="/assets/2017-Reinforcement-Learning/q-value-2.png"><br/>
-<small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
+<small>source: Lecture notes, Unsupervised and Reinf. Learning, M.O. Gewaltig, EPFL</small>
 </p>
 
 ##### Theorem - Convergence in expectation of SARSA
 
-If the mean update has converged ( $ < \Delta Q (s,a) > =0 > $) with the update rule \ref{sarsa}, then the resulting Q-values solve the [Bellman equation](https://en.wikipedia.org/wiki/Bellman_equation), a necessary condition for optimality associated with the mathematical optimization method known as dynamic programming:
+If the mean update has converged ( $ < \Delta Q (s,a) > =0 > $) with the update rule \ref{sarsa}, then the resulting Q-values solve the [Bellman equation](https://en.wikipedia.org/wiki/Bellman_equation), a necessary condition for optimality, associated with the mathematical optimization method known as dynamic programming:
 
 $$
 Q (s,a) =  \sum_{s'} P^a_{s \rightarrow s'} [ R^a_{s \rightarrow s'} + \gamma \sum_{a'} \pi (s',a') Q(s',a') ]
@@ -123,16 +123,16 @@ $$
 where $\pi$ is the policy chosen --- covered next. I'll skip the details. A thorough cover on optimality in policies is provided by <a href="/assets/2017-Reinforcement-Learning/Ag4-4x.pdf">Ag4-4x.pdf</a>.
 
 To summarize, the SARSA algorithm follows as:
-- Being in stat $s$ choose action $a$ according to the policy $\pi$;
+- Begin in state $s$ and choose action $a$ according to the policy $\pi$;
 - Observe reward $r$ and next state $s'$;
 - Choose action $a'$ in state $s'$ according to policy;
 
 ##### Q-Learning
 
 Another method for TD learning is the Q-learning. It's very simillar to the SARSA method described:
-- SARSA, an on-policy method: $$ \Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma Q(s',a') ] e_{aij} $$
+- SARSA, an ON-policy method: $$ \Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma Q(s',a') ] e_{aij} $$
   - The same policy is used to select the next action and to update the Q-values
-- Q-Learning, an off-policy method: $$ \Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma \text{ max } Q(s',a') ] e_{aij} $$
+- Q-Learning, an OFF-policy method: $$ \Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma \text{ max } Q(s',a') ] e_{aij} $$
   - the action is selected using policy A e.g. soft-max;
   - the Q-values are updated using policy C e.g. greedy;
 
@@ -207,7 +207,7 @@ where $\phi$ is the basis function ($s_j$ represents the centers of the BF shape
 
 <p align="center">
 <img width="30%" height="30%" src="/assets/2017-Reinforcement-Learning/continuous_space.png"><br/>
-<small>source: Lecture notes, Unsupervised and Reing. Learning, M.O. Gewaltig, EPFL</small>
+<small>source: Lecture notes, Unsupervised and Reinf. Learning, M.O. Gewaltig, EPFL</small>
 </p>
 
 
