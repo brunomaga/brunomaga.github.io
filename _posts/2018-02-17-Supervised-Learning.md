@@ -57,7 +57,7 @@ The quality of the approximation is provided by the **loss** or **cost function*
 \end{cases}
 $$
   - convex, differentiable, and also robust to outliers. The hard bit is to set $\delta$
-- Tukey’s bisquare loss (de⇢fined in terms of the gradient): $$ \frac{\partial L}{\partial e} =
+- Tukey’s bisquare loss (defined in terms of the gradient): $$ \frac{\partial L}{\partial e} =
 \begin{cases}
     e (1-\frac{e^2}{\delta^2})^2 & \text{, if } \mid e \mid \le \delta\\
     0 & \text{, if } \mid e \mid \gt \delta\\
@@ -73,7 +73,7 @@ Given a cost function $L(w)$ we want to find the weights that mimimizes the cost
 - Grid Search (brute-force);
 - Least Squares: analytical solution for linear MSE ( $$ \triangledown L(w) = 0 $$ is a system of D equations ); 
 - Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L (w^t) $$, for step size $\gamma$, and gradient $$ \triangledown L (w) = [ \frac{\partial L(w)}{\partial w_1}, ... , \frac{\partial L(w)}{\partial w_D}  ]^T $$;
-- Stochastic Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L_n (w^t) $$, for a random choice of inputs $n$. Computationally cheap but unbiased estimate of gradient;
+- Stochastic Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L_n (w^t) $$, for a random choice of an inputs $n$. Computationally cheap but unbiased estimate of gradient;
 - Mini-batch SGD: $$ w^{t+1} = w^{t} - \gamma \frac{1}{\mid B \mid} \sum_{n \in B} \triangledown L_n (w^t) $$, for a random subset $ B \subseteq [N] $. For each sample $n$ , we compute the gradient at the same current point $w^{(t)}$;
 
 With some variants:
@@ -154,7 +154,7 @@ $$
 
 ##### Overfitting and Underfitting
 
-Overfitting is fitting the noise in ad- dition to the signal. Underfitting is not fitting the signal well. To reduce overfitting, increasing data *may help*. 
+Overfitting is fitting the noise in addition to the signal. Underfitting is not fitting the signal well. To reduce overfitting, increasing data *may help*. 
 
 <p align="center">
 <img width="35%" height="35%" src="/assets/2018-Supervised-Learning/overfitting.png"><br/>
@@ -183,7 +183,7 @@ Techniques:
 - [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_estimator); 
 - [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a (deep) [neural network]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) and retrieving the final model as an average of models (see separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) in Deep Neural Networks for details.
 
-As a final note, Linear models can be made more powerful, by constructing better fea- tures for your input data. One way is to use nonlinear **basis functions** $$ \phi(x_j) $$, which are nonlinear transformations applied to input variables $x_j$.
+As a final note, Linear models can be made more powerful, by constructing better features for your input data. One way is to use nonlinear **basis functions** $$ \phi(x_j) $$, which are nonlinear transformations applied to input variables $x_j$.
 
 [Tensorflow playground](https://playground.tensorflow.org) is a very useful resource to visualize the effects of regularization.
 

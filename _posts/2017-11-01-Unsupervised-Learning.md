@@ -234,7 +234,7 @@ On a 2D universe, one can imagine a 3-cluster algorithm to follow as:
 <br/><small>source: wikipedia</small>
 </p>
 
-The previous update function is a **batch learning rule**, and it updates the weight based on a set (*batch*) of inputs. The converse rule is called the **online update** rule and updates the weights at the introduction of every new input:
+The previous update function is a **batch learning rule**, as it updates the weight based on a set (*batch*) of inputs. The converse rule is called the **online update** rule and updates the weights at the introduction of every new input:
 
 $$
 \Delta w_i = \eta (x_u - w_i)
@@ -243,8 +243,9 @@ $$
 which is the Oja's Hebbian learning rule.
 
 K-means has 2 main problems:
-- forces orces the clusters to be spherical, but sometimes it is desirable to have elliptical clusters;
+- forces the clusters to be spherical, but sometimes it is desirable to have elliptical clusters;
 - each element can only belong to a cluster, but this may not always be a good choice;
+
 Both problems are fixed with Gaussian [Mixture Models](https://en.wikipedia.org/wiki/Mixture_model). a mixture model corresponds to the mixture distribution that represents the probability distribution of observations in the overall population. 
 
 <div class="alert alert-warning" role="alert">
@@ -281,12 +282,12 @@ $$
 
 - repeat until stabilization: either by reaching the maximum iterations count, or difference in weights below a given threshold. 
 
-I found a very nice video demonstrating the iterative execution of the Kohonen map [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs). 
+I found a very nice video demonstrating an iterative execution of the Kohonen map [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs). 
 
 A good example is the detection of hand-written digits on a trained dataset of the [MNIST database](http://yann.lecun.com/exdb/mnist/). For simplicity, we will work only with digits from 0 to 9. 
 Each digit is a 28x28 (=784) pixel array, represented as data point on a 784-d dataspace. Each pixels is monochromatic, thus each dimension is limited to values between 0 and 256. Our task is to, given a database of 5000 handwritten digits, find the best 6x6 SOM that best represents 4 numbers from 0-9. We will study how choosing the right neighborhood width and learning rate affect the performance of the Kohonen map.
 
-The input dataset and the `python` implementation are available in <a href="/assets/2017-Unsupervised-Learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to find to fine tune the neighboring and learning rate $\eta$ parameters. A good solution would give you some visual perception of the numbers being identified (in this case 0, 1, 2 and 3). Here I discuss three possible outputs:
+The input dataset and the `python` implementation are available in <a href="/assets/2017-Unsupervised-Learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to fine-tune the neighboring and learning rate $\eta$ parameters. A good solution would give you some visual perception of the numbers being identified (in this case 0, 1, 2 and 3). Here I discuss three possible outputs:
 - left: a nicely tuned SOM, where each quadrant of neurons represents a digit;
 - center: a SOM with a high learning rate. The large step size makes neurons *step* for too long distances during trainig,  leading to a mixing of digits on proximal neurons and possibly a  *tangled* SOM web;
 - right: a SOM with a high neighborhood width. The high width causes all neurons to behave almost synchronously, due tot he very wide range of the udpate function. This leads to very similar outputs per neuron;
@@ -307,7 +308,7 @@ As a final remark, distance-based methods struggle with high dimensionality data
 
 ### Receptive fields in the Visual Cortex
 
-Neurons in the receptive fields in the visual cortex are [Gabor filters](https://en.wikipedia.org/wiki/Gabor_filter). In practice, it means that the output of a neuron depends on the texture being analysed --- e.g. a neuron fine-tuned for a recognizing lines displayed at 90 degrees, will fare less often for lines at zero degrees, with a spike rate increasing as the angle approaches 90 degrees. Besides the orientation sensitivy described, the same property is noticeable on colours, motion, forms, and so on.
+Neurons in the receptive fields in the visual cortex are [Gabor filters](https://en.wikipedia.org/wiki/Gabor_filter). In practice, it means that the output of a neuron depends on the texture being analysed --- e.g. a neuron fine-tuned for recognizing lines displayed at 90 degrees, will fire less often for lines at zero degrees, with a spike rate increasing as the angle approaches 90 degrees. Besides the orientation sensitivy described, the same property is noticeable on colours, motion, forms, and so on.
 A Gaussian function is typically used to model the spatially limited receptive field of a V1 cell, with its mean at the best tuned input propert (in this case, rotation).
 
 <div class="alert alert-warning" role="alert">
