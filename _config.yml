@@ -5,7 +5,7 @@ email: bruno@magalhaes.pro
 resume: /assets/cv_short.pdf
 google_scholar: https://scholar.google.ch/citations?user=pirWLLgAAAAJ
 description: >-
-  I'm an AI resident at Microsoft Research in Cambridge, UK. Prior to this, I finished a PhD Neuroscience at the EPFL in Switzerland -- researching large scale computer algorithms to map and simulate neural networks in the brain -- an MSc Advanced Computing from the Imperial College London, and I worked in London, Sao Paulo, New York and Slovenia. My fields of specialization are Parallel and Distributed Computing, Simulation and Machine Learning. I like to play waterpolo, travel and ski. To know more about me, read my <a href="assets/cv_short.pdf">resume</a>, <a href="https://scholar.google.ch/citations?user=pirWLLgAAAAJ">publications</a>, or send me an <a href="mailto:bruno@magalhaes.pro?subject=Hello">email</a>.
+  I'm an AI resident at Microsoft Research in Cambridge, UK. Prior to this, I finished a PhD Neuroscience at the EPFL in Switzerland (researching large scale computer algorithms to map and simulate neural networks in the brain), an MSc Advanced Computing from the Imperial College London, and I worked in London, Sao Paulo, New York and Slovenia. My fields of specialization are Parallel and Distributed Computing, Simulation and Machine Learning. I like to play waterpolo, travel and ski. To know more about me, read my <a href="assets/cv_short.pdf">resume</a>, <a href="https://scholar.google.ch/citations?user=pirWLLgAAAAJ">publications</a>, or send me an <a href="mailto:bruno@magalhaes.pro?subject=Hello">email</a>.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://brunomaga.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username:  ibrunomaga
