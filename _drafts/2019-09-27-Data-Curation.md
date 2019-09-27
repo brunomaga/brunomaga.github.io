@@ -1,0 +1,68 @@
+---
+layout: post
+title:  "[draft] Spatial Decomposition of Millions of Objects in Distributed Memory Space"
+date:   2015-12-01 12:01:42 +0100
+categories: [distributed algorithms, parallel algorithms]
+tags: [algorithms]
+---
+
+Imagine you have N objects placed in a tridimensional space and stored across a distributed network of C compute nodes. The problem is simple:
+- how to divide the universe in such a way that each compute node gets an equal number of objects (N/C)? and
+- how to ensure that objects of each compute node are as close as possible to each other? and
+- how to ensure that the regions of objects on each compute node overlap very little wither oter compute nodes' regions? 
+
+This is a very common problem set-up and a problemn of high importance in large-scale scientific problems. The main rationale is that a good spatial decomposition allows computations of proximal objects to be computed individually and in parallel by all compute nodes, and the neighbouring elements to be duplicated (cloned) among nodes.
+
+On a simpler 2D space, one can think of several *slicing* alternatives:
+
+<p align="center">
+<img src="/assets/2015-Slicing/mini-single-axis.png">
+<img src="/assets/2015-Slicing/mini-nug.png">
+<img src="/assets/2015-Slicing/mini-orb.png">
+<img src="/assets/2015-Slicing/mini-str.png">
+</p>
+
+A small analysis of efficiency: if you pick the slicing layout (1) then you would incur in a lot of duplication of objects, specially when ojects are long or if there is a high number of compute nodes. (2) works better by reducing cloning, yet it does not guarantee an accurate spatial decomposition. (3) and (4) are similar, but while one is a sequence of $$ log_2 C $$ recursive bisectional decomposition, the other is a 3-level recursive $$m*n*h=c$$ sub-sections decomposition algorithm. 
+
+The following table details the complexity of each algorithm (we assume sorting with average complexity $$ n log n$$:
+<p align="center"> <img width="50%" height="50%" src="/assets/2015-Slicing/table.png"></p>
+
+Accross all slicing layouts possible, the (3) is the most efficient and guarantees low data duplication, allows for accurate slicing, and requires only D (dimensions) recursive iteratione, independently of the number of compute nodes (contrarily to (4)). However, its implementation on a distributed memory environment is not trivial. Possible options are:
+- A histogram/binning slicing algorithm that clusters elements in spacial bins and uses the sum of elements per bin as a metric;
+- A sampling method that performs serial slicing in one compute node, and approximates slice coordinated based on a portion of the data; 
+
+Can we do better?
+ 
+A technique I published of the Proceedings of the International SuperComputing 2015 is called the *Sort-Balance-Split* and is a multi-dimensional tree-recursive algorithm of spatial division. The algorithm follows three steps:
+- The sort step performs a distributed sorting operation of elements on a given dimension;
+  - The distributed sorting algorithm was covered in depth in my [previous post][sorting-post];
+- The balance step equalized the elements on each compute node in such was the it is still sorted and each compute node has N/C elements;
+<p align="center"> <img width="50%" height="50%" src="/assets/2015-Slicing/balance.png"></p>
+- The split creates sub-networks from the main network, and performs the same algorithm on the next dimension, on each sub-compute node.
+<p align="center"> <img width="50%" height="50%" src="/assets/2015-Slicing/split.png"></p>
+
+This method has several advantages compared to existing approximated methods while delivering an efficient execution, due to (1) a fixed complexity due to the number of communication steps being fixed for any network and input size; and (2) accurate decomposition.
+
+A sample application of the algorithm on a 2D universe of 16 shapes distributed across 4 compute nodes (ranks) is presented below:
+<p align="center"><img width="60%" height="60%" src="/assets/2015-Slicing/STR_steps.png"></p>
+
+From left to right:
+1. Initial data layout;
+2. The inital sorting operation will sort all elements on the first (X) dimension, without caring about the other coordinates;
+   - Data is load balanced on the X axis, so that each rank holds 4 shapes;
+3. A network split divides the initial problem of 16 shapes across 4 nodes on a network, into 8 shapes on two networks of 2 nodes;
+4. Each network performs a distributed sort of its objects on the next axis (Y), and balances the workload;
+5. Final data layout; 
+
+Here's a more detailed example (skip it if you've already understood):
+<p align="center"><img width="40%" height="40%" src="/assets/2015-Slicing/SBS.png"></p>
+ 
+
+And here is an application of a distributed slicing to the N-particles problem, enabling one to simulate cosmic activity such as the Big Bang, and several times winner of the Gordon Bell Prize for Scientific Computing. And an application to a small network of neurons. Enjoy the view.
+<p align="center"> <img width="30%" height="30%" src="/assets/2015-Slicing/n_body_slicing.png"> <span style="display:inline-block; width:1cm;"></span>  <img width="30%" height="30%" src="/assets/2015-Slicing/Screenshot5.png"> </p>
+
+For limitations, benchmarks and a more thorough analysis of the problem, check the original [publication][slicing-ref].
+For the `C++` code implementation, download <a href="/assets/2015-Slicing/slicing.tar.gz">slicing.tar.gz</a>.
+
+[slicing-ref]: https://link.springer.com/chapter/10.1007/978-3-319-41321-1_5
+[sorting-post]: {{ site.baseurl }}{% post_url 2014-06-21-Distributed-Sort %}
