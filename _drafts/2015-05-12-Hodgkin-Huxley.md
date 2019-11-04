@@ -64,5 +64,3 @@ And here is an application of a distributed slicing to the N-particles problem, 
 For limitations, benchmarks and a more thorough analysis of the problem, check the original [publication][slicing-ref].
 For the `C++` code implementation, download <a href="/assets/2015-Slicing/slicing.tar.gz">slicing.tar.gz</a>.
 
-[slicing-ref]: https://link.springer.com/chapter/10.1007/978-3-319-41321-1_5
-[sorting-post]: {{ site.baseurl }}{% post_url 2014-06-21-Distributed-Sort %}
