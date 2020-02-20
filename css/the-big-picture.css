@@ -13,12 +13,37 @@ body {
   -o-background-size: cover;
 }
 
+
+.bodypost {
+  background-color: rgba(255,255,255, 0.7);
+  /*background: url('http://placehold.it/1920x1080') no-repeat center center fixed;*/
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  background-size: cover;
+  -o-background-size: cover;
+}
+
+.jumbotronTransparentBackground {
+    background: none
+}
+
+.jumbotron {
+    padding-bottom: 20px;
+    display: inline-block;
+}
+
 .myTransparentBackground {
-  background-color: rgba(255,255,255, 0.5);
+  background-color: rgba(255,255,255, 0.8);
   color: inherit;
 }
 
 .myTransparentBackgroundLight {
-  background-color: rgba(255,255,255, 0.8);
+  background-color: rgba(255,255,255, 0.85);
   color: inherit;
 }
+
+.myTransparentBackgroundVeryLight {
+  background-color: rgba(255,255,255, 0.90);
+  color: inherit;
+}
+

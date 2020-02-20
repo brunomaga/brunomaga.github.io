@@ -2,6 +2,12 @@
 layout: default
 ---
 
+<!-- 4 lines common to all pages -->
+<main>
+<section>
+<div class="container">
+<div class="row">
+
 
 <div class="home">
 
@@ -15,7 +21,7 @@ layout: default
 
   <hr class="my-4">
   {%- if site.posts.size > 0 -%}
-    <h5>{{ page.list_title | default: "Notebook" }}</h5>
+    <h5>{{ page.list_title | default: "Posts" }}</h5>
     <ul class="list-unstyled">
       {%- for post in site.posts -%}
       <li>
@@ -56,3 +62,10 @@ layout: default
   {{ content }}
   </div>
 </div>
+
+
+<!-- 4 lines common to all pages -->
+</div>
+</div>
+</section>
+</main>
