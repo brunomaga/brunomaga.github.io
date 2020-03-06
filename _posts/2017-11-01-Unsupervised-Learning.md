@@ -1,14 +1,12 @@
 ---
 layout: post
-title:  "Unsupervised Learning: an overview of methods"
+title:  "Unsupervised Learning: an introduction"
 date:   2017-11-01 12:01:42 +0100
 categories: [machine learning, unsupervised learning]
 tags: [machinelearning]
 ---
 
-<div class="alert alert-primary" role="alert">
-Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of several unsupervised learning methods that I came across. Its content may not be entirely correct and is continuously updated.
-</div>
+Unsupervised Learning is the feld of Machine Learning dedicated to the methods of learning without supervision or reward signals. In practice, and contrarily to the fields of [Reinforcement Learning]({{ site.baseurl }}{% post_url 2017-11-27-Reinforcement-Learning %}) and  [Supervised Learning]({{ site.baseurl }}{% post_url  2018-02-17-Supervised-Learning %}), the data is the only information provided to the methods. However, methods are still very powerful and are commonly used for applications such as image compression, dimensionality reduction and classification. 
 
 ### Foreword: Hebbian Learning
 
@@ -174,12 +172,6 @@ Or... because the algorithm converges when $w \propto \Delta w$, and  $w$ and $-
 
 As a final remark, it is relevant to mention that *kurtosis is very weak with outliers because is a fourth order function*. An alternative often used method is the Neg-entropy, robust for outliers. I'll ommit it for brevity. If you're interested on details, check the [original lecture notes](https://www.slideshare.net/yokotatsuya/independent-component-analysis-11359849).
 
-### Singular Value Decomposition
-
-<div class="alert alert-warning" role="alert">
-I will write this section once I acquire a good grasp on the subject.
-</div>
-
 ### Competitive Learning and k-means
 
 Competitive Learning underlies the self organization of the brain. In practice, neural network wiring is adaptive, not fixed. And competition drives wiring across all brain systems (motor cortex, neocortex, etc.).
@@ -246,14 +238,11 @@ K-means has 2 main problems:
 - forces the clusters to be spherical, but sometimes it is desirable to have elliptical clusters;
 - each element can only belong to a cluster, but this may not always be a good choice;
 
-Both problems are fixed with Gaussian [Mixture Models](https://en.wikipedia.org/wiki/Mixture_model). a mixture model corresponds to the mixture distribution that represents the probability distribution of observations in the overall population. 
+Both problems can be fixed with Gaussian [Mixture Models](https://en.wikipedia.org/wiki/Mixture_model). A mixture model corresponds to the mixture distribution that represents the probability distribution of observations in the overall population.
 
 <div class="alert alert-warning" role="alert">
-I will omit the details as I plan to create a separate post on the topic of Mixture Models.
+I'll ommit the details on the topic of Gaussian Mixed models and try to write a post in the near future.
 </div>
-
-[comment]: <>
-[comment]: <> TODO: lectures weeks 8 and 9 in PCML
 
 ### Self-Organizing Maps and Kohonen Maps
 
@@ -305,13 +294,4 @@ For more examples, check the [wikipedia entry for Self Organizing maps](https://
 ##### The Curse of Dimensionality
 
 As a final remark, distance-based methods struggle with high dimensionality data. This is particularly relevant on Euclidian distances. This is due to a phenomen denominated the [Curse of Dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality) that states that the distance between any two given elements in a multidimensional space becomes similar as we increase the number of dimensions, deeming the distance metric almost irrelevant. I will not detail the soundness of the claim, but check this [blog post](https://towardsdatascience.com/that-cursing-dimensionality-ac317fb0fdcc) if you are interested in knowing the details.
-
-### Receptive fields in the Visual Cortex
-
-Neurons in the receptive fields in the visual cortex are [Gabor filters](https://en.wikipedia.org/wiki/Gabor_filter). In practice, it means that the output of a neuron depends on the texture being analysed --- e.g. a neuron fine-tuned for recognizing lines displayed at 90 degrees, will fire less often for lines at zero degrees, with a spike rate increasing as the angle approaches 90 degrees. Besides the orientation sensitivy described, the same property is noticeable on colours, motion, forms, and so on.
-A Gaussian function is typically used to model the spatially limited receptive field of a V1 cell, with its mean at the best tuned input propert (in this case, rotation).
-
-<div class="alert alert-warning" role="alert">
-The model of visual cortex (V1) neurons training is presented on detail <a href="http://fourier.eng.hmc.edu/e180/lectures/v1/node14.html"> here</a>. I will continue this section once I acquire a good grasp on the subject.
-</div>
 
