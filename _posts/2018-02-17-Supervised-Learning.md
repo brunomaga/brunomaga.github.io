@@ -1,15 +1,11 @@
 ---
 
 layout: post
-title:  "Supervised Learning: basic concepts and methods"
+title:  "Supervised Learning: an introduction"
 date:   2018-02-17
 categories: [machine learning, supervised learning]
 tags: [machinelearning]
 ---
-
-<div class="alert alert-primary" role="alert">
-This post is largely inspired by the lecture notes for Machine Learning, by M. E. Khan, M. Jaggi and R. Urbanke at EPFL. Its content is continuously updated.
-</div>
 
 Supervised Learning is the field of machine learning that learns through supervision, or in practice, learns with the help of an external agent (human or automatic) that provides the solution for a given training set, in order to *provide an approximator* for the mechanics that relates the given input to the outputs (labels). We present the basic contents in the following sections. Advanced topics will be covered in individual posts.
 
@@ -183,107 +179,10 @@ Techniques:
 - [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_estimator); 
 - [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a (deep) [neural network]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) and retrieving the final model as an average of models (see separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) in Deep Neural Networks for details.
 
-As a final note, Linear models can be made more powerful, by constructing better features for your input data. One way is to use nonlinear **basis functions** $$ \phi(x_j) $$, which are nonlinear transformations applied to input variables $x_j$.
-
-[Tensorflow playground](https://playground.tensorflow.org) is a very useful resource to visualize the effects of regularization.
-
-##### Cross-validation
-
-**K-fold cross-validation** allows us to efficiently compute the error and are a better alternative to random data splits. We randomly partition the data into $K$ groups. We train on $K − 1$ groups and test on the remaining group. We repeat this until we have tested on all $K$ sets. We then average the results.
-
-##### Classification
-
-A **classifier** will divide the input space into a collection of regions belonging to each class. The boundaries of these regions are called **decision boundaries**. The aim of the classification problem is to build a predictor based on a training set and apply it to predict on *new* data. 
-
-A common method is the **nearest neighbor**, assigning the label of the majority of the closest $k$ datapoints. A natural prediction for the *k-NN* is:
-
-$$
-f_{S_t,k} = \frac{1}{k} \sum_{n : x_n \in neighbors_{S_t},k(x)} y_n
-$$
-
-where $$ neighbors_{S_t},k(x) $$ is the set of $k$ input points in $S_t$ that are closest to $x$. The classification is performed by assigning the label with the most *votes* across the neighbors.
-Similarly to the unsupervised learning methods described [previously]({{ site.baseurl }}{% post_url 2017-11-01-Unsupervised-Learning %}), the kNN method struggles with high dimensionality. This relates to the side-length required to capture a fraction of the data. In the picture below, when dimensionality is 10, we need 80% of volume to reach 10% of data. 
-
-<p align="center">
-<img width="35%" height="35%" src="/assets/2018-Supervised-Learning/curse_dimensionality.png"><br/>
-<small>source: Machine Learning lecture notes, R Urbanke, EPFL</small>
-</p>
-
-##### Support Vector Machines
-
-The Support Vector Machine (SVM) is obtained by changing the loss function to Hinge, optimizing:
-
-$$
-min_w \sum_{n=1}^N [1 - y_n x_n^T w]_{+} + \frac{\lambda}{2} \| w \|^2
-$$
-
-where the **Hinge Loss** is defined by $$ [z]_{+} = max \{ 0, z \} $$
-
-<p align="center">
-<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/hinge_loss.png"><br/>
-<small>source: Machine Learning lecture notes, M Jaggi, EPFL</small>
-</p>
-
-SVM is a **maximum margin method**, it aims at maximizing the minimum distance between labels. Maximizing the margin seems good because points near the decision surface represent very uncertain classification decisions:
+As a final note, Linear models can be made more powerful, by constructing better features for your input data. One way is to use nonlinear **
 
 
-<p align="center">
-<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/svm.png"><br/>
-<small>source:  Introduction to Information Retrieval, Manning et al.,  Cambridge University Press. 2008</small>
-</p>
-
-The SVM is not differentiable. The concept of **duality** allows one to optimize $$ min_w L(w) $$, by creating a function $$ G(w,\alpha) $$ such that $$ L(w) = max_\alpha G(w,\alpha) $$ so that we can choose to optimize either of
-
-$$
-min_w max_\alpha G(w, \alpha) = max_\alpha min_w G(w,\alpha)
-$$ 
-
-In the SVM problem, $$ [z]_{+} = max \{ 0, z \} = max_\alpha \text{ } \alpha \text{ } z$$ where $$ \alpha \in [0,1] $$, so we can rewite the problem as:
-
-$$
-min_w max_{\alpha \in [0,1]^N} \sum_{n=1}^N \alpha [1 - y_n x_n^T w]_{+} + \frac{\lambda}{2} \| w \|^2
-$$
-
-which is differentiable, convex in $w$ and **concave** in $\alpha$ (a **concave** or **concave downwards** function is the negative of a convex function).
-
-<p align="center">
-<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/svm_convex_concave.png"><br/>
-<small>source: Machine Learning lecture notes (annotated), M Jaggi, EPFL</small>
-</p>
-
-Finally:
-
-$$
-\triangledown_w G(w,\alpha) = - \sum_{n=1}^N \alpha_n y_n x_n + \lambda w
-$$
-
-where we can find $a^\star \in R^N$ maximizing $g(n)$ using coordinate descent.
-
-The **representer theorem** generalizes this problem: for a $$ w^\star $$ minimizing the following function:
-
-$$
-min_w \sum_{n=1}^N L_n (y_n, x_n^Tw) + \frac{\lambda}{2} \| w \|^2
-$$
-
-there exists $$ \alpha^\star $$ such that $$ w^\star = X \alpha^\star $$.
-
-##### Kernel Function
-
-A kernel is defined by $$ K = X^TX $$, or $$ K = \phi^T \phi $$ for basis functions. A big advantage of using kernels is that we do not need to specify $$ \phi(X) $$ as we can work with $K$ directly.
-
-If $$ K_{ij} = k(x_i, x_j) $$, then $$ k(x,x') = \phi(x)^T \phi(x') $$. Examples of kernels:
-- linear kernel: $$  k(x,x') = x^Tx' $$
-- polynomial kernel: $$ k(x,x') = x^2(x')^2 $$
-- Radial Basis Function (RBF) kernel: $$ k(x,x') = exp [-\frac{1}{2} (x-x')^T(x-x') ] $$
-
-How can we ensure that there exists a $$\phi$$ corresponding to a given kernnel $K$?  The answer is: as long as the kernel satisfies certain properties:
-- A kernel must be an inner product in some feature space. To ensure it, these properties must hold:
-  - $K$ should be symmetric: $$ k(x,x') = k(x',x) $$
-  - $K$ should be positive semi-definite. 
-
-<div class="alert alert-warning" role="alert">
-I did not come across any exercise using kernels, so I will continue this topic once I have a better grasp on the subject
-</div>
+A good application of a kernal is to *help* our regression model by adapting the input space to the mode. An example is 
 
 ##### Matrix Factorization
 
@@ -354,9 +253,9 @@ We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given 
 
 To finalize, the article [Matrix Factorization Techniques for Recommender Systems](/assets/2018-Supervised-Learning/Recommender-Systems-Netflix.pdf) might be of your interest. 
 
-##### Text Representation
+##### Text Embedding
 
-Several techniques to represent text:
+Most (or all!) learning methods require some kind of numerical representation of the input space. The main question is then: how can a model learn from text? The answer is simple: by **embedding** our textual representation into a fixed-size numerical vector space, and use the new vector and input and output of our model. For the curious ones, here are some embedding techniques:
 - [Bag of words](https://en.wikipedia.org/wiki/Bag-of-words_model). Each word is represented by an index in a vocabulary of words.
 - The Co-occurence Matrix, where $n_{ij}$ holds contexts where word $i$ is used along word $j$;
   - We can use the previous method of matrix factorization to predict words co-occurence;
@@ -366,11 +265,7 @@ Several techniques to represent text:
   - Another good resource [here](https://towardsdatascience.com/emnlp-what-is-glove-part-i-3b6ce6a7f970);
 - Skip-Gram model: we train a neural network with pairs of words. We the utilized the network to retrieve the probability of every word in the dictionary to appear near the input word;
   - Another good resource [here](https://towardsdatascience.com/word2vec-skip-gram-model-part-1-intuition-78614e4d6e0b)
-- [FastText (from facebook)](https://fasttext.cc/): no idea!
-
-<div class="alert alert-warning" role="alert">
-I'll ommit details as I plan to write an entire post dedicated to text representation, Natural Language Processing and context retrieving.
-</div>
+- [FastText (from facebook)](https://fasttext.cc/): Still need to get a grasp on this one!
 
 ##### Binning
 
@@ -388,8 +283,3 @@ This approach obviously falls short for high input dimensionality. For such use 
 
 Moved to a separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}).
 
-##### Graphical Models, Bayesian Networks and Belief Propagation
-
-<div class="alert alert-warning" role="alert">
-25.02.2019: information will be added soon.
-</div>

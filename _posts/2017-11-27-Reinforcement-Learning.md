@@ -1,17 +1,13 @@
 ---
 
 layout: post
-title:  "Reinforcement Learning: an overview of methods"
+title:  "Reinforcement Learning: an introduction"
 date:   2017-11-27
 categories: [machine learning, reinforcement learning]
 tags: [machinelearning]
 ---
 
-<div class="alert alert-primary" role="alert">
-Unlike most posts that provide a thorough study on a particular subject, this post provides a very high level description of several reinforcement learning methods that I came across. Its content may not be entirely correct and is continuously updated.
-</div>
-
-Reinforcement learning is a field of machine learning that --- roughly speaking --- encompasses learning by reward or prediction of reward. It is a topic of high interest as it's claimed to best represent human behaviour, mostly driven by stimuli. We eat because we are hungry, and after eating we are satisfied (positive reward). We feel pain as a negative *reward* of hurting our bodies, and we learn from previous painful experiences, to avoid repetition. We gamble because we predict a possible positive reward from a lucky play (the dopamine effect on the brain). This phenomenon has been first studied by [Pavlov in 1927](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4116985/), and the list of examples is endless. Here I describe some methods of RL that may be useful.
+Reinforcement learning is the field of machine learning that --- roughly speaking --- encompasses learning by reward or prediction of reward. It is a topic of high interest as it's claimed to best represent human behaviour, mostly driven by stimuli. We eat because we are hungry, and after eating we are satisfied (positive reward). We feel pain as a negative *reward* of hurting our bodies, and we learn from previous painful experiences, to avoid repetition. We gamble because we predict a possible positive reward from a lucky play (the dopamine effect on the brain). This phenomenon has been first studied by [Pavlov in 1927](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4116985/), and the list of examples is endless. Here I describe some methods of RL that may be useful.
 
 ### Restricted Boltzmann Machines
 
@@ -246,5 +242,5 @@ $$
 which is a fast approximation of the policy gradient.
 
 <div class="alert alert-warning" role="alert">
-I am looking for a nice application of policy gradient, with coding examples. I will try to finish this section in the near future.
+I am looking for a nice application of policy gradient, with coding examples. I will try to finalize this section in the near future.
 </div>
