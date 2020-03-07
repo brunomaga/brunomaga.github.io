@@ -1,12 +1,19 @@
 ---
 layout: post
 title:  "Bayesian Regression"
-date:   2019-10-12 12:01:42 +0100
+date:   2019-10-12 01:00:00 +0100
 categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-Bayesian methods allows us to perform modelling of an input to an output by providing a measure of uncertainty or "how sure we are", based on the seen data. Take the following example of few observations of $x$ in a linear space, plotted in pink, with a yellow line represeting a linear regression of the data:
+Bayesian methods allows us to perform modelling of an input to an output by providing a measure of uncertainty or "how sure we are", based on the seen data. Unlike most *frequentist* methods commonly used, where the outpt of the method is a set of best fit parameters (e.g. the values of the weight on linear regression), the output of a Bayesian regression is a probability distribution of each model parameter, called the *posterior distribution*. 
+Unlike most *frequentist* methods commonly used, where the outpt of the method is a set of best fit parameters (e.g. the values of the weight on linear regression), the output of a Bayesian regression is a probability distribution of each model parameter, called the *posterior distribution*. 
+
+For the sake of comparison, take the example of the simple linear regression $y = mx + b$. On the frequentist approach, one tries to find the constant that define the slope $m$ and bias $b$ values, with $m \in \mathbb{R}$ and $b \in \mathbb{R}$, using optimization methods. On the other hand, the Bayesian approach would also compute $y = mx + b$, however, $b$ and $m$ are not fixed values but drawn from probabilities that we *tune* during training. As an example, we can assume as prior knowledge that $m$ and $b$ are independent and and normally distributed, therefore $b \thicksim \mathbb{N}(\mu, \sigma^2)$ and $w \thicksim \mathbb{N}(\mu, \sigma^2)$, and the parameters to be learnt would then be all $\mu$ and $\sigma$. Additionally, we can also add the model of noise (or inverse precision) constant $\varepsilon$ that models as well *how noisy* our data may be, by computing $y = mx + b + \varepsilon$, with $\varepsilon \thicksim \mathbb{N}(0, \sigma^2)$.
+ 
+Another benefit of Bayesian is the possibility of **online learning**, TODO
+
+Take the following example of few observations of $x$ in a linear space, plotted in pink, with a yellow line represeting a linear regression of the data:
   
 <p align="center">
 <img width="40%" height="40%" src="/assets/2019-Bayesian-Regression/linear_bayesian_1.png">
@@ -20,17 +27,17 @@ The value of $x$ can be estimated by the value in the regression model represent
 
 In practice, Bayesian uses decision theory to *optimize the loss function*. That is possible because Bayesian gives us what we need to optimize the loss function: the *predictive distribution* of the output given the data i.e. $p( y \| x, D)$. 
 
-### Introduction
+In this post we will discuss how to perform Bayesian regression, with a particular emphasis on linear regression and normal distrutions.
 
-Unlike most *frequentist* methods commonly used, where the outpt of the method is a set of best fit parameters (e.g. the values of the weight on linear regression), the output of a Bayesian regression is a probability distribution of each parameter $\theta$, called the *posterior distribution*. 
+### Basic concepts
 
-From the field of probability, the *product rule* tells us that the *joint distribution* of $A$ and $B$ can be writted as the product of the distribution of $a$ and the conditional distribution of $B$ given a value of $A$, i.e: $P(A, B) = P(A) P(B\|A)$. By symmetry we have that $P(B,A) = P(B) P(A\|B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the *Bayes Theorem*:
+From the field of probability, the **product rule** tells us that the **joint distribution** of two given events $A$ and $B$ can be written as the product of the distribution of $a$ and the **conditional distribution** of $B$ given a value of $A$, i.e: $P(A, B) = P(A) P(B\|A)$. By symmetry we have that $P(B,A) = P(B) P(A\|B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
 
 \begin{equation}
 P (A\|B) = \frac{P(B\|A) P(A)}{P(B)} \propto P(B\|A) P(A)
 \end{equation}
 
-commonly read as "the *posterior* $P(A\| B)$ is proportional to the product of the *prior* $P(A)$ and the *likelihood* $P(B\|A)$" (not that we dropped the *normalizer* term $P(B)$ as it is constant.
+This equation is commonly read as "the **posterior** $P(A\| B)$ is proportional to the product of the **prior** $P(A)$ and the **likelihood** $P(B\|A)$" -- note that we dropped the **normalizer** term $P(B)$ as it is constant, making the left-hand term proportional to $P (A\|B)$.
  
 The posterior distribution describes how much the data has changed our *prior* beliefs. An important theoream called the *Bernstein-von Mises Theorem* states that:
 - for a sufficiently large sample size, the posterior distribution becomes independent of the prior (as long as the prior is neither 0 or 1)
