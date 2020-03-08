@@ -108,7 +108,7 @@ where $s'$ and $a'$ are the state and action at the next step possibly taken.
 <small>source: Lecture notes, Unsupervised and Reinf. Learning, M.O. Gewaltig, EPFL</small>
 </p>
 
-##### Theorem - Convergence in expectation of SARSA
+### Theorem - Convergence in expectation of SARSA
 
 If the mean update has converged ( $ < \Delta Q (s,a) > =0 > $) with the update rule \ref{sarsa}, then the resulting Q-values solve the [Bellman equation](https://en.wikipedia.org/wiki/Bellman_equation), a necessary condition for optimality, associated with the mathematical optimization method known as dynamic programming:
 
@@ -123,7 +123,7 @@ To summarize, the SARSA algorithm follows as:
 - Observe reward $r$ and next state $s'$;
 - Choose action $a'$ in state $s'$ according to policy;
 
-##### Q-Learning
+### Q-Learning
 
 Another method for TD learning is the Q-learning. It's very simillar to the SARSA method described:
 - SARSA, an ON-policy method: $$ \Delta Q(s,a) = \eta [ r - Q(s,a)  - \gamma Q(s',a') ] e_{aij} $$
@@ -132,7 +132,7 @@ Another method for TD learning is the Q-learning. It's very simillar to the SARS
   - the action is selected using policy A e.g. soft-max;
   - the Q-values are updated using policy C e.g. greedy;
 
-##### Eligibility Trace
+### Eligibility Trace
 
 A third term called the **eligibility trace** can be added to the model. An eligibility trace is a temporary record of the occurrence of an event, such as the visiting of a state or the taking of an action. The trace marks the memory parameters associated with the event as eligible for undergoing learning changes. In practice, it's a decay term on the expected reward of each state, based on the number of steps taken from the actual step to the one where the eligibility trace is computed from. This leads to the updated formulation \ref{sarsa}:
 
@@ -160,7 +160,7 @@ In practice, the eligibility decays the expected reward with a factor $\lambda$ 
 <small>source: Unsupervised and Reinforcement Learning lecture notes, MO Gewaltig, EPFL</small>
 </p>
 
-##### Policies
+### Policies
 
 Due to the existance of an eligibility trace, it's easy to see that once a first path is successfully taken to the state of reward, it will always be followed if we simply follow the history of steps with maximum reward. To overcome this, the problem of **exploration vs exploitation** of space relates how much a model sticks to the previous state analysis versus how much he's allowed to deviate and try new paths. Among several possible **policies**, common approaches are:
 - greedy strategy: always take action $$ a^\star $$ such that $$ Q(s, a^\star) = Q(s,a_j) $$;
@@ -168,7 +168,7 @@ Due to the existance of an eligibility trace, it's easy to see that once a first
 - [Softmax strategy](https://www.sciencedirect.com/science/article/pii/S0925231217310974): see [here](https://medium.com/emergent-future/simple-reinforcement-learning-with-tensorflow-part-7-action-selection-strategies-for-exploration-d3a97b7cceaf)
 - Optimistic greedy: initializes the estimated reward for each action to a high value, in order to prevent locking to a sub-optimal action;
 
-##### Examples
+### Examples
 
 Take an extended version of the navigation problem mentioned above. We plan to probam a mouse in a dark room:
 - The room is made of 6x6 tiles (possible states);
@@ -191,7 +191,7 @@ A more sophisticated example of TD-learning was provided by Gerry Tesauro for th
 <img width="30%" height="30%" src="/assets/2017-Reinforcement-Learning/gammon.png">
 </p>       
 
-##### Continuous State spaces
+### Continuous State spaces
 
 Notice that the list of states $S$ described so far are represented on a discrete dataset. To properly represent a continuous space, we alter the state-action value function to 
 
@@ -207,7 +207,7 @@ where $\phi$ is the basis function ($s_j$ represents the centers of the BF shape
 </p>
 
 
-##### Limitations
+### Limitations
 
 A major limitation of the simple TD-learning methods we presented so far is that it requires memory to store the Q values for all combinations of states and actions. Moreover, it is a linear function approximation, therefore not commonly used. However, it is relevant to mention that its application with multiple neuron layer architectures provide an approximation for non-linear functions, such as the TD-gammon examples mentioned previously, and the deeply-reinforced  (deep Q-learning) learning model presented by [Google Deepmind ATARI player](https://www.nature.com/articles/nature14236) ( [pdf](/assets/2017-Reinforcement-Learning/MnihEtAlHassibis15NatureControlDeepRL.pdf) ). 
 

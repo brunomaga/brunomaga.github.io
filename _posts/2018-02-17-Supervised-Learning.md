@@ -9,7 +9,7 @@ tags: [machinelearning]
 
 Supervised Learning is the field of machine learning that learns through supervision, or in practice, learns with the help of an external agent (human or automatic) that provides the solution for a given training set, in order to *provide an approximator* for the mechanics that relates the given input to the outputs (labels). We present the basic contents in the following sections. Advanced topics will be covered in individual posts.
 
-##### Regression
+### Regression
 
 Regression relates an input variable to an output, to either predict new outputs, or understand the effect of the input in the output. A regression dataset consists of a set of pairs $(x_n, y_n)$ of size $N$ with input $x_n$ and output/label $y_n$. For a new input $x_n$, the goal of regression is to find $f$ such that $$ y_n \approx f(x_n) $$. It does so by finding **weights** $w$ that approximate:
 - linear regression: $$ y_n \approx f(x_n) = w_0 + w_1 x_{n1} $$
@@ -18,7 +18,7 @@ Regression relates an input variable to an output, to either predict new outputs
 
 If $$ D \gt N $$ is called the problem is [under-determined]().
 
-##### Convexity
+### Convexity
 
 A function is **convex** if a line joining two points never intersects with the function anywhere else, ie:
 
@@ -41,7 +41,7 @@ A set $C$ is convex the line segment between any two points of $C$ lies in $C$, 
 
 Intersections of convex sets are convex. 
 
-##### Loss
+### Loss
 
 The quality of the approximation is provided by the **loss** or **cost function**. Examples:
 - Mean Square Error: $$ MSE(w) = \frac{1}{N} \sum_{n=1}^N [ y_n - f(x_n)]^2 $$ , large errors have relatively greater influence, so it is not good for outliers;
@@ -63,7 +63,7 @@ $$
 
 For personal amusement, in this [website](https://lossfunctions.tumblr.com/) we find a funny compilation of loss functions gone *wrong*.
 
-##### Optimization
+### Optimization
 
 Given a cost function $L(w)$ we want to find the weights that mimimizes the cost, via:
 - Grid Search (brute-force);
@@ -119,7 +119,7 @@ Finally, another method is the [**coordinate descent**](https://en.wikipedia.org
 
 The main advantage is that it is extremely simple to implement and doesn’t require any knowledge of the derivative of the function. It’s really useful for extremely complicated functions or functions whose derivatives are far more expensive to compute than the function itself. However, due to its iterative nature, it's not a good candidate for parallelism. Another issue is that it has a a non-smooth multivariable function, thus it may be stuck in non-stationary point if the level curves of a function are not smooth (source: [wikipedia](https://en.wikipedia.org/wiki/Coordinate_descent#Limitations)).
 
-##### Probability Distributions 
+### Probability Distributions 
 
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. Examples:
 - Gaussian: 
@@ -148,7 +148,7 @@ $$
 L_{lik}(w) \approx E_{p(x,y)} [ log p(y | x,w ) ]
 $$
 
-##### Overfitting and Underfitting
+### Overfitting and Underfitting
 
 Overfitting is fitting the noise in addition to the signal. Underfitting is not fitting the signal well. To reduce overfitting, increasing data *may help*. 
 
@@ -159,7 +159,7 @@ Overfitting is fitting the noise in addition to the signal. Underfitting is not 
 
 We can also use regularization, forcing the model to be not too complex.
 
-##### Regularization
+### Regularization
 
 Occam’s Razor: "Plurality is not to be posited without necessity" or *simple models are better. To simplify the model, we can add a regulatization term $\Omega$ to penalize complex models:
 
@@ -184,7 +184,7 @@ As a final note, Linear models can be made more powerful, by constructing better
 
 A good application of a kernal is to *help* our regression model by adapting the input space to the mode. An example is 
 
-##### Matrix Factorization
+### Matrix Factorization
 
 Matrix factorization can be used to discover underling latent factors and/or to predict missing values of the matrix. We aim to find $W$, $Z$ such that $$ W \approx WZ^T $$. I.e. we aim to predict $x_{dn}$, where $d$ is an element in $Z$, and $n$ is an element in $W$. For movie rating, $Z$ could be users, $W$ could be movies, and $x_{dn}$ the star rating.
 
@@ -253,7 +253,7 @@ We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given 
 
 To finalize, the article [Matrix Factorization Techniques for Recommender Systems](/assets/2018-Supervised-Learning/Recommender-Systems-Netflix.pdf) might be of your interest. 
 
-##### Text Embedding
+### Text Embedding
 
 Most (or all!) learning methods require some kind of numerical representation of the input space. The main question is then: how can a model learn from text? The answer is simple: by **embedding** our textual representation into a fixed-size numerical vector space, and use the new vector and input and output of our model. For the curious ones, here are some embedding techniques:
 - [Bag of words](https://en.wikipedia.org/wiki/Bag-of-words_model). Each word is represented by an index in a vocabulary of words.
@@ -267,7 +267,7 @@ Most (or all!) learning methods require some kind of numerical representation of
   - Another good resource [here](https://towardsdatascience.com/word2vec-skip-gram-model-part-1-intuition-78614e4d6e0b)
 - [FastText (from facebook)](https://fasttext.cc/): Still need to get a grasp on this one!
 
-##### Binning
+### Binning
 
 We have seen that simple linear classification schemes like logistic regression can work well but are limited. For some data representations that are non-linear, some classifiers (e.g. polynomial) may still be good, particularly when we know a priori which features are useful. A possible solution is to add as many features as possible i.e. add all polynomial terms up to some order, leading to overfitting.
 
@@ -279,7 +279,7 @@ Another possibility is to use **binning**, a technique for data preparation wher
 
 This approach obviously falls short for high input dimensionality. For such use cases, deep neural networks is the solution, as it provides a non-linear approximator.
 
-##### Deep Neural Networks
+### Deep Neural Networks
 
 Moved to a separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}).
 

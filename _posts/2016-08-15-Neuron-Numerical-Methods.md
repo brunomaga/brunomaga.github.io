@@ -246,10 +246,6 @@ $$
 \label{eq_crank_nicholson_steps}
 $$
 
-<div class="alert alert-warning" role="alert">
- TODO: I need to confirm this very last step.
-</div>
-
 ##### Computational Implementation
 
 NEURON's workflow for the resolution based on interleaved time stepping is defined by a set of iterations that run sequentially for every computation and communication time step of duration $\Delta t$ and $\Delta t_{comm}$ respectively as:
@@ -275,7 +271,7 @@ NEURON's implementation of fixed time step integrates the equation over the $\De
 A strong argument supporting a fixed time step approach is the possibility of data vectorization. At every time step, several mechanisms run the same operations with different inputs, therefore allowing for a data layout in memory that takes advantage of hyperthreading or other vectorization modules on modern architectures.
 
 
-##### Handling of non linearity
+##### Handling of non-linearity
 
 Although nonlinear equations generally require an iterative resolution in order to maintain second order correcteness, the HH membrane properties allow the cable equation to be described linearly and solved without iterations, while keeping second-order error accuracy. NEURON's variant of Crank-Nicholson with staggered time stepping applies the Strang splitting method to calculate the values of the compartment voltage and Hodgkin-Huxley gating states on interleaved time intervals. Therefore it converts a large non-linear system into two linear systems and the problem has now second-order accuracy, with a computation cost *almost* identical to the Backward Euler method. As a side note, a direct solution of voltage equation using a linearized membrane current $I(V,t)=g(V-E)$ at a time step $t \rightarrow t + \Delta t$ is possible if the conductance $g$ and reversal potential $E$ have second-order accuracy at time $t+\Delta t/2$. as detailed in [The NEURON book][neuron-book]. Since the conduction of HH-type channels is given by a function of state variables $n$ ($K^+$), $m$ and $h$ ($Na^+$), this second-order accuracy at $t+\Delta t/2$ is achieved by performing a calculation with a time step offset of $\Delta t/2$ from the current voltage time step. In brief, to calculate the second-order accurate integration between $t-\Delta t/2$ and $t+\Delta t/2$ we only need the second-order correct value of voltage-dependent rates at the instant $t$.
 

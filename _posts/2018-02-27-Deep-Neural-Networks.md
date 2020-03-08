@@ -15,7 +15,7 @@ $$
 
 can work well but are limited. Alternative approaches like binning work well only for low input dimensionality. That's where neural networks fill the gap. Neural networks allows us to learn not only the *weights* but also the *useful features*. In practice, they are what we call an **[universal approximator](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. an approximator to any function in a bounded continuous domain. I will omit the proof, email me if you are interested in knowing more.
 
-##### Structure
+### Structure
 
 The structure of a simple NN is the following: one input layer of size $D$, $L$ hidden layers of size $K$, and one output layer. It is a **feedfoward network**: the computation performed by the network starts with the input from the left and flows to the right. There is no feedback loop. It can be used for regression (when input and output are provided) and for classification (when input are provided and new output is the classifier).
 
@@ -43,7 +43,7 @@ where $f$ is the regression function of neurons, as previously. Some popular cho
 - Leaky ReLU: $$\phi(x) = max \{\alpha x,x\}$$. Fixes the problem of *dying* in Non-leaky rectified linear units;
   - In brief, if the dot product of the input to a ReLU with its weights is negative, the output is 0. The gradient of $$ max\{ 0,x \} $$ is $0$ when the output is $0$. If for any reason the output is consistently $0$ (for example, if the ReLU has a large negative bias), then the gradient will be consistently 0. The error signal backpropagated from later layers gets multiplied by this 0, so no error signal ever passes to earlier layers. The ReLU has died.  With leaky ReLUs, the gradient is never 0, and this problem is avoided.  
 
-##### Back-propagation
+### Back-propagation
 
 Similarly to previous regression use cases, we are required to minimize the loss in the system, using e.g. Stochastig Gradient Descent. As always when dealing with gradient descent we compute the gradient of the cost function for a particular input sample (with respect to all weights of the net and all bias terms) and then we take a small step in the direction opposite to this gradient. Computing the derivative with respect to a particular parameter is really just applying the chain rule of calculus. The cost function can be written as (details omitted):
 
@@ -99,7 +99,7 @@ The complete back propagation is then summarized as:
 - Backward pass: set $$ \delta ^{(L+1)} $$ using the appropriate loss and activation function. Compute $$ \delta ^{(L+1)} $$ for $$ l = L, ..., 1 $$;
 - Final computation: For all parameters compute $$ \frac{\partial L_n}{\partial w_{i,j}^{(l)}} $$ (eq. \ref{eq_w}) and $$ \frac{\partial L_n}{\partial b_{j}^{(l)}} $$ (eq. \ref{eq_b});
 
-##### Regularization via Dropout
+### Regularization via Dropout
 
 [Dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5) is a method to *drop out* (ignore) neurons in neural network  and retrieving the final model as an average of models. The rationale is that the processing of the same problem in different neural networks prevents complex co-adaptations on training data. It performs model averaging, and reduces overfitting.
 
@@ -109,7 +109,7 @@ From [wikipedia](https://en.wikipedia.org/wiki/Convolutional_neural_network#Drop
 <img width="35%" height="35%" src="/assets/2018-Deep-Neural-Networks/dropout.png">
 </p>
 
-##### Convolutional Neural Networks
+### Convolutional Neural Networks
  
 The disadvantage of large neural networks is that it has a very high number of parameters so it may require lots of data to be trained. In some scenarios, local training should suffice: e.g. in an audio stream, it is natural to process an input stream $$ x^{(0)}[n] $$ stream by running it through a linear time-invariant filter, whose output $$ x^{(1)}[n] $$ is given by the convolution of the input $$ x^{(0)}[n] $$ and the $$ f [n] $$, as:
 
@@ -148,20 +148,6 @@ The size of each picture typically gets smaller and smaller as we proceed throug
 
 Training follows from back-propagation, ignoring that some weights are shared, and considering each weight on each edge to be an independent variable. Once the gradient has been computed for this network with independent weights, just sum up the gradients of all edges that share the same weight. This gives us the gradient for the network with weight sharing. 
 
-An example with code will follow soon.
-
-##### Long Short-Term Memory Neurons (LSTM)
- 
-Let $$ w_{i,j}^{(l)} $$ be the weight of the edge going from node $i$ at layer $l−1$ to node $j$ at layer $l$, at time $t$. Assume we use the same constants in all levels i.e. $$ \lambda^{(l)} = \lambda $$. The update rule for the use case is:
-
-$$
-w_{i,j}^{(l)} [t+1] = w_{i,j}^{(l)}[t] - \eta ( \triangledown_w L + \lambda w_{i,j}^{(l)} [t] ) = w_{i,j}^{(l)} [t] ( 1 - \eta \lambda) - \eta \triangledown_w L
-$$ 
-
-where $$\eta$$ is the step size, and  $$ \lambda $$ is the regularization constant. We see that in one update step the weight is decreased by a factor $$ 1- \eta \lambda $$ and in addition we add a small step in the negative direction of the gradient. We say that regularization leads to **weight decay**.
-
-LSTMs are neurons that are suitable for time based learning iterations as they control a *gate* that enables learning of significant input signals, and also reduces the effect of the weight decay, by only learning relevant weight changes.
-
-<div class="alert alert-warning" role="alert">
-15.02.2019: I will update this section soon
+<div class="alert alert-primary" role="alert">
+15.02.2019: An example with code will follow soon.
 </div>
