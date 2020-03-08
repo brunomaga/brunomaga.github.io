@@ -291,7 +291,7 @@ The input dataset and the `python` implementation are available in <a href="/ass
  
 For more examples, check the [wikipedia entry for Self Organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
 
-##### The Curse of Dimensionality
+### The Curse of Dimensionality
 
 As a final remark, distance-based methods struggle with high dimensionality data. This is particularly relevant on Euclidian distances. This is due to a phenomen denominated the [Curse of Dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality) that states that the distance between any two given elements in a multidimensional space becomes similar as we increase the number of dimensions, deeming the distance metric almost irrelevant. I will not detail the soundness of the claim, but check this [blog post](https://towardsdatascience.com/that-cursing-dimensionality-ac317fb0fdcc) if you are interested in knowing the details.
 
