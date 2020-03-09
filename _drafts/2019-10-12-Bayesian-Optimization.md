@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Bayesian Regression"
+title:  "Bayesian Optimization"
 date:   2019-10-12 01:00:00 +0100
 categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
@@ -16,13 +16,13 @@ Another benefit of Bayesian is the possibility of **online learning**, TODO
 Take the following example of few observations of $x$ in a linear space, plotted in pink, with a yellow line represeting a linear regression of the data:
   
 <p align="center">
-<img width="40%" height="40%" src="/assets/2019-Bayesian-Regression/linear_bayesian_1.png">
+<img width="40%" height="40%" src="/assets/2019-Bayesian-Optimization/linear_bayesian_1.png">
 </p>
 
 The value of $x$ can be estimated by the value in the regression model represented by a blue cross. However, because it is so different from other observations, we may not be certain of how accurate is our prediction. The Bayesian model helps in this decision by computing the uncertainty (or error) of our decision, as plotted in green:
 
 <p align="center">
-<img width="40%" height="40%" src="/assets/2019-Bayesian-Regression/linear_bayesian_2.png">
+<img width="40%" height="40%" src="/assets/2019-Bayesian-Optimization/linear_bayesian_2.png">
 </p>
 
 In practice, Bayesian uses decision theory to *optimize the loss function*. That is possible because Bayesian gives us what we need to optimize the loss function: the *predictive distribution* of the output given the data i.e. $p( y \| x, D)$. 
@@ -48,7 +48,7 @@ The posterior distribution describes how much the data has changed our *prior* b
 
 The prior distribution $P(A)$ is a shorthand for $P(A \| I)$ where $I$ is all information we have before start collecting data. If we have no information about the parameters then $P(A\|I)$ is a constant --- called an *uninformative prior* or *objective prior* --- and the posterior equals the likelihood function. Otherwise, we call it a *substantive/informative* prior.
 
-### Bayesian Linear Regression
+### Bayesian Linear Optimization
 
 
 ---
