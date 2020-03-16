@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Unsupervised Learning: an introduction"
-date:   2017-11-01 12:01:42 +0100
 categories: [machine learning, unsupervised learning]
 tags: [machinelearning]
 ---

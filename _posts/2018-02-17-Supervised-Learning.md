@@ -2,7 +2,6 @@
 
 layout: post
 title:  "Supervised Learning: an introduction"
-date:   2018-02-17
 categories: [machine learning, supervised learning]
 tags: [machinelearning]
 ---

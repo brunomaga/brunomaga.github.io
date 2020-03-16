@@ -2,7 +2,6 @@
 
 layout: post
 title:  "Reinforcement Learning: an introduction"
-date:   2017-11-27
 categories: [machine learning, reinforcement learning]
 tags: [machinelearning]
 ---

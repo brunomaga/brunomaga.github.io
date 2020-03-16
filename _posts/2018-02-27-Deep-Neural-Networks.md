@@ -2,7 +2,6 @@
 
 layout: post
 title:  "Deep Neural Networks"
-date:   2018-02-27
 categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---

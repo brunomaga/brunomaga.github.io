@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "The Leaky Integrate-and-Fire Neuron Model and The Brunel Network"
-date:   2016-02-08
 categories: [neural dynamics, leaky integrate-and-fire, brunel network]
 tags: [neuraldynamics]
 ---
