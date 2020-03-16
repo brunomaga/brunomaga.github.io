@@ -14,19 +14,19 @@ layout: default
   <header class="post-header">
     <h1 class="post-title" itemprop="name headline">{{ page.title | escape }}</h1>
     <p class="post-meta">
-      <a href="{{ site.url }}" title="back" class="badge badge-primary"><i class="fas fa-arrow-left"></i> back</a>
+      <a href="{{ site.url }}" title="back" class="badge"><i class="fas fa-arrow-left"></i> back</a>
       <span style="display:inline-block; width:0.1cm;"></span>
-      <time class="dt-published badge badge-dark" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+      <time class="dt-published badge badge-light" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {%- assign date_format = site.minima.date_format | default: "%-d %b %Y" -%}
         {{ page.date | date: date_format }}
       </time>
       {%- if page.author -%}
         • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
       {%- endif -%}
-      <span style="display:inline-block; width:0.15cm;"></span>
+      <span style="display:inline-block; width:0.30cm;"></span>
       <!-- We use tags instead of categories because they dont add to the URL -->
       {%- for category in page.categories -%}
-        <span class="badge badge-secondary"> {{ category }} </span>
+        <span class="badge badge-light"> {{ category }} </span>
         <span style="display:inline-block; width:0.05cm;"></span>
       {%- endfor -%}
       <!--
