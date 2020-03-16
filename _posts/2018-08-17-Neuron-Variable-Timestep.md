@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Variable Timestep Resolution of the Electrical Activity of Neurons"
-date:   2017-08-17 
+date:   2018-08-17 
 categories: [numerical methods, variable timestep, simulation, biological neuron models]
 tags: [simulation]
 ---
@@ -132,33 +132,33 @@ Large networks of cells can not be integrated by a global adaptive time stepping
 
 In the following picture, we illustrate A time line (from A to D) of six cells running the *lvardt* algorithm. The intervals of possible interpolation are displayed as a black rectangle. The system's earliest event time is shown by the vertical line traversing all neurons. Triggers of discrete events on a particular neuron are displayed as a short thick vertical bar. (A) the smallest $t_b$ advances by the length of the hashed rectangle; (B) Cell 5 has the smallest $t_bb$ and integrates forward; (C) The next earliest event on the system is at neuron 3. This event trigger creates three new events to be delivered to cells 3,4,5; (D) The new early event forces cell 3 back-interpolates, the event is handled, and cell 3 reinitializes. Cell 3 will be the next cell to integrate forward:
 
-<p align="center"><img width="30%" height="30%" src="/assets/2017-Neuron-Variable-Timestep/local_variable_timestep_six_cell_example.png"><br/><small>source: [The NEURON book][neuron-book]</small></p>
+<p align="center"><img width="30%" height="30%" src="/assets/2018-Neuron-Variable-Timestep/local_variable_timestep_six_cell_example.png"><br/><small>source: [The NEURON book][neuron-book]</small></p>
 
 ### Single Neuron Performance
 
 One can notice the difference in performance of the Backward Euler and Variable Timestep interpolators during a stiff trajectory of an Action Potential in the following picture.
 
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/L5_neuron_soma_voltage_per_step_6ms.png"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/L5_neuron_soma_voltage_per_step_6ms.png"></p>
 
 Note the difference in interpolation instants, placed at a equidistant interval on the Backward Euler use case, and adapting to solution gradient on the variable step counterpart. A current injection at the soma forces the neuron to spike at a rate that increases with the injected current. A simple consists in measuring the number of interpolations betweeen both methods, by trying to enforce different levels of stiffness and measure the number of steps:
 
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/cvode_pulse_currents_table.png"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/cvode_pulse_currents_table.png"></p>
 
 The slow dynamics of the fixed step method --- that end up accounting for the events at discrete intervals instead of event delivery times of its variable step counterpart --- lead to a propagation of voltage trajectory (you can assume Euler with $$\Delta t=1 \mu s$$ and $$CVODE with atol=10^{-4}$$ as reference solutions): 
 
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/L5_neuron_pulse1_3mA_100ms_cvode_vs_backward_euler.png"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/L5_neuron_pulse1_3mA_100ms_cvode_vs_backward_euler.png"></p>
 
 After a second of simulation, the spike time phase-shifting is substantial, demonstrating the gain in using variable step methods for this use case. 
 
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/L5_neuron_pulse_1000ms_results.png"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/L5_neuron_pulse_1000ms_results.png"></p>
 
 To study wether these advantages are feasible, we measure the simulation runtime of both methods. Our first test measures the impact of the stiffness in terms of simulation steps and time to solution on an intel i5 2.6Ghz. The different current values are injected as proportional to the *action potential threshold* current, i.e. the minimum current that is required to be continuously injected for the neuron to spike.
 
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/cvode_dependency_on_variation_solution.png"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/cvode_dependency_on_variation_solution.png"></p>
 
 Results look promising, even at an extremelly high current value we have a significant speed-up. A second test enforces discontinuities and reset of the IVP problems by artificially injecting current pulses of $1 \mu s$ at given frequencies. 
 
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/cvode_dependency_on_events_arrival.png"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/cvode_dependency_on_events_arrival.png"></p>
 
 In this scenario, we see a high dependency on the number of discontinuities, and some yet minor dependency on the discontinuity value (i.e. amount of current injected). The holy grail is then in: How does this apply to networks of neurons?
 
@@ -169,7 +169,7 @@ cells, and thalamic reticular neurons). The two thalamic cell types produced bur
 
 In the following picture we present the afforementioned results for the comparison of fixed and variable time step methods for the mutual-inhibition model. Execution time grows linearly with simulation time for the fixed-step integration (dashed lines). Variable-step methods have a reduction in CPU load at the onset of synchrony. The rationale behind the non-linearity of adaptive time stepping, is that *lvardt* produces time steps that jump around during the initial presynchrony phase of the simulation (fast uprising phase), and then slowly stabilizes to an alternation between large steps in the long intervals separating the population spikes and extremely short time steps during the population spike itself:
 
-<p align="center"><img width="30%" height="30%" src="/assets/2017-Neuron-Variable-Timestep/lvardt_exec_time_comparison.png"><br/><small>source: Lytton et al. 2015 </small></p>
+<p align="center"><img width="30%" height="30%" src="/assets/2018-Neuron-Variable-Timestep/lvardt_exec_time_comparison.png"><br/><small>source: Lytton et al. 2015 </small></p>
 
 ### Simulation of a network of heterogeneous neurons
 
@@ -180,16 +180,16 @@ Although network of similarly-behaving neurons guive us an *estimation* of achie
 To measure the efficiency across the different spiking dynamics across neurons, we reproduced a previously-published digital reconstruction of a [laboratory experiment from the Blue Brain Project on the Cell Magazine][markram2015cell]. We simulated 7.5 seconds of electrical activity, performing a fixed-step simulation of the spontaneous activity of 219.247 neurons during tonic depolarization. For the biology enthusiasts: the network exhibits spontaneous slow oscillatory population bursts, initiated in Layer 5, spreading down to L6, and then up to L4 and L2/3 with secondary bursts spreading back to L6. For further details, refer to section \textit{Simulating Spontaneous Activity} in \cite{markram2015reconstruction}.
  
 We take two sample neurons from the top 1% *busiest* neurons (in terms of incoming spikes i.e. discontinuities) and visually analyse the number of spikes arriving per time interval (left, each time bin account for 0.1ms) and the distribution of time intervals between spikes arrival (right): 
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/neuron_203076.PNG"></p>
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/neuron_138083.PNG"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/neuron_203076.PNG"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/neuron_138083.PNG"></p>
 
 The number of spikes received in that top 1% was between 3040 and 6146 events. We redo the same analysis for two sample neurons collected from the mean 1% of neurons in terms of spiking arrivals:
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/neuron_208223.PNG"></p>
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/neuron_87784.PNG"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/neuron_208223.PNG"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/neuron_87784.PNG"></p>
 
 With 541 to 558 spiking events. And the bottom 1%:
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/neuron_132412.PNG"></p>
-<p align="center"><img width="50%" height="50%" src="/assets/2017-Neuron-Variable-Timestep/neuron_2101.PNG"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/neuron_132412.PNG"></p>
+<p align="center"><img width="50%" height="50%" src="/assets/2018-Neuron-Variable-Timestep/neuron_2101.PNG"></p>
 with less than 100 events.
 
 The total events received across all neurons in the network was of approximately 155 Million, i.e. mean per neuron of 707 current spikes received. In practice, this means that most brain regions (or pattern activities) fall within the interval of acceleration that we described in the previous section.
@@ -207,7 +207,7 @@ To tackle this issues, simulation is split in equidistant time intervals equal t
 2. Asynchronous communication: synaptic activity can be transmitted immediatly after they occur or together with the synchronization information in an **all-to-all communication**;
 3. Synchronous communication: neurons interpolation and spikes communication for a stepping time-window must be completed until computation and communication for the next window starts.
  
-However, going to the *extreme* of the possible optimisation, we observe that this **colective synchronization of neurons** has two main downsides: (a) no compute node can ever perform a CVODE timestep that exceeds the limits of the current time frame, (b) all compute nodes must wait for the slowest to reach the end of the time frame, and (c) all compute nodes restart the CVODE at the initial instant of every time frame. A solution to this problem is what we call a **fully-asynchronous execution model**, which is an execution model that guarantees asynchronous communication, computation and synchronization. Detailed information on the implementation (and added cache-efficiency benefits) can be implemented <a href="/assets/2017-Neuron-Variable-Timestep/neurox-cache-efficient.pdf">in the original publication</a>, but the main concept is:
+However, going to the *extreme* of the possible optimisation, we observe that this **colective synchronization of neurons** has two main downsides: (a) no compute node can ever perform a CVODE timestep that exceeds the limits of the current time frame, (b) all compute nodes must wait for the slowest to reach the end of the time frame, and (c) all compute nodes restart the CVODE at the initial instant of every time frame. A solution to this problem is what we call a **fully-asynchronous execution model**, which is an execution model that guarantees asynchronous communication, computation and synchronization. Detailed information on the implementation (and added cache-efficiency benefits) can be implemented <a href="/assets/2018-Neuron-Variable-Timestep/neurox-cache-efficient.pdf">in the original publication</a>, but the main concept is:
 - Each neuron keeps a map of all its pre-synaptic dependencies, i.e. those neurons whose axons connect to its synapses, or in practice, those which may spike and deliver current into the neuron;
   - This map is actively updated by small notification of stepping from the pre-synaptic dependencies;
 - Each neuron keeps a map of all its post-synaptic dependencies, i.e. those whose dendrits connect to its axon terminal, or in practice, those which receive current fom the neuron when it spikes;
@@ -227,11 +227,11 @@ Even though results sound promising, different mamals, brain regions and mental 
 - a model of *fast dynamics* of 38 Hz, characterizing an approximation of the cortical and thalamic neuronal activity during periods of high vigilance; and the regular regime of the theoretical model of inhibition-dominated model of the [Brunel Network][LIF-model-post]; and 
 - a model of *burst dynamics* at 55.8 Hz, typically a by-product of depolarizing current injections, representative of the fast-spiking regime of the  inhibition-dominated irregular dynamics of the [Brunel Network][LIF-model-post].
 
-Our comparison tested several fixed- and variable-step interpolation methods, whose details are availabe <a href="/assets/2017-Neuron-Variable-Timestep/neurox-vardt-arxiv.pdf">in the original publication preprint</a>. The benchmark results are displayed next:
+Our comparison tested several fixed- and variable-step interpolation methods, whose details are availabe <a href="/assets/2018-Neuron-Variable-Timestep/neurox-vardt-arxiv.pdf">in the original publication preprint</a>. The benchmark results are displayed next:
 
-<p align="center"><img width="70%" height="70%" src="/assets/2017-Neuron-Variable-Timestep/benchmark_two_rows_2.PNG"></p>
+<p align="center"><img width="70%" height="70%" src="/assets/2018-Neuron-Variable-Timestep/benchmark_two_rows_2.PNG"></p>
 
 Quoting the previous paper: "Fixed step methods do not yield significantly-different execution times across different spiking regimes. This is due to the homogeneous computation of neuron  state updates throughout time, and the light computation attached to synaptic events and collective communication not yielding a substantial increase of runtime. The difference in execution times measured across the five regimes was of about $2\%$, which we consider negligible. On the other hand, as expected, variable step executions are penalized on regimes with high discontinuity rates. It is noticeable that the runtimes of fixed- and variable-step solvers approximate as we increase the spiking rate, i.e. the increase of runtimes with the input size is steeper for variable timestep (2b$\hspace{0.3mm}{\color{red!80}\bullet}$ and  2c$\hspace{0.3mm}{\color{black}\bullet}{\color{gray}\bullet}{\color{lightgray}\bullet}$) compared to fixed timestep methods (2a$\hspace{0.3mm}{\color{blue!80}\bullet}$). This is due to discontinuities in variable-step being delivered throughout a continuous time line, compared to the discrete delivery instants of the fixed-step methods --- therefore increase the number of interpolation steps; and the iterative model of the variable timestep reinitializing the state computation with small step sizes on each IVP reset, compared to the constant-sized step of fixed step methods.  A remarkable performance is visible on the quiet dynamics use case, where our fully-implicit ODE solver of complex models (with Newton iterations), still runs faster than the simple solver resolving only a system of linear equations. The underlying rationale is that --- despite the inherent computation cost of Newton iterations in the variable step methods --- the low level of discontinuities allow for very long steps, that surpass the simulation throughput of simple solvers running on fixed step methods." 
 
-For further details, detailed comparisons on the performance of *Variable Step Event Grouping*, *Fully-Asynchronous vs Bulk-Synchonous Execution Models*, *Runtime Dependency on Input Size and Spike Activity*, and the *Overall Runtime Speed-up Estimation* of 228.5-24.6x (based on the distribution of neurons per spiking regime on the brain), refer to the <a href="/assets/2017-Neuron-Variable-Timestep/neurox-vardt-arxiv.pdf">article preprint</a>.
+For further details, detailed comparisons on the performance of *Variable Step Event Grouping*, *Fully-Asynchronous vs Bulk-Synchonous Execution Models*, *Runtime Dependency on Input Size and Spike Activity*, and the *Overall Runtime Speed-up Estimation* of 228.5-24.6x (based on the distribution of neurons per spiking regime on the brain), refer to the <a href="/assets/2018-Neuron-Variable-Timestep/neurox-vardt-arxiv.pdf">article preprint</a>.
 
