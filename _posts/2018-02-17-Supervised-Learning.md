@@ -119,35 +119,6 @@ Finally, another method is the [**coordinate descent**](https://en.wikipedia.org
 
 The main advantage is that it is extremely simple to implement and doesn’t require any knowledge of the derivative of the function. It’s really useful for extremely complicated functions or functions whose derivatives are far more expensive to compute than the function itself. However, due to its iterative nature, it's not a good candidate for parallelism. Another issue is that it has a a non-smooth multivariable function, thus it may be stuck in non-stationary point if the level curves of a function are not smooth (source: [wikipedia](https://en.wikipedia.org/wiki/Coordinate_descent#Limitations)).
 
-### Probability Distributions 
-
-A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. Examples:
-- Gaussian: 
- $$ p(y | \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } exp [ - \frac{(y - \mu)^2}{2 \sigma^2} ] $$, or in vector form $$ p(y | \mu, \Sigma ) = \frac{1}{ \sqrt{ (2 \pi)^D det(\Sigma)} } exp [ - \frac{1}{2}(y - \mu)^T \Sigma^{-1} (y-\mu)] $$
-
-- Laplace:
- $$ p( y_n | x_n, w ) = \frac{1}{2b} e^{-\frac{1}{b} | y_n - X_n^T w | } $$
-
-- [TODO complete]
-
-The **log-likelihood** is the log of the [likelihood](https://www.statisticshowto.datasciencecentral.com/likelihood-function/) of observing --- given observed data --- a parameter value  of the statistical model used to describe that data. I.e.:
-
-$$
-L_{lik} (w) = log p (y | X, w)
-$$
-
-This can be used to estimate the cost. The log-likelihood if (typically?) convex in the weight vector $w$, as it's a sum of convex functions. The **Maximum likelihood estimator (MLE)** states that:
-
-$$
-argmin_w L_{MSE}(w) = argmax_w L_{lik} (w)
-$$
-
-MLE is a sample approximation of the *expected* log-likelihood i.e.
-
-$$
-L_{lik}(w) \approx E_{p(x,y)} [ log p(y | x,w ) ]
-$$
-
 ### Overfitting and Underfitting
 
 Overfitting is fitting the noise in addition to the signal. Underfitting is not fitting the signal well. To reduce overfitting, increasing data *may help*. 
@@ -255,7 +226,7 @@ To finalize, the article [Matrix Factorization Techniques for Recommender System
 
 ### Text Embedding
 
-Most (or all!) learning methods require some kind of numerical representation of the input space. The main question is then: how can a model learn from text? The answer is simple: by **embedding** our textual representation into a fixed-size numerical vector space, and use the new vector and input and output of our model. For the curious ones, here are some embedding techniques:
+All learning methods require some kind of numerical representation of the input space. Booleans are converted to 0 or 1s, labelling of input samples according to different sets is represented by fixed-size weighted input vector (or binning, where each position of the vector represents the weight of a sample on each class), etc. On textual representations, where inputs have different lenghts, the solution relies on **embedding** our textual representation into a fixed-size numerical vector space, and use the new vector and input and output of our model. For the curious ones, here are some embedding techniques:
 - [Bag of words](https://en.wikipedia.org/wiki/Bag-of-words_model). Each word is represented by an index in a vocabulary of words.
 - The Co-occurence Matrix, where $n_{ij}$ holds contexts where word $i$ is used along word $j$;
   - We can use the previous method of matrix factorization to predict words co-occurence;
