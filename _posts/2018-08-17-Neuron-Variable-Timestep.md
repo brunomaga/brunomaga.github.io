@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Variable Timestep Resolution of the Electrical Activity of Neurons"
-date:   2018-08-17 
 categories: [numerical methods, variable timestep, simulation, biological neuron models]
 tags: [simulation]
 ---

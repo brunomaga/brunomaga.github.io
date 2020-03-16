@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Numerical Resolution of the Electrical Activity of Detailed Neuron Models"
-date:   2016-08-15 
 categories: [numerical methods, simulation, biological neuron models]
 tags: [simulation]
 ---

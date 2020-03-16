@@ -1,7 +1,6 @@
 ---
 layout: post
 title:  "Distributed Sorting Algorithms"
-date:   2014-06-21 12:01:42 +0100
 categories: [distributed algorithms, parallel algorithms]
 tags: [algorithms]
 ---

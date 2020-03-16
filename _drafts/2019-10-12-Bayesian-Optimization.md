@@ -1,9 +1,8 @@
 ---
 layout: post
 title:  "Bayesian Optimization"
-date:   2019-10-12 01:00:00 +0100
 categories: [machine learning, probabilistic programming]
-#tags: [machinelearning]
+tags: [machinelearning]
 ---
 
 Bayesian methods allows us to perform modelling of an input to an output by providing a measure of *uncertainty* or "how sure we are", based on the seen data. Unlike most *frequentist* methods commonly used, where the outpt of the method is a set of best fit parameters, the output of a Bayesian regression is a probability distribution of each model parameter, called the **posterior distribution**. 
