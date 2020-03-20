@@ -34,7 +34,7 @@ $$
 A set $C$ is convex the line segment between any two points of $C$ lies in $C$, i'e does not touch outside the limits of $C$. Here's a picture of a convex and a non-convex set:
 
 <p align="center">
-<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/convex-set.jpg"><br/>
+<img width="30%" height="30%" src="/assets/Supervised-Learning/convex-set.jpg"><br/>
 <small>source: britannica</small>
 </p>
 
@@ -81,13 +81,13 @@ With some variants:
   - alternatively, one can use penalty functions instead of projections, solving $$ min_{w \in R^D} L(w) + I_c(w) $$ where $I_c$ is the penalty function;
 
 <p align="center">
-<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/projection.png"><br/>
+<img width="30%" height="30%" src="/assets/Supervised-Learning/projection.png"><br/>
 <small>source: Machine Learning lecture notes, M Jaggi, EPFL</small>
 </p>
 
 When $$ \triangledown L (w) $$ is close to zero, we are close to an optimum. If second derivative is positive (semi-definite), then it may be a local minimum. If the function is convex, we are at a global minimum. 
 
-Gradient descent is very sensitive to ill-conditioning. Normalizing input dimensions allows the step size to properly adjust to high differences in features dimensionalities. Choosing step size can be tricky. See [MIT_252_Lecture04.pdf](/assets/2018-Supervised-Learning/MIT_252_Lecture04.pdf) and [optpart2.pdf](/assets/2018-Supervised-Learning/optpart2.pdf) for some guidance, and the famous **Armijos Rule**.
+Gradient descent is very sensitive to ill-conditioning. Normalizing input dimensions allows the step size to properly adjust to high differences in features dimensionalities. Choosing step size can be tricky. See [MIT_252_Lecture04.pdf](/assets/Supervised-Learning/MIT_252_Lecture04.pdf) and [optpart2.pdf](/assets/Supervised-Learning/optpart2.pdf) for some guidance, and the famous **Armijos Rule**.
 
 Gradient descent is a first-order method (only looks at the gradient).  We get a more powerful optimization algorithm if we use also the second order terms. We need fewer steps to converge if we use second order terms, on the other hand every iteration is more costly. The **Newton's method** make use of the second order terms and takes steps in the direction that minimizes a quadratic approximation. We define the **Hessian** as 
 
@@ -112,7 +112,7 @@ I'll ommit the explanation of this formula, but email me if you are interested. 
 Finally, another method is the [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) that iterates over individual coordinates (keeping others fixed), in order to minimize the loss function. 
 
 <p align="center">
-<img width="30%" height="30%" src="/assets/2018-Supervised-Learning/coordinate_descent.svg.png"><br/>
+<img width="30%" height="30%" src="/assets/Supervised-Learning/coordinate_descent.svg.png"><br/>
 <small>source: wikipedia</small>
 </p>
 
@@ -123,7 +123,7 @@ The main advantage is that it is extremely simple to implement and doesn’t req
 Overfitting is fitting the noise in addition to the signal. Underfitting is not fitting the signal well. To reduce overfitting, increasing data *may help*. 
 
 <p align="center">
-<img width="35%" height="35%" src="/assets/2018-Supervised-Learning/overfitting.png"><br/>
+<img width="35%" height="35%" src="/assets/Supervised-Learning/overfitting.png"><br/>
 <small>source: Machine Learning lecture notes, M Jaggi, EPFL</small>
 </p>
 
@@ -167,7 +167,7 @@ $$
 where $$ D \in R^{D \times K} $$ and $$ Z \in R^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ collects the indices of the observed ratings of the input matrix $X$.
 
 <p align="center">
-<img width="60%"  src="/assets/2018-Supervised-Learning/matrix-factorization.png">
+<img width="60%"  src="/assets/Supervised-Learning/matrix-factorization.png">
 </p>
 
 This cost function is not convex and not [identifiable](https://en.wikipedia.org/wiki/Identifiability). $K$ is the number of latent features (e.g. gender, age group, citizenship, etc). Large $K$ facilitates overfitting. We can add a regularizer to the function:
@@ -221,7 +221,7 @@ We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given 
   min_{W,Z} L(W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [x_{dn} - (WZ^T)_{dn}]^2 + ...
   $$
 
-To finalize, the article [Matrix Factorization Techniques for Recommender Systems](/assets/2018-Supervised-Learning/Recommender-Systems-Netflix.pdf) might be of your interest. 
+To finalize, the article [Matrix Factorization Techniques for Recommender Systems](/assets/Supervised-Learning/Recommender-Systems-Netflix.pdf) might be of your interest. 
 
 ### Text Embedding
 
@@ -244,7 +244,7 @@ We have seen that simple linear classification schemes like logistic regression 
 Another possibility is to use **binning**, a technique for data preparation where we represent input as combinations of input data intervals, allowing a non-linear combination of inputs. As a simple example, take a neural network to detect the house prices inSwitzerland for a given latitude and longitude. A regular neural net would be trained for a given *latitude* and *longitude* input, against an output price. This could only represent linear combinations of both parameters. Alternatively we can discretize the parameters space, and represent as input all the combinations of latitude and longitude intervals, allowing non-linearity in the model:
 
 <p align="center">
-<img width="80%" height="80%" src="/assets/2018-Supervised-Learning/binning.png"><br/>
+<img width="80%" height="80%" src="/assets/Supervised-Learning/binning.png"><br/>
 </p>
 
 This approach obviously falls short for high input dimensionality. For such use cases, deep neural networks is the solution, as it provides a non-linear approximator.

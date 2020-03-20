@@ -19,7 +19,7 @@ can work well but are limited. Alternative approaches like binning work well onl
 The structure of a simple NN is the following: one input layer of size $D$, $L$ hidden layers of size $K$, and one output layer. It is a **feedfoward network**: the computation performed by the network starts with the input from the left and flows to the right. There is no feedback loop. It can be used for regression (when input and output are provided) and for classification (when input are provided and new output is the classifier).
 
 <p align="center">
-<img width="30%" height="30%" src="/assets/2018-Deep-Neural-Networks/dnn.png"><br/>
+<img width="30%" height="30%" src="/assets/Deep-Neural-Networks/dnn.png"><br/>
 <small>source: Machine Learning lecture notes, M Jaggi, EPFL</small>
 </p>
 
@@ -105,7 +105,7 @@ The complete back propagation is then summarized as:
 From [wikipedia](https://en.wikipedia.org/wiki/Convolutional_neural_network#Dropout):  "Because a fully connected layer occupies most of the parameters, it is prone to overfitting. [...] At each training stage, individual nodes are either *dropped out* of the net with probability $$ 1-p $$ or kept with probability $p$, so that a reduced network is left; incoming and outgoing edges to a dropped-out node are also removed. Only the reduced network is trained on the data in that stage. The removed nodes are then reinserted into the network with their original weights. "
 
 <p align="center">
-<img width="35%" height="35%" src="/assets/2018-Deep-Neural-Networks/dropout.png">
+<img width="35%" height="35%" src="/assets/Deep-Neural-Networks/dropout.png">
 </p>
 
 ### Convolutional Neural Networks
@@ -126,14 +126,14 @@ $$
 We see that the output $$ x^{(1)} $$ at position $$ [n, m] $$ only depends on the value of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. So we no longer need a fully connected network but  only the one that representes the local strucure, leading to fewer parameters to deal with. This structure implies that we should use the same filter (e.g., not only the same connection-pattern but also the same weights) at every position! This is called **weight sharing**, drastically reducing the number of parameters further. The difference between a locally/sparse connected and a fully connected is obvious:
 
 <p align="center">
-<img width="25%" height="25%" src="/assets/2018-Deep-Neural-Networks/fully_sparse_connectivity.png">
+<img width="25%" height="25%" src="/assets/Deep-Neural-Networks/fully_sparse_connectivity.png">
 </p>
 
 It is common to not only compute the output of a single filter but to use multiple filters. The various outputs are called channels. This introduces some additional parameters into the model.
 If we add several channels we do not end up with a 2D output in the next level but in fact with a 3D output. Per layer we have increasingly more channels but a smaller “footprint.” In brief, applying the local connectivity to a 2D input dataset on a *deep* neural network, we have the final structure as:
 
 <p align="center">
-<img width="65%" height="65%" src="/assets/2018-Deep-Neural-Networks/cnn.png">
+<img width="65%" height="65%" src="/assets/Deep-Neural-Networks/cnn.png">
 </p>
 
 Notice the three types of operations involved:

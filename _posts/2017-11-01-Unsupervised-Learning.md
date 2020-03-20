@@ -87,7 +87,7 @@ The algorithm is the following:
 A visual example is displayed below, where the output of the PCA rotates the data towards the new axis in the cluster of the datapoints:
 
 <p align="center">
-<img width="30%" height="30%" src="/assets/2017-Unsupervised-Learning/GaussianScatterPCA.svg.png"><br/><small>source: wikipedia</small>
+<img width="30%" height="30%" src="/assets/Unsupervised-Learning/GaussianScatterPCA.svg.png"><br/><small>source: wikipedia</small>
 </p>
 
 We can now discard the least significant dimensions of the final post-PCA data, reducing the number of features in the model.
@@ -133,9 +133,9 @@ $$
 where $U$ is an orthogonal transform matrix.  **Whitening simplifies the ICA**, so it is only necessary to estimate $U$. A visual illustration of the source, observerd and whitened data is diplayed below:
 
 <p align="center">
-<img width="20%" height="20%" src="/assets/2017-Unsupervised-Learning/ica_source.png">
-<img width="20%" height="20%" src="/assets/2017-Unsupervised-Learning/ica_observed.png"> 
-<img width="20%" height="20%" src="/assets/2017-Unsupervised-Learning/ica_whitening.png">
+<img width="20%" height="20%" src="/assets/Unsupervised-Learning/ica_source.png">
+<img width="20%" height="20%" src="/assets/Unsupervised-Learning/ica_observed.png"> 
+<img width="20%" height="20%" src="/assets/Unsupervised-Learning/ica_whitening.png">
 <br/><small>source: T. Yokota, Lecture notes, Nagoya Institute of Technology</small>
 </p>
 
@@ -159,7 +159,7 @@ $$
 
 We aim to maximize the absolute value of the *kurtosis* , i.e. maximize $| k(w^Tz) |$ such that $w^T w=1$. The differential is:
 <p align="center">
-<img width="50%" height="50%" src="/assets/2017-Unsupervised-Learning/ica_kurtosis.png">
+<img width="50%" height="50%" src="/assets/Unsupervised-Learning/ica_kurtosis.png">
 </p>
 
 Now we can solve via Gradient descent:
@@ -183,7 +183,7 @@ $$
 This kind of resolution underlies problems such as the [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram) for spatial data partitioning. A 2D example follows, where we cluster points in a region (coloured cells) by their prototype (black points):
 
 <p align="center">
-<img width="30%" height="30%" src="/assets/2017-Unsupervised-Learning/voronoi.png">
+<img width="30%" height="30%" src="/assets/Unsupervised-Learning/voronoi.png">
 <br/><small>source: wikipedia</small>
 </p>
 
@@ -214,14 +214,14 @@ $$
 which is the definition of center of mass of group $i$. An illustration of the algorithm follows:
 
 <p align="center">
-<img width="70%" height="70%" src="/assets/2017-Unsupervised-Learning/k-means.png">
+<img width="70%" height="70%" src="/assets/Unsupervised-Learning/k-means.png">
 <br/><small>source: wikipedia</small>
 </p>
 
 On a 2D universe, one can imagine a 3-cluster algorithm to follow as:
 
 <p align="center">
-<img width="30%" height="30%" src="/assets/2017-Unsupervised-Learning/K-means_convergence.gif">
+<img width="30%" height="30%" src="/assets/Unsupervised-Learning/K-means_convergence.gif">
 <br/><small>source: wikipedia</small>
 </p>
 
@@ -248,8 +248,8 @@ I'll ommit the details on the topic of Gaussian Mixed models and try to write a 
 A self-organizing map (SOM) is an unsupervised artificial neural network, typically applied on a 2D space, that represents a discretization of the input space (or the training set). Its main purpose is to represent training by localized regions (neurons) that represent agglomerates of inputs:
 
 <p align="center">
-<img width="40%" height="40%" src="/assets/2017-Unsupervised-Learning/kohonen.png">
-<img width="43%" height="43%" src="/assets/2017-Unsupervised-Learning/kohonen2.png">
+<img width="40%" height="40%" src="/assets/Unsupervised-Learning/kohonen.png">
+<img width="43%" height="43%" src="/assets/Unsupervised-Learning/kohonen2.png">
 <br/><small>source: Unsupervised and Reinforcement Learning lecture nodes from W. Gerstner at EPFL</small>
 </p>
 
@@ -275,17 +275,17 @@ I found a very nice video demonstrating an iterative execution of the Kohonen ma
 A good example is the detection of hand-written digits on a trained dataset of the [MNIST database](http://yann.lecun.com/exdb/mnist/). For simplicity, we will work only with digits from 0 to 9. 
 Each digit is a 28x28 (=784) pixel array, represented as data point on a 784-d dataspace. Each pixels is monochromatic, thus each dimension is limited to values between 0 and 256. Our task is to, given a database of 5000 handwritten digits, find the best 6x6 SOM that best represents 4 numbers from 0-9. We will study how choosing the right neighborhood width and learning rate affect the performance of the Kohonen map.
 
-The input dataset and the `python` implementation are available in <a href="/assets/2017-Unsupervised-Learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to fine-tune the neighboring and learning rate $\eta$ parameters. A good solution would give you some visual perception of the numbers being identified (in this case 0, 1, 2 and 3). Here I discuss three possible outputs:
+The input dataset and the `python` implementation are available in <a href="/assets/Unsupervised-Learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to fine-tune the neighboring and learning rate $\eta$ parameters. A good solution would give you some visual perception of the numbers being identified (in this case 0, 1, 2 and 3). Here I discuss three possible outputs:
 - left: a nicely tuned SOM, where each quadrant of neurons represents a digit;
 - center: a SOM with a high learning rate. The large step size makes neurons *step* for too long distances during trainig,  leading to a mixing of digits on proximal neurons and possibly a  *tangled* SOM web;
 - right: a SOM with a high neighborhood width. The high width causes all neurons to behave almost synchronously, due tot he very wide range of the udpate function. This leads to very similar outputs per neuron;
 
 <p align="center">
-<img width="25%" height="25%" src="/assets/2017-Unsupervised-Learning/kohonen_1.png">
+<img width="25%" height="25%" src="/assets/Unsupervised-Learning/kohonen_1.png">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="25%" height="25%" src="/assets/2017-Unsupervised-Learning/kohonen_2.png">
+<img width="25%" height="25%" src="/assets/Unsupervised-Learning/kohonen_2.png">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="25%" height="25%" src="/assets/2017-Unsupervised-Learning/kohonen_3.png">
+<img width="25%" height="25%" src="/assets/Unsupervised-Learning/kohonen_3.png">
 </p> 
  
 For more examples, check the [wikipedia entry for Self Organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
