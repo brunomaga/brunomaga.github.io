@@ -13,7 +13,7 @@ For the sake of comparison, take the example of the simple linear regression $y 
 Take the following example of few observations of $x$ in a linear space, plotted in pink, with a yellow line representing a linear regression of the data. The value of $x$ can be estimated by the value in the regression model represented by a blue cross. However, because it is so different from other observations, we may not be certain of how accurate is our prediction. The Bayesian model helps in this decision by computing the uncertainty (or error) of our decision, as plotted in green:
 
 <p align="center">
-<img width="40%" height="40%" src="/assets/2019-Bayesian-Optimization/linear_bayesian_2.png">
+<img width="40%" height="40%" src="/assets/Bayesian-Optimization/linear_bayesian_2.png">
 </p>
 
 Apart from the uncertainty quantification, another benefit of Bayesian is the possibility of **online learning**, i.e. a continuous update of the trained model (from previously-seen data) by looking at only the new data. This is a handy feature for e.g. datasets that are purged periodically.
@@ -58,8 +58,6 @@ A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribut
   - $argmin E_2$ = $(y - Xw)^2 = (y-Xw)^T(y-Xw)$ , which (when equal to zero) has a closed for solution of $w = (X^TX)^{-1} X^Ty$
   - ie minimizing $E_2$ is equivalent to determining  the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = mx + b + \varepsilon$ instead, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$
 - TODO add Adams optimizer to Unsupervised Learning notebook
-- TODO remove Date and Categories from final URL (use tags instead?)
-
 
 ### Maximum Likelihood (MLE) and Maximum-a-Posteriori (MAP)
 
