@@ -3,6 +3,8 @@ name: "Bruno Magalhaes"
 location: Lausanne, Switzerland
 email: bruno@magalhaes.pro
 resume: /assets/cv_short.pdf
+assets: /assets/
+resources: /resources/
 google_scholar: https://scholar.google.ch/citations?user=pirWLLgAAAAJ
 description: >-
   I'm an AI resident at Microsoft Research in Cambridge (UK) working on time-sequence data and probabilistic machine learning. Prior to this, I completed a PhD Neuroscience at the EPFL in Switzerland (researching large-scale reconstruction and simulation of brain-inspired neural networks), a MSc Advanced Computing from the Imperial College London, and I worked as a software and systems engineer. My fields of specialization are Parallel and Distributed Computing, Machine Learning and Simulation. To know more about me, read my <a href="assets/cv_short.pdf">resume</a>, <a href="https://scholar.google.ch/citations?user=pirWLLgAAAAJ">publications</a>, or <a href="mailto:bruno@magalhaes.pro?subject=Hello">email me</a>.
