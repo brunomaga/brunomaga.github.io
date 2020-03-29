@@ -35,21 +35,17 @@ layout: default
       {%- endfor -%}
     </ul>
   <hr class="my-4">
-  <h5>{{ page.list_title | default: "Resources" }}</h5>
-  <ul>
-	  <li><a href="https://www.springer.com/gp/book/9780387310732">Pattern Classification and Machine Learning, Christopher M. Bishop</a> (<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">pdf</a>)</li>
-	  <li><a href="http://mbmlbook.com/">Model-Based Machine Learning, John Winn et al.</a> (<a href="http://mbmlbook.com/MBMLbook.pdf">pdf</a>)</li>
-	  <li><a href="https://mml-book.github.io/">Mathematics for Machine Learning, Deisenroth, Aldo Faisal, Cheng S. Ong</a> (<a href="https://mml-book.github.io/book/mml-book.pdf">pdf</a>)</li>
-	  <li><a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner</a> (<a href="https://neuronaldynamics.epfl.ch/online/index.html">online</a>)</li>
-	  <li><a href="assets/latex_math_symbols.pdf">Latex Mathematical Symbols</a>
-  </ul>
-  <hr class="my-4">
   {%- endif -%}
             <div align="center">
             <h5>
               <a href="mailto:{{ site.email }}?subject=Hello" title="e-mail"><i class="far fa-envelope"></i></a>
               <span style="display:inline-block; width:0.1cm;"></span>
-              <a href="{{ site.google_scholar }}" title="Google scholar"><i class="far fa-file-alt"></i></a>
+	      <!-- <a href="{{ site.resume }}" title="Resume"><i class="ai ai-cv cv-1x"></i></a> -->
+	      <a href="{{ site.resume }}" title="Resume"><i class="far fa-user-circle"></i></a>
+              <span style="display:inline-block; width:0.1cm;"></span>
+	      <a href="{{ site.resources }}" title="Books and Resources"><i class="fas fa-book"></i></a>
+              <span style="display:inline-block; width:0.1cm;"></span>
+	      <a href="{{ site.google_scholar }}" title="Google scholar"><i class="ai ai-google-scholar ai-1x"></i></a>
               <span style="display:inline-block; width:0.1cm;"></span>
               <a href="https://github.com/{{ site.github_username }}" title="GitHub"><i class="fab light fa-github"></i></a>
               <span style="display:inline-block; width:0.1cm;"></span>
@@ -66,7 +62,7 @@ layout: default
               <span style="display:inline-block; width:0.1cm;"></span>
               <a href="#"><i class="fab fa-facebook-f"></i></a>-->
             </h5>
-            </div>
+            </div> 
   {{ content }}
   </div>
 </div>
