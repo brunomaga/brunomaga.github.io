@@ -12,7 +12,7 @@ Some books freely available online, and related to the topics discussed:
           <li><a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a> (<a href="https://neuronaldynamics.epfl.ch/online/index.html">online</a>)</li>
 </ul>
 
-Other interesting resources:
+Other useful resources:
 <ul>
           <li><a href="{{ site.assets }}/latex_math_symbols.pdf">Latex Mathematical Symbols</a></li>
 </ul>
