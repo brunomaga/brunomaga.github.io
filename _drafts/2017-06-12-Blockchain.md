@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "[draft] Spatial Decomposition of Millions of Objects in Distributed Memory Space"
+title:  "[draft] Blockchain"
 categories: [distributed algorithms, parallel algorithms]
 #tags: [algorithms]
 ---
