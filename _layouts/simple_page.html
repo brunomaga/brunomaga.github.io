@@ -1,0 +1,30 @@
+---
+layout: default
+---
+
+<!-- 4 lines common to all pages -->
+<main>
+<section>
+<div class="container">
+  <div class="row">
+  <div class="col-lg-7 jumbotron  jumbotronTransparentBackground myTransparentBackgroundVeryLight">
+
+  {%- if page.title -%}
+    <h1 class="page-heading">{{ page.title }}</h1>
+  {%- endif -%}
+
+  <div class="post-content e-content mt-5 mb-5" itemprop="articleBody">
+    {{ content }}
+  </div>
+
+<hr/>
+<a href="{{ site.url }}" title="back"><i class="fas fa-arrow-left"></i> back</a> <span style="display:inline-block; width:0.5cm;"></span>
+<a href="mailto:{{ site.email }}?subject=Feedback - {{ page.title }}" title="e-mail comments and feedback"><i class="far fa-envelope"></i> feedback</a>
+
+</div>
+
+<!-- 4 lines common to all pages -->
+</div>
+</div>
+</section>
+</main>

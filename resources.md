@@ -1,5 +1,5 @@
 ---
-layout: post
+layout: simple_page
 title: Books and Resources
 permalink: /resources/
 ---
