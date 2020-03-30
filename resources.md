@@ -15,5 +15,6 @@ Some books freely available online, and related to the topics discussed:
 Other useful resources:
 <ul>
           <li><a href="{{ site.assets }}/latex_math_symbols.pdf">Latex Mathematical Symbols</a></li>
+          <li><a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a></li>
 </ul>
 

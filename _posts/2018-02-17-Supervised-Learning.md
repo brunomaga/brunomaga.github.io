@@ -66,7 +66,29 @@ For personal amusement, in this [website](https://lossfunctions.tumblr.com/) we 
 
 Given a cost function $L(w)$ we want to find the weights that mimimizes the cost, via:
 - Grid Search (brute-force);
-- Least Squares: analytical solution for linear MSE ( $$ \triangledown L(w) = 0 $$ is a system of D equations ); 
+- Least Squares: analytical solution for regression with MSE loss function: 
+  - take the simplest form of linear regression with $y = Xw$. We want to minimize the MSE loss function i.e. minimize
+  $$
+  \begin{align*}
+    & (y - Xw)^2 \\
+  = & (y-Xw)^T(y-Xw) \\
+  = & y^Ty - y^TXw - (Xw)^Ty + (Xw)^TXw \\
+  = & y^Ty - w^TX^Ty - w^TX^Ty + w^TX^TXw \\
+  = & y^Ty - 2 w^TX^Ty + w^TX^TXw;\\
+  \end{align*}
+  $$
+  - **If $X^TX$ is invertible**, this minimization problem has an unique closed-form solution. To find the minimal value, we set the derivative to zero and this leads us to:\\
+  $$
+  \begin{align*}
+    & \frac{\partial}{\partial w} y^Ty - 2 w^TX^Ty + w^TX^TXw = 0 \\
+  \Leftrightarrow & 0 - 2 X^Ty + 2 X^TXw = 0 \\
+  \Leftrightarrow & 2 X^TXw = 2X^Ty \\
+  \Leftrightarrow & w = (X^TX)^{-1} X^Ty;\\
+  \end{align*}
+  $$
+    - In the previous computation, note that $\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$ (<a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, eq 2.4.1).
+  - As a side note, the **Gram matrix $X^TX$** is invertible if **X has full column rank***, i.e. $rank(X)=D$ (we'll ommit the proof). The rank of a matrix is defined as (a) the maximum number of linearly independent column vectors in the matrix, therefore we we assume that all columns are linearly independent; 
+
 - Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L (w^t) $$, for step size $\gamma$, and gradient $$ \triangledown L (w) = [ \frac{\partial L(w)}{\partial w_1}, ... , \frac{\partial L(w)}{\partial w_D}  ]^T $$;
 - Stochastic Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L_n (w^t) $$, for a random choice of an inputs $n$. Computationally cheap but unbiased estimate of gradient;
 - Mini-batch SGD: $$ w^{t+1} = w^{t} - \gamma \frac{1}{\mid B \mid} \sum_{n \in B} \triangledown L_n (w^t) $$, for a random subset $ B \subseteq [N] $. For each sample $n$ , we compute the gradient at the same current point $w^{(t)}$;
@@ -141,7 +163,10 @@ Techniques:
 - L2 regularization (standard Euclidean norm): $$ \Omega(w) = \lambda \| w \|^2 $$, where $$ \| w \|^2 = \sum_{i=0}^M w_i^2 $$
   - Large weights will be penalized, as they are *considered unlikely*;
   - If $L$ is the MSE, this is called **Ridge Regression** ;
-  - the parameter $ \lambda \gt 0 $ can be tuned to reduce overfitting. This is the **model selection** problem: 
+  - the parameter $ \lambda \gt 0 $ can be tuned to reduce overfitting. This is the **model selection** problem;
+  - similarly to the Least Squares problem, the loss of the MSE with Rigde Regression has an analytical solution:
+    - computed by minimizing $(y - Xw)^T(y-Wx) + \lambda w^Tw$, and;
+    - derivating with respect to $w$ leads to the normal equation $w = (X^TX - \lambda I)^{-1} X^Ty$.
 - L1 regularization: $$ \Omega(w) = \lambda \| w \| $$, where $$
  \| w \| = \sum_{i=0}^M | w_i | $$ 
   - keeping L1-norm small forces some elements in $w$ to be strictly 0, thus enforcity sparcity. Some features will not be used since their weight is 0.
@@ -150,7 +175,6 @@ Techniques:
 - [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a (deep) [neural network]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) and retrieving the final model as an average of models (see separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) in Deep Neural Networks for details.
 
 As a final note, Linear models can be made more powerful, by constructing better features for your input data. One way is to use nonlinear **
-
 
 A good application of a kernal is to *help* our regression model by adapting the input space to the mode. An example is 
 
