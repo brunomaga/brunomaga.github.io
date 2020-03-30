@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bayesian Optimization"
-categories: [machine learning, probabilistic programming]
+categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
@@ -22,16 +22,16 @@ In this post we will discuss how to perform Bayesian optimization, with a partic
 
 ### Basic concepts
 
-From the field of probability, the **product rule** tells us that the **joint distribution** of two given events $A$ and $B$ can be written as the product of the distribution of $a$ and the **conditional distribution** of $B$ given a value of $A$, i.e: $P(A, B) = P(A) P(B\|A)$. By symmetry we have that $P(B,A) = P(B) P(A\|B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
+From the field of probability, the **product rule** tells us that the **joint distribution** of two given events $A$ and $B$ can be written as the product of the distribution of $a$ and the **conditional distribution** of $B$ given a value of $A$, i.e: $P(A, B) = P(A) P(B\mid A)$. By symmetry we have that $P(B,A) = P(B) P(A\mid B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
 
 \begin{equation}
-P (A\|B) = \frac{P(B\|A) P(A)}{P(B)} \propto P(B\|A) P(A)
+P (A\mid B) = \frac{P(B\mid A) P(A)}{P(B)} \propto P(B\mid A) P(A)
 \label{eq_prior_AB}
 \end{equation}
 
-This equation is commonly read as "the **posterior** $P(A\| B)$ is proportional to the product of the **prior** $P(A)$ and the **likelihood** $P(B\|A)$" -- note that we dropped the **normalizer** term $P(B)$ as it is constant, making the left-hand term proportional to $P (A\|B)$.
+This equation is commonly read as "the **posterior** $P(A\mid  B)$ is proportional to the product of the **prior** $P(A)$ and the **likelihood** $P(B\mid A)$" -- note that we dropped the **normalizer** term $P(B)$ as it is constant, making the left-hand term proportional to $P (A\mid B)$.
  
-The prior distribution $P(A)$ is a shorthand for $P(A \| I)$ where $I$ is all information we have before start collecting data. If we have no information about the parameters then $P(A\|I)$ is a constant --- called an *uninformative prior* or *objective prior* --- and the posterior equals the likelihood function. Otherwise, we call it a *substantive/informative* prior.
+The prior distribution $P(A)$ is a shorthand for $P(A\mid I)$ where $I$ is all information we have before start collecting data. If we have no information about the parameters then $P(A\mid I)$ is a constant --- called an *uninformative prior* or *objective prior* --- and the posterior equals the likelihood function. Otherwise, we call it a *substantive/informative* prior.
 
 The posterior distribution describes how much the data has changed our *prior* beliefs. An important theoream called the *Bernstein-von Mises Theorem* states that:
 - for a sufficiently large sample size, the posterior distribution becomes independent of the prior (as long as the prior is neither 0 or 1)
@@ -45,34 +45,33 @@ The posterior distribution describes how much the data has changed our *prior* b
 
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. Examples:
 - Gaussian distribution, for an input $y$:
-  $$p(y | \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } exp [ - \frac{(y - \mu)^2}{2 \sigma^2} ]$$ for a distribution with mean $\mu$ and standard deviation $\sigma$, or
-  $$p(y | \mu, \Sigma ) = \frac{1}{ \sqrt{ (2 \pi)^D det(\Sigma)} } exp [ - \frac{1}{2}(y - \mu)^T \Sigma^{-1} (y-\mu)]$$ with means-vector $\mu$ and covariance matrix $\Sigma$ on its matrix form
+  - $$p(y \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } exp [ - \frac{(y - \mu)^2}{2 \sigma^2} ]$$ for a distribution with mean $\mu$ and standard deviation $\sigma$, or
+  - $$p(y \mid \mu, \Sigma ) = \frac{1}{ \sqrt{ (2 \pi)^D det(\Sigma)} } exp [ - \frac{1}{2}(y - \mu)^T \Sigma^{-1} (y-\mu)]$$ with means-vector $\mu$ and covariance matrix $\Sigma$ on its matrix form
 
 - Laplace:
- $$ p( y_n | x_n, w ) = \frac{1}{2b} e^{-\frac{1}{b} | y_n - X_n^T w | } $$
+ $$ p( y_n mid x_n, w ) = \frac{1}{2b} e^{-\frac{1}{b} mid y_n - X_n^T w mid } $$
 
 - TODO add more distributions
+
+### Exponential Family of distributions
+
 - TODO add explanation of exponential family
-- TODO add Least Square solution to the Unsupervised Learning notebook
-- TOOD add analytical solution to Mean Square Error:
-  - $argmin E_2$ = $(y - Xw)^2 = (y-Xw)^T(y-Xw)$ , which (when equal to zero) has a closed for solution of $w = (X^TX)^{-1} X^Ty$
-  - ie minimizing $E_2$ is equivalent to determining  the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = mx + b + \varepsilon$ instead, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$
-- TODO add Adams optimizer to Unsupervised Learning notebook
+- TODO explain that because all are exponentials, the log makes it easier
 
 ### Maximum Likelihood (MLE) and Maximum-a-Posteriori (MAP)
 
-The problem in hand is to find the parameters of the distribution that best represent the data. Adapting the previous equation \ref{eq_prior_AB} of the prior to the problem at hand, we aim at computing:
+The problem in hand is to find the parameters of the distribution that best represent the data. Adapting the previous equation \ref{eq_prior_AB} of the prior to the problem of regression in a Bayesian environment (finding the weights of our model given input,  labels, and parameters), we aim at computing:
 
 $$
-P (w \| y, X, \sigma^2) = \frac{P(y\|w, X, \sigma^2) P(w)}{P(y, X, \sigma^2)} \propto P(y\|w, X, \sigma^2) P(w)
+P (w\mid y, X, \sigma^2) = \frac{P(y\mid w, X, \sigma^2) P(w)}{P(y, X, \sigma^2)} \propto P(y\mid w, X, \sigma^2) P(w)
 \label{eq_prior_w}
 $$
 
 for a given input set $X$, with labels $y$, and model parameters $\sigma$.
 
 There are two main optimization problems that we discuss commonly on Bayesian methods:
-- When we try to find *how likely is that an output $y$ belongs to a model defined by $X$, $w$ and $\sigma$*, or **maximize the likelihood $P(y\|w, X, \sigma^2)$**, we perform a Maximum Likelihood Estimator (MLE);
-- When we try to maximize the posterior, or the probability of the model parameters $w$ given the model $X$, $y$ and $\sigma$, or **maximize the posterior $P (w \| y, X, \sigma^2)$**, we perform a Maximum-a-Posteriori (MAP); 
+- When we try to find *how likely is that an output $y$ belongs to a model defined by $X$, $w$ and $\sigma$*, or **maximize the likelihood $P(y\mid w, X, \sigma^2)$**, we perform a Maximum Likelihood Estimator (MLE);
+- When we try to maximize the posterior, or the probability of the model parameters $w$ given the model $X$, $y$ and $\sigma$, or **maximize the posterior $P (w\mid y, X, \sigma^2)$**, we perform a Maximum-a-Posteriori (MAP); 
 
 
 To compute that, we perform the *log-trick* and place the term to optimize into a log function. We can do this because $log$ is a monotonically-increasing function, thus applying it to any function won't change the input values where the minimum or maximum of the solution is found (ie where gradient is zero). Moreover, since most distributions are part of the **exponential family** of distributions, they can all be represented as an exponential, and applying the log will bring the power term *out* of the exponential, and make it computationally simpler are faster. 
@@ -80,7 +79,7 @@ To compute that, we perform the *log-trick* and place the term to optimize into 
 The **log-likelihood** is the log of the [likelihood](https://www.statisticshowto.datasciencecentral.com/likelihood-function/) of observing --- given observed data --- a parameter value  of the statistical model used to describe that data. I.e.:
 
 $$
-L_{lik} (w) = log p (y | X, w)
+L_{lik} (w) = log p (y mid X, w)
 $$
 
 This can be used to estimate the cost. The log-likelihood if (typically?) convex in the weight vector $w$, as it's a sum of convex functions. The **Maximum likelihood estimator (MLE)** states that:
@@ -92,7 +91,7 @@ $$
 i.e. the solution that minimizes the weights in the Mean Square Error problem, maximizes the log-likelihood of the data. MLE is a sample approximation of the *expected* log-likelihood i.e.
 
 $$
-L_{lik}(w) \approx E_{p(x,y)} [ log p(y | x,w ) ]
+L_{lik}(w) \approx E_{p(x,y)} [ log p(y mid x,w ) ]
 $$
 
 [coordinate-ascent]: {{ site.baseurl }}{% post_url 2018-02-17-Supervised-Learning %}
@@ -105,9 +104,24 @@ A particular exception of Bayesian optimization that requires non-iterative meth
 1. defining the appropriate parametric distribution of the weights (i.e. the prior) is a *hard* problem and requires domain knowledge that many times is not easy to grasp;
 2. the analytical solution for the posteriors is *extremelly fast* to compute even for very large datasets and dimensionality, compared to aternative methods that we will cover later;
 
-Take the linear regression model $y = w_1x_1 + ... + w_dx_d$ or its alternative matrix representation $y = \sum_{d=1}^D \text{ } w_d^TX$ for a problem with dimensionlity $D$.
+Take the simplest form of linear regression with $y = Xw$. To penalize outliers, we use a loss function based on the mean square error. Thus, we want now to minimize $(y - Xw)^2 = (y-Xw)^T(y-Xw)$. This minimization problem is called the Least Square Problem, and we showed in a [previous post]({{ site.baseurl }}{% post_url 2018-02-17-Supervised-Learning %}) that it has the closed-form solution $ w = (X^TX)^{-1} X^Ty$. 
 
-Going back to the previous equation \ref{eq_prior_w} 
+In practice, minimizing the Least Squares problem is equivalent to determining the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = wx + b + \varepsilon$ instead, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. This is obivous since the MSE loss in $(y - Xw)^2$ increases quadratically with the difference between groundtruth $y$ and predicted $Xw$ values.
+
+With that in mind, suppose that we want to compute the noise level in the output solution, ie, suppose $y$ has been generated through $y_d = w_0 + w_1x_1 + ... + w_dx_d + \varepsilon_d$ for a problem with dimensionlity $D$, with $\varepsilon_d \thicksim \mathcal{N}(0, \sigma^2)$. Applying the Gaussian distribution (with mean setto the $Xw$ sum of products), we get:
+  - $$p(y_d \mid X_d, w, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } exp \left( - \frac{1}{2 \sigma^2} \left( y_d - x_dw \right)^2 \right)$$ or
+  - $$p(y \mid X, w, \sigma^2 ) = \frac{1}{(2 \pi \sigma^2)^{D/2}} exp \left( - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) \right)$$ in matrix form;
+
+Going back to equation \ref{eq_prior_w}, we take the log of the previous equation to simplify the maths: 
+$$
+L = log P ( y \mid X, w, \sigma^2 ) = - \frac{D}{2} log ( 2 \pi \sigma^2) - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw)
+$$
+to simplify even further, instead of minimizing the loss, we negate the previous equation and compute instead the maximum value of:
+$$
+L = log P ( y \mid X, w, \sigma^2 ) = \frac{D}{2} log ( 2 \pi \sigma^2) + \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw)
+$$
+
+
 
 ### Stochastic Variational Inference for approximate posterior
 
@@ -123,7 +137,7 @@ disadvantages: very high computation cost, what to do with an exact posterior wh
 
 ### Refresher: Linear Algebra
 
-Here's a reminder of some operations on linear algebra, in case the previous reductions cause some confusion:
+Here's a reminder of some operations on linear algebra, in case the previous reductions cause some confusion. For more complex operations, check <a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a>.
 
 1. **Multiplication:**
 	1. $A(BC) = (AB)C$;
