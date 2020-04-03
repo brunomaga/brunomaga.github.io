@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Bayesian Optimization"
+title:  "Bayesian Optimization: Linear Regression"
 categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
@@ -45,11 +45,10 @@ The posterior distribution describes how much the data has changed our *prior* b
 
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. Examples:
 - Gaussian distribution, for an input $y$:
-  - $$p(y \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } exp [ - \frac{(y - \mu)^2}{2 \sigma^2} ]$$ for a distribution with mean $\mu$ and standard deviation $\sigma$, or
-  - $$p(y \mid \mu, \Sigma ) = \frac{1}{ \sqrt{ (2 \pi)^D det(\Sigma)} } exp [ - \frac{1}{2}(y - \mu)^T \Sigma^{-1} (y-\mu)]$$ with means-vector $\mu$ and covariance matrix $\Sigma$ on its matrix form
-
+  - $$p(y \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(y - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $\mu$ and standard deviation $\sigma$, or
+  - $$p(y \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{-D/2} \text{ } det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(y - \mu)^T \Sigma^{-1} (y-\mu) \right)$$ with means-vector $\mu$ and covariance matrix $\Sigma$ on its multivariate notation
 - Laplace:
- $$ p( y_n mid x_n, w ) = \frac{1}{2b} e^{-\frac{1}{b} mid y_n - X_n^T w mid } $$
+ $$ p( y_n \mid x_n, w ) = \frac{1}{2b} e^{-\frac{1}{b} \mid y_n - X_n^T w \mid } $$
 
 - TODO add more distributions
 
@@ -79,10 +78,10 @@ To compute that, we perform the *log-trick* and place the term to optimize into 
 The **log-likelihood** is the log of the [likelihood](https://www.statisticshowto.datasciencecentral.com/likelihood-function/) of observing --- given observed data --- a parameter value  of the statistical model used to describe that data. I.e.:
 
 $$
-L_{lik} (w) = log p (y mid X, w)
+L_{lik} (w) = log p (y \mid X, w)
 $$
 
-This can be used to estimate the cost. The log-likelihood if (typically?) convex in the weight vector $w$, as it's a sum of convex functions. The **Maximum likelihood estimator (MLE)** states that:
+This can be used to estimate the cost. The log-likelihood is (typically?) convex in the weight vector $w$, as it's a sum of convex functions. The **Maximum likelihood estimator (MLE)** states that:
 
 $$
 argmin_w L_{MSE}(w) = argmax_w L_{lik} (w)
@@ -91,7 +90,7 @@ $$
 i.e. the solution that minimizes the weights in the Mean Square Error problem, maximizes the log-likelihood of the data. MLE is a sample approximation of the *expected* log-likelihood i.e.
 
 $$
-L_{lik}(w) \approx E_{p(x,y)} [ log p(y mid x,w ) ]
+L_{lik}(w) \approx E_{p(x,y)} [ log p(y \mid x,w ) ]
 $$
 
 [coordinate-ascent]: {{ site.baseurl }}{% post_url 2018-02-17-Supervised-Learning %}
@@ -100,11 +99,22 @@ When the distribution of the prior and posterior are computationally tractable, 
 
 ### Bayesian Linear Optimization
 
+<small>
+(In case the following reductions cause some confusion, check <a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a simple overview of matrix operations.)
+</small>
+
 A particular exception of Bayesian optimization that requires non-iterative methods is the linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is utilized very commonly, mainly due to two reasons:
 1. defining the appropriate parametric distribution of the weights (i.e. the prior) is a *hard* problem and requires domain knowledge that many times is not easy to grasp;
 2. the analytical solution for the posteriors is *extremelly fast* to compute even for very large datasets and dimensionality, compared to aternative methods that we will cover later;
 
-Take the simplest form of linear regression with $y = Xw$. To penalize outliers, we use a loss function based on the mean square error. Thus, we want now to minimize $(y - Xw)^2 = (y-Xw)^T(y-Xw)$. This minimization problem is called the Least Square Problem, and we showed in a [previous post]({{ site.baseurl }}{% post_url 2018-02-17-Supervised-Learning %}) that it has the closed-form solution $ w = (X^TX)^{-1} X^Ty$. 
+Take the simplest form of linear regression with $y = Xw$. To penalize outliers, we use a loss function based on the mean square error. Thus, we want now to minimize
+
+$$
+(y - Xw)^2 = (y-Xw)^T(y-Xw).
+\label{eq_E2}
+$$
+
+This minimization problem is called the Least Square Problem, and we showed in a [previous post]({{ site.baseurl }}{% post_url 2018-02-17-Supervised-Learning %}) that it has the closed-form solution $ w = (X^TX)^{-1} X^Ty$. 
 
 In practice, minimizing the Least Squares problem is equivalent to determining the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = wx + b + \varepsilon$ instead, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. This is obivous since the MSE loss in $(y - Xw)^2$ increases quadratically with the difference between groundtruth $y$ and predicted $Xw$ values.
 
@@ -116,28 +126,139 @@ Going back to equation \ref{eq_prior_w}, we take the log of the previous equatio
 $$
 L = log P ( y \mid X, w, \sigma^2 ) = - \frac{D}{2} log ( 2 \pi \sigma^2) - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw)
 $$
-to simplify even further, instead of minimizing the loss, we negate the previous equation and compute instead the maximum value of:
+
+The relevant message here is that minimizing the loss (or maximizing the negative log) --- i.e. by computing its derivative equal to zero --- depends only on the second term on the right-hand side sum, as the first term is independent of $w$. Moreover, $1/\sigma^2$ is a constant therefore this resolution is equivalent to miminizing the Least Squares (Equation \ref{eq_E2}) and scale it to $1/\sigma^2$.
+
+##### Adding regularization
+
+Regularizers can be added normally as in the non-Bayesian regression and may have as well an analytical solution. As an example, if we want ot add an $L_2$/Ridge regularizer:
+
 $$
-L = log P ( y \mid X, w, \sigma^2 ) = \frac{D}{2} log ( 2 \pi \sigma^2) + \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw)
+  \begin{align*}
+ 0 = & \frac{d}{dw} \left( L - \frac{\alpha}{2} w^Tw \right)\\
+ 0 = & \frac{d}{dw} \left( - \frac{D}{2} log ( 2 \pi \sigma^2) - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{\alpha}{2} w^Tw \right)\\
+ w = & (X^TX + \lambda I )^{-1} X^Ty
+  \end{align*}
+$$
+
+where $\lambda = \alpha \sigma^2$. Note that we picked the regularizer constant $\alpha/2$ on the first step to simplify the maths and *cancel out* the 2 when doing the derivative of the $w^Tw$.
+
+##### Analytical Solution
+
+We assume all our weights are drawn from a gaussian distribution and may (or may not) be independent. In practice, we start with the prior $p(w) \thicksim \mathcal{N}(m_0, S_0)$, with mean vector $m_0$, and (positive semi-definite) covariance matrix $S_0$ (following the variable notation found on [Chris Bishop's PCML book]({{ site.resources_permalink }}).
+
+We have then the following prior in multivariate notation:
+
+$$
+p(w \mid m_0, S_0 ) = (2 \pi)^{-\frac{D}{2}} \text{ } det(S_0)^{- \frac{1}{2}} \text{ } exp \left( - \frac{1}{2}(w - m_0)^T S_0^{-1} (y-m_0) \right)
+$$ 
+
+And the likelihood:
+
+$$
+p(y \mid w, X, \sigma^2) = \frac{1}{(2 \pi \sigma^2)^{D/2}} exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) \right)
+$$
+
+We now replace the terms on the the Bayes equation \ref{eq_prior_w} with the previous terms, leading to the final formulation:
+
+$$
+p(w \mid y, X, \sigma^2) \propto exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{1}{2}(w-m_0)^TS_0^{-1}(w-m_0) \right)
+$$
+
+##### Exponent of Multivariate Normal Distribution
+
+The value of $$d = \sqrt{ (x - \mu)^T \Sigma^{-1}(x-\mu)}$$ for a given observation $x_i$ is called the [Mahalonabis distance](https://en.wikipedia.org/wiki/Mahalanobis_distance).
+
+We will note that the previous density function only depends on $w$ through the squared Mohalanobis distance:
+
+$$
+Q = -\frac{1}{2}(w - \mu)^T S^{-1}(w-\mu)
+$$
+
+which is the equation for a hyper-ellipse centered at the mean $\mu$, eg:
+
+<p align="center">
+<img width="30%" height="30%" src="/assets/Bayesian-Optimization/mahalanobis.gif"/>
+<br/><br/><small>bivariate normal for 2 dimensions, showing an ellipse with center at mean $\mu$ and covariance $S$
+<br/>source: <a href="https://online.stat.psu.edu/stat505/lesson/4/4.3">Applied Multivariate Statistical Analysis, PennState Eberly College of Science</a> </small>
+</p>
+
+
+There are several important properties on the exponent component defined by the Mahalobis distance $(w - \mu)^T S^{-1}(w-\mu)$:
+- All values of $w$ such that $$(w - \mu)^T S^{-1}(w-\mu) = c$$  for any constant $c$ have the same value of density $p(w)$ and thus equal likelihood;
+- As the value of $$(w - \mu)^T S^{-1}(w-\mu)$$ increases, the value of the density function decreases;
+- The value of $$(w - \mu)^T S^{-1}(w-\mu)$$ increases as the distance bewtween $w$ and $\mu$ decreases;
+- The variable $d^2$ has a chi-square distribution with $p$ degrees of freedom;
+
+We will find the mean $\mu$ and covariance $S$ that fit that expression (also detailed on section 9.3.3 of the [Mathematics for Machine Learning book]({{ site.resources_permalink }})).
+
+$$
+  \begin{align}
+   & - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{1}{2}(w-m_0)^TS_0^{-1}(w-m_0) \\
+ = & - \frac{1}{2} \left( \sigma^{-2} y^T y - 2\sigma^{-2} y^T Xw + \sigma^{-2} w^T X^T Xw + w^TS_0^{-1}w - 2 m_0^T S_0^{-1} w + m_0^T S_0^{-1} m_0 \right) \\
+   \label{eq1_sq}
+ = & - \frac{1}{2} \left( w^T ( \sigma^{-2} X^TX + S_0^{-1}) w \right)   & \hspace{2cm}\text{(terms quadratic in $w$)} \\
+   \label{eq1_lin}
+   & + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right)               &  \hspace{2cm}\text{(terms linear in $w$)} \\
+   & - \frac{1}{2} \left( \sigma^{-2} y^T y + m_0^T S_0^{-1} m_0 \right) & \hspace{2cm}\text{(const terms independent of $w$)} \\
+  \end{align}
 $$
 
 
+Looking at the last term, we can see that this function is quadratic in $w$. Because the unnoormalized log-posterior distribution is negative, implies that *the posterior is Gaussian*, i.e. going back to Equation \ref{eq_prior_w}:
 
-### Stochastic Variational Inference for approximate posterior
+$$
+  \begin{align*}
+    & P (w\mid y, X, \sigma^2) \\
+  = & exp ( log \text{ } P (w\mid y, X, \sigma^2) ) )  \\
+\propto & exp ( log \text{ } P(y\mid w, X, \sigma^2) + log \text{ } P(w) ) \\
+\propto & exp \left( -\frac{1}{2} \left( w^T ( \sigma^{-2} X^TX + S_0^{-1}) w \right) + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right) \right) \\
+  \end{align*}
+$$
 
-advantage: faster than sampling methods; allows non-linear regression methods;
-disadvantages: over-confident, works well only if we know the parametric distribution of the posterior, requires the posterior to follow a parametric distribution, otherwise we can use the sampling.
+where we used the linear and quadratic terms in $w$ and ignored the $const$ terms as they do not change the proportional operation.
 
-### Monte Carlo sampling for exact posteriors 
+Finally, to bring this unnormalized Gaussian into the form proportional to $ \mathcal{N} ( w \mid m_N, S_N )$, we utilize the method for [completing the square](https://en.wikipedia.org/wiki/Completing_the_square). We want:
 
-advantages: *real* posterior.
-disadvantages: very high computation cost, what to do with an exact posterior which doesnt follow a parametric ditribution.
+$$
+  \begin{align}
+  & \mathcal{N} ( w \mid m_N, S_N ) \\
+= & -\frac{1}{2}(w - \mu)^T S^{-1}(w-\mu)    & \hspace{2cm}\text{(the Mohalanobis term?)} \\ 
+   \label{eq2_sq}
+ = & -\frac{1}{2} \left(w^T S_N^{-1}w \right)   & \hspace{2cm}\text{(terms quadratic in $w$)} \\
+   \label{eq2_lin}
+   & + m^T_N S^{-1}_N w                         &  \hspace{2cm}\text{(terms linear in $w$)} \\
+   & - \frac{1}{2} \left( m_N^T S_N^{-1} m_N \right) & \hspace{2cm}\text{(const terms independent of $w$)} \\
+  \end{align}
+$$
+
+Thus, by matching the squared (\ref{eq1_sq}, \ref{eq2_sq}) and linear (\ref{eq1_lin}, \ref{eq2_lin}) expressions on the computed vs desired equations, we can find $S_N$ and $m_N$ as:
+
+$$
+ \begin{align*}
+                   & w^T S_N^{-1} w = \sigma^{-2} w^TX^TXw+w^TS_0^{-1} w \\
+  \Leftrightarrow  & w^T S_N^{-1} w = w^T ( \sigma^{-2} X^TX+ S^{-1}_0) w \\
+  \Leftrightarrow  & S_N^{-1} = \sigma^{-2} X^T X + S^{-1}_0 \\
+  \Leftrightarrow  & S_N = ( \sigma^{-2} X^TX + S^{-1}_0)^{-1} \\
+ \end{align*}
+$$
+
+and
+
+$$
+ \begin{align*}
+                   & -2 m_N^T S_N^{-1}w = 2 (\sigma^{-2}X^Ty + S_0^{-1} m_0)^T w \\
+  \Leftrightarrow  & m_N^T S_N^{-1} = (\sigma^{-2}X^Ty + S_0^{-1} m_0)^T \\
+  \Leftrightarrow  & m_N^T = S_N (\sigma^{-2}X^Ty + S_0^{-1} m_0) \\
+ \end{align*}
+$$
 
 ---
+---
 
-### Refresher: Linear Algebra
+##### Refresher: Linear Algebra
 
-Here's a reminder of some operations on linear algebra, in case the previous reductions cause some confusion. For more complex operations, check <a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a>.
+For further details, check <a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed list of matrix operations.
 
 1. **Multiplication:**
 	1. $A(BC) = (AB)C$;
