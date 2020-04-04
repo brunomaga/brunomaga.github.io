@@ -12,10 +12,6 @@ For the sake of comparison, take the example of the simple linear regression $y 
  
 Take the following example of few observations of $x$ in a linear space, plotted in pink, with a yellow line representing a linear regression of the data. The value of $x$ can be estimated by the value in the regression model represented by a blue cross. However, because it is so different from other observations, we may not be certain of how accurate is our prediction. The Bayesian model helps in this decision by computing the uncertainty (or error) of our decision, as plotted in green:
 
-<p align="center">
-<img width="40%" height="40%" src="/assets/Bayesian-Optimization/linear_bayesian_2.png">
-</p>
-
 Apart from the uncertainty quantification, another benefit of Bayesian is the possibility of **online learning**, i.e. a continuous update of the trained model (from previously-seen data) by looking at only the new data. This is a handy feature for e.g. datasets that are purged periodically.
 
 In this post we will discuss how to perform Bayesian optimization, with a particular emphasis on linear regression and normal distrutions.
@@ -143,9 +139,9 @@ $$
 
 where $\lambda = \alpha \sigma^2$. Note that we picked the regularizer constant $\alpha/2$ on the first step to simplify the maths and *cancel out* the 2 when doing the derivative of the $w^Tw$.
 
-##### Analytical Solution
+##### Posterior Analytical Solution
 
-We assume all our weights are drawn from a gaussian distribution and may (or may not) be independent. In practice, we start with the prior $p(w) \thicksim \mathcal{N}(m_0, S_0)$, with mean vector $m_0$, and (positive semi-definite) covariance matrix $S_0$ (following the variable notation found on [Chris Bishop's PCML book]({{ site.resources_permalink }}).
+We assume all our weights are drawn from a gaussian distribution and may (or may not) be independent. In practice, we start with the prior $p(w) \thicksim \mathcal{N}(m_0, S_0)$, with mean vector $m_0$, and (positive semi-definite) covariance matrix $S_0$ (following the variable notation found on [Chris Bishop's PRML book]({{ site.resources_permalink }}).
 
 We have then the following prior in multivariate notation:
 
@@ -253,10 +249,78 @@ $$
  \end{align*}
 $$
 
+inline with equations 3.50 and 3.51 in [Chris Bishop's PRML book]({{ site.resources_permalink }}).
+
+##### Online learning
+
+Online learning allows us to do iterative learning by continuously updating our posterior based on new observable data. The main principle is that --- following the $posterior \propto likelihood * prior$ principle --- at every iteration we turn our posterior into the new prior, i.e. the new initial knowledge is what we learnt previously. The main advantage is not requiring all the data at once for training and allowing us to learn from datasets that are not fully-available at once. An illustration of the principle is displayed below:
+
+<p align="center">
+<img width="50%" height="50%" src="/assets/Bayesian-Optimization/linear_bayesian_posterior_1.png"/><br/>
+<img width="50%" height="50%" src="/assets/Bayesian-Optimization/linear_bayesian_posterior_3.png"/><br/>
+<img width="50%" height="50%" src="/assets/Bayesian-Optimization/linear_bayesian_posterior_4.png"/><br/>
+<img width="50%" height="50%" src="/assets/Bayesian-Optimization/linear_bayesian_posterior_5.png"/><br/>
+<br/><br/><small>illustration of three steps of online learning for the linear model $y = w_0 + w_1x$.
+<br/>(inspired on fig 3.7, <a href="{{ site.resources_permalink }}">Pattern Classification and Machine Learning, Chris Bishop</a>)</small>
+</p>
+
+Note that we start with the prior knowledge that both weights ($w_0$ and $w_1$) are zero-centered, i.e. mean 0, and a std deviation of 1 (top-center photo). Drawing regression models from such distribution leads to a very noisy regression (top-right). When a new datapoint is introduced, the new likelihood (second row, left) is multiplied by our new prior, i.e. the posterior of the previous iteration (top-center), leading to the new posterior (second row, center). The model is now more accurate that the search space (covariance of the weights) is more reduced (second row, right). After three iterations, the model is already very accurate with a reduce variance on the weights (bottom centre) and better-finned linear regression models (bottom right).
+
+### Predictive Variance
+
+Remember that we wanted to model a noisy output defined by $y = X^Tw + \varepsilon$ with model parameters $w \thicksim \mathcal{N}(\mu, \sigma^2)$  and noise parameter $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. The closed-form solution that computes the distribution of $w$ was provided on the previous section. We'll now compute the distribution of $\varepsilon$. *Note that drawing samples from the posterio P(y \mid X, w, \sigma^2)$ is equivalent to drawing samples from $y = X^Tw + \varepsilon$.
+
+We can then compute the [expectation](https://en.wikipedia.org/wiki/Expected_value) of $y$ as:
+
+$$
+ \begin{align*}
+  \mathbf{E} \left[ y \right] & = \mathbf{E} \left[ X^Tw + \varepsilon \right] \\
+                              & = X^T \mathbf{E} \left[ w \right] + \mathbf{E} \left[ \varepsilon \right] \\
+                              & = X^T m_N \\
+ \end{align*}
+$$
+
+i.e. because noise has a mean zero, it's a result equivalent to a linear regression where the weights are set to the close-form solution of their mean value. The [variance](https://en.wikipedia.org/wiki/Variance) of $y$ follows analogously (see Variance rules at the end of the post if in doubt):
+
+$$
+  \begin{align*}
+  \mathbf{Var} \left[ y \right] & = \mathbf{Var} \left[ X^Tw + \varepsilon \right] \\
+                                & = \mathbf{Var} \left[ X^Tw  \right] + \mathbf{Var} \left[ \varepsilon \right] + 2\mathbf{Cov} \left[ X^Tw, \varepsilon \right] \\
+                                & = \mathbf{Var} \left[ X^Tw  \right] + \mathbf{Var} \left[ \varepsilon \right] & \text{(independent variables)}\\
+                                & = X^T \mathbf{Var} \left[ w  \right] X + \mathbf{Var} \left[ \varepsilon \right] & \text{(Var linear transformation (rule 6, bottom))}\\
+                                & = X^T S_N X + \sigma^2 & \text{($\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$ and variance is the square of the std deviation)}\\
+%\\
+%\\
+%
+%\mathbf{Var} \left[ y \right] & = \mathbf{E} \left[ (y- \mathbf{E} \left[ y \right])^2 \right]    & \text{(definition of Var)}\\
+%                              & = \mathbf{E} \left[ \left(X^Tw + \varepsilon -  X^T m_N \right)^2 \right]    & \text{(replacing $y$ and $\mathbf{E} \left[ y \right]$ from before)}\\
+%                              & = \mathbf{E} \left[ \left(X^T(w-m_N)  + \varepsilon \right)^2 \right] \\
+%                              & = \mathbf{E} \left[ X^T(w-m_N)(w-m_N)^TX + 2X^T(w-m_N) \varepsilon + \varepsilon^2 \right] & \text{(note: $\left( X^T(w-m_N) \right) \left( X^T(w-m_N) \right)^T = X^T(w-m_N)(w-m_N)^TX$ )}\\
+%                              & = \mathbf{E} \left[ X^T(w-m_N)(w-m_N)^TX \right] + 2 \mathbf{E} \left[ X^T(w-m_N) \varepsilon \right] + \mathbf{E} \left[ \varepsilon^2 \right] \\
+%                              & = X^T \mathbf{E} \left[ (w-m_N)(w-m_N)^T \right] X + 0 + \sigma^2\\
+%                              & = X^T S_N X + \sigma^2\\
+ \end{align*}
+$$
+
+Similarly to the visualization displayed before, introducing new dataset affects improves the accuracy of our model:
+
+<p align="center">
+<img width="35%" height="35%" src="/assets/Bayesian-Optimization/linear_bayesian_predictive_distribution_0.png"/><br/>
+<img width="35%" height="35%" src="/assets/Bayesian-Optimization/linear_bayesian_predictive_distribution_1.png"/><br/>
+<img width="35%" height="35%" src="/assets/Bayesian-Optimization/linear_bayesian_predictive_distribution_2.png"/><br/>
+<img width="35%" height="35%" src="/assets/Bayesian-Optimization/linear_bayesian_predictive_distribution_3.png"/><br/>
+<br/><br/><small>illustration of four steps modelling a synthetic sinusoidal data. Pictures with green groudntruth, red model mean approximation, and light-red predictive variance.
+<br/>source: <a href="{{ site.resources_permalink }}">Pattern Classification and Machine Learning, Chris Bishop</a></small>
+</p>
+
+##### Final Remarks
+
+For more advanced topics on Bayesian Linear Regression refer to chapter 3 in Pattern Recognition and Machine Learning book from Chris Bishop and chapter 9.3 in Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}). To download the source code of the closed-form solutions and reproduce the examples above, check the <a href="{{ site.assets }}/Bayesian-Optimization/Bayesian_Linear_Regression.ipynb">Bayesian Linear Regression notebook</a>.
+
 ---
 ---
 
-##### Refresher: Linear Algebra
+##### Appending: Refresher on Linear Algebra
 
 For further details, check <a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed list of matrix operations.
 
@@ -266,6 +330,7 @@ For further details, check <a href="{{ site.assets }}/the_matrix_cookbook.pdf">T
 	3. $(B+C)A=BA+CA$;
 	4. $r(AB)=(rA)B=A(rB)$ for a scalar $r$;
 	5. $I_mA=AI=AI_n$;
+	6. $(A+B)^2 = (A+B)(A+B)^T$
 
 2. **Transpose:**
 	1. $(A^T)^T = A$;
@@ -285,3 +350,12 @@ For further details, check <a href="{{ site.assets }}/the_matrix_cookbook.pdf">T
 	3. If $A$ is invertible, then $Ax=b$ has an unique solution;
 	4. If $A$ is invertible, $(A^{-1})^{-1}=A$;
 	5. $rA^{-1} = (\frac{1}{r}A)^{-1}$ for a scalar $r$;
+
+5. **Variance and Covariance:**
+	1. $Var(X) = Cov(X,X)$;
+	1. $Var(rX) = r Var(X)$, for scalar $r$;
+	2. $Var(X+Y) = Var(X) + Var(Y) + 2Cov(X,Y)$;
+	3. $Var(X+Y) = Var(X) + Var(Y)$, if X and Y are independent (ie, zero covariance);
+	4. $Var(X) = \mathbf{E}[(X-\mathbf{E}[X])^2 ] = \mathbf{E} \left[ X^2  - 2X\mathbf{E}[X] + \mathbf{E}[X]^2 \right] = \mathbf{E}[X^2] - 2\mathbf{E}[X]\mathbf{E}[X] + \mathbf{E}[X]^2 =  \mathbf{E}[X^2] -  \mathbf{E}[X]^2$;
+	5. If $y$ is a linear transformation $y=mx+b$, then $Var(y)=m^2 \text{ } Var(w)$;
+		- In multivariate form, if $y=X^Tw$, then $Var(y)=X^T \text{ } Var(w) \text{ } X$;
