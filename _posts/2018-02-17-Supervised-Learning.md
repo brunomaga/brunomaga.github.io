@@ -277,3 +277,7 @@ This approach obviously falls short for high input dimensionality. For such use 
 
 Moved to a separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}).
 
+### Bayesian Optimization
+
+Moved to a separate [post]({{ site.baseurl }}{% post_url  2019-11-12-Bayesian-Linear-Regression %}).
+
