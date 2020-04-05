@@ -15,7 +15,7 @@ Apart from the uncertainty quantification, another benefit of Bayesian is the po
 
 We will discuss heavily the normal distribution in the following setion. As a refresher, the [Normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) is defined for an input $x$ by:
   - $$p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $\mu$ and standard deviation $\sigma$, or
-  - $$p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{-D/2} \text{ } det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)$$ with means-vector $\mu$ and covariance matrix $\Sigma$ on its multivariate notation
+  - $$p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{-D/2} \text{ } det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)$$ with mean vector $\mu$ and covariance matrix $\Sigma$ on its multivariate notation
 
 ### Bayes Theorem
 
