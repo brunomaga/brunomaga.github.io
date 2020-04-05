@@ -1,9 +1,15 @@
 ---
 layout: post
-title:  "Bayesian Optimization: Complex use cases"
+title:  "[draft] Bayesian Optimization: Complex use cases"
 categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
+
+### DNN
+
+https://arxiv.org/abs/1906.09686
+https://arxiv.org/abs/2002.02405
+
 
 ### Stochastic Variational Inference for approximate posterior
 
