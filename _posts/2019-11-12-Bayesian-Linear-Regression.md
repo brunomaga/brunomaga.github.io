@@ -56,7 +56,7 @@ Note that the likelihood is not a probability distribution (it does not integrat
 
 When the distribution of the prior and posterior are computationally tractable, the optimization of the parameters that define the distribution can be performed using the [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent) method, an iterative method that we've covered [previously]({% post_url 2018-02-17-Supervised-Learning %}). In practice we perform and iterative partial derivatives of the prior/posterior for the model parameters (e.g. mean $\mu$ and standard deviation $\sigma$ in a Gaussian environment) and move our weight estimation towards the direction of lowest loss.
 
-To simplify the computation, we perform the *log-trick* and place the term to optimize into a log function. We can do this because $log$ is a monotonically-increasing function, thus applying it to any function won't change the input values where the minimum or maximum of the solution is found (ie where gradient is zero). Moreover, since most common and tractable distributions (including the Gaussian distribution we'll cover next) are part of the **exponential family of distributions** (detailed in our [previous post](https://en.wikipedia.org/wiki/Exponential_family)), and is represented by an exponential, by applying the $log$ function we bring the power term *out* of the exponential, making its computation simpler are computationally faster. We then get: 
+To simplify the computation, we perform the *log-trick* and place the term to optimize into a log function. We can do this because $log$ is a monotonically-increasing function, thus applying it to any function won't change the input values where the minimum or maximum of the solution is found (ie where gradient is zero). Moreover, since Gaussian distribution is represented by a product of an exponential, by applying the $log$ function we *bring the power term out* of the exponential, making its computation simpler are faster. We then get: 
 
 $$
   \begin{align*}
@@ -159,7 +159,7 @@ In practice, this is the sum of the log-likelihood $ log \text{ } P(y \mid X, w)
 $$
   \begin{align*}
 - \frac{d \text{ }  log \text{ } p( w \mid X,y)}{dw} & = \frac{d \text{ }  log \text{ } p( y \mid X,w)}{dw} - \frac{d \text{ }  log \text{ } p(w)}{dw} \\ 
- & = \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right)  & \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and Gaussian prior $\mathcal{N}(0, b^2 I)$)}\\
+ & = \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right)  & \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and prior $\mathcal{N}(0, b^2 I)$)}\\
  & = \frac{1}{\sigma^2}(w^TX^TX-y^TX) + \frac{1}{b^2}w^T & \text{(First-order derivative, rule 3)}\\
   \end{align*}
 \label{eq_prior_w}
@@ -213,7 +213,7 @@ We now apply the log-trick, and factorize the expression so that we can isolate 
 
 $$
   \begin{align}
- log \text{ } P (w \mid X, y) = & -\frac{1}{2} (\sigma^{-2}(y-Xw)^T(y-XW) + (w-m_0)^TS_0^{-1}(w-m_0)) + const & \text{(ignore const terms as it's a zero-derivative)}\\
+ log \text{ } P (w \mid X, y) = & -\frac{1}{2} (\sigma^{-2}(y-Xw)^T(y-XW) + (w-m_0)^TS_0^{-1}(w-m_0)) + const & \text{(ignore const due to zero-derivative)}\\
  = & - \frac{1}{2} \left( \sigma^{-2} y^T y - 2\sigma^{-2} y^T Xw + \sigma^{-2} w^T X^T Xw + w^TS_0^{-1}w - 2 m_0^T S_0^{-1} w + m_0^T S_0^{-1} m_0 \right) \\
    \label{eq1_sq}
  = & - \frac{1}{2} \left( w^T ( \sigma^{-2} X^TX + S_0^{-1}) w \right)   & \hspace{2cm}\text{(terms quadratic in $w$)} \\
