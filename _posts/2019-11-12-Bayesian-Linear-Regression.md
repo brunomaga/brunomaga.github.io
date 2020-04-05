@@ -19,16 +19,16 @@ We will discuss heavily the normal distribution in the following setion. As a re
 
 ### Bayes Theorem
 
-From the field of probability, the **product rule** tells us that the **joint distribution** of two given events $A$ and $B$ can be written as the product of the distribution of $a$ and the **conditional distribution** of $B$ given a value of $A$, i.e: $P(A, B) = P(A) P(B\mid A)$. By symmetry we have that $P(B,A) = P(B) P(A\mid B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
+From the field of probability, the **product rule** tells us that the **joint distribution** of two given events $A$ and $B$ can be written as the product of the distribution of $a$ and the **conditional distribution** of $B$ given a value of $A$, i.e: $p(A, B) = p(A) p(B\mid A)$. By symmetry we have that $p(B,A) = p(B) p(A\mid B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
 
 \begin{equation}
-P (A\mid B) = \frac{P(B\mid A) P(A)}{P(B)} \propto P(B\mid A) P(A)
+p(A\mid B) = \frac{p(B\mid A) p(A)}{p(B)} \propto p(B\mid A) p(A)
 \label{eq_prior_AB}
 \end{equation}
 
-This equation is commonly read as "the **posterior** $P(A\mid  B)$ is proportional to the product of the **prior** $P(A)$ and the **likelihood** $P(B\mid A)$" -- note that we dropped the **normalizer** term $P(B)$ as it is a constant (making the right-hand term proportional but not equal to $P (A\mid B)$.
+This equation is commonly read as "the **posterior** $p(A\mid  B)$ is proportional to the product of the **prior** $p(A)$ and the **likelihood** $p(B\mid A)$" -- note that we dropped the **normalizer** term $p(B)$ as it is a constant (making the right-hand term proportional but not equal to $p(A\mid B)$.
  
-The prior distribution $P(A)$ is a shorthand for $P(A\mid I)$ where $I$ is all information we have before start collecting data. If we have no information about the parameters then $P(A\mid I)$ is a constant --- called an *uninformative prior* or *objective prior* --- and the posterior equals the likelihood function. Otherwise, we call it a *substantive/informative* prior.
+The prior distribution $p(A)$ is a shorthand for $p(A\mid I)$ where $I$ is all information we have before start collecting data. If we have no information about the parameters then $p(A\mid I)$ is a constant --- called an *uninformative prior* or *objective prior* --- and the posterior equals the likelihood function. Otherwise, we call it a *substantive/informative* prior.
 
 The posterior distribution describes how much the data has changed our *prior* beliefs. An important theoream called the **Bernstein-von Mises Theorem** states that:
 - for a sufficiently large sample size, the posterior distribution becomes independent of the prior (as long as the prior is neither 0 or 1)
@@ -46,7 +46,7 @@ There are two main optimization problems that we discuss in Bayesian methods: Ma
 </small>
 
 
-When we try to find *how likely is that an output $y$ belongs to a model defined by $X$, $w$ and $\sigma$*, or **maximize the likelihood $P(y\mid w, X, \sigma^2)$**, we perform a **Maximum Likelihood Estimator (MLE)**. Maximizing the likelihood means maximizing the probability that models the training data, given the model parameters, as:
+When we try to find *how likely is that an output $y$ belongs to a model defined by $X$, $w$ and $\sigma$*, or **maximize the likelihood $p(y\mid w, X, \sigma^2)$**, we perform a **Maximum Likelihood Estimator (MLE)**. Maximizing the likelihood means maximizing the probability that models the training data, given the model parameters, as:
 
 $$
 w_{MLE} = argmax_w \text{ } p(y \mid w, X) 
@@ -105,9 +105,9 @@ Regularizers can be added normally as in the non-Bayesian regression and may hav
 
 $$
   \begin{align*}
- 0 = & \frac{d}{dw} \left( L - \frac{\alpha}{2} w^Tw \right)\\
- 0 = & \frac{d}{dw} \left( - \frac{D}{2} log ( 2 \pi \sigma^2) - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{\alpha}{2} w^Tw \right)\\
- w_{MLE} = & (X^TX + \lambda I )^{-1} X^Ty
+ 0 = \frac{d}{dw} \left( L - \frac{\alpha}{2} w^Tw \right)\\
+ \Leftrightarrow 0 = \frac{d}{dw} \left( - \frac{D}{2} log ( 2 \pi \sigma^2) - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{\alpha}{2} w^Tw \right)\\
+ \Leftrightarrow w_{MLE\_reg} = (X^TX + \lambda I )^{-1} X^Ty
   \end{align*}
 $$
 
@@ -119,9 +119,9 @@ So far we assumed the noise $\sigma^2$ is known. However, we can use the same Ma
 
 $$
   \begin{align*}
-   log \text{ } p(y \mid X, w, \sigma^2) & = \sum_{n=1}^N log \text{ } \mathcal{N} (y_n \mid X_nw, \sigma^2) \\
-                                         & = \sum_{n=1}^N \left( -\frac{1}{2} log(2\pi) -\frac{1}{2} log(\sigma^2) -\frac{1}{2 \sigma^2}(y_n-X_nw)^2 \right)\\
-                                         & = -\frac{N}{2} log \sigma^2 -\frac{1}{2 \sigma^2} \sum_{n=1}^N (y_n - X_nw)^2 + const\\ 
+  log \text{ } p(y \mid X, w, \sigma^2) = & \sum_{n=1}^N log \text{ } \mathcal{N} (y_n \mid X_nw, \sigma^2) \\
+ = & \sum_{n=1}^N \left( -\frac{1}{2} log(2\pi) -\frac{1}{2} log(\sigma^2) -\frac{1}{2 \sigma^2}(y_n-X_nw)^2 \right)\\
+ = & -\frac{N}{2} log \sigma^2 -\frac{1}{2 \sigma^2} \sum_{n=1}^N (y_n - X_nw)^2 + const\\ 
   \end{align*}
 $$
 
@@ -129,9 +129,9 @@ The partial derivative of the loss with respect to $\sigma^2$ and the MLE-estima
 
 $$
   \begin{align*}
-   \frac{d \text{ } log \text{ } p(y \mid X, w, \sigma^2)}{d \sigma^2} & = -\frac{N}{2 \sigma^2} + \frac{1}{2 \sigma^4} \sum_{n=1}^N (y_n - X_nw)^2 = 0\\
-   \Leftrightarrow \frac{N}{2 \sigma^2} = & \frac{1}{2 \sigma^4} \sum_{n=1}^N (y_n - X_nw)^2 \\
-   \Leftrightarrow \sigma^2_{MLE} = & \frac{1}{N} \sum_{n=1}^N (y_n - X_nw)^2 \\
+   & \frac{d \text{ } log \text{ } p(y \mid X, w, \sigma^2)}{d \sigma^2} = -\frac{N}{2 \sigma^2} + \frac{1}{2 \sigma^4} \sum_{n=1}^N (y_n - X_nw)^2 = 0\\
+   \Leftrightarrow & \frac{N}{2 \sigma^2} = \frac{1}{2 \sigma^4} \sum_{n=1}^N (y_n - X_nw)^2 \\
+   \Leftrightarrow & \sigma^2_{MLE} = \frac{1}{N} \sum_{n=1}^N (y_n - X_nw)^2 \\
   \end{align*}
 $$
 
@@ -144,23 +144,24 @@ Maximum likelihood without regularizer is prone to overfitting (details in secti
 The problem in hand is to find the parameters of the distribution that best represent the data. Adapting the equation \ref{eq_prior_AB} of the prior to the problem of regression, we aim at computing:
 
 $$
-P (w\mid X, y) = \frac{P(y\mid X, w) P(w)}{P(y \mid X)} \propto P(y\mid X, w) P(w)
+p(w\mid X, y) = \frac{p(y\mid X, w) p(w)}{p(y \mid X)} \propto p(y\mid X, w) p(w)
 \label{posterior_w}
 $$
 
 The computation steps are similar to log-trick applied to the MLE use case. The *log-posterior* is then:
 
 $$
-log \text{ } P (w\mid X, y) = log \text{ } P(y \mid X, w) + log \text{ } P(w) + const
+log \text{ } p(w\mid X, y) = log \text{ } p(y \mid X, w) + log \text{ } p(w) + const
 $$
 
-In practice, this is the sum of the log-likelihood $ log \text{ } P(y \mid X, w)$ and the *log-prior* $log \text{ } P(w)$, so the MAP estimation is a *compromise* between the prior and the likelihood. Similarly to the MLE, we compute the derivative of the negative log-posterior with respect to $w$ as:
+In practice, this is the sum of the log-likelihood $ log \text{ } p(y \mid X, w)$ and the *log-prior* $log \text{ } p(w)$, so the MAP estimation is a *compromise* between the prior and the likelihood. Similarly to the MLE, we compute the derivative of the negative log-posterior with respect to $w$ as:
 
 $$
   \begin{align*}
-- \frac{d \text{ }  log \text{ } p( w \mid X,y)}{dw} & = \frac{d \text{ }  log \text{ } p( y \mid X,w)}{dw} - \frac{d \text{ }  log \text{ } p(w)}{dw} \\ 
- & = \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right)  & \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and prior $\mathcal{N}(0, b^2 I)$)}\\
- & = \frac{1}{\sigma^2}(w^TX^TX-y^TX) + \frac{1}{b^2}w^T & \text{(First-order derivative, rule 3)}\\
+   & - \frac{d \text{ }  log \text{ } p( w \mid X,y)}{dw} \\
+ = & \frac{d \text{ }  log \text{ } p( y \mid X,w)}{dw} - \frac{d \text{ }  log \text{ } p(w)}{dw} \\ 
+ = & \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right)  & \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and prior $\mathcal{N}(0, b^2 I)$)}\\
+ = & \frac{1}{\sigma^2}(w^TX^TX-y^TX) + \frac{1}{b^2}w^T & \text{(First-order derivative, rule 3)}\\
   \end{align*}
 \label{eq_prior_w}
 $$
@@ -177,14 +178,14 @@ $$
 \end{align*}
 $$
 
-Now we see that the only difference between the weights estimated using MAP ($w_{MAP}$) and using MLE ($w_{MLE}$) is the additional term $\frac{\sigma^2}{b^2}I$ in the inverse matrix, acting as a regularizer.
+Now we see that the only difference between the weights estimated using MAp($w_{MAP}$) and using MLE ($w_{MLE}$) is the additional term $\frac{\sigma^2}{b^2}I$ in the inverse matrix, acting as a regularizer.
 
 ### Closed-form solution for Bayesian Linear Regression
 
 Insted of computing a point estimate via MLE or MAP, a special case of Bayesian optimization is the linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is utilized very commonly, mainly since the result is not an estimation, and computing the analytical solution for the posteriors is *extremelly fast* to compute even for very large datasets and dimensionality.
 
 
-We assume all our weights are drawn from a gaussian distribution and can be independent (if covariance matrix is diagonal) or not (otherwise). In practice, we start with the prior $p(w) \thicksim \mathcal{N}(m_0, S_0)$, with mean vector $m_0$, and (positive semi-definite) covariance matrix $S_0$ (following the variable notation found on [Chris Bishop's PRML book]({{ site.resources_permalink }}).
+We assume all our weights are drawn from a gaussian distribution and can be independent (if covariance matrix is diagonal) or not (otherwise). In practice, we start with the prior $p(w) \thicksim \mathcal{N}(m_0, S_0)$, with mean vector $m_0$, and (positive semi-definite) covariance matrix $S_0$ (following the variable notation found on [Chris Bishop's PRML book]({{ site.resources_permalink }})).
 
 We have then the following prior in multivariate notation:
 
@@ -202,8 +203,8 @@ Going back to Equation \ref{posterior_w} and replacing the terms, we have:
 
 $$
 \begin{align*}
-P (w \mid X, y) & = \frac{P (y\mid X, w) P(w)}{P(y \mid X )} \\
-                & \propto P(y\mid X, w) P(w) & \text{(dropped constant term in division)}\\
+p(w \mid X, y) & = \frac{p(y\mid X, w) p(w)}{p(y \mid X )} \\
+                & \propto p(y\mid X, w) p(w) & \text{(dropped constant term in division)}\\
                 & \propto exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{1}{2}(w-m_0)^TS_0^{-1}(w-m_0) \right) & \text{(dropped constant in multiplication)}\\
                 & = exp \left( -\frac{1}{2} \left( \sigma^{-2} (y-Xw)^T(y-Xw) + (w-m_0)^TS_0^{-1}(w-m_0) \right) \right)\\
 \end{align*}
@@ -213,7 +214,8 @@ We now apply the log-trick, and factorize the expression so that we can isolate 
 
 $$
   \begin{align}
- log \text{ } P (w \mid X, y) = & -\frac{1}{2} (\sigma^{-2}(y-Xw)^T(y-XW) + (w-m_0)^TS_0^{-1}(w-m_0)) + const & \text{(ignore const due to zero-derivative)}\\
+   & log \text{ } p(w \mid X, y)  \\
+ = & -\frac{1}{2} (\sigma^{-2}(y-Xw)^T(y-XW) + (w-m_0)^TS_0^{-1}(w-m_0)) + const & \text{(ignore const due to zero-derivative)}\\
  = & - \frac{1}{2} \left( \sigma^{-2} y^T y - 2\sigma^{-2} y^T Xw + \sigma^{-2} w^T X^T Xw + w^TS_0^{-1}w - 2 m_0^T S_0^{-1} w + m_0^T S_0^{-1} m_0 \right) \\
    \label{eq1_sq}
  = & - \frac{1}{2} \left( w^T ( \sigma^{-2} X^TX + S_0^{-1}) w \right)   & \hspace{2cm}\text{(terms quadratic in $w$)} \\
@@ -227,10 +229,9 @@ As a side note: looking at the last term, we can see that this function is quadr
 
 $$
   \begin{align*}
-    & P (w\mid X, y) \\
-  = & exp ( log \text{ } P (w\mid y, X) ) ) \\
-\propto & exp ( log \text{ } P(y\mid X, w) + log \text{ } P(w) )  & \text{(Bayes equation)}\\
-\propto & exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right) \right) & \text{(quadratic and linear terms of $ log \text{ } P (w \mid X, y)$)}\\
+ p(w\mid X, y) = & exp ( log \text{ } p(w\mid y, X) ) ) \\
+\propto & exp ( log \text{ } p(y\mid X, w) + log \text{ } p(w) )  & \text{(Bayes equation)}\\
+\propto & exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right) \right) & \text{(quadratic and linear terms of $ log \text{ } p(w \mid X, y)$)}\\
   \end{align*}
 $$
 
@@ -289,7 +290,7 @@ We start with the prior knowledge that both weights ($w_0$ and $w_1$) are zero-c
 
 ### Predictive Variance
 
-Remember that we wanted to model a noisy output defined by $y = Xw + \varepsilon$ with model parameters $w \thicksim \mathcal{N}(\mu, \sigma^2)$  and noise parameter $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. The closed-form solution that computes the distribution of $w$ was provided on the previous section. We'll now compute the distribution of $\varepsilon$. Note that drawing samples from the posterior $P(y \mid X, w, \sigma^2)$ is equivalent to drawing samples from $y = Xw + \varepsilon$.
+Remember that we wanted to model a noisy output defined by $y = Xw + \varepsilon$ with model parameters $w \thicksim \mathcal{N}(\mu, \sigma^2)$  and noise parameter $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. The closed-form solution that computes the distribution of $w$ was provided on the previous section. We'll now compute the distribution of $\varepsilon$. Note that drawing samples from the posterior $p(y \mid X, w, \sigma^2)$ is equivalent to drawing samples from $y = Xw + \varepsilon$.
 
 We can then compute the [expectation](https://en.wikipedia.org/wiki/Expected_value) of $y$ as:
 
