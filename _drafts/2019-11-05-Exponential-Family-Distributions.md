@@ -5,10 +5,10 @@ categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-### Background Probability Distributions 
+### Background: Probability Distributions 
 
-A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. Examples:
-- Gaussian distribution, for an input $y$:
+A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. A few examples of commonly used distributions are (and an input $x$):
+- Gaussian distribution:
   - $$p(y \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(y - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $\mu$ and standard deviation $\sigma$, or
   - $$p(y \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{-D/2} \text{ } det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(y - \mu)^T \Sigma^{-1} (y-\mu) \right)$$ with means-vector $\mu$ and covariance matrix $\Sigma$ on its multivariate notation
 - Laplace:
