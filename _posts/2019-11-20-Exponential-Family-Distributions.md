@@ -5,50 +5,155 @@ categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-In our [previous post]({{ site.baseurl }}{% post_url 2018-02-17-Supervised-Learning %}), we saw that computing the Maximum Likelihood estimator and the Maximum-a-Posterior becomes much easier once we apply the log-trick. The rationale was that by multiplying the solution by the $\log$, the normal distribution becomes easier to compute as we convert a multiplication with an exponential terms into a $log$ of sums. 
+On the [previous post]({{ site.baseurl }}{% post_url 2019-11-12-Bayesian-Linear-Regression %}), we saw that computing the Maximum Likelihood estimator and the Maximum-a-Posterior on a normally-distributed set of parameters becomes much easier once we apply the log-trick. The rationale is that since $\log$ is an increasingly monotonic function, the maximum and minimum values of the function to be optimized are the same as the original function inside the $\log$ operator. Thus, by applying the $\log$ function to the solution, the normal distribution becomes simpler and faster to compute, as we convert a product with an exponential into a sum. 
 
-However, this is not an unique property of the Gaussian distribution. In this post we will show that several other distributions can be represented in a similar syntax, making it simple to compute as well. To the set of such distribution we call the **Exponential Family of Distributions**.
-
-### Background: Probability Distributions 
-
-A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. A few examples of commonly used distributions are (for an input $x$):
-- Gaussian distribution:
-  - $$p(y \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(y - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $\mu$ and standard deviation $\sigma$, or
-  - $$p(y \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{-D/2} \text{ } det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(y - \mu)^T \Sigma^{-1} (y-\mu) \right)$$ with means-vector $\mu$ and covariance matrix $\Sigma$ on its multivariate notation
-- Laplace:
- $$ p( y_n \mid x_n, w ) = \frac{1}{2b} e^{-\frac{1}{b} \mid y_n - X_n^T w \mid } $$
-- Bernoulli: 
-  - $p(x) = \alpha^x (1-\alpha)^{1-x}, x \in \{0,1\}$
-
-- TODO add more distributions
+However, this is not a property of the Gaussian distribution only. In fact, most common distributions including the exponential, log-normal, gamma, chi-squared, beta, Dirichlet, Bernoulli, categorical, Poisson, geometric, inverse Gaussian, von Mises and von Mises-Fisher distributions can be represented in a similar syntax, making it simple to compute as well. To the set of such distributions we call it the **Exponential Family of Distributions**, and we will discuss them next.
 
 ### Exponential Family of distributions
 
-The exponential family of distribution is the set of distributions that can be described as:
-
-Exponential families include many of the most common distributions. Among many others, exponential families includes the following:
+The exponential family of distribution is the set of distributions parametrized by $\theta \in \mathbf{R}^D$ that can be described in the form:
 
 $$
-p(x, \theta) = h(x) \text{ } exp ( \theta^T T(x) - A(\theta) )
+p(x \mid \theta) = h(x) \exp \left(\eta(\theta)^T T(x) -A(\theta)\right)
+\label{eq_main_theta}
 $$
 
-In fact, the most commonly distributions belong to the family of distributions, including:
-- normal
-exponential
-gamma
-chi-squared
-beta
-Dirichlet
-Bernoulli
-categorical
-Poisson
-Wishart
-inverse Wishart
-geometric
+or in a more extensive notation:
 
-This property is very important, as it allows us to perform optimization by applying the log-likelihood method described next. The rationale is that since $log$ is an increasingly monotonic function, the maximum and minimum values of the loss functions are the same as in the original function. Moreover, it simplifies massively the computation as:
+$$
+p(x \mid \theta) = h(x) \exp\left(\sum_{i=1}^s \eta_i({\boldsymbol \theta}) T_i(x) - A({\boldsymbol \theta}) \right)
+$$
 
-### Appendix: Exponential family parameters for common distributions
+where $T(x)$, $h(x)$, $\eta(\theta)$, and $A(\theta)$ are known functions. An alternative notation to equation \ref{eq_main_theta} describes $A$ as a function of $\eta$, regardless of the transformation from $\theta$ to $\eta$. This new expression we call an exponential family in its **natural form**, and looks like:
+
+$$
+p(x \mid \eta) = h(x) \exp \left(\eta^T T(x) -A(\eta)\right)
+\label{eq_main_eta}
+$$
+
+The therm $T(x)$ is a **sufficient statistic** of the distribution. The sufficient statistic is a function of the data that holds all information the data $x$ provides with regard to the unknown parameter values;
+- The intuitive notion of sufficiency is that $T(X)$ is sufficient for $\eta$ if there is no information in $X$ regarding $\eta$ beyond that in $T(X)$. That is, having observed $T(X)$, we can throw away $X$ for the purposes of inference with respect to $\eta$;
+- Moreover, this means that  the likelihood *ratio* is the same for any two datasets $x$ and $y$, i.e.  if $T(x)=T(y)$, then $\frac{p(x \mid \theta_1)}{p(x \mid \theta_2)} = \frac{p(y \mid \theta_1)}{p(y \mid \theta_2)}$;
+
+The term $\eta$ is the **natural parameter**, and the set of values $\eta$ for which $p(x \mid \theta)$ is finite is called the **natural parameter space** and is always convex; 
+
+The term $A(\eta)$ is the **log-partition function** because it is the logarithm of a normalization factor, ensuring that the distribution $f(x;\mid \theta)$ sums up or integrates to one (without wich $p(x \mid \theta)$ is not a probability distribution), ie.:
+- $A(\eta) =  \log \int_x h(x) \exp (\eta(\theta)^T T(x)) \, \mathrm{d}x$;
+- Another important point is that the mean and variance of $T(x)$ can be derived by differentiating $A(\eta)$ and computing the first- and second- derivative, respectively:
+
+$$
+\frac{dA(\eta)}{d\eta} = \frac{d}{d\eta} \log \int_x h(x) \exp (\eta(\theta)^T T(x)) \, \mathrm{d}x
+$$ 
+
+One requirement of the exponential family distributions is that the parameters *must* factorize (i.e. must be separable into products, each of which involves only one type of variable), as either the power or base of an enxponentiation operation. I.e. the factors must be one of the following:
+
+$$
+f(x), g(\theta), c^{f(x)}, c^{g(\theta)}, {[f(x)]}^c, {[g(\theta)]}^c, {[f(x)]}^{g(\theta)}, {[g(\theta)]}^{f(x)}, {[f(x)]}^{h(x)g(\theta)}, \text{ or } {[g(\theta)]}^{h(x)j(\theta)}
+$$
+
+where $f$ and $h$ are arbitrary functions of $x$, $g$ and $j$ are arbitrary functions of $\theta$; and c is an arbitrary constant expression.
+
+Another important point is that a product of two exponential-family distributions is as well part of the exponential family, but unnormalized:
+
+$$
+\begin{align*}
+  &  \left( h(x) \exp \left(\eta(\theta_1)^T T(x) -A(\theta_1)\right) \right) 
+    *\left( h(x) \exp \left(\eta(\theta_2)^T T(x) -A(\theta_1)\right) \right) \\
+= & \widetilde{h}(x) \exp \left(\left(\eta(\theta_1)+\eta(\theta_2)\right)^T T(x) -\widetilde{A}(\theta_1, \theta_2)\right) \\
+\end{align*}
+$$
+
+
+Finally, the *exponential families have conjugate priors* (i.e. same distributions for prior and posterior distributions), and the *posterior predictive distribution has always a closed-form solution* (provided that the normalizing factor can also be stated in closed-form), both important properties for Bayesian statistics.
+
+In the following sections we will go through a few probability distributions and factorize them as a member of the exponential family.
+
+#### Univariate Gaussian distribution
+
+The univariate Gaussian distribution is defined for an input $x$ as:
+
+$$
+p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
+$$
+
+for a distribution with mean $\mu$ and standard deviation $\sigma$. By moving the terms around we get:
+
+$$
+\begin{align*}
+%% source: http://www.cs.columbia.edu/~jebara/4771/tutorials/lecture12.pdf
+p(x \mid \mu, \sigma ) & = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right) \\
+                       & = \frac{1}{ \sqrt{2 \pi } } \text{ } exp \left( - \log \theta - \frac{x^2}{2 \sigma^2} + \frac{\mu x}{\sigma^2} - \frac{\mu^2}{2 \sigma^2} \right) \\
+                       & = \frac{1}{ \sqrt{2 \pi } } \text{ } exp \left( \theta^TT(x) - \log \theta - \frac{\mu}{2\sigma^2} \right) \\
+                       & = h(x) \text{ } exp \left( \eta(\theta)^TT(x) - A(\theta) \right) \\
+\end{align*}
+$$
+
+where:
+- $h(x) = \frac{1}{ \sqrt{2 \pi}}$
+- $T = { x \choose x^2 }$ 
+- $\eta(\theta) = { \mu/(\sigma^2) \choose -1\(2\sigma^2) }$ 
+- $A(\eta) = \frac{\mu^2}{2\sigma^2} + \log \sigma = - \frac{ \eta^2_1}{4 \eta_2} - \frac{1}{2} \log(-2\eta_2)$
+
+We will now use the first and second derivative of $A(x)$ to compute the mean and the variance of the sufficient statistic $T(x)$:
+
+$$
+\begin{align*}
+%% source: https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/other-readings/chapter8.pdf
+\frac{dA}{d\eta_1} & = \frac{dA}{d\eta_1} \left( - \frac{ \eta^2_1}{4 \eta_2} - \frac{1}{2} \log(-2\eta_2) \right) \\
+                   & = \frac{\eta_1}{2\eta_2} \\
+                   & = \frac{\mu / \sigma^2}{1/\sigma^2} \\
+		   & = \mu \\
+\end{align*}
+$$
+
+which is the mean of $x$, the first component of the sufficient analysis. Takes the second derivative we get:
+
+$$
+%% source: https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/other-readings/chapter8.pdf
+\frac{d^2A}{d\eta_1^2} = - \frac{1}{2\eta_2} = \sigma^2
+$$
+
+which is the standard deviation of our normal distribution, by definition.
+
+### Bernoulli
+
+Similarly, to compute the exponential family parameters in the Bernoulli distribution we follow as:
+
+$$
+%% source: http://www.cs.columbia.edu/~jebara/4771/tutorials/lecture12.pdf
+\begin{align*}
+p(x, \alpha) & = \alpha^x (1-\alpha)^{1-x} \hspace{0.5cm}, x \in \{0,1\} \\
+             & = \exp \left( \log (\alpha^x (1-\alpha)^{1-x} \right) \\
+             & = \exp \left( x \log \alpha + (1-x) \log (1-\alpha) \right) \\
+             & = \exp \left( x \log \frac{\alpha}{1-\alpha} + \log (1-\alpha) \right) \\
+             & = \exp \left( x \eta - \log (1+e^\eta) \right) \\
+\end{align*}
+$$
+
+where:
+- $h(x) = 1$
+- $T(x) = x$
+- $\eta = \log \frac{\alpha}{1-\alpha}$
+- $A(\eta) = \log ( 1+e^\eta)$.
+
+We now compute the mean of $T(x)$ as:
+
+$$
+\begin{align*}
+\frac{d A}{d \eta} = \frac{e^\eta}{1+e^\eta} = \frac{1}{1 + e^{-\eta}} = \mu \\
+\end{align*}
+$$
+
+which is the mean of a Bernoulli variable. Taking a second derivative yields:
+
+$$
+%% source: https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/other-readings/chapter8.pdf
+\frac{d^2A}{d\eta^2} = \frac{d \mu}{d \eta} = \mu (1-\mu)
+$$
+
+which is the variance of a Bernoulli variable.
+
+### Parameters for common distributions
 
 The following table provides a summary of most common distributions in the exponential family and their exponential-family parameters. For a more exhaustive list, check the [Wikipedia entry for Exponential Family](https://en.wikipedia.org/wiki/Exponential_family).
 
@@ -164,7 +269,7 @@ f(x\mid\mu,b) = \frac{1}{2b} \exp \left( -\frac{|x-\mu|}{b} \right) \\
 <tr>
 <td><p><a href="https://en.wikipedia.org/wiki/normal_distribution" title="wikilink">normal distribution</a><br />
 known variance</p></td>
-<td><p><span class="math inline">\( f(x) = \frac{1}{\sigma \sqrt{2\pi} } e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} \)</span></p></td>
+<td><p><span class="math inline">\( f(x; \mu, \sigma^2) = \frac{1}{\sigma \sqrt{2\pi} } e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} \)</span></p></td>
 <td><p>μ</p></td>
 <td><p><span class="math inline">\(\frac{\mu}{\sigma}\)</span></p></td>
 <td><p><span class="math inline">\(\sigma\eta\)</span></p></td>
@@ -175,7 +280,7 @@ known variance</p></td>
 </tr>
 <tr>
 <td><p><a href="https://en.wikipedia.org/wiki/normal_distribution" title="wikilink">normal distribution</a></p></td>
-<td><p><span class="math inline">\( f(x) = \frac{1}{\sigma \sqrt{2\pi} } e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} \)</span></p></td>
+<td><p><span class="math inline">\( f(x; \mu, \sigma^2) = \frac{1}{\sigma \sqrt{2\pi} } e^{-\frac{1}{2}\left(\frac{x-\mu}{\sigma}\right)^2} \)</span></p></td>
 <td><p>μ,σ<sup>2</sup></p></td>
 <td><p><span class="math inline">\(\begin{bmatrix} \dfrac{\mu}{\sigma^2} \\[10pt] -\dfrac{1}{2\sigma^2} \end{bmatrix}\)</span></p></td>
 <td><p><span class="math inline">\(\begin{bmatrix} -\dfrac{\eta_1}{2\eta_2} \\[15pt] -\dfrac{1}{2\eta_2} \end{bmatrix}\)</span></p></td>
@@ -258,3 +363,35 @@ where <span class="math inline">\(\textstyle\sum_{i=1}^k e^{\eta_i}=1\)</span></
 </tbody>
 </table>
 </font>
+
+### Maximum Likelihood
+
+On the [previous post]({{ site.baseurl }}{% post_url 2019-11-12-Bayesian-Linear-Regression %}), we have computed before the Maximum Likelihood Estimator (MLE) for a Gaussian distribution. We now have seen that Gaussian --- alongside plenty other distributions --- belongs to the Exponential Family of Distributions. We will now show that the MLE estimator can be generalized across all distributions in the Exponential Family.
+
+As in the Gaussian use case, to compute the MLE we start by applying the log-trick to the general expression of the exponential family:
+
+$$
+%% source: http://www.cs.columbia.edu/~jebara/4771/tutorials/lecture12.pdf
+\begin{align*}
+\log p(x \mid \theta) & =  \log \left( h(x) \exp \left(\eta(\theta)^T T(x) -A(\theta) \right) \right) \\
+                      & =  \log \left( \prod_{x=i}^N h(x_i) \right) + \theta(\eta)^T \left( \sum_{i=1}^N T(x) \right) - NA(\theta) \\
+%\log p(x \mid \theta) & = \sum_{i=1}^N \log p(x_i \mid \theta) \\
+%                      & = \sum_{i=1}^M \log \left( h(x_i) \exp \left(\eta(\theta)^T T(x_i) -A(\theta) \right) \right) \\
+%                      & = \sum_{i=1}^N \left( \log h(x_i) + \eta(\theta)^T T(x_i) - A(\theta) \right) \\ 
+%                      & = \sum_{i=1}^N \left( \log h(x_i) + \eta(\theta)^T T(x_i) \right) - NA(\theta) \\ 
+\end{align*}
+$$ 
+
+we then compute the derivative and set it to zero:
+
+$$
+%% source: http://www.cs.columbia.edu/~jebara/4771/tutorials/lecture12.pdf
+\begin{align*}
+& \frac{d}{d \theta} \log p(x \mid \theta) = 0 \\
+\Leftrightarrow & \sum_{i=1}^N T(x_i) - N \nabla_\theta A (\theta) =0 \\ 
+\Leftrightarrow & \nabla_\theta A (\theta) = \frac{1}{N} \sum_{i=1}^N T(x_i)\\
+\Leftrightarrow & \mu_{MLE} = \frac{1}{N} \sum{i=1}^N T(x_n) & \text{(from above:  $\frac{dA(\theta)}{d \theta} = E[T(x)]$ )}\\
+\end{align*}
+$$
+
+Not surprisingly, the results involves the data only via the sufficient statistics $\sum_{n=1}^N T(x_i)$, giving a meaning to our notion of sufficiency --- *in order to estimate parameters we retain only the sufficient statistic*. For distributions in which $T(x) = X$, which include the the Bernoulli, Poisson and multinomial distributions, it shows that the sample mean is the maximum likelihood estimate of the mean. For the univariate Gaussian distribution, the sample mean is the maximum likelihood estimate of the mean and the sample variance is the maximum likelihood estimate of the variance.
