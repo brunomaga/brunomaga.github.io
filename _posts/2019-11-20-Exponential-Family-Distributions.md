@@ -50,18 +50,18 @@ $$
 \frac{dA}{d\eta^T} & = \frac{d}{d\eta^T} \left(  \log \int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x  \right) \\
                    & = \frac{ \int_x T(x) h(x) \exp (\eta^T T(x)) \, \mathrm{d}x}{\int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x} &\text{log derivative rule: $\left(\frac{d}{dx} log(x) = \frac{x'}{x}\right)$} \\
                    & = \int_x T(x) h(x) exp(\eta^TT(x) - A(\eta))  \, \mathrm{d}x & \text{(definition of A, and $\frac{∫f \, dx}{∫g \, dx} = ∫(f - g ) \, dx$)}\\
-                   & = \mathbf{E}[T(x)] & \text{(def. expected value: $\mathbf{E}[X] = \int_x x \, f(x) dx$, for density func. $f(x)$)}\\
+                   & = \mathbf{E}[T(X)] & \text{(def. expected value: $\mathbf{E}[X] = \int_x x \, f(x) dx$, for density func. $f(x)$)}\\
 \end{align*}
 $$ 
 
-I.e. the first derivative of $A(\eta)$ is equal to the mean of the sufficient statistic. We can now look at the second derivative:
+For the complete dataset $X=(x_1, x_2, ..., x_m$)$. I.e. the first derivative of $A(\eta)$ is equal to the mean of the sufficient statistic. We can now look at the second derivative:
 
 $$
 \begin{align*}
 \frac{d^2A}{d\eta\,d\eta^T} & = \int_x h(x) T(x) \left( T(x) -\frac{d}{d\eta^T}A(\eta)\right)^T \, exp\left(\eta^TT(x) - A(\eta)\right)  \, dx \\
-                            & = \int_x h(x) T(x) \left( T(x) - \mathbf{E}[T(x)] \right)^T \, exp\left(\eta^TT(x) - A(\eta)\right)  \, dx  & \text{( $\frac{dA}{d\eta^T} =  \mathbf{E}[T(x)]$)}\\
-                            & = \mathbf{E}[T(x)T(x)^T] -\mathbf{E}[T(x)] \, \mathbf{E}[T(x)]^T  & \text{($\mathbf{E}[X] = \int_x x \, f(x) dx$)}\\
-                            & = \mathbf{Var}[T(x)] & \text{($ Var(X)=E[X^2]-E[X]^2$)}\\
+                            & = \int_x h(x) T(x) \left( T(x) - \mathbf{E}[T(X)] \right)^T \, exp\left(\eta^TT(x) - A(\eta)\right)  \, dx  & \text{( $\frac{dA}{d\eta^T} =  \mathbf{E}[T(X)]$)}\\
+                            & = \mathbf{E}[T(X)T(X)^T] -\mathbf{E}[T(X)] \, \mathbf{E}[T(X)]^T  & \text{($\mathbf{E}[X] = \int_x x \, f(x) dx$)}\\
+                            & = \mathbf{Var}[T(X)] & \text{($ Var(X)=E[X^2]-E[X]^2$)}\\
 \end{align*}
 $$
 
@@ -397,7 +397,7 @@ $$
 & \frac{d}{d \eta} lik(\eta \mid X) = 0 \\
 \Leftrightarrow & \sum_{i=1}^N T(x_i) - N \nabla_\eta A (\eta) =0 \\ 
 \Leftrightarrow & \nabla_\eta A (\eta) = \frac{1}{N} \sum_{i=1}^N T(x_i)\\
-\Leftrightarrow & \mu_{MLE} = \frac{1}{N} \sum{i=1}^N T(x_n) & \text{(from above:  $\frac{dA(\eta)}{d \eta} = E[T(x)]$ and $E[T(x)] = \mu$ )}\\
+\Leftrightarrow & \mu_{MLE} = \frac{1}{N} \sum{i=1}^N T(x_n) & \text{(from above:  $\frac{dA(\eta)}{d \eta} = E[T(X)]$ and $E[T(X)] = \mu$ )}\\
 \end{align*}
 $$
 
