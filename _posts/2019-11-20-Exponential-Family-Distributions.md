@@ -49,7 +49,7 @@ $$
 \begin{align*}
 \frac{dA}{d\eta^T} & = \frac{d}{d\eta^T} \left(  \log \int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x  \right) \\
                    & = \frac{ \int_x T(x) h(x) \exp (\eta^T T(x)) \, \mathrm{d}x}{\int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x} &\text{log derivative rule: $\left(\frac{d}{dx} log(x) = \frac{x'}{x}\right)$} \\
-                   & = \int_x T(x) h(x) exp(\eta^TT(x) - A(\eta))  \, \mathrm{d}x & \text{(definition of A, and $\frac{∫f \, dx}{∫g \, dx} = ∫(f - g ) \, dx$)}\\
+                   & = \int_x T(x) h(x) exp(\eta^TT(x) - A(\eta))  \, \mathrm{d}x & \text{(definition of $p(x \mid \eta)$, and $\frac{∫f \, dx}{∫g \, dx} = ∫(f - g ) \, dx$)}\\
                    & = \mathbf{E}[T(X)] & \text{(def. expected value: $\mathbf{E}[X] = \int_x x \, f(x) dx$, for density func. $f(x)$)}\\
 \end{align*}
 $$ 
@@ -87,7 +87,7 @@ $$
 
 Finally, the *exponential families have conjugate priors* (i.e. same distributions for prior and posterior distributions), and the *posterior predictive distribution has always a closed-form solution* (provided that the normalizing factor can also be stated in closed-form), both important properties for Bayesian statistics.
 
-#### Example: Univariate Gaussian distribution
+### Example: Univariate Gaussian distribution
 
 The univariate Gaussian distribution is defined for an input $x$ as:
 
