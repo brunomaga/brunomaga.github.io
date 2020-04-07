@@ -8,16 +8,16 @@ layout: default
 <div class="container">
 <div class="row">
 
-
 <div class="home">
 
-    <div class="col-lg-7 jumbotron myTransparentBackground">
+<div class="col-lg-7 jumbotron myTransparentBackground">
   {%- if page.title -%}
     <h1 class="page-heading">{{ page.title }}</h1>
+  {%- else -%}
+    <h1 class="page-heading">{{ site.title }}</h1>
   {%- endif -%}
 
-  <h1 class="page-heading">{{ site.title }}</h1>
-  <p> {{ site.description }} </p>
+  <p> {{ content }} </p>
 
   <hr class="my-4">
   {%- if site.posts.size > 0 -%}
@@ -36,8 +36,6 @@ layout: default
     </ul>
   {%- endif -%}
 
-  {{ content }}
-
   <hr class="my-4" />
 
   <div align="center">
@@ -50,10 +48,10 @@ layout: default
                 <i class="far fa-user-circle"></i>
 	        <!-- <i class="ai ai-cv cv-1x"></i> -->
 	      </a>
-	      <a type="button" class="btn btn-link px-2 py-0" href="{{ site.resources_permalink }}" title="Books and Resources">
+	      <a type="button" class="btn btn-link px-2 py-0" href="{{ site.resources_permalink }}" title="Resources">
                 <i class="fas fa-book"></i>
 	      </a>
-	      <a type="button" class="btn btn-link px-2 py-0" href="{{ site.google_scholar }}" title="Google scholar">
+	      <a type="button" class="btn btn-link px-2 py-0" href="{{ site.google_scholar }}" title="Google Scholar">
 	        <i class="ai ai-google-scholar ai-1x"></i>
 	      </a>
 	      <a type="button" class="btn btn-link px-2 py-0" href="https://github.com/{{ site.github_username }}" title="GitHub">
@@ -69,8 +67,6 @@ layout: default
 	        <i class="fas fa-rss"></i>
 	      </a>
               <!--
-              <a href="mindmap.pdf" title="mindmap"><i class="fas fa-brain" alt="knowledge map"></i></a>
-              <span style="display:inline-block; width:0.1cm;"></span>
               <span style="display:inline-block; width:0.1cm;"></span>
               <a href="#"><i class="fab fa-instagram"></i></a>
               <span style="display:inline-block; width:0.1cm;"></span>
