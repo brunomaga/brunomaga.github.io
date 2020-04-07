@@ -105,9 +105,9 @@ Regularizers can be added normally as in the non-Bayesian regression and may hav
 
 $$
   \begin{align*}
- 0 = \frac{d}{dw} \left( L - \frac{\alpha}{2} w^Tw \right)\\
- \Leftrightarrow 0 = \frac{d}{dw} \left( - \frac{D}{2} log ( 2 \pi \sigma^2) - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{\alpha}{2} w^Tw \right)\\
- \Leftrightarrow w_{MLE\_reg} = (X^TX + \lambda I )^{-1} X^Ty
+ & 0 = \frac{d}{dw} \left( L - \frac{\alpha}{2} w^Tw \right)\\
+ \Leftrightarrow & 0 = \frac{d}{dw} \left( - \frac{D}{2} log ( 2 \pi \sigma^2) - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{\alpha}{2} w^Tw \right)\\
+ \Leftrightarrow & w_{MLE\_reg} = (X^TX + \lambda I )^{-1} X^Ty\\
   \end{align*}
 $$
 
