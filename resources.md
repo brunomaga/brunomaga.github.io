@@ -1,6 +1,6 @@
 ---
-layout: simple_page
-title: Books and Resources
+layout: narrow_page
+title: Resources
 permalink: /resources/
 ---
 
