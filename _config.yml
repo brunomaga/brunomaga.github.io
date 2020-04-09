@@ -11,6 +11,7 @@ url: "https://brunomaga.github.io" # the base hostname & protocol for your site,
 twitter_username:  ibrunomaga
 github_username:   brunomaga
 linkedin_username: brunomaga
+microsoft_bio_url: "https://www.microsoft.com/en-us/research/people/t-brdacu/"
 
 # Build settings
 markdown: kramdown
