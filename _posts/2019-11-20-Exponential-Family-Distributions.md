@@ -9,6 +9,25 @@ On the [previous post]({{ site.baseurl }}{% post_url 2019-11-12-Bayesian-Linear-
 
 However, this is not a property of the Gaussian distribution only. In fact, most common distributions including the exponential, log-normal, gamma, chi-squared, beta, Dirichlet, Bernoulli, categorical, Poisson, geometric, inverse Gaussian, von Mises and von Mises-Fisher distributions can be represented in a similar syntax, making it simple to compute as well. To the set of such distributions we call it the **Exponential Family of Distributions**, and we will discuss them next.
 
+##### Detour: relationship between common probability distributions
+
+Probability distributions describe the probabilities of each outcome, with the common property that the probability of all events adds up to 1. They can also be classified in two subsets: the ones described by a probability **mass function** if specified for discrete values, or probability **density functions** if described within some continuous interval. There are dozens (hundreds?) of different distributions, even though only 15 of them are often mentioned and used, and have some kind of relationship among themselves: 
+
+<p align="center">
+<img width="50%" height="50%" src="/assets/Exponential-Family-Distributions/common_distributions.png"/><br/>
+<br/><br/><small>15 most common probability distributions and their relationships.
+<br/>(source: post <a href="https://medium.com/@srowen/common-probability-distributions-347e6b945ce4">Common probability distributions</a> from Sean Owen)</small>
+</p>
+
+A bried summary of their relationship follows. For more details, check the original [post](https://medium.com/@srowen/common-probability-distributions-347e6b945ce4) from Sean Owen:
+- *Bernoulli and Uniform*: the uniform distribution yields equal probability to each discrete outcome e.g. a coin toss or a dice roll; the Bernoulli yields an unequal probability to two discrete outcomes as $p$ and $1-p$, e.g. an unfair coin toss;
+- *Binomial and Hypergeometric*:  the binomial can be seen as the probability of the sum of outcomes of what follows a bernoulli distribution, e.g. rolling a dice 30 times, what's the probability that we get the outcome six? This count follows the binomial distribution, with parameter $n$ trials, and $p$ as success (a la Bernoulli);
+- *Point and Binomial*: like the binomial distriution, the poisson distribution is a distribution of a count --- the number of time some event happened over a discrete time, given a rate for the event to ocur. It's parametrized as $\lambda = np$ (the $n$ and $p$ parameters of the binomial);  
+- *Geometric and Negative Binomial*: while in the binomial we count the number of times the probability *succeeds* in yielding a given event after a number of trial, in the geometric distribution we count how many negative trials until we succeed in out event happening; The negative binomial distribution is a simple generalization of the geometric, measuring the number of failures until $r$ successes have occurred, not just 1;
+- *Exponential and Weibull*: the exponential distribution is the geometric on a continuous interval, parametrized by $\lambda$, like Poisson. While it will describes "time until event or failure" at a constant rate, the Weibull distribution models increases or decreases of rate of failures over time (i.e. models *time-to-failure*);  
+- *Normal, Log-Normal, Student’s t, and Chi-squared*: if we take a set of values following the same (any) distribution and sum them, that sum of values follows approximatly the normal distribution --- this is true regardless of the underlying distribution, and this phenomenon is called the [**Central Limit Theorem**](https://en.wikipedia.org/wiki/Central_limit_theorem). The log-normal distribution relates to distributions whose logarithm is normally distributed. The exponentiation of a normally distribution is log-normally distributed. Student's t-distributions are normal distribution with a *fatter* tail, although is approaches normal distribution as the parameter increases. The chi-square distribution if the distribution of sum-of-squares of normally-distributed values;
+- *Gamma and Beta*: the gamma distribution is a generalization of the exponential and the chi-squared distributions. Like the exponential distribution, it is used to model waiting times e.g. the time until next $n$ events occur. It appears in machine learning as the conjugate prior to some distributions. The beta distribution is the conjugate prior to most of the other distributions mentioned here;
+
 ### Exponential Family of distributions
 
 The exponential family of distribution is the set of distributions parametrized by $\theta \in \mathbf{R}^D$ that can be described in the form:
