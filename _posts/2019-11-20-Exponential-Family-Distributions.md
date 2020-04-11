@@ -153,7 +153,7 @@ $$
 
 which is the standard deviation of our normal distribution, by definition.
 
-### Example: Bernoulli
+### Example: Bernoulli distribution
 
 Similarly, to compute the exponential family parameters in the Bernoulli distribution we follow as:
 
