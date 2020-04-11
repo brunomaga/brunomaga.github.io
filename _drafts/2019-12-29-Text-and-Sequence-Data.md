@@ -28,7 +28,7 @@ Apart from the uncertainty quantification, another benefit of Bayesian is the po
 
 In this post we will discuss how to perform Bayesian optimization, with a particular emphasis on linear regression and normal distrutions.
 
-### Basic concepts
+## Basic concepts
 
 From the field of probability, the **product rule** tells us that the **joint distribution** of two given events $A$ and $B$ can be written as the product of the distribution of $a$ and the **conditional distribution** of $B$ given a value of $A$, i.e: $P(A, B) = P(A) P(B\|A)$. By symmetry we have that $P(B,A) = P(B) P(A\|B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
 
@@ -49,7 +49,7 @@ The posterior distribution describes how much the data has changed our *prior* b
   - ie the effect of the prior decreases as the data increases;
 
 
-### Probability Distributions and the Exponential Family 
+## Probability Distributions and the Exponential Family 
 
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. Examples:
 - Gaussian distribution, for an input $y$:
@@ -67,7 +67,7 @@ A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribut
   - ie minimizing $E_2$ is equivalent to determining  the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = mx + b + \varepsilon$ instead, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$
 - TODO add Adams optimizer to Unsupervised Learning notebook
 
-### Maximum Likelihood (MLE) and Maximum-a-Posteriori (MAP)
+## Maximum Likelihood (MLE) and Maximum-a-Posteriori (MAP)
 
 The problem in hand is to find the parameters of the distribution that best represent the data. Adapting the previous equation \ref{eq_prior_AB} of the prior to the problem at hand, we aim at computing:
 
@@ -107,7 +107,7 @@ $$
 
 When the distribution of the prior and posterior are computationally tractable, the optimization of the parameters that define the distribution can be performed using the [coordinate ascent][coordinate-ascent] method, detailed briefly previously. In practice we perform and iterative partial derivatives of the prior/posterior for the model parameters. For the sake of comparison, while we minimize the negation of the loss on $w$ when performing linear regression, on a Bayesian model with a Gaussian distribution on all priors, we'd maximize based on the coordinate ascent of the parameters mean $\mu$ and standard deviation $\sigma$.
 
-### Bayesian Linear Optimization
+## Bayesian Linear Optimization
 
 A particular exception of Bayesian optimization that requires non-iterative methods is the linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is utilized very commonly, mainly due to two reasons:
 1. defining the appropriate parametric distribution of the weights (i.e. the prior) is a *hard* problem and requires domain knowledge that many times is not easy to grasp;
@@ -117,19 +117,19 @@ Take the linear regression model $y = w_1x_1 + ... + w_dx_d$ or its alternative 
 
 Going back to the previous equation \ref{eq_prior_w} 
 
-### Stochastic Variational Inference for approximate posterior
+## Stochastic Variational Inference for approximate posterior
 
 advantage: faster than sampling methods; allows non-linear regression methods;
 disadvantages: over-confident, works well only if we know the parametric distribution of the posterior, requires the posterior to follow a parametric distribution, otherwise we can use the sampling.
 
-### Monte Carlo sampling for exact posteriors 
+## Monte Carlo sampling for exact posteriors 
 
 advantages: *real* posterior.
 disadvantages: very high computation cost, what to do with an exact posterior which doesnt follow a parametric ditribution.
 
 ---
 
-### Refresher: Linear Algebra
+## Refresher: Linear Algebra
 
 Here's a reminder of some operations on linear algebra, in case the previous reductions cause some confusion:
 
