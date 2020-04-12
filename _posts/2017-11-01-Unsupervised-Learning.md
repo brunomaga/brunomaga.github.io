@@ -237,7 +237,7 @@ K-means has 2 main problems:
 - forces the clusters to be spherical, but sometimes it is desirable to have elliptical clusters;
 - each element can only belong to a cluster, but this may not always be a good choice;
 
-Both problems can be fixed with Gaussian [Mixture Models](https://en.wikipedia.org/wiki/Mixture_model). A mixture model corresponds to the mixture of distributions --- in this case Gaussians --- that represents the probability distribution of observations in the overall population. This content is covered in [another post](({{ site.baseurl }}{% post_url 2019-12-01-Bayesian-SVI-MCMC.md %}).
+Both problems can be fixed with Gaussian [Mixture Models](https://en.wikipedia.org/wiki/Mixture_model). A mixture model corresponds to the mixture of distributions --- in this case Gaussians --- that represents the probability distribution of observations in the overall population. This content is covered in [another post]({{ site.baseurl }}{% post_url 2019-12-01-Bayesian-SVI-MCMC %}).
 
 ## Self-Organizing Maps and Kohonen Maps
 
