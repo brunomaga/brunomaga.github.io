@@ -31,7 +31,8 @@ $$
 
 I will try to post about this topic in the near future, but if you're curious you can always check the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/Bayesian-Variational-Inference-GMM/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf) if you are interested on the theory behind it, or a practical explanation with code in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
 
-The main advantage of MCMC is that it provides an approximation of the *true* posterior. On the other hand, it requires a massive computation power for complex with large latent spaces. That's where Variational Inference enters the picture: it's faster yet the posterior may not be exact. 
+The main advantage of MCMC is that it provides an approximation of the *true* posterior, although there are many disavantadges on handling a exact posterior which doesn't follow a parametric ditribution (such as interpretability in high dimensions). Moreover, it requires a massive computation power for complex with large latent spaces. That's where Variational Inference enters the picture: it's faster and works well if we know the parametric distribution of the posterior, however being sometimes *over-confident* when posteriors are not be exact. 
+
 ## Variational Inference
 
 The idea behind Variational Inference (VI) is to propose a family of densities and find a member $q^\star$ of that family which is close to the target posterior $p(z \mid x)$. I.e. instead of computing the *real* posterior, we try to find the parameters $z$ of a new distribution $q^\star$ (the approximation to our real posterior) such that:
@@ -299,39 +300,17 @@ $$
 \end{align*}
 $$
 
-
-#### Expectation Maximization
-
-when we don't know the source, e.g. if we don't know beforehand which elements belong to each Gaussian Model. In this scenarion, we'd need to find as well the probability of each datapoint belonging to each Gaussian group. This problem becomes then a kind of a *chiken and egg* problem:
-- we need the parameters of each Gaussian to know where each point belongs; but
-- we need to know where each point belongs to know the parameters of each Gaussian;
-
-The approach to this optimization is the [Expectaction Maximization (EM) method](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm), iterative algorithm that iterates over the following two steps until convergence. I'll try to update this post and include it it in the near future. 
-
-disadvantages: over-confident, works well only if we know the parametric distribution of the posterior, requires the posterior to follow a parametric distribution, otherwise we can use the sampling.
-
-## Monte Carlo sampling for exact posteriors 
-
-Before VI, the dominant approach to compute the posterior was the Markov chain Monte Carlo methods (MCMC), based on sampling. 
-
-[quote]
-". Landmark developments include the Metropolis-Hastings algorithm (Metropolis et al.,
-1953; Hastings, 1970), the Gibbs sampler (Geman and Geman, 1984) and its application to
-Bayesian statistics (Gelfand and Smith, 1990). MCMC algorithms are under active investigation. They have been widely studied, extended, and applied; see Robert and Casella (2004)
-for a perspective."
-
- 
-advantages: *real* posterior.
-disadvantages: very high computation cost, what to do with an exact posterior which doesnt follow a parametric ditribution.
-
 ---
 
 #### Further reading
 
-This post is continuously updated. Related topics and resources to be added in the near future.
+This post is continuously updated. Here's a list of related topics and resources to be added in the near future:
 
 Variational Inference: A Review for Statisticians
 - [https://arxiv.org/pdf/1601.00670.pdf]()
+
+Expectation Maximization algorithm:
+- [https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm]()
 
 Stochastic Variational Inference and the variational autoencoders
 - [http://krasserm.github.io/2018/04/03/variational-inference/]()
