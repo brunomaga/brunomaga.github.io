@@ -5,31 +5,42 @@ categories: [machine learning, unsupervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-There are several approaches to inference, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Juntion tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference \& mean-field approximations, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why de we need approximate methods after all? Simple because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. This post focuses on the field of Variational Inference with mean-field approximation.
-
-#### Detour: Markov Chain Monte Carlo
-
-
-One of the main problem in Bayesian inference is to approximate a complex posterior probability density. For many years, the dominant approach was the [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). A simple high-level understanding follows from the name MCMC itself:
-- [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters via generating random numbers. A simple example is to compute the area of a circle inside by generating random 2D coordinates whitin the bounding square around the circle, and estimate the value of $\pi$ or the area of the circle from the proportion of generated datapoints that fall inside vs ouside the square;
-- [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain) is a stochastic model describing a sequence of events in which the probability of moving to a next state depends *only* on the state of the current state and not on the previous ones; an example would be the probability of the next character in a word for all *27* possible characters, given the current character.
-- Therefore, MCMC methods are used to approximate the (posterior) distribution or next iteration state of a parameter by random sampling from a probabilitist space, given the prior (current state). In practice, while you can't compute it, you can't draw samples from it. However...
-
-
-Compared to other approximate methods such as MCMC, the main advantage is that VI tends to be faster and easier to scale for large data. 
-
-I will try to post on this topic in the near future, but if you're curious you can always check the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/Bayesian-Variational-Inference-GMM/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf) if you are interested on the theory behind it, or a practical explanation with code in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
-
-
-## Variational Inference
-
 We have mentioned in a [previous post]({{ site.baseurl }}{% post_url 2019-11-12-Bayesian-Linear-Regression %}) about Bayesian inference, that the goal of Bayesian inference is to compute the likelihood of observed data and the mode of the density of the likelihood, marginal distribution and conditional distributions. Recall the formulation of the **posterior** of the latent variable $z$ and observations $x$, derived from the Bayes rule without the normalization term:
 
 $$
 p (z \mid x) \propto p(z) \, p(x \mid z)
 $$
 
-read as *the posterior is proportional to the prior times the likelihood*. Inference in Bayesian models amounts to conditioning on the data and compute the posterior $p(z \mid x)$. The inference problem is to compute the **conditional probability** of the latent variables $z$ given the observations $x$ in $X$. By definition, we can write the [conditional probability](https://en.wikipedia.org/wiki/Conditional_probability#Definition) as:
+read as *the posterior is proportional to the prior times the likelihood*. Inference in Bayesian models amounts to conditioning on the data and compute the posterior $p(z \mid x)$. The inference problem is to compute the **conditional probability** of the latent variables $z$ given the observations $x$ in $X$.
+
+
+There are several approaches to inference, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Juntion tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why do we need approximate methods after all? Simple because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. This post focuses on the field of Variational Inference with mean-field approximation.
+
+#### Detour: Markov Chain Monte Carlo
+
+One of the main problem in Bayesian inference is to approximate a complex posterior probability density. For many years, the dominant approach was the [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). A simple high-level understanding follows from the name MCMC itself:
+- [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters via generating random numbers. A simple example is to compute the area of a circle inside by generating random 2D coordinates whitin the bounding square around the circle, and estimate the value of $\pi$ or the area of the circle from the proportion of generated datapoints that fall inside vs ouside the square;
+- [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain) is a stochastic model describing a sequence of events in which the probability of moving to a next state depends *only* on the state of the current state and not on the previous ones; an example would be the probability of the next character in a word for all *27* possible characters, given the current character.
+
+Therefore, MCMC methods are used to approximate the distribution or next iteration state of a parameter by random sampling from a probabilitistic space. In practice, we take several samples of the latent variables (say $\mu$ or $\sigma^2$ in normal distribution) and pick the values that explain the data better than the previous values. This fitting works by computing the acceptance ratio of the proposed over the current posterior (allowing us to discard the term $P(x)$ which is what we can't compute):
+
+$$
+  \frac{ \hspace{0.5cm}{ } \frac{P(x \mid z) \, P(z)}{ P(x) } \hspace{0.5cm} } { \text{ } \frac{P(x \mid z_0) \, P(z_0)}{ P(x) } \text{ } }
+= \frac{ P(x \mid z) \, P(z) }{ P(x \mid z_0) \, P(z_0)}
+$$
+
+I will try to post about this topic in the near future, but if you're curious you can always check the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/Bayesian-Variational-Inference-GMM/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf) if you are interested on the theory behind it, or a practical explanation with code in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
+
+The main advantage of MCMC is that it provides an approximation of the *true* posterior. On the other hand, it requires a massive computation power for complex with large latent spaces. That's where Variational Inference enters the picture: it's faster yet the posterior may not be exact. 
+## Variational Inference
+
+The idea behind Variational Inference (VI) is to propose a family of densities and find a member $q^\star$ of that family which is close to the target posterior $p(z \mid x)$. I.e. instead of computing the *real* posterior, we try to find the parameters $z$ of a new distribution $q^\star$ (the approximation to our real posterior) such that:
+
+$$
+q^\star(z) = arg\,min \, KL(q(z) || p(z\mid x))
+$$
+
+The main rationale is that we can then utilize the VI-approximated distribution $q^\star$ and not the real (untractable) posterior $q$ on the tasks at hand. By definition, we can write the [conditional probability](https://en.wikipedia.org/wiki/Conditional_probability#Definition) $p(z\mid x)$ as:
 
 $$
 p (z \mid x ) = \frac{p(z,x)}{p(x)}
@@ -42,14 +53,6 @@ $$
 p(x) = \int p(z,x) dz
 \label{eq_joint}
 $$
-
-The idea behind Variational Inference (VI) is to propose a family of densities and find a member $q^\star$ of that family which is close to the target posterior $p(z \mid x)$. I.e. instead of computing the *real* posterior, we try to find the parameters $z$ of a new distribution $q^\star$ (the approximation to our real posterior) such that:
-
-$$
-q^\star(z) = arg\,min \, KL(q(z) || p(z\mid x))
-$$
-
-The main rationale is that we can then utilize the VI-approximated distribution $q^\star$ and not the real (untractable) posterior $q$ on the tasks at hand.
 
 #### Kullback-Leibler Divergence
 
