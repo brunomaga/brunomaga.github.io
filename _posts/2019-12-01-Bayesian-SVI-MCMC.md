@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Variational Bayesian Inference and Monte-Carlo methods"
+title:  "Variational Bayesian Inference"
 categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
@@ -194,10 +194,10 @@ $$
 Leading to the final coordinate ascent update:
 
 $$
-\begin{align*}
+\begin{align}
 q^{\star}(z_j) & \propto exp \{ \mathbf{E}_{q_{\neq j}} [ \log p(z_j \mid z_{\neq j}, x)] \} \\
-               & \propto exp \{ \mathbf{E}_{q_{\neq j}} [ \log p(z_j, z_{\neq j}, x)] \} & \text{(mean-field assumption: latent vars are independent)}\\
-\end{align*}
+               & \propto exp \{ \mathbf{E}_{q_{\neq j}} [ \log p(z_j, z_{\neq j}, x)] \} & \text{(mean-field assumption: latent vars are independent)} \label{eq_CAVI}\\
+\end{align}
 $$
 
 However, this provides the factorization but not the form (i.e. what specific distribution family) of the optimal $q_j$. The form we choose dictates influences the complexity or *easiness* of the coordinate update $q^{\star}(z_j)$. Moreover, a general formulation is also possible for the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-11-20-Exponential-Family-Distributions %}). Finally, the method described is often referred to Coordinate ascent variational inference (CAVI) and can be seen as a Message Passing algorthm. This has enabled the design of large-scale models.
@@ -210,12 +210,13 @@ ELBO(q_j) = \mathbf{E_j} [ \mathbf{E}_{\neq j}[ \log p (z_j, z_{\neq j}, x) ]] -
 $$ 
 
 where the first term on the right-hand side was rewritten using [iterated expectation](https://en.wikipedia.org/wiki/Law_of_total_expectation), and the second term was decomposed using the mean-field variable independency and keeping only the terms dependent on $q_j(z_j)$. 
+An alternative resolution based on derivatives is also proposed in [Chris Bishop's PRML book]({{ site.resources_permalink }})).
 
 ## Example: Gaussian Mixture Models
 
 A Gaussian mixture model is a probabilistic model that assumes all the data points are generated from a mixture of a finite number of Gaussian distributions with unknown parameters. The problem at hand is to fit a Gaussian density function to the input dataset. 
 
-Take a family of a mixture of $K$ univariate Gaussian distributions with means $\mu = \{ \mu_1, \mu_2, ..., \mu_K \}$. The means are drawn from a common prior $p(\mu_n)$, which we assume to be Gaussian $$\mathcal{N}(\mu, \sigma^2)$$, and $\sigma^2$ is a hyper-parameter. The cluster assignment of each point $c_i$ is described as a $K-$vector of zeros except a one on the index of the allocated cluster. Each new observation $x_i$ is drawn from the corresponding Gaussian $\mathcal{N}(c_i^T, \mu, 1)$. The full model is then described as:
+Take a family of a mixture of $K$ univariate Gaussian distributions with means $\mu = \mu_{1:K} = \{ \mu_1, \mu_2, ..., \mu_K \}$. The means are drawn from a common prior $p(\mu_n)$, which we assume to be Gaussian $$\mathcal{N}(\mu, \sigma^2)$$, and $\sigma^2$ is a hyper-parameter. The cluster assignments in $c_{1:n}$ for each point $c_i$ is described as a $K-$vector of zeros except a one on the index of the allocated cluster. Each new observation $x_i$ (from a total of $n$ observations) is drawn from the corresponding Gaussian $\mathcal{N}(c_i^T, \mu, 1)$. The full model is then described as:
 
 $$
 %source: section 2.1: https://arxiv.org/pdf/1601.00670.pdf
@@ -226,35 +227,69 @@ x_i \mid c_i, \mu & \thicksim \mathcal{N}(c_i^T \mu, 1)            & & i=1,...,n
 \end{align}
 $$
 
-quote-begin
-For a sample of size $n$, the joint probability of the latent and observed variables is:
+The joint probability of the latent and observed variables is:
 
 $$
 p (\mu, c, x) = p(\mu) p(c,x) = p(\mu) \, \prod_{i=1}^n p(c_i) p(x_i \mid c_i, \mu)
+\label{eq_7_source}
 $$
 
-where we applied the probability chain rule $P(A, B) = P(A \mid B) \, P(B)$. The latent variables are $z=\{\mu, c\}$, the $K$ classes and $n$ class assignments. The evidence (eq. \ref{eq_joint}) is described as:
+for the sample size $n$. Here we applied again the probability chain rule. The latent variables are $z=\{\mu, c\}$, holding the $K$-class means and the $n$-point class assigments. The evidence is:
 
 $$
-p(x) = \int p(\mu) \prod_{i=1}^n \sum_{c_i} p(c_i) \, p(x_i \mid c_i, \mu) d\mu = \sum_c p(c) \int p(\mu) \prod_{i=1}^n p(x_i \mid c_i, \mu) d\mu
+\begin{align*}
+p(x) & = \int p(\mu) \prod_{i=1}^n \sum_{c_i} p(c_i) \, p(x_i \mid c_i, \mu) d\mu \\
+     & = \sum_c p(c) \int p(\mu) \prod_{i=1}^n p(x_i \mid c_i, \mu) d\mu \\
+\end{align*}
 $$
 
-begin-quote
-Here each individual integral is computable, thanks to the conjugacy between the Gaussian
-prior on the components and the Gaussian likelihood. But there are $K^n$ of them, one for
-each configuration of the cluster assignments. Computing the evidence remains exponential
-in K, hence intractable.
-end-quote
-
-However, following the mean-field *recipe*, the mean-field variational family contains approximate posterior probabilities of the form:
+Although we can now compute this previous equation, since the gaussian prior and likelihood are conjugates. However, we havei $K$ classes that are to be assigned to $n$ points, i.e. $K^n$ assignments, or one per each configuration of cluster assignments. Therefore it remains computationally intractable. The alternative feasible solution is to use mean-field approximation. However, following the mean-field *recipe* from before, the approximate posterior probabilities are of the form:
 
 $$
 q(\mu,c) = \prod_{k=1}^K q(\mu_k; m_k, s^2_k) \prod_{i=1}^n q(c_i; \varphi_i).
+\label{eq_variational_family}
 $$
 
-begin-quote
-Moreover, each latent variable is guided by its own variational factor. The factor $q(\mu_k; m_k, s^2_k)$ is a Gaussian distribution of the $k^{th}$ mixure component's mean (its mean and variance are $m_k$ and $s^2_k$); and $q(c_i; \varphi_i)$ is a distribution on the $i^{th}$ observation's mixture assignment; its assingment probabilitues are a $K-$vector $\varphi_i$.
+and re-phrasing what was mentioned before, each latent variable is governed by its own variational factor. The factor $q(\mu_k; m_k, s^2_k)$ is a Gaussian distribution of the $k^{th}$ mixure component, including its mean $m_k$ and variance $s^2_k$. The factor $q(c_i; \varphi_i)$ is a distribution on the $i^{th}$ observation's mixture assignment; its assignment probabilities are a $K-$vector $\varphi_i$.
 end-quote
+
+So we have two types of variational parameters: (1) the Gaussian parameters $m_k$ and $s^2_k$ to approximate the posterior of the $k^{th}$ component; and (2) the Categorical parameters $\varphi_i$ to approximate the posterior cluster assignement of the $i^{th}$ data point. We now combine the joint density of the latent and observed variables (eq. \ref{eq_7_source}) and the variational family (eq. eq. \ref{eq_variational_family}) to form the ELBO for the mixture of Gaussians:
+
+$$
+%source https://arxiv.org/pdf/1601.00670.pdf
+\begin{align*}
+ELBO(m, s^2, \varphi) = & \sum_{k=1}^K \mathbf{E} \left[ \log p(\mu_k); m_k, s_k^2 \right] \\
+                        & + \sum_{i=1}^n \left( \mathbf{E} \left[ \log p(c_i); \varphi_i \right] + \mathbf{E} \left[ \log p(x_i \mid c_i, \mu); \varphi_i, m, s^2 \right] \right) \\
+                        & - \sum_{i=1}^n \left( \mathbf{E} \left[ \log q(c_i; \varphi_i) \right] - \sum_{k=1}^K \mathbf{E} \left[ \log q(\mu_k ; m_k, s_k^2) \right] \right) \\
+\end{align*}
+$$
+
+The CAVI (coordinate ascent variational inference) updates each variational parameter in turn, so we need to comput both updates.
+
+#### 1. Variational update for cluster assignment
+
+We start with the variational update for the cluster assignment $c_i$. Using the mean-field *recipe* in equation \ref{eq_CAVI}:
+
+$$
+q^{\star}(c_i; \varphi_i) \propto exp \left( \log p(c_i) + \mathbf{E} [ \log p(x_i \mid c_i, \mu); m, s^2] \right).
+$$
+
+The first term is the log prior of $c_i$, the same value for all values of $c_i$: $\log p(c_i)= \log \frac{1}{K} = \log 1 - \log K = -\log K$.  The second term is the expected log probability of the $c_i^{th}$ Gaussian density. Because $c_i$ is an [indicator vector](https://en.wikipedia.org/wiki/Indicator_vector) we can write:
+
+$$
+p (x_i \mid c_i, \mu) = \prod_{k=1}^K p(x_i \mid \mu_k)^{c_{ik}}
+$$
+
+i.e. because $c_{ik} = \{0,1\}$, this is a multiplication of terms that are ones except when cluster $k$ is allocated to the datapoint $x_i$. We use this to continue the expansion of the second term:
+
+$$
+\begin{align*}
+\mathbf{E} [ \log p(x_i \mid c_i, \mu); m, s^2] & = \sum_k c_{ik} \mathbf{E} [ \log p(x_i \mid \mu_k); m_k, s_k^2] & \text{(sum of matching assignments $ik$)} \\
+   & = \sum_k c_{ik} \mathbf{E} [ -(x_i - \mu_k)^2/2; m_k, s_k^2] + const \\
+   & = \sum_k c_{ik} \left( \mathbf{E} [ \mu_k; m_k, s_k^2] x_i -  \mathbf{E}[ \mu^2_k; m_k, s^2_k]/2 \right) + const \\
+\end{align*}
+$$
+
 
 #### Expectation Maximization
 
@@ -280,23 +315,30 @@ for a perspective."
 advantages: *real* posterior.
 disadvantages: very high computation cost, what to do with an exact posterior which doesnt follow a parametric ditribution.
 
-## Related topics
+---
 
-About the quality of Bayesian methods on Deep Neural Networks:
-- https://arxiv.org/abs/1906.09686
-- https://arxiv.org/abs/2002.02405
+#### Further reading
 
-Forward vd Reverse KL:
-- https://wiseodd.github.io/techblog/2016/12/21/forward-reverse-kl/
-- https://blog.evjang.com/2016/08/variational-bayes.html
+This post is continuously updated. Related topics and resources to be added in the near future.
+
+Variational Inference: A Review for Statisticians
+- [https://arxiv.org/pdf/1601.00670.pdf]()
 
 Stochastic Variational Inference and the variational autoencoders
-- http://krasserm.github.io/2018/04/03/variational-inference/
+- [http://krasserm.github.io/2018/04/03/variational-inference/]()
+
+About the quality of Bayesian methods on Deep Neural Networks:
+- [https://arxiv.org/abs/1906.09686]()
+- [https://arxiv.org/abs/2002.02405]()
+
+Forward vd Reverse KL:
+- [https://wiseodd.github.io/techblog/2016/12/21/forward-reverse-kl/]()
+- [https://blog.evjang.com/2016/08/variational-bayes.html]()
 
 PyTorch code exmaples:
-- https://pyro.ai/examples/bayesian\_regression.html
-- https://pyro.ai/examples/svi\_part\_i.html
-- http://krasserm.github.io/2019/11/21/latent-variable-models-part-1/
+- [https://pyro.ai/examples/bayesian\_regression.html]()
+- [https://pyro.ai/examples/svi\_part\_i.html]()
+- [http://krasserm.github.io/2019/11/21/latent-variable-models-part-1/]()
 
 Stochastic Variational Inference:
-- http://www.columbia.edu/~jwp2128/Papers/HoffmanBleiWangPaisley2013.pdf
+- [http://www.columbia.edu/~jwp2128/Papers/HoffmanBleiWangPaisley2013.pdf]()
