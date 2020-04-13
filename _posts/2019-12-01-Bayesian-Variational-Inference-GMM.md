@@ -341,6 +341,7 @@ Variational Inference: A Review for Statisticians
 
 Expectation Maximization algorithm:
 - [https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm]()
+- [http://bjlkeng.github.io/posts/the-expectation-maximization-algorithm/]()
 
 Stochastic Variational Inference and the variational autoencoders
 - [http://krasserm.github.io/2018/04/03/variational-inference/]()
@@ -352,6 +353,7 @@ About the quality of Bayesian methods on Deep Neural Networks:
 Forward vd Reverse KL:
 - [https://wiseodd.github.io/techblog/2016/12/21/forward-reverse-kl/]()
 - [https://blog.evjang.com/2016/08/variational-bayes.html]()
+- [http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/]()
 
 PyTorch code exmaples:
 - [https://pyro.ai/examples/bayesian\_regression.html]()
