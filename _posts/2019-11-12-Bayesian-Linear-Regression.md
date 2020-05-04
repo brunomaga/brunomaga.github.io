@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Bayesian Linear Regression"
+title:  "Bayesian Linear Regression, Maximum Likelihood and Maximum-A-Priori"
 categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
