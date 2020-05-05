@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Variational Bayesian Inference and Gaussian Mixture Models"
+title:  "Variational Inference, Mean-Field Approx. and Gaussian Mixture Models"
 categories: [machine learning, unsupervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
@@ -29,7 +29,7 @@ $$
 
 The inference problem is to compute the conditional probability of the latent variables $z$ given the observations $x$ in $X$, i.e. conditioning on the data and compute the posterior $p(z \mid x)$. For many models, this evidence integral does not have a closed-form solution or requires an exponential time to compute. 
 
-There are several approaches to inference, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Juntion tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why do we need approximate methods after all? Simple because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. This post focuses on the field of Variational Inference with mean-field approximation.
+**There are several approaches to inference**, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Juntion tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why do we need approximate methods after all? Simply because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. **This post focuses on the simplest approach to Variational Inference based on mean-field approximation and coordinate-ascent optimization**.
 
 ## Detour: Markov Chain Monte Carlo
 
@@ -248,11 +248,11 @@ where the constant $\alpha$ is typically set to $max_i x_i$, providing numerical
 
 ## Example: Gaussian Mixture Models
 
-<small>Credit: this section is a more verbose and extended explanation of sections 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).</small>
+<small>Credit: this section is a more verbose and extended explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).</small>
 
 A Gaussian mixture model is a probabilistic model that assumes all the data points are generated from a mixture of a finite number of Gaussian distributions with unknown parameters. The problem at hand is to fit a Gaussian density function to the input dataset. 
 
-Take a family of a mixture of $K$ univariate Gaussian distributions with means $\mu = \mu_{1:K} = \{ \mu_1, \mu_2, ..., \mu_K \}$. The means are drawn from a common prior $p(\mu_n)$, which we assume to be Gaussian $$\mathcal{N}(\mu, \sigma^2)$$, and $\sigma^2$ is a hyper-parameter. The cluster assignments in $c_{1:n}$ for each point $c_i$ is described as a $K-$vector of zeros except a one on the index of the allocated cluster. Each new observation $x_i$ (from a total of $n$ observations) is drawn from the corresponding Gaussian $\mathcal{N}(c_i^T, \mu, 1)$. The model can be expressed as:
+Take a family of a mixture of $K$ univariate Gaussian distributions with means $\mu = \mu_{1:K} = \{ \mu_1, \mu_2, ..., \mu_K \}$. The means are drawn from a common prior $p(\mu_n)$, which we assume to be Gaussian $$\mathcal{N}(\mu, \sigma^2)$$. **The latent space are the means $\mu_{1:K}$ and the cluster assignments $c_{1:n}$** for each observation $x_i$. **$\sigma^2$ is a hyper-parameter**. $c_i$ is described as an indicator $K-$vector, i.e. all zeros except a one on the index of the allocated cluster. Each new observation $x_i$ (from a total of $n$ observations) is drawn from the corresponding Gaussian $\mathcal{N}(c_i^T, \mu, 1)$. The model can be expressed as:
 
 $$
 %source: section 2.1: https://arxiv.org/pdf/1601.00670.pdf
@@ -263,14 +263,14 @@ x_i \mid c_i, \mu & \thicksim \mathcal{N}(c_i^T \mu, 1)            & & i=1,...,n
 \end{align}
 $$
 
-The joint probability of the latent and observed variables is:
+In this case, the joint probability of the latent and observed variables  for a sample of size $n$ is:
 
 $$
 p (\mu, c, x) = p(\mu) p(c,x) = p(\mu) \, \prod_{i=1}^n p(c_i) p(x_i \mid c_i, \mu)
 \label{eq_7_source}
 $$
 
-for the sample size $n$. Here we applied again the probability chain rule. The latent variables are $z=\{\mu, c\}$, holding the $K$-class means and the $n$-point class assigments. The evidence is:
+Here we applied again the probability chain rule. The latent variables are $z=\{\mu, c\}$, holding the $K$-class means and the $n$-point class assigments. The evidence is:
 
 $$
 \begin{align*}
@@ -279,11 +279,11 @@ p(x) & = \int p(\mu) \prod_{i=1}^n \sum_{c_i} p(c_i) \, p(x_i \mid c_i, \mu) d\m
 \end{align*}
 $$
 
-I.e the evidence is now a sum of all possible configurations of clusters assignment, ie complexity $K^n$ due to $K$ classes that have to be assigned to $n$ points.
+I.e the evidence is now a sum of all possible configurations of clusters assignment, with a computational complexity $O(K^n)$ due to $K$ classes that have to be assigned to $n$ points.
 We can compute this previous equation, since the gaussian prior and likelihood are conjugates.
 However, it is still computationally intractable due to the $K^n$ complexity. 
 
-An alternative solution is to use mean-field approximation. We know from before (eq. \ref{eq_posterior_mf}} that the mean-field yields approximate posterior probabilities of the form:
+An alternative solution is to use the mean-field approximation method we've discussed. We know from before (eq. \ref{eq_posterior_mf}} that the mean-field yields approximate posterior probabilities of the form:
 
 $$
 q(\mu,c) = \prod_{k=1}^K q(\mu_k; m_k, s^2_k) \prod_{i=1}^n q(c_i; \varphi_i).
@@ -291,22 +291,21 @@ q(\mu,c) = \prod_{k=1}^K q(\mu_k; m_k, s^2_k) \prod_{i=1}^n q(c_i; \varphi_i).
 $$
 
 and re-phrasing what was mentioned before, each latent variable is governed by its own variational factor. The factor $q(\mu_k; m_k, s^2_k)$ is a Gaussian distribution of the $k^{th}$ mixure component, including its mean $m_k$ and variance $s^2_k$. The factor $q(c_i; \varphi_i)$ is a distribution on the $i^{th}$ observation's mixture assignment; its assignment probabilities are a $K-$vector $\varphi_i$.
-end-quote
 
 So we have two types of variational parameters: (1) the Gaussian parameters $m_k$ and $s^2_k$ to approximate the posterior of the $k^{th}$ component; and (2) the Categorical parameters $\varphi_i$ to approximate the posterior cluster assignement of the $i^{th}$ data point. We now combine the joint density of the latent and observed variables (eq. \ref{eq_7_source}) and the variational family (eq. \ref{eq_variational_family}) to form the ELBO for the mixture of Gaussians:
 
 $$
 %source https://arxiv.org/pdf/1601.00670.pdf
-\begin{align*}
+\begin{align}
 ELBO(m, s^2, \varphi) = & \sum_{k=1}^K \mathbf{E} \left[ \log p(\mu_k); m_k, s_k^2 \right] \\
                         & + \sum_{i=1}^n \left( \mathbf{E} \left[ \log p(c_i); \varphi_i \right] + \mathbf{E} \left[ \log p(x_i \mid c_i, \mu); \varphi_i, m, s^2 \right] \right) \\
-                        & - \sum_{i=1}^n \left( \mathbf{E} \left[ \log q(c_i; \varphi_i) \right] - \sum_{k=1}^K \mathbf{E} \left[ \log q(\mu_k ; m_k, s_k^2) \right] \right) \\
-\end{align*}
+                        & - \sum_{i=1}^n \left( \mathbf{E} \left[ \log q(c_i; \varphi_i) \right] - \sum_{k=1}^K \mathbf{E} \left[ \log q(\mu_k ; m_k, s_k^2) \right] \right) \label{eq_algo_elbo} \\
+\end{align}
 $$
 
 The CAVI (coordinate ascent variational inference) updates each variational parameter in turn, so we need to comput both updates.
 
-##### 1. Variational update for cluster assignment
+##### Upadte 1: Variational update for cluster assignment
 
 We start with the variational update for the cluster assignment $c_i$. Using the mean-field recipe from equation \ref{eq_CAVI}:
 
@@ -337,10 +336,11 @@ The calculation requires $\mathbf{E} [\mu_k]$ and $\mathbf{E} [\mu_k^2]$, comput
 
 $$
 \varphi_{ik} \propto exp \left\{ x_i \, \mathbf{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbf{E}[ \mu^2_k; m_k, s^2_k \right\}
+\label{eq_algo_first_step}
 $$
 
 
-##### 2. Variational update for cluster mean
+##### Update 2: Variational update for cluster mean
 
 We now turn to the variational density $$q(\mu_k; m_k, s^2_k)$$ on equation \ref{eq_variational_family}. We use again \ref{eq_CAVI} (the exponentiated log of te joint) for the mean values $\mu_k$:
 
@@ -348,40 +348,61 @@ $$
 q(\mu_k) \propto \exp \{ \log p(\mu_k) + \sum_{i=1}^n \mathbf{E} [ \log p(x_i \mid c_i, \mu); \varphi_i, m_{k\neq}, s^2_{k\neq} ] \}
 $$
 
+where the term $\varphi_{ik}$ represents as before the probabliity that the $i^{th}$ observation comes from the $k^{th}$ cluster, and $c_i$ is a one-hot (or indicator) vector. The computation of the log probability follows as:
 
-#### Variational Inference with Exponential Family
+$$
+\log q(\mu_k) = \log p(\mu_k) + \sum_i \mathbf{E} [ \log p(x_i \mid c_i, \mu); \varphi_i, m_{\neq k}, s^2_{\neq k}] + const\\
+$$
 
-[Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-11-20-Exponential-Family-Distributions %}).
+We will ommit this reduction, if you are looking for details, check equations 28-32 [here](https://arxiv.org/pdf/1601.00670.pdf). This calculation leads to :
 
----
+$$
+\log q(\mu_k) = (\sum_i \varphi_{ik} x_i) \mu_k - (\frac{1}{2} \sigma^2 + \frac{1}{2} \sum_i \varphi_{ik} ) \mu_k^2 + const.\\
+$$
 
-#### Further reading
+In practice it means that the CAVI optimal variational density of $\mu_k$ is a member of the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-11-20-Exponential-Family-Distributions %}) with sufficient statistics $$\{\mu, \mu^2\}$$  and natural parameters $$\left\{\sum_{i=1}^n \varphi_{ik} x_i, -\frac{1}{2} \sigma^2 - \frac{1}{2}\sum_{i=1}^n \varphi_{ik} \right\}$$. 
+ For a detailed discussion on exponential family, sufficient statistics and natural parameters check the previous [post]({{ site.baseurl }}{% post_url 2019-11-20-Exponential-Family-Distributions %}) for details. We can now express the updates for the mean and standard deviation we have:
 
-This post is being continuously updated. Here's a list of related topics and resources to be covered in the near future:
+$$
+\begin{align*}
+0 & = \frac{d\, \log q(\mu_k)}{d\mu} \\
+0 & = \sum_i \varphi_{ik}x_i - 2 \left( \frac{1}{2} \sigma^2 + \frac{1}{2} \sum_i \varphi_{ik} \right) \mu_k \\
+\hat{\mu_k} & = \frac{\sum_i \varphi_{ik} x_i}{1/\sigma^2 + \sum_i \varphi_{ik}}\\ 
+\end{align*}
+$$
 
-Variational Inference: A Review for Statisticians
-- [https://arxiv.org/pdf/1601.00670.pdf](https://arxiv.org/pdf/1601.00670.pdf)
+We'll refer to the final variable $\hat{\mu_k}$ as $m_k$,  in line with the paper and to avoid confusions. Similarly, the update of the the standard deviation is:
 
-Expectation Maximization algorithm:
-- [https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm)
-- [http://bjlkeng.github.io/posts/the-expectation-maximization-algorithm/](http://bjlkeng.github.io/posts/the-expectation-maximization-algorithm/)
+$$
+s^2_k = \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}\\
+\label{eq_algo_second_step}
+$$
 
-Stochastic Variational Inference and the variational autoencoders
-- [http://krasserm.github.io/2018/04/03/variational-inference/](http://krasserm.github.io/2018/04/03/variational-inference/)
+##### Algorithm and Vizualization
 
-About the quality of Bayesian methods on Deep Neural Networks:
-- [https://arxiv.org/abs/1906.09686](https://arxiv.org/abs/1906.09686)
-- [https://arxiv.org/abs/2002.02405](https://arxiv.org/abs/2002.02405)
+Putting it all together, the algorithm follows as:
 
-Forward vd Reverse KL:
-- [https://wiseodd.github.io/techblog/2016/12/21/forward-reverse-kl/](https://wiseodd.github.io/techblog/2016/12/21/forward-reverse-kl/)
-- [https://blog.evjang.com/2016/08/variational-bayes.html](https://blog.evjang.com/2016/08/variational-bayes.html)
-- [http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/](http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/)
+- While ELBO has not converged:
+	1. for all $i \in \{1, ..., n\}$, set $$\varphi_{ik} \propto exp \left\{ x_i \, \mathbf{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbf{E}[ \mu^2_k; m_k, s^2_k \right\} $$ (equation \ref{eq_algo_first_step})
+	2. for $k \in \{1, ..., K\}$ do:
+		- set $$m_k \leftarrow \frac{\sum_i \varphi_{ik} x_i}{1/\sigma^2 + \sum_i \varphi_{ik}}$$ (equation \ref{eq_algo_second_step}) 
+		- set $$s^2_k \leftarrow \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}$$ (equation \ref{eq_algo_second_step})
+	3. compute $ELBO(m, s^2, \varphi)$ (equation \ref{eq_algo_elbo})
 
-PyTorch code exmaples:
-- [https://pyro.ai/examples/bayesian\_regression.html](https://pyro.ai/examples/bayesian\_regression.html)
-- [https://pyro.ai/examples/svi\_part\_i.html](https://pyro.ai/examples/svi\_part\_i.html)
-- [http://krasserm.github.io/2019/11/21/latent-variable-models-part-1/](http://krasserm.github.io/2019/11/21/latent-variable-models-part-1/)
+The algorithm is iterative and will converge on a certain loss threshold (ELBO), based on the fitting of each Gaussian to the data points. The concept can be easily understood by looking at the illustration of several iterations of the fitting of Gaussian models to 5 clusters of points:   
 
-Stochastic Variational Inference:
- [http://www.columbia.edu/~jwp2128/Papers/HoffmanBleiWangPaisley2013.pdf](http://www.columbia.edu/~jwp2128/Papers/HoffmanBleiWangPaisley2013.pdf)
+<p align="center">
+<img width="60%" height="60%" src="/assets/Bayesian-Variational-Inference-GMM/GMM_iterations.JPG"/><br/>
+<br/><br/><small>Example of the application of the CAVI algorithm to Gaussian Mixture Models. Dataset described by 2D points assigned to five color-coded clusters.
+<br/>(source: <a href="https://arxiv.org/pdf/1601.00670.pdf">Variational Inference: A Review for Statisticians</a>)</small>
+</p>
+
+
+## Further Reading
+
+There is a universe of methods and techniques that are interesting and were not covered in this post. To name a few:
+- An application of the CAVI to other members of the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-11-20-Exponential-Family-Distributions %}) and Stochastic Variational Inference is detailed in the papers [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf) and [Stochastic Variational Inference](http://www.columbia.edu/~jwp2128/Papers/HoffmanBleiWangPaisley2013.pdf);
+- Another very famous method for inference is the [Expectation Maximization algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm), covered in [Brian Keng's post](http://bjlkeng.github.io/posts/the-expectation-maximization-algorithm/) and that I plan to cover as well in the future;
+- The KL divergence formula is non-symmetric for the two parameter distributions. For details on the application of forward- and reverse KL divergence, relating to computing variational loss based on $$KL( q(z) \mid\mid p(z\mid x))$$ vs $$KL(p(z\mid x) \mid \mid q(z) )$$, refer to [Augustinus Kristiadi's plost](https://wiseodd.github.io/techblog/2016/12/21/forward-reverse-kl/), [Eric Jang's post](https://blog.evjang.com/2016/08/variational-bayes.html) and [Brian Keng's post](http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/);
+- Pytorch provides detailed examples with explanations of implementations of Variational Inference in Pytorch. A good place to start is [*SVI Part I: An Introduction to Stochastic Variational Inference in Pyro*](https://pyro.ai/examples/svi_part_i.html);
+- Finally, a bit off-topic, there is some discussion on whether methods based on approximated posteriors and Bayesian methods are any good for more complicated models, particularly for Deep Neural Nets. If you're curious, I recommend the papers [Quality of Uncertainty Quantification for Bayesian Neural Network Inference](https://arxiv.org/abs/1906.09686) and [How Good is the Bayes Posterior in Deep Neural Networks Really?](https://arxiv.org/abs/2002.02405).
