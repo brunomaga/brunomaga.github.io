@@ -69,14 +69,14 @@ These quantities are easy to compute by a forward pass in the network, starting 
 Now, let
 
 $$
-\delta_j^{(l)} = \frac{\delta L_n}{\delta z_j^{(l)}}.
+\delta_j^{(l)} = \frac{\partial L_n}{\partial z_j^{(l)}}.
 \label{eq_delta}
 $$
 
 These quantities are easier to compute with a backward pass:
 
 $$
-\delta_j^{(l)} = \frac{\delta L_n}{\delta z_j^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\delta z_j^{(l)}} = \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
+\delta_j^{(l)} = \frac{\partial L_n}{\partial z_j^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} = \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
 $$
 
 We used the chain rule on the second equality operation. Going back to equation \ref{eq_gradient}:
