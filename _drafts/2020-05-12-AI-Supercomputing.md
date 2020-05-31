@@ -1,160 +1,640 @@
 ---
 layout: post
-title:  "[draft] Learning Models for Textual and Sequence Data"
-categories: [machine learning, probabilistic programming]
+title:  "AI Supercomputing: from Linear Regression to BERT"
+categories: [machine learning, supercomputing]
 tags: [machinelearning]
 ---
 
-DNN
-RNN
-LSTMs
-GRUs
-Transformers
-
-Text Embedding
-
-Bayesian methods allows us to perform modelling of an input to an output by providing a measure of *uncertainty* or "how sure we are", based on the seen data. Unlike most *frequentist* methods commonly used, where the outpt of the method is a set of best fit parameters, the output of a Bayesian regression is a probability distribution of each model parameter, called the **posterior distribution**. 
-Unlike most *frequentist* methods commonly used, where the outpt of the method is a set of best fit parameters (e.g. the values of the weight on linear regression), the output of a Bayesian regression is a probability distribution of each model parameter, called the *posterior distribution*. 
-
-For the sake of comparison, take the example of the simple linear regression $y = mx + b$. On the frequentist approach, one tries to find the constant that define the slope $m$ and bias $b$ values, with $m \in \mathbb{R}$ and $b \in \mathbb{R}$, using optimization methods. On the other hand, the Bayesian approach would also compute $y = mx + b$, however, $b$ and $m$ are not fixed values but drawn from probabilities that we *tune* during training. As an example, we can assume as prior knowledge that $m$ and $b$ are independent and normally distributed --- i.e. $b \thicksim \mathcal{N}(\mu, \sigma^2)$ and $w \thicksim \mathcal{N}(\mu, \sigma^2)$ --- and the parameters to be learnt would then be all $\mu$ and $\sigma$. Additionally, we can also add the model of the noise (or inverse of the precision) constant $\varepsilon$ that models as well *how noisy* our data may be, by computing $y = mx + b + \varepsilon$ instead, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$.
- 
-Take the following example of few observations of $x$ in a linear space, plotted in pink, with a yellow line representing a linear regression of the data. The value of $x$ can be estimated by the value in the regression model represented by a blue cross. However, because it is so different from other observations, we may not be certain of how accurate is our prediction. The Bayesian model helps in this decision by computing the uncertainty (or error) of our decision, as plotted in green:
-
-<p align="center">
-<img width="40%" height="40%" src="/assets/Bayesian-Optimization/linear_bayesian_2.png">
-</p>
-
-Apart from the uncertainty quantification, another benefit of Bayesian is the possibility of **online learning**, i.e. a continuous update of the trained model (from previously-seen data) by looking at only the new data. This is a handy feature for e.g. datasets that are purged periodically.
-
-In this post we will discuss how to perform Bayesian optimization, with a particular emphasis on linear regression and normal distrutions.
-
-## Basic concepts
-
-From the field of probability, the **product rule** tells us that the **joint distribution** of two given events $A$ and $B$ can be written as the product of the distribution of $a$ and the **conditional distribution** of $B$ given a value of $A$, i.e: $P(A, B) = P(A) P(B\|A)$. By symmetry we have that $P(B,A) = P(B) P(A\|B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
-
-\begin{equation}
-P (A\|B) = \frac{P(B\|A) P(A)}{P(B)} \propto P(B\|A) P(A)
-\label{eq_prior_AB}
-\end{equation}
-
-This equation is commonly read as "the **posterior** $P(A\| B)$ is proportional to the product of the **prior** $P(A)$ and the **likelihood** $P(B\|A)$" -- note that we dropped the **normalizer** term $P(B)$ as it is constant, making the left-hand term proportional to $P (A\|B)$.
- 
-The prior distribution $P(A)$ is a shorthand for $P(A \| I)$ where $I$ is all information we have before start collecting data. If we have no information about the parameters then $P(A\|I)$ is a constant --- called an *uninformative prior* or *objective prior* --- and the posterior equals the likelihood function. Otherwise, we call it a *substantive/informative* prior.
-
-The posterior distribution describes how much the data has changed our *prior* beliefs. An important theoream called the *Bernstein-von Mises Theorem* states that:
-- for a sufficiently large sample size, the posterior distribution becomes independent of the prior (as long as the prior is neither 0 or 1)
-  - ie for a sufficiently large dataset, the prior just doesnt matter much anymore as the current data has enough information;
-  - in other others, if we let the datapoints go to infitiny, the posterior distribution will go to normal distribution, where the mean will be the maximum likelihood estimator;
-    - this is a restatement of the central limit theorem, where the posterior distribution becomes the likelihood function;
-  - ie the effect of the prior decreases as the data increases;
-
-
-## Probability Distributions and the Exponential Family 
-
-A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. Examples:
-- Gaussian distribution, for an input $y$:
-  $$p(y | \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } exp [ - \frac{(y - \mu)^2}{2 \sigma^2} ]$$ for a distribution with mean $\mu$ and standard deviation $\sigma$, or
-  $$p(y | \mu, \Sigma ) = \frac{1}{ \sqrt{ (2 \pi)^D det(\Sigma)} } exp [ - \frac{1}{2}(y - \mu)^T \Sigma^{-1} (y-\mu)]$$ with means-vector $\mu$ and covariance matrix $\Sigma$ on its matrix form
-
-- Laplace:
- $$ p( y_n | x_n, w ) = \frac{1}{2b} e^{-\frac{1}{b} | y_n - X_n^T w | } $$
-
-- TODO add more distributions
-- TODO add explanation of exponential family
-- TODO add Least Square solution to the Unsupervised Learning notebook
-- TOOD add analytical solution to Mean Square Error:
-  - $argmin E_2$ = $(y - Xw)^2 = (y-Xw)^T(y-Xw)$ , which (when equal to zero) has a closed for solution of $w = (X^TX)^{-1} X^Ty$
-  - ie minimizing $E_2$ is equivalent to determining  the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = mx + b + \varepsilon$ instead, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$
-- TODO add Adams optimizer to Unsupervised Learning notebook
-
-## Maximum Likelihood (MLE) and Maximum-a-Posteriori (MAP)
-
-The problem in hand is to find the parameters of the distribution that best represent the data. Adapting the previous equation \ref{eq_prior_AB} of the prior to the problem at hand, we aim at computing:
-
-$$
-P (w \| y, X, \sigma^2) = \frac{P(y\|w, X, \sigma^2) P(w)}{P(y, X, \sigma^2)} \propto P(y\|w, X, \sigma^2) P(w)
-\label{eq_prior_w}
-$$
-
-for a given input set $X$, with labels $y$, and model parameters $\sigma$.
-
-There are two main optimization problems that we discuss commonly on Bayesian methods:
-- When we try to find *how likely is that an output $y$ belongs to a model defined by $X$, $w$ and $\sigma$*, or **maximize the likelihood $P(y\|w, X, \sigma^2)$**, we perform a Maximum Likelihood Estimator (MLE);
-- When we try to maximize the posterior, or the probability of the model parameters $w$ given the model $X$, $y$ and $\sigma$, or **maximize the posterior $P (w \| y, X, \sigma^2)$**, we perform a Maximum-a-Posteriori (MAP); 
-
-
-To compute that, we perform the *log-trick* and place the term to optimize into a log function. We can do this because $log$ is a monotonically-increasing function, thus applying it to any function won't change the input values where the minimum or maximum of the solution is found (ie where gradient is zero). Moreover, since most distributions are part of the **exponential family** of distributions, they can all be represented as an exponential, and applying the log will bring the power term *out* of the exponential, and make it computationally simpler are faster. 
-
-The **log-likelihood** is the log of the [likelihood](https://www.statisticshowto.datasciencecentral.com/likelihood-function/) of observing --- given observed data --- a parameter value  of the statistical model used to describe that data. I.e.:
-
-$$
-L_{lik} (w) = log p (y | X, w)
-$$
-
-This can be used to estimate the cost. The log-likelihood if (typically?) convex in the weight vector $w$, as it's a sum of convex functions. The **Maximum likelihood estimator (MLE)** states that:
-
-$$
-argmin_w L_{MSE}(w) = argmax_w L_{lik} (w)
-$$
-
-i.e. the solution that minimizes the weights in the Mean Square Error problem, maximizes the log-likelihood of the data. MLE is a sample approximation of the *expected* log-likelihood i.e.
-
-$$
-L_{lik}(w) \approx E_{p(x,y)} [ log p(y | x,w ) ]
-$$
 
 [coordinate-ascent]: {{ site.baseurl }}{% post_url 2018-02-17-Supervised-Learning %}
 
-When the distribution of the prior and posterior are computationally tractable, the optimization of the parameters that define the distribution can be performed using the [coordinate ascent][coordinate-ascent] method, detailed briefly previously. In practice we perform and iterative partial derivatives of the prior/posterior for the model parameters. For the sake of comparison, while we minimize the negation of the loss on $w$ when performing linear regression, on a Bayesian model with a Gaussian distribution on all priors, we'd maximize based on the coordinate ascent of the parameters mean $\mu$ and standard deviation $\sigma$.
+tion can be performed using the [coordinate ascent][coordinate-ascent] method. 
 
-## Bayesian Linear Optimization
 
-A particular exception of Bayesian optimization that requires non-iterative methods is the linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is utilized very commonly, mainly due to two reasons:
-1. defining the appropriate parametric distribution of the weights (i.e. the prior) is a *hard* problem and requires domain knowledge that many times is not easy to grasp;
-2. the analytical solution for the posteriors is *extremelly fast* to compute even for very large datasets and dimensionality, compared to aternative methods that we will cover later;
+Machine Learning is driven by mathematical models that try to *learn* from data. The complexity of the data is continuously increasing, due to higher-resolution photos, larger textual databases, higher number of observable features on input datapoints, etc. The computing power available *tends* to follow, or somehow adapt, as observed by [Moore's law](https://en.wikipedia.org/wiki/Moore%27s_law). However, in the occurence of very large datasets and very computationally-expensive learning models, the learning process is limited due to insufficient memory or an infeasibly-high training time. This is where **AI Supercomputing --- or technically speaking Parallel/Distributed computing of Machine Learning algorithms** ---  comes into place. 
 
-Take the linear regression model $y = w_1x_1 + ... + w_dx_d$ or its alternative matrix representation $y = \sum_{d=1}^D \text{ } w_d^TX$ for a problem with dimensionlity $D$.
+AI Supercomputing focuses on how to distribute data (models, inputs) and computation across several compute units (vector units, CPU cores, GPU cores, and machines). The goal is to distribute the data in such way that the learning algorithm can be execution simultaneously (*parallelized*) with different datasets across all processors, speeding up the solution and reducing memory usage per machine. On the other hand, distributing data that are computationally dependent --- or equally, that need to be in the same memory region (machine) to be computed together at some point --- introduces another layer of analysis of efficiency due to the overhead on the communication required to move variables across machines or compute units. So the ideal algorithm can be characterized as the one that allows for:
 
-Going back to the previous equation \ref{eq_prior_w} 
+1. homogeneous distribution of data across memory units, i.e. balanced memory usage;
+2. homogeneous amount of computation assigned to each compute unit, i.e. balanced computation; and
+3. a minimal amount of communication across memory/compute units, or ideally a zero communication overhead if overlaping of communication and computation is possible.
 
-## Stochastic Variational Inference for approximate posterior
+When these three properties are achieved, then we guarantee the **linear scaling** of the algorithm. This means that, by increasing (e.g. doubling) the compute resources, we decrease (halve) the computation. In practice, perfectly-linear scaling is very hard, but quasi-linear scaling is commonly achieved on cleverly designed algorithms. Let's start with the basics.
 
-advantage: faster than sampling methods; allows non-linear regression methods;
-disadvantages: over-confident, works well only if we know the parametric distribution of the posterior, requires the posterior to follow a parametric distribution, otherwise we can use the sampling.
 
-## Monte Carlo sampling for exact posteriors 
+# Linear Regression and Mutual Exclusion
 
-advantages: *real* posterior.
-disadvantages: very high computation cost, what to do with an exact posterior which doesnt follow a parametric ditribution.
+That a basic linear example of input variables $x$, labels $y$, learnt weights $w$ and a loss functions set at the Mean Absolute Error.
+We want to minimize:
 
----
+$$
+MAE(w)  = \frac{1}{N} \sum_{n=1}^N | y_n - f(x_n) | \text{, where } f(x_n) = \sum_{j=1}^{M} w_j x_j
+$$
 
-## Refresher: Linear Algebra
 
-Here's a reminder of some operations on linear algebra, in case the previous reductions cause some confusion:
+To speed-up the solution, we can *parallelize* both sums in $MAE$ and $f(x_n)$ with several compute units (let's say $T$ compute threads) and decompose the computation as:
 
-1. **Multiplication:**
-	1. $A(BC) = (AB)C$;
-	2. $A(B+C)=AB+AC$;
-	3. $(B+C)A=BA+CA$;
-	4. $r(AB)=(rA)B=A(rB)$ for a scalar $r$;
-	5. $I_mA=AI=AI_n$;
+$$
+\begin{align*}
+MAE(w) & = MAE (w_{thread_1}) + MAE (w_{thread_2}) + ... + MAE (w_{thread_T})\\
+& = \sum_{n=1}^{\lfloor N/T \rfloor} |y_n - f(x_n)| +  \sum_{n=\lfloor N/T \rfloor +1}^{2\lfloor N/T \rfloor} |y_n - f(x_n)| + ... + \sum_{n=(T-1)\lfloor N/T \rfloor +1}^{N} |y_n - f(x_n)|
+\end{align*}
+$$
 
-2. **Transpose:**
-	1. $(A^T)^T = A$;
-	2. $(A+B)^T=A^T+B^T$;
-	3. $(rA)^T = rA^T$ for a scalar $r$;
-	4. $(AB)^T=B^TA^T$;
+\pause
+\vspace{0.15cm}
+This operation is \textit{memory-safe} for $f(x_n)$, but unsafe for $MAE(w)$. \pause Options:
 
-3. **Division:**
-	1. if $rA=B$, then $r=BA^{-1}$, for a scalar $r$;
-	2. if $Ar=B$, then $r=A^{-1}B$, for a scalar $r$;
-	3. $Ax=b$ is the system of linear equations $a_{1,1}x_1 + a_{1,2}x_2 + ... + a_{1,n}x_n = b_1$ for row $1$, repeated for every row;
-		- therefore, $x = A^{-1}b$, if matrix has $A$ an inverse;
+\small
+\begin{enumerate}
+\item base case, no parallelism. \textbf{Slow!} \texttt{(AI\_SC\_1.cpp)}
+\pause
+\item each thread updates the MAE sum continuously. \textbf{Wrong!} \texttt{(AI\_SC\_2.cpp)}
+\pause
+\item same as before, with a \textit{mutual-exclusion} control. \textbf{Very slow!} \texttt{(AI\_SC\_3.cpp)}
+\pause
+\item same as before, with sums computed independently. \textbf{Good!} \texttt{(AI\_SC\_4.cpp)}
+\end{enumerate}
+}
 
-4. **Inverse:** 
-	1. $AA^{-1}=A^{-1}A=I$;
-	2. If $A$ is invertible, its inverse is unique;
-	3. If $A$ is invertible, then $Ax=b$ has an unique solution;
-	4. If $A$ is invertible, $(A^{-1})^{-1}=A$;
-	5. $rA^{-1} = (\frac{1}{r}A)^{-1}$ for a scalar $r$;
+\end{frame}
+
+\begin{frame}{From CPU to GPU to TPU/IPU}
+\Wider[2.5em]{
+\small
+\vspace{0.1cm}
+\textbf{\alert{Take-home message:}} In Machine Learning:
+\begin{enumerate}
+\item (matrix-vector) computations can de decomposed and fully-parallelized;
+\item Reductions are uncommon, so there's almost no synchronization overhead;
+\end{enumerate}
+\pause
+
+\vspace{0.08cm}
+\textbf{\alert{Exception:}} MCMC methods, due to parallel random number generation.
+\begin{itemize}
+\item choose between parallelism \small{(different seeds)} and reproducibility {\small(prev. option 3)}.
+\end{itemize}
+
+
+\pause \centering
+\vspace{0.1cm}
+\textbf{\alert{Rule:}} total parallel compute power (\textbf{FLOPS}, not Ghz) is the relevant hardware spec.
+
+\pause
+\centering
+\vspace{0.2cm}
+\begin{columns}
+\column{0.45\textwidth}
+\includegraphics[width=1.05\textwidth]{microsoft-sync-computing/figures/a53-power-curve.png}
+\column{0.55\textwidth}
+
+\pause	
+\begin{tiny}
+\begin{tabular}{l r r r}
+\hline
+ & \textbf{base CPU} & \textbf{FLOPS (32 bit)} & \textbf{Max RAM} \\
+\hline
+Intel Xeon 8180 & 28x 2.5 Ghz & 1.36 TFLOPS & 768 GB\\
+Tesla K80 & 4992x 0.56 Ghz & 8.73 TFLOPS & 2x12 GB \\
+GraphCore & * 1216 x 1.6Ghz & 31.1 TFLOPS &  ** 304 MiB \\
+\hline
+\end{tabular}
+
+\vspace{0.2cm}
+* TPUs use Accumulating Matrix Product (AMP) units, allowing 16 single-precision floating point operations per clock cycle.
+
+\vspace{0.1cm}
+** Small memory compensated by low latency.
+
+\vspace{0.1cm}
+\textbf{CPU:} 64- and 32-bit ops;
+\textbf{GPU:} 64, 32, 16 (NVIDIA Pascal);
+\textbf{TPU:} 64, 32, 16, ...
+
+\vspace{0.3cm}
+{\color{gray}\textbf{Source:} \href{https://www.graphcore.ai/products/ipu}{Dissecting the
+Graphcore IPU Architecture via Microbenchmarking, Citadel Technical Report, 7 December 2019}}
+
+
+
+
+\end{tiny}
+
+\vspace{0.25cm} \centering \pause
+\textbf{\alert{Memory is limited and expensive.}}
+\end{columns}
+}
+\end{frame}
+
+\begin{frame}{Deep Neural Nets on GPUs. GPU-offloading (vDNN)}
+\Wider[2.5em]{
+\centering
+\small
+\vspace{0.4cm}
+GPUs are faster, but... \alert{how to overcome the memory limitations?}
+\vspace{-0.2cm}
+
+\pause
+$$
+x^{(l)} = f^{(l)} (x^{(l-1)}) = \phi ((W^{(l)})^T x^{(l-1)}) \text{ \hspace{0.2cm} and \hspace{0.2cm} }
+L = \frac{1}{N} \sum_{n=1}^N | y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) |
+$$
+
+\pause
+\vspace{0.1cm}
+\includegraphics[width=0.85\textwidth]{microsoft-sync-computing/figures/vDNN.png}
+
+\pause
+\vspace{0.2cm}
+vDNN\footnote{ Source, References: \textbf{vDNN}:
+\href{https://arxiv.org/pdf/1602.08124.pdf}{Rhu et al., vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design, Proc. 49th Annual IEEE/ACM Symposium on Microarchitecture (MICRO)};
+ \textbf{vDNN+}: \href{https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf}{Shriram et al, Dynamic Memory Management for GPU-based training of Deep Neural Networks, Proc. IPDPS 2019} 	
+}: 
+Keep model in CPU memory, and active layer in GPU memory.
+
+For larger networks, use hard drive (SSD).
+}
+\end{frame}
+
+\begin{frame}{Deep Neural Nets on GPUs. GPU-offloading (vDNN)}
+\Wider[3.5em]{
+\centering \scriptsize
+\textbf{Forward pass}
+
+\includegraphics[width=0.75\textwidth]{microsoft-sync-computing/figures/vDNN2.png}
+
+\pause
+\vspace{0.1cm}
+\textbf{Backward propagation}
+
+\includegraphics[width=0.75\textwidth]{microsoft-sync-computing/figures/vDNN3.png}
+
+\vspace{-0.6cm}
+\scriptsize
+$$
+\delta_j^{(l)} =  \frac{\partial L_n}{\partial z_j^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} = \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
+\text{ \hspace{0.3cm}\, where \hspace{0.3cm} } 
+z_j^{(l)} =  (W^{(l)})^T x^{(l-1)}
+$$
+
+}
+\end{frame}
+
+\begin{frame}{Pipeline Parallelism (G-Pipe, PipeDream)}
+\Wider[2.5em]{
+\vspace{0.5cm}
+\centering
+\includegraphics[width=0.38\textwidth]{microsoft-sync-computing/figures/Pipedream_DNN_pipeline.PNG}
+\hspace{0.5cm}
+\pause
+\includegraphics[width=0.53\textwidth]{microsoft-sync-computing/figures/Pipedream_DNN_pipeline_parallel.PNG}
+
+\small \pause
+\vspace{0.2cm}
+Backward prop. starts after all forward pass. finishes. Can we do better?
+
+\pause
+\vspace{0.6cm}
+
+\includegraphics[width=0.53\textwidth]{microsoft-sync-computing/figures/Pipedream_DNN_pipeline_parallel_Microsoft.PNG}
+
+{\tiny \color{gray}
+\vspace{0.5cm}
+\href{https://arxiv.org/abs/1811.06965}{Google, GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism, ArXiv};
+
+\href{https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/}{Microsoft, PipeDream: Generalized Pipeline Parallelism for DNN Training} }
+}
+\end{frame}
+
+
+\begin{frame}{Data Parallelism}
+\centering
+\vspace{1.2cm}
+\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/DNN_data_parallelism.pdf}
+
+\pause
+\vspace{0.8cm}
+\textbf{\alert{Issue:}} Not memory efficient. Model is duplicated!
+
+\vspace{0.6cm}
+{\tiny \color{gray}
+Source: \href{https://arxiv.org/abs/1811.03600}{Google Labs, Measuring the Effects of Data Parallelism on Neural Network Training
+, arXiv}}
+\end{frame}
+
+
+\begin{frame}{Model Parallelism (DNN)}
+\centering
+\includegraphics[width=0.9\textwidth]{microsoft-sync-computing/figures/DNN_model_parallelism.pdf}
+
+\pause
+\vspace{1cm}
+\textbf{\alert{Issue:}} Not communication efficient!
+\end{frame}
+
+
+\begin{frame}{Partial Model Parallelism (CNN)}
+\Wider[3em]{
+%Input: N points x C channels x W width x H height
+%weights: F filters x C channels x (K x K) filter size
+%output: N  x Filter x Widht' x Height'
+\small
+\vspace{0.1cm}
+
+\begin{center}
+\vspace{0.1cm}
+\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/argonne_parallel_2.PNG}
+\end{center}
+
+\scriptsize
+\textbf{LEFT:} Parallelism of image across \alert{four processors};  {\color{red}Red box:} center of 3x3 convolution filter; {\color{red}red arrow}: data movement; {\color{violet}violet region:} elements to be communicated at every step so perform filter of elements at the border. \textbf{RIGHT:} communication across \alert{two processors}. {\color{red}Red arrow:} forward phase dependencies; {\color{blue}Blue arrow:} back-propagation dependencies;
+
+%\textbf{Equations:}
+
+\small
+\vspace{0.5cm}
+{\small Equation 1:} \hspace{0.1cm} $ y_{k,f,i,j} = \sum_{c=0}^{C-1} \sum_{a=-O}^{O} \sum_{b=-O}^{O} x_{k,c,i+a,j+b} w_{f,c,a+O,b+O} $
+
+{\small Equation 2:} \hspace{0.1cm}  $ \frac{dL}{dw_{f,c,a,b}} = \sum_{k=0}^{N-1} \sum_{i=0}^{H-1} \sum_{j=0}^{W-1} \frac{dL}{dy_{k, f, i, j}} x_{k, c, i+a-O, j+b-O} $
+
+{\small Equation 3:} \hspace{0.1cm}  $ \frac{dL}{dx_{k,c,i,j}} = \sum_{j=0}^{F-1} \sum_{a=-O}^{O} \sum_{b=-O}^{O} \frac{dL}{dy_{k, f, i-a, j-b}} w_{f, c, a+O, b+O} $
+
+\vspace{0.2cm}
+{\tiny \color{gray}
+Source: \href{https://arxiv.org/pdf/1903.06681.pdf}{Dryden et al., Improving Strong-Scaling of CNN Training by Exploiting Finer-Grained Parallelism, Proc. IPDPS 2019} }
+
+}
+\end{frame}
+
+
+\begin{frame}[standout]
+\centering
+\vspace{1cm}
+So far, we know that:
+
+\vspace{1.2cm}
+\begin{small}
+\begin{itemize}
+\item ML is very parallel due to efficient Matrix-vector multiplication;
+\item Memory is limited but we overcome it with \textbf{CPU-offloading};
+\item We can \textbf{pipeline} parallelism;
+\item We can parallelize data and use mean batch gradients;
+\item We can parallelize the model (locally e.g. CNN);
+\end{itemize}
+\end{small}
+
+\pause
+\vspace{1.2cm}
+\textbf{\alert{Any ML model that is not covered?}}
+
+\begin{tabular}{l l}
+\parbox{0.45\textwidth}{
+}
+\end{tabular}
+
+\vspace{1.5cm}
+
+\small brunomaga.github.io
+\end{frame}
+
+
+\begin{frame}{Limitations of parallelism (Encoder-Decoder, Seq-to-Seq)}
+\Wider[2.5em]{
+\small 
+
+\begin{center}
+\includegraphics[width=0.48\textwidth]{microsoft-sync-computing/figures/Encoder_Decoder.pdf}
+\pause \hspace{1.2cm} \vspace{0.3cm}
+\includegraphics[width=0.65\textwidth]{microsoft-sync-computing/figures/encoder_decoder_3.png}
+\end{center}
+
+\scriptsize 
+\vspace{-0.6cm}
+\begin{itemize}
+\item \pause \textbf{encoding/decoding is a recursive algorithm} $\rightarrow$ iterations can't the parallelized;
+\item \pause \textbf{Single hidden layer with \textit{small} embedding}  $\rightarrow$ no performance gain on parallelizing layers;
+\item \pause \textbf{Inputs/outputs of different lengths} $\rightarrow$  only matching batch sizes can be parallelized;
+\end{itemize}
+
+\pause
+\centering \alert{...also important: \textbf{Attention Mechanism}}
+
+%\pause Also, long sentences lead to vanishing/exploding gradients.
+
+}
+\end{frame}
+
+\begin{frame}{Transformer}
+\Wider[4em]{
+\vspace{-0.05cm}
+\begin{columns}
+\column{0.33\textwidth}
+\includegraphics[width=1.23\textwidth]{microsoft-sync-computing/figures/transformer.PNG}
+
+\vspace{-0.1cm}
+{\color{gray}\tiny (\href{https://arxiv.org/abs/1706.03762}{Vaswani et al., Attention is all you need, Arxiv})}
+\column{0.55\textwidth}
+
+\begin{small}
+\pause\textbf{\alert{Encoder}}
+\end{small}
+
+\begin{tiny}
+
+\pause Model has no recurrence or convolution, so we need a \textbf{positional encoder} to give context of order of words in sentence. Example: \textit{My \textbf{dog} is loud} vs \textit{I look like a \textbf{dog}}. %Dimensionality of PE is the same as embeddings $d$ so that they can be summed.
+
+$ PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \text {\hspace{0.25cm} and \hspace{0.25cm}} PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right) $\\
+
+\pause \vspace{0.3cm}\textbf{Multi-head Attention} solves for $n$ heads, \textit{What part of the input should I focus on?}\\\vspace{-0.3cm}
+\begin{center}
+\includegraphics[width=0.6\textwidth]{microsoft-sync-computing/figures/transformer_attention.PNG}
+\end{center}
+
+\vspace{-0.5cm}
+$$
+Attention(K, V, Q) = softmax\left(QK^T / \sqrt{d_k}\right) V
+$$
+
+\vspace{-0.7cm}
+$$
+MHA(K, V, Q) = [head_0,.., head_n]W^M \text{, \hspace{0.2cm}} head_i = Attention(KW^K_i, VW^V_i, QW^Q_i)
+$$
+
+\vspace{-0.1cm}
+\pause \textbf{Feed Forward} is a regressor (single hidden-layer DNN) that transforms the attention vectors into a form that is valid as input to the decoder.
+
+\end{tiny}
+
+\vspace{0.15cm}
+\begin{small}
+\pause\textbf{\alert{Decoder}}
+\end{small}
+
+\begin{tiny}
+
+\pause \textbf{Masked Multi-head Attention} similar to regular MHA, but replaces upper diagonal of attention vector by zeros, to hide next word from model model. \\\vspace{-0.3cm}
+\begin{center}
+\includegraphics[width=0.4\textwidth]{microsoft-sync-computing/figures/transformer_attention_masked.png}
+\end{center}
+
+\vspace{-0.3cm}
+\pause \textbf{Multi-head attention} determines how the words in input \& output sentences interact.
+
+\vspace{0.1cm}
+\pause \textbf{Linear} expands the space into an array of size equals to French vocabulary. 
+
+\vspace{0.1cm}
+\textbf{Softmax} tranforms into a prob. distribution. Word with highest probability is picked.\\
+\end{tiny}
+
+\end{columns}
+}
+\end{frame}
+
+
+\begin{frame}{Transformer (2)}
+\Wider[3.5em]{
+\vspace{0.2cm}
+
+\begin{columns}
+\column{0.33\textwidth}
+\includegraphics[width=1.23\textwidth]{microsoft-sync-computing/figures/transformer.PNG}
+
+\vspace{-0.1cm}
+{\color{gray}\tiny (\href{https://arxiv.org/abs/1706.03762}{Vaswani et al., Attention is all you need, Arxiv})}
+
+\column{0.55\textwidth}
+
+\small 
+\textbf{\alert{Computational Complexity}}
+
+\includegraphics[width=1.\textwidth]{microsoft-sync-computing/figures/transformer_table.png}
+
+\begin{tiny}
+$n$: sequence length, $d$: representation dim., $k$: kernel size; $r$: size of neighbourhood.
+
+\end{tiny}
+
+%RNN: $d^2$ multiplications (multiplication of weights in fully connected layer of DNN) for each of the $n$ words in the sentence
+
+%Self-Attn (Encoder):  Attention matrix $n^2$, where each element of attention matrix has embedding $d$
+
+%amount of computation that can be parallelized, as measured by the minimum number of sequential operations
+
+\vspace{0.3cm}
+\begin{scriptsize}
+\pause \textbf{{Why is it that $n^2 d$ is better than $n d^2$?}}
+
+\pause Sentences length $n \approx 70$, and word embeddings $d \approx 2000$.
+\end{scriptsize}
+\pause
+
+\vspace{0.5cm}
+\pause
+\textbf{\alert{Parallelism}}
+
+\begin{scriptsize}
+Still limited Dec. batch size, but no more Enc. recursion!
+\end{scriptsize}
+
+\vspace{0.5cm}
+\pause
+\textbf{\alert{Rationale}}
+
+\begin{scriptsize}
+\begin{itemize}
+\item Encoder learns English language (context);
+\item Decoder learnt the English-to-French translation;
+\end{itemize}
+\end{scriptsize}
+
+\vspace{0.3cm}
+\pause
+\textbf{Can we get rid of the Decoder} and use only the Encoder to learn complex tasks?
+\end{columns}
+
+}
+\end{frame}
+
+
+%\begin{frame}%{Transformer 3D}
+%\centering \small
+%\includegraphics[width=0.75\textwidth]{microsoft-sync-computing/figures/transformer_3d.jpg}
+%\end{frame}
+
+\begin{frame}{BERT \small (Bidirectional Encoder Representation from Transformers)}
+\Wider[3em]{
+
+\small
+
+\begin{center}
+BERT is a stack of Transformer encoders. Learns language \textit{context}.
+
+\vspace{0.1cm}
+\includegraphics[width=0.9\textwidth]{microsoft-sync-computing/figures/BERT.PNG}
+\end{center}
+
+\pause
+
+\textbf{Pre-Training: 2 self-supervised prediction tasks at same time}:
+\begin{itemize}
+\item \pause tasks: Masked Language Model; and Next Sentence Prediction;
+\item \pause trained on Wikipedia, 24 BERT layers, batches of 256 sentences * 512 tokens;
+\end{itemize}
+
+\pause
+\vspace{0.2cm}
+\begin{columns}
+\column{0.45\textwidth}
+\texttt{\tiny
+Input = [CLS] the man went to [MASK] store [SEP]\\
+\hspace{0.7cm}he bought a gallon [MASK] milk [SEP]\\
+Label = IsNext\\}
+
+\column{0.45\textwidth}
+\texttt{\tiny
+Input = [CLS] the man [MASK] to the store [SEP]\\
+\hspace{0.7cm}penguin [MASK] are flight \#\#less birds [SEP]\\
+Label = NotNext\\}
+\end{columns}
+
+\pause
+\vspace{0.2cm}
+\begin{columns}
+\column{0.1\textwidth}
+{\small \textbf{Input Layout}}
+
+\column{0.71\textwidth}
+
+\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/BERT_input.PNG}
+\end{columns}
+
+\vspace{0.2cm}
+{\tiny \color{gray}
+\href{https://arxiv.org/abs/1810.04805}{BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google AI Language}
+}
+
+}
+\end{frame}
+
+
+\begin{frame}{BERT \small (Bidirectional Encoder Representation from Transformers) (2)}
+\Wider[3em]{
+
+\small
+
+\textbf{Fine-Tuning:}  Adding one layer to a pre-trained BERT to learn to solve most tasks.
+
+\begin{center}
+\vspace{-0.2cm}
+\includegraphics[width=0.6\textwidth]{microsoft-sync-computing/figures/BERT_tasks.png}
+\end{center}
+
+\vspace{-0.1cm}
+\pause
+\tiny
+Information encoded by BERT is useful but, on its own, insufficient to perform a translation task [due to no left-to-right prediction]. However, "BERT pre-training allows for a better initialization point for [an] NMT model", \href{https://arxiv.org/abs/1909.12744}{Clichant et al.,On the use of BERT for Neural Machine Translation, arXiv}
+
+}
+\end{frame}
+
+
+
+%\begin{frame}%{Transformer 3D}
+%\centering \small
+%\includegraphics[width=0.75\textwidth]{microsoft-sync-computing/figures/transformer_3d.jpg}
+%\end{frame}
+
+\begin{frame}{Microsoft ZeRO \& DeepSpeed}
+\Wider[2.5em]{
+
+\scriptsize	
+
+\pause
+Remember BERT is a stack of Transformer Encoders, i.e. a sequence of matrix-vector multiplication?
+
+\pause
+\vspace{0.3cm}
+Remember Data Parallelism (DP) and Model Parallelism (MP)?
+
+\vspace{0.2cm}
+\begin{columns}
+\column{0.55\textwidth}
+\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/DNN_data_parallelism.pdf}
+\column{0.38\textwidth}
+\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/DNN_model_parallelism.pdf}
+\vspace{0.5cm}
+\end{columns}
+
+\pause
+\vspace{0.3cm}
+Remember the inputs and outputs on each layer of forward and backward propagation?
+
+\includegraphics[width=0.45\textwidth]{microsoft-sync-computing/figures/vDNN2.png}
+\hspace{1cm}
+\includegraphics[width=0.45\textwidth]{microsoft-sync-computing/figures/vDNN3.png}
+
+\pause
+\vspace{0.2cm}
+\textbf{ZeRO (Zero Redundancy Optimizer) combines all}: \textit{"[...] achieves the computation/communication efficiency of DP while achieving memory efficiency of MP, [...] retaining the computational granularity and communication volume of DP using a dynamic
+communication schedule during training"}
+
+\pause
+\centering
+\vspace{0.2cm}
+\scriptsize
+Video: 
+\href{https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/}{ZeRO \& DeepSpeed: New system optimizations enable training models with over 100B parameters}
+
+%ZeRO removes the memory redundancies across data-parallel processes by partitioning the model states—parameters, gradients, and optimizer (Adam) state—across data parallel processes instead of replicating them. 
+
+%partitions optimizer states, gradients and parameters
+
+%We show that ZeRO can be combined with any model parallelism
+ 
+%We call this ZeRO-powered data parallelism, which allows per-device memory usage to scale linearly with the degree of data parallelism and incurs similar communication volume as data parallelism. 
+
+\vspace{0.2cm}
+{\color{gray}\tiny
+Sources: \href{https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/}{ZeRO \& DeepSpeed announcement page}, \href{https://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/}{Turing-NLG blog post}; \href{https://www.deepspeed.ai/}{www.deepspeed.ai/}; \href{https://github.com/microsoft/DeepSpeed\#further-reading}{DeepSpeed github docs}; \href{https://www.microsoft.com/en-us/research/publication/zero-memory-optimizations-toward-training-trillion-parameter-models/}{ZeRO paper};
+} 
+}
+\end{frame}
+
+\begin{frame}{Microsoft ZeRO \& DeepSpeed}
+\Wider[2.5em]{
+\vspace{0.2cm}
+\textbf{State of the Art}: \pause Bert-large (0.3B)\pause , GPT-2 (1.5B)\pause , Megatron-LM (8.3B)\pause , T5 (11B). \pause ZeRO can run 100B parameters \pause but they didn't, takes longer than a year for training! \pause So they ran 17B.
+
+\centering \pause
+\vspace{0.3cm}
+\includegraphics[width=0.9\textwidth]{microsoft-sync-computing/figures/ZeRO_superlinear_speedup_60B_parameter.PNG}
+
+\vspace{0.2cm} \pause
+\textbf{super-linear speedup in the regime of 64-400 GPUs}
+
+\small \vspace{0.1cm} \pause
+\textit{"This is a property of ZeRO-DP
+which reduces the memory footprint of the model states as we increase the DP degree, allowing
+us to fit larger batch sizes per GPU"}
+}
+\end{frame}
+
+\begin{frame}[standout]
+\centering
+\Wider[2.5em]{
+\vspace{1cm}
+\centering Thank you
+\vspace{1.5cm}
+
+\small
+Linear Regression $\cdot$ CPU offloading $\cdot$ Pipeline parallelism $\cdot$
+\\data parallelism $\cdot$ model parallelism $\cdot$ Encoder-Decoder $\cdot$
+\\Transformer $\cdot$ BERT $\cdot$ ZeRO $\cdot$ super-linear speedup
+
+\vspace{1.5cm}
+
+%\small brunomaga.github.io
+}
+\end{frame}
