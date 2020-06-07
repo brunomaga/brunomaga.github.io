@@ -28,7 +28,9 @@ That a basic linear example of input variables $x$, labels $y$, learnt weights $
 We want to minimize:
 
 $$
+\begin{align*}
 MAE(w)  = \frac{1}{N} \sum_{n=1}^N | y_n - f(x_n) | \text{, where } f(x_n) = \sum_{j=1}^{M} w_j x_j
+\end{align*}
 $$
 
 
@@ -41,216 +43,170 @@ MAE(w) & = MAE (w_{thread_1}) + MAE (w_{thread_2}) + ... + MAE (w_{thread_T})\\
 \end{align*}
 $$
 
-\pause
-\vspace{0.15cm}
-This operation is \textit{memory-safe} for $f(x_n)$, but unsafe for $MAE(w)$. \pause Options:
+This operation is \textit{memory-safe} for $f(x_n)$, but unsafe for $MAE(w)$, or equivalently, all write operations (variable assignments) in $f(x_n)$ write on different positions while in $MAE(w)$ they don't. In practice, computing $f(x_n)$ requires a sum of $M$ independent products written on each index of $x$, while the final value holding $MAE(w)$ is a constant that needs to be updated with the valuer on every term $\|y_n - f(x_n)\|$. How will that value be updated when several threads try to write simultaneously to the memory space holding it? Let's study four options:
 
-\small
-\begin{enumerate}
-\item base case, no parallelism. \textbf{Slow!} \texttt{(AI\_SC\_1.cpp)}
-\pause
-\item each thread updates the MAE sum continuously. \textbf{Wrong!} \texttt{(AI\_SC\_2.cpp)}
-\pause
-\item same as before, with a \textit{mutual-exclusion} control. \textbf{Very slow!} \texttt{(AI\_SC\_3.cpp)}
-\pause
-\item same as before, with sums computed independently. \textbf{Good!} \texttt{(AI\_SC\_4.cpp)}
-\end{enumerate}
-}
+1. base case: no parallelism, i.e. use only a single thread. The output is correct but its computation is **slow**. This implementation is available in <a href="/assets/AI-Supercomputing/AI_SC_1.cpp">AI\_SC\_1.cpp</a>;
+2. each thread updates the MAE sum continuously. This implementation provides an almost linear scaling of computation, however the output is **wrong** as several memory corruptions occured when several threads try to update the value continuously (<a href="/assets/AI-Supercomputing/AI_SC_2.cpp">AI\_SC\_2.cpp</a>);
+3. same as before, however we add a *mutex* (mutual exclusion) control object. A mutex allows a region of the code to be *locked* by a thread, in such way that no other thread  can enter it until the first thread has unlocked it. We can use it to protect the operation responsiblefor the memory update of the variable being accessed *concurrently* for every update operation. This operation gives an accurate result, however it is **Very slow!**, due to the computational overhead introduced by the mutex itself (<a href="/assets/AI-Supercomputing/AI_SC_3.cpp">AI\_SC\_3.cpp</a>);
+4. finally, the same as before, but we compute the sums of each thread independently and perform a single concurrent memory update of the final variable once, and only at the ned of the execution. This approach gives the correct result with almost **linear scaling** of the algorithm (<a href="/assets/AI-Supercomputing/AI_SC_4.cpp">AI\_SC\_4.cpp</a>);
 
-\end{frame}
+These examples are relevant as they show several points: concurrency control is computational expensive; parallelization is worth it; and matrix-vector multiplications and updates (that underlie most operations in Machine Learning) can be performed efficiently when individual contributions from compute units are decomposed, computed independently and *reduced* at the end.
 
-\begin{frame}{From CPU to GPU to TPU/IPU}
-\Wider[2.5em]{
-\small
-\vspace{0.1cm}
-\textbf{\alert{Take-home message:}} In Machine Learning:
-\begin{enumerate}
-\item (matrix-vector) computations can de decomposed and fully-parallelized;
-\item Reductions are uncommon, so there's almost no synchronization overhead;
-\end{enumerate}
-\pause
+However, not all operations can be easily parallelizable and reproducible. An example is any method based on random number generation, such as [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) methods. In such scenarios, where comput units *draw* continuosly random number(s) for every datapoint, we need to think of the efficiency problem as a trade-off between reproduciblity and efficency. We may allow a fully-parallel algorithm (by having a random number generator per compute unit, therefore yielding efficient computation with results that can only be reproduced on executions with the same number of processors). Or we can have a single random generator with mutually-exclusive access and the sequence of randomly-generated numbers consistent across executions, such as drawing numbers following the input offset. Such details fall out of the scope of this post, so we'll move on with the main topic.
 
-\vspace{0.08cm}
-\textbf{\alert{Exception:}} MCMC methods, due to parallel random number generation.
-\begin{itemize}
-\item choose between parallelism \small{(different seeds)} and reproducibility {\small(prev. option 3)}.
-\end{itemize}
+# From CPU to GPU and TPU/IPU
+
+We talk about compute units over and over. But what does it really mean? On the subject of Machine Learning, three main architectures are relevant:
+1. CPU (Central Processing Unit): the main processor of any desktop, laptop or mobile computer. Intended to be a high speed processor to perform efficiently most *iterative* tasks that we do on a daily basis, such as text editors, mouse/keyboard interfaces, browser, and most applications that run on any operative systems. As we interact of few of these apps at a time, while others run a minimal service on the background, the CPU is defined by a few cores of high-frequency clockspeed. 
+2. GPU (Graphics Processing Unit): initially designed for graphics processing, which are by nature highly parallel (e.g. the computaion of each pixel value on a screen) and based on Matrix/Vector operations (such as rotation, translation and scaling of 3D shapes). As these operations are usually simple algebraic computation performed simultaneously for millions of inputs, the GPU was designed as a high number of compute cores, running at a low-clock speed;
+3. IPU (Inteligent Processing Unit) or TPU (Tensor Processing Unit): a natural evolution of the GPU towards Machine Learning applications. Allows for a higher throughput (or total compute power) due to reducing the operation of each processor to Machine Learning purposes, thus decreaing processor size and allowing an increased number of cores. Because the emphasis of ML application is typically the processing of large batch sizes, IPUs are designed to compute at a rate lower than the GPU. 
+
+The main question is: what drives processor designed to lower the clockspeed of their processors, instead of just designing GPU/TPU/IPUs at the same clock speed as CPUs? The answer is **power consumption**, **[heat dissipation](https://en.wikipedia.org/wiki/List_of_CPU_power_dissipation_figures)** and **temperature**. In practice, to increase the clockspeed we usually reduce the transistor size thus inserting [more transistors in the same chip](https://en.wikipedia.org/wiki/Transistor_count) or placing them more tightly in the same area. This leads to an increase of power comsunption and temperature that has been observed to grow exponentially with the increase of the clockspeed: 
+
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/a53-power-curve.png"/><br/>
+<br/><small>Exponential increase of power comsumption (y axis) for a linear increase of processor frequency (x axis),<br/> for one to four cores (colour coded) of the Samsung Exynos 7420 processor. (source: <a href="https://www.anandtech.com/show/9330/exynos-7420-deep-dive/5">AnandTech</a>)</small>
+</p>
 
 
-\pause \centering
-\vspace{0.1cm}
-\textbf{\alert{Rule:}} total parallel compute power (\textbf{FLOPS}, not Ghz) is the relevant hardware spec.
+The take-home message is: in regression problems, since computational reductions happens rarely and are very efficient (as we saw on the Linear Regression example), then the hardware feature that dictates performance is total GHz across all compute cores. Or more importantly, number of **FLOPs** )(Floating Point Operations per second), since a processor instruction can execute simultaneously several operations, using a techique called [SIMD (Single Instruction Multiple Data](https://en.wikipedia.org/wiki/SIMD#:~:text=Single%20instruction%2C%20multiple%20data%20(SIMD,on%20multiple%20data%20points%20simultaneously.) or [MIMD (Multiple Instructions Multiple Data)[https://en.wikipedia.org/wiki/MIMD]. We'll skip the details about SIMD and MIMD functioning as they're not relevant in the context of this post. 
 
-\pause
-\centering
-\vspace{0.2cm}
-\begin{columns}
-\column{0.45\textwidth}
-\includegraphics[width=1.05\textwidth]{microsoft-sync-computing/figures/a53-power-curve.png}
-\column{0.55\textwidth}
+Looking at the previous plot, we see that, to efficiently maximize GHz/FLOPs throughput, one is much more efficient by having several processors of low clock frequency, instead of fewer of a higher frequency. This is, at a very high level, the main different between a CPU and a GPU architecture, and this explains why GPUs tend to be the preferred choice to compute Machine Learning trainign problems. This phylosophy led to the creation of [TPUs (Tenso Processing Units)](https://en.wikipedia.org/wiki/Tensor_processing_unit) and [IPUs (Inteligent Processing Unit)](https://www.graphcore.ai/products/ipu), that explore this trade-off of number of cores vs clock-frequency, with lower-precision floating point representations (to maximize SIMD), and ML-specialized logical units on the processors, to augment further the throughput. Comparing a common CPU, GPU, and IPU used in compute clusters dedicated to ML tasks:
 
-\pause	
-\begin{tiny}
-\begin{tabular}{l r r r}
-\hline
- & \textbf{base CPU} & \textbf{FLOPS (32 bit)} & \textbf{Max RAM} \\
-\hline
-Intel Xeon 8180 & 28x 2.5 Ghz & 1.36 TFLOPS & 768 GB\\
-Tesla K80 & 4992x 0.56 Ghz & 8.73 TFLOPS & 2x12 GB \\
-GraphCore & * 1216 x 1.6Ghz & 31.1 TFLOPS &  ** 304 MiB \\
-\hline
-\end{tabular}
 
-\vspace{0.2cm}
-* TPUs use Accumulating Matrix Product (AMP) units, allowing 16 single-precision floating point operations per clock cycle.
+|                    | **cores x clock-frequency**  $\hspace{1cm}$ | **FLOPs (32 bits representation)**  $\hspace{1cm}$ | **Max RAM** |
+|---------------------	|-----------------------------	|------------------------------------	|-------------	|
+| **Intel Xeon 8180** $\hspace{1cm}$ | 28x 2.5 Ghz 	| 1.36 TFLOPS 		| 768 GB       	|
+| **Tesla K80**       	| 4992x 0.56 Ghz             	| 8.73 TFLOPS                         	| 2x 12GB     	|
+| **Graphcore IPU**   	| 1216 x 1.6Ghz [1]           	| 31.1 TFLOPS                     	| 304 MiB [2] 	|
+|---------------------	|-----------------------------	|------------------------------------	|-------------	|
 
-\vspace{0.1cm}
-** Small memory compensated by low latency.
+<br/>
+Some important remarks on the IPU architecture: [1] TPUs use Accumulating Matrix Product (AMP) units, allowing 16 single-precision floating point operations per clock cycle, therefore the processor is not directly comparable by looking simply at core count and clock-frequency. Also, [2] small memory is compensated by a very low latency between processor and memory, allowing onloading of offloading of large datasets more efficiently. To learn more about Graphcore's IPU, see the technical report [Dissecting the Graphcore IPU Architecture via Microbenchmarking, Citadel Technical Report, 7 December 2019](https://www.graphcore.ai/products/ipu).
 
-\vspace{0.1cm}
-\textbf{CPU:} 64- and 32-bit ops;
-\textbf{GPU:} 64, 32, 16 (NVIDIA Pascal);
-\textbf{TPU:} 64, 32, 16, ...
+One main observation derives from the previous table. Memory bandwidth increases from CPU to GPU to IPU, however its total capacity is reduced. We will discuss next how this limitation by continuously on-/offloading only the required data to the memory.
 
-\vspace{0.3cm}
-{\color{gray}\textbf{Source:} \href{https://www.graphcore.ai/products/ipu}{Dissecting the
-Graphcore IPU Architecture via Microbenchmarking, Citadel Technical Report, 7 December 2019}}
+# CPU offloading of Deep Neural Nets
 
 
 
 
-\end{tiny}
-
-\vspace{0.25cm} \centering \pause
-\textbf{\alert{Memory is limited and expensive.}}
-\end{columns}
-}
-\end{frame}
-
-\begin{frame}{Deep Neural Nets on GPUs. GPU-offloading (vDNN)}
-\Wider[2.5em]{
-\centering
-\small
-\vspace{0.4cm}
 GPUs are faster, but... \alert{how to overcome the memory limitations?}
-\vspace{-0.2cm}
 
-\pause
+We've seen before on a previous post about [Deep Neural Networks]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}), that for a given layer $l$ of the network, the input is represent as:
+
 $$
-x^{(l)} = f^{(l)} (x^{(l-1)}) = \phi ((W^{(l)})^T x^{(l-1)}) \text{ \hspace{0.2cm} and \hspace{0.2cm} }
+x^{(l)} = f^{(l)} (x^{(l-1)}) = \phi ((W^{(l)})^T x^{(l-1)})
+$$
+
+where $\phi$ is the activation function. The loss is then computed by taking into account the groundtrugh $y$ and the composition of the ouputs of all layers in the neural network, ie:
+
+$$
 L = \frac{1}{N} \sum_{n=1}^N | y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) |
 $$
 
-\pause
-\vspace{0.1cm}
-\includegraphics[width=0.85\textwidth]{microsoft-sync-computing/figures/vDNN.png}
+The important concept here is on the **composition**. In practice one only needs the current layer's state and previous layer output to perform the computation at every layer. This concept has been explored by the (vDNN (Rhu et al.))[https://arxiv.org/pdf/1602.08124.pdf] and (vDNN+ (Shiram et al))[https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf] implementations: 
 
-\pause
-\vspace{0.2cm}
-vDNN\footnote{ Source, References: \textbf{vDNN}:
-\href{https://arxiv.org/pdf/1602.08124.pdf}{Rhu et al., vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design, Proc. 49th Annual IEEE/ACM Symposium on Microarchitecture (MICRO)};
- \textbf{vDNN+}: \href{https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf}{Shriram et al, Dynamic Memory Management for GPU-based training of Deep Neural Networks, Proc. IPDPS 2019} 	
-}: 
-Keep model in CPU memory, and active layer in GPU memory.
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN.png"/><br/>
+<br/><small>An overview of the vDNN(+) implementation on convolutional neural network. Red arrays represent the data flow of variables $x$ and $y$ (layers input and output) during forward propagation. Blue arrows represent data flow during bacward progagation. Yellow arrows represent weight variables. Yellow arrow represent is the variables *workspace in cuDNN*, needed in certain convolutional algorithms. Source: <a href="[https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
+</p>
 
-For larger networks, use hard drive (SSD).
-}
-\end{frame}
+The concept is simple: we store the complete model in CPU memory (or hard-drive if required), and move the active layer into GPU memory when it needs to be computed. To reduce the waiting time of pushing and pulling a layer into the GPU, a viable optimization is to copy asynchronously (ie on the background) the next layer to be computed, while computing the current layer's update.
 
-\begin{frame}{Deep Neural Nets on GPUs. GPU-offloading (vDNN)}
-\Wider[3.5em]{
-\centering \scriptsize
-\textbf{Forward pass}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN2.png"/><br/>
+<br/><small>The forward pass on the vDNN(+) implementation on convolutional neural network. Data not associated with the curent layer (N, yellow arrow) being processed are marked with black cross and can safely be removed from the GPU's memory. Source: <a href="[https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
+</p>
 
-\includegraphics[width=0.75\textwidth]{microsoft-sync-computing/figures/vDNN2.png}
 
-\pause
-\vspace{0.1cm}
-\textbf{Backward propagation}
-
-\includegraphics[width=0.75\textwidth]{microsoft-sync-computing/figures/vDNN3.png}
-
-\vspace{-0.6cm}
-\scriptsize
 $$
 \delta_j^{(l)} =  \frac{\partial L_n}{\partial z_j^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} = \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
 \text{ \hspace{0.3cm}\, where \hspace{0.3cm} } 
 z_j^{(l)} =  (W^{(l)})^T x^{(l-1)}
 $$
 
-}
-\end{frame}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN3.png"/><br/>
+<br/><small>The back propagation phase on the vDNN(+) implementation on convolutional neural network. Data not associated with the curent layer (2, yellow arrow) being processed are marked with black cross and can safely be removed from the GPU's memory. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
+</p>
 
-\begin{frame}{Pipeline Parallelism (G-Pipe, PipeDream)}
-\Wider[2.5em]{
-\vspace{0.5cm}
-\centering
-\includegraphics[width=0.38\textwidth]{microsoft-sync-computing/figures/Pipedream_DNN_pipeline.PNG}
-\hspace{0.5cm}
-\pause
-\includegraphics[width=0.53\textwidth]{microsoft-sync-computing/figures/Pipedream_DNN_pipeline_parallel.PNG}
 
-\small \pause
-\vspace{0.2cm}
+# Pipeline Parallelims Pipeline Parallelism (G-Pipe, PipeDream)
+
+<p align="center">
+<br/>
+<img width="35%" height="35%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline.PNG"/><br/>
+<br/><small>A regular execution of a deep/convolutional neural net using serial processing. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Mirosoft, arXiv)</a>
+</small>
+</p>
+
+
+[Google, GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism, ArXiv](https://arxiv.org/abs/1811.06965)
+
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel.PNG"/><br/>
+<br/><small>A regular execution of a deep/convolutional neural net using serial processing. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Mirosoft, arXiv)</a>
+</small>
+</p>
+
+
 Backward prop. starts after all forward pass. finishes. Can we do better?
 
-\pause
-\vspace{0.6cm}
+[Microsoft, PipeDream: Generalized Pipeline Parallelism for DNN Training, arXiv](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
 
-\includegraphics[width=0.53\textwidth]{microsoft-sync-computing/figures/Pipedream_DNN_pipeline_parallel_Microsoft.PNG}
-
-{\tiny \color{gray}
-\vspace{0.5cm}
-\href{https://arxiv.org/abs/1811.06965}{Google, GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism, ArXiv};
-
-\href{https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/}{Microsoft, PipeDream: Generalized Pipeline Parallelism for DNN Training} }
-}
-\end{frame}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel_Microsoft.PNG"/><br/>
+<br/><small>A regular execution of a deep/convolutional neural net using serial processing. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Mirosoft, arXiv)</a>
+</small>
+</p>
 
 
-\begin{frame}{Data Parallelism}
-\centering
-\vspace{1.2cm}
-\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/DNN_data_parallelism.pdf}
 
-\pause
-\vspace{0.8cm}
-\textbf{\alert{Issue:}} Not memory efficient. Model is duplicated!
+# Data Parallelism 
 
-\vspace{0.6cm}
-{\tiny \color{gray}
-Source: \href{https://arxiv.org/abs/1811.03600}{Google Labs, Measuring the Effects of Data Parallelism on Neural Network Training
-, arXiv}}
-\end{frame}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/DNN_data_parallelism.pdf"/><br/>
+<br/><small>Data Parallelism.</a>
+</small>
+</p>
+
+Not memory efficient. Model is duplicated!
+
+[Google Labs, Measuring the Effects of Data Parallelism on Neural Network Training, arXiv](https://arxiv.org/abs/1811.03600)
+
+#Model parallelism
+
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/DNN_model_parallelism.pdf"/><br/>
+<br/><small>Model Parallelism.</a>
+</small>
+</p>
+
+Not communication efficient!
 
 
-\begin{frame}{Model Parallelism (DNN)}
-\centering
-\includegraphics[width=0.9\textwidth]{microsoft-sync-computing/figures/DNN_model_parallelism.pdf}
-
-\pause
-\vspace{1cm}
-\textbf{\alert{Issue:}} Not communication efficient!
-\end{frame}
+## Partial Model Parallelism (CNN)
 
 
-\begin{frame}{Partial Model Parallelism (CNN)}
-\Wider[3em]{
-%Input: N points x C channels x W width x H height
-%weights: F filters x C channels x (K x K) filter size
-%output: N  x Filter x Widht' x Height'
-\small
-\vspace{0.1cm}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/argonne_parallel_2.PNG"/><br/>
+<br/><small>Model Parallelism.</a>
+</small>
+</p>
 
-\begin{center}
-\vspace{0.1cm}
-\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/argonne_parallel_2.PNG}
-\end{center}
+Parallelism of image across *four processors*;  Red box: center of 3x3 convolution filter; {\color{red}red arrow}: data movement; {\color{violet}violet region:} elements to be communicated at every step so perform filter of elements at the border. \textbf{RIGHT:} communication across \alert{two processors}. {\color{red}Red arrow:} forward phase dependencies; {\color{blue}Blue arrow:} back-propagation dependencies;
 
-\scriptsize
-\textbf{LEFT:} Parallelism of image across \alert{four processors};  {\color{red}Red box:} center of 3x3 convolution filter; {\color{red}red arrow}: data movement; {\color{violet}violet region:} elements to be communicated at every step so perform filter of elements at the border. \textbf{RIGHT:} communication across \alert{two processors}. {\color{red}Red arrow:} forward phase dependencies; {\color{blue}Blue arrow:} back-propagation dependencies;
-
-%\textbf{Equations:}
+\textbf{Equations:}
 
 \small
 \vspace{0.5cm}
@@ -260,332 +216,200 @@ Source: \href{https://arxiv.org/abs/1811.03600}{Google Labs, Measuring the Effec
 
 {\small Equation 3:} \hspace{0.1cm}  $ \frac{dL}{dx_{k,c,i,j}} = \sum_{j=0}^{F-1} \sum_{a=-O}^{O} \sum_{b=-O}^{O} \frac{dL}{dy_{k, f, i-a, j-b}} w_{f, c, a+O, b+O} $
 
-\vspace{0.2cm}
-{\tiny \color{gray}
-Source: \href{https://arxiv.org/pdf/1903.06681.pdf}{Dryden et al., Improving Strong-Scaling of CNN Training by Exploiting Finer-Grained Parallelism, Proc. IPDPS 2019} }
+[Dryden et al., Improving Strong-Scaling of CNN Training by Exploiting Finer-Grained Parallelism, Proc. IPDPS 2019](https://arxiv.org/pdf/1903.06681.pdf)
 
-}
-\end{frame}
+---
 
-
-\begin{frame}[standout]
-\centering
-\vspace{1cm}
 So far, we know that:
+- ML is very parallel due to efficient Matrix-vector multiplication;
+- Memory is limited but we overcome it with \textbf{CPU-offloading};
+- We can \textbf{pipeline} parallelism;
+- We can parallelize data and use mean batch gradients;
+- We can parallelize the model (locally e.g. CNN);
 
-\vspace{1.2cm}
-\begin{small}
-\begin{itemize}
-\item ML is very parallel due to efficient Matrix-vector multiplication;
-\item Memory is limited but we overcome it with \textbf{CPU-offloading};
-\item We can \textbf{pipeline} parallelism;
-\item We can parallelize data and use mean batch gradients;
-\item We can parallelize the model (locally e.g. CNN);
-\end{itemize}
-\end{small}
-
-\pause
-\vspace{1.2cm}
-\textbf{\alert{Any ML model that is not covered?}}
-
-\begin{tabular}{l l}
-\parbox{0.45\textwidth}{
-}
-\end{tabular}
-
-\vspace{1.5cm}
-
-\small brunomaga.github.io
-\end{frame}
+*Any ML model that is not covered?*
 
 
-\begin{frame}{Limitations of parallelism (Encoder-Decoder, Seq-to-Seq)}
-\Wider[2.5em]{
-\small 
+# Lmitations of parallelism (Encoder-Decoder, Seq-to-Seq)
 
-\begin{center}
-\includegraphics[width=0.48\textwidth]{microsoft-sync-computing/figures/Encoder_Decoder.pdf}
-\pause \hspace{1.2cm} \vspace{0.3cm}
-\includegraphics[width=0.65\textwidth]{microsoft-sync-computing/figures/encoder_decoder_3.png}
-\end{center}
 
-\scriptsize 
-\vspace{-0.6cm}
-\begin{itemize}
-\item \pause \textbf{encoding/decoding is a recursive algorithm} $\rightarrow$ iterations can't the parallelized;
-\item \pause \textbf{Single hidden layer with \textit{small} embedding}  $\rightarrow$ no performance gain on parallelizing layers;
-\item \pause \textbf{Inputs/outputs of different lengths} $\rightarrow$  only matching batch sizes can be parallelized;
-\end{itemize}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/Encoder_Decoder.pdf"/><br/>
+<br/><small>Model Parallelism.</a>
+</small>
+</p>
 
-\pause
-\centering \alert{...also important: \textbf{Attention Mechanism}}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/encoder_decoder_3.png"/><br/>
+<br/><small>Model Parallelism.</a>
+</small>
+</p>
 
-%\pause Also, long sentences lead to vanishing/exploding gradients.
+- encoding/decoding is a recursive algorithm $\rightarrow$ iterations can't the parallelized;
+- Single hidden layer with *small* embedding  $\rightarrow$ no performance gain on parallelizing layers;
+- Inputs/outputs of different lengths $\rightarrow$  only matching batch sizes can be parallelized;
 
-}
-\end{frame}
+...also important: *Attention Mechanism*
 
-\begin{frame}{Transformer}
-\Wider[4em]{
-\vspace{-0.05cm}
-\begin{columns}
-\column{0.33\textwidth}
-\includegraphics[width=1.23\textwidth]{microsoft-sync-computing/figures/transformer.PNG}
+also, long sentences lead to vanishing/exploding gradients.
 
-\vspace{-0.1cm}
-{\color{gray}\tiny (\href{https://arxiv.org/abs/1706.03762}{Vaswani et al., Attention is all you need, Arxiv})}
-\column{0.55\textwidth}
+# Transformer 
 
-\begin{small}
-\pause\textbf{\alert{Encoder}}
-\end{small}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/transformer.PNG"/><br/>
+<br/><small>The transformer architecture.</a>
+</small>
+</p>
 
-\begin{tiny}
 
-\pause Model has no recurrence or convolution, so we need a \textbf{positional encoder} to give context of order of words in sentence. Example: \textit{My \textbf{dog} is loud} vs \textit{I look like a \textbf{dog}}. %Dimensionality of PE is the same as embeddings $d$ so that they can be summed.
+[Vaswani et al. (Google), Attention is all you need, Arxiv](https://arxiv.org/abs/1706.03762)
 
-$ PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \text {\hspace{0.25cm} and \hspace{0.25cm}} PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right) $\\
 
-\pause \vspace{0.3cm}\textbf{Multi-head Attention} solves for $n$ heads, \textit{What part of the input should I focus on?}\\\vspace{-0.3cm}
-\begin{center}
-\includegraphics[width=0.6\textwidth]{microsoft-sync-computing/figures/transformer_attention.PNG}
-\end{center}
+## Encoder
 
-\vspace{-0.5cm}
+Model has no recurrence or convolution, so we need a \textbf{positional encoder} to give context of order of words in sentence. Example: \textit{My \textbf{dog} is loud} vs \textit{I look like a \textbf{dog}}. %Dimensionality of PE is the same as embeddings $d$ so that they can be summed.
+
+$$
+ PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \text {\hspace{0.25cm} and \hspace{0.25cm}} PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right)
+$$
+
+**Multi-head Attention** solves for $n$ heads, *What part of the input should I focus on?*
+
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/transformer_attention.PNG"/><br/>
+<br/><small>The transformer architecture.</a>
+</small>
+</p>
+
 $$
 Attention(K, V, Q) = softmax\left(QK^T / \sqrt{d_k}\right) V
 $$
 
-\vspace{-0.7cm}
 $$
 MHA(K, V, Q) = [head_0,.., head_n]W^M \text{, \hspace{0.2cm}} head_i = Attention(KW^K_i, VW^V_i, QW^Q_i)
 $$
 
-\vspace{-0.1cm}
-\pause \textbf{Feed Forward} is a regressor (single hidden-layer DNN) that transforms the attention vectors into a form that is valid as input to the decoder.
+**Feed Forward** is a regressor (single hidden-layer DNN) that transforms the attention vectors into a form that is valid as input to the decoder.
 
 \end{tiny}
 
-\vspace{0.15cm}
-\begin{small}
-\pause\textbf{\alert{Decoder}}
-\end{small}
+## Decoder 
 
-\begin{tiny}
+**Masked Multi-head Attention** similar to regular MHA, but replaces upper diagonal of attention vector by zeros, to hide next word from model model.
 
-\pause \textbf{Masked Multi-head Attention} similar to regular MHA, but replaces upper diagonal of attention vector by zeros, to hide next word from model model. \\\vspace{-0.3cm}
-\begin{center}
-\includegraphics[width=0.4\textwidth]{microsoft-sync-computing/figures/transformer_attention_masked.png}
-\end{center}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/transformer_attention_masked.png"/><br/>
+<br/><small>The transformer  attention mechanism masked.</a>
+</small>
+</p>
 
-\vspace{-0.3cm}
-\pause \textbf{Multi-head attention} determines how the words in input \& output sentences interact.
+Multi-head attention determines how the words in input \& output sentences interact.
 
-\vspace{0.1cm}
-\pause \textbf{Linear} expands the space into an array of size equals to French vocabulary. 
+*Linear* expands the space into an array of size equals to French vocabulary. 
 
-\vspace{0.1cm}
-\textbf{Softmax} tranforms into a prob. distribution. Word with highest probability is picked.\\
-\end{tiny}
+*Softmax* tranforms into a prob. distribution. Word with highest probability is picked.
 
-\end{columns}
-}
-\end{frame}
+**Computational Complexity**:
 
 
-\begin{frame}{Transformer (2)}
-\Wider[3.5em]{
-\vspace{0.2cm}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/transformer_table.png"/><br/>
+<br/><small>The transformer  attention mechanism masked.</a>
+</small>
+</p>
 
-\begin{columns}
-\column{0.33\textwidth}
-\includegraphics[width=1.23\textwidth]{microsoft-sync-computing/figures/transformer.PNG}
-
-\vspace{-0.1cm}
-{\color{gray}\tiny (\href{https://arxiv.org/abs/1706.03762}{Vaswani et al., Attention is all you need, Arxiv})}
-
-\column{0.55\textwidth}
-
-\small 
-\textbf{\alert{Computational Complexity}}
-
-\includegraphics[width=1.\textwidth]{microsoft-sync-computing/figures/transformer_table.png}
-
-\begin{tiny}
 $n$: sequence length, $d$: representation dim., $k$: kernel size; $r$: size of neighbourhood.
 
-\end{tiny}
+RNN: $d^2$ multiplications (multiplication of weights in fully connected layer of DNN) for each of the $n$ words in the sentence
 
-%RNN: $d^2$ multiplications (multiplication of weights in fully connected layer of DNN) for each of the $n$ words in the sentence
+Self-Attn (Encoder):  Attention matrix $n^2$, where each element of attention matrix has embedding $d$
 
-%Self-Attn (Encoder):  Attention matrix $n^2$, where each element of attention matrix has embedding $d$
+amount of computation that can be parallelized, as measured by the minimum number of sequential operations
 
-%amount of computation that can be parallelized, as measured by the minimum number of sequential operations
+Why is it that $n^2 d$ is better than $n d^2$?
 
-\vspace{0.3cm}
-\begin{scriptsize}
-\pause \textbf{{Why is it that $n^2 d$ is better than $n d^2$?}}
+Sentences length $n \approx 70$, and word embeddings $d \approx 2000$.
 
-\pause Sentences length $n \approx 70$, and word embeddings $d \approx 2000$.
-\end{scriptsize}
-\pause
+**Parallelism:** till limited Dec. batch size, but no more Enc. recursion!
 
-\vspace{0.5cm}
-\pause
-\textbf{\alert{Parallelism}}
+**Rationale:**
+- Encoder learns English language (context);
+- Decoder learnt the English-to-French translation;
 
-\begin{scriptsize}
-Still limited Dec. batch size, but no more Enc. recursion!
-\end{scriptsize}
+Can we get rid of the Decoder and use only the Encoder to learn complex tasks?
 
-\vspace{0.5cm}
-\pause
-\textbf{\alert{Rationale}}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/transformer_3d_original.png"/><br/>
+<br/><small>The transformer  attention mechanism masked.</a>
+</small>
+</p>
 
-\begin{scriptsize}
-\begin{itemize}
-\item Encoder learns English language (context);
-\item Decoder learnt the English-to-French translation;
-\end{itemize}
-\end{scriptsize}
+# BERT: Bidirectional Encoder Representation from Transformers
 
-\vspace{0.3cm}
-\pause
-\textbf{Can we get rid of the Decoder} and use only the Encoder to learn complex tasks?
-\end{columns}
-
-}
-\end{frame}
-
-
-%\begin{frame}%{Transformer 3D}
-%\centering \small
-%\includegraphics[width=0.75\textwidth]{microsoft-sync-computing/figures/transformer_3d.jpg}
-%\end{frame}
-
-\begin{frame}{BERT \small (Bidirectional Encoder Representation from Transformers)}
-\Wider[3em]{
-
-\small
-
-\begin{center}
 BERT is a stack of Transformer encoders. Learns language \textit{context}.
 
-\vspace{0.1cm}
-\includegraphics[width=0.9\textwidth]{microsoft-sync-computing/figures/BERT.PNG}
-\end{center}
 
-\pause
-
-\textbf{Pre-Training: 2 self-supervised prediction tasks at same time}:
-\begin{itemize}
-\item \pause tasks: Masked Language Model; and Next Sentence Prediction;
-\item \pause trained on Wikipedia, 24 BERT layers, batches of 256 sentences * 512 tokens;
-\end{itemize}
-
-\pause
-\vspace{0.2cm}
-\begin{columns}
-\column{0.45\textwidth}
-\texttt{\tiny
-Input = [CLS] the man went to [MASK] store [SEP]\\
-\hspace{0.7cm}he bought a gallon [MASK] milk [SEP]\\
-Label = IsNext\\}
-
-\column{0.45\textwidth}
-\texttt{\tiny
-Input = [CLS] the man [MASK] to the store [SEP]\\
-\hspace{0.7cm}penguin [MASK] are flight \#\#less birds [SEP]\\
-Label = NotNext\\}
-\end{columns}
-
-\pause
-\vspace{0.2cm}
-\begin{columns}
-\column{0.1\textwidth}
-{\small \textbf{Input Layout}}
-
-\column{0.71\textwidth}
-
-\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/BERT_input.PNG}
-\end{columns}
-
-\vspace{0.2cm}
-{\tiny \color{gray}
-\href{https://arxiv.org/abs/1810.04805}{BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google AI Language}
-}
-
-}
-\end{frame}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/BERT.PNG"/><br/>
+<br/><small>The transformer  attention mechanism masked.</a>
+</small>
+</p>
 
 
-\begin{frame}{BERT \small (Bidirectional Encoder Representation from Transformers) (2)}
-\Wider[3em]{
+Pre-Training: 2 self-supervised prediction tasks at same time:
+- tasks: Masked Language Model; and Next Sentence Prediction;
+- trained on Wikipedia, 24 BERT layers, batches of 256 sentences * 512 tokens;
 
-\small
+Input = [CLS] the man went to [MASK] store [SEP]
+\hspace{0.7cm}he bought a gallon [MASK] milk [SEP]
+Label = IsNext
 
-\textbf{Fine-Tuning:}  Adding one layer to a pre-trained BERT to learn to solve most tasks.
+Input = [CLS] the man [MASK] to the store [SEP]
+\hspace{0.7cm}penguin [MASK] are flight \#\#less birds [SEP]
+Label = NotNext
 
-\begin{center}
-\vspace{-0.2cm}
-\includegraphics[width=0.6\textwidth]{microsoft-sync-computing/figures/BERT_tasks.png}
-\end{center}
+### Input Layout
 
-\vspace{-0.1cm}
-\pause
-\tiny
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/BERT_input.PNG"/><br/>
+<br/><small>The transformer  attention mechanism masked.</a>
+</small>
+</p>
+
+[BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google AI](https://arxiv.org/abs/1810.04805)
+
+- Fine-Tuning:  Adding one layer to a pre-trained BERT to learn to solve most tasks.
+
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/BERT_tasks.png"/><br/>
+<br/><small>The transformer  attention mechanism masked.</a>
+</small>
+</p>
+
 Information encoded by BERT is useful but, on its own, insufficient to perform a translation task [due to no left-to-right prediction]. However, "BERT pre-training allows for a better initialization point for [an] NMT model", \href{https://arxiv.org/abs/1909.12744}{Clichant et al.,On the use of BERT for Neural Machine Translation, arXiv}
 
-}
-\end{frame}
+# Microsoft ZeRO \& DeepSpeed
 
-
-
-%\begin{frame}%{Transformer 3D}
-%\centering \small
-%\includegraphics[width=0.75\textwidth]{microsoft-sync-computing/figures/transformer_3d.jpg}
-%\end{frame}
-
-\begin{frame}{Microsoft ZeRO \& DeepSpeed}
-\Wider[2.5em]{
-
-\scriptsize	
-
-\pause
 Remember BERT is a stack of Transformer Encoders, i.e. a sequence of matrix-vector multiplication?
 
-\pause
-\vspace{0.3cm}
 Remember Data Parallelism (DP) and Model Parallelism (MP)?
 
-\vspace{0.2cm}
-\begin{columns}
-\column{0.55\textwidth}
-\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/DNN_data_parallelism.pdf}
-\column{0.38\textwidth}
-\includegraphics[width=1.0\textwidth]{microsoft-sync-computing/figures/DNN_model_parallelism.pdf}
-\vspace{0.5cm}
-\end{columns}
-
-\pause
-\vspace{0.3cm}
 Remember the inputs and outputs on each layer of forward and backward propagation?
 
-\includegraphics[width=0.45\textwidth]{microsoft-sync-computing/figures/vDNN2.png}
-\hspace{1cm}
-\includegraphics[width=0.45\textwidth]{microsoft-sync-computing/figures/vDNN3.png}
+**ZeRO (Zero Redundancy Optimizer) combines all**: \textit{"[...] achieves the computation/communication efficiency of DP while achieving memory efficiency of MP, [...] retaining the computational granularity and communication volume of DP using a dynamic
+communication schedule during training"
 
-\pause
-\vspace{0.2cm}
-\textbf{ZeRO (Zero Redundancy Optimizer) combines all}: \textit{"[...] achieves the computation/communication efficiency of DP while achieving memory efficiency of MP, [...] retaining the computational granularity and communication volume of DP using a dynamic
-communication schedule during training"}
-
-\pause
-\centering
-\vspace{0.2cm}
-\scriptsize
-Video: 
-\href{https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/}{ZeRO \& DeepSpeed: New system optimizations enable training models with over 100B parameters}
+[Video](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
 
 %ZeRO removes the memory redundancies across data-parallel processes by partitioning the model states—parameters, gradients, and optimizer (Adam) state—across data parallel processes instead of replicating them. 
 
@@ -595,46 +419,27 @@ Video:
  
 %We call this ZeRO-powered data parallelism, which allows per-device memory usage to scale linearly with the degree of data parallelism and incurs similar communication volume as data parallelism. 
 
-\vspace{0.2cm}
-{\color{gray}\tiny
-Sources: \href{https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/}{ZeRO \& DeepSpeed announcement page}, \href{https://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/}{Turing-NLG blog post}; \href{https://www.deepspeed.ai/}{www.deepspeed.ai/}; \href{https://github.com/microsoft/DeepSpeed\#further-reading}{DeepSpeed github docs}; \href{https://www.microsoft.com/en-us/research/publication/zero-memory-optimizations-toward-training-trillion-parameter-models/}{ZeRO paper};
-} 
-}
-\end{frame}
+Sources:
+- [ZeRO \& DeepSpeed announcement page](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/);
+- [Turing-NLG blog post](ttps://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/);
+- [www.deepspeed.ai/](https://www.deepspeed.ai/);
+- [DeepSpeed github docs](https://github.com/microsoft/DeepSpeed\#further-reading);
+- [ZeRO paper](https://www.microsoft.com/en-us/research/publication/zero-memory-optimizations-toward-training-trillion-parameter-models/);
 
-\begin{frame}{Microsoft ZeRO \& DeepSpeed}
-\Wider[2.5em]{
-\vspace{0.2cm}
-\textbf{State of the Art}: \pause Bert-large (0.3B)\pause , GPT-2 (1.5B)\pause , Megatron-LM (8.3B)\pause , T5 (11B). \pause ZeRO can run 100B parameters \pause but they didn't, takes longer than a year for training! \pause So they ran 17B.
+**State of the Art**: \pause Bert-large (0.3B), GPT-2 (1.5B), Megatron-LM (8.3B), T5 (11B). ZeRO can run 100B parameters but they didn't, takes longer than a year for training! So they ran 17B.
 
-\centering \pause
-\vspace{0.3cm}
-\includegraphics[width=0.9\textwidth]{microsoft-sync-computing/figures/ZeRO_superlinear_speedup_60B_parameter.PNG}
+### Superlinear speed-up
 
-\vspace{0.2cm} \pause
-\textbf{super-linear speedup in the regime of 64-400 GPUs}
+<p align="center">
+<br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/ZeRO_superlinear_speedup_60B_parameter.PNG"/><br/>
+<br/><small>The transformer  attention mechanism masked.</a>
+</small>
+</p>
 
-\small \vspace{0.1cm} \pause
-\textit{"This is a property of ZeRO-DP
+super-linear speedup in the regime of 64-400 GPUs
+
+This is a property of ZeRO-DP
 which reduces the memory footprint of the model states as we increase the DP degree, allowing
-us to fit larger batch sizes per GPU"}
-}
-\end{frame}
+us to fit larger batch sizes per GPU"
 
-\begin{frame}[standout]
-\centering
-\Wider[2.5em]{
-\vspace{1cm}
-\centering Thank you
-\vspace{1.5cm}
-
-\small
-Linear Regression $\cdot$ CPU offloading $\cdot$ Pipeline parallelism $\cdot$
-\\data parallelism $\cdot$ model parallelism $\cdot$ Encoder-Decoder $\cdot$
-\\Transformer $\cdot$ BERT $\cdot$ ZeRO $\cdot$ super-linear speedup
-
-\vspace{1.5cm}
-
-%\small brunomaga.github.io
-}
-\end{frame}
