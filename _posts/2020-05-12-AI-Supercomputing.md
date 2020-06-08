@@ -194,7 +194,7 @@ As a final note, this method does not always require the same network to be copi
 
 For a thorough analysis of the topic, take a look at the paper [Measuring the Effects of Data Parallelism on Neural Network Training (Google Labs, arXiv)](https://arxiv.org/abs/1811.03600)
 
-#Model parallelism
+# Model parallelism
 
 Model parallelism is another general term for the family of methods that perform parallelism at the model level, i.e. the data being distributed across different processors is not the datapoints but the model states. In fact, we can thing of the previous pipelining parallelism as model parallelism as well, as the model is divided layer-wise across several compute node. There are other methods for model parallelims, with the most common being the division and allocation of the dimensionality space of input data and model across processors: 
 
