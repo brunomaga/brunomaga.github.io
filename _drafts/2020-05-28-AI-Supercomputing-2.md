@@ -18,17 +18,21 @@ In our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputin
 
 # Lmitations of parallelism (Encoder-Decoder, Seq-to-Seq)
 
+Enc-Dec paper:
+https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf
+
+Atention paper:
 
 <p align="center">
 <br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/Encoder_Decoder.pdf"/><br/>
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/Encoder_Decoder.png"/><br/>
 <br/><small>Model Parallelism.</a>
 </small>
 </p>
 
 <p align="center">
 <br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/encoder_decoder_3.png"/><br/>
+<img width="90%" height="90%" src="/assets/AI-Supercomputing/Encoder_Decoder_2.png"/><br/>
 <br/><small>Model Parallelism.</a>
 </small>
 </p>
