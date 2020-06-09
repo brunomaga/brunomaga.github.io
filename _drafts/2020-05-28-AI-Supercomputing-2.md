@@ -6,50 +6,53 @@ tags: [machinelearning]
 ---
 
 
-In our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}), we've shows that:
-- ML is very parallel due to efficient Matrix-vector multiplication;
-- Memory is limited but we overcome it with \textbf{CPU-offloading};
-- We can \textbf{pipeline} parallelism;
-- We can parallelize data and use mean batch gradients;
-- We can parallelize the model (locally e.g. CNN);
-
-*Any ML model that is not covered?*
+In our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}), we've discuss different techniques and levels of parallelism (model, data, pipeline, CPU offloading) and showed that efficient parallelism (with almost-linear scaling) at scale is achievable in Machine Learning problems. However, recursive models --- such as the ones used in translation and text interpretation tasks --- are not easy to parallelize. In this post we explain why.
 
 
-# Lmitations of parallelism (Encoder-Decoder, Seq-to-Seq)
+# Encoder-Decoder and Sequence-to-Sequence
 
-Enc-Dec paper:
-https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf
+The Encoder-Decoder (original paper [Sequence to Sequence Learning with Neural Networks, Google, arXiv](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)) is a learning model that learns a encoding and a decoding tasks applied to two sequences, i.e. a sequence-to-sequence task such as the translation of a sentence from a given language to a target language. The learning mechanism is a two-phase recursive algorithm, for the encoder and decoder respectively, where each phase is a sequence of iterations over a recursive neural network.
 
-Atention paper:
+The structure of the Recursive Deep Neural Network (RNN) is as follows. Words are represented by an embedding of dimensionality $d$. The neuros of the model are not stateless (e.g. like in a regular neuron with an activation function), but have an internal state. Two common examples are [Long Short-Term Memory neurons (LSTM)](https://en.wikipedia.org/wiki/Long_short-term_memory) or [Gated Recurrent Units (GRU)](https://en.wikipedia.org/wiki/Gated_recurrent_unit). As a side note, GRU tends to be used in most cases as it includes a single (versus two on the LSTM) state variables, making training faster. The network has fully-connected network layers:
+- an input layer of length $2d$ (when utilizing GRU neurons) or $3d$ (LSTM), referring to the concatenation of the embedding of the previous iteration's hidden space (we'll cover this next), and the embeding of the current word being input;
+	- on the first iteration, the input is initialized randomly or with a zero vector;
+- a single hiddle layer of size $d$, refering to the hidden space of the current iteration;
+- an output layer of size $d$, whose output value is the embedding of the predicted/groundtruth word;
+
+This structure can be represented by the following picture:
 
 <p align="center">
 <br/>
 <img width="45%" height="45%" src="/assets/AI-Supercomputing/Encoder_Decoder.png"/><br/>
-<br/><small>Model Parallelism.</a>
+<br/><small>The recursive deep neural network trained on each step of the encoder-decoder architecture. The blue areas represent input neurons. The green area represent a single hidden layer. The red area represents the model output. Neurons are typically LSTMs or GRUs, and the concatenation of their internal states forms the hidden space used as input on the next iteration </a>
 </small>
 </p>
+
+The training follows in two phases. During the encoding, it passes iteratively all the words on the input sequence into the RNN, and reutilizes the hidden state of an iteration as part of the input of the next one. The output of the RNN is discarded, we're simply training the hidden states. When all workds have been processed, the hidden state of the RNN is past as input to the first iteration on the decoder, concatenated with the *Beginning of Sentence (BOS)* flag. The rest follows as: the output sequence is used in iteration $t$ as output and in iteration $t+1$ as input. The last iterations input is the flat *End of String (EOS)*, that may be analogous to *BOS*. Training of the RNN iterations happens at every iterations, as in a normal [Deep Neural Network]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}). This algorithm can de illustrated as:
 
 <p align="center">
 <br/>
 <img width="90%" height="90%" src="/assets/AI-Supercomputing/Encoder_Decoder_2.png"/><br/>
-<br/><small>Model Parallelism.</a>
+<br/><small>The workflow of an encoder decoder training by learning from the translation of the english sentence "Hello World." to the Frence sentence "Bonjour le monde." .</a>
 </small>
 </p>
 
-- encoding/decoding is a recursive algorithm $\rightarrow$ iterations can't the parallelized;
-- Single hidden layer with *small* embedding  $\rightarrow$ no performance gain on parallelizing layers;
-- Inputs/outputs of different lengths $\rightarrow$  only matching batch sizes can be parallelized;
+Two relevant remarks. Once the network is trained, the translation of a new sentence is executed similarly by running encoder iterations until the flag *EOS* is output. An improvement based on the concept of **Attention Mechanism** has been introduced  (original paper [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473)) that combines the hidden space of every encoder iteration with the input of the decoding steps, in order to increase the model capatiblities. For the sake of brevity, we will ommit these details and go back to the topic of computational complexity.
 
-...also important: *Attention Mechanism*
+Parallelism/scaling/acceleration of such sequence-to-sequence models is an issue. There are three underlying reasons behind it:
+- encoding/decoding is a recursive algorithm, and we can't parallelize recursive iterations (each iteration depends on the hidden state of the previous);
+- the DNN underlying the RNN has only a single layer with a dimension of $d$, referring to an embedding that usually is of small size. Therefore, it does not *allow* for good parallelism such by dimensionality of pipelining;
+- input and output sequences have different lengths, therefore it is very hard to bach sizes per input or output;
+	- in practice, some batching is possible by grouping sentences by encoder length size first, and for each encoder, by decoder length size. This is however very inneficient as we require a high number of sentences for every encoder/decoder lengths pair to fully utilize our compute resources. Not impossible, but very unlikely.
 
-also, long sentences lead to vanishing/exploding gradients.
 
 # Transformer 
 
+This 
+
 <p align="center">
 <br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/transformer.PNG"/><br/>
+<img width="35%" height="35%" src="/assets/AI-Supercomputing/transformer.PNG"/><br/>
 <br/><small>The transformer architecture.</a>
 </small>
 </p>
