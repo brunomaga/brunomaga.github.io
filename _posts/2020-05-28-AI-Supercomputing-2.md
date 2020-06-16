@@ -6,7 +6,7 @@ tags: [machinelearning]
 ---
 
 
-In our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}), we've discuss different techniques and levels of parallelism (model, data, pipeline, CPU offloading) and showed that efficient parallelism (with almost-linear scaling) at scale is possible in Machine Learning problems. However, recursive models --- such as the ones used in translation and text interpretation tasks --- are not easy to parallelize. In this post we explain why.
+In our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}), we discussed different techniques and levels of parallelism (model, data, pipeline, CPU offloading) and showed that efficient parallelism (with almost-linear scaling) at scale is possible in Machine Learning problems. However, recursive models --- such as the ones used in translation and text interpretation tasks --- are not easy to parallelize. In this post we explain why.
 
 
 # Encoder-Decoder and Sequence-to-Sequence
