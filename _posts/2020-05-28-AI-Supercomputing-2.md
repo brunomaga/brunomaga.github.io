@@ -241,7 +241,7 @@ As a final note, information encoded by BERT is useful but, on its own, insuffic
 # Microsoft ZeRO and DeepSpeed
 
 This section is being written and will be available soon. For now, here are some references:
-- [ZeRO \& DeepSpeed announcement page](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/);
+- [ZeRO and DeepSpeed announcement page](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/);
 - [Turing-NLG blog post](ttps://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/);
 - [www.deepspeed.ai/](https://www.deepspeed.ai/);
 - [DeepSpeed github docs](https://github.com/microsoft/DeepSpeed\#further-reading);
