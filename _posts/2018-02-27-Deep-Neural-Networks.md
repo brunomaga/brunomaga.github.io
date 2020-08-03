@@ -39,7 +39,7 @@ where $f$ is the regression function of neurons, as previously. Some popular cho
 - [sigmoid function](https://www.wolframalpha.com/input/?i=1%2F(1%2Be%5E%7B-x%7D)): $$ \phi(x) = \frac{1}{1+e^{-x}} $$, positive and bounded;
 - [*tanh*](https://www.wolframalpha.com/input/?i=%5Cfrac%7Be%5Ex+-+e%5E%7B-x%7D%7D%7Be%5Ex%2Be%5E%7B-x%7D%7D) = $$ \phi(x) = \frac{e^x - e^{-x}}{e^x+e^{-x}} $$, balanced (positive and negative) and  bounded;
 - [Rectified linear Unit – ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)): $$\phi(x) = [x]_+ = maxo\{0,x\}$$, always positive and unbounded; often used as it's computationally *cheap*; 
-- Leaky ReLU: $$\phi(x) = max \{\alpha x,x\}$$. Fixes the problem of *dying* in Non-leaky rectified linear units;
+- Leaky ReLU: $$\phi(x) = max \{\alpha x,x\}$$. Fixes the problem of *dying weights* in Non-leaky rectified linear units;
   - In brief, if the dot product of the input to a ReLU with its weights is negative, the output is 0. The gradient of $$ max\{ 0,x \} $$ is $0$ when the output is $0$. If for any reason the output is consistently $0$ (for example, if the ReLU has a large negative bias), then the gradient will be consistently 0. The error signal backpropagated from later layers gets multiplied by this 0, so no error signal ever passes to earlier layers. The ReLU has died.  With leaky ReLUs, the gradient is never 0, and this problem is avoided.  
 
 ## Back-propagation
@@ -64,6 +64,7 @@ z^{(l)} = (W^{(l)})^T x^{(l-1)}+b^{(l)} .
 \label{eq_z}
 $$
 
+i.e. $z^{(l)}$ is is the total input computed at layer $l$ before applying the activation funtion.
 These quantities are easy to compute by a forward pass in the network, starting at $$ x^{(0)} = x_n $$ and then applying this recursion for $$ l=1,...,L+1 $$.
 
 Now, let
@@ -76,27 +77,27 @@ $$
 These quantities are easier to compute with a backward pass:
 
 $$
-\delta_j^{(l)} = \frac{\partial L_n}{\partial z_j^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} = \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
+\delta_j^{(l)} = \frac{\partial L_n}{\partial z_j^{(l)}} = \sum_k \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} =  \sum_k \delta_k^{(l+1)} \frac{\partial (W^{(l+1)})^T x^{(l)}+b^{(l+1)}}{\partial z_j^{(l)}} =  \sum_k \delta_k^{(l+1)}  W_{j,k}^{(l+1)} \frac{\partial x^{(l)}}{\partial z_j^{(l)}}  =  \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
 $$
 
 We used the chain rule on the second equality operation. Going back to equation \ref{eq_gradient}:
 
 $$
-\frac{\partial L_n}{\partial w_{i,j}^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l)}} \frac{\partial z_k^{(l)}}{\partial w_{i,j}^{(l)}} = \delta_j^{(l)} x_j^{(l-1)}
+\frac{\partial L_n}{\partial w_{i,j}^{(l)}} = \sum_k \frac{\partial L_n}{\partial z_k^{(l)}} \frac{\partial z_k^{(l)}}{\partial w_{i,j}^{(l)}} = \delta_j^{(l)} x_j^{(l-1)}
 \label{eq_w}
 $$
 
-Here we used chain rule, equation \ref{eq_delta} on the definition of $\delta$, and the partial derivative of equation \ref{eq_z} over $w$. In a similar manner:
+Here we used the chain rule, equation \ref{eq_delta} on the definition of $\delta$, and the partial derivative of equation \ref{eq_z} over $w$. In a similar manner:
 
 $$
-\frac{\partial L_n}{\partial b_{j}^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l)}} \frac{\partial z_k^{(l)}}{\partial b_{j}^{(l)}} = \delta_j^{(l)} \cdot 1 = \delta_j^{(l)}
+\frac{\partial L_n}{\partial b_{j}^{(l)}} = \sum_k \frac{\partial L_n}{\partial z_k^{(l)}} \frac{\partial z_k^{(l)}}{\partial b_{j}^{(l)}} = \delta_j^{(l)} \cdot 1 = \delta_j^{(l)}
 \label{eq_b}
 $$
 
 The complete back propagation is then summarized as:
-- Forward pass: set $$ x^{(0)} = x_n $$. Compute $$ z^{(l)} $$ for $$ l=1,...,l+1 $$;
-- Backward pass: set $$ \delta ^{(L+1)} $$ using the appropriate loss and activation function. Compute $$ \delta ^{(L+1)} $$ for $$ l = L, ..., 1 $$;
-- Final computation: For all parameters compute $$ \frac{\partial L_n}{\partial w_{i,j}^{(l)}} $$ (eq. \ref{eq_w}) and $$ \frac{\partial L_n}{\partial b_{j}^{(l)}} $$ (eq. \ref{eq_b});
+1. **Forward pass**: set $$ x^{(0)} = x_n $$. Compute $$ z^{(l)} $$ for $$ l=1,...,l+1 $$;
+2. **Backward pass**: set $$ \delta ^{(L+1)} $$ using the appropriate loss and activation function. Compute $$ \delta ^{(L+1)} $$ for $$ l = L, ..., 1 $$;
+3. **Final computation**: for all parameters compute $$ \frac{\partial L_n}{\partial w_{i,j}^{(l)}} $$ (eq. \ref{eq_w}) and $$ \frac{\partial L_n}{\partial b_{j}^{(l)}} $$ (eq. \ref{eq_b});
 
 ## Regularization via Dropout
 
@@ -147,6 +148,3 @@ The size of each picture typically gets smaller and smaller as we proceed throug
 
 Training follows from back-propagation, ignoring that some weights are shared, and considering each weight on each edge to be an independent variable. Once the gradient has been computed for this network with independent weights, just sum up the gradients of all edges that share the same weight. This gives us the gradient for the network with weight sharing. 
 
-<div class="alert alert-primary" role="alert">
-15.02.2019: An example with code will follow soon.
-</div>
