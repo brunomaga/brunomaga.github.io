@@ -33,7 +33,7 @@ The prior distribution $p(A)$ is a shorthand for $p(A\mid I)$ where $I$ is all i
 The posterior distribution describes how much the data has changed our *prior* beliefs. An important theoream called the **Bernstein-von Mises Theorem** states that:
 - for a sufficiently large sample size, the posterior distribution becomes independent of the prior (as long as the prior is neither 0 or 1)
   - ie for a sufficiently large dataset, the prior just doesnt matter much anymore as the current data has enough information;
-  - in other others, if we let the datapoints go to infitiny, the posterior distribution will go to normal distribution, where the mean will be the maximum likelihood estimator;
+  - if we let the datapoints go to infitiny, the posterior distribution will go to normal distribution, where the mean will be the maximum likelihood estimator;
     - this is a restatement of the central limit theorem, where the posterior distribution becomes the likelihood function;
   - ie the effect of the prior decreases as the data increases;
 
@@ -46,7 +46,7 @@ There are two main optimization problems that we discuss in Bayesian methods: Ma
 </small>
 
 
-When we try to find *how likely is that an output $y$ belongs to a model defined by $X$, $w$ and $\sigma$*, or **maximize the likelihood $p(y\mid w, X, \sigma^2)$**, we perform a **Maximum Likelihood Estimator (MLE)**. Maximizing the likelihood means maximizing the probability that models the training data, given the model parameters, as:
+When we try to find *how likely is for an output $y$ to belong to a model defined by data $X$, weights $w$ and model parameters $\sigma$ (if any)*, or **maximize the likelihood $p(y\mid w, X, \sigma^2)$**, we perform a **Maximum Likelihood Estimator (MLE)**. Maximizing the likelihood means maximizing the probability that models the training data, given the model parameters, as:
 
 $$
 w_{MLE} = argmax_w \text{ } p(y \mid w, X) 
@@ -56,23 +56,26 @@ Note that the likelihood is not a probability distribution (it does not integrat
 
 When the distribution of the prior and posterior are computationally tractable, the optimization of the parameters that define the distribution can be performed using the [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent) method, an iterative method that we've covered [previously]({% post_url 2018-02-17-Supervised-Learning %}). In practice we perform and iterative partial derivatives of the prior/posterior for the model parameters (e.g. mean $\mu$ and standard deviation $\sigma$ in a Gaussian environment) and move our weight estimation towards the direction of lowest loss.
 
-To simplify the computation, we perform the *log-trick* and place the term to optimize into a log function. We can do this because $log$ is a monotonically-increasing function, thus applying it to any function won't change the input values where the minimum or maximum of the solution is found (ie where gradient is zero). Moreover, since Gaussian distribution is represented by a product of an exponential, by applying the $log$ function we *bring the power term out* of the exponential, making its computation simpler are faster. We then get: 
+To simplify the computation, we perform the *log-trick* and place the term to optimize into a log function. We can do this because $log$ is a monotonically-increasing function, thus applying it to any function won't change the input values where the minimum or maximum of the solution (ie where gradient is zero). Moreover, since Gaussian distribution is represented by a product of an exponential, by applying the $log$ function we *bring the power term out* of the exponential, making its computation simpler and faster. In practice, we apply the log-trick to the function we want to minimize and get: 
 
 $$
   \begin{align*}
--log \text{ } p(y \mid w, X) & = -log \prod_{n=1}^N p(y_n \mid w_n, X_n) \\
+-\log \text{ } p(y \mid w, X) & = -log \prod_{n=1}^N p(y_n \mid w_n, X_n) \\
                                        & = - \sum_{n=1}^N log \text{ } p(y \mid w, X)\\
   \end{align*}
 $$
 
-In the linear regression model, the likelihood is Gaussian, due to the Gaussian noise term $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2_{\varepsilon})$$. Therefore:
+I.e. we turn a log of products into a sum of logs. In the linear regression model, the likelihood is Gaussian, due to the Gaussian noise term $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2_{\varepsilon})$$. Therefore:
 
 $$
-log \text{ }  p(y \mid w, X) =  - \frac{1}{2 \sigma^2} (y_n - x^T_n w)^2 + const
+\begin{align*}
+log \text{ }  p(y \mid w, X, \sigma^2) & = \log \left( \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(y_n - x_n^Tw)^2}{2 \sigma^2} \right) \right)\\
+& =  - \frac{1}{2 \sigma^2} (y_n - x^T_n w)^2 + const \\
+\end{align*}
 \label{eq_lr_likelihood}
 $$ 
 
-where $const$ includes all terms independent of $w$. Using the negative log-likelihood (and ignoring the constants whose derivative is zero), we get the following loss function:
+where $const$ includes all terms independent of $w$. Using the negative of the previous log-likelihood, and ignoring the constants whose derivative is zero, we get the following loss function:
 
 $$
   \begin{align*}
@@ -139,7 +142,7 @@ i.e. $\sigma^2$ is the mean of the squared distance between observations and noi
 
 ## Maximum-a-Posteriori (MAP)
 
-Maximum likelihood without regularizer is prone to overfitting (details in section 9.2.2 of the [Mathematics for Machine Learning book]({{ site.resources_permalink }})). In the occurrence of overfitting, we run into very large parameter values. To mitigate the effect of huge values, we can place the prior on the parameter space, and seek now the parameters to estimate the posterior distribution. This is called the Maximum-a-Posteriori estimation (MAP). This is obtained by applying Bayes Theorem
+Maximum likelihood without regularizer is prone to overfitting (details in section 9.2.2 of the [Mathematics for Machine Learning book]({{ site.resources_permalink }})). In the occurrence of overfitting, we run into very large parameter values. To mitigate the effect of huge values, we can place the prior on the parameter space, and seek now the parameters to estimate the posterior distribution. This is called the Maximum-a-Posteriori estimation (MAP), and is obtained by applying the Bayes Theorem.
 
 The problem in hand is to find the parameters of the distribution that best represent the data. Adapting the equation \ref{eq_prior_AB} of the prior to the problem of regression, we aim at computing:
 
@@ -182,7 +185,7 @@ Now we see that the only difference between the weights estimated using MAp($w_{
 
 ## Closed-form solution for Bayesian Linear Regression
 
-Insted of computing a point estimate via MLE or MAP, a special case of Bayesian optimization is the linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is utilized very commonly, mainly since the result is not an estimation, and computing the analytical solution for the posteriors is *extremelly fast* to compute even for very large datasets and dimensionality.
+Instead of computing a point estimate via MLE or MAP, a special case of Bayesian optimization is the linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is utilized very commonly, mainly since the result is not an estimation, and computing the analytical solution for the posteriors is *extremelly fast* to compute even for very large datasets and dimensionality.
 
 
 We assume all our weights are drawn from a gaussian distribution and can be independent (if covariance matrix is diagonal) or not (otherwise). In practice, we start with the prior $p(w) \thicksim \mathcal{N}(m_0, S_0)$, with mean vector $m_0$, and (positive semi-definite) covariance matrix $S_0$ (following the variable notation found on [Chris Bishop's PRML book]({{ site.resources_permalink }})).

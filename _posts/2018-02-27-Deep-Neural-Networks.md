@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  "Deep Neural Networks"
+title:  "Deep Neural Networks and Back-propagation Algorithm"
 categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---
