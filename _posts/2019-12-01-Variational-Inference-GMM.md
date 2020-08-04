@@ -34,7 +34,7 @@ The inference problem is to compute the conditional probability of the latent va
 ## Detour: Markov Chain Monte Carlo
 
 Before moving into Variational Inference, let's understand the place of VI in this type of inference. For many years, the dominant approach was the [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). A simple high-level understanding of MCMC follows from the name itself:
-- [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters via generating random numbers. A simple example is to compute the area of a circle inside by generating random 2D coordinates whitin the bounding square around the circle, and estimate the value of $\pi$ or the area of the circle from the proportion of generated datapoints that fall inside vs ouside the square;
+- [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters via generating random numbers. A simple example is to compute the area of a circle inside by generating random 2D coordinates whitin the bounding square around the circle, and estimate the value of $\pi$ or the area of the circle from the proportion of generated datapoints that fall inside vs outside the circlle in the square;
 - [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain) is a stochastic model describing a sequence of events in which the probability of moving to a next state depends *only* on the state of the current state and not on the previous ones; an example would be the probability of the next character in a word for all *27* possible characters, given the current character.
 
 Therefore, MCMC methods are used to approximate the distribution (state) of parameters at a next iteration by random sampling from a probabilitistic space defined in the current state. MCMC is based on the assumption that the prior-likelihood product $ P(x \mid z) \, P(z)$ can be computed, i.e. is known, for a given $z$. However, we can do this without having any knowledge of the function of $z$. But we know that from a mathematical perspective (eq. \ref{eq_bayes}) the posterior density is expressed as:
@@ -46,7 +46,7 @@ p (z \mid x) & = \frac{p(z) \, p(x \mid z)}{p(x)} & \text{(Bayes, eq. \ref{eq_ba
 \end{align*}
 $$
 
-where the top term of the division can be computed, but the bottom one is unknown or intractable. Since the bottom term is a *normalizer* --- i.e. guarantees that the posterior sums to 1, we can discard it, leading to the expression $ (z \mid x) \propto p(z) \, p(x \mid z)$. Therefore, the rationale is that we can take several samples of the latent variables (as en example the mean $\mu$ or variance $\sigma^2$ in normal distribution) from the current space, and update our model with the values that explain the data better than the values at the current state, i.e. higher posterior probability. A simpler way to represent this description is to compute the acceptance ratio of the proposed over the current posterior (allowing us to discard the term $P(x)$ which we couldn't compute):
+where the top term of the division can be computed, but the bottom one is unknown or intractable. Since the bottom term is a *normalizer* --- i.e. guarantees that the posterior sums to 1, we can discard it, leading to the expression $ p (z \mid x) \propto p(z) \, p(x \mid z)$. Therefore, the rationale is that we can take several samples of the latent variables (as en example the mean $\mu$ or variance $\sigma^2$ in normal distribution) from the current space, and update our model with the values that explain the data better than the values at the current state, i.e. higher posterior probability. A simpler way to represent this description is to compute the acceptance ratio of the proposed over the current posterior (allowing us to discard the term $P(x)$ which we couldn't compute):
 
 $$
   \frac{ P(z \mid x) }{ P(z_0 \mid x) }
@@ -305,7 +305,7 @@ $$
 
 The CAVI (coordinate ascent variational inference) updates each variational parameter in turn, so we need to comput both updates.
 
-##### Upadte 1: Variational update for cluster assignment
+##### Update 1: Variational update for cluster assignment
 
 We start with the variational update for the cluster assignment $c_i$. Using the mean-field recipe from equation \ref{eq_CAVI}:
 
