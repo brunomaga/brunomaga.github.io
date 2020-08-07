@@ -246,5 +246,5 @@ In this post, we have shown that:
 - Other model parallelism techniques that parallelize on the dimensions of features and latent space are highly ineficient as the communication increases quadratically with the input and hidden layers size;
 	- However, models of local model partitioning such as Convolutional Neural Networks can utilise this technique efficiently, due to the local filtering that limits the communication space to the neighborhood of neurons set by the image filter;
 
-There's a class of models that have not been covered: sequence data such as textual sentences. In such cases, the previous techniques can hardly be applied due to the recursive nature of the training algorithm. These topics will be covered in the [next post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}).
+There's a class of models that have not been covered: sequence data such as textual sentences. In such cases, the previous techniques can hardly be applied due to the recursive nature of the training algorithm. These topics will be covered in the [next post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}).
 
