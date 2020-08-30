@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  "Supervised Learning: an introduction"
+title:  "[draft] Supervised Learning: an introduction"
 categories: [machine learning, supervised learning]
 tags: [machinelearning]
 ---

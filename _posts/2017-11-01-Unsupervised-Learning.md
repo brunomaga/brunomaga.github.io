@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Unsupervised Learning: an introduction"
+title:  "Unsupervised Learning: basic methods"
 categories: [machine learning, unsupervised learning]
 tags: [machinelearning]
 ---
 
-Unsupervised Learning is the feld of Machine Learning dedicated to the methods of learning without supervision or reward signals. In practice, and contrarily to the fields of [Reinforcement Learning]({{ site.baseurl }}{% post_url 2017-11-27-Reinforcement-Learning %}) and  [Supervised Learning]({{ site.baseurl }}{% post_url  2018-02-17-Supervised-Learning %}), the data is the only information provided to the methods. However, methods are still very powerful and are commonly used for applications such as image compression, dimensionality reduction and classification. 
+Unsupervised Learning is the feld of Machine Learning dedicated to the methods of learning without supervision or reward signals. In practice, and contrarily to the fields of [Reinforcement Learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and  [Supervised Learning]({{ site.baseurl }}{% post_url  2017-02-17-Supervised-Learning %}), the data is the only information provided to the methods. However, methods are still very powerful and are commonly used for applications such as image compression, dimensionality reduction and classification. 
 
 ## Foreword: Hebbian Learning
 
