@@ -11,7 +11,7 @@ $$
 y_n \approx f(x_n) = w_0 + w_1 x_{n1} + ... + + w_D x_{nD} \hspace{1cm}\text{, or simply}\hspace{1cm} y_n \approx f(X) = Xw.
 $$
 
-We use an error or loss function $L(w)$ to indicate how good our estimation is. As as example, the Mean Square Error loss is described as $ L(w) = \frac{1}{N} \sum_{n=1}^N [ y_n - f(x_n)]^2$, and has the property of penalizing predictions with larger errors due to the square term. Another loss function, the Mean Absolute Error, with $ L(w) = \frac{1}{N} \sum_{n=1}^N \mid y_n - f(x_n) \mid $, enforces sparsity in the weight values.
+We use an error or loss function $L(w)$ to indicate how good our estimation is. As as example, the Mean Square Error (MSE) loss is described as $ L(w) = \frac{1}{N} \sum_{n=1}^N [ y_n - f(x_n)]^2$, and has the property of penalizing predictions with larger errors due to the square term. Another loss function, the Mean Absolute Error (MAE), with $ L(w) = \frac{1}{N} \sum_{n=1}^N \mid y_n - f(x_n) \mid $, enforces sparsity in the weight values.
 
 In brief, we want to find the weight values that mimimize the loss function. A naive approach is the Grid Search, a brute-force approach that tests all combinations of $w$ in a given interval. This is usually a dull approach and only works on very low dimensionality problems. An alternative is to optimize the loss function by computing the gradient of the derivative and stepping $w$ to the values that minimizes the loss. The most common methods are the gradient descent and its variants:
 - Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L (w^t) $$, for step size $\gamma$, and gradient $$ \triangledown L (w) = [ \frac{\partial L(w)}{\partial w_1}, ... , \frac{\partial L(w)}{\partial w_D}  ]^T $$;
@@ -55,7 +55,7 @@ Common regularizer approaches are:
 - L1 regularization: $$ \Omega(w) = \lambda \| w \| $$, where $$
  \| w \| = \sum_{i=0}^M | w_i | $$ 
   - keeping L1-norm small forces some elements in $w$ to be strictly 0, thus enforcity sparcity. Some features will not be used since their weight is 0.
-  - If $L$ is the MSE, this is called **Lasso Regression**;
+  - If $L$ is the MAE, this is called **Lasso Regression**;
   - the parameter $ \lambda \gt 0 $ can be tuned to reduce overfitting. This is the **model selection** problem;
 - L2 regularization (standard Euclidean norm): $$ \Omega(w) = \lambda \| w \|^2 $$, where $$ \| w \|^2 = \sum_{i=0}^M w_i^2 $$
   - Large weights will be penalized, as they are *considered unlikely*;
