@@ -92,7 +92,7 @@ $$
        & \frac{dL}{dw} = 0 \\
    \Leftrightarrow & 0 = \frac{d}{dw} \left( \frac{1}{2 \sigma^2} (y-Xw)^T(t-Xw) \right) \\
    \Leftrightarrow & 0 =  \frac{1}{2 \sigma^2} \frac{d}{dw} \left( y^Ty - 2y^TXw + w^TX^TXw \right) \\
-   \Leftrightarrow & 0 =  \frac{1}{2 \sigma^2} \left( -y^TX + w^TX^TX \right) \\
+   \Leftrightarrow & 0 =  \frac{1}{2 \sigma^2} \left( -2y^TX + 2w^TX^TX \right) \\
    \Leftrightarrow & y^TX = w^TX^TX \\
    \Leftrightarrow & w^T = y^TX (X^TX)^{-1} \\
    \Leftrightarrow & w_{MLE} = (X^TX)^{-1}X^Ty \\
