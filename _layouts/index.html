@@ -2,25 +2,12 @@
 layout: default
 ---
 
-<!-- 3 lines common to all pages -->
-<section>
-<div class="container">
-<div class="row">
-
-<div class="home">
-
-<div class="col-lg-7 jumbotron myTransparentBackground">
-  {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
-  {%- else -%}
-    <h1 class="page-heading">{{ site.title }}</h1>
-  {%- endif -%}
+  <h1 class="mt-5">{{ page.title }}</h1>
 
   <p> {{ content }} </p>
 
-  <hr class="my-4">
   {%- if site.posts.size > 0 -%}
-    <h5>{{ page.list_title | default: "Posts" }}</h5>
+    <h4 class="mt-5">{{ page.list_title | default: "Posts" }}</h4>
     <ul class="list-unstyled">
       {%- for post in site.posts -%}
       <li>
@@ -35,48 +22,3 @@ layout: default
     </ul>
   {%- endif -%}
 
-  <hr class="my-4" />
-
-  <div align="center">
-	<div class="btn-group btn-group-lg text-center" role="group" aria-label="Links">
-	      <!-- NOTE: px-2 and py-0 is for spacing (horizontal and vertical padding) -->
-	      <a type="button" class="btn btn-link px-2 py-0" href="mailto:{{ site.email }}?subject=Hello" title="e-mail">
-		<i class="far fa-envelope"></i>
-	      </a>
-	      <a type="button" class="btn btn-link px-2 py-0" href="{{ site.resume }}" title="Resume">
-                <i class="far fa-user-circle"></i>
-	        <!-- <i class="ai ai-cv cv-1x"></i> -->
-	      </a>
-	      <a type="button" class="btn btn-link px-2 py-0" href="{{ site.google_scholar }}" title="Google Scholar">
-	        <i class="ai ai-google-scholar ai-1x"></i>
-	      </a>
-	      <a type="button" class="btn btn-link px-2 py-0" href="https://github.com/{{ site.github_username }}" title="GitHub">
-                <i class="fab light fa-github"></i>
-	      </a>
-	      <a type="button" class="btn btn-link px-2 py-0" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" title="LinkedIn">
-	        <i class="fab fa-linkedin-in"></i>
-	      </a>
-	      <a type="button" class="btn btn-link px-2 py-0" href="https://twitter.com/{{ site.twitter_username }}" title="Twitter">
-                <i class="fab fa-twitter"></i>
-	      </a>
-	      <a type="button" class="btn btn-link px-2 py-0" href="{{ "/feed.xml" | relative_url }}" title="RSS feed">
-	        <i class="fas fa-rss"></i>
-	      </a>
-	      <a type="button" class="btn btn-link px-2 py-0" href="{{ site.resources_permalink }}" title="Resources">
-                <i class="fas fa-book"></i>
-	      </a>
-              <!--
-              <span style="display:inline-block; width:0.1cm;"></span>
-              <a href="#"><i class="fab fa-instagram"></i></a>
-              <span style="display:inline-block; width:0.1cm;"></span>
-              <a href="#"><i class="fab fa-facebook-f"></i></a>-->
-	</div> 
-  </div> 
-  </div>
-</div>
-
-
-<!-- 3 lines common to all pages -->
-</div>
-</div>
-</section>
