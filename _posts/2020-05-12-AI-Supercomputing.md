@@ -18,7 +18,7 @@ AI Supercomputing focuses on how to distribute data (models, inputs) and computa
 In practice, guaranteeting these properties is very hard (particularly the perfectly-linear scaling), but an almost-ideal homogeneity of computation and data with quasi-linear scaling can be achieve on cleverly designed algorithms. Let's start with the basics.
 
 
-# Linear Regression and Mutual Exclusion
+## Linear Regression and Mutual Exclusion
 
 Take a simple example of linear regression with input variables $x$, labels $y$, learnt weights $w$ and a loss function set as the Mean Absolute Error.
 We want to minimize:
@@ -50,7 +50,7 @@ These examples give us an important message: concurrency control is computationa
 
 However, not all operations can be easily parallelizable and reproducible. A common example is any method based on random number generation, such as [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) methods applied in Bayesian Optimization. In such scenarios, where compute units *draw* continuosly random number(s) for every datapoint, we need to think of the efficiency problem as a trade-off between reproduciblity and efficency. We may allow a fully-parallel algorithm (by having a random number generator per compute unit, therefore yielding efficient computation with results that can only be reproduced on executions with the same number of processors and seeds). Or we can have a single random generator with mutually-exclusive access and then generate (at the beginning of the execution) a sequence of randomly-generated numbers which consistent across executions. Such details fall out of the scope of this post, so we'll move on with the main topic.
 
-# From CPU to GPU and TPU/IPU
+## From CPU to GPU and TPU/IPU
 
 We've mentioned several time the words "compute unit", "compute architecture" and "processor". Those are random jargon used to describe any piece of hardware that can perform algorithmic computations. On the subject of Machine Learning, three main architectures are relevant:
 1. CPU (Central Processing Unit): the main processor of any desktop, laptop or mobile computer. Intended to be a high speed processor to perform efficiently most *iterative* tasks that we do on a daily basis, such as text editors, mouse/keyboard interfaces, browser, and most applications that run on the operative systems. As on a normal session we interact with few of these apps at a time (and keep others on the background), the CPU was suited to this type of behavior and built as a small set of cores with a high-frequency clockspeed. 
@@ -84,7 +84,7 @@ Some important remarks on the IPU architecture: [1] TPUs use Accumulating Matrix
 
 One main observation derives from the previous table. Memory bandwidth increases from CPU to GPU to IPU, however its total capacity is reduced. In practice, small memory is compensated by a very low latency between processor and memory, allowing onloading of offloading of large datasets more efficiently. So how do we train large models on small memory regions?
 
-# CPU offloading (vDNN)
+## CPU offloading (vDNN)
 
 A common technique to handle memory limitations is offloading. In this particular example, we'll focus on GPU to CPU offloading. The main goal of this method is to identify and move to the GPU only the portions of data that are required for each computation step, and keep the remaining on the CPU.
 
@@ -126,11 +126,11 @@ $$
 \delta_j^{(l)} =  \frac{\partial L_n}{\partial z_j^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} = \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
 $$
 
-[//]: # and the final loss function over the weights as:
+[//]: ## and the final loss function over the weights as:
 [//]: #
-[//]: # $$
-[//]: # \frac{\partial L_n}{\partial w_{i,j}^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l)}} \frac{\partial z_k^{(l)}}{\partial w_{i,j}^{(l)}} = \delta_j^{(l)} x_j^{(l-1)}
-[//]: # $$
+[//]: ## $$
+[//]: ## \frac{\partial L_n}{\partial w_{i,j}^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l)}} \frac{\partial z_k^{(l)}}{\partial w_{i,j}^{(l)}} = \delta_j^{(l)} x_j^{(l-1)}
+[//]: ## $$
 
 
 i.e., for the backward propagation, we require both the input variable $x^{(l-1)}$ (inside $z_j^{(l)}$), the weights $W^{(l+1)}$ and the derivatives $\delta_j^{(l+1)}$. This can now be represented as: 
@@ -142,7 +142,7 @@ i.e., for the backward propagation, we require both the input variable $x^{(l-1)
 </p>
 
 
-# Pipeline Parallelism (G-Pipe, PipeDream)
+## Pipeline Parallelism (G-Pipe, PipeDream)
 
 Take the previous neural network with 4 layers stored across a network of processors. For simplicity, we'll call the designated compute unit as a *Worker*. If we allocate each Worker to a layer of the network, we can perform a distributed execution of the training where input and output of connecting layers are communited among the respective Workers. I.e. instead of offloading a layer at a time from GPU to CPU and do the inverse when required, we simple have a network GPUs where layears are distributed. A timeline of the execution could then be represented as:
 
@@ -176,7 +176,7 @@ The following workflow illustration provides a better overview of the algorithm 
 </p>
 
 
-# Data Parallelism 
+## Data Parallelism 
 
 Data Parallelism refers to the family of methods that perform parallelism at the data level, i.e. by allocating distinct batches of data to the processors. The previous examples of pipelining are also part of the data parallelism family, since multiple batches of data are executed simultaneously, even though it's not a *purely-parallel* implementation as the batches are processed iteratively and not simultaneously.
 
@@ -195,7 +195,7 @@ As a final note, this method does not always require the same network to be copi
 
 For a thorough analysis of the topic, take a look at the paper [Measuring the Effects of Data Parallelism on Neural Network Training (Google Labs, arXiv)](https://arxiv.org/abs/1811.03600)
 
-# Model parallelism
+## Model parallelism
 
 Model parallelism is another general term for the family of methods that perform parallelism at the model level, i.e. the data being distributed across different processors is not the input dataset, but the model states instead. In fact, we can think of the previous pipelining parallelism as model parallelism as well, as the model is divided layer-wise across several compute nodes. There are other methods for model parallelims, with the most common being the division and allocation of the dimensionality space of input data and model across processors: 
 
@@ -208,7 +208,7 @@ Model parallelism is another general term for the family of methods that perform
 
 Looking at the previous picture, we notice a major drawback in this method. During training, the constant usage of sums of products using all dimensions on the input space will force processors to continuously communicate those variables among themselves (red lines in the picture). This creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. Moreover, since the number of weights between two layers grows quadratically with the increase of neurons (e.g. for layers with neuron count $N_1$ and $N_2$, the number of weights are $N_1*N_2$), this method is not usable on large input spaces, as the communication becomes a bottleneck.
 
-### Local Model Parallelism (CNN)
+#### Local Model Parallelism (CNN)
 
 Before throwing the towel on model parallelism, it is relevant to mention that this type of parallelism has some use cases where it is applicable and highly efficient. A common example is on the parallelism of very high resolution pictures on [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}). In practice, due to the filter operator in CNNs, the dependencies (weights) between two neurons on sequential layers is not quadratic on the input (as before), but constant with size $F*F$ for a filter of size $F$.
 
@@ -236,7 +236,7 @@ For completion, the equations of the previous picture are the following:
 Can you infer the data dependencies displayed in the picture (red and blue arrows) from these equations? We won't go on details here, but read the  [original paper](https://arxiv.org/pdf/1903.06681.pdf) if you are interested.
 
 
-### Closing Remarks
+#### Closing Remarks
 
 In this post, we have shown that:
 - Machine Learning problems are highly-parallelizable due to efficient Matrix-vector multiplication, and computational reductions that happen rarely;

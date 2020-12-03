@@ -43,7 +43,7 @@ We want to compute the $w$ that minimizes the loss, or equally, where its deriva
 Note that we used the trick $\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$ (<a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, eq 2.4.1). The results tells us that **if $X^TX$ is invertible**, this minimization problem has an unique closed-form solution given by that final form. As a side note, the **Gram matrix $X^TX$** is invertible if **X has full column rank**, i.e. $rank(X)=D$ (we'll ommit the proof). The rank of a matrix is defined as the maximum number of linearly independent column vectors in the matrix, therefore we assume that all columns are linearly independent.
 
 
-#### Regularization
+##### Regularization
 
 It's a common practice to add to the loss a regulatization term $\Omega$ that penalizes complex models. Therefore our loss minimization problem becomes:
 
@@ -66,7 +66,7 @@ Common regularizer approaches are:
 - [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a (deep) [neural network]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) and retrieving the final model as an average of models (see separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) in Deep Neural Networks for details.
 - [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_estimator); 
 
-## Matrix Factorization
+### Matrix Factorization
 
 Matrix factorization can be used to discover underling latent factors and/or to predict missing values of the matrix. We aim to find $W$, $Z$ such that $$ W \approx WZ^T $$. I.e. we aim to predict $x_{dn}$, where $d$ is an element in $Z$, and $n$ is an element in $W$. For movie rating, $Z$ could be users, $W$ could be movies, and $x_{dn}$ the star rating.
 
@@ -134,7 +134,7 @@ We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given 
   $$
 
 
-#### Coordinate Descent 
+##### Coordinate Descent 
 
 The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) optimization method iterates over individual coordinates (keeping others fixed), in order to minimize the loss function. 
 

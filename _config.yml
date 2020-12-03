@@ -11,7 +11,7 @@ url: "https://brunomaga.github.io" # the base hostname & protocol for your site,
 twitter_username:  ibrunomaga
 github_username:   brunomaga
 linkedin_username: brunomaga
-microsoft_cambridge_url: "https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/"
+posts_description: "When time allows, I post about HPC or ML projects I was involved in, or publications and discussions I find interesting."
 
 # Build settings
 markdown: kramdown
