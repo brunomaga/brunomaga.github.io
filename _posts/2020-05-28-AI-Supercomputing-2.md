@@ -9,7 +9,7 @@ tags: [machinelearning]
 In our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}), we discussed different techniques and levels of parallelism (model, data, pipeline, CPU offloading) and showed that efficient parallelism (with almost-linear scaling) at scale is possible in Machine Learning problems. However, recursive models --- such as the ones used in translation and text interpretation tasks --- are not easy to parallelize. In this post we explain why.
 
 
-# Encoder-Decoder and Sequence-to-Sequence
+## Encoder-Decoder and Sequence-to-Sequence
 
 The Encoder-Decoder (original paper [Sequence to Sequence Learning with Neural Networks (Google, arXiv)](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)) is a learning model that learns an encoding and a decoding task applied to two sequences, i.e. it trains for a sequence-to-sequence task such as the translation of a sentence from a given language to a target language. The learning mechanism is a two-phase recursive algorithm, for the encoder and decoder respectively, where each phase is a sequence of iterations over a recursive neural network.
 
@@ -55,7 +55,7 @@ Parallelism, scaling and acceleration of such sequence-to-sequence models is an 
 - the hidden layer is composed of $h$ neurons, and $h$ is usually a value small enought to allow for acceleration at the layer level (e.g. the model parallelism showned in the our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %});
 - input and output sequences have different lengths, and each batch needs to be a set of input and output sentences of similar lenghts, which makes the batches small and inefficient to parallelize. In practice, some batching is possible by grouping sentences first by length of the encoder inputs, and for each encoder, group by length of decoder inputs. This is however very inneficient as we require an extremmly high number of sentences so that all groups of encoder/decoder pairs are large enough to fully utilize the compute resources at every training batch. Not impossible, but very unlikely.
 
-# Transformer 
+## Transformer 
 
 In 2017 the staff at Google introducted the Transformer (original paper [Attention is all you need (2017, Google, Arxiv)](https://arxiv.org/abs/1706.03762)), overcoming many of the previous issues, while demonstrating better results. The transformer architecture is the following:
 <p align="center">
@@ -69,7 +69,7 @@ In 2017 the staff at Google introducted the Transformer (original paper [Attenti
 The left and right hand side components refer to the encoder and decoder, specifically.
 We will describe these components in the next sections, and ommit the implementation details to focus on computational complexity. If you're curious about its implementation details, have a look at [The Annotated Transformer](https://nlp.seas.harvard.edu/2018/04/03/attention.html).
 
-### Word and Positional Embeddig
+#### Word and Positional Embeddig
 
 The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. According to the paper, the embedding of a given word in the position $pos$ in a sentence, is an array with size $d$ whose value at each dimension $i$ is:
 
@@ -86,7 +86,7 @@ In practice, the embedding is given by $sine$ and $cosine$  waves with a differe
 </small>
 </p>
 
-### Attention Mechanism
+#### Attention Mechanism
 
 The main component of the transformer is the attention mechanism, that determines how the words in input and output sentences interact. In brief, it's the component that *learns* the relationship between words in such a way that it learns the relevant bits of information on each context (thus the naming *Attention* mechanism). The transformer architecture includes not one, but several of these mechanisms, executed in parallel, to allow the model to learn multiple relevant aspects of the input. This **Multi-head Attention Mechanism** solves for $n$ heads, *What part of the input should I focus on?*
 
@@ -139,7 +139,7 @@ The **Masked Multi-head Attention** component on the decoder is similar to the r
 </small>
 </p>
 
-### Other components
+#### Other components
 
 The other components on the transformer are not unique, and have been used previously in other machine learning models:
 - The *Feed Forward* is a regressor (single hidden-layer DNN) that transforms the attention vectors into a form that is valid as input to the decoder or to the next computation phase;
@@ -147,7 +147,7 @@ The other components on the transformer are not unique, and have been used previ
 - The *Softmax* operation transforms the previous array into a probability distribution. The word with the highest probability is picked as output;
 
 
-### Computational Complexity
+#### Computational Complexity
 
 Besides the great reduction in the number of iterations on the encoder size, the authors compare the computational complexity of four comparative models:
 
@@ -165,7 +165,7 @@ The claim is that the $O(n^2 d)$ is better than $O(n d^2)$. This sound illogical
 
 To summarize, the encoder-decoder architecture of the transformer allows a faster non-recursive training of input sequences, and a faster training of output sentences, making it much more efficient than the sequence-to-sequence approaches discussed initially.
 
-# BERT: Bidirectional Encoder Representation from Transformers
+## BERT: Bidirectional Encoder Representation from Transformers
 
 Attending to the previous topic, the main rationale of the Transformer's Encoder-Decoder is that:
 - The encoder learns the context of the input language (English in the previous example);
@@ -183,7 +183,7 @@ So, the encoder is efficiently trained and learns a *context*. So the main quest
 
 The training is performed in two phases. A pre-training phase learns the contexts of the language. And a fine-tuning phase adapts the trained model to the task being solved. Let's start with the pre-training.
 
-### Pre-training
+#### Pre-training
 
 The pre-training phase is based on the simultaneous resolution of two self-supervised prediction tasks:
 1. Masked language model: given a sentence with works replaced with a flag (or masked), train it against the same sentence with those words in place;
@@ -211,7 +211,7 @@ Note that the Yes/No flag related to the second task is past as the first embedd
 
 As a side note, the authors trained this model on BooksCorpus (800M words) and English Wikipedia (2,500M words), using 24 BERT layers, batches of 256 sentences with 512 tokens each.
 
-### Fine-tuning
+#### Fine-tuning
 
 The fine-tuning phase adds an extra layer to the pre-trained BERT model, in order to train the model to the task at hand. This approach has been applied previously in other models, particularly on Convolutional Neural Nets, where the first layers are pre-trained and learnt edges and lines, and the remaining layers are added later and used on training of the object-specific detection.
 
@@ -220,7 +220,7 @@ In the original paper, the authors demonstrated this model successfully being ap
 2. Single Sentence Classification Tasks: similar to the previous, but applied to a single sentence. Used for learning contexts like finding hateful speech, etc.;
 3. Question Answering Tasks: allows one to pass as input the concatenation of the question and a paragraph where the answer to the question is available. The output of the model is the input with the embeddings representing the start and end word of the answer replaced by a marker. As an example:
 	- input:  "[CLS] His name is John. John is a Swiss carpenter and he is 23 years old [SEP] How old is John";
-	- output: "[CLS] His name is John. John is a Swiss carpenter and ###he is 23 years old### [SEP] How old is John";
+	- output: "[CLS] His name is John. John is a Swiss carpenter and ###he is 23 years old#### [SEP] How old is John";
 4. Single Sentence Tagging tasks: retrieves the classes of individual words e.g. Name, Location, Job, etc, by replacing each relevant word with its class id. As an example:
 	- input: "[CLS] His name is John. John is a Swiss carpenter and he is 23 years old";
 	- output: "[CLS] His name is [NAME]. [NAME] is a [NATIONALITY] [OCCUPATION] and he is [AGE] years old".
@@ -238,7 +238,7 @@ The input and output models of the fine-tuning of these tasks are illustrated in
 As a final note, information encoded by BERT is useful but, on its own, insufficient to perform a translation task. However, "BERT pre-training allows for a better initialization point for [an] Neural Machine Translation model" (source: [Clichant et al.,On the use of BERT for Neural Machine Translation, arXiv](https://arxiv.org/abs/1909.12744)). 
 
 
-# Microsoft ZeRO and DeepSpeed
+## Microsoft ZeRO and DeepSpeed
 
 This section is being written and will be available soon. For now, here are some references:
 - [ZeRO and DeepSpeed announcement page](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/);
@@ -258,7 +258,7 @@ This section is being written and will be available soon. For now, here are some
 [//]: <> partitions optimizer states, gradients and parameters; We show that ZeRO can be combined with any model parallelism; We call this ZeRO-powered data parallelism, which allows per-device memory usage to scale linearly with the degree of data parallelism and incurs similar communication volume as data parallelism. 
 
 
-[//]: <> ### Superlinear speed-up
+[//]: <> #### Superlinear speed-up
 
 [//]: <> <p align="center">
 [//]: <> <br/>

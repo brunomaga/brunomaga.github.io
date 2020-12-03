@@ -11,13 +11,13 @@ For the sake of comparison, take the example of a simple linear regression $y = 
  
 Apart from the uncertainty quantification, another benefit of Bayesian is the possibility of **online learning**, i.e. a continuous update of the trained model (from previously-seen data) by looking at only the new data. This is a handy feature for e.g. datasets that are purged periodically.
 
-#### Refresher: Normal distribution
+##### Refresher: Normal distribution
 
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. In the following post, we methods will be solely based on the [Normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) defined for an input $x$ by:
   - $$p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $\mu$ and standard deviation $\sigma$ on an univariate notation, or
   - $$p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{-D/2} \text{ } det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)$$ with mean vector $\mu$ and covariance matrix $\Sigma$ on its multivariate (*matrix*) notation
 
-## Bayes Theorem
+### Bayes Theorem
 
 From the field of probability, the **product rule** tells us that the **joint distribution** of two given events $A$ and $B$ can be written as the product of the distribution of $a$ and the **conditional distribution** of $B$ given a value of $A$, i.e: $p(A, B) = p(A) p(B\mid A)$. By symmetry we have that $p(B,A) = p(B) p(A\mid B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
 
@@ -39,7 +39,7 @@ The posterior distribution describes how much the data has changed our *prior* b
 
 There are two main optimization problems that we discuss in Bayesian methods: Maximum Likelihood Estimator (MLE) and Maximum-a-Posteriori (MAP).
 
-## Maximum Likelihood Estimator (MLE)
+### Maximum Likelihood Estimator (MLE)
 
 <small>
 (In case the following reductions cause some confusion, check the [appendix at the bottom of the page](#appendix-lin-alg) for the rules used, or <a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed overview of matrix operations.)
@@ -102,7 +102,7 @@ $$
 Note that this solution is independent of the noise variance $\sigma^2$, and is the same as minimizing the Least Squares Problem, as we showed in a [previous post]({{ site.baseurl }}{% post_url 2017-02-17-Supervised-Learning %}), with the same closed-form solution $ w = (X^TX)^{-1} X^Ty$. In practice, minimizing the Least Squares problem is equivalent to determining the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = wx + b + \varepsilon$, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. 
 
 
-#### Adding regularization
+##### Adding regularization
 
 Regularizers can be added normally as in the non-Bayesian regression and may have as well an analytical solution. As an example, if we want ot add an $L_2$/Ridge regularizer:
 
@@ -116,7 +116,7 @@ $$
 
 where $\lambda = \alpha \sigma^2$, therefore the solution is now noise-dependent, contrarily to the previous use case. Note that we picked the regularizer constant $\alpha/2$ on the first step to simplify the maths and *cancel out* the 2 when doing the derivative of the $w^Tw$.
 
-#### Estimating noise variance
+##### Estimating noise variance
 
 So far we assumed the noise $\sigma^2$ is known. However, we can use the same Maximum Likelihood principle to obtain the estimator $\sigma^2_{MLE}$ for the noise:
 
@@ -140,7 +140,7 @@ $$
 
 i.e. $\sigma^2$ is the mean of the squared distance between observations and noise-free values.
 
-## Maximum-a-Posteriori (MAP)
+### Maximum-a-Posteriori (MAP)
 
 Maximum likelihood without regularizer is prone to overfitting (details in section 9.2.2 of the [Mathematics for Machine Learning book]({{ site.resources_permalink }})). In the occurrence of overfitting, we run into very large parameter values. To mitigate the effect of huge values, we can place the prior on the parameter space, and seek now the parameters to estimate the posterior distribution. This is called the Maximum-a-Posteriori estimation (MAP), and is obtained by applying the Bayes Theorem.
 
@@ -183,7 +183,7 @@ $$
 
 Now we see that the only difference between the weights estimated using MAp($w_{MAP}$) and using MLE ($w_{MLE}$) is the additional term $\frac{\sigma^2}{b^2}I$ in the inverse matrix, acting as a regularizer.
 
-## Closed-form solution for Bayesian Linear Regression
+### Closed-form solution for Bayesian Linear Regression
 
 Instead of computing a point estimate via MLE or MAP, a special case of Bayesian optimization is the linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is utilized very commonly, mainly since the result is not an estimation, and computing the analytical solution for the posteriors is *extremelly fast* to compute even for very large datasets and dimensionality.
 
@@ -276,7 +276,7 @@ $$
 
 inline with equations 3.50 and 3.51 in [Chris Bishop's PRML book]({{ site.resources_permalink }}).
 
-## Online learning
+### Online learning
 
 Online learning allows us to do iterative learning by continuously updating our posterior based on new observable data. The main principle is that --- following the $posterior \propto likelihood * prior$ principle --- at every iteration we turn our posterior into the new prior, i.e. the new initial knowledge is what we learnt previously. The main advantage is not requiring all the data at once for training and allowing us to learn from datasets that are not fully-available at once. An illustration of the principle is displayed below:
 
@@ -291,7 +291,7 @@ Online learning allows us to do iterative learning by continuously updating our 
 
 We start with the prior knowledge that both weights ($w_0$ and $w_1$) are zero-centered, i.e. mean 0, and a std deviation of 1. When a new datapoint is introduced (blue circle on the top-right plot), the new posterior (top-left) is computed from the likelihood and our initial prior. Drawing models from the current priors leads to an innacurate regression model (yellow lines on the top-right plot) Another point is then introduced (2nd row, right), leading to a new posterior (second row, left), computed from the likelihood and the prior (i.e. the posterior of the previous iteration). The model is now more accurate and the earch space (covariance of the weights) is more reduced (second row, left). After two more iterations, the model is already very accurate with a reduce variance on the weights (bottom left) and better-tunned linear regression models (bottom right).
 
-## Predictive Variance
+### Predictive Variance
 
 Remember that we wanted to model a noisy output defined by $y = Xw + \varepsilon$ with model parameters $w \thicksim \mathcal{N}(\mu, \sigma^2)$  and noise parameter $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. The closed-form solution that computes the distribution of $w$ was provided on the previous section. We'll now compute the distribution of $\varepsilon$. Note that drawing samples from the posterior $p(y \mid X, w, \sigma^2)$ is equivalent to drawing samples from $y = Xw + \varepsilon$.
 
@@ -338,14 +338,14 @@ Similarly to the visualization displayed before, introducing new datapoints impr
 <br/>(inspired on fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Classification and Machine Learning, Chris Bishop</a>)</small>
 </p>
 
-#### Final Remarks
+##### Final Remarks
 
 For more advanced topics on Bayesian Linear Regression refer to chapter 3 in Pattern Recognition and Machine Learning book from Chris Bishop and chapter 9.3 in Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}). To download the source code of the closed-form solutions and reproduce the examples above, download the <a href="{{ site.assets }}/Bayesian-Linear-Regression/Bayesian_Linear_Regression.ipynb">Bayesian Linear Regression notebook</a>.
 
 ---
 ---
 
-#### Appendix: Regresher on Linear Algebra
+##### Appendix: Regresher on Linear Algebra
 <div id="appendix-lin-alg" />
 
 Here are the list of algebraic rules used in this document. For further details, check <a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed list of matrix operations.

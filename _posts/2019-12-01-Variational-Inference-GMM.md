@@ -31,7 +31,7 @@ The inference problem is to compute the conditional probability of the latent va
 
 **There are several approaches to inference**, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Juntion tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why do we need approximate methods after all? Simply because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. **This post focuses on the simplest approach to Variational Inference based on mean-field approximation and coordinate-ascent optimization**.
 
-## Detour: Markov Chain Monte Carlo
+### Detour: Markov Chain Monte Carlo
 
 Before moving into Variational Inference, let's understand the place of VI in this type of inference. For many years, the dominant approach was the [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). A simple high-level understanding of MCMC follows from the name itself:
 - [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters via generating random numbers. A simple example is to compute the area of a circle inside by generating random 2D coordinates whitin the bounding square around the circle, and estimate the value of $\pi$ or the area of the circle from the proportion of generated datapoints that fall inside vs outside the circlle in the square;
@@ -60,7 +60,7 @@ The main advantage of MCMC is that it provides an approximation of the *true* po
 
 I will try to post about this topic in the near future, but if you're curious you can always check the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/Bayesian-Variational-Inference-GMM/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf) if you are interested on the theory behind it, or a practical explanation with code in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
 
-## Variational Inference
+### Variational Inference
 
 The idea behind Variational Inference (VI) is to propose a family of densities and find a member $q^\star$ of that family which is close to the target posterior $p(z \mid x)$. I.e. instead of computing the *real* posterior, we try to find the parameters $z$ of a new distribution $q^\star$ (the approximation to our real posterior) such that:
 
@@ -79,7 +79,7 @@ If both $q$ and $p$ are high, then we achieve a good solution as the KL-divergen
 
 The logic is that we want to minimize the divergence between our real posterior $p(z \mid x)$ and its approximated posterior $q(z)$. We cannot minimize this directly, but we can minimize a function that is *equal to it (up to a constant)*, known as the Evidence Lower Bound.
 
-## Evidence Lower Bound (ELBO)
+### Evidence Lower Bound (ELBO)
 
 <small>
 Good to know: there are mainly two approaches to describe ELBO. I'll follow the paper [*Variational Inference: A Review for Statisticians*](https://arxiv.org/pdf/1601.00670.pdf). For an alternative approach, check the blog posts from [Zhiya Zuo](https://zhiyzuo.github.io/VI/) and [Chris Coy](https://chrischoy.github.io/research/Expectation-Maximization-and-Variational-Inference/) . 
@@ -135,7 +135,7 @@ $$
 
 So we optimize the lower-bound term over quantities $q(z)$ to find a minimal approximation. Or in other words, since $\log p(x)$ does not depend on $q$, we **maximize the ELBO which is equivalent to miniziming the KL-divergence** of the real posterior $p(z \mid x)$ and its approximation $q(z)$.
 
-## Mean-field Variational Family
+### Mean-field Variational Family
 
 So far we foccused on a single posterior defined by a family with a single distributions $q$. We now extend our analysis to complex families. We focus on the simplest method for such scenarios, the **mean-field approximation, where we assume all latent variables are independent**. More complex scenarios such as variational family with dependencies between variables (structured variational inference) or with mixtures of variational families (covered in [Chris Bishop's PRML book]({{ site.resources_permalink }})) are not covered. As a side note, because the latent variables are independent, the mean-field approach that follows usually does not contain the true posterior.
 
@@ -192,7 +192,7 @@ ELBO(q) & = \mathbf{E}_q [\log p(x_{1:n},z_{1:m})] - \mathbf{E}_{q_j}[\log q(z_{
 \end{align*}
 $$
 
-## Coordinate Ascent Variational Inference (CAVI) 
+### Coordinate Ascent Variational Inference (CAVI) 
 
 A common method for iteratively finding the optimal solution is the coordinate ascent variational inference (CAVI), where we compute the derivative of each variational factor and alternatively update the weights towards the lowest loss acording to the factor being iterated. Before we proceed to the derivative, we introduce the notation:
 
@@ -246,7 +246,7 @@ $$
 
 where the constant $\alpha$ is typically set to $max_i x_i$, providing numerical stability to most common VI computations.
 
-## Example: Gaussian Mixture Models
+### Example: Gaussian Mixture Models
 
 <small>Credit: this section is a more verbose and extended explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).</small>
 
@@ -305,7 +305,7 @@ $$
 
 The CAVI (coordinate ascent variational inference) updates each variational parameter in turn, so we need to comput both updates.
 
-##### Update 1: Variational update for cluster assignment
+###### Update 1: Variational update for cluster assignment
 
 We start with the variational update for the cluster assignment $c_i$. Using the mean-field recipe from equation \ref{eq_CAVI}:
 
@@ -340,7 +340,7 @@ $$
 $$
 
 
-##### Update 2: Variational update for cluster mean
+###### Update 2: Variational update for cluster mean
 
 We now turn to the variational density $$q(\mu_k; m_k, s^2_k)$$ on equation \ref{eq_variational_family}. We use again \ref{eq_CAVI} (the exponentiated log of te joint) for the mean values $\mu_k$:
 
@@ -378,7 +378,7 @@ s^2_k = \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}\\
 \label{eq_algo_second_step}
 $$
 
-##### Algorithm and Vizualization
+###### Algorithm and Vizualization
 
 Putting it all together, the algorithm follows as:
 
@@ -398,7 +398,7 @@ The algorithm is iterative and will converge on a certain loss threshold (ELBO),
 </p>
 
 
-## Further Reading
+### Further Reading
 
 There is a universe of methods and techniques that are interesting and were not covered in this post. To name a few:
 - An application of the CAVI to other members of the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-11-20-Exponential-Family-Distributions %}) and Stochastic Variational Inference is detailed in the papers [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf) and [Stochastic Variational Inference](http://www.columbia.edu/~jwp2128/Papers/HoffmanBleiWangPaisley2013.pdf);

@@ -7,7 +7,10 @@ layout: default
   <p> {{ content }} </p>
 
   {%- if site.posts.size > 0 -%}
-    <h4 class="mt-5">{{ page.list_title | default: "Posts" }}</h4>
+    <h4 class="mt-5 mb-3">{{ page.list_title | default: "Posts" }}</h4>
+    {%- if site.posts_description -%}
+    <p>{{ site.posts_description | escape }}</p>
+    {%- endif -%}
     <table>
       {%- for post in site.posts -%}
       <tr>

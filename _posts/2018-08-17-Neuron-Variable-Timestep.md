@@ -17,7 +17,7 @@ $$
 
 where $h$ is the timestep, $y$ is the array of states and $f$ is the Right-Hand side function of the ODE. Can we do better? In this post we present a fully-implicit method based on variable-order variable timestepping.
 
-## CVODE for fully-implicit adaptive-order adaptive-step interpolation
+### CVODE for fully-implicit adaptive-order adaptive-step interpolation
  
 [lytton2005independent]: https://aip.scitation.org/doi/pdf/10.1063/1.4822377
 [sundials]: https://computation.llnl.gov/projects/sundials
@@ -89,7 +89,7 @@ $$
 
 Equation \ref{eq_newton_cvode} requires a division by the Jacobian $J$, i.e. a multiplication by its inverse. Due to the expensive computation of the inverse of the Jacobian, CVODE allows for a trade-off of accuracy and solution time of any equation, by requiring one to only supply a solver for $P y = b$ instead. For the linear case, although NEURON supports a resolution with the Hines solver (default) or the (a) or (c) methods mentioned previously, there has been little exploration of the non-Hines approaches.
 
-## Error Handling
+### Error Handling
 
 One main difference between fixed and variable time stepping, is that from the user's perspective, one does not specify the time step but the relative local (*rtol*) and absolute errors (*atol*) instead. The solver then adjusts $\Delta t$ based on the two values. The local error is based on the extrapolation process within a time step. CVODE uses a weighted root-mean-square norm for all error-like quantities, denoted as:
 
@@ -121,7 +121,7 @@ $$
 R || \delta_m || < 0.1 \epsilon
 $$
 
-## Local and Global Time Stepping
+### Local and Global Time Stepping
 
 NEURON's default error setting for CVODE is $10 \mu M$ for membrane potential and $0.1 nM$ for internal free calcium concentration, allowing a HH-based action potential to have an accuracy equivalent of fixed time step with $\Delta t = 25 \mu s$. The default maximum order for BDF is $5$, although *it is recommended* to let CVODE decide the best order.
 
@@ -133,7 +133,7 @@ In the following picture, we illustrate A time line (from A to D) of six cells r
 
 <p align="center"><img width="30%" height="30%" src="/assets/Neuron-Variable-Timestep/local_variable_timestep_six_cell_example.png"><br/><small>source: [The NEURON book][neuron-book]</small></p>
 
-## Single Neuron Performance
+### Single Neuron Performance
 
 One can notice the difference in performance of the Backward Euler and Variable Timestep interpolators during a stiff trajectory of an Action Potential in the following picture.
 
@@ -161,7 +161,7 @@ Results look promising, even at an extremelly high current value we have a signi
 
 In this scenario, we see a high dependency on the number of discontinuities, and some yet minor dependency on the discontinuity value (i.e. amount of current injected). The holy grail is then in: How does this apply to networks of neurons?
 
-## Simulation of a network of homegeneous neurons
+### Simulation of a network of homegeneous neurons
 
 The performance of *lvardt*'s integration model was tested ([Lytton et al. 2015][lytton2005independent]) on a connected homogeneous network of 100 inhibitory neurons on a single compute node. Due to their inhibitory features, the circuit presents rapid synchronization through mutual inhibition, where variable time steps integrators are likely to encounter problems. A fixed time step of $0.0025 ms$ yielded *closely comparable* results to those of *lvardt* with absolute error tolerance (atol) of $10^{-3}$ or $10^{-5}$. The event deliveries and the associated interpolations took about $12\%$ of total execution time. When using *lvardt*'s global time stepping, the author claims the large amount of events lead to an increase of execution time in the order of 60-fold. Another experiment featured a Thalamocortical simulation, featuring four cell types (cortical pyramidal neurons and interneurons, thalamocortical
 cells, and thalamic reticular neurons). The two thalamic cell types produced bursts with prolonged interburst intervals, therefore very suitable for the use of the *lvardt* algorithm. A simulation of $150 ms$ of simulation time, aiming at high-precision with an error tolerance (atol) of $10^{-6}$ for *lvardt* and $\Delta t = 10^{-4} ms$ for the fixed time step, yielded an execution time of 6 minute 13 seconds and 10 hour 20 minute, respectively, a 100-fold speed-up. For a standard-precision run, with an atol of $10^{-3}$ and $\Delta t = 10^{-2}$, the simulations took 2 minutes for *lvardt* and 5 minutes 53 seconds for fixed time step, a 3-fold speed-up.
@@ -170,7 +170,7 @@ In the following picture we present the afforementioned results for the comparis
 
 <p align="center"><img width="30%" height="30%" src="/assets/Neuron-Variable-Timestep/lvardt_exec_time_comparison.png"><br/><small>source: Lytton et al. 2015 </small></p>
 
-## Simulation of a network of heterogeneous neurons
+### Simulation of a network of heterogeneous neurons
 
 [markram2015cell]: https://www.cell.com/fulltext/S0092-8674(15)01191-5
 
@@ -195,7 +195,7 @@ The total events received across all neurons in the network was of approximately
 
 Is the theoretical speed-up guaranteed to hold in practice? As Einstein once said *"In theory, there's no difference between theory and practice, but in practice, there is"*. And that's exactly right in our case, where two main issues arise. 
 
-#### 1. Distributed CVODE executions
+##### 1. Distributed CVODE executions
 
 Simulations of such scale require parallel/distributed computing due to the memory/computation requirements.
 
@@ -215,7 +215,7 @@ However, going to the *extreme* of the possible optimisation, we observe that th
 
 This approach increases computational efficiency as neurons are computed beyond the approaches that include synchronization intervals, and due to neurons performing more interpolation steps, by staying longer in more efficient CPU cache levels. 
 
-#### 2. Testing conditions alter spike rates
+##### 2. Testing conditions alter spike rates
 
 [LIF-model-post]: {{ site.baseurl }}{% post_url 2016-02-08-LIF-Brunel %}
 
