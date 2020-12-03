@@ -73,29 +73,28 @@
 
     <!-- Begin page content -->
     <main role="main" class="flex-shrink-0">
-    <div class="container">
+    <div class="container max-width:960">
         {{ content }}
     </div>
     </main>
 
 
-<footer class="footer mt-auto py-3">
-
-<div class="container">
-<div class="btn-group btn-group-sm" role="group" aria-label="Basic example">
-  <a type="button" href="{{ site.url }}" class="btn btn-link"><i class="fa fa-home" aria-hidden="true" title="Home"></i> Home</a>
-  <a type="button" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link"><i class="far fa-envelope" title="Email"></i> Email</a>
-  <a type="button" href="{{ site.resume }}" class="btn btn-link"><i class="far fa-user-circle" title="One page resume"></i> Resume</a>
-  <a type="button" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a>
-  <a type="button" href="https://github.com/{{ site.github_username }}" class="btn btn-link"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a>
-  <a type="button" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" class="btn btn-link"><i class="fab fa-linkedin" aria-hidden="true"></i> Linkedin</a>
-  <a type="buttom" href="{{ site.google_scholar }}" class="btn btn-link"><i class="ai ai-google-scholar ai-1x" aria-hidden="true" title="Google Scholar"></i> Scholar</a>
-  <a type="button" href="{{ "/feed.xml" | relative_url }}" class="btn btn-link"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a>
-</div>
-</div>
-
-</footer>
-
+<nav class="navbar navbar-expand-lg navbar-light bg-light text-center mt-3">
+  <div class="container">
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav">
+        <a type="nav-item nav-link" href="{{ site.url }}" class="btn btn-link btn-sm"><i class="fa fa-home" aria-hidden="true" title="Home"></i> Home</a>
+        <a type="nav-item nav-link" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link btn-sm"><i class="far fa-envelope" aria-hidden="true" title="Email"></i> Email</a>
+        <a type="nav-item nav-link" href="{{ site.resume }}" class="btn btn-link btn-sm"><i class="far fa-user-circle" aria-hidden="true" title="One page resume"></i> Resume</a>
+        <a type="nav-item nav-link" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link btn-sm"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a>
+        <a type="nav-item nav-link" href="https://github.com/{{ site.github_username }}" class="btn btn-link btn-sm"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a>
+        <a type="nav-item nav-link" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" class="btn btn-link btn-sm"><i class="fab fa-linkedin" aria-hidden="true"></i> Linkedin</a>
+        <a type="nav-item nav-link" href="{{ site.google_scholar }}" class="btn btn-link btn-sm"><i class="ai ai-google-scholar ai-1x" aria-hidden="true" title="Google Scholar"></i> Scholar</a>
+        <a type="nav-item nav-link" href="{{ "/feed.xml" | relative_url }}" class="btn btn-link btn-sm"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a>
+    </div>
+  </div>
+  </div>
+</nav>
 </body>
 
 </html>
