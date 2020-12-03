@@ -20,29 +20,8 @@
 
     <title>{{ page.title }}</title>
 
-    <!-- for backgroun image, do we need this?-->
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
-
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-
     <!-- Bootstrap core CSS -->
     <link href="{{ "/vendor/bootstrap/css/bootstrap.min.css" | relative_url }}" rel="stylesheet">
-
-    <!-- Custom styles for this template -->
-    <link href="{{ "/css/sticky-footer.css" | relative_url }}" rel="stylesheet">
 
     <!-- font awesome for social media icons -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
@@ -67,33 +46,64 @@
     </script>
     <script src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" type="text/javascript"></script>
        
+    <style> 
+        /* Modify the background color */ 
+        .navbar-custom { 
+            background-color: #f2f3f3; 
+        } 
+        /* Mobify link color of class btn-link (in footer)*/
+        .btn-link { 
+            color: #646769;
+        }
+
+        /* Max page width */
+.container-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 950px; /* or 950px */
+}
+    </style> 
   </head>
 
-  <body class="d-flex flex-column h-100">
+  <body>
 
     <!-- Begin page content -->
-    <main role="main" class="flex-shrink-0">
-    <div class="container max-width:960">
+    <main role="main">
+    <div class="container-fluid">
         {{ content }}
     </div>
     </main>
 
 
-<nav class="navbar navbar-expand-lg navbar-light bg-light text-center mt-3">
-  <div class="container">
-  <div class="collapse navbar-collapse" id="navbarCollapse">
-    <div class="navbar-nav">
-        <a type="nav-item nav-link" href="{{ site.url }}" class="btn btn-link btn-sm"><i class="fa fa-home" aria-hidden="true" title="Home"></i> Home</a>
-        <a type="nav-item nav-link" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link btn-sm"><i class="far fa-envelope" aria-hidden="true" title="Email"></i> Email</a>
-        <a type="nav-item nav-link" href="{{ site.resume }}" class="btn btn-link btn-sm"><i class="far fa-user-circle" aria-hidden="true" title="One page resume"></i> Resume</a>
-        <a type="nav-item nav-link" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link btn-sm"><i class="fab fa-fw fa-twitter-square" aria-hidden="true"></i> Twitter</a>
-        <a type="nav-item nav-link" href="https://github.com/{{ site.github_username }}" class="btn btn-link btn-sm"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a>
-        <a type="nav-item nav-link" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" class="btn btn-link btn-sm"><i class="fab fa-linkedin" aria-hidden="true"></i> Linkedin</a>
-        <a type="nav-item nav-link" href="{{ site.google_scholar }}" class="btn btn-link btn-sm"><i class="ai ai-google-scholar ai-1x" aria-hidden="true" title="Google Scholar"></i> Scholar</a>
-        <a type="nav-item nav-link" href="{{ "/feed.xml" | relative_url }}" class="btn btn-link btn-sm"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a>
-    </div>
-  </div>
-  </div>
+<nav class="navbar navbar-expand-sm navbar-custom mt-5 navbar-static-bottom">
+      <div class="container-fluid">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="btn btn-link btn-sm" href="{{ site.url }}" class="btn btn-link btn-sm"><i class="fa fa-home"  title="Home"></i> Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-link btn-sm" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link btn-sm"><i class="far fa-envelope"  title="Email"></i> Email</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-link btn-sm" href="{{ site.resume }}" class="btn btn-link btn-sm"><i class="far fa-user-circle"  title="One page resume"></i> Resume</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-link btn-sm" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link btn-sm"><i class="fab fa-fw fa-twitter-square" ></i> Twitter</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-link btn-sm" href="https://github.com/{{ site.github_username }}" class="btn btn-link btn-sm"><i class="fab fa-fw fa-github" ></i> GitHub</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-link btn-sm" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" class="btn btn-link btn-sm"><i class="fab fa-linkedin" ></i> Linkedin</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-item btn btn-link btn-sm" href="{{ site.google_scholar }}" class="btn btn-link btn-sm"><i class="ai ai-google-scholar ai-1x"  title="Google Scholar"></i> Scholar</a>
+          </li>
+          <li class="nav-item">
+            <a class="btn btn-link btn-sm" href="{{ "/feed.xml" | relative_url }}" class="btn btn-link btn-sm"><i class="fas fa-fw fa-rss-square" ></i> Feed</a>
+          </li>
+        </ul>
+      </div>
 </nav>
 </body>
 
