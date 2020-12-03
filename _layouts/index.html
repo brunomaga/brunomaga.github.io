@@ -11,12 +11,12 @@ layout: default
     <table>
       {%- for post in site.posts -%}
       <tr>
-      <td>
+      <td class="align-top">
         {%- assign date_format = site.minima.date_format | default: "%Y" -%}
         {{ post.date | date: date_format }}
 	<span style="display:inline-block; width:0.1cm;"></span>
       </td>
-      <td>
+      <td class="align-top">
         <a class="mt-3" href="{{ post.url | relative_url }}">{{ post.title | escape }}</a> 
         {%- if site.show_excerpts -%}
           {{ post.excerpt }}
