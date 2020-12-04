@@ -19,7 +19,7 @@ To know more about me, check my <a href="{{site.resume}}"> one page resume</a>, 
   </div>
 </div>
 
-<h4 class="mt-5 mb-3">Contacts</h4>
+<h4 class="mt-5 mb-3">Personal Details</h4>
 
 <ul class="nav">
   <li class="nav-item">
@@ -44,10 +44,10 @@ To know more about me, check my <a href="{{site.resume}}"> one page resume</a>, 
     <a class="nav-item btn btn-link" href="{{ site.google_scholar }}" class="btn btn-link"><i class="ai ai-google-scholar ai-1x"  title="Google Scholar"></i> Bruno Magalhaes</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" class="btn btn-link"><i class="fa fa-home"  title="Home"></i> Lausanne, Switzerland</a>
+    <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Lausanne"><i class="fa fa-home"  title="Home"></i> Lausanne, Switzerland</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" class="btn btn-link"><i class="fas fa-passport"  title="Nationality"></i> Portuguese</a>
+    <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Portugal"><i class="fas fa-passport"  title="Nationality"></i> Portuguese</a>
   </li>
   <div class="noprint">
     <li class="nav-item">
