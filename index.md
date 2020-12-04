@@ -12,10 +12,7 @@ title: "Bruno Magalhaes"
     <img src="{{site.photo}}" class="img-fluid rounded float-left" alt="my photo"/>
   </div>
   <div class="col">
-I'm an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland --- researching large-scale reconstruction and simulation of brain-inspired spiking neural networks --- and worked as a research software engineer for distributed algorithms at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>. My fields of interest are Parallel and Distributed Computing, Machine Learning and Simulation.
-    <div class="noprint">
-To know more about me, check my <a href="{{site.resume}}"> one page resume</a>, <a href="{{ site.google_scholar }}">Google scholar profile</a>, or <a href="mailto:{{ site.email }}?subject=Hello">email me</a>.
-    </div>
+I'm an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland (researching large-scale reconstruction and simulation of brain-inspired spiking neural networks) and worked as a research software engineer for distributed algorithms at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>. My fields of interest are Parallel and Distributed Computing, Machine Learning and Simulation.
   </div>
 </div>
 
@@ -51,13 +48,13 @@ To know more about me, check my <a href="{{site.resume}}"> one page resume</a>, 
   </li>
   <div class="noprint">
     <li class="nav-item">
-      <a class="btn btn-link" href="{{ site.resume }}" class="btn btn-link"><i class="far fa-user-circle"  title="One page resume"></i> resume</a>
+      <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="One page resume"></i> resume</a>
     </li>
   </div>
   <!--
   <div class="noprint">
     <li class="nav-item">
-      <a class="btn btn-link" href="{{ site.resume }}" class="btn btn-link"><i class="fas fa-download" title="download this page"></i> Download this page</a>
+      <a class="btn btn-link" href="javascript:window.print()"><i class="fas fa-download" title="download this page"></i> Download this page</a>
     </li>
   </div>
   -->
