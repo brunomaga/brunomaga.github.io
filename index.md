@@ -5,7 +5,7 @@ title: "Bruno Magalhaes"
 
 <h1 class="mt-5" itemprop="name headline">{{ page.title | escape }}</h1>
 
-<p class="lead"><b>Researcher for High Performance Computing, Machine Learning Engineer</b></p>
+<p class="lead"><b>High Performance Computing Researcher, Machine Learning Engineer</b></p>
 
 I'm an AI resident at [Microsoft Research](https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/) in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational [Neuroscience](https://www.epfl.ch/education/phd/edne-neuroscience/) at the [EPFL](https://www.epfl.ch/en/) in Switzerland --- researching large-scale reconstruction and simulation of brain-inspired spiking neural networks --- and worked as a research software engineer for distributed algorithms at the [Blue Brain Project](https://www.epfl.ch/research/domains/bluebrain/). My fields of interest are Parallel and Distributed Computing, Machine Learning and Simulation. To know more about me, read my [one-page resume]({{ site.resume}}), [publications]({{ site.google_scholar }}), or [email me](mailto:{{ site.email }}?subject=Hello).
 
@@ -62,6 +62,6 @@ When time allows, I post about HPC or ML projects I was involved in, or publicat
 
 <h4 class="mt-5 mb-3">Misc</h4>
 
-I have been playing waterpolo for most of my life, the last 10 years with [Lausanne Waterpolo](https://lausannenatation.ch/section/waterpolo/) and [Cambridge City Waterpolo](https://www.cambridgewaterpolo.co.uk/) clubs. I am also a big fan of winter sports, particularly skiing and snowboarding, and I feel lucky to live close to many great [ski resorts in Switzerland](https://www.myswitzerland.com/en-ch/experiences/winter/). I also enjoy cooking and hope one day that my cooking skills reach very high standards.
+I have been playing waterpolo for most of my life, the last 10 years with [Lausanne Waterpolo](https://lausannenatation.ch/section/waterpolo/) and [Cambridge City Waterpolo](https://www.cambridgewaterpolo.co.uk/) clubs. I am also a big fan of winter sports, particularly skiing and snowboarding, and I feel lucky to live close to many great [ski resorts in Switzerland](https://www.myswitzerland.com/en-ch/experiences/winter/). I also enjoy cooking and hope one day my cooking skills reach very high standards.
 
-As a general rule, I prefer not to be addressed by my academic title or surname (e.g. *"Dear Dr Bruno"* or *"Dear Mr Magalhaes"*). I believe education is about knowledge and not academic titles. So addressing me simply by my first name (*"Hi Bruno"*) is totally fine :)
+As a general rule, I prefer not to be addressed by my academic title or surname (e.g. *"Dear Dr Bruno"* or *"Dear Mr Magalhaes"*). I believe education is about knowledge and not academic titles. So addressing me simply by my first name (*"Hi Bruno"*) is perfectly fine :)

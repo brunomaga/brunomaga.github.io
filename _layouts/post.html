@@ -4,22 +4,31 @@ layout: default
 
 <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
+<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
   <header class="post-header">
-    <h1 class="mt-5" itemprop="name headline">{{ page.title | escape }}</h1>
+    <h1 class="mt-5 mb-3" itemprop="name headline">{{ page.title | escape }}</h1>
     <p class="post-meta">
-      <a href="{{ site.url }}" title="back" class="badge"><i class="fas fa-arrow-left"></i> back</a>
-      <span style="display:inline-block; width:0.1cm;"></span>
-      <time class="dt-published badge badge-light" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
+      <a href="{{ site.url }}"><i class="fas fa-arrow-left"  title="Back"></i> Back</a>
+      <span style="display:inline-block; width:0.3cm;"></span>
+
+      <i class="fas fa-calendar-alt"></i>
+      <time class="dt-published" datetime="{{ page.date | date_to_xmlschema }}" itemprop="datePublished">
         {%- assign date_format = site.minima.date_format | default: "%-d %b %Y" -%}
         {{ page.date | date: date_format }}
       </time>
+      <span style="display:inline-block; width:0.3cm;"></span>
+
       {%- if page.author -%}
-        • <span itemprop="author" itemscope itemtype="http://schema.org/Person"><span class="p-author h-card" itemprop="name">{{ page.author }}</span></span>
+      <i class="fas fa-user-alt"></i>
+        {{ page.author }}
+      <span style="display:inline-block; width:0.3cm;"></span>
       {%- endif -%}
-      <span style="display:inline-block; width:0.30cm;"></span>
-      <!-- We use tags instead of categories because they dont add to the URL -->
+
+      <!-- We use categories instead of tags because they allow multiple words -->
+      <i class="fas fa-tags"></i>
       {%- for category in page.categories -%}
-        <span class="badge badge-light"> {{ category }} </span>
+        <span> {{ category }} </span>
         <span style="display:inline-block; width:0.05cm;"></span>
       {%- endfor -%}
       <!--
