@@ -7,7 +7,18 @@ title: "Bruno Magalhaes"
 
 <p class="lead"><b>High Performance Computing Researcher, Machine Learning Engineer</b></p>
 
+<div class="row">
+  <div class="col-3">
+    <img src="{{site.photo}}" class="img-fluid rounded float-left" alt="my photo"/>
+  </div>
+  <div class="col">
+I'm an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland --- researching large-scale reconstruction and simulation of brain-inspired spiking neural networks --- and worked as a research software engineer for distributed algorithms at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>. My fields of interest are Parallel and Distributed Computing, Machine Learning and Simulation. To know more about me, read my <a href="{{site.resume}}"> one page resume</a>, <a href="{{ site.google_scholar }}">Google scholar profile</a>, or <a href="mailto:{{ site.email }}?subject=Hello">email me</a>.
+<!--
 I'm an AI resident at [Microsoft Research](https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/) in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational [Neuroscience](https://www.epfl.ch/education/phd/edne-neuroscience/) at the [EPFL](https://www.epfl.ch/en/) in Switzerland --- researching large-scale reconstruction and simulation of brain-inspired spiking neural networks --- and worked as a research software engineer for distributed algorithms at the [Blue Brain Project](https://www.epfl.ch/research/domains/bluebrain/). My fields of interest are Parallel and Distributed Computing, Machine Learning and Simulation. To know more about me, read my [one-page resume]({{ site.resume}}), [publications]({{ site.google_scholar }}), or [email me](mailto:{{ site.email }}?subject=Hello).
+-->
+  </div>
+</div>
+
 
 
 <!--
