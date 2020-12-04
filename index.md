@@ -12,14 +12,56 @@ title: "Bruno Magalhaes"
     <img src="{{site.photo}}" class="img-fluid rounded float-left" alt="my photo"/>
   </div>
   <div class="col">
-I'm an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland --- researching large-scale reconstruction and simulation of brain-inspired spiking neural networks --- and worked as a research software engineer for distributed algorithms at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>. My fields of interest are Parallel and Distributed Computing, Machine Learning and Simulation. To know more about me, read my <a href="{{site.resume}}"> one page resume</a>, <a href="{{ site.google_scholar }}">Google scholar profile</a>, or <a href="mailto:{{ site.email }}?subject=Hello">email me</a>.
-<!--
-I'm an AI resident at [Microsoft Research](https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/) in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational [Neuroscience](https://www.epfl.ch/education/phd/edne-neuroscience/) at the [EPFL](https://www.epfl.ch/en/) in Switzerland --- researching large-scale reconstruction and simulation of brain-inspired spiking neural networks --- and worked as a research software engineer for distributed algorithms at the [Blue Brain Project](https://www.epfl.ch/research/domains/bluebrain/). My fields of interest are Parallel and Distributed Computing, Machine Learning and Simulation. To know more about me, read my [one-page resume]({{ site.resume}}), [publications]({{ site.google_scholar }}), or [email me](mailto:{{ site.email }}?subject=Hello).
--->
+I'm an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland --- researching large-scale reconstruction and simulation of brain-inspired spiking neural networks --- and worked as a research software engineer for distributed algorithms at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>. My fields of interest are Parallel and Distributed Computing, Machine Learning and Simulation.
+    <div class="noprint">
+To know more about me, check my <a href="{{site.resume}}"> one page resume</a>, <a href="{{ site.google_scholar }}">Google scholar profile</a>, or <a href="mailto:{{ site.email }}?subject=Hello">email me</a>.
+    </div>
   </div>
 </div>
 
+<h4 class="mt-5 mb-3">Contacts</h4>
 
+<ul class="nav">
+  <li class="nav-item">
+    <a class="btn btn-link disabled" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" href="{{ site.url }}" class="btn btn-link"><i class="fas fa-mouse-pointer" title="homepage"></i> {{ site.url }} </a>
+  </li>
+  <li class="nav-item">
+    <a class="btn btn-link" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link"><i class="fab fa-fw fa-twitter-square" ></i> {{ site.twitter_username }} </a>
+  </li>
+  <li class="nav-item">
+    <a class="btn btn-link" href="https://github.com/{{ site.github_username }}" class="btn btn-link"><i class="fab fa-fw fa-github" ></i>{{ site.github_username}}</a>
+  </li>
+  <li class="nav-item">
+    <a class="btn btn-link" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" class="btn btn-link"><i class="fab fa-linkedin" ></i> {{ site.linkedin_username }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="btn btn-link" href="skype:{{ site.skype_username }}" class="btn btn-link"><i class="fab fa-skype" aria-hidden="true"></i> {{ site.skype_username }} </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-item btn btn-link" href="{{ site.google_scholar }}" class="btn btn-link"><i class="ai ai-google-scholar ai-1x"  title="Google Scholar"></i> Bruno Magalhaes</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" class="btn btn-link"><i class="fa fa-home"  title="Home"></i> Lausanne, Switzerland</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link disabled" class="btn btn-link"><i class="fas fa-passport"  title="Nationality"></i> Portuguese</a>
+  </li>
+  <div class="noprint">
+    <li class="nav-item">
+      <a class="btn btn-link" href="{{ site.resume }}" class="btn btn-link"><i class="far fa-user-circle"  title="One page resume"></i> resume</a>
+    </li>
+  </div>
+  <!--
+  <div class="noprint">
+    <li class="nav-item">
+      <a class="btn btn-link" href="{{ site.resume }}" class="btn btn-link"><i class="fas fa-download" title="download this page"></i> Download this page</a>
+    </li>
+  </div>
+  -->
+</ul>
 
 <!--
 <h4 class="mt-5 mb-3">Research Interests</h4>
@@ -34,11 +76,23 @@ asdsa
 
 -->
 
+<h4 class="mt-5 mb-3">Biographical timeline</h4>
+
+
+||||
+|--- ||--- |
+|2019-2020|| AI resident at Microsoft Research, Cambridge, UK |
+|2015-2019|| PhD Computational Neuroscience at EPFL, Switzerland |
+|2011-2015|| Research Engineer at Blue Brain Project, EPFL, Switzerland |
+|2009-2011|| Junior IT architect at the Noble Group, London, UK |
+|2008-2009|| MSc Advanced Computing at Imperial College London, UK |
+|2007-2008|| Analyst Programmer at MSCI real estate, London, UK |
+|2002-2007|| BSc Systems Engineering and Computer Science at Univ. Minho, Portugal |
+
 <h4 class="mt-5 mb-3">Publications</h4>
 
 Here's a list of my most relevant publications. In the following, I was the first author and publications were peer-reviewed, unless mentioned otherwise. Conference journals/proceedings required a presentation at the venue as well. For a more exhaustive list, see my [Google Scholar]({{ site.google_scholar }}) profile.
 
-||||
 |--- ||--- |
 |2020||[Fully-Asynchronous Fully-Implicit Variable-Order Variable-Timestep Simulation of Neural Networks](https://arxiv.org/abs/1907.00670), Proc. International Conference on Computational Science, Amsterdam, Holland (ICCS 2020)|
 |2019||[Asynchronous SIMD-Enabled Branch-Parallelism of Morphologically-Detailed Neuron Models](https://www.frontiersin.org/articles/10.3389/fninf.2019.00054/full), Frontiers in Neuroinformatics|
@@ -52,11 +106,12 @@ Here's a list of my most relevant publications. In the following, I was the firs
 |ongoing||(arXiv) Efficient Distributed Transposition of Large-Scale Multigraphs And High-Cardinality Sparse Matrices|
 
 
+<div class="noprint">
 <h4 class="mt-5 mb-3">Posts</h4>
 
 When time allows, I post about HPC or ML projects I was involved in, or publications and discussions I find interesting.
 
-  <table>
+  <table class="mt-3">
   {% for post in site.posts %}
       <tr>
       <td class="align-top">
@@ -70,6 +125,7 @@ When time allows, I post about HPC or ML projects I was involved in, or publicat
       </tr>
   {% endfor %}
   </table>
+</div> <!-- noprint -->
 
 <h4 class="mt-5 mb-3">Misc</h4>
 

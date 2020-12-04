@@ -61,6 +61,12 @@
             max-width: 950px; /* or 950px */
         }
 
+	/* area not to be printed */
+        @media print
+        {
+            .noprint {display:none;}
+        }
+
         /* hyperlinks as gray and bold */
         /*
         a {
@@ -92,7 +98,7 @@
             <a class="btn btn-link btn-sm" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link btn-sm"><i class="far fa-envelope"  title="Email"></i> Email</a>
           </li>
           <li class="nav-item">
-            <a class="btn btn-link btn-sm" href="{{ site.resume }}" class="btn btn-link btn-sm"><i class="far fa-user-circle"  title="One page resume"></i> Resume</a>
+            <a class="btn btn-link btn-sm" href="skype:{{ site.skype_username }}" class="btn btn-link btn-sm"><i class="fab fa-skype" aria-hidden="true"></i> Skype </a>
           </li>
           <li class="nav-item">
             <a class="btn btn-link btn-sm" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link btn-sm"><i class="fab fa-fw fa-twitter-square" ></i> Twitter</a>
