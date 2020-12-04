@@ -20,10 +20,10 @@ I'm an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/micr
 
 <ul class="nav">
   <li class="nav-item">
-    <a class="btn btn-link disabled" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
+    <a class="btn btn-link" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link disabled" href="{{ site.url }}" class="btn btn-link"><i class="fas fa-mouse-pointer" title="homepage"></i> {{ site.url }} </a>
+    <a class="nav-link" href="{{ site.url }}" class="btn btn-link"><i class="fas fa-mouse-pointer" title="homepage"></i> {{ site.url }} </a>
   </li>
   <li class="nav-item">
     <a class="btn btn-link" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link"><i class="fab fa-fw fa-twitter-square" ></i> {{ site.twitter_username }} </a>
@@ -75,8 +75,6 @@ asdsa
 
 <h4 class="mt-5 mb-3">Biographical timeline</h4>
 
-
-||||
 |--- ||--- |
 |2019-2020|| AI resident at Microsoft Research, Cambridge, UK |
 |2015-2019|| PhD Computational Neuroscience at EPFL, Switzerland |
