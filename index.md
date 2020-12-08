@@ -122,6 +122,8 @@ When time allows, I post about HPC or ML projects I was involved in, or publicat
   </table>
 </div> <!-- noprint -->
 
+I also keep note of a [resources page]({{ site.resources_permalink }}) where I list several HPC and ML ebooks available online that I use as reference on my posts. 
+
 <h4 class="mt-5 mb-3">Misc</h4>
 
 I have been playing waterpolo for most of my life, the last 10 years with [Lausanne Waterpolo](https://lausannenatation.ch/section/waterpolo/) and [Cambridge City Waterpolo](https://www.cambridgewaterpolo.co.uk/) clubs. I am also a big fan of winter sports, particularly skiing and snowboarding, and I feel lucky to live close to many great ski resorts in Switzerland. I also enjoy cooking and hope one day my cooking skills reach very high standards.
