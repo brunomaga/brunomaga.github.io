@@ -128,4 +128,4 @@ I also keep note of a [resources page]({{ site.resources_permalink }}) where I l
 
 I have been playing waterpolo for most of my life, the last 10 years with [Lausanne Waterpolo](https://lausannenatation.ch/section/waterpolo/) and [Cambridge City Waterpolo](https://www.cambridgewaterpolo.co.uk/) clubs. I am also a big fan of winter sports, particularly skiing and snowboarding, and I feel lucky to live close to many great ski resorts in Switzerland. I also enjoy cooking and hope one day my cooking skills reach very high standards.
 
-As a general rule, I prefer not to be addressed by my academic title or surname (e.g. *"Dear Dr Bruno"* or *"Dear Mr Magalhaes"*). I believe education is about knowledge and not academic titles. So addressing me simply by my first name (*"Hi Bruno"*) is perfectly fine :)
+As a general rule, I prefer not to be addressed by my academic title or surname (e.g. *"Dear Dr Bruno"* or *"Dear Mr Magalhaes"*). I believe education is about knowledge and not diplomas. So addressing me simply by my first name (*"Hi Bruno"*) is perfectly fine :)
