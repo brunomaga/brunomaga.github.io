@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "AI Supercomputing: Levels of Parallelism, Linear Regression, DNNs and CNNs"
+title:  "AI Supercomputing: Levels of Parallelism, Linear Regression, Deep Neural Nets and Convolutional Neural Nets"
 categories: [machine learning, supercomputing]
 tags: [machinelearning]
 ---

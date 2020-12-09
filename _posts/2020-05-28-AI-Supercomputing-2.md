@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "AI Supercomputing II: Limitations, Encoder-Decoder, Transformers and BERT"
+title:  "AI Supercomputing (part 2): Limitations, Encoder-Decoder, Transformers and BERT"
 categories: [machine learning, supercomputing]
 tags: [machinelearning]
 ---

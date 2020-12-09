@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Variational Inference, Mean-Field Approx. and Gaussian Mixture Models"
+title:  "Variational Inference, Mean-Field Approximation and Gaussian Mixture Models"
 categories: [machine learning, unsupervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
