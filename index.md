@@ -21,10 +21,12 @@ Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/res
 </p>
 
 <p>
-My research interests are Machine Learning applied to chaotic and massively-large datasets and compute infrastructure, and all related questions that can arise from the field, such as data confidentiality, poisoning attacks, learning from population clusters, learning from networks, federated ML, parallel ML processing, etc.
+I'm interested in applying Machine Learning to solve big engineering problems. When such ML systems don't exist, I like to create them, or at least face the challenge of trying.
 </p>
+
   </div>
 </div>
+
 
 <h4 class="mt-5 mb-3">Personal Details</h4>
 
@@ -70,45 +72,107 @@ My research interests are Machine Learning applied to chaotic and massively-larg
   -->
 </ul>
 
-<!--
+
 <h4 class="mt-5 mb-3">Research Interests</h4>
 
-I'm interested in applying Machine Learning to solve big engineering problems. When such ML systems don't exist, I like to create them, or at least face the challenge of trying. There are two big questions that I faced in life and would like to solve at some point, for the benefit of all:
-- How to scale the processing of machine learning systems ([Moore's Law](https://en.wikipedia.org/wiki/Moore%27s_law)) to adapt to the exponential growth of new-generation data such as bots, generative ML, etc? For this I tend to read about decentralized and federated ML;
-- How to make artificial neurons learn like spiking neurons, i.e. without back-propagation, loss function, and iterations?
+<p>
+My research interests are Machine Learning applied to chaotic and massively-large datasets and compute infrastructure, and all related questions that can arise from the field, such as data confidentiality, poisoning attacks, learning from population clusters, learning from networks, federated ML, parallel ML processing, etc.
+</p>
 
-<h4 class="mt-5 mb-3">Education</h4>
-
-asdsa
-
--->
+<p>
+There are two big questions that I faced in life and would like to find the answer at some point, for the benefit of all:
+<ol>
+<li>  How to scale the processing of machine learning systems <a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore's Law</a> to adapt to the exponential growth of new-generation data such as bots, generative ML, etc? For this I tend to read about decentralized and federated ML; </li>
+<li> How to make artificial neurons learn like spiking neurons, i.e. without back-propagation, loss function, and iterations? </li>
+</ol>
+</p>
 
 <h4 class="mt-5 mb-3">Biographical timeline</h4>
 
-
-<!--
-  <table class="mt-3">
+<table class="mt-3">
       <tr>
         <td style="min-width:70px"> 2019-20 </td>
         <td> <b> AI resident at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-         We improved the load balancing of the CPU (and later storage) of thousands of Exchange email servers, dictated by the usage of individual email users across daytime, location, and logging information with over 2 exabytes of information. We provided a better mapping of user-to-CPU and a better answer to the question "which user should be allocated to each server at a given interval" by learning time series from user usage patterns. We implemented several algorithms to efficiently handle and do feature extraction on such distributed dataset. We later used Deep Neural Nets, Recursive Neural Nets, GRUs Encoder-Decoder with Attention Mechanism, and Bayesian Optimization (closed-form, Variational Inference, Markov Chain Monte Carlo) to learn from the data;
+Improvement of load balancing of Exchange email servers by learning time series from user usage patterns. Used DNNs, RNNs, GRUs Encoder-Decoder w/ Attention Mech., and Bayesian Optimization (closed-form, Variational Inf., MCMC);
       </td> </tr>
       <tr> <td/> <td>
-         We also built a recommendation system on a distributed graph with over a trillion edges, mapping all Meetings, Documents, Users and Emails. We developed several techniques to efficiently traverse the graph and filter the subgraph that would best relate to the query of similarity for two given nodes. This similarity metric would be learnt using a Graph Neural Net and Deep Neural Nets and the target would allow similar nodes to be recommended when creating meetings or emails; 
+Recommendation system using Graph Neural Nets on very large Meetings/Documents/Users/Emails graph;
       </td> </tr>
-  </table>
--->
+      <tr> <td/> <td>
+Feature selection, outliers detection, and distributed data processing algorithms for Exabyte-scale ML datasets;
+      </td> </tr>
 
-|--- ||--- |
-|2019-20|| AI resident at Microsoft Research, Cambridge, UK |
-|2015-19|| PhD Computational Neuroscience at EPFL, Switzerland |
-|2011-15|| Research Engineer at Blue Brain Project, EPFL, Switzerland |
-|2009-11|| Junior IT architect at the Noble Group, London, UK |
-|2008-09|| MSc Advanced Computing at Imperial College London, UK |
-|2007-08|| Analyst Programmer at MSCI real estate, London, UK |
-|2002-07|| BSc Systems Engineering and Computer Science at Univ. Minho, Portugal |
+      <tr>
+        <td style="min-width:70px"> 2015-19 </td>
+        <td> <b>  PhD Computational Neuroscience candidate at EPFL, Switzerland</b> </td>
+      </tr>
+      <tr> <td/> <td>
+Research, conceptualization, implementation and publication of new methods for asynchronous variable-step simulation
+of detailed spiking neural networks on large (>10K) networks of highly-heterogeneous compute nodes;
+      </td> </tr>
+      <tr> <td/> <td>
+Thesis Asynchronous Simulation of Neuronal Activity nominated for the EPFL doctoral school excellency award (TOP 8%
+doctorates) and for the IBM research award for the best thesis in computational sciences (awaiting decision);
+Trained on cellular behavior and cognitive neuroscience, biological modeling, machine learning, NLP and Statistics;
+Visiting researcher at the Center for Research in Extreme Scale Technologies at Indiana University (US), Summers 2015-17;
+      </td> </tr>
+      <tr> <td/> <td>
+Technologies : asynchronous runtime systems (HPX), computation and communication; global memory addressing; distributed task scheduling, concurrency and threading; dynamic load-balancing; vectorization and cache-optimization;
+      </td> </tr>
+      <tr> <td/> <td>
+Teaching assistant for Unsupervised and reinforcement learning, Project in neuroinformatics and In silico neuroscience
+      </td> </tr>
+
+      <tr>
+        <td style="min-width:70px"> 2011-15 </td>
+        <td> <b> Research Engineer at Blue Brain Project, EPFL, Switzerland </b> </td>
+      </tr>
+      <tr> <td/> <td>
+Creation and implementation of algorithms for parallel/distributed volumetric spatial decomposition, load balancing, spatial indexing, sorting, I/O, sparse matrix transpose, and graph navigation, that underlie an efficient storage and processing
+of neural networks on extremelly large supercomputers with over 16K compute nodes;
+      </td> </tr>
+
+
+      <tr>
+        <td style="min-width:70px"> 2009-11 </td>
+        <td> <b> Junior IT architect at the Noble Group, London, UK </b> </td>
+      </tr>
+      <tr> <td/> <td>
+Network design and configuration for a backup data centre for EU Power & Gas trading infrastructure, London, UK;
+Network configuration and infrastructure design for a port and warehouse for coffee and soy beans, Santos, Brazil;
+Implementation of a web-based software for metals and coffee trading, New York, USA;
+      </td> </tr>
+
+      <tr>
+        <td style="min-width:70px"> 2008-09 </td>
+        <td> <b> MSc Advanced Computing at Imperial College London, UK </b> </td>
+      </tr>
+      <tr> <td/> <td>
+Final project GPU-enabled steady-state solution of large Markov models based on distributed, multi-core CPU and GPU
+(CUDA) computation of large Markov models awarded distinction and published at NSMC’10. Finished degree with Merit.
+      </td> </tr>
+
+      <tr>
+        <td style="min-width:70px"> 2007-08 </td>
+        <td> <b> Analyst Programmer at MSCI real estate, London, UK </b> </td>
+      </tr>
+      <tr> <td/> <td>
+Development of a search engine and web/windows app (C++, C#, .NET) for efficient storage and analytics of financial data
+      </td> </tr>
+
+
+      <tr>
+        <td style="min-width:70px"> 2002-07 </td>
+        <td> <b> BSc Systems Engineering and Computer Science at Univ. Minho, Portugal </b> </td>
+      </tr>
+      <tr> <td/> <td>
+Exchange student at the University of Maribor, Slovenia, 2005/2006. Finished degree with A (Top 10%)
+      </td> </tr>
+
+</table>
+
 
 <h4 class="mt-5 mb-3">Publications</h4>
 
