@@ -5,14 +5,24 @@ title: "Bruno Magalhaes"
 
 <h1 class="mt-5" itemprop="name headline">{{ page.title | escape }}</h1>
 
-<p class="lead"><b>High Performance Computing Researcher, Machine Learning Engineer</b></p>
+<p class="lead"><b>Research Engineer for Machine Learning and High Performance Computing</b></p>
 
 <div class="row">
   <div class="col-3">
     <img src="{{site.photo}}" class="img-fluid rounded float-left" alt="my photo"/>
   </div>
   <div class="col">
-I'm an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland (researching large-scale reconstruction and simulation of brain-inspired spiking neural networks) and worked as a research software engineer for distributed algorithms at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>. My fields of interest are Parallel and Distributed Computing, Machine Learning and Simulation.
+<p>
+I'm a Machine Learning research engineer with a large expertise on High Performance Computing, i.e. large-scale data science, distributed storage, data processing, multicore/GPU algorithms implemented on several supercomputers with over 10K nodes and exabyte scale datasets.
+</p>
+
+<p>
+Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland (researching large-scale reconstruction and simulation of brain-inspired spiking neural networks) and worked as a research software engineer for distributed algorithms at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>. 
+</p>
+
+<p>
+My research interests are Machine Learning applied to chaotic and massively-large datasets and compute infrastructure, and all related questions that can arise from the field, such as data confidentiality, poisoning attacks, learning from population clusters, learning from networks, federated ML, parallel ML processing, etc.
+</p>
   </div>
 </div>
 
@@ -48,7 +58,7 @@ I'm an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/micr
   </li>
   <div class="noprint">
     <li class="nav-item">
-      <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="One page resume"></i> resume</a>
+      <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="resume"></i> resume</a>
     </li>
   </div>
   <!--
@@ -75,14 +85,30 @@ asdsa
 
 <h4 class="mt-5 mb-3">Biographical timeline</h4>
 
+
+<!--
+  <table class="mt-3">
+      <tr>
+        <td style="min-width:70px"> 2019-20 </td>
+        <td> <b> AI resident at Microsoft Research, Cambridge, UK </b> </td>
+      </tr>
+      <tr> <td/> <td>
+         We improved the load balancing of the CPU (and later storage) of thousands of Exchange email servers, dictated by the usage of individual email users across daytime, location, and logging information with over 2 exabytes of information. We provided a better mapping of user-to-CPU and a better answer to the question "which user should be allocated to each server at a given interval" by learning time series from user usage patterns. We implemented several algorithms to efficiently handle and do feature extraction on such distributed dataset. We later used Deep Neural Nets, Recursive Neural Nets, GRUs Encoder-Decoder with Attention Mechanism, and Bayesian Optimization (closed-form, Variational Inference, Markov Chain Monte Carlo) to learn from the data;
+      </td> </tr>
+      <tr> <td/> <td>
+         We also built a recommendation system on a distributed graph with over a trillion edges, mapping all Meetings, Documents, Users and Emails. We developed several techniques to efficiently traverse the graph and filter the subgraph that would best relate to the query of similarity for two given nodes. This similarity metric would be learnt using a Graph Neural Net and Deep Neural Nets and the target would allow similar nodes to be recommended when creating meetings or emails; 
+      </td> </tr>
+  </table>
+-->
+
 |--- ||--- |
-|2019-2020|| AI resident at Microsoft Research, Cambridge, UK |
-|2015-2019|| PhD Computational Neuroscience at EPFL, Switzerland |
-|2011-2015|| Research Engineer at Blue Brain Project, EPFL, Switzerland |
-|2009-2011|| Junior IT architect at the Noble Group, London, UK |
-|2008-2009|| MSc Advanced Computing at Imperial College London, UK |
-|2007-2008|| Analyst Programmer at MSCI real estate, London, UK |
-|2002-2007|| BSc Systems Engineering and Computer Science at Univ. Minho, Portugal |
+|2019-20|| AI resident at Microsoft Research, Cambridge, UK |
+|2015-19|| PhD Computational Neuroscience at EPFL, Switzerland |
+|2011-15|| Research Engineer at Blue Brain Project, EPFL, Switzerland |
+|2009-11|| Junior IT architect at the Noble Group, London, UK |
+|2008-09|| MSc Advanced Computing at Imperial College London, UK |
+|2007-08|| Analyst Programmer at MSCI real estate, London, UK |
+|2002-07|| BSc Systems Engineering and Computer Science at Univ. Minho, Portugal |
 
 <h4 class="mt-5 mb-3">Publications</h4>
 
