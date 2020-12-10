@@ -17,7 +17,7 @@ I'm a Machine Learning research engineer with a strong background on High Perfor
 </p>
 
 <p>
-Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale data science, distributed storage and multicore/GPU algorithms. Some of my life work is now part of the <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators, and has been executed on several supercomputers with over 10K compute nodes processing exabyte-scale datasets.
+Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale data science, distributed storage and multicore/GPU algorithms. Some of my life work is now part of the <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators, and has been executed on several supercomputers with thousands of compute nodes processing exabytes of data.
 </p>
 
   </div>
@@ -186,10 +186,10 @@ I was trained on theoretical aspects of computer science such as compilers, logi
 
       <tr>
         <td style="min-width:70px"> 2007 </td>
-        <td> <b> BSc Systems Engineering and Computer Science at Univ. Minho, Portugal </b> </td>
+        <td> <b> BSc Systems Engineering and Computer Science at University of Minho, Portugal </b> </td>
       </tr>
       <tr> <td/> <td>
-Between 2005 and 2005 I was an ERASMUS exchange student at the University of Maribor in Slovenia. I finished the degree with A (best 10%);
+Between 2005 and 2006 I was an ERASMUS exchange student at the University of Maribor in Slovenia. I finished the degree with A (best 10%);
       </td> </tr>
 
 </table>
