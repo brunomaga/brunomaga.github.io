@@ -243,6 +243,6 @@ I have been playing waterpolo for most of my life, the last 10 years with <a hre
 </p>
 
 <p>
-As a general rule, I prefer not to be addressed by my academic title or surname (e.g. *"Dear Dr Bruno"* or *"Dear Mr Magalhaes"*). I believe education is about knowledge and not diplomas. So addressing me simply by my first name (*"Hi Bruno"*) is perfectly fine :)
+As a general rule, I prefer not to be addressed by my academic title or surname (e.g. <i>"Dear Dr Bruno"</i> or <i>"Dear Mr Magalhaes"</i>. I believe education is about knowledge and not diplomas. So addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine :)
 </p>
 </div> <!-- noprint -->
