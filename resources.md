@@ -4,7 +4,7 @@ title: Resources
 permalink: /resources/
 ---
 
-<h1 class="mt-5">Resources</h1>
+<h1 class="mt-5" itemprop="name headline">{{ page.title | escape }}</h1>
 
   <div class="mt-3"></div>
 Some books freely available online, and related to the topics discussed: 
