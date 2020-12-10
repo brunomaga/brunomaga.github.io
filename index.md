@@ -52,11 +52,9 @@ Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/res
   <li class="nav-item">
     <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Portugal"><i class="fas fa-passport"  title="Nationality"></i> Portuguese</a>
   </li>
-  <div class="noprint">
-    <li class="nav-item">
-      <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="resume"></i> resume</a>
-    </li>
-  </div>
+  <li class="nav-item">
+    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="resume"></i> resume</a>
+  </li>
   <!--
   <div class="noprint">
     <li class="nav-item">
@@ -217,6 +215,7 @@ Here's a list of my most relevant publications. In the following, I was the firs
 
 When time allows, I post about HPC or ML projects I was involved in, or publications and discussions I find interesting.
 
+<p>
   <table class="mt-3">
   {% for post in site.posts %}
       <tr>
@@ -231,13 +230,12 @@ When time allows, I post about HPC or ML projects I was involved in, or publicat
       </tr>
   {% endfor %}
   </table>
-</div> <!-- noprint -->
+</p>
 
-<div class="noprint">
+<p>
 I also maintain a <a href="{{ site.resources_permalink }}">resources page</a> where I keep note of several HPC and ML ebooks available online, used as reference on my posts. 
-</div> <!-- noprint -->
+</p>
 
-<div class="noprint">
 <h4 class="mt-5 mb-3">Misc</h4>
 
 <p>
