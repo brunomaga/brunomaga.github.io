@@ -234,13 +234,17 @@ When time allows, I post about HPC or ML projects I was involved in, or publicat
 </div> <!-- noprint -->
 
 <div class="noprint">
-I also maintain a [resources page]({{ site.resources_permalink }}) where I keep note of several HPC and ML ebooks available online, used as reference on my posts. 
+I also maintain a <a href="{{ site.resources_permalink }}">resources page</a> where I keep note of several HPC and ML ebooks available online, used as reference on my posts. 
 </div> <!-- noprint -->
 
 <div class="noprint">
 <h4 class="mt-5 mb-3">Misc</h4>
 
-I have been playing waterpolo for most of my life, the last 10 years with [Lausanne Waterpolo](https://lausannenatation.ch/section/waterpolo/) and [Cambridge City Waterpolo](https://www.cambridgewaterpolo.co.uk/) clubs. I am also a big fan of winter sports, particularly skiing and snowboarding, and I feel lucky to live close to many great ski resorts in Switzerland. I also enjoy cooking and hope one day my cooking skills reach very high standards.
+<p>
+I have been playing waterpolo for most of my life, the last 10 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://www.cambridgewaterpolo.co.uk/">Cambridge City</a> waterpolo clubs. I am also a big fan of winter sports, particularly skiing and snowboarding, and I feel lucky to live close to many great ski resorts in Switzerland. I also enjoy cooking and hope one day my cooking skills reach very high standards.
+</p>
 
+<p>
 As a general rule, I prefer not to be addressed by my academic title or surname (e.g. *"Dear Dr Bruno"* or *"Dear Mr Magalhaes"*). I believe education is about knowledge and not diplomas. So addressing me simply by my first name (*"Hi Bruno"*) is perfectly fine :)
+</p>
 </div> <!-- noprint -->
