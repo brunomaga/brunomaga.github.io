@@ -13,11 +13,11 @@ title: "Bruno Magalhaes"
   </div>
   <div class="col">
 <p>
-I'm a Machine Learning research engineer with a strong background on High Performance Computing. I'm interested in applying Machine Learning to solve big engineering problems, with a sweet spot for neuromorphic computing and other brain related tech.
+I'm a Machine Learning research engineer with a strong background on High Performance Computing. I'm interested in applying Machine Learning to solve engineering problems, with a sweet spot for neuromorphic computing and other brain related tech.
 </p>
 
 <p>
-Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale data science, distributed storage and multicore/GPU algorithms. Some of my work is now part of the <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators, and has been executed full steam on several supercomputers with thousands of compute nodes processing exabytes of data.
+Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale data science, distributed storage and multicore/GPU algorithms. Some of my work is now part of the <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators, and has been executed full steam on several supercomputers with thousands of compute nodes processing terabytes of data.
 </p>
 
   </div>
@@ -83,7 +83,7 @@ There are two big questions that I came across and would like to find the answer
         <td> <b> AI resident at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-I improved the CPU load balancing of email accounts across email servers, a non-trivial problem since usage depends on time of the day, account type, region, timezone etc. This was based on an ML system that learnt time series from user logs, using DNNs, RNNs, Encoder-Decoders, Bayesian linear regression (closed-form solution) and Bayesian neural nets (Variational Inference); 
+I improved the CPU load balancing of email accounts across email servers, a non-trivial problem since usage depends on time of the day, account type, region, timezone etc. This was based on an ML system that learnt time series from email usage patterns, using DNNs, RNNs, Encoder-Decoders, Bayesian linear regression (closed-form solution) and Bayesian neural nets (Variational Inference); 
       </td> </tr>
       <tr> <td/> <td>
 I also built a recommendation system using Graph Neural Nets to learn from related nodes on on very large (trillion edges) Meetings/Documents/Users/Emails graphs;
@@ -94,8 +94,8 @@ I also built a recommendation system using Graph Neural Nets to learn from relat
         <td> <b>PhD candidate at École polytechnique fédérale de Lausanne ‐ EPFL, Switzerland</b> </td>
       </tr>
       <tr> <td/> <td>
-I researched, conceptualized, implementated and published my work on new methods for asynchronous variable-step simulation
-of detailed spiking neural networks on large networks of highly-heterogeneous compute nodes. My main contribution was the first ever fully-asynchronous execution model (with async. computation, communication and IO), demonstrated on our use case and yielding a much faster execution and a more precise solution;
+I researched, conceptualized, implementated and published new methods for the asynchronous variable-step simulation
+of detailed spiking neural networks on large networks of highly-heterogeneous compute nodes. My main contribution was the first ever fully-asynchronous execution model (with async. computation, communication and IO), demonstrated on our use case and yielding a much faster execution and a higher numerical accuracy and stability;
       </td> </tr>
       <tr> <td/> <td>
 Most of the work was implemented and validated on the  <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators. I programmed in C and C++ on top of an asynchronous runtime system with global memory addressing (HPX) and implemented all the simulation logic (fixed and variable timestep interpolation) and the underlying HPC algorithms such as distributed task scheduling, multicore parallelism, concurrency, threading, dynamic load-balancing, vectorization and cache optimizations on four distinct Intel and AMD cluster architectures;
@@ -112,15 +112,15 @@ During my PhD, I performed 400h of teaching assistant duties for the courses of 
         <td> <b> Research Engineer at Blue Brain Project, EPFL, Switzerland </b> </td>
       </tr>
       <tr> <td/> <td>
-Aiming at scaling up the largest ever digital reconstruction of a detailed neocortex, I designed and developed several algorithms for efficient computation and storage via parallel/distributed volumetric spatial decomposition, load balancing, spatial indexing, sorting, I/O, sparse matrix transpose, and graph navigation;
+Aiming at scaling up the largest ever digital reconstruction of a detailed neocortex, I designed and developed several algorithms for efficient computation and storage on supercomputers. To name a few, parallel/distributed volumetric spatial decomposition, load balancing, spatial indexing, sorting, I/O, sparse matrix transpose, and graph navigation;
       </td> </tr>
       <tr> <td/> <td>
-My work led to the first ever reconstruction of a digital model of such detail and at the scale of the mouse brain (80M neurons) and the underlying technology supporting the lab's landmark <a href="http://www.cell.com/abstract/S0092-8674(15)01191-5">Cell paper</a>;
+My work led to the first ever digital reconstruction of detailed brain model at the scale of the mouse brain (80M neurons), and is the underlying technology supporting the lab's landmark <a href="http://www.cell.com/abstract/S0092-8674(15)01191-5">Cell paper</a>;
       </td> </tr>
 
       <tr>
         <td style="min-width:70px"> 2009-11 </td>
-        <td> <b> Junior IT architect at the Noble Group, London, UK </b> </td>
+        <td> <b> Junior IT architect, Noble Group, London, UK </b> </td>
       </tr>
       <tr> <td/> <td>
 As part of an international traineeship, I did three rotational placements on different headquarters where I performed the following duties:
@@ -140,7 +140,7 @@ As part of an international traineeship, I did three rotational placements on di
         <td> <b> Analyst Programmer at MSCI real estate, London, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-My first full-time job, where I consolidated my knowledge of algorithms, programming and end-to-end software systems. I developed a web app, a windows app, and a search engine on C++, C# and ASP (.NET) that would allow efficient storage and gathering of analytics of financial data;
+My first full-time job, where I consolidated my knowledge of algorithms, programming and end-to-end development of software systems. I developed a web app, a windows app, and a search engine on C++, C# and ASP (.NET) that would allow efficient storage and gathering of analytics of financial data;
       </td> </tr>
 
 </table>
@@ -155,13 +155,13 @@ My first full-time job, where I consolidated my knowledge of algorithms, program
         <td> <b>PhD (Computational) Neuroscience, École polytechnique fédérale de Lausanne ‐ EPFL, Switzerland</b> </td>
       </tr>
       <tr> <td/> <td>
-I was hired by the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a> (BBP), directed by  <a href="https://en.wikipedia.org/wiki/Henry_Markram">Henry Markram </a> (the father of the <a href="https://en.wikipedia.org/wiki/Spike-timing-dependent_plasticity#:~:text=Spike%2Dtiming%2Ddependent%20plasticity%20(,action%20potentials%20(or%20spikes).">STDP</a> plasticity model), under the supervision of <a href="https://www.epfl.ch/research/domains/bluebrain/blue-brain/people/divisionleaders/felix-schurmann/">Felix Schuerman</a> (BBP co-director, professor at EPFL), and <a href="https://en.wikipedia.org/wiki/Thomas_Sterling_(computing)">Thomas Sterling </a>(professor at Indiana University, and winner of the <a href="https://en.wikipedia.org/wiki/Gordon_Bell_Prize">Gordon Bell prize</a> for his invention of the Beowulf cluster);
+I was hired by the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a> (BBP), directed by  <a href="https://en.wikipedia.org/wiki/Henry_Markram">Henry Markram </a> (the father of the <a href="https://en.wikipedia.org/wiki/Spike-timing-dependent_plasticity#:~:text=Spike%2Dtiming%2Ddependent%20plasticity%20(,action%20potentials%20(or%20spikes).">STDP</a> plasticity model), under the supervision of <a href="https://www.epfl.ch/research/domains/bluebrain/blue-brain/people/divisionleaders/felix-schurmann/">Felix Schuerman</a> (at EPFL), and <a href="https://en.wikipedia.org/wiki/Thomas_Sterling_(computing)">Thomas Sterling </a>(at Indiana University, winner of the <a href="https://en.wikipedia.org/wiki/Gordon_Bell_Prize">Gordon Bell prize</a> and inventor of the Beowulf cluster);
       </td> </tr>
       <tr> <td/> <td>
-My research aimed at combining numerical methods, distributed computing, and neuroscience and discover new ways of performing <i>better</i> (ie faster and more accurate) simulations of detailed spiking neural networks. The simulation model followed the <a href="https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model">Hodgkin-Huxley</a> model (1963 Medicine Nobel Prize) with extensions for detailed branching and ionic channels;
+My research aimed at combining numerical methods, distributed computing, and neuroscience to discover new ways of performing <i>better</i> (ie faster, more accurate, more stable) simulations of detailed spiking neural networks. The numerical models followed the <a href="https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model">Hodgkin-Huxley</a> model (1963 Medicine Nobel Prize) with extensions for detailed branching and further ionic channels;
       </td> </tr>
       <tr> <td/> <td>
-My thesis entitled <a href="https://infoscience.epfl.ch/record/268035?ln=en">Asynchronous Simulation of Neuronal Activity</a> was nominated for the EPFL doctoral program distinction award (best 8%) and for the IBM research award for the best thesis in computational sciences. The juri was composed by <a href="https://www.bsc.es/labarta-mancho-jesus">Jesus Labarta</a> (director of the Barcelona Supercomputing Center), <a href="https://www.fz-juelich.de/SharedDocs/Personen/INM/INM-6/EN/staff/Diesmann_Markus.html?nn=724620">Markus Diesmann</a> (Director of the Jullich Research Center) and <a href="https://people.epfl.ch/simone.deparis">Simone Deparis</a> (Professor on the Mathematics dept. at EPFL);  
+My thesis entitled <a href="https://infoscience.epfl.ch/record/268035?ln=en">Asynchronous Simulation of Neuronal Activity</a> was nominated for the EPFL doctoral program distinction award (best 8%) and for the IBM research award for the best thesis in computational sciences. The juri was composed by <a href="https://www.bsc.es/labarta-mancho-jesus">Jesus Labarta</a> (director of Barcelona Supercomputing Center), <a href="https://www.fz-juelich.de/SharedDocs/Personen/INM/INM-6/EN/staff/Diesmann_Markus.html?nn=724620">Markus Diesmann</a> (Director of Jullich Research Center) and <a href="https://people.epfl.ch/simone.deparis">Simone Deparis</a> (Professor at the dept. of Mathematics at EPFL);  
       </td> </tr>
       <tr> <td/> <td>
 As part of the doctoral program I was trained on <a href="http://isa.epfl.ch/imoniteur_ISAP/!itffichecours.htm?ww_i_matiere=2555928173&ww_x_anneeAcad=2020-2021&ww_i_section=2140391&ww_i_niveau=&ww_c_langue=en">cellular and circuit mechanisms in neuroscience</a>, <a href="https://edu.epfl.ch/coursebook/en/neuroscience-behavior-and-cognition-BIO-483">behavior and cognition in neuroscience</a>, <a href="https://edu.epfl.ch/coursebook/en/biological-modeling-of-neural-networks-BIO-465">biological modeling of neural networks</a>, <a href="https://edu.epfl.ch/coursebook/en/machine-learning-CS-433">machine learning</a>, <a href="https://edu.epfl.ch/coursebook/en/introduction-to-natural-language-processing-CS-431">natural language processing</a> and <a href="https://edu.epfl.ch/coursebook/en/statistics-for-data-science-MATH-413">statistics for data science</a>;
@@ -175,7 +175,7 @@ During the Summer periods of 2015, 2016 and 2017, I was a visiting researcher at
         <td> <b> MSc Advanced Computing at Imperial College London, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-I was trained on theoretical aspects of computer science such as compilers, logic, computer vision, etc. My final project aimed at developing a distributed, multi-core CPU and GPU (CUDA) computation of large Markov models on a distributed network, was awarded distinction and was published as <a href="http://eprints.maths.manchester.ac.uk/1533/">GPU-enabled steady-state solution of large Markov models</a> at NSMC’10;
+I was trained on the theoretical aspects of computer science such as compilers, logic, computer vision, type systems, etc. My final project aimed at developing a distributed, multi-core CPU and GPU (CUDA) computation of large Markov models on a distributed network, was awarded distinction and was published as <a href="http://eprints.maths.manchester.ac.uk/1533/">GPU-enabled steady-state solution of large Markov models</a> at NSMC’10;
       </td> </tr>
 
       <tr>
@@ -239,6 +239,6 @@ I have been playing waterpolo for most of my life, the last 10 years with <a hre
 </p>
 
 <p>
-As a general rule, I prefer not to be addressed by my academic title or surname (e.g. <i>"Dear Dr Bruno"</i> or <i>"Dear Mr Magalhaes"</i>. I believe education is about knowledge and not diplomas. So addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine :)
+As a general rule, I prefer not to be addressed by my academic title or surname (e.g. <i>"Dear Dr Bruno"</i> or <i>"Dear Mr Magalhaes"</i>. I believe education is about knowledge and not diplomas, so addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine :)
 </p>
 </div> <!-- noprint -->
