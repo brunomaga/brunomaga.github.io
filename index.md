@@ -67,17 +67,13 @@ Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/res
 
 <h4 class="mt-5 mb-3">Research Interests</h4>
 
-<p>
-My research interests are Machine Learning in general, and particularly when applied to chaotic and massively-large datasets and compute infrastructure, and all related questions that can arise from the field, such as data confidentiality, poisoning attacks, learning from population clusters, learning from networks, federated ML, decentralized/parallel ML processing, etc.
-</p>
+My research interests are Machine Learning in general, with a particular interest on ML applied to chaotic/large datasets and compute infrastructure, and all related questions that can arise from the field, such as data confidentiality, poisoning attacks, learning from population clusters, learning from networks, federated ML, decentralized/parallel ML processing, etc.
 
-<p>
 There are two big questions that I came across and would like to find the answer at some point in life:
-<ol>
+<ul>
 <li> How to build machine learning systems that can handle the <a href="https://techjury.net/blog/how-much-data-is-created-every-day/#gref">explosive growth</a> of data generated every day (social media, bots, generative ML,etc), that largely exceeds the growth of <i>compute power</i> described by <a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore's Law</a>? </li>
 <li> How to make artificial neurons learn like spiking neurons, i.e. without back-propagation, loss function and iterations, and encoding inputs over space and time? </li>
-</ol>
-</p>
+</ul>
 
 <h4 class="mt-5 mb-3">Work Experience</h4>
 
@@ -99,10 +95,10 @@ I also built a recommendation system using Graph Neural Nets to learn from relat
       </tr>
       <tr> <td/> <td>
 I researched, conceptualized, implementated and published my work on new methods for asynchronous variable-step simulation
-of detailed spiking neural networks on large networks of highly-heterogeneous compute nodes. The simulation model followed the <a href="https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model">Hodgkin-Huxley</a> model (1963 Medicine Nobel Prize) with extensions for detailed branching and ionic channels. My main contribution was the first ever fully-asynchronous execution model (with async. computation, communication and IO), demonstrated on our use case and yielding a much faster execution and a more precise solution;
+of detailed spiking neural networks on large networks of highly-heterogeneous compute nodes. My main contribution was the first ever fully-asynchronous execution model (with async. computation, communication and IO), demonstrated on our use case and yielding a much faster execution and a more precise solution;
       </td> </tr>
       <tr> <td/> <td>
-Most of the work was implemented and validated on the  <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators. I programmed in C and C++ on top of an asynchronous runtime system with global memory addressing (HPX) and implemented all the simulation logic (fixed and variable timestep interpolation) and the underlying HPC algorithms such as distributed task scheduling, concurrency, threading, dynamic load-balancing, vectorization and cache-optimized code;
+Most of the work was implemented and validated on the  <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators. I programmed in C and C++ on top of an asynchronous runtime system with global memory addressing (HPX) and implemented all the simulation logic (fixed and variable timestep interpolation) and the underlying HPC algorithms such as distributed task scheduling, multicore parallelism, concurrency, threading, dynamic load-balancing, vectorization and cache optimizations on four distinct Intel and AMD cluster architectures;
       </td> </tr>
       <tr>
         <td style="min-width:70px"> 2015-18 </td>
@@ -162,10 +158,10 @@ My first full-time job, where I consolidated my knowledge of algorithms, program
 I was hired by the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a> (BBP), directed by  <a href="https://en.wikipedia.org/wiki/Henry_Markram">Henry Markram </a> (the father of the <a href="https://en.wikipedia.org/wiki/Spike-timing-dependent_plasticity#:~:text=Spike%2Dtiming%2Ddependent%20plasticity%20(,action%20potentials%20(or%20spikes).">STDP</a> plasticity model), under the supervision of <a href="https://www.epfl.ch/research/domains/bluebrain/blue-brain/people/divisionleaders/felix-schurmann/">Felix Schuerman</a> (BBP co-director, professor at EPFL), and <a href="https://en.wikipedia.org/wiki/Thomas_Sterling_(computing)">Thomas Sterling </a>(professor at Indiana University, and winner of the <a href="https://en.wikipedia.org/wiki/Gordon_Bell_Prize">Gordon Bell prize</a> for his invention of the Beowulf cluster);
       </td> </tr>
       <tr> <td/> <td>
-My research aimed at combining numerical methods, distributed computing, and neuroscience to research new ways of performing <i>better</i> (ie faster and more accurate) simulations of detailed spiking neural networks;
+My research aimed at combining numerical methods, distributed computing, and neuroscience and discover new ways of performing <i>better</i> (ie faster and more accurate) simulations of detailed spiking neural networks. The simulation model followed the <a href="https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model">Hodgkin-Huxley</a> model (1963 Medicine Nobel Prize) with extensions for detailed branching and ionic channels;
       </td> </tr>
       <tr> <td/> <td>
-My thesis entitled <a href="https://infoscience.epfl.ch/record/268035?ln=en">Asynchronous Simulation of Neuronal Activity</a> was nominated for the EPFL doctoral program distinction award (best 8\%) and for the IBM research award for the best thesis in computational sciences. The juri was composed by <a href="https://www.bsc.es/labarta-mancho-jesus">Jesus Labarta</a> (director of the Barcelona Supercomputing Center), <a href="https://www.fz-juelich.de/SharedDocs/Personen/INM/INM-6/EN/staff/Diesmann_Markus.html?nn=724620">Markus Diesmann</a> (Director of the Jullich Research Center) and <a href="https://people.epfl.ch/simone.deparis">Simone Deparis</a> (Professor on the Mathematics dept. at EPFL);  
+My thesis entitled <a href="https://infoscience.epfl.ch/record/268035?ln=en">Asynchronous Simulation of Neuronal Activity</a> was nominated for the EPFL doctoral program distinction award (best 8%) and for the IBM research award for the best thesis in computational sciences. The juri was composed by <a href="https://www.bsc.es/labarta-mancho-jesus">Jesus Labarta</a> (director of the Barcelona Supercomputing Center), <a href="https://www.fz-juelich.de/SharedDocs/Personen/INM/INM-6/EN/staff/Diesmann_Markus.html?nn=724620">Markus Diesmann</a> (Director of the Jullich Research Center) and <a href="https://people.epfl.ch/simone.deparis">Simone Deparis</a> (Professor on the Mathematics dept. at EPFL);  
       </td> </tr>
       <tr> <td/> <td>
 As part of the doctoral program I was trained on <a href="http://isa.epfl.ch/imoniteur_ISAP/!itffichecours.htm?ww_i_matiere=2555928173&ww_x_anneeAcad=2020-2021&ww_i_section=2140391&ww_i_niveau=&ww_c_langue=en">cellular and circuit mechanisms in neuroscience</a>, <a href="https://edu.epfl.ch/coursebook/en/neuroscience-behavior-and-cognition-BIO-483">behavior and cognition in neuroscience</a>, <a href="https://edu.epfl.ch/coursebook/en/biological-modeling-of-neural-networks-BIO-465">biological modeling of neural networks</a>, <a href="https://edu.epfl.ch/coursebook/en/machine-learning-CS-433">machine learning</a>, <a href="https://edu.epfl.ch/coursebook/en/introduction-to-natural-language-processing-CS-431">natural language processing</a> and <a href="https://edu.epfl.ch/coursebook/en/statistics-for-data-science-MATH-413">statistics for data science</a>;
