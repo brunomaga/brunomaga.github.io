@@ -13,7 +13,7 @@ title: "Bruno Magalhaes"
   </div>
   <div class="col">
 <p>
-I'm a Machine Learning research engineer with a strong background on High Performance Computing. I'm interested in applying Machine Learning to solve engineering problems, with a sweet spot for neuromorphic computing and other brain related tech.
+I'm a Machine Learning research engineer with a strong background on High Performance Computing. I'm interested in applying Machine Learning to solve big engineering problems, with a sweet spot for neuromorphic computing and other brain related tech.
 </p>
 
 <p>
@@ -155,7 +155,7 @@ My first full-time job, where I consolidated my knowledge of algorithms, program
         <td> <b>PhD (Computational) Neuroscience, École polytechnique fédérale de Lausanne ‐ EPFL, Switzerland</b> </td>
       </tr>
       <tr> <td/> <td>
-I was hired by the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a> (BBP), directed by  <a href="https://en.wikipedia.org/wiki/Henry_Markram">Henry Markram </a> (the father of the <a href="https://en.wikipedia.org/wiki/Spike-timing-dependent_plasticity#:~:text=Spike%2Dtiming%2Ddependent%20plasticity%20(,action%20potentials%20(or%20spikes).">STDP</a> plasticity model), under the supervision of <a href="https://www.epfl.ch/research/domains/bluebrain/blue-brain/people/divisionleaders/felix-schurmann/">Felix Schuerman</a> (at EPFL), and <a href="https://en.wikipedia.org/wiki/Thomas_Sterling_(computing)">Thomas Sterling </a>(at Indiana University, winner of the <a href="https://en.wikipedia.org/wiki/Gordon_Bell_Prize">Gordon Bell prize</a> and inventor of the Beowulf cluster);
+I was hired by the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a> (BBP), directed by  <a href="https://en.wikipedia.org/wiki/Henry_Markram">Henry Markram </a> (the father of the <a href="https://en.wikipedia.org/wiki/Spike-timing-dependent_plasticity#:~:text=Spike%2Dtiming%2Ddependent%20plasticity%20(,action%20potentials%20(or%20spikes).">STDP</a> plasticity model), under the supervision of <a href="https://www.epfl.ch/research/domains/bluebrain/blue-brain/people/divisionleaders/felix-schurmann/">Felix Schuerman</a> (professor at EPFL), and <a href="https://en.wikipedia.org/wiki/Thomas_Sterling_(computing)">Thomas Sterling </a>(professor at Indiana University, winner of the <a href="https://en.wikipedia.org/wiki/Gordon_Bell_Prize">Gordon Bell prize</a> and inventor of the Beowulf cluster);
       </td> </tr>
       <tr> <td/> <td>
 My research aimed at combining numerical methods, distributed computing, and neuroscience to discover new ways of performing <i>better</i> (ie faster, more accurate, more stable) simulations of detailed spiking neural networks. The numerical models followed the <a href="https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model">Hodgkin-Huxley</a> model (1963 Medicine Nobel Prize) with extensions for detailed branching and further ionic channels;
