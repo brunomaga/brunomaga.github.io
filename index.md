@@ -13,7 +13,7 @@ title: "Bruno Magalhaes"
   </div>
   <div class="col">
 <p>
-I'm a Machine Learning research engineer with a strong background on High Performance Computing. I'm interested in applying Machine Learning to solve big engineering problems, with a sweet spot for neuromorphic computing and other brain related tech.
+I'm a Machine Learning (ML) research engineer with a strong background on High Performance Computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain related tech.
 </p>
 
 <p>
@@ -68,7 +68,7 @@ Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/res
 
 <h4 class="mt-5 mb-3">Research Interests</h4>
 
-My research interests are Machine Learning in general, with a particular interest on ML applied to chaotic/large datasets and compute infrastructure, and all related questions that can arise from the field, such as data confidentiality, poisoning attacks, learning from population clusters, learning from networks, federated ML, decentralized/parallel ML processing, etc.
+My research interests are general ML and HPC, with a particular interest on ML applied to chaotic/large datasets and compute infrastructure, and all related questions that can arise from the field, such as data confidentiality, poisoning attacks, learning from population clusters, learning from networks, federated ML, decentralized/parallel ML processing, etc.
 
 There are two big questions that I came across and would like to find the answer at some point in life:
 <ul>
