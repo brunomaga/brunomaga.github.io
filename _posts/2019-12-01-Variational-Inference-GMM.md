@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Variational Inference, Mean-Field Approximation and Gaussian Mixture Models"
+title:  "Variational Inference: Mean-Field Approximation on Gaussian Mixture Models"
 categories: [machine learning, unsupervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
@@ -62,7 +62,7 @@ I will try to post about this topic in the near future, but if you're curious yo
 
 ### Variational Inference
 
-The idea behind Variational Inference (VI) is to propose a family of densities and find a member $q^\star$ of that family which is close to the target posterior $p(z \mid x)$. I.e. instead of computing the *real* posterior, we try to find the parameters $z$ of a new distribution $q^\star$ (the approximation to our real posterior) such that:
+**The idea behind Variational Inference (VI) methods is to propose a family of densities and find a member $q^\star$ of that family which is close to the target posterior $p(z \mid x)$**. I.e. instead of computing the *real* posterior, we try to find the parameters $z$ of a new distribution $q^\star$ (the approximation to our real posterior) such that:
 
 $$
 q^\star(z) = arg\,min \, KL(q(z) || p(z\mid x))
@@ -135,9 +135,16 @@ $$
 
 So we optimize the lower-bound term over quantities $q(z)$ to find a minimal approximation. Or in other words, since $\log p(x)$ does not depend on $q$, we **maximize the ELBO which is equivalent to miniziming the KL-divergence** of the real posterior $p(z \mid x)$ and its approximation $q(z)$.
 
-### Mean-field Variational Family
+### Mean-field approximation
 
-So far we foccused on a single posterior defined by a family with a single distributions $q$. We now extend our analysis to complex families. We focus on the simplest method for such scenarios, the **mean-field approximation, where we assume all latent variables are independent**. More complex scenarios such as variational family with dependencies between variables (structured variational inference) or with mixtures of variational families (covered in [Chris Bishop's PRML book]({{ site.resources_permalink }})) are not covered. As a side note, because the latent variables are independent, the mean-field approach that follows usually does not contain the true posterior.
+So far we foccused on a single posterior defined by a family with a single distributions $q$, whose posterior $p(z \mid x)$ is tractable. We now extend our analysis to complex families, where the posterior is not tractable. 
+
+One way to overcome it is to approximate the posterior probability using a simpler model. For example, assuming that a set of a set of latent variables is independent of other variables. Or we can enfurce full independence among all latent variables given $x$. This assumption is known as the **mean-field approximation**.
+
+In practice, this methods originates from mean-field theory. From [wikipedia](https://en.wikipedia.org/wiki/Mean-field_theory): 
+> "Mean-field theory [...] studies the behavior of high-dimensional random (stochastic) models by studying a simpler model that approximates the original by averaging over degrees of freedom. [...] The effect of all the other individuals on any given individual is approximated by a single averaged effect, thus reducing a many-body problem to a one-body problem."
+
+More complex scenarios such as variational family with dependencies between variables (structured variational inference) or with mixtures of variational families (covered in [Chris Bishop's PRML book]({{ site.resources_permalink }})) will be covered in a future post. As a side note, because the latent variables are independent, the mean-field approach that follows usually does not contain the true posterior.
 
 In this type of Variational Inference, due to variable independency, the variational distribution over the latent variables factorizes as:
 
@@ -152,9 +159,9 @@ $$
 q(z) =  q(z_1, ..., z_m) =  q(z_{G_1}, ..., z_{G_K}) = \prod_{j=1}^{K} q_j(z_{G_j}) 
 $$
 
-This setup is often called **generalized mean field** instead of **naive mean field**. Each latent variable $z_j$ is governed by its wn variational factor, the density $q_j(z_j)$. For the formulation to be complete, we'd have to specify the parametric form of the individual variational factors. In principle, each can take on any parametric distribution to the corresponding random variable (e.g. a combination of Gaussian and Categorical distributions). The computation of the (template of the) functional form of $q_j(z_j)$ is very lenghty and is detailed on [Brian Keng's post](http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/), so I'll skip those details and show later an application of this template to Gaussian Mixture Models.
+This setup is often called **generalized mean field** instead of **naive mean field**. Each latent variable $z_j$ is governed by its own variational factor, the density $q_j(z_j)$. For the formulation to be complete, we'd have to specify the parametric form of the individual variational factors. In principle, each can take on any parametric distribution to the corresponding random variable (e.g. a combination of Gaussian and Categorical distributions). The computation of the (template of the) functional form of $q_j(z_j)$ is very lenghty and is detailed on [Brian Keng's post](http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/), so I'll skip those details and show later an application of this template to Gaussian Mixture Models.
 
-Back to the main topic, *the main objective now is to optimize the ELBO in the mean field variational inference*, or equivalently, to choose the variational factors that maximize the ELBO (eq. \ref{eq_elbo}). A common approach is to  use the **coordinate ascent** method, by optimizing the variational approximation of each latent variable $q_{z_j}$, while holding the others fixed.
+Back to the main topic, *the main objective now is to optimize the ELBO in the mean field variational inference*, or equivalently, to choose the variational factors that maximizes the ELBO (eq. \ref{eq_elbo}). A common approach is to  use the **coordinate ascent** method, by optimizing the variational approximation of each latent variable $q_{z_j}$, while holding the others fixed.
 
 Recall the [probability chain rule](https://en.wikipedia.org/wiki/Chain_rule_(probability)) for more than two events $X_1, \ldots , X_n$:
 
@@ -192,7 +199,7 @@ ELBO(q) & = \mathbf{E}_q [\log p(x_{1:n},z_{1:m})] - \mathbf{E}_{q_j}[\log q(z_{
 \end{align*}
 $$
 
-### Coordinate Ascent Variational Inference (CAVI) 
+### Coordinate Ascent Mean-Field Variational Inference 
 
 A common method for iteratively finding the optimal solution is the coordinate ascent variational inference (CAVI), where we compute the derivative of each variational factor and alternatively update the weights towards the lowest loss acording to the factor being iterated. Before we proceed to the derivative, we introduce the notation:
 
@@ -246,11 +253,11 @@ $$
 
 where the constant $\alpha$ is typically set to $max_i x_i$, providing numerical stability to most common VI computations.
 
-### Example: Gaussian Mixture Models
+### Gaussian Mixture Models
 
 <small>Credit: this section is a more verbose and extended explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).</small>
 
-A Gaussian mixture model is a probabilistic model that assumes all the data points are generated from a mixture of a finite number of Gaussian distributions with unknown parameters. The problem at hand is to fit a Gaussian density function to the input dataset. 
+A Gaussian mixture model is a probabilistic model that assumes all the data points are generated from a mixture of a finite number of Gaussian distributions with unknown parameters. The problem at hand is to fit a set of Gaussian density functions to the input dataset. 
 
 Take a family of a mixture of $K$ univariate Gaussian distributions with means $\mu = \mu_{1:K} = \{ \mu_1, \mu_2, ..., \mu_K \}$. The means are drawn from a common prior $p(\mu_n)$, which we assume to be Gaussian $$\mathcal{N}(\mu, \sigma^2)$$. **The latent space are the means $\mu_{1:K}$ and the cluster assignments $c_{1:n}$** for each observation $x_i$. **$\sigma^2$ is a hyper-parameter**. $c_i$ is described as an indicator $K-$vector, i.e. all zeros except a one on the index of the allocated cluster. Each new observation $x_i$ (from a total of $n$ observations) is drawn from the corresponding Gaussian $\mathcal{N}(c_i^T, \mu, 1)$. The model can be expressed as:
 
@@ -283,7 +290,7 @@ I.e the evidence is now a sum of all possible configurations of clusters assignm
 We can compute this previous equation, since the gaussian prior and likelihood are conjugates.
 However, it is still computationally intractable due to the $K^n$ complexity. 
 
-An alternative solution is to use the mean-field approximation method we've discussed. We know from before (eq. \ref{eq_posterior_mf}} that the mean-field yields approximate posterior probabilities of the form:
+An alternative solution is to use the mean-field approximation method we've discussed. We know from before (eq. \ref{eq_posterior_mf}) that the mean-field yields approximate posterior probabilities of the form:
 
 $$
 q(\mu,c) = \prod_{k=1}^K q(\mu_k; m_k, s^2_k) \prod_{i=1}^n q(c_i; \varphi_i).
@@ -305,7 +312,7 @@ $$
 
 The CAVI (coordinate ascent variational inference) updates each variational parameter in turn, so we need to comput both updates.
 
-###### Update 1: Variational update for cluster assignment
+##### Update 1: Variational update for cluster assignment
 
 We start with the variational update for the cluster assignment $c_i$. Using the mean-field recipe from equation \ref{eq_CAVI}:
 
@@ -340,7 +347,7 @@ $$
 $$
 
 
-###### Update 2: Variational update for cluster mean
+##### Update 2: Variational update for cluster mean
 
 We now turn to the variational density $$q(\mu_k; m_k, s^2_k)$$ on equation \ref{eq_variational_family}. We use again \ref{eq_CAVI} (the exponentiated log of te joint) for the mean values $\mu_k$:
 
@@ -389,7 +396,7 @@ Putting it all together, the algorithm follows as:
 		- set $$s^2_k \leftarrow \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}$$ (equation \ref{eq_algo_second_step})
 	3. compute $ELBO(m, s^2, \varphi)$ (equation \ref{eq_algo_elbo})
 
-The algorithm is iterative and will converge on a certain loss threshold (ELBO), based on the fitting of each Gaussian to the data points. The concept can be easily understood by looking at the illustration of several iterations of the fitting of Gaussian models to 5 clusters of points:   
+The algorithm is iterative and will converge on a certain loss threshold (ELBO), based on the fitting of each Gaussian to the data points. The concept can be easily understood by looking at the illustration of several iterations of the fitting of Gaussian models to 4 clusters of points:   
 
 <p align="center">
 <img width="60%" height="60%" src="/assets/Bayesian-Variational-Inference-GMM/GMM_iterations.JPG"/><br/>
@@ -402,7 +409,6 @@ The algorithm is iterative and will converge on a certain loss threshold (ELBO),
 
 There is a universe of methods and techniques that are interesting and were not covered in this post. To name a few:
 - An application of the CAVI to other members of the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-11-20-Exponential-Family-Distributions %}) and Stochastic Variational Inference is detailed in the papers [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf) and [Stochastic Variational Inference](http://www.columbia.edu/~jwp2128/Papers/HoffmanBleiWangPaisley2013.pdf);
-- Another very famous method for inference is the [Expectation Maximization algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm), covered in [Brian Keng's post](http://bjlkeng.github.io/posts/the-expectation-maximization-algorithm/) and that I plan to cover as well in the future;
 - The KL divergence formula is non-symmetric for the two parameter distributions. For details on the application of forward- and reverse KL divergence, relating to computing variational loss based on $$KL( q(z) \mid\mid p(z\mid x))$$ vs $$KL(p(z\mid x) \mid \mid q(z) )$$, refer to [Augustinus Kristiadi's plost](https://wiseodd.github.io/techblog/2016/12/21/forward-reverse-kl/), [Eric Jang's post](https://blog.evjang.com/2016/08/variational-bayes.html) and [Brian Keng's post](http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/);
 - Pytorch provides detailed examples with explanations of implementations of Variational Inference in Pytorch. A good place to start is [*SVI Part I: An Introduction to Stochastic Variational Inference in Pyro*](https://pyro.ai/examples/svi_part_i.html);
-- Finally, a bit off-topic, there is some discussion on whether methods based on approximated posteriors and Bayesian methods are any good for more complicated models, particularly for Deep Neural Nets. If you're curious, I recommend the papers [Quality of Uncertainty Quantification for Bayesian Neural Network Inference](https://arxiv.org/abs/1906.09686) and [How Good is the Bayes Posterior in Deep Neural Networks Really?](https://arxiv.org/abs/2002.02405).
+- Finally, a bit off topic, there is some discussion on whether methods based on approximated posteriors and Bayesian methods are any good for more complicated models, particularly for Deep Neural Nets. If you're curious, I recommend the papers [Quality of Uncertainty Quantification for Bayesian Neural Network Inference](https://arxiv.org/abs/1906.09686) and [How Good is the Bayes Posterior in Deep Neural Networks Really?](https://arxiv.org/abs/2002.02405).
