@@ -29,7 +29,7 @@ $$
 
 The inference problem is to compute the conditional probability of the latent variables $z$ given the observations $x$ in $X$, i.e. conditioning on the data and compute the posterior $p(z \mid x)$. For many models, this evidence integral does not have a closed-form solution or requires an exponential time to compute. 
 
-**There are several approaches to inference**, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Juntion tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why do we need approximate methods after all? Simply because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. **This post focuses on the simplest approach to Variational Inference based on mean-field approximation and coordinate-ascent optimization**.
+**There are several approaches to inference**, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Junction tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why do we need approximate methods after all? Simply because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. **This post focuses on the simplest approach to Variational Inference based on mean-field approximation and coordinate-ascent optimization**.
 
 ### Detour: Markov Chain Monte Carlo
 
@@ -58,6 +58,8 @@ and perform a step change towards the state of highest ratio.
 
 The main advantage of MCMC is that it provides an approximation of the *true* posterior, although there are many disavantadges on handling a exact posterior which doesn't follow a parametric ditribution (such as hard interpretability in high dimensions). Moreover, it requires a massive computation power for problems with large latent spaces. That's where Variational Inference enters the picture: it's faster and works well if we know the parametric distribution of the posterior, however being sometimes *over-confident* when posterior are not exact to the approximated. 
 
+So as a golden rule, always use approximated methods, but if in doubt, double check with the true MCMC-based posterior.
+
 I will try to post about this topic in the near future, but if you're curious you can always check the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/Bayesian-Variational-Inference-GMM/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf) if you are interested on the theory behind it, or a practical explanation with code in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
 
 ### Variational Inference
@@ -71,69 +73,53 @@ $$
 The logic behing it is that we want to minimize the divergence between a real posterior and its approximated posterior, sometimes referred to as the *guide* distribution/posterior. So we need to first define a metric of *approximation* or proximity. To that extent, the closeness (*proximity*) of two distributins $p$ and $q$ is a measurement of *probabilities similiarity* measured by the [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence): 
 
 $$
-KL (q(z) || p(z \mid x)) =  \int_z q(z) \log \frac{q(z)}{p(z \mid x)} = \mathbf{E} \left[ \log \frac{q(z)}{p( z\mid x)} \right]
+KL (q(z) || p(z \mid x)) =  \int q(z) \log \frac{q(z)}{p(z \mid x)} dz= \mathbf{E} \left[ \log \frac{q(z)}{p( z\mid x)} \right]
 \label{eq_KLdiv}
 $$ 
 
-If both $q$ and $p$ are high, then we achieve a good solution as the KL-divergence is low. If $q$ is high and $p$ is low, we have a high divergence and the solution *may* not be very good. Otherwise, if *q* is low, we dont care about *p*, since we achieve low divergence, independently of $p$. It would then make more sense to compute $KL(p\|\|q)$ instead, however we do not do this due to computational reasons, as we will see later.
+Note that KL is not a distance metric as it's not symmetric. And that sometimes your may found divergence metrics other than KL divergence.
+
+Back to the topic. If both $q$ and $p$ are high, then we achieve a good solution as the KL-divergence is low. If $q$ is high and $p$ is low, we have a high divergence and the solution *may* not be very good. Otherwise, if *q* is low, we dont care about *p*, since we achieve low divergence, independently of $p$. It would then make more sense to compute $KL(p\|\|q)$ instead, however we do not do this due to computational reasons, as we will see later.
 
 The logic is that we want to minimize the divergence between our real posterior $p(z \mid x)$ and its approximated posterior $q(z)$. We cannot minimize this directly, but we can minimize a function that is *equal to it (up to a constant)*, known as the Evidence Lower Bound.
 
 ### Evidence Lower Bound (ELBO)
 
-<small>
-Good to know: there are mainly two approaches to describe ELBO. I'll follow the paper [*Variational Inference: A Review for Statisticians*](https://arxiv.org/pdf/1601.00670.pdf). For an alternative approach, check the blog posts from [Zhiya Zuo](https://zhiyzuo.github.io/VI/) and [Chris Coy](https://chrischoy.github.io/research/Expectation-Maximization-and-Variational-Inference/) . 
-</small>
-
-Before we start, we introduce the concept of [Jensen's inequality](https://en.wikipedia.org/wiki/Jensen%27s_inequality) (applied to random variables $X$),  that relates the value of a convex function $f$ of an integral to the integral of the convex function:
+Looking at equation \ref{eq_KLdiv}, we see a big issue: it includes the true posterior $p(z \mid x)$ which is exactly the value we do not know.
+However, we can re-write the KL divergence as:
 
 $$
-f ( \mathbf{E}[X] ) \ge \mathbf{E}[f(X)]
-\label{eq_jensens}
-$$
-
-We apply the Jensen's inequality to the log (marginal) probability of the observations to get the ELBO:
-
-$$
-%source: assets/Bayesian-SVI-MCMC/10708-scribe-lecture13.pdf
 \begin{align*}
-\log p(x) & = \log \int p(x,z) dz & \text{(marginalizing $z$, eq. \ref{eq_joint})}\\
-  & = log \int p(x,z) \frac{q(z)}{q(z)} dz \\
-  & = \log \left( \mathbf{E} \left[ \frac{p(x,z)}{q(z)} \right] \right)    & \text{(expected value: $\mathbf{E}[X] = \int x \, p_X(x) \, dx$)} \\
-  & \ge \mathbf{E} [\log p(x,z)] - \mathbf{E}[\log q(z)] & \text{($\mathbf{E}[XY]=\mathbf{E}[X]*\mathbf{E}[Y]$; Jensen's inequality, eq. \ref{eq_jensens})} \\
+KL (q(z) || p(z \mid x)) 
+  & = \int q(z) \log \frac{q(z)}{p(z \mid x)} dz \\
+  & = \int q(z) \log \frac{q(z)p(x)}{p(z, x)} dz  & \text{(definition of conditional prob.)}\\
+  & = \int q(z) \left( \log p(x) + q(z) \log \frac{q(z)}{p(z, x)} \right) dz  & \text{(expanding $\log$)}\\
+  & = \log p(x) \int q(z) dz + \int q(z) \log \frac{q(z)}{p(z, x)} dz  & \text{(definition of conditional prob.)}\\
+  & = \log p(x) - \int q(z) \log \frac{p(z, x)}{q(z)} dz  & \text{(negate log; $q(z)$ is a dist. thus $\int q(z) dz =1$)}\\
 \end{align*}
 $$
 
-Putting it all together, the Evidence Lower Bound for a probability model $p(x,z)$ and the approximation to the posterior $q(z)$  is:
+Now there are two very important messages about both terms on the right:
+- We are minimizing the KL divergence over $q$, therefore the term $\log p(x)$ can be ignored as it does not contain $q$;
+- The second term $\int ... dz $ contains now only terms that we know:
+  - $p(z,x)$ is just the prior times the likelihood i.e. $p(z,x) = p(z) \, p(x \mid z)$, which are the inputs of the problem;
+  - this term is called the ELBO, which we will mininize, or since it's a negated term, that we will maximize!
+
+We know that the KL is not negative. Thus $\log p(x) \ge ELBO$, thus justifying the name "Evidence **lower bound**".
+
+Note that ELBO can also be described as, and is usually found expressed in terms of the expected values of the two variables as:
 
 $$
-ELBO(q) = \mathbf{E} [\log p(x,z)] - \mathbf{E}[\log q(z)]
+ELBO(q) = \int q(z) \log \frac{p(z, x)}{q(z)} =  \int q(z) \log p(z, x) dz - \int q(z) \log q(z) dz  = \mathbf{E} [\log p(x,z)] - \mathbf{E}[\log q(z)]
 \label{eq_elbo}
 $$
 
-This formulation justifies the name ELBO. In practice, $\mathbf{E} [\log p(x,z)] - \mathbf{E}[\log q(z)]$ is smaller-or-equal than --- or is the lower bound of --- the evidence $\log p(x)$.
+One important remark. The KL is bounded to a minimum value of 0, so we can print the KL we can see how good we are performing across iterations, as the value ideally approaches 0. On the other hand, the ELBO grows and converges to an absolute value that *tells nothing* about the quality of our results. This "KL vs ELBO" is still a (well researched) open problem.
 
-
-We can use the previous result and rewrite the KL-divergence as:
-
-$$
-%source: assets/Bayesian-SVI-MCMC/10708-scribe-lecture13.pdf
-\begin{align*}
-KL (q(z) || p(z \mid x)) & = \mathbf{E} \left[ \log \frac{q(z)}{p(z \mid x)} \right] & \text{(def of KL-divergence, eq. \ref{eq_KLdiv})}\\
- & = \mathbf{E} [\log q(z)] - \mathbf{E}[\log p(z\mid x)] \\  
- & = \mathbf{E} [\log q(z)] - \mathbf{E} [\log p(z,x)] + \mathbf{E} [\log p(x)]  &\text{(def. conditional prob., eq. \ref{eq_conditional})}\\  
- & = - (\mathbf{E} [\log q(z)] + \mathbf{E} [\log p(z,x)]) + \log p(x)\\
- & = - ELBO(q) + \log p(x) &\text{(def. of ELBO eq. \label{eq_elbo})}\\
-\end{align*}
-$$
-
-i.e. the KL divergence is the negative of the ELBO plus a constant that does not depend on $q$. The previous formulation is also commonly represented as:
-
-$$
-\log p(x) = ELBO(q) + KL (q(z) || p(z \mid x))
-$$
-
-So we optimize the lower-bound term over quantities $q(z)$ to find a minimal approximation. Or in other words, since $\log p(x)$ does not depend on $q$, we **maximize the ELBO which is equivalent to miniziming the KL-divergence** of the real posterior $p(z \mid x)$ and its approximation $q(z)$.
+Now we have an optimization problem, how do we optimize?
+ - One option: coordinate descent in all $q_1, ..., q_j$, pretty slow, we have to hand-derive an algorithm to find out what the steps are;
+ - Stochastic Variational Inference, faster
+ - Automatic Differentiation Variational Inference: assume all distributions are Gaussian and optimizations can be done automatically without hand derivations;
 
 ### Mean-field approximation
 
@@ -144,7 +130,7 @@ One way to overcome it is to approximate the posterior probability using a simpl
 In practice, this methods originates from mean-field theory. From [wikipedia](https://en.wikipedia.org/wiki/Mean-field_theory): 
 > "Mean-field theory [...] studies the behavior of high-dimensional random (stochastic) models by studying a simpler model that approximates the original by averaging over degrees of freedom. [...] The effect of all the other individuals on any given individual is approximated by a single averaged effect, thus reducing a many-body problem to a one-body problem."
 
-More complex scenarios such as variational family with dependencies between variables (structured variational inference) or with mixtures of variational families (covered in [Chris Bishop's PRML book]({{ site.resources_permalink }})) will be covered in a future post. As a side note, because the latent variables are independent, the mean-field approach that follows usually does not contain the true posterior.
+More complex scenarios such as variational family with dependencies between variables (structured variational inference) or with mixtures of variational families (covered in [Chris Bishop's PRML book]({{ site.resources_permalink }})) will be covered in a future post. As a side note, **because the latent variables are independent, the mean-field approach that follows usually does not contain the true posterior**.
 
 In this type of Variational Inference, due to variable independency, the variational distribution over the latent variables factorizes as:
 
@@ -153,15 +139,20 @@ q(z) = q(z_1, ..., z_m) = \prod_{j=1}^{m} q(z_j)
 \label{eq_posterior_mf}
 $$
 
-where each latent variable ($z_j$) is governed by its own density $q(z_j)$. Note that the variational family input does not depend on the input data $x$ which does not show up in the equation. We can also partition the latent variables into $K$ groups $$z_{G_1}, ..., z_{G_K}$$, and represent the approximation instead as:
+where each latent variable ($z_j$) is governed by its own density $q(z_j)$. Note that the variational family input does not depend on the input data $x$ which does not show up in the equation.
+
+We can also partition the latent variables into $K$ groups $$z_{G_1}, ..., z_{G_K}$$, and represent the approximation instead as:
 
 $$
 q(z) =  q(z_1, ..., z_m) =  q(z_{G_1}, ..., z_{G_K}) = \prod_{j=1}^{K} q_j(z_{G_j}) 
 $$
 
-This setup is often called **generalized mean field** instead of **naive mean field**. Each latent variable $z_j$ is governed by its own variational factor, the density $q_j(z_j)$. For the formulation to be complete, we'd have to specify the parametric form of the individual variational factors. In principle, each can take on any parametric distribution to the corresponding random variable (e.g. a combination of Gaussian and Categorical distributions). The computation of the (template of the) functional form of $q_j(z_j)$ is very lenghty and is detailed on [Brian Keng's post](http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/), so I'll skip those details and show later an application of this template to Gaussian Mixture Models.
+This setup is often called **generalized mean field** instead of **naive mean field**. Each latent variable $z_j$ is governed by its own variational factor, the density $q_j(z_j)$. For the formulation to be complete, we'd have to specify the parametric form of the individual variational factors. In principle, each can take on any parametric distribution to the corresponding random variable (e.g. a combination of Gaussian and Categorical distributions).
 
-Back to the main topic, *the main objective now is to optimize the ELBO in the mean field variational inference*, or equivalently, to choose the variational factors that maximizes the ELBO (eq. \ref{eq_elbo}). A common approach is to  use the **coordinate ascent** method, by optimizing the variational approximation of each latent variable $q_{z_j}$, while holding the others fixed.
+
+### Coordinate Ascent Variational Inference 
+
+The main objective is to optimize the ELBO in the mean field variational inference, or equivalently, to choose the variational factors that maximizes the ELBO (eq. \ref{eq_elbo}). A common approach is to  use the **coordinate ascent** method, by optimizing the variational approximation of each latent variable $q_{z_j}$, while holding the others fixed.
 
 Recall the [probability chain rule](https://en.wikipedia.org/wiki/Chain_rule_(probability)) for more than two events $X_1, \ldots , X_n$:
 
@@ -175,20 +166,21 @@ $$
 P\left(\bigcap_{k=1}^n X_k\right) = \prod_{k=1}^n P\left(X_k \,\Bigg|\, \bigcap_{j=1}^{k-1} X_j\right)
 $$
 
-We now apply the chain rule to equation \ref{eq_joint} but applied to our use case, i.e. to the joint probablility $p(z_{1:m}, x_{1:n})$ for $m$ variational factors and $n$ datapoints we get:
+Remember from eq. \ref{eq_elbo} that $ELBO(q) = \mathbf{E} [\log p(z, x)] - \mathbf{E}[\log q(z)]$.
+We now apply the chain rule to the joint probablility $p(z_{1:m}, x_{1:n})$ for $m$ variational factors and $n$ datapoints we get:
 
 $$
 %source: assets: 10708-scribe-lecture13.pdf
 p(z_{1:m}, x_{1:n}) = p(x_{1:n}) \prod_{j=1}^m p(z_j \mid z_{1: (j-1)}, x_{1:n})
 $$
 
-We can decompose the entropy term of the ELBO (using the mean field variational approximation) as: 
+and we can decompose the entropy term using the mean field variational approximation as: 
 
 $$
 \mathbf{E}_q [ \log q(z_{1:m})] = \sum_j^m \mathbf{E}_{q_j}[\log q(z_j)]
 $$
 
-Combining the two previous factors, we can now express the ELBO in equation \ref{eq_elbo} for the mean field-variational approximation as:
+Inserting the two previous reductions in the ELBO equation, we can now express it for the mean field-variational approximation as:
 
 $$
 %source: assets: 10708-scribe-lecture13.pdf
@@ -199,9 +191,7 @@ ELBO(q) & = \mathbf{E}_q [\log p(x_{1:n},z_{1:m})] - \mathbf{E}_{q_j}[\log q(z_{
 \end{align*}
 $$
 
-### Coordinate Ascent Mean-Field Variational Inference 
-
-A common method for iteratively finding the optimal solution is the coordinate ascent variational inference (CAVI), where we compute the derivative of each variational factor and alternatively update the weights towards the lowest loss acording to the factor being iterated. Before we proceed to the derivative, we introduce the notation:
+We now apply the coordinate ascent variational inference (CAVI), where we compute the derivative of each variational factor and alternatively update the weights towards the lowest loss acording to the factor being iterated. Before we proceed to the derivative, we introduce the notation:
 
 $$
 p (z_j \mid z_{\neq j}, x) = p (z_j \mid z_1, ..., z_{j-1}, z_{j+1}, ..., z_m, x)
@@ -211,7 +201,7 @@ where $\neq j$ means *all indices except the $j^{th}$*. Now we want to derive th
 
 $$
 \begin{align*}
-  & arg\,max_{q_j} \, ELBO \\
+  & arg\,max_{q_j} \, ELBO (q)\\
 = & arg\,max_{q_j} \, \left( \log p(x_{1:n}) + \sum_j^m \mathbf{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbf{E}_{q_j}[\log q(z_j)] \right)\\  
 = & arg\,max_{q_j} \, \left( \mathbf{E}_q \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \mathbf{E}_{q_j}[\log q(z_j)] \right) & \text{(removing vars that don't depend on $q(z_j)$)} \\
 = & arg\,max_{q_j} \, \left( \int q(z_j) \log p(z_j \mid z_{\neq j}, x) dz_j - \int q(z_j) \log q(z_j) dz_j \right) & \text{(def. Expected Value)} \\
@@ -235,25 +225,8 @@ $$
 
 However, this provides the factorization or the template of the computation, but not the final form (i.e. application to a specific distribution family) of the optimal $q_j$. The form we choose influences the complexity or *easiness* of the coordinate update $q^{\star}(z_j)$. As a side note, this formulation can be seen as a Message Passing algorthm, widely used in Graphical Models (see [John Winn's MBML book]({{ site.resources_permalink }})), and this has enabled the design of large-scale models.
 
-To finalize, we derive the coordinate update of the previous equation, by re-writing the ELBO in eq. \ref{eq_elbo} as a function of the $j^{th}$ variational factor $q_j(z_j)$ and *absorbing* into a constant the terms that do not depend on it:
 
-$$
-%source: [*Variational Inference: A Review for Statisticians*](https://arxiv.org/pdf/1601.00670.pdf)
-ELBO(q_j) = \mathbf{E_j} [ \mathbf{E}_{\neq j}[ \log p (z_j, z_{\neq j}, x) ]] - \mathbf{E}_j [ \log q_j(z_j)] + const
-$$ 
-
-where the first term on the right-hand side was rewritten using [iterated expectation](https://en.wikipedia.org/wiki/Law_of_total_expectation), and the second term was decomposed using the mean-field variable independency and keeping only the terms dependent on $q_j(z_j)$. 
-An alternative resolution based on gradients is also proposed in [Chris Bishop's PRML book]({{ site.resources_permalink }})).
-
-Finally, to help with numerical stability, it's recommended to work with logarithms of probabilities. A useful *log-sum-trick* is the definition of the logarithm of the probability as:
-
-$$
-\log \left[ \sum_i \exp(x_i) \right] = \alpha + \log \left[ \sum_i \exp (x_i - \alpha) \right]
-$$ 
-
-where the constant $\alpha$ is typically set to $max_i x_i$, providing numerical stability to most common VI computations.
-
-### Gaussian Mixture Models
+#### Multivariate Gaussian Mixture Models
 
 <small>Credit: this section is a more verbose and extended explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).</small>
 
@@ -310,7 +283,7 @@ ELBO(m, s^2, \varphi) = & \sum_{k=1}^K \mathbf{E} \left[ \log p(\mu_k); m_k, s_k
 \end{align}
 $$
 
-The CAVI (coordinate ascent variational inference) updates each variational parameter in turn, so we need to comput both updates.
+The CAVI (coordinate ascent variational inference) updates each variational parameter in turn, so we need to compute both updates.
 
 ##### Update 1: Variational update for cluster assignment
 
@@ -405,11 +378,3 @@ The algorithm is iterative and will converge on a certain loss threshold (ELBO),
 <br/>(source: <a href="https://arxiv.org/pdf/1601.00670.pdf">Variational Inference: A Review for Statisticians</a>)</small>
 </p>
 
-
-### Further Reading
-
-There is a universe of methods and techniques that are interesting and were not covered in this post. To name a few:
-- An application of the CAVI to other members of the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-11-20-Exponential-Family-Distributions %}) and Stochastic Variational Inference is detailed in the papers [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf) and [Stochastic Variational Inference](http://www.columbia.edu/~jwp2128/Papers/HoffmanBleiWangPaisley2013.pdf);
-- The KL divergence formula is non-symmetric for the two parameter distributions. For details on the application of forward- and reverse KL divergence, relating to computing variational loss based on $$KL( q(z) \mid\mid p(z\mid x))$$ vs $$KL(p(z\mid x) \mid \mid q(z) )$$, refer to [Augustinus Kristiadi's plost](https://wiseodd.github.io/techblog/2016/12/21/forward-reverse-kl/), [Eric Jang's post](https://blog.evjang.com/2016/08/variational-bayes.html) and [Brian Keng's post](http://bjlkeng.github.io/posts/variational-bayes-and-the-mean-field-approximation/);
-- Pytorch provides detailed examples with explanations of implementations of Variational Inference in Pytorch. A good place to start is [*SVI Part I: An Introduction to Stochastic Variational Inference in Pyro*](https://pyro.ai/examples/svi_part_i.html);
-- Finally, a bit off topic, there is some discussion on whether methods based on approximated posteriors and Bayesian methods are any good for more complicated models, particularly for Deep Neural Nets. If you're curious, I recommend the papers [Quality of Uncertainty Quantification for Bayesian Neural Network Inference](https://arxiv.org/abs/1906.09686) and [How Good is the Bayes Posterior in Deep Neural Networks Really?](https://arxiv.org/abs/2002.02405).
