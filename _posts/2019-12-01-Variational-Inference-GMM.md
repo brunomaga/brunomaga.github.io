@@ -226,7 +226,7 @@ $$
 However, this provides the factorization or the template of the computation, but not the final form (i.e. application to a specific distribution family) of the optimal $q_j$. The form we choose influences the complexity or *easiness* of the coordinate update $q^{\star}(z_j)$. As a side note, this formulation can be seen as a Message Passing algorthm, widely used in Graphical Models (see [John Winn's MBML book]({{ site.resources_permalink }})), and this has enabled the design of large-scale models.
 
 
-#### Multivariate Gaussian Mixture Models
+### Multivariate Gaussian Mixture Models
 
 <small>Credit: this section is a more verbose and extended explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).</small>
 
