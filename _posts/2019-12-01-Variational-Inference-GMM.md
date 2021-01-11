@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Variational Inference: Mean-Field Approximation on Gaussian Mixture Models"
+title:  "Variational Inference: Mean-Field Approximation with Coordinate Ascent and Stochastic Variational Inference on Gaussian Mixture Models"
 categories: [machine learning, unsupervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
@@ -29,7 +29,7 @@ $$
 
 The inference problem is to compute the conditional probability of the latent variables $z$ given the observations $x$ in $X$, i.e. conditioning on the data and compute the posterior $p(z \mid x)$. For many models, this evidence integral does not have a closed-form solution or requires an exponential time to compute. 
 
-**There are several approaches to inference**, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Junction tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why do we need approximate methods after all? Simply because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. **This post focuses on the simplest approach to Variational Inference based on mean-field approximation and coordinate-ascent optimization**.
+**There are several approaches to inference**, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Junction tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why do we need approximate methods after all? Simply because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. **This post focuses on the simplest approach to Variational Inference based on mean-field approximation**.
 
 ### Detour: Markov Chain Monte Carlo
 
@@ -223,8 +223,7 @@ q^{\star}(z_j) & \propto exp \{ \mathbf{E}_{q_{\neq j}} [ \log p(z_j \mid z_{\ne
 \end{align}
 $$
 
-However, this provides the factorization or the template of the computation, but not the final form (i.e. application to a specific distribution family) of the optimal $q_j$. The form we choose influences the complexity or *easiness* of the coordinate update $q^{\star}(z_j)$. As a side note, this formulation can be seen as a Message Passing algorthm, widely used in Graphical Models (see [John Winn's MBML book]({{ site.resources_permalink }})), and this has enabled the design of large-scale models.
-
+However, this provides the factorization or the template of the computation, but not the final form (i.e. application to a specific distribution family) of the optimal $q_j$. The form we choose influences the complexity or *easiness* of the coordinate update $q^{\star}(z_j)$.
 
 ### Multivariate Gaussian Mixture Models
 
@@ -378,3 +377,15 @@ The algorithm is iterative and will converge on a certain loss threshold (ELBO),
 <br/>(source: <a href="https://arxiv.org/pdf/1601.00670.pdf">Variational Inference: A Review for Statisticians</a>)</small>
 </p>
 
+## Stochastic Variational Inference
+
+The coordinate ascent variational inference method presented does not scale well for very large datasets.
+The underlying reason is that CAVI requires iterating between re-analyzing every data point in the data set and re-estimating its hidden structure. This is inefficient for large data sets, because it requires a full pass through the data at each iteration.
+
+Another famous method --  [Stochastic Gradient Descent](https://jmlr.org/papers/volume14/hoffman13a/hoffman13a.pdf) (SVI) --- utilizes a more efficient algorithm by using stochastic optimization ([Robbins and Monro, 1951](https://projecteuclid.org/euclid.aoms/1177729586)), a technique that follows noisy estimates of the gradient of the objective. 
+
+SVI is in fact stochastic gradient descent applied to variational inference. It allows the algorithm to scale to large datasets that are encountered in modern machine learning, since the ELBO can be computed on a single mini-batch at each iteration.
+
+When used in variational inference, SVI iterates between subsampling the data and adjusting the hidden structure based only on the subsample, making it more efficient than traditional variational inference. For this reason, several ML libraries such as [pyro](https://pyro.ai/examples/svi_part_i.html) use SVI. 
+
+I will ommit details for now, and add them when time allows. If you are interested, have a look at section 4.3 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).
