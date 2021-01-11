@@ -103,7 +103,7 @@ Most of the work was implemented and validated on the  <a href="https://neuron.y
       </td> </tr>
       <tr>
         <td style="min-width:70px"> 2015-18 </td>
-        <td> <b>Teaching Assitant (part-time), École polytechnique fédérale de Lausanne ‐ EPFL, Switzerland</b> </td>
+        <td> <b>Teaching Assistant, École polytechnique fédérale de Lausanne ‐ EPFL, Switzerland</b> </td>
       </tr>
       <tr> <td/> <td>
 During my PhD, I performed 400h of teaching assistant duties for the courses of <a href="https://edu.epfl.ch/coursebook/en/unsupervised-reinforcement-learning-in-neural-networks-CS-434">unsupervised and reinforcement learning</a>, <a href="https://edu.epfl.ch/coursebook/en/project-in-informatics-CS-116">project in neuroinformatics</a> and <a href="https://edu.epfl.ch/coursebook/en/in-silico-neuroscience-BIOENG-450#:~:text=%22In%20silico%20Neuroscience%22%20introduces%20masters,management%2C%20modelling%20and%20computing%20technologies.">in silico neuroscience</a>, preparing exams, coursework, and tutorials;
@@ -230,13 +230,13 @@ When time allows, I post about HPC or ML projects I was involved in, or publicat
 </p>
 
 <p>
-I also maintain a <a href="{{ site.resources_permalink }}">resources page</a> where I keep note of several HPC and ML ebooks available online, used as reference on my posts. 
+I also maintain a <a href="{{ site.resources_permalink }}">resources page</a> where I keep track of several HPC and ML ebooks available online, used as reference on my posts. 
 </p>
 
 <h4 class="mt-5 mb-3">Misc</h4>
 
 <p>
-I have been playing waterpolo for most of my life, the last 10 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://www.cambridgewaterpolo.co.uk/">Cambridge City</a> waterpolo clubs. I am also a big fan of winter sports, particularly skiing and snowboarding, and I feel lucky to live close to many great ski resorts in Switzerland. I also enjoy cooking and hope one day my cooking skills reach very high standards.
+I have been playing waterpolo for most of my life, the last 10 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://www.cambridgewaterpolo.co.uk/">Cambridge City</a> clubs. I am also a big fan of winter sports, particularly skiing and snowboarding, and I feel lucky to live close to many great ski resorts in Switzerland. I also enjoy cooking and hope one day my cooking skills reach very high standards.
 </p>
 
 <p>
