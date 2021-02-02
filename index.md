@@ -13,7 +13,7 @@ title: "Bruno Magalhaes"
   </div>
   <div class="col">
 <p>
-I'm a machine learning (ML) research engineer with a strong background on High Performance Computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain related technology.
+I'm a machine learning (ML) research engineer with a strong background on high performance computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain related technology.
 </p>
 
 <p>
