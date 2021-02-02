@@ -13,11 +13,11 @@ title: "Bruno Magalhaes"
   </div>
   <div class="col">
 <p>
-I'm a Machine Learning (ML) research engineer with a strong background on High Performance Computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain related tech.
+I'm a machine learning (ML) research engineer with a strong background on High Performance Computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain related technology.
 </p>
 
 <p>
-Previously, I was an AI resident at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge">Microsoft Research</a> in Cambridge (UK), working on probabilistic machine learning, time-sequence data and graph neural networks. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale data science, distributed storage and multicore/GPU algorithms. Some of my work is now part of the <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators, and has been executed full steam on several supercomputers with thousands of compute nodes processing terabytes of data.
+I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research</a> as an AI researcher on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale distributed computing, storage and multicore/GPU algorithms. Some of my work is now part of the <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators, and has been executed full steam on several supercomputers with thousands of compute nodes processing terabytes of data.
 </p>
 
   </div>
