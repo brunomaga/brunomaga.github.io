@@ -99,7 +99,7 @@ I researched, conceptualized, implementated and published new methods for the as
 of detailed spiking neural networks on large networks of highly-heterogeneous compute nodes. My main contribution was the first ever fully-asynchronous execution model (with async. computation, communication and IO), demonstrated on our use case and yielding a much faster execution and a higher numerical accuracy and stability;
       </td> </tr>
       <tr> <td/> <td>
-Most of the work was implemented and validated on the  <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators. I programmed in C and C++ on top of an asynchronous runtime system with global memory addressing (HPX) and implemented all the simulation logic (fixed and variable timestep interpolation) and the underlying HPC algorithms such as distributed task scheduling, multicore parallelism, concurrency, threading, dynamic load-balancing, vectorization and cache optimizations on four distinct Intel and AMD cluster architectures;
+Most of the work was implemented and validated on the  <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators. I programmed in C and C++ on top of an asynchronous runtime system with global memory addressing (HPX) and implemented all the simulation logic (fixed and variable timestep interpolation) and the underlying HPC algorithms such as distributed task scheduling, multicore parallelism, concurrency, threading, dynamic load-balancing, vectorization and cache optimizations on four distinct Intel and compute AMD clusters;
       </td> </tr>
       <tr>
         <td style="min-width:70px"> 2015-18 </td>
@@ -113,7 +113,7 @@ During my PhD, I performed 400h of teaching assistant duties for the courses of 
         <td> <b> Research Engineer at Blue Brain Project, EPFL, Switzerland </b> </td>
       </tr>
       <tr> <td/> <td>
-Aiming at scaling up the largest ever digital reconstruction of a detailed neocortex, I designed and developed several algorithms for efficient computation and storage on supercomputers. To name a few, parallel/distributed volumetric spatial decomposition, load balancing, spatial indexing, sorting, I/O, sparse matrix transpose, and graph navigation;
+Aiming at scaling up the largest ever digital reconstruction of a detailed mammal neocortex, I designed and developed several algorithms for efficient computation and storage on BlueGene/P, Bluegene/Q and SGI supercomputers. To name a few, parallel/distributed volumetric spatial decomposition, load balancing, spatial indexing, sorting, I/O, sparse matrix transpose, and graph navigation;
       </td> </tr>
       <tr> <td/> <td>
 My work led to the first ever digital reconstruction of detailed brain model at the scale of the mouse brain (80M neurons), and is the underlying technology supporting the lab's landmark <a href="http://www.cell.com/abstract/S0092-8674(15)01191-5">Cell paper</a>;
@@ -141,7 +141,7 @@ As part of an international traineeship, I did three rotational placements on di
         <td> <b> Analyst Programmer at MSCI real estate, London, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-My first full-time job, where I consolidated my knowledge of algorithms, programming and end-to-end development of software systems. I developed a web app, a windows app, and a search engine on C++, C# and ASP (.NET) that would allow efficient storage and gathering of analytics of financial data;
+My first full-time job, where I consolidated my knowledge of algorithms, programming and end-to-end development of software systems. I developed a web app, a windows app, and a search engine on C++, C# and ASP (.NET) that would allow efficient storage and gathering of analytics on financial data;
       </td> </tr>
 
 </table>

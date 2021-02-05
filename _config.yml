@@ -12,6 +12,39 @@ github_username:   brunomaga
 linkedin_username: brunomaga
 skype_username: brunomaga
 
+# for the links Statistics for Data Science at EPFL in the resources page
+statistics_lectures: https://github.com/brunomaga/Statistics_EPFL/raw/main/lecture-slides/lectureXXX.pdf
+statistics_exercises: https://github.com/brunomaga/Statistics_EPFL/raw/main/exercises/exercisesXXX.pdf
+statistics_solutions: https://github.com/brunomaga/Statistics_EPFL/raw/main/exercises/solutionsXXX.pdf
+statistics_videos_preffix: https://www.youtube.com/watch?v=
+statistics_videos: {
+        '1' : Qe8q7Dnicew,
+        '2' : Qe8q7Dnicew,
+        '3' : Qe8q7Dnicew,
+        '4a': Qe8q7Dnicew, '4b': Qe8q7Dnicew, '4c': Qe8q7Dnicew,
+        '5a': Qe8q7Dnicew, '5b': Qe8q7Dnicew, '5c': Qe8q7Dnicew,
+        '6a': Qe8q7Dnicew, '6b': Qe8q7Dnicew,
+        '7' : Qe8q7Dnicew,
+        '8' : Qe8q7Dnicew,
+        '9' : Qe8q7Dnicew,
+        '10': Qe8q7Dnicew,
+        '11': Qe8q7Dnicew,
+        '12': Qe8q7Dnicew,
+        '13': Qe8q7Dnicew,
+        '14': Qe8q7Dnicew,
+        '15': Qe8q7Dnicew,
+        '16': Qe8q7Dnicew,
+        '17': Qe8q7Dnicew,
+        '18': Qe8q7Dnicew,
+        '19': Qe8q7Dnicew,
+        '20': Qe8q7Dnicew,
+        '21': Qe8q7Dnicew,
+        '22': Qe8q7Dnicew,
+        '23': Qe8q7Dnicew,
+        '24': Qe8q7Dnicew,
+        '25': Qe8q7Dnicew,
+}
+
 # Build settings
 markdown: kramdown
 theme: minima
