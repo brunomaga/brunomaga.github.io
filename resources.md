@@ -25,13 +25,11 @@ Material for the course <a href="https://edu.epfl.ch/coursebook/en/statistics-fo
     <a href="{{ site.statistics_lectures | replace: 'XXX', i }}"> {{i}} </a>
   {% endfor %}
 </li>
-<!--
 <li>lecture videos:
   {% for keyval in site.statistics_videos %}
       <a href="{{site.statistics_videos_preffix}}{{ keyval[1] }}">{{ keyval[0] }}</a>
   {% endfor %}
 </li>
-<-->
 <li>exercises:
   {% for i in (1..12) %}
     <a href="{{ site.statistics_exercises | replace: 'XXX', i }}"> {{i}} </a>
