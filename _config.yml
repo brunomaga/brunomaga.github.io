@@ -16,6 +16,7 @@ skype_username: brunomaga
 statistics_lectures: https://github.com/brunomaga/Statistics_EPFL/raw/main/lecture-slides/lectureXXX.pdf
 statistics_exercises: https://github.com/brunomaga/Statistics_EPFL/raw/main/exercises/exercisesXXX.pdf
 statistics_solutions: https://github.com/brunomaga/Statistics_EPFL/raw/main/exercises/solutionsXXX.pdf
+statistics_distributions: https://github.com/brunomaga/Statistics_EPFL/raw/main/formula-sheet-XXX-distributions.pdf
 statistics_videos_preffix: https://www.youtube.com/watch?v=
 statistics_videos: {
         '1' : UL3sbuoRdr4,

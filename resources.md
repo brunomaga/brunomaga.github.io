@@ -40,7 +40,13 @@ Material for the course <a href="https://edu.epfl.ch/coursebook/en/statistics-fo
     <a href="{{ site.statistics_solutions | replace: 'XXX', i }}"> {{i}} </a>
   {% endfor %}
 </li>
-</ul> 
+<li>probabilistic density, distribution and parameters for 
+    <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a>
+    and
+    <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a> 
+    distributions
+</li>
+</ul>
 
 <br/>
 Other useful resources:
