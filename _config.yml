@@ -28,20 +28,20 @@ statistics_videos: {
         '8' : Tz35WW5-Ssk,
         '9' : LDOPp8TKpik,
         '10': 1R80y3hoN7M,
-        '11': ,
+        '11': qojOhge0LmQ,
         '12': aOXjJMyRhN0,
-        '13': ,
-        '14': ,
-        '15': ,
-        '16': ,
-        '17': ,
-        '18': ,
-        '19': ,
-        '20': ,
-        '21': ,
-        '22': ,
-        '23': ,
-        #'24': ,
+        '13': wqAQ2438V-4,
+        '14': QpM2VVhXlkU,
+        '15': 6pg4Yra55e0,
+        '16': ehtVjfDdiN8,
+        '17': D93kbPIVgq0,
+        '18': KG-JtRg2vTk,
+        '19': TmXVMxcMLug,
+        '20': REQGAnbU3LQ,
+        '21': _Huuf8rIhNU,
+        '22': i1G4I38lClc,
+        '23': 2oAsWRTwBdw,
+        #'24': i1G4I38lClc,
         #'25': 1YrxidM0tYE,
 }
 
@@ -52,6 +52,7 @@ plugins:
   - jekyll-feed
 
 permalink: /:title  #replaces folder structure /YY/mm/dd/categories/title by only /title
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
