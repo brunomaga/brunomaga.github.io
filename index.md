@@ -5,7 +5,7 @@ title: "Bruno Magalhaes"
 
 <h1 class="mt-5" itemprop="name headline">{{ page.title | escape }}</h1>
 
-<p class="lead"><b>Research Engineer for Machine Learning and High Performance Computing</b></p>
+<p class="lead mb-4"><b>Research Engineer for Machine Learning and High Performance Computing</b></p>
 
 <div class="row">
   <div class="col-3">
