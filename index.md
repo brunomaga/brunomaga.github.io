@@ -80,11 +80,14 @@ There are two big questions that I came across and would like to find the answer
 
 <table class="mt-3">
       <tr>
-        <td style="min-width:70px"> 2019-20 </td>
-        <td> <b> AI resident at Microsoft Research, Cambridge, UK </b> </td>
+        <td style="min-width:70px"> 2019-present</td>
+        <td> <b> AI researcher at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-I improved the CPU load balancing of email accounts across email servers, a non-trivial problem since usage depends on time of the day, account type, region, timezone etc. This was based on an ML system that learnt time series from email usage patterns, using DNNs, RNNs, Encoder-Decoders, Bayesian linear regression (closed-form solution) and Bayesian neural nets (Variational Inference); 
+      I develop and apply Machine Learning methods to several use cases on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>.
+      </td> </tr>
+      <tr> <td/> <td>
+Previously, as an AI resident, I improved the CPU load balancing of email servers, based on an ML system that learnt time series from email usage patterns, using DNNs, RNNs, Encoder-Decoders, Bayesian linear regression (closed-form solution) and Bayesian neural nets (Variational Inference); 
       </td> </tr>
       <tr> <td/> <td>
 I also built a recommendation system using Graph Neural Nets to learn from related nodes on on very large (trillion edges) Meetings/Documents/Users/Emails graphs;
@@ -103,7 +106,7 @@ Most of the work was implemented and validated on the  <a href="https://neuron.y
       </td> </tr>
       <tr>
         <td style="min-width:70px"> 2015-18 </td>
-        <td> <b>Teaching Assistant, École polytechnique fédérale de Lausanne ‐ EPFL, Switzerland</b> </td>
+        <td> <b>Teaching Assistant at École polytechnique fédérale de Lausanne ‐ EPFL, Switzerland</b> </td>
       </tr>
       <tr> <td/> <td>
 During my PhD, I performed 400h of teaching assistant duties for the courses of <a href="https://edu.epfl.ch/coursebook/en/unsupervised-reinforcement-learning-in-neural-networks-CS-434">unsupervised and reinforcement learning</a>, <a href="https://edu.epfl.ch/coursebook/en/project-in-informatics-CS-116">project in neuroinformatics</a> and <a href="https://edu.epfl.ch/coursebook/en/in-silico-neuroscience-BIOENG-450#:~:text=%22In%20silico%20Neuroscience%22%20introduces%20masters,management%2C%20modelling%20and%20computing%20technologies.">in silico neuroscience</a>, preparing exams, coursework, and tutorials;
@@ -121,7 +124,7 @@ My work led to the first ever digital reconstruction of detailed brain model at 
 
       <tr>
         <td style="min-width:70px"> 2009-11 </td>
-        <td> <b> Junior IT architect, Noble Group, London, UK </b> </td>
+        <td> <b> Junior IT architect at Noble Group, London, UK </b> </td>
       </tr>
       <tr> <td/> <td>
 As part of an international traineeship, I did three rotational placements on different headquarters where I performed the following duties:
@@ -153,7 +156,7 @@ My first full-time job, where I consolidated my knowledge of algorithms, program
 
       <tr>
         <td style="min-width:70px"> 2015-19 </td>
-        <td> <b>PhD (Computational) Neuroscience, École polytechnique fédérale de Lausanne ‐ EPFL, Switzerland</b> </td>
+        <td> <b>PhD Computational Neuroscience at École polytechnique fédérale de Lausanne ‐ EPFL, Switzerland</b> </td>
       </tr>
       <tr> <td/> <td>
 I was hired by the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a> (BBP), directed by  <a href="https://en.wikipedia.org/wiki/Henry_Markram">Henry Markram </a> (the father of the <a href="https://en.wikipedia.org/wiki/Spike-timing-dependent_plasticity#:~:text=Spike%2Dtiming%2Ddependent%20plasticity%20(,action%20potentials%20(or%20spikes).">STDP</a> plasticity model), under the supervision of <a href="https://www.epfl.ch/research/domains/bluebrain/blue-brain/people/divisionleaders/felix-schurmann/">Felix Schuerman</a> (professor at EPFL), and <a href="https://en.wikipedia.org/wiki/Thomas_Sterling_(computing)">Thomas Sterling </a>(professor at Indiana University, winner of the <a href="https://en.wikipedia.org/wiki/Gordon_Bell_Prize">Gordon Bell prize</a> and inventor of the Beowulf cluster);
