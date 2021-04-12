@@ -239,7 +239,7 @@ I also maintain a <a href="{{ site.resources_permalink }}">resources page</a> wh
 <h4 class="mt-5 mb-3">Misc</h4>
 
 <p>
-I have been playing waterpolo for most of my life, the last 10 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://www.cambridgewaterpolo.co.uk/">Cambridge City</a> clubs. I am also a big fan of winter sports, particularly skiing and snowboarding, and I feel lucky to live close to many great ski resorts in Switzerland. I also enjoy cooking and hope one day my cooking skills reach very high standards.
+I have been playing waterpolo for most of my life, the last 10 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://www.cambridgewaterpolo.co.uk/">Cambridge City</a> clubs. I enjoy cooking, and I am a big fan of winter sports, particularly skiing and snowboarding.
 </p>
 
 <p>
