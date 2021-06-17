@@ -13,7 +13,7 @@ title: "Bruno Magalhaes"
   </div>
   <div class="col">
 <p>
-I'm a machine learning (ML) research engineer with a strong background on high performance computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain related technology.
+I'm a machine learning (ML) research engineer with a strong background on high performance computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain-related technology.
 </p>
 
 <p>
@@ -66,6 +66,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 </ul>
 
 
+<!--
 <h4 class="mt-5 mb-3">Research Interests</h4>
 
 My research interests are general ML and HPC, with a particular interest on ML applied to chaotic/large datasets and compute infrastructure, and all related questions that can arise from the field, such as data confidentiality, poisoning attacks, learning from population clusters, learning from networks, federated ML, decentralized/parallel ML processing, etc.
@@ -75,8 +76,9 @@ There are two big questions that I came across and would like to find the answer
 <li> How to build machine learning systems that can handle the <a href="https://techjury.net/blog/how-much-data-is-created-every-day/#gref">explosive growth</a> of data generated every day (social media, bots, generative ML,etc), that largely exceeds the growth of <i>compute power</i> described by <a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore's Law</a>? </li>
 <li> How to make artificial neurons learn like spiking neurons, i.e. without back-propagation, loss function and iterations, and encoding inputs over space and time? </li>
 </ul>
+-->
 
-<h4 class="mt-5 mb-3">Work Experience</h4>
+<h4 class="mt-5 mb-3">Professional Experience</h4>
 
 <table class="mt-3">
       <tr>

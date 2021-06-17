@@ -238,24 +238,9 @@ The input and output models of the fine-tuning of these tasks are illustrated in
 As a final note, information encoded by BERT is useful but, on its own, insufficient to perform a translation task. However, "BERT pre-training allows for a better initialization point for [an] Neural Machine Translation model" (source: [Clichant et al.,On the use of BERT for Neural Machine Translation, arXiv](https://arxiv.org/abs/1909.12744)). 
 
 
-## Microsoft ZeRO and DeepSpeed
+## Further reading
 
-This section is being written and will be available soon. For now, here are some references:
-- [ZeRO and DeepSpeed announcement page](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/);
-- [Turing-NLG blog post](ttps://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/);
-- [www.deepspeed.ai/](https://www.deepspeed.ai/);
-- [DeepSpeed github docs](https://github.com/microsoft/DeepSpeed\#further-reading);
-- [ZeRO paper](https://www.microsoft.com/en-us/research/publication/zero-memory-optimizations-toward-training-trillion-parameter-models/);
-
-[//]: <> **State of the Art**: \pause Bert-large (0.3B), GPT-2 (1.5B), Megatron-LM (8.3B), T5 (11B). ZeRO can run 100B parameters but they didn't, takes longer than a year for training! So they ran 17B.
-
-[//]: <> **ZeRO (Zero Redundancy Optimizer) combines the efforts explained in the AI Supercomputing posts ll**: \textit{"[...] achieves the computation/communication efficiency of DP while achieving memory efficiency of MP, [...] retaining the computational granularity and communication volume of DP using a dynamic communication schedule during training"
-
-[//]: <>[Video](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
-
-[//]: <> ZeRO removes the memory redundancies across data-parallel processes by partitioning the model states—parameters, gradients, and optimizer (Adam) state—across data parallel processes instead of replicating them. 
-
-[//]: <> partitions optimizer states, gradients and parameters; We show that ZeRO can be combined with any model parallelism; We call this ZeRO-powered data parallelism, which allows per-device memory usage to scale linearly with the degree of data parallelism and incurs similar communication volume as data parallelism. 
+The limits of supercomputing in Machine Learning are continuously pushed. If you are interested in work in large datasets and parallel machines, see the [ZeRO and DeepSpeed work at Microsoft](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) ( [Turing-NLG blog post](ttps://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/), [www.deepspeed.ai/](https://www.deepspeed.ai/), [ZeRO paper](https://www.microsoft.com/en-us/research/publication/zero-memory-optimizations-toward-training-trillion-parameter-models/)), the [Megatron work at NVIDIA](https://github.com/NVIDIA/Megatron-LM) and the [GPT work at OpenAI](https://en.wikipedia.org/wiki/GPT-3). 
 
 
 [//]: <> #### Superlinear speed-up
