@@ -71,10 +71,10 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 <table class="mt-3">
       <tr>
         <td style="min-width:70px"> 2019-present</td>
-        <td> <b> Researcher at Microsoft Research, Cambridge, UK </b> </td>
+        <td> <b> AI Researcher at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-       I design computer vision models for object recognition and classification on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. Due to the super high resolution and size of the input data, I also perform full-stack development of large/scalable data pipelines and scalable Machine Learning models on the cloud (AzureML);
+       I design computer vision models for object recognition and classification of information written on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. Due to the super high resolution and size of the input data, I also perform full-stack development of large/scalable data pipelines and scalable Machine Learning models on the cloud (AzureML);
       </td> </tr>
       <tr> <td/> <td>
 Previously, as an AI resident, I improved the CPU load balancing of email servers, based on an ML system that learnt time series from email usage patterns, using DNNs, RNNs, Encoder-Decoders, Bayesian linear regression (closed-form solution) and Bayesian neural nets (Variational Inference); 
