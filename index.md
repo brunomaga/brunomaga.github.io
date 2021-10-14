@@ -66,27 +66,15 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 </ul>
 
 
-<!--
-<h4 class="mt-5 mb-3">Research Interests</h4>
-
-My research interests are general ML and HPC, with a particular interest on ML applied to chaotic/large datasets and compute infrastructure, and all related questions that can arise from the field, such as data confidentiality, poisoning attacks, learning from population clusters, learning from networks, federated ML, decentralized/parallel ML processing, etc.
-
-There are two big questions that I came across and would like to find the answer at some point in life:
-<ul>
-<li> How to build machine learning systems that can handle the <a href="https://techjury.net/blog/how-much-data-is-created-every-day/#gref">explosive growth</a> of data generated every day (social media, bots, generative ML,etc), that largely exceeds the growth of <i>compute power</i> described by <a href="https://en.wikipedia.org/wiki/Moore%27s_law">Moore's Law</a>? </li>
-<li> How to make artificial neurons learn like spiking neurons, i.e. without back-propagation, loss function and iterations, and encoding inputs over space and time? </li>
-</ul>
--->
-
 <h4 class="mt-5 mb-3">Professional Experience</h4>
 
 <table class="mt-3">
       <tr>
         <td style="min-width:70px"> 2019-present</td>
-        <td> <b> AI researcher at Microsoft Research, Cambridge, UK </b> </td>
+        <td> <b> Researcher at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-      I develop and apply Machine Learning methods to several use cases on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>.
+       I design computer vision models for object recognition and classification on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. Due to the super high resolution and size of the input data, I also perform full-stack development of large/scalable data pipelines and scalable Machine Learning models on the cloud (AzureML);
       </td> </tr>
       <tr> <td/> <td>
 Previously, as an AI resident, I improved the CPU load balancing of email servers, based on an ML system that learnt time series from email usage patterns, using DNNs, RNNs, Encoder-Decoders, Bayesian linear regression (closed-form solution) and Bayesian neural nets (Variational Inference); 
