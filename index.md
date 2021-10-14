@@ -19,7 +19,7 @@ Hi! I'm a machine learning (ML) research engineer with a background on high perf
 <p>
 I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> as an AI researcher on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project at EPFL</a>, working on large-scale distributed computing, storage and multicore/GPU algorithms.
 </p>
-
+    
   </div>
 </div>
 
@@ -74,7 +74,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
         <td> <b> AI Researcher at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-       I design computer vision models for object recognition and classification of information written on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. Due to the super high resolution and size of the input data, I also perform full-stack development of large/scalable data pipelines and scalable Machine Learning models on the cloud (AzureML);
+       I design computer vision models for object recognition and classification of information written on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>.  I also perform full-stack development of large/scalable data pipelines and scalable Machine Learning models on the cloud (AzureML), in order to handle the large amount of super-high resolution input data.
       </td> </tr>
       <tr> <td/> <td>
 Previously, as an AI resident, I improved the CPU load balancing of email servers, based on an ML system that learnt time series from email usage patterns, using DNNs, RNNs, Encoder-Decoders, Bayesian linear regression (closed-form solution) and Bayesian neural nets (Variational Inference); 
