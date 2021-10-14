@@ -13,11 +13,11 @@ title: "Bruno Magalhaes"
   </div>
   <div class="col">
 <p>
-I'm a machine learning (ML) research engineer with a strong background on high performance computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain-related technology.
+Hi! I'm a machine learning (ML) research engineer with a background on high performance computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain-related technology.
 </p>
 
 <p>
-I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research</a> as an AI researcher on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale distributed computing, storage and multicore/GPU algorithms. Some of my work is now part of the <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators, and has been executed full steam on several supercomputers with thousands of compute nodes processing terabytes of data.
+I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> as an AI researcher on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project at EPFL</a>, working on large-scale distributed computing, storage and multicore/GPU algorithms.
 </p>
 
   </div>
@@ -92,7 +92,8 @@ I researched, conceptualized, implementated and published new methods for the as
 of detailed spiking neural networks on large networks of highly-heterogeneous compute nodes. My main contribution was the first ever fully-asynchronous execution model (with async. computation, communication and IO), demonstrated on our use case and yielding a much faster execution and a higher numerical accuracy and stability;
       </td> </tr>
       <tr> <td/> <td>
-Most of the work was implemented and validated on the  <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open source simulators. I programmed in C and C++ on top of an asynchronous runtime system with global memory addressing (HPX) and implemented all the simulation logic (fixed and variable timestep interpolation) and the underlying HPC algorithms such as distributed task scheduling, multicore parallelism, concurrency, threading, dynamic load-balancing, vectorization and cache optimizations on four distinct Intel and compute AMD clusters;
+I programmed in C and C++ on top of an asynchronous runtime system with global memory addressing (HPX) and implemented all the simulation logic (fixed and variable timestep interpolation) and the underlying HPC algorithms such as distributed task scheduling, multicore parallelism, concurrency, threading, dynamic load-balancing, vectorization and cache optimizations on four distinct Intel and compute AMD clusters. 
+Most of my work was implemented and validated on the <a href="https://neuron.yale.edu/neuron/">NEURON</a> and <a href="https://github.com/BlueBrain/CoreNeuron">CoreNeuron</a> open-source simulators, and has been executed full steam on several supercomputers with thousands of compute nodes processing terabytes of data.
       </td> </tr>
       <tr>
         <td style="min-width:70px"> 2015-18 </td>
