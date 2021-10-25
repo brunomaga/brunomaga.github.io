@@ -17,7 +17,7 @@ Hi! I'm a machine learning (ML) research engineer with a background on high perf
 </p>
 
 <p>
-I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> as an AI researcher on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project at EPFL</a>, working on large-scale distributed computing, storage and multicore/GPU algorithms.
+I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> as an AI researcher for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>, where I create large computer vision models and ML pipelines for the cloud. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale distributed computing, storage and multicore/GPU algorithms.
 </p>
     
   </div>
