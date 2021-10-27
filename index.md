@@ -232,10 +232,6 @@ I also maintain a <a href="{{ site.resources_permalink }}">resources page</a> wh
 <h4 class="mt-5 mb-3">Misc</h4>
 
 <p>
-I have been playing waterpolo for most of my life, the last 10 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://www.cambridgewaterpolo.co.uk/">Cambridge City</a> clubs. I enjoy cooking, and I am a big fan of winter sports, particularly skiing and snowboarding.
-</p>
-
-<p>
-As a general rule, I prefer not to be addressed by my academic title or surname (e.g. <i>"Dear Dr Bruno"</i> or <i>"Dear Mr Magalhaes"</i>. I believe education is about knowledge and not diplomas, so addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine :)
+I've been playing waterpolo for most of my life, the last 12 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://uk.teamunify.com/SubTabGeneric.jsp?_stabid_=153844/">Cambridge City</a> clubs. I enjoy cooking and winter sports - particularly skiing - and I am a cryptocurrency enthusiast. As a general rule, I prefer not to be addressed by my academic title or surname, so addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine :)
 </p>
 </div> <!-- noprint -->
