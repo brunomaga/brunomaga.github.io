@@ -15,6 +15,7 @@ Some books freely available online, and related to the topics discussed:
           <li><a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a> (<a href="https://neuronaldynamics.epfl.ch/online/index.html">online</a>)</li>
           <li><a href="https://www.pdfdrive.com/schaums-outline-of-linear-algebra-5th-ed-e179255854.html">Schaum's Outline of Linear Algebra (5th Ed.), Seymour Lipschutz and Marc Lipson</a> (<a href="https://www.pdfdrive.com/download.pdf?id=179255854&h=b429869e4e59b3160a950bd30678a00a&u=cache&ext=pdf">pdf</a>)</li>
           <li><a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms,  Shai Shalev-Shwartz and Shai Ben-David</a> (<a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf">pdf</a>)</li>
+          <li><a href="http://www.inference.org.uk/mackay/itila/book.html">Information Theory, Inference, and Learning Algorithms, David MacKay</a> (<a href="http://www.inference.org.uk/itprnn/book.pdf">pdf</a>)</li>
 </ul>
 
 <br/>
