@@ -10,9 +10,15 @@ permalink: /publications/
 A quick summary of some interesting publications I come accross:
 
 |--- ||--- |
-|2021||[Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research, Google, Univ. California, NeurIPS 2021](https://arxiv.org/abs/2112.01716)|
+|2021||[Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization, Facebook AI and Gergia Institute of Technology, ICCV 2017](https://arxiv.org/abs/1610.02391)|
+||| <img width="90%" height="90%" src="/assets/publications/gradcam.png"/> |
+||||
+|2021||[Revisiting ResNets: Improved Training and Scaling Strategies, Google and UC Berkelry, NeurIPS 2021](https://arxiv.org/abs/2103.07579)|
+||| <img width="70%" height="70%" src="/assets/publications/revisiting_resnets.png"/> |
+||||
+|2021||[Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research, Google and Univ. California, NeurIPS 2021](https://arxiv.org/abs/2112.01716)|
 ||| winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021 |
-||| <img width="70%" height="70%" src="/assets/publications/reduced_recycled_datasets.png"/> |
+||| <img width="65%" height="65%" src="/assets/publications/reduced_recycled_datasets.png"/> |
 ||||
 |2021||[MLP-Mixer: An all-MLP Architecture for Vision, Google, NeurIPS 2021](https://arxiv.org/abs/2105.01601)|
 ||| <img width="70%" height="70%" src="/assets/publications/mlp_mixer.png"/> |
@@ -33,7 +39,10 @@ A quick summary of some interesting publications I come accross:
 |2017|| <img width="70%" height="70%" src="/assets/publications/bert.png"/> |
 ||||
 |2016||[Attention is all you need (Transformer), Google, NeurIPS 2017](https://arxiv.org/abs/1706.03762)|
-|2017|| <img width="30%" height="30%" src="/assets/publications/transformer.png"/> |
+||| <img width="30%" height="30%" src="/assets/publications/transformer.png"/> |
+||||
+|2016||[Attention is all you need (Transformer), Google, NeurIPS 2017](https://arxiv.org/abs/1706.03762)|
+||| <img width="30%" height="30%" src="/assets/publications/transformer.png"/> |
 ||||
 |2015||[Neural Machine Translation by Jointly Learning to Align and Translate, D. Bahdanau, K. Cho, Y. Bengio](https://arxiv.org/abs/1409.0473)|
 ||| <img width="50%" height="50%" src="/assets/publications/attention_mech.png"/> |
