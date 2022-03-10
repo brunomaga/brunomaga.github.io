@@ -1,13 +1,13 @@
 ---
 layout: default
-title: Publications
+title: Publications Bookmark
 permalink: /publications/
 ---
 
 <h1 class="mt-5" itemprop="name headline">{{ page.title | escape }}</h1>
 
   <div class="mt-3"></div>
-A quick summary of some interesting publications I come accross:
+A quick summary of some interesting publications I came accross:
 
 |--- ||--- |
 |2021||[Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization, Facebook AI and Gergia Institute of Technology, ICCV 2017](https://arxiv.org/abs/1610.02391)|
