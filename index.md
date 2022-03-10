@@ -226,7 +226,8 @@ When time allows, I post about HPC or ML projects I was involved in, or publicat
 </p>
 
 <p>
-I also maintain a <a href="{{ site.resources_permalink }}">resources page</a> where I keep track of several HPC and ML ebooks available online, used as reference on my posts. 
+#I also maintain a <a href="{{ site.publications_permalink }}">summary of publications</a> and <a href="{{ site.resources_permalink }}">resources page</a> where I keep track of several free HPC and ML resources used as reference in my posts. 
+I also maintain a <a href="{{ site.resources_permalink }}">resources page</a> where I keep track of several free HPC and ML resources used as reference in my posts. 
 </p>
 
 <h4 class="mt-5 mb-3">Misc</h4>

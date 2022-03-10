@@ -4,6 +4,7 @@ assets: /assets/
 resume: /assets/cv.pdf
 photo: /assets/photo.jpeg
 resources_permalink: /resources/
+publications_permalink: /publications/
 google_scholar: https://scholar.google.ch/citations?user=pirWLLgAAAAJ
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://brunomaga.github.io" # the base hostname & protocol for your site, e.g. http://example.com
