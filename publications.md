@@ -9,51 +9,36 @@ permalink: /publications/
   <div class="mt-3"></div>
 A quick summary of some interesting publications I come accross:
 
-<ul>
-          <li><a href="https://www.springer.com/gp/book/9780387310732">Pattern Classification and Machine Learning, Christopher M. Bishop</a> (<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">pdf</a>)</li>
-          <li><a href="http://mbmlbook.com/">Model-Based Machine Learning, John Winn et al.</a> (<a href="http://mbmlbook.com/MBMLbook.pdf">pdf</a>)</li>
-          <li><a href="https://mml-book.github.io/">Mathematics for Machine Learning, Deisenroth, Aldo Faisal, Cheng S. Ong</a> (<a href="https://mml-book.github.io/book/mml-book.pdf">pdf</a>)</li>
-          <li><a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a> (<a href="https://neuronaldynamics.epfl.ch/online/index.html">online</a>)</li>
-          <li><a href="https://www.pdfdrive.com/schaums-outline-of-linear-algebra-5th-ed-e179255854.html">Schaum's Outline of Linear Algebra (5th Ed.), Seymour Lipschutz and Marc Lipson</a> (<a href="https://www.pdfdrive.com/download.pdf?id=179255854&h=b429869e4e59b3160a950bd30678a00a&u=cache&ext=pdf">pdf</a>)</li>
-          <li><a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms,  Shai Shalev-Shwartz and Shai Ben-David</a> (<a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf">pdf</a>)</li>
-          <li><a href="http://www.inference.org.uk/mackay/itila/book.html">Information Theory, Inference, and Learning Algorithms, David MacKay</a> (<a href="http://www.inference.org.uk/itprnn/book.pdf">pdf</a>)</li>
-</ul>
+|--- ||--- |
+|2021||[Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research, Google, Univ. California, NeurIPS 2021](https://arxiv.org/abs/2112.01716)|
+||| winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021 |
+||| <img width="70%" height="70%" src="/assets/publications/reduced_recycled_datasets.png"/> |
+||||
+|2021||[MLP-Mixer: An all-MLP Architecture for Vision, Google, NeurIPS 2021](https://arxiv.org/abs/2105.01601)|
+||| <img width="70%" height="70%" src="/assets/publications/mlp_mixer.png"/> |
+||||
+|2021||[Pay attention to MLPs, Google, NeurIPS 2021](https://arxiv.org/abs/2105.08050)|
+||| <img width="70%" height="70%" src="/assets/publications/pay_attention_to_mlps.png"/> |
+||||
+|2021||[Long-Short Transformer: Efficient Transformers for Language and Vision, NVIDIA, NeurIPS 2021](https://arxiv.org/abs/2107.02192)|
+||| <img width="70%" height="70%" src="/assets/publications/long_short_transformer.png"/> |
+||||
+|2021||[Dynamic Grained Encoder for Vision Transformers, ..., NeurIPS 2021](https://proceedings.neurips.cc/paper/2021/file/2d969e2cee8cfa07ce7ca0bb13c7a36d-Paper.pdf)|
+||| <img width="70%" height="70%" src="/assets/publications/dge_transformer.png"/> |
+||||
+|2020||[Language Models are Few-Shot Learners (GPT-3), OpenAI](https://arxiv.org/abs/2005.14165)|
+||| <img width="70%" height="70%" src="/assets/publications/gpt3.png"/> |
+||||
+|2018||[BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google](https://arxiv.org/abs/1810.04805)|
+|2017|| <img width="70%" height="70%" src="/assets/publications/bert.png"/> |
+||||
+|2016||[Attention is all you need (Transformer), Google, NeurIPS 2017](https://arxiv.org/abs/1706.03762)|
+|2017|| <img width="30%" height="30%" src="/assets/publications/transformer.png"/> |
+||||
+|2015||[Neural Machine Translation by Jointly Learning to Align and Translate, D. Bahdanau, K. Cho, Y. Bengio](https://arxiv.org/abs/1409.0473)|
+||| <img width="50%" height="50%" src="/assets/publications/attention_mech.png"/> |
+||||
+|2014||[Sequence to Sequence Learning with Neural Networks, Google, NeurIPS 2014](https://arxiv.org/abs/1409.3215)|
+||| <img width="75%" height="75%" src="/assets/publications/seq2seq.png"/> |
 
-<br/>
-Material for the course <a href="https://edu.epfl.ch/coursebook/en/statistics-for-data-science-MATH-413">Statistics for data Science</a> at EPFL:
-<ul>
-<li>lecture slides:
-  {% for i in (1..23) %}
-    <a href="{{ site.statistics_lectures | replace: 'XXX', i }}"> {{i}} </a>
-  {% endfor %}
-</li>
-<li>lecture videos:
-  {% for keyval in site.statistics_videos %}
-      <a href="{{site.statistics_videos_preffix}}{{ keyval[1] }}">{{ keyval[0] }}</a>
-  {% endfor %}
-</li>
-<li>exercises:
-  {% for i in (1..12) %}
-    <a href="{{ site.statistics_exercises | replace: 'XXX', i }}"> {{i}} </a>
-  {% endfor %}
-</li>
-<li>solutions:
-  {% for i in (1..12) %}
-    <a href="{{ site.statistics_solutions | replace: 'XXX', i }}"> {{i}} </a>
-  {% endfor %}
-</li>
-<li>probabilistic density, distribution and parameters for 
-    <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a>
-    and
-    <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a> 
-    distributions
-</li>
-</ul>
-
-<br/>
-Other useful resources:
-<ul>
-          <li><a href="{{ site.assets }}/latex_math_symbols.pdf">Latex Mathematical Symbols</a></li>
-          <li><a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a></li>
-</ul>
 
