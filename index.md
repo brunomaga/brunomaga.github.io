@@ -13,11 +13,11 @@ title: "Bruno Magalhaes"
   </div>
   <div class="col">
 <p>
-Hi! I'm a machine learning (ML) research engineer with a background on high performance computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain-related technology.
+Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Performance Computing (HPC). I'm interested in solving big engineering problems using either or both of these fields, with a sweet spot for neuromorphic computing and other brain-related technology.
 </p>
 
 <p>
-I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> as an AI researcher for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>, where I create large computer vision models and ML pipelines for the cloud. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale distributed computing, storage and multicore/GPU algorithms.
+I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>, where I create large computer vision models and ML pipelines for the cloud. Prior to this, I completed a PhD in Computational Neuroscience at the <a href="https://www.epfl.ch/en/">EPFL</a> in Switzerland, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, working on large-scale distributed computing, storage and multicore/GPU algorithms.
 </p>
     
   </div>
@@ -41,9 +41,11 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
   <li class="nav-item">
     <a class="btn btn-link" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" class="btn btn-link"><i class="fab fa-linkedin" ></i> {{ site.linkedin_username }}</a>
   </li>
+<!--
   <li class="nav-item">
     <a class="btn btn-link" href="skype:{{ site.skype_username }}" class="btn btn-link"><i class="fab fa-skype" aria-hidden="true"></i> {{ site.skype_username }} </a>
   </li>
+-->
   <li class="nav-item">
     <a class="nav-item btn btn-link" href="{{ site.google_scholar }}" class="btn btn-link"><i class="ai ai-google-scholar ai-1x"  title="Google Scholar"></i> google scholar</a>
   </li>
@@ -71,7 +73,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 <table class="mt-3">
       <tr>
         <td style="min-width:70px"> 2019-present</td>
-        <td> <b> AI Researcher at Microsoft Research, Cambridge, UK </b> </td>
+        <td> <b> Senior Research Engineer at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
        I design computer vision models for object recognition and classification of information written on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>.  I also perform full-stack development of large data pipelines and scalable Machine Learning models on the cloud (AzureML), in order to handle the large amount of super-high resolution input data.
