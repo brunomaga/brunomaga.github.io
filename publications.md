@@ -68,7 +68,7 @@ A quick summary of some interesting publications I came accross:
 ||| The loss function is a sum of two terms:|
 ||| <img width="80%" height="80%" src="/assets/publications/vae_loss.png"/> |
 ||| The first term is the reconstruction loss (or expected negative log-likelihood of the i-th datapoint). The expectation is taken with respect to the encoder’s distribution over the representations, encouraging the VAE to generate valid datapoints. This loss compares the model output with the model input and can be the losses we used in the autoencoders, such as L2 loss. The second term is the Kullback-Leibler divergence between the encoder’s distribution $$q_\theta(z\mid x)q$$ and $$p(z)$$. This divergence measures how much information is lost (in units of nats) when using $$q$$ to represent $$p$$. It is one measure of how close $$q$$ is to $$p$$. |
-|||Results using a VAE on the MNIST and Frey Face datasets compared varaitional lower bound and estimated marginal likelihood provided improved results over the wake-sleep algorithm.   |
+|||Results using a VAE on the MNIST and Frey Face datasets compared variational lower bound and estimated marginal likelihood, demonstrating improved results over the wake-sleep algorithm.   |
 ||| <img width="50%" height="50%" src="/assets/publications/vae.png"/> |
 ||| VAE structure (image credit: [Data Science Blog: Variational Autoencoders, by Sunil Yadav](https://data-science-blog.com/blog/2022/04/19/variational-autoencoders/)) |
 ||| <img width="60%" height="60%" src="/assets/publications/vae2.png"/> |
