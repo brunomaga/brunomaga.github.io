@@ -178,22 +178,32 @@ The following workflow illustration provides a better overview of the algorithm 
 
 ## Data Parallelism 
 
-Data Parallelism refers to the family of methods that perform parallelism at the data level, i.e. by allocating distinct batches of data to the processors. The previous examples of pipelining are also part of the data parallelism family, since multiple batches of data are executed simultaneously, even though it's not a *purely-parallel* implementation as the batches are processed iteratively and not simultaneously.
+(Distributed) Data Parallelism refers to the family of methods that perform parallelism at the data level, i.e. by allocating distinct batches of data processors. The previous examples of pipelining are also part of the data parallelism family, since multiple batches of data are executed simultaneously, even though it's not a *purely-parallel* implementation as the batches are processed iteratively and not simultaneously.
 
-Another common approach relies simple on the duplication of the model and batch-parallelism by allocating different batches to different models. The rationale is simple: (1) a copy of the model is instantiated on every processor; (2) the input dataset is distributed equally across all processors; (3) rhe final weight update is computed as the average of the weights of the model on every processor.
+The rationale of DDP is simple: (1) a copy of the model is instantiated on every processor and instantiated equally (ie all processors have the same random seed); (2) the input dataset is distributed across all processors, by delegating different subsets of data to each processor; (3) the final weight update is computed as the average gradients of the model on every processor.
 
 <p align="center">
 <br/>
 <img width="50%" height="50%" src="/assets/AI-Supercomputing/DNN_data_parallelism.png"/><br/>
-<br/><small>An illustration of DNN data parallelism on two processors $p0$ and $p1$ computing a dataset divided on two equally-sized batches of datapoints. Execution of both batches occurs in parallel on both processors, containing each a full copy of the DNN model. The final weight update is provided by the average weights of the models.
+<br/><small>An illustration of DNN data parallelism on two processors $p0$ and $p1$ computing a dataset divided on two equally-sized "batches" of datapoints. Execution of both batches occurs in parallel on both processors, containing each a similar copy of the DNN model. The final weight update is provided by the averaged gradients of the models.
 </small>
 </p>
 
-The main advantadge of this method is the linear increase in efficiency, i.e. by doubling the amount of processors, we reduce the training time by half. However, it's not memory efficient, since it requires a duplication of the entire model on all compute units, i.e. increasing number of processors allows only for a speedup in solution, not on the training of larger models.
+The main advantadge of this method is the linear increase in efficiency, i.e. by doubling the amount of processors, we reduce the training time by half. However, it's not memory efficient, since it requires a duplication of the entire model on all compute units, i.e. increasing number of processors allows only for a speedup in solution, not on the increase of the model size.
 
-As a final note, this method does not always require the same network to be copied over to each compute unit. An example of this property is the [dropout]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) technique utilized in Deep Neural Nets, where training on several distinct networks are executed simultaneously (even though usually the same data is executed on all models).
+As an exceptional use case, this method does not always require the same network to be copied over to each compute unit. An example of this property is the [dropout]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) technique utilized in Deep Neural Nets, where training on several distinct networks are executed simultaneously (even though usually the same data is executed on all models).
 
 For a thorough analysis of the topic, take a look at the paper [Measuring the Effects of Data Parallelism on Neural Network Training (Google Labs, arXiv)](https://arxiv.org/abs/1811.03600)
+
+## Gradient Accumulation and Microbatching
+
+Gradient accumulation is a technique that allows for large batch the be computed, when normally this would be prohobitive due to high memory requirements. The rationale is to use the gradient updates from smaller datasets as the gradient update of a larger dataset. The algorithm is as follows:
+- At runtime, divide each minibatch in equal subsets of "microbatches";
+- Pass each subset iteratively to the model, compute the forward pass and backpropagation, and compute the gradient updates of that microbatch (without updating the weights);
+- Take the average of all the previous microbatch gradients as the final gradient of the minibatch;
+- Use that gradient to do weights update;
+
+To summarise, in normal executions, the final gradient of a minibatch is the averaged gradient of all datapoints. When using microbatching, the final gradient of a minibatch is the averaged gradient of all datapoints in a microbatch, and all microbatches in a minibatch.
 
 ## Model parallelism
 
