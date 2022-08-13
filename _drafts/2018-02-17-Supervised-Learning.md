@@ -279,5 +279,5 @@ Moved to a separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-
 
 ## Bayesian Optimization
 
-Moved to a separate [post]({{ site.baseurl }}{% post_url  2019-11-12-Bayesian-Linear-Regression %}).
+Moved to a separate [post]({{ site.baseurl }}{% post_url  2018-11-12-Bayesian-Linear-Regression %}).
 
