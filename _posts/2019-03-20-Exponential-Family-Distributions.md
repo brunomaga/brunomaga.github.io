@@ -5,7 +5,7 @@ categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-On the [previous post]({{ site.baseurl }}{% post_url 2019-11-12-Bayesian-Linear-Regression %}), we saw that computing the Maximum Likelihood estimator and the Maximum-a-Posterior on a normally-distributed set of parameters becomes much easier once we apply the log-trick. The rationale is that since $\log$ is an increasingly monotonic function, the maximum and minimum values of the function to be optimized are the same as the original function inside the $\log$ operator. Thus, by applying the $\log$ function to the solution, the normal distribution becomes simpler and faster to compute, as we convert a product with an exponential into a sum. 
+On the [previous post]({{ site.baseurl }}{% post_url 2018-11-12-Bayesian-Linear-Regression %}), we saw that computing the Maximum Likelihood estimator and the Maximum-a-Posterior on a normally-distributed set of parameters becomes much easier once we apply the log-trick. The rationale is that since $\log$ is an increasingly monotonic function, the maximum and minimum values of the function to be optimized are the same as the original function inside the $\log$ operator. Thus, by applying the $\log$ function to the solution, the normal distribution becomes simpler and faster to compute, as we convert a product with an exponential into a sum. 
 
 However, this is not a property of the Gaussian distribution only. In fact, most common distributions including the exponential, log-normal, gamma, chi-squared, beta, Dirichlet, Bernoulli, categorical, Poisson, geometric, inverse Gaussian, von Mises and von Mises-Fisher distributions can be represented in a similar syntax, making it simple to compute as well. To the set of such distributions we call it the **Exponential Family of Distributions**, and we will discuss them next.
 
@@ -391,7 +391,7 @@ where <span class="math inline">\(\textstyle\sum_{i=1}^k e^{\eta_i}=1\)</span></
 
 ### Maximum Likelihood
 
-On the [previous post]({{ site.baseurl }}{% post_url 2019-11-12-Bayesian-Linear-Regression %}), we have computed the Maximum Likelihood Estimator (MLE) for a Gaussian distribution. In thos post, we have seen that Gaussian --- alongside plenty other distributions --- belongs to the Exponential Family of Distributions. We will now show that the MLE estimator can be generalized across all distributions in the Exponential Family.
+On the [previous post]({{ site.baseurl }}{% post_url 2018-11-12-Bayesian-Linear-Regression %}), we have computed the Maximum Likelihood Estimator (MLE) for a Gaussian distribution. In thos post, we have seen that Gaussian --- alongside plenty other distributions --- belongs to the Exponential Family of Distributions. We will now show that the MLE estimator can be generalized across all distributions in the Exponential Family.
 
 As in the Gaussian use case, to compute the MLE we start by applying the log-trick to the general expression of the exponential family, and obtain the following log-likelihood:
 
