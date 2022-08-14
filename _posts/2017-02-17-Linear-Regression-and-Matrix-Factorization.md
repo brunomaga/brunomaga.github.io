@@ -81,7 +81,7 @@ $$
 where $$ D \in R^{D \times K} $$ and $$ Z \in R^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ collects the indices of the observed ratings of the input matrix $X$.
 
 <p align="center">
-<img width="60%"  src="/assets/Supervised-Learning/matrix-factorization.png">
+<img width="60%"  src="/assets/Linear-Regression-and-Matrix-Factorization/matrix-factorization.png">
 </p>
 
 This cost function is not convex and not [identifiable](https://en.wikipedia.org/wiki/Identifiability). $K$ is the number of latent features (e.g. gender, age group, citizenship, etc). Large $K$ facilitates overfitting. We can add a regularizer to the function:
@@ -141,7 +141,7 @@ We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given 
 The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) optimization method iterates over individual coordinates (keeping others fixed), in order to minimize the loss function. 
 
 <p align="center">
-<img width="40%" height="40%" src="/assets/Supervised-Learning/coordinate_descent.svg.png"><br/>
+<img width="40%" height="40%" src="/assets/Linear-Regression-and-Matrix-Factorization/coordinate_descent.svg.png"><br/>
 <small>source: wikipedia</small>
 </p>
 
