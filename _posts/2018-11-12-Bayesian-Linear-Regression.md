@@ -54,7 +54,7 @@ $$
 
 Note that the likelihood is not a probability distribution (it does not integrate to 1, i.e. it's unnormalized). It's simply a function of the parameters $w$.
 
-When the distribution of the prior and posterior are computationally tractable, the optimization of the parameters that define the distribution can be performed using the [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent) method, an iterative method that we've covered [previously]({% post_url 2017-02-17-Supervised-Learning %}). In practice we perform and iterative partial derivatives of the prior/posterior for the model parameters (e.g. mean $\mu$ and standard deviation $\sigma$ in a Gaussian environment) and move our weight estimation towards the direction of lowest loss.
+When the distribution of the prior and posterior are computationally tractable, the optimization of the parameters that define the distribution can be performed using the [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent) method, an iterative method that we've covered [previously]({% post_url 2017-02-17-Linear-Regression-and-Matrix-Factorization %}). In practice we perform and iterative partial derivatives of the prior/posterior for the model parameters (e.g. mean $\mu$ and standard deviation $\sigma$ in a Gaussian environment) and move our weight estimation towards the direction of lowest loss.
 
 To simplify the computation, we perform the *log-trick* and place the term to optimize into a log function. We can do this because $log$ is a monotonically-increasing function, thus applying it to any function won't change the input values where the minimum or maximum of the solution (ie where gradient is zero). Moreover, since Gaussian distribution is represented by a product of an exponential, by applying the $log$ function we *bring the power term out* of the exponential, making its computation simpler and faster. In practice, we apply the log-trick to the function we want to minimize and get: 
 
@@ -99,7 +99,7 @@ $$
   \end{align*}
 $$
 
-Note that this solution is independent of the noise variance $\sigma^2$, and is the same as minimizing the Least Squares Problem, as we showed in a [previous post]({{ site.baseurl }}{% post_url 2017-02-17-Supervised-Learning %}), with the same closed-form solution $ w = (X^TX)^{-1} X^Ty$. In practice, minimizing the Least Squares problem is equivalent to determining the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = wx + b + \varepsilon$, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. 
+Note that this solution is independent of the noise variance $\sigma^2$, and is the same as minimizing the Least Squares Problem, as we showed in a [previous post]({{ site.baseurl }}{% post_url 2017-02-17-Linear-Regression-and-Matrix-Factorization %}), with the same closed-form solution $ w = (X^TX)^{-1} X^Ty$. In practice, minimizing the Least Squares problem is equivalent to determining the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = wx + b + \varepsilon$, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. 
 
 
 ##### Adding regularization
