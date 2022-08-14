@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Variational Inference: Mean-Field Approximation with Coordinate Ascent and Stochastic Variational Inference on Gaussian Mixture Models"
+title:  "Variational Inference: ELBO, Mean-Field Approximation, CAVI and Gaussian Mixture Models"
 categories: [machine learning, unsupervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
