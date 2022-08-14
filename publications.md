@@ -58,8 +58,15 @@ A quick summary of some interesting publications I came accross:
 |2015||[Spatial Transformer Networks, Google DeepMind, NeurIPS 2015](https://arxiv.org/abs/1506.02025) |
 ||| <img width="70%" height="70%" src="/assets/publications/STN.png"/> |
 ||||
-|2014||[Generative Adversarial Networks](https://arxiv.org/abs/1406.2661)|
-|||  |
+|2014||[Generative Adversarial Networks (GANs), Univ Montreal, NeurIPS 2014](https://arxiv.org/abs/1406.2661)|
+||| A new generative model composed of two models trained simultaneously: a generative model G that captures the data distributed, and a discriminative model D that estimates the probability that a sample came from the training data rather than G. The training procedure for G is to maximize the probability of D making a mistake. This framework is the minimax 2-player game. The adversarial framework comes from the generative model facing the discrinative model that learns wether a sample is from the model distribution or the data distribution. *"The generative model can be thought of as analogous to a team of counterfeiters, trying to produce fake currency and use it without detection, while the discriminative model is analogous to the police, trying to detect the counterfeit currency. Competition in this game drives both teams to improve their methods until the counterfeits are indistiguishable from the genuine articles."* The generative model generates samples by passing a random noise through a multilayer perceptron. The discriminative model is also a multilayer perceptron. Because both models are connected deep neural networks, training is performed regularly via backpropagation. |
+
+Setup:
+- we aim at learning the generator's distribution $$p_g$$ over data $$x$$;
+- The generator $$ G(z \mid \theta_g)$$ takes as input the input noise variable $$p_z(z). $$\theta_g$$ are the parameters of its multilayer percepton;
+- The discriminator $$D(x \mid \theta_d)$$ takes the input $$x$$ and based on its DNN parameters $$\theta_d$$ it outputs a single scalar representing the probability that $$x$$ came from the data rather than $$p_g$$;
+- 
+
 ||||
 |2014||[Sequence to Sequence Learning with Neural Networks, Google, NeurIPS 2014](https://arxiv.org/abs/1409.3215)|
 ||| A sequence-to-sequence or Encoder-(to-)Decoder architecture built on Deep Neural Networks of LSTM neurons, demonstrating efficient results on an English-to-French translation task. The main idea is that both Encoder and Decoder are RNNs that use LSTM neurons and its hidden states as a fixed-dimensional vector representation of the sequence so far. That representation is then passed it (i.e. concatenated) to the next token of the sentence. Token [EOS] delimited end of input and output sentences. [More info here]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}). |
