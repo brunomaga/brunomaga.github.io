@@ -63,8 +63,10 @@ The paper tested the VAE on the MNIST and Frey Face datasets and compared the va
 
 ### Detour: why do we maximize the Expected Value?
 
-In the Bayesian setup, it is common that the loss function is the sum of the expected values of several terms. Why? It all goes down to the theory of Large numbers.
+In the Bayesian setup, it is common that the loss function is the sum of the expected values of several terms. Why?
+
+It all goes down to the [Law of large numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers). According to the law, the average of the outcomes of a large number of trials should be close to the expected value, and it tends to approximates the expected value as the number of trials increases.
 
 Imagine we are playing a game (BlackJack, Slots, Rock-Paper-Scissors) that is repeatable as many times as desired. Because of the law of large numbers, we know that value of wins will over $$n$$ iterations of the game will approximate $$n \mathbb{E}(X)$$. In practice, we want to optimise our problem according to the most-likely outcome of our experiment, i.e. maximize its expected value;
 
-So in practice, the law of large numbers will often guarantee a better outcome over the long run, and we aim at maximizing that outcome by maximizing the *expected* outcome in the long run. 
+So in practice, the law of large numbers will often guarantee a better outcome over the long run, and we maximize that outcome by maximizing the *expected* outcome of our optimisation in the long run. 
