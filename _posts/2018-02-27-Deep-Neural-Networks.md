@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  "Deep Neural Networks and the back-propagation algorithm"
+title:  "Deep Neural Networks: backpropagation algorithm, dropout and CNNs"
 categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---
@@ -142,9 +142,21 @@ Notice the three types of operations involved:
   - convolution is a mathematical operation on two functions to produce a third function that expresses how the shape of one is modified by the other. Convolution is similar to cross-correlation;
 - pooling: combine the outputs of neuron clusters at one layer into a single neuron in the next layer.
   - A very common operation is the max pooling, that uses the maximum value from each of a cluster of neurons at the prior layer;
-- fully connected: similar to multi-layer perceptron, providing the *universal approximator* effect;
+- fully connected: similar to multi-layer perceptron, providing the *universal approximator* function ;
 
 The size of each picture typically gets smaller and smaller as we proceed through the layers, either due to the handling of the boundary or because we might perform subsampling.
 
-Training follows from back-propagation, ignoring that some weights are shared, and considering each weight on each edge to be an independent variable. Once the gradient has been computed for this network with independent weights, just sum up the gradients of all edges that share the same weight. This gives us the gradient for the network with weight sharing. 
+Training follows from backpropagation, ignoring that some weights are shared, and considering each weight on each edge to be an independent variable. Once the gradient has been computed for this network with independent weights, just sum up the gradients of all edges that share the same weight. This gives us the gradient for the network with weight sharing. 
 
+### Skip connections
+
+An issue with very deep networks is that the performance of the model drops down with the increase in depth of the architecture. This is known as the *degradation problem*. One possible reason is overfitting: the models tends to overfit if given too much capacity. Other reasons are the vanishing gradients and/or exploding gradients. A way to improve is to use [normalization](https://arxiv.org/abs/1803.08494) techniques to ensure that gradients have healthy norms.
+
+A better way to improve this is to provide layers of the network with outputs from layers that are not directly connected. These connections will *skip* some of the layers in the neural network and feed the output of one layer as the input of the next layers --- justifying the name *skip connections*. In practive, the input to a given layer will be the combination (typically via addition or concatenation) of the input of several previous layers. 
+
+<p align="center">
+<img width="65%" height="65%" src="/assets/Deep-Neural-Networks/DenseNet.png"><br/>
+<small>An example of a CNN with skip connections (DenseNet). source: <a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a></small> 
+</p>
+
+There is currently a plethora of different implementations of CNNs with several layouts of skip connections. If you are curious to know more, have a look at [ResNet](https://arxiv.org/abs/1512.03385), [DenseNet](https://arxiv.org/abs/1608.06993) and [U-net](https://arxiv.org/abs/1505.04597).
