@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Variational Autoencoders: a brief summary"
+title:  "Variational Autoencoders"
 categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-This post is a brief summary of [Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114) and [An Introduction to Variational Autoencoders](https://arxiv.org/abs/1906.02691) from Diederik P. Kingma, Max Welling at the Uversiteit van Amsterdam. 
+<small>credit: most content in this post is a summary of the papers [Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114) and [An Introduction to Variational Autoencoders](https://arxiv.org/abs/1906.02691) from Diederik P. Kingma, Max Welling at the Uversiteit van Amsterdam. </small>
 
 The papers introduces Variational Autoencoders, aiming at performing efficient inference and learning in probabilistic models whose latent variables and parameters have intractable posterior distributions, and on large datasets. The SGVB (Stochastic Gradient Variational Bayes) estimator presented can be used for efficient approximation of posterior inference in almost any model with continuous latent variables, and because it’s differentiable, it can be optimized with e.g. gradient descent. The AutoEncoding Variabional Bayes (AEVB) algorithm presented uses the SGVB estimator to optimize a model that does efficient approximate posterior inference using simple sampling (from parametric distributions).
 
@@ -55,9 +55,16 @@ The loss function is a sum of two terms:
 
 The first term is the reconstruction loss (or expected negative log-likelihood of the i-th datapoint). The expectation is taken with respect to the encoder’s distribution over the representations, encouraging the VAE to generate valid datapoints. This loss compares the model output with the model input and can be the losses we used in the autoencoders, such as L2 loss.
 
-The second term is the Kullback-Leibler divergence between the encoder’s distribution qθ(z∣x)q and p(z). This divergence measures how much information is lost (in units of nats) when using q to represent p. It is one measure of how close q is to p.
+The second term is the Kullback-Leibler divergence between the encoder’s distribution $$q_{\theta}(z \mid x)$$ and p(z). This divergence measures how much information is lost (in units of nats) when using $$q$$ to represent $$p$$. It is one measure of how close $$q$$ is to $$p$$.
 
 ### Results
 
 The paper tested the VAE on the MNIST and Frey Face datasets and compared the variational lower bound and estimated marginal likelihood, demonstrating improved results over the wake-sleep algorithm.
 
+### Detour: why do we maximize the Expected Value?
+
+In the Bayesian setup, it is common that the loss function is the sum of the expected values of several terms. Why? It all goes down to the theory of Large numbers.
+
+Imagine we are playing a game (BlackJack, Slots, Rock-Paper-Scissors) that is repeatable as many times as desired. Because of the law of large numbers, we know that value of wins will over $$n$$ iterations of the game will approximate $$n \mathbb{E}(X)$$. In practice, we want to optimise our problem according to the most-likely outcome of our experiment, i.e. maximize its expected value;
+
+So in practice, the law of large numbers will often guarantee a better outcome over the long run, and we aim at maximizing that outcome by maximizing the *expected* outcome in the long run. 
