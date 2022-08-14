@@ -31,7 +31,7 @@ The difference between Variational Autoencoders and regular Autoencoders (such a
 
 In practice, they can be vizualised  as:
  
-<p align="center"><img width="95%" height="95%" src="/assets/publications/vae.png"/><br/>
+<p align="center"><img width="95%" height="95%" src="/assets/Variational-Autoencoders/vae.png"/><br/>
 <small>VAE vs AE structure (image credit: <a href="https://data-science-blog.com/blog/2022/04/19/variational-autoencoders/">Variational Autoencoders, Data Science Blog, by Sunil Yadav</a>))</small></p>
 
 ### Why VAE instead of Variational Inference
@@ -44,14 +44,14 @@ The authors noticed that the sampling induces sampling noise in the gradients re
 
 It goes as follows: the sample vector $$z$$ that is typically sampled from the mean vector $$\mu$$ and variance $$\sigma$$ in the Gaussian scenario in now described as $$ z = \mu + \sigma \cdot \epsilon$$ where $$\epsilon$$ is always the standard gaussian ie $$\epsilon ~ N(0,1)$$.
 
-<p align="center"><img width="70%" height="70%" src="/assets/publications/vae2.png"/></p>
+<p align="center"><img width="70%" height="70%" src="/assets/Variational-Autoencoders/vae2.png"/></p>
 
 
 ### The loss function
 
 The loss function is a sum of two terms:
 
-<p align="center"><img width="70%" height="70%" src="/assets/publications/vae_loss.png"/></p>
+<p align="center"><img width="70%" height="70%" src="/assets/Variational-Autoencoders/vae_loss.png"/></p>
 
 The first term is the reconstruction loss (or expected negative log-likelihood of the i-th datapoint). The expectation is taken with respect to the encoder’s distribution over the representations, encouraging the VAE to generate valid datapoints. This loss compares the model output with the model input and can be the losses we used in the autoencoders, such as L2 loss.
 
