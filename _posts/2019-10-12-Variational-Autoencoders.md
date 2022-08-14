@@ -42,7 +42,7 @@ One advantage of the VAE framework, relative to ordinary Variational Inference, 
 
 The authors noticed that the sampling induces sampling noise in the gradients required for learning (or that because $$z$$ is randomly generated and cannot be backpropagated), and to can counteract that variance they use the “reparameterization trick”.
 
-It goes as follows: the sample vector $$z$$ that is typically sampled from the mean vector $$\mu$$ and variance $$\sigma$$ in the Gaussian scenario in now described as $$ z = \mu + \sigma \cdot \epsilon$$ where $$\epsilon$$ is always the standard gaussian ie $$\epsilon ~ N(0,1)$$.
+It goes as follows: the sample vector $$z$$ that is typically sampled from the mean vector $$\mu$$ and variance $$\sigma$$ in the Gaussian scenario in now described as $$ z = \mu + \sigma \cdot \epsilon$$ where $$\epsilon$$ is always the standard gaussian ie $$\epsilon \sim N(0,1)$$.
 
 <p align="center"><img width="70%" height="70%" src="/assets/Variational-Autoencoders/vae2.png"/></p>
 
