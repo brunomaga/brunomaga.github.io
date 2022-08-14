@@ -63,8 +63,10 @@ Common regularizer approaches are:
   - similarly to the Least Squares problem, the loss of the MSE with Rigde Regression has an analytical solution:
     - computed by minimizing $(y - Xw)^T(y-Wx) + \lambda w^Tw$, and;
     - derivating with respect to $w$ leads to the normal equation $w = (X^TX - \lambda I)^{-1} X^Ty$.
-- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a (deep) [neural network]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) and retrieving the final model as an average of models (see separate [post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) in Deep Neural Networks for details.
-- [shrinkage](https://en.wikipedia.org/wiki/Shrinkage_estimator); 
+
+Other techniques that do not add the regularizer term to the loss function but helps in improving model accuracy: 
+- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a (deep) [neural network]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) at every batch during training and using all neurons at validation. Shown to increase generalization by forcing the model to train wihtout relying on specific weights. (see [separate post]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) for more details.
+- [layer, instance, batch, and group normalization](https://arxiv.org/abs/1803.08494): methods to reduce internal covariance shift by fitting the output of activation layers to a standard normal distributed. Learns optional scale and shift parameters that scale of standard deviation and shift of mean for improved performance over the standard normal distribution.  
 
 ### Matrix Factorization
 
