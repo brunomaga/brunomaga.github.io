@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  "Deep Neural Networks: backpropagation algorithm, dropout and CNNs"
+title:  "Deep Neural Networks: backpropagation, dropout and CNNs"
 categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---
