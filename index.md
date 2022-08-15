@@ -56,7 +56,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
     <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Portugal"><i class="fas fa-passport"  title="Nationality"></i> Portuguese</a>
   </li>
   <li class="nav-item">
-    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="resume"></i> resume</a>
+    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="one page resume"></i> resume</a>
   </li>
   <!--
   <div class="noprint">
