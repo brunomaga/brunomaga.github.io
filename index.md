@@ -27,6 +27,9 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 
 <ul class="nav mt-3">
   <li class="nav-item">
+    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="one page resume"></i> <b>one page resume</b></a>
+  </li>
+  <li class="nav-item">
     <a class="btn btn-link" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
   </li>
   <li class="nav-item">
@@ -55,9 +58,6 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
   <li class="nav-item">
     <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Portugal"><i class="fas fa-passport"  title="Nationality"></i> Portuguese</a>
   </li>
-  <li class="nav-item">
-    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="one page resume"></i> resume</a>
-  </li>
   <!--
   <div class="noprint">
     <li class="nav-item">
@@ -76,7 +76,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
         <td> <b> Senior Research Engineer at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-       I design computer vision models for object recognition and classification of information written on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>.  I also perform full-stack development of large data pipelines and scalable Machine Learning models on the cloud (AzureML), in order to handle the large amount of super-high resolution input data.
+       I design computer vision models for object recognition and classification of information written on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>.  I also perform full-stack development of large data pipelines and scalable Machine Learning models (data parallelism, pipelining, sharded ML) on the AzureML cloud, in order to handle the large amount of super-high resolution input data.
       </td> </tr>
       <tr> <td/> <td>
 Previously, as an AI resident, I improved the CPU load balancing of email servers, based on an ML system that learnt time series from email usage patterns, using DNNs, RNNs, Encoder-Decoders, Bayesian linear regression (closed-form solution) and Bayesian neural nets (Variational Inference); 
