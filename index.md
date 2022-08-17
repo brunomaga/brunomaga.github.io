@@ -73,7 +73,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 <table class="mt-3">
       <tr>
         <td style="min-width:70px"> 2019-present</td>
-        <td> <b> Senior Research Engineer at Microsoft Research, Cambridge, UK </b> </td>
+        <td> <b> Senior Researcher at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
        I design computer vision models for object recognition and classification of information written on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>.  I also perform full-stack development of large data pipelines and scalable Machine Learning models (data parallelism, pipelining, sharded ML) on the AzureML cloud, in order to handle the large amount of super-high resolution input data.
