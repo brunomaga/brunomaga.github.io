@@ -53,8 +53,8 @@ A quick summary of some interesting publications I came accross:
 |2018||[BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google](https://arxiv.org/abs/1810.04805)|
 ||| (also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) )|
 ||| Existing standard language models are unidirectional and that's a major limitation in performance, e.g. attending to previous tokens in the self-attention layers in the Transformer. This is an issue for many problems like question answering, it is crucial to incorporate context from both directions. BERT removes this unidirectionality by using a masked language model instead, that allows it to train a deep bidirectional Transformer. BERT model architecture is a multi-layer bidirectional sequence of Transformer encoder blocks. BERT models are trained in 2 steps: pre-training and fine-tuning. During pre-training, the model is trained on *unlabeled data* on different datasets. During fine-tuned, the pre-trained model is trained for a given specific task. Apart from output layers, the same architectures are used in both pre-training and fine-tuning. During fine-tuning, all parameters are fine-tuned. The input sentence may be a single sentence or a pair of sentences (e.g. question/answer) packed together. Words are embedded with WorkPiece embeddings. [CLS] is the first token of every sentence. [SEP] is a special separator token. To each token (word embedding) it is also added a learned embedding to indicate if  it belongs to sentence A or B. Each input is then the sum of its position embedding, segment embedding and token embedding (Fig. 2). The pre-training happens in two unsupervised tasks: (1) Masked LM, by masking of 15% of input tokens at random and trying to predict them, and (2) and Next Sentence Prediction, by passing sentence pairs and predicting whether the second sentence is a logic follow up from the first, or not. The fine-tuning happens differently for every task: we pass the specific inputs and outputs to the BERT and do a regular training. The input is the sequences A and B and separators. The output is the answer to the task by: replacing [CLS] by the sentence or sentence-pair label when the task is to classify a sentence or pair or sentences; replacing the stard and end tokens to indicate the span of output answer tokens that answers the question passed in the input (when input is a question/answer pair, Fig 1); or the class of each word for Named Entity Recognition tasks. [More info here]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}). |
-||| <img width="70%" height="70%" src="/assets/publications/bert.png"/> |
-||| <img width="70%" height="70%" src="/assets/publications/bert2.png"/> |
+||| <img width="85%" height="85%" src="/assets/publications/bert.png"/> |
+||| <img width="85%" height="85%" src="/assets/publications/bert2.png"/> |
 ||||
 |2016||[Attention is all you need (Transformer), Google, NeurIPS 2017](https://arxiv.org/abs/1706.03762)|
 ||| (also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) )|
@@ -67,7 +67,7 @@ A quick summary of some interesting publications I came accross:
 ||| <img width="70%" height="70%" src="/assets/publications/attention_mech.png"/> |
 ||||
 |2015||[Spatial Transformer Networks, Google DeepMind, NeurIPS 2015](https://arxiv.org/abs/1506.02025) |
-||| <img width="70%" height="70%" src="/assets/publications/STN.png"/> |
+||| <img width="85%" height="85%" src="/assets/publications/STN.png"/> |
 ||||
 |2014||[Generative Adversarial Networks (GANs), Univ Montreal, NeurIPS 2014](https://arxiv.org/abs/1406.2661)|
 ||| Detailed on a different post: [different blog post]({{ site.baseurl }}{% post_url 2020-02-01-Generative-Adversarial-Networks %})
