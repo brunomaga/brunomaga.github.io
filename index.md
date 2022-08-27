@@ -190,7 +190,7 @@ Between 2005 and 2006 I was an ERASMUS exchange student at the University of Mar
 
 <h4 class="mt-5 mb-3">Publications</h4>
 
-Here's a list of my most relevant publications. In the following, I was the first author and publications were peer-reviewed, unless mentioned otherwise. Conference journals/proceedings required a presentation at the venue as well. For a more exhaustive list, see my [Google Scholar]({{ site.google_scholar }}) profile.
+Here's a list of my most relevant publications, peer-reviewed and as first author (unless mentioned otherwise). For an exhaustive list, see my [Google Scholar]({{ site.google_scholar }}) profile.
 
 |--- ||--- |
 |2020||[Fully-Asynchronous Fully-Implicit Variable-Order Variable-Timestep Simulation of Neural Networks](https://arxiv.org/abs/1907.00670), Proc. International Conference on Computational Science, Amsterdam, Holland (ICCS 2020)|
