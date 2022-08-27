@@ -211,20 +211,20 @@ Gradient accumulation is a technique that allows for large batch the be computed
 
 To summarise, in normal executions, the final gradient of a minibatch is the averaged gradient of all datapoints. When using microbatching, the final gradient of a minibatch is the averaged gradient of all datapoints in a microbatch, and all microbatches in a minibatch.
 
-## Model parallelism
+## Layer parallelism
 
-Model parallelism is another general term for the family of methods that perform parallelism at the model level, i.e. the data being distributed across different processors is not the input dataset, but the model states instead. In fact, we can think of the previous pipelining parallelism as model parallelism as well, as the model is divided layer-wise across several compute nodes. There are other methods for model parallelims, with the most common being the division and allocation of the dimensionality space of input data and model across processors: 
+Layer parallelism is another method for parallelism where the data being distributed across different processors is not the batch dimension (as in data parallelim) or model depth dimension (e.g. pipelining), but the model states instead. The most common application of this method is by *vertically* dividing the allocating to different accelerators both the input data and model layers, as in:
 
 <p align="center">
 <br/>
-<img width="40%" height="40%" src="/assets/AI-Supercomputing/DNN_model_parallelism.png"/><br/>
-<br/><small>A representation of a DNN model parallelism on two processors $p0$ and $p1$. Input dataset and model parameters are divided across processors based on the dimensionality of the input features. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/DNN_model_parallelism.png"/><br/>
+<br/><small>A representation of model parallelism at the layer level on a fully-connected DNN, on two processors $p0$ and $p1$. Input dataset and each layer of the model are divided and allocated to different processors. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
 </small>
 </p>
 
 Looking at the previous picture, we notice a major drawback in this method. During training, the constant usage of sums of products using all dimensions on the input space will force processors to continuously communicate those variables among themselves (red lines in the picture). This creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. Moreover, since the number of weights between two layers grows quadratically with the increase of neurons (e.g. for layers with neuron count $N_1$ and $N_2$, the number of weights are $N_1*N_2$), this method is not usable on large input spaces, as the communication becomes a bottleneck.
 
-#### Local Model Parallelism (CNN)
+#### Layer Parallelism on CNNs
 
 Before throwing the towel on model parallelism, it is relevant to mention that this type of parallelism has some use cases where it is applicable and highly efficient. A common example is on the parallelism of very high resolution pictures on [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}). In practice, due to the filter operator in CNNs, the dependencies (weights) between two neurons on sequential layers is not quadratic on the input (as before), but constant with size $F*F$ for a filter of size $F$.
 
