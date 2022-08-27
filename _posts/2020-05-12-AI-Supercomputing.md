@@ -162,7 +162,9 @@ We notice that most of the available compute time is spent doing nothing. This i
 </small>
 </p>
 
-Can we do better? Yes! In fact, there's still a big limitation on the previous method: the computation is divided in two chunks referring to a set of forward and a set of backward computation steps, leading to high moments of idleness at the start and end of each computation chunk. Moreover, this is a very restrictive dependency: in fact, to start the backward pass of a single batch we need only the forward pass of that particular batch, and not of all backward passes. This property has been explored by Microsoft and detailed in [PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/), and the main ideas are:
+The downside is that the backpropagation requires information about the forward pass for each input. Thus, to save on memory requirements, the output of the forward pass (activations) is dropped as soon as it is communicated with the accelerators holding connecting layers of the model. This way it is possible to pass a much larger mini-batch. During the backward pass, those activations are computed again, when needed.
+
+There's still a big limitation on the previous method: the computation is divided in two chunks referring to a set of forward and a set of backward computation steps, leading to high moments of idleness at the start and end of each computation chunk. Moreover, this is a very restrictive dependency: in fact, to start the backward pass of a single batch we need only the forward pass of that particular batch, and not of all backward passes. This property has been explored by Microsoft and detailed in [PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/), and the main ideas are:
 - the backward pass of a given batch starts immediately after the forward pass has finished;
 - if a worker is allocated a forward pass and a backward pass on the same time iteration, it prioritizes the backward pass and computes the forward pass when it's idle;
 
@@ -174,6 +176,10 @@ The following workflow illustration provides a better overview of the algorithm 
 <br/><small>A pipeline execution of a sequence of batches using the PipeDream strategy. A backward propagation of a batch is initiated as soon as its related forward pass has finished. Bacward passes are prioritized over forward passes on each worker. Implementation details and image aource: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 </small>
 </p>
+
+Where's the caveat? In fact, mixing forward and backward passes from different mini-batches lead to wrong weight updates. Therefore, the authors perform versioning of the weights (it copying different weight versions) so that the backward passes take into account the weight states relating to its epoch, not the epoch of the following forward pass. This leads to an increase in memory requirements.
+
+In brief: for memory efficent pipelining use GPipe, and for compute efficient pipelining, gor for PipeDream.
 
 
 ## Data Parallelism 
