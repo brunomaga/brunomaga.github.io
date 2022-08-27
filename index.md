@@ -27,7 +27,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 
 <ul class="nav mt-3">
   <li class="nav-item">
-    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-user-circle"  title="one page resume"></i> <b>one page resume</b></a>
+    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-file"  title="one page resume"></i> <b>one page resume</b></a>
   </li>
   <li class="nav-item">
     <a class="btn btn-link" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
@@ -36,7 +36,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
     <a class="nav-link" href="{{ site.url }}" class="btn btn-link"><i class="fas fa-mouse-pointer" title="homepage"></i> {{ site.url }} </a>
   </li>
   <li class="nav-item">
-    <a class="btn btn-link" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link"><i class="fab fa-fw fa-twitter-square" ></i> {{ site.twitter_username }} </a>
+    <a class="btn btn-link" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link"><i class="fab fa-fw fa-twitter" ></i> {{ site.twitter_username }} </a>
   </li>
   <li class="nav-item">
     <a class="btn btn-link" href="https://github.com/{{ site.github_username }}" class="btn btn-link"><i class="fab fa-fw fa-github" ></i>{{ site.github_username}}</a>
@@ -208,7 +208,8 @@ Here's a list of my most relevant publications. In the following, I was the firs
 <div class="noprint">
 <h4 class="mt-5 mb-3">Posts</h4>
 
-When time allows, I post about HPC or ML projects I was involved in, or publications and discussions I find interesting.
+When time allows, I post about HPC and ML.
+I also maintain a <a href="{{ site.publications_permalink }}">publications bookmark</a> and a <a href="{{ site.resources_permalink }}">resources page</a> where I keep track of several resources used as reference in my posts. 
 
 <p>
   <table class="mt-3">
@@ -227,13 +228,9 @@ When time allows, I post about HPC or ML projects I was involved in, or publicat
   </table>
 </p>
 
-<p>
-I also maintain a <a href="{{ site.publications_permalink }}">publications bookmark</a> and a <a href="{{ site.resources_permalink }}">resources page</a> where I keep track of several free HPC and ML resources used as reference in my posts. 
-</p>
-
 <h4 class="mt-5 mb-3">Misc</h4>
 
 <p>
-I've been playing waterpolo for most of my life, the last 12 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://uk.teamunify.com/SubTabGeneric.jsp?_stabid_=153844/">Cambridge City</a> clubs. I enjoy cooking and winter sports - particularly skiing - and I am a cryptocurrency enthusiast. As a general rule, I prefer not to be addressed by my academic title or surname, so addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine :)
+I've been playing waterpolo for most of my life, the last 14 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://uk.teamunify.com/SubTabGeneric.jsp?team=cocsc&_stabid_=154244">Cambridge City</a> clubs. I enjoy cooking, winter sports and board games. As a general rule, I prefer not to be addressed by my academic title or surname, so addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine :)
 </p>
 </div> <!-- noprint -->
