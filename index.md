@@ -231,6 +231,6 @@ I also maintain a <a href="{{ site.publications_permalink }}">publications bookm
 <h4 class="mt-5 mb-3">Misc</h4>
 
 <p>
-I've been playing waterpolo for most of my life, the last 14 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://uk.teamunify.com/SubTabGeneric.jsp?team=cocsc&_stabid_=154244">Cambridge City</a> clubs. I enjoy cooking, winter sports and board games. As a general rule, I prefer not to be addressed by my academic title or surname, so addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine :)
+I've been playing waterpolo for most of my life, the last 14 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Natation</a> and <a href="https://uk.teamunify.com/SubTabGeneric.jsp?team=cocsc&_stabid_=154244">Cambridge City</a> clubs. I enjoy cooking, winter sports and board games. As a general rule, I prefer not to be addressed by my academic title or surname, so addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine.
 </p>
 </div> <!-- noprint -->
