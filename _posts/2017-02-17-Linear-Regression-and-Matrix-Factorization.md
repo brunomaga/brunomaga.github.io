@@ -40,7 +40,7 @@ We want to compute the $w$ that minimizes the loss, or equally, where its deriva
   \end{align*}
   $$
 
-Note that we used the trick $\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$ (<a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, eq 2.4.1). The results tells us that **if $X^TX$ is invertible**, this minimization problem has an unique closed-form solution given by that final form. As a side note, the **Gram matrix $X^TX$** is invertible if **X has full column rank**, i.e. $rank(X)=D$ (we'll ommit the proof). The rank of a matrix is defined as the maximum number of linearly independent column vectors in the matrix, therefore we assume that all columns are linearly independent.
+Note that we used the trick $\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$ (<a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, eq 2.4.1). The results tells us that **if $X^TX$ is invertible**, this minimization problem has an unique closed-form solution given by that final form. As a side note, the **Gram matrix $X^TX$** is invertible if **X has full column rank**, i.e. $rank(X)=D$ (we'll ommit the proof). The rank of a matrix is defined as the maximum number of linearly independent column vectors in the matrix, therefore we assume that all columns are linearly independent.
 
 
 ##### Regularization

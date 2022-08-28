@@ -42,7 +42,7 @@ There are two main optimization problems that we discuss in Bayesian methods: Ma
 ### Maximum Likelihood Estimator (MLE)
 
 <small>
-(In case the following reductions cause some confusion, check the [appendix at the bottom of the page](#appendix-lin-alg) for the rules used, or <a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed overview of matrix operations.)
+(In case the following reductions cause some confusion, check the [appendix at the bottom of the page](#appendix-lin-alg) for the rules used, or <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed overview of matrix operations.)
 </small>
 
 
@@ -348,7 +348,7 @@ For more advanced topics on Bayesian Linear Regression refer to chapter 3 in Pat
 ##### Appendix: Regresher on Linear Algebra
 <div id="appendix-lin-alg" />
 
-Here are the list of algebraic rules used in this document. For further details, check <a href="{{ site.assets }}/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed list of matrix operations.
+Here are the list of algebraic rules used in this document. For further details, check <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed list of matrix operations.
 
 1. **Multiplication:**
 	1. $A(BC) = (AB)C$;
