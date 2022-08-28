@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Expectation-Maximization and Gaussian Mixture Models"
+title:  "[DRAFT] Expectation-Maximization and Gaussian Mixture Models"
 categories: [machine learning, unsupervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
