@@ -5,7 +5,7 @@ categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-I decided to compile a summary of topics in algebra that relevant to ML. Most information is collected from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.  
+I decided to compile a summary of topics in algebra that are relevant to ML. Most information is extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section, and are a recollection of ML topics asked in job interviews.
 
 ### Properties of Matrices
 
@@ -151,7 +151,7 @@ $$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$;
   - Sum: $$ (f(x) + g(x))' = f'(x)+ g'(x)$$;
   - Chain: $$ (g(f(x))' = (g \circ f)'(x) = g'(f(x))f'(x) = \frac{df}{dg} \frac{dg}{dx}$$;
 - the **Hessian** or $$\triangledown^2_{x,y} f(x,y)$$ is a collection of all second-order partial derivatives, defined by the symmetric matrix:
-  <img width="20%" height="20%" src="/assets/Algebra-for-ML/Hessian.png"/>
+  <img width="40%" height="40%" src="/assets/Algebra-for-ML/Hessian.png"/>
  - the gradient of a function is often used to locally (linearly) approximate $$f$$ around $$x_0$$: $$f(x) ≈ f(x_0) + (∇_xf)(x_0)(x − x_0)$$. I.e. t's a Taylor series of two terms. multivariate Taylor series can be used for higher-order approximations (page 166, def 5.7 in <a href="{{ site.resources_permalink }}">MML book</a>);
 
 - In deep neural networks, the function value $$y$$ of a $$K$$-deep DNN is computed as: $$ y = (f_K ◦ f^{K−1} ◦ ... ◦ f_1)(x) = f_K(f_{K−1}( ... (f_1(x)) ... )) $$
@@ -161,4 +161,21 @@ $$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$;
   - the blue terms are partial derivatives of a layer with respect to its parameters; 
 - Backpropagation is a special case of the **automatic differentiation** algorithm, a techniques to evaluate the gradient of a function by working with intermediate variables and dependencies and applying the chain rule;
 
+### Optimization
 
+- **Gradient Descent**: an optimization method to minimize an $$f$$ function iteratively. For iteration $$i$$ and step-size $$\gamma$$:
+  - $$x_{i+1} = x_t − γ((∇f)(x_0))^T$$, 
+- **Gradient Descent with Momentum**: stores the value of the update $$\Delta x_i$$ at each iteration $$i$$ to determine the next update as a linear combination of the current and previous gradients:
+   - $x_{i+1} = x_i − γ_i((∇f)(x_i))^T + α∆x_i$
+   - where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^T$$ and $$\alpha \in [0,1]$$;
+      - $$\alpha$$ is a hyper-parameter (user defined), close to $$1$$. If $$\alpha=0$$, this performs regular Gradient Descent'
+- **Constrained gradients**: find $$min_x f(x)$$ subject to $$g_i(x) \le 0$$, for all $$i=1,...,m$$;
+  - solved by converting from a constrained to an unconstrained problem of minimizing $$J$$ where $$J(x) = f(x) + \sum_{i=1}^m \mathbb{1} (g_i(x))$$; 
+    - where $$1(z)$$ is an infinite step function: $$1(z)=0$$ if $$z \le 0$$, and $$1(z)=\infty$$ otherwise;
+  - and replacing this step function (difficult to optimize) by **Lagrange multipliers** $$\lambda$$;
+    - the new function to minimize is now $$L(x) = f(x) + \sum_{i=1}^m \lambda_i (g_i(x)) = f(x) + \lambda^T g(x)$$
+  - **Lagrange duality** is the method of converting an optimization problem in one set of variables x (the **primal variables**), into another optimization problem in a different set of variables λ (**dual variables**);
+    - further details in section 7.2 in <a href="{{ site.resources_permalink }}">MML book</a>:
+- **Adam Optimizer** (ADAptive Moment estimation): uses estimations of the first and second moments of the gradient (the "curvature") to adapt the learning rate for each weight of the neural network;  
+  - in some cases Adam doesn't converge to the optimal solution, but SGD does. According to the authors, switching to SGD in some cases show better generalizing performance than Adam alone;
+  - calculates the exponential moving average of gradients and square gradients. Parameters $$\beta_1$$ and $$\beta_2$$ are used to control the decay rates of these moving averages. Adam is a combination of two gradient descent methods, Momentum, and RMSP

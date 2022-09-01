@@ -88,7 +88,7 @@ One main observation derives from the previous table. Memory bandwidth increases
 
 A common technique to handle memory limitations is offloading. In this particular example, we'll focus on GPU to CPU offloading. The main goal of this method is to identify and move to the GPU only the portions of data that are required for each computation step, and keep the remaining on the CPU.
 
-Take this example of training of a multi-layer Deep Neural Network.  We've seen on a [previous post about DNNs]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) that the output $x$ for a given layer $l$ of the network, is represent as:
+Take this example of training of a multi-layer Deep Neural Network.  We've seen on a [previous post about DNNs]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}) that the output $x$ for a given layer $l$ of the network, is represent as:
 
 $$
 x^{(l)} = f^{(l)} (x^{(l-1)}) = \phi ((W^{(l)})^T x^{(l-1)})
@@ -197,7 +197,7 @@ The rationale of DDP is simple: (1) a copy of the model is instantiated on every
 
 The main advantadge of this method is the linear increase in efficiency, i.e. by doubling the amount of processors, we reduce the training time by half. However, it's not memory efficient, since it requires a duplication of the entire model on all compute units, i.e. increasing number of processors allows only for a speedup in solution, not on the increase of the model size.
 
-As an exceptional use case, this method does not always require the same network to be copied over to each compute unit. An example of this property is the [dropout]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}) technique utilized in Deep Neural Nets, where training on several distinct networks are executed simultaneously (even though usually the same data is executed on all models).
+As an exceptional use case, this method does not always require the same network to be copied over to each compute unit. An example of this property is the [dropout]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}) technique utilized in Deep Neural Nets, where training on several distinct networks are executed simultaneously (even though usually the same data is executed on all models).
 
 For a thorough analysis of the topic, take a look at the paper [Measuring the Effects of Data Parallelism on Neural Network Training (Google Labs, arXiv)](https://arxiv.org/abs/1811.03600)
 
@@ -226,7 +226,7 @@ Looking at the previous picture, we notice a major drawback in this method. Duri
 
 #### Layer Parallelism on CNNs
 
-Before throwing the towel on model parallelism, it is relevant to mention that this type of parallelism has some use cases where it is applicable and highly efficient. A common example is on the parallelism of very high resolution pictures on [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-02-27-Deep-Neural-Networks %}). In practice, due to the filter operator in CNNs, the dependencies (weights) between two neurons on sequential layers is not quadratic on the input (as before), but constant with size $F*F$ for a filter of size $F$.
+Before throwing the towel on model parallelism, it is relevant to mention that this type of parallelism has some use cases where it is applicable and highly efficient. A common example is on the parallelism of very high resolution pictures on [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}). In practice, due to the filter operator in CNNs, the dependencies (weights) between two neurons on sequential layers is not quadratic on the input (as before), but constant with size $F*F$ for a filter of size $F$.
 
 This method has been detailed by [Dryden et al. (Improving Strong-Scaling of CNN Training by Exploiting Finer-Grained Parallelism, Proc. IPDPS 2019)](https://arxiv.org/pdf/1903.06681.pdf). The functioning is illustrated in the picture below and is as follows:
 1. Input dataset (image pixels) are divided on the height and width dimensions across processors;
