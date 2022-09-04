@@ -1,9 +1,16 @@
 ---
 layout: post
-title:  "Statistics for ML Engineers"
+title:  "[Draft] Statistics for ML Engineers"
 categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
+
+**Statistics** is the study of uncertainty. **Probability** is the fraction of times that an event occurs. A **sample space** is the set of all possible outcomes of the experiment. 
+
+In discrete probability, the joint probability is given by the confusion matrix:
+$$
+P(X = x_i, Y = y_j) = \frac{n{ij}}{N}
+$$
 
 All ML engineers have an exhaustive training on algebra and statistics. Because it's easy to forget some basic content after some time without practice, I decided to compile a summary of related topics. Most information is collected from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.  
 
