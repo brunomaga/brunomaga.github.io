@@ -170,13 +170,13 @@ A list of most common data types and embedding types:
   - in a classification task: use the activation of the last layer *before* the layer that does logit/softmax. I.e. the input to the final layer, i.e. the ouput of the one before last;
   - in an image-to-image task e.g. segmentation e.g. using a [U-net](https://arxiv.org/abs/1505.04597): use the activation the last downsampling layers which is the first layer of upsampling layers, i.e. the [*information bottleneck*](https://en.wikipedia.org/wiki/Information_bottleneck_method);
 - videos: input is now 5D (batch size, time, channels, height, width) where the input is a sequence of video frames stacked on the time dimension. Embeddings are collected similarly to a regular CNN (adapted to use 3D instead of 2D convolutions, etc);
-- graph: embedding of a graph is given by the embedding of a node after several steps of the [message passing interface](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html): $$x_i^{(k)} = \gamma^{(k)} \left( x_j^{(k-1)}, \Box_{j} \, \phi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$
+- graph: embedding of a graph is given by the embedding of a node after several steps of the [message passing algorithm](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html): $$x_i^{(k)} = \gamma^{(k)} \left( x_j^{(k-1)}, \Box_{j} \, \phi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$
   - where $\Box$ is a differentiable, permutation invarait function e.g. sum, mean, max;
   - and $\gamma$ and $\phi$ are differentiable functions such as DNNs.
  
-#### non-conventional loss function
+#### Non-conventional loss function
 
 As a final remark, most regression tasks use the RSME loss function, and most classification tasks use the (Binary) cross-entropy loss. However, other loss functions of interest are:
-- triplet loss
+- triplet loss:
 - contrastive loss:
 - CTC loss: for sequences
