@@ -113,7 +113,7 @@ An **affine mapping** is defined as $$x \Rightarrow a + \phi(x)$$ for linear map
 - Given a matrix  $$A \in \mathbb{R}^{m \times n}$$, we can always obtain a symmetric positive semidefinite matrix $$S=A^TA$$. If $$rk(A)=n$$, then $$A^TA$$ is symmetric positive definite;
 - Note: covariance matrices are positive semidefinite :)
 
-<p align="center"><img width="65%" height="65%" src="/assets/publications/MML_eigenvalues_and_eigenvectors.png"/><br/>
+<p align="center"><img width="65%" height="65%" src="/assets/Algebra-for-ML/MML_eigenvalues_and_eigenvectors.png"/><br/>
 <small>image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a></small></p>
 
 **Cholesky Decomposition**: a symmetric, positive definite matrix $$A$$ can be factorized into a product $$A = LL^T$$, where $$L$$ is a *lower-triangular matrix* with positive diagonal elements. $$L$$ is unique. This can be solved normally as a SLE.

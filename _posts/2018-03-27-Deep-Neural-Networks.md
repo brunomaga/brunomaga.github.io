@@ -1,22 +1,14 @@
 ---
 
 layout: post
-title:  "Deep Neural Networks: backpropagation, dropout and CNNs"
+title:  "Deep Neural Networks: backpropagation, dropout, CNNs and embeddings"
 categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---
 
-We have seen that simple linear classification schemes like logistic regression:
+Deep Neural networks -- also known as Multi Layer Perceptrons -- are **[universal approximator](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. an ML approximator to any function in a bounded continuous domain. They're the most important and relevant ML tool on the field of supervised learning as they're included in models related to most supervised tasks.
 
-$$
-p (y | x^T w) = \frac{e^{x^Tw_y}}{1+e^{x^Tw_y}}
-$$
-
-can work well but are limited. Alternative approaches like binning work well only for low input dimensionality. That's where neural networks fill the gap. Neural networks allows us to learn not only the *weights* but also the *useful features*. In practice, they are what we call an **[universal approximator](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. an approximator to any function in a bounded continuous domain. I will omit the proof, email me if you are interested in knowing more.
-
-### Structure
-
-The structure of a simple NN is the following: one input layer of size $D$, $L$ hidden layers of size $K$, and one output layer. It is a **feedfoward network**: the computation performed by the network starts with the input from the left and flows to the right. There is no feedback loop. It can be used for regression (when input and output are provided) and for classification (when input are provided and new output is the classifier).
+The structure of a basic NN is the following: one input layer of size $D$, $L$ hidden layers of size $K$, and one output layer. It is a **feedfoward network**: the computation performed by the network starts with the input from the left and flows to the right. There is no feedback loop. It can be used for regression (when input and output are provided) and for classification (when input are provided and new output is the classifier).
 
 <p align="center">
 <img width="30%" height="30%" src="/assets/Deep-Neural-Networks/dnn.png"><br/>
@@ -160,3 +152,31 @@ A better way to improve this is to provide layers of the network with outputs fr
 </p>
 
 There is currently a plethora of different implementations of CNNs with several layouts of skip connections. If you are curious to know more, have a look at [ResNet](https://arxiv.org/abs/1512.03385), [DenseNet](https://arxiv.org/abs/1608.06993) and [U-net](https://arxiv.org/abs/1505.04597).
+
+
+### Embeddings
+
+Embeddings are a simpler representation of data characterized by variable size (e.g. lists, text) or multi-dimensionality (images, videos). We use embeddings as a way to represent our data in a simpler (linear) layout, in such a way that the model that inputs it (usually a DNN) can run in a feasible time and within memory requirements.
+
+Embeddings are also the backbone of multi-modal machine learning, i.e. ML applied to combination of different input types, where the representation of several datapoints as a single input is typically the concatenation of the embeddings of each data type.
+
+The technique to train embeddings is usually as follows: train a network for a given task on several inputs, as we would do normally; then take the trained model, pass the new datapoint, and collect its embedding as the activation or hidden state of a layer in that network.
+
+A list of most common data types and embedding types:
+- words: [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (skipgram or bag-of-words)
+- text (word sequences): [BERT]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %})
+- non-textual sequences: [Encoder-Decoders e.g. LSTMs RNNs]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %})
+- images: 
+  - in a classification task: use the activation of the last layer *before* the layer that does logit/softmax. I.e. the input to the final layer, i.e. the ouput of the one before last;
+  - in an image-to-image task e.g. segmentation e.g. using a [U-net](https://arxiv.org/abs/1505.04597): use the activation the last downsampling layers which is the first layer of upsampling layers, i.e. the [*information bottleneck*](https://en.wikipedia.org/wiki/Information_bottleneck_method);
+- videos: input is now 5D (batch size, time, channels, height, width) where the input is a sequence of video frames stacked on the time dimension. Embeddings are collected similarly to a regular CNN (adapted to use 3D instead of 2D convolutions, etc);
+- graph: embedding of a graph is given by the embedding of a node after several steps of the [message passing interface](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html): $$x_i^{(k)} = \gamma^{(k)} \left( x_j^{(k-1)}, \Box_{j} \, \phi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$
+  - where $\Box$ is a differentiable, permutation invarait function e.g. sum, mean, max;
+  - and $\gamma$ and $\phi$ are differentiable functions such as DNNs.
+ 
+#### non-conventional loss function
+
+As a final remark, most regression tasks use the RSME loss function, and most classification tasks use the (Binary) cross-entropy loss. However, other loss functions of interest are:
+- triplet loss
+- contrastive loss:
+- CTC loss: for sequences
