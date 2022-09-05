@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  "Deep Neural Networks: backpropagation, dropout, CNNs and embeddings"
+title:  "Deep Neural Networks, backpropagation, dropout, CNNs, embeddings and loss functions"
 categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---
@@ -170,13 +170,23 @@ A list of most common data types and embedding types:
   - in a classification task: use the activation of the last layer *before* the layer that does logit/softmax. I.e. the input to the final layer, i.e. the ouput of the one before last;
   - in an image-to-image task e.g. segmentation e.g. using a [U-net](https://arxiv.org/abs/1505.04597): use the activation the last downsampling layers which is the first layer of upsampling layers, i.e. the [*information bottleneck*](https://en.wikipedia.org/wiki/Information_bottleneck_method);
 - videos: input is now 5D (batch size, time, channels, height, width) where the input is a sequence of video frames stacked on the time dimension. Embeddings are collected similarly to a regular CNN (adapted to use 3D instead of 2D convolutions, etc);
-- graph: embedding of a graph is given by the embedding of a node after several steps of the [message passing algorithm](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html): $$x_i^{(k)} = \gamma^{(k)} \left( x_j^{(k-1)}, \Box_{j} \, \phi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$
-  - where $\Box$ is a differentiable, permutation invarait function e.g. sum, mean, max;
+- graph: embedding of a graph is given by the embedding of a node after several steps of the [message passing algorithm](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html) as $$x_i^{(k)} = \gamma^{(k)} \left( x_j^{(k-1)}, \Box_{j} \, \phi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$, where:
+  - $$x_i^{(k)}$$ is the embedding of node $x_i$ at messape passing step $k$;
+  - $$e_{i,j}$$ is the embedding of the edges between nodes $$i$$ and $$j$$;
+  - $\Box$ is a differentiable, permutation invariant function e.g. sum, mean, max;
   - and $\gamma$ and $\phi$ are differentiable functions such as DNNs.
  
-#### Non-conventional loss function
+### Non-conventional loss functions
 
-As a final remark, most regression tasks use the RSME loss function, and most classification tasks use the (Binary) cross-entropy loss. However, other loss functions of interest are:
-- triplet loss:
+Most regression tasks use the RSME loss function, and most classification tasks use the (Binary) cross-entropy loss. However, other loss functions of interest.
+
+**[Triplet loss](https://en.wikipedia.org/wiki/Triplet_loss)**: used on classification tasks where the number of classes is very large. Shibsankar Bas wrote an [amazing blog post](https://towardsdatascience.com/image-similarity-using-triplet-loss-3744c0f67973) about it. Quoting him: triplet loss helps by learning distributed embeddings representation of data points in a way that in the high dimensional vector space, contextually similar data points are projected in the near-by region whereas dissimilar data points are projected far away from each other. The network is trained against triplets of *(anchor, positive, negative)* inputs consisting of an anchor image, a positive (similar or same category) image, and one negative (dissimilar or different category) image. The Triplet Loss minimizes the distance between an anchor and a positive and maximizes the distance between the Anchor and the negative. The idea is to have 3 identical networks having the same neural net architecture and **they should share weights**. Anchor, Positive and Negative images are passed through their respective network and during backpropagation weight vectors are updated using shared architecture. During prediction time, any one network is used to compute the vector representation of input data. The formulation is:
+
+$${\displaystyle {\mathcal {L}}\left(A,P,N\right)=\operatorname {max} \left({\|\operatorname {f} \left(A\right)-\operatorname {f} \left(P\right)\|}^{2}-{\|\operatorname {f} \left(A\right)-\operatorname {f} \left(N\right)\|}^{2}+\alpha ,0\right)}$$
+
+where $$A$$ is an anchor input, $$P$$ is a positive input of the same class as $$A$$, $$N$$ is a negative input of a different class from $$A$$, $$\alpha$$ is a margin between positive and negative pairs, and $$f$$ is an embedding.
+
+
+
 - contrastive loss:
 - CTC loss: for sequences
