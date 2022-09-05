@@ -52,7 +52,7 @@ $$
 w_{MLE} = argmax_w \text{ } p(y \mid w, X) 
 $$
 
-Note that the likelihood is not a probability distribution (it does not integrate to 1, i.e. it's unnormalized). It's simply a function of the parameters $w$.
+Let us interpret what the probability density p(x | θ) is modeling for a fixed value of θ. It is a distribution that models the uncertainty of the data for a given parameter setting. In a complementary view, if we consider the data to be fixed (because it has been observed), and we vary the parameters θ, what does the MLE tell us? It tells us how likely a particular setting of θ is for the observations x. Based on this second view, the maximum likelihood estimator gives us the most likely parameter θ for the set of data.  (MML book, section 8.3.1).
 
 When the distribution of the prior and posterior are computationally tractable, the optimization of the parameters that define the distribution can be performed using the [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent) method, an iterative method that we've covered [previously]({% post_url 2017-02-17-Linear-Regression-and-Matrix-Factorization %}). In practice we perform and iterative partial derivatives of the prior/posterior for the model parameters (e.g. mean $\mu$ and standard deviation $\sigma$ in a Gaussian environment) and move our weight estimation towards the direction of lowest loss.
 
@@ -142,7 +142,11 @@ i.e. $\sigma^2$ is the mean of the squared distance between observations and noi
 
 ### Maximum-a-Posteriori (MAP)
 
-Maximum likelihood without regularizer is prone to overfitting (details in section 9.2.2 of the [Mathematics for Machine Learning book]({{ site.resources_permalink }})). In the occurrence of overfitting, we run into very large parameter values. To mitigate the effect of huge values, we can place the prior on the parameter space, and seek now the parameters to estimate the posterior distribution. This is called the Maximum-a-Posteriori estimation (MAP), and is obtained by applying the Bayes Theorem.
+Maximum likelihood without regularizer is prone to overfitting (details in section 9.2.2 of the [Mathematics for Machine Learning book]({{ site.resources_permalink }})). In the occurrence of overfitting, we run into very large parameter values. To mitigate the effect of huge values, we can place the prior on the parameter space, and seek now the parameters to estimate the posterior distribution. 
+
+If we have prior knowledge about the distribution of the parameters, we can multiply an additional term to the likelihood. This additional term is a prior probability distribution on parameters. For a given prior, after observing some data $x$, how should we update the distribution of the parameters? In other words, how should we represent the fact that we have more specific knowledge of the parameters after observing data $x$?
+
+This is called the Maximum-a-Posteriori estimation (MAP), and is obtained by applying the Bayes Theorem.
 
 The problem in hand is to find the parameters of the distribution that best represent the data. Adapting the equation \ref{eq_prior_AB} of the prior to the problem of regression, we aim at computing:
 
@@ -157,7 +161,7 @@ $$
 log \text{ } p(w\mid X, y) = log \text{ } p(y \mid X, w) + log \text{ } p(w) + const
 $$
 
-In practice, this is the sum of the log-likelihood $ log \text{ } p(y \mid X, w)$ and the *log-prior* $log \text{ } p(w)$, so the MAP estimation is a *compromise* between the prior and the likelihood. Similarly to the MLE, we compute the derivative of the negative log-posterior with respect to $w$ as:
+In practice, this is the sum of the log-likelihood $ log \text{ } p(y \mid X, w)$ and the *log-prior* $log \text{ } p(w)$, so the MAP estimation is a *compromise* between the prior and the likelihood. An alternative view is the idea of regularization, which introduces an additional term that biases the resulting parameters to be close to the original (MML book section 8.3.2). Similarly to the MLE, we compute the derivative of the negative log-posterior with respect to $w$ as:
 
 $$
   \begin{align*}
@@ -187,6 +191,7 @@ Now we see that the only difference between the weights estimated using MAp($w_{
 
 Instead of computing a point estimate via MLE or MAP, a special case of Bayesian optimization is the linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is utilized very commonly, mainly since the result is not an estimation, and computing the analytical solution for the posteriors is *extremelly fast* to compute even for very large datasets and dimensionality.
 
+In brief, bayesian linear regression is a type of conditional modeling in which the mean of one variable is described by a linear combination of other variables, with the goal of obtaining the posterior probability of the regression coefficients (as well as other parameters describing the distribution of the regressand) and ultimately allowing the out-of-sample prediction of the regressand (often labelled {\displaystyle y}y) conditional on observed values of the regressors (source: [wikipedia page for Bayesian Linear Regression](https://en.wikipedia.org/wiki/Bayesian_linear_regression)). I.e. Bayesian linear regression pushes the idea of the parameter prior a step further and does not even attempt to compute a point estimate of the parameters, but instead the full posterior distribution over the parameters is taken into account when making predictions. This means we do not fit any parameters, but we compute a mean over all plausible parameters settings (according to the posterior).
 
 We assume all our weights are drawn from a gaussian distribution and can be independent (if covariance matrix is diagonal) or not (otherwise). In practice, we start with the prior $p(w) \thicksim \mathcal{N}(m_0, S_0)$, with mean vector $m_0$, and (positive semi-definite) covariance matrix $S_0$ (following the variable notation found on [Chris Bishop's PRML book]({{ site.resources_permalink }})).
 
