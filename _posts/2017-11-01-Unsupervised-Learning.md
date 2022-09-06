@@ -90,9 +90,9 @@ A visual example is displayed below, where the output of the PCA rotates the dat
 <img width="30%" height="30%" src="/assets/Unsupervised-Learning/GaussianScatterPCA.svg.png"><br/><small>source: wikipedia</small>
 </p>
 
-We can now discard the least significant dimensions of the final post-PCA data, reducing the number of features in the model.
+We can now discard the least significant dimensions of the final post-PCA data, reducing the number of features in the model. The size of $$F$$ dictates the ammount of compression we achieve.
 
-<b>Small trick:</b> to retrieve the original data, we simply need to invert the final transformation, i.e.:
+To recover the the original data (or an approximation if $$F$$ does not include all features), we use the inverse of the final transformation $$F^T$$, i.e.:
 
 $$
 D_c = F^{-T} D_n = F D_n
