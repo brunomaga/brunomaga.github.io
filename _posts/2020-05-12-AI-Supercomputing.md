@@ -181,7 +181,7 @@ Where's the caveat? In fact, mixing forward and backward passes from different m
 
 In brief: for memory efficent pipelining use GPipe, and for compute efficient pipelining, gor for PipeDream.
 
-#### Activation breakpointing
+#### Memmory tradeoffs, activation breakpointing and invertible logic
 
 The main pipelining issue is memory requirements. Even if the computation if 100% pipeline and distributed, achieving a high level of pipelining per accelerator (ie a large batch size) is hard due to memory constraints. The problem is the increasing size of backprogapation "tape", ie the ammount of activation functions that have to be stored in memory to allow for the back propagation, growing linearly with the batch size. There are few solutions around it:
 - Loading and storing activation on a local storage system e.g. hard drive -- typically slow;
@@ -190,8 +190,7 @@ The main pipelining issue is memory requirements. Even if the computation if 100
   - in regular DNN backpropagation, we store all activations of all layers, so that output is readily available;
   - if we dont want to spend and store any memory on activations, we can recompute the output of layer 7 as $ f^{(7)} \circ ... \circ f^{(2)} \circ f^{(1)} (x^{(0)})$ where $x^{(0)}$ is the input datapoint passed at level 0;
   - a hybrid solution based on activation checkpointing on layers 5 and 10 -- ie those outputs are stored and readily available -- allows us to compute the output of layer 7 as  $f^{(7)} \circ f^{(6)} (a^{(5)})$ where $a^{(5)}$ is the activation breakpoint stored at layer 5;
-- Use invertible logic to recover the input from the output. I.e., because the output $y$ is known during backpropagation, recompute $x$ from $y^{(l+1)}= f^{(l+1)}(w^Tx^{(l+1)})$ at every layer;
- 
+- Use invertible logic to recover the input from the output. I.e., because the output $y$ of each layer is known during backpropagation, recompute $x$ from $y^{(l+1)}= f^{(l+1)}(w^Tx^{(l+1)})$ at every layer;
 
 
 ## Data Parallelism 

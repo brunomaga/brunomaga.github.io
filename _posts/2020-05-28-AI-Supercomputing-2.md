@@ -57,6 +57,8 @@ Parallelism, scaling and acceleration of such sequence-to-sequence models is an 
 
 ## Transformer 
 
+Note: the original Transformer paper is also detailed in the section <a href="{{ site.publications_permalink }}">publications bookmark</a>.
+
 In 2017 the staff at Google introducted the Transformer (original paper [Attention is all you need (2017, Google, Arxiv)](https://arxiv.org/abs/1706.03762)), overcoming many of the previous issues, while demonstrating better results. The transformer architecture is the following:
 <p align="center">
 <br/>
@@ -130,7 +132,7 @@ $$
 I.e. it's a concatenation of all attention heads, and the parameters learnt are the weights of the keys ($W^K_i$), values ($W^V_i$) and query ($W^Q_i$) space of each head $i$, and a final transformation of the multi-head concatenation $W^{MHA}$. In terms of computational complexity, the attention mechanism on the encoder is trained on the complete input sequence at once (as illustrated in the "the big red dog" example), instead of looping through all words in the input sequence. Therefore,  **the attention mechanism replaces the recursive (RNN) iterations on an encoder, by a set of matrix-vector multiplications**.
 
 
-The **Masked Multi-head Attention** component on the decoder is similar to the regular MHA, but replaces the diagonal of the attention mechanism matrix by zeros, to hide next word from the model. Decoding is performed with a word of the output sequence of a time, with previously seen words added to the attention array, and the following words set to zero. Applied to the previous example, the four iterations are: 
+The **Masked Multi-head Attention** component on the decoder is similar to the regular MHA, but replaces the top diagonal of the attention mechanism matrix by zeros, to hide next word from the model. Decoding is performed with a word of the output sequence of a time, with previously seen words added to the attention array, and the following words set to zero. Applied to the previous example, the four iterations are: 
 
 <p align="center">
 <br/>
@@ -167,6 +169,8 @@ To summarize, the encoder-decoder architecture of the transformer allows a faste
 
 ## BERT: Bidirectional Encoder Representation from Transformers
 
+Note: the original BERT paper is also detailed in the section <a href="{{ site.publications_permalink }}">publications bookmark</a>.
+
 Attending to the previous topic, the main rationale of the Transformer's Encoder-Decoder is that:
 - The encoder learns the context of the input language (English in the previous example);
 - The decoder learns the task of the input-to-output languages (the English-to-French translation);
@@ -176,7 +180,7 @@ So, the encoder is efficiently trained and learns a *context*. So the main quest
 
 <p align="center">
 <br/>
-<img width="60%" height="60%" src="/assets/AI-Supercomputing/BERT.PNG"/><br/>
+<img width="80%" height="80%" src="/assets/AI-Supercomputing/BERT.PNG"/><br/>
 <br/><small>The BERT model, as a stack of Transformer encoders.
 </small>
 </p>
@@ -203,7 +207,7 @@ Note that the Yes/No flag related to the second task is past as the first embedd
 
 <p align="center">
 <br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/BERT_input.PNG"/><br/>
+<img width="60%" height="60%" src="/assets/AI-Supercomputing/BERT_input.PNG"/><br/>
 <br/><small>The input of the BERT model. Position Emdebbings are similar to the transformer model, discussed above. Segment embeddings flag each word as part of the first or second sentence. Token embedding are the text-embeddings of the input data. The datapoint being input to the model is the concatenation of these three embeddings.
 <br/>Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
 </small>
