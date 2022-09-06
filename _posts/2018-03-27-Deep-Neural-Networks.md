@@ -163,7 +163,9 @@ Embeddings are also the backbone of multi-modal machine learning, i.e. ML applie
 The technique to train embeddings is usually as follows: train a network for a given task on several inputs, as we would do normally; then take the trained model, pass the new datapoint, and collect its embedding as the activation or hidden state of a layer in that network.
 
 A list of most common data types and embedding types:
-- words: [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (skipgram or bag-of-words)
+- words: [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (*skipgram* or *continuous bag of words*)
+  - skipgram: slower to train ("3 days"), better in capturing better semantic relationships, e.g. for 'cat' return 'dog' as a word with close embeddings;
+  - CBOW: faster to train ("few hours"), better syntactic relationships between words, e.g. for 'cat' return 'cats';
 - text (word sequences): [BERT]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %})
 - non-textual sequences: [Encoder-Decoders e.g. LSTMs RNNs]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %})
 - point cluster or array: [Principal Component Analysis]({{ site.baseurl }}{% post_url 2017-11-01-Unsupervised-Learning.md %})
@@ -175,7 +177,7 @@ A list of most common data types and embedding types:
   - $$x_i^{(k)}$$ is the embedding of node $x_i$ at messape passing step $k$;
   - $$e_{i,j}$$ is the embedding of the edges between nodes $$i$$ and $$j$$;
   - $\Box$ is a differentiable, permutation invariant function e.g. sum, mean, max;
-  - and $\gamma$ and $\phi$ are differentiable functions such as DNNs.
+  - and $\gamma$ and $\phi$ are differentiable functions such as DNNs or RNNs (LSTMs, GRUs).
  
 ### Non-conventional loss functions
 
@@ -190,3 +192,5 @@ where $$A$$ is an anchor input, $$P$$ is a positive input of the same class as $
 **[Contrastive loss](https://en.wikipedia.org/wiki/Siamese_neural_network)**: similar and often confused with triplet loss. Yet these solve different problems: for known similarity relationships, we use Contrastive loss. For only negative/positive relationships (like for face recognition where people's identity is the anchor), then Triplet loss is used. In practice, the triplet loss considers the anchor-neighbor-distant triplets while the contrastive loss deals with the anchor-neighbor and anchor-distant pairs of samples. The contrastive loss trains siamese networks against pairs of inputs labelled as similar or dissimilar (1 or 0). For the original paper refer to [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf) or its summary in the <a href="{{ site.publications_permalink }}">publications bookmark</a>.
 
 **[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)**: a classifier and loss function for noisy sequential unsegments input data, for training recurrent neural networks (RNNs) such as LSTM networks to tackle sequence problems where the timing is variable. Published on [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf). Already summarized in the <a href="{{ site.publications_permalink }}">publications bookmark</a> section.
+
+**[Focal Loss](https://arxiv.org/abs/1708.02002)**
