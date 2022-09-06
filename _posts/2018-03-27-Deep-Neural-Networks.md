@@ -166,6 +166,7 @@ A list of most common data types and embedding types:
 - words: [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (skipgram or bag-of-words)
 - text (word sequences): [BERT]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %})
 - non-textual sequences: [Encoder-Decoders e.g. LSTMs RNNs]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %})
+- point cluster or array: [Principal Component Analysis]({{ site.baseurl }}{% post_url 2017-11-01-Unsupervised-Learning.md %})
 - images: 
   - in a classification task: use the activation of the last layer *before* the layer that does logit/softmax. I.e. the input to the final layer, i.e. the ouput of the one before last;
   - in an image-to-image task e.g. segmentation e.g. using a [U-net](https://arxiv.org/abs/1505.04597): use the activation the last downsampling layers which is the first layer of upsampling layers, i.e. the [*information bottleneck*](https://en.wikipedia.org/wiki/Information_bottleneck_method);
