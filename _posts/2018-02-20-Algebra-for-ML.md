@@ -5,7 +5,7 @@ categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-I decided to compile a summary of topics in algebra that are relevant to ML. Most information is extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section, and are a recollection of ML topics asked in job interviews.
+I decided to compile a summary of topics in algebra that are relevant to ML. Most information is extracted from books in the <a href="{{ site.resources_permalink }}">resources</a> section.
 
 ### Properties of Matrices
 
@@ -29,13 +29,13 @@ The general solution of a SLE is found with **Gaussian Elimination** of the augm
 - To compute the inverse we find the matrix that satisfies $$AX=I$$, so that $$X=A^{-1}$$. We use Gaussian Elimination to solve the SLE $$[A \mid I]$$ and turn it into $$[I \mid A^{-1}]$$; 
   - When $$A$$ is square and invertible, the solution for $$Ax=b$$ is $$x=A^{-1}b$$;
   - Otherwise, $$Ax = b \Leftrightarrow A^T Ax = A^Tb \Leftrightarrow x = (A^TA)^{−1}A^Tb$$, which is also the **least-squares** solution;
-  - $$(A^TA)^{−1}A^T$$ is also called the **pseudo-inverse** of $$A$$, which can be computed for non-square matrices $$A$$. It only requires that $$A^A$$ is positive definite, which is the case if $$A$$ is full rank; 
-- GE is not feasible for large matrices because of its cubic computational complexity. In practice, these are solved iteratively with e.g. the Jacobi method, Richardson method, etc. The main idea is:
+  - $$(A^TA)^{−1}A^T$$ is also called the **pseudo-inverse** of $$A$$, which can be computed for non-square matrices $$A$$. It only requires that $$A^T$$ is positive definite, which is the case if $$A$$ is full rank; 
+- Gaussian Elimination is not feasible for large matrices because of its cubic computational complexity. In practice, these are solved iteratively with e.g. the Jacobi method, Richardson method, etc. The main idea is:
   - to solve $$Ax=b$$ iteratively, we set up an iteration of the form $$x^{(k+1)} = Cx^{(k)} + d$$, for a suitable $$C$$ and $$d$$ that minimized the residual error $$\mid x^{k+1}-x_* \mid$$ in every iteration and converges to $$x_*$$; 
 
 ### Vector Spaces
  
-- the term "vector multiplication" is not defined. Theoretically, it could be an element-wise multiplication $$c_j = a_j b_j$$, or most commonly **outer product** $$ab^T$$ or **inner product**, **scalar product** or **dot product** $$a^Tb$$;
+- the term "vector multiplication" is not well defined. Theoretically, it could be an element-wise multiplication $$c_j = a_j b_j$$, or most commonly **outer product** $$ab^T$$ or **inner product**, **scalar product** or **dot product** $$a^Tb$$;
 - a **linear combination** $$v$$ of vectors $$x_1, ..., x_n$$ is defined by the sum of a scaled set of vectors, ie $$v = \sum_{i=1}^k \lambda_i x_i \in V$$, for constants $$\lambda_i$$; 
 - if there is a linear combination of vectors $$x_1, ..., x_n$$ such that $$\sum_{i=1}^k \lambda_i x_i=0$$ with all $$\lambda_i \neq 0$$, then vectors $$x$$ are **linearly dependent**. If only the trivial solution exists with all $$\lambda_i=0$$ then they are **linearly independent** ;  
   - Intuitively, a set of linearly independent vectors consists of vectors that have no redundancy, i.e., if we remove any of those vectors from
@@ -48,7 +48,7 @@ the set, we will lose something in our representation;
 - the **rank** of a matrix is the number of *linearly independent* columns/rows. Thus, $$rk(A)=rk(A^T)$$;
   - a matrix $$A \in \mathbb{R}^{m \times n}$$ is invertible iff $$rk(A)=n$$;
   - a SLE $$Ax=b$$ can only be solved if $$rk(A) = rk (A \mid b)$$;
-  - a matrix has **ful rank** if its rank equals the largest possible rank for a matrix of its dimensions;
+  - a matrix has **full rank** if its rank equals the largest possible rank for a matrix of its dimensions;
   - note: **dimension** of a matrix is the number of vectors in *any* basis for the space to be spanned. Rank of a matrix is the dimension of the column space;
 
 
@@ -84,7 +84,11 @@ An **affine mapping** is defined as $$x \Rightarrow a + \phi(x)$$ for linear map
 ### Matrix Decompositions
 
 - a matrix is **invertible** if determinant is not 0;
-- determinant rules: $$det(AB) = det(A) det(B)$$;\, $$det(A) = det(A^T)$$;\, $$det(A^{-1})=\frac{1}{det(A)}$$;\, *Similar* matrices have the same determinant;
+- determinant properties:
+  - $det(AB) = det(A) det(B)$; 
+  - $det(A) = det(A^T)$; 
+  - $det(A^{-1})=\frac{1}{det(A)}$;
+  - *Similar* matrices have the same determinant;
 - the determinant can also be computed as the product of the diagonal on a matrix in row-echelon form;
   - thus, a square matrix $$A \in \mathbb{R}^{n \times n}$$ has $$det(A) \neq 0$$ iff $$rank(A)=n$$.
   - I.e. $$A$$ is invertible iff it has full rank; 

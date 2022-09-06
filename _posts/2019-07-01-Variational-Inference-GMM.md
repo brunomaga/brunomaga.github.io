@@ -77,7 +77,7 @@ KL (q(z) || p(z \mid x)) =  \int q(z) \log \frac{q(z)}{p(z \mid x)} dz= \mathbf{
 \label{eq_KLdiv}
 $$ 
 
-Note that KL is not a distance metric as it's not symmetric. And that sometimes your may found divergence metrics other than KL divergence.
+Note that **KL is not a distance metric as it's not symmetric**. And that there are other divergence metrics other than KL divergence, part of the [f-divergence family](https://en.wikipedia.org/wiki/F-divergence).
 
 Back to the topic. If both $q$ and $p$ are high, then we achieve a good solution as the KL-divergence is low. If $q$ is high and $p$ is low, we have a high divergence and the solution *may* not be very good. Otherwise, if *q* is low, we dont care about *p*, since we achieve low divergence, independently of $p$. It would then make more sense to compute $KL(p\|\|q)$ instead, however we do not do this due to computational reasons, as we will see later.
 
@@ -152,7 +152,7 @@ This setup is often called **generalized mean field** instead of **naive mean fi
 
 ### Coordinate Ascent Variational Inference 
 
-The main objective is to optimize the ELBO in the mean field variational inference, or equivalently, to choose the variational factors that maximizes the ELBO (eq. \ref{eq_elbo}). A common approach is to  use the **coordinate ascent** method, by optimizing the variational approximation of each latent variable $q_{z_j}$, while holding the others fixed.
+The main objective is to **optimize the ELBO in the mean field variational inference**, or equivalently, to choose the variational factors that maximizes the ELBO (eq. \ref{eq_elbo}). A common approach is to  use the **coordinate ascent** method, by optimizing the variational approximation of each latent variable $q_{z_j}$, while holding the others fixed.
 
 Recall the [probability chain rule](https://en.wikipedia.org/wiki/Chain_rule_(probability)) for more than two events $X_1, \ldots , X_n$:
 
@@ -227,7 +227,7 @@ However, this provides the factorization or the template of the computation, but
 
 ### Multivariate Gaussian Mixture Models
 
-<small>Credit: this section is a more verbose and extended explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).</small>
+<small>Credit: this section is a more verbose explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).</small>
 
 A Gaussian mixture model is a probabilistic model that assumes all the data points are generated from a mixture of a finite number of Gaussian distributions with unknown parameters. The problem at hand is to fit a set of Gaussian density functions to the input dataset. 
 
