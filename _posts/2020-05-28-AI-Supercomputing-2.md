@@ -73,7 +73,7 @@ We will describe these components in the next sections, and ommit the implementa
 
 #### Word and Positional Embeddig
 
-The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. According to the paper, the embedding of a given word in the position $pos$ in a sentence, is an array with size $d$ whose value at each dimension $i$ is:
+The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding of a given word in the position $pos$ in a sentence, is an array with size $d$ whose value at each dimension $i$ is:
 
 $$
 PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \,\text{ and }\, PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right)
