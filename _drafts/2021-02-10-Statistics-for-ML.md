@@ -7,20 +7,9 @@ tags: [machinelearning]
 
 ### Basics of Probability
 
-There are two frameworks for statistical modelling, the explanatory model framework and the predictive framework.
+There are two frameworks for statistical modelling, the explanatory model framework and the predictive framework. We cannot always model the resolution of the observed data, so we introduce **stochasticity** to our model. Stochasticity refers to the property of being well described by a random probability distribution. Although stochasticity and **randomness** are distinct in that the former refers to a modeling approach and the latter refers to phenomena themselves, these two terms are often used synonymously.  The data is viewed as observations from that model.
 
-The explanatory framework starts from assuming a model to describe the observations. The predictive framework starts from assuming you can find a function $f(x)$ which maps from input $x$ to an output $f(x)$.
-
-We cannot always model the resolution of the observed data, so we introduce **stochasticity** to our model. Stochasticity refers to the property of being well described by a random probability distribution. Although stochasticity and **randomness** are distinct in that the former refers to a modeling approach and the latter refers to phenomena themselves, these two terms are often used synonymously.  The data is viewed as observations from that model.
-
-Probabilistic models can be caracterized  <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a> and <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a> input interval. I've covered different families of distributions in a previous [post]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) .
-
-The outcome of an experiment, or *what is observed* is called an observation or a realisation. 
-Models are modelled by a set of parameters $\theta$. So we model the distribution $F(y_1, ..., y_n; \theta)$ where $y_i \in Y$. We typically assume that $F(y_1, ..., y_n; \theta)$ is known, but $\theta$ in unknown. So we observe a realisation of $Y=(Y_1, ..., Y_b)^T \in \mathcal{Y}^n$, and use them to assert the true value of $\theta$ and quantify our uncertainty.
-
-When $F( \cdot , \theta)$ if known, we have a **parametric** proglem. When $F( \cdot )$ is unknown the problem is **non-parametric**.
-We shall model **outcomes** of experiments. The set of outcomes will be written as $\Omega$. An **event** is a subset $F \subset \Omega$ of $Omega$. An event is **realised** when the outcome of the experiment is an element of $F$. 
-
+Statistical distributions can be either <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a> or <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a>, while most continuous distributions belong to the [exponential family of distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) .
 
 - the **union** of two subsets is written as $$F_1 \cup F_2 = \{ ω ∈ Ω : ω ∈ F1 \text{ or } ω ∈ F2 \}$$;
 - the  **intersection** is $$F1 ∩ F2 = \{ ω ∈ Ω : ω ∈ F1 \text{ and } ω ∈ F2 \}$$;
