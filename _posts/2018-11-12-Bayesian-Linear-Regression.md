@@ -345,6 +345,8 @@ Similarly to the visualization displayed before, introducing new datapoints impr
 
 For more advanced topics on Bayesian Linear Regression refer to chapter 3 in Pattern Recognition and Machine Learning book from Chris Bishop and chapter 9.3 in Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}). To download the source code of the closed-form solutions and reproduce the examples above, download the <a href="{{ site.assets }}/Bayesian-Linear-Regression/Bayesian_Linear_Regression.ipynb">Bayesian Linear Regression notebook</a>.
 
+Finally, it has been shown that a kernelized Bayesian Linear Regression with the Kernel $K(x, x′)=x^Tx′$ is equivalent to a [Gaussian Process](https://en.wikipedia.org/wiki/Gaussian_process).  
+ 
 ---
 ---
 
