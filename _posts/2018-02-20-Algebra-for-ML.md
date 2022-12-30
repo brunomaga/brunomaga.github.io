@@ -35,7 +35,10 @@ The general solution of a SLE is found with **Gaussian Elimination** of the augm
 
 ### Vector Spaces
  
-- the term "vector multiplication" is not well defined. Theoretically, it could be an element-wise multiplication $$c_j = a_j b_j$$, or most commonly **outer product** $$ab^T$$ or **inner product**, **scalar product** or **dot product** $$a^Tb$$;
+- the term *vector multiplication* is not well defined. Theoretically, it could be:
+  - an element-wise multiplication $$c_j = a_j b_j$$,
+  - the **outer product** $$ab^T$$, or 
+  - the **inner product**, **scalar product** or **dot product** $$a^Tb$$, which has a geometric equivalence $$a \dot b = \vert a \vert \, \vert b \vert \, cos \theta$$ (where $$\vert a \vert$$ is the magnitude of $$a$$, and $$\theta$$ is the angle between $$a$$ and $$b$$).
 - a **linear combination** $$v$$ of vectors $$x_1, ..., x_n$$ is defined by the sum of a scaled set of vectors, ie $$v = \sum_{i=1}^k \lambda_i x_i \in V$$, for constants $$\lambda_i$$; 
 - if there is a linear combination of vectors $$x_1, ..., x_n$$ such that $$\sum_{i=1}^k \lambda_i x_i=0$$ with all $$\lambda_i \neq 0$$, then vectors $$x$$ are **linearly dependent**. If only the trivial solution exists with all $$\lambda_i=0$$ then they are **linearly independent** ;  
   - Intuitively, a set of linearly independent vectors consists of vectors that have no redundancy, i.e., if we remove any of those vectors from
