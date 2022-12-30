@@ -76,7 +76,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
         <td> <b> Senior Researcher at Microsoft Research, Cambridge, UK </b> </td>
       </tr>
       <tr> <td/> <td>
-       I design computer vision models for object recognition and classification of information written on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>.  I also perform full-stack development of large data pipelines and scalable Machine Learning models (data parallelism, pipelining, sharded ML) on the AzureML cloud, in order to handle the large amount of super-high resolution input data.
+       I design computer vision models for object recognition and classification of information written on glass for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>.  I also perform full-stack development of large data pipelines and scalable Machine Learning models (data parallelism, pipelining, sharded ML) running on the AzureML cloud, in order to handle the large amount of super-high resolution input data.
       </td> </tr>
       <tr> <td/> <td>
 Previously, as an AI resident, I improved the CPU load balancing of email servers, based on an ML system that learnt time series from email usage patterns, using DNNs, RNNs, Encoder-Decoders, Bayesian linear regression (closed-form solution) and Bayesian neural nets (Variational Inference); 
