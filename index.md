@@ -27,7 +27,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 
 <ul class="nav mt-3">
   <li class="nav-item">
-    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-file"  title="one page resume"></i> <b>one page resume</b></a>
+    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-file"  title="resume"></i> <b>resume</b></a>
   </li>
   <li class="nav-item">
     <a class="btn btn-link" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
