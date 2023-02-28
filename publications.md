@@ -9,6 +9,14 @@ permalink: /publications/
  <div class="mt-4 mb-4"> A quick summary of some interesting publications I came accross. Continuously updated.  </div>
 
 |--- ||--- |
+|2022||[Training Compute-Optimal Large Language Models, arXiv](https://arxiv.org/abs/2203.15556)|
+||| The authors revisit the question "Given a fixed FLOPs budget, how should one trade-off model size and the number of training tokens?" to which they present three approaches: (1) fix model sizes and vary number of training tokens; (2) vary model sizes for 9 different FLOP counts; (3) fit a parametric loss function to the values retrived from the 2 approaches. Estimates were collected from a total of 400 runs. |
+|||  The main conclusion is that current large language models are under-performing as they only scaled the model size and not the data size. For compute-optimal training, the model size and number of training tokens should be scalled equally. This hypothesis is demonstrated with a "compute-optimal" model Chinchilla, with the same "compute budget" as Gopher (70B parameters) and 4× more more data. Chinchilla outperforms Gopher (280B), GPT-3 (175B), Jurassic-1 (178B), and Megatron-Turing NLG (530B) on several evaluation tasks. |
+||| To be compute optimal (in terms of accuracy vs energy cost), Kaplan et al. (2020) claims that models should not be trained to their lowest possible loss, and for a 10× increase in computational budget, the model should increase by 5.5× and the training tokens by 1.8x. In this paper, the authors defend that model size and trainig tokens should be scaled in equal proportions. |
+||| <img class="mt-3" width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models.png"/> |
+||| <img class="mt-3" width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models_2.png"/> |
+||||
+||||
 |2021||[Grad-CAM: Visual Explanations from Deep Networks via Gradient-based Localization, Facebook AI and Gergia Institute of Technology, ICCV 2017](https://arxiv.org/abs/1610.02391)|
 ||| <img class="mt-3" width="90%" height="90%" src="/assets/publications/gradcam.png"/> |
 ||||
