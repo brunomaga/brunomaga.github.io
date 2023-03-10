@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "AI Supercomputing (part 2): Encoder-Decoder, Transformers, BERT and Sharding"
+title:  "AI Supercomputing (part 2): Encoder-Decoder, Transformers, BERT, Sharding, and model compression"
 categories: [machine learning, supercomputing]
 tags: [machinelearning]
 ---
@@ -249,13 +249,14 @@ The limits of supercomputing in Machine Learning can been pushed to a far greate
 On top of that, when using model parallelism such as pipelining, each processor can keep only the subset of model layers that it needs for its computation. In practice, the optimizer parameters and temporary buffers that each processor holds in memory refer only to the computation it is required to do. The model weights can also be divided the same way --- even though they have a much smaller memory footprint --- sacrificing memory reduction for a larger runtime. In this scenario, processors continuously communicate the activation and gradients (forward and backward passes) to the processors holding connecting layers in the network. This can also be combined with data parallelism, leading to a setup where each processor has a subset of the data batch and a subset of the model. This technique is called Sharding, where a shard is a subset of the model layers that is delegated to individual compute units. If you are interested in this topic, see [ZeRO and DeepSpeed work at Microsoft](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) ( [Turing-NLG blog post](ttps://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/), [www.deepspeed.ai/](https://www.deepspeed.ai/), [ZeRO paper](https://www.microsoft.com/en-us/research/publication/zero-memory-optimizations-toward-training-trillion-parameter-models/)), the [Megatron work at NVIDIA](https://github.com/NVIDIA/Megatron-LM) and the [GPT work at OpenAI](https://en.wikipedia.org/wiki/GPT-3). 
 
 
-## Reducing memory footprint and runtime
+## Model compression for reduced memory footprint and runtime
 
 Many use cases will require model size to be small for deployment (particularly onto embedded systems), or require inter-layer communication to be small due to storage or network bandwidth limitations, or even benefit from a smaller numerical representation to increase vectorization. To handle that, some commonly used techniques are:  
 - [Pruning methods](https://arxiv.org/abs/2101.09671), where weights or neurons are *dropped* after training or during training (via a train-prune-train-prune-etc workflow). Note that prunning of weights alone will reduce memory footprint but not compute time in GPUs due to the registers being filled with the same neurons as pre-prunning;
 - [Quantization methods](https://arxiv.org/abs/2103.13630) to reduce the numerical representation, value ranges and bit counts of values. The common use case is the floating point representation in a numerical representation of a smaller bit size (e.g. from 64- to 32-bit) or mixed precision, reducing memory footprint and runtime (by increasing vectorization);
 - [Knowledge distillation](https://research.google/pubs/pub44873/), a special case of model compression, that transfer learning from a larger to a smaller model. This allows the smaller model to be smaller and lighter, and *some times* of increased performance;
 - [Checkpointing](https://arxiv.org/abs/2012.00825) to avoid storing all activations of intermediate layers --- required for back-propagation --- *in lieu* of on-the-fly computation of activations from a previous checkpoint (layer). The ammount of checkpointed layers guides the tradeoff between runtime increase and memory decrease; 
+- [Neural architecture search (NAS)](https://en.wikipedia.org/wiki/Neural_architecture_search), a method to search for the parameters that define the architecture of the models (e.g. number of layers, layer sizes, etc). I have no applied exposure to this method, but found [this paper](https://arxiv.org/abs/2301.08727) to be very insightful in surveying existing methods;
 
 [//]: <> #### Superlinear speed-up
 
