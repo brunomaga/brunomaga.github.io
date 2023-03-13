@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  "Deep Neural Networks, backpropagation, dropout, CNNs, embeddings and loss functions"
+title:  "Deep Neural Networks, backpropagation, autodiff, dropout, CNNs, embeddings and loss functions"
 categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---
@@ -90,6 +90,12 @@ The complete back propagation is then summarized as:
 1. **Forward pass**: set $$ x^{(0)} = x_n $$. Compute $$ z^{(l)} $$ for $$ l=1,...,l+1 $$;
 2. **Backward pass**: set $$ \delta ^{(L+1)} $$ using the appropriate loss and activation function. Compute $$ \delta ^{(L+1)} $$ for $$ l = L, ..., 1 $$;
 3. **Final computation**: for all parameters compute $$ \frac{\partial L_n}{\partial w_{i,j}^{(l)}} $$ (eq. \ref{eq_w}) and $$ \frac{\partial L_n}{\partial b_{j}^{(l)}} $$ (eq. \ref{eq_b});
+
+### Automatic Differentiation
+
+The chain rule shows us the theoretical framework, but not how to compute it efficiently. In practice, contraritly to the back-propagation algorithm above, (automatic differentiation)[https://en.wikipedia.org/wiki/Automatic_differentiation] ) (*autodiff*) algorithms such as (pytorch's autograd)[https://pytorch.org/tutorials/beginner/introyt/autogradyt_tutorial.html], do not require the derivatives of the loss and activation functions to be specified explicitly.
+
+Instead, a graph of workflow operations and dependencies is created, and partial derivatives of basic arithmetic operations (sums, division, sins, ...) are computed on the fly. Derivatives of activations and loss functions are computed from the graph of these partial derivatives. For more details, refer to <a href="https://towardsdatascience.com/automatic-differentiation-explained-b4ba8e60c2ad">Chi-Feng Wang's post</a> for an illustrative example of the automatic differentiation graph, or the <a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">Princeton course COS 324 in automatic differentiation</a> for a thorough explanation of the whole process.
 
 ### Regularization via Dropout
 
