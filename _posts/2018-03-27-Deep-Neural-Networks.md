@@ -93,7 +93,7 @@ The complete back propagation is then summarized as:
 
 ### Automatic Differentiation
 
-The chain rule shows us the theoretical framework, but not how to compute it efficiently. In practice, contraritly to the back-propagation algorithm above, (automatic differentiation)[https://en.wikipedia.org/wiki/Automatic_differentiation] ) (*autodiff*) algorithms such as (pytorch's autograd)[https://pytorch.org/tutorials/beginner/introyt/autogradyt_tutorial.html], do not require the derivatives of the loss and activation functions to be specified explicitly.
+The chain rule shows us the theoretical framework, but not how to compute it efficiently. In practice, contraritly to the back-propagation algorithm above, <a href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation ("autodiff")</a> algorithms such as <a href="https://pytorch.org/tutorials/beginner/introyt/autogradyt_tutorial.html">pytorch's autograd</a>, do not require the derivatives of the loss and activation functions to be specified explicitly.
 
 Instead, a graph of workflow operations and dependencies is created, and partial derivatives of basic arithmetic operations (sums, division, sins, ...) are computed on the fly. Derivatives of activations and loss functions are computed from the graph of these partial derivatives. For more details, refer to <a href="https://towardsdatascience.com/automatic-differentiation-explained-b4ba8e60c2ad">Chi-Feng Wang's post</a> for an illustrative example of the automatic differentiation graph, or the <a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">Princeton course COS 324 in automatic differentiation</a> for a thorough explanation of the whole process.
 
