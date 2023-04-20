@@ -27,7 +27,10 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 
 <ul class="nav mt-3">
   <li class="nav-item">
-    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-file"  title="resume"></i> <b>resume</b></a>
+    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-file"  title="resume"></i> <b>one page resume</b></a>
+  </li>
+  <li class="nav-item">
+    <a class="btn btn-link" href="{{ site.cv }}"><i class="far fa-file"  title="full cv"></i> <b>full cv</b></a>
   </li>
   <li class="nav-item">
     <a class="btn btn-link" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
@@ -56,7 +59,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
     <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Lausanne"><i class="fa fa-home"  title="Home"></i> Lausanne, Switzerland</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Portugal"><i class="fas fa-passport"  title="Nationality"></i> Portuguese</a>
+    <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Portugal"><i class="fas fa-passport"  title="Nationality"></i> Portuguese, Swiss</a>
   </li>
   <!--
   <div class="noprint">
