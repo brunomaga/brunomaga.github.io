@@ -39,13 +39,13 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
     <a class="nav-link" href="{{ site.url }}" class="btn btn-link"><i class="fas fa-mouse-pointer" title="homepage"></i> {{ site.url }} </a>
   </li>
   <li class="nav-item">
-    <a class="btn btn-link" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link"><i class="fab fa-fw fa-twitter" ></i> {{ site.twitter_username }} </a>
-  </li>
-  <li class="nav-item">
     <a class="btn btn-link" href="https://github.com/{{ site.github_username }}" class="btn btn-link"><i class="fab fa-fw fa-github" ></i>{{ site.github_username}}</a>
   </li>
   <li class="nav-item">
     <a class="btn btn-link" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" class="btn btn-link"><i class="fab fa-linkedin" ></i> {{ site.linkedin_username }}</a>
+  </li>
+  <li class="nav-item">
+    <a class="btn btn-link" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link"><i class="fab fa-fw fa-twitter" ></i> {{ site.twitter_username }} </a>
   </li>
 <!--
   <li class="nav-item">
