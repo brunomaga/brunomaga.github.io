@@ -59,7 +59,7 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
     <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Lausanne"><i class="fa fa-home"  title="Home"></i> Lausanne, Switzerland</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Portugal"><i class="fas fa-passport"  title="Nationality"></i> Portuguese, Swiss</a>
+    <a class="nav-link btn btn-link" href="#"><i class="fas fa-passport"  title="Nationality"></i> Portuguese and Swiss</a>
   </li>
   <!--
   <div class="noprint">
