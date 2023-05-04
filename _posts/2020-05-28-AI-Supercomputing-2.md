@@ -69,11 +69,11 @@ In 2017 the staff at Google introducted the Transformer (original paper [Attenti
 </p>
 
 The left and right hand side components refer to the encoder and decoder, specifically.
-We will describe these components in the next sections, and ommit the implementation details to focus on computational complexity. If you're curious about its implementation details, have a look at [The Annotated Transformer](https://nlp.seas.harvard.edu/2018/04/03/attention.html).
+We will describe these components in the next sections, and ommit the implementation details to focus on computational complexity. If you're curious about its implementation, have a look at [The Annotated Transformer](https://nlp.seas.harvard.edu/2018/04/03/attention.html).
 
 #### Word and Positional Embeddig
 
-The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding of a given word in the position $pos$ in a sentence, is an array with size $d$ whose value at each dimension $i$ is:
+The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes and circles in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding of a given word in the position $pos$ in a sentence, is an array with dimensionality $d$ whose value at each dimension $i$ is:
 
 $$
 PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \,\text{ and }\, PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right)
@@ -84,7 +84,7 @@ In practice, the embedding is given by $sine$ and $cosine$  waves with a differe
 <p align="center">
 <br/>
 <img width="60%" height="60%" src="/assets/AI-Supercomputing/transformer-embedding.png"/><br/>
-<br/><small>The output of the positional encoding in the transformer architecture, for dimensions 4 to 7 of the embedding array, for a word with a sentence-positioning related to the x axis. <br/>Source: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
+<br/><small>The output of the positional encoding in the transformer architecture, for dimensions 4 to 7 of the embedding array, for a word with a sentence-positioning related to the x axis. Source: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
 </small>
 </p>
 
@@ -121,9 +121,9 @@ The technique used and the main component of the attention mechanism is the **sc
 </small>
 </p>
 
-The logic is the following: similar vectors yield large angle-cosine values. These values are then scaled by $\sqrt{d_k}$ by the attention mechanism, introduced for numerical stability (detailed in the paper). The output is then past to a $softmax$ function that normalizes the vector and converts into a probability distribution, and finally multiplied by $V$ to retrieve the values scaled to the probability distribution of a given key. In practice, this can be interpreted as an implementation of a key-value store found in regular programming languages (on a discrete set of values), but on a continuous space. I.e. instead of outputting the value in a given position in a map related to the query, it outputs the probability of each value to relate to a given query, and retrieves all values and their respective importance, based on that query.
+The logic is the following: similar vectors yield small angle-cosine values. These values are then scaled by $\sqrt{d_k}$ by the attention mechanism, introduced for numerical stability (detailed in the paper). The output is then past to a $softmax$ function that normalizes the vector and converts into a probability distribution, and finally multiplied by $V$ to retrieve the values scaled to the probability distribution of a given key. In practice, this can be interpreted as an implementation of a key-value store found in regular programming languages (on a discrete set of values), but on a continuous space. I.e. instead of outputting the value in a given position in a map related to the query, it outputs the probability of each value to relate to a given query, and retrieves all values and their respective importance, based on that query.
 
-Finally, the multi-head attention mechanims combines all attention mechanism modues, and is defined as:
+Finally, the multi-head attention mechanims combines all attention mechanism modules, and is defined as:
 
 $$
 MHA(K, V, Q) = [head_0,.., head_n]W^{MHA}   \,\text{ and }\,  head_i = Attention(KW^K_i, VW^V_i, QW^Q_i)
@@ -137,7 +137,7 @@ The **Masked Multi-head Attention** component on the decoder is similar to the r
 <p align="center">
 <br/>
 <img width="30%" height="30%" src="/assets/AI-Supercomputing/transformer_attention_masked.png"/><br/>
-<br/><small>Input of the masked attention mechanism on the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every word iterated. The mask component of the attention mechanism refers to replacing unseen words by zero. Source: unknown.
+<br/><small>Input of the masked attention mechanism on the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every word iterated. The mask component of the attention mechanism refers to replacing (in the attention matrix) the position of unseen words by zero. Source: unknown.
 </small>
 </p>
 
@@ -146,7 +146,7 @@ The **Masked Multi-head Attention** component on the decoder is similar to the r
 The other components on the transformer are not unique, and have been used previously in other machine learning models:
 - The *Feed Forward* is a regressor (single hidden-layer DNN) that transforms the attention vectors into a form that is valid as input to the decoder or to the next computation phase;
 - The *Linear* transformation component on the decoder expands the space into an array of size equals to the target vocabulary (French in the example); 
-- The *Softmax* operation transforms the previous array into a probability distribution. The word with the highest probability is picked as output;
+- The *Softmax* operation transforms the output of the previous layer into a probability distribution. The word with the highest probability is picked as output;
 
 
 #### Computational Complexity
@@ -155,13 +155,12 @@ Besides the great reduction in the number of iterations on the encoder size, the
 
 <p align="center">
 <br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/transformer_table.png"/><br/>
-<br/><small>Comparative table of computational complexity of four different learning models. Key: $n$: sequence length, $d$: representation dim., $k$: kernel size; $r$: size of neighbourhood.
-<br/>Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
+<img width="60%" height="60%" src="/assets/AI-Supercomputing/transformer_table.png"/><br/>
+<br/><small>Comparative table of computational complexity of four different learning models. Key: $n$: sequence length, $d$: representation dim., $k$: kernel size; $r$: size of neighbourhood. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
 </small>
 </p>
 
-For the RNN used in previous Sequence-to-Sequence mechanism, the number of operations performed is in the order of $d^2$ multiplications (multiplication of weights in fully connected layer of DNN) for each of the $n$ words in the sentence, therefore $O(n^2 d)$. On the self-attention mechanism that we discussed in the Transformer, we have several operations of the attention matrix $n^2$ and the key and query vectors of embedding size $d$, therefore yielding a complexity of $O(n d^2$). 
+For the RNN used in previous Sequence-to-Sequence mechanism, the number of operations performed is in the order of $d^2$ multiplications (multiplication of weights in a fully-connected layer of a DNN) for each of the $n$ words in the sentence, therefore $O(n^2 d)$. On the self-attention mechanism that we discussed in the Transformer, we have several operations of the attention matrix $n^2$ and the key and query vectors of embedding size $d$, therefore yielding a complexity of $O(n d^2$). 
 
 The claim is that the $O(n^2 d)$ is better than $O(n d^2)$. This sound illogical in most Machine Learning problems as typically the input size is way larger than the dimensionality of the embedding. However, remember that $n$ here is the number of words in a sentence (in the order of $n \approx 70$) and $d$ is the size of the embedding ($d \approx 2000$).
 
@@ -208,8 +207,7 @@ Note that the Yes/No flag related to the second task is past as the first embedd
 <p align="center">
 <br/>
 <img width="60%" height="60%" src="/assets/AI-Supercomputing/BERT_input.PNG"/><br/>
-<br/><small>The input of the BERT model. Position Emdebbings are similar to the transformer model, discussed above. Segment embeddings flag each word as part of the first or second sentence. Token embedding are the text-embeddings of the input data. The datapoint being input to the model is the concatenation of these three embeddings.
-<br/>Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
+<br/><small>The input of the BERT model. Position Emdebbings are similar to the transformer model, discussed above. Segment embeddings flag each word as part of the first or second sentence. Token embedding are the text-embeddings of the input data. The datapoint being input to the model is the concatenation of these three embeddings. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
 </small>
 </p>
 
@@ -217,7 +215,7 @@ As a side note, the authors trained this model on BooksCorpus (800M words) and E
 
 #### Fine-tuning
 
-The fine-tuning phase adds an extra layer to the pre-trained BERT model, in order to train the model to the task at hand. This approach has been applied previously in other models, particularly on Convolutional Neural Nets, where the first layers are pre-trained and learnt edges and lines, and the remaining layers are added later and used on training of the object-specific detection.
+The fine-tuning phase adds an extra layer to the pre-trained BERT model, in order to train the model to the task at hand. This approach has been applied previously in other models, particularly on Convolutional Neural Nets, where the first layers are pre-trained and learnt edges and lines, and the remaining layers are added later and used on the training of the object-specific detection.
 
 In the original paper, the authors demonstrated this model successfully being applied to four families of tasks:
 1. Sentence Pair Classification Tasks: classification of context from pairs of sentences. Examples: do sentences agree/disagree, does the second sentence follow from the previous one, do they describe a simillar context, etc. Similarly to the pre-training phase of the BERT models, the label is past as the first embedded symbol of the output; 
