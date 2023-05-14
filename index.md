@@ -27,33 +27,33 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 
 <ul class="nav mt-3">
   <li class="nav-item">
-    <a class="btn btn-link" href="{{ site.resume }}"><i class="far fa-file"  title="resume"></i> <b>one page resume</b></a>
+    <a class="nav-link btn btn-link" href="{{ site.resume }}"><i class="far fa-file" title="resume"></i> <b>one page resume</b></a>
   </li>
   <li class="nav-item">
-    <a class="btn btn-link" href="{{ site.cv }}"><i class="far fa-file"  title="full cv"></i> <b>full cv</b></a>
+    <a class="nav-link btn btn-link" href="{{ site.cv }}"><i class="far fa-file" title="full cv"></i> <b>full cv</b></a>
   </li>
   <li class="nav-item">
-    <a class="btn btn-link" href="mailto:{{ site.email }}?subject=Hello" class="btn btn-link"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
+    <a class="nav-link btn btn-link" href="mailto:{{ site.email }}?subject=Hello"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="{{ site.url }}" class="btn btn-link"><i class="fas fa-mouse-pointer" title="homepage"></i> {{ site.url }} </a>
+    <a class="nav-link btn btn-link" href="{{ site.url }}"><i class="fas fa-mouse-pointer" title="homepage"></i> {{ site.url }} </a>
   </li>
   <li class="nav-item">
-    <a class="btn btn-link" href="https://github.com/{{ site.github_username }}" class="btn btn-link"><i class="fab fa-fw fa-github" ></i>{{ site.github_username}}</a>
+    <a class="nav-link btn btn-link" href="https://github.com/{{ site.github_username }}"><i class="fab fa-fw fa-github" ></i>{{ site.github_username}}</a>
   </li>
   <li class="nav-item">
-    <a class="btn btn-link" href="https://www.linkedin.com/in/{{ site.linkedin_username }}" class="btn btn-link"><i class="fab fa-linkedin" ></i> {{ site.linkedin_username }}</a>
+    <a class="nav-link btn btn-link" href="https://www.linkedin.com/in/{{ site.linkedin_username }}"><i class="fab fa-linkedin" ></i> {{ site.linkedin_username }}</a>
   </li>
   <li class="nav-item">
-    <a class="btn btn-link" href="https://twitter.com/{{ site.twitter_username }}" class="btn btn-link"><i class="fab fa-fw fa-twitter" ></i> {{ site.twitter_username }} </a>
+    <a class="nav-link btn btn-link" href="https://twitter.com/{{ site.twitter_username }}"><i class="fab fa-fw fa-twitter" ></i> {{ site.twitter_username }} </a>
   </li>
 <!--
   <li class="nav-item">
-    <a class="btn btn-link" href="skype:{{ site.skype_username }}" class="btn btn-link"><i class="fab fa-skype" aria-hidden="true"></i> {{ site.skype_username }} </a>
+    <a class="nav-link btn btn-link" href="skype:{{ site.skype_username }}"><i class="fab fa-skype" aria-hidden="true"></i> {{ site.skype_username }} </a>
   </li>
 -->
   <li class="nav-item">
-    <a class="nav-item btn btn-link" href="{{ site.google_scholar }}" class="btn btn-link"><i class="ai ai-google-scholar ai-1x"  title="Google Scholar"></i> google scholar</a>
+    <a class="nav-link btn btn-link" href="{{ site.google_scholar }}"><i class="ai ai-google-scholar ai-1x"  title="Google Scholar"></i> google scholar</a>
   </li>
   <li class="nav-item">
     <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Lausanne"><i class="fa fa-home"  title="Home"></i> Lausanne, Switzerland</a>
@@ -61,13 +61,6 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
   <li class="nav-item">
     <a class="nav-link btn btn-link" href="#"><i class="fas fa-passport"  title="Nationality"></i> Portuguese and Swiss</a>
   </li>
-  <!--
-  <div class="noprint">
-    <li class="nav-item">
-      <a class="btn btn-link" href="javascript:window.print()"><i class="fas fa-download" title="download this page"></i> Download this page</a>
-    </li>
-  </div>
-  -->
 </ul>
 
 
@@ -191,7 +184,6 @@ Between 2005 and 2006 I was an ERASMUS exchange student at the University of Mar
 </table>
 
 
-<div class="noprint">
 <h4 class="mt-5 mb-3">Posts</h4>
 
 
@@ -221,4 +213,3 @@ My <a href="{{ site.google_scholar }}">google scholar page</a> indexes most of m
 <p>
 I've been playing waterpolo for most of my life, the last 14 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Aquatique</a> and <a href="https://uk.teamunify.com/SubTabGeneric.jsp?team=cocsc&_stabid_=154244">Cambridge City</a> clubs. I enjoy cooking, winter sports and board games. As a general rule, I prefer not to be addressed by my academic title or surname, so addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine.
 </p>
-</div> <!-- noprint -->
