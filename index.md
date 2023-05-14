@@ -27,16 +27,13 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 
 <ul class="nav mt-3">
   <li class="nav-item">
-    <a class="nav-link btn btn-link" href="{{ site.resume }}"><i class="far fa-file" title="resume"></i> <b>one page resume</b></a>
+    <a class="nav-link btn btn-link" href="{{ site.resume }}"><i class="far fa-file" title="resume"></i> one page resume</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link btn btn-link" href="{{ site.cv }}"><i class="far fa-file" title="full cv"></i> <b>full cv</b></a>
+    <a class="nav-link btn btn-link" href="{{ site.cv }}"><i class="far fa-file" title="full cv"></i> full cv</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link btn btn-link" href="mailto:{{ site.email }}?subject=Hello"><i class="fas fa-envelope" title="Email"></i> {{site.email}}</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link btn btn-link" href="{{ site.url }}"><i class="fas fa-mouse-pointer" title="homepage"></i> {{ site.url }} </a>
+    <a class="nav-link btn btn-link" href="mailto:{{ site.email }}?subject=Hello"><i class="far fa-envelope" title="Email"></i> {{site.email}}</a>
   </li>
   <li class="nav-item">
     <a class="nav-link btn btn-link" href="https://github.com/{{ site.github_username }}"><i class="fab fa-fw fa-github" ></i>{{ site.github_username}}</a>
@@ -54,6 +51,9 @@ I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-resear
 -->
   <li class="nav-item">
     <a class="nav-link btn btn-link" href="{{ site.google_scholar }}"><i class="ai ai-google-scholar ai-1x"  title="Google Scholar"></i> google scholar</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link btn btn-link" href="{{ site.url }}"><i class="fas fa-mouse-pointer" title="homepage"></i> {{ site.url }} </a>
   </li>
   <li class="nav-item">
     <a class="nav-link btn btn-link" href="https://en.wikipedia.org/wiki/Lausanne"><i class="fa fa-home"  title="Home"></i> Lausanne, Switzerland</a>
