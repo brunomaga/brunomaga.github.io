@@ -48,6 +48,9 @@ statistics_videos: {
         #'25': 1YrxidM0tYE,
 }
 
+# Google analytics
+google_analytics: UA-129707365-1
+
 # Build settings
 markdown: kramdown
 theme: minima
