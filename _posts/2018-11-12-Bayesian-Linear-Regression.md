@@ -350,7 +350,7 @@ Finally, it has been shown that a kernelized Bayesian Linear Regression with the
 ---
 ---
 
-##### Appendix: Regresher on Linear Algebra
+##### Appendix: Refresher on Linear Algebra
 <div id="appendix-lin-alg" />
 
 Here are the list of algebraic rules used in this document. For further details, check <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed list of matrix operations.
