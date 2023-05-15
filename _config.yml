@@ -1,5 +1,7 @@
 title: "Bruno Magalhaes"
-email: brunomaga@gmail.com
+author:
+  name: Bruno Magalhaes
+  email: "brunomaga@gmail.com"
 assets: /assets/
 resume: /resume.pdf
 cv: /cv.pdf
@@ -12,7 +14,6 @@ url: "https://brunomaga.github.io" # the base hostname & protocol for your site,
 twitter_username:  ibrunomaga
 github_username:   brunomaga
 linkedin_username: brunomaga
-skype_username: brunomaga
 
 # for the links Statistics for Data Science at EPFL in the resources page
 statistics_lectures: https://github.com/brunomaga/Statistics_EPFL/raw/main/lecture-slides/lectureXXX.pdf
@@ -52,7 +53,6 @@ statistics_videos: {
 google_analytics: UA-129707365-1
 
 # Build settings
-markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
