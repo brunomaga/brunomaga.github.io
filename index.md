@@ -1,6 +1,6 @@
 ---
 layout: base
-title: "Posts"
+title: "Home"
 ---
 
 # Bruno Magalhaes
