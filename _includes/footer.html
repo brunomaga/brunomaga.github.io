@@ -8,7 +8,7 @@
   </td>
   {% else %}
   <td style="border:none; text-align:left">
-    <!-- <i class="fas fa-home"></i> {{ site.url }} -->
+    <a href="{{ site.url }}"><i class="fas fa-home"></i></a>
   </td>
   {% endif %}
   <td style="border:none; text-align:right">
@@ -17,7 +17,6 @@
     <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}"><i class="fab fa-linkedin" ></i></a>
     <a href="https://twitter.com/{{ site.twitter_username }}"><i class="fab fa-fw fa-twitter" ></i></a>
     <a href="{{ site.google_scholar }}"><i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i></a>
-    <a href="{{ site.url }}"><i class="fas fa-home"></i></a>
     <a href="{{ "/feed.xml" | relative_url }}"><i class="fas fa-fw fa-rss-square" ></i></a>
   </td>
 </tr>
