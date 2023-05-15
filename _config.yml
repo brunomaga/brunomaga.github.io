@@ -56,9 +56,6 @@ google_analytics: UA-129707365-1
 theme: minima
 plugins:
   - jekyll-feed
-  - jekyll-remote-theme # added until we have minima 3.0 released
-
-remote_theme: jekyll/minima  #added until we get minima 3.0 released
 
 permalink: /:title  #replaces folder structure /YY/mm/dd/categories/title by only /title
 
