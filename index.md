@@ -17,7 +17,7 @@ Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Perf
 |--- |--- |--- |
 | <a href="{{site.resume}}"><i class="far fa-file"></i> one page resume</a> | <a href="{{site.cv}}"><i class="far fa-file"></i> full cv</a> | <a href="mailto:{{ site.author.email }}?subject=Hello"><i class="far fa-envelope" title="Email"></i> {{site.author.email}}</a> |
 | <a href="https://github.com/{{ site.github_username }}"><i class="fab fa-fw fa-github" ></i> {{ site.github_username}}</a> | <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}"> <i class="fab fa-linkedin" ></i> {{ site.linkedin_username }}</a> | <a href="https://twitter.com/{{ site.twitter_username }}"> <i class="fab fa-fw fa-twitter" ></i> {{ site.twitter_username }}</a> |
-| <a href="{{ site.google_scholar }}"> <i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> google scholar</a> | <a href="{{ site.url }}"><i class="fas fa-mouse-pointer"></i> {{site.url}}</a> | <a href="#"> <i class="fas fa-passport" title="Nationality"></i> Portuguese and Swiss</a> |
+| <a href="{{ site.google_scholar }}"> <i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> google scholar</a> | <a href="{{ site.url }}"><i class="fas fa-mouse-pointer"></i> {{site.url | replace:'http://','' | replace:'https://','' }}</a> | <a href="#"> <i class="fas fa-passport" title="Nationality"></i> Portuguese and Swiss</a> |
 
 When time allows, I post about HPC and ML.
 I also maintain a <a href="{{ site.publications_permalink }}">publications bookmark</a> and a <a href="{{ site.resources_permalink }}">resources page</a> where I keep track of several resources used as reference in these posts. 
