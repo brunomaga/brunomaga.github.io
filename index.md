@@ -19,8 +19,8 @@ Prior to this, I completed a PhD in Computational Neuroscience at <a href="https
 
 <table style='table-layout:fixed; border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
   <tr>
-    <td style="border:none; text-align:left"><a href="{{site.resume}}"><i class="far fa-file" title="resume"></i> one page resume</a></td>
-    <td style="border:none; text-align:left"><a href="{{site.cv}}"><i class="far fa-file" title="resume"></i> full cv</a></td>
+    <td style="border:none; text-align:left"><a href="{{site.resume}}"><i class="far fa-file"></i> one page resume</a></td>
+    <td style="border:none; text-align:left"><a href="{{site.cv}}"><i class="far fa-file"></i> full cv</a></td>
     <td style="border:none; text-align:left"><a href="mailto:{{ site.author.email }}?subject=Hello"><i class="far fa-envelope" title="Email"></i> {{site.author.email}}</a></td>
   </tr>
   <tr>
