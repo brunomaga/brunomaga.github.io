@@ -4,7 +4,7 @@ title: Bookmarks
 permalink: /publications/
 ---
 
-<h1 class="mt-5" itemprop="name headline">{{ page.title  escape }}</h1>
+<h1 class="mt-5" itemprop="name headline">{{ page.title | escape }}</h1>
 
 <div class="mt-4 mb-4"> A quick summary of some interesting publications I came accross. Continuously updated.  </div>
 

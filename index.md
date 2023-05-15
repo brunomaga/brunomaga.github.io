@@ -8,7 +8,7 @@ title: "Home"
 ## Machine Learning and High Performance Computing
 
 <table style='table-layout:fixed; border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
-<tr><td width="27%" style='border:none'>
+<tr><td width="20%" style='border:none'>
 <img src="{{site.photo}}" alt="my photo" width="100%" height="100%"/>
 </td><td style="border:none">
 Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Performance Computing (HPC). I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>, where I create large parallel-distributed ML models and pipelines on the cloud. <br/><br/>Prior to this, I completed a PhD in Computational Neuroscience at <a href="https://www.epfl.ch/en/">EPFL</a>, researching large-scale reconstruction and simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a>, foccusinng on distributed computing, storage and multicore/GPU algorithms.
@@ -36,8 +36,4 @@ My <a href="{{ site.google_scholar }}">google scholar page</a> indexes most of m
 </tr>
 {% endfor %}
 </table>
-
-
-<br/>
-As hobbies, I've been playing waterpolo for most of my life, the last 14 years with <a href="https://lausannenatation.ch/section/waterpolo/">Lausanne Aquatique</a> and <a href="https://uk.teamunify.com/SubTabGeneric.jsp?team=cocsc&_stabid_=154244">Cambridge City</a> clubs. I enjoy cooking, winter sports and board games. And as a general rule, I prefer not to be addressed by my academic title or surname, so addressing me simply by my first name (<i>"Hi Bruno"</i>) is perfectly fine <i class="far fa-smile"></i>
 
