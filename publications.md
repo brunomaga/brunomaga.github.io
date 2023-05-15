@@ -1,6 +1,6 @@
 ---
 layout: default
-title: Publication bookmarks
+title: Publications bookmark
 permalink: /publications/
 ---
 
