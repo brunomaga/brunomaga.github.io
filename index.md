@@ -29,6 +29,7 @@ Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Perf
   <div class="Rtable-cell"> <a href="{{ site.google_scholar }}"> <i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> google scholar</a> </div>
   <div class="Rtable-cell"> <a href="{{ site.url }}"><i class="fas fa-mouse-pointer"></i> {{site.url | replace:'http://','' | replace:'https://','' }}</a> </div>
   <div class="Rtable-cell"> <i class="fas fa-passport" title="Nationality"></i> Portuguese and Swiss </div>
+  <div class="Rtable-cell"> </div>
 
 </div>
 
