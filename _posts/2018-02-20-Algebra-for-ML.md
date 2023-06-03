@@ -5,7 +5,7 @@ categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-I decided to compile a summary of topics in algebra that are relevant to ML. Most information is extracted from books in the <a href="{{ site.resources_permalink }}">resources</a> section.
+I compiled a summary of algebra topics that are relevant to ML. Most information is extracted from books in the <a href="{{ site.resources_permalink }}">resources</a> section.
 
 ### Properties of Matrices
 
@@ -14,7 +14,7 @@ I decided to compile a summary of topics in algebra that are relevant to ML. Mos
   - $$AA^{-1} = I = A^{-1}A$$,  $$(AB)^{-1}=B^{-1}A^{-1}$$;
   - two matrics $$A$$ and $$B$$ are inverse to each other if $$AB=I=BA$$;
 - **Transpose**: $${(A^T)}^{T}=A$$, $$(A+B)^T=A^T+B^T$$, $$(AB)^T=B^TA^T$$;
-- **Symmetric** iff $$A=A^T$$. Thus $$A$$ is square. Also, if $$A$$ is invertible then $$A^T$$ is also invertible and $$A^T=A^{-1}$$. Sum of symmetric matrices is a symmetric matrix, but usually not their product;
+- **Symmetric** iff $$A=A^T$$. Thus $$A$$ is square. Also, if $$A$$ is invertible then $$A^T$$ is also invertible and $$A^T=A^{-1}$$. Sum of symmetric matrices is a symmetric matrix -- this holds for a sum but usually not for a product;
 
 
 ### Systems of Linear Equations
@@ -36,14 +36,17 @@ The general solution of a SLE is found with **Gaussian Elimination** of the augm
 ### Vector Spaces
  
 - the term *vector multiplication* is not well defined. Theoretically, it could be:
-  - an element-wise multiplication $$c_j = a_j b_j$$,
+  - an element-wise **multiplication** $$c_j = a_j b_j$$,
   - the **outer product** $$ab^T$$, or 
-  - the **inner product**, **scalar product** or **dot product** $$a \cdot b = a^Tb$$, which has a geometric equivalence $$a \cdot b = \vert a \vert \, \vert b \vert \, cos \, \theta$$ (where $$\vert a \vert$$ is the magnitude of $$a$$, and $$\theta$$ is the angle between $$a$$ and $$b$$).
+  - the **inner product**, **scalar product** or **dot product** $$<a, b> = a \cdot b = a^Tb$$, which has a geometric equivalence $$a \cdot b = \vert a \vert \, \vert b \vert \, cos \, \theta$$ (where $$\vert a \vert$$ is the magnitude (norm) of $$a$$, and $$\theta$$ is the angle between $$a$$ and $$b$$).
+    - Note: the dot product is designed specifically for the Euclidean spaces. An inner product on the other hand is a notion defined in terms of a generic vector space.
+    - Note: some inner products are not dot products (example in page 73 in <a href="{{ site.resources_permalink }}">MML book</a>.);
 - a **linear combination** $$v$$ of vectors $$x_1, ..., x_n$$ is defined by the sum of a scaled set of vectors, ie $$v = \sum_{i=1}^k \lambda_i x_i \in V$$, for constants $$\lambda_i$$; 
 - if there is a linear combination of vectors $$x_1, ..., x_n$$ such that $$\sum_{i=1}^k \lambda_i x_i=0$$ with all $$\lambda_i \neq 0$$, then vectors $$x$$ are **linearly dependent**. If only the trivial solution exists with all $$\lambda_i=0$$ then they are **linearly independent** ;  
   - Intuitively, a set of linearly independent vectors consists of vectors that have no redundancy, i.e., if we remove any of those vectors from
 the set, we will lose something in our representation;
-  - To find out if a set of vectors are linearly independent, is to write all vectors as columns of a matrix and perform GE until the row echelon form. All column vectors are linearly independent iff all columns are pivot columns; 
+  - To find out if a set of vectors are linearly independent, write all vectors as columns of a matrix and perform GE until the row echelon form. All column vectors are linearly independent iff all columns are pivot columns; 
+  - Otherwise, all vectors in a column without a pivot can be expressed as a linear combination of the other vectors with a pivot (as they're the *basis* of that vector space);  
 - for a given vector space, if every vector can be expressed as a linear combination of a set of vectors $$A=\{ x_1, ..., x_n\}$$, then $$A$$ is the **generating set** of that vector space. The set of all linear combinations of $$A$$ is called the **span** of $$A$$. Moreover, $$A$$ is called minimal if there exists no smaller set that spans V. Every linearly independent generating set of V is minimal and is called a **basis** of V;
   - a basis is a minimal generating set and a maximal linearly independent set of vectors;
   - the dimension of a vector space corresponds to the number of its basis vectors;
@@ -51,75 +54,105 @@ the set, we will lose something in our representation;
 - the **rank** of a matrix is the number of *linearly independent* columns/rows. Thus, $$rk(A)=rk(A^T)$$;
   - a matrix $$A \in \mathbb{R}^{m \times n}$$ is invertible iff $$rk(A)=n$$;
   - a SLE $$Ax=b$$ can only be solved if $$rk(A) = rk (A \mid b)$$;
-  - a matrix has **full rank** if its rank equals the largest possible rank for a matrix of its dimensions;
+  - a matrix has **full rank** if its rank equals the largest possible rank for a matrix of its dimensions, otherwise it's **rank deficient**;
   - note: **dimension** of a matrix is the number of vectors in *any* basis for the space to be spanned. Rank of a matrix is the dimension of the column space;
 
 
-### Linear Mappings 
+### Linear Mapping
 
-A **Linear Mapping** is a maping $$\phi: V \rightarrow W$$ such that: $$\phi (\lambda x + \psi y) = \lambda \phi(x) + \lambda \psi(y)$$, for constants $$\lambda, \psi$$ and $$x, y \in V$$.
-- it can be classified as **Injective** if $$\phi(x)=\phi(y) \rightarrow x = y$$; $$\,$$ **Surjective** if $$\phi(V)=W$$; $$\,$$ **Bijective** if both;
-- for $$y=Ax$$, where $$x$$ are a set coordinates, $$A$$ is the **transformation matrix** of $$x$$ into the new coordinates $$y$$;
-- two matrices $$A, B \in \mathbb{R}^{m\ times n}$$ are **equivalent** if there exist regular matrices $$S \in \mathbb{R}^{n \times n}$$ and  $$S \in \mathbb{R}^{m \times m}$$, such that: $$B = T^{-1}A S$$; 
-- two matrices $$A, B \in \mathbb{R}^{m\ times n}$$ are **similarent** if there exist regular matrices $$S \in \mathbb{R}^{n \times n}$$ and  $$S \in \mathbb{R}^{m \times m}$$, such that: $$B = S^{-1}A S$$. Similarity implies equivalence, no the other way around;
+A **Linear Mapping** (a.k.a linear transformation or map) is a function $$\phi: V \rightarrow W$$ for vector spaces $$V$$, $$W$$, such that: $$\phi (\lambda x + \psi y) = \lambda \phi(x) + \lambda \psi(y)$$, for constants $$\lambda, \psi$$ and $$x, y \in V$$. It can also be represented as a matrix (not only as a function).
+- $$\phi$$ is called **injective** if $$\phi(x)=\phi(y) \rightarrow x = y$$; $$\,\,$$ **Surjective** if $$\phi(V)=W$$; $$\,\,$$ **Bijective** if both;
+  - Surjective means that every element in $$W$$ can be achieved from $$V$$;
+  - Bijective means mapping can be undone i.e. there's a mapping $$\psi : W \rightarrow V$$ s.t. $$\psi(W)=V$$; 
+  - Special cases: **Isomorphism** $$\phi: V \rightarrow W$$ if linear and bijective.  **Endomorphism** $$\phi : V \rightarrow V$$ if linear. **Automorphism** $$\phi V \rightarrow V$$ if linear and bijective;
+    - Vector spaces $$V$$ and $$W$$ are isomorphic if $$dim(V) = dim(W)$$. I.e. there exists a linear, bijective mapping between two vector spaces of the same dimension.
+  - For linear mappings $$Φ : V → W$$ and $$Ψ : W → X$$, the mapping $$Ψ ◦ Φ : V → X$$ is also linear;
+  - If $$Φ : V → W$$ is an isomorphism, then $$Φ^{−1} : W → V$$ is an isomorphism, too.
+- for $$y=Ax$$, where $$x$$ are a set coordinates, $$A$$ is the **transformation matrix** of $$x$$ into the new coordinates $$y$$, i.e. transformation matrix can be used to map coordinates with from an ordered basis into another ordered basis;
+- two matrices $$A, B \in \mathbb{R}^{m\ times n}$$ are **equivalent** if there exist regular matrices $$S \in \mathbb{R}^{n \times n}$$ and  $$S \in \mathbb{R}^{m \times m}$$, such that: $$B = T^{-1}A S$$. I.e. the matrices can be transformed into one another by a combination of elementary row and column operations. 
+- two matrices $$A, B \in \mathbb{R}^{m\ times n}$$ are **similar** if there exist regular matrices $$S \in \mathbb{R}^{n \times n}$$ and  $$S \in \mathbb{R}^{m \times m}$$, such that: $$B = S^{-1}A S$$. Thus, similar matrices are always equivalent, not the other way around;
 - for $$\phi : V \rightarrow W$$, a **kernel** is the set of vectors $$v \in V$$ that $$\phi$$ maps onto the neutral element $$0_W \in W$$, ie $$\{ v \in V : \phi(v)=0_W \}$$; 
-- the **image** is the set of vectors $$w \in W$$ that can be reached by $$\phi$$ from any vector in $$V$$;
-- the **kernel space** or **null space** is the solution to the SLE $$Ax=0$$;
-
-An **affine mapping** is defined as $$x \Rightarrow a + \phi(x)$$ for linear mapping $$\phi$$ and mapping $$a$$ (the translation vector). Affine mappings keep the geometric **structure invariant**, and preserve dimension and parallelism. It's a transformation in terms of translation, scaling and shearing.
+- the **kernel space** ($$ker$$, or **domain** or **null space**) of a linear mapping is the solution to the SLE $$Ax=0$$, ie captures all possible linear combinations of the elements in $$R^n$$ that produce $$0$$;
+- the **image** ($$Im$$, or **codomain**) of a linear mapping is the set of vectors $$w \in W$$ that can be reached by $$Φ : V → W$$ from any vector in $$V$$;
+  - for a linear mapping $$Φ : V →W$$, we have that $$\,\,ker(Φ) \subseteq V$$ and $$Im(Φ) \subseteq W$$.
+- **Rank-Nullity theorem:** $$dim(ker(Φ)) + dim(Im(Φ)) = dim(V)$$, For vector spaces $$V$$, $$W$$ and a linear mapping $$Φ : V →W$$
+- An **affine mapping / transformation** is a composition of linear transformations that defines translation, scaling, rotation and shearing. Affine transformations keep the structure invariant, and preserve parallelism and dimension.
 
 ### Analytic Geometry
 
-- a bilinear mapping $$\Omega : V \times V \rightarrow V$$ is called **symmetric** if order of arguments doesnt matter for the final result, **positive definite** if $$∀x \in V \setminus {0} : Ω(x, x) > 0 , Ω(0, 0) = 0$$;
-- a positive, symmetric, definite, bilinear mapping  $$\Omega : V \times V \rightarrow V$$ is called an inner product on $$V$$ and is typically written as $$<x,y>$$. Symmetric, positive definite matrices are important in ML as they are defined by the inner product;
-- Note: some inner products are not dot products (example in page 73 in <a href="{{ site.resources_permalink }}">MML book</a>.);
-- a symmetric matrix $$A$$ that satisfies $$∀x ∈ V\setminus {0} : x^TAx > 0$$ is called **symmetric, positive definite** or just positive definite. In this case $$<x,y> = \hat{x}^TA\hat{y}$$ defines an **inner product** where $$\hat{x}, \hat{y}$$ are the coordinate representations of $$x, y \in V$$; 
-- a norm of vector a vector $$x$$ is represented by $$\| x \|$$. Examples of norms: manhattan and euclidian;
-- The **Length of a vector** is $$\| x \| = \sqrt{<x,x>}$$ and the **distance** between two vectors is $$d(x,y) = \| x-y \| = \sqrt{ <x-y, x-y>}$$;
+A bilinear mapping $$\Omega : V \times V \rightarrow V$$ is called **symmetric** if the order of the arguments doesnt matter for the final result, **positive definite** if $$∀x \in V \setminus {0} : Ω(x, x) > 0 , Ω(0, 0) = 0$$;
+
+A symmetric matrix $$A$$ is called **symmetric, positive definite** or just positive definite iff it satisfies $$∀x ∈ V\setminus {0} : x^TAx > 0$$. If only $$\ge$$ holds, it is instead **positive semidefinite**.
+- Loosely speaking, Positive-definite matrices are the matrix analogues to positive numbers. As an example: the covariance matrix is positive semidefinite. 
+- a positive, symmetric, definite, bilinear mapping  $$\Omega : V \times V \rightarrow V$$ is called an inner product on $$V$$ and is typically written as $$<x,y>$$. If $$A$$ is p.s.d., then $$<x,y> = \hat{x}^TA\hat{y}$$ defines an inner product where $$\hat{x}, \hat{y}$$ are the coordinate representations of $$x, y \in V$$.
+- The following holds if $$A \in \mathbb{R}^{n \times x}$$ is p.s.d:
+  - the null space (kernel) of $$A$$ is only $$0$$ because $$x^T A x \gt 0$$ for all $$x \neq 0$$. This implies $$A \neq 0$$ if $$x \neq 0$$;
+  - The diagonal elements elements $$a_{ii}$$ of $$A$$ are positive because $$a_{ii} = e^T_i A e_i > 0$$, where $$e_i$$ is the $$i$$-th vector of the standard basis in $$\mathbb{R}^n$$.
+- in optimization, quadratic forms on positive definite matrices $$x^TAx$$ are always positive for non-zero $$x$$ and are convex. 
+- a positive definite matrix has all positive eigenvalues. As the determinant equals the products of all of the eigenvalues, the determinant of a positive definite matrix is positive. Non-zero determinant means that p.s.d is invertible.
+
+The norm of vector a vector $$x$$ is represented by $$\| x \|$$. Examples of norms: manhattan and euclidian;
+- The **length of a vector** is $$\| x \| = \sqrt{<x,x>} = \sqrt{x^Tx}$$ and the **distance** between two vectors is $$d(x,y) = \| x-y \| = \sqrt{ <x-y, x-y>}$$;
 - **Cauchy-Schwarz Inequality**: $$\mid <x, y> \mid \, \le \, \| x \| \, \| y \|$$;
-- any **metric** of distance must be positive definite, symmetric, and respect triangle inequality: $$d(x, z) \le d(x, y) + d(y, z)$$ for all $$x, y, z ∈ V$$;
-- the angle $$w$$ between two vectors is computed as $$\cos w = \frac{<x,y>}{\|x\| \|y\|}$$, where $$ <x,y> $$ is typically the dot product $$x^Ty$$;
-  - if $$<x,y>=0$$, both vectors are **orthogonal**, and we write it as $$x \perp y$$. If $$\|x\|=\|y\|=1$$ they are **orthonormal**;
-  - a square matrix $$A$$ is an **orthogonal matrix** iff $$AA^T = I = A^TA$$ ie $$A^{-1}=A^T$$; 
-- the **inner product** of two functions $$u$$ and $$v$$ defined in $$\mathbb{R}$$ is computed as $$ <u,v> = \int_a^b u(x) v(x) dx $$ for lower and upper limits $$a, b < \infty$$; 
-- a **projection** is a linear transformation $$P$$ from a vector space to itself (ie an endomorphism): $$P^2 = P \circ P = P$$, ie $$P$$ is idempotent.  
+
+A **metric** $$d:V ×V → R$$ where $$(x, y) → d(x, y)$$ satisfies the following: 
+- $$d$$ is positive definite, i.e., $$d(x, y) ⩾ 0$$ for all $$x, y ∈ V$$ and $$d(x, y) = 0 \Leftrightarrow x = y$$;
+- $$d$$ is symmetric, i.e., $$d(x, y) = d(y, x)$$ for all $$x, y ∈ V$$;
+- Triangle inequality: $$d(x, z) ⩽ d(x, y) + d(y, z)$$ for all $$x, y, z ∈ V$$;
+
+The angle $$w$$ between two vectors is computed as $$\cos w = \frac{<x,y>}{\|x\| \|y\|}$$, where $$ <x,y> $$ is typically the dot product $$x^Ty$$.
+- Thus  $$\cos w = \frac{<x,y>}{\sqrt{<x,x> <y,y>}} =  \frac{x^Ty}{\sqrt{x^Txy^Ty}}$$;
+- if $$<x,y>=0$$, both vectors are **orthogonal**, and we write it as $$x \perp y$$ (x and y are **perperdicular**). If $$\|x\|=\|y\|=1$$ they are **orthonormal**;
+
+A square matrix $$A$$ is an **orthogonal matrix** iff its columns are orthonormal so that $$AA^T = I = A^TA$$, which implies $$A^{-1}=A^T$$; 
+
+The **inner product** of two functions $$u : \mathbb{R} \rightarrow \mathbb{R} $$ and $$v: \mathbb{R} \rightarrow \mathbb{R}$$ is defined as $$ <u,v> = \int_a^b u(x) v(x) dx $$ for lower and upper limits $$a, b < \infty$$; 
+
+Let $$V$$ be a vector space and $$U ⊆ V$$ a subspace of $$V$$. A linear mapping $$π : V → U$$ is called a **projection** if $$π^2 = π ◦ π = π$$ ie $$\pi$$. In the use case of matrices, $$P$$ is a projection iff $$P^2 = P$$.
 
 ### Matrix Decompositions
 
-- a matrix is **invertible** if determinant is not 0;
-- determinant properties:
-  - $det(AB) = det(A) det(B)$; 
-  - $det(A) = det(A^T)$; 
-  - $det(A^{-1})=\frac{1}{det(A)}$;
-  - *Similar* matrices have the same determinant;
-- the determinant can also be computed as the product of the diagonal on a matrix in row-echelon form;
-  - thus, a square matrix $$A \in \mathbb{R}^{n \times n}$$ has $$det(A) \neq 0$$ iff $$rank(A)=n$$.
-  - I.e. $$A$$ is invertible iff it has full rank; 
-- the **trace** of a square matrix is the sum of its diagonal terms, and the sum of its eigenvalues;
+determinant properties:
+- $det(AB) = det(A) det(B)$; 
+- $det(A) = det(A^T)$; 
+- $det(A^{-1})=\frac{1}{det(A)}$;
+- for more than 2 columns or rows: $$det(A) = \sum_{k=1}^{n} (−1)^{k+j}a_{kj} det(A_{k,j})
+- *Similar* matrices have the same determinant;
+- a matrix $$A$$ is **invertible** if $$det(A) \neq 0$$;
+- for a diagonal matrix, the determinant is computed by the product of the diagonal elements;
+- the determinant is the signed volume of the parallelepiped formed by the columns of the matrix, i.e. it can also be computed as the product of the diagonal on a matrix in row-echelon form;
+  - thus, $$A$$ is invertible iff it has full rank; 
+  - and a square matrix $$A \in \mathbb{R}^{n \times n}$$ has $$det(A) \neq 0$$ iff $$rank(A)=n$$.
+
+The **trace** of a square matrix is the sum of its diagonal terms, or the sum of its eigenvalues;
 - for a square matrix $$A \in \mathbb{R}^{n \times n}$$, $$λ ∈ \mathbb{R}$$ is an **eigenvalue** of $$A$$ and $$x ∈ \mathbb{R}^n \setminus {0}$$ is the corresponding **eigenvector** of $$A$$ if  $$Ax = λx$$; 
-  - to determine the eigenvalues of $$A$$, solve $$Ax = \lambda x$$ or equivalently solve $$det(A - \lambda I)=0$$ for $$x$$;
-    - $$p(\lambda) = det(A - \lambda I)$$ is called the **characteristic polynomial**;
-  - to determine the eigenvectors $$x_i$$, solve $$Ax_i=\lambda_i x_i$$ for each eigenvalue $$\lambda_i$$ found previously;
-    - eigenvectors corresponding to distinct eigenvalues are linearly independent;
-    - therefore, eigenvectors of a matrix with $$n$$ distinct eigenvectors form a basis of $$\mathbb{R}^n$$;
+
+Eigenvalues and eigen vectors:
+- to determine the **eigenvalues** of $$A$$, solve $$Ax = \lambda x$$ or equivalently solve $$det(A - \lambda I)=0$$ for $$x$$;
+  - $$p(\lambda) = det(A - \lambda I)$$ is called the **characteristic polynomial**;
+- to determine the eigenvectors $$x_i$$, solve $$Ax_i=\lambda_i x_i$$ for each eigenvalue $$\lambda_i$$ found previously;
+  - eigenvectors corresponding to distinct eigenvalues are linearly independent;
+  - therefore, eigenvectors of a matrix with $$n$$ distinct eigenvectors form a basis of $$\mathbb{R}^n$$;
 - a square matrix with less (linearly independent) eigenvectors than its dimension is called **defective**; 
-  - Two vectors are called **codirected** if they point in the same direction and **collinear** if they point in opposite directions. All vectors that are collinear to x are also eigenvectors of A;
-  - a matrix and its transpose have the same eigenvalues, but not necessarily the same eigenvectors;
-  - similar matrices possess the same eigenvalues;
-  - symmetric, positive definite matrices always have positive, real eigenvalues;
-  - Graphical intuition: the direction of the two eigenvectors correspond to the canonical basis vectors i.e., to cardinal axes. Each axis is scaled by a factor equivalent to its eigenvalue. 
-- Given a matrix  $$A \in \mathbb{R}^{m \times n}$$, we can always obtain a symmetric positive semidefinite matrix $$S=A^TA$$. If $$rk(A)=n$$, then $$A^TA$$ is symmetric positive definite;
-- Note: covariance matrices are positive semidefinite :)
+
+Two vectors are called **codirected** if they point in the same direction and **collinear** if they point in opposite directions. All vectors that are collinear to $$x$$ are also eigenvectors of A;
+- Non-uniqueness of eigenvectors: if $$x$$ is an eigenvector of $$A$$ associated with eigenvalue $$λ$$, then for any $$c ∈ \mathbb{R}\setminus\{0\}$$ it holds that $$cx$$ is an eigenvector of $$A$$ with the same eigenvalue;
+- a matrix and its transpose have the same eigenvalues, but not necessarily the same eigenvectors;
+- symmetric, positive definite matrices -- like the p.s.d. covariance matrix -- always have positive, real eigenvalues. Determinant is the product of eigenvalues, thus it is not zero. Therefore it is also invertible;
+- Given a matrix  $$A \in \mathbb{R}^{m \times n}$$, we can always obtain a symmetric positive semidefinite matrix $$S=A^TA$$.
+  - If $$rk(A)=n$$, then $$A^TA$$ is symmetric positive definite;
+  - there exists eigenvectors with real eigenvalues (spectral theorem);
+- Graphical intuition: the direction of the two eigenvectors correspond to the canonical basis vectors i.e., to cardinal axes. Each axis is scaled by a factor equivalent to its eigenvalue: 
 
 <p align="center"><img width="65%" height="65%" src="/assets/Algebra-for-ML/MML_eigenvalues_and_eigenvectors.png"/><br/>
 <small>image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a></small></p>
 
-**Cholesky Decomposition**: a symmetric, positive definite matrix $$A$$ can be factorized into a product $$A = LL^T$$, where $$L$$ is a *lower-triangular matrix* with positive diagonal elements. $$L$$ is unique. This can be solved normally as a SLE.
+**Cholesky Decomposition**: a symmetric, positive definite matrix $$A$$ can be factorized into a product $$A = LL^T$$, where $$L$$ is a *lower-triangular matrix* with positive diagonal elements. $$L$$ is unique. This can be solved normally as a SLE. It is used e.g. to sample from Gaussian distributions and to compute determinants efficiently, as $$det(A) = det(L) det(L^⊤) = det(L)^2$$.
 
-**Diagonalizable**: a matrix $$A \in \mathbb{R}^{n \times n}$$ is diagonalizable (ie made into a diagonal matrix) if there is an invertible square matrix $$P \in \mathbb{R}^{n \times n}$$ such that $$D=P^{-1}AP$$. A symmetric matrix is always diagonalizable. The inverse of a diagonal matrix is the matrix replacing all diagonals by their reciprocal, i.e. replace $$a_{ii}$$ by $$\frac{1}{a_{ii}}$$.
-
-**Eigendecomposition**: a matrix $$A \in \mathbb{R}^{n \times n}$$ can be factored into $$A = PDP^{-1}$$, where $$P \in \mathbb{R}^{n \times n}$$ and $$D$$ is a diagonal matrix whose diagonal entries are the eigenvalues of $$A$$, iff the eigenvectors of $$A$$ form a basis of $$\mathbb{R}^n$$.
-- When this eigendecomposition exists, then $$det(A) = det(PDP^{−1}) = det(P) \, det(D) \, det(P^{−1})$$, and $$A^k = (PDP^{−1})^k = PD^kP^{−1}$$.
+**Diagonalizable**: a matrix $$A \in \mathbb{R}^{n \times n}$$ is diagonalizable if it is similar to a diagonal matrix, i.e. if there is an invertible matrix $$P \in \mathbb{R}^{n \times n}$$ such that $$D=P^{-1}AP$$. The inverse of a diagonal matrix is the matrix replacing all diagonals by their reciprocal, i.e. replace $$a_{ii}$$ by $$\frac{1}{a_{ii}}$$.
+- a matrix $$A \in \mathbb{R}^{n \times n}$$ can be factored into $$A = PDP^{-1}$$, where $$P \in \mathbb{R}^{n \times n}$$ and $$D$$ is a diagonal matrix whose diagonal entries are the eigenvalues of $$A$$, iff the eigenvectors of $$A$$ form a basis of $$\mathbb{R}^n$$.
+- when this eigendecomposition exists, then $$det(A) = det(PDP^{−1}) = det(P) \, det(D) \, det(P^{−1})$$, and $$A^k = (PDP^{−1})^k = PD^kP^{−1}$$;
+- a symmetric matrix can always be diagonalized;
 
 **Singular Value Decomposition** is a decomposition of the form $$S = U \Sigma V^T$$:
 <p align="center"><img width="45%" height="45%" src="/assets/Algebra-for-ML/MML_SVD.png"/><br/>
