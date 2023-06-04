@@ -200,3 +200,4 @@ where $$A$$ is an anchor input, $$P$$ is a positive input of the same class as $
 **[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)**: a classifier and loss function for noisy sequential unsegments input data, for training recurrent neural networks (RNNs) such as LSTM networks to tackle sequence problems where the timing is variable. Published on [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf). Already summarized in the <a href="{{ site.publications_permalink }}">publications bookmark</a> section.
 
 **[Focal Loss](https://arxiv.org/abs/1708.02002)**
+

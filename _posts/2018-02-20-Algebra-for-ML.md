@@ -1,11 +1,9 @@
 ---
 layout: post
 title:  "Algebra for ML Engineers"
-categories: [machine learning, algebra]
-tags: [machinelearning]
 ---
 
-A brief summary of the algebra topics that are most relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.
+A brief summary of the algebra topics that are most relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For more on statistics or probabilities, see the post [Statistics and Probabilities for ML Engineers]({{ site.baseurl }}{% post_url 2019-02-10-Statistics-for-ML %}) .
 
 
 ### Properties of Matrices
