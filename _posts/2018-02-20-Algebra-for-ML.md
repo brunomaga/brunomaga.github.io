@@ -5,7 +5,8 @@ categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-I compiled a summary of algebra topics that are relevant to ML. Most information is extracted from books in the <a href="{{ site.resources_permalink }}">resources</a> section.
+A brief summary of the algebra topics that are most relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.
+
 
 ### Properties of Matrices
 
@@ -32,6 +33,7 @@ The general solution of a SLE is found with **Gaussian Elimination** of the augm
   - $$(A^TA)^{−1}A^T$$ is also called the **pseudo-inverse** of $$A$$, which can be computed for non-square matrices $$A$$. It only requires that $$A^T$$ is positive definite, which is the case if $$A$$ is full rank; 
 - Gaussian Elimination is not feasible for large matrices because of its cubic computational complexity. In practice, these are solved iteratively with e.g. the Jacobi method, Richardson method, etc. The main idea is:
   - to solve $$Ax=b$$ iteratively, we set up an iteration of the form $$x^{(k+1)} = Cx^{(k)} + d$$, for a suitable $$C$$ and $$d$$ that minimized the residual error $$\mid x^{k+1}-x_* \mid$$ in every iteration and converges to $$x_*$$; 
+
 
 ### Vector Spaces
  
@@ -77,6 +79,7 @@ A **Linear Mapping** (a.k.a linear transformation or map) is a function $$\phi: 
   - for a linear mapping $$Φ : V →W$$, we have that $$\,\,ker(Φ) \subseteq V$$ and $$Im(Φ) \subseteq W$$.
 - **Rank-Nullity theorem:** $$dim(ker(Φ)) + dim(Im(Φ)) = dim(V)$$, For vector spaces $$V$$, $$W$$ and a linear mapping $$Φ : V →W$$
 - An **affine mapping / transformation** is a composition of linear transformations that defines translation, scaling, rotation and shearing. Affine transformations keep the structure invariant, and preserve parallelism and dimension.
+
 
 ### Analytic Geometry
 
@@ -157,17 +160,18 @@ Two vectors are called **codirected** if they point in the same direction and **
 **Singular Value Decomposition** is a decomposition of the form $$S = U \Sigma V^T$$:
 <p align="center"><img width="45%" height="45%" src="/assets/Algebra-for-ML/MML_SVD.png"/><br/>
 <small>image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a></small></p>
-- applicable to all (not only square) matrices, and it always exists;
-- $$\Sigma$$ is the **singular value matrix**, a (non-square) matrix with only positive diagonal entries $$\Sigma_{ii} = \sigma_{i} \ge 0$$, and zero otherwise. $$\sigma_{i}$$ are the **singular values**. $$\Sigma$$ is unique. By convention $$\sigma_{i}$$ are ordered by value with largest at $$i=0$$;
+- applicable to all matrices (not only square), and it always exists;
+- $$\Sigma$$ is the **singular value matrix**, a (non-square) matrix with only positive diagonal matrix with entries $$\Sigma_{ii} = \sigma_{i} \ge 0$$, and zero otherwise. $$\sigma_{i}$$ are the **singular values**. $$\Sigma$$ is unique. By convention $$\sigma_{i}$$ are ordered by value with largest at $$i=0$$;
 - $$U$$ is orthogonal and its column vectors $$u_i$$ are called **left-singular values**;
+  - orthogonal because $$(UU^T=U^TU=I)$$ i.e.  it's orthogonal and normal = orthonormal;
 - $$V$$ is orthogonal and its column vectors $$v_i$$ are called **right-singular values**;
 - the SVD intuition follows superficially a similar structure to our eigendecomposition intuition;
-  - the left-singular vectors of $$A$$ are eigenvectors of $$AA^T$$;
+  - the left-singular vectors of $$A$$ are the eigenbasis (ie the eigenvectors) of $$AA^T$$;
   - the right-singular vectors of $$A$$ are eigenvectors of $$A^TA$$;
   - the nonzero singular values of $$A$$ are the square roots of the nonzero eigenvalues of both $$AA^T$$ and $$A^TA$$;
-- computing the SVD of $$A \in \mathbb{R}^{m \times n}$$ is equivalent to finding two sets of orthonormal bases $$U = (u_1,... , u_m)$$ and $$V = (v_1,... , v_n)$$ of the codomain $$\mathbb{R}_m$$ and the domain $$\mathbb{R}_n$$, respectively. From these ordered bases, we construct the matrices $$U$$ and $$V$$;
-- matrix approximation and compression can be achieving by reconstructing the original matrix using less singular values $$\sigma$$;
-  - In practice, for a rankg-$$k$$ approximation: $$\hat{A(k)} = \sum_{i=1}^{k} \sigma_i u_i v_i^T = \sum_{i=1}^k \sigma_i A_i$$.
+- i.e. computing the SVD of $$A \in \mathbb{R}^{m \times n}$$ is equivalent to finding two sets of orthonormal bases $$U = (u_1,... , u_m)$$ and $$V = (v_1,... , v_n)$$ of the codomain $$\mathbb{R}_m$$ and the domain $$\mathbb{R}_n$$, respectively. From these ordered bases, we construct the matrices $$U$$ and $$V$$;
+- Comparing the eigendecomposition of an s.p.d matrix ($$S = S^⊤ = PDP^⊤$$) with the corresponding SVD ($$S = UΣV^⊤$$), they are equivalent if we set $$U = P = V$$ and $$D = Σ$$;
+- matrix approximation/compression is achieved by reconstructing the original matrix using less singular values $$\sigma$$. In practice, for a rank-$$k$$ approximation: $$\hat{A(k)} = \sum_{i=1}^{k} \sigma_i u_i v_i^T = \sum_{i=1}^k \sigma_i A_i$$:
 
 <img width="43%" height="43%" src="/assets/Algebra-for-ML/SVD_example_2.png"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="/assets/Algebra-for-ML/SVD_example.png"/><br/>
 <small>**Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequential transformations. TThe SVD of a matrix can be interpreted as a decomposition of a corresponding linear mapping into three operations. Top-left to bottom-left: $$V^T$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$. The third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: example of application of SVD. Image sources: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a> and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a></small>
@@ -177,38 +181,49 @@ Two vectors are called **codirected** if they point in the same direction and **
 - in SVD, domain and codomain can be vector spaces of different dimensions;
 - the vectors of $$P$$ in ED are not necessarily orthogonal. The vectors in the matrices $$U$$ and $$V$$ in the SVD are orthonormal, so they do represent rotations;
 
+
 ### Vector Calculus
 
-- A **Taylor Polynomial** of degree $$n$$ of a function $$f$$ at $$x_0$$ is: $$T_n(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$, where $$f^{(k)}$$ is the $$k$$-th derivative;
-  - the **Taylor series** is a representation of a function f as an infinite sum of terms. These terms are determined using derivatives of $$f$$ evaluated at $$x_0$$. It is the Taylor Polinomial of infinite order i.e. $$T_{\infty}(x)$$. if $$T_{\infty}(x)=f(x)$$ it is called **analytic**;
-  - Relevance: in ML we often need to compute expectations, i.e., we need to solve integrals of the form:
-$$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$;
-  - Even for parametric $$p(x)$$, this integral typically cannot be solved analytically. The Taylor series expansion of $$f$$ is one way of finding an approximate solution.
+For $$h > 0$$ the **derivative** of $$f$$ at $$x$$ is defined as the limit:  $$\frac{df}{dx} = \lim_{x \rightarrow 0} \frac{f(x+h) - f(x)}{h}$$. In the limit, we obtain the $$tangent$$;
 
-- the **gradient** of **Jacobian** or $$\triangledown_x f(x)$$ of function $$f : \mathbb{R}^n \rightarrow \mathbb{R}^n$$ is the $$m \times n$$ matrix of partial derivatives per variable $$\frac{df_i(x)}{x_j}$$ for row and column iterators $$i$$ and $$j$$, respectively. Useful rules:
+A **Taylor Polynomial** of degree $$n$$ of a function $$f$$ at $$x_0$$ is: $$T_n(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$, where $$f^{(k)}$$ is the $$k$$-th derivative of $$f$$;
+- the **Taylor series** is a representation of a function f as an infinite sum of terms. These terms are determined using derivatives of $$f$$ evaluated at $$x_0$$. It is the Taylor Polinomial of infinite order i.e. $$T_{\infty}(x)$$. If $$T_{\infty}(x)=f(x)$$ it is called **analytic**;
+- Relevance: in ML we often need to compute expectations, i.e., we need to solve integrals of the form:
+$$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$;
+  - Even for parametric $$p(x)$$, this integral typically cannot be solved analytically. The Taylor series expansion of $$f$$ is a way to find an approximate solution.
+
+The **gradient** of **Jacobian** or $$\triangledown_x f(x)$$ of function $$f : \mathbb{R}^n \rightarrow \mathbb{R}^n$$ is the $$m \times n$$ matrix of partial derivatives per variable $$\frac{df_i(x)}{x_j}$$ for row and column iterators $$i$$ and $$j$$, respectively. Useful rules in partial differentiation:
   - Product: $$ (f(x) g(x))' = f'(x)g(x) + f(x)g'(x)$$;
   - Quotient: $$ \left(\frac{f(x)}{g(x)}\right)' = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$$;
   - Sum: $$ (f(x) + g(x))' = f'(x)+ g'(x)$$;
   - Chain: $$ (g(f(x))' = (g \circ f)'(x) = g'(f(x))f'(x) = \frac{df}{dg} \frac{dg}{dx}$$;
-- the **Hessian** or $$\triangledown^2_{x,y} f(x,y)$$ is a collection of all second-order partial derivatives, defined by the symmetric matrix:
-  <img width="40%" height="40%" src="/assets/Algebra-for-ML/Hessian.png"/>
- - the gradient of a function is often used to locally (linearly) approximate $$f$$ around $$x_0$$: $$f(x) ≈ f(x_0) + (∇_xf)(x_0)(x − x_0)$$. I.e. t's a Taylor series of two terms. multivariate Taylor series can be used for higher-order approximations (page 166, def 5.7 in <a href="{{ site.resources_permalink }}">MML book</a>);
 
-- In deep neural networks, the function value $$y$$ of a $$K$$-deep DNN is computed as: $$ y = (f_K ◦ f^{K−1} ◦ ... ◦ f_1)(x) = f_K(f_{K−1}( ... (f_1(x)) ... )) $$
+The **Hessian** or $$\triangledown^2_{x,y} f(x,y)$$ is a collection of all second-order partial derivatives, defined by the symmetric matrix:
+  <img width="33%" height="33%" src="/assets/Algebra-for-ML/Hessian.png"/>
+
+In deep neural networks, the output $$y$$ of a $$K$$-deep DNN is computed as: $$ y = (f_K ◦ f_{K−1} ◦ ... ◦ f_1)(x) = f_K(f_{K−1}( ... (f_1(x)) ... )) $$
 - The **chain rule** allows us to describe the partial derivatives as the following:  
   <img width="33%" height="33%" src="/assets/Algebra-for-ML/DNN_partial_derivatives.png"/>
   - the orange terms are partial derivatives of a layer with respect to its inputs; 
   - the blue terms are partial derivatives of a layer with respect to its parameters; 
-- Backpropagation is a special case of the **automatic differentiation** algorithm, a techniques to evaluate the gradient of a function by working with intermediate variables and dependencies and applying the chain rule;
+
+Backpropagation is a special case of the **automatic differentiation** algorithm, a techniques to evaluate the gradient of a function by working with intermediate variables and dependencies and applying the chain rule. Example: 
+  <img width="55%" height="55%" src="/assets/Algebra-for-ML/backprop.png"/><br/>
+  <small>(source: section 5.6, <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)</small>
+- "Writing out the gradient in this explicit way is often impractical since it often results in a very lengthy expression for a derivative. In practice, it means that, if we are not careful, the implementation of the gradient could be significantly more expensive than computing the function, which imposes unnecessary overhead."
+- If we use instead the automatic differentiation algorithm:
+  <img width="55%" height="55%" src="/assets/Algebra-for-ML/autodiff.png"/><br/>
+  <small>(source: adapted from example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)</small>
+
 
 ### Optimization
 
 - **Gradient Descent**: an optimization method to minimize an $$f$$ function iteratively. For iteration $$i$$ and step-size $$\gamma$$:
   - $$x_{i+1} = x_t − γ((∇f)(x_0))^T$$, 
 - **Gradient Descent with Momentum**: stores the value of the update $$\Delta x_i$$ at each iteration $$i$$ to determine the next update as a linear combination of the current and previous gradients:
-   - $x_{i+1} = x_i − γ_i((∇f)(x_i))^T + α∆x_i$
-   - where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^T$$ and $$\alpha \in [0,1]$$;
-      - $$\alpha$$ is a hyper-parameter (user defined), close to $$1$$. If $$\alpha=0$$, this performs regular Gradient Descent'
+  - $x_{i+1} = x_i − γ_i((∇f)(x_i))^T + α∆x_i$
+  - where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^T$$ and $$\alpha \in [0,1]$$;
+     - $$\alpha$$ is a hyper-parameter (user defined), close to $$1$$. If $$\alpha=0$$, this performs regular Gradient Descent'
 - **Constrained gradients**: find $$min_x f(x)$$ subject to $$g_i(x) \le 0$$, for all $$i=1,...,m$$;
   - solved by converting from a constrained to an unconstrained problem of minimizing $$J$$ where $$J(x) = f(x) + \sum_{i=1}^m \mathbb{1} (g_i(x))$$; 
     - where $$1(z)$$ is an infinite step function: $$1(z)=0$$ if $$z \le 0$$, and $$1(z)=\infty$$ otherwise;
