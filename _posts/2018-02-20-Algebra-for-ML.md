@@ -221,7 +221,7 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
 
 ### Continuous Optimization
 
-- To check whether a stationary point is a minimum or maximum of a function, we need to take check if the second derivative is positive or negative at the stationary point. I.e. compute $$\frac{df(x)}{x^2}$$, then replace $$x$$ at all stationary points: If $$f′′(x)<0$$, function is concave up and that point is a maximum. If $$>0$$, it is concave down, and a minimum;
+- To check whether a stationary point is a minimum or maximum of a function, we need to take check if the second derivative is positive or negative at the stationary point. I.e. compute $$\frac{df(x)}{x^2}$$, then replace $$x$$ at all stationary points: If $$f′′(x)>0$$, function is concave up and that point is a maximum. If $$<0$$, it is concave down, and a minimum;
 - **Gradient Descent**: an optimization method to minimize an $$f$$ function iteratively. For iteration $$i$$ and step-size $$\gamma$$:
   - $$x_{i+1} = x_t − γ((∇f)(x_0))^T$$, 
 - **Gradient Descent with Momentum**: stores the value of the update $$\Delta x_i$$ at each iteration $$i$$ to determine the next update as a linear combination of the current and previous gradients:
@@ -241,6 +241,7 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
   - in some cases Adam doesn't converge to the optimal solution, but SGD does. According to the authors, switching to SGD in some cases show better generalizing performance than Adam alone;
   - calculates the exponential moving average of gradients and square gradients. Parameters $$\beta_1$$ and $$\beta_2$$ are used to control the decay rates of these moving averages. Adam is a combination of two gradient descent methods, Momentum, and RMSP
 - **Convex sets** are sets such that a straight line connecting any two elements of the set lie inside the set;
+  - similarly, a **convex function** is a function where any line segment between any two distinct points on the graph of the function lies above the graph between the two points. It's in concave up, therefore its second derivative is non-negative on its entire domain. A strictly convex function has at most one global minimum.;
 - **Linear programming** or **linear optimization**, is a method to achieve the best outcome (maximum profit or lowest cost) in a mathematical model whose requirements are represented by linear relationships, eg in the form $$f(x) = ax+b$$. In algebraic notations, a linear program is defined as:
   - find a vector $$x$$ that maximizes/minimizes $$c^{\intercal} x$$,
   - subject to $$Ax \le b$$ and $$x \ge 0$$,
