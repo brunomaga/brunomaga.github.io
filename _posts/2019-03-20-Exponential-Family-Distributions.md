@@ -111,7 +111,7 @@ Finally, the *exponential families have conjugate priors* (i.e. same distributio
 The univariate Gaussian distribution is defined for an input $x$ as:
 
 $$
-p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
+p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
 $$
 
 for a distribution with mean $\mu$ and standard deviation $\sigma$. By moving the terms around we get:
