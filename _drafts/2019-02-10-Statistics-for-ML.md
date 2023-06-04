@@ -1,19 +1,19 @@
 ---
 layout: post
-title:  "[Draft] Statistics for ML Engineers"
+title:  "[Draft] Statistics and Probabilities for ML Engineers"
 categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-### Chapter 6 MML book: Probabilities and Distributions
-
-Basic definitions:
+**Basic definitions**:
 - **sample space $$Ω$$**  is the set of all *possible* outcomes of an experiment;
 - **event space $$A$$** is the space of *potential* results of the experiment;
 - **probability of A**, or $$P(A)$$ is the degree of belief that the event $$A$$ will occur, in the interval $$[0,1]$$;
 - **random variable** is a target space function $$X : Ω → T$$ that takes an outcome/event in $$Ω$$ (an outcome) and returns a particular quantity of interest $$x \in T$$
   - For example, in the case of tossing two coins and counting the number of heads or tails, a random variable $$X$$ maps to the three possible outcomes: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
   - Note: the name "random variable" creates confusion because it's neither random nor a variable: it's a function!
+
+**Statistical distributions** can be either <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a> or <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a>. Most parametric continuous distributions belong to the [exponential family of distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) .
 - $$P(X=x)$$ is called a **probabilistic mass function (pmf)** or a **probability density function (pdf)** for a discrete or continuous variable $$x$$, respectively; 
   - Any discrete (continuous) domain can be a probability as long as it only has non-negative values and all values sum (integrate) to 1; 
   - the probability of a subset/range of values is the sum of all probabilities of it occurring ie $$P( a \le X \le b) = \int^b_a p(x) dx$$, or the equivalent sum for the discrete use case;
@@ -30,9 +30,8 @@ Basic definitions:
 - ie $$p(x,y) = p(y \mid x) p(x) = p( x \mid y) p(y)$$
 
 **Bayes rule** describes the relationship between some prior knowledge $$p(x)$$ about an unobserved random variable x and some relationship $$p(y | x)$$ between $$x$$ and a second variable $$y$$:
-- read as $$\text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}$$ 
-- computed as $$p(x \mid y) = \frac{ p(y \mid x) p(x)}{p(y)} $$ 
-  - this is derived directly from the sum and product rules
+- $$p(x \mid y) = \frac{ p(y \mid x) p(x)}{p(y)} = \text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}$$. 
+- derived from the sum and product rules: $$p(y \mid x) p(y) = p(x \mid y) p(x) \Leftrightarrow p(x \mid y) = \frac{p(y \mid x) p(x)}{p(y)}$$.
 - the posterior is the quantity of interest as it tells us what we know about $$x$$ after observing $$y$$.
 - $$p(y) = \int p(y \mid x) p(x) dx = \mathbb{E}[ p(y \mid x)]$$ is the **marginal likelihood** or **evidence**
 
@@ -61,16 +60,36 @@ Basic definitions:
 - $$\mathbb{E}[x-y] = \mathbb{E}[x] - \mathbb{E}[y]$$.
 - $$\mathbb{V}[x+y] = \mathbb{V}[x] + \mathbb{V}[y] + Cov[x,y] + Cov[y,x]$$.
 - $$\mathbb{V}[x-y] = \mathbb{V}[x] + \mathbb{V}[y] - Cov[x,y] - Cov[y,x]$$.
-- $$\mathbb{E}[Ax+b] = A \mathbb{E}[x] = A \mu$$, where $$\mu$$ is the mean.
+- $$\mathbb{E}[Ax+b] = A \mathbb{E}[x] = A \mu$$, for the affine transformation $$y = Ax + b$$ of $$x$$, where $$\mu$$ is the mean.
 - $$\mathbb{V}[Ax+b] = \mathbb{V}[Ax] = A \mathbb{V}[x] A^{\intercal} = A \Sigma A^{\intercal}$$, where $$\Sigma$$ is the covariance.
 
-**Statistical Independence** of random variables $$X$$ and $$Y$$: $$p(x,y)=p(x)p(y)
+**Statistical Independence** of random variables $$X$$ and $$Y$$ iff $$p(x,y)=p(x)p(y)$$. Independence means:
+- $$p(y \mid x) = p(x)$$.
+- $$p(x \mid y) = p(y)$$.
+- $$\mathbb{E}[x,y] = \mathbb{E}[x] \mathbb{E}[y]$$, thus
+- $$Cov_{X,Y}[x,y] = \mathbb{E}[x,y] - \mathbb{E}[x] \mathbb{E}[y] = 0$$, thus
+- $$\mathbb{V}_{X,Y}[x+y] = \mathbb{V}_X[x] + \mathbb{V}_X[y]$$.
+- important: $$Cov_{X,Y}[x,y]=0$$ does not hold in converse, i.e. zero covariance does not mean independence!
+
+**Conditional Independence** of rvs $$X$$ and $$Y$$ given $$Z$$ ie $$X \perp Y \mid Z$$ iff $$p(x,y \mid z) = p(x \mid z) \, p(y \mid z)$$ for all $$z \in Z$$
+
+**Gaussian Distribution** (see the post about the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) for more distributions): 
+- univariate with mean $$\mu$$ and variance $$\sigma^2$$: $$\,\,\,p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$
+- multivariate with mean vector $$\mu \in \mathbb{R}^D$$ and covariance matrix $$\Sigma$$: $$p(x \mid \mu, \Sigma ) = (2 \pi)^{-\frac{D}{2}} \mid\Sigma\mid^{-\frac{1}{2}} \exp \left( -\frac{1}{2}(x-\mu)^{\intercal} \Sigma^{-1}(x-\mu) \right)$$
+- marginals and conditional of multivariate Gaussians are also Gaussians:
+  <p align="center">
+  <img width="45%" height="45%" src="/assets/Statistics-for-ML/bivariate_gaussian.png"/><br/>
+  <br/><small>A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional disribution is a slice accross the X or Y dimension and is also a Gaussian. <b>Source:</b> post <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Wikipedia "Multivariate normal distribution"</a></small>
+  </p>
+  - for a bivariate Gassian distribution of two Gaussian random variables $$X$$ and $$Y$$ the distribution is $$p(x,y) = \mathcal{N} \left( \begin{bmatrix} \mu_x \\ \mu_y  \end{bmatrix}, \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix}   \right)$$. 
+  - the conditional is also Gaussian: $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y}). 
+  - the marginal $$p(x)$$ of $$p(x,y)$$: $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$.
+
 
 ### Basics of Probability
 
 There are two frameworks for statistical modelling, the explanatory model framework and the predictive framework. We cannot always model the resolution of the observed data, so we introduce **stochasticity** to our model. Stochasticity refers to the property of being well described by a random probability distribution. Although stochasticity and **randomness** are distinct in that the former refers to a modeling approach and the latter refers to phenomena themselves, these two terms are often used synonymously.  The data is viewed as observations from that model.
 
-Statistical distributions can be either <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a> or <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a>, while most continuous distributions belong to the [exponential family of distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) .
 
 - the **union** of two subsets is written as $$F_1 \cup F_2 = \{ ω ∈ Ω : ω ∈ F1 \text{ or } ω ∈ F2 \}$$;
 - the  **intersection** is $$F1 ∩ F2 = \{ ω ∈ Ω : ω ∈ F1 \text{ and } ω ∈ F2 \}$$;
