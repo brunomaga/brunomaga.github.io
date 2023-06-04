@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Statistics and Probabilities for ML Engineers"
+title:  "Statistics for ML Engineers"
 categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
@@ -105,7 +105,7 @@ Just a follow up of the post [Algebra for ML Engineers]({{ site.baseurl }}{% pos
 - A conjugate prior is an algebraic convenience, giving a closed-form expression for the posterior; otherwise, numerical integration may be necessary.
 - Every member of the exponential family has a conjugate prior.
 
-**Exponential Family** are all distributions that can be expressed on the form $$p(x \mid \theta) = h(x) \exp \left(\eta(\theta)^{\intercal} ϕ(x) -A(\theta)\right)$$
+**Exponential Family** are all distributions that can be expressed in the form $$p(x \mid \theta) = h(x) \exp \left(\eta(\theta)^{\intercal} ϕ(x) -A(\theta)\right)$$
 - $$θ$$ are the the **natural parameters** of the family
 - $$A(θ)$$ is the **log-partition function**, a normalization constant that ensures that the distribution sums up or integrates to one.
 - $$ϕ(x)$$ is a **sufficient statistic** of the distribution
