@@ -1,6 +1,5 @@
 ---
 layout: default
-title: "Home"
 ---
 
 <h1 class="post-title p-name" itemprop="name headline">Bruno Magalhaes</h1>

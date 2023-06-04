@@ -5,7 +5,7 @@ categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-### Chapter 6 MML book
+### Chapter 6 MML book: Probabilities and Distributions
 
 Basic definitions:
 - **sample space $$Ω$$**  is the set of all *possible* outcomes of an experiment;
@@ -36,7 +36,35 @@ Basic definitions:
 - the posterior is the quantity of interest as it tells us what we know about $$x$$ after observing $$y$$.
 - $$p(y) = \int p(y \mid x) p(x) dx = \mathbb{E}[ p(y \mid x)]$$ is the **marginal likelihood** or **evidence**
 
-**Expected Value**: $$\mathbb{E}_X [g(x)] = \int_X g(x) p(x) dx$$, or the equivalent sum for the discrete use case 
+**Expected Value** of a function $$g$$ given:
+- an univariate random variable $$X$$ is: $$\mathbb{E}_X [g(x)] = \int_X g(x) p(x) dx$$, or the equivalent sum for the discrete use case 
+- multivariate vector as a finite set of univariate ie $$X = \left[X_1, X_2, X_D \right]$$ is:  $$\mathbb{E}_X [g(x)] = \left[ \mathbb{E}_{X_1} [g(x_1)], \mathbb{E}_{X_2} [g(x_2)], ..., \mathbb{E}_{X_D} [g(x_D)] \right] \in \mathbb{R}^D$$  
+
+**Covariance** is the expected product of their two deviations from the respective means, ue:
+- univariate: $$Cov_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = Cov_{Y,X}[y,x]$$
+- multivariate r.v. $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$: $$Cov_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \mathbb{E}[y]^{\intercal} = Cov[y,y]^{\intercal} \in \mathbb{R}^{D \times E}$$
+
+**Variance**:
+- univariate: $$\mathbb{V}_X[x] = Cov_X[x,x] = \mathbb{E}_{X} \left[ (x-\mathbb{E}_X[x])^2 \right] = \mathbb{E}_X[x^2] - \mathbb{E}_X[x]^2$$
+- multivariate: $$\mathbb{V}_X[x] = Cov_X[x,x] = \mathbb{E}_X[(x-\mu)(x-\mu)^{\intercal} ] = \mathbb{E}_X[xx^{\intercal}] - \mathbb{E}_X[x] \mathbb{E}_X[x]^{\intercal}$$ 
+  - this is a $$D \times D$$ matrix also called the **Covariance Matrix** of the multivariate r.v. $$X$$.
+    - it is symmetric and positive semidefinite;
+    - the diagonal terms are 1, i.e. no covariance between the same 2 random variables;
+    - the off-diagonals are $$Cov[x_i, x_j]$$ for $$i,j = 1, ..., D$$ and $$i \neq j$$. 
+
+**Correlation** between random variables is a measure of covariance standardized to a limited interval $$[-1,1]$$:
+- computed from the Covariance (matrix) as $$corr[x,y] = \frac{Cov[x,y]}{\sqrt{\mathbb{V}[x] \mathbb{V}[y]}}  \in [-1, 1]$$
+- positive correlation means $y$ increases as $x$ increases (1=perfect correlation). Negative means $$y$$ decreases as $$x$$ increases. Zero means no correlation.
+
+**Rules of transformations of Random Variables**:
+- $$\mathbb{E}[x+y] = \mathbb{E}[x] + \mathbb{E}[y]$$.
+- $$\mathbb{E}[x-y] = \mathbb{E}[x] - \mathbb{E}[y]$$.
+- $$\mathbb{V}[x+y] = \mathbb{V}[x] + \mathbb{V}[y] + Cov[x,y] + Cov[y,x]$$.
+- $$\mathbb{V}[x-y] = \mathbb{V}[x] + \mathbb{V}[y] - Cov[x,y] - Cov[y,x]$$.
+- $$\mathbb{E}[Ax+b] = A \mathbb{E}[x] = A \mu$$, where $$\mu$$ is the mean.
+- $$\mathbb{V}[Ax+b] = \mathbb{V}[Ax] = A \mathbb{V}[x] A^{\intercal} = A \Sigma A^{\intercal}$$, where $$\Sigma$$ is the covariance.
+
+**Statistical Independence** of random variables $$X$$ and $$Y$$: $$p(x,y)=p(x)p(y)
 
 ### Basics of Probability
 
