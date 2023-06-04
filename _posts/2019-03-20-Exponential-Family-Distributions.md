@@ -104,7 +104,7 @@ $$
 $$
 
 
-Finally, the *exponential families have conjugate priors* (i.e. same distributions for prior and posterior distributions), and the *posterior predictive distribution has always a closed-form solution* (provided that the normalizing factor can also be stated in closed-form), both important properties for Bayesian statistics.
+Finally, the *exponential family distribution have conjugate priors* (i.e. prior and posterior distributions have distributions from the exponential family), and the *posterior predictive distribution has always a closed-form solution* (provided that the normalizing factor can also be stated in closed-form), both important properties for Bayesian statistics.
 
 ### Example: Univariate Gaussian distribution
 

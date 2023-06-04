@@ -81,9 +81,46 @@ tags: [machinelearning]
   <img width="45%" height="45%" src="/assets/Statistics-for-ML/bivariate_gaussian.png"/><br/>
   <br/><small>A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional disribution is a slice accross the X or Y dimension and is also a Gaussian. <b>Source:</b> post <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Wikipedia "Multivariate normal distribution"</a></small>
   </p>
-  - for a bivariate Gassian distribution of two Gaussian random variables $$X$$ and $$Y$$ the distribution is $$p(x,y) = \mathcal{N} \left( \begin{bmatrix} \mu_x \\ \mu_y  \end{bmatrix}, \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix}   \right)$$. 
-  - the conditional is also Gaussian: $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y}). 
+  - bivariate Gassian distribution of two Gaussian random variables $$X$$ and $$Y$$: $$p(x,y) = \mathcal{N} \left( \begin{bmatrix} \mu_x \\ \mu_y  \end{bmatrix}, \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix}   \right)$$. 
+  - the conditional is also Gaussian: $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$. 
   - the marginal $$p(x)$$ of $$p(x,y)$$: $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$.
+- the product of two gaussians $$\mathcal{N} (x \mid a, A) \, \mathcal{N}(x \mid b, B)$$ is a Gaussian scaled by a $$c \in \mathbb{R}$$.
+- if $$X,Y$$ are independent univariate Gaussian random variables:
+  - $$p(x,y)=p(x) p(y)$$, and
+  - $$p(x+y) = \mathcal{N}(\mu_x + \mu_y, \Sigma_x + \Sigma_y)$$.
+    - weighted sum $$p(ax + by) = \mathcal{N}(a\mu_x + b\mu_y, a^2 \Sigma_x + b^2 \Sigma_y)$$.
+- any linear/affine transformation of a Gaussian random variable is also Guassian. Take $$y=Ax$$ being the transformed version of $$x$$:
+  - $$\mathbb{E}[y] = \mathbb{E}[Ax] = A \mathbb{E}[x] = A\mu$$, and
+  - $$\mathbb{V}[y] = \mathbb{V}[Ax] = A \mathbb{V}[x]A^T = A \Sigma A^{\intercal}$$, thus
+  - $$p(y) = \mathcal{N}(y \mid A\mu, A \Sigma A^{\intercal})$$.
+
+
+**Conjugacy**
+
+- If the posterior distribution $$p(\theta \mid x)$$ is in the same probability distribution *family* as the prior probability distribution $$p(\theta )$$:
+  - the prior and posterior are then called **conjugate distributions**, and
+  - the prior is called a **conjugate prior** for the likelihood function $$p(x\mid \theta )$$.
+- A conjugate prior is an algebraic convenience, giving a closed-form expression for the posterior; otherwise, numerical integration may be necessary.
+- Every member of the exponential family has a conjugate prior.
+
+**Exponential Family** are all distributions that can be expressed on the form $$p(x \mid \theta) = h(x) \exp \left(\eta(\theta)^{\intercal} ϕ(x) -A(\theta)\right)$$
+- $$θ$$ are the the **natural parameters** of the family
+- $$A(θ)$$ is the **log-partition function**, a normalization constant that ensures that the distribution sums up or integrates to one.
+- $$ϕ(x)$$ is a **sufficient statistic** of the distribution
+  - we can capture information about data in $$ϕ(x)$$.
+  - sufficient statistics carry all the information needed to make inference about the population, that is, they are the statistics that are sufficient to represent the distribution:
+  - **Fischer-Neyman theorem**: Let $$X$$ have probability density function $$p(x \mid θ)$$. Then the statistics $$ϕ(x)$$ are sufficient for $$θ$$ if and only if $$p(x \mid θ)$$ can be written in the form $$p(x \mid \theta) = h(x) g_{\theta}(\theta(x))$$, where $$h(x)$$ is a distribution independent of $$θ$$ and $$g_θ$$ captures all the dependence on $$θ$$ via sufficient statistics $$ϕ(x)$$. 
+  - Note that the form of the exponential family is essentially a particular expression of $$g_θ(ϕ(x))$$ in the Fisher-Neyman theorem. 
+- $$\eta$$ is the **natural parameter**,
+- for optimization purposes, we use $$ p (x \mid \theta) \propto \exp (\theta^{\intercal} \eta(x)) $$
+- Alternative notation in **natural form**: $$p(x \mid \eta) = h(x) \exp \left(\eta^T T(x) -A(\eta)\right)$$.
+- Why use exponential family:
+  - they have finite-dimensional sufficient statistics;
+  - conjugate distributions are easy to write down, and the conjugate distributions also come from an exponential family;
+  - Maximum Likelihood Estimation behaves nicely because empirical estimates of sufficient statistics are optimal estimates of the population values of sufficient statistics (recall the mean and covariance of a Gaussian);
+  - From an optimization perspective, the log-likelihood function is concave, allowing for efficient optimization approaches to be applied;
+
+
 
 
 ### Basics of Probability
