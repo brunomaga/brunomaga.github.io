@@ -241,7 +241,7 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
   - in some cases Adam doesn't converge to the optimal solution, but SGD does. According to the authors, switching to SGD in some cases show better generalizing performance than Adam alone;
   - calculates the exponential moving average of gradients and square gradients. Parameters $$\beta_1$$ and $$\beta_2$$ are used to control the decay rates of these moving averages. Adam is a combination of two gradient descent methods, Momentum, and RMSP
 - **Convex sets** are sets such that a straight line connecting any two elements of the set lie inside the set;
-  - similarly, a **convex function** is a function where any line segment between any two distinct points on the graph of the function lies above the graph between the two points. It's in concave up, therefore its second derivative is non-negative on its entire domain. A strictly convex function has at most one global minimum.;
+  - similarly, a **[convex function](https://en.wikipedia.org/wiki/Convex_function)** is a function where any line segment between any two distinct points on the graph of the function lies above the graph between the two points. It's in concave up, therefore its second derivative is non-negative on its entire domain. A strictly convex function has at most one global minimum.;
 - **Linear programming** or **linear optimization**, is a method to achieve the best outcome (maximum profit or lowest cost) in a mathematical model whose requirements are represented by linear relationships, eg in the form $$f(x) = ax+b$$. In algebraic notations, a linear program is defined as:
   - find a vector $$x$$ that maximizes/minimizes $$c^{\intercal} x$$,
   - subject to $$Ax \le b$$ and $$x \ge 0$$,
