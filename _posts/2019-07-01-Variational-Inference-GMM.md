@@ -5,7 +5,7 @@ categories: [machine learning, unsupervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-We learnt in a [previous post]({{ site.baseurl }}{% post_url 2018-11-12-Bayesian-Linear-Regression %}) about Bayesian inference, that the goal of Bayesian inference is to compute the likelihood of observed data and the mode of the density of the likelihood, marginal distribution and conditional distributions. Recall the formulation of the **posterior** of the latent variable $z$ and observations $x$, derived from the Bayes rule without the normalization term:
+We learnt in a [previous post]({{ site.baseurl }}{% post_url 2018-08-20-Bayesian-Linear-Regression %}) about Bayesian inference, that the goal of Bayesian inference is to compute the likelihood of observed data and the mode of the density of the likelihood, marginal distribution and conditional distributions. Recall the formulation of the **posterior** of the latent variable $z$ and observations $x$, derived from the Bayes rule without the normalization term:
 
 $$
 p (z \mid x) = \frac{p(z) \, p(x \mid z)}{p(x)} \propto p(z) \, p(x \mid z)

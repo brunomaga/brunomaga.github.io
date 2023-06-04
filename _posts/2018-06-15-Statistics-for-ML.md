@@ -5,7 +5,7 @@ categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-Just a follow up of the post [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-02-20-Algebra-for-ML %}), with basic concepts of probabilities and statistics that are relevant to ML engineers.
+Just a follow up of the post [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-Algebra-for-ML %}), with basic concepts of probabilities and statistics that are relevant to ML engineers.
 
 **Basic definitions**:
 - **sample space $$Ω$$**  is the set of all *possible* outcomes of an experiment;
