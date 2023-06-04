@@ -5,6 +5,39 @@ categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
+### Chapter 6 MML book
+
+Basic definitions:
+- **sample space $$Ω$$**  is the set of all *possible* outcomes of an experiment;
+- **event space $$A$$** is the space of *potential* results of the experiment;
+- **probability of A**, or $$P(A)$$ is the degree of belief that the event $$A$$ will occur, in the interval $$[0,1]$$;
+- **random variable** is a target space function $$X : Ω → T$$ that takes an outcome/event in $$Ω$$ (an outcome) and returns a particular quantity of interest $$x \in T$$
+  - For example, in the case of tossing two coins and counting the number of heads or tails, a random variable $$X$$ maps to the three possible outcomes: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
+  - Note: the name "random variable" creates confusion because it's neither random nor a variable: it's a function!
+- $$P(X=x)$$ is called a **probabilistic mass function (pmf)** or a **probability density function (pdf)** for a discrete or continuous variable $$x$$, respectively; 
+  - Any discrete (continuous) domain can be a probability as long as it only has non-negative values and all values sum (integrate) to 1; 
+  - the probability of a subset/range of values is the sum of all probabilities of it occurring ie $$P( a \le X \le b) = \int^b_a p(x) dx$$, or the equivalent sum for the discrete use case;
+- $$P(X \le x)$$ is the **cumulative distribution function (cdf)**
+  - there are CDFs which do not have a corresponding PDF;
+- for discrete probabilities:
+  - **joint probability** of $$x \in X$$ and $$y \in Y$$ (not independent) is $$P(X=x_i, Y=y_i) = \frac{n_{ij}}{N}$$, where $$n_{ij}$$ can be taken as the $$ij$$-cell in the confusion matrix;
+
+**Sum rule** (or **marginalization property**) tells that the probability of $$x$$ is the sum of all joint probabilities of $$x$$ and another variable $$y$$:
+- discrete: $$p(x) = \sum_{y \in Y} p(x,y)$$
+- continuous: $$p(x) = \int_Y p(x,y) dy$$
+
+**Product rule** relates the joint distribution and the conditions distribution, and tells that every joint distribution can be factorized into two other distributions:
+- ie $$p(x,y) = p(y \mid x) p(x) = p( x \mid y) p(y)$$
+
+**Bayes rule** describes the relationship between some prior knowledge $$p(x)$$ about an unobserved random variable x and some relationship $$p(y | x)$$ between $$x$$ and a second variable $$y$$:
+- read as $$\text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}$$ 
+- computed as $$p(x \mid y) = \frac{ p(y \mid x) p(x)}{p(y)} $$ 
+  - this is derived directly from the sum and product rules
+- the posterior is the quantity of interest as it tells us what we know about $$x$$ after observing $$y$$.
+- $$p(y) = \int p(y \mid x) p(x) dx = \mathbb{E}[ p(y \mid x)]$$ is the **marginal likelihood** or **evidence**
+
+**Expected Value**: $$\mathbb{E}_X [g(x)] = \int_X g(x) p(x) dx$$, or the equivalent sum for the discrete use case 
+
 ### Basics of Probability
 
 There are two frameworks for statistical modelling, the explanatory model framework and the predictive framework. We cannot always model the resolution of the observed data, so we introduce **stochasticity** to our model. Stochasticity refers to the property of being well described by a random probability distribution. Although stochasticity and **randomness** are distinct in that the former refers to a modeling approach and the latter refers to phenomena themselves, these two terms are often used synonymously.  The data is viewed as observations from that model.
