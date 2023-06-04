@@ -190,7 +190,8 @@ A **Taylor Polynomial** of degree $$n$$ of a function $$f$$ at $$x_0$$ is: $$T_n
 - the **Taylor series** is a representation of a function f as an infinite sum of terms. These terms are determined using derivatives of $$f$$ evaluated at $$x_0$$. It is the Taylor Polinomial of infinite order i.e. $$T_{\infty}(x)$$. If $$T_{\infty}(x)=f(x)$$ it is called **analytic**;
 - Relevance: in ML we often need to compute expectations, i.e., we need to solve integrals of the form:
 $$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$;
-  - Even for parametric $$p(x)$$, this integral typically cannot be solved analytically. The Taylor series expansion of $$f$$ is a way to find an approximate solution.
+  - Even for parametric $$p(x)$$, this integral typically cannot be solved analytically. The Taylor series expansion of $$f(x)$$ is a way to find an approximate solution $$\mathbb{E}[f(x)] \approx \mathbb{E}[T_k(x)]$$.
+  - see [Taylor expansions for the moments of functions of random variables](https://en.wikipedia.org/wiki/Taylor_expansions_for_the_moments_of_functions_of_random_variables) for more details
 
 The **gradient** of **Jacobian** or $$\triangledown_x f(x)$$ of function $$f : \mathbb{R}^n \rightarrow \mathbb{R}^n$$ is the $$m \times n$$ matrix of partial derivatives per variable $$\frac{df_i(x)}{x_j}$$ for row and column iterators $$i$$ and $$j$$, respectively. Useful rules in partial differentiation:
   - Product: $$ (f(x) g(x))' = f'(x)g(x) + f(x)g'(x)$$;
@@ -208,22 +209,26 @@ In deep neural networks, the output $$y$$ of a $$K$$-deep DNN is computed as: $$
   - the blue terms are partial derivatives of a layer with respect to its parameters; 
 
 Backpropagation is a special case of the **automatic differentiation** algorithm, a techniques to evaluate the gradient of a function by working with intermediate variables and dependencies and applying the chain rule. Example: 
+
   <img width="55%" height="55%" src="/assets/Algebra-for-ML/backprop.png"/><br/>
   <small>(source: section 5.6, <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)</small>
 - "Writing out the gradient in this explicit way is often impractical since it often results in a very lengthy expression for a derivative. In practice, it means that, if we are not careful, the implementation of the gradient could be significantly more expensive than computing the function, which imposes unnecessary overhead."
-- If we use instead the automatic differentiation algorithm:
-  <img width="55%" height="55%" src="/assets/Algebra-for-ML/autodiff.png"/><br/>
+- If we use instead the automatic differentiation algorithm, we can do a *forward* pass efficiently by reutilizing intermediatte results, and can break the *back propagation* algorithm into partial derivatives that propagate backwards on the graph:
+
+  <img width="57%" height="57%" src="/assets/Algebra-for-ML/autodiff.png"/><br/>
   <small>(source: adapted from example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)</small>
 
 
-### Optimization
+### Continuous Optimization
 
+- To check whether a stationary point is a minimum or maximum of a function, we need to take check if the second derivative is positive or negative at the stationary point. I.e. compute $$\frac{df(x)}{x^2}$$, then replace $$x$$ at all stationary points: If $$f′′(x)<0$$, function is concave up and that point is a maximum. If $$>0$$, it is concave down, and a minimum;
 - **Gradient Descent**: an optimization method to minimize an $$f$$ function iteratively. For iteration $$i$$ and step-size $$\gamma$$:
   - $$x_{i+1} = x_t − γ((∇f)(x_0))^T$$, 
 - **Gradient Descent with Momentum**: stores the value of the update $$\Delta x_i$$ at each iteration $$i$$ to determine the next update as a linear combination of the current and previous gradients:
   - $x_{i+1} = x_i − γ_i((∇f)(x_i))^T + α∆x_i$
   - where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^T$$ and $$\alpha \in [0,1]$$;
-     - $$\alpha$$ is a hyper-parameter (user defined), close to $$1$$. If $$\alpha=0$$, this performs regular Gradient Descent'
+     - $$\alpha$$ is a hyper-parameter (user defined), close to $$1$$. If $$\alpha=0$$, this performs regular Gradient Descent;
+- **Stochastic Gradient Descent**: a computationally-cheaper and a noisy approximation of the gradient descent that only takes a subset of inputs at each interation; 
 - **Constrained gradients**: find $$min_x f(x)$$ subject to $$g_i(x) \le 0$$, for all $$i=1,...,m$$;
   - solved by converting from a constrained to an unconstrained problem of minimizing $$J$$ where $$J(x) = f(x) + \sum_{i=1}^m \mathbb{1} (g_i(x))$$; 
     - where $$1(z)$$ is an infinite step function: $$1(z)=0$$ if $$z \le 0$$, and $$1(z)=\infty$$ otherwise;
@@ -232,5 +237,11 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
   - **Lagrange duality** is the method of converting an optimization problem in one set of variables x (the **primal variables**), into another optimization problem in a different set of variables λ (**dual variables**);
     - further details in section 7.2 in <a href="{{ site.resources_permalink }}">MML book</a>:
 - **Adam Optimizer** (ADAptive Moment estimation): uses estimations of the first and second moments of the gradient (the "curvature") to adapt the learning rate for each weight of the neural network;  
+  - Curvature is not the second derivative!! This would be too expensive to compute.
   - in some cases Adam doesn't converge to the optimal solution, but SGD does. According to the authors, switching to SGD in some cases show better generalizing performance than Adam alone;
   - calculates the exponential moving average of gradients and square gradients. Parameters $$\beta_1$$ and $$\beta_2$$ are used to control the decay rates of these moving averages. Adam is a combination of two gradient descent methods, Momentum, and RMSP
+- **Convex sets** are sets such that a straight line connecting any two elements of the set lie inside the set;
+- **Linear programming** or **linear optimization**, is a method to achieve the best outcome (maximum profit or lowest cost) in a mathematical model whose requirements are represented by linear relationships, eg in the form $$f(x) = ax+b$$. In algebraic notations, a linear program is defined as:
+  - find a vector $$x$$ that maximizes/minimizes $$c^{\intercal} x$$,
+  - subject to $$Ax \le b$$ and $$x \ge 0$$,
+  - where $$a \in \mathbb{R}^{m \times d}$$ and $$b \in \mathbb{R}^m$$
