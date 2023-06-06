@@ -42,13 +42,13 @@ The squared output $y^2$ guarantees that the larger the output of the neuron bec
 Another common formulation is the covarience rule
 
 $$
-\frac{d}{dt}w_{ij} = \eta (x_i - < x_i >) ( y_j - < y_j >) 
+\frac{d}{dt}w_{ij} = \eta (x_i - \langle x_i \rangle) ( y_j - \langle y_j \rangle ) 
 $$
 
-assuming that $x$ and $y$ fluctuate around the mean values $ < x > $ and $ < y > $. Or the Bienenstock-Cooper-Munroe (BCM, 1982) rule:
+assuming that $x$ and $y$ fluctuate around the mean values $$ \langle x \rangle $$ and $$ \langle y \rangle $$. Or the Bienenstock-Cooper-Munroe (BCM, 1982) rule:
 
 $$
-\frac{d}{dt}w_{ij} = \eta y_j x_i (x_i - < x_i > )
+\frac{d}{dt}w_{ij} = \eta y_j x_i (x_i - \langle x_i \rangle )
 $$
 
 a physical theory of learning in the visual cortex developed in 1981, proposing a sliding threshold for Long-term potentiation (LTP) depression (LTD) induction, and stating that synaptic plasticity is stabilized by a dynamic adaptation of the time-averaged postsynaptic activity.
