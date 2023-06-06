@@ -1,7 +1,7 @@
 ---
 
 layout: post
-title:  "Deep Neural Networks, backpropagation, autodiff, dropout, CNNs, embeddings and loss functions"
+title:  "Deep Neural Networks, backpropagation, autodiff, dropout, CNNs and embeddings"
 categories: [machine learning, supervised learning, deep neural networks]
 tags: [machinelearning]
 ---
@@ -185,19 +185,3 @@ A list of most common data types and embedding types:
   - $\Box$ is a differentiable, permutation invariant function e.g. sum, mean, max;
   - and $\gamma$ and $\phi$ are differentiable functions such as DNNs or RNNs (LSTMs, GRUs).
  
-### Non-conventional loss functions
-
-While most regression tasks use the Mean Square Error loss function, and most classification tasks use the (Binary) cross-entropy loss, there are some other loss functions of interest for specific use cases. I summarize a few below.
-
-**[Triplet loss](https://en.wikipedia.org/wiki/Triplet_loss)**: used on classification tasks where the number of classes is very large. Shibsankar Bas wrote an [amazing blog post](https://towardsdatascience.com/image-similarity-using-triplet-loss-3744c0f67973) about it. Quoting him: triplet loss helps by learning distributed embeddings representation of data points in a way that in the high dimensional vector space, contextually similar data points are projected in the near-by region whereas dissimilar data points are projected far away from each other. The network is trained against triplets of *(anchor, positive, negative)* inputs consisting of an anchor image, a positive (similar or same category) image, and one negative (dissimilar or different category) image. The Triplet Loss minimizes the distance between an anchor and a positive and maximizes the distance between the Anchor and the negative. The idea is to have 3 identical networks having the same neural net architecture and **they should share weights**. Anchor, Positive and Negative images are passed through their respective network and during backpropagation weight vectors are updated using shared architecture. During prediction time, any one network is used to compute the vector representation of input data. The formulation is:
-
-$${\displaystyle {\mathcal {L}}\left(A,P,N\right)=\operatorname {max} \left({\|\operatorname {f} \left(A\right)-\operatorname {f} \left(P\right)\|}^{2}-{\|\operatorname {f} \left(A\right)-\operatorname {f} \left(N\right)\|}^{2}+\alpha ,0\right)}$$
-
-where $$A$$ is an anchor input, $$P$$ is a positive input of the same class as $$A$$, $$N$$ is a negative input of a different class from $$A$$, $$\alpha$$ is a margin between positive and negative pairs, and $$f$$ is an embedding. For more details see the original paper [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832).
-
-**[Contrastive loss](https://en.wikipedia.org/wiki/Siamese_neural_network)**: similar and often confused with triplet loss. Yet these solve different problems: for known similarity relationships, we use Contrastive loss. For only negative/positive relationships (like for face recognition where people's identity is the anchor), then Triplet loss is used. In practice, the triplet loss considers the anchor-neighbor-distant triplets while the contrastive loss deals with the anchor-neighbor and anchor-distant pairs of samples. The contrastive loss trains siamese networks against pairs of inputs labelled as similar or dissimilar (1 or 0). For the original paper refer to [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf) or my summary in the <a href="{{ site.publications_permalink }}">publications bookmark</a>.
-
-**[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)**: a classifier and loss function for noisy sequential unsegments input data, for training recurrent neural networks (RNNs) such as LSTM networks to tackle sequence problems where the timing is variable. Published on [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf). Already summarized in the <a href="{{ site.publications_permalink }}">publications bookmark</a> section.
-
-**[Focal Loss](https://arxiv.org/abs/1708.02002)**
-
