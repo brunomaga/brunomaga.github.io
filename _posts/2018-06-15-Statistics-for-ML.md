@@ -156,6 +156,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - if distributions are independent: $$M_{X+Y}(t) = M_X(t) * M_Y(Y)$$.
 - can be used to show that e.f. sum of gaussians is a gaussian.
 
+---
 
 <br/>
 **Central Limit Theorem**: Let $$Y_n$$ be independent random variables (of any form) with $$\mathbb{E}[Y_k]=\mu$$ for all $$k$$. Then $$\frac{1}{n} (Y_1 + ... + Y_n) \rightarrow \mu$$.
