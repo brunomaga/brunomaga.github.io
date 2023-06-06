@@ -138,6 +138,6 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 
 
 **Mutual Information** measures the reduction in uncertainty for one variable given a known value of the other variable:
-- $$ I(X,Y)= \int_{x,y} p(x,y) \log \frac{p (x,y)}{p(x) \, p(y)} dx\,dy = \mathbb{E} \left[ D_{KL} \left( p({x \mid y) | p(x) \right) \right]$$.
+- $$ I(X,Y)= \int_{x,y} p(x,y) \log \frac{p (x,y)}{p(x) \, p(y)} dx\,dy = \mathbb{E} \left[ D_{KL} \left( p(x \mid y) \,\|\, p(x) \right) \right]$$.
 - $$ I(X,Y)= H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)$$.
 
