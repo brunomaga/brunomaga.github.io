@@ -21,7 +21,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 **Statistical distributions** can be either <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a> or <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a>. Most parametric continuous distributions belong to the [exponential family of distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) .
 - $$P(X=x)$$ is called a **probabilistic mass function (pmf)** or a **probability density function (pdf)** for a discrete or continuous variable $$x$$, respectively; 
   - Any discrete (continuous) domain can be a probability as long as it only has non-negative values and all values sum (integrate) to 1; 
-  - $$P(X \le x) = = \int^x_{-\infty} p(t) dd$$$$ is the **cumulative distribution function (cdf)**
+  - $$P(X \le x) = = \int^x_{-\infty} p(t) dt$$$$ is the **cumulative distribution function (cdf)**
     - there are CDFs which do not have a corresponding PDF;
   - the probability of a subset/range of values is the sum of all probabilities of it occurring ie $$P( a \le X \le b) = \int^b_a p(t) dt$$, or the equivalent sum for the discrete use case;
 - for discrete probabilities:
