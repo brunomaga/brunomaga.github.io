@@ -170,8 +170,8 @@ We'll omit details on likelihood estimators, as they are covered in a [different
 Back to non-probabilistic models. Most regression tasks use the Mean Squared Error loss function:
 
 $$
-MSE(\hat{y}_n) = \mathbb{E}\left[ (y_n - \hat{y}_n)^2 \right
-]$$.
+MSE(\hat{y}_n) = \mathbb{E}\left[ (y_n - \hat{y}_n)^2 \right]
+$$.
 
 Most classification tasks use the binary or multi-class cross-entropy loss functions:
 - binary: $$H(p) = -(y \log p(x) + (1-y) \log (1-p(x)))$$.
@@ -192,22 +192,4 @@ where $$A$$ is an anchor input, $$P$$ is a positive input of the same class as $
 **[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)**: a classifier and loss function for noisy sequential unsegments input data, for training recurrent neural networks (RNNs) such as LSTM networks to tackle sequence problems where the timing is variable. Published on [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf). Already summarized in the <a href="{{ site.publications_permalink }}">publications bookmark</a> section.
 
 **[Focal Loss](https://arxiv.org/abs/1708.02002)**
-
-### Entropy and Mutual Information
-
-A final topic is the interest relates to the meaning of a channel or random variable in information theory. A channel in our case is the trained model. When you want to quantify the quality of your model in terms or recovering a signal, you can use the accuracy (percentage of correct guesses), error rate, F1-score, recall, presicion, etc...  
-
-However, another measure of interest is the channel **entropy**, that measures the average level of *surprise* or *uncertainty* inherent to the channel's possible outcomes.
-
-$$
-\mathrm {H} (X):=-\sum _{x\in {\mathcal {X}}}p(x)\log p(x)=\mathbb {E} [-\log p(X)]
-$$
-
-Also, **mutual information** is calculated between two variables and measures the reduction in uncertainty for one variable given a known value of the other variable.
-
-$$
-I(X;Y)= ∑_{x,y}p_{XY}(x,y) \log \frac{p_{XY}(x,y)}{P_X(x) P_Y(y)} = \mathbb{E} \left[ D_{KL} \left( p_{X \mid Y} \mid \mid p_X \right) \right] = H(Y) - H(Y \mid X)
-$$
-
-On the discrete use case -- e.g. when the noise of each channel can be represented by a histogram -- the probability values can be retrieved from the confusion matrix of size $$ Symbols \times output\text{ }bins$$. In the case of a continuous input and output, the analytical resolution is needed.
 
