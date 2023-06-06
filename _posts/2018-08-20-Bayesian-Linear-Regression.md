@@ -19,23 +19,27 @@ A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribut
 
 ### Bayes Theorem
 
-From the field of probability, the **product rule** tells us that the **joint distribution** of two given events $A$ and $B$ can be written as the product of the distribution of $a$ and the **conditional distribution** of $B$ given a value of $A$, i.e: $p(A, B) = p(A) p(B\mid A)$. By symmetry we have that $p(B,A) = p(B) p(A\mid B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
+From the field of probability, the **product rule** tells us that $p(A, B) = p(A) p(B\mid A)$. By symmetry we have that $p(B,A) = p(B) p(A\mid B)$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
 
 \begin{equation}
-p(A\mid B) = \frac{p(B\mid A) p(A)}{p(B)} \propto p(B\mid A) p(A)
+\text{posterior} = \frac{\text{likelihood}\, \times \, \text{prior}}{\text{evidence}} = p(A\mid B) = \frac{p(B\mid A) p(A)}{p(B)}\end{equation}
+
+In Machine Learning, we are mostly interested in how the parameters of the model $$\theta$$ relate to the data $$X$$:
+
+\begin{equation}
+p(\theta \mid X) = \frac{p(X\mid \theta) p(\theta)}{p(X)} \propto p(X \mid \theta) p(\theta) \text{, where evidence is } p(X) = \int p(X \mid \theta) p(\theta) d\theta = \mathbb{E}_{\theta}[ p(X \mid \theta) ]   
 \label{eq_prior_AB}
 \end{equation}
 
-This equation is commonly read as "the **posterior** $p(A\mid  B)$ is proportional to the product of the **prior** $p(A)$ and the **likelihood** $p(B\mid A)$" -- note that we dropped the **normalizer** term $p(B)$ as it is a constant (making the right-hand term proportional but not equal to $p(A\mid B)$.
- 
-The prior distribution $p(A)$ is a shorthand for $p(A\mid I)$ where $I$ is all information we have before start collecting data. If we have no information about the parameters then $p(A\mid I)$ is a constant --- called an *uninformative prior* or *objective prior* --- and the posterior equals the likelihood function. Otherwise, we call it a *substantive/informative* prior.
+The idea behing Bayes Theorem in ML is to invert the relationship between the parameters $$θ$$ and the data $$X$$ to obtain the posterior;
 
-The posterior distribution describes how much the data has changed our *prior* beliefs. An important theoream called the **Bernstein-von Mises Theorem** states that:
+An important theoream called the **Bernstein-von Mises Theorem** states that:
 - for a sufficiently large sample size, the posterior distribution becomes independent of the prior (as long as the prior is neither 0 or 1)
   - ie for a sufficiently large dataset, the prior just doesnt matter much anymore as the current data has enough information;
   - if we let the datapoints go to infitiny, the posterior distribution will go to normal distribution, where the mean will be the maximum likelihood estimator;
     - this is a restatement of the central limit theorem, where the posterior distribution becomes the likelihood function;
   - ie the effect of the prior decreases as the data increases;
+- we typically want to maximize the posterior, so we can drop the evidence term (as it's independent of $$\theta$$) and compute only the maximum of the term $$p(X \mid \theta) p(\theta)$$. 
 
 There are two main optimization problems that we discuss in Bayesian methods: Maximum Likelihood Estimator (MLE) and Maximum-a-Posteriori (MAP).
 
@@ -341,7 +345,17 @@ Similarly to the visualization displayed before, introducing new datapoints impr
 <br/>(inspired on fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Classification and Machine Learning, Chris Bishop</a>)</small>
 </p>
 
-##### Final Remarks
+### Comparing two Bayesian models
+
+If we want to compare two probabilistic models $$M_1,M_2$$, with posteriors given the same dataset $$D$$, we compute the ratio of the posteriors, a.k.a. the **posterior odds** as:
+
+$$
+\frac{M_1}{M_2} = \frac{ \frac{p(D \mid M_1) \, p(M_1)}{p(D)} }{ \frac{p(D \mid M_2) \, p(M_2)}{p(D)} } =  \frac{p(D \mid M_1) \, p(M_1)}{p(D \mid M_2) \, p(M_2)} 
+$$
+
+If we assume the same prior for both models, then the equation simplifies to $$\frac{p(D \mid M_1)}{p(D \mid M_2)}$$. If this ratio is greater than $$1$$, we pick model $$M_1$$, otherwise we pick model $$M_2$$.
+
+### Final Remarks
 
 For more advanced topics on Bayesian Linear Regression refer to chapter 3 in Pattern Recognition and Machine Learning book from Chris Bishop and chapter 9.3 in Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}). To download the source code of the closed-form solutions and reproduce the examples above, download the <a href="{{ site.assets }}/Bayesian-Linear-Regression/Bayesian_Linear_Regression.ipynb">Bayesian Linear Regression notebook</a>.
 
