@@ -12,8 +12,9 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - **event space $$A$$** is the space of *potential* results of the experiment;
 - **probability of A**, or $$P(A)$$ is the degree of belief that the event $$A$$ will occur, in the interval $$[0,1]$$;
 - **random variable** is a target space function $$X : Ω → T$$ that takes an outcome/event in $$Ω$$ (an outcome) and returns a particular quantity of interest $$x \in T$$
-  - For example, in the case of tossing two coins and counting the number of heads or tails, a random variable $$X$$ maps to the three possible outcomes: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
   - Note: the name "random variable" creates confusion because it's neither random nor a variable: it's a function!
+  - For example, in the case of tossing two coins and counting the number of heads or tails, a random variable $$X$$ maps to the three possible outcomes: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
+  - the **sum of independent random variables** is the **convolution**: $$ \int_{X+Y}(u) = \int_{-\infty}^{+\infty} f_X(u-v) \, f_Y(v) \, dv$$
 
 **Statistical distributions** can be either <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a> or <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a>. Most parametric continuous distributions belong to the [exponential family of distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) .
 - $$P(X=x)$$ is called a **probabilistic mass function (pmf)** or a **probability density function (pdf)** for a discrete or continuous variable $$x$$, respectively; 
@@ -29,7 +30,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - continuous: $$p(x) = \int_Y p(x,y) dy$$
 
 **Product rule** relates the joint distribution and the conditions distribution, and tells that every joint distribution can be factorized into two other distributions:
-- ie $$p(x,y) = p(y \mid x) p(x) = p( x \mid y) p(y)$$
+- $$p(x,y) = p(y \mid x) p(x) = p( x \mid y) p(y)$$.
 
 **Bayes rule** describes the relationship between some prior knowledge $$p(x)$$ about an unobserved random variable x and some relationship $$p(y | x)$$ between $$x$$ and a second variable $$y$$:
 - $$p(x \mid y) = \frac{ p(y \mid x) p(x)}{p(y)} = \text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}$$. 
@@ -42,6 +43,11 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - multivariate vector as a finite set of univariate ie $$X = \left[X_1, X_2, X_D \right]$$ is:  $$\mathbb{E}_X [g(x)] = \left[ \mathbb{E}_{X_1} [g(x_1)], \mathbb{E}_{X_2} [g(x_2)], ..., \mathbb{E}_{X_D} [g(x_D)] \right] \in \mathbb{R}^D$$  
 
 **Covariance** is the expected product of their two deviations from the respective means, ue:
+- $$ Cov(X,Y)\\
+= \mathbb{E} \left[ (X- \mathbb{E}[X]) \, (Y- \mathbb{E}[Y]) \right] \\
+= \mathbb{E}\left[ XY -  X\mathbb{E}[Y] - \mathbb{E}[X]Y +  \mathbb{E}[X]\mathbb{E}[Y] \right] \\
+= \mathbb{E}[XY] - \mathbb{E}[X] \mathbb{E}[Y] - \mathbb{E}[X] \mathbb{E}[Y] +  \mathbb{E}[X] \mathbb{E}[Y] \\
+= \mathbb{E}[XY] -  \mathbb{E}[X] \mathbb{E}[Y]$$. 
 - univariate: $$Cov_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = Cov_{Y,X}[y,x]$$
 - multivariate r.v. $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$: $$Cov_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \mathbb{E}[y]^{\intercal} = Cov[y,y]^{\intercal} \in \mathbb{R}^{D \times E}$$
 
@@ -52,6 +58,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
     - it is symmetric and positive semidefinite;
     - the diagonal terms are 1, i.e. no covariance between the same 2 random variables;
     - the off-diagonals are $$Cov[x_i, x_j]$$ for $$i,j = 1, ..., D$$ and $$i \neq j$$. 
+- Law of total variance: $$ \mathbb{V}[Y] = \mathbb{E} \left [ \mathbb{V}[Y \mid X] \right] + \mathbb{V}\left[ \mathbb{E}[Y \mid X] \right]$$ 
 
 **Correlation** between random variables is a measure of covariance standardized to a limited interval $$[-1,1]$$:
 - computed from the Covariance (matrix) as $$corr[x,y] = \frac{Cov[x,y]}{\sqrt{\mathbb{V}[x] \mathbb{V}[y]}}  \in [-1, 1]$$
@@ -62,8 +69,8 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - $$\mathbb{E}[x-y] = \mathbb{E}[x] - \mathbb{E}[y]$$.
 - $$\mathbb{V}[x+y] = \mathbb{V}[x] + \mathbb{V}[y] + Cov[x,y] + Cov[y,x]$$.
 - $$\mathbb{V}[x-y] = \mathbb{V}[x] + \mathbb{V}[y] - Cov[x,y] - Cov[y,x]$$.
-- $$\mathbb{E}[Ax+b] = A \mathbb{E}[x] = A \mu$$, for the affine transformation $$y = Ax + b$$ of $$x$$, where $$\mu$$ is the mean.
-- $$\mathbb{V}[Ax+b] = \mathbb{V}[Ax] = A \mathbb{V}[x] A^{\intercal} = A \Sigma A^{\intercal}$$, where $$\Sigma$$ is the covariance.
+- $$\mathbb{E}[Ax+b] = A \mathbb{E}[x] = A \mu$$, for the affine transformation $$y = Ax + b$$ of $$x$$, where $$\mu$$ is the mean vector.
+- $$\mathbb{V}[Ax+b] = \mathbb{V}[Ax] = A \mathbb{V}[x] A^{\intercal} = A \Sigma A^{\intercal}$$, where $$\Sigma$$ is the covariance matrix.
 
 **Statistical Independence** of random variables $$X$$ and $$Y$$ iff $$p(x,y)=p(x)p(y)$$. Independence means:
 - $$p(y \mid x) = p(x)$$.
@@ -123,4 +130,14 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - Alternative notation in **natural form**: $$p(x \mid \eta) = h(x) \exp \left(\eta^T T(x) -A(\eta)\right)$$.
 
 
+**Entropy**  measures the average level of *surprise* or *uncertainty* inherent to the channel:
+- $$ \mathrm {H} (X):=-\int_{x} p(x)\log p(x)=\mathbb {E} [-\log p(x)] dx$$.
+- Conditional Entropy: $$ H( Y \mid X) = - \int_x f(x) \int_y f(y \mid x) \log f(y \mid x) \,dy\,dx$$.
+- Joint Entropy: $$ H(X, Y) = - \int_{xy} f(x,y) \log f(x,y x) \,dx\,dy$$.
+- Entropy Chain Rule: $$ H(X,Y) = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y) $$.
+
+
+**Mutual Information** measures the reduction in uncertainty for one variable given a known value of the other variable:
+- $$ I(X,Y)= \int_{x,y} p(x,y) \log \frac{p (x,y)}{p(x) \, p(y)} dx\,dy = \mathbb{E} \left[ D_{KL} \left( p({x \mid y) | p(x) \right) \right]$$.
+- $$ I(X,Y)= H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)$$.
 
