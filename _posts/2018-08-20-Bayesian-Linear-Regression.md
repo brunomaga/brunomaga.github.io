@@ -361,10 +361,16 @@ For more advanced topics on Bayesian Linear Regression refer to chapter 3 in Pat
 
 Finally, it has been shown that a kernelized Bayesian Linear Regression with the Kernel $K(x, x′)=x^Tx′$ is equivalent to a [Gaussian Process](https://en.wikipedia.org/wiki/Gaussian_process).  
  
----
+#### Misc: linear models of the exponential family
+
+For a set up related to an output which is non-Gaussian but is a member of the exponential family, check [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model).
+
+<br/>
+<br/>
+
 ---
 
-##### Appendix: Refresher on Linear Algebra
+#### Appendix: refresher on Linear Algebra
 <div id="appendix-lin-alg" />
 
 Here are the list of algebraic rules used in this document. For further details, check <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed list of matrix operations.
@@ -404,14 +410,14 @@ Here are the list of algebraic rules used in this document. For further details,
 	4. $\frac{d X^TwX}{dw} = \frac{d X^Tw^TX}{dw} = XX^T$ 
 
 6. **Variance and Covariance:**
-	1. $Var(X) = Cov(X,X)$;
-	2. $Var(rX) = r Var(X)$, for scalar $r$;
-	3. $Var(X+Y) = Var(X) + Var(Y) + 2Cov(X,Y)$;
-	4. $Var(X+Y) = Var(X) + Var(Y)$, if X and Y are independent (ie, zero covariance);
-	5. $Var(X) = \mathbf{E}[(X-\mathbf{E}[X])^2 ] = \mathbf{E} \left[ X^2  - 2X\mathbf{E}[X] + \mathbf{E}[X]^2 \right] = \mathbf{E}[X^2] - 2\mathbf{E}[X]\mathbf{E}[X] + \mathbf{E}[X]^2 =  \mathbf{E}[X^2] -  \mathbf{E}[X]^2$;
+	1. $\mathbb{Var}(X) = \mathbb{Cov}(X,X)$;
+	2. $\mathbb{Var}(rX) = r \mathbb{Var}(X)$, for scalar $r$;
+	3. $\mathbb{Var}(X+Y) = \mathbb{Var}(X) + \mathbb{Var}(Y) + 2\mathbb{Cov}(X,Y)$;
+	4. $\mathbb{Var}(X+Y) = \mathbb{Var}(X) + \mathbb{Var}(Y)$, if X and Y are independent (ie, zero covariance);
+	5. $\mathbb{Var}(X) = \mathbf{E}[(X-\mathbf{E}[X])^2 ] = \mathbf{E} \left[ X^2  - 2X\mathbf{E}[X] + \mathbf{E}[X]^2 \right] = \mathbf{E}[X^2] - 2\mathbf{E}[X]\mathbf{E}[X] + \mathbf{E}[X]^2 =  \mathbf{E}[X^2] -  \mathbf{E}[X]^2$;
 	6. If $y$ is a linear transformation of univariate form $y=mx+b$ or multivariate form $y=Xw+b$ then:
-		- Variance in univariate form: $Var(y)=m^2 \text{ } Var(w)$;
-		- Variance in multivariate form: $Var (Xw + b) = Var (Xw) = X Var(w) X^T = X \Sigma X^T$, where $\Sigma$ is the covariance matrix of $X$;
+		- Variance in univariate form: $\mathbb{Var}(y)=m^2 \text{ } \mathbb{Var}(w)$;
+		- Variance in multivariate form: $Var (Xw + b) = Var (Xw) = X \mathbb{Var}(w) X^T = X \Sigma X^T$, where $\Sigma$ is the covariance matrix of $X$;
 		- Expected Value in multivariate form: $\mathbf{E}[Xw + b] = X \mathbf{E}[w] + b = X \mu + b$, where $\mu$ is the mean of $X$ 
 			- formulas 6.50 and 6.51 in [Mathematics for Machine Learning]({{ site.resources_permalink }})
  
