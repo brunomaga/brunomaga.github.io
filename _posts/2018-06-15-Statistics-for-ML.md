@@ -43,6 +43,8 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - the posterior is the quantity of interest as it tells us what we know about $$x$$ after observing $$y$$.
 - $$p(y) = \int p(y \mid x) p(x) dx = \mathbb{E}[ p(y \mid x)]$$ is the **marginal likelihood** or **evidence**
 
+---
+
 <br/>
 **Expected Value** of a function $$g$$ given:
 - an univariate random variable $$X$$ is: $$\mathbb{E}_X [g(x)] = \int_X g(x) p(x) dx$$, or the equivalent sum for the discrete use case 
@@ -50,49 +52,51 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 
 <br/>
 **Covariance** is the expected product of their two deviations from the respective means, ue:
-- $$ Cov(X,Y)\\
+- $$\mathbb{Cov}[X,Y]\\
 = \mathbb{E} \left[ (X- \mathbb{E}[X]) \, (Y- \mathbb{E}[Y]) \right] \\
-= \mathbb{E}\left[ XY -  X\mathbb{E}[Y] - \mathbb{E}[X]Y +  \mathbb{E}[X]\mathbb{E}[Y] \right] \\
-= \mathbb{E}[XY] - \mathbb{E}[X] \mathbb{E}[Y] - \mathbb{E}[X] \mathbb{E}[Y] +  \mathbb{E}[X] \mathbb{E}[Y] \\
-= \mathbb{E}[XY] -  \mathbb{E}[X] \mathbb{E}[Y]$$. 
+= \mathbb{E}\left[ XY -  X\mathbb{E}[Y] - \mathbb{E}[X]Y +  \mathbb{E}[X]\,\mathbb{E}[Y] \right] \\
+= \mathbb{E}[XY] - \mathbb{E}[X] \,\mathbb{E}[Y] - \mathbb{E}[X] \,\mathbb{E}[Y] +  \mathbb{E}[X] \, \mathbb{E}[Y] \\
+= \mathbb{E}[XY] -  \mathbb{E}[X] \,\mathbb{E}[Y]$$. 
 - univariate: $$Cov_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = Cov_{Y,X}[y,x]$$
-- multivariate r.v. $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$: $$Cov_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \mathbb{E}[y]^{\intercal} = Cov[y,y]^{\intercal} \in \mathbb{R}^{D \times E}$$
+- multivariate r.v. $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$: $$Cov_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \,\mathbb{E}[y]^{\intercal} = \mathbb{Cov}[y,y]^{\intercal} \in \mathbb{R}^{D \times E}$$
 
 <br/>
 **Variance**:
-- univariate: $$\mathbb{V}_X[x] = Cov_X[x,x] = \mathbb{E}_{X} \left[ (x-\mathbb{E}_X[x])^2 \right] = \mathbb{E}_X[x^2] - \mathbb{E}_X[x]^2$$
-- multivariate: $$\mathbb{V}_X[x] = Cov_X[x,x] = \mathbb{E}_X[(x-\mu)(x-\mu)^{\intercal} ] = \mathbb{E}_X[xx^{\intercal}] - \mathbb{E}_X[x] \mathbb{E}_X[x]^{\intercal}$$ 
+- univariate: $$\mathbb{Var}_X[x] = Cov_X[x,x] = \mathbb{E}_{X} \left[ (x-\mathbb{E}_X[x])^2 \right] = \mathbb{E}_X[x^2] - \mathbb{E}_X[x]^2$$
+- multivariate: $$\mathbb{Var}_X[x] = Cov_X[x,x] = \mathbb{E}_X[(x-\mu)(x-\mu)^{\intercal} ] = \mathbb{E}_X[xx^{\intercal}] - \mathbb{E}_X[x] \, \mathbb{E}_X[x]^{\intercal}$$ 
   - this is a $$D \times D$$ matrix also called the **Covariance Matrix** of the multivariate r.v. $$X$$.
     - it is symmetric and positive semidefinite;
     - the diagonal terms are 1, i.e. no covariance between the same 2 random variables;
-    - the off-diagonals are $$Cov[x_i, x_j]$$ for $$i,j = 1, ..., D$$ and $$i \neq j$$. 
-- Law of total variance: $$ \mathbb{V}[Y] = \mathbb{E} \left [ \mathbb{V}[Y \mid X] \right] + \mathbb{V}\left[ \mathbb{E}[Y \mid X] \right]$$ 
+    - the off-diagonals are $$\mathbb{Cov}[x_i, x_j]$$ for $$i,j = 1, ..., D$$ and $$i \neq j$$. 
+- Law of total variance: $$ \mathbb{Var}[Y] = \mathbb{E} \left [ \mathbb{Var}[Y \mid X] \right] + \mathbb{Var}\left[ \mathbb{E}[Y \mid X] \right]$$ 
 
 <br/>
 **Correlation** between random variables is a measure of covariance standardized to a limited interval $$[-1,1]$$:
-- computed from the Covariance (matrix) as $$corr[x,y] = \frac{Cov[x,y]}{\sqrt{\mathbb{V}[x] \mathbb{V}[y]}}  \in [-1, 1]$$
+- computed from the Covariance (matrix) as $$corr[x,y] = \frac{\mathbb{Cov}[x,y]}{\sqrt{\mathbb{Var}[x] \mathbb{Var}[y]}}  \in [-1, 1]$$
 - positive correlation means $y$ increases as $x$ increases (1=perfect correlation). Negative means $$y$$ decreases as $$x$$ increases. Zero means no correlation.
 
 <br/>
 **Rules of transformations of Random Variables**:
 - $$\mathbb{E}[x+y] = \mathbb{E}[x] + \mathbb{E}[y]$$.
 - $$\mathbb{E}[x-y] = \mathbb{E}[x] - \mathbb{E}[y]$$.
-- $$\mathbb{V}[x+y] = \mathbb{V}[x] + \mathbb{V}[y] + Cov[x,y] + Cov[y,x]$$.
-- $$\mathbb{V}[x-y] = \mathbb{V}[x] + \mathbb{V}[y] - Cov[x,y] - Cov[y,x]$$.
+- $$\mathbb{Var}[x+y] = \mathbb{Var}[x] + \mathbb{Var}[y] + \mathbb{Cov}[x,y] + \mathbb{Cov}[y,x]$$.
+- $$\mathbb{Var}[x-y] = \mathbb{Var}[x] + \mathbb{Var}[y] - \mathbb{Cov}[x,y] - \mathbb{Cov}[y,x]$$.
 - $$\mathbb{E}[Ax+b] = A \mathbb{E}[x] = A \mu$$, for the affine transformation $$y = Ax + b$$ of $$x$$, where $$\mu$$ is the mean vector.
-- $$\mathbb{V}[Ax+b] = \mathbb{V}[Ax] = A \mathbb{V}[x] A^{\intercal} = A \Sigma A^{\intercal}$$, where $$\Sigma$$ is the covariance matrix.
+- $$\mathbb{Var}[Ax+b] = \mathbb{Var}[Ax] = A \mathbb{Var}[x] A^{\intercal} = A \Sigma A^{\intercal}$$, where $$\Sigma$$ is the covariance matrix.
 
 <br/>
 **Statistical Independence** of random variables $$X$$ and $$Y$$ iff $$p(x,y)=p(x)p(y)$$. Independence means:
 - $$p(y \mid x) = p(x)$$.
 - $$p(x \mid y) = p(y)$$.
-- $$\mathbb{E}[x,y] = \mathbb{E}[x] \mathbb{E}[y]$$, thus
-- $$Cov_{X,Y}[x,y] = \mathbb{E}[x,y] - \mathbb{E}[x] \mathbb{E}[y] = 0$$, thus
-- $$\mathbb{V}_{X,Y}[x+y] = \mathbb{V}_X[x] + \mathbb{V}_X[y]$$.
+- $$\mathbb{E}[x,y] = \mathbb{E}[x] \, \mathbb{E}[y]$$, thus
+- $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[x,y] - \mathbb{E}[x] \, \mathbb{E}[y] = 0$$, thus
+- $$\mathbb{Var}_{X,Y}[x+y] = \mathbb{Var}_X[x] + \mathbb{Var}_X[y]$$.
 - important: $$Cov_{X,Y}[x,y]=0$$ does not hold in converse, i.e. zero covariance does not mean independence!
 
 <br/>
 **Conditional Independence** of rvs $$X$$ and $$Y$$ given $$Z$$ ie $$X \perp Y \mid Z$$ iff $$p(x,y \mid z) = p(x \mid z) \, p(y \mid z)$$ for all $$z \in Z$$
+
+---
 
 <br/>
 **Gaussian Distribution** (see the post about the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) for more distributions): 
@@ -113,7 +117,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
     - weighted sum $$p(ax + by) = \mathcal{N}(a\mu_x + b\mu_y, a^2 \Sigma_x + b^2 \Sigma_y)$$.
 - any linear/affine transformation of a Gaussian random variable is also Guassian. Take $$y=Ax$$ being the transformed version of $$x$$:
   - $$\mathbb{E}[y] = \mathbb{E}[Ax] = A \mathbb{E}[x] = A\mu$$, and
-  - $$\mathbb{V}[y] = \mathbb{V}[Ax] = A \mathbb{V}[x]A^T = A \Sigma A^{\intercal}$$, thus
+  - $$\mathbb{Var}[y] = \mathbb{Var}[Ax] = A \mathbb{Var}[x]A^T = A \Sigma A^{\intercal}$$, thus
   - $$p(y) = \mathcal{N}(y \mid A\mu, A \Sigma A^{\intercal})$$.
 - sum of uniform gaussians squares $$Z_i \sim \mathcal{N}(0,1) $$is a Chi-Square distribution with $n$ degrees of freedom: $$Z_1^2 + Z_2^2 + ... + Z_n^2 \sim X_n^2 $$.
 
@@ -147,19 +151,6 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 
 
 <br/>
-**Entropy**  measures the average level of *surprise* or *uncertainty* inherent to the channel:
-- $$ \mathrm {H} (X):=-\int_{x} p(x)\log p(x)=\mathbb {E} [-\log p(x)] dx$$.
-- Conditional Entropy: $$ H( Y \mid X) = - \int_x f(x) \int_y f(y \mid x) \log f(y \mid x) \,dy\,dx$$.
-- Joint Entropy: $$ H(X, Y) = - \int_{xy} f(x,y) \log f(x,y x) \,dx\,dy$$.
-- Entropy Chain Rule: $$ H(X,Y) = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y) $$.
-
-
-<br/>
-**Mutual Information** measures the reduction in uncertainty for one variable given a known value of the other variable:
-- $$ I(X,Y)= \int_{x,y} p(x,y) \log \frac{p (x,y)}{p(x) \, p(y)} dx\,dy = \mathbb{E} \left[ D_{KL} \left( p(x \mid y) \,\|\, p(x) \right) \right]$$.
-- $$ I(X,Y)= H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)$$.
-
-<br/>
 **Moment Generation Function** is an alternative formulation of a pdf $$f(x)$$:
 - $$M(t) = \mathbb{E} \left[ e^{eX} \right] = \sum_{x \in S} e^{tX}\, f(x)$$.
 - if distributions are independent: $$M_{X+Y}(t) = M_X(t) * M_Y(Y)$$.
@@ -173,14 +164,45 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 **Theory of Large Numbers**: Let $$\{ Y_n \}$$ be a sequence of iid random variables (of any form) with mean $$\mu$$ and variance $$\sigma^2$$. Then $$\sqrt{n} \left( \frac{1}{n} \sum_{i=1}^N (Y_i - \mu) \right) \rightarrow \mathcal{N}(0, \sigma^2)$$.
  
 <br/>
-**p-value** (or observed significance level) is the smallest value of $$α-$$quantile for which the null hypothesis would be rejected.
+Inequality rules:
+- **Jensen's inequality**: $$\phi (\mathbb{E}[X]) \le \mathbb{E}[ \phi(X)]$$ , where $$\phi$$ is a convex function. 
+- **Markov's inequality**: $$ p(X \ge \epsilon) \le \frac{\mathbb{E}[X]}{\epsilon}$$, where $$\epsilon \gt 0$$.
+- **Chebyshev's inequality**: $$p \left( \mid X - \mathbb{E}[X] \mid \ge \epsilon \right) \le \frac{\mathbb{Var}[X]}{\epsilon^2}$$.
+- **Chauchy-Schwarz inequality**: $$\mathbb{Var}[A] \, \mathbb{Var}[B] \ge \mathbb{Cov}^2[A,B]$$.
 
 <br/>
-**Permutation** is the arrangements of *all* items in which order matters: $$^nP_k=\frac{n!}{(n-k)!}$$.
+**Kullback–Leibler / KL divergence**: $$ KL ( q \| p ) =  \int_\mathbb{R} p(x) \log \frac{p(x)}{q(x)} dx $$ 
+- by Jensen's inequality we get: $$ KL ( q \| p ) = \mathbb{E} \left( - \log \frac{q(X)}{p(X)} \right) \ge -\log \mathbb{E} \left( \frac{q(X)}{p(X)} \right) =0$$. 
+- KL divergence is not a metric because it's not symmetric: $$  KL ( q \| p ) \neq  KL ( p \| q )$$.
+- $$p=q \Leftrightarrow KL ( q \| p ) = 0$$.
 
-**Arrangement** is the arrangement of *some* items in which order matter: $$A_k=n^k$$ with replacement or $$k!$$ without.
+<br/>
+**p-value** (or observed significance level) is the smallest value of $$α-$$quantile for which the null hypothesis would be rejected.
 
-**Combination** is the arrangement of *some* items in which order *doesn't* matter: $$\binom nk=^nC_k=\frac{n!}{k!(n-k)!}$$.
+---
+
+<br/>
+**Entropy**  measures the average level of *surprise* or *uncertainty* inherent to the channel:
+- $$ \mathrm {H} (X):=-\int_{x} p(x)\log p(x)=\mathbb {E} [-\log p(x)] dx$$.
+- Conditional Entropy: $$ H( Y \mid X) = - \int_x f(x) \int_y f(y \mid x) \log f(y \mid x) \,dy\,dx$$.
+- Joint Entropy: $$ H(X, Y) = - \int_{xy} f(x,y) \log f(x,y x) \,dx\,dy$$.
+- Entropy Chain Rule: $$ H(X,Y) = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y) $$.
+
+
+<br/>
+**Mutual Information** measures the reduction in uncertainty for one variable given a known value of the other variable:
+- $$ I(X,Y)= \int_{x,y} p(x,y) \log \frac{p (x,y)}{p(x) \, p(y)} dx\,dy = \mathbb{E} \left[ D_{KL} \left( p(x \mid y) \,\|\, p(x) \right) \right]$$.
+- $$ I(X,Y)= H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)$$.
+
+---
+
+<br/>
+Arrangements:
+- **Permutation** is the arrangements of *all* items in which order matters: $$^nP_k=\frac{n!}{(n-k)!}$$.
+- **Arrangement** is the arrangement of *some* items in which order matter: $$A_k=n^k$$ with replacement or $$k!$$ without.
+- **Combination** is the arrangement of *some* items in which order *doesn't* matter: $$\binom nk=^nC_k=\frac{n!}{k!(n-k)!}$$.
+
+---
 
 <br/>
 **Causal Inference**: a **Direct Aclyclic Graph** is a probabilistic model for which a graph expresses the conditional dependence structure between random variables.
@@ -191,4 +213,5 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
   <img width="20%" height="20%" src="/assets/Statistics-for-ML/directed_graph.png"/><br/>
   <br/><small>Source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Graphical_model">Graphical model</a></small>
   </p>
+
 
