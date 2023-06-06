@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Unsupervised Learning: basic methods"
+title:  "Unsupervised Learning: Principal Component Analysis and basics"
 categories: [machine learning, unsupervised learning]
 tags: [machinelearning]
 ---
@@ -76,13 +76,13 @@ Principal component analysis (PCA) is a statistical procedure that uses an ortho
 </blockquote>
 
 The algorithm is the following:
-- center data by substracting mean: $x \leftarrow x - < x >$
-- calculate [Covariance matrix](https://en.wikipedia.org/wiki/Covariance_matrix): $ C_{kj} = < ( x_k - < x_k > ) (x_j - < x_j >) >$
+- center data by substracting mean: $$x \leftarrow x - \langle x \rangle$$
+- calculate [Covariance matrix](https://en.wikipedia.org/wiki/Covariance_matrix): $$ C_{kj} = \langle ( x_k - \langle x_k \rangle ) (x_j - \langle x_j \rangle ) \rangle $$
 - calculate [eigenvalues and eigenvectors](https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors) of the covariance matrix:
   - compute $det(C - \lambda I)$, where $\lambda_n$ is one eigenvalue;
   - compute the respective eigenvector for each eigenvalue by solving $C e_n = \lambda_n e_n$;
 - compute the feature vector $F$, composed by the eigenvectors in the order of the largest to smallest corresponding eigenvalues.
-- the final data is obtained by multiplying the feature vector transposed ($F^T$, i.e. with the most significant eigenvector is on top) by a matrix $D_c$ whose rows are the mean centered data $x -< x > $ and $y -< y > $ as: $D_n = F^T D_c$
+- the final data is obtained by multiplying the feature vector transposed ($F^T$, i.e. with the most significant eigenvector is on top) by a matrix $D_c$ whose rows are the mean centered data $$x - \langle x \rangle $$ and $$y - \langle y \rangle $$ as: $$D_n = F^T D_c$$
 
 A visual example is displayed below, where the output of the PCA rotates the data towards the new axis in the cluster of the datapoints:
 
@@ -172,6 +172,8 @@ Or... because the algorithm converges when $w \propto \Delta w$, and  $w$ and $-
 As a final remark, it is relevant to mention that *kurtosis is very weak with outliers because is a fourth order function*. An alternative often used method is the Neg-entropy, robust for outliers. I'll ommit it for brevity. If you're interested on details, check the [original lecture notes](https://www.slideshare.net/yokotatsuya/independent-component-analysis-11359849).
 
 ### Competitive Learning and k-means
+
+Not to be confused with the [k-nearest neighbours algorithm (KNN)](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).
 
 Competitive Learning underlies the self organization of the brain. In practice, neural network wiring is adaptive, not fixed. And competition drives wiring across all brain systems (motor cortex, neocortex, etc.).
 A common technique for data reduction from competitive learning is the **prototype clustering**, where we represent the datapoints $x_n$ by a smaller set of prototypes $w_n$ that represent point clusters. The general rule is that *a new point $x$ belongs to the closest prototype $k$*, i.e. 

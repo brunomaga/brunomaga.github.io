@@ -151,7 +151,7 @@ The main advantage is that it is extremely simple to implement and doesn’t req
 
 ### Risk and Loss functions
 
-In ML, on non-probabilistic models, we follow the principle of empirical risk empirical risk minimization, in order to find good parameters. With a statistical model (omitted in this post), the principle of maximum likelihood is used to find a good set of parameters. The **risk** is the expected loss between the expeted output $$y_n$$ and the predicted value $$\hat{y}_n$$, ie
+In ML, on non-probabilistic models, we follow the principle of empirical risk empirical risk minimization, in order to find good parameters.  The **risk** is the expected loss between the expeted output $$y_n$$ and the predicted value $$\hat{y}_n$$, ie
 
 $$
 r(f) = \mathbb{E}[l(\hat{y}_n, y_n)]
@@ -159,7 +159,19 @@ $$
 
 where the predictor $$\hat{y}_n = f(x_n, \theta∗)$$ represents the output of the model $$f$$ with input data $$x_n$$ and parameters $$\theta*$$.
 
-Most regression tasks use the Mean Squared Error loss function: $$MSE(\hat{y}_n) = \mathbb{E}\left[ (y_n - \hat{y}_n)^2 \right]$$.
+On the case of a statistical model, the object of the maximum likelihood estimator is to find the function of the parameters that fits the model well
+
+$$
+L_x(θ) = −log p(x | θ) .
+$$
+
+We'll omit details on likelihood estimators, as they are covered in a [different post]({{ site.baseurl }}{% post_url 2018-08-20-Bayesian-Linear-Regression %}). 
+
+Back to non-probabilistic models. Most regression tasks use the Mean Squared Error loss function:
+
+$$
+MSE(\hat{y}_n) = \mathbb{E}\left[ (y_n - \hat{y}_n)^2 \right
+]$$.
 
 Most classification tasks use the binary or multi-class cross-entropy loss functions:
 - binary: $$H(p) = -(y \log p(x) + (1-y) \log (1-p(x)))$$.
