@@ -177,8 +177,14 @@ Inequality rules:
 - KL divergence is not a metric because it's not symmetric: $$  KL ( q \| p ) \neq  KL ( p \| q )$$.
 - $$p=q \Leftrightarrow KL ( q \| p ) = 0$$.
 
+---
+
 <br/>
-**p-value** (or observed significance level) is the smallest value of $$α-$$quantile for which the null hypothesis would be rejected.
+Testing:
+- **quantile** is the inverse of the CDF. It tells at which point the cdf (or the integral of the pdf) equals a given value $$\alpha \in [0,1]$$. 
+- **p-value** (or observed significance level)  is the smallest value of $$α$$ for which the null would be rejected at level $$α$$.
+- the **confidence interval** refers to the probability that a population parameter will fall between a set of values for a certain proportion of times. Example, for a $$95%$$ **confidence level**:
+  <p align="center"><img width="30%" height="30%" src="/assets/Statistics-for-ML/confidence_interval.png"/></p>
 
 ---
 
