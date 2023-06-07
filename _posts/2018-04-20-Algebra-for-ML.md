@@ -185,10 +185,12 @@ Two vectors are called **codirected** if they point in the same direction and **
 For $$h > 0$$ the **derivative** of $$f$$ at $$x$$ is defined as the limit:  $$\frac{df}{dx} = \lim_{x \rightarrow 0} \frac{f(x+h) - f(x)}{h}$$. In the limit, we obtain the $$tangent$$;
 
 A **Taylor Polynomial** of degree $$n$$ of a function $$f$$ at $$x_0$$ is: $$T_n(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$, where $$f^{(k)}$$ is the $$k$$-th derivative of $$f$$;
-- the **Taylor series** is a representation of a function f as an infinite sum of terms. These terms are determined using derivatives of $$f$$ evaluated at $$x_0$$. It is the Taylor Polinomial of infinite order i.e. $$T_{\infty}(x)$$. If $$T_{\infty}(x)=f(x)$$ it is called **analytic**;
-- Relevance: in ML we often need to compute expectations, i.e., we need to solve integrals of the form:
-$$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$;
-  - Even for parametric $$p(x)$$, this integral typically cannot be solved analytically. The Taylor series expansion of $$f(x)$$ is a way to find an approximate solution $$\mathbb{E}[f(x)] \approx \mathbb{E}[T_k(x)]$$.
+- the **Taylor series** is a representation of a function $$f$$ as an infinite sum of terms. These terms are determined using derivatives of $$f$$ evaluated at $$x_0$$. It is the Taylor Polinomial of infinite order i.e. $$T_{\infty}(x)$$. If $$T_{\infty}(x)=f(x)$$ it is called **analytic**;
+- Relevance:
+  - in ML we often need to compute expectations, i.e., we need to solve integrals of the form:
+$$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$. Even for parametric $$p(x)$$, this integral typically cannot be solved analytically. The Taylor series expansion of $$f(x)$$ is a way to find an approximate solution $$\mathbb{E}[f(x)] \approx \mathbb{E}[T_k(x)]$$.
+  - in Bayesian statistics, the posterior often involves computing integrals: $$p(x \mid y) = \frac{ p(y \mid x) p(x)}{p(y)}$$, where $$p(y) = \int p(y \mid x) p(x) dx$$. These integrals are often multidimensional in realistic problems, and are typically intractable analytically (except in a few special cases requiring the use of conjugate priors). Approximate inference must be applied.  
+  - much of non-Bayesian statistics is based on maximum likelihood -- finding the maximum of a (usually multidimensional) function, which involves knowledge of its derivatives, i.e. differentiation. Numerical methods may not be mandatory but they will be used as they are simpler (faster) -- it comes down to the fact that differentiation is more tractable than integration.
   - see [Taylor expansions for the moments of functions of random variables](https://en.wikipedia.org/wiki/Taylor_expansions_for_the_moments_of_functions_of_random_variables) for more details
 
 The **gradient** of **Jacobian** or $$\triangledown_x f(x)$$ of function $$f : \mathbb{R}^n \rightarrow \mathbb{R}^n$$ is the $$m \times n$$ matrix of partial derivatives per variable $$\frac{df_i(x)}{x_j}$$ for row and column iterators $$i$$ and $$j$$, respectively. Useful rules in partial differentiation:
