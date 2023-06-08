@@ -154,7 +154,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 **Moment Generation Function** is an alternative formulation of a pdf $$f(x)$$:
 - $$M(t) = \mathbb{E} \left[ e^{eX} \right] = \sum_{x \in S} e^{tX}\, f(x)$$.
 - if distributions are independent: $$M_{X+Y}(t) = M_X(t) * M_Y(Y)$$.
-- can be used to show that e.f. sum of gaussians is a gaussian.
+- can be used to show that e.g. sum of gaussians is a gaussian.
 
 ---
 
