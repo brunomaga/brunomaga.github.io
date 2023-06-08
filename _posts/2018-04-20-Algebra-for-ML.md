@@ -184,8 +184,9 @@ Two vectors are called **codirected** if they point in the same direction and **
 
 For $$h > 0$$ the **derivative** of $$f$$ at $$x$$ is defined as the limit:  $$\frac{df}{dx} = \lim_{x \rightarrow 0} \frac{f(x+h) - f(x)}{h}$$. In the limit, we obtain the $$tangent$$;
 
-A **Taylor Polynomial** of degree $$n$$ of a function $$f$$ at $$x_0$$ is: $$T_n(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$, where $$f^{(k)}$$ is the $$k$$-th derivative of $$f$$;
-- the **Taylor series** is a representation of a function $$f$$ as an infinite sum of terms. These terms are determined using derivatives of $$f$$ evaluated at $$x_0$$. It is the Taylor Polinomial of infinite order i.e. $$T_{\infty}(x)$$. If $$T_{\infty}(x)=f(x)$$ it is called **analytic**;
+The **Taylor series** is a representation of a function $$f$$ as an an infinite sum of terms that are expressed in terms of the function's derivatives at a single point $$x_0$$.
+- the **Taylor Polynomial** of degree $$n$$ of a function $$f$$ at $$x_0$$ is: $$T_n(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k$$, where $$f^{(k)}$$ is the $$k$$-th derivative of $$f$$;
+- If it is the Taylor Polinomial of infinite order i.e. $$T_{\infty}(x)$$. If $$T_{\infty}(x)=f(x)$$ it is called **analytic**;
 - Relevance:
   - in ML we often need to compute expectations, i.e., we need to solve integrals of the form:
 $$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$. Even for parametric $$p(x)$$, this integral typically cannot be solved analytically. The Taylor series expansion of $$f(x)$$ is a way to find an approximate solution $$\mathbb{E}[f(x)] \approx \mathbb{E}[T_k(x)]$$.
@@ -195,7 +196,7 @@ $$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$. Even for parametric $$p(x)$$, this in
 
 The **Newton's method** is a root-finding algorithm which produces successively better approximations to the roots (or zeroes) of a real-valued function. I.e. solves equations of the form $$f(x)=0$$ by successive approximation. Iterations are defined as: $$x_{n+1}=x_{n}-{\frac {f(x_{n})}{f'(x_{n})}} $$.
 - The initial value $$x_0$$ should be picked as close as possible to the zero.
-- We then find the equation of the line tangent to $$y=f(x)$$ at $$x=x_0$$  and follow it back to the $$x$$ axis at a new (and improved!) guess $$x_1$$:
+- We then find the equation of the line tangent to $$y=f(x)$$ at $$x=x_0$$  and follow it back to the $$x$$ axis at a new improved guess $$x_1$$:
 
   <img width="45%" height="45%" src="/assets/Algebra-for-ML/newton_method.gif"/><br/>
   <small>(source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)</small>

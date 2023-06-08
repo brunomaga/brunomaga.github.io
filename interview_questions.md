@@ -1,0 +1,210 @@
+---
+layout: default
+title: Bonus! interview questions
+permalink: /interview_questions/
+---
+
+Just a collection of interview questions.
+
+### Maths/Stats
+
+- What is a random variable?
+- What’s a linear combination of vectors?
+- how to check if two vectors are independent?
+  - dot product is zero, they're orthogonal.
+- how to check if vectors are orthogonal or parallel?
+- what's the cross product of two perpendicular vectors and the product of two parallel vectors?
+  - The cross product $$ a \times b$$ is always orthogonal to both vectors, and has magnitude zero when the vectors are parallel and maximum magnitude $$‖a‖‖b‖$$ when they are orthogonal.
+- what's the dot product of two perpendicular vectors and the product of two parallel vectors?
+  - The dot product of orthogonal vectors is $$0$$, as $$cos \theta = 0$$. The dot product of parallel vectors $$a$$ and $$b$$ is the product of the magnitude of both vectors ie $$\|a\| \|b\|$$.
+
+- how to check if multiple vectors are independent?
+  - row echelon format of the matrix with all vectors as columns
+- what is the generating set of a vector space? and basis, dimension?
+- what is the rank and the trace of a matrix?
+  - trace = sum of diagonals, 
+- What does full rank mean on a matrix?
+  - full rank means invertibility
+- what is an affine transformation? What does it guarantee?
+  - guarantees parallelism
+- what is a projection?
+  - idempotent
+- what is (uniform) row echelon format?
+- how many matrix multiplication operations are there?
+  - element-wise multiplication, inner/dot product, outer product, cross product?
+- how do you calculate the angle between two vectors?
+- what is the complexity of a dot product?
+- what is a (strictly) convex function?
+- why do we need convex functions? 
+  - single solution and global minimum for strictly convex.
+- what is gradient descent?
+  - a first order optimisation algorithm.
+- How do you compute a Jacobian and a Hessian? What is their dimensionality? Are they square and/or symmetric?
+  - dims: $$f \times d$$ and $$d \times d$$. Jacobian is not symmetric and not square. Hessian is symmetric and square.
+- What are second-order optimisation algorithms? what is the Adams optimizer? does it use the second derivative? (why not?)
+  - an optimizer that uses the momentum / second order, not the second derivative (Hessian) because it would be too slow.
+  - in Adam, second order means curvature, not derivative!
+- How can the 2nd derivative be used in an optimisation algorithm?
+  - (??)
+- how do you compute an expectaction?
+- is $$\mathbb{Cov}[X,Y] = \mathbb{Cov}[Y,X]$$? 
+  - yes for univariate random vars, no for multivariate: $$\mathbb{Cov}[X,Y] = \mathbb{Cov}[Y,X]^{\intercal}$$
+- What is the variance of the sum of random vars, i.e. $$\mathbb{Var}[A+B]$$?
+- What is the expectation of the sum of random vars, i.e. $$\mathbb{E}[A+B]$$?
+- What is the sum of two random variables? (convolution)
+- What is the linear transformation of a gaussian random variable?
+- Describe Newton's method? Where does it come from? How can it be adapted to find a minimum in a function?
+  - (??)
+- What is the formula for the Taylor series? Why does it make sense? Why is there a 1/n! in the formula?
+  - (??)
+  - Example, to learn distribution of model parameters: $$p(\theta \mid X) = \frac{ p(X \mid \theta) \, p(\theta)}{p (X)}$$
+- What is an invertible matrix? What are the criteria that apply? What are the procedures to invert a Matrix? What is the complexity?
+  - invertible matrix $$A^{-1}$$ of a matrix $$A$$ is that matrix that allows $$AA^{-1} = I = A^{-1}A$$.
+  - if inverse exists, $$A$$ is called regular/invertible/non-singular.
+  - if determinant is *not* zero, matrix is invertible.
+  - to invert, perform gaussian elimination on the matrix $$[A \mid I]$$ to achieve $$[ I \mid A^{-1} ]$$.
+  - it runs on the same complexity as gaussian elimination, cubic! 
+- How do you compute the determinant of a triangular matrix?
+  - determinant of a triangular matrix is the product of the diagonals! 
+- What is linear programming? Quadratic programming? Dynamic programming?
+- How to perform an inverse or gaussian elimination of very large matrices?
+  - because GE runs on cubic complexity, needs instead an iterative algorithm e.g. Jacobi method. 
+- whats the inverse of a symmetric matrix?
+  - its transpose: if $$A$$ is symmetric, then $$A^{\intercal}=A^{-1}$$
+- if $$A$$ is invertible, is $$A^{\intercal}$$ invertible? Why?
+  - (??)
+- How to check if a set of vectors is independent?
+- If vector $$A$$ is independent of $$B$$ and $$B$$ independent of $$C$$, is $$A$$ independent of $$C$$? Example? No!
+- If random var $$A$$ is independent of $$B$$ and $$B$$ independent of $$C$$, is $$A$$ independent of $$C$$? Example? No!
+- What is the solution to the least squares, or system of linear equations $$Ax=b$$
+  - if $$A$$ is square and invertible: $$x = A^{-1}b$$
+  - otherwise: $$x=(A^TA)^{−1}A^Tb$$
+- What is the difference between Covariance and correlation?
+- What is the difference between dependence and correlation? (??)
+- What is a positive (semi) definite matrix? How to check if a matrix is psd? Why are covariance matrices psd?
+  - Diagonal is always positive. 
+- What is likelihood? What does the likelihood result mean i.e. how to interpret it? Give an example. (??)
+- What’s the difference between probability and likelihood?
+- What are the product and sum rules of probability? What is marginalization and marginal likelihood?
+- What is the sum of two gaussian random variables?
+- What is Bayes' Formula? Can you give an example?
+  - Bayes describes the relationship between some prior knowledge $$p(x)$$ about an unobserved random variable $$x$$ and some relationship $$p(y \mid x)$$ between $$x$$ and a second variable $$y$$
+- What is the problem of the bayesian setup?
+  - intractable or computationally prohibitive. Therefore we can use variational inference for instance, MCMC, Taylor series, ...
+- What does Markov Chain Monte Carlo mean:
+  - Random stepping (Monte Carlo) where next iteration depends only on the current (Markov chain)
+- What is the exponential family?
+- What properties do distributions of the exponential family have?
+  - conjugate prior, MLE/MAP standard resolution, includes stuff statistics $$Φ(x)$$.
+- What are generalized linear models?
+- What is a conjugate prior?
+- What the theorem of Jensen's inequality? When do you use it?
+- What is KL divergenge? Is it a metric?
+- What is the central limit theorem? Give an example.
+- What is the law of large numbers? Give an example.
+- What are eigen values and eigen vectors? What do they mean?
+- What is eigendecomposition? Give the example of an algorithm.
+- how to compute eigenvalues and eigen vectors?
+- How do you perform a Principal Component Analysis?
+- How to recover original dataset from PCA?
+  $$X’=VX \Leftrightarrow V^{−1} X’ = X$$, but because eigen vectors are orthonormal, $$V^T X’=X$$ 
+- How do you perform a Singular Value Decomposition? when would you use this instead of PCA?
+- What is Cholesky’s factorization (positive semidefinite matrix)
+- What is the Toeplitz matrix?
+  - matrix where each diagonal from left to right is constant e.g. $$[ [a, b, c, d], [e, a, b, c], [d, e, a, b], [c, d, e, a] ]$$ 
+  - used to compute linear convolution as a multiplication by te Toeplitz instead of sliding kernel. Useful e.g. on GPUs.
+- What’s a Fourier transform? When to use it?
+- What is a Lagrange multiplier? When to use it?
+- What are sufficient statistics? What theorem describes it? (Fischer-Neyman)
+
+
+### Machine Learning
+
+- What is a regularizer? What is L1/L2 regularization and when are they used?
+  - To discuss: regularize means to make things regular or acceptable; aims at reducing overfitting; L1 = absolute value = weight dropping; L2 = square of difference;
+- What is the difference between Type I and Type II error?
+  - A type I error (false-positive) occurs if an investigator rejects a null hypothesis that is actually true in the population; a type II error (false-negative) occurs if the investigator fails to reject a null hypothesis that is actually false in the population.
+- How do batch-/layer normalization work as a regularizer? And dropout?
+- What is the biad/variance tradeoff? How do they look on a good model?
+  - low bias, low variance.
+- What is overfitting/underfitting, how do know if we are over-/underfitting, and how to overcome it?
+  - Overfitting; Low train error, high valid error. Low bias high variance
+  - Underfitting: high error on train and validation, High Bias and a High Variance
+  - to overcome overfitting:
+    - Reduce the network’s capacity by removing layers or reducing the number of elements in the hidden layers: the higher the capacity, the easier it is for the model to learn the input classes.
+    - Apply regularization, which comes down to adding a cost to the loss function for large weights
+- What is dropout and how does it work? Why does it work?
+  - train vs valid steps, $$p$$ parameter. subnetworks learn alternative logics.
+- How to model uncertainty or error of a model? 
+  - use ensembles to compute mean, and compare model with the mean of the ensembles output.
+- How do ensemble methods work? What ensemble methods do you know?
+  - possible options: each model is trained with different data (maybe with some overlaps), each model is trained with different seeds, different models.
+- How to model graphs of molecules represented as strings? (Transformers) 
+
+- What is the memory/computation bottleneck of a Transformer? 
+- What is a latent variable model?
+- What is a (direct) graphical model?
+
+- What are BERT's / GPT's pre-trainining and post-training tasks?
+- Why use Transformers instead of RNNs for sequences? What are the computational advantages/disadvantages?
+  - RNN rent to perform worse with tokens on the beginning of the sequence, and better with final tokens.
+  - Transformers allows every token to attend to every token, with a weighted attention given by the attention matrix.
+- What is the point of the mask in the attention head of the Transformer?
+- What are GANs and what are the challenges in training them?
+  - Model collapse, Discriminator lean too fast, therefore the gradients are too small in the discriminator
+- Describe the loss function of a GAN.
+- What are VAEs and what are the challenges in training them?
+  - reparametrization trick.
+- Describe the loss function of a VAE.
+- What are kernels and how do they work? What is a Gram matrix? How are they useful? Limitations? Complexity?
+  - we project input into higher dimensionality where we can do (linear) regression/separation.
+- How do SVMs work? What's the complexity? 
+  - maximize margin (best answer)
+  - $$K(x,y)= \phi(x)^T \phi(y)$$, this multiplication makes it quadratic.
+  - we can then perform linear regression on the higher dimensionality data.
+  - SVMs then have complexity quadratic to cubic during the training phase (??), therefore they do not scale well with data.
+- What is the analytics solution to least squares? And Ridge Regression?
+- What is entropy and Mutual Information?
+- What loss function to use for categorical classification, binary classification, regression, etc? 
+- What’s the difference between a generative and discriminative model?
+- How is KNN different than k-means?
+- How do ROC curves work?
+
+### ML software enginnering
+
+- Train, validation, test datasets? k-cross validation?
+- What is the back-propagation algorithm?
+- What are the different types of scaling and parallelism?
+  - microbatching (gradient accumulation), data parallelism, model parallelism across layers, pipelining, sharding, etc
+- What is the automatic differentiation and how does it work?
+- What are the different ways of reducing model size?
+  - gradient clipping, model quantization, mixed-precision, prunning or model distilation (to a smaller model).
+- What is the receptive field of a CNN? 
+- What is the pooling in a CNN and why do we need it? and kernel and why do we need it?
+- Why when to use Relu, Leaky telu, sigmoid?
+  - With a Leaky ReLU (LReLU), you won’t face the “dead ReLU” (or “dying ReLU”) problem which happens when your ReLU always have values under 0 - this completely blocks learning in the ReLU because of gradients of 0 in the negative part
+- How to compute variance of a set of $$n$$ values, in one single loop?
+  - as we loop, accumulate the sum of $$x_i$$ and the sum of $$x_i^2$$. At the get the square of the sum of $$x_i$$ and divide both sums by $$n$$.
+  - ie we compute variance as $$Var[X] = \mathbb{E[x^2]} - \mathbb{E[x]^2}$$.
+- What is a Turing Machine?
+- What are the performance metrics used for binary classification?
+  - accuracy, precision, recall, F1-score. ROC curve?
+- Does low loss mean higher accuracy? Give an example. Why to use accuracy instead of loss to measure performance?
+- what is a decision tree, and how is a decision tree pruned?
+- What is the memory bottleneck in DNNs and CNNs?
+  - DNNs: optimizer parameters and model weights. CNNS: activations (layer outputs)
+- how to compare two Bayesian models (priors)?
+  - compute the ratio, they have same evidence, and assume same prior, all goes down to ratio of likelihoods 
+- Why does the cross-entropy fomula make sense? 
+  - CrossEntropy is the negative of the log-Likelihood of x (or softmax of x if output is not a distribution).
+- Why do we use cross-entropy instead of negative log-likelihood? (computational stability)
+- How to build a CNN for image segmentation?
+- How to find edges without DNN (ie using traditional methods)?
+  - location with smalles value of sum of image with jittered image
+- what's the dimensionality of a kernel in a CNN?
+- explain how to collect embeddings?
+  - VAE middle layer, U-net middle layer / downsampling, PCA.
+- What is an autoencoder?
+  - a DNN that learns to transform an input into noise and back into the input.
+- What is the Difference between Bagging and Boosting?
+- What is a Random Forest? What is the computational complexity in training?
