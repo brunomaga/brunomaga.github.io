@@ -37,7 +37,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - $$p(x,y) = p(y \mid x) p(x) = p( x \mid y) p(y)$$.
 
 <br/>
-**Bayes rule** describes the relationship between some prior knowledge $$p(x)$$ about an unobserved random variable x and some relationship $$p(y | x)$$ between $$x$$ and a second variable $$y$$:
+**Bayes rule** describes the relationship between some prior knowledge $$p(x)$$ about an unobserved random variable $$x$$ and some relationship $$p(y \mid x)$$ between $$x$$ and a second variable $$y$$:
 - $$p(x \mid y) = \frac{ p(y \mid x) p(x)}{p(y)}$$, read as: $$\text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}$$. 
 - derived from the sum and product rules: $$p(y \mid x) p(y) = p(x \mid y) p(x) \Leftrightarrow p(x \mid y) = \frac{p(y \mid x) p(x)}{p(y)}$$.
 - **evidence** is the **marginal likelihood** $$p(y) = \int p(y \mid x) p(x) dx = \mathbb{E}[ p(y \mid x)]$$.
