@@ -193,16 +193,28 @@ $$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$. Even for parametric $$p(x)$$, this in
   - much of non-Bayesian statistics is based on maximum likelihood -- finding the maximum of a (usually multidimensional) function, which involves knowledge of its derivatives, i.e. differentiation. Numerical methods may not be mandatory but they will be used as they are simpler (faster) -- it comes down to the fact that differentiation is more tractable than integration.
   - see [Taylor expansions for the moments of functions of random variables](https://en.wikipedia.org/wiki/Taylor_expansions_for_the_moments_of_functions_of_random_variables) for more details
 
+The **Newton's method** is a root-finding algorithm which produces successively better approximations to the roots (or zeroes) of a real-valued function. I.e. solves equations of the form $$f(x)=0$$ by successive approximation. Iterations are defined as: $$x_{n+1}=x_{n}-{\frac {f(x_{n})}{f'(x_{n})}} $$.
+- The initial value $$x_0$$ should be picked as close as possible to the zero.
+- We then find the equation of the line tangent to $$y=f(x)$$ at $$x=x_0$$  and follow it back to the $$x$$ axis at a new (and improved!) guess $$x_1$$:
+
+  <img width="45%" height="45%" src="/assets/Algebra-for-ML/newton_method.gif"/><br/>
+  <small>(source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)</small>
+
+
 The **gradient** of **Jacobian** or $$\triangledown_x f(x)$$ of function $$f : \mathbb{R}^n \rightarrow \mathbb{R}^n$$ is the $$m \times n$$ matrix of partial derivatives per variable $$\frac{df_i(x)}{x_j}$$ for row and column iterators $$i$$ and $$j$$, respectively. Useful rules in partial differentiation:
-  - Product: $$ (f(x) g(x))' = f'(x)g(x) + f(x)g'(x)$$;
-  - Quotient: $$ \left(\frac{f(x)}{g(x)}\right)' = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$$;
-  - Sum: $$ (f(x) + g(x))' = f'(x)+ g'(x)$$;
-  - Chain: $$ (g(f(x))' = (g \circ f)'(x) = g'(f(x))f'(x) = \frac{df}{dg} \frac{dg}{dx}$$;
+- Product: $$ (f(x) g(x))' = f'(x)g(x) + f(x)g'(x)$$;
+- Quotient: $$ \left(\frac{f(x)}{g(x)}\right)' = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$$;
+- Sum: $$ (f(x) + g(x))' = f'(x)+ g'(x)$$;
+- Chain: $$ (g(f(x))' = (g \circ f)'(x) = g'(f(x))f'(x) = \frac{df}{dg} \frac{dg}{dx}$$;
 
 The **Hessian** or $$\triangledown^2_{x,y} f(x,y)$$ is a collection of all second-order partial derivatives, defined by the symmetric matrix:
+
   <img width="33%" height="33%" src="/assets/Algebra-for-ML/Hessian.png"/>
 
-In deep neural networks, the output $$y$$ of a $$K$$-deep DNN is computed as: $$ y = (f_K ◦ f_{K−1} ◦ ... ◦ f_1)(x) = f_K(f_{K−1}( ... (f_1(x)) ... )) $$
+
+### Deep Neural Networks
+
+The output $$y$$ of a $$K$$-deep DNN is computed as: $$ y = (f_K ◦ f_{K−1} ◦ ... ◦ f_1)(x) = f_K(f_{K−1}( ... (f_1(x)) ... )) $$
 - The **chain rule** allows us to describe the partial derivatives as the following:  
   <img width="33%" height="33%" src="/assets/Algebra-for-ML/DNN_partial_derivatives.png"/>
   - the orange terms are partial derivatives of a layer with respect to its inputs; 
