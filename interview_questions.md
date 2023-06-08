@@ -1,10 +1,9 @@
 ---
-layout: default
-title: Bonus! interview questions
+layout: post
+title: Interview questions
 permalink: /interview_questions/
 ---
 
-Just a collection of interview questions.
 
 ### Maths/Stats
 
