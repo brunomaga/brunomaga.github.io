@@ -12,11 +12,10 @@ permalink: /interview_questions/
 - how to check if two vectors are independent?
   - dot product is zero, they're orthogonal.
 - how to check if vectors are orthogonal or parallel?
-- what's the cross product of two perpendicular vectors and the product of two parallel vectors?
+- what's the cross product of two perpendicular vectors and the cross product of two parallel vectors?
   - The cross product $$ a \times b$$ is always orthogonal to both vectors, and has magnitude zero when the vectors are parallel and maximum magnitude $$‖a‖‖b‖$$ when they are orthogonal.
-- what's the dot product of two perpendicular vectors and the product of two parallel vectors?
+- what's the dot product of two perpendicular vectors and the dot product of two parallel vectors?
   - The dot product of orthogonal vectors is $$0$$, as $$cos \theta = 0$$. The dot product of parallel vectors $$a$$ and $$b$$ is the product of the magnitude of both vectors ie $$\|a\| \|b\|$$.
-
 - how to check if multiple vectors are independent?
   - row echelon format of the matrix with all vectors as columns
 - what is the generating set of a vector space? and basis, dimension?
