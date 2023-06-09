@@ -5,7 +5,7 @@ categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-Algebra-for-ML %}). We will summarize concepts of probabilities and statistics that are relevant to ML engineers.
+A brief summary of topics in statistics and probability that are relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For a similar post related to the topics of Algebra, see [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-Algebra-for-ML %}). 
 
 <br/>
 **Basic definitions**:
@@ -48,7 +48,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 <br/>
 **Expected Value** of a function $$g$$ given:
 - an univariate random variable $$X$$ is: $$\mathbb{E}_X [g(x)] = \int_X g(x) p(x) dx$$, or the equivalent averaged sum for the discrete use case. 
-- multivariate vector as a finite set of univariate ie $$X = \left[X_1, X_2, X_D \right]$$ is:  $$\mathbb{E}_X [g(x)] = \left[ \mathbb{E}_{X_1} [g(x_1)], \mathbb{E}_{X_2} [g(x_2)], ..., \mathbb{E}_{X_D} [g(x_D)] \right] \in \mathbb{R}^D$.
+- multivariate vector as a finite set of univariate ie $$X = \left[X_1, X_2, X_D \right]$$ is:  $$\mathbb{E}_X [g(x)] = \left[ \mathbb{E}_{X_1} [g(x_1)], \mathbb{E}_{X_2} [g(x_2)], ..., \mathbb{E}_{X_D} [g(x_D)] \right] \in \mathbb{R}^D$$.
 
 <br/>
 **Covariance** is the expected product of their two deviations from the respective means, ue:
@@ -58,13 +58,13 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 = \mathbb{E}[XY] - \mathbb{E}[X] \,\mathbb{E}[Y] - \mathbb{E}[X] \,\mathbb{E}[Y] +  \mathbb{E}[X] \, \mathbb{E}[Y] \\
 = \mathbb{E}[XY] -  \mathbb{E}[X] \,\mathbb{E}[Y]$$. 
 - univariate: $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = \mathbb{Cov}_{Y,X}[y,x]$$
-- multivariate r.v. $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$: $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \,\mathbb{E}[y]^{\intercal} = \mathbb{Cov}[y,y]^{\intercal} \in \mathbb{R}^{D \times E}$$
+- multivariate random vars $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$: $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \,\mathbb{E}[y]^{\intercal} = \mathbb{Cov}[y,y]^{\intercal} \in \mathbb{R}^{D \times E}$$
 
 <br/>
 **Variance**:
 - univariate: $$\mathbb{Var}_X[x] = \mathbb{Cov}_X[x,x] = \mathbb{E}_{X} \left[ (x-\mathbb{E}_X[x])^2 \right] = \mathbb{E}_X[x^2] - \mathbb{E}_X[x]^2$$
 - multivariate: $$\mathbb{Var}_X[x] = \mathbb{Cov}_X[x,x] = \mathbb{E}_X[(x-\mu)(x-\mu)^{\intercal} ] = \mathbb{E}_X[xx^{\intercal}] - \mathbb{E}_X[x] \, \mathbb{E}_X[x]^{\intercal}$$ 
-  - this is a $$D \times D$$ matrix also called the **Covariance Matrix** of the multivariate r.v. $$X$$.
+  - this is a $$D \times D$$ matrix also called the **Covariance Matrix** of the multivariate random var $$X$$.
     - it is symmetric and positive semidefinite;
     - the diagonal terms are 1, i.e. no covariance between the same 2 random variables;
     - the off-diagonals are $$\mathbb{Cov}[x_i, x_j]$$ for $$i,j = 1, ..., D$$ and $$i \neq j$$. 
@@ -86,8 +86,8 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 
 <br/>
 **Statistical Independence** of random variables $$X$$ and $$Y$$ iff $$p(x,y)=p(x)p(y)$$. Independence means:
-- $$p(y \mid x) = p(x)$$.
-- $$p(x \mid y) = p(y)$$.
+- $$p(y \mid x) = p(y)$$.
+- $$p(x \mid y) = pxx)$$.
 - $$\mathbb{E}[x,y] = \mathbb{E}[x] \, \mathbb{E}[y]$$, thus
 - $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[x,y] - \mathbb{E}[x] \, \mathbb{E}[y] = 0$$, thus
 - $$\mathbb{Var}_{X,Y}[x+y] = \mathbb{Var}_X[x] + \mathbb{Var}_X[y]$$.
@@ -105,7 +105,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - marginals and conditional of multivariate Gaussians are also Gaussians:
   - joint distribution of a bivariate Gaussian distribution made of two Gaussian random variables $$X$$ and $$Y$$: $$p(x,y) = \mathcal{N} \left( \begin{bmatrix} \mu_x \\ \mu_y  \end{bmatrix}, \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix}   \right)$$. 
   - the conditional is also Gaussian: $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$. 
-  - the marginal $$p(x)$$ of $$p(x,y)$$: $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$.
+  - the marginal is also Gaussian: $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$.
   <p align="center">
   <img width="45%" height="45%" src="/assets/Statistics-for-ML/bivariate_gaussian.png"/><br/>
   <br/><small>A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional disribution is a slice accross the X or Y dimension and is also a Gaussian. <b>Source:</b> wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a></small>
@@ -138,10 +138,10 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - $$ϕ(x)$$ is a **sufficient statistic** of the distribution
   - we can capture information about data (population) in $$ϕ(x)$$.
   - sufficient statistics carry *all* the information needed to make inference about the population, that is, they are the statistics that are sufficient to represent the distribution:
-  - **Fischer-Neyman theorem**: Let $$X$$ have probability density function $$p(x \mid θ)$$. Then the statistics $$ϕ(x)$$ are sufficient for $$θ$$ if and only if $$p(x \mid θ)$$ can be written in the form $$p(x \mid \theta) = h(x) g_{\theta}(\theta(x))$$, where $$h(x)$$ is a distribution independent of $$θ$$ and $$g_θ$$ captures all the dependence on $$θ$$ via sufficient statistics $$ϕ(x)$$. 
+  - **Fischer-Neyman theorem**: Let $$X$$ have probability density function $$p(x \mid θ)$$. Then the statistics $$ϕ(x)$$ are sufficient for $$θ$$ if and only if $$p(x \mid θ)$$ can be written in the form $$p(x \mid \theta) = h(x) g_{\theta}(ϕ(x))$$, where $$h(x)$$ is a distribution independent of $$θ$$ and $$g_θ$$ captures all the dependence on $$θ$$ via sufficient statistics $$ϕ(x)$$. 
   - Note that the form of the exponential family is essentially a particular expression of $$g_θ(ϕ(x))$$ in the Fisher-Neyman theorem. 
 - $$\eta$$ is the **natural parameter**,
-- for optimization purposes, we use $$ p (x \mid \theta) \propto \exp (\theta^{\intercal} \eta(x)) $$
+- for optimization purposes, we use $$ p (x \mid \theta) \propto \exp (\theta^{\intercal} ϕ(x))$$.
 - Why use exponential family:
   - they have finite-dimensional sufficient statistics;
   - conjugate distributions are easy to write down, and the conjugate distributions also come from an exponential family;
@@ -162,7 +162,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 **Central Limit Theorem**: Let $$Y_n$$ be independent random variables (of any form) with $$\mathbb{E}[Y_k]=\mu$$ for all $$k$$. Then $$\frac{1}{n} (Y_1 + ... + Y_n) \rightarrow \mu$$.
 
 <br/>
-**Theory of Large Numbers**: Let $$\{ Y_n \}$$ be a sequence of iid random variables (of any form) with mean $$\mu$$ and variance $$\sigma^2$$. Then $$\sqrt{n} \left( \frac{1}{n} \sum_{i=1}^N (Y_i - \mu) \right) \rightarrow \mathcal{N}(0, \sigma^2)$$.
+**Law of Large Numbers**: Let $$\{ Y_n \}$$ be a sequence of iid random variables (of any form) with mean $$\mu$$ and variance $$\sigma^2$$. Then $$\sqrt{n} \left( \frac{1}{n} \sum_{i=1}^N (Y_i - \mu) \right) \rightarrow \mathcal{N}(0, \sigma^2)$$.
  
 <br/>
 Inequality rules:
@@ -207,9 +207,9 @@ Testing:
 
 <br/>
 Arrangements of $$k$$ items out of a set of size $$n$$:
+- **Arrangement** is the arrangement of *some* items in which order matter: $$^nA_k=n^k$$ with replacement or $$k!$$ without.
 - **Permutation** is the arrangements of *all* items in which order matters: $$^nP_k=\frac{n!}{(n-k)!}$$.
-- **Arrangement** is the arrangement of *some* items in which order matter: $$A_k=n^k$$ with replacement or $$k!$$ without.
-- **Combination** is the arrangement of *some* items in which order *doesn't* matter: $$\binom nk=^nC_k=\frac{n!}{k!(n-k)!}$$.
+- **Combination** is the arrangement of *some* items in which order *doesn't* matter: $$\binom nk = \, ^nC_k = \frac{1}{k!} ^nP_k = \frac{n!}{k!(n-k)!}$$.
 
 ---
 

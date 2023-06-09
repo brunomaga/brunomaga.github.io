@@ -7,6 +7,8 @@ permalink: /interview_questions/
 
 ### Maths/Stats
 
+Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-Algebra-for-ML %}) and [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-Statistics-for-ML %}). 
+
 - What is a random variable?
 - What’s a linear combination of vectors?
 - how to check if two vectors are independent?
@@ -107,7 +109,7 @@ permalink: /interview_questions/
 - how to compute eigenvalues and eigen vectors?
 - How do you perform a Principal Component Analysis?
 - How to recover original dataset from PCA?
-  $$X’=VX \Leftrightarrow V^{−1} X’ = X$$, but because eigen vectors are orthonormal, $$V^T X’=X$$ 
+  - $$X’=VX \Leftrightarrow V^{−1} X’ = X$$, but because eigen vectors are orthonormal, $$V^T X’=X$$ 
 - How do you perform a Singular Value Decomposition? when would you use this instead of PCA?
 - What is Cholesky’s factorization (positive semidefinite matrix)
 - What is the Toeplitz matrix?
@@ -116,6 +118,7 @@ permalink: /interview_questions/
 - What’s a Fourier transform? When to use it?
 - What is a Lagrange multiplier? When to use it?
 - What are sufficient statistics? What theorem describes it? (Fischer-Neyman)
+- How to sample from a Gaussian distribution?
 
 
 ### Machine Learning

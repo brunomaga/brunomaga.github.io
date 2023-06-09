@@ -3,7 +3,7 @@ layout: post
 title:  "Algebra for ML Engineers"
 ---
 
-A brief summary of the algebra topics that are most relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For the topics of statistics or probabilities, see the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-Statistics-for-ML %}) .
+A brief summary of topics in Algebra that are relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For the topics of statistics or probabilities, see the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-Statistics-for-ML %}) .
 
 
 ### Properties of Matrices
@@ -118,12 +118,12 @@ determinant properties:
 - $det(AB) = det(A) det(B)$; 
 - $det(A) = det(A^{\intercal})$; 
 - $det(A^{-1})=\frac{1}{det(A)}$;
-- for more than 2 columns or rows: $$det(A) = \sum_{k=1}^{n} (−1)^{k+j}a_{kj} det(A_{k,j})
+- for more than 2 columns or rows: $$det(A) = \sum_{k=1}^{n} (−1)^{k+j}a_{kj} det(A_{k,j})$$.
 - *Similar* matrices have the same determinant;
 - a matrix $$A$$ is **invertible** if $$det(A) \neq 0$$;
 - for a diagonal matrix, the determinant is computed by the product of the diagonal elements;
 - the determinant is the signed volume of the parallelepiped formed by the columns of the matrix, i.e. it can also be computed as the product of the diagonal on a matrix in row-echelon form;
-  - thus, $$A$$ is invertible iff it has full rank; 
+  - Important: $$A$$ is invertible *iff* it has full rank; 
   - and a square matrix $$A \in \mathbb{R}^{n \times n}$$ has $$det(A) \neq 0$$ iff $$rank(A)=n$$.
 
 The **trace** of a square matrix is the sum of its diagonal terms, or the sum of its eigenvalues;
@@ -156,19 +156,17 @@ Two vectors are called **codirected** if they point in the same direction and **
 - when this eigendecomposition exists, then $$det(A) = det(PDP^{−1}) = det(P) \, det(D) \, det(P^{−1})$$, and $$A^k = (PDP^{−1})^k = PD^kP^{−1}$$;
 - a symmetric matrix can always be diagonalized;
 
-**Singular Value Decomposition** is a decomposition of the form $$S = U \Sigma V^{\intercal}$$:
+**Singular Value Decomposition** is a decomposition of the form $$A = U \Sigma V^{\intercal}$$:
 <p align="center"><img width="45%" height="45%" src="/assets/Algebra-for-ML/MML_SVD.png"/><br/>
 <small>image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a></small></p>
 - applicable to all matrices (not only square), and it always exists;
 - $$\Sigma$$ is the **singular value matrix**, a (non-square) matrix with only positive diagonal matrix with entries $$\Sigma_{ii} = \sigma_{i} \ge 0$$, and zero otherwise. $$\sigma_{i}$$ are the **singular values**. $$\Sigma$$ is unique. By convention $$\sigma_{i}$$ are ordered by value with largest at $$i=0$$;
 - $$U$$ is orthogonal and its column vectors $$u_i$$ are called **left-singular values**;
   - orthogonal because $$(UU^{\intercal}=U^{\intercal}U=I)$$ i.e.  it's orthogonal and normal = orthonormal;
-- $$V$$ is orthogonal and its column vectors $$v_i$$ are called **right-singular values**;
-- the SVD intuition follows superficially a similar structure to our eigendecomposition intuition;
   - the left-singular vectors of $$A$$ are the eigenbasis (ie the eigenvectors) of $$AA^{\intercal}$$;
+- $$V$$ is orthogonal and its column vectors $$v_i$$ are called **right-singular values**;
   - the right-singular vectors of $$A$$ are eigenvectors of $$A^{\intercal}A$$;
-  - the nonzero singular values of $$A$$ are the square roots of the nonzero eigenvalues of both $$AA^{\intercal}$$ and $$A^{\intercal}A$$;
-- i.e. computing the SVD of $$A \in \mathbb{R}^{m \times n}$$ is equivalent to finding two sets of orthonormal bases $$U = (u_1,... , u_m)$$ and $$V = (v_1,... , v_n)$$ of the codomain $$\mathbb{R}_m$$ and the domain $$\mathbb{R}_n$$, respectively. From these ordered bases, we construct the matrices $$U$$ and $$V$$;
+- Computing the SVD of $$A \in \mathbb{R}^{m \times n}$$ is equivalent to finding two sets of orthonormal bases $$U = (u_1,... , u_m)$$ and $$V = (v_1,... , v_n)$$ of the codomain $$\mathbb{R}_m$$ and the domain $$\mathbb{R}_n$$, respectively. From these ordered bases, we construct the matrices $$U$$ and $$V$$;
 - Comparing the eigendecomposition of an s.p.d matrix ($$S = S^⊤ = PDP^⊤$$) with the corresponding SVD ($$S = UΣV^⊤$$), they are equivalent if we set $$U = P = V$$ and $$D = Σ$$;
 - matrix approximation/compression is achieved by reconstructing the original matrix using less singular values $$\sigma$$. In practice, for a rank-$$k$$ approximation: $$\hat{A(k)} = \sum_{i=1}^{k} \sigma_i u_i v_i^{\intercal} = \sum_{i=1}^k \sigma_i A_i$$:
 
@@ -203,13 +201,13 @@ The **Newton's method** is a root-finding algorithm which produces successively 
   <small>(source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)</small>
 
 
-The **gradient** of **Jacobian** or $$\triangledown_x f(x)$$ of function $$f : \mathbb{R}^n \rightarrow \mathbb{R}^n$$ is the $$m \times n$$ matrix of partial derivatives per variable $$\frac{df_i(x)}{x_j}$$ for row and column iterators $$i$$ and $$j$$, respectively. Useful rules in partial differentiation:
+The **gradient** of **Jacobian** or $$\triangledown_x f(x)$$ of function $$f : \mathbb{R}^n \rightarrow \mathbb{R}^n$$ is the $$m \times n$$ matrix of *partial* derivatives per variable $$\frac{df_i(x)}{x_j}$$ for function $$i$$ and variable $$j$$ iterators. Useful rules in partial differentiation:
 - Product: $$ (f(x) g(x))' = f'(x)g(x) + f(x)g'(x)$$;
 - Quotient: $$ \left(\frac{f(x)}{g(x)}\right)' = \frac{f'(x)g(x) - f(x)g'(x)}{g(x)^2}$$;
 - Sum: $$ (f(x) + g(x))' = f'(x)+ g'(x)$$;
 - Chain: $$ (g(f(x))' = (g \circ f)'(x) = g'(f(x))f'(x) = \frac{df}{dg} \frac{dg}{dx}$$;
 
-The **Hessian** or $$\triangledown^2_{x,y} f(x,y)$$ is a collection of all second-order partial derivatives, defined by the symmetric matrix:
+The **Hessian** of a function $$\triangledown^2_{x,y} f(x,y)$$ is a collection of all second-order partial derivatives of all variables with respect to all other variables, defined by the *symmetric* matrix:
 
   <img width="33%" height="33%" src="/assets/Algebra-for-ML/Hessian.png"/>
 
@@ -250,8 +248,9 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
     - the new function to minimize is now $$L(x) = f(x) + \sum_{i=1}^m \lambda_i (g_i(x)) = f(x) + \lambda^{\intercal} g(x)$$
   - **Lagrange duality** is the method of converting an optimization problem in one set of variables x (the **primal variables**), into another optimization problem in a different set of variables λ (**dual variables**);
     - further details in section 7.2 in <a href="{{ site.resources_permalink }}">MML book</a>:
-- **Adam Optimizer** (ADAptive Moment estimation): uses estimations of the first and second moments of the gradient (the "curvature") to adapt the learning rate for each weight of the neural network;  
+- **Adam Optimizer** (ADAptive Moment estimation): uses estimations of the first and second moments of the gradient (the *curvature*, exponential moving average ? ) to adapt the learning rate for each weight of the neural network;  
   - Curvature is not the second derivative!! This would be too expensive to compute.
+  - "The method computes individual adaptive learning rates for different parameters from estimates of first and second moments of the gradients."
   - in some cases Adam doesn't converge to the optimal solution, but SGD does. According to the authors, switching to SGD in some cases show better generalizing performance than Adam alone;
   - calculates the exponential moving average of gradients and square gradients. Parameters $$\beta_1$$ and $$\beta_2$$ are used to control the decay rates of these moving averages. Adam is a combination of two gradient descent methods, Momentum, and RMSP
 - **Convex sets** are sets such that a straight line connecting any two elements of the set lie inside the set;
