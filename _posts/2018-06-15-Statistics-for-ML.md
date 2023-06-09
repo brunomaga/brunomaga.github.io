@@ -39,16 +39,16 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 <br/>
 **Bayes rule** describes the relationship between some prior knowledge $$p(x)$$ about an unobserved random variable $$x$$ and some relationship $$p(y \mid x)$$ between $$x$$ and a second variable $$y$$:
 - $$p(x \mid y) = \frac{ p(y \mid x) p(x)}{p(y)}$$, read as: $$\text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}$$. 
-- derived from the sum and product rules: $$p(y \mid x) p(y) = p(x \mid y) p(x) \Leftrightarrow p(x \mid y) = \frac{p(y \mid x) p(x)}{p(y)}$$.
+- derived from the product rule on both terms: $$p(y \mid x) p(y) = p(x \mid y) p(x) \Leftrightarrow p(x \mid y) = \frac{p(y \mid x) p(x)}{p(y)}$$.
 - **evidence** is the **marginal likelihood** $$p(y) = \int p(y \mid x) p(x) dx = \mathbb{E}[ p(y \mid x)]$$.
-- the posterior is the quantity of interest as it tells us what we know about $$x$$ after observing $$y$$.
+- in ML the posterior $$p(\theta \mid x)$$ is the quantity of interest as it tells us what we know about the parameters $$\theta$$ (ie their distribution) after observing the population $$x$$ (its likelihood and a known/extimated prior).
 
 ---
 
 <br/>
 **Expected Value** of a function $$g$$ given:
-- an univariate random variable $$X$$ is: $$\mathbb{E}_X [g(x)] = \int_X g(x) p(x) dx$$, or the equivalent sum for the discrete use case 
-- multivariate vector as a finite set of univariate ie $$X = \left[X_1, X_2, X_D \right]$$ is:  $$\mathbb{E}_X [g(x)] = \left[ \mathbb{E}_{X_1} [g(x_1)], \mathbb{E}_{X_2} [g(x_2)], ..., \mathbb{E}_{X_D} [g(x_D)] \right] \in \mathbb{R}^D$$  
+- an univariate random variable $$X$$ is: $$\mathbb{E}_X [g(x)] = \int_X g(x) p(x) dx$$, or the equivalent averaged sum for the discrete use case. 
+- multivariate vector as a finite set of univariate ie $$X = \left[X_1, X_2, X_D \right]$$ is:  $$\mathbb{E}_X [g(x)] = \left[ \mathbb{E}_{X_1} [g(x_1)], \mathbb{E}_{X_2} [g(x_2)], ..., \mathbb{E}_{X_D} [g(x_D)] \right] \in \mathbb{R}^D$.
 
 <br/>
 **Covariance** is the expected product of their two deviations from the respective means, ue:
@@ -57,13 +57,13 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 = \mathbb{E}\left[ XY -  X\mathbb{E}[Y] - \mathbb{E}[X]Y +  \mathbb{E}[X]\,\mathbb{E}[Y] \right] \\
 = \mathbb{E}[XY] - \mathbb{E}[X] \,\mathbb{E}[Y] - \mathbb{E}[X] \,\mathbb{E}[Y] +  \mathbb{E}[X] \, \mathbb{E}[Y] \\
 = \mathbb{E}[XY] -  \mathbb{E}[X] \,\mathbb{E}[Y]$$. 
-- univariate: $$Cov_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = Cov_{Y,X}[y,x]$$
-- multivariate r.v. $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$: $$Cov_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \,\mathbb{E}[y]^{\intercal} = \mathbb{Cov}[y,y]^{\intercal} \in \mathbb{R}^{D \times E}$$
+- univariate: $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = \mathbb{Cov}_{Y,X}[y,x]$$
+- multivariate r.v. $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$: $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \,\mathbb{E}[y]^{\intercal} = \mathbb{Cov}[y,y]^{\intercal} \in \mathbb{R}^{D \times E}$$
 
 <br/>
 **Variance**:
-- univariate: $$\mathbb{Var}_X[x] = Cov_X[x,x] = \mathbb{E}_{X} \left[ (x-\mathbb{E}_X[x])^2 \right] = \mathbb{E}_X[x^2] - \mathbb{E}_X[x]^2$$
-- multivariate: $$\mathbb{Var}_X[x] = Cov_X[x,x] = \mathbb{E}_X[(x-\mu)(x-\mu)^{\intercal} ] = \mathbb{E}_X[xx^{\intercal}] - \mathbb{E}_X[x] \, \mathbb{E}_X[x]^{\intercal}$$ 
+- univariate: $$\mathbb{Var}_X[x] = \mathbb{Cov}_X[x,x] = \mathbb{E}_{X} \left[ (x-\mathbb{E}_X[x])^2 \right] = \mathbb{E}_X[x^2] - \mathbb{E}_X[x]^2$$
+- multivariate: $$\mathbb{Var}_X[x] = \mathbb{Cov}_X[x,x] = \mathbb{E}_X[(x-\mu)(x-\mu)^{\intercal} ] = \mathbb{E}_X[xx^{\intercal}] - \mathbb{E}_X[x] \, \mathbb{E}_X[x]^{\intercal}$$ 
   - this is a $$D \times D$$ matrix also called the **Covariance Matrix** of the multivariate r.v. $$X$$.
     - it is symmetric and positive semidefinite;
     - the diagonal terms are 1, i.e. no covariance between the same 2 random variables;
@@ -91,7 +91,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - $$\mathbb{E}[x,y] = \mathbb{E}[x] \, \mathbb{E}[y]$$, thus
 - $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[x,y] - \mathbb{E}[x] \, \mathbb{E}[y] = 0$$, thus
 - $$\mathbb{Var}_{X,Y}[x+y] = \mathbb{Var}_X[x] + \mathbb{Var}_X[y]$$.
-- important: $$Cov_{X,Y}[x,y]=0$$ does not hold in converse, i.e. zero covariance does not mean independence!
+- important: $$\mathbb{Cov}_{X,Y}[x,y]=0$$ does not hold in converse, i.e. zero covariance does not mean independence!
 
 <br/>
 **Conditional Independence** of rvs $$X$$ and $$Y$$ given $$Z$$ ie $$X \perp Y \mid Z$$ iff $$p(x,y \mid z) = p(x \mid z) \, p(y \mid z)$$ for all $$z \in Z$$
@@ -103,14 +103,14 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - univariate with mean $$\mu$$ and variance $$\sigma^2$$: $$\,\,\,p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$
 - multivariate with mean vector $$\mu \in \mathbb{R}^D$$ and covariance matrix $$\Sigma$$: $$p(x \mid \mu, \Sigma ) = (2 \pi)^{-\frac{D}{2}} \mid\Sigma\mid^{-\frac{1}{2}} \exp \left( -\frac{1}{2}(x-\mu)^{\intercal} \Sigma^{-1}(x-\mu) \right)$$
 - marginals and conditional of multivariate Gaussians are also Gaussians:
-  <p align="center">
-  <img width="45%" height="45%" src="/assets/Statistics-for-ML/bivariate_gaussian.png"/><br/>
-  <br/><small>A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional disribution is a slice accross the X or Y dimension and is also a Gaussian. <b>Source:</b> post <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Wikipedia "Multivariate normal distribution"</a></small>
-  </p>
-  - bivariate Gassian distribution of two Gaussian random variables $$X$$ and $$Y$$: $$p(x,y) = \mathcal{N} \left( \begin{bmatrix} \mu_x \\ \mu_y  \end{bmatrix}, \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix}   \right)$$. 
+  - joint distribution of a bivariate Gaussian distribution made of two Gaussian random variables $$X$$ and $$Y$$: $$p(x,y) = \mathcal{N} \left( \begin{bmatrix} \mu_x \\ \mu_y  \end{bmatrix}, \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix}   \right)$$. 
   - the conditional is also Gaussian: $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$. 
   - the marginal $$p(x)$$ of $$p(x,y)$$: $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$.
-- the product of two gaussians $$\mathcal{N} (x \mid a, A) \, \mathcal{N}(x \mid b, B)$$ is a Gaussian scaled by a $$c \in \mathbb{R}$$.
+  <p align="center">
+  <img width="45%" height="45%" src="/assets/Statistics-for-ML/bivariate_gaussian.png"/><br/>
+  <br/><small>A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional disribution is a slice accross the X or Y dimension and is also a Gaussian. <b>Source:</b> wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a></small>
+  </p>
+- the product of two gaussians pdfs $$\mathcal{N} (x \mid a, A) \, \mathcal{N}(x \mid b, B)$$ is a Gaussian scaled by a $$c \in \mathbb{R}$$.
 - if $$X,Y$$ are independent univariate Gaussian random variables:
   - $$p(x,y)=p(x) p(y)$$, and
   - $$p(x+y) = \mathcal{N}(\mu_x + \mu_y, \Sigma_x + \Sigma_y)$$.
@@ -125,7 +125,7 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 <br/>
 **Conjugacy**
 
-- If the posterior distribution $$p(\theta \mid x)$$ is in the same probability distribution *family* as the prior probability distribution $$p(\theta )$$:
+- If the posterior distribution $$p(\theta \mid x)$$ is in the same probability distribution *family* (not only same distribution) as the prior $$p(\theta )$$:
   - the prior and posterior are then called **conjugate distributions**, and
   - the prior is called a **conjugate prior** for the likelihood function $$p(x\mid \theta )$$.
 - A conjugate prior is an algebraic convenience, giving a closed-form expression for the posterior; otherwise, numerical integration may be necessary.
@@ -136,8 +136,8 @@ This post follows from the post [Algebra for ML Engineers]({{ site.baseurl }}{% 
 - $$θ$$ are the the **natural parameters** of the family
 - $$A(θ)$$ is the **log-partition function**, a normalization constant that ensures that the distribution sums up or integrates to one.
 - $$ϕ(x)$$ is a **sufficient statistic** of the distribution
-  - we can capture information about data in $$ϕ(x)$$.
-  - sufficient statistics carry all the information needed to make inference about the population, that is, they are the statistics that are sufficient to represent the distribution:
+  - we can capture information about data (population) in $$ϕ(x)$$.
+  - sufficient statistics carry *all* the information needed to make inference about the population, that is, they are the statistics that are sufficient to represent the distribution:
   - **Fischer-Neyman theorem**: Let $$X$$ have probability density function $$p(x \mid θ)$$. Then the statistics $$ϕ(x)$$ are sufficient for $$θ$$ if and only if $$p(x \mid θ)$$ can be written in the form $$p(x \mid \theta) = h(x) g_{\theta}(\theta(x))$$, where $$h(x)$$ is a distribution independent of $$θ$$ and $$g_θ$$ captures all the dependence on $$θ$$ via sufficient statistics $$ϕ(x)$$. 
   - Note that the form of the exponential family is essentially a particular expression of $$g_θ(ϕ(x))$$ in the Fisher-Neyman theorem. 
 - $$\eta$$ is the **natural parameter**,
@@ -170,10 +170,12 @@ Inequality rules:
 - **Markov's inequality**: $$ p(X \ge \epsilon) \le \frac{\mathbb{E}[X]}{\epsilon}$$, where $$\epsilon \gt 0$$.
 - **Chebyshev's inequality**: $$p \left( \mid X - \mathbb{E}[X] \mid \ge \epsilon \right) \le \frac{\mathbb{Var}[X]}{\epsilon^2}$$.
 - **Chauchy-Schwarz inequality**: $$\mathbb{Var}[A] \, \mathbb{Var}[B] \ge \mathbb{Cov}^2[A,B]$$.
+- **ELBO inequality:** $$\ln p_{\theta }(x)\geq \mathbb {\mathbb {E} } _{z\sim q_{\phi }}\left[\ln {\frac {p_{\theta }(x,z)}{q_{\phi }(z)}}\right].$$
+  - the left-hand side is the evidence for $$x$$, and the right-hand side is the evidence lower bound (ELBO) for $$x$$.
 
 <br/>
 **Kullback–Leibler / KL divergence**: $$ KL ( q \| p ) =  \int_\mathbb{R} p(x) \log \frac{p(x)}{q(x)} dx $$ 
-- by Jensen's inequality we get: $$ KL ( q \| p ) = \mathbb{E} \left( - \log \frac{q(X)}{p(X)} \right) \ge -\log \mathbb{E} \left( \frac{q(X)}{p(X)} \right) =0$$. 
+- from Jensen's inequality we get: $$ KL ( q \| p ) = \mathbb{E} \left[ - \log \frac{q(X)}{p(X)} \right] \ge -\log \mathbb{E} \left[ \frac{q(X)}{p(X)} \right] =0$$. 
 - KL divergence is not a metric because it's not symmetric: $$  KL ( q \| p ) \neq  KL ( p \| q )$$.
 - $$p=q \Leftrightarrow KL ( q \| p ) = 0$$.
 
@@ -182,7 +184,7 @@ Inequality rules:
 <br/>
 Testing:
 - **quantile** is the inverse of the CDF. It tells at which point the cdf (or the integral of the pdf) equals a given value $$\alpha \in [0,1]$$. 
-- **p-value** (or observed significance level)  is the smallest value of $$α$$ for which the null would be rejected at level $$α$$.
+- **p-value** (or observed significance level)  is the smallest value of $$α$$ for which the null hypothesis would be rejected at level $$α$$.
 - the **confidence interval** refers to the probability that a population parameter will fall between a set of values for a certain proportion of times. Example, for a $$95%$$ **confidence level**:
   <p align="center"><img width="30%" height="30%" src="/assets/Statistics-for-ML/confidence_interval.png"/></p>
 
@@ -190,7 +192,7 @@ Testing:
 
 <br/>
 **Entropy**  measures the average level of *surprise* or *uncertainty* inherent to the channel:
-- $$ \mathrm {H} (X):=-\int_{x} p(x)\log p(x)=\mathbb {E} [-\log p(x)] dx$$.
+- $$ \mathrm {H} (X) = -\int_{x} p(x)\log p(x)=\mathbb {E} [-\log p(x)] dx$$.
 - Conditional Entropy: $$ H( Y \mid X) = - \int_x f(x) \int_y f(y \mid x) \log f(y \mid x) \,dy\,dx$$.
 - Joint Entropy: $$ H(X, Y) = - \int_{xy} f(x,y) \log f(x,y x) \,dx\,dy$$.
 - Entropy Chain Rule: $$ H(X,Y) = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y) $$.
@@ -204,13 +206,14 @@ Testing:
 ---
 
 <br/>
-Arrangements:
+Arrangements of $$k$$ items out of a set of size $$n$$:
 - **Permutation** is the arrangements of *all* items in which order matters: $$^nP_k=\frac{n!}{(n-k)!}$$.
 - **Arrangement** is the arrangement of *some* items in which order matter: $$A_k=n^k$$ with replacement or $$k!$$ without.
 - **Combination** is the arrangement of *some* items in which order *doesn't* matter: $$\binom nk=^nC_k=\frac{n!}{k!(n-k)!}$$.
 
 ---
 
+<br/>
 **Sets**
 - the **union** of two subsets is written as $$F_1 \cup F_2 = \{ ω ∈ Ω : ω ∈ F1 \text{ or } ω ∈ F2 \}$$;
 - the  **intersection** is $$F1 ∩ F2 = \{ ω ∈ Ω : ω ∈ F1 \text{ and } ω ∈ F2 \}$$;
@@ -226,8 +229,6 @@ Arrangements:
   - distributivity: $F1 ∪ (F2 ∩ F3) = (F1 ∪ F2) ∩ (F1 ∪ F3)$
   - De Morgan's Laws: $(F1 ∪ F2)^c = F^c_1 ∩ F^c_2$  and  $(F1 ∩ F2)^c = F^c_1 ∪ F^c_2$
 
-
-A **probability measure** $\mathbb{P}$ is a real function defined over the events in Ω, that provides the probability of an event. Three constraints hold: always positive ($\mathbb{P}(F) \ge 0$), sum to 1 ($\mathbb{P}(\Omega) = 1$); and $\mathbb{P}(G) \sum_{n \ge 1} \mathbb{P}(F_n)$ for the union G of the disjoint events $$\{ F_n \}$$.
 
 Using the previous axioms we can show that:
 - We can show that $Pr(F1 ∪ F2) = Pr(F1) − Pr(F1 ∩ F2) + Pr(F2)$;
