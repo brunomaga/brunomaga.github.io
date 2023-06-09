@@ -194,8 +194,9 @@ $$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$. Even for parametric $$p(x)$$, this in
   - see [Taylor expansions for the moments of functions of random variables](https://en.wikipedia.org/wiki/Taylor_expansions_for_the_moments_of_functions_of_random_variables) for more details
 
 The **Newton's method** is a root-finding algorithm which produces successively better approximations to the roots (or zeroes) of a real-valued function. I.e. solves equations of the form $$f(x)=0$$ by successive approximation. Iterations are defined as: $$x_{n+1}=x_{n}-{\frac {f(x_{n})}{f'(x_{n})}} $$.
-- The initial value $$x_0$$ should be picked as close as possible to the zero.
-- We then find the equation of the line tangent to $$y=f(x)$$ at $$x=x_0$$  and follow it back to the $$x$$ axis at a new improved guess $$x_1$$:
+- the initial value $$x_0$$ should be picked as close as possible to the zero.
+- we then find the equation of the line tangent to $$y=f(x)$$ at $$x=x_0$$  and follow it back to the $$x$$ axis at a new improved guess $$x_1$$:
+- the minimum of a function can be found by computing the root of the derivative ie: $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$
 
   <img width="45%" height="45%" src="/assets/Algebra-for-ML/newton_method.gif"/><br/>
   <small>(source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)</small>
