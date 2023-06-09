@@ -212,3 +212,9 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
   - a DNN that learns to transform an input into noise and back into the input.
 - What is the Difference between Bagging and Boosting?
 - What is a Random Forest? What is the computational complexity in training?
+- Given two sets of samples, how to check if they come from the same distribution?
+  - If shape of distribution is known, e.g. gaussian, fit to gaussian and compare mean and variance values.
+  - Otherwise a first quick comparison is to compute the expected value and the variance of the samples.
+  - Otherwise, build a histogram for each set of samples, then compare the overlap of the histograms. Or equivalently, compare absolute difference of CDFs.
+    - If it's above a given threshold, assume they're drawn from same distribution
+  - Note: perfect match/comparison is not possible, because the histogram/shape of two sets of samples will likely not match, even if drawn from the exact same distribution.
