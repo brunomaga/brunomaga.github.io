@@ -36,6 +36,9 @@ To compute the **inverse** we find the matrix that satisfies $$AX=I$$, so that $
 
 ### Vector Spaces
  
+- The **norm** of vector $$x$$ is represented by $$\| x \|$$ or $$\mid x \mid$$. Examples of norms: manhattan and euclidian;
+  - The **length of a vector** is $$\| x \| = \sqrt{<x,x>} = \sqrt{x^{\intercal}x}$$ and the **distance** between two vectors is $$d(x,y) = \| x-y \| = \sqrt{ <x-y, x-y>}$$;
+  - **Cauchy-Schwarz Inequality**: $$\mid <x, y> \mid \,\, \le \,\, \| x \| \, \| y \|$$;
 - the term *vector multiplication* is not well defined. Theoretically, it could be:
   - an element-wise **multiplication** $$c_j = a_j b_j$$,
   - the **outer product** $$ab^{\intercal}$$, or 
@@ -93,10 +96,6 @@ A symmetric matrix $$A$$ is called **symmetric, positive definite** or just posi
   - The diagonal elements elements $$a_{ii}$$ of $$A$$ are positive because $$a_{ii} = e^{\intercal}_i A e_i > 0$$, where $$e_i$$ is the $$i$$-th vector of the standard basis in $$\mathbb{R}^n$$.
 - in optimization, quadratic forms on positive definite matrices $$x^{\intercal}Ax$$ are always positive for non-zero $$x$$ and are convex. 
 - *Important:* a positive definite matrix has all positive eigenvalues, and they are in the diagonal. As the determinant equals the products of all eigenvalues, the determinant of a positive definite matrix is positive. Non-zero determinant means that p.s.d is invertible.
-
-The norm of vector $$x$$ is represented by $$\| x \|$$ or $$\mid x \mid$$. Examples of norms: manhattan and euclidian;
-- The **length of a vector** is $$\| x \| = \sqrt{<x,x>} = \sqrt{x^{\intercal}x}$$ and the **distance** between two vectors is $$d(x,y) = \| x-y \| = \sqrt{ <x-y, x-y>}$$;
-- **Cauchy-Schwarz Inequality**: $$\mid <x, y> \mid \, \le \, \| x \| \, \| y \|$$;
 
 A **metric** is a function $$d:V ×V → R$$ where $$(x, y) → d(x, y)$$ satisfies the following: 
 - $$d$$ is positive definite, i.e., $$d(x, y) ⩾ 0$$ for all $$x, y ∈ V$$ and $$d(x, y) = 0 \Leftrightarrow x = y$$;
