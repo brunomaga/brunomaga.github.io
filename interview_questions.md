@@ -12,6 +12,8 @@ permalink: /interview_questions/
 - how to check if two vectors are independent?
   - dot product is zero, they're orthogonal.
 - how to check if vectors are orthogonal or parallel?
+- what's orthogonal vectors, normal vectors, orthonormal vectors?
+- what's an orthogonal matrix?
 - what's the cross product of two perpendicular vectors and the cross product of two parallel vectors?
   - The cross product $$ a \times b$$ is always orthogonal to both vectors, and has magnitude zero when the vectors are parallel and maximum magnitude $$‖a‖‖b‖$$ when they are orthogonal.
 - what's the dot product of two perpendicular vectors and the dot product of two parallel vectors?

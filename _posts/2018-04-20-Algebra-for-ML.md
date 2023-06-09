@@ -3,7 +3,7 @@ layout: post
 title:  "Algebra for ML Engineers"
 ---
 
-A brief summary of the algebra topics that are most relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For more on statistics or probabilities, see the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-Statistics-for-ML %}) .
+A brief summary of the algebra topics that are most relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For the topics of statistics or probabilities, see the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-Statistics-for-ML %}) .
 
 
 ### Properties of Matrices
@@ -12,24 +12,25 @@ A brief summary of the algebra topics that are most relevant to ML engineers on 
 - **Inverse**: not every matrix $$A$$ contains an inverse $$A^{-1}$$. If it exists, $$A$$ is called regular/invertible/non-singular. Otherwise it is called singular/non-invertible;
   - $$AA^{-1} = I = A^{-1}A$$,  $$(AB)^{-1}=B^{-1}A^{-1}$$;
   - two matrics $$A$$ and $$B$$ are inverse to each other if $$AB=I=BA$$;
-- **Transpose**: $${(A^T)}^{T}=A$$, $$(A+B)^T=A^T+B^T$$, $$(AB)^T=B^TA^T$$;
-- **Symmetric** iff $$A=A^T$$. Thus $$A$$ is square. Also, if $$A$$ is invertible then $$A^T$$ is also invertible and $$A^T=A^{-1}$$. Sum of symmetric matrices is a symmetric matrix -- this holds for a sum but usually not for a product;
+- **Transpose**: $${(A^{\intercal})^{\intercal}}=A$$, $$(A+B)^{\intercal}=A^{\intercal}+B^{\intercal}$$, $$(AB)^{\intercal}=B^{\intercal}A^{\intercal}$$;
+- **Symmetric** iff $$A=A^{\intercal}$$. Thus $$A$$ is square. Also, if $$A$$ is symmetric and invertible then $$A^{\intercal}$$ is also invertible and $$A^{\intercal}=A^{-1}$$. Sum of symmetric matrices is a symmetric matrix, but product of symmetric matrices is usually not.
 
 
 ### Systems of Linear Equations
 
-A **System of Linear Equations** with equations of the type $$a_1x_1 + ...+ a_nx_n = b$$ for constants $$a_1$$ to $$a_n$$ and $$b$$ and unkownn $$x$$ can be defined as $$A x=b$$;
+A **System of Linear Equations** with equations of the type $$a_1x_1 + ...+ a_nx_n = b$$ for constants $$a_1$$ to $$a_n$$ and $$b$$ and unkownn $$x$$ can be defined as $$A x=b$$. The general solution of a SLE is found analytically or with **Gaussian Elimination** of the augmented matrix $$[A \mid b]$$;
 - We can have none, one or infinitely many solutions to such system (when there are more unknowns than equations). When no solution exists for $$Ax=b$$ we wave to resort to approximate solutions; 
 - The solution represents the interception of all lines (defined by diff. equations) in a geometric representation;
-
-The general solution of a SLE is found with **Gaussian Elimination** of the augmented matrix $$[A \mid b]$$;
-- The result of the forward pass of the Gaussian Elimination puts the matrix in the **Row-Echelon** form i.e. a staircase structure;
-  - A row-echelon matrix is in **reduced row-echelon** format if the leading entries of each row (the **pivot**) is 1 and the pivot is the only nonzero entry in its *column*;   
-- To compute the inverse we find the matrix that satisfies $$AX=I$$, so that $$X=A^{-1}$$. We use Gaussian Elimination to solve the SLE $$[A \mid I]$$ and turn it into $$[I \mid A^{-1}]$$; 
+- Analytically:
   - When $$A$$ is square and invertible, the solution for $$Ax=b$$ is $$x=A^{-1}b$$;
-  - Otherwise, $$Ax = b \Leftrightarrow A^T Ax = A^Tb \Leftrightarrow x = (A^TA)^{−1}A^Tb$$, which is also the **least-squares** solution;
-  - $$(A^TA)^{−1}A^T$$ is also called the **pseudo-inverse** of $$A$$, which can be computed for non-square matrices $$A$$. It only requires that $$A^T$$ is positive definite, which is the case if $$A$$ is full rank; 
-- Gaussian Elimination is not feasible for large matrices because of its cubic computational complexity. In practice, these are solved iteratively with e.g. the Jacobi method, Richardson method, etc. The main idea is:
+  - Otherwise, $$Ax = b \Leftrightarrow A^{\intercal} Ax = A^{\intercal}b \Leftrightarrow x = (A^{\intercal}A)^{−1}A^{\intercal}b$$, which is also the **least-squares** solution;
+  - $$(A^{\intercal}A)^{−1}A^{\intercal}$$ is also called the **pseudo-inverse** of $$A$$, which can be computed for non-square matrices $$A$$. It only requires that $$A^{\intercal}$$ is positive definite, which is the case if $$A$$ is full rank; 
+- With Gaussian Elimination in $$[A \mid b]$$:
+  - The result of the forward pass of the Gaussian Elimination puts the matrix in the **Row-Echelon** form i.e. a staircase structure;
+    - A row-echelon matrix is in **reduced row-echelon** format if the leading entries of each row (the **pivot**) is 1 and the pivot is the only nonzero entry in its *column*;   
+
+To compute the **inverse** we find the matrix that satisfies $$AX=I$$, so that $$X=A^{-1}$$. We use Gaussian Elimination to solve the SLE $$[A \mid I]$$ and turn it into $$[I \mid A^{-1}]$$; 
+- Gaussian Elimination is not feasible for large matrices because of its cubic computational complexity. In practice, these are solved iteratively with e.g. the Jacobi method, Newton's method, MCMC, etc. The main idea is:
   - to solve $$Ax=b$$ iteratively, we set up an iteration of the form $$x^{(k+1)} = Cx^{(k)} + d$$, for a suitable $$C$$ and $$d$$ that minimized the residual error $$\mid x^{k+1}-x_* \mid$$ in every iteration and converges to $$x_*$$; 
 
 
@@ -37,10 +38,11 @@ The general solution of a SLE is found with **Gaussian Elimination** of the augm
  
 - the term *vector multiplication* is not well defined. Theoretically, it could be:
   - an element-wise **multiplication** $$c_j = a_j b_j$$,
-  - the **outer product** $$ab^T$$, or 
-  - the **inner product**, **scalar product** or **dot product** $$<a, b> = a \cdot b = a^Tb$$, which has a geometric equivalence $$a \cdot b = \vert a \vert \, \vert b \vert \, cos \, \theta$$ (where $$\vert a \vert$$ is the magnitude (norm) of $$a$$, and $$\theta$$ is the angle between $$a$$ and $$b$$).
+  - the **outer product** $$ab^{\intercal}$$, or 
+  - the **inner product**, **scalar product** or **dot product** $$<a, b> = a \cdot b = a^{\intercal}b$$, which has a geometric equivalence $$a \cdot b = \vert a \vert \, \vert b \vert \, cos \, \theta$$ (where $$\vert a \vert$$ is the magnitude (norm) of $$a$$, and $$\theta$$ is the angle between $$a$$ and $$b$$).
     - Note: the dot product is designed specifically for the Euclidean spaces. An inner product on the other hand is a notion defined in terms of a generic vector space.
-    - Note: some inner products are not dot products (example in page 73 in <a href="{{ site.resources_permalink }}">MML book</a>.);
+    - Commutative: $$a \cdot b = b \cdot a$$.
+  - the **cross product** with geometrical interpretation $$a \times b = \vert a \vert \, \vert b \vert \, sin \, \theta \, n$$, that returns a vector instead of a scalar as in dot product. Not commutative: $$a \times b \neq b \times a$$.
 - a **linear combination** $$v$$ of vectors $$x_1, ..., x_n$$ is defined by the sum of a scaled set of vectors, ie $$v = \sum_{i=1}^k \lambda_i x_i \in V$$, for constants $$\lambda_i$$; 
 - if there is a linear combination of vectors $$x_1, ..., x_n$$ such that $$\sum_{i=1}^k \lambda_i x_i=0$$ with all $$\lambda_i \neq 0$$, then vectors $$x$$ are **linearly dependent**. If only the trivial solution exists with all $$\lambda_i=0$$ then they are **linearly independent** ;  
   - Intuitively, a set of linearly independent vectors consists of vectors that have no redundancy, i.e., if we remove any of those vectors from
@@ -51,7 +53,7 @@ the set, we will lose something in our representation;
   - a basis is a minimal generating set and a maximal linearly independent set of vectors;
   - the dimension of a vector space corresponds to the number of its basis vectors;
   - a basis of a vector space can be found by the row-echelon form of a matrix with the spanning vectors of the space as columns. The vector defined by the columns with a pivot are *a* basis of U;  
-- the **rank** of a matrix is the number of *linearly independent* columns/rows. Thus, $$rk(A)=rk(A^T)$$;
+- the **rank** of a matrix is the number of *linearly independent* columns/rows. Thus, $$rk(A)=rk(A^{\intercal})$$;
   - a matrix $$A \in \mathbb{R}^{m \times n}$$ is invertible iff $$rk(A)=n$$;
   - a SLE $$Ax=b$$ can only be solved if $$rk(A) = rk (A \mid b)$$;
   - a matrix has **full rank** if its rank equals the largest possible rank for a matrix of its dimensions, otherwise it's **rank deficient**;
@@ -83,29 +85,29 @@ A **Linear Mapping** (a.k.a linear transformation or map) is a function $$\phi: 
 
 A bilinear mapping $$\Omega : V \times V \rightarrow V$$ is called **symmetric** if the order of the arguments doesnt matter for the final result, **positive definite** if $$∀x \in V \setminus {0} : Ω(x, x) > 0 , Ω(0, 0) = 0$$;
 
-A symmetric matrix $$A$$ is called **symmetric, positive definite** or just positive definite iff it satisfies $$∀x ∈ V\setminus {0} : x^TAx > 0$$. If only $$\ge$$ holds, it is instead **positive semidefinite**.
+A symmetric matrix $$A$$ is called **symmetric, positive definite** or just positive definite iff it satisfies $$∀x ∈ V\setminus {0} : x^{\intercal}Ax > 0$$. If only $$\ge$$ holds, it is instead **positive semidefinite**.
 - Loosely speaking, Positive-definite matrices are the matrix analogues to positive numbers. As an example: the covariance matrix is positive semidefinite. 
-- a positive, symmetric, definite, bilinear mapping  $$\Omega : V \times V \rightarrow V$$ is called an inner product on $$V$$ and is typically written as $$<x,y>$$. If $$A$$ is p.s.d., then $$<x,y> = \hat{x}^TA\hat{y}$$ defines an inner product where $$\hat{x}, \hat{y}$$ are the coordinate representations of $$x, y \in V$$.
+- a positive, symmetric, definite, bilinear mapping  $$\Omega : V \times V \rightarrow V$$ is called an inner product on $$V$$ and is typically written as $$<x,y>$$. If $$A$$ is p.s.d., then $$<x,y> = \hat{x}^{\intercal}A\hat{y}$$ defines an inner product where $$\hat{x}, \hat{y}$$ are the coordinate representations of $$x, y \in V$$.
 - The following holds if $$A \in \mathbb{R}^{n \times x}$$ is p.s.d:
-  - the null space (kernel) of $$A$$ is only $$0$$ because $$x^T A x \gt 0$$ for all $$x \neq 0$$. This implies $$A \neq 0$$ if $$x \neq 0$$;
-  - The diagonal elements elements $$a_{ii}$$ of $$A$$ are positive because $$a_{ii} = e^T_i A e_i > 0$$, where $$e_i$$ is the $$i$$-th vector of the standard basis in $$\mathbb{R}^n$$.
-- in optimization, quadratic forms on positive definite matrices $$x^TAx$$ are always positive for non-zero $$x$$ and are convex. 
-- a positive definite matrix has all positive eigenvalues. As the determinant equals the products of all of the eigenvalues, the determinant of a positive definite matrix is positive. Non-zero determinant means that p.s.d is invertible.
+  - the null space (kernel) of $$A$$ is only $$0$$ because $$x^{\intercal} A x \gt 0$$ for all $$x \neq 0$$. This implies $$A \neq 0$$ if $$x \neq 0$$;
+  - The diagonal elements elements $$a_{ii}$$ of $$A$$ are positive because $$a_{ii} = e^{\intercal}_i A e_i > 0$$, where $$e_i$$ is the $$i$$-th vector of the standard basis in $$\mathbb{R}^n$$.
+- in optimization, quadratic forms on positive definite matrices $$x^{\intercal}Ax$$ are always positive for non-zero $$x$$ and are convex. 
+- *Important:* a positive definite matrix has all positive eigenvalues, and they are in the diagonal. As the determinant equals the products of all eigenvalues, the determinant of a positive definite matrix is positive. Non-zero determinant means that p.s.d is invertible.
 
-The norm of vector a vector $$x$$ is represented by $$\| x \|$$. Examples of norms: manhattan and euclidian;
-- The **length of a vector** is $$\| x \| = \sqrt{<x,x>} = \sqrt{x^Tx}$$ and the **distance** between two vectors is $$d(x,y) = \| x-y \| = \sqrt{ <x-y, x-y>}$$;
+The norm of vector $$x$$ is represented by $$\| x \|$$ or $$\mid x \mid$$. Examples of norms: manhattan and euclidian;
+- The **length of a vector** is $$\| x \| = \sqrt{<x,x>} = \sqrt{x^{\intercal}x}$$ and the **distance** between two vectors is $$d(x,y) = \| x-y \| = \sqrt{ <x-y, x-y>}$$;
 - **Cauchy-Schwarz Inequality**: $$\mid <x, y> \mid \, \le \, \| x \| \, \| y \|$$;
 
-A **metric** $$d:V ×V → R$$ where $$(x, y) → d(x, y)$$ satisfies the following: 
+A **metric** is a function $$d:V ×V → R$$ where $$(x, y) → d(x, y)$$ satisfies the following: 
 - $$d$$ is positive definite, i.e., $$d(x, y) ⩾ 0$$ for all $$x, y ∈ V$$ and $$d(x, y) = 0 \Leftrightarrow x = y$$;
 - $$d$$ is symmetric, i.e., $$d(x, y) = d(y, x)$$ for all $$x, y ∈ V$$;
 - Triangle inequality: $$d(x, z) ⩽ d(x, y) + d(y, z)$$ for all $$x, y, z ∈ V$$;
 
-The angle $$w$$ between two vectors is computed as $$\cos w = \frac{<x,y>}{\|x\| \|y\|}$$, where $$ <x,y> $$ is typically the dot product $$x^Ty$$.
-- Thus  $$\cos w = \frac{<x,y>}{\sqrt{<x,x> <y,y>}} =  \frac{x^Ty}{\sqrt{x^Txy^Ty}}$$;
+The angle $$w$$ between two vectors is computed as $$\cos w = \frac{<x,y>}{\|x\| \|y\|}$$, where $$ <x,y> $$ is typically the dot product $$x^{\intercal}y$$.
+- Thus  $$\cos w = \frac{<x,y>}{\sqrt{<x,x> <y,y>}} =  \frac{x^{\intercal}y}{\sqrt{x^{\intercal}xy^{\intercal}y}}$$;
 - if $$<x,y>=0$$, both vectors are **orthogonal**, and we write it as $$x \perp y$$ (x and y are **perperdicular**). If $$\|x\|=\|y\|=1$$ they are **orthonormal**;
 
-A square matrix $$A$$ is an **orthogonal matrix** iff its columns are orthonormal so that $$AA^T = I = A^TA$$, which implies $$A^{-1}=A^T$$; 
+A square matrix $$A$$ is an **orthogonal matrix** iff its columns are orthonormal so that $$AA^{\intercal} = I = A^{\intercal}A$$, which implies $$A^{-1}=A^{\intercal}$$; 
 
 The **inner product** of two functions $$u : \mathbb{R} \rightarrow \mathbb{R} $$ and $$v: \mathbb{R} \rightarrow \mathbb{R}$$ is defined as $$ <u,v> = \int_a^b u(x) v(x) dx $$ for lower and upper limits $$a, b < \infty$$; 
 
@@ -115,7 +117,7 @@ Let $$V$$ be a vector space and $$U ⊆ V$$ a subspace of $$V$$. A linear mappin
 
 determinant properties:
 - $det(AB) = det(A) det(B)$; 
-- $det(A) = det(A^T)$; 
+- $det(A) = det(A^{\intercal})$; 
 - $det(A^{-1})=\frac{1}{det(A)}$;
 - for more than 2 columns or rows: $$det(A) = \sum_{k=1}^{n} (−1)^{k+j}a_{kj} det(A_{k,j})
 - *Similar* matrices have the same determinant;
@@ -133,46 +135,46 @@ Eigenvalues and eigen vectors:
   - $$p(\lambda) = det(A - \lambda I)$$ is called the **characteristic polynomial**;
 - to determine the eigenvectors $$x_i$$, solve $$Ax_i=\lambda_i x_i$$ for each eigenvalue $$\lambda_i$$ found previously;
   - eigenvectors corresponding to distinct eigenvalues are linearly independent;
-  - therefore, eigenvectors of a matrix with $$n$$ distinct eigenvectors form a basis of $$\mathbb{R}^n$$;
+  - therefore, eigenvectors of a matrix with $$n$$ distinct eigenvectors form *a* basis of $$\mathbb{R}^n$$;
 - a square matrix with less (linearly independent) eigenvectors than its dimension is called **defective**; 
 
 Two vectors are called **codirected** if they point in the same direction and **collinear** if they point in opposite directions. All vectors that are collinear to $$x$$ are also eigenvectors of A;
 - Non-uniqueness of eigenvectors: if $$x$$ is an eigenvector of $$A$$ associated with eigenvalue $$λ$$, then for any $$c ∈ \mathbb{R}\setminus\{0\}$$ it holds that $$cx$$ is an eigenvector of $$A$$ with the same eigenvalue;
 - a matrix and its transpose have the same eigenvalues, but not necessarily the same eigenvectors;
 - symmetric, positive definite matrices -- like the p.s.d. covariance matrix -- always have positive, real eigenvalues. Determinant is the product of eigenvalues, thus it is not zero. Therefore it is also invertible;
-- Given a matrix  $$A \in \mathbb{R}^{m \times n}$$, we can always obtain a symmetric positive semidefinite matrix $$S=A^TA$$.
-  - If $$rk(A)=n$$, then $$A^TA$$ is symmetric positive definite;
+- Given a matrix  $$A \in \mathbb{R}^{m \times n}$$, we can always obtain a symmetric positive semidefinite matrix $$S=A^{\intercal}A$$.
+  - If $$rk(A)=n$$, then $$A^{\intercal}A$$ is symmetric positive definite;
   - there exists eigenvectors with real eigenvalues (spectral theorem), i.e. to check if a is positive definite, check if all eigenvalues are positive.
 - Graphical intuition: the direction of the two eigenvectors correspond to the canonical basis vectors i.e., to cardinal axes. Each axis is scaled by a factor equivalent to its eigenvalue: 
 
 <p align="center"><img width="65%" height="65%" src="/assets/Algebra-for-ML/MML_eigenvalues_and_eigenvectors.png"/><br/>
 <small>image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a></small></p>
 
-**Cholesky Decomposition**: a symmetric, positive definite matrix $$A$$ can be factorized into a product $$A = LL^T$$, where $$L$$ is a *lower-triangular matrix* with positive diagonal elements. $$L$$ is unique. This can be solved normally as a SLE. It is used e.g. to sample from Gaussian distributions and to compute determinants efficiently, as $$det(A) = det(L) det(L^⊤) = det(L)^2$$.
+**Cholesky Decomposition**: a symmetric, positive definite matrix $$A$$ can be factorized into a product $$A = LL^{\intercal}$$, where $$L$$ is a *lower-triangular matrix* with positive diagonal elements. $$L$$ is unique. This can be solved normally as a SLE. It is used e.g. to sample from Gaussian distributions and to compute determinants efficiently, as $$det(A) = det(L) det(L^⊤) = det(L)^2$$.
 
 **Diagonalizable**: a matrix $$A \in \mathbb{R}^{n \times n}$$ is diagonalizable if it is similar to a diagonal matrix, i.e. if there is an invertible matrix $$P \in \mathbb{R}^{n \times n}$$ such that $$D=P^{-1}AP$$. The inverse of a diagonal matrix is the matrix replacing all diagonals by their reciprocal, i.e. replace $$a_{ii}$$ by $$\frac{1}{a_{ii}}$$.
 - a matrix $$A \in \mathbb{R}^{n \times n}$$ can be factored into $$A = PDP^{-1}$$, where $$P \in \mathbb{R}^{n \times n}$$ and $$D$$ is a diagonal matrix whose diagonal entries are the eigenvalues of $$A$$, iff the eigenvectors of $$A$$ form a basis of $$\mathbb{R}^n$$.
 - when this eigendecomposition exists, then $$det(A) = det(PDP^{−1}) = det(P) \, det(D) \, det(P^{−1})$$, and $$A^k = (PDP^{−1})^k = PD^kP^{−1}$$;
 - a symmetric matrix can always be diagonalized;
 
-**Singular Value Decomposition** is a decomposition of the form $$S = U \Sigma V^T$$:
+**Singular Value Decomposition** is a decomposition of the form $$S = U \Sigma V^{\intercal}$$:
 <p align="center"><img width="45%" height="45%" src="/assets/Algebra-for-ML/MML_SVD.png"/><br/>
 <small>image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a></small></p>
 - applicable to all matrices (not only square), and it always exists;
 - $$\Sigma$$ is the **singular value matrix**, a (non-square) matrix with only positive diagonal matrix with entries $$\Sigma_{ii} = \sigma_{i} \ge 0$$, and zero otherwise. $$\sigma_{i}$$ are the **singular values**. $$\Sigma$$ is unique. By convention $$\sigma_{i}$$ are ordered by value with largest at $$i=0$$;
 - $$U$$ is orthogonal and its column vectors $$u_i$$ are called **left-singular values**;
-  - orthogonal because $$(UU^T=U^TU=I)$$ i.e.  it's orthogonal and normal = orthonormal;
+  - orthogonal because $$(UU^{\intercal}=U^{\intercal}U=I)$$ i.e.  it's orthogonal and normal = orthonormal;
 - $$V$$ is orthogonal and its column vectors $$v_i$$ are called **right-singular values**;
 - the SVD intuition follows superficially a similar structure to our eigendecomposition intuition;
-  - the left-singular vectors of $$A$$ are the eigenbasis (ie the eigenvectors) of $$AA^T$$;
-  - the right-singular vectors of $$A$$ are eigenvectors of $$A^TA$$;
-  - the nonzero singular values of $$A$$ are the square roots of the nonzero eigenvalues of both $$AA^T$$ and $$A^TA$$;
+  - the left-singular vectors of $$A$$ are the eigenbasis (ie the eigenvectors) of $$AA^{\intercal}$$;
+  - the right-singular vectors of $$A$$ are eigenvectors of $$A^{\intercal}A$$;
+  - the nonzero singular values of $$A$$ are the square roots of the nonzero eigenvalues of both $$AA^{\intercal}$$ and $$A^{\intercal}A$$;
 - i.e. computing the SVD of $$A \in \mathbb{R}^{m \times n}$$ is equivalent to finding two sets of orthonormal bases $$U = (u_1,... , u_m)$$ and $$V = (v_1,... , v_n)$$ of the codomain $$\mathbb{R}_m$$ and the domain $$\mathbb{R}_n$$, respectively. From these ordered bases, we construct the matrices $$U$$ and $$V$$;
 - Comparing the eigendecomposition of an s.p.d matrix ($$S = S^⊤ = PDP^⊤$$) with the corresponding SVD ($$S = UΣV^⊤$$), they are equivalent if we set $$U = P = V$$ and $$D = Σ$$;
-- matrix approximation/compression is achieved by reconstructing the original matrix using less singular values $$\sigma$$. In practice, for a rank-$$k$$ approximation: $$\hat{A(k)} = \sum_{i=1}^{k} \sigma_i u_i v_i^T = \sum_{i=1}^k \sigma_i A_i$$:
+- matrix approximation/compression is achieved by reconstructing the original matrix using less singular values $$\sigma$$. In practice, for a rank-$$k$$ approximation: $$\hat{A(k)} = \sum_{i=1}^{k} \sigma_i u_i v_i^{\intercal} = \sum_{i=1}^k \sigma_i A_i$$:
 
 <img width="43%" height="43%" src="/assets/Algebra-for-ML/SVD_example_2.png"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="/assets/Algebra-for-ML/SVD_example.png"/><br/>
-<small>**Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequential transformations. TThe SVD of a matrix can be interpreted as a decomposition of a corresponding linear mapping into three operations. Top-left to bottom-left: $$V^T$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$. The third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: example of application of SVD. Image sources: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a> and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a></small>
+<small>**Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequential transformations. TThe SVD of a matrix can be interpreted as a decomposition of a corresponding linear mapping into three operations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$. The third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: example of application of SVD. Image sources: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a> and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a></small>
 
 **Eigenvalue Decomposition vs. Singular Value Decomposition**:
 - The SVD always exists for any matrix. The ED is only defined for square matrixes and only exists if we can find a bases of the eigenvectors in $$\mathbb{R}^n$$;
@@ -236,17 +238,17 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
 
 - To check whether a stationary point is a minimum or maximum of a function, we need to take check if the second derivative is positive or negative at the stationary point. I.e. compute $$\frac{df(x)}{x^2}$$, then replace $$x$$ at all stationary points: If $$f′′(x)>0$$, function is concave up and that point is a maximum. If $$<0$$, it is concave down, and a minimum;
 - **Gradient Descent**: an optimization method to minimize an $$f$$ function iteratively. For iteration $$i$$ and step-size $$\gamma$$:
-  - $$x_{i+1} = x_t − γ((∇f)(x_0))^T$$, 
+  - $$x_{i+1} = x_t − γ((∇f)(x_0))^{\intercal}$$, 
 - **Gradient Descent with Momentum**: stores the value of the update $$\Delta x_i$$ at each iteration $$i$$ to determine the next update as a linear combination of the current and previous gradients:
-  - $x_{i+1} = x_i − γ_i((∇f)(x_i))^T + α∆x_i$
-  - where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^T$$ and $$\alpha \in [0,1]$$;
+  - $x_{i+1} = x_i − γ_i((∇f)(x_i))^{\intercal} + α∆x_i$
+  - where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^{\intercal}$$ and $$\alpha \in [0,1]$$;
      - $$\alpha$$ is a hyper-parameter (user defined), close to $$1$$. If $$\alpha=0$$, this performs regular Gradient Descent;
 - **Stochastic Gradient Descent**: a computationally-cheaper and a noisy approximation of the gradient descent that only takes a subset of inputs at each interation; 
 - **Constrained gradients**: find $$min_x f(x)$$ subject to $$g_i(x) \le 0$$, for all $$i=1,...,m$$;
   - solved by converting from a constrained to an unconstrained problem of minimizing $$J$$ where $$J(x) = f(x) + \sum_{i=1}^m \mathbb{1} (g_i(x))$$; 
     - where $$1(z)$$ is an infinite step function: $$1(z)=0$$ if $$z \le 0$$, and $$1(z)=\infty$$ otherwise;
   - and replacing this step function (difficult to optimize) by **Lagrange multipliers** $$\lambda$$;
-    - the new function to minimize is now $$L(x) = f(x) + \sum_{i=1}^m \lambda_i (g_i(x)) = f(x) + \lambda^T g(x)$$
+    - the new function to minimize is now $$L(x) = f(x) + \sum_{i=1}^m \lambda_i (g_i(x)) = f(x) + \lambda^{\intercal} g(x)$$
   - **Lagrange duality** is the method of converting an optimization problem in one set of variables x (the **primal variables**), into another optimization problem in a different set of variables λ (**dual variables**);
     - further details in section 7.2 in <a href="{{ site.resources_permalink }}">MML book</a>:
 - **Adam Optimizer** (ADAptive Moment estimation): uses estimations of the first and second moments of the gradient (the "curvature") to adapt the learning rate for each weight of the neural network;  
