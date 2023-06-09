@@ -119,6 +119,7 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What is a Lagrange multiplier? When to use it?
 - What are sufficient statistics? What theorem describes it? (Fischer-Neyman)
 - How to sample from a Gaussian distribution?
+- How to use Newton's method to get the minimum of a function?
 
 
 ### Machine Learning
