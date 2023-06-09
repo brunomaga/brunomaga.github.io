@@ -142,7 +142,7 @@ Two vectors are called **codirected** if they point in the same direction and **
 - symmetric, positive definite matrices -- like the p.s.d. covariance matrix -- always have positive, real eigenvalues. Determinant is the product of eigenvalues, thus it is not zero. Therefore it is also invertible;
 - Given a matrix  $$A \in \mathbb{R}^{m \times n}$$, we can always obtain a symmetric positive semidefinite matrix $$S=A^TA$$.
   - If $$rk(A)=n$$, then $$A^TA$$ is symmetric positive definite;
-  - there exists eigenvectors with real eigenvalues (spectral theorem);
+  - there exists eigenvectors with real eigenvalues (spectral theorem), i.e. to check if a is positive definite, check if all eigenvalues are positive.
 - Graphical intuition: the direction of the two eigenvectors correspond to the canonical basis vectors i.e., to cardinal axes. Each axis is scaled by a factor equivalent to its eigenvalue: 
 
 <p align="center"><img width="65%" height="65%" src="/assets/Algebra-for-ML/MML_eigenvalues_and_eigenvectors.png"/><br/>
