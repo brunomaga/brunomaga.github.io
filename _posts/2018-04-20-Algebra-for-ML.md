@@ -9,6 +9,7 @@ A brief summary of topics in Algebra that are relevant to ML engineers on a dail
 ### Properties of Matrices
 
 - Matrices have the properties of associativity $$(AB)C = A(BC)$$ and distributivity $$(A+B)C = AC + BC$$ and $$A(B+C)=AB+AC$$;
+- There is no division operator defined between matrices. The equivalent is the multiplication by the inverse (when it exists) i.e. $$A/B = AB^{-1}$$.
 - **Inverse**: not every matrix $$A$$ contains an inverse $$A^{-1}$$. If it exists, $$A$$ is called regular/invertible/non-singular. Otherwise it is called singular/non-invertible;
   - $$AA^{-1} = I = A^{-1}A$$,  $$(AB)^{-1}=B^{-1}A^{-1}$$;
   - two matrics $$A$$ and $$B$$ are inverse to each other if $$AB=I=BA$$;
@@ -196,7 +197,8 @@ $$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$. Even for parametric $$p(x)$$, this in
 The **Newton's method** is a root-finding algorithm which produces successively better approximations to the roots (or zeroes) of a real-valued function. I.e. solves equations of the form $$f(x)=0$$ by successive approximation. Iterations are defined as: $$x_{n+1}=x_{n}-{\frac {f(x_{n})}{f'(x_{n})}} $$.
 - the initial value $$x_0$$ should be picked as close as possible to the zero.
 - we then find the equation of the line tangent to $$y=f(x)$$ at $$x=x_0$$  and follow it back to the $$x$$ axis at a new improved guess $$x_1$$:
-- the minimum of a function can be found by computing the root of the derivative ie: $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$
+- the minimum of a function can be found by computing the root of the derivative ie: $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$.
+  - The division is not defined, so we replace it by the multiplication by the inverse i.e. $$x_{n+1}=x_{n}- f'(x_{n}) \, f''(x_{n})^{-1}$$.
 
   <img width="45%" height="45%" src="/assets/Algebra-for-ML/newton_method.gif"/><br/>
   <small>(source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)</small>
