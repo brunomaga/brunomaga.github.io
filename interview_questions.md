@@ -56,7 +56,7 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What is the sum of two random variables? (convolution)
 - What is the linear transformation of a gaussian random variable?
 - Describe Newton's method? Where does it come from? How can it be adapted to find a minimum in a function?
-  - (??)
+  - Yes, the minimum of a function can be found by computing the root of the derivative ie: $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$. Division is not defined between matrices, needs to be replaced by multiplication of the inverse.
 - What is the formula for the Taylor series? Why does it make sense? Why is there a 1/n! in the formula?
   - (??)
   - Example, to learn distribution of model parameters: $$p(\theta \mid X) = \frac{ p(X \mid \theta) \, p(\theta)}{p (X)}$$
@@ -119,7 +119,6 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What is a Lagrange multiplier? When to use it?
 - What are sufficient statistics? What theorem describes it? (Fischer-Neyman)
 - How to sample from a Gaussian distribution?
-- How to use Newton's method to get the minimum of a function?
 
 
 ### Machine Learning
@@ -218,3 +217,17 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
   - Otherwise, build a histogram for each set of samples, then compare the overlap of the histograms. Or equivalently, compare absolute difference of CDFs.
     - If it's above a given threshold, assume they're drawn from same distribution
   - Note: perfect match/comparison is not possible, because the histogram/shape of two sets of samples will likely not match, even if drawn from the exact same distribution.
+- What's the complexity of a matrix multiplication? Write the code. 
+- What's the complexity of a Gaussian Elimination ?
+- Take the operation `A^T X^T A X` (??), with a matrix and vector `X`. Is the output a vector or a scalar? Write the pseudocode to do this in one loop. What's the code to compute its derivative?
+  - Code to run in one loop (quadratic):
+```
+# A: M x N
+# X: N
+res = 0
+AT = A.T  #: N x M, precomputed transpose
+for m in range(M):
+  for n in range(N):
+    res += AT[n,m] * X[n] * A[m,n] * X[n] 
+```
+  - derivative (??): `res += 2 * pow( A[m,n], 2) * X[n]` 
