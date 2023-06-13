@@ -252,5 +252,5 @@ for m in range(M):
   - GPT
 - How to do image generation?
   - One method for image synthesis relies on inverting a diffusion process (Ho et al 2020). The principle consists of defining analytically a process that gradually degrades any sample, and consequently transforms the complex and unknown density of the data into a simple and well-known density such as a normal, and training a deep architecture to invert this degradation process.
-- How does Self-supervised learning work?
-
+- What is Self-supervised learning?
+  - Methods that take advantage of unlabeled datasets (e.g. GPT, Contrastive Predictive Coding (CPC), Simple Framework for Contrastive Learning of Representations (SimCLR)). The key principle of these methods is to define a task that does not require labels but necessitates feature representations which are useful for the real task of interest, for which a small labeled data set exists. 
