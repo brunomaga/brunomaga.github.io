@@ -248,3 +248,35 @@ Using the previous axioms we can show that:
   </p>
 
 
+---
+
+<br>
+**Extra: Non-parametric statistics (Smoothing):** we use a **Kernel Density Estimator** to convert a discrete distribution into a continuous distribution. Formulation: given a cumulative distribution function, discrete, formulated by $$n$$ steps $$Y_1, ..., T_n$$ as:
+
+$$
+\hat{F}_n (y) = \frac{1}{n} \sum_{i=1}^{n} I(Y_i \le y)
+$$  
+
+the kernel density estimator $$\hat{f}$$ is the random density function:
+
+$$
+\hat{f}(x) \, = \, \frac{1}{nh} \sum_{i=1}^n K \left( \frac{x-Y_i}{h}  \right)
+$$
+
+where $$K$$ is the kernel - a non-negative function - and $$h \gt 0$$ is a the smoothing parameter (*bandwidth*).
+- $$h$$ regulates bias-variance trade-off;
+- large $$h$$ vs small $$h$$ dictates flat vs wiggly estimator;
+- an example of $$K$$ is the standard normal CDF.
+
+  <p align="center">
+  <img width="60%" height="60%" src="/assets/Statistics-for-ML/KDE.png"/><br/>
+  <small>Source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel density estimation</a></small>
+  </p>
+
+The following table summarizes the method use for each use case:
+
+|-|-|-|
+| **Distribution / function $$g$$** | **parametric $$g(x_i^{\intercal}) = x_i^{\intercal} \beta$$** | **non-parametric $$g$$** |
+| Gaussian | Linear Regression | Smoothing (KDE) |
+| Exponential Family | Generalized Linear Models | Generative Additive Models |
+ 
