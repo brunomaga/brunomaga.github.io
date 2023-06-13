@@ -73,13 +73,17 @@ We will describe these components in the next sections, and ommit the implementa
 
 #### Word and Positional Embeddig
 
-The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes and circles in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding of a given word in the position $pos$ in a sentence, is an array with dimensionality $d$ whose value at each dimension $i$ is:
+The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes and circles in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding position $d$ of a given word in the position $pos$ of a sentence is:
 
 $$
-PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \,\text{ and }\, PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right)
+PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \,\text{ for an even position $d$, and}
 $$
 
-In practice, the embedding is given by $sine$ and $cosine$  waves with a different frequency and offset for each dimension. As an example, for a word with positioning $pos$, then the values at dimensions $4$ to $7$ of the embedding is:
+$$
+PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right)\, \text{ otherwise.}
+$$
+
+In practice, the embedding is given by $sine$ and $cosine$  waves with a different frequency and offset for each dimension. As an example, for a word with positioning $pos$ (x axis), then the values at dimensions $4$, $5%, $6$ and $7$ is:
 
 <p align="center">
 <br/>
@@ -104,13 +108,36 @@ Let's look at a single head of attention mechanism for now. Take the sentence of
 How does this mechanism work? According to the paper, each attention head is formulated as:
 
 $$
-Attention(K, V, Q) = softmax\left(QK^T / \sqrt{d_k}\right) V
+Attention(K, V, Q) = A \, V = softmax\left( \frac{QK^T}{\sqrt{D^{QK}}} \right) V
 $$
 
-Where $K$, $V$ and $Q$ refer to the key, value and query latent spaces. This is a similar naming to a regular python dictionary and a C++ hash-map or hash-table, as they are all *key-value* stores that are *queried* for a given value (thus the usage of  $K$, $V$ and $Q$ variable convention). 
+Where:
+- $$Q$$ is a tensor of queries of size $$N^Q×D^{QK}$$
+- $$K$$ is a tensor of keys of size $$N^{KV}×D^{QK}$$, and
+- $$V$$ is a tensor values of size $$N^{KV}×D^V$$, thus
+- $$Attention(K,V,Q)$$ is of dimension $$N^Q×D^V$$.  
+
+The tensor $$A$$ is the **attention score** where $$A_{q,k}$$ is computed for every query index $$q$$ and every key index $$k$$, as the argmax of the softmax (*softargmax*), of the **dot products** between the query $$Q_q$$ and the keys:
+
+$$
+A_{q,k} = \frac{     \exp \left( \frac{1}{\sqrt{D^{QK}} } Q^{\intercal}_q K_k  \right)     }{   \sum_l  \exp \left( \frac{1}{\sqrt{D^{QK}}}   Q^{\intercal}_q K_l  \right)  } 
+$$
+
+The term $$ \frac{1}{\sqrt{D^{QK}}} $$ helps keeping the range of values roughly unchanged even for large $$D^{QK}$$. For each query, the final value is computed for as a weighted sum of the input values by the attention scores as: $$Y_q = \sum_k A_{q,k} \, V_k $$. 
+
+<p align="center">
+<br/>
+<img width="50%" height="50%" src="/assets/AI-Supercomputing/transformer_attention_lbdl.png"/><br/>
+<br/><small>The attention operator can be interpreted as matching every query $Q_q$ with all the keys $K_1, ..., K_{N^{KV}}$ to get normalized attention scores $A_{q,1},...,A_{q,N^{KV}}$ (left), and then averaging the values $V_1,...,V_{N^{KV}}$ with these scores to compute the resulting $Y_q$ (right).
+<br>Source: <a href="{{ site.resources_permalink }}">the little book of deep learning</a>.
+</small>
+</p>
 
 Notice that in the transformer diagram, each attention module has three inputs (arrows) referring to these three variables. The attention mechanism at the start of each encoder and decoder is retrieving keys, values and queries from its own input, learning the context of the source and target languages, respectively. However, in one occurence of the attention mechanism, the keys and values are provided by the encoder, and the query by the decoder, relating to the module that is trained for the translation at hand. 
 
+
+
+<!--
 The technique used and the main component of the attention mechanism is the **scaled dot-product** $QK^T$. The dot product of two vectors is computed as $a . b = \mid \mid a \mid \mid \, . \, \mid \mid b \mid \mid \, cos\, \theta_{ab}$, and provides the cosine of the angle between two vectors. Therefore, if two vectors have a simillar representation in space, the angle formed between them is small and its cosine is large. Here's a graphical representation of this logic:
 
 
@@ -122,6 +149,7 @@ The technique used and the main component of the attention mechanism is the **sc
 </p>
 
 The logic is the following: similar vectors yield small angle-cosine values. These values are then scaled by $\sqrt{d_k}$ by the attention mechanism, introduced for numerical stability (detailed in the paper). The output is then past to a $softmax$ function that normalizes the vector and converts into a probability distribution, and finally multiplied by $V$ to retrieve the values scaled to the probability distribution of a given key. In practice, this can be interpreted as an implementation of a key-value store found in regular programming languages (on a discrete set of values), but on a continuous space. I.e. instead of outputting the value in a given position in a map related to the query, it outputs the probability of each value to relate to a given query, and retrieves all values and their respective importance, based on that query.
+-->
 
 Finally, the multi-head attention mechanims combines all attention mechanism modules, and is defined as:
 
