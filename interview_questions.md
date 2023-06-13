@@ -115,7 +115,9 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What is the Toeplitz matrix?
   - matrix where each diagonal from left to right is constant e.g. $$[ [a, b, c, d], [e, a, b, c], [d, e, a, b], [c, d, e, a] ]$$ 
   - used to compute linear convolution as a multiplication by te Toeplitz instead of sliding kernel. Useful e.g. on GPUs.
-- What’s a Fourier transform? When to use it?
+- What’s a Fourier transform?
+- How are neural nets related to Fourier transforms? What are Fourier transforms, for that matter?
+  - We can consider the discrete Fourier transform (DFT) to be an artificial neural network: it is a single layer network, with no bias, no activation function, and particular values for the weights. The number of output nodes is equal to the number of frequencies we evaluate.
 - What is a Lagrange multiplier? When to use it?
 - What are sufficient statistics? What theorem describes it? (Fischer-Neyman)
 - How to sample from a Gaussian distribution?
@@ -128,6 +130,7 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What is the difference between Type I and Type II error?
   - A type I error (false-positive) occurs if an investigator rejects a null hypothesis that is actually true in the population; a type II error (false-negative) occurs if the investigator fails to reject a null hypothesis that is actually false in the population.
 - How do batch-/layer normalization work as a regularizer? And dropout?
+  - allows much higher learning rates and smaler step size. Paper abstract “Training Deep Neural Networks is complicated by the fact that the distribution of each layer’s inputs changes during training, as the parameters of the previous layers change. This slows down the training by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard to train models with saturating nonlinearities. We refer to this phenomenon as internal covariate shift".
 - What is the biad/variance tradeoff? How do they look on a good model?
   - low bias, low variance.
 - What is overfitting/underfitting, how do know if we are over-/underfitting, and how to overcome it?
@@ -163,6 +166,8 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
   - we project input into higher dimensionality where we can do (linear) regression/separation.
 - How do SVMs work? What's the complexity? 
   - maximize margin (best answer)
+  - Lagrange multipliers
+  - support vectors, dual optimization problem
   - $$K(x,y)= \phi(x)^T \phi(y)$$, this multiplication makes it quadratic.
   - we can then perform linear regression on the higher dimensionality data.
   - SVMs then have complexity quadratic to cubic during the training phase (??), therefore they do not scale well with data.
@@ -173,9 +178,6 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - How is KNN different than k-means?
 - How do ROC curves work?
 - What is an autoencoder?
-- Why do we need skip connections?
-  - to train deep networks, to remove vanishing gradients
-- What are the components of a DNN? what is the stride? How does kernel size influence training?
 
 ### ML software enginnering
 
@@ -190,6 +192,8 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What is the pooling in a CNN and why do we need it? and kernel and why do we need it?
 - Why when to use Relu, Leaky telu, sigmoid?
   - With a Leaky ReLU (LReLU), you won’t face the “dead ReLU” (or “dying ReLU”) problem which happens when your ReLU always have values under 0 - this completely blocks learning in the ReLU because of gradients of 0 in the negative part
+- A method/recide to create large neural network, detect hyper-parameters (layer count, neuron count), avoid overfitting, etc.?
+  - follow <a href='http://karpathy.github.io/2019/04/25/recipe/'>Andrej Karpathy's recipe</a>.
 - How to compute variance of a set of $$n$$ values, in one single loop?
   - as we loop, accumulate the sum of $$x_i$$ and the sum of $$x_i^2$$. At the get the square of the sum of $$x_i$$ and divide both sums by $$n$$.
   - ie we compute variance as $$Var[X] = \mathbb{E[x^2]} - \mathbb{E[x]^2}$$.
@@ -221,6 +225,10 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
   - Otherwise, build a histogram for each set of samples, then compare the overlap of the histograms. Or equivalently, compare absolute difference of CDFs.
     - If it's above a given threshold, assume they're drawn from same distribution
   - Note: perfect match/comparison is not possible, because the histogram/shape of two sets of samples will likely not match, even if drawn from the exact same distribution.
+- What are exploding and vanishing gradients?
+- Why do we need skip connections?
+  - to train deep networks, to remove vanishing gradients
+- What are the components of a CNN? what is the stride? How does kernel size influence training?
 - What's the complexity of a matrix multiplication? Write the code. 
 - What's the complexity of a Gaussian Elimination ?
 - Take the operation `A^T X^T A X` (??), with a matrix and vector `X`. Is the output a vector or a scalar? Write the pseudocode to do this in one loop. What's the code to compute its derivative?
