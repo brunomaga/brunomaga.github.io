@@ -147,16 +147,16 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What is the memory/computation bottleneck of a Transformer? 
 - What is a latent variable model?
 - What is a (direct) graphical model?
-
+- What is a graph neural net? What is the message passing and what's its formulation?
 - What are BERT's / GPT's pre-trainining and post-training tasks?
 - Why use Transformers instead of RNNs for sequences? What are the computational advantages/disadvantages?
   - RNN rent to perform worse with tokens on the beginning of the sequence, and better with final tokens.
   - Transformers allows every token to attend to every token, with a weighted attention given by the attention matrix.
 - What is the point of the mask in the attention head of the Transformer?
-- What are GANs and what are the challenges in training them?
+- What are GANs and what are the challenges in training them? What's the loss function?
   - Model collapse, Discriminator lean too fast, therefore the gradients are too small in the discriminator
 - Describe the loss function of a GAN.
-- What are VAEs and what are the challenges in training them?
+- What are VAEs and what are the challenges in training them? What's the loss function?
   - reparametrization trick.
 - Describe the loss function of a VAE.
 - What are kernels and how do they work? What is a Gram matrix? How are they useful? Limitations? Complexity?
@@ -172,6 +172,10 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What’s the difference between a generative and discriminative model?
 - How is KNN different than k-means?
 - How do ROC curves work?
+- What is an autoencoder?
+- Why do we need skip connections?
+  - to train deep networks, to remove vanishing gradients
+- What are the components of a DNN? what is the stride? How does kernel size influence training?
 
 ### ML software enginnering
 
@@ -231,3 +235,22 @@ for m in range(M):
     res += AT[n,m] * X[n] * A[m,n] * X[n] 
 ```
   - derivative (??): `res += 2 * pow( A[m,n], 2) * X[n]` 
+- How does attention matrix and positional encoding of a transformer work?
+- How to perform object classification in images?
+  - U-Net and CrossEntropy loss on output vector of classes.
+- How to perform object detection in images?
+  - downsampling until outputting the 4 corners of bounding box and the classification vector (with class "no object").
+- How to do image segmentation?
+  - U-Net and output images as 1 layer per class with object segmentation as 1 and  everything else 0.
+- How to perform image denoising?
+  - autoencoder from dirty to clean image, MSE loss
+- How to do Speech recognition, i.e. audio to text?
+  - input as spectogram, network with 1D convolution, Transformer network, output as BPE tokenizer.
+- Text-image representations: how to have an image and a text of the image refer to the same feature vector?
+  -  Contrastive Language-Image Pre-training (CLIP), combininig am image encoder (visual transformer) and a text encoder (GPT).
+- How to do text generation?
+  - GPT
+- How to do image generation?
+  - One method for image synthesis relies on inverting a diffusion process (Ho et al 2020). The principle consists of defining analytically a process that gradually degrades any sample, and consequently transforms the complex and unknown density of the data into a simple and well-known density such as a normal, and training a deep architecture to invert this degradation process.
+- How does Self-supervised learning work?
+
