@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Unsupervised Learning: Principal Component Analysis and basics"
+title:  "Unsupervised Learning basics and Principal Component Analysis"
 categories: [machine learning, unsupervised learning]
 tags: [machinelearning]
 ---
