@@ -112,9 +112,9 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
   - $$X’=VX \Leftrightarrow V^{−1} X’ = X$$, but because eigen vectors are orthonormal, $$V^T X’=X$$ 
 - How do you perform a Singular Value Decomposition? when would you use this instead of PCA?
 - What is Cholesky’s factorization (positive semidefinite matrix)
-- What is the Toeplitz matrix?
+- What is the Toeplitz matrix? When to use it in ML?
   - matrix where each diagonal from left to right is constant e.g. $$[ [a, b, c, d], [e, a, b, c], [d, e, a, b], [c, d, e, a] ]$$ 
-  - used to compute linear convolution as a multiplication by te Toeplitz instead of sliding kernel. Useful e.g. on GPUs.
+  - used to compute linear convolution as a multiplication by the Toeplitz instead of a sliding kernel. Useful e.g. on GPUs.
 - What’s a Fourier transform?
 - How are neural nets related to Fourier transforms? What are Fourier transforms, for that matter?
   - We can consider the discrete Fourier transform (DFT) to be an artificial neural network: it is a single layer network, with no bias, no activation function, and particular values for the weights. The number of output nodes is equal to the number of frequencies we evaluate.
@@ -171,8 +171,13 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
   - $$K(x,y)= \phi(x)^T \phi(y)$$, this multiplication makes it quadratic.
   - we can then perform linear regression on the higher dimensionality data.
   - SVMs then have complexity quadratic to cubic during the training phase (??), therefore they do not scale well with data.
-- What is the analytics solution to least squares? And Ridge Regression?
-- What is entropy and Mutual Information?
+- What's least squares? Derive its analytical solution.
+  - computed by minimizing $$(y - Xw)^2 \, = \, (y-Xw)^T(y-Xw)$$.
+  - derivating with respect to $w$ leads to $$w = (X^TX)^{-1} X^Ty$$. 
+- What's ridge regression? Derive its analytical solution.
+  - computed by minimizing $$(y - Xw)^2 + \lambda w^Tw \, = \, (y - Xw)^T(y-Wx) + \lambda w^Tw$$.
+  - derivating with respect to $w$ leads to $$w = (X^TX - \lambda I)^{-1} X^Ty$$.
+- What is entropy and Mutual Information?:
 - What loss function to use for categorical classification, binary classification, regression, etc? 
 - What’s the difference between a generative and discriminative model?
 - How is KNN different than k-means?

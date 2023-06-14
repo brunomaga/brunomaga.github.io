@@ -195,7 +195,7 @@ The total events received across all neurons in the network was of approximately
 
 Is the theoretical speed-up guaranteed to hold in practice? As Einstein once said *"In theory, there's no difference between theory and practice, but in practice, there is"*. And that's exactly right in our case, where two main issues arise. 
 
-##### 1. Distributed CVODE executions
+#### 1. Distributed CVODE executions
 
 Simulations of such scale require parallel/distributed computing due to the memory/computation requirements.
 
@@ -215,7 +215,7 @@ However, going to the *extreme* of the possible optimisation, we observe that th
 
 This approach increases computational efficiency as neurons are computed beyond the approaches that include synchronization intervals, and due to neurons performing more interpolation steps, by staying longer in more efficient CPU cache levels. 
 
-##### 2. Testing conditions alter spike rates
+#### 2. Testing conditions alter spike rates
 
 [LIF-model-post]: {{ site.baseurl }}{% post_url 2016-02-08-LIF-Brunel %}
 
