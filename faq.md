@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Interview questions
-permalink: /interview_questions/
+title: Frequently Asked (Interview) Questions
+permalink: /faq/
 ---
 
 
