@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Frequently Asked (Interview) Questions
+title: Frequently Asked Questions
 permalink: /faq/
 ---
 
@@ -178,14 +178,36 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - How is KNN different than k-means?
 - How do ROC curves work?
 - What is an autoencoder?
+- What is a random walk?
+  - the movements of an object or changes in a variable that follow no discernible pattern or trend.
+- What does stochastic mean?
+  - “Stochastic” is a description that refers to outcomes based upon random probability. Or having a random probability distribution or pattern that may be analysed statistically but may not be predicted precisely.
 
 ### ML software enginnering
 
 - Train, validation, test datasets? k-cross validation?
 - What is the back-propagation algorithm?
+- What is the Q-function, policy function, state and action in Reinforcement Learning?
+  - build a DNN that takes as input the current state and output the Q-value for each possible action.
+  - Q-function: given a state, what's the value (return) of every action that we can take, ie $$Q(state,action)$$. 
+  - policy function follows after the Q-function: given the state, what's the best action out of all Q values (Q function outputs), e.g. $$\pi(state) = argmax_a Q(action, state)$$.
+  - output of policy function is then backpropagated.
+- What's the setup for DNN for Reinforcement learning e.g. ATARI player?
+  - What's the loss (Q-loss)?
+- What's the downside of using Q-values? What's the alternative?
+  - Complexity: can only model scenarions where action space is discrete and small. Cant handle continuous action spaces.
+  - To adress this, we use Policy gradient methods.
+- What are the different deep reinforcement learning algorithms?
+  - Q-learning: find $$Q(s,a)$$ then $$\pi(s) = argmax_a Q(s,a)$$. 
+  - Policy learning: find $$\pi(s)$$ then sample $$a \sim \pi(s)$$
+- How does policy gradient work? What's the loss function? How to pre-train?
+  - DNN learns parametric policies e.g. $$P(a_1 \mid s)$$ for all actions where $$P(a \mid s) = \mathcal{N}(\mu, \sigma^2)$$. Then $$\pi(s) \sim P(a \mid s)$$.
+  - Car racer: do simulated environment
+  - board games: train two networks against each other. 
 - What are the different types of scaling and parallelism?
   - microbatching (gradient accumulation), data parallelism, model parallelism across layers, pipelining, sharding, etc
 - What is the automatic differentiation and how does it work?
+  - see [Pytorch's doumentation for AutoGrad mechanics](https://pytorch.org/docs/stable/notes/autograd.html).
 - What are the different ways of reducing model size?
   - gradient clipping, model quantization, mixed-precision, prunning or model distilation (to a smaller model).
 - What is the receptive field of a CNN? 
@@ -262,3 +284,4 @@ for m in range(M):
   - One method for image synthesis relies on inverting a diffusion process (Ho et al 2020). The principle consists of defining analytically a process that gradually degrades any sample, and consequently transforms the complex and unknown density of the data into a simple and well-known density such as a normal, and training a deep architecture to invert this degradation process.
 - What is Self-supervised learning?
   - Methods that take advantage of unlabeled datasets (e.g. GPT, Contrastive Predictive Coding (CPC), Simple Framework for Contrastive Learning of Representations (SimCLR)). The key principle of these methods is to define a task that does not require labels but necessitates feature representations which are useful for the real task of interest, for which a small labeled data set exists. 
+  - see [A Cookbook of Self-Supervised Learning](https://arxiv.org/abs/2304.12210) for details.

@@ -151,7 +151,7 @@ The main advantage is that it is extremely simple to implement and doesn’t req
 
 ### Risk and Loss functions
 
-In ML, on non-probabilistic models, we follow the principle of empirical risk empirical risk minimization, in order to find good parameters.  The **risk** is the expected loss between the expeted output $$y_n$$ and the predicted value $$\hat{y}_n$$, ie
+In ML, on non-probabilistic models, we follow the principle of empirical risk empirical risk minimization, in order to find good parameters.  The **risk** is the expected loss between the expected output $$y_n$$ and the predicted value $$\hat{y}_n$$, ie
 
 $$
 r(f) = \mathbb{E}[l(\hat{y}_n, y_n)]
