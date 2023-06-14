@@ -22,28 +22,28 @@ For the particular example of linear regression and the Mean Squared Error loss 
 
   $$
   \begin{align*}
-  (y - Xw)^2 = & (y-Xw)^T(y-Xw) \\
-  = & y^Ty - y^TXw - (Xw)^Ty + (Xw)^TXw \\
-  = & y^Ty - w^TX^Ty - w^TX^Ty + w^TX^TXw \\
-  = & y^Ty - 2 w^TX^Ty + w^TX^TXw;\\
+  (y - Xw)^2 = \, & (y-Xw)^T(y-Xw) \\
+  = \, & y^Ty - y^TXw - (Xw)^Ty + (Xw)^TXw \\
+  = \, & y^Ty - w^TX^Ty - w^TX^Ty + w^TX^TXw \\
+  = \, & y^Ty - 2 w^TX^Ty + w^TX^TXw\\
   \end{align*}
   $$
 
-We want to compute the $w$ that minimizes the loss, or equally, where its derivative is 0. So we compute:
+We want to compute the $w$ that minimizes the loss, or equivalently, where its derivative is 0. So we compute:
 
   $$
   \begin{align*}
     & \frac{\partial}{\partial w} y^Ty - 2 w^TX^Ty + w^TX^TXw = 0 \\
-  \Leftrightarrow & 0 - 2 X^Ty + 2 X^TXw = 0 \\
-  \Leftrightarrow & 2 X^TXw = 2X^Ty \\
-  \Leftrightarrow & w = (X^TX)^{-1} X^Ty;\\
+  \Leftrightarrow \, & 0 - 2 X^Ty + 2 X^TXw = 0 \\
+  \Leftrightarrow \, & 2 X^TXw = 2X^Ty \\
+  \Leftrightarrow \, & w = (X^TX)^{-1} X^Ty\\
   \end{align*}
   $$
 
 Note that we used the trick $\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$ (<a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, eq 2.4.1). The results tells us that **if $X^TX$ is invertible**, this minimization problem has an unique closed-form solution given by that final form. As a side note, the **Gram matrix $X^TX$** is invertible if **X has full column rank**, i.e. $rank(X)=D$ (we'll ommit the proof). The rank of a matrix is defined as the maximum number of linearly independent column vectors in the matrix, therefore we assume that all columns are linearly independent.
 
 
-##### Regularization
+#### Regularization
 
 It's a common practice to add to the loss a regulatization term $\Omega$ that penalizes complex models. Therefore our loss minimization problem becomes:
 
@@ -137,7 +137,7 @@ We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given 
   $$
 
 
-##### Coordinate Descent 
+#### Coordinate Descent 
 
 The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) optimization method iterates over individual coordinates (keeping others fixed), in order to minimize the loss function. 
 
@@ -170,8 +170,8 @@ We'll omit details on likelihood estimators, as they are covered in a [different
 Back to non-probabilistic models. Most regression tasks use the Mean Squared Error loss function:
 
 $$
-MSE(\hat{y}_n) = \mathbb{E}\left[ (y_n - \hat{y}_n)^2 \right]
-$$.
+MSE(\hat{y}_n) = \mathbb{E}\left[ (y_n - \hat{y}_n)^2 \right].
+$$
 
 Most classification tasks use the binary or multi-class cross-entropy loss functions:
 - binary: $$H(p) = -(y \log p(x) + (1-y) \log (1-p(x)))$$.

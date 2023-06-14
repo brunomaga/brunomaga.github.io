@@ -11,7 +11,7 @@ For the sake of comparison, take the example of a simple linear regression $y = 
  
 Apart from the uncertainty quantification, another benefit of Bayesian is the possibility of **online learning**, i.e. a continuous update of the trained model (from previously-seen data) by looking at only the new data. This is a handy feature for e.g. datasets that are purged periodically.
 
-##### Refresher: Normal distribution
+#### Refresher: Normal distribution
 
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. In the following post, we methods will be solely based on the [Normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) defined for an input $x$ by:
   - $$p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \text{ } exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $\mu$ and standard deviation $\sigma$ on an univariate notation, or
@@ -104,7 +104,7 @@ $$
 Note that this solution is independent of the noise variance $\sigma^2$, and is the same as minimizing the Least Squares Problem, as we showed in a [previous post]({{ site.baseurl }}{% post_url 2017-02-17-Linear-Regression-and-Matrix-Factorization %}), with the same closed-form solution $ w = (X^TX)^{-1} X^Ty$. In practice, minimizing the Least Squares problem is equivalent to determining the most likely $w$ under the assumption that $y$ contains gaussian noise  i.e. $y = wx + b + \varepsilon$, with $\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$. 
 
 
-##### Adding regularization
+#### Adding regularization
 
 Regularizers can be added normally as in the non-Bayesian regression and may have as well an analytical solution. As an example, if we want ot add an $L_2$/Ridge regularizer:
 
@@ -118,7 +118,7 @@ $$
 
 where $\lambda = \alpha \sigma^2$, therefore the solution is now noise-dependent, contrarily to the previous use case. Note that we picked the regularizer constant $\alpha/2$ on the first step to simplify the maths and *cancel out* the 2 when doing the derivative of the $w^Tw$.
 
-##### Estimating noise variance
+#### Estimating noise variance
 
 So far we assumed the noise $\sigma^2$ is known. However, we can use the same Maximum Likelihood principle to obtain the estimator $\sigma^2_{MLE}$ for the noise:
 

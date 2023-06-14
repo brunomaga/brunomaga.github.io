@@ -284,7 +284,7 @@ $$
 
 The CAVI (coordinate ascent variational inference) updates each variational parameter in turn, so we need to compute both updates.
 
-##### Update 1: Variational update for cluster assignment
+#### Update 1: Variational update for cluster assignment
 
 We start with the variational update for the cluster assignment $c_i$. Using the mean-field recipe from equation \ref{eq_CAVI}:
 
@@ -320,7 +320,7 @@ $$
 $$
 
 
-##### Update 2: Variational update for cluster mean
+#### Update 2: Variational update for cluster mean
 
 We now turn to the variational density $$q(\mu_k; m_k, s^2_k)$$ on equation \ref{eq_variational_family}. We use again \ref{eq_CAVI} (the exponentiated log of te joint) for the mean values $\mu_k$:
 
@@ -358,7 +358,7 @@ s^2_k = \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}\\
 \label{eq_algo_second_step}
 $$
 
-###### Algorithm and Vizualization
+#### Algorithm and Vizualization
 
 Putting it all together, the algorithm follows as:
 
