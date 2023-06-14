@@ -129,7 +129,7 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
   - To discuss: regularize means to make things regular or acceptable; aims at reducing overfitting; L1 = absolute value = weight dropping; L2 = square of difference;
 - What is the difference between Type I and Type II error?
   - A type I error (false-positive) occurs if an investigator rejects a null hypothesis that is actually true in the population; a type II error (false-negative) occurs if the investigator fails to reject a null hypothesis that is actually false in the population.
-- How do batch-/layer normalization work as a regularizer? And dropout?
+- How do batch-/layer normalization work as a regularizer?
   - allows much higher learning rates and smaler step size. Paper abstract “Training Deep Neural Networks is complicated by the fact that the distribution of each layer’s inputs changes during training, as the parameters of the previous layers change. This slows down the training by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard to train models with saturating nonlinearities. We refer to this phenomenon as internal covariate shift".
 - What is the biad/variance tradeoff? How do they look on a good model?
   - low bias, low variance.
@@ -140,7 +140,7 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
     - Reduce the network’s capacity by removing layers or reducing the number of elements in the hidden layers: the higher the capacity, the easier it is for the model to learn the input classes.
     - Apply regularization, which comes down to adding a cost to the loss function for large weights
 - What is dropout and how does it work? Why does it work?
-  - train vs valid steps, $$p$$ parameter. subnetworks learn alternative logics.
+  - train vs valid steps, $$p$$ parameter, reduces overfitting, subnetworks learn alternative logics (while DNN is more prone to overfitting), 2-3 times slower to train, regularizer as promotes sparse activations like L2 regularization. 
 - How to model uncertainty or error of a model? 
   - use ensembles to compute mean, and compare model with the mean of the ensembles output.
 - How do ensemble methods work? What ensemble methods do you know?
@@ -290,3 +290,4 @@ for m in range(M):
 - What is Self-supervised learning?
   - Methods that take advantage of unlabeled datasets (e.g. GPT, Contrastive Predictive Coding (CPC), Simple Framework for Contrastive Learning of Representations (SimCLR)). The key principle of these methods is to define a task that does not require labels but necessitates feature representations which are useful for the real task of interest, for which a small labeled data set exists. 
   - see [A Cookbook of Self-Supervised Learning](https://arxiv.org/abs/2304.12210) for details.
+- How to collect embeddings of sequences, text, words (Word2vec, skipgram, CBOW), point clusters or arrays, graphs, images?
