@@ -77,10 +77,10 @@ Principal component analysis (PCA) is a statistical procedure that uses an ortho
 
 The algorithm is the following:
 - center data by substracting mean: $$x \leftarrow x - \langle x \rangle$$
-- calculate [Covariance matrix](https://en.wikipedia.org/wiki/Covariance_matrix): $$ C_{kj} = \langle ( x_k - \langle x_k \rangle ) (x_j - \langle x_j \rangle ) \rangle $$
+- calculate [Covariance matrix](https://en.wikipedia.org/wiki/Covariance_matrix): $$ C = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X}) \, (X_i - \bar{X})^{\intercal}  $$
 - calculate [eigenvalues and eigenvectors](https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors) of the covariance matrix:
-  - compute $det(C - \lambda I)$, where $\lambda_n$ is one eigenvalue;
-  - compute the respective eigenvector for each eigenvalue by solving $C e_n = \lambda_n e_n$;
+  - solve $det(C - \lambda I)=0$, where $\lambda$ are the eigenvalues;
+  - compute the eigenvector $$v_i$$ for each eigenvalue $$\lambda_i$$ by solving $$C v_i = \lambda_i v_i \, \Leftrightarrow \, (C- \lambda_i) v_i = 0$$;
 - compute the feature vector $F$, composed by the eigenvectors in the order of the largest to smallest corresponding eigenvalues.
 - the final data is obtained by multiplying the feature vector transposed ($F^T$, i.e. with the most significant eigenvector is on top) by a matrix $D_c$ whose rows are the mean centered data $$x - \langle x \rangle $$ and $$y - \langle y \rangle $$ as: $$D_n = F^T D_c$$
 
@@ -92,7 +92,7 @@ A visual example is displayed below, where the output of the PCA rotates the dat
 
 We can now discard the least significant dimensions of the final post-PCA data, reducing the number of features in the model. The size of $$F$$ dictates the ammount of compression we achieve.
 
-To recover the the original data (or an approximation if $$F$$ does not include all features), we use the inverse of the final transformation $$F^T$$, i.e.:
+To recover the the original data (or an approximation if $$F$$ does not include all features), we invert the transform operation and ~~divide~~ and multiply the transformed data by the inverse of the transformation matrix $$F^{-T}$$, i.e.:
 
 $$
 D_c = F^{-T} D_n = F D_n
