@@ -62,7 +62,7 @@ This leads to two main problems:
 - mathematically, the update of the parameters is none or very small, so the stepping in the loss landscape is very slow;
 - computationally, arithmetic operations over very small values lead to incorrect (or "always zero") results due to insufficient floating point precision in the processor (typically 16 or 32 bits); 
 
-The work around suggested by the authors is to change the algorithm for training the generator, and instead of minimizing $$\log(1 − D(G(z)))$$, they maximize $$\log D(G(z))$$ so that the optimisation landscape "provides much stronger gradients early in training". See the pseudo-code at the end of this post for a clearer explanation.
+The work around suggested by the authors is to change the algorithm for training the generator, and instead of minimizing $$\log(1 − D(G(z)))$$, they maximize $$\log D(G(z))$$ so that the optimisation landscape "provides much stronger gradients early in training". See the pseudocode at the end of this post for a clearer explanation.
 
 
 ### Challenge: Mode collapse
