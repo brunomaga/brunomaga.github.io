@@ -105,6 +105,8 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What is the central limit theorem? Give an example.
 - What is the law of large numbers? Give an example.
 - What are eigen values and eigen vectors? What do they mean?
+  - [Eigenvalues and eigenvectors](https://en.wikipedia.org/wiki/Eigenvalues_and_eigenvectors)
+  - An eigenbasis is a basis of $$R^n$$ consisting of eigenvectors of $$A$$. Eigenvectors with different eigenvalues are automatically linearly independent.
 - What is eigendecomposition? Give the example of an algorithm.
 - how to compute eigenvalues and eigen vectors?
 - How do you perform a Principal Component Analysis?
@@ -159,6 +161,8 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What are GANs and what are the challenges in training them? What's the loss function?
   - Model collapse, Discriminator lean too fast, therefore the gradients are too small in the discriminator
 - Describe the loss function of a GAN.
+- What are latent variables?
+- Whats the goal of Variational Inference?
 - What are VAEs and what are the challenges in training them? What's the loss function?
   - reparametrization trick.
 - Describe the loss function of a VAE.

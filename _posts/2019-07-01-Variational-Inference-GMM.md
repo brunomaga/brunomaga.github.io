@@ -64,6 +64,8 @@ I will try to post about this topic in the near future, but if you're curious yo
 
 ### Variational Inference
 
+**IMPORTANT:** this section is outdated and the best resource for this topic is the wikipedia entry for [Variational Bayesian Methods](https://en.wikipedia.org/wiki/Variational_Bayesian_methods). 
+
 **The idea behind Variational Inference (VI) methods is to propose a family of densities and find a member $q^\star$ of that family which is close to the target posterior $p(z \mid x)$**. I.e. instead of computing the *real* posterior, we try to find the parameters $z$ of a new distribution $q^\star$ (the approximation to our real posterior) such that:
 
 $$
@@ -77,7 +79,7 @@ KL (q(z) || p(z \mid x)) =  \int q(z) \log \frac{q(z)}{p(z \mid x)} dz= \mathbf{
 \label{eq_KLdiv}
 $$ 
 
-Note that **KL is not a distance metric as it's not symmetric**. And that there are other divergence metrics other than KL divergence, part of the [f-divergence family](https://en.wikipedia.org/wiki/F-divergence).
+Note that KL-divergence is a *dissimilarity function* and is *not a metric* as it's not symmetric. And that there are other divergence metrics other than KL divergence, part of the [f-divergence family](https://en.wikipedia.org/wiki/F-divergence).
 
 Back to the topic. If both $q$ and $p$ are high, then we achieve a good solution as the KL-divergence is low. If $q$ is high and $p$ is low, we have a high divergence and the solution *may* not be very good. Otherwise, if *q* is low, we dont care about *p*, since we achieve low divergence, independently of $p$. It would then make more sense to compute $KL(p\|\|q)$ instead, however we do not do this due to computational reasons, as we will see later.
 

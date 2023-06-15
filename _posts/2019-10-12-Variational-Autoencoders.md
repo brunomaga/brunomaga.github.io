@@ -9,14 +9,14 @@ tags: [machinelearning]
 
 The papers introduces Variational Autoencoders, aiming at performing efficient inference and learning in probabilistic models whose latent variables and parameters have intractable posterior distributions, and on large datasets. The SGVB (Stochastic Gradient Variational Bayes) estimator presented can be used for efficient approximation of posterior inference in almost any model with continuous latent variables, and because it’s differentiable, it can be optimized with e.g. gradient descent. The AutoEncoding Variational Bayes (AEVB) algorithm presented uses the SGVB estimator to optimize a model that does efficient approximate posterior inference using simple sampling (from parametric distributions).
 
-In brief, the VAE is the machine learning model, a probabilistic auto-encoder, where the probabilistic encoder (aka recognition model) and decoder (aka generative model) are represented as neural networks. The AEVB algorithm is a learning/inference algorithm that can be used to find the parameters of the VAE, i.e. to perform approximate variational inference in the directed graphical model of the VAE.
+The VAE is a probabilistic auto-encoder, where the probabilistic encoder (aka recognition model) and decoder (aka generative model) are represented as neural networks. The AEVB algorithm is a learning/inference algorithm that can be used to find the parameters of the VAE, i.e. to perform approximate variational inference in the directed graphical model of the VAE.
 
 Input datapoints $$x$$ are generated as following:
 - a value $$z(i)$$ is generated from some prior distribution $$p_{\theta^*}(z)$$; and
 - a value $$x(i)$$ is generated from the likelihood distribution $$p_{\theta^∗}(x \mid z)$$.
 
 The assumptions are that both the prior and likelihood functions are parametric differentiable distributions, and that $$\theta^*$$ and $$z(i)$$ are unknown. There’s also the assumption of intractability as in:
-- the integral of the marginal likelihood $$\int p_\theta(z) p\theta(x \mid z) dz$$ is intractable;
+- the integral of the evidence or marginal likelihood $$\int p_\theta(z) p\theta(x \mid z) dz$$ is intractable;
 - the true posterior density $$p\theta (z \mid x)$$ is intractable, so the expectation maximization algorithm cant be used; and
 - the algorithms for any mean-field approximation algorithm are also intractable.
 This is the level of intractability common to DNNs with nonlinear hidden layers.
@@ -44,7 +44,7 @@ One advantage of the VAE framework, relative to ordinary Variational Inference, 
 
 The authors noticed that the sampling induces sampling noise in the gradients required for learning (or that because $$z$$ is randomly generated and cannot be backpropagated), and to counteract that variance they use the “reparameterization trick”.
 
-It goes as follows: the sample vector $$z$$ that is typically sampled from the mean vector $$\mu$$ and variance $$\sigma$$ in the Gaussian scenario in now described as $$ z = \mu + \sigma \cdot \epsilon$$ where $$\epsilon$$ is always the standard gaussian ie $$\epsilon \sim N(0,1)$$.
+It goes as follows: the sample vector $$z$$ that is typically sampled from the mean vector $$\mu$$ and the variance $$\sigma^2$$ in the Gaussian scenario in now described as $$ z = \mu + \sigma \cdot \epsilon$$ where $$\epsilon$$ is the standard gaussian ie $$\epsilon \sim N(0,1)$$.
 
 <p align="center"><img width="70%" height="70%" src="/assets/Variational-Autoencoders/vae2.png"/></p>
 
@@ -55,9 +55,9 @@ The loss function is a sum of two terms:
 
 <p align="center"><img width="60%" height="60%" src="/assets/Variational-Autoencoders/vae_loss.png"/></p>
 
-The first term is the reconstruction loss (or expected negative log-likelihood of the i-th datapoint). The expectation is taken with respect to the encoder’s distribution over the representations, encouraging the VAE to generate valid datapoints. This loss compares the model output with the model input and can be the losses we used in regular autoencoders, such as L2 loss.
+The first term is the reconstruction loss (or expected negative log-likelihood of the i-th datapoint). The expectation is taken with respect to the encoder’s distribution over the representations, encouraging the VAE to generate valid datapoints. This loss compares the model output with the model input and can be the losses we used in regular autoencoders, such as L2 loss, cross-entropy, etc.
 
-The second term is the Kullback-Leibler divergence between the encoder’s distribution $$q_{\theta}(z \mid x)$$ and p(z). This divergence measures how much information is lost (in units of nats) when using $$q$$ to represent $$p$$. It is one measure of how close $$q$$ is to $$p$$.
+The second term is the Kullback-Leibler divergence between the encoder’s distribution $$q_{\theta}(z \mid x)$$ and the standard Gaussians $$p(z)$$, where $$p(z)=\mathcal{N}(\mu=0, \sigma^2=1)$$. This divergence compares the latent vector with a zero mean, unit variance Gaussian distribution, and penalizes the VAE if it starts to produce latent vectors that are not from the desired distribution. If the encoder outputs representations $$z$$ that are different than those from a standard normal distribution, it will receive a penalty in the loss. This regularizer term means ‘keep the representations $$z$$ of each digit sufficiently diverse’.
 
 ### Results
 
