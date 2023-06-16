@@ -296,3 +296,7 @@ for m in range(M):
   - Methods that take advantage of unlabeled datasets (e.g. GPT, Contrastive Predictive Coding (CPC), Simple Framework for Contrastive Learning of Representations (SimCLR)). The key principle of these methods is to define a task that does not require labels but necessitates feature representations which are useful for the real task of interest, for which a small labeled data set exists. 
   - see [A Cookbook of Self-Supervised Learning](https://arxiv.org/abs/2304.12210) for details.
 - How to collect embeddings of sequences, text, words (Word2vec, skipgram, CBOW), point clusters or arrays, graphs, images?
+- In data parallelism, why do we synchronize (reduce) gradients between accelerators, and not the weights?
+  - (??) because jacobians are produced as source of linearity so they can be averaged, while weights are not, so we can't reduce weights (??).
+- In transformers, why do we need the feed forward network?
+  - (??) A simple feed-forward neural network is applied to every attention vector to transform the attention vectors into a form that is acceptable to the next encoder or decoder layer. (??)
