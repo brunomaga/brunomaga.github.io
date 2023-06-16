@@ -144,6 +144,7 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
     - dropout
 - What is dropout and how does it work? Why does it work?
   - train vs valid steps, $$p$$ parameter, reduces overfitting, subnetworks learn alternative logics (while DNN is more prone to overfitting), 2-3 times slower to train, regularizer as promotes sparse activations like L2 regularization. 
+- What are ensembles? Give few examples. What is bagging and boosting?
 - How to model uncertainty or error of a model? 
   - use ensembles to compute mean, and compare model with the mean of the ensembles output.
 - How do ensemble methods work? What ensemble methods do you know?
