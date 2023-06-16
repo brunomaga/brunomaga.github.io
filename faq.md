@@ -132,7 +132,7 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What is the difference between Type I and Type II error?
   - A type I error (false-positive) occurs if an investigator rejects a null hypothesis that is actually true in the population; a type II error (false-negative) occurs if the investigator fails to reject a null hypothesis that is actually false in the population.
 - How do batch-/layer normalization work as a regularizer?
-  - allows much higher learning rates and smaler step size. Paper abstract “Training Deep Neural Networks is complicated by the fact that the distribution of each layer’s inputs changes during training, as the parameters of the previous layers change. This slows down the training by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard to train models with saturating nonlinearities. We refer to this phenomenon as internal covariate shift".
+  - allows much higher learning rates and smapller step size. Paper abstract “Training Deep Neural Networks is complicated by the fact that the distribution of each layer’s inputs changes during training, as the parameters of the previous layers change. This slows down the training by requiring lower learning rates and careful parameter initialization, and makes it notoriously hard to train models with saturating nonlinearities. We refer to this phenomenon as internal covariate shift".
 - What is the biad/variance tradeoff? How do they look on a good model?
   - low bias, low variance.
 - What is overfitting/underfitting, how do know if we are over-/underfitting, and how to overcome it?
@@ -141,16 +141,18 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
   - to overcome overfitting:
     - Reduce the network’s capacity by removing layers or reducing the number of elements in the hidden layers: the higher the capacity, the easier it is for the model to learn the input classes.
     - Apply regularization, which comes down to adding a cost to the loss function for large weights
+    - dropout
 - What is dropout and how does it work? Why does it work?
   - train vs valid steps, $$p$$ parameter, reduces overfitting, subnetworks learn alternative logics (while DNN is more prone to overfitting), 2-3 times slower to train, regularizer as promotes sparse activations like L2 regularization. 
 - How to model uncertainty or error of a model? 
   - use ensembles to compute mean, and compare model with the mean of the ensembles output.
 - How do ensemble methods work? What ensemble methods do you know?
+  - ensembles is a techinique that combines multiple models and....
   - possible options: each model is trained with different data (maybe with some overlaps), each model is trained with different seeds, different models.
 - How to model graphs of molecules represented as strings? (Transformers) 
 
 - What is the memory/computation bottleneck of a Transformer? 
-- What is a latent variable model?
+- What are latent variables? What is a latent variable model?
 - What is a (direct) graphical model?
 - What is a graph neural net? What is the message passing and what's its formulation?
 - What are BERT's / GPT's pre-trainining and post-training tasks?
@@ -161,11 +163,9 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What are GANs and what are the challenges in training them? What's the loss function?
   - Model collapse, Discriminator lean too fast, therefore the gradients are too small in the discriminator
 - Describe the loss function of a GAN.
-- What are latent variables?
 - Whats the goal of Variational Inference?
 - What are VAEs and what are the challenges in training them? What's the loss function?
   - reparametrization trick.
-- Describe the loss function of a VAE.
 - What are kernels and how do they work? What is a Gram matrix? How are they useful? Limitations? Complexity?
   - we project input into higher dimensionality where we can do (linear) regression/separation.
 - How do SVMs work? What's the complexity? 
