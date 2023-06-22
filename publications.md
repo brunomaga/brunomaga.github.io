@@ -7,8 +7,7 @@ permalink: /publications/
 A quick summary of some interesting publications I came accross. Continuously updated. <br/>
 
 ---
-
-### 2022. [Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](https://arxiv.org/abs/2207.05306)
+### 2022 [Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](https://arxiv.org/abs/2207.05306)
 
 From the abstract: "the traditional training method only supervises the neural network at its last layer and propagates the supervision layer-by-layer, which leads to hardship in optimizing the intermediate layers. Recently, deep supervision has been proposed to add auxiliary classifiers to the intermediate layers of deep neural networks. By optimizing these auxiliary classifiers with the supervised task loss, the supervision can be applied to the shallow layers directly. However, deep supervision conflicts with the well-known observation that the shallow layers learn low-level features instead of task-biased high-level semantic features. To address this issue, this paper proposes a novel training framework named Contrastive Deep Supervision, which supervises the intermediate layers with augmentation-based contrastive learning".  The rationale is that contrastive learning can provide better supervision for intermediate layers than the supervised task loss. Contrastive learning "regards two augmentations from the same image as a positive pair and different images as negative pairs. During training, the neural network is trained to minimize the distance of a positive pair while maximizing the distance of a negative pair. As a result, the network can learn the invariance to various data augmentation, such as Color Jitter and Random Gray Scale". Contrastive Deep Supervision starts from those advancements, and optimizes the intermediate layers with contrastive learning instead of traditional supervised learning. As shown in the figure above, "several projection heads are attached in the intermediate layers of the neural networks and trained to perform contrastive learning. These projection heads can be discarded in the inference period to avoid additional computation and storage. Different from deep supervision which trains the intermediate layers to learn the knowledge for a specific task, the intermediate layers in our method are trained to learn the invariance to data augmentation, which makes the neural network generalize better. Besides, since contrastive learning can be performed on unlabeled data, the proposed contrastive deep supervision can also be easily extended in the semi-supervised learning paradigm". Finally, contrastive deep supervision can be further utilized to boost the performance of knowledge distillation.
 
@@ -57,6 +56,23 @@ To be compute optimal (in terms of accuracy vs energy cost), Kaplan et al. (2020
 <img class="mt-3" width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models.png"/> 
 
 <img class="mt-3" width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models_2.png"/> 
+
+<br/>
+
+---
+
+### 2021 [Skilful precipitation nowcasting using deep generative models of radar, Google Deepmind](https://www.nature.com/articles/s41586-021-03854-z)
+
+Current weather predictions are done by using numerical weather predictions, by solving physical equations that descrive radar-based wind estimates. Alternative methods use machine learning to capture non-linear behaviour that is not described by the mathematical formalism of the weather-regulating equations. Two main problems arise: poor performance on rarer medium-to-heavy rain events, and weather forecast at high resolution for short-term intervals (2 hours, a.k.a. nowcasting).
+This paper solves demonstrates improvements in the skill of probabilistic precipitation nowcasting, by using an approach known as generative modelling, based on a deep generative model (DGM) for the probabilistic nowcasting of precipitation.
+
+The DGM presented is a statistical models that learns the probability distributions of data and uses it to generate samples. It also has the ability to simulate many samples from the conditional distribution of future radar given historical radar, thus generating forecasts (similar to ensemble methods). The model predicts $$N$$ future radar fields given $$M$$ past, using radar-based estimates of surface precipitation $$X_T$$ at a time $$T$$. Learning is performed similarly to existing work on generative adversarial networks (GANs) for video generation. The GAN model is composed as a generator trained using two discriminators (spatial and temporal) and an additional regularization term. "The generator comprises the conditioning stack which processes past four radar fields that is used as context. [...] This stack produces a context representation that is used as an input to the sampler" (that samples from a standard Gaussian).The spatial and temporal discriminator are identical, except that the temporal discrimination uses a 3D kernel to account for the temporal dimension. During evaluation, the generator architecture is the same, but the full radar observations and latent variables distribution of width and heigh $$1/32$$ times smaller than then radar observations are used as inputs to the conditioning stack and latent conditioning stack, respectively. "In particular, the latent conditioning stack allows for spatiotemporally consistent predictions for much larger regions than those on which the generator is trained".
+ 
+These predictions focus on medium to heavy rain scenarios, as they are the most impactful for society.
+The model accurately capture large-scale events, while also predicting rainfall uncertainty and generating many alternative rain scenarios (known as ensemble predictions), with consistent predictions of large regions and with lead times from 5–90 min ahead. 
+Results are validated by 50 expert meteorologists that would opt in 89% of situations by this model predictions, compared to competitive methods (PySTEPS, Unet and MetNet) used for nowcasting predictions. As future work, the authors suggest specializing this model for improved long-term predictions.
+
+<img class="mt-3" width="90%" height="90%" src="/assets/publications/GANs_for_weather_nowcasting_nature.png"/>
 
 <br/>
 
