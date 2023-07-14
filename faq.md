@@ -118,6 +118,8 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
   - matrix where each diagonal from left to right is constant e.g. $$[ [a, b, c, d], [e, a, b, c], [d, e, a, b], [c, d, e, a] ]$$ 
   - used to compute linear convolution as a multiplication by the Toeplitz instead of a sliding kernel. Useful e.g. on GPUs.
 - What’s a Fourier transform?
+- What are strided convolutions and what are they used for?
+  - Used for a larger receptive field on CNNs without increasing kernel size (and computation and memory).
 - How are neural nets related to Fourier transforms? What are Fourier transforms, for that matter?
   - We can consider the discrete Fourier transform (DFT) to be an artificial neural network: it is a single layer network, with no bias, no activation function, and particular values for the weights. The number of output nodes is equal to the number of frequencies we evaluate.
 - What is a Lagrange multiplier? When to use it?
