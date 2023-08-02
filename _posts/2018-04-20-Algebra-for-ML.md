@@ -26,10 +26,10 @@ A **System of Linear Equations** with equations of the type $$a_1x_1 + ...+ a_nx
   - When $$A$$ is square and invertible, the solution for $$Ax=b$$ is $$x=A^{-1}b$$;
   - Otherwise, $$Ax = b \Leftrightarrow A^{\intercal} Ax = A^{\intercal}b \Leftrightarrow x = (A^{\intercal}A)^{−1}A^{\intercal}b$$, which is also the **least-squares** solution;
     - $$(A^{\intercal}A)^{−1}A^{\intercal}$$ is also called the **pseudo-inverse** of $$A$$, which can be computed for non-square matrices $$A$$. It only requires that $$A^{\intercal}$$ is positive definite, which is the case if $$A$$ is full rank; 
-    - $$\mathbb{E}[x] = (A^{\intercal}A)^{−1}A^{\intercal} \, \mathbb{E}[b] = = (A^{\intercal}A)^{−1}A^{\intercal}(Ax) = x $$.
+    - $$\mathbb{E}[x] = (A^{\intercal}A)^{−1}A^{\intercal} \, \mathbb{E}[b] = (A^{\intercal}A)^{−1}A^{\intercal}(Ax) = x $$.
     - Let $$P=(A^{\intercal}A)^{−1}A^{\intercal}$$. \\
 $$\,\mathbb{Var}[x] = \mathbb{Var}[Pb] = P\, \mathbb{Var}[b] P^{\intercal} = \sigma^2 P P^{\intercal} = \sigma^2 \, (A^{\intercal}A)^{−1}A^{\intercal} \, A (A^{\intercal}A)^{-1} = \sigma^2 \, (A^{\intercal}A)^{−1}$$. \\
-We used $$\mathbb{Var}[Pb] = P \mathbb{Var}[b] P^{\intercal}$$ (formula 375 on Matrix Cookbook), and $$A^{\intercal} \, A (A^{\intercal}A)^{-1}=I$$.
+We used $$\mathbb{Var}[Pb] = P \, \mathbb{Var}[b] P^{\intercal}$$ (formula 375 on Matrix Cookbook), and $$A^{\intercal} \, A (A^{\intercal}A)^{-1}=I$$.
 - With Gaussian Elimination in $$[A \mid b]$$:
   - The result of the forward pass of the Gaussian Elimination puts the matrix in the **Row-Echelon** form i.e. a staircase structure;
     - A row-echelon matrix is in **reduced row-echelon** format if the leading entries of each row (the **pivot**) is 1 and the pivot is the only nonzero entry in its *column*;   
@@ -242,7 +242,7 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
 
 - To check whether a stationary point is a minimum or maximum of a function, we need to take check if the second derivative is positive or negative at the stationary point. I.e. compute $$\frac{df(x)}{x^2}$$, then replace $$x$$ at all stationary points: If $$f′′(x)>0$$, function is concave up and that point is a maximum. If $$<0$$, it is concave down, and a minimum;
 - **Gradient Descent**: an optimization method to minimize an $$f$$ function iteratively. For iteration $$i$$ and step-size $$\gamma$$:
-  - $$x_{i+1} = x_t − γ((∇f)(x_0))^{\intercal}$$, 
+  - $$x_{i+1} = x_t − γ((∇f)(x_i))^{\intercal}$$, 
 - **Gradient Descent with Momentum**: stores the value of the update $$\Delta x_i$$ at each iteration $$i$$ to determine the next update as a linear combination of the current and previous gradients:
   - $x_{i+1} = x_i − γ_i((∇f)(x_i))^{\intercal} + α∆x_i$
   - where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^{\intercal}$$ and $$\alpha \in [0,1]$$;
@@ -266,3 +266,4 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
   - find a vector $$x$$ that maximizes/minimizes $$c^{\intercal} x$$,
   - subject to $$Ax \le b$$ and $$x \ge 0$$,
   - where $$a \in \mathbb{R}^{m \times d}$$ and $$b \in \mathbb{R}^m$$
+  - solvers: Simples, Highs, ...

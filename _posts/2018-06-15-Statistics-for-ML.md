@@ -273,7 +273,7 @@ where $$K$$ is the kernel - a non-negative function - and $$h \gt 0$$ is a the s
   <small>Source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel density estimation</a></small>
   </p>
 
-The following table summarizes the method use for each use case:
+The following table summarizes the method used for each use case:
 
 |-|-|-|
 | **Distribution / function $$g$$** | **parametric $$g(x_i^{\intercal}) = x_i^{\intercal} \beta$$** | **non-parametric $$g$$** |
