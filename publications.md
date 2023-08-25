@@ -6,12 +6,14 @@ permalink: /publications/
 
 A quick summary of some interesting publications I came accross. Continuously updated. <br/>
 
-###
+<br/>
 
 ---
 ### 2023 [Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](https://arxiv.org/abs/2303.12712)
 
 A summary paper reporting early results of the experiments with GPT-4 when it was still in active development by OpenAI. The authors "demonstrate that, beyond its mastery of language, GPT-4 can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more, without needing any special prompting. Moreover, in all of these tasks, GPT-4’s performance is strikingly close to human-level performance". The bulk of the paper contains dozens of examples that compare GPT-4 and Chat-GPT and demonstrate that GPU-4 surpasses ChatGPT in performance, in code generation, audio generation (output as musical notes), drawings (SVG, TIKZ), and mathematical resolutions (LaTeX).
+
+<br/>
 
 ---
 ### 2022 [Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](https://arxiv.org/abs/2207.05306)
@@ -23,7 +25,6 @@ From the abstract: "the traditional training method only supervises the neural n
 <br/>
 
 ---
-
 ### 2022 [Making the Most of Text Semantics to Improve Biomedical Vision-Language Processing, Microsoft](https://arxiv.org/abs/2204.09817)
 
 A multi-model approach for text and images applied to health (radioligy), based on contrastive-learning in self-supervised vision-language processing (VLP). As background, one strong motivation is the lack of medical data and the need to self-supervise (and annotate) it, which are expensive and time-consuming. These lead to a interest in multi-model self-supervised learning and cross-model weak supervision, in particular paired text-image data. The paper focus on self-supervised vision-language learning, by jointly learning image and representations for several use cases such as zero-/few-shot image classification, report generation, error detection, and disease localisation.
@@ -35,7 +36,6 @@ It introduces a new chest X-ray (CXR) domain-specific language model (CXR-BERT),
 <br/>
 
 ---
-
 ### 2022 [Emergent Abilities of Large Language Models, Google Research & Stanford](https://openreview.net/forum?id=yzkSU5zdwD)
 
 The paper discusses instead the phenomenon of **emergent abilities** of large language models. An ability is emergent if it is not present in smaller models but is present in larger models, and not extrapolated from scaling laws. *Phase transition* is the scale at which such abilities are exposed. Scale in this context may represent different compute budgets, data quality or other factors --- the paper foccuses not on ideal training but on the discussion of such phenomena. As a disclaimer, "model scale is not the singular factor for unlocking an emergent ability" and "the science of training large language models progresses, certain abilities may be unlocked for smaller models with new architectures, higher-quality data, or improved training procedures".
@@ -51,7 +51,6 @@ A similar analysis with augmented prompting exposes the emergent property as rel
 <br/>
 
 ---
-
 ### 2022 [Training Compute-Optimal Large Language Models, arXiv](https://arxiv.org/abs/2203.15556)
 
 Heavily related to HPC's performance modelling applied to large language models. The authors revisit the question "Given a fixed FLOPs budget, how should one trade-off model size and the number of training tokens?" to which they present three approaches: (1) fix model sizes and vary number of training tokens; (2) vary model sizes for 9 different FLOP counts; (3) fit a parametric loss function to the values retrived from the 2 approaches. Estimates were collected from a total of 400 runs. 
@@ -67,7 +66,6 @@ To be compute optimal (in terms of accuracy vs energy cost), Kaplan et al. (2020
 <br/>
 
 ---
-
 ### 2021 [Skilful precipitation nowcasting using deep generative models of radar, Google Deepmind](https://www.nature.com/articles/s41586-021-03854-z)
 
 Current weather predictions are done by using numerical weather predictions, by solving physical equations that descrive radar-based wind estimates. Alternative methods use machine learning to capture non-linear behaviour that is not described by the mathematical formalism of the weather-regulating equations. Two main problems arise: poor performance on rarer medium-to-heavy rain events, and weather forecast at high resolution for short-term intervals (2 hours, a.k.a. nowcasting).
@@ -84,7 +82,6 @@ Results are validated by 50 expert meteorologists that would opt in 89% of situa
 <br/>
 
 ---
-
 ### 2021 [Revisiting ResNets: Improved Training and Scaling Strategies, Google and UC Berkelry, NeurIPS 2021](https://arxiv.org/abs/2103.07579)
 
 <img class="mt-3" width="80%" height="80%" src="/assets/publications/revisiting_resnets.png"/> 
@@ -92,7 +89,6 @@ Results are validated by 50 expert meteorologists that would opt in 89% of situa
 <br/>
 
 ---
-
 ### 2021 [Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research, Google and Univ. California, NeurIPS 2021](https://arxiv.org/abs/2112.01716)
 
 winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021 
@@ -102,7 +98,6 @@ winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021
 <br/>
 
 ---
-
 ### 2021 [MLP-Mixer: An all-MLP Architecture for Vision, Google, NeurIPS 2021](https://arxiv.org/abs/2105.01601)
 
 <img class="mt-3" width="70%" height="70%" src="/assets/publications/mlp_mixer.png"/> 
@@ -110,7 +105,6 @@ winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021
 <br/>
 
 ---
-
 ### 2021 [Pay attention to MLPs, Google, NeurIPS 2021](https://arxiv.org/abs/2105.08050)
 
 <img class="mt-3" width="70%" height="70%" src="/assets/publications/pay_attention_to_mlps.png"/> 
@@ -162,7 +156,7 @@ matrices to perform more effective graph convolutions and learn more powerful no
 Learning new graph structures involves identifying useful meta-paths, which are paths connected
 with heterogeneous edges, and multi-hop connections"
   
-In the GTN model, a [Graph Convolutional Network (CGN)](https://arxiv.org/abs/1609.02907) is used to learn useful representations for node classification in an end-to-end fashion.  
+In the GTN model, a [Graph Convolutional Network (CGN)](https://arxiv.org/abs/1609.02907) is used to learn useful representations for node classification in an end-to-end fashion.   
 
 ---
 
