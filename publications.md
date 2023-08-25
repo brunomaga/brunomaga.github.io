@@ -6,6 +6,13 @@ permalink: /publications/
 
 A quick summary of some interesting publications I came accross. Continuously updated. <br/>
 
+###
+
+---
+### 2023 [Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](https://arxiv.org/abs/2303.12712)
+
+A summary paper reporting early results of the experiments with GPT-4 when it was still in active development by OpenAI. The authors "demonstrate that, beyond its mastery of language, GPT-4 can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more, without needing any special prompting. Moreover, in all of these tasks, GPT-4’s performance is strikingly close to human-level performance". The bulk of the paper contains dozens of examples that compare GPT-4 and Chat-GPT and demonstrate that GPU-4 surpasses ChatGPT in performance, in code generation, audio generation (output as musical notes), drawings (SVG, TIKZ), and mathematical resolutions (LaTeX).
+
 ---
 ### 2022 [Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](https://arxiv.org/abs/2207.05306)
 
@@ -144,6 +151,21 @@ An extension of the transformer architecture to images. Works by passing as inpu
 
 ---
 
+### 2009 [Graph Transformer Networks, Korea University](https://arxiv.org/abs/1911.06455]
+
+"Most Existing GNNs are designed to learn node representations on the fixed and homogeneous graphs. The limitations especially become problematic when learning representations on a misspecified graph or a heterogeneous graph that consists of various types of nodes and edges". This paper presents Graph Transformer Networks (GTNs) that are capable of generating new graph structures". " Graph Transformer layer, a core layer of GTNs, learns a soft selection of edge types and composite relations for generating useful multi-hop connections so-called meta-paths". "GTNs can be viewed as a graph analogue of Spatial Transformer Networks which explicitly learn spatial transformations of input images or features". "The graph generation is interpretable and the
+model is able to provide insight on effective meta-paths for prediction". While existing methods handle heterogenous types of nodes or edges by e.g. a two-stage approach (converting heterogenous to homogeneous graph and then learning representation), GTNs operate on a heterogeneous graph and transform the graph for tasks while learning node representation on the transformed graphs in an end-to-end fashion. 
+
+The goal of GTNs is to "generate new graph structures and learn node representations on the learned graphs simultaneously. Unlike most CNNs on graphs that
+assume the graph is given, GTNs seek for new graph structures using multiple candidate adjacency
+matrices to perform more effective graph convolutions and learn more powerful node representations.
+Learning new graph structures involves identifying useful meta-paths, which are paths connected
+with heterogeneous edges, and multi-hop connections"
+  
+In the GTN model, a [Graph Convolutional Network (CGN)](https://arxiv.org/abs/1609.02907) is used to learn useful representations for node classification in an end-to-end fashion.  
+
+---
+
 ### 2019 [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models, Microsoft](https://arxiv.org/abs/1910.02054)
 
 ZeRO (as in Zero Redundancy Optimizer) is a parallelism method that "eliminates memory redundancies in data- and model-parallel training while retaining low communication volume and high computational granularity, allowing us to scale the model size proportional to the number of devices with sustained high efficiency". The results show the (at the time) largest language model ever created (17B parameters), beating Bert-large (0.3B), GPT-2 (1.5B), Megatron-LM (8.3B), and T5 (11B). It also demonstrates super-linear speedup on 400 GPUs (due to an increase of batch size per accelerator). 
@@ -172,6 +194,24 @@ Finally, ZeRO can be complemented with techniques that reduce activation memory 
 <small> image credit: adapted from images in [Microsoft Research Blog video](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) </small> 
 
 <br/>
+
+---
+
+### 2018 [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
+<br/>
+
+This paper introduces efficient distributed intra-layer model parallelism for Multi-Layer Perceptrons and Transformer attention mechamism on GPT2, BERT and bidirectional Transformers. The method present is an orthogonal effort and can be combined with existing data, pipeline or model parallelism techniques. The approach approximates closely the pattern of linear scaling (Fig. 1). "We show that the existing BERT architecture results in model degradation as the size increases. We overcome this challenge by rearranging the layer normalization and residual connection in the transformer layers and show that with this change, results for the downstream tasks on development sets improve monotonically as the model size
+increases." It also overcomes the limitations of data parallelims (where the model must fit entirely in one worker) and the idleness across time in pipeline parallelism. 
+
+Section 3 includes details on the parallelism technique. On the MLP block, take each block being described as $$Y = GeLU(XA)$$:
+- the typical approach is to split the weight matrix A along its rows and input X along its columns as (for 2 processors $$1$$ and $$2$$): $$X=[X_1, X_2]$$ and $$A=[A_1, A_2]^T$$. This partitioning will result in $$Y = GeLU(X_1A_1 + X_2A_2)$$. Since $$GeLU$$ is a nonlinear function, $$GeLU(X_1A_1+ X_2A_2) \neq GeLU(X_1A_1) + GeLU(X_2A_2)$$ and this approach will require a synchronization point (to sum both partial sums of products) before the $$GeLU$$ function.
+- Another option is to split $$A$$ along its columns, i.e. it's a feature- (not row-) wise partitioning. This allows the $$GeLU$$ nonlinearity to be independently applied to the output of each partitioned GEMM: $$[Y1, Y2] = [GeLU(XA1), GeLU(XA2)]$$. This removes the synchronization point.
+
+This approach splits both GEMMs in the MLP block across GPUs and requires only a single all-reduce operation in the forward pass (g operator) and a single all-reduce in the backward pass (f operator).
+
+The same logic applies to the attention heads, where we split the key, value and query matrices similartly to the matrix $$A$$ above. A similar logic follows for the embeddings: "in transformer language models, the output embedding layer shares weights with the input embedding, requiring modifications to both. We parallelize the input embedding weight matrix $$E_{H×v}$$ along the vocabulary dimension $$E = [E1, E2]$$ (column-wise)". To reduce the communication in the output of the model (logits) the authors replace communication of logits by scalar losses. Finally, there are 4 total communication operations in the forward and backward pass of a single model parallel transformer layer (Fig. 4).
+
+<img class="mt-3" width="60%" height="60%" src="/assets/publications/MegatronLM.png"/> 
 
 ---
 
@@ -242,6 +282,18 @@ Formulation: if $i = (iN, iC, iH, iW)$ is a 4D vector indexing the image feature
 - Group norm: $$S_i = \{ k \mid k_N = i_N, \frac{k_C}{C/G} = \frac{i_C}{C/G} \}$$ ie the output is a matrix of size $N \times C/G$, for $G$ groups;
 
 <img class="mt-3" width="75%" height="75%" src="/assets/publications/group_normalization.png"/>  <img class="mt-3" width="23%" height="23%" src="/assets/publications/group_normalization_2.png"/> 
+
+<br/>
+
+---
+
+### 2016 [Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)
+
+GCNs are a variant of the Convolutional Neural Networks that operate on graphs. Similarly to CNNs, GCNs learn the features by inspecting neighboring nodes. The main difference is that CNNs are meant to operate on regular Euclidean structures (e.g. images), while GNNs are a generalized applicable to an arbitrary structure or order.
+
+More info on a separate [blog post from the author](https://tkipf.github.io/graph-convolutional-networks/) or [this post](https://towardsdatascience.com/understanding-graph-convolutional-networks-for-node-classification-a2bfdb7aba7b).
+
+<img class="mt-3" width="47%" height="47%" src="/assets/publications/GraphConvNets.png"/> 
 
 <br/>
 

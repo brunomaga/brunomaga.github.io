@@ -195,9 +195,12 @@ The main pipelining issue is memory requirements. Even if the computation if 100
 
 ## Data Parallelism 
 
-(Distributed) Data Parallelism refers to the family of methods that perform parallelism at the data level, i.e. by allocating distinct batches of data processors. The previous examples of pipelining are also part of the data parallelism family, since multiple batches of data are executed simultaneously, even though it's not a *purely-parallel* implementation as the batches are processed iteratively and not simultaneously.
+Distributed Data Parallelism (DDP) refers to the family of methods that perform parallelism at the data level, i.e. by allocating distinct batches of data to different processors. The previous examples of pipelining are also part of the data parallel family, as multiple mini-batches of data are executed simultaneously, even though it's not a *purely-parallel* implementation as the mini-batches are processed iteratively and not simultaneously.
 
-The rationale of DDP is simple: (1) a copy of the model is instantiated on every processor and instantiated equally (ie all processors have the same random seed); (2) the input dataset is distributed across all processors, by delegating different subsets of data to each processor; (3) the final weight update is computed as the average gradients of the model on every processor.
+The rationale of DDP is simple: 
+1. a copy of the model is instantiated on every processor and instantiated equally , ie all processors have the same random seed and initiate weights similarly; 
+2. the input dataset is distributed across all processors, by delegating different subsets of data to each processor;
+3. at the end of each forward pass, weight updates (gradients) are computed for each processor, then averaged across all processors, and the final weight update is then the reduced mean gradients. This keeps all models in synchrony throughout the whole execution.
 
 <p align="center">
 <br/>
@@ -206,9 +209,9 @@ The rationale of DDP is simple: (1) a copy of the model is instantiated on every
 </small>
 </p>
 
-The main advantadge of this method is the linear increase in efficiency, i.e. by doubling the amount of processors, we reduce the training time by half. However, it's not memory efficient, since it requires a duplication of the entire model on all compute units, i.e. increasing number of processors allows only for a speedup in solution, not on the increase of the model size.
+The main advantadge of this method is the linear increase in efficiency, i.e. by doubling the amount of processors, we reduce the compute time by half, minus the communication overhead. However, it's not memory efficient, since it requires a duplication of the entire model on all compute units, i.e. increasing number of processors allows only for a speedup in solution, not on the increase of the model size.
 
-As an exceptional use case, this method does not always require the same network to be copied over to each compute unit. An example of this property is the [dropout]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}) technique utilized in Deep Neural Nets, where training on several distinct networks are executed simultaneously (even though usually the same data is executed on all models).
+As a final note, DDP doesn't always guarantee a deterministic solution independent of the processor count. To guarantee a single communication step per epoch, some operations such as layer normalization are performed locally (at a processor level) leading to a weight update that changes with the data assigned per processor. 
 
 For a thorough analysis of the topic, take a look at the paper [Measuring the Effects of Data Parallelism on Neural Network Training (Google Labs, arXiv)](https://arxiv.org/abs/1811.03600)
 
@@ -217,27 +220,35 @@ For a thorough analysis of the topic, take a look at the paper [Measuring the Ef
 Gradient accumulation is a technique that allows for large batch the be computed, when normally this would be prohobitive due to high memory requirements. The rationale is to use the gradient updates from smaller datasets as the gradient update of a larger dataset. The algorithm is as follows:
 - At runtime, divide each minibatch in equal subsets of "microbatches";
 - Pass each subset iteratively to the model, compute the forward pass and backpropagation, and compute the gradient updates of that microbatch (without updating the weights);
-- Take the average of all the previous microbatch gradients as the final gradient of the minibatch;
-- Use that gradient to do weights update;
+- Take the average of all the gradients across all processors as the final gradient of the minibatch;
+- Use that gradient to do the weights update;
 
-To summarise, in normal executions, the final gradient of a minibatch is the averaged gradient of all datapoints. When using microbatching, the final gradient of a minibatch is the averaged gradient of all datapoints in a microbatch, and all microbatches in a minibatch.
+To summarise, in normal executions, the final gradient of a minibatch is the averaged gradient across all processors. When using gradient accumulation, the final gradient of a minibatch is the averaged gradient of all datapoints in a microbatch, and all microbatches in a minibatch.
 
-## Layer parallelism
+## Vertical model parallelism, or Tensor-parallelism, or Intra-Layer model parallelism
 
-Layer parallelism is another method for parallelism where the data being distributed across different processors is not the batch dimension (as in data parallelim) or model depth dimension (e.g. pipelining), but the model states instead. The most common application of this method is by *vertically* dividing the allocating to different accelerators both the input data and model layers, as in:
+Intra-layer parallelism is another method for parallelism where the data being distributed across different processors is not the batch dimension (as in data parallelim) or model depth dimension (e.g. pipelining), but at the parameter level instead. The most common application of this method is by *vertically* dividing and allocating to different accelerators both the input data and model layers, as in:
 
 <p align="center">
 <br/>
 <img width="55%" height="55%" src="/assets/AI-Supercomputing/DNN_model_parallelism.png"/><br/>
-<br/><small>A representation of model parallelism at the layer level on a fully-connected DNN, on two processors $p0$ and $p1$. Input dataset and each layer of the model are divided and allocated to different processors. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
+<br/><small>A representation of (vertical) model parallelism at the layer level on a fully-connected DNN, on two processors $p0$ and $p1$. Input dataset and each layer of the model are divided and allocated to different processors. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
 </small>
 </p>
 
-Looking at the previous picture, we notice a major drawback in this method. During training, the constant usage of sums of products using all dimensions on the input space will force processors to continuously communicate those variables among themselves (red lines in the picture). This creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. Moreover, since the number of weights between two layers grows quadratically with the increase of neurons (e.g. for layers with neuron count $N_1$ and $N_2$, the number of weights are $N_1*N_2$), this method is not usable on large input spaces, as the communication becomes a bottleneck.
+Looking at the previous picture, we notice a major drawback in this method. During training, the constant usage of sums of products using all dimensions on the input space will force processors to continuously communicate those variables among themselves (red lines in the picture). This creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. Moreover, since the number of weights between two layers grows quadratically with the increase of neurons (e.g. for layers with neuron count $N_1$ and $N_2$, the number of weights are $N_1*N_2$), this method is not used *directly* on large input spaces, as the communication becomes a bottleneck: every compute unit needs to communicate to every other compute unit its own contribution of the sum of products happening at every layer. 
 
-#### Layer Parallelism on CNNs
+#### Overcomming the quadratic communication
 
-Before throwing the towel on model parallelism, it is relevant to mention that this type of parallelism has some use cases where it is applicable and highly efficient. A common example is on the parallelism of very high resolution pictures on [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}). In practice, due to the filter operator in CNNs, the dependencies (weights) between two neurons on sequential layers is not quadratic on the input (as before), but constant with size $F*F$ for a filter of size $F$.
+To overcome the previous quadratic complexity, [Megraton-LM](https://arxiv.org/abs/1909.08053) uses a very simple technique to reduce the ammount of communication. On an MLP block, take each block being described as $$Y = GeLU(XA)$$:
+- the typical approach is to split the weight matrix A along its rows and input X along its columns as (for 2 processors $$1$$ and $$2$$): $$X=[X_1, X_2]$$ and $$A=[A_1, A_2]^T$$. This partitioning will result in $$Y = GeLU(X_1A_1 + X_2A_2)$$. Since $$GeLU$$ is a nonlinear function, $$GeLU(X_1A_1+ X_2A_2) \neq GeLU(X_1A_1) + GeLU(X_2A_2)$$ and this approach will require a synchronization point (to sum both partial sums of products) before the $$GeLU$$ function.
+- The proposed option is to split $$A$$ along its columns, i.e. it's a feature- (not row-) wise partitioning. This allows the $$GeLU$$ nonlinearity to be independently applied to the output of each partitioned GEMM: $$[Y1, Y2] = [GeLU(XA1), GeLU(XA2)]$$. This removes the synchronization point.
+
+Transformer models follow an analogous approach. For more details, see section *3. Model Parallel Transformers* of the [Megraton-LM paper](https://arxiv.org/abs/1909.08053) for the diagram on Multi-Layer Perceptron and Self-Attention modules. 
+
+#### Intra-layer Parallelism on CNNs
+
+It is relevant to mention that vertical model parallelism has some use cases where it is applicable and highly efficient. A common example is on the parallelism of very high resolution pictures on [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}). In practice, due to the filter operator in CNNs, the dependencies (weights) between two neurons on sequential layers is not quadratic on the input (as before), but constant with size $F*F$ for a filter of size $F$.
 
 This method has been detailed by [Dryden et al. (Improving Strong-Scaling of CNN Training by Exploiting Finer-Grained Parallelism, Proc. IPDPS 2019)](https://arxiv.org/pdf/1903.06681.pdf). The functioning is illustrated in the picture below and is as follows:
 1. Input dataset (image pixels) are divided on the height and width dimensions across processors;
