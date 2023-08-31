@@ -51,6 +51,23 @@ A similar analysis with augmented prompting exposes the emergent property as rel
 <br/>
 
 ---
+### 2022 [Rethinking Attention with Performers, Google, Cambridge, DeepMind and Alan Turing Institute](https://arxiv.org/abs/2009.14794)
+
+From the abstract: Performers are "Transformer architectures which **can estimate regular
+(softmax) full-rank-attention Transformers with provable accuracy**, but using only
+linear (as opposed to quadratic) space and time complexity, without relying on
+any priors such as sparsity or low-rankness. To approximate softmax attention kernels, Performers use a novel Fast Attention Via positive Orthogonal Random features approach (FAVOR+)"
+
+- Background: Bidirectional (or non-directional, as in BERT models) dot-product attention has the following form, where $$A ∈ \mathcal{R}^{L×L}$$ is the so-called attention matrix: $$Att_↔(Q, K, V) = D^{−1}AV,$$  $$A = \exp (QK^{\intercal} / \sqrt{d}), D = diag(A1_L)$$. Bidirectional
+attention is applied in encoder self-attention and encoder-decoder attention in Seq2Seq architectures.
+- More background: Another important type of attention is unidirectional dot-product attention which has the form:
+$$Att_→(Q, K, V) = \tilde{D}^{−1}AV , \tilde{A} = tril(A), \tilde{D}= diag(\tilde{A} 1 L)$$, where $$tril$$ returns the lower diagonal of the argument matrix.
+
+<img class="mt-3" width="85%" height="85%" src="/assets/publications/performers.png"/> 
+
+<br/>
+
+---
 ### 2022 [Training Compute-Optimal Large Language Models, arXiv](https://arxiv.org/abs/2203.15556)
 
 Heavily related to HPC's performance modelling applied to large language models. The authors revisit the question "Given a fixed FLOPs budget, how should one trade-off model size and the number of training tokens?" to which they present three approaches: (1) fix model sizes and vary number of training tokens; (2) vary model sizes for 9 different FLOP counts; (3) fit a parametric loss function to the values retrived from the 2 approaches. Estimates were collected from a total of 400 runs. 
@@ -145,6 +162,22 @@ An extension of the transformer architecture to images. Works by passing as inpu
 
 ---
 
+### 2020 [Graph Transformers Networks, Korea University](https://arxiv.org/abs/1911.06455)
+
+One limitation of most GNNs is that they assume the graph structure to be fixed and homogeneous, ie similar types of nodes and edges. From the abstract: "Graph Transformer Networks (GTNs) are capable of
+generating new graph structures, which involve identifying useful connections
+between unconnected nodes on the original graph, while learning effective node
+representation on the new graphs in an end-to-end fashion. Graph Transformer layer,
+a core layer of GTNs, learns a soft selection of edge types and composite relations
+for generating useful multi-hop connections". 
+- GTNs perform Meta-Path Generation: a meta-path defines a composite relation $$R = t_1 ◦ t_2 \, ... \, ◦ t_l$$ between node $$v_1$$ and $$v_{l+1}$$, where $$R_1 ◦ R_2$$ denotes the composition of relation $$R_1$$ and $$R_2$$.
+- GTNs use graph convolutional network (GCN) to learn useful representations for node classification in an end-to-end fashion.
+
+<img class="mt-3" width="75%" height="75%" src="/assets/publications/graph_transformer_networks.png"/> 
+
+<br/>
+
+---
 
 ### 2019 [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models, Microsoft](https://arxiv.org/abs/1910.02054)
 
@@ -236,9 +269,9 @@ PipeDream is a parallel pipelining method that delivers perfect overlap of commu
 
 Existing standard language models are unidirectional and that's a major limitation in performance, e.g. attending to previous tokens in the self-attention layers in the Transformer. This is an issue for many problems like question answering, it is crucial to incorporate context from both directions. BERT removes this unidirectionality by using a masked language model instead, that allows it to train a deep bidirectional Transformer. BERT model architecture is a multi-layer bidirectional sequence of Transformer encoder blocks. BERT models are trained in 2 steps: pre-training and fine-tuning. During pre-training, the model is trained on *unlabeled data* on different datasets. During fine-tuned, the pre-trained model is trained for a given specific task. Apart from output layers, the same architectures are used in both pre-training and fine-tuning. During fine-tuning, all parameters are fine-tuned. The input sentence may be a single sentence or a pair of sentences (e.g. question/answer) packed together. Words are embedded with WorkPiece embeddings. [CLS] is the first token of every sentence. [SEP] is a special separator token. To each token (word embedding) it is also added a learned embedding to indicate if it belongs to sentence A or B. Each input is then the sum of its position embedding, segment embedding and token embedding (Fig. 2). The pre-training happens in two unsupervised tasks: (1) Masked LM, by masking of 15% of input tokens at random and trying to predict them, and (2) and Next Sentence Prediction, by passing sentence pairs and predicting whether the second sentence is a logic follow up from the first, or not. The fine-tuning happens differently for every task: we pass the specific inputs and outputs to the BERT and do a regular training. The input is the sequences A and B and separators. The output is the answer to the task by: replacing [CLS] by the sentence or sentence-pair label when the task is to classify a sentence or pair or sentences; replacing the stard and end tokens to indicate the span of output answer tokens that answers the question passed in the input (when input is a question/answer pair, Fig 1); or the class of each word for Named Entity Recognition tasks. [More info here]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}). 
 
-<img class="mt-3" width="85%" height="85%" src="/assets/publications/bert.png"/> 
+<img class="mt-3" width="75%" height="75%" src="/assets/publications/bert.png"/> 
 
-<img class="mt-3" width="85%" height="85%" src="/assets/publications/bert2.png"/> 
+<img class="mt-3" width="75%" height="75%" src="/assets/publications/bert2.png"/> 
 
 <br/>
 
@@ -282,11 +315,18 @@ $$
 f(H^{(l)},A)=σ(\hat{D}^{−\frac{1}{2}} \hat{A} \hat{D} ^{−\frac{1}{2}} H^{(l)} W^{(l)}),
 $$
 
-with $$\hat{A}=A+I$$, where $$I$$ is the identity matrix and $$\hat{D}$$ is the (diagonal) [degree matrix](https://en.wikipedia.org/wiki/Degree_matrix) of $$\hat{A}$$. Note that $$D^{-\frac{1}{2}}$$ is the matrix with the reciprocal of the square root of each term in the diagonal. 
+with $$\hat{A}=A+I$$, where $$I$$ is the identity matrix and $$\hat{D}$$ is the (diagonal) [degree matrix](https://en.wikipedia.org/wiki/Degree_matrix) of $$\hat{A}$$. Note that $$D^{-\frac{1}{2}}$$ is the matrix with the reciprocal of the square root of each term in the diagonal. The layer-wise propagation rule is 
+
+$$
+h^{(l+1)}_{v_i}=σ(\sum_j \frac{1}{c_{ij}} h^{(l)}_{v_j} W^{(l)})
+$$  
+
+where $$j$$ indexes the neighboring nodes of $$v_i$$ and $$c_{ij}$$ is a normalization constant for the edge $$(v_i,v_j)$$.
+
 
 Sections 2.2 and 2.3 provide theoretical background and section 3 demonstrates an example on the task of node classification, using softmax of the output as in regular CNNs. I used a separate [blog post from the author](https://tkipf.github.io/graph-convolutional-networks/) or [this post from Francesco Casalegno](https://towardsdatascience.com/graph-convolutional-networks-deep-99d7fee5706f) for a better explanation.
 
-<img class="mt-3" width="70%" height="70%" src="/assets/publications/GraphConvNets.png"/> 
+<img class="mt-3" width="60%" height="60%" src="/assets/publications/GraphConvNets.png"/> 
 
 <br/>
 
@@ -298,7 +338,7 @@ Sections 2.2 and 2.3 provide theoretical background and section 3 demonstrates a
 a
 State-of-art transduction models are based on recurrent encoder-decoder architectures (possibly with Attention Mechanisms). The Transformer uses only attention mechanisms, and no recurrence or convolutions. Results show it to be of better performance, more parallelizable (due to non-recurrence in model), and faster to train. Contrarily to recurrent models, the whole source sentence (in the encoder) and target sentence (in the decoder) are fed at once. Therefore, backpropagation happens on a single step as well. Because the concept of word sequence provided by the recurrence was removed, Transformers use positional encoding of the input embeddings based on the combination of sine and cosine waves of different frequencies. The encoder and decoder are composed of a stack of 6 layers each. Each encoder layer includes a multi-heard attention module and a feed forward network. The decoder includes also a third module, a *masked* multi-head attention, that ensures that sentence does not learn from subsequent words in sentence. An attention head is a mapping of a query to a set of key-value pairs. Key-Value pairs are output by the encoder, and Queries are output by the decoder. The formulation of this *dot-product attention* is: $$Attention (Q, K, V) = softmax( QK^T / \sqrt{d_k}) V$$. Here, the dot-product of all queries and the key ($$QK^T$$) gives a value referring to how well aligned the query vectors are for a given key. This is then converted into a distribution ($$softmax$$) and then used extract the most meaningfull value $$V$$ (by multiplying). This is effectively an indexing mechanism (similar to a dictionary $$value = query\_dict[key]$$) but in a continuous space. The scaling factor $$\sqrt{d_k}$$ is used to avoid having really small gradients for large values of $$d_k$$ (dimensionality of keys). The multi-head attention heads allows the model to jointly attend to information from different (8) representation. It is formulated as $$MultiHead(Q,K, V) = Concat(head_1, ..., head_h)W^O$$ where $$head_i = Attention(QW^Q_i ,KW^K_i , VW^V_i)$$, ie it's the linearly-transformed (projected) concatenation of the attention heads with projected Q, K, and V. In terms of performance, self-attention layers have complexity $$O(n^2 d)$$ per layer, compared to $$O(n d^2)$$ in recurrent models (for sequence length $n$ and representation dimension $d$) --- which is typically faster as $$n < d$$ in most use cases. It also requires no recurrence and no attention connectivity between previous words in a sentence. 
 
-<img class="mt-3" width="50%" height="50%" src="/assets/publications/transformer.png"/> 
+<img class="mt-3" width="45%" height="45%" src="/assets/publications/transformer.png"/> 
 
 <br/>
 
