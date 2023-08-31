@@ -270,9 +270,23 @@ Formulation: if $i = (iN, iC, iH, iW)$ is a 4D vector indexing the image feature
 
 GCNs are a variant of the Convolutional Neural Networks that operate on graphs. Similarly to CNNs, GCNs learn the features by inspecting neighboring nodes. The main difference is that CNNs are meant to operate on regular Euclidean structures (e.g. images), while GNNs are a generalized applicable to an arbitrary structure or order.
 
-More info on a separate [blog post from the author](https://tkipf.github.io/graph-convolutional-networks/) or [this post](https://towardsdatascience.com/understanding-graph-convolutional-networks-for-node-classification-a2bfdb7aba7b).
+The background is the following. Similarly to the CNN downsampling/upsampling layers, there are several layers in the CGN model. We represent the hidden representation at a given layer as $$H^{(l)}$$. We also add the representation of the graph structure in matrix form $$A$$, e.g. an adjacency matrix or some function of it. Finally, we write the output of each layer as 
 
-<img class="mt-3" width="47%" height="47%" src="/assets/publications/GraphConvNets.png"/> 
+$$
+H^{(l+1)}=f(H^{(l)},A) = σ(AH^{(l)}W^{(l)})
+$$
+
+with $$H^{(0)}=X$$ (i.e. the input data), and where W$$^{(l)}$$ is a weight matrix for the $$l$$-th neural network layer and $$σ(⋅)$$ is an activation function (e.g. ReLU). To address two limitations (include the node itself on all multiplications with $$A$$ and normalizing (by scaling) $$A$$, the final formula seen in the paper is then extended to:
+
+$$
+f(H^{(l)},A)=σ(\hat{D}^{−\frac{1}{2}} \hat{A} \hat{D} ^{−\frac{1}{2}} H^{(l)} W^{(l)}),
+$$
+
+with $$\hat{A}=A+I$$, where $$I$$ is the identity matrix and $$\hat{D}$$ is the (diagonal) [degree matrix](https://en.wikipedia.org/wiki/Degree_matrix) of $$\hat{A}$$. Note that $$D^{-\frac{1}{2}}$$ is the matrix with the reciprocal of the square root of each term in the diagonal. 
+
+Sections 2.2 and 2.3 provide theoretical background and section 3 demonstrates an example on the task of node classification, using softmax of the output as in regular CNNs. I used a separate [blog post from the author](https://tkipf.github.io/graph-convolutional-networks/) or [this post from Francesco Casalegno](https://towardsdatascience.com/graph-convolutional-networks-deep-99d7fee5706f) for a better explanation.
+
+<img class="mt-3" width="70%" height="70%" src="/assets/publications/GraphConvNets.png"/> 
 
 <br/>
 
