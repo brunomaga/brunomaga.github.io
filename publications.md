@@ -4,7 +4,7 @@ title: Publications bookmark
 permalink: /publications/
 ---
 
-A quick summary of some interesting publications I came accross. Continuously updated. <br/>
+A summary of some interesting publications I came accross. For personal use. Continuously updated. <br/>
 
 <br/>
 
@@ -63,7 +63,7 @@ attention is applied in encoder self-attention and encoder-decoder attention in 
 - More background: Another important type of attention is unidirectional dot-product attention which has the form:
 $$Att_→(Q, K, V) = \tilde{D}^{−1}AV , \tilde{A} = tril(A), \tilde{D}= diag(\tilde{A} 1 L)$$, where $$tril$$ returns the lower diagonal of the argument matrix.
 
-<img class="mt-3" width="85%" height="85%" src="/assets/publications/performers.png"/> 
+<img class="mt-3" width="75%" height="75%" src="/assets/publications/performers.png"/> 
 
 <br/>
 
@@ -98,17 +98,11 @@ Results are validated by 50 expert meteorologists that would opt in 89% of situa
 
 <br/>
 
----
-### 2021 [Revisiting ResNets: Improved Training and Scaling Strategies, Google and UC Berkelry, NeurIPS 2021](https://arxiv.org/abs/2103.07579)
-
-<img class="mt-3" width="80%" height="80%" src="/assets/publications/revisiting_resnets.png"/> 
-
-<br/>
 
 ---
 ### 2021 [Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research, Google and Univ. California, NeurIPS 2021](https://arxiv.org/abs/2112.01716)
 
-winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021 
+Winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021. Abstract: "We study how dataset usage patterns differ across machine learning subcommunities and across time from 2015-2020. We find increasing concentration on fewer and fewer datasets within task communities, significant adoption of datasets from other tasks, and concentration across the field on datasets that have been introduced by researchers situated within a small number of elite institutions." 
 
 <img class="mt-3" width="75%" height="75%" src="/assets/publications/reduced_recycled_datasets.png"/> 
 
@@ -130,14 +124,6 @@ winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021
 
 ---
 
-### 2021 [Dynamic Grained Encoder for Vision Transformers, ..., NeurIPS 2021](https://proceedings.neurips.cc/paper/2021/file/2d969e2cee8cfa07ce7ca0bb13c7a36d-Paper.pdf)
-
-<img class="mt-3" width="70%" height="70%" src="/assets/publications/dge_transformer.png"/> 
-
-<br/>
-
----
-
 ### 2021 [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale, Google, ICLR 2021](https://paperswithcode.com/paper/an-image-is-worth-16x16-words-transformers-1)
 
 An extension of the transformer architecture to images. Works by passing as input to the transformer a sequence of linear embeddings of image patches. Paper demonstrates better results on classification tasks, compared to CNNs, ResNets and native attention mechanism (that do not scale well as pixels attend to other pixels leading to a quadratic complexity). Transformers lack the inductive bias of CNNs (e.g. translation equivariance and locality), and therefore do not generalize well when training on insufficient amounts of data. Class is added similarly to BERT as the *class* token. VTs use 1D positional encodings, since performance of 2D encoders did not deliver significant performance gains. Only MLP layers are local and translationally equivariant, yielding an inductive bias much smaller than CNNs. The *hybrid architecture* mode uses feature maps of a CNN instead of raw image patches as input. Similar to the original NLP transformer, it scales well and delivers a reduced training time compared to CNN-based architectures. Performance increases with dataset size. 
@@ -149,6 +135,33 @@ An extension of the transformer architecture to images. Works by passing as inpu
 ---
 
 ### 2020 [Scaling Laws for Neural Language Models, John Hopkins, OpenAI](https://arxiv.org/abs/2001.08361)
+
+Abstract: We study empirical scaling laws for language model performance on the cross-entropy loss.
+The loss scales as a power-law with model size, dataset size, and the amount of compute
+used for training, with some trends spanning more than seven orders of magnitude. Other
+architectural details such as network width or depth have minimal effects within a wide
+range. Simple equations govern the dependence of overfitting on model/dataset size and the
+dependence of training speed on model size. These relationships allow us to determine the
+optimal allocation of a fixed compute budget. Larger models are significantly more sampleefficient, such that optimally compute-efficient training involves training very large models
+on a relatively modest amount of data and stopping significantly before convergence.
+
+<img class="mt-3" width="75%" height="75%" src="/assets/publications/scaling_laws.png"/>
+
+**Keypoints:**
+- Model performance depends most strongly on scale, which consists of three factors: the number of model parameters N, the size of the dataset D, and the amount of compute C used for training. Performance has a power-law relationship with each of the three scale factors (Fig.1).
+- Within reasonable limits, performance depends very weakly on other architectural hyperparameters such as depth vs. width.
+- Performance improves predictably as long as we scale up N and D in tandem,
+but enters a regime of diminishing returns if either N or D is held fixed while the other increases.
+- When we evaluate models on text with a different distribution
+than they were trained on, the results are strongly correlated to those on the training validation set with
+a roughly constant offset in the loss, i.e. incurs a constant
+penalty but improves in line with the performance of the training set.
+- When working within a fixed compute budget C but without any other restrictions on the model size N or available data D, we attain optimal performance by training very large models
+and stopping significantly short of convergence.
+- The ideal batch size for training these models is roughly a power of the loss only
+
+<img class="mt-3" width="75%" height="75%" src="/assets/publications/scaling_laws_2.png"/>
+
 
 <br/>
 
@@ -175,7 +188,15 @@ for generating useful multi-hop connections".
 
 <img class="mt-3" width="75%" height="75%" src="/assets/publications/graph_transformer_networks.png"/> 
 
+
 <br/>
+
+---
+
+### 2019 [ALBERT: A Lite BERT for Self-supervised Learning of Language Representations, Google and Toyota](https://arxiv.org/abs/1909.11942)
+<br/>
+
+
 
 ---
 
