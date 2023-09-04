@@ -78,13 +78,13 @@ any priors such as sparsity or low-rankness. To approximate softmax attention ke
 
 A clearer explanation can be found on this [google research post](https://blog.research.google/2020/10/rethinking-attention-with-performers.html):
 
-**bidirectional attention**, where there's no notion of past and future: by decouplin matrices $$Q′$$ and $$K′$$ used in lower rank decomposition of $$A$$ and conducting matrix multiplications in the order indicated by dashed-boxes, we obtain a linear attention mechanism, never explicitly constructing $$A$$ or its approximation:
+**Bidirectional attention**, where there's no notion of past and future: by decouplin matrices $$Q′$$ and $$K′$$ used in lower rank decomposition of $$A$$ and conducting matrix multiplications in the order indicated by dashed-boxes, we obtain a linear attention mechanism, never explicitly constructing $$A$$ or its approximation:
 
 <img class="mt-3" width="75%" height="75%" src="/assets/publications/performers.jpg"/> 
 
 <small>**Left:** Standard attention module computation, where the final desired result is computed by performing a matrix multiplication with the attention matrix $$A$$ and value tensor $$V$$. **Right:** By decoupling matrices $$Q′$$ and $$K′$$ used in lower rank decomposition of $$A$$ and conducting matrix multiplications in the order indicated by dashed-boxes, we obtain a linear attention mechanism, never explicitly constructing $$A$$ or its approximation.</small>
 
-**unidirectional (causal) attention**, where tokens do not attend to other tokens appearing later in the sequence: the previous approach is modified to use prefix-sum computations, which only store running totals of matrix computations rather than storing an explicit lower-triangular regular attention matrix.
+**Unidirectional (causal) attention**, where tokens do not attend to other tokens appearing later in the sequence: the previous approach is modified to use prefix-sum computations, which only store running totals of matrix computations rather than storing an explicit lower-triangular regular attention matrix.
 
 <img class="mt-3" width="75%" height="75%" src="/assets/publications/performers2.gif"/> 
 
