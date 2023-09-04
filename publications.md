@@ -11,6 +11,30 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 A summary paper reporting early results of the experiments with GPT-4 when it was still in active development by OpenAI. The authors "demonstrate that, beyond its mastery of language, GPT-4 can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more, without needing any special prompting. Moreover, in all of these tasks, GPT-4’s performance is strikingly close to human-level performance". The bulk of the paper contains dozens of examples that compare GPT-4 and Chat-GPT and demonstrate that GPU-4 surpasses ChatGPT in performance, in code generation, audio generation (output as musical notes), drawings (SVG, TIKZ), and mathematical resolutions (LaTeX).
 
+<br/>
+# 2023 [GPTs are GPTs: An Early Look at the Labor Market Impact Potential of Large Language Models, OpenAI, OpenResearch, Univ. of Pennsylvania](https://arxiv.org/abs/2303.10130)
+
+The paper investigate the potential implications of large language models (LLMs), on the US labor market. The findings are:
+- around 80% of the U.S. workforce could have at least 10% of their work tasks affected by the introduction of LLMs; 
+- approximately 19% of workers may see at least 50% of their tasks impacted;
+- with access to LLMs, about 15% of all worker tasks could be completed significantly faster at the same level of quality; and this share increases to 47%-56% when incorporating software and tooling built on top of LLMs.
+
+The projected effects span all wage levels, with higher-income jobs potentially facing greater exposure to LLM capabilities.
+
+<br/>
+# 2023 [LongNet: Scaling Transformers to 1,000,000,000 Tokens](https://arxiv.org/abs/2307.02486)
+
+LongNet is a Trasnformer variant that can scale the sequence length up to 1B tokens, and without sacrificing the performance on shorter sequences. This overcomes current limitations of attention size in regular transformers, that requires a tradeoff between computational complexity and the model expressivity.
+1. LongNets have a linear computation complexity and a logarithm dependency between any two tokens in a sequence;
+2. They can be served as a distributed trainer for extremely long sequences;
+3. Its main trick is based on the **dilated attention**, which expands the attentive field exponentially as the distance grows, and is a direct replacement for current attention in Transformers.
+   - The general principle behind dilatied attention is: attention allocation decreases exponentially as the distance between tokens grows.
+   - When using multiple attention heads, the attention patterns differ among heads by shifting the attention masks.
+4. Dilated attention yields a computation complexity of $$O(ND)$$, compared to $$O(N d^2)$$ in RNNs, $$O(N^2 d)$$ in vanilla attention, and $$O(N \sqrt{N} d)$$ in sparse attention.
+ 
+<img class="mt-3" width="68%" height="68%" src="/assets/publications/longnets.png"/>
+&nbsp; &nbsp;
+<img class="mt-3" width="19%" height="19%" src="/assets/publications/longnets2.png"/>
 
 <br/>
 # 2022 [Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](https://arxiv.org/abs/2207.05306)
@@ -57,6 +81,8 @@ attention is applied in encoder self-attention and encoder-decoder attention in 
 - More background: Another important type of attention is unidirectional dot-product attention which has the form:
 $$Att_→(Q, K, V) = \tilde{D}^{−1}AV , \tilde{A} = tril(A), \tilde{D}= diag(\tilde{A} 1 L)$$, where $$tril$$ returns the lower diagonal of the argument matrix.
 
+More on this [google research post](https://blog.research.google/2020/10/rethinking-attention-with-performers.html).
+
 <img class="mt-3" width="75%" height="75%" src="/assets/publications/performers.png"/> 
 
 
@@ -100,6 +126,8 @@ Winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021. Abstra
 <br/>
 # 2021 [MLP-Mixer: An all-MLP Architecture for Vision, Google, NeurIPS 2021](https://arxiv.org/abs/2105.01601)
 
+The paper argues that neither (CNNs) convolution CNNs or (Transformers) attention are necessary for computer vision setups. To that extent, it presents MLP-mixers, a Multi-Layer Perceptron only architecture. "MLP-Mixer contains two types of layers: one with MLPs applied independently to image patches (i.e. "mixing" the per-location features), and one with MLPs applied across patches (i.e. "mixing" spatial information)." Results are competitive with existing methods.
+ 
 <img class="mt-3" width="70%" height="70%" src="/assets/publications/mlp_mixer.png"/> 
 
 
