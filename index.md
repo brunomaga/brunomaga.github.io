@@ -24,11 +24,11 @@ Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Perf
   <!-- <div class="Rtable-cell"> <a href="https://twitter.com/{{ site.twitter_username }}"> <i class="fab fa-fw fa-twitter" ></i> {{ site.twitter_username }}</a> </div> -->
   <div class="Rtable-cell"> <a href="{{ site.google_scholar }}"> <i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> google scholar</a> </div>
   <div class="Rtable-cell"> <a href="{{ site.url }}"><i class="fas fa-mouse-pointer"></i> {{site.url | replace:'http://','' | replace:'https://','' }}</a> </div>
-  <div class="Rtable-cell"> <i class="fas fa-passport" title="Nationality"></i> Portuguese and Swiss </div>
+  <div class="Rtable-cell"> <i class="fas fa-passport" title="Nationality"></i> <a href="https://en.wikipedia.org/wiki/Lusitanians">Portuguese</a> and <a href="https://en.wikipedia.org/wiki/Helvetii">Swiss</a></div>
 </div>
 
 
-On the side, I maintain a [publications bookmark]({{ site.publications_permalink }}) where I summarize several publications of interest, and a [resources page]({{ site.resources_permalink }}) where I keep track of related books and material available online. My [google scholar page]({{ site.google_scholar }}) indexes most of my scientific publications. When time allows, I post about HPC and ML:
+On the side, I maintain a [publications bookmark]({{ site.publications_permalink }}) where I summarize several papers of interest, and a [resources page]({{ site.resources_permalink }}) where I keep track of related books and material available online. My [google scholar page]({{ site.google_scholar }}) indexes most of my scientific publications. When time allows, I post about HPC and ML:
 
 <table style='border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
