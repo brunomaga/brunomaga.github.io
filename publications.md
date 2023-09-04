@@ -74,16 +74,21 @@ A similar analysis with augmented prompting exposes the emergent property as rel
 From the abstract: Performers are "Transformer architectures which **can estimate regular
 (softmax) full-rank-attention Transformers with provable accuracy**, but using only
 linear (as opposed to quadratic) space and time complexity, without relying on
-any priors such as sparsity or low-rankness. To approximate softmax attention kernels, Performers use a novel Fast Attention Via positive Orthogonal Random features approach (FAVOR+)"
+any priors such as sparsity or low-rankness. To approximate softmax attention kernels, Performers use a novel Fast Attention Via positive Orthogonal Random features approach (FAVOR+)".
 
-- Background: Bidirectional (or non-directional, as in BERT models) dot-product attention has the following form, where $$A ∈ \mathcal{R}^{L×L}$$ is the so-called attention matrix: $$Att_↔(Q, K, V) = D^{−1}AV,$$  $$A = \exp (QK^{\intercal} / \sqrt{d}), D = diag(A1_L)$$. Bidirectional
-attention is applied in encoder self-attention and encoder-decoder attention in Seq2Seq architectures.
-- More background: Another important type of attention is unidirectional dot-product attention which has the form:
-$$Att_→(Q, K, V) = \tilde{D}^{−1}AV , \tilde{A} = tril(A), \tilde{D}= diag(\tilde{A} 1 L)$$, where $$tril$$ returns the lower diagonal of the argument matrix.
+A clearer explanation can be found on this [google research post](https://blog.research.google/2020/10/rethinking-attention-with-performers.html):
 
-More on this [google research post](https://blog.research.google/2020/10/rethinking-attention-with-performers.html).
+**bidirectional attention**, where there's no notion of past and future: by decouplin matrices $$Q′$$ and $$K′$$ used in lower rank decomposition of $$A$$ and conducting matrix multiplications in the order indicated by dashed-boxes, we obtain a linear attention mechanism, never explicitly constructing $$A$$ or its approximation:
 
-<img class="mt-3" width="75%" height="75%" src="/assets/publications/performers.png"/> 
+<img class="mt-3" width="75%" height="75%" src="/assets/publications/performers.jpg"/> 
+
+<small>**Left:** Standard attention module computation, where the final desired result is computed by performing a matrix multiplication with the attention matrix $$A$$ and value tensor $$V$$. **Right:** By decoupling matrices $$Q′$$ and $$K′$$ used in lower rank decomposition of $$A$$ and conducting matrix multiplications in the order indicated by dashed-boxes, we obtain a linear attention mechanism, never explicitly constructing $$A$$ or its approximation.</small>
+
+**unidirectional (causal) attention**, where tokens do not attend to other tokens appearing later in the sequence: the previous approach is modified to use prefix-sum computations, which only store running totals of matrix computations rather than storing an explicit lower-triangular regular attention matrix.
+
+<img class="mt-3" width="75%" height="75%" src="/assets/publications/performers2.gif"/> 
+
+<small>**Left:** Standard unidirectional attention requires masking the attention matrix to obtain its lower-triangular part. **Right:** Unbiased approximation on the LHS can be obtained via a prefix-sum mechanism, where the prefix-sum of the outer-products of random feature maps for keys and value vectors is built on the fly and left-multiplied by query random feature vector to obtain the new row in the resulting matrix.</small>
 
 
 <br/>
