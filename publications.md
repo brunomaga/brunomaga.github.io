@@ -4,7 +4,7 @@ title: Publications bookmark
 permalink: /publications/
 ---
 
-A summary of some interesting publications I came accross. For personal use. Continuously updated.
+A summary of some interesting publications I came accross. Continuously updated.
 
 <br/>
 # 2023 [Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](https://arxiv.org/abs/2303.12712)
