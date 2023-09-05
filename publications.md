@@ -33,7 +33,7 @@ LongNet is a Trasnformer variant that can scale the sequence length up to 1B tok
 4. Dilated attention yields a computation complexity of $$O(ND)$$, compared to $$O(N d^2)$$ in RNNs, $$O(N^2 d)$$ in vanilla attention, and $$O(N \sqrt{N} d)$$ in sparse attention.
  
 <img class="mt-3" width="68%" height="68%" src="/assets/publications/longnets.png"/>
-&nbsp; &nbsp;
+&nbsp; &nbsp; &nbsp; &nbsp;
 <img class="mt-3" width="19%" height="19%" src="/assets/publications/longnets2.png"/>
 
 <br/>
@@ -137,7 +137,17 @@ The paper argues that neither (CNNs) convolution CNNs or (Transformers) attentio
 
 
 <br/>
-# 2021 [Pay attention to MLPs, Google, NeurIPS 2021](https://arxiv.org/abs/2105.08050)
+# 2021 [Pay Attention to MLPs, Google, NeurIPS 2021](https://arxiv.org/abs/2105.08050)
+
+The paper introduces gMLP (gated MLPs) and show that they can perform as well as Transformers in language and vision applications. It claims that "self-attention is not critical for Vision Transformers, as gMLP can achieve the same accuracy". In some BERT tasks it performed better than Transformers, and on finetuning tasks, it performed worse (but this can be overcome by making the gMLP model substantially larger).
+
+The gMLPs have no self-attention, and instead rely on channel projections and spatial projections with static parameterization. It consists of a stack of $$L$$ blocks with identical size and structure. Each block is defined as:
+
+$$
+Z = σ(XU), \,\,\,\,\,\,\,\, \tilde{Z} = s(Z), \,\,\,\,\,\,\,\, Y = \tilde{Z} V
+$$
+
+where $$σ$$ is an activation function, $$U$$ and $$V$$ are linear projections along the channel dimension, and $$s(·)$$ is a layer which captures spatial interactions. When $$s$$ is an identity mapping, the above transformation degenerates to a regular FFN, ie no cross-token communication. Here, $$s(·)$$ is a spatial depthwise convolution (Section 2.1), which, unlike Transformers, does not require position embeddings because that is captured in $$s(·)$$.
 
 <img class="mt-3" width="70%" height="70%" src="/assets/publications/pay_attention_to_mlps.png"/> 
 
