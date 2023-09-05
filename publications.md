@@ -161,6 +161,15 @@ An extension of the transformer architecture to images. Works by passing as inpu
 
 
 <br/>
+# 2021 [Finetuned Language Models Are Zero-Shot Learners](https://arxiv.org/abs/2109.01652)
+
+The paper presents simple method for improving the zero-shot learning abilities of language models. It shows that instruction tuning -- finetuning language models on a collection of tasks described via instructions -- substantially improves zero-shot performance on unseen tasks.
+The intuition is that performing instruction tuning—finetuning of the model with datasets expressed via natural language instructions (such as “Is the sentiment of this movie review positive or negative?” or “Translate ‘how are you’ into Chinese.”) substantially improves the zero-shot performance of the model.
+For each dataset, the authors manually compose ten unique templates that use natural language instructions to describe the task for that dataset.
+
+<img class="mt-3" width="70%" height="70%" src="/assets/publications/finetune_language_models.png"/> 
+
+<br/>
 # 2020 [Scaling Laws for Neural Language Models, John Hopkins, OpenAI](https://arxiv.org/abs/2001.08361)
 
 Abstract: We study empirical scaling laws for language model performance on the cross-entropy loss.
