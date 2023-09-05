@@ -193,7 +193,38 @@ and stopping significantly short of convergence.
 <br/>
 # 2020 [Language Models are Few-Shot Learners (GPT-3), OpenAI](https://arxiv.org/abs/2005.14165)
 
-<img class="mt-3" width="70%" height="70%" src="/assets/publications/gpt3.png"/> 
+Up until now, substantial gains on many NLP tasks were achieved by pre-training on a large corpus of text followed by fine-tuning on a specific task. This method still requires task-specific fine-tuning datasets of thousands or tens of thousands of examples. This paper shows that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art finetuning approaches. This paper presents and tests GPT-3 (an autoregressive LLM with 175 billion parameters, 10x larger than previous models) in the few-shot setup. 
+
+**GPT-3 architecture** uses the same model and architecture as [GPT-2](https://insightcivic.s3.us-east-1.amazonaws.com/language-models.pdf), including the modified initialization, pre-normalization, and reversible tokenization described therein, with the exception that we use alternating dense and locally banded sparse attention patterns in the layers of the transformer, similar to the [Sparse Transformer](https://arxiv.org/abs/1904.10509). 
+- Table 2.1 includes the 8 GPT-3 models built and their sizes/hyperparameters.
+- Fig. 2.2 shows the total compute used during training. Based on the analysis in [Scaling Laws For Neural Language Models](https://arxiv.org/abs/2001.08361) we train much larger models on many fewer tokens than is typical. 
+- Fig 3.1 shows the pattern of smooth scaling of performance with compute. Performance (cross-entropy loss) follows a power-law trend with the amount of compute used for training. 
+
+
+**Background (Fig 2.1):**
+- Fine-Tuning (FT) has been the most common approach in recent years, and involves updating the weights of
+a pre-trained model by training on a supervised dataset specific to the desired task.
+- Few-Shot (FS) is the term we will use in this work to refer to the setting where the model is given a few
+demonstrations of the task at inference time as conditioning [RWC+19], but no weight updates are allowed.
+- One-Shot (1S) is the same as few-shot except that only one demonstration is allowed, in addition to a natural
+language description of the task
+- Zero-Shot (0S) is the same as one-shot except that no demonstrations are allowed,  and the model is only given
+a natural language instruction describing the task.
+
+<img class="mt-3" width="80%" height="80%" src="/assets/publications/gpt3_fig21.png"/> 
+
+<img class="mt-3" width="80%" height="80%" src="/assets/publications/gpt3_fig11.png"/> 
+
+**Tasks tested and performance**:
+- On NLP tasks it achieves promising results in the zero-shot and one-shot settings, and in the the few-shot setting is sometimes competitive with or even occasionally surpasses state-of-the-art.
+- It also displays one-shot and few-shot proficiency at tasks designed to test rapid adaption or on-the-fly reasoning,
+which include unscrambling words, performing arithmetic, and using novel words in a sentence after seeing them defined only once.
+- Fig 3.3 to 3.12 show that  GPT3’s performance grows with model size, suggesting that language models continue to absorb knowledge as their capacity increases. Results plotted for the the TriviaQA, translation, [Winograd Schema Challenge](https://arxiv.org/abs/1907.10641), PIQA, comprehension, SuperGLUE, ANLI Round 3, arithmetic, word scrambling, and SAT tasks; on zero-, one- and few-shot training, respectively.
+- Fig 3.12 shows that people’s ability to identify whether news articles are model-generated (measured by the ratio of correct
+assignments to non-neutral assignments) decreases as model size increases.
+or QuAC. 
+- Fig 4.2 plots the benchmark contamination analysis. Data contamination has a minimal effect on GPT-3’s performance on most datasets, but the authors identify a few datasets where it could be inflating results:
+- Chaper 5 details the limitations. GPT-3 struggles with natural language inference tasks like the ANLI dataset, and some reading comprehension datasets like RACE
 
 
 <br/>
