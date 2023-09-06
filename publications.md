@@ -22,6 +22,11 @@ The paper investigate the potential implications of large language models (LLMs)
 The projected effects span all wage levels, with higher-income jobs potentially facing greater exposure to LLM capabilities.
 
 <br/>
+#2023 [Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](https://arxiv.org/abs/2307.08621)
+
+
+
+<br/>
 # 2023 [LongNet: Scaling Transformers to 1,000,000,000 Tokens](https://arxiv.org/abs/2307.02486)
 
 LongNet is a Transformer variant that can scale the sequence length up to 1B tokens, and without sacrificing the performance on shorter sequences. This overcomes current limitations of attention size in regular transformers, that requires a tradeoff between computational complexity and the model expressivity.
