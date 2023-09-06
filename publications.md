@@ -24,7 +24,7 @@ The projected effects span all wage levels, with higher-income jobs potentially 
 <br/>
 # 2023 [LongNet: Scaling Transformers to 1,000,000,000 Tokens](https://arxiv.org/abs/2307.02486)
 
-LongNet is a Trasnformer variant that can scale the sequence length up to 1B tokens, and without sacrificing the performance on shorter sequences. This overcomes current limitations of attention size in regular transformers, that requires a tradeoff between computational complexity and the model expressivity.
+LongNet is a Transformer variant that can scale the sequence length up to 1B tokens, and without sacrificing the performance on shorter sequences. This overcomes current limitations of attention size in regular transformers, that requires a tradeoff between computational complexity and the model expressivity.
 1. LongNets have a linear computation complexity and a logarithm dependency between any two tokens in a sequence;
 2. They can be served as a distributed trainer for extremely long sequences;
 3. Its main trick is based on the **dilated attention**, which expands the attentive field exponentially as the distance grows, and is a direct replacement for current attention in Transformers.
@@ -161,13 +161,13 @@ An extension of the transformer architecture to images. Works by passing as inpu
 
 
 <br/>
-# 2021 [Finetuned Language Models Are Zero-Shot Learners](https://arxiv.org/abs/2109.01652)
+# 2021 [Finetuned Language Models Are Zero-Shot Learners, Google, ICLR 2022](https://arxiv.org/abs/2109.01652)
 
 The paper presents a simple method for improving the zero-shot learning abilities of language models. It shows that instruction tuning -- finetuning language models on a collection of tasks described via instructions -- substantially improves zero-shot performance on unseen tasks.
 The intuition is that performing instruction tuning—finetuning of the model with datasets expressed via natural language instructions, substantially improves the zero-shot performance of the model.
 For each dataset, the authors manually compose ten unique templates that use natural language instructions to describe the task for that dataset.
 
-<img class="mt-3" width="70%" height="70%" src="/assets/publications/finetune_language_models.png"/> 
+<img class="mt-3" width="67%" height="67%" src="/assets/publications/finetune_language_models.png"/> 
 
 <br/>
 # 2020 [Scaling Laws for Neural Language Models, John Hopkins, OpenAI](https://arxiv.org/abs/2001.08361)
@@ -347,6 +347,27 @@ Existing standard language models are unidirectional and that's a major limitati
 
 
 <br/>
+# 2017 [Mixed Precision Training, Baidu and NVIDIA](https://arxiv.org/abs/1710.03740)
+
+A method for training using half-precision floating point numbers, without losing model accuracy or having to modify hyperparameters. Weights, activations, and gradients are stored in IEEE halfprecision format. This nearly halves memory requirements and speeds up arithmetic. Due to the reduced range of 16- vs 32-bit representation, three techniques are proposed to prevent the loss of critical information (or numerical overflows):
+1. Maintaining a single-precision copy of weights that accumulates the gradients after each optimizer step (this copy is rounded to half-precision for the forward- and back-propagation).
+  - Ie, use single-precision for master weights and updates loss-scaling, and accumulating FP16 products into FP32. And half-precision otherwise. This requires memory *duplication* in two representations for the FP32 master copy of weights: weights, activations and gradients are stored as FP16, and in order to match the accuracy of the FP32 networks, an FP32 master copy of weights is maintained and updated with the weight gradient during the optimizer step.
+  - The intuiting behind requiring FP32 for master weights is to include small values that cant be represented by FP16, and because the ratio of the weight value to the weight update is very large.
+2. performing loss-scaling to preserve gradient values with small magnitudes.
+  - Rationale: FP16 exponent bias centers the range of normalized value exponents to $$[−14, 15]$$ while gradient values in practice tend to be dominated by small magnitudes (negative exponents). 
+  - Scaling up the gradients will shift them to occupy more of the representable range and preserve values that are otherwise lost to zeros
+  - To implement scaling, scale the loss value
+computed in the forward pass by shifting the gradient values into FP16-representable range, prior to back-opagation. By chain rule back-propagation
+ensures that all the gradient values are scaled by the same amount. Finally, weight gradients must be unscaled before weight update to maintain the update magnitudes as in FP32 training.
+  - Any scale factor can be used (without any loss), as long as its product with the maximum absolute gradient value is below 65504.
+3. Using half-precision arithmetic that accumulates into single-precision outputs, which are converted to half precision before storing to memory.
+  - Different arithmetics (vector dot-products, reductions, and point-wise operations) require different treatment.
+  - "To maintain model accuracy, we found that some networks require that FP16 vector dot-product accumulates the partial products into an FP32 value, which is converted to FP16 before writing to memory. Without this accumulation in FP32, some FP16 models *did not match the accuracy* of the baseline models."
+  - Large reductions (sums across elements of a vector) e.g. batch-normalization, should be carried out in FP32.
+  - Point-wise operations, such as non-linearities and element-wise matrix products, are memory bandwidth limited. Since arithmetic precision does not impact the speed of these operations, either FP16 or FP32 math can be used.
+
+
+<br/>
 # 2018 [Group Normalization, Facebook AI Research](https://arxiv.org/abs/1803.08494)
 
 This paper presents Group normalization. GN surpasses Batch Normalization particularly on small batch sizes, due to error increasing rapidly when the batch size becomes smaller, caused by inaccurate batch statistics estimation. This limits BN's udage for training larger models and trasferring features. The rationale is that BN exhibits drawbacks that are also caused by its distinct behavior of normalizing along the batch dimension. In particular, it is required for BN to work with a "sufficiently large batch size". 
@@ -354,13 +375,9 @@ This paper presents Group normalization. GN surpasses Batch Normalization partic
 Layer Normalization and Instance Normalization also avoid normalizing along the batch dimension. These methods are effective for training sequential models (RNN/LSTM) or generative models (GANs), but both have limited success in visual recognition, for which GN presented better results. 
 
 Formulation: if $i = (iN, iC, iH, iW)$ is a 4D vector indexing the image features in (N batch size, Channels , Height, Widht), the mean is $$/mu_i = 1/m \sum_{k \in S_i x_k}$$ and the standard deviation is $$\sigma_i = \sqrt{1/m \sum_{k \in S_i} (x_k - \mu_i)^2 }$$: 
-
 - Batch norm: $$S_i = \{ k \mid k_C = i_C \}$$ ie the output is a vector of the same length as channel count; 
-
 - Layer norm: $$S_i = \{ k \mid k_N = i_N \}$$ ie the output is a vector of the same length as batch size; 
-
 - Instance norm: $$S_i = \{ k \mid k_N = i_N, k_C = i_C \}$$ ie the output is a matrix of size $N \times C$; 
-
 - Group norm: $$S_i = \{ k \mid k_N = i_N, \frac{k_C}{C/G} = \frac{i_C}{C/G} \}$$ ie the output is a matrix of size $N \times C/G$, for $G$ groups;
 
 <img class="mt-3" width="75%" height="75%" src="/assets/publications/group_normalization.png"/>  <img class="mt-3" width="23%" height="23%" src="/assets/publications/group_normalization_2.png"/> 
