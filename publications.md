@@ -9,7 +9,17 @@ A summary of some interesting publications I came accross. Continuously updated.
 <br/>
 # 2023 [Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](https://arxiv.org/abs/2303.12712)
 
-A summary paper reporting early results of the experiments with GPT-4 when it was still in active development by OpenAI. The authors "demonstrate that, beyond its mastery of language, GPT-4 can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more, without needing any special prompting. Moreover, in all of these tasks, GPT-4’s performance is strikingly close to human-level performance". The bulk of the paper contains dozens of examples that compare GPT-4 and Chat-GPT and demonstrate that GPU-4 surpasses ChatGPT in performance, in code generation, audio generation (output as musical notes), drawings (SVG, TIKZ), and mathematical resolutions (LaTeX).
+A summary paper reporting early results of the experiments with GPT-4 when it was still in active development by OpenAI. The authors "demonstrate that, beyond its mastery of language, GPT-4 can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more, without needing any special prompting. Moreover, in all of these tasks, GPT-4’s performance is strikingly close to human-level performance". The bulk of the paper contains dozens of examples that compare GPT-4 and Chat-GPT and demonstrate that GPU-4 surpasses ChatGPT in performance, in code generation, audio generation (output as musical notes), drawings (SVG, TIKZ), and mathematical resolutions (LaTeX). As weaknesses, besides the regular hallucinations it was also observed:
+- Incapacity of planning correctly, when planning is not a linear path.
+- Wrong complex arithmetic solver, e.g. `What's what is 151412 * 12412 / 12312 + 2? [...] is approximately equal to 152,513.676` instead of `152643.79`.
+- Trained on past information only, without temporal awareness, e.g. `Whats the president of the US? Donald Trump`.
+- lack of rigorous algorithms e.g. `What is the 11th letter of "abacadab"?  [..]  the 11th letter is "b."`
+- ilogical reasoning/assumptions due to dataset biases, e.g. in gender: `If a man is a computer scientist, a woman is... a source of beauty and inspiration`.
+
+But these can be overcome by including external APIs on training and making them in the query e.g.:
+- `Using CALC(x) as a calculator of the expression x, what's 151412 * 12412 / 12312 + 2?`, or
+- `Using SEARCH(x) to search for a query x, who's the president of the US?` or
+- `Using CALENDAR(subject, date, user) and MAIL(user, text), book a meeting with the title 'subject' on the day 'date' to the user 'user', then email 'user' all the information`. 
 
 <br/>
 # 2023 [GPTs are GPTs: An Early Look at the Labor Market Impact Potential of Large Language Models, OpenAI, OpenResearch, Univ. of Pennsylvania](https://arxiv.org/abs/2303.10130)
