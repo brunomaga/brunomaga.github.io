@@ -31,10 +31,29 @@ The paper investigate the potential implications of large language models (LLMs)
 
 The projected effects span all wage levels, with higher-income jobs potentially facing greater exposure to LLM capabilities.
 
+
+<!--
 <br/>
-#2023 [Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](https://arxiv.org/abs/2307.08621)
+# 2023 [Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](https://arxiv.org/abs/2307.08621)
 
+(note: a simpler summary video of RetNets can be found [here](https://www.youtube.com/watch?v=JaIL1VAEwZ8))
 
+RetNets introduces a multi-scale retention mechanism to substitute multi-head attention in Transformers, which has three computation paradigms:
+- parallel framework, for training parallelism that utilizes GPU devices fully.
+- recurrent framework for low-cost $$O(1)$$ inference, which improves decoding throughput (8.4x improvement over Transformer), latency (15.6x), and GPU memory (3.4x) without sacrificing performance, on Figure 1.
+- a chunkwise recurrent representation that can perform efficient long-sequence modeling with linear complexity,  where each chunk is encoded parallelly while recurrently summarizing the chunks. It allows encoding each local block for computation speed while recurrently encoding the global blocks to save GPU memory 
+
+Retentive network (RetNet) is a stack of $$L$$ identical blocks, which follows a similar layout (i.e.,
+residual connection, and pre-LayerNorm) as in Transformer. Each RetNet block contains
+two modules: a multi-scale retention (MSR) module, and a feed-forward network (FFN) module.  The MSR module calls the tokens in a sequence in an auto-regressive manner. The input vector is first created as $$X_0$$ in the shape of sequence length by hidden domain size. Then we calculate contextualized vector representations for each layer of the RetNet. Retention can be represented in two ways:
+1. in the **parallel representation**, where $$Retention(X) = Q K\intercal \dot D)V$$ similar to the transformer but with an extra matrix $$D$$ (Eq. 5). This is befenicial for parallel training.
+2. in the **recurrent representation**, it is written as a recurrent neural net (RNN) which is beneficial for inference, and $$Retention(X_n)=Q_n S_n$$ where $$S_n$$ depends on the previous term $$S_{n-1}$$.
+3. a **hybrid form** combining the previous two representations is also possible to accelerate training on large sequences. Input sequence is divided into chunks. Within each chunk, the computation is performed in the parallel representation. Cross-chunk information is passed in the recurrent representation.
+
+<img class="mt-3" width="68%" height="68%" src="/assets/publications/RetNet.png"/>
+
+TODO finish!
+-->
 
 <br/>
 # 2023 [LongNet: Scaling Transformers to 1,000,000,000 Tokens](https://arxiv.org/abs/2307.02486)
@@ -119,6 +138,22 @@ To be compute optimal (in terms of accuracy vs energy cost), Kaplan et al. (2020
 
 <img class="mt-3" width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models_2.png"/> 
 
+
+<br/>
+# 2021 [GSPMD: General and Scalable Parallelization for ML Computation Graphs](https://arxiv.org/pdf/2105.04663.pdf)
+
+also covered on a [google blog post](https://blog.research.google/2021/12/general-and-scalable-parallelization.html).
+
+GSPMD (General and Scalable Parallelization for ML Computation Graphs) is an open-source, automatic, compiler-based parallelization system based on the [XLA compiler](https://www.tensorflow.org/xla). Because different model architectures may be better suited to different parallelization strategies, GSPMD is designed to support a large variety of parallelism algorithms appropriate for different use cases (e.g. data parallelism for small models, pipelining parallelism for larger models, or a combination of both).
+
+In GSPMD, each tensor will be assigned a sharding property, either explicitly by the user as initial annotations, or by the sharding completion pass. The sharding property specifies how the data is distributed across devices. GSPMD defines three types of sharding: replicated (all devices have the same full data), tiled (a tiled sharding of the tensor, without data suplication), and partially tilled (an extension to [GShard](https://arxiv.org/abs/2006.16668), where tensor is tilled among subgroups of processors, that then have a different tilling within each subgroup). 
+
+The sharding properties are user-defined with `mesh_split(tensor, device_mesh, dims_mapping)` that allows a tensor to be across the device mesh and a mapping from each data tensor dimension (i) to an optional device mesh dimension. This simple API is general enough to express
+all types of sharding, across the dimension(s) of batch, features, channels and/or others. The automatic partitioner in GSPMD is implemented as transformation/compiler passes in the XLA compiler (Section 3.5), using information about the operator (e.g. dot product is a generalized matrix multiply) or using iterative methods where  shardings assigned by the pass are refined incrementally over the iterations. 
+
+<img width="60%" height="60%" src="/assets/publications/GSPMD.png"/>
+
+<small> **Left:** A simplified feedforward layer of a Transformer model. Blue rectangles represent tensors with dashed red & blue lines overlaid representing the desired partitioning across a 2x2 mesh of devices. **Right:** A single partition, after GSPMD has been applied. **Source**: <a href="https://blog.research.google/2021/12/general-and-scalable-parallelization.html">google research post</a></small>
 
 <br/>
 # 2021 [Skilful precipitation nowcasting using deep generative models of radar, Google Deepmind](https://www.nature.com/articles/s41586-021-03854-z)
