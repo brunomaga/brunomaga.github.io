@@ -60,7 +60,7 @@ We've mentioned several time the words "compute unit", "compute architecture" an
 The main question is: what drives GPU/TPU/IPU processor designers to lower the clockspeed of their processors and increase the number of cores, instead of just designing their chips at the same clock speed and core count as CPUs? The answer is **power consumption**, **[heat dissipation](https://en.wikipedia.org/wiki/List_of_CPU_power_dissipation_figures)** and **temperature**. In practice, to increase the clockspeed we usually reduce the transistor size thus inserting [more transistors in the same chip](https://en.wikipedia.org/wiki/Transistor_count) or placing them more tightly in the same area. This leads to an increase of power comsumption and temperature that has been observed to grow exponentially with the increase of the clockspeed: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/a53-power-curve.png"/>
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/a53-power-curve.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Exponential increase of power comsumption (y axis) for a linear increase of processor frequency (x axis), for processor with one to four cores (colour coded) of the Samsung Exynos 7420 processor. (source: <a href="https://www.anandtech.com/show/9330/exynos-7420-deep-dive/5">AnandTech</a>)
@@ -103,7 +103,7 @@ $$
 The important concept here is the **composition** of the $$f$$ function throughout layers. In practice one only needs the current layer's state and previous layer output to perform the computation at every layer. This concept has been explored by the [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shiram et al)](https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf) implementations: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN.png"/>
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/vDNN.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An overview of the vDNN(+) implementation on a convolutional neural network. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Blue arrows represent data flow during backward progagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
@@ -114,7 +114,7 @@ We'll start with the forward pass. Looking at the initial formulation of $$x^{(l
 Therefore, for a given layer, the forward pass is represented as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN2.png"/>
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/vDNN2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The forward pass on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer N) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $$x^{(l-1)}$$ (represented as X) and $$W^{(l)}$$ (as WS). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
@@ -129,7 +129,7 @@ $$
 i.e., for the backward propagation, we require both the input variable $$x^{(l-1)}$$ (inside $$z_j^{(l)}$$), the weights $$W^{(l+1)}$$ and the derivatives $$\delta_j^{(l+1)}$$. This can now be represented as: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN3.png"/>
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/vDNN3.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The back propagation phase on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer 2) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $$x^{(l-1)}$$ (represented as X),  $$W^{(l+1)}$$ (as WS) and $$\delta_j^{(l+1)}$$ (as dY). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
@@ -193,7 +193,7 @@ The rationale of DDP is simple:
 3. at the end of each forward pass, weight updates (gradients) are computed for each processor, then averaged across all processors, and the final weight update is then the reduced mean gradients. This keeps all models in synchrony throughout the whole execution.
 
 {: style="text-align:center; font-size: small;"}
-<img width="50%" height="50%" src="/assets/AI-Supercomputing/DNN_data_parallelism.png"/>
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/DNN_data_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of DNN data parallelism on two processors $$p0$$ and $$p1$$ computing a dataset divided on two equally-sized "batches" of datapoints. Execution of both batches occurs in parallel on both processors, containing each a similar copy of the DNN model. The final weight update is provided by the averaged gradients of the models.

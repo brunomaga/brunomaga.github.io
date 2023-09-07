@@ -169,7 +169,7 @@ $$
   \begin{align*}
    & - \frac{d \,\,  log \,\, p( w \mid X,y)}{dw} \\
  = & \frac{d \,\,  log \,\, p( y \mid X,w)}{dw} - \frac{d \,\,  log \,\, p(w)}{dw} \\ 
- = & \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right)  & \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and prior } \mathcal{N}(0, b^2 I) \text{)} }\\
+ = & \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right)  & \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and prior } \mathcal{N}(0, b^2 I) \text{)}\\
  = & \frac{1}{\sigma^2}(w^TX^TX-y^TX) + \frac{1}{b^2}w^T & \text{(First-order derivative, rule 3)}\\
   \end{align*}
 \label{eq_prior_w}
@@ -228,10 +228,10 @@ $$
  = & -\frac{1}{2} (\sigma^{-2}(y-Xw)^T(y-XW) + (w-m_0)^TS_0^{-1}(w-m_0)) + const & \text{(ignore const due to zero-derivative)}\\
  = & - \frac{1}{2} \left( \sigma^{-2} y^T y - 2\sigma^{-2} y^T Xw + \sigma^{-2} w^T X^T Xw + w^TS_0^{-1}w - 2 m_0^T S_0^{-1} w + m_0^T S_0^{-1} m_0 \right) \\
    \label{eq1_sq}
- = & - \frac{1}{2} \left( w^T ( \sigma^{-2} X^TX + S_0^{-1}) w \right)   & \hspace{2cm}\text{(terms quadratic in } w \text{)}} \\
+ = & - \frac{1}{2} \left( w^T ( \sigma^{-2} X^TX + S_0^{-1}) w \right)   & \hspace{2cm}\text{(terms quadratic in } w \text{)} \\
    \label{eq1_lin}
-   & + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right)               &  \hspace{2cm}\text{(terms linear in } w \text{)}} \\
-   & - \frac{1}{2} \left( \sigma^{-2} y^T y + m_0^T S_0^{-1} m_0 \right) & \hspace{2cm}\text{(const terms independent of } w \text{)}} \\
+   & + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right)               &  \hspace{2cm}\text{(terms linear in } w \text{)} \\
+   & - \frac{1}{2} \left( \sigma^{-2} y^T y + m_0^T S_0^{-1} m_0 \right) & \hspace{2cm}\text{(const terms independent of } w \text{)} \\
   \end{align}
 $$
 
@@ -241,7 +241,7 @@ $$
   \begin{align*}
  p(w\mid X, y) = & exp ( log \,\, p(w\mid y, X) ) ) \\
 \propto & exp ( log \,\, p(y\mid X, w) + log \,\, p(w) )  & \text{(Bayes equation)}\\
-\propto & exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right) \right) & \text{(quadratic and linear terms of $$ log \,\, p(w \mid X, y)$$)}\\
+\propto & exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right) \right) & \text{(quadratic and linear terms of } log \,\, p(w \mid X, y) \text{)}\\
   \end{align*}
 $$
 
@@ -256,7 +256,7 @@ $$
  = & -\frac{1}{2} \left(w^T S_N^{-1}w \right)   & \hspace{2cm}\text{(terms quadratic in } w \text{)} \\
    \label{eq2_lin}
    & + m^T_N S^{-1}_N w                         &  \hspace{2cm}\text{(terms linear in } w \text{)} \\
-   & - \frac{1}{2} \left( m_N^T S_N^{-1} m_N \right) & \hspace{2cm}\text{(const terms independent of } w \text{)}} \\
+   & - \frac{1}{2} \left( m_N^T S_N^{-1} m_N \right) & \hspace{2cm}\text{(const terms independent of } w \text{)} \\
   \end{align}
 $$
 
@@ -288,16 +288,16 @@ inline with equations 3.50 and 3.51 in [Chris Bishop's PRML book]({{ site.resour
 Online learning allows us to do iterative learning by continuously updating our posterior based on new observable data. The main principle is that --- following the $$posterior \propto likelihood * prior$$ principle --- at every iteration we turn our posterior into the new prior, i.e. the new initial knowledge is what we learnt previously. The main advantage is not requiring all the data at once for training and allowing us to learn from datasets that are not fully-available at once. An illustration of the principle is displayed below:
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_1.png"/>
+<img width="45%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_1.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_3.png"/>
+<img width="45%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_3.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_4.png"/>
+<img width="45%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_4.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_5.png"/>
+<img width="45%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_5.png"/>
 
 {: style="text-align:center; font-size: small;"}
 illustration of four steps of online learning for the linear model $$y = w_0 + w_1x$$.
@@ -328,17 +328,7 @@ $$
                                 & = \mathbf{Var} \left[ Xw  \right] + \mathbf{Var} \left[ \varepsilon \right] + 2\mathbf{Cov} \left[ X^Tw, \varepsilon \right] \\
                                 & = \mathbf{Var} \left[ Xw  \right] + \mathbf{Var} \left[ \varepsilon \right] & \text{(independent variables)}\\
                                 & = X^T \mathbf{Var} \left[ w  \right] X + \mathbf{Var} \left[ \varepsilon \right] & \text{(Var linear transformation, rule 6))}\\
-                                & = X^T S_N X + \sigma^2 & ( \varepsilon \thicksim \mathcal{N}(0, \sigma^2 \text{) \text{ and noise variance } \sigma^2)}\\
-%\\
-%\\
-%
-%\mathbf{Var} \left[ y \right] & = \mathbf{E} \left[ (y- \mathbf{E} \left[ y \right])^2 \right]    & \text{(definition of Var)}\\
-%                              & = \mathbf{E} \left[ \left(X^Tw + \varepsilon -  X^T m_N \right)^2 \right]    & \text{(replacing } y \text{ and } \mathbf{E} \left[ y \right] \text{ from before)}}\\
-%                              & = \mathbf{E} \left[ \left(X^T(w-m_N)  + \varepsilon \right)^2 \right] \\
-%                              & = \mathbf{E} \left[ X^T(w-m_N)(w-m_N)^TX + 2X^T(w-m_N) \varepsilon + \varepsilon^2 \right] & (\text{note: } \left( X^T(w-m_N) \right) \left( X^T(w-m_N) \right)^T = X^T(w-m_N)(w-m_N)^TX$$ )}\\
-%                              & = \mathbf{E} \left[ X^T(w-m_N)(w-m_N)^TX \right] + 2 \mathbf{E} \left[ X^T(w-m_N) \varepsilon \right] + \mathbf{E} \left[ \varepsilon^2 \right] \\
-%                              & = X^T \mathbf{E} \left[ (w-m_N)(w-m_N)^T \right] X + 0 + \sigma^2\\
-%                              & = X^T S_N X + \sigma^2\\
+                                & = X^T S_N X + \sigma^2 & ( \varepsilon \thicksim \mathcal{N}(0, \sigma^2 ) \text{ and noise variance } \sigma^2 \text{)}\\
  \end{align*}
 $$
 
@@ -397,7 +387,7 @@ Here are the list of algebraic rules used in this document. For further details,
 	3. $$(B+C)A=BA+CA$$;
 	4. $$r(AB)=(rA)B=A(rB)$$ for a scalar $$r$$;
 	5. $$I_mA=AI=AI_n$$;
-	6. $$(A+B)^2 = (A+B)(A+B)^T$$
+	6. $$(A+B)^2 = (A+B)(A+B)^T$$;
 	7. $$(y - Xw)^2 = (y-Xw)^T(y-Xw)$$.
 
 2. **Transpose:**
@@ -420,10 +410,10 @@ Here are the list of algebraic rules used in this document. For further details,
 	5. $$rA^{-1} = (\frac{1}{r}A)^{-1}$$ for a scalar $$r$$;
 
 5. **First Order derivatives**:
-	1. $$\frac{d w^TX}{dw} = \frac{d X^Tw}{dw} = X$$ 
-	2. $$\frac{d X^TwY}{dw} = XY^T$$ 
-	3. $$\frac{d X^Tw^TY}{dw} = YX^T$$ 
-	4. $$\frac{d X^TwX}{dw} = \frac{d X^Tw^TX}{dw} = XX^T$$ 
+	1. $$\frac{d w^TX}{dw} = \frac{d X^Tw}{dw} = X$$; 
+	2. $$\frac{d X^TwY}{dw} = XY^T$$;
+	3. $$\frac{d X^Tw^TY}{dw} = YX^T$$; 
+	4. $$\frac{d X^TwX}{dw} = \frac{d X^Tw^TX}{dw} = XX^T$$; 
 
 6. **Variance and Covariance:**
 	1. $$\mathbb{Var}(X) = \mathbb{Cov}(X,X)$$;
