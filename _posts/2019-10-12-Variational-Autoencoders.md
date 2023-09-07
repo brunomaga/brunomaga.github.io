@@ -5,7 +5,7 @@ categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-<small>credit: most content in this post is a summary of the papers [Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114) and [An Introduction to Variational Autoencoders](https://arxiv.org/abs/1906.02691) from Diederik P. Kingma, Max Welling at the Uversiteit van Amsterdam. </small>
+credit: most content in this post is a summary of the papers [Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114) and [An Introduction to Variational Autoencoders](https://arxiv.org/abs/1906.02691) from Diederik P. Kingma, Max Welling at the Uversiteit van Amsterdam. 
 
 The papers introduces Variational Autoencoders, aiming at performing efficient inference and learning in probabilistic models whose latent variables and parameters have intractable posterior distributions, and on large datasets. The SGVB (Stochastic Gradient Variational Bayes) estimator presented can be used for efficient approximation of posterior inference in almost any model with continuous latent variables, and because it’s differentiable, it can be optimized with e.g. gradient descent. The AutoEncoding Variational Bayes (AEVB) algorithm presented uses the SGVB estimator to optimize a model that does efficient approximate posterior inference using simple sampling (from parametric distributions).
 
@@ -33,8 +33,11 @@ The difference between Variational Autoencoders and regular Autoencoders (such a
 
 In practice, they can be vizualised  as:
  
-<p align="center"><img width="95%" height="95%" src="/assets/Variational-Autoencoders/vae.png"/><br/>
-<small>VAE vs AE structure (image credit: <a href="https://data-science-blog.com/blog/2022/04/19/variational-autoencoders/">Variational Autoencoders, Data Science Blog, by Sunil Yadav</a>))</small></p>
+{: style="text-align:center; font-size: small;"}
+<img width="95%" height="95%" src="/assets/Variational-Autoencoders/vae.png"/>
+
+{: style="text-align:center; font-size: small;"}
+VAE vs AE structure (image credit: <a href="https://data-science-blog.com/blog/2022/04/19/variational-autoencoders/">Variational Autoencoders, Data Science Blog, by Sunil Yadav</a>))
 
 ### Why VAE instead of Variational Inference
 
@@ -46,14 +49,15 @@ The authors noticed that the sampling induces sampling noise in the gradients re
 
 It goes as follows: the sample vector $$z$$ that is typically sampled from the mean vector $$\mu$$ and the variance $$\sigma^2$$ in the Gaussian scenario in now described as $$ z = \mu + \sigma \cdot \epsilon$$ where $$\epsilon$$ is the standard gaussian ie $$\epsilon \sim N(0,1)$$.
 
-<p align="center"><img width="70%" height="70%" src="/assets/Variational-Autoencoders/vae2.png"/></p>
-
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/Variational-Autoencoders/vae2.png"/>
 
 ### The loss function
 
 The loss function is a sum of two terms:
 
-<p align="center"><img width="60%" height="60%" src="/assets/Variational-Autoencoders/vae_loss.png"/></p>
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/Variational-Autoencoders/vae_loss.png"/>
 
 The first term is the reconstruction loss (or expected negative log-likelihood of the i-th datapoint). The expectation is taken with respect to the encoder’s distribution over the representations, encouraging the VAE to generate valid datapoints. This loss compares the model output with the model input and can be the losses we used in regular autoencoders, such as L2 loss, cross-entropy, etc.
 

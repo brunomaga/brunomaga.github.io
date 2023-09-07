@@ -120,9 +120,9 @@ Let $$V$$ be a vector space and $$U ⊆ V$$ a subspace of $$V$$. A linear mappin
 ### Matrix Decompositions
 
 determinant properties:
-- $det(AB) = det(A) det(B)$; 
-- $det(A) = det(A^{\intercal})$; 
-- $det(A^{-1})=\frac{1}{det(A)}$;
+- $$det(AB) = det(A) det(B)$$; 
+- $$det(A) = det(A^{\intercal})$$; 
+- $$det(A^{-1})=\frac{1}{det(A)}$$;
 - for more than 2 columns or rows: $$det(A) = \sum_{k=1}^{n} (−1)^{k+j}a_{kj} det(A_{k,j})$$.
 - *Similar* matrices have the same determinant;
 - a matrix $$A$$ is **invertible** if $$det(A) \neq 0$$;
@@ -151,8 +151,11 @@ Two vectors are called **codirected** if they point in the same direction and **
   - there exists eigenvectors with real eigenvalues (spectral theorem), i.e. to check if a is positive definite, check if all eigenvalues are positive.
 - Graphical intuition: the direction of the two eigenvectors correspond to the canonical basis vectors i.e., to cardinal axes. Each axis is scaled by a factor equivalent to its eigenvalue: 
 
-<p align="center"><img width="65%" height="65%" src="/assets/Algebra-for-ML/MML_eigenvalues_and_eigenvectors.png"/><br/>
-<small>image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a></small></p>
+{: style="text-align:center; font-size: small;"}
+<img width="65%" height="65%" src="/assets/Algebra-for-ML/MML_eigenvalues_and_eigenvectors.png"/>
+
+{: style="text-align:center; font-size: small;"}
+image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
 
 **Cholesky Decomposition**: a symmetric, positive definite matrix $$A$$ can be factorized into a product $$A = LL^{\intercal}$$, where $$L$$ is a *lower-triangular matrix* with positive diagonal elements. $$L$$ is unique. This can be solved normally as a SLE. It is used e.g. to sample from Gaussian distributions and to compute determinants efficiently, as $$det(A) = det(L) det(L^⊤) = det(L)^2$$.
 
@@ -162,8 +165,13 @@ Two vectors are called **codirected** if they point in the same direction and **
 - a symmetric matrix can always be diagonalized;
 
 **Singular Value Decomposition** is a decomposition of the form $$A = U \Sigma V^{\intercal}$$:
-<p align="center"><img width="45%" height="45%" src="/assets/Algebra-for-ML/MML_SVD.png"/><br/>
-<small>image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a></small></p>
+
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/Algebra-for-ML/MML_SVD.png"/>
+
+{: style="text-align:center; font-size: small;"}
+image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
+
 - applicable to all matrices (not only square), and it always exists;
 - $$\Sigma$$ is the **singular value matrix**, a (non-square) matrix with only positive diagonal matrix with entries $$\Sigma_{ii} = \sigma_{i} \ge 0$$, and zero otherwise. $$\sigma_{i}$$ are the **singular values**. $$\Sigma$$ is unique. By convention $$\sigma_{i}$$ are ordered by value with largest at $$i=0$$;
 - $$U$$ is orthogonal and its column vectors $$u_i$$ are called **left-singular values**;
@@ -175,8 +183,11 @@ Two vectors are called **codirected** if they point in the same direction and **
 - Comparing the eigendecomposition of an s.p.d matrix ($$S = S^⊤ = PDP^⊤$$) with the corresponding SVD ($$S = UΣV^⊤$$), they are equivalent if we set $$U = P = V$$ and $$D = Σ$$;
 - matrix approximation/compression is achieved by reconstructing the original matrix using less singular values $$\sigma$$. In practice, for a rank-$$k$$ approximation: $$\hat{A(k)} = \sum_{i=1}^{k} \sigma_i u_i v_i^{\intercal} = \sum_{i=1}^k \sigma_i A_i$$:
 
-<img width="43%" height="43%" src="/assets/Algebra-for-ML/SVD_example_2.png"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="/assets/Algebra-for-ML/SVD_example.png"/><br/>
-<small>**Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequential transformations. TThe SVD of a matrix can be interpreted as a decomposition of a corresponding linear mapping into three operations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$. The third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: example of application of SVD. Image sources: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a> and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a></small>
+{: style="text-align:center; font-size: small;"}
+<img width="43%" height="43%" src="/assets/Algebra-for-ML/SVD_example_2.png"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="/assets/Algebra-for-ML/SVD_example.png"/>
+
+{: style="text-align:center; font-size: small;"}
+**Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequential transformations. TThe SVD of a matrix can be interpreted as a decomposition of a corresponding linear mapping into three operations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$. The third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: example of application of SVD. Image sources: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a> and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a>
 
 **Eigenvalue Decomposition vs. Singular Value Decomposition**:
 - The SVD always exists for any matrix. The ED is only defined for square matrixes and only exists if we can find a bases of the eigenvectors in $$\mathbb{R}^n$$;
@@ -204,8 +215,9 @@ The **Newton's method** is a root-finding algorithm which produces successively 
 - the minimum of a function can be found by computing the root of the derivative ie: $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$.
   - The division is not defined, so we replace it by the multiplication by the inverse i.e. $$x_{n+1}=x_{n}- f'(x_{n}) \, f''(x_{n})^{-1}$$.
 
-  <img width="45%" height="45%" src="/assets/Algebra-for-ML/newton_method.gif"/><br/>
-  <small>(source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)</small>
+  <img width="45%" height="45%" src="/assets/Algebra-for-ML/newton_method.gif"/>
+
+  (source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)
 
 
 The **gradient** of **Jacobian** or $$\triangledown_x f(x)$$ of function $$f : \mathbb{R}^n \rightarrow \mathbb{R}^n$$ is the $$m \times n$$ matrix of *partial* derivatives per variable $$\frac{df_i(x)}{x_j}$$ for function $$i$$ and variable $$j$$ iterators. Useful rules in partial differentiation:
@@ -229,13 +241,15 @@ The output $$y$$ of a $$K$$-deep DNN is computed as: $$ y = (f_K ◦ f_{K−1} �
 
 Backpropagation is a special case of the **automatic differentiation** algorithm, a techniques to evaluate the gradient of a function by working with intermediate variables and dependencies and applying the chain rule. Example: 
 
-  <img width="55%" height="55%" src="/assets/Algebra-for-ML/backprop.png"/><br/>
-  <small>(source: section 5.6, <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)</small>
+  <img width="55%" height="55%" src="/assets/Algebra-for-ML/backprop.png"/>
+
+  (source: section 5.6, <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 - "Writing out the gradient in this explicit way is often impractical since it often results in a very lengthy expression for a derivative. In practice, it means that, if we are not careful, the implementation of the gradient could be significantly more expensive than computing the function, which imposes unnecessary overhead."
 - If we use instead the automatic differentiation algorithm, we can do a *forward* pass efficiently by reutilizing intermediatte results, and can break the *back propagation* algorithm into partial derivatives that propagate backwards on the graph:
 
-  <img width="57%" height="57%" src="/assets/Algebra-for-ML/autodiff.png"/><br/>
-  <small>(source: adapted from example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)</small>
+  <img width="57%" height="57%" src="/assets/Algebra-for-ML/autodiff.png"/>
+
+  (source: adapted from example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 
 
 ### Continuous Optimization
@@ -244,7 +258,7 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
 - **Gradient Descent**: an optimization method to minimize an $$f$$ function iteratively. For iteration $$i$$ and step-size $$\gamma$$:
   - $$x_{i+1} = x_t − γ((∇f)(x_i))^{\intercal}$$, 
 - **Gradient Descent with Momentum**: stores the value of the update $$\Delta x_i$$ at each iteration $$i$$ to determine the next update as a linear combination of the current and previous gradients:
-  - $x_{i+1} = x_i − γ_i((∇f)(x_i))^{\intercal} + α∆x_i$
+  - $$x_{i+1} = x_i − γ_i((∇f)(x_i))^{\intercal} + α∆x_i$$
   - where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^{\intercal}$$ and $$\alpha \in [0,1]$$;
      - $$\alpha$$ is a hyper-parameter (user defined), close to $$1$$. If $$\alpha=0$$, this performs regular Gradient Descent;
 - **Stochastic Gradient Descent**: a computationally-cheaper and a noisy approximation of the gradient descent that only takes a subset of inputs at each interation; 

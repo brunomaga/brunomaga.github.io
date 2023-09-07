@@ -8,7 +8,6 @@ tags: [machinelearning]
 
 In our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}), we discussed different techniques and levels of parallelism (model, data, pipeline, CPU offloading) and showed that efficient parallelism (with almost-linear scaling) at scale is possible in Machine Learning problems. However, recursive models --- such as the ones used in translation and text interpretation tasks --- are not easy to parallelize. In this post we explain why.
 
-
 ## Encoder-Decoder and Sequence-to-Sequence
 
 The Encoder-Decoder (original paper [Sequence to Sequence Learning with Neural Networks (Google, arXiv)](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)) is an AutoEncoder model that learns an encoding and a decoding task applied to two sequences, i.e. it trains for a sequence-to-sequence task such as the translation of a sentence from a given language to a target language. The learning mechanism is a two-phase recursive algorithm, for the encoder and decoder respectively, where each phase is a sequence of iterations over a recursive neural network.
@@ -23,12 +22,11 @@ The structure of its Recursive Deep Neural Network (RNN) is as follows:
 
 This structure is easily represented by the following picture:
 
-<p align="center">
-<br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/Encoder_Decoder.png"/><br/>
-<br/><small>The recursive deep neural network trained on each step of the encoder-decoder architecture. The blue area represent input neurons. The green area represents a single hidden layer formed by the states of the GRU/LSTM neurons of the RNN. The red area represents the model output. The concatenation of the hidden layer of the previous iteration and the current iteration's input are used as model input.
-</small>
-</p>
+{: style="text-align:center;"}
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/Encoder_Decoder.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The recursive deep neural network trained on each step of the encoder-decoder architecture. The blue area represent input neurons. The green area represents a single hidden layer formed by the states of the GRU/LSTM neurons of the RNN. The red area represents the model output. The concatenation of the hidden layer of the previous iteration and the current iteration's input are used as model input. 
 
 The training follows with an encoding and decoding phase:
 - During the encoding, the RNN processes all the words on the input sequence iteratively, and reutilizes (concatenates) the hidden state of an iteration as input of the next one. The output of the RNN is discarded, as we are simply training the hidden states. When all words have been processed, the hidden state of the RNN is past as input to the first iteration of the decoder;
@@ -36,12 +34,12 @@ The training follows with an encoding and decoding phase:
 
 This algorithm can be illustrated as:
 
-<p align="center">
-<br/>
-<img width="90%" height="90%" src="/assets/AI-Supercomputing/Encoder_Decoder_2.png"/><br/>
-<br/><small>The workflow of an encoder-decoder architecture training by learning the translation of the english sentence "Hello World." to the Frence sentence "Bonjour le monde." .
-</small>
-</p>
+{: style="text-align:center;"}
+<img width="90%" height="90%" src="/assets/AI-Supercomputing/Encoder_Decoder_2.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The workflow of an encoder-decoder architecture training by learning the translation of the english sentence "Hello World." to the Frence sentence "Bonjour le monde.".
+
 
 Two relevant remarks about the Encoder-Decoder architecture:
 - Once the network is trained, the translation of a new sentence is executed by running encoder iterations until the flag *EOS* is output;
@@ -60,13 +58,14 @@ Parallelism, scaling and acceleration of such sequence-to-sequence models is an 
 Note: the original Transformer paper is also detailed in the section <a href="{{ site.publications_permalink }}">publications bookmark</a>.
 
 In 2017 the staff at Google introducted the Transformer (original paper [Attention is all you need (2017, Google, Arxiv)](https://arxiv.org/abs/1706.03762)), overcoming many of the previous issues, while demonstrating better results. The transformer architecture is the following:
-<p align="center">
-<br/>
-<img width="35%" height="35%" src="/assets/AI-Supercomputing/transformer.PNG"/><br/>
-<br/><small>The transformer architecture. Grey regions represent the Encoder (left) and Decoder (right) architectures.
-<br/>Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
-</small>
-</p>
+
+{: style="text-align:center;"}
+<img width="35%" height="35%" src="/assets/AI-Supercomputing/transformer.PNG"/>
+
+{: style="text-align:center; font-size: small;"}
+The transformer architecture. Grey regions represent the Encoder (left) and Decoder (right) architectures.
+Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
+
 
 The left and right hand side components refer to the encoder and decoder, specifically.
 We will describe these components in the next sections, and ommit the implementation details to focus on computational complexity. If you're curious about its implementation, have a look at [The Annotated Transformer](https://nlp.seas.harvard.edu/2018/04/03/attention.html).
@@ -76,7 +75,7 @@ We will describe these components in the next sections, and ommit the implementa
 The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes and circles in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding position $$d$$ of a given word in the position $$pos$$ of a sentence is:
 
 $$
-PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \,\text{ for an even position $d$, and}
+PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \,\text{ for an even position} $$d$$ \text{, and}
 $$
 
 $$
@@ -85,12 +84,11 @@ $$
 
 In practice, the embedding is given by the $$sine$$ and $$cosine$$ waves with a different frequency and offset for each dimension. As an example, for a word with positioning $$pos$$ (x axis), then the values at dimensions $$4$$, $$5$$, $$6$$ and $$7$$ is:
 
-<p align="center">
-<br/>
-<img width="60%" height="60%" src="/assets/AI-Supercomputing/transformer-embedding.png"/><br/>
-<br/><small>The output of the positional encoding in the transformer architecture, for dimensions 4 to 7 of the embedding array, for a word with a sentence-positioning related to the x axis. Source: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
-</small>
-</p>
+
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/AI-Supercomputing/transformer-embedding.png"/>
+
+The output of the positional encoding in the transformer architecture, for dimensions 4 to 7 of the embedding array, for a word with a sentence-positioning related to the x axis. Source: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
 
 #### Attention Mechanism
 
@@ -98,13 +96,11 @@ The main component of the transformer is the attention mechanism, that determine
 
 Let's look at a single head of attention mechanism for now. Take the sentence of length $$N$$ words, how is each word related to every other word on that sentence? The output of a single attention mechanism is then the $$N \times N$$ matrix storing these inter-word importance metric. Here's an example:
 
-<p align="center">
-<br/>
-<img width="40%" height="40%" src="/assets/AI-Supercomputing/transformer_attention.PNG"/><br/>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="40%" height="40%" src="/assets/AI-Supercomputing/transformer_attention.PNG"/>
 
-<small>**Caption:** The attention mechanism output. For the sentence of length $$N=4$$ "The big red dog" the output at every row of the attention matrix is the normalized relevance metric of that word to every other word in the sentence. Source: unknown.
-</small>
+{: style="text-align:center; font-size: small;"}
+The attention mechanism output. For the sentence of length $$N=4$$ "The big red dog" the output at every row of the attention matrix is the normalized relevance metric of that word to every other word in the sentence. Source: unknown. 
 
 How does this mechanism work? According to the paper, each attention head is formulated as:
 
@@ -126,31 +122,15 @@ $$
 
 The term $$ \frac{1}{\sqrt{D^{QK}}} $$ helps keeping the range of values roughly unchanged even for large $$D^{QK}$$. For each query, the final value is computed for as a weighted sum of the input values by the attention scores as: $$Y_q = \sum_k A_{q,k} \, V_k $$. 
 
-<p align="center">
-<img width="50%" height="50%" src="/assets/AI-Supercomputing/transformer_attention_lbdl.png"/> <br/>
-</p>
+{: style="text-align:center;"}
+<img width="50%" height="50%" src="/assets/AI-Supercomputing/transformer_attention_lbdl.png"/>
 
-<small>**Caption:** The attention operator can be interpreted as matching every query $$Q_q$$ with all the keys $$K_1, ..., K_{N^{KV}}$$ to get normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averaging the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute the resulting $$Y_q$$ (right). Source: <a href="{{ site.resources_permalink }}">the little book of deep learning</a>.
-</small>
+{: style="text-align:center; font-size: small;"}
+The attention operator can be interpreted as matching every query $$Q_q$$ with all the keys $$K_1, ..., K_{N^{KV}}$$ to get normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averaging the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute the resulting $$Y_q$$ (right). Source: [the little book of deep learning]({{ site.resources_permalink }}). 
+
 
 Notice that in the transformer diagram, each attention module has three inputs (arrows) referring to these three variables. The attention mechanism at the start of each encoder and decoder is retrieving keys, values and queries from its own input, learning the context of the source and target languages, respectively. However, in one occurence of the attention mechanism, the keys and values are provided by the encoder, and the query by the decoder, relating to the module that is trained for the translation at hand. 
 
-
-
-<!--
-The technique used and the main component of the attention mechanism is the **scaled dot-product** $QK^T$. The dot product of two vectors is computed as $a . b = \mid \mid a \mid \mid \, . \, \mid \mid b \mid \mid \, cos\, \theta_{ab}$, and provides the cosine of the angle between two vectors. Therefore, if two vectors have a simillar representation in space, the angle formed between them is small and its cosine is large. Here's a graphical representation of this logic:
-
-
-<p align="center">
-<br/>
-<img width="40%" height="40%" src="/assets/AI-Supercomputing/Transformer-Attention-Mech-dot-product.png"/>
-
-<small>An example of the dot-product method inside the attention mechanism, applied to a mapping of 4 key vectors $K_1$ to $K_4$ and a query vector $Q$. Left: a graphical representation of the query vector and the key vectors. Right: the angle and cosine of the angles formed between query and vectors.
-</small>
-</p>
-
-The logic is the following: similar vectors yield small angle-cosine values. These values are then scaled by $\sqrt{d_k}$ by the attention mechanism, introduced for numerical stability (detailed in the paper). The output is then past to a $softmax$ function that normalizes the vector and converts into a probability distribution, and finally multiplied by $V$ to retrieve the values scaled to the probability distribution of a given key. In practice, this can be interpreted as an implementation of a key-value store found in regular programming languages (on a discrete set of values), but on a continuous space. I.e. instead of outputting the value in a given position in a map related to the query, it outputs the probability of each value to relate to a given query, and retrieves all values and their respective importance, based on that query.
--->
 
 Finally, the multi-head attention mechanims combines all attention mechanism modules, and is defined as:
 
@@ -163,12 +143,12 @@ I.e. it's a concatenation of all attention heads, and the parameters learnt are 
 
 The **Masked Multi-head Attention** component on the decoder is similar to the regular MHA, but replaces the top diagonal of the attention mechanism matrix by zeros, to hide next word from the model. Decoding is performed with a word of the output sequence of a time, with previously seen words added to the attention array, and the following words set to zero. Applied to the previous example, the four iterations are: 
 
-<p align="center">
-<br/>
-<img width="30%" height="30%" src="/assets/AI-Supercomputing/transformer_attention_masked.png"/><br/>
-<br/><small>Input of the masked attention mechanism on the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every word iterated. The mask component of the attention mechanism refers to replacing (in the attention matrix) the position of unseen words by zero. Source: unknown.
-</small>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="30%" height="30%" src="/assets/AI-Supercomputing/transformer_attention_masked.png"/>
+
+{: style="text-align:center; font-size: small;"}
+Input of the masked attention mechanism on the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every word iterated. The mask component of the attention mechanism refers to replacing (in the attention matrix) the position of unseen words by zero. Source: unknown.
+
 
 #### Other components
 
@@ -182,13 +162,12 @@ The other components on the transformer are not unique, and have been used previ
 
 Besides the great reduction in the number of iterations on the encoder size, the authors compare the computational complexity of four comparative models:
 
-<p align="center">
-<br/>
-<img width="60%" height="60%" src="/assets/AI-Supercomputing/transformer_table.png"/><br/>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/AI-Supercomputing/transformer_table.png"/>
 
-<small><b>Caption:</b> Comparative table of computational complexity of four different learning models. Key: $$n$$: sequence length, $$d$$: representation dim., $$k$$: kernel size; $$r$$: size of neighbourhood. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
-</small>
+{: style="text-align:center; font-size: small;"}
+Comparative table of computational complexity of four different learning models. Key: $$n$$: sequence length, $$d$$: representation dim., $$k$$: kernel size; $$r$$: size of neighbourhood. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
+
 
 For the RNN used in previous Sequence-to-Sequence mechanism, the number of operations performed is in the order of $$d^2$$ multiplications (multiplication of weights in a fully-connected layer of a DNN) for each of the $$n$$ words in the sentence, therefore $$O(n^2 d)$$. On the self-attention mechanism that we discussed in the Transformer, we have several operations of the attention matrix $$n^2$$ and the key and query vectors of embedding size $$d$$, therefore yielding a complexity of $$O(n d^2)$$. 
 
@@ -206,14 +185,11 @@ Attending to the previous topic, the main rationale of the Transformer's Encoder
 
 So, the encoder is efficiently trained and learns a *context*. So the main question is "Can we use only the Encoder's context and learn complex tasks?". This led to the introduction of the BERT model (original paper [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google AI](https://arxiv.org/abs/1810.04805)). BERT is a stack of Transformer encoders that Learns language contexts and performs interpretation tasks.
 
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/AI-Supercomputing/BERT.PNG"/>
 
-<p align="center">
-<br/>
-<img width="80%" height="80%" src="/assets/AI-Supercomputing/BERT.PNG"/><br/>
-
-<small>The BERT model, as a stack of Transformer encoders.
-</small>
-</p>
+{: style="text-align:center; font-size: small;"}
+The BERT model, as a stack of Transformer encoders.
 
 The training is performed in two phases. A pre-training phase learns the contexts of the language. And a fine-tuning phase adapts the trained model to the task being solved. Let's start with the pre-training.
 
@@ -222,7 +198,6 @@ The training is performed in two phases. A pre-training phase learns the context
 The pre-training phase is based on the simultaneous resolution of two self-supervised prediction tasks:
 1. Masked language model: given a sentence with works replaced with a flag (or masked), train it against the same sentence with those words in place;
 2. Next sentence prediction: Given two sentences, train the model to guess if the second sentence follows from the first or not;
-
 
 Example of two training examples:
 ```
@@ -235,13 +210,11 @@ Output = [NotNext] the man went to the store [SEP] penguins like to jump [SEP]
 
 Note that the Yes/No flag related to the second task is past as the first embedded word in the output. The layout of the input data is:
 
-<p align="center">
-<br/>
-<img width="60%" height="60%" src="/assets/AI-Supercomputing/BERT_input.PNG"/><br/>
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/AI-Supercomputing/BERT_input.PNG"/>
 
-<small>The input of the BERT model. Position Emdebbings are similar to the transformer model, discussed above. Segment embeddings flag each word as part of the first or second sentence. Token embedding are the text-embeddings of the input data. The datapoint being input to the model is the concatenation of these three embeddings. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
-</small>
-</p>
+{: style="text-align:center; font-size: small;"}
+The input of the BERT model. Position Emdebbings are similar to the transformer model, discussed above. Segment embeddings flag each word as part of the first or second sentence. Token embedding are the text-embeddings of the input data. The datapoint being input to the model is the concatenation of these three embeddings. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
 
 As a side note, the authors trained this model on BooksCorpus (800M words) and English Wikipedia (2,500M words), using 24 BERT layers, batches of 256 sentences with 512 tokens each.
 
@@ -261,16 +234,14 @@ In the original paper, the authors demonstrated this model successfully being ap
 
 The input and output models of the fine-tuning of these tasks are illustrated in the following picture: 
 
-<p align="center">
-<br/>
-<img width="60%" height="60%" src="/assets/AI-Supercomputing/BERT_tasks.png"/><br/>
-<br/><small>Input and output of the fine-tuning phase of a BERT network, applied to four different interpretation tasks.
-<br/>Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
-</small>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/AI-Supercomputing/BERT_tasks.png"/>
+
+{: style="text-align:center; font-size: small;"}
+Input and output of the fine-tuning phase of a BERT network, applied to four different interpretation tasks.
+Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
 
 As a final note, information encoded by BERT is useful but, on its own, insufficient to perform a translation task. However, "BERT pre-training allows for a better initialization point for [an] Neural Machine Translation model" (source: [Clichant et al.,On the use of BERT for Neural Machine Translation, arXiv](https://arxiv.org/abs/1909.12744)). 
-
 
 ## Sharding
 
@@ -310,15 +281,4 @@ Many use cases will require model size to be small for deployment (particularly 
 - [Knowledge distillation](https://research.google/pubs/pub44873/), a special case of model compression, that transfer learning from a larger to a smaller model. This allows the smaller model to be smaller and lighter, and *some times* of increased performance;
 - [Checkpointing](https://arxiv.org/abs/2012.00825) to avoid storing all activations of intermediate layers --- required for back-propagation --- *in lieu* of on-the-fly computation of activations from a previous checkpoint (layer). The ammount of checkpointed layers guides the tradeoff between runtime increase and memory decrease; 
 - [Neural architecture search (NAS)](https://en.wikipedia.org/wiki/Neural_architecture_search), a method to search for the parameters that define the architecture of the models (e.g. number of layers, layer sizes, etc). I have no applied exposure to this method, but found [this paper](https://arxiv.org/abs/2301.08727) to be very insightful in surveying existing methods;
-
-[//]: <> #### Superlinear speed-up
-
-[//]: <> <p align="center">
-[//]: <> <br/>
-[//]: <> <img width="45%" height="45%" src="/assets/AI-Supercomputing/ZeRO_superlinear_speedup_60B_parameter.PNG"/><br/>
-[//]: <> <br/><small>The transformer  attention mechanism masked.</a>
-[//]: <> </small>
-[//]: <> </p>
-
-[//]: <> super-linear speedup in the regime of 64-400 GPUs. This is a property of ZeRO-DP which reduces the memory footprint of the model states as we increase the DP degree, allowing us to fit larger batch sizes per GPU"
 
