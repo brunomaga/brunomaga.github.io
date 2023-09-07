@@ -33,9 +33,11 @@ The projected effects span all wage levels, with higher-income jobs potentially 
 
 
 <br/>
-#2023 [Segment Anything, Meta AI Research](https://arxiv.org/abs/2304.02643)
+# 2023 [Segment Anything, Meta AI Research](https://arxiv.org/abs/2304.02643)
 
+The Segment Anything (SA) project is a task, model, and dataset for image segmentation. SA built the largest segmentation dataset to date (by far), with over 1 billion masks on 11M images. The model is designed to be promptable, to allow zero-shot transter to new image distributions and tasks. The authors clame that its zero-shot performance on new datasets is impressive – competitive or even superior to prior fully supervised results. SA and the dataset are released at [https://segment-anything.com](https://segment-anything.com)
 
+<img width="80%" height="80%" src="/assets/publications/segment_anything.png"/>
 
 <br/>
 # 2023 [Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](https://arxiv.org/abs/2307.08621)
@@ -56,7 +58,7 @@ two modules: a multi-scale retention (MSR) module, and a feed-forward network (F
 
 Finally, the model uses $$h = d_{model}/d$$ retention heads in each layer, where $$d$$ is the head dimension. The heads use different parameter matrices $$W_Q, W_K, W_V \in \mathbb{R}^{d \times d}$$ and scalar $$γ$$ per head. The overall architecture for a given layer $$l$$ of the RetNet is then $$Y_l = MSR(LayerNorm(X_l)) + X_l$$ and $$X_{l+1} = FFN(LN(Y_l)) + Y_l$$, ie similar to a regular transformer but replacing the attention by a retention head.
 
-<img width="68%" height="68%" src="/assets/publications/RetNet.png"/>
+<img width="80%" height="80%" src="/assets/publications/RetNet.png"/>
 
 
 <br/>
