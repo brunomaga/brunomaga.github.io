@@ -14,12 +14,12 @@ In our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputin
 The Encoder-Decoder (original paper [Sequence to Sequence Learning with Neural Networks (Google, arXiv)](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)) is an AutoEncoder model that learns an encoding and a decoding task applied to two sequences, i.e. it trains for a sequence-to-sequence task such as the translation of a sentence from a given language to a target language. The learning mechanism is a two-phase recursive algorithm, for the encoder and decoder respectively, where each phase is a sequence of iterations over a recursive neural network.
 
 The structure of its Recursive Deep Neural Network (RNN) is as follows:
-- Words are past as part of the input, represented by an embedding of dimensionality $d$;
+- Words are past as part of the input, represented by an embedding of dimensionality $$d$$;
 - The neurons used in the model are not stateless (e.g. like in a regular neuron with an activation function), but have an internal state. Two common examples are [Long Short-Term Memory neurons (LSTM)](https://en.wikipedia.org/wiki/Long_short-term_memory) and [Gated Recurrent Units (GRU)](https://en.wikipedia.org/wiki/Gated_recurrent_unit). The set of state variables of the neurons on a single are the layer's *hidden state*. In this example, as in most application, we'll focus on GRU as it includes a single state variable on each neuron (versus two on the LSTM counterpart), making it faster to train;
 - The network has three fully connected layers:
-	- an output layer of size $h$, whose output value is the embedding of the predicted/groundtruth word;
-	- a single hiddle layer of size $d$, refering to the hidden space of the current iteration;
-	- an input layer of length $h+d$ (when utilizing GRU neurons) or $2h+d$ (LSTM), referring to the concatenation of the embedding of the previous iteration's hidden space (we'll cover this next), and the embeding of the current word being input. On the first iteration, the input is initialized randomly or with a zero vector;
+	- an output layer of size $$h$$, whose output value is the embedding of the predicted/groundtruth word;
+	- a single hiddle layer of size $$d$$, refering to the hidden space of the current iteration;
+	- an input layer of length $$h+d$$ (when utilizing GRU neurons) or $$2h+d$$ (LSTM), referring to the concatenation of the embedding of the previous iteration's hidden space (we'll cover this next), and the embeding of the current word being input. On the first iteration, the input is initialized randomly or with a zero vector;
 
 This structure is easily represented by the following picture:
 
@@ -52,7 +52,7 @@ For the sake of brevity, we will ommit these details and refer you to the [Pytor
 Parallelism, scaling and acceleration of such sequence-to-sequence models is an issue. There are four main reasons that explain this:
 - encoding/decoding is a recursive algorithm, and we can't parallelize recursive iterations, as each iteration depends on the hidden state of the previous one;
 - the DNN underlying the RNN architecture has only a single layer, therefore model parallelism like pipelining (covered in our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %})) won't provide any gains;
-- the hidden layer is composed of $h$ neurons, and $h$ is usually a value small enought to allow for acceleration at the layer level (e.g. the model parallelism showned in the our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %});
+- the hidden layer is composed of $$h$$ neurons, and $$h$$ is usually a value small enought to allow for acceleration at the layer level (e.g. the model parallelism showned in the our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %});
 - input and output sequences have different lengths, and each batch needs to be a set of input and output sentences of similar lenghts, which makes the batches small and inefficient to parallelize. In practice, some batching is possible by grouping sentences first by length of the encoder inputs, and for each encoder, group by length of decoder inputs. This is however very inneficient as we require an extremmly high number of sentences so that all groups of encoder/decoder pairs are large enough to fully utilize the compute resources at every training batch. Not impossible, but very unlikely.
 
 ## Transformer 
@@ -73,7 +73,7 @@ We will describe these components in the next sections, and ommit the implementa
 
 #### Word and Positional Embeddig
 
-The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes and circles in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding position $d$ of a given word in the position $pos$ of a sentence is:
+The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes and circles in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding position $$d$$ of a given word in the position $$pos$$ of a sentence is:
 
 $$
 PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \,\text{ for an even position $d$, and}
@@ -83,7 +83,7 @@ $$
 PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right)\, \text{ otherwise.}
 $$
 
-In practice, the embedding is given by $sine$ and $cosine$  waves with a different frequency and offset for each dimension. As an example, for a word with positioning $pos$ (x axis), then the values at dimensions $4$, $5$, $6$ and $7$ is:
+In practice, the embedding is given by the $$sine$$ and $$cosine$$ waves with a different frequency and offset for each dimension. As an example, for a word with positioning $$pos$$ (x axis), then the values at dimensions $$4$$, $$5$$, $$6$$ and $$7$$ is:
 
 <p align="center">
 <br/>
@@ -94,14 +94,14 @@ In practice, the embedding is given by $sine$ and $cosine$  waves with a differe
 
 #### Attention Mechanism
 
-The main component of the transformer is the attention mechanism, that determines how the words in input and output sentences interact. In brief, it's the component that *learns* the relationship between words in such a way that it learns the relevant bits of information on each context (thus the naming *Attention* mechanism). The transformer architecture includes not one, but several of these mechanisms, executed in parallel, to allow the model to learn multiple relevant aspects of the input. This **Multi-head Attention Mechanism** solves for $n$ heads, *What part of the input should I focus on?*
+The main component of the transformer is the attention mechanism, that determines how the words in input and output sentences interact. In brief, it's the component that *learns* the relationship between words in such a way that it learns the relevant bits of information on each context (thus the naming *Attention* mechanism). The transformer architecture includes not one, but several of these mechanisms, executed in parallel, to allow the model to learn multiple relevant aspects of the input. This **Multi-head Attention Mechanism** solves for $$n$$ heads, *What part of the input should I focus on?*
 
-Let's look at a single head of attention mechanism for now. Take the sentence of length $N$ words, how is each word related to every other word on that sentence? The output of a single attention mechanism is then the $N \times N$ matrix storing these inter-word importance metric. Here's an example:
+Let's look at a single head of attention mechanism for now. Take the sentence of length $$N$$ words, how is each word related to every other word on that sentence? The output of a single attention mechanism is then the $$N \times N$$ matrix storing these inter-word importance metric. Here's an example:
 
 <p align="center">
 <br/>
 <img width="40%" height="40%" src="/assets/AI-Supercomputing/transformer_attention.PNG"/><br/>
-<br/><small>The attention mechanism output. For the sentence of length $N=4$ "The big red dog" the output at every row of the attention matrix is the normalized relevance metric of that word to every other word in the sentence. Source: unknown.
+<br/><small>The attention mechanism output. For the sentence of length $$N=4$$ "The big red dog" the output at every row of the attention matrix is the normalized relevance metric of that word to every other word in the sentence. Source: unknown.
 </small>
 </p>
 
@@ -128,7 +128,7 @@ The term $$ \frac{1}{\sqrt{D^{QK}}} $$ helps keeping the range of values roughly
 <p align="center">
 <br/>
 <img width="50%" height="50%" src="/assets/AI-Supercomputing/transformer_attention_lbdl.png"/><br/>
-<br/><small>The attention operator can be interpreted as matching every query $Q_q$ with all the keys $K_1, ..., K_{N^{KV}}$ to get normalized attention scores $A_{q,1},...,A_{q,N^{KV}}$ (left), and then averaging the values $V_1,...,V_{N^{KV}}$ with these scores to compute the resulting $Y_q$ (right).
+<br/><small>The attention operator can be interpreted as matching every query $$Q_q$$ with all the keys $$K_1, ..., K_{N^{KV}}$$ to get normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averaging the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute the resulting $$Y_q$$ (right).
 <br>Source: <a href="{{ site.resources_permalink }}">the little book of deep learning</a>.
 </small>
 </p>
@@ -157,7 +157,7 @@ $$
 MHA(K, V, Q) = [head_0,.., head_n]W^{MHA}   \,\text{ and }\,  head_i = Attention(KW^K_i, VW^V_i, QW^Q_i)
 $$
 
-I.e. it's a concatenation of all attention heads, and the parameters learnt are the weights of the keys ($W^K_i$), values ($W^V_i$) and query ($W^Q_i$) space of each head $i$, and a final transformation of the multi-head concatenation $W^{MHA}$. In terms of computational complexity, the attention mechanism on the encoder is trained on the complete input sequence at once (as illustrated in the "the big red dog" example), instead of looping through all words in the input sequence. Therefore,  **the attention mechanism replaces the recursive (RNN) iterations on an encoder, by a set of matrix-vector multiplications**.
+I.e. it's a concatenation of all attention heads, and the parameters learnt are the weights of the keys ($$W^K_i$$), values ($$W^V_i$$) and query ($$W^Q_i$$) space of each head $$i$$, and a final transformation of the multi-head concatenation $$W^{MHA}$$. In terms of computational complexity, the attention mechanism on the encoder is trained on the complete input sequence at once (as illustrated in the "the big red dog" example), instead of looping through all words in the input sequence. Therefore,  **the attention mechanism replaces the recursive (RNN) iterations on an encoder, by a set of matrix-vector multiplications**.
 
 
 The **Masked Multi-head Attention** component on the decoder is similar to the regular MHA, but replaces the top diagonal of the attention mechanism matrix by zeros, to hide next word from the model. Decoding is performed with a word of the output sequence of a time, with previously seen words added to the attention array, and the following words set to zero. Applied to the previous example, the four iterations are: 
@@ -184,13 +184,13 @@ Besides the great reduction in the number of iterations on the encoder size, the
 <p align="center">
 <br/>
 <img width="60%" height="60%" src="/assets/AI-Supercomputing/transformer_table.png"/><br/>
-<br/><small>Comparative table of computational complexity of four different learning models. Key: $n$: sequence length, $d$: representation dim., $k$: kernel size; $r$: size of neighbourhood. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
+<br/><small>Comparative table of computational complexity of four different learning models. Key: $$n$$: sequence length, $$d$$: representation dim., $$k$$: kernel size; $$r$$: size of neighbourhood. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
 </small>
 </p>
 
-For the RNN used in previous Sequence-to-Sequence mechanism, the number of operations performed is in the order of $d^2$ multiplications (multiplication of weights in a fully-connected layer of a DNN) for each of the $n$ words in the sentence, therefore $O(n^2 d)$. On the self-attention mechanism that we discussed in the Transformer, we have several operations of the attention matrix $n^2$ and the key and query vectors of embedding size $d$, therefore yielding a complexity of $O(n d^2$). 
+For the RNN used in previous Sequence-to-Sequence mechanism, the number of operations performed is in the order of $$d^2$$ multiplications (multiplication of weights in a fully-connected layer of a DNN) for each of the $$n$$ words in the sentence, therefore $$O(n^2 d)$$. On the self-attention mechanism that we discussed in the Transformer, we have several operations of the attention matrix $$n^2$$ and the key and query vectors of embedding size $$d$$, therefore yielding a complexity of $$O(n d^2)$$. 
 
-The claim is that the $O(n^2 d)$ is better than $O(n d^2)$. This sound illogical in most Machine Learning problems as typically the input size is way larger than the dimensionality of the embedding. However, remember that $n$ here is the number of words in a sentence (in the order of $n \approx 70$) and $d$ is the size of the embedding ($d \approx 2000$).
+The claim is that the $$O(n^2 d)$$ is better than $$O(n d^2)$$. This sound illogical in most Machine Learning problems as typically the input size is way larger than the dimensionality of the embedding. However, remember that $$n$$ here is the number of words in a sentence (in the order of $$n \approx 70$$) and $$d$$ is the size of the embedding ($$d \approx 2000$$).
 
 To summarize, the encoder-decoder architecture of the transformer allows a faster non-recursive training of input sequences, and a faster training of output sentences, making it much more efficient than the sequence-to-sequence approaches discussed initially.
 
