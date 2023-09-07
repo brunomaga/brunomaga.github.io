@@ -101,9 +101,10 @@ Let's look at a single head of attention mechanism for now. Take the sentence of
 <p align="center">
 <br/>
 <img width="40%" height="40%" src="/assets/AI-Supercomputing/transformer_attention.PNG"/><br/>
-<br/><small>The attention mechanism output. For the sentence of length $$N=4$$ "The big red dog" the output at every row of the attention matrix is the normalized relevance metric of that word to every other word in the sentence. Source: unknown.
-</small>
 </p>
+
+<small>**Caption:** The attention mechanism output. For the sentence of length $$N=4$$ "The big red dog" the output at every row of the attention matrix is the normalized relevance metric of that word to every other word in the sentence. Source: unknown.
+</small>
 
 How does this mechanism work? According to the paper, each attention head is formulated as:
 
@@ -126,12 +127,11 @@ $$
 The term $$ \frac{1}{\sqrt{D^{QK}}} $$ helps keeping the range of values roughly unchanged even for large $$D^{QK}$$. For each query, the final value is computed for as a weighted sum of the input values by the attention scores as: $$Y_q = \sum_k A_{q,k} \, V_k $$. 
 
 <p align="center">
-<br/>
-<img width="50%" height="50%" src="/assets/AI-Supercomputing/transformer_attention_lbdl.png"/><br/>
-<br/><small>The attention operator can be interpreted as matching every query $$Q_q$$ with all the keys $$K_1, ..., K_{N^{KV}}$$ to get normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averaging the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute the resulting $$Y_q$$ (right).
-<br>Source: <a href="{{ site.resources_permalink }}">the little book of deep learning</a>.
-</small>
+<img width="50%" height="50%" src="/assets/AI-Supercomputing/transformer_attention_lbdl.png"/> <br/>
 </p>
+
+<small>**Caption:** The attention operator can be interpreted as matching every query $$Q_q$$ with all the keys $$K_1, ..., K_{N^{KV}}$$ to get normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averaging the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute the resulting $$Y_q$$ (right). Source: <a href="{{ site.resources_permalink }}">the little book of deep learning</a>.
+</small>
 
 Notice that in the transformer diagram, each attention module has three inputs (arrows) referring to these three variables. The attention mechanism at the start of each encoder and decoder is retrieving keys, values and queries from its own input, learning the context of the source and target languages, respectively. However, in one occurence of the attention mechanism, the keys and values are provided by the encoder, and the query by the decoder, relating to the module that is trained for the translation at hand. 
 
@@ -144,7 +144,8 @@ The technique used and the main component of the attention mechanism is the **sc
 <p align="center">
 <br/>
 <img width="40%" height="40%" src="/assets/AI-Supercomputing/Transformer-Attention-Mech-dot-product.png"/>
-<br/><small>An example of the dot-product method inside the attention mechanism, applied to a mapping of 4 key vectors $K_1$ to $K_4$ and a query vector $Q$. Left: a graphical representation of the query vector and the key vectors. Right: the angle and cosine of the angles formed between query and vectors.
+
+<small>An example of the dot-product method inside the attention mechanism, applied to a mapping of 4 key vectors $K_1$ to $K_4$ and a query vector $Q$. Left: a graphical representation of the query vector and the key vectors. Right: the angle and cosine of the angles formed between query and vectors.
 </small>
 </p>
 
@@ -184,9 +185,10 @@ Besides the great reduction in the number of iterations on the encoder size, the
 <p align="center">
 <br/>
 <img width="60%" height="60%" src="/assets/AI-Supercomputing/transformer_table.png"/><br/>
-<br/><small>Comparative table of computational complexity of four different learning models. Key: $$n$$: sequence length, $$d$$: representation dim., $$k$$: kernel size; $$r$$: size of neighbourhood. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
-</small>
 </p>
+
+<small><b>Caption:</b> Comparative table of computational complexity of four different learning models. Key: $$n$$: sequence length, $$d$$: representation dim., $$k$$: kernel size; $$r$$: size of neighbourhood. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
+</small>
 
 For the RNN used in previous Sequence-to-Sequence mechanism, the number of operations performed is in the order of $$d^2$$ multiplications (multiplication of weights in a fully-connected layer of a DNN) for each of the $$n$$ words in the sentence, therefore $$O(n^2 d)$$. On the self-attention mechanism that we discussed in the Transformer, we have several operations of the attention matrix $$n^2$$ and the key and query vectors of embedding size $$d$$, therefore yielding a complexity of $$O(n d^2)$$. 
 
@@ -208,7 +210,8 @@ So, the encoder is efficiently trained and learns a *context*. So the main quest
 <p align="center">
 <br/>
 <img width="80%" height="80%" src="/assets/AI-Supercomputing/BERT.PNG"/><br/>
-<br/><small>The BERT model, as a stack of Transformer encoders.
+
+<small>The BERT model, as a stack of Transformer encoders.
 </small>
 </p>
 
@@ -235,7 +238,8 @@ Note that the Yes/No flag related to the second task is past as the first embedd
 <p align="center">
 <br/>
 <img width="60%" height="60%" src="/assets/AI-Supercomputing/BERT_input.PNG"/><br/>
-<br/><small>The input of the BERT model. Position Emdebbings are similar to the transformer model, discussed above. Segment embeddings flag each word as part of the first or second sentence. Token embedding are the text-embeddings of the input data. The datapoint being input to the model is the concatenation of these three embeddings. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
+
+<small>The input of the BERT model. Position Emdebbings are similar to the transformer model, discussed above. Segment embeddings flag each word as part of the first or second sentence. Token embedding are the text-embeddings of the input data. The datapoint being input to the model is the concatenation of these three embeddings. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
 </small>
 </p>
 
