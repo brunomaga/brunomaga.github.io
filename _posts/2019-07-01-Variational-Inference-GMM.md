@@ -97,7 +97,7 @@ KL (q(z) || p(z \mid x))
   & = \int q(z) \log \frac{q(z)p(x)}{p(z, x)} dz  & \text{(definition of conditional prob.)}\\
   & = \int q(z) \left( \log p(x) + q(z) \log \frac{q(z)}{p(z, x)} \right) dz  & \text{(expanding } \log \text{)}\\
   & = \log p(x) \int q(z) dz + \int q(z) \log \frac{q(z)}{p(z, x)} dz  & \text{(definition of conditional prob.)}\\
-  & = \log p(x) - \int q(z) \log \frac{p(z, x)}{q(z)} dz  & \text{(negate log; } q(z) \text{ is a dist. thus } \int q(z) dz =1 \text{)}}\\
+  & = \log p(x) - \int q(z) \log \frac{p(z, x)}{q(z)} dz  & \text{(negate log; } q(z) \text{ is a dist. thus } \int q(z) dz =1 \text{)}\\
 \end{align*}
 $$
 

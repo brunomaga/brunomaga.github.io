@@ -27,6 +27,7 @@ When a matrix is stored in a single compute node, transposition is easy and foll
 Given a dense matrix representation of a graph connectivity $$E$$, the algorithm to compute $$G^{\star}_{r} = (V_{r}, E^{\star}_{r})$$ for every rank $$r$$, requires only the computation of the matrix $$M^{T}_{r}$$ for the connectivity $$E^{\star}_{r}$$. Note that vertices information is local to a compute node, and they are still resident in the same memory location after transpose,
  therefore the nodes information $$V$$ is the same for $$G$$ and $$G^{\star}$$. The implementation of the distributed transpose is well known for a **dense** connectivity matrix, and available via the `MPI_Alltoall` collective call, that inputs (outputs) an array of elements, the size of the array, and datatype of the elements to be sent (received).
 
+{: style="text-align:center; font-size: small;"}
 <img width="50%" height="50%" src="/assets/Matrix-Transpose/all_to_all.jpg"><span class="text-secondary">
 
 {: style="text-align:center; font-size: small;"}
@@ -73,7 +74,7 @@ The **local transpose** of a matrix $$M$$ represented by the concatenation of $$
 $$
 LocalTranspose(M)_{i j} =\left\{
   \begin{array}{@{}ll@{}}
-    \big( M^T_1 \| M^T_2 \| ... \| M^T_R \big)_{j i}& \text{, if } $$M$$ \text{ is in row view }\\
+    \big( M^T_1 \| M^T_2 \| ... \| M^T_R \big)_{j i}& \text{, if } M \text{ is in row view }\\
     \big( M^T_1 // M^T_2 // ... // M^T_R \big)_{j i}& \text{, otherwise}
   \end{array}\right.
 $$
@@ -85,7 +86,7 @@ The **view swap** of a distributed matrix that alternates between a data represe
 $$
 ViewSwap(M)_{i j} =\left\{
   \begin{array}{@{}ll@{}}
-    \big( M_1 \| M_2 \| ... \| M_R \big)_{i j}& \text{, if } $$M$$ \text{ is in row view}\\
+    \big( M_1 \| M_2 \| ... \| M_R \big)_{i j}& \text{, if } M \text{ is in row view}\\
     \big( M_1 //  M_2 //  ... //  M_R \big)_{i j}& \text{, otherwise}
   \end{array}\right.
 $$
@@ -98,6 +99,7 @@ $$.
 
 This information is required for the correct matching of column/row id to target rank, used in the sparse transposition steps that follow. The view swap algorithm follows then in two communication steps. The first step performs a dense matrix transpose to send/receive the number of elements to/from other ranks. The second step performs a selective scatter-gather (`MPI_Alltoallv`) that delievers the elements to the final rank.
 
+{: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/Matrix-Transpose/matrix-transposition-crs.png">
 
 A memory realignment based on colum id and row id leads to the final distributed matrix dataset. To finalize, the view swap method is also an involutory function, as each view swap performs two involutory transpose operations, and two consecutive view swaps yield the initial dataset.
@@ -128,6 +130,7 @@ We start by the definition of a data format that can allocate high cardinality e
 
 The transpose algorithm follows then in three steps. First, each compute node (rank) collects the metadata of its own sub-matrix, composed by the set of triplets on the form [ row id, column id, number of elements], indicating the row colum and dimensionionality of each cell. Then they perform a **local transposition** of their own data, by reordering their triplets by colum and row id. This sequence illustrates the first step:
  
+{: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/Matrix-Transpose/xcrs_transpose_1.png">
 
 The second step starts the **view swap** method. All ranks pack and exchange (i.e. an all-to-all communication) the set of triplets to the correct recipient of the cell in the final tranposed matrix. In practice, the previous local transpose operation already sorted each sub-matrix by columns (i.e by rows of the final transposed dataset), therefore the triplets are already grouped by destination rank. More importantly: the matrix composed of all triplets across all ranks is a distributed matrix of fixed element size per cell (a tuplet of fixed size). Therefore, to perform this exchange we execute the same distributed transpose that we presented above in section *How to Transpose it?*. After the exchange, all ranks will hold the triplets of the metadata (*but not the data yet*) of the final matrix structure:   
