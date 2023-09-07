@@ -324,6 +324,15 @@ for generating useful multi-hop connections".
 
 
 <br/>
+# 2019 [No Language Left Behind: Scaling Human-Centered Machine Translation, Meta, Berkeley and Johns Hopkins](https://arxiv.org/abs/2207.04672)
+
+No Language Left Behing (NLLB) is an open-source projects that provides an ML model capable of delivering igh-quality translations between 200 languages—including low-resource languages like Asturian, Luganda, Urdu and more. The model (NLLB-200) is a conditional
+model based on Sparsely Gated Mixture of Experts that is "trained on data obtained
+with novel and effective data mining techniques tailored for low-resource languages". It also presents "architectural and training improvements to counteract overfitting while training on thousands of tasks".
+- Background (wikipedia): Mixture of experts (MoE) is a machine learning technique where multiple expert networks (learners) are used to divide a problem space into homogeneous regions. It differs from ensemble techniques in that typically only one or a few expert models will be run, rather than combining results from all models. An example from computer vision is combining one neural network model for human detection with another for pose estimation.
+
+
+<br/>
 # 2019 [Generating Long Sequences with Sparse Transformers, OpenAI](https://arxiv.org/abs/1904.10509)
 
 The paper introduces several sparse factorizations of the attention matrix that reduce the quadratic complexity on memory and runtime Transformers to $$O(n \sqrt{n})$$. It also allows for larger sequences. These work by separating the full attention computation into several faster attention operations which, when combined, can **approximate the dense attention** operation.  The authors claim that sparsity in attention is a natural pattern and show (by visual inspection) various examples where  most layers had sparse attention patterns across most data points, suggesting that adding sparsity to the attention would not signficantly affecting performance. In other layers, however, they noticed global patterns and data-dependent sparsity, whose performance could be affected by sparsity in the attention matrix.
