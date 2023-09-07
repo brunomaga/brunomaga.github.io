@@ -166,7 +166,7 @@ Now we can solve via Gradient descent:
 - with $$w \propto sign [ k(w^T z)] [ E [ z(w^T z)^3 ] - 3w ] $$. 
 
 Or... because the algorithm converges when $$w \propto \Delta w$$, and  $$w$$ and $$-w$$ are equivalent, by the **FastICA** as:
-- $$w \leftarrow E [ z ( w^T z)^3 ] - 3w$$
+- $$w \leftarrow E [ z ( w^T z)^3 ] - 3w$$.
 
 As a final remark, it is relevant to mention that *kurtosis is very weak with outliers because is a fourth order function*. An alternative often used method is the Neg-entropy, robust for outliers. I'll ommit it for brevity. If you're interested on details, check the [original lecture notes](https://www.slideshare.net/yokotatsuya/independent-component-analysis-11359849).
 

@@ -14,7 +14,7 @@ However, this is not a property of the Gaussian distribution only. In fact, most
 Probability distributions describe the probabilities of each outcome, with the common property that the probability of all events adds up to 1. They can also be classified in two subsets: the ones described by a probability **mass function** if specified for discrete values, or probability **density functions** if described within some continuous interval. There are dozens (hundreds?) of different distributions, even though only 15 of them are often mentioned and used, and have some kind of relationship among themselves: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="50%" height="50%" src="/assets/Exponential-Family-Distributions/common_distributions.png"/>
+<img width="70%" height="70%" src="/assets/Exponential-Family-Distributions/common_distributions.png"/>
 
 {: style="text-align:center; font-size: small;"}
 15 most common probability distributions and their relationships.
@@ -128,10 +128,10 @@ p(x \mid \mu, \sigma ) & = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \
 $$
 
 where:
-- $$h(x) = \frac{1}{ \sqrt{2 \pi}}$$
-- $$T = { x \choose x^2 }$$ 
-- $$\eta(\theta) = { \mu/(\sigma^2) \choose -1/(2\sigma^2) }$$ 
-- $$A(\eta) = \frac{\mu^2}{2\sigma^2} + \log \sigma = - \frac{ \eta^2_1}{4 \eta_2} - \frac{1}{2} \log(-2\eta_2)$$
+- $$h(x) = \frac{1}{ \sqrt{2 \pi}}$$,
+- $$T = { x \choose x^2 }$$,
+- $$\eta(\theta) = { \mu/(\sigma^2) \choose -1/(2\sigma^2) }$$, 
+- $$A(\eta) = \frac{\mu^2}{2\sigma^2} + \log \sigma = - \frac{ \eta^2_1}{4 \eta_2} - \frac{1}{2} \log(-2\eta_2)$$,
 
 We will now use the first and second derivative of $$A(x)$$ to compute the mean and the variance of the sufficient statistic $$T(x)$$:
 
@@ -170,9 +170,9 @@ p(x, \alpha) & = \alpha^x (1-\alpha)^{1-x} \hspace{0.5cm}, x \in \{0,1\} \\
 $$
 
 where:
-- $$h(x) = 1$$
-- $$T(x) = x$$
-- $$\eta = \log \frac{\alpha}{1-\alpha}$$
+- $$h(x) = 1$$,
+- $$T(x) = x$$,
+- $$\eta = \log \frac{\alpha}{1-\alpha}$$,
 - $$A(\eta) = \log ( 1+e^\eta)$$.
 
 We now compute the mean of $$T(x)$$ as:
@@ -417,7 +417,7 @@ $$
 & \frac{d}{d \eta} lik(\eta \mid X) = 0 \\
 \Leftrightarrow & \sum_{i=1}^N T(x_i) - N \nabla_\eta A (\eta) =0 \\ 
 \Leftrightarrow & \nabla_\eta A (\eta) = \frac{1}{N} \sum_{i=1}^N T(x_i)\\
-\Leftrightarrow & \mu_{MLE} = \frac{1}{N} \sum{i=1}^N T(x_n) & \text{(from above:  } \frac{dA(\eta)}{d \eta} = E[T(X)]$$ and $$E[T(X)] = \mu \text{)}\\
+\Leftrightarrow & \mu_{MLE} = \frac{1}{N} \sum{i=1}^N T(x_n) & \text{(from above:  } \frac{dA(\eta)}{d \eta} = E[T(X)] \text{ and } E[T(X)] = \mu \text{)}\\
 \end{align*}
 $$
 

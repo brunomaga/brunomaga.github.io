@@ -127,7 +127,7 @@ $$
 We see that the output $$ x^{(1)} $$ at position $$ [n, m] $$ only depends on the value of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. So we no longer need a fully connected network but  only the one that representes the local strucure, leading to fewer parameters to deal with. This structure implies that we should use the same filter (e.g., not only the same connection-pattern but also the same weights) at every position! This is called **weight sharing**, drastically reducing the number of parameters further. The difference between a locally/sparse connected and a fully connected is obvious:
 
 {: style="text-align:center; font-size: small;"}
-<img width="25%" height="25%" src="/assets/Deep-Neural-Networks/fully_sparse_connectivity.png">
+<img width="35%" height="35%" src="/assets/Deep-Neural-Networks/fully_sparse_connectivity.png">
 
 It is common to not only compute the output of a single filter but to use multiple filters. The various outputs are called channels. This introduces some additional parameters into the model.
 If we add several channels we do not end up with a 2D output in the next level but in fact with a 3D output. Per layer we have increasingly more channels but a smaller “footprint.” In brief, applying the local connectivity to a 2D input dataset on a *deep* neural network, we have the final structure as:
