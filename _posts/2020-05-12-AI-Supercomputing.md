@@ -59,11 +59,11 @@ We've mentioned several time the words "compute unit", "compute architecture" an
 
 The main question is: what drives GPU/TPU/IPU processor designers to lower the clockspeed of their processors and increase the number of cores, instead of just designing their chips at the same clock speed and core count as CPUs? The answer is **power consumption**, **[heat dissipation](https://en.wikipedia.org/wiki/List_of_CPU_power_dissipation_figures)** and **temperature**. In practice, to increase the clockspeed we usually reduce the transistor size thus inserting [more transistors in the same chip](https://en.wikipedia.org/wiki/Transistor_count) or placing them more tightly in the same area. This leads to an increase of power comsumption and temperature that has been observed to grow exponentially with the increase of the clockspeed: 
 
-<p align="center">
-<br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/a53-power-curve.png"/><br/>
-<br/><small>Exponential increase of power comsumption (y axis) for a linear increase of processor frequency (x axis),<br/> for processor with one to four cores (colour coded) of the Samsung Exynos 7420 processor. (source: <a href="https://www.anandtech.com/show/9330/exynos-7420-deep-dive/5">AnandTech</a>)</small>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/a53-power-curve.png"/>
+
+{: style="text-align:center; font-size: small;"}
+Exponential increase of power comsumption (y axis) for a linear increase of processor frequency (x axis), for processor with one to four cores (colour coded) of the Samsung Exynos 7420 processor. (source: <a href="https://www.anandtech.com/show/9330/exynos-7420-deep-dive/5">AnandTech</a>)
 
 Therefore, for a simillar throughput, many cores of low clock frequency yield the same results of few cores of high frequency, yet at a much lower power comsunption. Equivalently, For a fixed power consumption, one can extract more compute power from many low frequency cores than from a few high frequency cores.
 
@@ -79,7 +79,7 @@ Looking at the previous plot, we see that, to efficiently maximize GHz/FLOPs thr
 | **Graphcore IPU**   	| 1216 x 1.6Ghz [1]           	| 31.1 TFLOPS                     	| 304 MiB [2] 	|
 |---------------------	|-----------------------------	|------------------------------------	|-------------	|
 
-<br/>
+
 Some important remarks on the IPU architecture: [1] TPUs use Accumulating Matrix Product (AMP) units, allowing 16 single-precision floating point operations per clock cycle, therefore the processor is not directly comparable by looking simply at core count and clock-frequency. To learn more about Graphcore's IPU, see the technical report [Dissecting the Graphcore IPU Architecture via Microbenchmarking, Citadel Technical Report, 7 December 2019](https://www.graphcore.ai/products/ipu).
 
 One main observation derives from the previous table. Memory bandwidth increases from CPU to GPU to IPU, however its total capacity is reduced. In practice, small memory is compensated by a very low latency between processor and memory, allowing onloading of offloading of large datasets more efficiently. So how do we train large models on small memory regions?
@@ -102,23 +102,22 @@ $$
 
 The important concept here is the **composition** of the $$f$$ function throughout layers. In practice one only needs the current layer's state and previous layer output to perform the computation at every layer. This concept has been explored by the [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shiram et al)](https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf) implementations: 
 
-<p align="center">
-<br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN.png"/><br/>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN.png"/>
 
-<small>An overview of the vDNN(+) implementation on a convolutional neural network. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Blue arrows represent data flow during backward progagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
+{: style="text-align:center; font-size: small;"}
+An overview of the vDNN(+) implementation on a convolutional neural network. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Blue arrows represent data flow during backward progagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
 
 The concept is simple: we store the complete model insmall memory is compensated by a very low latency between processor and memory, allowing onloading of offloading of large datasets more efficiently. T CPU memory (or hard-drive if required), and move the active layer into GPU memory when it needs to be computed. To reduce the waiting time of pushing and pulling a layer into the GPU, a viable optimization is to copy asynchronously (ie on the background) the next layer to be computed, while computing the current layer's update. This way, when the algorithm finished to compute a given layer, it can proceed immediately to the next one as it is already available in memory, thus removing onloading waiting time.
 
 We'll start with the forward pass. Looking at the initial formulation of $$x^{(l)}$$, we can isolate which variables are used during the forward pass of a given layer. For the computation of the output of a given layer, we need the weights of the neurons in the current layer ($$W^{(l)}$$) and the outputs of neurons on the previous layer $$x^{(l-1)}$$.
 Therefore, for a given layer, the forward pass is represented as:
 
-<p align="center">
-<br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN2.png"/><br/>
-<br/><small>The forward pass on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer N) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $$x^{(l-1)}$$ (represented as X) and $$W^{(l)}$$ (as WS). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN2.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The forward pass on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer N) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $$x^{(l-1)}$$ (represented as X) and $$W^{(l)}$$ (as WS). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
 
 
 The backward propagation phase is trickier. Referring to the same DNN post, we have represented the derivative of the loss of a given neuron $$j$$ in a given layer $$l$$, on the input $$z^{(l)} = (W^{(l)})^T x^{(l-1)}$$ as $$\delta_j^{(l)}$$, where:
@@ -127,41 +126,32 @@ $$
 \delta_j^{(l)} =  \frac{\partial L_n}{\partial z_j^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} = \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
 $$
 
-[//]: ## and the final loss function over the weights as:
-[//]: #
-[//]: ## $$
-[//]: ## \frac{\partial L_n}{\partial w_{i,j}^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l)}} \frac{\partial z_k^{(l)}}{\partial w_{i,j}^{(l)}} = \delta_j^{(l)} x_j^{(l-1)}
-[//]: ## $$
-
-
 i.e., for the backward propagation, we require both the input variable $$x^{(l-1)}$$ (inside $$z_j^{(l)}$$), the weights $$W^{(l+1)}$$ and the derivatives $$\delta_j^{(l+1)}$$. This can now be represented as: 
 
-<p align="center">
-<br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN3.png"/><br/>
-<br/><small>The back propagation phase on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer 2) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $$x^{(l-1)}$$ (represented as X),  $$W^{(l+1)}$$ (as WS) and $$\delta_j^{(l+1)}$$ (as dY). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN3.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The back propagation phase on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer 2) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $$x^{(l-1)}$$ (represented as X),  $$W^{(l+1)}$$ (as WS) and $$\delta_j^{(l+1)}$$ (as dY). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
 
 
 ## Pipeline Parallelism (G-Pipe, PipeDream)
 
 Take the previous neural network with 4 layers stored across a network of processors. For simplicity, we'll call the designated compute unit as a *Worker*. If we allocate each Worker to a layer of the network, we can perform a distributed execution of the training where input and output of connecting layers are communited among the respective Workers. I.e. instead of offloading a layer at a time from GPU to CPU and do the inverse when required, we simple have a network GPUs where layears are distributed. A timeline of the execution could then be represented as:
 
-<p align="center">
-<br/>
-<img width="35%" height="35%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline.PNG"/><br/>
-<br/><small>Left-to-right timeline of a serial execution of the training of a deep/convolutional neural net divided across 4 compute units (Workers). Blue squares represent forward passes. Green squares represent backward passes and are defined by two computation steps. The number on each square is the input batch index. Black squares represent moments of idleness, i.e. worker is not performing  any computation. <br/>Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
-</small>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="35%" height="35%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline.PNG"/>
+
+{: style="text-align:center; font-size: small;"}
+Left-to-right timeline of a serial execution of the training of a deep/convolutional neural net divided across 4 compute units (Workers). Blue squares represent forward passes. Green squares represent backward passes and are defined by two computation steps. The number on each square is the input batch index. Black squares represent moments of idleness, i.e. worker is not performing  any computation. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 
 We notice that most of the available compute time is spent doing nothing. This is due to the data dependency across layers: one worker can only proceed with the forward (backward) pass when the worker with the previous (next) index has finished its computation. A possible improvement is to process a group of input batches simultaneously by using a pipelining technique. In practice, we *feed* to the neural network one group of batches (with a batch count equal to the number of workers), that are past iteratively to the model, i.e. one batch per timestep. At every iteration, a worker performs its forward (backward) pass and passes the relevant data to the worker holding the following (previous) layer of the network. Therefore, after a number of phases equal to the workers count, all workers have been allocated some computation. When all batches inside the group have their backward propagation finished, the model update is performed based on the weights (states) of all batches in the groups. This approach is detailled on the paper [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, ArXiv)](https://arxiv.org/abs/1811.06965) and can be illustrated as:
 
-<p align="center">
-<br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel.PNG"/><br/>
-<br/><small>A pipeline execution of groups of batches, computed as a forward phase of all batches in a group, followed by a backward phase of all batches in the same group. Implementation details in <a href="https://arxiv.org/abs/1811.06965">GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, ArXiv)</a>. Image source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
-</small>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel.PNG"/>
+
+{: style="text-align:center; font-size: small;"}
+A pipeline execution of groups of batches, computed as a forward phase of all batches in a group, followed by a backward phase of all batches in the same group. Implementation details in <a href="https://arxiv.org/abs/1811.06965">GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, ArXiv)</a>. Image source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 
 The downside is that the backpropagation requires information about the forward pass for each input. Thus, to save on memory requirements, the output of the forward pass (activations) is dropped as soon as it is communicated with the accelerators holding connecting layers of the model. This way it is possible to pass a much larger mini-batch. During the backward pass, those activations are computed again, when needed.
 
@@ -171,12 +161,11 @@ There's still a big limitation on the previous method: the computation is divide
 
 The following workflow illustration provides a better overview of the algorithm and its usage of compute resources:
 
-<p align="center">
-<br/>
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel_Microsoft.PNG"/><br/>
-<br/><small>A pipeline execution of a sequence of batches using the PipeDream strategy. A backward propagation of a batch is initiated as soon as its related forward pass has finished. Bacward passes are prioritized over forward passes on each worker. Implementation details and image aource: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
-</small>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel_Microsoft.PNG"/>
+
+{: style="text-align:center; font-size: small;"}
+A pipeline execution of a sequence of batches using the PipeDream strategy. A backward propagation of a batch is initiated as soon as its related forward pass has finished. Bacward passes are prioritized over forward passes on each worker. Implementation details and image aource: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 
 Where's the caveat? In fact, mixing forward and backward passes from different mini-batches lead to wrong weight updates. Therefore, the authors perform versioning of the weights (it copying different weight versions) so that the backward passes take into account the weight states relating to its epoch, not the epoch of the following forward pass. This leads to an increase in memory requirements.
 
@@ -203,13 +192,12 @@ The rationale of DDP is simple:
 2. the input dataset is distributed across all processors, by delegating different subsets of data to each processor;
 3. at the end of each forward pass, weight updates (gradients) are computed for each processor, then averaged across all processors, and the final weight update is then the reduced mean gradients. This keeps all models in synchrony throughout the whole execution.
 
-<p align="center">
-<br/>
-<img width="50%" height="50%" src="/assets/AI-Supercomputing/DNN_data_parallelism.png"/><br/>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="50%" height="50%" src="/assets/AI-Supercomputing/DNN_data_parallelism.png"/>
 
-<small>**Caption:** an illustration of DNN data parallelism on two processors $$p0$$ and $$p1$$ computing a dataset divided on two equally-sized "batches" of datapoints. Execution of both batches occurs in parallel on both processors, containing each a similar copy of the DNN model. The final weight update is provided by the averaged gradients of the models.
-</small>
+{: style="text-align:center; font-size: small;"}
+An illustration of DNN data parallelism on two processors $$p0$$ and $$p1$$ computing a dataset divided on two equally-sized "batches" of datapoints. Execution of both batches occurs in parallel on both processors, containing each a similar copy of the DNN model. The final weight update is provided by the averaged gradients of the models.
+
 
 The main advantadge of this method is the linear increase in efficiency, i.e. by doubling the amount of processors, we reduce the compute time by half, minus the communication overhead. However, it's not memory efficient, since it requires a duplication of the entire model on all compute units, i.e. increasing number of processors allows only for a speedup in solution, not on the increase of the model size.
 
@@ -231,13 +219,11 @@ To summarise, in normal executions, the final gradient of a minibatch is the ave
 
 Intra-layer parallelism is another method for parallelism where the data being distributed across different processors is not the batch dimension (as in data parallelim) or model depth dimension (e.g. pipelining), but at the parameter level instead. The most common application of this method is by *vertically* dividing and allocating to different accelerators both the input data and model layers, as in:
 
-<p align="center">
-<br/>
-<img width="55%" height="55%" src="/assets/AI-Supercomputing/DNN_model_parallelism.png"/><br/>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/DNN_model_parallelism.png"/>
 
-<small>**Caption:** a representation of (vertical) model parallelism at the layer level on a fully-connected DNN, on two processors $$p0$$ and $$p1$$. Input dataset and each layer of the model are divided and allocated to different processors. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
-</small>
+{: style="text-align:center; font-size: small;"}
+A representation of (vertical) model parallelism at the layer level on a fully-connected DNN, on two processors $$p0$$ and $$p1$$. Input dataset and each layer of the model are divided and allocated to different processors. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
 
 Looking at the previous picture, we notice a major drawback in this method. During training, the constant usage of sums of products using all dimensions on the input space will force processors to continuously communicate those variables among themselves (red lines in the picture). This creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. Moreover, since the number of weights between two layers grows quadratically with the increase of neurons (e.g. for layers with neuron count $$N_1$$ and $$N_2$$, the number of weights are $$N_1 * N_2$$ ), this method is not used *directly* on large input spaces, as the communication becomes a bottleneck: every processor needs to communicate to every other processor its own contribution of the sum of products happening at every layer.
 
@@ -260,14 +246,12 @@ This method has been detailed by [Dryden et al. (Improving Strong-Scaling of CNN
 	- input and weights during forward pass;
 	- input weights and derivatives during backward pass;
 
-<p align="center">
-<br/>
-<img width="70%" height="70%" src="/assets/AI-Supercomputing/argonne_parallel_2.PNG"/><br/>
-</p>
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/AI-Supercomputing/argonne_parallel_2.PNG"/>
 
-<small>
-<b>Caption:</b> Illustration of model parallelism applied to Convolutional Neural network. <b/>LEFT:</b> Parallelism of the pixels of an image across four processors $$p0-p3$$. <b><span style="color: red;">red box</span></b>: center of the 3x3 convolution filter; <b><span style="color: red;">red arrow</span></b>: data movement required for updating neuron in center of filter; <b><span style="color: violet;">violet region:</span></b> <i>halo region</i> formed of the elements that need to be communicated at every step. <b>RIGHT:</b> communication between processors $$p0$$ and $$p1$$. <b><span style="color: red;">Red arrow</span></b>: forward pass dependencies; <b><span style="color: blue;">blue arrow</span></b>: backward pass dependencies;
-</small>
+{: style="text-align:center; font-size: small;"}
+Illustration of model parallelism applied to Convolutional Neural network. <b/>LEFT:</b> Parallelism of the pixels of an image across four processors $$p0-p3$$. <b><span style="color: red;">red box</span></b>: center of the 3x3 convolution filter; <b><span style="color: red;">red arrow</span></b>: data movement required for updating neuron in center of filter; <b><span style="color: violet;">violet region:</span></b> <i>halo region</i> formed of the elements that need to be communicated at every step. <b>RIGHT:</b> communication between processors $$p0$$ and $$p1$$. <b><span style="color: red;">Red arrow</span></b>: forward pass dependencies; <b><span style="color: blue;">blue arrow</span></b>: backward pass dependencies;
+
 
 
 For completion, the equations of the previous picture are the following:

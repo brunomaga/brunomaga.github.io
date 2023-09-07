@@ -5,7 +5,7 @@ categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-<small>credit: most content in this post is a summary of the paper [Generative Adversarial Networks](https://arxiv.org/abs/1406.2661), published at NeurIPS 2014, by Ian Goodfellow and colleagues at the Unviersity of Montreal.</small>
+credit: most content in this post is a summary of the paper [Generative Adversarial Networks](https://arxiv.org/abs/1406.2661), published at NeurIPS 2014, by Ian Goodfellow and colleagues at the Unviersity of Montreal.
 
 The paper introduces a new generative model composed of two models trained simultaneously:
 - a generative model G that captures the data distribution; and
@@ -26,8 +26,11 @@ The discriminative model is also a multilayer perceptron.
 
 The overall structure of the generator and discriminator training can be pictured as:
 
-<p align="center"><img width="65%" height="65%" src="/assets/Generative-Adversarial-Networks/GAN.png"/><br/>
-<small>The GAN model (image credit: Benjamin Striner, lecture notes CMU 11-785)</small></p>
+{: style="text-align:center; font-size: small;"}
+<img width="65%" height="65%" src="/assets/Generative-Adversarial-Networks/GAN.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The GAN model (image credit: Benjamin Striner, lecture notes CMU 11-785)
 
 ### Loss and minimax challenge
 
@@ -35,7 +38,8 @@ We train the discriminator $$D$$ to best guess the source of the data, i.e. maxi
 
 We train the generator $$G$$ simultaneously to minimize $$1-D((G(z)))$$, i.e. be able to fake the data well enough. In practice, $$D$$ and $$G$$ are playing a two-player minimax game with value function $$V(G,D)$$:
 
-<p align="center"><img width="70%" height="70%" src="/assets/Generative-Adversarial-Networks/minimax_loss.png"/></p>
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/Generative-Adversarial-Networks/minimax_loss.png"/>
 
 The loss function is a sum of two penalization terms:
 - on the first term we optimise the discriminator, such that on the long run, we expect all real inputs (drawn from the data, ie $$x \sim p_{data}$$) to be as correct as possible;
@@ -73,5 +77,5 @@ This challenge was not part of the original publication, and it was not discover
 
 This final training algorithm is the following:
 
-<p align="center"><img width="70%" height="70%" src="/assets/Generative-Adversarial-Networks/GAN_algorithm.png"/></p>
+<img width="70%" height="70%" src="/assets/Generative-Adversarial-Networks/GAN_algorithm.png"/>
 
