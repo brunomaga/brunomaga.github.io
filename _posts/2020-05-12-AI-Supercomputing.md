@@ -20,7 +20,7 @@ In practice, guaranteeting these properties is very hard (particularly the perfe
 
 ## Linear Regression and Mutual Exclusion
 
-Take a simple example of linear regression with input variables $x$, labels $y$, learnt weights $w$ and a loss function set as the Mean Absolute Error.
+Take a simple example of linear regression with input variables $$x$$, labels $$y$$, learnt weights $$w$$ and a loss function set as the Mean Absolute Error.
 We want to minimize:
 
 $$
@@ -30,7 +30,7 @@ MAE(w)  = \frac{1}{N} \sum_{n=1}^N | y_n - f(x_n) | \text{, where } f(x_n) = \su
 $$
 
 
-To speed-up the solution, we can *parallelize* both sums in $MAE$ and $f(x_n)$ with several compute units (let's say $T$ compute threads) and decompose the computation as:
+To speed-up the solution, we can *parallelize* both sums in $$MAE$$ and $$f(x_n)$$ with several compute units (let's say $$T$$ compute threads) and decompose the computation as:
 
 $$
 \begin{align*}
@@ -39,10 +39,10 @@ MAE(w) & = MAE (w_{thread_1}) + MAE (w_{thread_2}) + ... + MAE (w_{thread_T})\\
 \end{align*}
 $$
 
-This operation is *memory-safe* for $f(x_n)$, but unsafe for $MAE(w)$. This means that all write operations (variable assignments) in $f(x_n)$ are performed on different memory positions (vector indices) while in $MAE(w)$ this is not the case. In practice, computing $f(x_n)$ requires a sum of $M$ independent products written on each index of $x$, while the final value holding $MAE(w)$ is a constant that needs to be updated with the value of every term $\|y_n - f(x_n)\|$. What happens to the execution time and final value when several threads try to write simultaneously to the memory space holding it? Let's study four options:
+This operation is *memory-safe* for $$f(x_n)$$, but unsafe for $$MAE(w)$$. This means that all write operations (variable assignments) in $$f(x_n)$$ are performed on different memory positions (vector indices) while in $$MAE(w)$$ this is not the case. In practice, computing $$f(x_n)$$ requires a sum of $$M$$ independent products written on each index of $$x$$, while the final value holding $$MAE(w)$$ is a constant that needs to be updated with the value of every term $$\|y_n - f(x_n)\|$$. What happens to the execution time and final value when several threads try to write simultaneously to the memory space holding it? Let's study four options:
 
 1. base case: no parallelism, i.e. use only a single thread. The output is correct but its computation is **slow**. This implementation is available in <a href="/assets/AI-Supercomputing/AI_SC_1.cpp">AI\_SC\_1.cpp</a>;
-2. each thread updates the MAE sum, at every update of the term $\|y_n - f(x_n)\|$. This implementation provides an almost-linear scaling of computation (there's some overhead on initiating threads). However the output is **wrong** as several memory corruptions occur when multiple threads try to update the final value (or its memory position) at the same time (<a href="/assets/AI-Supercomputing/AI_SC_2.cpp">AI\_SC\_2.cpp</a>);
+2. each thread updates the MAE sum, at every update of the term $$\mid y_n - f(x_n)\mid$$. This implementation provides an almost-linear scaling of computation (there's some overhead on initiating threads). However the output is **wrong** as several memory corruptions occur when multiple threads try to update the final value (or its memory position) at the same time (<a href="/assets/AI-Supercomputing/AI_SC_2.cpp">AI\_SC\_2.cpp</a>);
 3. same as before, however we add a *mutex* (mutual exclusion) control object. A mutex allows for a section of the code to be *locked* by a thread, in such way that no other thread  can enter it until the first thread has unlocked it. We can use it to protect the operation responsible for the memory update of the variable being accessed *concurrently* at every update operation. This method gives an accurate result, however it is **very slow**, due to the computational overhead introduced by the mutex itself (<a href="/assets/AI-Supercomputing/AI_SC_3.cpp">AI\_SC\_3.cpp</a>);
 4. finally, we try the same as before, but we compute the sums of each thread independently and perform a single concurrent memory update of the final variable once, and only at the end of the execution. This approach gives the correct result with an almost-linear scaling of the algorithm (<a href="/assets/AI-Supercomputing/AI_SC_4.cpp">AI\_SC\_4.cpp</a>);
 
@@ -72,9 +72,9 @@ The take-home message is: in regression problems, since computational reductions
 Looking at the previous plot, we see that, to efficiently maximize GHz/FLOPs throughput, one is much more efficient by having several processors of low clock frequency, instead of fewer of a higher frequency. This is, at a very high level, the main different between a CPU and a GPU architecture, and this explains why GPUs tend to be the preferred choice to compute Machine Learning training problems. This phylosophy led to the creation of [TPUs (Tenso Processing Units)](https://en.wikipedia.org/wiki/Tensor_processing_unit) and [IPUs (Inteligent Processing Unit)](https://www.graphcore.ai/products/ipu), that explore this trade-off of number of cores vs clock-frequency, with lower-precision floating point representations (to maximize SIMD), and ML-specialized logical units on the processors, to augment further the throughput. Let's check the  common CPU, GPU, and IPU specifications for processors used in compute clusters dedicated to ML tasks:
 
 
-|                    | **cores x clock-frequency**  $\hspace{1cm}$ | **FLOPs (32 bits representation)**  $\hspace{1cm}$ | **Max RAM** |
+|                    | **cores x clock-frequency**  $$\hspace{1cm}$$ | **FLOPs (32 bits representation)**  $$\hspace{1cm}$$ | **Max RAM** |
 |---------------------	|-----------------------------	|------------------------------------	|-------------	|
-| **Intel Xeon 8180** $\hspace{1cm}$ | 28x 2.5 Ghz 	| 1.36 TFLOPS 		| 768 GB       	|
+| **Intel Xeon 8180** $$\hspace{1cm}$$ | 28x 2.5 Ghz 	| 1.36 TFLOPS 		| 768 GB       	|
 | **Tesla K80**       	| 4992x 0.56 Ghz             	| 8.73 TFLOPS                         	| 2x 12GB     	|
 | **Graphcore IPU**   	| 1216 x 1.6Ghz [1]           	| 31.1 TFLOPS                     	| 304 MiB [2] 	|
 |---------------------	|-----------------------------	|------------------------------------	|-------------	|
@@ -88,39 +88,40 @@ One main observation derives from the previous table. Memory bandwidth increases
 
 A common technique to handle memory limitations is offloading. In this particular example, we'll focus on GPU to CPU offloading. The main goal of this method is to identify and move to the GPU only the portions of data that are required for each computation step, and keep the remaining on the CPU.
 
-Take this example of training of a multi-layer Deep Neural Network.  We've seen on a [previous post about DNNs]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}) that the output $x$ for a given layer $l$ of the network, is represent as:
+Take this example of training of a multi-layer Deep Neural Network.  We've seen on a [previous post about DNNs]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}) that the output $$x$$ for a given layer $$l$$ of the network, is represent as:
 
 $$
 x^{(l)} = f^{(l)} (x^{(l-1)}) = \phi ((W^{(l)})^T x^{(l-1)})
 $$
 
-where $\phi$ is the activation function. The loss is then computed by taking into account the groundtrugh $y$ and the composition of the ouputs of all layers in the neural network, ie:
+where $$\phi$$ is the activation function. The loss is then computed by taking into account the groundtrugh $$y$$ and the composition of the ouputs of all layers in the neural network, ie:
 
 $$
 L = \frac{1}{N} \sum_{n=1}^N | y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) |
 $$
 
-The important concept here is the **composition** of the $f$ function throughout layers. In practice one only needs the current layer's state and previous layer output to perform the computation at every layer. This concept has been explored by the [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shiram et al)](https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf) implementations: 
+The important concept here is the **composition** of the $$f$$ function throughout layers. In practice one only needs the current layer's state and previous layer output to perform the computation at every layer. This concept has been explored by the [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shiram et al)](https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf) implementations: 
 
 <p align="center">
 <br/>
 <img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN.png"/><br/>
-<br/><small>An overview of the vDNN(+) implementation on a convolutional neural network. Red arrays represent the data flow of variables $x$ and $y$ (layers input and output) during forward propagation. Blue arrows represent data flow during backward progagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
 </p>
+
+<small>An overview of the vDNN(+) implementation on a convolutional neural network. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Blue arrows represent data flow during backward progagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
 
 The concept is simple: we store the complete model insmall memory is compensated by a very low latency between processor and memory, allowing onloading of offloading of large datasets more efficiently. T CPU memory (or hard-drive if required), and move the active layer into GPU memory when it needs to be computed. To reduce the waiting time of pushing and pulling a layer into the GPU, a viable optimization is to copy asynchronously (ie on the background) the next layer to be computed, while computing the current layer's update. This way, when the algorithm finished to compute a given layer, it can proceed immediately to the next one as it is already available in memory, thus removing onloading waiting time.
 
-We'll start with the forward pass. Looking at the initial formulation of $x^{(l)}$, we can isolate which variables are used during the forward pass of a given layer. For the computation of the output of a given layer, we need the weights of the neurons in the current layer ($W^{(l)}$) and the outputs of neurons on the previous layer $x^{(l-1)}$.
+We'll start with the forward pass. Looking at the initial formulation of $$x^{(l)}$$, we can isolate which variables are used during the forward pass of a given layer. For the computation of the output of a given layer, we need the weights of the neurons in the current layer ($$W^{(l)}$$) and the outputs of neurons on the previous layer $$x^{(l-1)}$$.
 Therefore, for a given layer, the forward pass is represented as:
 
 <p align="center">
 <br/>
 <img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN2.png"/><br/>
-<br/><small>The forward pass on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer N) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $x^{(l-1)}$ (represented as X) and $W^{(l)}$ (as WS). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
+<br/><small>The forward pass on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer N) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $$x^{(l-1)}$$ (represented as X) and $$W^{(l)}$$ (as WS). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
 </p>
 
 
-The backward propagation phase is trickier. Referring to the same DNN post, we have represented the derivative of the loss of a given neuron $j$ in a given layer $l$, on the input $z^{(l)} = (W^{(l)})^T x^{(l-1)}$ as $\delta_j^{(l)}$, where:
+The backward propagation phase is trickier. Referring to the same DNN post, we have represented the derivative of the loss of a given neuron $$j$$ in a given layer $$l$$, on the input $$z^{(l)} = (W^{(l)})^T x^{(l-1)}$$ as $$\delta_j^{(l)}$$, where:
 
 $$
 \delta_j^{(l)} =  \frac{\partial L_n}{\partial z_j^{(l)}} = \sum \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} = \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
@@ -133,12 +134,12 @@ $$
 [//]: ## $$
 
 
-i.e., for the backward propagation, we require both the input variable $x^{(l-1)}$ (inside $z_j^{(l)}$), the weights $W^{(l+1)}$ and the derivatives $\delta_j^{(l+1)}$. This can now be represented as: 
+i.e., for the backward propagation, we require both the input variable $$x^{(l-1)}$$ (inside $$z_j^{(l)}$$), the weights $$W^{(l+1)}$$ and the derivatives $$\delta_j^{(l+1)}$$. This can now be represented as: 
 
 <p align="center">
 <br/>
 <img width="45%" height="45%" src="/assets/AI-Supercomputing/vDNN3.png"/><br/>
-<br/><small>The back propagation phase on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer 2) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $x^{(l-1)}$ (represented as X),  $W^{(l+1)}$ (as WS) and $\delta_j^{(l+1)}$ (as dY). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
+<br/><small>The back propagation phase on the vDNN(+) implementation on convolutional neural networks. Data not associated with the current layer being processed (layer 2) are marked with a black cross and can safely be removed from the GPU's memory. Input variables are $$x^{(l-1)}$$ (represented as X),  $$W^{(l+1)}$$ (as WS) and $$\delta_j^{(l+1)}$$ (as dY). Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a></small>
 </p>
 
 
@@ -188,9 +189,9 @@ The main pipelining issue is memory requirements. Even if the computation if 100
 - Recompute the activations/output of each layer every time we need -- computationally expensive, see next point;
 - Create activation breakpoint, ie store activations of certain layers in memory (as breakpoints) in such a way that the longest "tape size" is limited to the number of layers between the current and the next breapoint. In practice, we recompute the output of the layers from the breakpoint of the closest lower layer. As an example, take a DNN with 15 layers. To perform the backprogapation on e.g. layer 7 we need the gradients backpropagated from the upper layer and the output of layer 7 during the forward pass:  
   - in regular DNN backpropagation, we store all activations of all layers, so that output is readily available;
-  - if we dont want to spend and store any memory on activations, we can recompute the output of layer 7 as $ f^{(7)} \circ ... \circ f^{(2)} \circ f^{(1)} (x^{(0)})$ where $x^{(0)}$ is the input datapoint passed at level 0;
-  - a hybrid solution based on activation checkpointing on layers 5 and 10 -- ie those outputs are stored and readily available -- allows us to compute the output of layer 7 as  $f^{(7)} \circ f^{(6)} (a^{(5)})$ where $a^{(5)}$ is the activation breakpoint stored at layer 5;
-- Use invertible logic to recover the input from the output. I.e., because the output $y$ of each layer is known during backpropagation, recompute $x$ from $y^{(l+1)}= f^{(l+1)}(w^Tx^{(l+1)})$ at every layer;
+  - if we dont want to spend and store any memory on activations, we can recompute the output of layer 7 as $$f^{(7)} \circ ... \circ f^{(2)} \circ f^{(1)} (x^{(0)})$$ where $$x^{(0)}$$ is the input datapoint passed at level 0;
+  - a hybrid solution based on activation checkpointing on layers 5 and 10 -- ie those outputs are stored and readily available -- allows us to compute the output of layer 7 as  $$f^{(7)} \circ f^{(6)} (a^{(5)})$$ where $$a^{(5)}$$ is the activation breakpoint stored at layer 5;
+- Use invertible logic to recover the input from the output. I.e., because the output $$y$$ of each layer is known during backpropagation, recompute $$x$$ from $$y^{(l+1)}= f^{(l+1)}(w^Tx^{(l+1)})$$ at every layer;
 
 
 ## Data Parallelism 
@@ -205,9 +206,10 @@ The rationale of DDP is simple:
 <p align="center">
 <br/>
 <img width="50%" height="50%" src="/assets/AI-Supercomputing/DNN_data_parallelism.png"/><br/>
-<br/><small>An illustration of DNN data parallelism on two processors $p0$ and $p1$ computing a dataset divided on two equally-sized "batches" of datapoints. Execution of both batches occurs in parallel on both processors, containing each a similar copy of the DNN model. The final weight update is provided by the averaged gradients of the models.
-</small>
 </p>
+
+<small>**Caption:** an illustration of DNN data parallelism on two processors $$p0$$ and $$p1$$ computing a dataset divided on two equally-sized "batches" of datapoints. Execution of both batches occurs in parallel on both processors, containing each a similar copy of the DNN model. The final weight update is provided by the averaged gradients of the models.
+</small>
 
 The main advantadge of this method is the linear increase in efficiency, i.e. by doubling the amount of processors, we reduce the compute time by half, minus the communication overhead. However, it's not memory efficient, since it requires a duplication of the entire model on all compute units, i.e. increasing number of processors allows only for a speedup in solution, not on the increase of the model size.
 
@@ -232,11 +234,12 @@ Intra-layer parallelism is another method for parallelism where the data being d
 <p align="center">
 <br/>
 <img width="55%" height="55%" src="/assets/AI-Supercomputing/DNN_model_parallelism.png"/><br/>
-<br/><small>A representation of (vertical) model parallelism at the layer level on a fully-connected DNN, on two processors $p0$ and $p1$. Input dataset and each layer of the model are divided and allocated to different processors. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
-</small>
 </p>
 
-Looking at the previous picture, we notice a major drawback in this method. During training, the constant usage of sums of products using all dimensions on the input space will force processors to continuously communicate those variables among themselves (red lines in the picture). This creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. Moreover, since the number of weights between two layers grows quadratically with the increase of neurons (e.g. for layers with neuron count $N_1$ and $N_2$, the number of weights are $N_1 * N_2$ ), this method is not used *directly* on large input spaces, as the communication becomes a bottleneck: every processor needs to communicate to every other processor its own contribution of the sum of products happening at every layer.
+<small>**Caption:** a representation of (vertical) model parallelism at the layer level on a fully-connected DNN, on two processors $$p0$$ and $$p1$$. Input dataset and each layer of the model are divided and allocated to different processors. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
+</small>
+
+Looking at the previous picture, we notice a major drawback in this method. During training, the constant usage of sums of products using all dimensions on the input space will force processors to continuously communicate those variables among themselves (red lines in the picture). This creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. Moreover, since the number of weights between two layers grows quadratically with the increase of neurons (e.g. for layers with neuron count $$N_1$$ and $$N_2$$, the number of weights are $$N_1 * N_2$$ ), this method is not used *directly* on large input spaces, as the communication becomes a bottleneck: every processor needs to communicate to every other processor its own contribution of the sum of products happening at every layer.
 
 #### Overcomming the quadratic communication
 
@@ -248,11 +251,11 @@ Transformer models follow an analogous approach. For more details, see section *
 
 #### Intra-layer Parallelism on CNNs
 
-It is relevant to mention that vertical model parallelism has some use cases where it is applicable and highly efficient. A common example is on the parallelism of very high resolution pictures on [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}). In practice, due to the filter operator in CNNs, the dependencies (weights) between two neurons on sequential layers is not quadratic on the input (as before), but constant with size $F*F$ for a filter of size $F$.
+It is relevant to mention that vertical model parallelism has some use cases where it is applicable and highly efficient. A common example is on the parallelism of very high resolution pictures on [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}). In practice, due to the filter operator in CNNs, the dependencies (weights) between two neurons on sequential layers is not quadratic on the input (as before), but constant with size $$F*F$$ for a filter of size $$F$$.
 
 This method has been detailed by [Dryden et al. (Improving Strong-Scaling of CNN Training by Exploiting Finer-Grained Parallelism, Proc. IPDPS 2019)](https://arxiv.org/pdf/1903.06681.pdf). The functioning is illustrated in the picture below and is as follows:
 1. Input dataset (image pixels) are divided on the height and width dimensions across processors;
-2. Dependencies among neurons on different dimenstions are limited to the $F \times F$ filter around each pixel. The weight updates can be computed directly if the neurons in the filter fall in the same processor's region, or need to be communicated (as before) otherwise. Neurons that need to be communicated are denominated part of the *halo region* (marked as a violet region in the picture below);
+2. Dependencies among neurons on different dimenstions are limited to the $$F \times F$$ filter around each pixel. The weight updates can be computed directly if the neurons in the filter fall in the same processor's region, or need to be communicated (as before) otherwise. Neurons that need to be communicated are denominated part of the *halo region* (marked as a violet region in the picture below);
 3. Similarly to the "CPU offloading (vDNN)" example above, values that need to be communicated are:
 	- input and weights during forward pass;
 	- input weights and derivatives during backward pass;
@@ -260,16 +263,20 @@ This method has been detailed by [Dryden et al. (Improving Strong-Scaling of CNN
 <p align="center">
 <br/>
 <img width="70%" height="70%" src="/assets/AI-Supercomputing/argonne_parallel_2.PNG"/><br/>
-<br/><small>
-<b>Illustration of model parallelism applied to Convolutional Neural network. LEFT:</b> Parallelism of the pixels of an image across four processors $p0-p3$. <b><span style="color: red;">red box</span></b>: center of the 3x3 convolution filter; <b><span style="color: red;">red arrow</span></b>: data movement required for updating neuron in center of filter; <b><span style="color: violet;">violet region:</span></b> <i>halo region</i> formed of the elements that need to be communicated at every step. <b>RIGHT:</b> communication between processors $p0$ and $p1$. <b><span style="color: red;">Red arrow</span></b>: forward pass dependencies; <b><span style="color: blue;">blue arrow</span></b>: backward pass dependencies;
-</small>
 </p>
+
+<small>
+<b>Caption:</b> Illustration of model parallelism applied to Convolutional Neural network. <b/>LEFT:</b> Parallelism of the pixels of an image across four processors $$p0-p3$$. <b><span style="color: red;">red box</span></b>: center of the 3x3 convolution filter; <b><span style="color: red;">red arrow</span></b>: data movement required for updating neuron in center of filter; <b><span style="color: violet;">violet region:</span></b> <i>halo region</i> formed of the elements that need to be communicated at every step. <b>RIGHT:</b> communication between processors $$p0$$ and $$p1$$. <b><span style="color: red;">Red arrow</span></b>: forward pass dependencies; <b><span style="color: blue;">blue arrow</span></b>: backward pass dependencies;
+</small>
 
 
 For completion, the equations of the previous picture are the following:
-1. $ y_{k,f,i,j} = \sum_{c=0}^{C-1} \sum_{a=-O}^{O} \sum_{b=-O}^{O} x_{k,c,i+a,j+b} w_{f,c,a+O,b+O} $
-2. $ \frac{dL}{dw_{f,c,a,b}} = \sum_{k=0}^{N-1} \sum_{i=0}^{H-1} \sum_{j=0}^{W-1} \frac{dL}{dy_{k, f, i, j}} x_{k, c, i+a-O, j+b-O} $
-3. $ \frac{dL}{dx_{k,c,i,j}} = \sum_{j=0}^{F-1} \sum_{a=-O}^{O} \sum_{b=-O}^{O} \frac{dL}{dy_{k, f, i-a, j-b}} w_{f, c, a+O, b+O} $
+
+$$ y_{k,f,i,j} = \sum_{c=0}^{C-1} \sum_{a=-O}^{O} \sum_{b=-O}^{O} x_{k,c,i+a,j+b} w_{f,c,a+O,b+O} $$
+
+$$ \frac{dL}{dw_{f,c,a,b}} = \sum_{k=0}^{N-1} \sum_{i=0}^{H-1} \sum_{j=0}^{W-1} \frac{dL}{dy_{k, f, i, j}} x_{k, c, i+a-O, j+b-O} $$
+
+$$ \frac{dL}{dx_{k,c,i,j}} = \sum_{j=0}^{F-1} \sum_{a=-O}^{O} \sum_{b=-O}^{O} \frac{dL}{dy_{k, f, i-a, j-b}} w_{f, c, a+O, b+O} $$
 
 Can you infer the data dependencies displayed in the picture (red and blue arrows) from these equations? We won't go on details here, but read the  [original paper](https://arxiv.org/pdf/1903.06681.pdf) if you are interested.
 
