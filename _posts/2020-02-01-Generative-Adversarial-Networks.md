@@ -15,7 +15,7 @@ The training procedure for G is to maximize the probability of D making a mistak
 
 ### Mathematical setup
 
-The goal of the generative model is to generate samples by passing a random noise $z$ through a multilayer perceptron.
+The goal of the generative model is to generate samples by passing a random noise $$z$$ through a multilayer perceptron.
 - The generator $$ G(z \mid \theta_g)$$ is a multilayer perceptron with parameters $$\theta_g$$.
 - $$p_z(z)$$ is the prior on the input noise variables.
 - The generator $$G$$ implicitly defines a probability distribution $$p_g$$ as the distribution of the samples $$G(z)$$ obtained when $$z \sim p_z$$;
