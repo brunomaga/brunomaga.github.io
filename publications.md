@@ -151,6 +151,17 @@ To be compute optimal (in terms of accuracy vs energy cost), Kaplan et al. (2020
 
 
 <br/>
+# 2021 [ZeRO-Infinity: Breaking the GPU Memory Wall for Extreme Scale Deep Learning, Microsoft](https://arxiv.org/abs/2104.07857)
+
+Towards allowing very large models on (memory-limited) GPUs, ZeRO-Infinity is a system technology that leverages GPU, CPU, and NVMe memory to allow for unprecedented model scale on limited resources, without code refactoring. It achieves excellent training throughput and scalability, unencumbered by the limited CPU or NVMe bandwidth.  An open source implementation of ZeRO-Infinity is available through DeepSpeed.
+
+ZeRO-Infinity is built
+on top of [ZeRO-3](https://arxiv.org/abs/1910.02054) which partitions all model states to remove
+memory redundancy, and its main goal is to offload all of the partitioned model states to CPU or
+NVMe memory, or keep them on the GPU based on the memory
+requirements. Offloading techniques for different data types are detailed in section 5.
+
+<br/>
 # 2021 [GSPMD: General and Scalable Parallelization for ML Computation Graphs, Google](https://arxiv.org/pdf/2105.04663.pdf)
 
 also covered on a [google blog post](https://blog.research.google/2021/12/general-and-scalable-parallelization.html).
