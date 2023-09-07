@@ -58,7 +58,7 @@ two modules: a multi-scale retention (MSR) module, and a feed-forward network (F
 
 Finally, the model uses $$h = d_{model}/d$$ retention heads in each layer, where $$d$$ is the head dimension. The heads use different parameter matrices $$W_Q, W_K, W_V \in \mathbb{R}^{d \times d}$$ and scalar $$γ$$ per head. The overall architecture for a given layer $$l$$ of the RetNet is then $$Y_l = MSR(LayerNorm(X_l)) + X_l$$ and $$X_{l+1} = FFN(LN(Y_l)) + Y_l$$, ie similar to a regular transformer but replacing the attention by a retention head.
 
-<img width="80%" height="80%" src="/assets/publications/RetNet.png"/>
+<img width="60%" height="60%" src="/assets/publications/RetNet.png"/>
 
 
 <br/>
