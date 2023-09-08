@@ -25,6 +25,8 @@
   <!-- MathJax to render formulas -->
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>window.MathJax = { tex: { tags: 'all' } }; </script> <!-- NOTE: this adds numbering to equations, otherwise \ref{...} will fail -->
+
 
 <!-- CSS for table that collapses on smaller screens. source: https://css-tricks.com/accessible-simple-responsive-tables/ -->
 <style>
