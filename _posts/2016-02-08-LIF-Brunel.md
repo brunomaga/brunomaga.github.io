@@ -71,8 +71,25 @@ We can advance neurons with a fixed step or variable step interpolation.
 
 We can also solve the fixed and variable step interpolations numerically, instaed of using the analytical solution.
 This is a common practice for efficiency purposes, as the exponential and division operators required are computationally costly. The solution is not exact, but can appoximate *well enough* the solution when the timestep $$\Delta t$$ is *small enough*. As a simple example, we can use two approximated fixed-step [Euler methods][euler]:
-- **Explicit Forward Euler:** $$\tau \frac{dV_{t}}{dt} = -V_{t - \Delta t} + RI_{(t-\Delta t, t]} \Leftrightarrow V_t = V_{t - \Delta t} +  \frac{dV_{t- \Delta t}}{dt} \Delta t \Leftrightarrow  V_t = \frac{-V_{t - \Delta t} + RI_{(t-\Delta t, t]}}{\tau} \Delta t$$
-- **Implicit Backward Euler:** $$\tau \frac{dV_{t}}{dt} = -V_{t} + RI_{(t-\Delta t, t]} \Leftrightarrow \frac{V_{t} - V_{t - \Delta t}}{\Delta t} = -V_{t} + RI_{(t-\Delta t, t]} \Leftrightarrow V_t = \frac{RI_{(t-\Delta t, t]} + \tau * V_{t-\Delta t}}{\Delta t + \tau}$$
+- **Explicit Forward Euler:** 
+
+$$
+\begin{align*}
+& \tau \frac{dV_{t}}{dt} = -V_{t - \Delta t} + RI_{(t-\Delta t, t]} \\
+\Leftrightarrow & V_t = V_{t - \Delta t} +  \frac{dV_{t- \Delta t}}{dt} \Delta t \\
+\Leftrightarrow & V_t = \frac{-V_{t - \Delta t} + RI_{(t-\Delta t, t]}}{\tau} \Delta t
+\end{align*}
+$$
+
+- **Implicit Backward Euler:**
+
+$$
+\begin{align*}
+& \tau \frac{dV_{t}}{dt} = -V_{t} + RI_{(t-\Delta t, t]} \\
+\Leftrightarrow & \frac{V_{t} - V_{t - \Delta t}}{\Delta t} = -V_{t} + RI_{(t-\Delta t, t]} \\
+\Leftrightarrow & V_t = \frac{RI_{(t-\Delta t, t]} + \tau * V_{t-\Delta t}}{\Delta t + \tau}
+\end{align*}
+$$
 
 with $$\frac{dV_{t}}{dt}$$ and $$RI_{(t-\Delta t, t]}$$ computed from equations \ref{equation_diff} and \ref{equation_current} respectively. Note that $$RI_{(t-\Delta t, t]}$$ is divided by $$\Delta t$$ so that it is expressed in voltage per time-unit instead of per timestep.
 

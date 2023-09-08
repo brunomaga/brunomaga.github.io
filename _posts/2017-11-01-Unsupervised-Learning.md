@@ -109,9 +109,11 @@ The ICA is based on the [Central Limit Theorem](https://en.wikipedia.org/wiki/Ce
 A famous example is the [cocktail party](https://en.wikipedia.org/wiki/Cocktail_party_effect) problem. A guest will be listening to an observed signal $$x$$ from an original signal $$s$$, as in:
 
 $$
+\begin{align*}
 x_1(t) = a_{11}s_1(t) + a_{12}s_2(t) + a_{13}s_3(t)\\
 x_2(t) = a_{21}s_1(t) + a_{22}s_2(t) + a_{23}s_3(t)\\
 x_3(t) = a_{31}s_1(t) + a_{32}s_2(t) + a_{33}s_3(t)
+\end{align*}
 $$
 
 We assume that $$s_1$$, $$s_2$$ and $$s_3$$ are statistically independent. The goal of the ICA is to estimate the independent components $$s(t)$$ from $$x(t)$$, with

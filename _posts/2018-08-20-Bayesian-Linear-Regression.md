@@ -26,10 +26,15 @@ From the field of probability, the **product rule** tells us that $$p(A, B) = p(
 
 In Machine Learning, we are mostly interested in how the parameters of the model $$\theta$$ relate to the data $$X$$:
 
-\begin{equation}
-p(\theta \mid X) = \frac{p(X\mid \theta) p(\theta)}{p(X)} \propto p(X \mid \theta) p(\theta) \text{, where evidence is } p(X) = \int p(X \mid \theta) p(\theta) d\theta = \mathbb{E}_{\theta}[ p(X \mid \theta) ]   
+$$
+p(\theta \mid X) = \frac{p(X\mid \theta) p(\theta)}{p(X)} \propto p(X \mid \theta) p(\theta)
 \label{eq_prior_AB}
-\end{equation}
+$$
+
+,where evidence is
+$$
+p(X) = \int p(X \mid \theta) p(\theta) d\theta = \mathbb{E}_{\theta}[ p(X \mid \theta) ]
+$$   
 
 The idea behing Bayes Theorem in ML is to invert the relationship between the parameters $$θ$$ and the data $$X$$ to obtain the posterior;
 

@@ -52,11 +52,14 @@ A brief summary of topics in statistics and probability that are relevant to ML 
 
 
 **Covariance** is the expected product of their two deviations from the respective means, ue:
-- $$\mathbb{Cov}[X,Y]\\
-= \mathbb{E} \left[ (X- \mathbb{E}[X]) \, (Y- \mathbb{E}[Y]) \right] \\
-= \mathbb{E}\left[ XY -  X\mathbb{E}[Y] - \mathbb{E}[X]Y +  \mathbb{E}[X]\,\mathbb{E}[Y] \right] \\
-= \mathbb{E}[XY] - \mathbb{E}[X] \,\mathbb{E}[Y] - \mathbb{E}[X] \,\mathbb{E}[Y] +  \mathbb{E}[X] \, \mathbb{E}[Y] \\
-= \mathbb{E}[XY] -  \mathbb{E}[X] \,\mathbb{E}[Y]$$. 
+- $$
+\begin{align*}
+\mathbb{Cov}[X,Y] & = \mathbb{E} \left[ (X- \mathbb{E}[X]) \, (Y- \mathbb{E}[Y]) \right] \\
+& = \mathbb{E}\left[ XY -  X\mathbb{E}[Y] - \mathbb{E}[X]Y +  \mathbb{E}[X]\,\mathbb{E}[Y] \right] \\
+& = \mathbb{E}[XY] - \mathbb{E}[X] \,\mathbb{E}[Y] - \mathbb{E}[X] \,\mathbb{E}[Y] +  \mathbb{E}[X] \, \mathbb{E}[Y] \\
+& = \mathbb{E}[XY] -  \mathbb{E}[X] \,\mathbb{E}[Y]
+\end{align*}
+$$. 
 - univariate: $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = \mathbb{Cov}_{Y,X}[y,x]$$
 - multivariate random vars $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$: $$\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \,\mathbb{E}[y]^{\intercal} = \mathbb{Cov}[y,y]^{\intercal} \in \mathbb{R}^{D \times E}$$
 
@@ -107,8 +110,10 @@ A brief summary of topics in statistics and probability that are relevant to ML 
   - the conditional is also Gaussian: $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$. 
   - the marginal is also Gaussian: $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$.
 
+  {: style="text-align:center; font-size: small;"}
   <img width="45%" height="45%" src="/assets/Statistics-for-ML/bivariate_gaussian.png"/>
 
+  {: style="text-align:center; font-size: small;"}
   A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional disribution is a slice accross the X or Y dimension and is also a Gaussian. <b>Source:</b> wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a>
   
 - the product of two gaussians pdfs $$\mathcal{N} (x \mid a, A) \, \mathcal{N}(x \mid b, B)$$ is a Gaussian scaled by a $$c \in \mathbb{R}$$.
@@ -188,6 +193,7 @@ Testing:
 - **p-value** (or observed significance level)  is the smallest value of $$α$$ for which the null hypothesis would be rejected at level $$α$$.
 - the **confidence interval** refers to the probability that a population parameter will fall between a set of values for a certain proportion of times. Example, for a $$95%$$ **confidence level**:
 
+  {: style="text-align:center; font-size: small;"}
   <img width="30%" height="30%" src="/assets/Statistics-for-ML/confidence_interval.png"/>
 
 ---
@@ -244,8 +250,10 @@ Using the previous axioms we can show that:
 -  the model represents a factorization of the joint probability of all random variables: $$ P(X_1,\ldots ,X_n) =\prod_{i=1}^{n} p \left( X_i \mid p(X_i) \right)$$.
 - Example: $$p(A,B,C,D) = P(A)\cdot p(B \mid A) \cdot p( C \mid A) \cdot p ( D \mid A,C ) $$:
 
+  {: style="text-align:center; font-size: small;"}
   <img width="20%" height="20%" src="/assets/Statistics-for-ML/directed_graph.png"/>
 
+  {: style="text-align:center; font-size: small;"}
   Source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Graphical_model">Graphical model</a>
   
 ---
@@ -268,8 +276,10 @@ where $$K$$ is the kernel - a non-negative function - and $$h \gt 0$$ is a the s
 - large $$h$$ vs small $$h$$ dictates flat vs wiggly estimator;
 - an example of $$K$$ is the standard normal CDF.
   
+  {: style="text-align:center; font-size: small;"}
   <img width="60%" height="60%" src="/assets/Statistics-for-ML/KDE.png"/>
 
+  {: style="text-align:center; font-size: small;"}
   Source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel density estimation</a>
 
 The following table summarizes the method used for each use case:
