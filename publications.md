@@ -7,6 +7,35 @@ permalink: /publications/
 A summary of some interesting publications I came accross. Continuously updated.
 
 <br/>
+# 2023 [Llama 2: Open Foundation and Fine-Tuned Chat Model](https://arxiv.org/abs/2307.09288)
+
+LLama 2 is a collection of pretrained and fine-tuned large language models (LLMs) ranging in scale from 7 billion to 70 billion parameters. Llama 2-Chat is a finetuned LLM optimized for dialogue use cases. The models outperform open-source chat models, and based on
+human evaluations for helpfulness and safety, it outperforms open-source models and appear to be on par with closed-source models (although may not be a suitable substitute). Results on safety human evaluation for Llama 2-Chat are presented in Figure 3. The train dataset is only publicly available sources, which does not include data from Meta’s products or services, or sources that may include users' personal information. Table 2 presents the GPU compute hours, power consumption and carbon emissions of each model
+
+The pretraining setting and model architecture are adopted from Llama 1, i.e. bytepair encoding (BPE), pre-normalization via RMSNorm, SwiGLU activations, rotary positional embeddings, AdamW optimizer, cosine learning rate scheduler). However, the primary architectural differences from Llama 1 include **increased context length** and **grouped-query attention (GQA)**.
+
+The finetuning was performed with supervised fine-tuning (Section 3.1), initial and iterative reward modeling (Section 3.2.2) and RLHF (Section 3.2.3). As drawback of RLHF, "initial RLHF models tended to forget the initial instruction after a few turns of dialogue (Figure 9, below, left). To address these limitations, we propose **Ghost Attention (GAtt)**, a very simple method inspired by Context Distillation (Bai et al., 2022b) that hacks the fine-tuning data to help the attention focus in a multi-stage process" (Figure 9, below, right).
+
+{: style="text-align:center; font-size: small;"}
+<img width="65%" height="65%" src="/assets/publications/llama2_gatt.png"/>
+
+<br/>
+# 2023 [LLaMA: Open and Efficient Foundation Language Models, Meta](https://arxiv.org/abs/2302.13971)
+
+LLaMa is a collection of Large Language Models (LLM) with 7B to 65B parameters trained in public datasets, with performance superior to GPT-3 and comparable with Chinchilla-70B and PaLM-540B. Training is inspired by the Chinchilla scaling laws. The datasets used for the pre-training data are presented in Table 1, with training hyperparameters in Table 2. String are tokenized using the bytepair encoding (BPE) algorithm, with circa 1.4T tokens after tokenization.
+
+The models architecture is made of several improvements over the original Transformer:
+- **Pre-normalization [GPT3]:** training stability is improved with RMSNorm normalization at the input of each transformer sub-layer, instead of output.
+- **SwiGLU activation function [PaLM]:** ReLU activation is replaced with SwiGLU to improve performance, with a dimension of $$\frac{2}{3} 4d$$ instead of $$4d$$ as in PaLM.
+- **Rotary Embeddings [GPTNeo]:** positional embeddings are replaced by rotary positional embeddings (RoPE) at each layer of the output. 
+- **Optimization** performed with AdamW optimizer with $$β_1 = 0.9$$, $$β2 = 0.95$$ and $$eps = 10^{−5}$$.
+- **Cosine learning rate schedule** with a warmup of $$2000$$ steps, a weight decay of $$0.1$$, a gradient clipping of $$1.0$$ and a final learning of $$10%$$ of the initial value.
+- **Causal multi-Head attention** inspired by Rabe and Staats (2021) and uses the backward from Dao et al. (2022), replaces the regular transformer multi-head attention. "This is achieved by not storing the attention weights and not computing the key/query scores that are masked due to
+the causal nature of the language modeling task."
+- **Activation checkpointing** was implemented to reduce memory. Yet it required manually implementing the Pytorch backward propagation function for the Transformer (insted of PyTorch autograd). This also required model and sequence parallelism (why?).
+- **Overlap of the computation of activations and the communication between GPUs** over the network, to reduce latency.   
+ 
+<br/>
 # 2023 [Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](https://arxiv.org/abs/2303.12712)
 
 A summary paper reporting early results of the experiments with GPT-4 when it was still in active development by OpenAI. The authors "demonstrate that, beyond its mastery of language, GPT-4 can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more, without needing any special prompting. Moreover, in all of these tasks, GPT-4’s performance is strikingly close to human-level performance". The bulk of the paper contains dozens of examples that compare GPT-4 and Chat-GPT and demonstrate that GPU-4 surpasses ChatGPT in performance, in code generation, audio generation (output as musical notes), drawings (SVG, TIKZ), and mathematical resolutions (LaTeX). As weaknesses, besides the regular hallucinations it was also observed:
