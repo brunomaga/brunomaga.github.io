@@ -70,7 +70,13 @@ $$
 These quantities are easier to compute with a backward pass:
 
 $$
-\delta_j^{(l)} = \frac{\partial L_n}{\partial z_j^{(l)}} = \sum_k \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} =  \sum_k \delta_k^{(l+1)} \frac{\partial (W^{(l+1)})^T x^{(l)}+b^{(l+1)}}{\partial z_j^{(l)}} =  \sum_k \delta_k^{(l+1)}  W_{j,k}^{(l+1)} \frac{\partial x^{(l)}}{\partial z_j^{(l)}}  =  \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)})
+\begin{align*}
+\delta_j^{(l)} = & \frac{\partial L_n}{\partial z_j^{(l)}} \\
+= & \sum_k \frac{\partial L_n}{\partial z_k^{(l+1)}} \frac{\partial z_k^{(l+1)}}{\partial z_j^{(l)}} \\ 
+= & \sum_k \delta_k^{(l+1)} \frac{\partial (W^{(l+1)})^T x^{(l)}+b^{(l+1)}}{\partial z_j^{(l)}} \\
+= & \sum_k \delta_k^{(l+1)}  W_{j,k}^{(l+1)} \frac{\partial x^{(l)}}{\partial z_j^{(l)}} \\
+= & \sum_k \delta_k^{(l+1)} W_{j,k}^{(l+1)} \phi '(z_j^{(l)}) 
+\end{align*}
 $$
 
 We used the chain rule on the second equality operation. Going back to equation \ref{eq_gradient}:

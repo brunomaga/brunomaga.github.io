@@ -74,11 +74,12 @@ $$
 For the Newton corrections, CVODE provides the following options: (a) direct dense solver, (b) direct banded solver, (c) a diagonal approximate Jacobian solver, or the SPGMR (Scaled Preconditioned GMRES) method. A preconditioner matrix is a transformation that conditions a given problem into a form that is more suitable for numerical solving methods. NEURON applies the SPGMR method, that requires a matrix $$M$$ (or preconditioner matrix $$P$$ for the SPGMR case) to be an Inexact Newton iteration, in which $$M$$ is applied in a matrix-free manner, where the matrix-vector products $$Jv$$ are obtained by either difference quotients or an user-supplied routine. In NEURON, $$J y$$ is user-provided by the *SOLVE* block in the mechanisms. In practice, the SPGMR transforms the nonlinear problem into a linear one, by introducing a multiplication by the Jacobian (In vector calculus, the Jacobian matrix is the matrix of all first-order partial derivatives of a vector-valued function), and it involves computing the solution of the equation:
 
 $$
-y_{n(m+1)} = y_{n(m)} -  J^{-1} G(y_{n(m)}) \\
-\equiv y_{n(m+1)} - y_{n(m)} = - J^{-1} G(y_{n(m)}) \\
-\equiv P [y_{n(m+1)} - y_{n(m)}] = - P J^{-1} G(y_{n(m)}) \\
-\equiv P [y_{n(m+1)} - y_{n(m)}] = - G(y_{n(m)}) \\
-\label{eq_newton_cvode}
+\begin{align*}
+y_{n(m+1)} = & y_{n(m)} -  J^{-1} G(y_{n(m)}) \\
+\equiv & y_{n(m+1)} - y_{n(m)} = - J^{-1} G(y_{n(m)}) \\
+\equiv & P [y_{n(m+1)} - y_{n(m)}] = - P J^{-1} G(y_{n(m)}) \\
+\equiv & P [y_{n(m+1)} - y_{n(m)}] = - G(y_{n(m)}) \\
+\end{align*}
 $$
 
 where 
@@ -87,7 +88,7 @@ $$
  P \approx I - \gamma J \text{ , } J = \partial f / \partial y \text{ , and } \gamma = h_n \beta_{n,0}
 $$
 
-Equation \ref{eq_newton_cvode} requires a division by the Jacobian $$J$$, i.e. a multiplication by its inverse. Due to the expensive computation of the inverse of the Jacobian, CVODE allows for a trade-off of accuracy and solution time of any equation, by requiring one to only supply a solver for $$P y = b$$ instead. For the linear case, although NEURON supports a resolution with the Hines solver (default) or the (a) or (c) methods mentioned previously, there has been little exploration of the non-Hines approaches.
+The previous equation requires a division by the Jacobian $$J$$, i.e. a multiplication by its inverse. Due to the expensive computation of the inverse of the Jacobian, CVODE allows for a trade-off of accuracy and solution time of any equation, by requiring one to only supply a solver for $$P y = b$$ instead. For the linear case, although NEURON supports a resolution with the Hines solver (default) or the (a) or (c) methods mentioned previously, there has been little exploration of the non-Hines approaches.
 
 ### Error Handling
 

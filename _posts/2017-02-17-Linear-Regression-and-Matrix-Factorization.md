@@ -125,7 +125,10 @@ We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given 
 - If there are **no** missing ratings in the matrix ie $$ \Omega = [D] \times [N] $$, then:
 
   $$
-  min_{W,Z} L(W,Z) = \frac{1}{2} \sum_{d=1}^D \sum_{n=1}^N [x_{dn} - (WZ^T)_{dn}]^2 + \text{ (regularizer) } =  \frac{1}{2} \| X - WZ^T \| ^2 + \frac{\lambda_w}{2} \| W \|^2 +  \frac{\lambda_z}{2} \| Z \|^2
+  \begin{align*}
+  min_{W,Z} L(W,Z) = & \frac{1}{2} \sum_{d=1}^D \sum_{n=1}^N [x_{dn} - (WZ^T)_{dn}]^2 + \text{ (regularizer) } \\
+  = & \frac{1}{2} \| X - WZ^T \| ^2 + \frac{\lambda_w}{2} \| W \|^2 +  \frac{\lambda_z}{2} \| Z \|^2
+  \end{align*}
   $$
 
   - We can use coordinate descent (minimize $$W$$ for fixed $$Z$$ and vice-versa) to minimize cost plus regularizer;
