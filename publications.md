@@ -128,10 +128,20 @@ cost". Gradient clipping plays an important role in the performance of sparse Mo
 
 Magneto is a "foundation transform for true general-purpose modeling, which serves as a go-to architecture for various tasks and modalities with
 guaranteed training stability". Specifically, the paper introduces Sub-LayerNorm (which adds an extra LayerNorm
-to each sublayer) for good expressivity. Also introduces the initialization strategy theoretically derived from [DeepNet](https://arxiv.org/abs/2203.00555) (below) for stable scaling up. Experiments demonstrate superior performance to the standard Transformer across language, translation, vision, speecha and multimodal tasks.
+to each sublayer) for good expressivity. Also introduces a novel initialization strategy theoretically derived from [DeepNet](https://arxiv.org/abs/2203.00555) (below) for stable scaling up. Experiments demonstrate superior performance to the standard Transformer across language, translation, vision, speecha and multimodal tasks. There are only lines of code changes on top of the vanilla Transformer architecture: the Sub-LN structure, and the weights of query projection and key projection are not scaled during initialization following DeepNet (below).
  
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/magneto.png"/>
+
+<br/>
+# 2022 [DeepNet: Scaling Transformers to 1,000 Layers](https://arxiv.org/abs/2203.00555)
+
+This paper introduces a normalization function (**DeepNorm**) to modify the residual connection in Transformer, accompanyed with theoretically derived initialization, in order to stabilize extremely deep Transformers.
+- Background: previous work had sown that better initialization methods improve the stability of the training of Transformer.
+- DeepNorm works by introducing a new normalization function at residual connections, which has theoretical justification of bounding the model update by a constant.
+- "The proposed method combines the best of two worlds, i.e., good performance of Post-LN and stable training of Pre-LN (picture above), making DeepNorm a preferred alternative.". 
+- Figure 2 shows the `deepnorm` (the normalization layer function), `deepnorm_init` (the weights initialization) and constants.
+
 
 <br/>
 # 2022 [Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](https://arxiv.org/abs/2207.05306)
