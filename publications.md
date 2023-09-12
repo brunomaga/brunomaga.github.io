@@ -122,6 +122,7 @@ TorchScale adopts [Magneto](https://arxiv.org/abs/2210.06423) (below) as the def
 Transformers to scale up to billions or trillions of parameters without much additional computation
 cost". Gradient clipping plays an important role in the performance of sparse MoE models, and this was overcome by a new method created by the authors - SparseClip.
   - Note: Gradient clipping is standard practice for deep neural models to alleviate the gradient explosion problem. It is even more important for the sparse MoE models, which are more unstable in training.
+- **Transformer variants in the toolkit** available at [https://github.com/microsoft/torchscale](https://github.com/microsoft/torchscale): deep models (DeepNet),  Foundation Transformers (Magneto), sparsity ( X-MoE), RetNet, LongNet, parameter stability (SparseClip), ...  
   
 <br/>
 # 2022 [Foundation Transformers (Magneto), Microsoft](https://arxiv.org/abs/2210.06423)
