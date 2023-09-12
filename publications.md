@@ -113,6 +113,27 @@ LongNet is a Transformer variant that can scale the sequence length up to 1B tok
 <img width="19%" height="19%" src="/assets/publications/longnets2.png"/>
 
 <br/>
+# 2022 [TorchScale: Transformers at Scale, Microsoft](https://arxiv.org/abs/2211.13184)
+
+TorchScale is an open-source toolkit that allows researchers and developers to scale up Transformers efficiently and effectively. 
+TorchScale adopts [Magneto](https://arxiv.org/abs/2210.06423) (below) as the default model backbone, thus supporting several applications applications, including language modeling, machine translation, vision pretraining, speech recognition, and multi-modal pretraining, just like Magneto.
+- **Stability:** to handle models unstability in optimization as the model grows, TorchScale follows the theoretical derivation of [DeepNet](https://arxiv.org/abs/2203.00555) (below), just like Magneto.
+- **Efficiency:** TorchScale implements sparsity via Mixture of Experts as in [X-MoE](https://arxiv.org/abs/2204.09179) , a variant of sparse MoE model. "Torchscale supports both Top-1 and Top-2 routing algorithms (?), which balance the performance and the computation cost.  This allows
+Transformers to scale up to billions or trillions of parameters without much additional computation
+cost". Gradient clipping plays an important role in the performance of sparse MoE models, and this was overcome by a new method created by the authors - SparseClip.
+  - Note: Gradient clipping is standard practice for deep neural models to alleviate the gradient explosion problem. It is even more important for the sparse MoE models, which are more unstable in training.
+  
+<br/>
+# 2022 [Foundation Transformers (Magneto), Microsoft](https://arxiv.org/abs/2210.06423)
+
+Magneto is a "foundation transform for true general-purpose modeling, which serves as a go-to architecture for various tasks and modalities with
+guaranteed training stability". Specifically, the paper introduces Sub-LayerNorm (which adds an extra LayerNorm
+to each sublayer) for good expressivity. Also introduces the initialization strategy theoretically derived from [DeepNet](https://arxiv.org/abs/2203.00555) (below) for stable scaling up. Experiments demonstrate superior performance to the standard Transformer across language, translation, vision, speecha and multimodal tasks.
+ 
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/publications/magneto.png"/>
+
+<br/>
 # 2022 [Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](https://arxiv.org/abs/2207.05306)
 
 From the abstract: "the traditional training method only supervises the neural network at its last layer and propagates the supervision layer-by-layer, which leads to hardship in optimizing the intermediate layers. Recently, deep supervision has been proposed to add auxiliary classifiers to the intermediate layers of deep neural networks. By optimizing these auxiliary classifiers with the supervised task loss, the supervision can be applied to the shallow layers directly. However, deep supervision conflicts with the well-known observation that the shallow layers learn low-level features instead of task-biased high-level semantic features. To address this issue, this paper proposes a novel training framework named Contrastive Deep Supervision, which supervises the intermediate layers with augmentation-based contrastive learning".  The rationale is that contrastive learning can provide better supervision for intermediate layers than the supervised task loss. Contrastive learning "regards two augmentations from the same image as a positive pair and different images as negative pairs. During training, the neural network is trained to minimize the distance of a positive pair while maximizing the distance of a negative pair. As a result, the network can learn the invariance to various data augmentation, such as Color Jitter and Random Gray Scale". Contrastive Deep Supervision starts from those advancements, and optimizes the intermediate layers with contrastive learning instead of traditional supervised learning. As shown in the figure above, "several projection heads are attached in the intermediate layers of the neural networks and trained to perform contrastive learning. These projection heads can be discarded in the inference period to avoid additional computation and storage. Different from deep supervision which trains the intermediate layers to learn the knowledge for a specific task, the intermediate layers in our method are trained to learn the invariance to data augmentation, which makes the neural network generalize better. Besides, since contrastive learning can be performed on unlabeled data, the proposed contrastive deep supervision can also be easily extended in the semi-supervised learning paradigm". Finally, contrastive deep supervision can be further utilized to boost the performance of knowledge distillation.
