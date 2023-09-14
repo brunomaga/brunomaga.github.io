@@ -216,4 +216,4 @@ MaxMemAllocated=0.16GB
 
 ### Files
 
-For the full files mentioned here, see <a href="/assets/GPT-lite/gptlite_deepspeed.py">gptlite_deepspeed.py</a> for this code, <a href="/assets/GPT-lite/gptite_model.py">gptlite_model.py</a> for the trimmed GPTlite model (model only, no run/valid loop), and <a href="/assets/GPT-lite/gptlite_config_ds.json">gptlite_config_ds.ds</a> for the DeepSpeed config file.
+For the full files mentioned here, see <a href="/assets/GPT-lite/gptlite_deepspeed.py">gptlite_deepspeed.py</a> for this code, <a href="/assets/GPT-lite/gptlite_model.py">gptlite_model.py</a> for the trimmed GPTlite model (model only, no run/valid loop), and <a href="/assets/GPT-lite/gptlite_config_ds.json">gptlite_config_ds.json</a> for the DeepSpeed config file.
