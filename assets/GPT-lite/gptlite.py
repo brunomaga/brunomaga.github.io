@@ -2,9 +2,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-torch.manual_seed(1337)
-device = 'cpu' #torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
 # set the random seed, for reproducibility
 torch.manual_seed(42)
 
