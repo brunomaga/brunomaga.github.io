@@ -2,16 +2,16 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-# replicate GPT-3 Medium in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
+# replicate GPT-3 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
 
 # depth of the network as number of decoder blocks.
-n_layer = 24 #12 for GPT-3 small
+n_layer = 12
 
 # size of the embeddings (d_model)
-n_embd = 1024 #768 for GPT-3 small
+n_embd = 768
 
 # number of attention heads in the Multi-Attention mechanism
-n_head = 16 #12 for GPT-3 small
+n_head = 12
 
 # number of heads. this is the $d_k$ in the paper formulation of Attn. Mech
 head_size = 64
@@ -39,6 +39,7 @@ itos = { i:ch for i,ch in enumerate(chars) }
 encode = lambda x: torch.tensor([stoi[ch] for ch in x], dtype=torch.long) #encode text to integers
 decode = lambda x: ''.join([itos[i] for i in x]) #decode integers to text
 vocab_size = len(stoi)
+print("vocab size: ", vocab_size)
 print(encode("Hello world"))
 print(decode(encode("Hello world").tolist()))
 print("character zero is:", decode([0]), "<end>")
@@ -130,7 +131,7 @@ class Block(nn.Module):
 
 
 class GPTlite(nn.Module):
-  def __init__(self, num_head=4, n_layer=3):
+  def __init__(self, n_layer=3):
     super().__init__()
     # vocabulary embedding and positional embedding
     self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
@@ -148,20 +149,12 @@ class GPTlite(nn.Module):
     #idx and targets are both of shape (B,T)
     B, T = idx.shape
     tok_emb = self.token_embedding_table(idx) #shape (B,T,C)
-    pos_emb = self.position_embedding_table(torch.arange(T)) #shape (T,C)
+    pos_emb = self.position_embedding_table(torch.arange(T).to(idx.device)) #shape (T,C)
     x = tok_emb + pos_emb #shape (B,T,C)
     x = self.blocks(x)
     x = self.ln(x)
-    logits = self.lm_head(x) #shape (B,T,V)
-
-    if targets is None: #when calling generate()
-      loss = None
-    else:
-      B, T, C  = logits.shape
-      logits = logits.view(B*T, C) #shape (B*T,C)
-      targets = targets.view(-1) #shape (B*T)
-      loss = F.cross_entropy(logits, targets)
-    return logits, loss
+    logits = self.lm_head(x) #shape (B,T,C)
+    return torch.swapaxes(logits,1,2) #shape (B,C,T)
 
   def generate(self, idx, max_new_tokens):
     """ given a context idx, generate max_new_tokens tokens and append them to idx """
@@ -177,6 +170,4 @@ class GPTlite(nn.Module):
       #append next token ix to the solution sequence so far
       idx = torch.cat([idx, idx_next], dim=-1) # shape (B, T+1)
     return idx
-
-
 

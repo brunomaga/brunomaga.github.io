@@ -1,5 +1,6 @@
 import torch
 import os
+import deepspeed
 
 # DeepSpeed requires a distributed environment even when only one process is used.
 if os.environ.get("WORLD_SIZE") is None:
@@ -10,21 +11,18 @@ if os.environ.get("WORLD_SIZE") is None:
   os.environ["WORLD_SIZE"] = "1"
 
 
-def get_deepspeed_args(description='CIFAR'):
+def get_deepspeed_args(description='GPT lite on DeepSpeed'):
   import argparse
   parser = argparse.ArgumentParser(description=description)
-  #deepspeed_config used by deepspeed.initialize(args=args, ...)
-  parser.add_argument('--deepspeed_config', type=str, default='./ds_config.json',
-                        help='DeepSpeed config file.')
-  # Mandatory deepspeed arg  set by `deepspeed` launcher
   parser.add_argument('--local_rank', type=int, default=-1,
                         help='local rank passed from distributed launcher')
+  # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config, ...)
+  parser = deepspeed.add_config_arguments(parser)
   return parser.parse_args()
 
   
 def get_model_and_dataset():
-
-  import gptlite_model as gptlite # use out GPT-lite model
+  import gptlite
 
   class GPTliteDataset(torch.utils.data.Dataset):
 
@@ -36,14 +34,13 @@ def get_model_and_dataset():
         return len(self.train_data)
 
       def __getitem__(self, idx):
-        # generate 1 random offsets on the data
-        ix = torch.randint(len(self.train_data)-self.block_size)
+        # generate 1 random offset on the data
+        ix = torch.randint(len(self.train_data)-self.block_size , size=())
         # input is a random subset of tokens
-        x = torch.Tensor(self.train_data[ix : ix+self.block_size])
+        x = self.train_data[ix   : ix+self.block_size]
         # target is just x shifted right (ie the next predicted word)
-        y = torch.Tensor(self.train_data[ix+1 : ix+1+self.block_size])
-        
-        return gptlite.get_batch(self.train_data, batch_size=1) #get 1 item
+        y = self.train_data[ix+1 : ix+1+self.block_size]
+        return x, y
 
   model = gptlite.GPTlite()
   dataset = GPTliteDataset(gptlite.train_data, gptlite.block_size)
@@ -56,13 +53,11 @@ def main_deepspeed():
   deepspeed.init_distributed()
   args = get_deepspeed_args('CIFAR') 
   model, train_dataset = get_model_and_dataset()
-  parameters = filter(lambda p: p.requires_grad, model.parameters())
+  # parameters = filter(lambda p: p.requires_grad, model.parameters())
 
   model_engine, optimizer, train_dataloader , _ = deepspeed.initialize(
-    args=args, #needs args.local_rank and args.deepspeed_config (or argument config)
-    model=model,
-    model_parameters=parameters, #maybe just mode.parameters() ?
-    training_data=train_dataset,
+    args=args, model=model, training_data=train_dataset,
+    #model_parameters=parameters, #optional, to specify which params to optimize 
     #config=args.deepspeed_config, #only needed when args.deepspeed_config does not exist
     )
 
@@ -75,6 +70,7 @@ def main_deepspeed():
   elif model_engine.fp16_enabled():     target_dtype=torch.half
       
   criterion = torch.nn.CrossEntropyLoss()
+  
   for epoch in range(20):  # loop over the dataset multiple times
     running_loss = 0.0
     for step, data in enumerate(train_dataloader):
@@ -100,5 +96,4 @@ def main_deepspeed():
 
 if __name__ == "__main__":
   main_deepspeed()
-
 
