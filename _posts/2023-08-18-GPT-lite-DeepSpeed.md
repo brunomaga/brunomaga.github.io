@@ -1,11 +1,17 @@
 ---
 layout: post
-title:  "Scaling a GPT model with ZeRO and DeepSpeed"
+title:  "Scaling a GPT model with 3D parallelism via ZeRO and DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
 In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model - and trained it on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will use the same model and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054), a *zero-redundancy* scaling technique detailed [in this post]({{ site.baseurl }}{% post_url  2020-05-28-AI-Supercomputing-2 %}). We'll use the `deepspeed` package for `python`.
+
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/GPT-lite-DeepSpeed/GPT_3D_parallelism_2.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The resources allocation problem vizualized a a (color-coded) allocation of compute resources in the 3D space with data, layers and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the network, data parallelism across datapoints in the input batch, and tensor/vertical parallelism across parameters on each layer.
 
 We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">model implementation</a>:
 
@@ -29,7 +35,7 @@ block_size = 2048
 dropout = 0.1
 ```
 
-We then create the `ArgumentParser` required for the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
+We then create an `ArgumentParser` object that is required for the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
 - the `--local_rank` parameter that is the local rank of each process in the network, and will be populated automatically by the `deepspeed` launcher;
 - optionally, we add the `--deepspeed_config` where we specify the path to the DeepSpeed config file. If you choose not to add it to the command line arguments, then it must be specified as the parameter `config` in `deepspeed.initialize()`.
 
@@ -92,7 +98,7 @@ def get_model_and_dataset():
     return model, dataset
 ```
 
-Let's continue with our GPT-lite model use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and defined by its config file. So the initialization is pretty straighforward:
+Let's continue with our GPT-lite model use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined by its config file. So the initialization is pretty straighforward:
 
 ```python
 def main_deepspeed():
@@ -145,10 +151,10 @@ and finally the training loop, with a structure very similar to the PyTorch impl
     if local_rank == 0:
         print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
 ```
+ 
+### The DeepSpeed config file
 
-### Config file
-
-The bulk of the code is very simple as it follows the DeepSpeed *recipe*. The real *nuance* and complexity of using DeepSpeed is the config file (`.json`). The number of possible fields in the config is very large, and they define parallelism, precision, solvers, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the optimizer (`optimizer`) and LR scheduler (`scheduler`) settings:
+The bulk of the code is very simple as it follows the DeepSpeed *recipe*. The real *nuance* and complexity of using DeepSpeed is the config file (`.json`). The number of possible fields in the config is very large, as they define parallelism, precision, solvers, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the optimizer (`optimizer`) and LR scheduler (`scheduler`) settings:
 
 ```json
 {
@@ -176,7 +182,7 @@ The bulk of the code is very simple as it follows the DeepSpeed *recipe*. The re
   },
 ```
 
-### Launch
+### Launching a distributed execution
 
 The installation of DeepSpeed includes the `deepspeed` app, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In this blog, we will run our model in a single compute node with 8 GPUs. The python code above is in the file <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> and the config file is <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a>. So the launch command is:
 
@@ -189,17 +195,32 @@ We need to allocate at least 1 input per process. Thus, next time you define the
 
 If we where required to run this in multiple compute nodes, we'd need to specify the DNS of each node and the number of GPUs per node. This is done by passing an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node. Other relevant parameter is related to the [Autotuning of hyperparameters and parallelism](https://www.deepspeed.ai/tutorials/autotuning/), that requires the `--autotuning` flag. For more flags, running `deepspeed --help` provides a brief summary of all options.
 
-### Benchmark
 
-We will use the `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics: running avg. samples per sec, average memory allocated and max memory allocated at any given instant. 
+### 3D Parallelism
 
-The following use cases were benchmarked:
+A GPT model allows for three types of parallelism, that can be into what DeepSpeed calls **3D parallelism**:
+1. **Data parallelism**, by dividing the number of datapoints (`train_batch_size`) across a subset of nodes.
+2. **Pipeline parallelism**, by delegating different blocks of the GPT to different resources. Piepeline parallelism is possible with no modification by defining blocks of the model inside a `nn.Sequential` container, that DeepSpeed can then explore. This is declared in our model as:
+  ```
+  self.blocks = nn.Sequential( *[Block(n_embd, n_head=4) for _ in range(n_layer)])
+  ```
+3. **Tensor/vertical parallelism**, by dividing the parameters on each layer across compute resources, the specialization of the ZeRO operations.  
+
+Finding the best combination of the individual levels of parallelism is a hard problem.
+This is a resources allocation problem across the 3D volume in the space of data, parameters and layers space. It aims at finding the best *slicing* across the 3D volume, and allocating different volumetric regions to different resources, in a way that best balances the compute time and/or memory across resources:
+ 
+### Benchmark Setup
+
+We will run and test several parallelism configurations. To quantify our results, we will use the `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: running avg. samples per sec, average memory allocated and max memory allocated at any given instant. Finally, because ultimately the goal of DeepSpeed is scaling, we will test the largest model possible on each configuration. 
+
+The following configurations will be benchmarked:
 - the single GPU use case, i.e. no parallelism;
   - launched with `python gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json` (note: the config is still needed on serial runs, to define for optimizer, datatypes, etc);
+- the pipeline parallel execution; 
 - DeepSpeed with ZeRO stage 0 (ie ZeRO is disabled), performing distributed data parallelism;
   - launched with `deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json`
 - DeepSpeed with ZeRO stage 1. The optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
-  - launched as before, with the following field added to the config file:
+  - launched as before, with the following field in the config file:
     ```
         "zero_optimization": {
             "stage": 1
@@ -224,24 +245,21 @@ The following use cases were benchmarked:
             "offload_param":     { "device": "cpu" }
         }
     ```
-- DeepSpeed with automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/).
-  - New config entry:
-    ```
-        "amp": {
-            "enabled": true,
-            "opt_level": "O1",
-        }
-    ```
+- DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/).
+  - for amp trainig:  `"amp":  { "enabled": true, "opt_level": "O1" } `
+  - for fp16 trainig: `"fp16": { "enabled": true, ... } ` following the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
  
-The benchmark results are the following:
+### Benchmark Results 
 
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
+I'm still working on autotuning the resource allocation problem. Results coming soon.
+
+[//]: # {: style="text-align:center; font-size: small;"}
+[//]: # <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
 
 
 ### Final remarks 
 
-We just touched the surface of DeepSpeed capabilities. Other tools that should be taking into account are:
+We just touched the surface of the capabilities of DeepSpeed. Other components of DeepSpeed that should be taken into account are:
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts.
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html).
 - [Pipeline Parallelism](https://www.deepspeed.ai/tutorials/pipeline/) for a simpler layer-level implementation of parallelism.
@@ -254,4 +272,5 @@ All done! If you want to download the files in this post and run it on your own,
 - <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> for the main python code;
 - <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model (model only, no run/valid loop);
 - <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a> for the DeepSpeed config file for ZeRO stage 3 with mixed precision and CPU offloading; and
+- <a href="/assets/GPT-lite-DeepSpeed/run.sh">run.sh</a> for the command line script to launch the execution.
 - <a href="/assets/GPT-lite-DeepSpeed/benchmark.xlsx">benchmark.xlsx</a> for the spreadsheet with the benchmark results and plot.
