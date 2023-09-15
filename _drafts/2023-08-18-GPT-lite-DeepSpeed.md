@@ -250,4 +250,8 @@ We just touched the surface of DeepSpeed capabilities. Other tools that should b
 
 And many others covered also in the [tutorial page](https://www.deepspeed.ai/tutorials/). The full list of options for the `zero_optimization` is in [the ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html). And a good set of tutorials and examples is available in the [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/) repo, particularly the [CIFAR10 tutorial](https://github.com/microsoft/DeepSpeedExamples/tree/master/training/cifar).
 
-All done! To download the files mentioned here, see <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model (model only, no run/valid loop), and <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a> for the DeepSpeed config file.
+All done! If you want to download the files in this post and run it on your own, see:
+- <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> for the main python code;
+- <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model (model only, no run/valid loop);
+- <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a> for the DeepSpeed config file for ZeRO stage 3 with mixed precision and CPU offloading; and
+- <a href="/assets/GPT-lite-DeepSpeed/benchmark.xlsx">benchmark.xlsx</a> for the spreadsheet with the benchmark results and plot.
