@@ -8,10 +8,10 @@ tags: [machinelearning]
 In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model - and trained it on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will use the same model and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054), a *zero-redundancy* scaling technique detailed [in this post]({{ site.baseurl }}{% post_url  2020-05-28-AI-Supercomputing-2 %}). We'll use the `deepspeed` package for `python`.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="/assets/GPT-lite-DeepSpeed/GPT_3D_parallelism_2.png"/>
+<img width="55%" height="55%" src="/assets/GPT-lite-DeepSpeed/GPT_3D_parallelism_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The resources allocation problem vizualized a a (color-coded) allocation of compute resources in the 3D space with data, layers and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the network, data parallelism across datapoints in the input batch, and tensor/vertical parallelism across parameters on each layer.
+The resources allocation problem vizualized a a (color-coded) allocation of compute resources in the 3D space with data, layers and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the network, data parallelism across datapoints in the input batch, and tensor/vertical parallelism across parameters on each layer. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
 We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">model implementation</a>:
 
@@ -247,7 +247,7 @@ The following configurations will be benchmarked:
     ```
 - DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/).
   - for amp trainig:  `"amp":  { "enabled": true, "opt_level": "O1" } `
-  - for fp16 trainig: `"fp16": { "enabled": true, ... } ` following the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
+  - for fp16 trainig: `"fp16": { "enabled": true, ... }`, in line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
  
 ### Benchmark Results 
 
