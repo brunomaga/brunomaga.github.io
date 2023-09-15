@@ -74,13 +74,8 @@ We will describe these components in the next sections, and ommit the implementa
 
 The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes and circles in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding position $$d$$ of a given word in the position $$pos$$ of a sentence is:
 
-$$
-PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right) \,\text{ for an even position} $$d$$ \text{, and}
-$$
-
-$$
-PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right)\, \text{ otherwise.}
-$$
+- $$PE_{(pos,2i)} = sin\left(\frac{pos}{10000^{2i/d}}\right)$$ for an even position $$d$$ and
+- $$PE_{(pos,2i+1)} = cos\left(\frac{pos}{10000^{2i/d}}\right)$$ otherwise.
 
 In practice, the embedding is given by the $$sine$$ and $$cosine$$ waves with a different frequency and offset for each dimension. As an example, for a word with positioning $$pos$$ (x axis), then the values at dimensions $$4$$, $$5$$, $$6$$ and $$7$$ is:
 
