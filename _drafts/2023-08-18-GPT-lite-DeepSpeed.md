@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Scaling a GPT model with DeepSpeed"
+title:  "Scaling a GPT model with ZeRO and DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite (a small version of the GPT model) and trained it on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will use the same model and scale it using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054), a *zero-redundancy* scaling technique detailed [in this post]({{ site.baseurl }}{% post_url  2020-05-28-AI-Supercomputing-2 %}). We'll use the `deepspeed` package for `python`.
+In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model - and trained it on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will use the same model and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054), a *zero-redundancy* scaling technique detailed [in this post]({{ site.baseurl }}{% post_url  2020-05-28-AI-Supercomputing-2 %}). We'll use the `deepspeed` package for `python`.
 
-We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables:
+We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">model implementation</a>:
 
 ```python
 # depth of the network as number of decoder blocks.
@@ -47,7 +47,7 @@ def get_deepspeed_args(description='GPT lite on DeepSpeed'):
   return parser.parse_args()
 ```
 
-We now create a function that returns a model of type `torch.nn.Module` and dataset of type `torch.utils.data.Dataset`:
+We now create a function that returns a model of type `torch.nn.Module` and a dataset of type `torch.utils.data.Dataset`:
 
 ```python
 def get_model_and_dataset():
@@ -76,7 +76,7 @@ def get_model_and_dataset():
   return model, dataset
 ```
 
-As a side not, **any model is possible** to be used in this code. E.g. if you'd want to perform 10-class classification on the `CIFAR10` dataset available in `torchvision`:
+As a side not, **any model and dataset can be used** in this code. As an example, if you'd want to perform 10-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`:
 
 ```python
 def get_model_and_dataset():
@@ -87,15 +87,15 @@ def get_model_and_dataset():
         transforms.ToTensor(),
         transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
     ])
-    dataset = torchvision.datasets.CIFAR10(root='./data', train=True, download=True, transform=transform)
+    dataset = torchvision.datasets.CIFAR10(
+        root='./data', train=True, download=True, transform=transform)
     return model, dataset
 ```
 
-Let's continue with our GPT-lite model. The bulk of the code is pretty simple. In practice, all boilerplate code that pytorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and defined in its config file. So the train loop is pretty simple:
+Let's continue with our GPT-lite model use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and defined by its config file. So the initialization is pretty straighforward:
 
 ```python
 def main_deepspeed():
-
 
   import deepspeed
   deepspeed.init_distributed()
@@ -103,12 +103,10 @@ def main_deepspeed():
   model, train_dataset = get_model_and_dataset()
 
   model_engine, optimizer, train_dataloader , _ = deepspeed.initialize(
-    args=args, model=model, training_data=train_dataset,
-    #config=args.deepspeed_config, #only needed when args.deepspeed_config does not exist
-    )
+    args=args, model=model, training_data=train_dataset,)
 ```
 
-Then we add the initialization of the loss function, input datatype, and local rank and device variables:
+Then we do the initialization of the loss function, input datatype, and the local rank and device:
 
 ``` python
   criterion = torch.nn.CrossEntropyLoss()
@@ -122,7 +120,7 @@ Then we add the initialization of the loss function, input datatype, and local r
   print(f"Starting training, I'm rank {local_rank} on {local_device}")
 ``` 
 
-and finally the training loop:
+and finally the training loop, with a structure very similar to the PyTorch implementation, except that there's no zeroing of gradients (it is managed internally by DeepSpeed):
 
 ```python
   n_epochs=20
@@ -144,12 +142,13 @@ and finally the training loop:
       model_engine.step() #update weights, no zero-ing
 
     # print statistics
-    if local_rank == 0: print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
+    if local_rank == 0:
+        print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
 ```
 
 ### Config file
 
-All code so far is pretty standard as it follows the DeepSpeed *recipe*. The real *nuance* and complexity of DeepSpeed is the config file. The number of possible fields in the DeepSpeed config is very large, and they are all detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the logger to output every 100 epochs (`steps_per_print`), and define optimizer (`optimizer`) and LR scheduler (`scheduler`) settings:
+The bulk of the code is very simple as it follows the DeepSpeed *recipe*. The real *nuance* and complexity of using DeepSpeed is the config file (`.json`). The number of possible fields in the config is very large, and they define parallelism, precision, solvers, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the optimizer (`optimizer`) and LR scheduler (`scheduler`) settings:
 
 ```json
 {
@@ -179,170 +178,65 @@ All code so far is pretty standard as it follows the DeepSpeed *recipe*. The rea
 
 ### Launch
 
-DeepSpeed installs with the `deepspeed` app, a network bootstrapper that detects all GPUs and nodes in a network and launches the python in all of them, with different `--local_rank` arguments. We will run this in a single compute node with 8 GPUs. Our  python python code is in the file `gptlite_deepspeed.py`  and the config file is `deepspeed_config_ds.json`. So our `deepspeed` call is:
+The installation of DeepSpeed includes the `deepspeed` app, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In this blog, we will run our model in a single compute node with 8 GPUs. The python code above is in the file <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> and the config file is <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a>. So the launch command is:
 
 ```
 deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json
 ```
 
 Note that in the config file we specified a batch size of 64, i.e. a batch of 8 for each GPU in our parallel runs. 
-We need to allocate at least 2 inputs per processor (it failed for me with 1 input per GPU), so take that into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable), when providing the batch size. In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * number of GPUs. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
+We need to allocate at least 1 input per process. Thus, next time you define the batch size, take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable): `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * number of GPUs. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
 
-If we where required to run this in multiple compute nodes, we'd need to specify the DNS of each node and the number of GPUs per node in a file. This would requires the parameter `--hostfile hostfile`. Other relevant function of DeepSpeed is the [Autotuning of hyperparameters and parallelism](https://www.deepspeed.ai/tutorials/autotuning/), that requires the `--autotuning` flag. For more flags, running `deepspeed --help` provides a quick explanation of all options.
+If we where required to run this in multiple compute nodes, we'd need to specify the DNS of each node and the number of GPUs per node. This is done by passing an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node. Other relevant parameter is related to the [Autotuning of hyperparameters and parallelism](https://www.deepspeed.ai/tutorials/autotuning/), that requires the `--autotuning` flag. For more flags, running `deepspeed --help` provides a brief summary of all options.
 
-### no DeepSpeed (single GPU run):
+### Benchmark
 
-launched with `python gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json` (Note: the config is needed for all optimizer, datatypes, etc variables).
+We will use the `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics: running avg. samples per sec, average memory allocated and max memory allocated at any given instant. 
 
-`nvidia-smi` metrics: memory usage of 10.44 GB in a single GPU, with GPU utilization at 100%
+The following use cases were benchmarked:
+- the single GPU use case, i.e. no parallelism;
+  - launched with `python gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json` (note: the config is still needed on serial runs, to define for optimizer, datatypes, etc);
+- DeepSpeed with ZeRO stage 0 (ie ZeRO is disabled), performing distributed data parallelism;
+  - launched with `deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json`
+- DeepSpeed with ZeRO stage 1. The optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
+  - launched as before, with the following field added to the config file:
+    ```
+        "zero_optimization": {
+            "stage": 1
+        }
+    ```
+- DeepSpeed with ZeRO stage 2. The reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
+  - These ZeRO config now includes two new entries to define the number of elements reduced/allreduced at a time. This limits the memory required for the allgather for large model sizes:
+    ```
+        "zero_optimization": {
+            "stage": 2,
+            "reduce_bucket_size": 5e8,
+            "all_reduce_bucket_size": 5e8
+        }
+    ```
+- DeepSpeed with ZeRO stage 3. The 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes.
+  - The field in the config file needs to be changed to `"stage": 3`.
+- DeepSpeed with ZeRO stage 3 Infinity. Infinity is an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857), which can offload to both CPU and NVMe memory for huge memory savings.
+  - To offload to the cpu, we add to our config:
+    ```
+        "zero_optimization": {
+            "offload_optimizer": { "device": "cpu" },
+            "offload_param":     { "device": "cpu" }
+        }
+    ```
+- DeepSpeed with automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/).
+  - New config entry:
+    ```
+        "amp": {
+            "enabled": true,
+            "opt_level": "O1",
+        }
+    ```
+ 
+The benchmark results are the following:
 
-output:
-```
-```
-
-
-### Deepspeed without ZeRO, or ZeRO stage 0, or Data Parallelism:
-
-Stage 0 disables deepzero, oly data parallelism
-
-`nvidia-smi` metrics: memory usage : 6.79GB MB, GPU utilization at 100%
-
-launched with `deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json`
-
-Logger output in terminal (broken in several lines):
-
-```
-RunningAvgSamplesPerSec=67.20094094640265,
-CurrSamplesPerSec=66.45660899684819,
-MemAllocated=0.47GB,
-MaxMemAllocated=6.07GB
-```
-
-### ZeRO stage 1
-
-The optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition. The confile file needs a new field:
-
-```
-   "zero_optimization": {
-	"stage": 1
-    }
-```
-
-`nvidia-smi` metrics: memory usage : 6.57GB, GPU utilization around 99%
-
-Logger output in terminal:
-
-```
-RunningAvgSamplesPerSec=67.0053491112917,
-CurrSamplesPerSec=63.59028627957837,
-MemAllocated=0.33GB,
-MaxMemAllocated=5.93GB
-```
-
-### ZeRO stage 2:
-
-The reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states. These fields were changed to the config file:
-
-```
-   "zero_optimization": {
-	"stage": 2,
-	"reduce_bucket_size": 5e8       # this MAY be necessary otherwise it will run out of memory
-	"all_reduce_bucket_size": 5e8   # this MAY be necessary otherwise it will run out of memory
-    }
-```
-
-The extra elements are the number of elements reduced/allreduced at a time. Limits the memory required for the allgather for large model sizes
-
-`nvidia-smi` metrics: memory usage : 6.5 GB, GPU utilization around 99%
-
-Logger output in terminal:
-
-
-```
-RunningAvgSamplesPerSec=67.96643162283617,
-CurrSamplesPerSec=63.47303343527717,
-MemAllocated=0.33GB,
-MaxMemAllocated=6.29GB
-```
-
-### ZeRO stage 3:
-
-The 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. The field in the config file needs to be changed to `"stage": 2`. 
-
-`nvidia-smi` metrics: memory usage : 7.06GB, GPU utilization in the range 100%
-
-Logger output in terminal:
-
-```
-RunningAvgSamplesPerSec=68.19805706375571,
-CurrSamplesPerSec=68.08978242810488,
-MemAllocated=0.45GB,
-MaxMemAllocated=6.11GB
-```
-
-### ZeRO stage 3 with offloading:
-
-In addition, ZeRO-3 includes the infinity offload engine to form ZeRO-Infinity (paper), which can offload to both CPU and NVMe memory for huge memory savings. To offload to the cpu, we add to our config:
-
-```
-  "zero_optimization": {
-      "offload_optimizer": {
-          "device": "cpu"
-      },
-      "offload_param": {
-          "device": "cpu"
-      }
-  }
-```
-
-`nvidia-smi` metrics: memory usage : 6.96GB, GPU utilization in the range 99%
-
-Logger output in terminal:
-
-```
-RunningAvgSamplesPerSec=57.297071153914516,
-CurrSamplesPerSec=56.074883086568896,
-MemAllocated=0.39GB,
-MaxMemAllocated=6.06GB
-```
-
-
-
-### Fp16 speed-up
-
-A speed-up comes from using fp16. That requires a loss scaling:
-
-```
-  "zero_optimization": {
-      "fp16": {
-          "enabled": true,
-          "fp16_master_weights_and_grads": false,
-          "loss_scale": 0,
-          "loss_scale_window": 500,
-          "hysteresis": 2,
-          "min_loss_scale": 1,
-          "initial_scale_power": 15
-      },
-  }
-```
-
-As a comparison, for the stage 1 the new output of the logger is:
-
-```
-RunningAvgSamplesPerSec=447.665553440481,
-CurrSamplesPerSec=453.0647979368359,
-MemAllocated=0.06GB,
-MaxMemAllocated=0.1GB
-```
-
-compared to the original
-
-```
-RunningAvgSamplesPerSec=357.6931784027813,
-CurrSamplesPerSec=372.6779510418055,
-MemAllocated=0.07GB,
-MaxMemAllocated=0.16GB
-```
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
 
 
 ### Final remarks 
