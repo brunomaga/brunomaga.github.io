@@ -243,7 +243,7 @@ We will include the following analysis:
     ```
 - DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/). For amp training the config adds `"amp":  { "enabled": true, "opt_level": "O1" } `. For fp16 trainig, we change it line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
  
-**NOTE:** I'm now working on autotuning the resource allocation problem and crashing numbers. Results will follow soon.
+**NOTE:** I'm now working on autotuning the resource allocation problem and collecting performance numbers. Results will follow soon.
 
 [//]: # {: style="text-align:center; font-size: small;"}
 [//]: # <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
@@ -254,16 +254,15 @@ We will include the following analysis:
 We just touched the surface of the capabilities of DeepSpeed. Other components of DeepSpeed that should be taken into account are:
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts.
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html).
-- [Pipeline Parallelism](https://www.deepspeed.ai/tutorials/pipeline/) for a simpler layer-level implementation of parallelism.
-- [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) resources allocation.
-- [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integration Hugging Face transformers into deepspeed.
-- The full list of options for the `zero_optimization` section in the config can be found in the [ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html).
+- [Pipeline Parallelism](https://www.deepspeed.ai/tutorials/pipeline/) for a simpler layer-level implementation of parallelism, without ZeRO.
+- [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) of resources allocation.
+- [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed.
+- [ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html) for the full list of config options for the `zero_optimization`.
 
-And many others covered also in the [tutorial page](https://www.deepspeed.ai/tutorials/). The full list of options for the `zero_optimization` is in [the ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html). And a good set of tutorials and examples is available in the [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/) repo, particularly the [CIFAR10 tutorial](https://github.com/microsoft/DeepSpeedExamples/tree/master/training/cifar).
+And many others covered by the [tutorial page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
 All done! If you want to download the files in this post and run it on your own, see:
 - <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> for the main python code;
 - <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model (model only, no run/valid loop);
 - <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a> for the DeepSpeed config file for ZeRO stage 3 with mixed precision and CPU offloading; and
 - <a href="/assets/GPT-lite-DeepSpeed/run.sh">run.sh</a> for the command line script to launch the execution.
-- <a href="/assets/GPT-lite-DeepSpeed/benchmark.xlsx">benchmark.xlsx</a> for the spreadsheet with the benchmark results and plot.
