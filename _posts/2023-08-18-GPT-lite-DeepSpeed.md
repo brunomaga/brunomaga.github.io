@@ -217,7 +217,7 @@ For other operations, running `deepspeed --help` provides a brief summary of all
 
 We will run and benchmark several parallelism configurations. To quantify our results, we will use the `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: running avg. samples per sec, average memory allocated and max memory allocated at any given instant. Finally, because ultimately the goal of DeepSpeed is scaling, we will test the largest model possible on each configuration. 
 
-The following configurations will be benchmarked:
+We included the following configurations in our benchmark:
 - the single node single GPU use case, i.e. no parallelism, by launching the run with `python` instead of `deepspeed`. 
 - the Pipeline Parallel execution.  Pipeline parallelism is possible with no modification by defining blocks of the model inside a `nn.Sequential` container, that DeepSpeed can then explore. This is declared in our model as:
   ```
