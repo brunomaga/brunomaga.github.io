@@ -10,19 +10,19 @@ In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), w
 
 ### 3D Parallelism
 
-A GPT model allows for three types of parallelism, that can be combined into what DeepSpeed calls **3D parallelism**:
-1. **Data parallelism**, by dividing the number of datapoints (batch size) across a subset of resources.
-2. **Pipeline parallelism**, by delegating different blocks of the GPT to different resources.
-3. **Tensor/vertical parallelism**, by dividing the parameters on each layer across compute resources, the specialization of the ZeRO operations.  
+A GPT model allows for three types of parallelism, that can be combined into what is commonly called **3D parallelism**:
+1. **Data parallelism**, by dividing the number of datapoints (batch size) across all compute resources.
+2. **Pipeline parallelism**, by delegating different layers (or blocks of layers) of the model to different resources.
+3. **Tensor/vertical parallelism**, by dividing the parameters on each layer across the compute resources, the scope of the ZeRO operations.  
 
-Finding the best combination of the individual levels of parallelism is a hard problem.
-This is a resources allocation problem across the 3D volume in the space of data, parameters and layers space. It aims at finding the best *slicing* across the 3D volume, and allocating different volumetric regions to different resources, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for increasing the model size.
+Finding the best combination of the three levels of parallelism is a hard problem.
+This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across the 3D volume, and allocating different partitions to different compute resources, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the model size.
  
 {: style="text-align:center; font-size: small;"}
 <img width="55%" height="55%" src="/assets/GPT-lite-DeepSpeed/GPT_3D_parallelism_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The resources allocation problem vizualized a a (color-coded) allocation of compute resources in the 3D space with data, layers and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the network, data parallelism across datapoints in the input batch, and tensor/vertical parallelism across parameters on each layer. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
+The resources allocation problem vizualized as a (color-coded) allocation of compute resources in the 3D space of data, layer and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the model, data parallelism across datapoints in the input batch, and model/tensor/vertical parallelism across the parameters of each layer. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
 ### Main code, spelled out
 
@@ -48,7 +48,7 @@ block_size = 2048
 dropout = 0.1
 ```
 
-We then create an `ArgumentParser` object that is required for the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
+We then create the `ArgumentParser` object that is required by the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
 - the `--local_rank` parameter that is the local rank of each process in the network, and will be populated automatically by the `deepspeed` launcher;
 - optionally, we add the `--deepspeed_config` where we specify the path to the DeepSpeed config file. If you choose not to add it to the command line arguments, then it must be specified as the parameter `config` in `deepspeed.initialize()`.
 
@@ -66,7 +66,7 @@ def get_deepspeed_args(description='GPT lite on DeepSpeed'):
   return parser.parse_args()
 ```
 
-We now create a function that returns a model of type `torch.nn.Module` and a dataset of type `torch.utils.data.Dataset`:
+We now create the function that returns a model of type `torch.nn.Module` and a dataset of type `torch.utils.data.Dataset`:
 
 ```python
 def get_model_and_dataset():
@@ -95,7 +95,7 @@ def get_model_and_dataset():
   return model, dataset
 ```
 
-As a side not, **any model and dataset can be used** in this code. As an example, if you'd want to perform 10-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`:
+As a side note, **any model and dataset can be used** in this code. As an example, if you'd want to perform a 10-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd redefine the previous function as:
 
 ```python
 def get_model_and_dataset():
@@ -111,7 +111,7 @@ def get_model_and_dataset():
     return model, dataset
 ```
 
-Let's continue with our GPT-lite use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined by its config file. So the initialization is pretty straighforward:
+Let's continue with our GPT-lite use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined by its config file. So the initialization of a DeepSpeed run is pretty straighforward:
 
 ```python
 def main_deepspeed():
@@ -167,7 +167,7 @@ and finally the training loop, with a structure very similar to the PyTorch impl
  
 ### DeepSpeed config file
 
-The bulk of the code is very simple as it follows the DeepSpeed *recipe*. The real *nuance* and complexity of using DeepSpeed is the config file (`.json`). The number of possible fields in the config is very large, as they define parallelism, precision, solvers, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the optimizer (`optimizer`) and LR scheduler (`scheduler`) settings:
+The real *nuance* and complexity in using DeepSpeed is the config file (`json`). The number of possible fields in the config is very large, as they define parallelism, floating point precision, logges, solver, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
 
 ```json
 {
@@ -197,7 +197,7 @@ The bulk of the code is very simple as it follows the DeepSpeed *recipe*. The re
 
 ### Launching a distributed execution
 
-The installation of DeepSpeed includes the `deepspeed` app, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In this blog, we will run our model in a single compute node with 8 GPUs. The python code above is in the file <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> and the config file is <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a>. So the launch command is:
+The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In this examplr, we will run our model in a single compute node with 8 GPUs, launching the python code in <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> with the config file <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a>. The launch command is:
 
 ```
 deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json
@@ -206,19 +206,19 @@ deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds
 Few notes about parallel runs:
 - Launching with `python` instead of `deepspeed` will perform a single-node single-GPU run.
 - In the config file we specified a batch size of 64, i.e. a batch of 8 for each GPU in our parallel runs. 
-We need to allocate at least 1 input per process. Thus, next time you define the batch size, take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable): `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * number of GPUs. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
-- If we where required to run this in multiple compute nodes, we'd need to specify the DNS of each node and the number of GPUs per node. This is done by passing an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node.
+We need to allocate at least 1 input per process. Thus, the batch size in the config should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * `--num_gpus`. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
+- If we where required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node.
 - Other relevant parameter is related to the [Autotuning of hyperparameters and parallelism](https://www.deepspeed.ai/tutorials/autotuning/), that requires the `--autotuning` flag.
 
-For other operations, running `deepspeed --help` provides a brief summary of all options.
+For more information of available flags, running `deepspeed --help` provides a brief summary of all options.
 
 
 ### Benchmark 
 
-We will run and benchmark several parallelism configurations. To quantify our results, we will use the `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: running avg. samples per sec, average memory allocated and max memory allocated at any given instant. Finally, because ultimately the goal of DeepSpeed is scaling, we will test the largest model possible on each configuration. 
+We will run and benchmark several parallelism configurations. To collect our metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: running avg. samples per sec, average memory allocated and max memory allocated at any given instant. Finally, because ultimately the goal of DeepSpeed is scaling, we will test the largest model possible on each configuration. 
 
-We included the following configurations in our benchmark:
-- the single node single GPU use case, i.e. no parallelism, by launching the run with `python` instead of `deepspeed`. 
+We will include the following analysis:
+- the single-node single-GPU use case, i.e. no parallelism. 
 - the Pipeline Parallel execution.  Pipeline parallelism is possible with no modification by defining blocks of the model inside a `nn.Sequential` container, that DeepSpeed can then explore. This is declared in our model as:
   ```
   self.blocks = nn.Sequential( *[Block(n_embd, n_head=4) for _ in range(n_layer)])
