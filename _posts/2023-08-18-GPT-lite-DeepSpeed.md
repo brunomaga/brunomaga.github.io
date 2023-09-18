@@ -17,14 +17,6 @@ A GPT model allows for three types of parallelism, that can be combined into wha
    - **ZeRO** and **Fully-Sharded Data Parallelism** are equivalent to data parallelism with distributed data storage. The main distinction is: in data parallelism, all processors hold a copy of the full model, and all models are kept in sync by averaging gradients at the end of every epoch and performing similar gradient updates. However, In ZeRO, the tensors for the parameter, gradients and optimizer states are distributed/partitioned/**sharded** across all the processors and scattered/gathered when needed. Thus the name: Zero-Redundancy *Optimizer*, but not data. ZeRO provides memory savings compared to data parallelism because of the partitioning of various tensors before and after the computations. An important remark is that the activations on the `forward` and `backward` still happen in full form i.e. they are not distributed and need to be kept on all processors for the backpropagation to work.
    - **Tensor parallelism** is a more intense approach of model parallelism that divides not just the parameters, gradients and optimizer states, but also the computation. This requires the operations and the layer activations (the output of the forward pass) to be also sharded - horizontally or vertically - and distributed across processors. This approach requires a modification of the computations to work in a distributed manner. Therefore, it is a model-specific strategy. This is supported but not provided by DeepSpeed, except in some implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/).
 
-Also, **ZeRO can be set with three different stage**. Each trade represents a different level of memory redundancy. In practice, it is a tradeoff between memory usage and communication required to communicate distributed tensors:
-1. **stage 1**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
-2. **stage 2**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
-3. **stage 3**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
-- **stage 3 with Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857), which can offload to both CPU and NVMe memory for huge memory savings.
-
-Here we will focus on model parallelism with the fully-sharded data parallel approach, with ZeRO stage 3. 
-
 Finding the best combination of the three levels of parallelism is a hard problem.
 This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across the 3D volume, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
@@ -33,6 +25,14 @@ This is a resources allocation problem across the 3D volume in the data, paramet
 
 {: style="text-align:center; font-size: small;"}
 The resources allocation problem vizualized as a (color-coded) allocation of processors in the 3D space of data, layer and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the model, data parallelism across datapoints in the input batch, and sharded/model/tensor/vertical parallelism across the parameters of each layer. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
+
+As a side note on model paralellism, **ZeRO can be set with three different stages**. Each trade represents a different level of memory redundancy. In practice, it is a tradeoff between memory usage and communication required to communicate distributed tensors:
+1. **stage 1**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
+2. **stage 2**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
+3. **stage 3**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
+   - **stage 3 with Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857), which can offload to both CPU and NVMe memory for huge memory savings.
+
+Here we will focus on model parallelism with the fully-sharded data parallel approach, with ZeRO stage 3. 
 
 ### Main code, spelled out
 
@@ -263,6 +263,7 @@ We will include the following analysis:
             "offload_param":     { "device": "cpu" }
         }
     ```
+
 [//]: # - DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/). For amp training the config adds `"amp":  { "enabled": true, "opt_level": "O1" } `. For fp16 trainig, we change it line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
  
 **NOTE:** I'm now working on autotuning the resource allocation problem and collecting performance numbers. Results will follow soon.
