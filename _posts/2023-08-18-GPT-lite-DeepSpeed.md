@@ -178,7 +178,15 @@ and finally the training loop, with a structure similar to the PyTorch implement
  
 ### Enabling Pipelining
 
-DeepSpeed uses all layers in a `nn.Sequential` container or `list` as the the sequence of layers to be broken into pipelining stages. A stage is a range of layers (or a block of computation) that will be assigned to a section of the pipeline. In our use case, we expose the layers be creating a method `to_layers()` method inside the `GPTlite` class that returns the sequence of layers to be run (note the `self.blocks` is of type `nn.Sequential`):
+DeepSpeed uses all layers in a `nn.Sequential` container or `list` as the the sequence of layers to be broken into pipelining stages. A stage is a range of layers (or a block of computation) that will be assigned to a section of the pipeline.
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
+
+{: style="text-align:center; font-size: small;"}
+A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
+
+In our use case, we expose the layers be creating a method `to_layers()` method inside the `GPTlite` class that returns the sequence of layers to be run (note the `self.blocks` is of type `nn.Sequential`):
 
 ```python
 class GPTlite(nn.Module):
@@ -198,13 +206,6 @@ Finally, we create a pipeline wrapper around `model`, that be fed later to the `
 ```python
 model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
 ```
-
-
-{: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
-
-{: style="text-align:center; font-size: small;"}
-A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
 
 ### DeepSpeed config file
