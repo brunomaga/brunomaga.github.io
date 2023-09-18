@@ -1,34 +1,42 @@
 ---
 layout: post
-title:  "Scaling a GPT model with 3D parallelism via ZeRO and DeepSpeed"
+title:  "Scaling a GPT model with ZeRO and DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model - and trained it on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will use the same model and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer), a scaling technique detailed before [in this post]({{ site.baseurl }}{% post_url  2020-05-28-AI-Supercomputing-2 %}). We'll use the `deepspeed` package for `python`.
+In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model - and trained it on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will use the same model and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer), a multi-dimensional scaling technique detailed [in this post]({{ site.baseurl }}{% post_url  2020-05-28-AI-Supercomputing-2 %}). We'll use the `deepspeed` package for `python`.
 
 
 ### 3D Parallelism
 
-A GPT model allows for three types of parallelism, that can be combined into what is commonly called by **3D parallelism**:
-1. **Data parallelism**, by dividing the number of datapoints (batch size) across all compute resources.
-2. **Pipeline parallelism**, by delegating different layers (or blocks of layers) of the model to different resources.
-3. **Model or Tensor parallelism**, by dividing the *tensors* on each layer across the processors. It may refer to two distinct implementations:
-   - **ZeRO** and **Fully-Sharded Data Parallelism** are equivalent data parallelism with distributed data storage. The computation on each processor is exactly the same as data parallel training. The main distinction is: in data parallelism, all processors hold a copy of the full model, and all processor models are kept in sync by averaging gradients at the end of every epoch. However, In ZeRO, the tensors for the parameter, gradients and optimizer states are distributed/partitioned/**sharded** across all the processors and scattered/gathered when needed. Thus the name: Zero-Redundancy *Optimizer*, but not data. ZeRO provides memory saving compared to data parallelism because of the partitioning of various tensors before and after the computations, but the `forward`/`backward` reduces still happens in full form i.e. the activations are passed between layers in the original size and shape. Therefore, ZeRO is distributed data parallelism approach on distributed memory, despite being called model parallelism (on the optimizer states).
-   - **Tensor parallelism** is a more intense approach of tensor parallelism that divides not just the parameters, gradients and optimizer states, but also the computation. This requires the operations and the layer activations (the output of the forward pass) to be also sharded - horizontally or vertically - and distributed across processors. This approach requires a modification of the computations to work in a distributed manner. Therefore, it is a model-specific strategy, which is why is supported by DeepSpeed, but not provided by it, except in some implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/).
+A GPT model allows for three types of parallelism, that can be combined into what we call **3D parallelism**:
+1. **Data parallelism**, by dividing the number of datapoints (batch size) across all processors, and using the average of the gradients across resources to perform the updates.
+2. **Pipeline parallelism**, by delegating different layers (or blocks of layers) of the model to different processors.
+3. **Model parallelism**, by dividing the *tensors* on each layer across the processors. It can be implemented by two distinct approaches:
+   - **ZeRO** and **Fully-Sharded Data Parallelism** are equivalent to data parallelism with distributed data storage. The main distinction is: in data parallelism, all processors hold a copy of the full model, and all models are kept in sync by averaging gradients at the end of every epoch and performing similar gradient updates. However, In ZeRO, the tensors for the parameter, gradients and optimizer states are distributed/partitioned/**sharded** across all the processors and scattered/gathered when needed. Thus the name: Zero-Redundancy *Optimizer*, but not data. ZeRO provides memory savings compared to data parallelism because of the partitioning of various tensors before and after the computations. An important remark is that the activations on the `forward` and `backward` still happen in full form i.e. they are not distributed and need to be kept on all processors for the backpropagation to work.
+   - **Tensor parallelism** is a more intense approach of model parallelism that divides not just the parameters, gradients and optimizer states, but also the computation. This requires the operations and the layer activations (the output of the forward pass) to be also sharded - horizontally or vertically - and distributed across processors. This approach requires a modification of the computations to work in a distributed manner. Therefore, it is a model-specific strategy. This is supported but not provided by DeepSpeed, except in some implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/).
+
+Also, **ZeRO can be set with three different stage**. Each trade represents a different level of memory redundancy. In practice, it is a tradeoff between memory usage and communication required to communicate distributed tensors:
+1. **stage 1**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
+2. **stage 2**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
+3. **stage 3**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
+- **stage 3 with Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857), which can offload to both CPU and NVMe memory for huge memory savings.
+
+Here we will focus on model parallelism with the fully-sharded data parallel approach, with ZeRO stage 3. 
 
 Finding the best combination of the three levels of parallelism is a hard problem.
-This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across the 3D volume, and allocating different partitions to different compute resources, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the model size.
+This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across the 3D volume, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
 {: style="text-align:center; font-size: small;"}
 <img width="55%" height="55%" src="/assets/GPT-lite-DeepSpeed/GPT_3D_parallelism_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The resources allocation problem vizualized as a (color-coded) allocation of compute resources in the 3D space of data, layer and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the model, data parallelism across datapoints in the input batch, and model/tensor/vertical parallelism across the parameters of each layer. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
+The resources allocation problem vizualized as a (color-coded) allocation of processors in the 3D space of data, layer and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the model, data parallelism across datapoints in the input batch, and sharded/model/tensor/vertical parallelism across the parameters of each layer. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
 ### Main code, spelled out
 
-We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">model implementation</a>:
+We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">python implementation</a>:
 
 ```python
 # depth of the network as number of decoder blocks.
@@ -40,7 +48,7 @@ n_embd = 768
 # number of attention heads in the Multi-Attention mechanism
 n_head = 12
 
-# number of heads. this is the $d_k$ in the paper formulation of Attn. Mech
+# number of heads, the $d_k$ in the paper formulation of Attn. Mech
 head_size = 64
 
 # block size ie max number of training sequence, the $n_{ctx}$ in the paper .
@@ -51,10 +59,10 @@ dropout = 0.1
 ```
 
 We then create the `ArgumentParser` object that is required by the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
-- the `--local_rank` parameter that is the local rank of each process in the network, and will be populated automatically by the `deepspeed` launcher;
-- optionally, we add the `--deepspeed_config` where we specify the path to the DeepSpeed config file. If you choose not to add it to the command line arguments, then it must be specified as the parameter `config` in `deepspeed.initialize()`.
+- the `--local_rank` parameter that is the local rank of each process in the network, and will be populated automatically by the `deepspeed` launcher upon launch;
+- optionally, we add the `--deepspeed_config` where we specify the path to the DeepSpeed config file. If you choose not to add it to the command line arguments, then it must be specified as the parameter `config` in the call to `deepspeed.initialize()`.
 
-The easiest way to do this is to manually add `--local_rank` to the instantiation of `ArgumentParser` and then call `deepspeed.add_config_arguments()` to add the `--deepspeed` boolean flag that enables/disables deepspeed, and the `--deepspeed_config` argument:
+A simpler way to do this is to call `deepspeed.add_config_arguments()`, that adds the `--deepspeed` boolean flag that enables/disables deepspeed and the `--deepspeed_config` argument:
 
 ```python
 def get_deepspeed_args(description='GPT lite on DeepSpeed'):
@@ -113,7 +121,7 @@ def get_model_and_dataset():
     return model, dataset
 ```
 
-Let's continue with our GPT-lite use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined by its config file. So the initialization of a DeepSpeed run is pretty straighforward:
+Let's continue with our GPT-lite use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straighforward:
 
 ```python
 def main_deepspeed():
@@ -136,12 +144,12 @@ Then we do the initialization of the loss function, input datatype, and the loca
   if   model_engine.bfloat16_enabled(): target_dtype=torch.bfloat16
   elif model_engine.fp16_enabled():     target_dtype=torch.half
 
-  local_device = deepspeed.accelerator.get_accelerator().device_name(model_engine.local_rank)
   local_rank = model_engine.local_rank
+  local_device = deepspeed.accelerator.get_accelerator().device_name(local_rank)
   print(f"Starting training, I'm rank {local_rank} on {local_device}")
 ``` 
 
-and finally the training loop, with a structure very similar to the PyTorch implementation, except that there's no zeroing of gradients (it is managed internally by DeepSpeed):
+and finally the training loop, with a structure similar to the PyTorch implementation. The only exception is that we dont perform zeroing of gradients, this is managed internally by DeepSpeed. Also, `train_dataloader` a `DistributedSampler` created by DeepSpeed, so multi-process runs will have each process delegated to a different subset of data.
 
 ```python
   n_epochs=20
@@ -167,9 +175,27 @@ and finally the training loop, with a structure very similar to the PyTorch impl
         print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
 ```
  
+### Enabling Pipelining
+
+DeepSpeed automatically detects pipelining stages from the `nn.Sequential` container. This is declared in our model as a sequence of GPT block as:
+```
+self.blocks = nn.Sequential( *[Block(n_embd, n_head=4) for _ in range(n_layer)])
+```
+
+So we just have to create a pipelining wrapper to the model before we feed it to the `deepspeed.initialize()` above:
+```
+model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
+```
+
+A stage is a range of layers (or a block of computation) that will be assigned to a section of the pipeline. As an example, if our model has 100 layers, then a `num_stage=2` means 50 layers per stage. Each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages.
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
+
+
 ### DeepSpeed config file
 
-The real *nuance* and complexity in using DeepSpeed is the config file (`json`). The number of possible fields in the config is very large, as they define parallelism, floating point precision, logges, solver, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
+The real *nuance* and complexity in using DeepSpeed is the config file (`json`). The number of possible fields in the config is very large, as they define parallelism, floating point precision, logger, solver, communication, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
 
 ```json
 {
@@ -199,7 +225,7 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
 
 ### Launching a distributed execution
 
-The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In this examplr, we will run our model in a single compute node with 8 GPUs, launching the python code in <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> with the config file <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a>. The launch command is:
+The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, we will launch the script `gptlit_deepspeed.py` on a compute node with 8 GPUs, with the DeepSpeed config file `gptlite_config_ds.json`:
 
 ```
 deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json
@@ -207,11 +233,10 @@ deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds
 
 Few notes about parallel runs:
 - Launching with `python` instead of `deepspeed` will perform a single-node single-GPU run.
-- In the config file we specified a batch size of 64, i.e. a batch of 8 for each GPU in our parallel runs. 
-We need to allocate at least 1 input per process. Thus, the batch size in the config should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * `--num_gpus`. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
 - If we where required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node.
-- Other relevant parameter is related to the [Autotuning of hyperparameters and parallelism](https://www.deepspeed.ai/tutorials/autotuning/), that requires the `--autotuning` flag.
-- micro-batch size has 2 different meanings, depending on the use or not of pipelining. If pipeline parallelism is not enabled, it referes to the number of input datapoints that are used for gradient accumulation. When using pipelining, it refers to the number of model blocks passed in the pipelining timeline.
+- In the config file we specified a batch size of 64, i.e. a batch of 8 for each GPU in our parallel runs.  We need to allocate at least 1 datapoint per process. Thus, the batch size in the config should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * `--num_gpus`. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
+- When using pipelining, each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\ge 1$$. 
+- To enable the [Autotuning of hyperparameters and parallelism](https://www.deepspeed.ai/tutorials/autotuning/), we'd pass the `--autotuning` flag.
 
 For more information of available flags, running `deepspeed --help` provides a brief summary of all options.
 
@@ -221,11 +246,8 @@ We will run and benchmark several parallelism configurations. To collect our met
 
 We will include the following analysis:
 - the single-node single-GPU use case, i.e. no parallelism. 
-- the Pipeline Parallel execution.  Pipeline parallelism is possible with no modification by defining blocks of the model inside a `nn.Sequential` container, that DeepSpeed can then explore. This is declared in our model as:
-  ```
-  self.blocks = nn.Sequential( *[Block(n_embd, n_head=4) for _ in range(n_layer)])
-  ```
-- ZeRO stage 0 (disabled), equivalent to distributed Data Parallelism. Enabled by default, or when adding to the config the entry `"zero_optimization": { "stage": 0 }`.
+- the Pipeline Parallel execution, enabled with `PipelineModule(..., num_stages=4)` and `train_micro_batch_size_per_gpu: 4` in the config.
+- Distributed Data Parallelism by disabling DeepZero. Enabled by omitting `zero_optimization` in the config, of passing `"zero_optimization": { "stage": 0 }`.
 - ZeRO stage 3. The ZeRO config will also include two new entries to define the number of elements reduced/allreduced at a time, to limit the memory required for the allgather for large model sizes:
      ```json
         "zero_optimization": {
@@ -234,18 +256,14 @@ We will include the following analysis:
           "all_reduce_bucket_size": 5e8
       }
      ```
-  Note that Zero has three stages that provide different levels that related to different tradeoffs between redundancy vs communication:
-  1. stage 1: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
-  2. stage 2: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
-  3. stage 3: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
-- DeepSpeed with ZeRO stage 3 Infinity. Infinity is an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857), which can offload to both CPU and NVMe memory for huge memory savings. To perform CPU offloading, we add to the config:
+- DeepSpeed with ZeRO stage 3 Infinity. To perform CPU offloading, we add to the config:
     ```json
         "zero_optimization": {
             "offload_optimizer": { "device": "cpu" },
             "offload_param":     { "device": "cpu" }
         }
     ```
-- DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/). For amp training the config adds `"amp":  { "enabled": true, "opt_level": "O1" } `. For fp16 trainig, we change it line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
+[//]: # - DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/). For amp training the config adds `"amp":  { "enabled": true, "opt_level": "O1" } `. For fp16 trainig, we change it line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
  
 **NOTE:** I'm now working on autotuning the resource allocation problem and collecting performance numbers. Results will follow soon.
 
