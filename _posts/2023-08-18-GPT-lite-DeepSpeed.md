@@ -30,7 +30,8 @@ As a side note on model paralellism, **ZeRO can be set with three different stag
 1. **stage 1**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
 2. **stage 2**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
 3. **stage 3**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
-   - **stage 3 with Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857), which can offload to both CPU and NVMe memory for huge memory savings.
+
+Additionaly, on top of the previous stages, we can enable **ZeRO-Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857) that offloads parameters to both CPU and NVMe memory for huge memory savings.
 
 Here we will focus on model parallelism with the fully-sharded data parallel approach, with ZeRO stage 3. 
 
@@ -177,20 +178,39 @@ and finally the training loop, with a structure similar to the PyTorch implement
  
 ### Enabling Pipelining
 
-DeepSpeed automatically detects pipelining stages from the `nn.Sequential` container. This is declared in our model as a sequence of GPT block as:
+DeepSpeed automatically detects pipelining stages from the `nn.Sequential` container. This is already declared in our model as a sequence of GPT block as:
 ```
-self.blocks = nn.Sequential( *[Block(n_embd, n_head=4) for _ in range(n_layer)])
+self.blocks = nn.Sequential( *[Block(n_embd, n_head=n_head) for _ in range(n_layer)])
 ```
 
-So we just have to create a pipelining wrapper to the model before we feed it to the `deepspeed.initialize()` above:
+However, the previous definition is missing the layers that precede and follow the GPT blocks, such as positional embeddings, etc. So we create a `to_layers` method inside the `GPTlite` class that returns the sequence of steps:
+
+```python
+class GPTlite(nn.Module):
+    def to_layers(self):
+        layers = [
+            lambda tok_emb pos_emb: tok_enm + pos_emb,
+            *self.blocks,
+            self.ln,
+            self.lm_head,
+            lambda logits: torch.swapaxes(logits,1,2)
+        ]
+        return layers
 ```
+
+Finally, we create a pipeline wrapper around the model, that can later be fed to the `deepspeed.initialize()` above: 
+
+```python
 model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
 ```
 
 A stage is a range of layers (or a block of computation) that will be assigned to a section of the pipeline. As an example, if our model has 100 layers, then a `num_stage=2` means 50 layers per stage. Each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
+<img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
+
+{: style="text-align:center; font-size: small;"}
+A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
 
 ### DeepSpeed config file
@@ -225,10 +245,10 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
 
 ### Launching a distributed execution
 
-The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, we will launch the script `gptlit_deepspeed.py` on a compute node with 8 GPUs, with the DeepSpeed config file `gptlite_config_ds.json`:
+The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `gptlit_deepspeed.py` on a compute node with 8 GPUs, with the DeepSpeed config file `gptlite_config_ds.json`, we run on the shell:
 
-```
-deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json
+```shell
+$ deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json
 ```
 
 Few notes about parallel runs:
@@ -263,8 +283,7 @@ We will include the following analysis:
             "offload_param":     { "device": "cpu" }
         }
     ```
-
-[//]: # - DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/). For amp training the config adds `"amp":  { "enabled": true, "opt_level": "O1" } `. For fp16 trainig, we change it line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
+- DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/). For amp training the config adds `"amp":  { "enabled": true, "opt_level": "O1" } `. For fp16 trainig, we change it line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
  
 **NOTE:** I'm now working on autotuning the resource allocation problem and collecting performance numbers. Results will follow soon.
 
