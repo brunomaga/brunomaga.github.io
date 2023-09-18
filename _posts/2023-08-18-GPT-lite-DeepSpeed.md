@@ -225,8 +225,8 @@ We will include the following analysis:
   ```
   self.blocks = nn.Sequential( *[Block(n_embd, n_head=4) for _ in range(n_layer)])
   ```
-- DeepSpeed with ZeRO stage 0 (ie ZeRO is disabled), equivalent to distributed Data Parallelism. Enabled by adding to the config `"zero_optimization": { "stage": 0 }`.
-- DeepSpeed with ZeRO on stage 3 by adding to config `"zero_optimization": { "stage": 3 }`. Note that Zero has three stages that provide different levels of zero-redundancy at the overhead of increased communication,.
+- ZeRO stage 0 (disabled), equivalent to distributed Data Parallelism. Enabled by default, or when adding to the config `"zero_optimization": { "stage": 0 }`.
+- ZeRO stage 3 by adding to config `"zero_optimization": { "stage": 3 }`. Note that Zero has three stages that provide different levels of zero-redundancy at the overhead of increased communication,.
   1. stage 1: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
   2. stage 2: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
   3. stage 3: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. The ZeRO config will also include two new entries to define the number of elements reduced/allreduced at a time, to limit the memory required for the allgather for large model sizes:
