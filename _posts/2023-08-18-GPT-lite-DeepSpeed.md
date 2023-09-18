@@ -33,7 +33,7 @@ Finally, **ZeRO has three alternative execution modes, called stages**. Each sta
 Additionaly, on top of the previous stages, we can enable **ZeRO-Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857) that offloads parameters to both CPU and NVMe memory for huge memory savings.
 
 Long story short, finding the optimal parallelism hyperparameters is a hard problem.
-This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across the 3D volume, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
+This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across that 3D space, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
 ### Main code, spelled out
 
