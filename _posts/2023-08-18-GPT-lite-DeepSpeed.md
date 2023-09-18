@@ -230,7 +230,7 @@ We will include the following analysis:
   1. stage 1: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
   2. stage 2: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
   3. stage 3: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. The ZeRO config will also include two new entries to define the number of elements reduced/allreduced at a time, to limit the memory required for the allgather for large model sizes:
-     ```
+     ```json
         "zero_optimization": {
           "stage": 3,
           "reduce_bucket_size": 5e8,
@@ -238,7 +238,7 @@ We will include the following analysis:
       }
      ```
 - DeepSpeed with ZeRO stage 3 Infinity. Infinity is an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857), which can offload to both CPU and NVMe memory for huge memory savings. To perform CPU offloading, we add to the config:
-    ```
+    ```json
         "zero_optimization": {
             "offload_optimizer": { "device": "cpu" },
             "offload_param":     { "device": "cpu" }
