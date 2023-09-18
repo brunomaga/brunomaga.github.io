@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model - and trained it on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will use the same model and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054), a *zero-redundancy* scaling technique detailed [in this post]({{ site.baseurl }}{% post_url  2020-05-28-AI-Supercomputing-2 %}). We'll use the `deepspeed` package for `python`.
+In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model - and trained it on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will use the same model and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer), a scaling technique detailed before [in this post]({{ site.baseurl }}{% post_url  2020-05-28-AI-Supercomputing-2 %}). We'll use the `deepspeed` package for `python`.
 
 
 ### 3D Parallelism
@@ -14,8 +14,8 @@ A GPT model allows for three types of parallelism, that can be combined into wha
 1. **Data parallelism**, by dividing the number of datapoints (batch size) across all compute resources.
 2. **Pipeline parallelism**, by delegating different layers (or blocks of layers) of the model to different resources.
 3. **Tensor parallelism**, by dividing the *tensors* on each layer across the processors. This is sometimes losely called of **model parallelism**, and there are two implementations that are relevant:
-   - **ZeRO is simply a data parallel setup with distributed data storage**. The computation on each processor is exactly the same as data parallel training. The main distinction is: in data parallelism, all processors hold a copy of the full model, and all processor models are kept in sync by averaging gradients at the end of every epoch. In ZeRO, the parameter, gradients and optimizer states are distributed/partitioned/**sharded** across all the GPUs and scattered/gathered when needed. This is compatible with `deepspeed` for any  model of type `torch.nn.Module`. In practice, with ZeRO's sharding, there's memore saving compared to data parallelism because of the partitioning various tensors before and after the computations, but the `forward`/`backward` reduces still happens in full form, i.e. we still need a high amount of memory for the activations when computing a large layer.  Therefore, ZeRO is more of a distributed data parallelism approach on distributed memory, than a model parallelims approach.
-   - **Full model parallelism** is a more intense approach of tensor parallelism that divides not just the parameter, gradients and optimizer states, but also the computation vertically and horizontally, respectively. I.e. it also shards the operations and the layer activations (the output of the forward pass) are also distributed across processors. This approach actually modifies the computations to work in a distributed manner. As an example: instead of collecting the full data, doing a matrix multiplication, and then partitioning again, the computation in the module is inherently modified to work in the distributed manner that best fits the model.  Therefore, tensor parallelism is a model-specific strategy, which is why DeepSpeed supports, but does not provide it, except in some model-specific implementation e.g. [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/).
+   - **ZeRO is equivalent to data parallelism with distributed data storage**. The computation on each processor is exactly the same as data parallel training. The main distinction is: in data parallelism, all processors hold a copy of the full model, and all processor models are kept in sync by averaging gradients at the end of every epoch. However, In ZeRO, the parameter, gradients and optimizer states are distributed/partitioned/**sharded** across all the processors and scattered/gathered when needed. Thus the name: Zero-Redundancy *Optimizer*, but not data. ZeRO provides memory saving compared to data parallelism because of the partitioning of various tensors before and after the computations, but the `forward`/`backward` reduces still happens in full form i.e. the activations are passed between layers in the original size and shape. Therefore, ZeRO is distributed data parallelism approach on distributed memory, despite being called model parallelism (on the optimizer states).
+   - **Full model parallelism** is a more intense approach of tensor parallelism that divides not just the parameters, gradients and optimizer states, but also the computation. This requires the operations and the layer activations (the output of the forward pass) to be also sharded - horizontally or vertically - and distributed across processors. This approach requires a modification of the computations to work in a distributed manner. Therefore, it is a model-specific strategy, which is why is supported by DeepSpeed, but not provided by it, except in some implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/).
 
 Finding the best combination of the three levels of parallelism is a hard problem.
 This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across the 3D volume, and allocating different partitions to different compute resources, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the model size.
@@ -211,10 +211,9 @@ Few notes about parallel runs:
 We need to allocate at least 1 input per process. Thus, the batch size in the config should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * `--num_gpus`. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
 - If we where required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node.
 - Other relevant parameter is related to the [Autotuning of hyperparameters and parallelism](https://www.deepspeed.ai/tutorials/autotuning/), that requires the `--autotuning` flag.
-- micro-batch size has 2 different meanings, depending on the use of not of pipelining. If pipeline parallelism is not enables, it referes to the *full* input datapoints that are used for gradient accumulation. When using pipelining, it refers to the number of blocks passed in the pipelining timeline.
+- micro-batch size has 2 different meanings, depending on the use or not of pipelining. If pipeline parallelism is not enabled, it referes to the number of input datapoints that are used for gradient accumulation. When using pipelining, it refers to the number of model blocks passed in the pipelining timeline.
 
 For more information of available flags, running `deepspeed --help` provides a brief summary of all options.
-
 
 ### Benchmark 
 
@@ -227,16 +226,17 @@ We will include the following analysis:
   self.blocks = nn.Sequential( *[Block(n_embd, n_head=4) for _ in range(n_layer)])
   ```
 - DeepSpeed with ZeRO stage 0 (ie ZeRO is disabled), equivalent to distributed Data Parallelism. Enabled by adding to the config `"zero_optimization": { "stage": 0 }`.
-- DeepSpeed with ZeRO stage 1. The optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition. The config is now changed to `"zero_optimization": { "stage": 1 }`.
-- DeepSpeed with ZeRO stage 2. The reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states. The ZeRO config now includes two new entries to define the number of elements reduced/allreduced at a time, to limit the memory required for the allgather for large model sizes:
-    ```
+- DeepSpeed with ZeRO on stage 3 by adding to config `"zero_optimization": { "stage": 3 }`. Note that Zero has three stages that provide different levels of zero-redundancy at the overhead of increased communication,.
+  1. stage 1: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
+  2. stage 2: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
+  3. stage 3: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. The ZeRO config will also include two new entries to define the number of elements reduced/allreduced at a time, to limit the memory required for the allgather for large model sizes:
+     ```
         "zero_optimization": {
-            "stage": 2,
-            "reduce_bucket_size": 5e8,
-            "all_reduce_bucket_size": 5e8
-        }
-    ```
-- DeepSpeed with ZeRO stage 3. The 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. We change the previous config to `"stage": 3`.
+          "stage": 3,
+          "reduce_bucket_size": 5e8,
+          "all_reduce_bucket_size": 5e8
+      }
+     ```
 - DeepSpeed with ZeRO stage 3 Infinity. Infinity is an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857), which can offload to both CPU and NVMe memory for huge memory savings. To perform CPU offloading, we add to the config:
     ```
         "zero_optimization": {
