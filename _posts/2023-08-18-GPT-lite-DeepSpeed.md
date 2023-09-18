@@ -35,7 +35,7 @@ Additionaly, on top of the previous stages, we can enable **ZeRO-Infinity**, an 
 Long story short, finding the optimal parallelism hyperparameters is a hard problem.
 This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across that 3D space, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
-### Main code, spelled out
+### Main code
 
 We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">python implementation</a>:
 
@@ -178,12 +178,7 @@ and finally the training loop, with a structure similar to the PyTorch implement
  
 ### Enabling Pipelining
 
-DeepSpeed automatically detects pipelining stages from the `nn.Sequential` container. This is already declared in our model as a sequence of GPT block as:
-```
-self.blocks = nn.Sequential( *[Block(n_embd, n_head=n_head) for _ in range(n_layer)])
-```
-
-However, the previous definition is missing the layers that precede and follow the GPT blocks, such as positional embeddings, etc. So we create a `to_layers` method inside the `GPTlite` class that returns the sequence of steps:
+DeepSpeed uses all layers in a `nn.Sequential` container or `list` as the the sequence of layers to be broken into pipelining stages. A stage is a range of layers (or a block of computation) that will be assigned to a section of the pipeline. In our use case, we expose the layers be creating a method `to_layers()` method inside the `GPTlite` class that returns the sequence of layers to be run (note the `self.blocks` is of type `nn.Sequential`):
 
 ```python
 class GPTlite(nn.Module):
@@ -204,7 +199,6 @@ Finally, we create a pipeline wrapper around `model`, that be fed later to the `
 model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
 ```
 
-A stage is a range of layers (or a block of computation) that will be assigned to a section of the pipeline. As an example, if our model has 100 layers, then a `num_stage=2` means 50 layers per stage. Each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
