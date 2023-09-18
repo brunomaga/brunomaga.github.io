@@ -13,28 +13,28 @@ In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), w
 A GPT model allows for three types of parallelism, that can be combined into what we call **3D parallelism**:
 1. **Data parallelism**, by dividing the number of datapoints (batch size) across all processors, and using the average of the gradients across resources to perform the updates.
 2. **Pipeline parallelism**, by delegating different layers (or blocks of layers) of the model to different processors.
-3. **Model parallelism**, by dividing the *tensors* on each layer across the processors. It can be implemented by two distinct approaches:
-   - **ZeRO** and **Fully-Sharded Data Parallelism** are equivalent to data parallelism with distributed data storage. The main distinction is: in data parallelism, all processors hold a copy of the full model, and all models are kept in sync by averaging gradients at the end of every epoch and performing similar gradient updates. However, In ZeRO, the tensors for the parameter, gradients and optimizer states are distributed/partitioned/**sharded** across all the processors and scattered/gathered when needed. Thus the name: Zero-Redundancy *Optimizer*, but not data. ZeRO provides memory savings compared to data parallelism because of the partitioning of various tensors before and after the computations. An important remark is that the activations on the `forward` and `backward` still happen in full form i.e. they are not distributed and need to be kept on all processors for the backpropagation to work.
-   - **Tensor parallelism** is a more intense approach of model parallelism that divides not just the parameters, gradients and optimizer states, but also the computation. This requires the operations and the layer activations (the output of the forward pass) to be also sharded - horizontally or vertically - and distributed across processors. This approach requires a modification of the computations to work in a distributed manner. Therefore, it is a model-specific strategy. This is supported but not provided by DeepSpeed, except in some implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/).
+3. **Model parallelism**, by dividing the *tensors* on each layer across the processors.
 
-Finding the best combination of the three levels of parallelism is a hard problem.
-This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across the 3D volume, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
- 
 {: style="text-align:center; font-size: small;"}
 <img width="55%" height="55%" src="/assets/GPT-lite-DeepSpeed/GPT_3D_parallelism_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The resources allocation problem vizualized as a (color-coded) allocation of processors in the 3D space of data, layer and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the model, data parallelism across datapoints in the input batch, and sharded/model/tensor/vertical parallelism across the parameters of each layer. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
-As a side note on model paralellism, **ZeRO can be set with three different stages**. Each trade represents a different level of memory redundancy. In practice, it is a tradeoff between memory usage and communication required to communicate distributed tensors:
-1. **stage 1**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
-2. **stage 2**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
-3. **stage 3**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
+Model parallelims can be implemented by two distinct approaches:
+- **ZeRO** implements **Fully-Sharded Data Parallelism** and is equivalent to data parallelism with distributed data storage. The main distinction is: in data parallelism, all processors hold a copy of the full model, and all models are kept in sync by averaging gradients at the end of every epoch and performing similar gradient updates. However, In ZeRO, the tensors for the parameter, gradients and optimizer states are distributed/partitioned/**sharded** across all the processors and scattered/gathered when needed. Thus the name: Zero-Redundancy *Optimizer*, but not data. ZeRO provides memory savings compared to data parallelism because of the partitioning of various tensors before and after the computations. An important remark is that the activations on the `forward` and `backward` still happen in full form i.e. they are not distributed and need to be kept on all processors for the backpropagation to work.
+- **Tensor parallelism** is a more intense approach of model parallelism that divides not just the parameters, gradients and optimizer states, but also the computation. This requires the operations and the layer activations (the output of the forward pass) to be also sharded - horizontally or vertically - and distributed across processors. This approach requires a modification of the computations to work in a distributed manner. Therefore, it is a model-specific strategy. This is supported but not provided by DeepSpeed, except in some implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/).
+
+Finally, **ZeRO has three alternative execution modes, called stages**. Each stage represents a different level of memory redundancy. In practice, picking a stage is equivalent to picking a tradeoff between memory usage and communication required to communicate distributed tensors:
+- **ZeRO stage 1**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
+- **ZeRO stage 2**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
+- **ZeRO stage 3**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
 
 Additionaly, on top of the previous stages, we can enable **ZeRO-Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857) that offloads parameters to both CPU and NVMe memory for huge memory savings.
 
-Here we will focus on model parallelism with the fully-sharded data parallel approach, with ZeRO stage 3. 
-
+Long story short, finding the optimal parallelism hyperparameters is a hard problem.
+This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across the 3D volume, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
+ 
 ### Main code, spelled out
 
 We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">python implementation</a>:
@@ -198,7 +198,7 @@ class GPTlite(nn.Module):
         return layers
 ```
 
-Finally, we create a pipeline wrapper around the model, that can later be fed to the `deepspeed.initialize()` above: 
+Finally, we create a pipeline wrapper around `model`, that be fed later to the `deepspeed.initialize()` declaration: 
 
 ```python
 model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
@@ -207,7 +207,7 @@ model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
 A stage is a range of layers (or a block of computation) that will be assigned to a section of the pipeline. As an example, if our model has 100 layers, then a `num_stage=2` means 50 layers per stage. Each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
+<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
 
 {: style="text-align:center; font-size: small;"}
 A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
