@@ -294,7 +294,7 @@ We will include the following analysis:
             "offload_param":     { "device": "cpu" }
         }
     ```
-- DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/). For amp training the config adds `"amp":  { "enabled": true, "opt_level": "O1" } `. For fp16 trainig, we change it line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
+- DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/). For amp training the config adds `"amp":  { "enabled": true, "opt_level": "O1" } `. For fp16 training, we change it line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
  
 **NOTE:** I'm now working on autotuning the resource allocation problem and collecting performance numbers. Results will follow soon.
 
