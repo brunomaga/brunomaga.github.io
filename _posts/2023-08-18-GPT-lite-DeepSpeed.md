@@ -188,10 +188,20 @@ DeepSpeed enables pipelining by assuming all modules in a `nn.Sequential` contai
 {: style="text-align:center; font-size: small;"}
 A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
-In our use case, we expose the layers be creating a method `to_layers()` method inside the `GPTlite` class that returns the sequence of layers as functions to be executed. Note that `to_layers()` follows the same order as the `forward` pass in `GPTlite` and that `self.blocks` is of type `nn.Sequential`):
+We will make pipeline parallelism optional in our use case, as in many cases (e.g. for small models) it is not benefitial. We will disable it by default and enable it by passing `--pipeline` on the command line:
+
+```python
+def get_deepspeed_args(description='GPT lite on DeepSpeed'):
+  # ...]
+  parser.add_argument("--pipeline", action="store_true",
+                      help="enable pipeline parallelism")
+```
+
+Now we expose the pipeline parallelism in our model by creating a method `to_layers()` method inside the `GPTlite` class that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass in `GPTlite` and that `self.blocks` is of type `nn.Sequential`):
 
 ```python
 class GPTlite(nn.Module):
+    # ...
     def to_layers(self):
         layers = [
             lambda tok_emb pos_emb: tok_emb + pos_emb,
@@ -203,10 +213,13 @@ class GPTlite(nn.Module):
         return layers
 ```
 
-Finally, we create a pipeline wrapper around `model`, that will be fed later to the `deepspeed.initialize()` as model: 
+Finally, in our DeepSpeed initialization code, we create a pipeline wrapper around `model`, that will be fed later to the `deepspeed.initialize()` as model: 
 
 ```python
-model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
+def main_deepspeed():
+  # ...
+  if args.pipeline:
+    model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
 ```
 
 
@@ -252,20 +265,21 @@ Few notes about parallel runs:
 - Launching with `python` instead of `deepspeed` will perform a single-node single-GPU run.
 - If we where required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node.
 - In the config file we specified a batch size of 64, i.e. a batch of 8 for each GPU in our parallel runs.  We need to allocate at least 1 datapoint per process. Thus, the batch size in the config should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * `--num_gpus`. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
-- When using pipelining, each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, for a posterior gradient accumulation. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\gt 1$$ to allow multi-stage parallelism.
+- When using pipelining, each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, for the gradient accumulation that follows. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\gt 1$$ to allow multi-stage parallelism.
 - Finetuning the allocation of processors to model shards/layers is difficult on large parallel runs. Using [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) is recommended.
 
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
+
 ### Benchmark 
 
-We will run and benchmark several parallelism configurations. To collect our metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: running avg. samples per sec, average memory allocated and max memory allocated at any given instant. Finally, because ultimately the goal of DeepSpeed is scaling, we will test the largest model possible on each configuration. 
+We will run and benchmark several parallelism configurations. To collect our metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will test the largest model possible on each configuration. 
 
 We will include the following analysis:
 - the single-node single-GPU use case, i.e. no parallelism. 
 - the Pipeline Parallel execution, enabled with `PipelineModule(..., num_stages=4)` and `train_micro_batch_size_per_gpu: 4` in the config.
-- Distributed Data Parallelism by disabling DeepZero. Enabled by omitting `zero_optimization` in the config, of passing `"zero_optimization": { "stage": 0 }`.
-- ZeRO stage 3. The ZeRO config will also include two new entries to define the number of elements reduced/allreduced at a time, to limit the memory required for the allgather for large model sizes:
+- Distributed Data Parallelism by disabling DeepZero. Enabled by omitting `zero_optimization` in the config, or passing `"zero_optimization": { "stage": 0 }`.
+- ZeRO stage 3. The config file will also include two new entries to define the number of elements reduced/allreduced at a time, to limit the memory required for the allgather:
      ```json
         "zero_optimization": {
           "stage": 3,
