@@ -242,10 +242,10 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
 
 ### Launching a distributed execution
 
-The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `gptlit_deepspeed.py` on a compute node with 8 GPUs, with the DeepSpeed config file `gptlite_config_ds.json`, we run on the shell:
+The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
 
 ```shell
-$ deepspeed --num_gpus=8 gptlite_deepspeed.py --deepspeed_config gptlite_config_ds.json
+$ deepspeed --num_gpus=8 train.py --deepspeed_config ds_config.json
 ```
 
 Few notes about parallel runs:
@@ -299,4 +299,4 @@ We just touched the surface of the capabilities of DeepSpeed. Other components o
 
 And many others covered by the [tutorial page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
-All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model, <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a> for the DeepSpeed config file, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">run.sh</a> for the command line script to launch the execution.
+All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/train.py">train.py</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model, <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">ds_config.json</a> for the DeepSpeed config file, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">run.sh</a> for the command line script to launch the execution.
