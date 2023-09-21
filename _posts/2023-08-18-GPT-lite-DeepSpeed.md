@@ -22,7 +22,7 @@ A GPT model allows for three types of parallelism, that can be combined into wha
 The resources allocation problem vizualized as a (color-coded) allocation of processors in the 3D space of data, layer and parameter dimensions. A GPT model allows for 3D parallelism as a combination of: pipelining across blocks/layers of the model, data parallelism across datapoints in the input batch, and sharded/model/tensor/vertical parallelism across the parameters of each layer. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
 Model parallelism can be implemented by two distinct approaches:
-- **ZeRO** implements **Fully-Sharded Data Parallelism** and is equivalent to data parallelism with distributed data storage. The main distinction is: in data parallelism, all processors hold a copy of the full model, and all models are kept in sync by averaging gradients at the end of every epoch and performing similar gradient updates. However, In ZeRO, the tensors for the parameter, gradients and optimizer states are distributed/partitioned/**sharded** across all the processors and scattered/gathered when needed. Thus the name: Zero-Redundancy *Optimizer*, but not data. ZeRO provides memory savings compared to data parallelism because of the partitioning of various tensors before and after the computations. An important remark is that the activations on the `forward` and `backward` still happen in full form i.e. they are not distributed and need to be kept on all processors for the backpropagation to work.
+- **ZeRO** implements **Fully-Sharded Data Parallelism (FSDP)** and is equivalent to data parallelism with distributed data storage. The main distinction is: in data parallelism, all processors hold a copy of the full model, and all models are kept in sync by averaging gradients at the end of every epoch and performing similar gradient updates. However, In ZeRO, the tensors for the parameter, gradients and optimizer states are distributed/partitioned/**sharded** across all the processors and scattered/gathered when needed. Thus the name: Zero-Redundancy *Optimizer*, but not data. ZeRO provides memory savings compared to data parallelism because of the partitioning of various tensors before and after the computations. An important remark is that the activations on the `forward` and `backward` still happen in full form i.e. they are not distributed and need to be kept on all processors for the backpropagation to work.
 - **Tensor parallelism** is a more intense approach of model parallelism that divides not just the parameters, gradients and optimizer states, but also the computation. This requires the operations and the layer activations (the output of the forward pass) to be also sharded - horizontally or vertically - and distributed across processors. This approach requires a modification of the computations to work in a distributed manner. Therefore, it is a model-specific strategy. This is supported but not provided by DeepSpeed, except in some implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/).
 
 Finally, **ZeRO has three alternative execution modes, called stages**. Each stage represents a different level of memory redundancy. In practice, picking a stage is equivalent to picking a tradeoff between memory usage and communication required to communicate distributed tensors:
@@ -176,9 +176,11 @@ and finally the training loop, with a structure similar to the PyTorch implement
         print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
 ```
  
-### Enabling Pipelining
+### Pipeline Parallelism
 
-DeepSpeed uses all layers in a `nn.Sequential` container or `list` as the sequence of layers to be broken into pipelining stages. A stage is a range of layers that define a block of computation that will be assigned to a section of the pipeline.
+[Pipeline parallelism](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) improves both the memory and compute efficiency during training by partitioning the layers of a model into stages that can be processed in parallel.
+
+DeepSpeed enables pipelining by assuming all modules in a `nn.Sequential` container or `list` to be the sequence of layers that can be broken into pipelining stages. A stage is a range of layers that define a block of computation that will be assigned to a section of the pipeline.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
@@ -291,15 +293,10 @@ We will include the following analysis:
 We just touched the surface of the capabilities of DeepSpeed. Other components of DeepSpeed that should be taken into account are:
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts.
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html).
-- [Pipeline Parallelism](https://www.deepspeed.ai/tutorials/pipeline/) for a simpler layer-level implementation of parallelism, without ZeRO.
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed.
 - [Activation checkpointing](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) helps overcoming high memory requirements from storing activations.
 - [ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html) for the full list of config options for the `zero_optimization`.
 
 And many others covered by the [tutorial page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
-All done! If you want to download the files in this post and run it on your own, see:
-- <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> for the main python code;
-- <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model (model only, no run/valid loop);
-- <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a> for the DeepSpeed config file for ZeRO stage 3 with mixed precision and CPU offloading; and
-- <a href="/assets/GPT-lite-DeepSpeed/run.sh">run.sh</a> for the command line script to launch the execution.
+All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/gptlite_deepspeed.py">gptlite_deepspeed.py</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model, <a href="/assets/GPT-lite-DeepSpeed/gptlite_config_ds.json">gptlite_config_ds.json</a> for the DeepSpeed config file, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">run.sh</a> for the command line script to launch the execution.
