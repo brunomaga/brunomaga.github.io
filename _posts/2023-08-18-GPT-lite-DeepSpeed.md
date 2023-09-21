@@ -186,7 +186,7 @@ DeepSpeed uses all layers in a `nn.Sequential` container or `list` as the sequen
 {: style="text-align:center; font-size: small;"}
 A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
-In our use case, we expose the layers be creating a method `to_layers()` method inside the `GPTlite` class that returns the sequence of layers to be run (note that `self.blocks` is of type `nn.Sequential`):
+In our use case, we expose the layers be creating a method `to_layers()` method inside the `GPTlite` class that returns the sequence of layers as functions to be executed. Note that `to_layers()` follows the same order as the `forward` pass in `GPTlite` and that `self.blocks` is of type `nn.Sequential`):
 
 ```python
 class GPTlite(nn.Module):
