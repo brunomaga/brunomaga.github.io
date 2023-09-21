@@ -178,7 +178,7 @@ and finally the training loop, with a structure similar to the PyTorch implement
  
 ### Enabling Pipelining
 
-DeepSpeed uses all layers in a `nn.Sequential` container or `list` as the the sequence of layers to be broken into pipelining stages. A stage is a range of layers (or a block of computation) that will be assigned to a section of the pipeline.
+DeepSpeed uses all layers in a `nn.Sequential` container or `list` as the sequence of layers to be broken into pipelining stages. A stage is a range of layers that define a block of computation that will be assigned to a section of the pipeline.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
