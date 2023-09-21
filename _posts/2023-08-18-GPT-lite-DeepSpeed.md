@@ -201,7 +201,7 @@ class GPTlite(nn.Module):
         return layers
 ```
 
-Finally, we create a pipeline wrapper around `model`, that be fed later to the `deepspeed.initialize()` declaration: 
+Finally, we create a pipeline wrapper around `model`, that will be fed later to the `deepspeed.initialize()` as model: 
 
 ```python
 model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
