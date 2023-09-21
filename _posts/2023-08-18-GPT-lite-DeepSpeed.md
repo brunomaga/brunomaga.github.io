@@ -250,7 +250,7 @@ Few notes about parallel runs:
 - Launching with `python` instead of `deepspeed` will perform a single-node single-GPU run.
 - If we where required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node.
 - In the config file we specified a batch size of 64, i.e. a batch of 8 for each GPU in our parallel runs.  We need to allocate at least 1 datapoint per process. Thus, the batch size in the config should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * `--num_gpus`. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
-- When using pipelining, each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\ge 1$$. 
+- When using pipelining, each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, for a posterior gradient accumulation. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\gt 1$$ to allow multi-stage parallelism.
 - To enable the [Autotuning of hyperparameters and parallelism](https://www.deepspeed.ai/tutorials/autotuning/), we'd pass the `--autotuning` flag.
 
 For more information of available flags, running `deepspeed --help` provides a brief summary of all options.
