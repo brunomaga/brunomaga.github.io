@@ -292,7 +292,6 @@ We just touched the surface of the capabilities of DeepSpeed. Other components o
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts.
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html).
 - [Pipeline Parallelism](https://www.deepspeed.ai/tutorials/pipeline/) for a simpler layer-level implementation of parallelism, without ZeRO.
-- [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) of resources allocation.
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed.
 - [ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html) for the full list of config options for the `zero_optimization`.
 
