@@ -293,6 +293,7 @@ We just touched the surface of the capabilities of DeepSpeed. Other components o
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html).
 - [Pipeline Parallelism](https://www.deepspeed.ai/tutorials/pipeline/) for a simpler layer-level implementation of parallelism, without ZeRO.
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed.
+- [Activation checkpointing](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) helps overcoming high memory requirements from storing activations.
 - [ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html) for the full list of config options for the `zero_optimization`.
 
 And many others covered by the [tutorial page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
