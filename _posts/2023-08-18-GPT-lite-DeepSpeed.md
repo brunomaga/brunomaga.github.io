@@ -192,7 +192,7 @@ In our use case, we expose the layers be creating a method `to_layers()` method 
 class GPTlite(nn.Module):
     def to_layers(self):
         layers = [
-            lambda tok_emb pos_emb: tok_enm + pos_emb,
+            lambda tok_emb pos_emb: tok_emb + pos_emb,
             *self.blocks,
             self.ln,
             self.lm_head,
