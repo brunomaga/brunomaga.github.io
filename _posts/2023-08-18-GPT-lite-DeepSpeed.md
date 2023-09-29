@@ -192,7 +192,7 @@ We will make pipeline parallelism optional in our use case, as in many cases (e.
 
 ```python
 def get_deepspeed_args(description='GPT lite on DeepSpeed'):
-  # ...]
+  # ...
   parser.add_argument("--pipeline", action="store_true",
                       help="enable pipeline parallelism")
 ```
