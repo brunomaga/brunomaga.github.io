@@ -316,7 +316,7 @@ Activating ZeRO will lead to the distribution of parameters across all processor
 [Mixed precision training](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. The automatic mixed precision module (amp) folows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation, particularly the `O0` to `O3` topimization levels. To enable it, we add to the config file
 
 ```json
-amp":  {
+"amp":  {
     "enabled": true,
     "opt_level": "O1"
 }
