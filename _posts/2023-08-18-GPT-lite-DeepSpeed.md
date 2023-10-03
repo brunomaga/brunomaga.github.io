@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-In the [previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model - and trained it on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will use the same model and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer), a multi-dimensional scaling technique detailed [in this post]({{ site.baseurl }}{% post_url  2020-05-28-AI-Supercomputing-2 %}). We'll use the `deepspeed` package for `python`.
+Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}) and [AI Supercomputing (part 2)]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) posts, we summarized existing parallelism techniques for ML models. Later, in the post [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model, trained on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will apply those parallelism techniques to that GPT model, and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer), available as the `deepspeed` package for `python`.
 
 
 ### 3D Parallelism
@@ -102,7 +102,8 @@ def get_model_and_dataset():
         return x, y
 
   model = gptlite.GPTlite()
-  dataset = GPTliteDataset(gptlite.train_data, gptlite.block_size)
+  train_data, _ = load_tiny_shakespeare_data() #load encoded data from text file (as before)
+  dataset = GPTliteDataset(train_data, gptlite.block_size)
   return model, dataset
 ```
 
@@ -176,7 +177,7 @@ and finally the training loop, with a structure similar to the PyTorch implement
         print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
 ```
  
-### Pipeline Parallelism
+### Pipeline parallelism (optional, advanced)
 
 [Pipeline parallelism](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) improves both the memory and compute efficiency during training by partitioning the layers of a model into stages that can be processed in parallel.
 
@@ -197,20 +198,22 @@ def get_deepspeed_args(description='GPT lite on DeepSpeed'):
                       help="enable pipeline parallelism")
 ```
 
-Now we expose the pipeline parallelism in our model by creating a method `to_layers()` method inside the `GPTlite` class that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass in `GPTlite` and that `self.blocks` is of type `nn.Sequential`):
+Now we expose the pipeline parallelism in our model by creating a method a new model `GPTlitePipe` that inherits from `GPTlite` and includes the method `to_layers()` that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass in `GPTlite` and that `self.blocks` is of type `nn.Sequential`:
 
 ```python
-class GPTlite(nn.Module):
-    # ...
-    def to_layers(self):
-        layers = [
-            lambda tok_emb pos_emb: tok_emb + pos_emb,
-            *self.blocks,
-            self.ln,
-            self.lm_head,
-            lambda logits: torch.swapaxes(logits,1,2)
-        ]
-        return layers
+class GPTlitePipe(GPTlite):
+  
+  def to_layers(self):  
+      layers = [
+          lambda idx:
+            self.token_embedding_table(idx) +
+            self.position_embedding_table(torch.arange(idx.shape[1]).to(idx.device)),
+          *self.blocks,
+          self.ln,
+          self.lm_head,
+          lambda logits: torch.swapaxes(logits,1,2)
+      ]
+      return layers
 ```
 
 Finally, in our DeepSpeed initialization code, we create a pipeline wrapper around `model`, that will be fed later to the `deepspeed.initialize()` as model: 
@@ -222,6 +225,29 @@ def main_deepspeed():
     model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
 ```
 
+**Compute and memory efficient pipelining** 
+
+The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`:
+
+```python
+from deepspeed.pipe import PipelineModule, LayerSpec
+
+class GPTlitePipeLayers(PipelineModule):
+
+  def __init__(self, vocab_size, **kwargs={}):
+    specs = [
+      LayerSpec(nn.Embedding, vocab_size, n_embd),
+      LayerSpec(nn.Embedding, block_size, n_embd),
+    ] + [
+      LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)
+    ] + [
+      LayerSpec(nn.LayerNorm, n_embd),
+      LayerSpec(nn.Linear, n_embd, vocab_size, bias=False),
+    ]
+    super().__init__(layers=specs, loss_fn=nn.CrossEntropyLoss(), **kwargs)
+```
+
+Finally, we will use the default [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) ie `partition_method=parameters`, that "balances the number of trainable parameters on each pipeline stage".
 
 ### DeepSpeed config file
 

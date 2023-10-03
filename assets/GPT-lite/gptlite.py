@@ -234,14 +234,14 @@ class Block(nn.Module):
   
     
 class MyModel(nn.Module):
-  def __init__(self, num_head=4, n_layer=3):
+  def __init__(self):
     super().__init__()
     # vocabulary embedding and positional embedding
     self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
     self.position_embedding_table = nn.Embedding(block_size, n_embd)
     
     #sequence of attention heads and feed forward layers
-    self.blocks = nn.Sequential( *[Block(n_embd, n_head=4) for _ in range(n_layer)])
+    self.blocks = nn.Sequential( *[Block(n_embd, n_head) for _ in range(n_layer)])
 
     #one layer normalization layer after transformer blocs and before linear layer that oututs the vocabulary
     self.ln = nn.LayerNorm(n_embd)
