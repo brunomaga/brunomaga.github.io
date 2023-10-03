@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}) and [AI Supercomputing (part 2)]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) posts, we summarized existing parallelism techniques for ML models. Later, in the post [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model, trained on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will apply those parallelism techniques to that GPT model, and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer), available as the `deepspeed` package for `python`.
+Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}) and [AI Supercomputing (part 2)]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) posts, we summarized existing parallelism techniques for ML models. Later, in the post [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model, trained on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will apply those parallelism techniques to that GPT model, and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer). We will use the `deepspeed` package for `python`.
 
 
 ### 3D Parallelism
@@ -216,16 +216,18 @@ class GPTlitePipe(GPTlite):
       return layers
 ```
 
-Finally, in our DeepSpeed initialization code, we create a pipeline wrapper around `model`, that will be fed later to the `deepspeed.initialize()` as model: 
+Finally, in our DeepSpeed initialization code, we create a pipeline wrapper around our model, with one stage per every 2 blocks of computation, and this will be fed later to the `deepspeed.initialize()` as the `model` parameter: 
 
 ```python
 def main_deepspeed():
   # ...
   if args.pipeline:
-    model = deepspeed.pip.PipelineModule(layers=model.to_layers(), num_stages=2)
+    model = gptlite.GPTlitePipe(model.vocab_size)
+    layers = model.to_layers()
+    model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=len(layers)//2)
 ```
 
-**Compute and memory efficient pipelining** 
+**Compute and memory efficiency** 
 
 The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`:
 
@@ -247,7 +249,15 @@ class GPTlitePipeLayers(PipelineModule):
     super().__init__(layers=specs, loss_fn=nn.CrossEntropyLoss(), **kwargs)
 ```
 
-Finally, we will use the default [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) ie `partition_method=parameters`, that "balances the number of trainable parameters on each pipeline stage".
+and the main code simplified to:
+```python
+def main_deepspeed():
+  # ...
+  if args.pipeline:
+    model = GPTlitePipeLayers(vocab_size)
+```
+
+Finally, we will not tune the [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) and we will use the default `partition_method=parameters`, that "balances the number of trainable parameters on each pipeline stage".
 
 ### DeepSpeed config file
 
