@@ -1,6 +1,7 @@
 import torch
 import os
 import deepspeed
+import gptlite
 
 # DeepSpeed requires a distributed environment even when only one process is used.
 if os.environ.get("WORLD_SIZE") is None:
@@ -11,19 +12,52 @@ if os.environ.get("WORLD_SIZE") is None:
   os.environ["WORLD_SIZE"] = "1"
 
 
+def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
+  #load input data
+  with open(filename) as f:
+      text = f.read()
+  print("input data loaded. Length of text: ", len(text))
+
+  #collect all ordered and unique characters in the text
+  chars = sorted(list(set(text)))
+  print("unique chars: ", "".join(chars))
+  print("length of chars: ", len(chars))
+
+  #map characters to integers
+  stoi = { ch:i for i,ch in enumerate(chars) }
+  itos = { i:ch for i,ch in enumerate(chars) }
+  encode = lambda x: torch.tensor([stoi[ch] for ch in x], dtype=torch.long) #encode text to integers
+  decode = lambda x: ''.join([itos[i] for i in x]) #decode integers to text
+  vocab_size = len(stoi)
+  print("vocab size: ", vocab_size)
+  print(encode("Hello world"))
+  print(decode(encode("Hello world").tolist()))
+  print("character zero is:", decode([0]), "<end>")
+
+  # collect input data, break dataset in train/validation
+  data = encode(text)
+  n = int(0.9*len(data))
+  train_data, valid_data = data[:n], data[n:]
+  print("Train data encoded", data.shape, train_data.shape, valid_data.shape)
+  return train_data, valid_data, vocab_size
+
+
 def get_deepspeed_args(description='GPT lite on DeepSpeed'):
   import argparse
   parser = argparse.ArgumentParser(description=description)
   parser.add_argument('--local_rank', type=int, default=-1,
                         help='local rank passed from distributed launcher')
+  parser.add_argument("--pipeline", action="store_true",
+                      help="enable pipeline parallelism")
+  parser.add_argument("--pipeline_spec_layers", action="store_true",
+                      help="enable SpecLayers in pipeline parallelism")
   # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config, ...)
   parser = deepspeed.add_config_arguments(parser)
   return parser.parse_args()
 
   
-def get_model_and_dataset():
-  import gptlite
-
+def get_dataset():
+  
   class GPTliteDataset(torch.utils.data.Dataset):
 
       def __init__(self, train_data, block_size):
@@ -42,19 +76,28 @@ def get_model_and_dataset():
         y = self.train_data[ix+1 : ix+1+self.block_size]
         return x, y
 
-  model = gptlite.GPTlite()
-  dataset = GPTliteDataset(gptlite.train_data, gptlite.block_size)
-  return model, dataset
+  train_data, _, vocab_size = load_tiny_shakespeare_data() #load data encodings from file
+  dataset = GPTliteDataset(train_data, gptlite.block_size)
+  return dataset, vocab_size
 
   
 def main_deepspeed():
 
   import deepspeed
   deepspeed.init_distributed()
-  args = get_deepspeed_args('CIFAR') 
-  model, train_dataset = get_model_and_dataset()
-  # parameters = filter(lambda p: p.requires_grad, model.parameters())
+  args = get_deepspeed_args() 
+  train_dataset, vocab_size = get_dataset()
 
+  if not args.pipeline:
+    model = gptlite.GPTlite(vocab_size)
+  elif not args.pipeline_spec_layers:
+    model = gptlite.GPTlitePipe(model.vocab_size)
+    layers = model.to_layers()
+    model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=len(layers)//2)
+  else:
+    model = gptlite.GPTlitePipeLayers(vocab_size)
+    
+  # parameters = filter(lambda p: p.requires_grad, model.parameters())
   model_engine, optimizer, train_dataloader , _ = deepspeed.initialize(
     args=args, model=model, training_data=train_dataset,
     #model_parameters=parameters, #optional, to specify which params to optimize 
@@ -96,4 +139,6 @@ def main_deepspeed():
 
 if __name__ == "__main__":
   main_deepspeed()
+
+
 

@@ -23,35 +23,6 @@ block_size = 2048
 dropout = 0.1
 
 
-#load input data
-with open("tinyshakespeare.txt") as f:
-    text = f.read()
-print("input data loaded. Length of text: ", len(text))
-
-#collect all ordered and unique characters in the text
-chars = sorted(list(set(text)))
-print("unique chars: ", "".join(chars))
-print("length of chars: ", len(chars))
-
-#map characters to integers
-stoi = { ch:i for i,ch in enumerate(chars) }
-itos = { i:ch for i,ch in enumerate(chars) }
-encode = lambda x: torch.tensor([stoi[ch] for ch in x], dtype=torch.long) #encode text to integers
-decode = lambda x: ''.join([itos[i] for i in x]) #decode integers to text
-vocab_size = len(stoi)
-print("vocab size: ", vocab_size)
-print(encode("Hello world"))
-print(decode(encode("Hello world").tolist()))
-print("character zero is:", decode([0]), "<end>")
-
-
-# collect input data, break dataset in train/validation
-data = encode(text)
-n = int(0.9*len(data))
-train_data, valid_data = data[:n], data[n:]
-print("Train data encoded", data.shape, train_data.shape, valid_data.shape)
-
-
 class Head(nn.Module):
 
   def __init__(self, head_size=16):
@@ -131,7 +102,7 @@ class Block(nn.Module):
 
 
 class GPTlite(nn.Module):
-  def __init__(self, n_layer=3):
+  def __init__(self, vocab_size):
     super().__init__()
     # vocabulary embedding and positional embedding
     self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
@@ -143,7 +114,7 @@ class GPTlite(nn.Module):
     #one layer normalization layer after transformer blocs and before linear layer that oututs the vocabulary
     self.ln = nn.LayerNorm(n_embd)
     self.lm_head = nn.Linear(n_embd, vocab_size, bias=False)
-
+    
   def forward(self, idx, targets=None):
     """ call the model with idx and targets (training) or without targets (generation)"""
     #idx and targets are both of shape (B,T)
@@ -170,4 +141,33 @@ class GPTlite(nn.Module):
       #append next token ix to the solution sequence so far
       idx = torch.cat([idx, idx_next], dim=-1) # shape (B, T+1)
     return idx
+
+
+class GPTlitePipe(GPTlite):
+  
+  def to_layers(self):  
+      layers = [
+          lambda idx:
+            self.token_embedding_table(idx) +
+            self.position_embedding_table(torch.arange(idx.shape[1]).to(idx.device)),
+          *self.blocks,
+          self.ln,
+          self.lm_head,
+          lambda logits: torch.swapaxes(logits,1,2)
+      ]
+      return layers
+
+
+from deepspeed.pipe import PipelineModule, LayerSpec
+class GPTlitePipeLayers(PipelineModule):
+
+  def __init__(self, vocab_size, kwargs={}):
+    self.specs = \
+    + [ LayerSpec(nn.Embedding, vocab_size, n_embd),
+        LayerSpec(nn.Embedding, block_size, n_embd) ]
+    + [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)]
+    + [ LayerSpec(nn.LayerNorm, n_embd),
+        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
+    super().__init__(layers=self.specs, loss_fn=nn.CrossEntropyLoss(), **kwargs)
+
 
