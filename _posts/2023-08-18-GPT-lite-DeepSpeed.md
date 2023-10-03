@@ -301,7 +301,7 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
   },
 ```
 
-### Scaling optimizations enabled by the config file
+### Other scaling optimizations
 
 [**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer. In our use case, we will use one activation checkpoint per decoder block (ie 12 in total) plus the 4 blocks that precede and follow the decoder blocks. This can be enabled by adding the following to the config file (see the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) for other options):
 
@@ -313,7 +313,7 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
     }
 ```
 
-These could also be set dynamically, using commande line arguments or based on our model size, if we added:
+You may notice that hardcoding `num_checkpoints` in the config file is a bit cumbersome. To overcome this, it is possible to dynamically set and overwrite config values using the `deepspeed.checkpointing.configure` method. This allows config values to be populated on-the-fly or with command line arguments. In this particular example, we could set the previous values as:
 ```
 def main_deepspeed():
   # ...
