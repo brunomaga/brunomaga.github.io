@@ -194,7 +194,7 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
   "train_batch_size": 64,
   "steps_per_print": 100,
   "optimizer": {
-    "type": "Adam",
+    "type": "AdamW",
     "params": {
       "lr": 0.001,
       "betas": [
@@ -213,6 +213,7 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
       "warmup_num_steps": 1000
     }
   },
+},
 ```
 
 **ZeRO** can be activated by specifying the relevant stage in the config file. If omitted, or when passing the stage 0, DeepSpeed is disabled and the execution follows the regular distributed data paralllel workflow:
@@ -223,35 +224,48 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
 }
 ```
 
-**Reducing communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. However, it is possible to reduce this buffer size (and perform the communication in parcels) by adding the following to the config:
+**Reducing the size of communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. To overcome this issue, we can reduce the maximum communication buffer size and perform the communication in parcels.
+On top of that, we can enable  **communication overlap** that attempts to overlap the reduction of the gradients with backward computation. To enable these 2 optimizations, we add to the config:
 
 ```json
 "zero_optimization": {
    "stage": 3,
    "reduce_bucket_size": 5e8,
-   "all_reduce_bucket_size": 5e8
+   "all_reduce_bucket_size": 5e8,
+   "overlap_comm": true,
 }
 ```
 
-[**ZeRO Infinity**](https://arxiv.org/abs/2104.07857) with cpu-offloading can be enabled by adding to the config:
+[**ZeRO Infinity**](https://arxiv.org/abs/2104.07857) to perform offloading of optimizer coputation to CPU (with page-locked/pinned CPU memory), and parameter offloading (only compatible with stage 3), can be enabled with: 
 
 ```json
 "zero_optimization": {
-    "offload_optimizer": { "device": "cpu" },
-    "offload_param":     { "device": "cpu" }
+  "stage": 3,
+  "offload_optimizer": {
+    "device": "cpu",
+    "pin_memory": true
+  },
+  "offload_param": {
+    "device": "cpu",
+    "pin_memory": true
+  },
 }
 ```
 
-[**Mixed precision training**](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. The automatic mixed precision module (amp) folows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation, particularly the `O0` to `O3` topimization levels. To enable it, we add to the config file
+[**Mixed precision representation**](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. It can be enabled by adding the `fp16` entry [in the config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options). As a side note, the `amp` config entry also enables mixed precision training that follows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation i.e. with the `O0` to `O3` opimization levels. However, [it is not compatible with ZeRO](https://www.deepspeed.ai/docs/config-json/#automatic-mixed-precision-amp-training-options), therefore we won't use it. The [`fp16` is equivalent to APEX optimization level O2](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), and according to the [documentation](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), "if you want to use ZeRO (currently) you must use this mode". We will enable it with the entry `"fp16: { enabled: true }` that is equivalent to the following default values:
 
 ```json
-"amp":  {
+"fp16": {
     "enabled": true,
-    "opt_level": "O1"
+    "auto_cast": false,
+    "loss_scale": 0,
+    "initial_scale_power": 16,
+    "loss_scale_window": 1000,
+    "hysteresis": 2,
+    "consecutive_hysteresis": false,
+    "min_loss_scale": 1
 }
-``` 
-
-**Training with a 16-bit floating point representation** can be enabled by [several parameters in the json config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), or as a first iteration, by changing the config file in line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
+```
 
 **Gradient accumulation** based on **micro-batching** is a technique that simulates a large mini-batch as an iteration of several micro-batches. This is particularly relevant when the whole mini-batch does not fit into memory, and using an accumulation of micro-batches overcomes that limitation. This method is enabled by setting `train_micro_batch_size_per_gpu` or `gradient_accumulation_steps` in the config file.
 
@@ -336,9 +350,9 @@ As an important remark, when using pipeline parallelism, the micro-batch argumen
 {: style="text-align:center; font-size: small;"}
 "An illustration of how DeepSpeed will train a batch with eight micro-batches using hybrid two-way data parallelism and two-stage pipeline parallelism. GPUs 0 and 2 are arranged in a pipeline and will alternate forward (F) and backward (B) passes. They will then all-reduce (AR) gradients with their data parallel counterparts, GPUs 1 and 3, respectively. Finally, the two pipeline stages update their model weights". Source: [DeepSpeed pipelining documentation](https://www.deepspeed.ai/tutorials/pipeline/)
 
-Finally, [Pipeline parallelism is not compatible with ZeRO-2 and ZeRO-3](https://deepspeed.readthedocs.io/en/latest/pipeline.html#pipeline-parallelism), as discussed [here](https://github.com/microsoft/DeepSpeed/issues/1110#issuecomment-850835817).
+Finally, [Pipeline parallelism is not compatible with ZeRO stages 2 or 3](https://deepspeed.readthedocs.io/en/latest/pipeline.html#pipeline-parallelism), as discussed [here](https://github.com/microsoft/DeepSpeed/issues/1110#issuecomment-850835817).
 
-**Compute and memory efficiency** 
+**Compute and memory efficiency:** 
 
 The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` (API [here](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`:
 
@@ -393,32 +407,58 @@ For more information on available flags, running `deepspeed --help` provides a b
 
 ### Benchmark 
 
-Coming soon.
+We will run and benchmark several parallelism configurations:
+- the single-node single-GPU use case, i.e. no parallelism;
+- Distributed Data Parallelism without DeepSpeed optimizations;
+- ZeRO stage 3, with maximum communication bucket size limited to `5e8` elements;
+- DeepSpeed with stage 3 and ZeRO-Infinity, i.e. CPU offloading;
+- the Pipeline Parallel execution without DeepSpeed and with DeepSpeed stage 1;
 
-[//]: We will run and benchmark several parallelism configurations. To collect our metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will test the largest model possible on each configuration. 
+All variants perform the same mixed precision representation following the `fp16` config described above.
 
-[//]: We will include the following analysis:
-[//]: - the single-node single-GPU use case, i.e. no parallelism. 
-[//]: - Distributed Data Parallelism without DeepSpeed optimizations
-[//]: - the Pipeline Parallel execution without DeepSpeed and with DeepSpeed Stage 1.
-[//]: - ZeRO stage 3, with maximum communication bucket size limited to `5e8` elements;
-[//]: - DeepSpeed with ZeRO stage 3 and ZeRO-Infinity, ie CPU offloading;
-[//]: - DeepSpeed with automatic mixed precition; 
- 
+We will use the [DeepSpeed API to estimate memory requirements](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage), by calling `deepspeed.runtime.zero.stage3.extimate_zero3_model_states_mem_needs_all_live` to estimate the memory requirements for our stage 3 implementations, as:
+
+```python
+def memory_requirements(model):
+  param_size_GB = sum([p.nelement() * p.element_size() for p in model.parameters()])/1024**3
+  print(f"Native model parameters size: {round(param_size_GB, 2)}GB.")
+
+  from deepspeed.runtime.zero.stage_1_and_2 import estimate_zero2_model_states_mem_needs_all_live
+  estimate_zero2_model_states_mem_needs_all_live(model, num_gpus_per_node=8, num_nodes=1)
+
+  from deepspeed.runtime.zero.stage3 import estimate_zero3_model_states_mem_needs_all_live
+  estimate_zero3_model_states_mem_needs_all_live(model, num_gpus_per_node=8, num_nodes=1)
+```
+
+Calling the function, the output tells you that:
+- the base model requires as parameters (not activations or buffers) about 0.323GB;
+- DeepSpeed ZeRO-2 requires 0.161GB and 0.484GB for the with and without offload optimizations;
+- DeepSpeed ZeRO-3 requires 0.009GB and 0.190GB for the with and without offload optimizations; 
+
+However, when activating pipelining, by launching with `--pipeline`):
+- the base model requires 0.053GB for parameters; 
+- ZeRO stage 2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
+- ZeRO stage 3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
+
+To collect real performace metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will test the largest model possible on each configuration. 
+
+(Coming soon)
+
 [//]: # {: style="text-align:center; font-size: small;"}
 [//]: # <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
 
 
 ### Final remarks 
 
-We just touched the surface of the capabilities of DeepSpeed. Other components of DeepSpeed that should be taken into account are:
+We just touched the surface of the capabilities of DeepSpeed, and there are plenty of resources that should also be taken into account:
 - [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
 - [Model Parallelism](https://www.deepspeed.ai/training/#model-parallelism) for implementation of custom tensor parallelism for the models that are not implemented in DeepSpeed;
 - [Activation Partitioning](https://www.deepspeed.ai/training/#activation-checkpointing-api) reduces the memory consumed by activations during model parallel training, by storing these activations in a partitioned state after the forward pass, and doing an allgather right before they are needed again on the backward propagation; 
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts;
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html);
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed;
-- [ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html) for the full list of config options for the `zero_optimization`;
-- and many others covered by the [training features](https://www.deepspeed.ai/training/#features), the [tutorial page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
+
+... and many more covered by the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
+
 
 All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/train.py">train.py</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model, <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">ds_config.json</a> for the DeepSpeed config file, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">run.sh</a> for the command line script to launch the execution.
