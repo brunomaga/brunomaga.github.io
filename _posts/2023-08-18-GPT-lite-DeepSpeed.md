@@ -80,9 +80,10 @@ def get_deepspeed_args(description='GPT lite on DeepSpeed'):
 We now create the function that returns a model of type `torch.nn.Module` and a dataset of type `torch.utils.data.Dataset`:
 
 ```python
-def get_model_and_dataset():
-  import gptlite
+import gptlite
 
+def get_dataset():
+  
   class GPTliteDataset(torch.utils.data.Dataset):
 
       def __init__(self, train_data, block_size):
@@ -101,26 +102,31 @@ def get_model_and_dataset():
         y = self.train_data[ix+1 : ix+1+self.block_size]
         return x, y
 
-  model = gptlite.GPTlite()
-  train_data, _ = load_tiny_shakespeare_data() #load encoded data from text file (as before)
+  train_data, _, vocab_size = load_tiny_shakespeare_data() #load encoded data from text file
   dataset = GPTliteDataset(train_data, gptlite.block_size)
-  return model, dataset
+  return dataset, vocab_size
+
+train_dataset, vocab_size = get_dataset()
+model = gptlite.GPTlite(vocab_size)
 ```
 
 As a side note, **any model and dataset can be used** in this code. As an example, if you'd want to perform a 10-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd redefine the previous function as:
 
 ```python
-def get_model_and_dataset():
-    import torchvision
-    import torchvision.transforms as transforms
-    model = torchvision.models.resnet18(num_classes=10)
-    transform = transforms.Compose([
-        transforms.ToTensor(),
-        transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-    ])
-    dataset = torchvision.datasets.CIFAR10(
-        root='./data', train=True, download=True, transform=transform)
-    return model, dataset
+import torchvision
+
+def get_dataset():
+  import torchvision.transforms as transforms
+  transform = transforms.Compose([
+    transforms.ToTensor(),
+    transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
+  ])
+  dataset = torchvision.datasets.CIFAR10(
+    root='./data', train=True, download=True, transform=transform)
+  return dataset
+
+train_dataset = get_dataset()
+model = torchvision.models.resnet18(num_classes=10)
 ```
 
 Let's continue with our GPT-lite use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straighforward:
@@ -130,8 +136,9 @@ def main_deepspeed():
 
   import deepspeed
   deepspeed.init_distributed()
-  args = get_deepspeed_args('CIFAR') 
-  model, train_dataset = get_model_and_dataset()
+  args = get_deepspeed_args() 
+  train_dataset, vocab_size = get_dataset()
+  model = gptlite.GPTlite(vocab_size)
 
   model_engine, optimizer, train_dataloader , _ = deepspeed.initialize(
     args=args, model=model, training_data=train_dataset,)
@@ -237,24 +244,29 @@ from deepspeed.pipe import PipelineModule, LayerSpec
 class GPTlitePipeLayers(PipelineModule):
 
   def __init__(self, vocab_size, **kwargs={}):
-    specs = [
-      LayerSpec(nn.Embedding, vocab_size, n_embd),
-      LayerSpec(nn.Embedding, block_size, n_embd),
-    ] + [
-      LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)
-    ] + [
-      LayerSpec(nn.LayerNorm, n_embd),
-      LayerSpec(nn.Linear, n_embd, vocab_size, bias=False),
-    ]
+    self.specs = \
+    + [ LayerSpec(nn.Embedding, vocab_size, n_embd),
+        LayerSpec(nn.Embedding, block_size, n_embd) ]
+    + [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)]
+    + [ LayerSpec(nn.LayerNorm, n_embd),
+        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
+
     super().__init__(layers=specs, loss_fn=nn.CrossEntropyLoss(), **kwargs)
 ```
 
-and the main code simplified to:
+and the main code altered to:
+
 ```python
+def get_deepspeed_args():
+  # ...
+  parser.add_argument("--pipeline_spec_layers", action="store_true",
+                      help="enable SpecLayers in pipeline parallelism")
+
+
 def main_deepspeed():
   # ...
-  if args.pipeline:
-    model = GPTlitePipeLayers(vocab_size)
+  if args.pipeline and args.pipeline_spec_layers:
+    model = gptlite.GPTlitePipeLayers(vocab_size)
 ```
 
 Finally, we will not tune the [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) and we will use the default `partition_method=parameters`, that "balances the number of trainable parameters on each pipeline stage".
