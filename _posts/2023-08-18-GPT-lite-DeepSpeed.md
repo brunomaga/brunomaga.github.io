@@ -279,6 +279,51 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
   },
 ```
 
+### Advanced features in the config file
+
+[Activation Checkpointing](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer.  This can be enabled by the following value in the config file, with all details available in the [json codumentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing):
+
+```json
+"activation_checkpointing": {
+    "partition_activations": false,
+    "cpu_checkpointing": false,
+    "contiguous_memory_optimization": false,
+    "number_checkpoints": null,
+    "synchronize_checkpoint_boundary": false,
+    "profile": false
+    }
+```
+
+Activating ZeRO will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. However, it is possible to reduce this buffer size (and perform the communication in parcels) by adding the following to the config:
+
+```json
+"zero_optimization": {
+   "stage": 3,
+   "reduce_bucket_size": 5e8,
+   "all_reduce_bucket_size": 5e8
+}
+```
+
+[ZeRO Infinity](https://arxiv.org/abs/2104.07857) with cpu-offloading can be enabled by adding to the config:
+
+```json
+"zero_optimization": {
+    "offload_optimizer": { "device": "cpu" },
+    "offload_param":     { "device": "cpu" }
+}
+```
+
+[Mixed precision training](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. The automatic mixed precision module (amp) folows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation, particularly the `O0` to `O3` topimization levels. To enable it, we add to the config file
+
+```json
+amp":  {
+    "enabled": true,
+    "opt_level": "O1"
+}
+``` 
+
+For fp16 training, we change the config it in line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
+
 ### Launching a distributed execution
 
 The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
@@ -297,33 +342,18 @@ Few notes about parallel runs:
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
 
-### Benchmark 
+[//]: ### Benchmark 
 
-We will run and benchmark several parallelism configurations. To collect our metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will test the largest model possible on each configuration. 
+[//]: We will run and benchmark several parallelism configurations. To collect our metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will test the largest model possible on each configuration. 
 
-We will include the following analysis:
-- the single-node single-GPU use case, i.e. no parallelism. 
-- the Pipeline Parallel execution, enabled with `PipelineModule(..., num_stages=4)` and `train_micro_batch_size_per_gpu: 4` in the config.
-- Distributed Data Parallelism by disabling DeepZero. Enabled by omitting `zero_optimization` in the config, or passing `"zero_optimization": { "stage": 0 }`.
-- ZeRO stage 3. The config file will also include two new entries to define the number of elements reduced/allreduced at a time, to limit the memory required for the allgather:
-     ```json
-        "zero_optimization": {
-          "stage": 3,
-          "reduce_bucket_size": 5e8,
-          "all_reduce_bucket_size": 5e8
-      }
-     ```
-- DeepSpeed with ZeRO stage 3 Infinity. To perform CPU offloading, we add to the config:
-    ```json
-        "zero_optimization": {
-            "offload_optimizer": { "device": "cpu" },
-            "offload_param":     { "device": "cpu" }
-        }
-    ```
-- DeepSpeed with 16-bit floating point (fp16) or automatic mixed precition (amp). Enables mixed precison with different optimization levels, based on [NVIDIA Apex](https://nvidia.github.io/apex/). For amp training the config adds `"amp":  { "enabled": true, "opt_level": "O1" } `. For fp16 training, we change it line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
+[//]: We will include the following analysis:
+[//]: - the single-node single-GPU use case, i.e. no parallelism. 
+[//]: - the Pipeline Parallel execution, enabled with `PipelineModule(..., num_stages=4)` and `train_micro_batch_size_per_gpu: 4` in the config.
+[//]: - Distributed Data Parallelism without DeepSpeed, equivalent to DeepSpeed stage 0 (ie disabled);
+[//]: - ZeRO stage 3, with maximum communication bucket size limited to `5e8` elements;
+[//]: - DeepSpeed with ZeRO stage 3 and ZeRO-Infinity, ie CPU offloading;
+[//]: - DeepSpeed with automatic mixed precition; 
  
-**NOTE:** I'm now working on autotuning the resource allocation problem and collecting performance numbers. Results will follow soon.
-
 [//]: # {: style="text-align:center; font-size: small;"}
 [//]: # <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
 
@@ -331,12 +361,10 @@ We will include the following analysis:
 ### Final remarks 
 
 We just touched the surface of the capabilities of DeepSpeed. Other components of DeepSpeed that should be taken into account are:
-- [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts.
-- [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html).
-- [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed.
-- [Activation checkpointing](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) helps overcoming high memory requirements from storing activations.
-- [ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html) for the full list of config options for the `zero_optimization`.
-
-And many others covered by the [tutorial page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
+- [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts;
+- [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html);
+- [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed;
+- [ZeRO API documentation](https://deepspeed.readthedocs.io/en/latest/zero3.html) for the full list of config options for the `zero_optimization`;
+- and many others covered by the [training features](https://www.deepspeed.ai/training/#features), the [tutorial page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
 All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/train.py">train.py</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model, <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">ds_config.json</a> for the DeepSpeed config file, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">run.sh</a> for the command line script to launch the execution.
