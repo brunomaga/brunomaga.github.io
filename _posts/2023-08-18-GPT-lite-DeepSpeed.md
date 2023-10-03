@@ -324,6 +324,8 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
 
 **Training with a 16-bit floating point representation** can be enabled by [several parameters in the json config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), or as a first iteration, by changing the config file in line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
 
+**Gradient Accumulation** based on **Micro-batching** is a technique that simulates a large mini-batch as a iteration of several micro-batches. This is particularly relevant when the whole mini-batch does not fit in memory. However, when using pipeline parallelism, the micro-batch has a subtly different meaning: each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, as they are required for the gradient accumulation that follows. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\gt 1$$ to activate gradient accumulation or to allow multi-stage parallelism when running pipeline parallelism. 
+
 ### Launching a distributed execution
 
 The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
@@ -336,7 +338,6 @@ Few notes about parallel runs:
 - Launching with `python` instead of `deepspeed` will perform a single-node single-GPU run.
 - If we where required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node.
 - In the config file we specified a batch size of 64, i.e. a batch of 8 for each GPU in our parallel runs.  We need to allocate at least 1 datapoint per process. Thus, the batch size in the config should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * `--num_gpus`. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
-- When using pipelining, each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, for the gradient accumulation that follows. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\gt 1$$ to allow multi-stage parallelism.
 
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
