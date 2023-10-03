@@ -303,17 +303,24 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
 
 ### Scaling optimizations enabled by the config file
 
-[**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer.  This can be enabled by the following value in the config file, with all details available in the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing):
+[**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer. In our use case, we will use one activation checkpoint per decoder block (ie 12 in total) plus the 4 blocks that precede and follow the decoder blocks. This can be enabled by the following value in the config file, with all details available in the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing):
 
 ```json
 "activation_checkpointing": {
-    "partition_activations": false,
-    "cpu_checkpointing": false,
-    "contiguous_memory_optimization": false,
-    "number_checkpoints": null,
-    "synchronize_checkpoint_boundary": false,
-    "profile": false
+    "partition_activations": true,
+    "contiguous_memory_optimization": true,
+    "num_checkpoints": 16,
     }
+```
+
+These could also be set dynamically, using commande line arguments or based on our model size, if we added:
+```
+def main_deepspeed():
+  # ...
+  deepspeed.checkpointing.configure(
+        partition_activations=args.partition_activations,
+        contiguous_checkpointing=args.contigious_checkpointing,
+        num_checkpoints=len(model.to_layers()),
 ```
 
 **Reducing communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. However, it is possible to reduce this buffer size (and perform the communication in parcels) by adding the following to the config:
@@ -346,7 +353,7 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
 
 **Training with a 16-bit floating point representation** can be enabled by [several parameters in the json config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), or as a first iteration, by changing the config file in line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
 
-**Gradient Accumulation** based on **Micro-batching** is a technique that simulates a large mini-batch as a iteration of several micro-batches. This is particularly relevant when the whole mini-batch does not fit in memory. However, when using pipeline parallelism, the micro-batch has a subtly different meaning: each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, as they are required for the gradient accumulation that follows. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\gt 1$$ to activate gradient accumulation or to allow multi-stage parallelism when running pipeline parallelism. 
+**Gradient Accumulation** based on **Micro-batching** is a technique that simulates a large mini-batch as an iteration of several micro-batches. This is particularly relevant when the whole mini-batch does not fit into memory. However, when using pipeline parallelism, the micro-batch has a subtly different meaning: each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, as they are required for the gradient accumulation that follows. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\gt 1$$ to activate gradient accumulation or to allow multi-stage parallelism when running pipeline parallelism. 
 
 ### Launching a distributed execution
 
