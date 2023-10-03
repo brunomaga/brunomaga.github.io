@@ -279,7 +279,7 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
   },
 ```
 
-### Advanced features in the config file
+### Scaling optimizations enabled by the config file
 
 [**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer.  This can be enabled by the following value in the config file, with all details available in the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing):
 
