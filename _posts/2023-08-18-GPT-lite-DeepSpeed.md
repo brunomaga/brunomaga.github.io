@@ -314,7 +314,8 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
 ```
 
 You may notice that hardcoding `num_checkpoints` in the config file is a bit cumbersome. To overcome this, it is possible to dynamically set and overwrite config values using the `deepspeed.checkpointing.configure` method. This allows config values to be populated on-the-fly or with command line arguments. In this particular example, we could set the previous values as:
-```
+
+```python
 def main_deepspeed():
   # ...
   deepspeed.checkpointing.configure(
