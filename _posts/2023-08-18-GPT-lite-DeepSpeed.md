@@ -281,7 +281,7 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
 
 ### Advanced features in the config file
 
-[Activation Checkpointing](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer.  This can be enabled by the following value in the config file, with all details available in the [json codumentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing):
+[**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer.  This can be enabled by the following value in the config file, with all details available in the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing):
 
 ```json
 "activation_checkpointing": {
@@ -294,7 +294,7 @@ The real *nuance* and complexity in using DeepSpeed is the config file (`json`).
     }
 ```
 
-Activating ZeRO will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. However, it is possible to reduce this buffer size (and perform the communication in parcels) by adding the following to the config:
+**Reducing communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. However, it is possible to reduce this buffer size (and perform the communication in parcels) by adding the following to the config:
 
 ```json
 "zero_optimization": {
@@ -304,7 +304,7 @@ Activating ZeRO will lead to the distribution of parameters across all processor
 }
 ```
 
-[ZeRO Infinity](https://arxiv.org/abs/2104.07857) with cpu-offloading can be enabled by adding to the config:
+[**ZeRO Infinity**](https://arxiv.org/abs/2104.07857) with cpu-offloading can be enabled by adding to the config:
 
 ```json
 "zero_optimization": {
@@ -313,7 +313,7 @@ Activating ZeRO will lead to the distribution of parameters across all processor
 }
 ```
 
-[Mixed precision training](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. The automatic mixed precision module (amp) folows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation, particularly the `O0` to `O3` topimization levels. To enable it, we add to the config file
+[**Mixed precision training**](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. The automatic mixed precision module (amp) folows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation, particularly the `O0` to `O3` topimization levels. To enable it, we add to the config file
 
 ```json
 "amp":  {
@@ -322,7 +322,7 @@ Activating ZeRO will lead to the distribution of parameters across all processor
 }
 ``` 
 
-For fp16 training, we change the config it in line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
+**Training with a 16-bit floating point representation** can be enabled by [several parameters in the json config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), or as a first iteration, by changing the config file in line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
 
 ### Launching a distributed execution
 
@@ -337,7 +337,6 @@ Few notes about parallel runs:
 - If we where required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node.
 - In the config file we specified a batch size of 64, i.e. a batch of 8 for each GPU in our parallel runs.  We need to allocate at least 1 datapoint per process. Thus, the batch size in the config should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation` * `--num_gpus`. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
 - When using pipelining, each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, for the gradient accumulation that follows. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\gt 1$$ to allow multi-stage parallelism.
-- Finetuning the allocation of processors to model shards/layers is difficult on large parallel runs. Using [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) is recommended.
 
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
@@ -361,6 +360,7 @@ For more information on available flags, running `deepspeed --help` provides a b
 ### Final remarks 
 
 We just touched the surface of the capabilities of DeepSpeed. Other components of DeepSpeed that should be taken into account are:
+- [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts;
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html);
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed;
