@@ -132,9 +132,10 @@ model = torchvision.models.resnet18(num_classes=10)
 Let's continue with our GPT-lite use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straighforward:
 
 ```python
+import deepspeed
+
 def main_deepspeed():
 
-  import deepspeed
   deepspeed.init_distributed()
   args = get_deepspeed_args() 
   train_dataset, vocab_size = get_dataset()
@@ -184,14 +185,107 @@ and finally the training loop, with a structure similar to the PyTorch implement
         print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
 ```
  
+### Config file
+
+The real *nuance* and complexity in using DeepSpeed is the `.json` config file. The number of possible fields in the config is very large, as they define parallelism, floating point precision, logger, solver, communication, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
+
+```json
+{
+  "train_batch_size": 64,
+  "steps_per_print": 100,
+  "optimizer": {
+    "type": "Adam",
+    "params": {
+      "lr": 0.001,
+      "betas": [
+        0.8,
+        0.999
+      ],
+      "eps": 1e-8,
+      "weight_decay": 3e-7
+    }
+  },
+  "scheduler": {
+    "type": "WarmupLR",
+    "params": {
+      "warmup_min_lr": 0,
+      "warmup_max_lr": 0.001,
+      "warmup_num_steps": 1000
+    }
+  },
+```
+
+**ZeRO** can be activated by specifying the relevant stage in the config file. If omitted, or when passing the stage 0, DeepSpeed is disabled and the execution follows the regular distributed data paralllel workflow:
+
+```json
+"zero_optimization": {
+   "stage": 3
+}
+```
+
+**Reducing communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. However, it is possible to reduce this buffer size (and perform the communication in parcels) by adding the following to the config:
+
+```json
+"zero_optimization": {
+   "stage": 3,
+   "reduce_bucket_size": 5e8,
+   "all_reduce_bucket_size": 5e8
+}
+```
+
+[**ZeRO Infinity**](https://arxiv.org/abs/2104.07857) with cpu-offloading can be enabled by adding to the config:
+
+```json
+"zero_optimization": {
+    "offload_optimizer": { "device": "cpu" },
+    "offload_param":     { "device": "cpu" }
+}
+```
+
+[**Mixed precision training**](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. The automatic mixed precision module (amp) folows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation, particularly the `O0` to `O3` topimization levels. To enable it, we add to the config file
+
+```json
+"amp":  {
+    "enabled": true,
+    "opt_level": "O1"
+}
+``` 
+
+**Training with a 16-bit floating point representation** can be enabled by [several parameters in the json config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), or as a first iteration, by changing the config file in line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
+
+**Gradient accumulation** based on **micro-batching** is a technique that simulates a large mini-batch as an iteration of several micro-batches. This is particularly relevant when the whole mini-batch does not fit into memory, and using an accumulation of micro-batches overcomes that limitation. This method is enabled by setting `train_micro_batch_size_per_gpu` or `gradient_accumulation_steps` in the config file.
+
+[**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer. In our use case, we will use one activation checkpoint per decoder block (ie 12 in total) plus the 4 blocks that precede and follow the decoder blocks. This can be enabled by adding the following to the config file (see the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) for other options):
+
+```json
+"activation_checkpointing": {
+    "partition_activations": true,
+    "contiguous_memory_optimization": true,
+    "num_checkpoints": 16,
+    }
+```
+
+You may notice that hardcoding `num_checkpoints` in the config file is a bit cumbersome. To overcome this, it is possible to dynamically set and overwrite any config value by using the `deepspeed.checkpointing.configure` method. This allows config values to be computed on-the-fly or specified via command line arguments. In this particular example, we could set the activation checkpointing values as:
+
+```python
+def main_deepspeed():
+  # ...
+  deepspeed.checkpointing.configure(
+        partition_activations=args.partition_activations,
+        contiguous_checkpointing=args.contigious_checkpointing,
+        num_checkpoints=len(model.to_layers()),
+```
+
+As a final note, the configuration file can be extended with e.g. problem or hardware specific parameters, but for brevity, I'll omit those details here. 
+
 ### Pipeline parallelism (optional, advanced)
 
-[Pipeline parallelism](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) improves both the memory and compute efficiency during training by partitioning the layers of a model into stages that can be processed in parallel.
+[Pipeline parallelism](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) improves both the memory and compute efficiency during training by partitioning the layers of a model into stages that can be processed in parallel. The pipeline parallelims implemented in DeepSpeed follows the [PipeDream-Flush implementation with 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/).
 
 DeepSpeed enables pipelining by assuming all modules in a `nn.Sequential` container or `list` to be the sequence of layers that can be broken into pipelining stages. A stage is a range of layers that define a block of computation that will be assigned to a section of the pipeline.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
+<img width="79%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
 
 {: style="text-align:center; font-size: small;"}
 A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
@@ -234,11 +328,19 @@ def main_deepspeed():
     model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=len(layers)//2)
 ```
 
-Finally, we need to set the micro-batch size to a value greater than 1 to allow multi-stage parallelism. This can be done in the config file and will be covered later.
+As an important remark, when using pipeline parallelism, the micro-batch argument has a subtly different meaning: each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, as they are required for the gradient accumulation that follows. Therefore, it is important to set the micro-batch size (parameter `train_micro_batch_size_per_gpu` in config file) to a value greater than 1 to allow multi-stage parallelism.
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining_2.png"/>
+
+{: style="text-align:center; font-size: small;"}
+"An illustration of how DeepSpeed will train a batch with eight micro-batches using hybrid two-way data parallelism and two-stage pipeline parallelism. GPUs 0 and 2 are arranged in a pipeline and will alternate forward (F) and backward (B) passes. They will then all-reduce (AR) gradients with their data parallel counterparts, GPUs 1 and 3, respectively. Finally, the two pipeline stages update their model weights". Source: [DeepSpeed pipelining documentation](https://www.deepspeed.ai/tutorials/pipeline/)
+
+Finally, [Pipeline parallelism is not compatible with ZeRO-2 and ZeRO-3](https://deepspeed.readthedocs.io/en/latest/pipeline.html#pipeline-parallelism), as discussed [here](https://github.com/microsoft/DeepSpeed/issues/1110#issuecomment-850835817).
 
 **Compute and memory efficiency** 
 
-The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`:
+The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` (API [here](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`:
 
 ```python
 from deepspeed.pipe import PipelineModule, LayerSpec
@@ -271,92 +373,7 @@ def main_deepspeed():
     model = gptlite.GPTlitePipeLayers(vocab_size)
 ```
 
-Finally, we will not tune the [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) and we will use the default `partition_method=parameters`, that "balances the number of trainable parameters on each pipeline stage".
-
-### DeepSpeed config file
-
-The real *nuance* and complexity in using DeepSpeed is the config file (`json`). The number of possible fields in the config is very large, as they define parallelism, floating point precision, logger, solver, communication, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
-
-```json
-{
-  "train_batch_size": 64,
-  "steps_per_print": 100,
-  "optimizer": {
-    "type": "Adam",
-    "params": {
-      "lr": 0.001,
-      "betas": [
-        0.8,
-        0.999
-      ],
-      "eps": 1e-8,
-      "weight_decay": 3e-7
-    }
-  },
-  "scheduler": {
-    "type": "WarmupLR",
-    "params": {
-      "warmup_min_lr": 0,
-      "warmup_max_lr": 0.001,
-      "warmup_num_steps": 1000
-    }
-  },
-```
-
-### Other scaling optimizations
-
-[**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer. In our use case, we will use one activation checkpoint per decoder block (ie 12 in total) plus the 4 blocks that precede and follow the decoder blocks. This can be enabled by adding the following to the config file (see the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) for other options):
-
-```json
-"activation_checkpointing": {
-    "partition_activations": true,
-    "contiguous_memory_optimization": true,
-    "num_checkpoints": 16,
-    }
-```
-
-You may notice that hardcoding `num_checkpoints` in the config file is a bit cumbersome. To overcome this, it is possible to dynamically set and overwrite config values using the `deepspeed.checkpointing.configure` method. This allows config values to be populated on-the-fly or with command line arguments. In this particular example, we could set the previous values as:
-
-```python
-def main_deepspeed():
-  # ...
-  deepspeed.checkpointing.configure(
-        partition_activations=args.partition_activations,
-        contiguous_checkpointing=args.contigious_checkpointing,
-        num_checkpoints=len(model.to_layers()),
-```
-
-**Reducing communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. However, it is possible to reduce this buffer size (and perform the communication in parcels) by adding the following to the config:
-
-```json
-"zero_optimization": {
-   "stage": 3,
-   "reduce_bucket_size": 5e8,
-   "all_reduce_bucket_size": 5e8
-}
-```
-
-[**ZeRO Infinity**](https://arxiv.org/abs/2104.07857) with cpu-offloading can be enabled by adding to the config:
-
-```json
-"zero_optimization": {
-    "offload_optimizer": { "device": "cpu" },
-    "offload_param":     { "device": "cpu" }
-}
-```
-
-[**Mixed precision training**](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. The automatic mixed precision module (amp) folows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation, particularly the `O0` to `O3` topimization levels. To enable it, we add to the config file
-
-```json
-"amp":  {
-    "enabled": true,
-    "opt_level": "O1"
-}
-``` 
-
-**Training with a 16-bit floating point representation** can be enabled by [several parameters in the json config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), or as a first iteration, by changing the config file in line with the [CIFAR10 example](https://github.com/microsoft/DeepSpeedExamples/blob/master/training/cifar/cifar10_deepspeed.py).
-
-**Gradient Accumulation** based on **Micro-batching** is a technique that simulates a large mini-batch as an iteration of several micro-batches. This is particularly relevant when the whole mini-batch does not fit into memory. However, when using pipeline parallelism, the micro-batch has a subtly different meaning: each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, as they are required for the gradient accumulation that follows. Therefore, it is important to set `train_micro_batch_size_per_gpu` $$\gt 1$$ to activate gradient accumulation or to allow multi-stage parallelism when running pipeline parallelism. 
+Finally, we will not tune the [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) and we will use the default `partition_method=parameters`, that "balances the number of trainable parameters on each pipeline stage". And in the extreme case the PipeDream algorithm is not the type of pipelining we want, then it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule). 
 
 ### Launching a distributed execution
 
@@ -376,14 +393,14 @@ For more information on available flags, running `deepspeed --help` provides a b
 
 ### Benchmark 
 
-Ongoing, coming soon.
+Coming soon.
 
 [//]: We will run and benchmark several parallelism configurations. To collect our metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will test the largest model possible on each configuration. 
 
 [//]: We will include the following analysis:
 [//]: - the single-node single-GPU use case, i.e. no parallelism. 
-[//]: - the Pipeline Parallel execution, enabled with `PipelineModule(..., num_stages=4)` and `train_micro_batch_size_per_gpu: 4` in the config.
-[//]: - Distributed Data Parallelism without DeepSpeed, equivalent to DeepSpeed stage 0 (ie disabled);
+[//]: - Distributed Data Parallelism without DeepSpeed optimizations
+[//]: - the Pipeline Parallel execution without DeepSpeed and with DeepSpeed Stage 1.
 [//]: - ZeRO stage 3, with maximum communication bucket size limited to `5e8` elements;
 [//]: - DeepSpeed with ZeRO stage 3 and ZeRO-Infinity, ie CPU offloading;
 [//]: - DeepSpeed with automatic mixed precition; 
@@ -396,6 +413,8 @@ Ongoing, coming soon.
 
 We just touched the surface of the capabilities of DeepSpeed. Other components of DeepSpeed that should be taken into account are:
 - [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
+- [Model Parallelism](https://www.deepspeed.ai/training/#model-parallelism) for implementation of custom tensor parallelism for the models that are not implemented in DeepSpeed;
+- [Activation Partitioning](https://www.deepspeed.ai/training/#activation-checkpointing-api) reduces the memory consumed by activations during model parallel training, by storing these activations in a partitioned state after the forward pass, and doing an allgather right before they are needed again on the backward propagation; 
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts;
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html);
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed;
