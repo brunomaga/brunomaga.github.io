@@ -342,7 +342,9 @@ Few notes about parallel runs:
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
 
-[//]: ### Benchmark 
+### Benchmark 
+
+Ongoing, coming soon.
 
 [//]: We will run and benchmark several parallelism configurations. To collect our metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will test the largest model possible on each configuration. 
 
