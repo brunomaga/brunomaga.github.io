@@ -405,18 +405,9 @@ Few notes about parallel runs:
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
 
-### Benchmark 
+### Benchmark of memory allocated to parameters 
 
-We will run and benchmark several parallelism configurations:
-- the single-node single-GPU use case, i.e. no parallelism;
-- Distributed Data Parallelism without DeepSpeed optimizations;
-- ZeRO stage 3, with maximum communication bucket size limited to `5e8` elements;
-- DeepSpeed with stage 3 and ZeRO-Infinity, i.e. CPU offloading;
-- the Pipeline Parallel execution without DeepSpeed and with DeepSpeed stage 1;
-
-All variants perform the same mixed precision representation following the `fp16` config described above.
-
-We will use the [DeepSpeed API to estimate memory requirements](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage), by calling `deepspeed.runtime.zero.stage3.extimate_zero3_model_states_mem_needs_all_live` to estimate the memory requirements for our stage 3 implementations, as:
+We will use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations. To do that, we create the method `memory_requirements` defined as:
 
 ```python
 def memory_requirements(model):
@@ -430,15 +421,17 @@ def memory_requirements(model):
   estimate_zero3_model_states_mem_needs_all_live(model, num_gpus_per_node=8, num_nodes=1)
 ```
 
-Calling the function, the output tells you that:
+Calling the method, the output tells you that:
 - the base model requires as parameters (not activations or buffers) about 0.323GB;
 - DeepSpeed ZeRO-2 requires 0.161GB and 0.484GB for the with and without offload optimizations;
 - DeepSpeed ZeRO-3 requires 0.009GB and 0.190GB for the with and without offload optimizations; 
 
-However, when activating pipelining, by launching with `--pipeline`):
+However, when activating pipelining, by launching with `--pipeline`:
 - the base model requires 0.053GB for parameters; 
 - ZeRO stage 2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
 - ZeRO stage 3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
+
+### Benchmark of memory and performance at runtime
 
 To collect real performace metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will test the largest model possible on each configuration. 
 
