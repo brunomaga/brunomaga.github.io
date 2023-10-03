@@ -223,7 +223,7 @@ class GPTlitePipe(GPTlite):
       return layers
 ```
 
-Finally, in our DeepSpeed initialization code, we create a pipeline wrapper around our model, with one stage per every 2 blocks of computation, and this will be fed later to the `deepspeed.initialize()` as the `model` parameter: 
+As a next step, in our DeepSpeed initialization code, we must create a pipeline wrapper around our model, with one stage per every 2 blocks of computation, and this will be fed later to the `deepspeed.initialize()` as the `model` parameter: 
 
 ```python
 def main_deepspeed():
@@ -233,6 +233,8 @@ def main_deepspeed():
     layers = model.to_layers()
     model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=len(layers)//2)
 ```
+
+Finally, we need to set the micro-batch size to a value greater than 1 to allow multi-stage parallelism. This can be done in the config file and will be covered later.
 
 **Compute and memory efficiency** 
 
