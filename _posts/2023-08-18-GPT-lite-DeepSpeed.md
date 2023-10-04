@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}) and [AI Supercomputing (part 2)]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) posts, we summarized existing parallelism techniques for ML models. Later, in the post [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model, trained on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will apply those parallelism techniques to that GPT model, and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer). We will use the `deepspeed` package for `python`.
+Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}) and [AI Supercomputing (part 2)]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) posts, we summarized existing parallelism techniques for ML models. Later, in the post [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite - a small version of the GPT model, trained on the "[Tiny Shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt)" dataset. In this post, we will apply those parallelism techniques to that GPT model, and scale it on a network of GPUs using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer). The DeepSpeed API is a lightweight wrapper on PyTorch, and can be installed by the `deepspeed` package for `python`.
 
 
 ### 3D Parallelism
@@ -30,7 +30,7 @@ Finally, **ZeRO has three alternative execution modes, called stages**. Each sta
 - **ZeRO stage 2 (ZeRO-2)**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
 - **ZeRO stage 3 (ZeRO-3)**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
 
-Additionaly, on top of the previous stages, we can enable **ZeRO-Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857) that offloads parameters to both CPU and NVMe memory for huge memory savings.
+Additionaly, on top of the previous stages, we can enable **ZeRO-Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857) that offloads parameters to both CPU and NVMe memory for huge memory savings. Note: DeepSpeed offloading capabilities with ZeRO-Offload was introduced with ZeRO-2. ZeRO-Infinity is the next generation of offloading capabilities, accessible to ZeRO-3. More details [here](https://deepspeed.readthedocs.io/en/latest/zero3.html#zero). 
 
 Long story short, finding the optimal parallelism hyperparameters is a hard problem.
 This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across that 3D space, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
@@ -249,7 +249,7 @@ On top of that, we can enable  **communication overlap** that attempts to overla
 }
 ```
 
-[**ZeRO Infinity**](https://arxiv.org/abs/2104.07857) to perform offloading of optimizer coputation to CPU (with page-locked/pinned CPU memory), and parameter offloading (only compatible with stage 3), can be enabled with: 
+[**ZeRO Infinity**](https://arxiv.org/abs/2104.07857) to perform offloading of optimizer coputation to CPU (with page-locked/pinned CPU memory), and parameter offloading. It is only compatible with ZeRO-3 and can be enabled with: 
 
 ```json
 {
@@ -459,7 +459,7 @@ However, when activating pipelining, by launching the run with `--pipeline --pip
 - ZeRO-2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
 - ZeRO-3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
 
-This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3, and CPU offloading only working with ZeRO-3.  
+This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3.  
 
 ### Benchmark
 
@@ -467,7 +467,7 @@ To collect real performance metrics, we will use `nvidia-smi` to quantify GPU me
 
 1. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed;
 2. The fully-shared DDP implementation with ZeRO-3;
-3. The fully-shared DDP implementation with ZeRO-3 and CPU offloading;
+3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading;
 4. The pipeline implementation with ZeRO-1;
 
 For fairness, all implementations tests use the same mixed precision representations, communication bucket sizes, microbatching, and activation checkpointing, as detailed above and in the <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> config file.
@@ -487,6 +487,7 @@ We just touched the surface of the capabilities of DeepSpeed, and there are plen
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html) for saving and resuming execution state, applicable to large runs that are prune to failures and interrupts;
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html);
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed;
+- [Flops Profiler](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) to measure the latency, number of estimated floating-point operations and parameters of each module in a PyTorch model;
 
 ... and many more covered by the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
