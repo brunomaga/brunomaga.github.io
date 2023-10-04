@@ -114,7 +114,7 @@ class GPTlite(nn.Module):
     #one layer normalization layer after transformer blocs and before linear layer that oututs the vocabulary
     self.ln = nn.LayerNorm(n_embd)
     self.lm_head = nn.Linear(n_embd, vocab_size, bias=False)
-    
+  
   def forward(self, idx, targets=None):
     """ call the model with idx and targets (training) or without targets (generation)"""
     #idx and targets are both of shape (B,T)
@@ -161,13 +161,23 @@ class GPTlitePipe(GPTlite):
 from deepspeed.pipe import PipelineModule, LayerSpec
 class GPTlitePipeLayers(PipelineModule):
 
-  def __init__(self, vocab_size, kwargs={}):
+  class Preprocess(nn.Module):
+    """ converts preprocessing into an nn.Module. Required for LayerSpec"""
+    def __init__(self, vocab_size):
+      super().__init__()
+      self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
+      self.position_embedding_table = nn.Embedding(block_size, n_embd)
+
+    def forward(self, idx):
+      B, T = idx.shape
+      tok_emb = self.token_embedding_table(idx)
+      pos_emb = self.position_embedding_table(torch.arange(T).to(idx.device))
+      return tok_emb + pos_emb
+
+  def __init__(self, vocab_size, pipe_kwargs={}):
     self.specs = \
-    + [ LayerSpec(nn.Embedding, vocab_size, n_embd),
-        LayerSpec(nn.Embedding, block_size, n_embd) ]
-    + [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)]
-    + [ LayerSpec(nn.LayerNorm, n_embd),
+      [ LayerSpec(GPTlitePipeLayers.Preprocess, vocab_size) ] + \
+      [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)] + \
+      [ LayerSpec(nn.LayerNorm, n_embd),
         LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
-    super().__init__(layers=self.specs, loss_fn=nn.CrossEntropyLoss(), **kwargs)
-
-
+    super().__init__(layers=self.specs, loss_fn=nn.CrossEntropyLoss(), **pipe_kwargs)

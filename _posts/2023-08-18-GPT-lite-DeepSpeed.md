@@ -339,7 +339,8 @@ def main_deepspeed():
   if args.pipeline:
     model = gptlite.GPTlitePipe(model.vocab_size)
     layers = model.to_layers()
-    model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=len(layers)//2)
+    num_stages=int(os.environ["WORLD_SIZE"])
+    model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=num_stages)
 ```
 
 As an important remark, when using pipeline parallelism, the micro-batch argument has a subtly different meaning: each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, as they are required for the gradient accumulation that follows. Therefore, it is important to set the micro-batch size (parameter `train_micro_batch_size_per_gpu` in config file) to a value greater than 1 to allow multi-stage parallelism.
@@ -352,24 +353,34 @@ As an important remark, when using pipeline parallelism, the micro-batch argumen
 
 Finally, [Pipeline parallelism is not compatible with ZeRO stages 2 or 3](https://deepspeed.readthedocs.io/en/latest/pipeline.html#pipeline-parallelism), as discussed [here](https://github.com/microsoft/DeepSpeed/issues/1110#issuecomment-850835817).
 
-**Compute and memory efficiency:** 
+**Increasing compute and memory efficiency with LayerSpec:** 
 
 The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` (API [here](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`:
 
 ```python
 from deepspeed.pipe import PipelineModule, LayerSpec
-
 class GPTlitePipeLayers(PipelineModule):
 
-  def __init__(self, vocab_size, **kwargs={}):
-    self.specs = \
-    + [ LayerSpec(nn.Embedding, vocab_size, n_embd),
-        LayerSpec(nn.Embedding, block_size, n_embd) ]
-    + [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)]
-    + [ LayerSpec(nn.LayerNorm, n_embd),
-        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
+  class Preprocess(nn.Module):
+    """ converts preprocessing into an nn.Module. Required for LayerSpec"""
+    def __init__(self, vocab_size):
+      super().__init__()
+      self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
+      self.position_embedding_table = nn.Embedding(block_size, n_embd)
 
-    super().__init__(layers=specs, loss_fn=nn.CrossEntropyLoss(), **kwargs)
+    def forward(self, idx):
+      B, T = idx.shape
+      tok_emb = self.token_embedding_table(idx)
+      pos_emb = self.position_embedding_table(torch.arange(T).to(idx.device))
+      return tok_emb + pos_emb
+
+  def __init__(self, vocab_size, pipe_kwargs={}):
+    self.specs = \
+      [ LayerSpec(GPTlitePipeLayers.Preprocess, vocab_size) ] + \
+      [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)] + \
+      [ LayerSpec(nn.LayerNorm, n_embd),
+        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
+    super().__init__(layers=self.specs, loss_fn=nn.CrossEntropyLoss(), **pipe_kwargs)
 ```
 
 and the main code altered to:
@@ -380,11 +391,10 @@ def get_deepspeed_args():
   parser.add_argument("--pipeline_spec_layers", action="store_true",
                       help="enable SpecLayers in pipeline parallelism")
 
-
 def main_deepspeed():
   # ...
   if args.pipeline and args.pipeline_spec_layers:
-    model = gptlite.GPTlitePipeLayers(vocab_size)
+    model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs={'num_stages':num_stages})
 ```
 
 Finally, we will not tune the [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) and we will use the default `partition_method=parameters`, that "balances the number of trainable parameters on each pipeline stage". And in the extreme case the PipeDream algorithm is not the type of pipelining we want, then it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule). 
@@ -405,12 +415,12 @@ Few notes about parallel runs:
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
 
-### Benchmark of memory allocated to parameters 
+### Benchmark of memory allocated to parameters (optional) 
 
-We will use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations. To do that, we create the method `memory_requirements` defined as:
+We will use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations, by creatint the method `measure_parameters_memory`:
 
 ```python
-def memory_requirements(model):
+def measure_parameters_memory(model):
   param_size_GB = sum([p.nelement() * p.element_size() for p in model.parameters()])/1024**3
   print(f"Native model parameters size: {round(param_size_GB, 2)}GB.")
 
@@ -426,10 +436,12 @@ Calling the method, the output tells you that:
 - DeepSpeed ZeRO-2 requires 0.161GB and 0.484GB for the with and without offload optimizations;
 - DeepSpeed ZeRO-3 requires 0.009GB and 0.190GB for the with and without offload optimizations; 
 
-However, when activating pipelining, by launching with `--pipeline`:
+However, when activating pipelining, ie by launching with `--pipeline --pipeline_spec_layers`:
 - the base model requires 0.053GB for parameters; 
 - ZeRO stage 2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
 - ZeRO stage 3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
+
+Now, this kind of metric has many fallacies: it only measures parameter overheard, and does not take activations or other residual buffers (e.g. normalization varibles) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate as pipeline parallelism is not compatible with ZeRO stages 2 or 3. 
 
 ### Benchmark of memory and performance at runtime
 
