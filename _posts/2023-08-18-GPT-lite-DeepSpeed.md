@@ -145,7 +145,7 @@ def main_deepspeed():
     args=args, model=model, training_data=train_dataset,)
 ```
 
-Then we do the initialization of the loss function, input datatype, and the local rank and device:
+Then we do the initialization of the loss function, input datatype, the local rank and the local device:
 
 ``` python
   criterion = torch.nn.CrossEntropyLoss()
@@ -185,7 +185,7 @@ and finally the training loop, with a structure similar to the PyTorch implement
         print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
 ```
  
-### Config file
+### Config file and scaling optimizations
 
 The real *nuance* and complexity in using DeepSpeed is the `.json` config file. The number of possible fields in the config is very large, as they define parallelism, floating point precision, logger, solver, communication, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
 
@@ -220,34 +220,39 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
 
 ```json
 {
-"train_batch_size": 128,
-"train_micro_batch_size_per_gpu": 1
+  "train_batch_size": 128,
+  "train_micro_batch_size_per_gpu": 1
 }
 ```
 
 **ZeRO** can be activated by specifying the relevant stage in the config file. If omitted, or when passing the stage 0, DeepSpeed is disabled and the execution follows the regular distributed data paralllel workflow:
 
 ```json
+{
   "zero_optimization": {
     "stage": 3
   }
+}
 ```
 
 **Reducing the size of communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. To overcome this issue, we can reduce the maximum communication buffer size and perform the communication in parcels.
 On top of that, we can enable  **communication overlap** that attempts to overlap the reduction of the gradients with backward computation. To enable these 2 optimizations, we add to the config:
 
 ```json
+{
   "zero_optimization": {
     "stage": 3,
     "reduce_bucket_size": 5e8,
     "all_reduce_bucket_size": 5e8,
     "overlap_comm": true,
   }
+}
 ```
 
 [**ZeRO Infinity**](https://arxiv.org/abs/2104.07857) to perform offloading of optimizer coputation to CPU (with page-locked/pinned CPU memory), and parameter offloading (only compatible with stage 3), can be enabled with: 
 
 ```json
+{
   "zero_optimization": {
     "stage": 3,
     "offload_optimizer": {
@@ -259,11 +264,13 @@ On top of that, we can enable  **communication overlap** that attempts to overla
       "pin_memory": true
     },
   }
+}
 ```
 
 [**Mixed precision representation**](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. It can be enabled by adding the `fp16` entry [in the config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options). As a side note, the `amp` config entry also enables mixed precision training that follows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation i.e. with the `O0` to `O3` opimization levels. However, [it is not compatible with ZeRO](https://www.deepspeed.ai/docs/config-json/#automatic-mixed-precision-amp-training-options), therefore we won't use it. The [`fp16` is equivalent to APEX optimization level O2](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), and according to the [documentation](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), "if you want to use ZeRO (currently) you must use this mode". We will enable it with the entry `"fp16: { enabled: true }` that is equivalent to the following default values:
 
 ```json
+{
   "fp16": {
     "enabled": true,
     "auto_cast": false,
@@ -274,16 +281,19 @@ On top of that, we can enable  **communication overlap** that attempts to overla
     "consecutive_hysteresis": false,
     "min_loss_scale": 1
   }
+}
 ```
 
 [**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer. In our use case, we will use one activation checkpoint per decoder block (ie 12 in total) plus the 4 blocks that precede and follow the decoder blocks. This can be enabled by adding the following to the config file (see the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) for other options):
 
 ```json
+{
   "activation_checkpointing": {
     "partition_activations": true,
     "contiguous_memory_optimization": true,
     "num_checkpoints": 16,
   }
+}
 ```
 
 You may notice that hardcoding `num_checkpoints` in the config file is a bit cumbersome. To overcome this, it is possible to dynamically set and overwrite any config value by using the [DeepSpeed API](https://deepspeed.readthedocs.io/). In this use case of activation checkpointing, `deepspeed.checkpointing.configure` allows the config values to be computed on-the-fly or specified via command line arguments, as:
@@ -449,7 +459,7 @@ However, when activating pipelining, by launching the run with `--pipeline --pip
 - ZeRO-2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
 - ZeRO-3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
 
-This metric is very useful as it gives a quick overview of scaling that is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3, and offloading only working with ZeRO-3.  
+This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3, and CPU offloading only working with ZeRO-3.  
 
 ### Benchmark
 
