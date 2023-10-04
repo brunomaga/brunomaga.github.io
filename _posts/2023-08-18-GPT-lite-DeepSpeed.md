@@ -433,16 +433,16 @@ def measure_parameters_memory(model):
 ```
 
 Calling the method, the output tells you that:
-- the base model requires as parameters about 0.323GB, per GPU;
+- the base model requires about 0.323GB for storage of parameters, per GPU;
 - DeepSpeed ZeRO-2 requires 0.161GB and 0.484GB for the with and without offload optimizations;
 - DeepSpeed ZeRO-3 requires 0.009GB and 0.190GB for the with and without offload optimizations; 
 
 However, when activating pipelining, by launching the run with `--pipeline --pipeline_spec_layers`:
-- the base model requires 0.053GB for parameters; 
-- ZeRO stage 2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
-- ZeRO stage 3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
+- the base model requires 0.053GB for the parameters; 
+- ZeRO-2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
+- ZeRO-3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
 
-Now, this kind of metric has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3. 
+This metric is very useful as it gives a quick overview of scaling that is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3, and offloading only working with ZeRO-3.  
 
 ### Benchmark
 
