@@ -174,11 +174,11 @@ class GPTlitePipeLayers(PipelineModule):
       pos_emb = self.position_embedding_table(torch.arange(T).to(idx.device))
       return tok_emb + pos_emb
 
-  def __init__(self, vocab_size, pipe_kwargs={}):
+  def __init__(self, vocab_size, pipe_kwargs):
     self.specs = \
       [ LayerSpec(GPTlitePipeLayers.Preprocess, vocab_size) ] + \
       [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)] + \
       [ LayerSpec(nn.LayerNorm, n_embd),
         LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
-    super().__init__(layers=self.specs, loss_fn=nn.CrossEntropyLoss(), **pipe_kwargs)
+    super().__init__(layers=self.specs, **pipe_kwargs)
 
