@@ -30,7 +30,7 @@ Finally, **ZeRO has three alternative execution modes, called stages**. Each sta
 - **ZeRO stage 2 (ZeRO-2)**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
 - **ZeRO stage 3 (ZeRO-3)**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
 
-Additionaly, on top of the previous stages, we can enable **ZeRO-Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857) that offloads parameters to both CPU and NVMe memory for huge memory savings. Note: DeepSpeed offloading capabilities with ZeRO-Offload was introduced with ZeRO-2. ZeRO-Infinity is the next generation of offloading capabilities, accessible to ZeRO-3. More details [here](https://deepspeed.readthedocs.io/en/latest/zero3.html#zero). 
+Additionaly, on top of the previous stages, we can enable **ZeRO-Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857) that offloads parameters to both CPU and NVMe memory for huge memory savings. Note: DeepSpeed offloading capabilities with [ZeRO-Offload](https://www.deepspeed.ai/tutorials/zero-offload/) was introduced with ZeRO-2. ZeRO-Infinity is the next generation of offloading capabilities, accessible to ZeRO-3. More details [here](https://deepspeed.readthedocs.io/en/latest/zero3.html#zero). 
 
 Long story short, finding the optimal parallelism hyperparameters is a hard problem.
 This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across that 3D space, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
@@ -487,7 +487,12 @@ We just touched the surface of the capabilities of DeepSpeed, and there are plen
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html) for saving and resuming execution state, applicable to large runs that are prune to failures and interrupts;
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html);
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed;
-- [Flops Profiler](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) to measure the latency, number of estimated floating-point operations and parameters of each module in a PyTorch model;
+- [Flops profiler](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) measures the time, flops and parameters of a PyTorch model and shows which modules or layers are the bottleneck;
+- [Sparse attention kernels](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) (API [here](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound;
+- [Communication optimizers](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining;
+- [Monitor](https://www.deepspeed.ai/training/#monitor) logs live training metrics to one or more monitoring backends to TensorBoard, csv file or other resource;
+- [Model Compression](https://www.deepspeed.ai/compression/) (API [here](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size;
+
 
 ... and many more covered by the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
