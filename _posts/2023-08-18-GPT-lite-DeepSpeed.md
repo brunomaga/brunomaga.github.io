@@ -26,9 +26,9 @@ Model parallelism can be implemented by two distinct approaches:
 - **Tensor parallelism** is a more intense approach of model parallelism that divides not just the parameters, gradients and optimizer states, but also the computation. This requires the operations and the layer activations (the output of the forward pass) to be also sharded - horizontally or vertically - and distributed across processors. This approach requires a modification of the computations to work in a distributed manner. Therefore, it is a model-specific strategy. This is [supported but not provided by DeepSpeed](https://www.deepspeed.ai/training/#support-for-custom-model-parallelism), except in some implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/).
 
 Finally, **ZeRO has three alternative execution modes, called stages**. Each stage represents a different level of memory redundancy. In practice, picking a stage is equivalent to picking a tradeoff between memory usage and communication required to communicate distributed tensors:
-- **ZeRO stage 1**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
-- **ZeRO stage 2**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
-- **ZeRO stage 3**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
+- **ZeRO stage 1 (ZeRO-1)**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
+- **ZeRO stage 2 (ZeRO-2)**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
+- **ZeRO stage 3 (ZeRO-3)**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
 
 Additionaly, on top of the previous stages, we can enable **ZeRO-Infinity**, an offload engine detailed in [ZeRO-Infinity](https://arxiv.org/abs/2104.07857) that offloads parameters to both CPU and NVMe memory for huge memory savings.
 
@@ -37,7 +37,7 @@ This is a resources allocation problem across the 3D volume in the data, paramet
  
 ### Main code
 
-We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">python implementation</a>:
+We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original GPTlite implementation (<a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a>):
 
 ```python
 # depth of the network as number of decoder blocks.
@@ -279,7 +279,7 @@ On top of that, we can enable  **communication overlap** that attempts to overla
     }
 ```
 
-You may notice that hardcoding `num_checkpoints` in the config file is a bit cumbersome. To overcome this, it is possible to dynamically set and overwrite any config value by using the `deepspeed.checkpointing.configure` method. This allows config values to be computed on-the-fly or specified via command line arguments. In this particular example, we could set the activation checkpointing values as:
+You may notice that hardcoding `num_checkpoints` in the config file is a bit cumbersome. To overcome this, it is possible to dynamically set and overwrite any config value by using the [DeepSpeed API](https://deepspeed.readthedocs.io/). In this use case of activation checkpointing, `deepspeed.checkpointing.configure` allows the config values to be computed on-the-fly or specified via command line arguments, as:
 
 ```python
 def main_deepspeed():
@@ -290,7 +290,7 @@ def main_deepspeed():
         num_checkpoints=len(model.to_layers()),
 ```
 
-As a final note, the configuration file can be extended with e.g. problem or hardware specific parameters, but for brevity, I'll omit those details here. 
+As a final note, the configuration file can also be extended with custom fields, but for brevity, we'll omit those details here. 
 
 ### Pipeline parallelism (optional, advanced)
 
@@ -359,6 +359,7 @@ The `GPTlitePipe` model above is neither memory efficient nor scalable as each G
 
 ```python
 from deepspeed.pipe import PipelineModule, LayerSpec
+
 class GPTlitePipeLayers(PipelineModule):
 
   class Preprocess(nn.Module):
@@ -404,7 +405,7 @@ Finally, we will not tune the [load balancing method for pipeline modules](https
 The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
 
 ```shell
-$ deepspeed --num_gpus=8 train.py --deepspeed_config ds_config.json
+$ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
 ```
 
 Few notes about parallel runs:
@@ -445,11 +446,14 @@ Now, this kind of metric has many fallacies: it only measures the parameters ove
 
 ### Benchmark
 
-To collect real performace metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will measure the largest model that is possible on each configuration. All implementations tests use the same mixed precision (`fp16`) representations and communication bucket sizes. We test 4 implementations:
+To collect real performance metrics, we will use `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will measure the largest model that is possible on each configuration. We will test four implementations:
+
 1. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed;
-2. The fully-shared DDP implementation with ZeRO stage 3;
-3. The fully-shared DDP implementation with ZeRO stage 3 and CPU offloading;
-4. The pipeline implementation with ZeRO stage 1;
+2. The fully-shared DDP implementation with ZeRO-3;
+3. The fully-shared DDP implementation with ZeRO-3 and CPU offloading;
+4. The pipeline implementation with ZeRO-1;
+
+For fairness, all implementations tests use the same mixed precision representations, communication bucket sizes, microbatching, and activation checkpointing, as detailed above and in the <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> config file.
 
 (Coming soon)
 
@@ -470,4 +474,4 @@ We just touched the surface of the capabilities of DeepSpeed, and there are plen
 ... and many more covered by the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
 
-All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/train.py">train.py</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">gptlite.py</a> for the GPTlite model, <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">ds_config.json</a> for the DeepSpeed config file, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">run.sh</a> for the command line script to launch the execution.
+All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> for the GPTlite model, <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> for the DeepSpeed config file, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a> for the command line script to launch the executions.
