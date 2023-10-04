@@ -415,9 +415,9 @@ Few notes about parallel runs:
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
 
-### Benchmark of memory allocated to parameters (optional) 
+### Measuring memory allocated to parameters (optional) 
 
-We will use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations, by creatint the method `measure_parameters_memory`:
+We will use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations, by calling the method `measure_parameters_memory`:
 
 ```python
 def measure_parameters_memory(model):
@@ -432,20 +432,24 @@ def measure_parameters_memory(model):
 ```
 
 Calling the method, the output tells you that:
-- the base model requires as parameters (not activations or buffers) about 0.323GB;
+- the base model requires as parameters about 0.323GB, per GPU;
 - DeepSpeed ZeRO-2 requires 0.161GB and 0.484GB for the with and without offload optimizations;
 - DeepSpeed ZeRO-3 requires 0.009GB and 0.190GB for the with and without offload optimizations; 
 
-However, when activating pipelining, ie by launching with `--pipeline --pipeline_spec_layers`:
+However, when activating pipelining, by launching the run with `--pipeline --pipeline_spec_layers`:
 - the base model requires 0.053GB for parameters; 
 - ZeRO stage 2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
 - ZeRO stage 3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
 
-Now, this kind of metric has many fallacies: it only measures parameter overheard, and does not take activations or other residual buffers (e.g. normalization varibles) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate as pipeline parallelism is not compatible with ZeRO stages 2 or 3. 
+Now, this kind of metric has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3. 
 
-### Benchmark of memory and performance at runtime
+### Benchmark
 
-To collect real performace metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will test the largest model possible on each configuration. 
+To collect real performace metrics, we will use  `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will measure the largest model that is possible on each configuration. All implementations tests use the same mixed precision (`fp16`) representations and communication bucket sizes. We test 4 implementations:
+1. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed;
+2. The fully-shared DDP implementation with ZeRO stage 3;
+3. The fully-shared DDP implementation with ZeRO stage 3 and CPU offloading;
+4. The pipeline implementation with ZeRO stage 1;
 
 (Coming soon)
 
@@ -457,9 +461,9 @@ To collect real performace metrics, we will use  `nvidia-smi` to quantify GPU me
 
 We just touched the surface of the capabilities of DeepSpeed, and there are plenty of resources that should also be taken into account:
 - [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
-- [Model Parallelism](https://www.deepspeed.ai/training/#model-parallelism) for implementation of custom tensor parallelism for the models that are not implemented in DeepSpeed;
+- [Model Parallelism](https://www.deepspeed.ai/training/#model-parallelism) for the implementation of custom tensor parallelism of models that are not implemented in DeepSpeed;
 - [Activation Partitioning](https://www.deepspeed.ai/training/#activation-checkpointing-api) reduces the memory consumed by activations during model parallel training, by storing these activations in a partitioned state after the forward pass, and doing an allgather right before they are needed again on the backward propagation; 
-- [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html), applied on large runs that are prune to failures or interrupts;
+- [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html) for saving and resuming execution state, applicable to large runs that are prune to failures and interrupts;
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html);
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed;
 
