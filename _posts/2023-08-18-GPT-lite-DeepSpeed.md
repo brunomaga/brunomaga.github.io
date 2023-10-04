@@ -164,7 +164,6 @@ and finally the training loop, with a structure similar to the PyTorch implement
 ```python
   n_epochs=20
   for epoch in range(n_epochs):
-    running_loss = 0.0
     for step, data in enumerate(train_dataloader):
 
       inputs = data[0].to(local_device)
@@ -175,14 +174,13 @@ and finally the training loop, with a structure similar to the PyTorch implement
             
       outputs = model_engine(inputs) #fwd pass
       loss = criterion(outputs, labels)
-      running_loss += loss.item()
 
       model_engine.backward(loss) #backprop
       model_engine.step() #update weights, no zero-ing
 
     # print statistics
     if local_rank == 0:
-        print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
+        print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, loss))
 ```
  
 ### Config file and scaling optimizations
@@ -235,7 +233,7 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
 }
 ```
 
-**Reducing the size of communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. To overcome this issue, we can reduce the maximum communication buffer size and perform the communication in parcels.
+**Reducing the size of communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. To overcome this issue, we can decrease the maximum size of communication buffer on reduce and all-gather operations and perform the communication in parcels.
 On top of that, we can enable  **communication overlap** that attempts to overlap the reduction of the gradients with backward computation. To enable these 2 optimizations, we add to the config:
 
 ```json
@@ -243,7 +241,7 @@ On top of that, we can enable  **communication overlap** that attempts to overla
   "zero_optimization": {
     "stage": 3,
     "reduce_bucket_size": 5e8,
-    "all_reduce_bucket_size": 5e8,
+    "allgather_bucket_size": 5e8,
     "overlap_comm": true,
   }
 }
@@ -348,7 +346,7 @@ class GPTlitePipe(GPTlite):
       return layers
 ```
 
-As a next step, in our DeepSpeed initialization code, we must create a pipeline wrapper around our model, with one stage per every 2 blocks of computation, and this will be fed later to the `deepspeed.initialize()` as the `model` parameter: 
+As a next step, in our DeepSpeed initialization code, we must create a pipeline wrapper around our model, with one stage per every 2 blocks of computation, and this will be fed later to the `deepspeed.initialize()` as the `model` parameter. The epocs training loop is also reduced to a single `train_batch()` operation that performs forward pass, back propagation and gradient updates in a single code line: 
 
 ```python
 def main_deepspeed():
@@ -358,6 +356,13 @@ def main_deepspeed():
     layers = model.to_layers()
     num_stages=int(os.environ["WORLD_SIZE"])
     model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=num_stages)
+
+  # ...
+  for epoch in range(n_epochs):
+    if args.pipeline:
+      loss=model_engine.train_batch()
+    else:
+      # ... as before
 ```
 
 As an important remark, when using pipeline parallelism, the micro-batch argument has a subtly different meaning: each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, as they are required for the gradient accumulation that follows. Therefore, it is important to set the micro-batch size (parameter `train_micro_batch_size_per_gpu` in config file) to a value greater than 1 to allow multi-stage parallelism.

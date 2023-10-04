@@ -1,4 +1,5 @@
 import torch
+import torch.distributed as dist
 import os
 import deepspeed
 import gptlite
@@ -13,15 +14,17 @@ if os.environ.get("WORLD_SIZE") is None:
 
 
 def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
+  rank = dist.get_rank()
+
   #load input data
   with open(filename) as f:
       text = f.read()
-  print("input data loaded. Length of text: ", len(text))
+  if rank==0: print("input data loaded. Length of text: ", len(text))
 
   #collect all ordered and unique characters in the text
   chars = sorted(list(set(text)))
-  print("unique chars: ", "".join(chars))
-  print("length of chars: ", len(chars))
+  if rank==0: print("unique chars: ", "".join(chars))
+  if rank==0: print("length of chars: ", len(chars))
 
   #map characters to integers
   stoi = { ch:i for i,ch in enumerate(chars) }
@@ -29,16 +32,16 @@ def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
   encode = lambda x: torch.tensor([stoi[ch] for ch in x], dtype=torch.long) #encode text to integers
   decode = lambda x: ''.join([itos[i] for i in x]) #decode integers to text
   vocab_size = len(stoi)
-  print("vocab size: ", vocab_size)
-  print(encode("Hello world"))
-  print(decode(encode("Hello world").tolist()))
-  print("character zero is:", decode([0]), "<end>")
+  if rank==0: print("vocab size: ", vocab_size)
+  if rank==0: print(encode("Hello world"))
+  if rank==0: print(decode(encode("Hello world").tolist()))
+  if rank==0: print("character zero is:", decode([0]), "<end>")
 
   # collect input data, break dataset in train/validation
   data = encode(text)
   n = int(0.9*len(data))
   train_data, valid_data = data[:n], data[n:]
-  print("Train data encoded", data.shape, train_data.shape, valid_data.shape)
+  if rank==0: print("Train data encoded", data.shape, train_data.shape, valid_data.shape)
   return train_data, valid_data, vocab_size
 
 
@@ -85,7 +88,7 @@ def get_dataset():
   
 def measure_parameters_memory(model, args):
 
-  ranks = [0] if not args.pipeline else list(range(int(os.environ["WORLD_SIZE"])))
+  ranks = [0] if not args.pipeline else list(range(dist.get_world_size()))
   for r in ranks:
     if args.local_rank == r:
       print(f"\n\nEstimating memory requirements at local rank {r}")
@@ -101,73 +104,64 @@ def measure_parameters_memory(model, args):
     torch.distributed.barrier()
     
   
-def main_deepspeed():
-
-  import deepspeed
+def main_deepspeed(n_epochs=20, random_seed=42):
   deepspeed.init_distributed()
   args = get_deepspeed_args() 
-
-  print("ARGS:", args)
   train_dataset, vocab_size = get_dataset()
+  torch.manual_seed(random_seed)
 
   if not args.pipeline:
     model = gptlite.GPTlite(vocab_size)
+    criterion = torch.nn.CrossEntropyLoss()
   else:
-    num_stages=int(os.environ["WORLD_SIZE"])
+    deepspeed.runtime.utils.set_random_seed(random_seed)
+    pipe_kwargs={
+      'num_stages':dist.get_world_size(),
+      'activation_checkpoint_interval': 0,
+      'loss_fn': torch.nn.CrossEntropyLoss(),
+      }
     if not args.pipeline_spec_layers:
-      model = gptlite.GPTlitePipe(vocab_size)
-      layers = model.to_layers()
-      model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=num_stages)
+      device_str = f'cuda:{dist.get_rank()}'
+      model = gptlite.GPTlitePipe(vocab_size).to(device_str)
+      model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
     else:
-      model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs={'num_stages':num_stages})
+      model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs=pipe_kwargs)
     
-  #estimate memory requirements for the stage 3 implementation
+  #estimate parameters memory requirements
   if args.run_memory_estimation_only:
     measure_parameters_memory(model, args)
     return
 
-  # parameters = filter(lambda p: p.requires_grad, model.parameters())
-  model_engine, optimizer, train_dataloader , _ = deepspeed.initialize(
+  engine, _, train_dataloader , _ = deepspeed.initialize(
     args=args, model=model, training_data=train_dataset,
-    #model_parameters=parameters, #optional, to specify which params to optimize 
+    model_parameters=[p for p in model.parameters() if p.requires_grad] #optional
     #config=args.deepspeed_config, #only needed when args.deepspeed_config does not exist
     )
 
-  local_device = deepspeed.accelerator.get_accelerator().device_name(model_engine.local_rank)
-  local_rank = model_engine.local_rank
-  print(f"Starting training, I'm rank {local_rank} on {local_device}")
+  assert engine.local_rank == dist.get_rank()
+  print(f"Starting training, I'm rank {engine.local_rank} on {engine.device}")
 
-  target_dtype = None # For float32, target_dtype is None so no datatype conversion needed
-  if   model_engine.bfloat16_enabled(): target_dtype=torch.bfloat16
-  elif model_engine.fp16_enabled():     target_dtype=torch.half
-      
-  criterion = torch.nn.CrossEntropyLoss()
+  for epoch in range(n_epochs):
+    if not args.pipeline:
+      for step, data in enumerate(train_dataloader):
+        inputs = data[0].to(engine.device)
+        labels = data[1].to(engine.device)
+              
+        outputs = engine(inputs) #fwd pass
+        loss = criterion(outputs, labels)
+        engine.backward(loss) #backprop
+        engine.step() #update weights, no zero-ing
+    else:
+      loss = engine.train_batch()
+
+    if engine.local_rank == 0:  # print statistics
+      print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, loss))
   
-  for epoch in range(20):  # loop over the dataset multiple times
-    running_loss = 0.0
-    for step, data in enumerate(train_dataloader):
-      print(f"Epoch {epoch}, Step {step} on {local_device}")
-
-      inputs = data[0].to(local_device)
-      labels = data[1].to(local_device)
-
-      if target_dtype != None:
-        inputs = inputs.to(target_dtype)
-            
-      outputs = model_engine(inputs) #fwd pass
-      loss = criterion(outputs, labels)
-      running_loss += loss.item()
-
-      model_engine.backward(loss) #backprop
-      model_engine.step() #update weights, no zero-ing
-
-    # print statistics
-    if local_rank == 0: print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, running_loss / step))
-  
-  if local_rank == 0: print('Finished Training')
+  if engine.local_rank == 0: print('Finished Training')
   
 
 if __name__ == "__main__":
   main_deepspeed()
+
 
 
