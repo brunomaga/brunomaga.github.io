@@ -51,6 +51,8 @@ def get_deepspeed_args(description='GPT lite on DeepSpeed'):
                       help="enable pipeline parallelism")
   parser.add_argument("--pipeline_spec_layers", action="store_true",
                       help="enable SpecLayers in pipeline parallelism")
+  parser.add_argument("--run_memory_estimation_only", action="store_true",
+                      help="run parameter memory estimation and quit")
   # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config, ...)
   parser = deepspeed.add_config_arguments(parser)
   return parser.parse_args()
@@ -81,22 +83,49 @@ def get_dataset():
   return dataset, vocab_size
 
   
+def measure_parameters_memory(model, args):
+
+  ranks = [0] if not args.pipeline else list(range(int(os.environ["WORLD_SIZE"])))
+  for r in ranks:
+    if args.local_rank == r:
+      print(f"\n\nEstimating memory requirements at local rank {r}")
+      param_size_GB = sum([p.nelement() * p.element_size() for p in model.parameters()])/1024**3
+      print(f"Native model parameters size: {round(param_size_GB, 3)}GB.")
+
+      from deepspeed.runtime.zero.stage_1_and_2 import estimate_zero2_model_states_mem_needs_all_live
+      estimate_zero2_model_states_mem_needs_all_live(model, num_gpus_per_node=8, num_nodes=1)
+      
+      from deepspeed.runtime.zero.stage3 import estimate_zero3_model_states_mem_needs_all_live
+      estimate_zero3_model_states_mem_needs_all_live(model, num_gpus_per_node=8, num_nodes=1)
+
+    torch.distributed.barrier()
+    
+  
 def main_deepspeed():
 
   import deepspeed
   deepspeed.init_distributed()
   args = get_deepspeed_args() 
+
+  print("ARGS:", args)
   train_dataset, vocab_size = get_dataset()
 
   if not args.pipeline:
     model = gptlite.GPTlite(vocab_size)
-  elif not args.pipeline_spec_layers:
-    model = gptlite.GPTlitePipe(model.vocab_size)
-    layers = model.to_layers()
-    model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=len(layers)//2)
   else:
-    model = gptlite.GPTlitePipeLayers(vocab_size)
+    num_stages=int(os.environ["WORLD_SIZE"])
+    if not args.pipeline_spec_layers:
+      model = gptlite.GPTlitePipe(vocab_size)
+      layers = model.to_layers()
+      model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=num_stages)
+    else:
+      model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs={'num_stages':num_stages})
     
+  #estimate memory requirements for the stage 3 implementation
+  if args.run_memory_estimation_only:
+    measure_parameters_memory(model, args)
+    return
+
   # parameters = filter(lambda p: p.requires_grad, model.parameters())
   model_engine, optimizer, train_dataloader , _ = deepspeed.initialize(
     args=args, model=model, training_data=train_dataset,
@@ -117,6 +146,7 @@ def main_deepspeed():
   for epoch in range(20):  # loop over the dataset multiple times
     running_loss = 0.0
     for step, data in enumerate(train_dataloader):
+      print(f"Epoch {epoch}, Step {step} on {local_device}")
 
       inputs = data[0].to(local_device)
       labels = data[1].to(local_device)
@@ -139,6 +169,5 @@ def main_deepspeed():
 
 if __name__ == "__main__":
   main_deepspeed()
-
 
 
