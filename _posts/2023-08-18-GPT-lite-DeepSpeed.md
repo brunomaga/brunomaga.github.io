@@ -63,7 +63,7 @@ We then create the `ArgumentParser` object that is required by the `initialize()
 - the `--local_rank` parameter that is the local rank of each process in the network, and will be populated automatically by the `deepspeed` launcher upon launch;
 - optionally, we add the `--deepspeed_config` where we specify the path to the DeepSpeed config file. If you choose not to add it to the command line arguments, then it must be specified as the parameter `config` in the call to `deepspeed.initialize()`.
 
-A simpler way to do this is to call `deepspeed.add_config_arguments()`, that adds the `--deepspeed` boolean flag that enables/disables deepspeed and the `--deepspeed_config` argument:
+A simpler way to do this is to call `deepspeed.add_config_arguments()`, that adds the `--deepspeed_config` and other DeepSpeed-specific argument:
 
 ```python
 def get_deepspeed_args(description='GPT lite on DeepSpeed'):
@@ -319,16 +319,16 @@ DeepSpeed enables pipelining by assuming all modules in a `nn.Sequential` contai
 {: style="text-align:center; font-size: small;"}
 A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
-We will make pipeline parallelism optional in our use case, as in many cases (e.g. for small models) it is not benefitial. We will disable it by default and enable it by passing `--pipeline` on the command line:
+We will make pipeline parallelism optional in our use case, as in many cases (e.g. for small models) it is not benefitial. We will enable by passing the number of stages as the `---pipeline_parallel_size` argument (default: 0, no pipelining) on the command line:
 
 ```python
 def get_deepspeed_args(description='GPT lite on DeepSpeed'):
   # ...
-  parser.add_argument("--pipeline", action="store_true",
-                      help="enable pipeline parallelism")
+  parser.add_argument('--pipeline-parallel-size', type=int, default=0,
+                      help='enable pipeline parallelism with N stages')
 ```
 
-Now we expose the pipeline parallelism in our model by creating a method a new model `GPTlitePipe` that inherits from `GPTlite` and includes the method `to_layers()` that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass in `GPTlite` and that `self.blocks` is of type `nn.Sequential`:
+Note that the number of stages must divide the number of GPUs. Now we expose the pipeline parallelism in our model by creating a method a new model `GPTlitePipe` that inherits from `GPTlite` and includes the method `to_layers()` that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass in `GPTlite` and that `self.blocks` is of type `nn.Sequential`:
 
 ```python
 class GPTlitePipe(GPTlite):
@@ -351,7 +351,7 @@ As a next step, in our DeepSpeed initialization code, we must create a pipeline 
 ```python
 def main_deepspeed():
   # ...
-  if args.pipeline:
+  if args.pipeline_parallel_size:
     model = gptlite.GPTlitePipe(model.vocab_size)
     layers = model.to_layers()
     num_stages=int(os.environ["WORLD_SIZE"])
@@ -359,10 +359,10 @@ def main_deepspeed():
 
   # ...
   for epoch in range(n_epochs):
-    if args.pipeline:
+    if args.pipeline_parallel_size:
       loss=model_engine.train_batch()
     else:
-      # ... as before
+      # ... forward, backward, and update step as before
 ```
 
 As an important remark, when using pipeline parallelism, the micro-batch argument has a subtly different meaning: each batch of training data is divided into micro-batches that can be processed in parallel by the pipeline stages, as they are required for the gradient accumulation that follows. Therefore, it is important to set the micro-batch size (parameter `train_micro_batch_size_per_gpu` in config file) to a value greater than 1 to allow multi-stage parallelism.
@@ -377,7 +377,7 @@ Finally, [Pipeline parallelism is not compatible with ZeRO stages 2 or 3](https:
 
 **Increasing compute and memory efficiency with LayerSpec:** 
 
-The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` (API [here](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`:
+The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` ([API](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`:
 
 ```python
 from deepspeed.pipe import PipelineModule, LayerSpec
@@ -416,8 +416,11 @@ def get_deepspeed_args():
 
 def main_deepspeed():
   # ...
-  if args.pipeline and args.pipeline_spec_layers:
-    model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs={'num_stages':num_stages})
+  if args.pipeline_parallel_size:
+    if args.pipeline_spec_layers:
+      model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs={'num_stages':num_stages})
+    else:
+      # ... GPTlitePipe model as before 
 ```
 
 Finally, we will not tune the [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) and we will use the default `partition_method=parameters`, that "balances the number of trainable parameters on each pipeline stage". And in the extreme case the PipeDream algorithm is not the type of pipelining we want, then it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule). 
@@ -427,7 +430,7 @@ Finally, we will not tune the [load balancing method for pipeline modules](https
 The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
 
 ```shell
-$ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
+$ deepspeed --num_gpus=8 train.py --deepspeed_config ds_config.json
 ```
 
 Few notes about parallel runs:
@@ -468,38 +471,36 @@ This metric is very useful as it gives a quick overview of scaling and is very f
 
 ### Benchmark
 
-To collect real performance metrics, we will use `nvidia-smi` to quantify GPU memory usage and processor utilization. We'll also use the deepspeed logger to collect 4 metrics at a set interval: average samples per sec, average allocated memory, and max allocated memory at any given instant. Finally, we will measure the largest model that is possible on each configuration. We will test four implementations:
+To collect real performance metrics, use the deepspeed logger to extract the following at every 10 steps: (1) the model throughput as average samples per sec, (2) the average allocated memory, and (3) the maximum allocated memory at any given instant. Finally, we will quantify model reduction by the largest input size per GPU that is possible on each configuration (as in: smaller model means more samples in memory). We will test four implementations:
 
-1. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed;
-2. The fully-shared DDP implementation with ZeRO-3;
-3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading;
-4. The pipeline implementation with ZeRO-1;
+1. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed (config <a href="/assets/GPT-lite-DeepSpeed/ds_config_ddp.json">`ds_config_ddp.json`</a>);
+2. The fully-shared DDP implementation with ZeRO-3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO3.json">`ds_config_ZeRO3.json`</a>);
+3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
+4. The pipeline implementation with ZeRO-1 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>);
 
-For fairness, all implementations tests use the same mixed precision representations, communication bucket sizes, microbatching, and activation checkpointing, as detailed above and in the <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> config file.
+For fairness, all implementations tests use the same mixed precision representations, communication bucket sizes, microbatching, and activation checkpointing.
 
-(Coming soon)
-
-[//]: # {: style="text-align:center; font-size: small;"}
-[//]: # <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
 
 
 ### Final remarks 
 
 We just touched the surface of the capabilities of DeepSpeed, and there are plenty of resources that should also be taken into account:
-- [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
+- [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
 - [Model Parallelism](https://www.deepspeed.ai/training/#model-parallelism) for the implementation of custom tensor parallelism of models that are not implemented in DeepSpeed;
 - [Activation Partitioning](https://www.deepspeed.ai/training/#activation-checkpointing-api) reduces the memory consumed by activations during model parallel training, by storing these activations in a partitioned state after the forward pass, and doing an allgather right before they are needed again on the backward propagation; 
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html) for saving and resuming execution state, applicable to large runs that are prune to failures and interrupts;
-- [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/)  for sparsity during inference. See the [API here](https://deepspeed.readthedocs.io/en/latest/moe.html);
+- [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/) ([API](https://deepspeed.readthedocs.io/en/latest/moe.html))  for sparsity during inference; 
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed;
 - [Flops profiler](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) measures the time, flops and parameters of a PyTorch model and shows which modules or layers are the bottleneck;
-- [Sparse attention kernels](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) (API [here](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound;
+- [Sparse attention kernels](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound;
 - [Communication optimizers](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining;
 - [Monitor](https://www.deepspeed.ai/training/#monitor) logs live training metrics to one or more monitoring backends to TensorBoard, csv file or other resource;
-- [Model Compression](https://www.deepspeed.ai/compression/) (API [here](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size;
+- [Model Compression](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size;
 
 
 ... and many more covered by the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
 
-All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> for the GPTlite model, <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> for the DeepSpeed config file, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a> for the command line script to launch the executions.
+All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> for the GPTlite model, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a> for the command line script to launch the executions.
