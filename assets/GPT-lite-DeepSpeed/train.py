@@ -50,6 +50,8 @@ def get_deepspeed_args(description='GPT lite on DeepSpeed'):
   parser = argparse.ArgumentParser(description=description)
   parser.add_argument('--local_rank', type=int, default=0,
                         help='local rank passed from distributed launcher')
+  parser.add_argument('--activation_checkpoint_interval', type=int, default=0,
+                      help='activation checkpoint interval (0 means disabled)')
   parser.add_argument('--pipeline_parallel_size', type=int, default=0,
                       help='enable pipeline parallelism with N stages')
   parser.add_argument("--pipeline_spec_layers", action="store_true",
@@ -104,7 +106,7 @@ def measure_parameters_memory(model, args):
     torch.distributed.barrier()
     
   
-def main_deepspeed(n_epochs=20, random_seed=42):
+def main_deepspeed(n_epochs=100, random_seed=42):
   deepspeed.init_distributed()
   args = get_deepspeed_args() 
   train_dataset, vocab_size = get_dataset()
@@ -114,18 +116,20 @@ def main_deepspeed(n_epochs=20, random_seed=42):
     #inspired by DeepSpeedExamples/training/pipeline_parallelism/train.py
     deepspeed.runtime.utils.set_random_seed(random_seed)
     pipe_kwargs={
-      'num_stages':args.pipeline_parallel_size,
-      'activation_checkpoint_interval': 0,
+      'num_stages': args.pipeline_parallel_size,
+      'activation_checkpoint_interval': args.activation_checkpoint_interval, 
       'loss_fn': torch.nn.CrossEntropyLoss(),
       }
+
     if args.pipeline_spec_layers:
-      model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs=pipe_kwargs)
+      model = gptlite.GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
     else:
       device_str = f'cuda:{dist.get_rank()}'
-      model = gptlite.GPTlitePipe(vocab_size).to(device_str)
+      model = gptlite.GPTlite(vocab_size).to(device_str)
       model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
   else:
-    model = gptlite.GPTlite(vocab_size)
+    model = gptlite.GPTlite(vocab_size,
+              activation_checkpoint_interval=args.activation_checkpoint_interval)
     criterion = torch.nn.CrossEntropyLoss()
     
   #estimate parameters memory requirements
