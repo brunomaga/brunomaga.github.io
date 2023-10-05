@@ -282,32 +282,9 @@ On top of that, we can enable  **communication overlap** that attempts to overla
 }
 ```
 
-[**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer. Activation checkpointing is extremelly relevant for DeepSpeed, as activations are not sharded, therefore not storing all activations in memory reduces substantially the memory footprint. In our use case, we will use one activation checkpoint per decoder block (ie 12 in total) plus the 4 blocks that precede and follow the decoder blocks. This can be enabled by adding the following to the config file (see the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) for other options):
-
-```json
-{
-  "activation_checkpointing": {
-    "partition_activations": true,
-    "contiguous_memory_optimization": true,
-    "num_checkpoints": 16,
-  }
-}
-```
-
-You may notice that hardcoding `num_checkpoints` in the config file is a bit cumbersome. To overcome this, it is possible to dynamically set and overwrite any config value by using the [DeepSpeed API](https://deepspeed.readthedocs.io/). In this use case of activation checkpointing, `deepspeed.checkpointing.configure` allows the config values to be computed on-the-fly or specified via command line arguments, as:
-
-```python
-def main_deepspeed():
-  # ...
-  deepspeed.checkpointing.configure(
-        partition_activations=args.partition_activations,
-        contiguous_checkpointing=args.contigious_checkpointing,
-        num_checkpoints=len(model.to_layers()),
-```
-
 As a final note, the configuration file can also be extended with custom fields, but for brevity, we'll omit those details here. 
 
-### Pipeline parallelism (optional, advanced)
+### Pipeline parallelism
 
 [Pipeline parallelism](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) improves both the memory and compute efficiency during training by partitioning the layers of a model into stages that can be processed in parallel. The pipeline parallelims implemented in DeepSpeed follows the [PipeDream-Flush implementation with 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/).
 
@@ -331,8 +308,9 @@ def get_deepspeed_args(description='GPT lite on DeepSpeed'):
 Note that the number of stages must divide the number of GPUs. Now we expose the pipeline parallelism in our model by creating a method a new model `GPTlitePipe` that inherits from `GPTlite` and includes the method `to_layers()` that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass in `GPTlite` and that `self.blocks` is of type `nn.Sequential`:
 
 ```python
-class GPTlitePipe(GPTlite):
-  
+class GPTlite(nn.Module):
+  # ...
+
   def to_layers(self):  
       layers = [
           lambda idx:
@@ -350,12 +328,17 @@ As a next step, in our DeepSpeed initialization code, we must create a pipeline 
 
 ```python
 def main_deepspeed():
+
   # ...
   if args.pipeline_parallel_size:
-    model = gptlite.GPTlitePipe(model.vocab_size)
-    layers = model.to_layers()
-    num_stages=int(os.environ["WORLD_SIZE"])
-    model = deepspeed.pipe.PipelineModule(layers=layers, num_stages=num_stages)
+    deepspeed.runtime.utils.set_random_seed(random_seed)
+    pipe_kwargs={
+      'num_stages': args.pipeline_parallel_size,
+      'loss_fn': torch.nn.CrossEntropyLoss(),
+      }
+
+    model = gptlite.GPTlite(vocab_size).to(device_str)
+    model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
 
   # ...
   for epoch in range(n_epochs):
@@ -377,12 +360,12 @@ Finally, [Pipeline parallelism is not compatible with ZeRO stages 2 or 3](https:
 
 **Increasing compute and memory efficiency with LayerSpec:** 
 
-The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` ([API](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`. The tricky bit is that some operations, specificatlly the sum of embeddings and the `torch.swapaxes` are not a `nn.Module` so they can't be used as a `LayerSpec`. To overcome this, we create the classes `EmbeddingsSum` and `SwapAxes` that encapsulate those logics into an `nn.Module`. The implementation for the pipeline class is then:
+The implementation of pipelining for the `GPTlite` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` ([API](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeSpec` with an `__init__` method that follows very closely the method in the original `GPTlite`. The tricky bit is that some operations, specificatlly the sum of embeddings and the `torch.swapaxes` are not a `nn.Module` so they can't be used as a `LayerSpec`. To overcome this, we create the classes `EmbeddingsSum` and `SwapAxes` that encapsulate those logics into an `nn.Module`. The implementation for the pipeline class is then:
 
 ```python
 from deepspeed.pipe import PipelineModule, LayerSpec
 
-class GPTlitePipeLayers(PipelineModule):
+class GPTlitePipeSpec(PipelineModule):
 
   class EmbeddingsSum(nn.Module):
     """ converts tok_emb + pos_emb into an nn.Module. Required for LayerSpec"""
@@ -411,11 +394,11 @@ class GPTlitePipeLayers(PipelineModule):
 
   def __init__(self, vocab_size, pipe_kwargs):
     self.specs = \
-      [ LayerSpec(GPTlitePipeLayers.EmbeddingsSum, vocab_size) ] + \
+      [ LayerSpec(GPTlitePipeSpec.EmbeddingsSum, vocab_size) ] + \
       [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)] + \
       [ LayerSpec(nn.LayerNorm, n_embd),
         LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ] + \
-      [ LayerSpec(GPTlitePipeLayers.SwapAxes) ]
+      [ LayerSpec(GPTlitePipeSpec.SwapAxes) ]
     super().__init__(layers=self.specs, **pipe_kwargs)
 ```
 
@@ -431,12 +414,50 @@ def main_deepspeed():
   # ...
   if args.pipeline_parallel_size:
     if args.pipeline_spec_layers:
-      model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs={'num_stages':num_stages})
+      model = gptlite.GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
     else:
       # ... GPTlitePipe model as before 
 ```
 
 Finally, we will not tune the [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) and we will use the default `partition_method=parameters`, that "balances the number of trainable parameters on each pipeline stage". And in the extreme case the PipeDream algorithm is not the type of pipelining we want, then it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule). 
+
+### Activation Checkpointing
+
+**IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed related to activation checkpointing combined with pipelining. I will wait for the fix to be published to before including activation checkpointing in the benchmark results.
+
+[**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer. Activation checkpointing is extremelly relevant for DeepSpeed, as activations are not sharded, therefore not storing all activations in memory reduces substantially the memory footprint.
+
+In our use case, and for simplicity, we will store activations at a given user-specified interval of the model layers. We start with an extra command line argument to dictate how often to checkpoint:
+```python
+  parser.add_argument('--activation_checkpoint_interval', type=int, default=0,
+                      help='activation checkpoint interval (0 means disabled)')
+```
+
+When using pipelining, introducing checkpoint at a fixed layer interval is easy, we just need to add the `activation_checkpoint_interval` argument to the `PipelineModule` constructor with: 
+```python
+    pipe_kwargs={ # ...
+      'activation_checkpoint_interval': args.activation_checkpoint_interval, 
+    }
+```
+
+When we are not using pipelining, we have to manually specify which layers to checkpoint. This requires calling [`deepspeed.checkpointing.checkpoint`](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html#using-activation-checkpointing) at every layer that we want to checkpoint. We will use the previous `lo_layers()` method to iterate over the model layers and filter those to be checkpointed in the `forward()` pass in `GPTlite` as:
+```python
+class GPTlite(nn.Module):
+  #...
+
+  def forward(self, idx, targets=None):
+
+    if self.activation_checkpoint_interval > 0:
+      x=idx
+      for l, layer in enumerate(self.to_layers()):
+        is_checkpoint = l % self.activation_checkpoint_interval == 0 
+        x = deepspeed.checkpointing.checkpoint(layer, x) if is_checkpoint else layer(x)
+      return x
+    else:
+      # ... as before
+```
+
+Finally, we can improve the activations memory reduction substantially when doing model parallelism, by partitioning activations and offloading those checkpoints to the CPU instead of saving them in memory. DeepSpeed does not integrate model/tensor parallelism natively so we will skip this, but check the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) for other details.
 
 ### Launching a distributed execution
 
@@ -490,6 +511,7 @@ To collect real performance metrics, use the deepspeed logger to extract the fol
 2. The fully-shared DDP implementation with ZeRO-3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO3.json">`ds_config_ZeRO3.json`</a>);
 3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
 4. The pipeline implementation with ZeRO-1, with memory efficient (using `LayerSpec`), and 4 stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). The output of DeepSpeed details the parameter and layer distribution for each stage:
+
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=21256704 (21.257M) \
   TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)

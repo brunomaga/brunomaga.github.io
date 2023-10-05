@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
+import deepspeed
 
 # replicate GPT-3 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
 
@@ -102,8 +103,11 @@ class Block(nn.Module):
 
 
 class GPTlite(nn.Module):
-  def __init__(self, vocab_size):
+  def __init__(self, vocab_size, activation_checkpoint_interval=0):
     super().__init__()
+    
+    self.activation_checkpoint_interval = activation_checkpoint_interval
+
     # vocabulary embedding and positional embedding
     self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
     self.position_embedding_table = nn.Embedding(block_size, n_embd)
@@ -118,6 +122,16 @@ class GPTlite(nn.Module):
   def forward(self, idx, targets=None):
     """ call the model with idx and targets (training) or without targets (generation)"""
     #idx and targets are both of shape (B,T)
+
+    # use case with breakpoint activation
+    if self.activation_checkpoint_interval > 0:
+      x=idx
+      for l, layer in enumerate(self.to_layers()):
+        is_checkpoint = l % self.activation_checkpoint_interval == 0 
+        x = deepspeed.checkpointing.checkpoint(layer, x) if is_checkpoint else layer(x)
+      return x
+      
+    # regular use case
     B, T = idx.shape
     tok_emb = self.token_embedding_table(idx) #shape (B,T,C)
     pos_emb = self.position_embedding_table(torch.arange(T).to(idx.device)) #shape (T,C)
@@ -143,8 +157,6 @@ class GPTlite(nn.Module):
     return idx
 
 
-class GPTlitePipe(GPTlite):
-  
   def to_layers(self):  
       layers = [
           lambda idx:
@@ -159,7 +171,7 @@ class GPTlitePipe(GPTlite):
 
 
 from deepspeed.pipe import PipelineModule, LayerSpec
-class GPTlitePipeLayers(PipelineModule):
+class GPTlitePipeSpec(PipelineModule):
 
   class EmbeddingsSum(nn.Module):
     """ converts tok_emb + pos_emb into an nn.Module. Required for LayerSpec"""
@@ -188,11 +200,10 @@ class GPTlitePipeLayers(PipelineModule):
 
   def __init__(self, vocab_size, pipe_kwargs):
     self.specs = \
-      [ LayerSpec(GPTlitePipeLayers.EmbeddingsSum, vocab_size) ] + \
+      [ LayerSpec(GPTlitePipeSpec.EmbeddingsSum, vocab_size) ] + \
       [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)] + \
       [ LayerSpec(nn.LayerNorm, n_embd),
         LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ] + \
-      [ LayerSpec(GPTlitePipeLayers.SwapAxes) ]
+      [ LayerSpec(GPTlitePipeSpec.SwapAxes) ]
     super().__init__(layers=self.specs, **pipe_kwargs)
-
 
