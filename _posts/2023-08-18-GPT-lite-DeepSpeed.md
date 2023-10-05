@@ -501,9 +501,16 @@ However, when activating pipelining, by launching the run with `--pipeline --pip
 
 This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3.  
 
+
+### Megatron-LM
+
+We'll follow the [Megatron-LM GPT2 tutorial](https://www.deepspeed.ai/tutorials/megatron/). 
+[Megatron-DeepSpeed repo](https://github.com/microsoft/Megatron-DeepSpeed) 
+trained on the [openwebtext dataset](https://github.com/yet-another-account/openwebtext).
+
 ### Benchmark
 
-To measure our performance, we will use the deepspeed logger to extract the following metrics at every 10 steps: (1) the model throughput as average samples per sec, (2) the average allocated memory, and (3) the maximum allocated memory at any given instant. We will also quantify our model reduction by measuring the largest input size per GPU that that is possible on each configuration (as in: smaller model means more samples in memory). All implementations tested use the same mixed precision representation, communication bucket sizes, microbatching, and activation checkpointing interval. We benchmarked five implementations:
+To measure our performance, we will use the deepspeed logger to extract the following metrics at every 10 steps: model throughput as average samples per sec, the average allocated memory, and maximum allocated memory. We will also quantify our model reduction by measuring the largest input size per GPU that that is possible on each configuration (as in: smaller model means more samples in memory). All implementations tested use the same mixed precision representation, communication bucket sizes, microbatching, and activation checkpointing interval. We benchmarked five implementations:
 
 1. The serial single-GPU implementation (config file <a href="/assets/GPT-lite-DeepSpeed/ds_config_serial.json">`ds_config_serial.json`</a>);
 2. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ddp.json">`ds_config_ddp.json`</a>);
@@ -532,12 +539,12 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
      10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
    ```
 
-**IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed related to activation checkpointing combined with pipelining. I will wait for the fix to be published to before including activation checkpointing in the benchmark results. So for the time being, I'll profile [AlexNet](https://en.wikipedia.org/wiki/AlexNet), a similar network also based on a sequence of blocks. 
+**IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed related to activation checkpointing combined with pipelining. I will wait for the fix to be published before showing the final benchmark results. 
 
-The results are the following:
+[//]: #So for the time being, I'll profile [AlexNet](https://en.wikipedia.org/wiki/AlexNet), a similar network also based on a sequence of blocks. The results are the following:
 
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
+[//]: # {: style="text-align:center; font-size: small;"}
+[//]: #<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
 
 ### Final remarks 
 
