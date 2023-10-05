@@ -25,7 +25,7 @@
     "enabled": true
   },
   "zero_optimization": {
-    "stage": 0,
+    "stage": 1,
     "overlap_comm": true,
     "reduce_bucket_size": 5e8,
     "allgather_bucket_size": 5e8

@@ -423,8 +423,6 @@ Finally, we will not tune the [load balancing method for pipeline modules](https
 
 ### Activation Checkpointing
 
-**IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed related to activation checkpointing combined with pipelining. I will wait for the fix to be published to before including activation checkpointing in the benchmark results.
-
 [**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward-pass activations required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass (required for the back propagation), only a small subset of - e.g. interleaved - layer outputs are kept in memory, and the remaining are computed on-the-fly with a forward pass from the closest lower layer. Activation checkpointing is extremelly relevant for DeepSpeed, as activations are not sharded, therefore not storing all activations in memory reduces substantially the memory footprint.
 
 In our use case, and for simplicity, we will store activations at a given user-specified interval of the model layers. We start with an extra command line argument to dictate how often to checkpoint:
@@ -533,6 +531,8 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
   TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)
      10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
    ```
+
+**IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed related to activation checkpointing combined with pipelining. I will wait for the fix to be published to before including activation checkpointing in the benchmark results. So for the time being, I'll profile [AlexNet](https://en.wikipedia.org/wiki/AlexNet), a similar network also based on a sequence of blocks. 
 
 The results are the following:
 
