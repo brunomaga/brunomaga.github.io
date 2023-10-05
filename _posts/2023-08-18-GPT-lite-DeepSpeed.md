@@ -377,15 +377,16 @@ Finally, [Pipeline parallelism is not compatible with ZeRO stages 2 or 3](https:
 
 **Increasing compute and memory efficiency with LayerSpec:** 
 
-The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` ([API](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`:
+The `GPTlitePipe` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` ([API](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeLayers` with an `__init__` method that follows very closely the method in the original `GPTlite`. The tricky bit is that some operations, specificatlly the sum of embeddings and the `torch.swapaxes` are not a `nn.Module` so they can't be used as a `LayerSpec`. To overcome this, we create the classes `EmbeddingsSum` and `SwapAxes` that encapsulate those logics into an `nn.Module`. The implementation for the pipeline class is then:
 
 ```python
 from deepspeed.pipe import PipelineModule, LayerSpec
 
 class GPTlitePipeLayers(PipelineModule):
 
-  class Preprocess(nn.Module):
-    """ converts preprocessing into an nn.Module. Required for LayerSpec"""
+  class EmbeddingsSum(nn.Module):
+    """ converts tok_emb + pos_emb into an nn.Module. Required for LayerSpec"""
+
     def __init__(self, vocab_size):
       super().__init__()
       self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
@@ -397,13 +398,25 @@ class GPTlitePipeLayers(PipelineModule):
       pos_emb = self.position_embedding_table(torch.arange(T).to(idx.device))
       return tok_emb + pos_emb
 
-  def __init__(self, vocab_size, pipe_kwargs={}):
+
+  class SwapAxes(nn.Module):
+    """ converts  torch.swapaxes(logits,1,2) into an nn.Module. Required for LayerSpec"""
+
+    def __init__(self):
+      super().__init__()
+
+    def forward(self, logits):
+      return torch.swapaxes(logits,1,2)
+
+
+  def __init__(self, vocab_size, pipe_kwargs):
     self.specs = \
-      [ LayerSpec(GPTlitePipeLayers.Preprocess, vocab_size) ] + \
+      [ LayerSpec(GPTlitePipeLayers.EmbeddingsSum, vocab_size) ] + \
       [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)] + \
       [ LayerSpec(nn.LayerNorm, n_embd),
-        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
-    super().__init__(layers=self.specs, loss_fn=nn.CrossEntropyLoss(), **pipe_kwargs)
+        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ] + \
+      [ LayerSpec(GPTlitePipeLayers.SwapAxes) ]
+    super().__init__(layers=self.specs, **pipe_kwargs)
 ```
 
 and the main code altered to:
@@ -476,7 +489,27 @@ To collect real performance metrics, use the deepspeed logger to extract the fol
 1. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed (config <a href="/assets/GPT-lite-DeepSpeed/ds_config_ddp.json">`ds_config_ddp.json`</a>);
 2. The fully-shared DDP implementation with ZeRO-3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO3.json">`ds_config_ZeRO3.json`</a>);
 3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
-4. The pipeline implementation with ZeRO-1 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>);
+4. The pipeline implementation with ZeRO-1, with memory efficient (using `LayerSpec`), and 4 stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). The output of DeepSpeed details the parameter and layer distribution for each stage:
+   ```
+RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=21256704 (21.257M) \
+  TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)
+     0: <lambda>, 1: Block, 2: Block, 3: Block
+   ```
+   ```
+RANK=2 STAGE=1 LAYERS=3 [4, 7) STAGE_PARAMS=21256704 (21.257M) \
+  TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)
+     4: Block, 5: Block, 6: Block
+   ```
+   ```
+RANK=4 STAGE=2 LAYERS=3 [7, 10) STAGE_PARAMS=21256704 (21.257M) \
+  TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)
+     7: Block, 8: Block, 9: Block
+   ```
+   ```
+RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
+  TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)
+     10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
+   ```
 
 For fairness, all implementations tests use the same mixed precision representations, communication bucket sizes, microbatching, and activation checkpointing.
 
