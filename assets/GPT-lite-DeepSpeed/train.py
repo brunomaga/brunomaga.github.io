@@ -48,10 +48,10 @@ def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
 def get_deepspeed_args(description='GPT lite on DeepSpeed'):
   import argparse
   parser = argparse.ArgumentParser(description=description)
-  parser.add_argument('--local_rank', type=int, default=-1,
+  parser.add_argument('--local_rank', type=int, default=0,
                         help='local rank passed from distributed launcher')
-  parser.add_argument("--pipeline", action="store_true",
-                      help="enable pipeline parallelism")
+  parser.add_argument('--pipeline_parallel_size', type=int, default=0,
+                      help='enable pipeline parallelism with N stages')
   parser.add_argument("--pipeline_spec_layers", action="store_true",
                       help="enable SpecLayers in pipeline parallelism")
   parser.add_argument("--run_memory_estimation_only", action="store_true",
@@ -88,7 +88,7 @@ def get_dataset():
   
 def measure_parameters_memory(model, args):
 
-  ranks = [0] if not args.pipeline else list(range(dist.get_world_size()))
+  ranks = list(range(dist.get_world_size())) if args.pipeline_parallel_size else [0]
   for r in ranks:
     if args.local_rank == r:
       print(f"\n\nEstimating memory requirements at local rank {r}")
@@ -110,22 +110,23 @@ def main_deepspeed(n_epochs=20, random_seed=42):
   train_dataset, vocab_size = get_dataset()
   torch.manual_seed(random_seed)
 
-  if not args.pipeline:
-    model = gptlite.GPTlite(vocab_size)
-    criterion = torch.nn.CrossEntropyLoss()
-  else:
+  if args.pipeline_parallel_size:
+    #inspired by DeepSpeedExamples/training/pipeline_parallelism/train.py
     deepspeed.runtime.utils.set_random_seed(random_seed)
     pipe_kwargs={
-      'num_stages':dist.get_world_size(),
+      'num_stages':args.pipeline_parallel_size,
       'activation_checkpoint_interval': 0,
       'loss_fn': torch.nn.CrossEntropyLoss(),
       }
-    if not args.pipeline_spec_layers:
+    if args.pipeline_spec_layers:
+      model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs=pipe_kwargs)
+    else:
       device_str = f'cuda:{dist.get_rank()}'
       model = gptlite.GPTlitePipe(vocab_size).to(device_str)
       model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
-    else:
-      model = gptlite.GPTlitePipeLayers(vocab_size, pipe_kwargs=pipe_kwargs)
+  else:
+    model = gptlite.GPTlite(vocab_size)
+    criterion = torch.nn.CrossEntropyLoss()
     
   #estimate parameters memory requirements
   if args.run_memory_estimation_only:
@@ -139,10 +140,12 @@ def main_deepspeed(n_epochs=20, random_seed=42):
     )
 
   assert engine.local_rank == dist.get_rank()
-  print(f"Starting training, I'm rank {engine.local_rank} on {engine.device}")
+  print(f"Starting training. Rank {engine.local_rank} on {engine.device}")
 
   for epoch in range(n_epochs):
-    if not args.pipeline:
+    if args.pipeline_parallel_size:
+      loss = engine.train_batch()
+    else:
       for step, data in enumerate(train_dataloader):
         inputs = data[0].to(engine.device)
         labels = data[1].to(engine.device)
@@ -151,13 +154,8 @@ def main_deepspeed(n_epochs=20, random_seed=42):
         loss = criterion(outputs, labels)
         engine.backward(loss) #backprop
         engine.step() #update weights, no zero-ing
-    else:
-      loss = engine.train_batch()
 
-    if engine.local_rank == 0:  # print statistics
-      print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, loss))
-  
-  if engine.local_rank == 0: print('Finished Training')
+    if engine.local_rank == 0: print(f"Epoch: {epoch}, Loss: {loss}")
   
 
 if __name__ == "__main__":

@@ -161,8 +161,9 @@ class GPTlitePipe(GPTlite):
 from deepspeed.pipe import PipelineModule, LayerSpec
 class GPTlitePipeLayers(PipelineModule):
 
-  class Preprocess(nn.Module):
-    """ converts preprocessing into an nn.Module. Required for LayerSpec"""
+  class EmbeddingsSum(nn.Module):
+    """ converts tok_emb + pos_emb into an nn.Module. Required for LayerSpec"""
+
     def __init__(self, vocab_size):
       super().__init__()
       self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
@@ -174,11 +175,24 @@ class GPTlitePipeLayers(PipelineModule):
       pos_emb = self.position_embedding_table(torch.arange(T).to(idx.device))
       return tok_emb + pos_emb
 
+
+  class SwapAxes(nn.Module):
+    """ converts  torch.swapaxes(logits,1,2) into an nn.Module. Required for LayerSpec"""
+
+    def __init__(self):
+      super().__init__()
+
+    def forward(self, logits):
+      return torch.swapaxes(logits,1,2)
+
+
   def __init__(self, vocab_size, pipe_kwargs):
     self.specs = \
-      [ LayerSpec(GPTlitePipeLayers.Preprocess, vocab_size) ] + \
+      [ LayerSpec(GPTlitePipeLayers.EmbeddingsSum, vocab_size) ] + \
       [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)] + \
       [ LayerSpec(nn.LayerNorm, n_embd),
-        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
+        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ] + \
+      [ LayerSpec(GPTlitePipeLayers.SwapAxes) ]
     super().__init__(layers=self.specs, **pipe_kwargs)
+
 
