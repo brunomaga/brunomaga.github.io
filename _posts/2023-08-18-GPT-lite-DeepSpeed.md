@@ -302,7 +302,7 @@ We will make pipeline parallelism optional in our use case, as in many cases (e.
 def get_deepspeed_args(description='GPT lite on DeepSpeed'):
   # ...
   parser.add_argument('--pipeline-parallel-size', type=int, default=0,
-                      help='enable pipeline parallelism with N stages')
+                      help='enable pipeline parallelism with N stages (0 means disabled)')
 ```
 
 Note that the number of stages must divide the number of GPUs. Now we expose the pipeline parallelism in our model by creating a method a new model `GPTlitePipe` that inherits from `GPTlite` and includes the method `to_layers()` that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass in `GPTlite` and that `self.blocks` is of type `nn.Sequential`:
@@ -505,12 +505,13 @@ This metric is very useful as it gives a quick overview of scaling and is very f
 
 ### Benchmark
 
-To collect real performance metrics, use the deepspeed logger to extract the following at every 10 steps: (1) the model throughput as average samples per sec, (2) the average allocated memory, and (3) the maximum allocated memory at any given instant. Finally, we will quantify model reduction by the largest input size per GPU that is possible on each configuration (as in: smaller model means more samples in memory). We will test four implementations:
+To collect real performance metrics, use the deepspeed logger to extract the following at every 10 steps: (1) the model throughput as average samples per sec, (2) the average allocated memory, and (3) the maximum allocated memory at any given instant. Finally, we will quantify model reduction by the largest input size per GPU that is possible on each configuration (as in: smaller model means more samples in memory). All implementations tests use the same mixed precision representation, communication bucket sizes, microbatching, and activation checkpointing interval. We measured the performance of five implementations:
 
-1. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed (config <a href="/assets/GPT-lite-DeepSpeed/ds_config_ddp.json">`ds_config_ddp.json`</a>);
+0. The serial single-GPU implementation (config file <a href="/assets/GPT-lite-DeepSpeed/ds_config_serial.json">`ds_config_serial.json`</a>);
+1. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ddp.json">`ds_config_ddp.json`</a>);
 2. The fully-shared DDP implementation with ZeRO-3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO3.json">`ds_config_ZeRO3.json`</a>);
 3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
-4. The pipeline implementation with ZeRO-1, with memory efficient (using `LayerSpec`), and 4 stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). The output of DeepSpeed details the parameter and layer distribution for each stage:
+4. The memory-efficient pipeline implementation with ZeRO-1 with 4 stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). The output of DeepSpeed details the parameter and layer distribution for each stage:
 
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=21256704 (21.257M) \
@@ -533,10 +534,9 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
      10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
    ```
 
-For fairness, all implementations tests use the same mixed precision representations, communication bucket sizes, microbatching, and activation checkpointing.
+The results are the following:
 
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
+(Coming soon)
 
 
 ### Final remarks 
