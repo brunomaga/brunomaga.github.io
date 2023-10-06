@@ -556,7 +556,7 @@ We just touched the surface of the capabilities of DeepSpeed, and there are plen
 - [Model Compression](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size;
 
 
-... and many more covered by the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/) and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
+... and many more covered by the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
 
 All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> for the GPTlite model, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a> for the command line script to launch the executions.
