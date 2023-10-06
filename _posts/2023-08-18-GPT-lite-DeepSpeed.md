@@ -73,7 +73,7 @@ We then create the `ArgumentParser` object that is required by the `initialize()
 A simpler way to do this is to call `deepspeed.add_config_arguments()`, that adds the `--deepspeed_config` and other DeepSpeed-specific argument:
 
 ```python
-def get_deepspeed_args(description='GPT lite on DeepSpeed'):
+def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   import argparse
   parser = argparse.ArgumentParser(description=description)
   # mandatory argument for calls with deepseed
@@ -136,17 +136,19 @@ train_dataset = get_dataset()
 model = torchvision.models.resnet18(num_classes=10)
 ```
 
-Let's continue with our GPT-lite use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straighforward:
+Pre-existing models (as far as I know) do not define activation checkpointing layers and pipelining layers, therefore these two features can not be used directly. But let's continue with our GPT-lite use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straighforward:
 
 ```python
 import deepspeed
 
-def main_deepspeed():
+def main_deepspeed(n_epochs=100, random_seed=42):
 
-  deepspeed.init_distributed()
-  args = get_deepspeed_args() 
-  train_dataset, vocab_size = get_dataset()
-  model = gptlite.GPTlite(vocab_size)
+  torch.manual_seed(random_seed)  #set random seed
+  deepspeed.init_distributed() #initialize distributed network
+  args = get_cmd_line_args() # get command line arguments
+
+  train_dataset, vocab_size = get_dataset() #initialize dataset
+  model = gptlite.GPTlite(vocab_size) #initialize model
 
   model_engine, optimizer, train_dataloader , _ = deepspeed.initialize(
     args=args, model=model, training_data=train_dataset,)
@@ -306,7 +308,7 @@ A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/
 We will make pipeline parallelism optional in our use case, as in many cases (e.g. for small models) it is not benefitial. We will enable by passing the number of stages as the `---pipeline_parallel_size` argument (default: 0, no pipelining) on the command line:
 
 ```python
-def get_deepspeed_args(description='GPT lite on DeepSpeed'):
+def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   # ...
   parser.add_argument('--pipeline-parallel-size', type=int, default=0,
                       help='enable pipeline parallelism with N stages (0 means disabled)')
@@ -412,7 +414,7 @@ class GPTlitePipeSpec(PipelineModule):
 and the main code altered to:
 
 ```python
-def get_deepspeed_args():
+def get_cmd_line_args():
   # ...
   parser.add_argument("--pipeline_spec_layers", action="store_true",
                       help="enable SpecLayers in pipeline parallelism")
@@ -469,7 +471,7 @@ Finally, we can improve the activations memory reduction substantially when doin
 The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
 
 ```shell
-$ deepspeed --num_gpus=8 train.py --deepspeed_config ds_config.json
+$ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
 ```
 
 Few notes about parallel runs:
@@ -540,7 +542,9 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
      10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
    ```
 
-**IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed related to activation checkpointing combined with pipelining. I will wait for the fix to be published before showing the final benchmark results. 
+We are using the following library versions: `pytorch==2.01`, with CUDA `11.7` and `deepspeed==0.10.3`.
+
+**IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. I will wait for the fix to be published before showing the final benchmark results. 
 
 [//]: #So for the time being, I'll profile [AlexNet](https://en.wikipedia.org/wiki/AlexNet), a similar network also based on a sequence of blocks. The results are the following:
 
