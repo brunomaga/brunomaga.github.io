@@ -502,12 +502,6 @@ However, when activating pipelining, by launching the run with `--pipeline --pip
 This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3.  
 
 
-### Megatron-LM
-
-We'll follow the [Megatron-LM GPT2 tutorial](https://www.deepspeed.ai/tutorials/megatron/). 
-[Megatron-DeepSpeed repo](https://github.com/microsoft/Megatron-DeepSpeed) 
-trained on the [openwebtext dataset](https://github.com/yet-another-account/openwebtext).
-
 ### Benchmark
 
 To measure our performance, we will use the deepspeed logger to extract the following metrics at every 10 steps: model throughput as average samples per sec, the average allocated memory, and maximum allocated memory. We will also quantify our model reduction by measuring the largest input size per GPU that that is possible on each configuration (as in: smaller model means more samples in memory). All implementations tested use the same mixed precision representation, communication bucket sizes, microbatching, and activation checkpointing interval. We benchmarked five implementations:
