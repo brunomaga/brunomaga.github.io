@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Scaling a GPT model with ZeRO and DeepSpeed"
+title:  "Scaling the training of GPT model with ZeRO and DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
