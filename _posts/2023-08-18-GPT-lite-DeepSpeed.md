@@ -44,7 +44,7 @@ This is a resources allocation problem across the 3D volume in the data, paramet
  
 ### Preparing the model and dataset
 
-We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original GPTlite implementation (<a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a>):
+We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original GPTlite implementation (<a href="/assets/GPT-lite/gptlite.py">`gptlite.py`</a>):
 
 ```python
 # depth of the network as number of decoder blocks.
@@ -530,7 +530,7 @@ To measure our performance, we will use the deepspeed logger to extract the foll
 2. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ddp.json">`ds_config_ddp.json`</a>);
 3. The fully-shared DDP implementation with ZeRO-3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO3.json">`ds_config_ZeRO3.json`</a>);
 4. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
-5. The memory-efficient pipeline implementation with ZeRO-1 with 4 stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). The output of DeepSpeed details the parameter and layer distribution for each stage:
+5. The memory-efficient pipeline implementation with ZeRO-1 with 4 pipeline stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). Note that DeepSpeed will load-balance stages across GPUs - based on parameter count - and output that information to the command line:
 
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=21256704 (21.257M) \
@@ -553,7 +553,7 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
      10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
    ```
 
-We are using the following library versions: `pytorch==2.01`, with CUDA `11.7` and `deepspeed==0.10.3`.
+For reproducibility purposes, we are using the following library versions: `pytorch==2.01`, with CUDA `11.7` and `deepspeed==0.10.3`.
 
 **IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. I will wait for the fix to be published before showing the final benchmark results. 
 
