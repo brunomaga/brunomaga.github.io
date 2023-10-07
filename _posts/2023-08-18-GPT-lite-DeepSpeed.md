@@ -42,7 +42,7 @@ Additionaly, on top of stage 1 and 2, we can enable [**ZeRO-Offload**](https://w
 Long story short, finding the optimal parallelism hyperparameters is a hard problem.
 This is a resources allocation problem across the 3D volume in the data, parameters and layers space. It aims at finding the best partitioning across that 3D space, and allocating different partitions to different processors, in a way that best balances the compute time and/or memory across resources. In practice, balanced compute across resources allows for a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
-### Main code
+### Preparing the model and dataset
 
 We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original GPTlite implementation (<a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a>):
 
@@ -66,25 +66,7 @@ block_size = 2048
 dropout = 0.1
 ```
 
-We then create the `ArgumentParser` object that is required by the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
-- the `--local_rank` parameter that is the local rank of each process in the network, and will be populated automatically by the `deepspeed` launcher upon launch;
-- optionally, we add the `--deepspeed_config` where we specify the path to the DeepSpeed config file. If you choose not to add it to the command line arguments, then it must be specified as the parameter `config` in the call to `deepspeed.initialize()`.
-
-A simpler way to do this is to call `deepspeed.add_config_arguments()`, that adds the `--deepspeed_config` and other DeepSpeed-specific argument:
-
-```python
-def get_cmd_line_args(description='GPT lite on DeepSpeed'):
-  import argparse
-  parser = argparse.ArgumentParser(description=description)
-  # mandatory argument for calls with deepseed
-  parser.add_argument('--local_rank', type=int, default=-1,
-                        help='local rank passed from distributed launcher')
-  # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config, ...)
-  parser = deepspeed.add_config_arguments(parser)
-  return parser.parse_args()
-```
-
-We now create the function that returns a model of type `torch.nn.Module` and a dataset of type `torch.utils.data.Dataset`:
+Then we write the code that returns our model and our dataset:
 
 ```python
 import gptlite
@@ -117,7 +99,9 @@ train_dataset, vocab_size = get_dataset()
 model = gptlite.GPTlite(vocab_size)
 ```
 
-As a side note, **any model and dataset can be used** in this code. As an example, if you'd want to perform a 10-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd redefine the previous function as:
+#### Detour: using other model and dataset
+
+As a side note, note that the `model` is of type `torch.nn.Module` and a `train_dataset` is of type `torch.utils.data.Dataset`. In practice, **any model and dataset can be used** in the code that follows. As an example, if you'd want to perform a 10-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd rewrite the previous code as:
 
 ```python
 import torchvision
@@ -136,11 +120,57 @@ train_dataset = get_dataset()
 model = torchvision.models.resnet18(num_classes=10)
 ```
 
-Pre-existing models (as far as I know) do not define activation checkpointing layers and pipelining layers, therefore these two features can not be used directly. But let's continue with our GPT-lite use case. The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straighforward:
+Pre-existing models do not define activation checkpointing layers and pipelining layers, therefore these two features cannot be used directly. 
+
+As an alternative model, if you want to test the response of the DeepSpeed scaling to models of different widths and depths, use this code for a simple DNN with layer width `W` and `L` layers, and you can play with the layer and depth sizes as you test:
+
+```python
+W, L = 1024, 15
+
+def get_benchmark_model(W, L):
+  import torch.nn as nn
+  layers = [ [nn.Linear(W, W), nn.ReLU()] ] * L
+  layers = [l for sublist in layers for l in sublist][:-1]
+  return nn.Sequential(*layers)
+
+class BenchmarkDataset(torch.utils.data.Dataset):
+    def __len__(self):
+      return 2**16
+      
+    def __getitem__(self, _):
+      x = torch.Tensor(W).uniform_(-1, 1)
+      y = int( x @ x % W) #num labels = W
+      return x, torch.tensor(y, dtype=torch.long)
+        
+model = get_benchmark_model()
+train_dataset = BenchmarkDataset()
+```
+
+### Main code
+
+We start integrating DeepSpeed in our main function by creating the `ArgumentParser` object that is required by the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
+- the `--local_rank` parameter that is the local rank of each process in the network, and will be populated automatically by the `deepspeed` launcher upon launch;
+- optionally, we add the `--deepspeed_config` where we specify the path to the DeepSpeed config file. If you choose not to add it to the command line arguments, then it must be specified as the parameter `config` in the call to `deepspeed.initialize()`.
+
+The most correct way to do this is to call `deepspeed.add_config_arguments()`, that adds the `--deepspeed_config` and other DeepSpeed-specific argument:
 
 ```python
 import deepspeed
 
+def get_cmd_line_args(description='GPT lite on DeepSpeed'):
+  import argparse
+  parser = argparse.ArgumentParser(description=description)
+  # mandatory argument for calls with deepseed
+  parser.add_argument('--local_rank', type=int, default=0,
+                        help='local rank passed from distributed launcher')
+  # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config, ...)
+  parser = deepspeed.add_config_arguments(parser)
+  return parser.parse_args()
+```
+
+The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straighforward:
+
+```python
 def main_deepspeed(n_epochs=100, random_seed=42):
 
   torch.manual_seed(random_seed)  #set random seed
@@ -149,52 +179,33 @@ def main_deepspeed(n_epochs=100, random_seed=42):
 
   train_dataset, vocab_size = get_dataset() #initialize dataset
   model = gptlite.GPTlite(vocab_size) #initialize model
+  criterion = torch.nn.CrossEntropyLoss() #initialize loss function
 
-  model_engine, optimizer, train_dataloader , _ = deepspeed.initialize(
+  engine, optimizer, train_dataloader , _ = deepspeed.initialize(
     args=args, model=model, training_data=train_dataset,)
+
 ```
 
-Then we do the initialization of the loss function, input datatype, the local rank and the local device:
-
-``` python
-  criterion = torch.nn.CrossEntropyLoss()
-
-  target_dtype = None # For float32, target_dtype is None so no datatype conversion needed
-  if   model_engine.bfloat16_enabled(): target_dtype=torch.bfloat16
-  elif model_engine.fp16_enabled():     target_dtype=torch.half
-
-  local_rank = model_engine.local_rank
-  local_device = deepspeed.accelerator.get_accelerator().device_name(local_rank)
-  print(f"Starting training, I'm rank {local_rank} on {local_device}")
-``` 
-
-and finally the training loop, with a structure similar to the PyTorch implementation. The only exception is that we dont perform zeroing of gradients, this is managed internally by DeepSpeed. Also, `train_dataloader` a `DistributedSampler` created by DeepSpeed, so multi-process runs will have each process delegated to a different subset of data.
+Then we write the the training loop, with a structure very similar to the PyTorch implementation. The only exception is that we dont perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `train_dataloader` is a `DistributedSampler` created by DeepSpeed`s `initialize()`, so multi-process runs will have each process automatically delegated to a different subset of data.
 
 ```python
-  n_epochs=20
   for epoch in range(n_epochs):
     for step, data in enumerate(train_dataloader):
-
-      inputs = data[0].to(local_device)
-      labels = data[1].to(local_device)
-
-      if target_dtype != None:
-        inputs = inputs.to(target_dtype)
-            
-      outputs = model_engine(inputs) #fwd pass
+      inputs = data[0].to(engine.device)
+      labels = data[1].to(engine.device)
+              
+      outputs = engine(inputs) #fwd pass
       loss = criterion(outputs, labels)
+      engine.backward(loss) #backprop
+      engine.step() #update weights, no zero-ing
 
-      model_engine.backward(loss) #backprop
-      model_engine.step() #update weights, no zero-ing
-
-    # print statistics
-    if local_rank == 0:
-        print("Epoch: {}, Step: {}, Loss: {}".format(epoch, step, loss))
+  # print statistics
+  if engine.local_rank == 0: print(f"Epoch: {epoch}, Loss: {loss}")
 ```
  
-### Config file and scaling optimizations
+### Config file
 
-The real *nuance* and complexity in using DeepSpeed is the `.json` config file. The number of possible fields in the config is very large, as they define parallelism, floating point precision, logger, solver, communication, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
+The real *nuance* and complexity in using DeepSpeed is the `.json` config file. The number of possible optimizations is large, as it defines parallelism, floating point precision, logger, solver, communication, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output at every 100 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
 
 ```json
 {
@@ -291,7 +302,7 @@ On top of that, we can enable  **communication overlap** that attempts to overla
 }
 ```
 
-As a final note, the configuration file can also be extended with custom fields, but for brevity, we'll omit those details here. 
+As a final note, the configuration file can also be extended with custom fields, that are e.g. specific to application or hardware, but for brevity we'll omit those details here. 
 
 ### Pipeline parallelism
 
@@ -345,14 +356,15 @@ def main_deepspeed():
       'num_stages': args.pipeline_parallel_size,
       'loss_fn': torch.nn.CrossEntropyLoss(),
       }
-
     model = gptlite.GPTlite(vocab_size).to(device_str)
     model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
+  else:
+    # ... as before: model = gptlite.GPTlite(vocab_size)
 
   # ...
   for epoch in range(n_epochs):
     if args.pipeline_parallel_size:
-      loss=model_engine.train_batch()
+      loss=engine.train_batch()
     else:
       # ... forward, backward, and update step as before
 ```
@@ -367,7 +379,7 @@ As an important remark, when using pipeline parallelism, the micro-batch argumen
 
 Finally, [Pipeline parallelism is not compatible with ZeRO stages 2 or 3](https://deepspeed.readthedocs.io/en/latest/pipeline.html#pipeline-parallelism), as discussed [here](https://github.com/microsoft/DeepSpeed/issues/1110#issuecomment-850835817).
 
-**Increasing compute and memory efficiency with LayerSpec:** 
+#### Increasing compute and memory efficiency with LayerSpec (optional) 
 
 The implementation of pipelining for the `GPTlite` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` ([API](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeSpec` with an `__init__` method that follows very closely the method in the original `GPTlite`. The tricky bit is that some operations, specificatlly the sum of embeddings and the `torch.swapaxes` are not a `nn.Module` so they can't be used as a `LayerSpec`. To overcome this, we create the classes `EmbeddingsSum` and `SwapAxes` that encapsulate those logics into an `nn.Module`. The implementation for the pipeline class is then:
 
@@ -460,29 +472,28 @@ class GPTlite(nn.Module):
         is_checkpoint = l % self.activation_checkpoint_interval == 0 
         x = deepspeed.checkpointing.checkpoint(layer, x) if is_checkpoint else layer(x)
       return x
-    else:
-      # ... as before
 ```
 
 Finally, we can improve the activations memory reduction substantially when doing model parallelism, by partitioning activations and offloading those checkpoints to the CPU instead of saving them in memory. DeepSpeed does not integrate model/tensor parallelism natively so we will skip this, but check the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) for other details.
 
 ### Launching a distributed execution
 
-The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that detects all GPUs and nodes in a network and launches the main python script in all of them, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
+The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that spaws a python script across compute nodes and GPUs, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
 
 ```shell
 $ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
 ```
 
-Few notes about parallel runs:
-- Launching with `python` instead of `deepspeed` will perform a single-node single-GPU run.
-- If we where required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node.
+Few notes about distributed executions:
+- `--num_gpus` is optional: if not provided, it will default to the available GPUs returned by the cuda toolkit;
+- Launching with `python` instead of `deepspeed` will perform a single-node single-GPU run;
+- If we where required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor of nodes and gpus per node;
 - In the config file we specified a batch size of 64, i.e. a batch of 8 for each GPU in our parallel runs.  We need to allocate at least 1 datapoint per process. Thus, the batch size in the config should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation_steps` * `--num_gpus`. Otherwise you'll get errors like `AssertionError: Micro batch size per gpu: 0 has to be greater than 0`.
 
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
 
-### Measuring memory allocated to parameters (optional) 
+### Detour: measuring memory allocated to parameters
 
 We will use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations, by calling the method `measure_parameters_memory`:
 
