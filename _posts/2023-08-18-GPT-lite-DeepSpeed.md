@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Scaling the training of GPT model with ZeRO and DeepSpeed"
+title:  "Large-scale training of a GPT model with ZeRO and DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -524,10 +524,14 @@ This metric is very useful as it gives a quick overview of scaling and is very f
 
 ### Benchmark
 
-To measure our performance, we will use the deepspeed logger to extract the following metrics at every 10 steps: model throughput as average samples per sec, the average allocated memory, and maximum allocated memory. We will also quantify our model reduction by measuring the largest input size per GPU that that is possible on each configuration (as in: smaller model means more samples in memory). All implementations tested use the same mixed precision representation, communication bucket sizes, microbatching, and activation checkpointing interval. We benchmarked five implementations:
+To measure our performance, we will use the deepspeed logger to extract the following metrics at every 10 steps: model throughput as average samples per sec, the average allocated memory, and maximum allocated memory. We will also quantify our model reduction by measuring the largest input size per GPU that that is possible on each configuration (as in: smaller model means more samples in memory). All implementations tested use the same mixed precision representation, communication bucket sizes, microbatching, and activation checkpointing interval.
 
-1. The serial single-GPU implementation (config file <a href="/assets/GPT-lite-DeepSpeed/ds_config_serial.json">`ds_config_serial.json`</a>);
-2. The regular distributed data parallel (DDP) implementation, ie no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ddp.json">`ds_config_ddp.json`</a>);
+For reproducibility purposes, we are using `pytorch==2.01`, CUDA `11.7` and `deepspeed==0.10.3`. The code for the main loop is in <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a>, the GPT-lite and benchmark models are in <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> and <a href="/assets/GPT-lite-DeepSpeed/benchmark.py">`benchmark.py`</a>, and the launch script is in <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a>.
+
+We benchmarked five implementations (with the following configs):
+
+1. The serial single-GPU implementation (<a href="/assets/GPT-lite-DeepSpeed/ds_config_serial.json">`ds_config_serial.json`</a>);
+2. The distributed data parallel (DDP) implementation, ie no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ddp.json">`ds_config_ddp.json`</a>);
 3. The fully-shared DDP implementation with ZeRO-3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO3.json">`ds_config_ZeRO3.json`</a>);
 4. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
 5. The memory-efficient pipeline implementation with ZeRO-1 with 4 pipeline stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). Note that DeepSpeed will load-balance stages across GPUs - based on parameter count - and output that information to the command line:
@@ -553,7 +557,6 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
      10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
    ```
 
-For reproducibility purposes, we are using the following library versions: `pytorch==2.01`, with CUDA `11.7` and `deepspeed==0.10.3`.
 
 **IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. I will wait for the fix to be published before showing the final benchmark results. 
 
@@ -562,7 +565,7 @@ For reproducibility purposes, we are using the following library versions: `pyto
 [//]: # {: style="text-align:center; font-size: small;"}
 [//]: #<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
 
-### Final remarks 
+### More resources 
 
 We just touched the surface of the capabilities of DeepSpeed, and there are plenty of resources that should also be taken into account:
 - [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
@@ -580,5 +583,3 @@ We just touched the surface of the capabilities of DeepSpeed, and there are plen
 
 ... and many more covered by the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
-
-All done! If you want to download the files in this post and run it on your own, see <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a> for the main python code, <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> for the GPTlite model, and <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a> for the command line script to launch the executions.
