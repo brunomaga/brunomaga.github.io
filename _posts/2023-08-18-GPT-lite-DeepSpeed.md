@@ -95,8 +95,11 @@ def get_dataset():
   dataset = GPTliteDataset(train_data, gptlite.block_size)
   return dataset, vocab_size
 
+def get_model(vocab_size):
+  return gptlite.GPTlite(vocab_size)
+
 train_dataset, vocab_size = get_dataset()
-model = gptlite.GPTlite(vocab_size)
+model = get_model(vocab_size)
 ```
 
 #### Detour: using other model and dataset
@@ -125,25 +128,32 @@ Pre-existing models do not define activation checkpointing layers and pipelining
 As an alternative model, if you want to test the response of the DeepSpeed scaling to models of different widths and depths, use this code for a simple DNN with layer width `W` and `L` layers, and you can play with the layer and depth sizes as you test:
 
 ```python
-W, L = 1024, 15
+class BenchmarkModel(nn.Module):
+  """" DNN with W input features, W neurons per layer, W output classes and L layers """
 
-def get_benchmark_model(W, L):
-  import torch.nn as nn
-  layers = [ [nn.Linear(W, W), nn.ReLU()] ] * L
-  layers = [l for sublist in layers for l in sublist][:-1]
-  return nn.Sequential(*layers)
+  def __init__(self, W, L, activation_checkpoint_interval=0):
+    super(BenchmarkModel, self).__init__()
+    self.layers = []
+    for _ in range(L):
+      self.layers += [nn.Linear(W, W), nn.ReLU()]
+    self.layers = nn.Sequential(*self.layers)
+
+  def forward(self, x):
+    return self.layers(x)
+
 
 class BenchmarkDataset(torch.utils.data.Dataset):
+    def __init__(self, W, len=2**16):
+      self.W = W
+      self.len = len
+
     def __len__(self):
-      return 2**16
-      
+      return self.len
+
     def __getitem__(self, _):
-      x = torch.Tensor(W).uniform_(-1, 1)
-      y = int( x @ x % W) #num labels = W
+      x = torch.Tensor(self.W).uniform_(-1, 1)
+      y = int( x @ x % self.W)
       return x, torch.tensor(y, dtype=torch.long)
-        
-model = get_benchmark_model()
-train_dataset = BenchmarkDataset()
 ```
 
 ### Main code
@@ -176,10 +186,10 @@ def main_deepspeed(n_epochs=100, random_seed=42):
   torch.manual_seed(random_seed)  #set random seed
   deepspeed.init_distributed() #initialize distributed network
   args = get_cmd_line_args() # get command line arguments
+  criterion = torch.nn.CrossEntropyLoss() #initialize loss function
 
   train_dataset, vocab_size = get_dataset() #initialize dataset
-  model = gptlite.GPTlite(vocab_size) #initialize model
-  criterion = torch.nn.CrossEntropyLoss() #initialize loss function
+  model = get_model(vocab_size) #initialize model
 
   engine, optimizer, train_dataloader , _ = deepspeed.initialize(
     args=args, model=model, training_data=train_dataset,)
@@ -253,15 +263,16 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
 }
 ```
 
-**Reducing the size of communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent of received. This may be an issue as these buffers may be large. To overcome this issue, we can decrease the maximum size of communication buffer on reduce and all-gather operations and perform the communication in parcels.
+**Reducing the size of communication buffers** is relevant when activating ZeRO, as it will lead to the distribution of parameters across all processors. This in practice will add the overhead of reduce and broadcast operations, that require memory buffers to be allocated for all data to be sent or received. This may be an issue as these buffers may be large. To overcome this issue, decrease the maximum size of communication buffer on reduce and all-gather operations and perform the communication in parcels.
 On top of that, we can enable  **communication overlap** that attempts to overlap the reduction of the gradients with backward computation. To enable these 2 optimizations, we add to the config:
 
 ```json
 {
   "zero_optimization": {
     "stage": 3,
-    "reduce_bucket_size": 5e8,
-    "allgather_bucket_size": 5e8,
+    "reduce_bucket_size": 5e5,          #default 5e9
+    "allgather_bucket_size": 5e5,       #default 5e9
+    "stage3_prefetch_bucket_size": 5e5, #default 5e9
     "overlap_comm": true,
   }
 }
@@ -347,14 +358,14 @@ class GPTlite(nn.Module):
 As a next step, in our DeepSpeed initialization code, we must create a pipeline wrapper around our model, with one stage per every 2 blocks of computation, and this will be fed later to the `deepspeed.initialize()` as the `model` parameter. The epocs training loop is also reduced to a single `train_batch()` operation that performs forward pass, back propagation and gradient updates in a single code line: 
 
 ```python
-def main_deepspeed():
+def get_model(criterion, vocab_size, pipeline_parallel_size=0):
 
   # ...
-  if args.pipeline_parallel_size:
+  if pipeline_parallel_size:
     deepspeed.runtime.utils.set_random_seed(random_seed)
     pipe_kwargs={
-      'num_stages': args.pipeline_parallel_size,
-      'loss_fn': torch.nn.CrossEntropyLoss(),
+      'num_stages': pipeline_parallel_size,
+      'loss_fn': criterion,
       }
     model = gptlite.GPTlite(vocab_size).to(device_str)
     model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
@@ -363,7 +374,7 @@ def main_deepspeed():
 
   # ...
   for epoch in range(n_epochs):
-    if args.pipeline_parallel_size:
+    if pipeline_parallel_size:
       loss=engine.train_batch()
     else:
       # ... forward, backward, and update step as before
@@ -431,9 +442,9 @@ def get_cmd_line_args():
   parser.add_argument("--pipeline_spec_layers", action="store_true",
                       help="enable SpecLayers in pipeline parallelism")
 
-def main_deepspeed():
-  # ...
-  if args.pipeline_parallel_size:
+def get_model(criterion, vocab_size, pipeline_parallel_size=0, pipeline_spec_layers=False):
+
+  if pipeline_parallel_size:
     if args.pipeline_spec_layers:
       model = gptlite.GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
     else:
@@ -453,10 +464,17 @@ In our use case, and for simplicity, we will store activations at a given user-s
 ```
 
 When using pipelining, introducing checkpoint at a fixed layer interval is easy, we just need to add the `activation_checkpoint_interval` argument to the `PipelineModule` constructor with: 
+
 ```python
+def get_model(criterion, vocab_size, \
+  pipeline_parallel_size=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
+
+  if pipeline_parallel_size:
     pipe_kwargs={ # ...
       'activation_checkpoint_interval': args.activation_checkpoint_interval, 
     }
+
+  # ....
 ```
 
 When we are not using pipelining, we have to manually specify which layers to checkpoint. This requires calling [`deepspeed.checkpointing.checkpoint`](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html#using-activation-checkpointing) at every layer that we want to checkpoint. We will use the previous `lo_layers()` method to iterate over the model layers and filter those to be checkpointed in the `forward()` pass of `GPTlite` as:
@@ -495,7 +513,7 @@ For more information on available flags, running `deepspeed --help` provides a b
 
 ### Detour: measuring memory allocated to parameters
 
-We will use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations, by calling the method `measure_parameters_memory`:
+We can use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations, by calling the following method at the onset of execution:
 
 ```python
 def measure_parameters_memory(model):
@@ -509,32 +527,31 @@ def measure_parameters_memory(model):
   estimate_zero3_model_states_mem_needs_all_live(model, num_gpus_per_node=8, num_nodes=1)
 ```
 
-Calling the method, the output tells you that:
+The output tells us that:
 - the base model requires about 0.323GB for storage of parameters, per GPU;
 - DeepSpeed ZeRO-2 requires 0.161GB and 0.484GB for the with and without offload optimizations;
 - DeepSpeed ZeRO-3 requires 0.009GB and 0.190GB for the with and without offload optimizations; 
 
-However, when activating pipelining, by launching the run with `--pipeline --pipeline_spec_layers`:
+However, when activating pipelining, by launching the run with `--pipeline_parallel_size 4 --pipeline_spec_layers`:
 - the base model requires 0.053GB for the parameters; 
 - ZeRO-2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
 - ZeRO-3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
 
-This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3.  
+This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, and does not take activations or other residual buffers (e.g. normalization variables) into account, does not look at the batch size, it does not consider communication buffers that take a significant amount of temporary memory, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3.  
 
 
 ### Benchmark
 
-To measure our performance, we will use the deepspeed logger to extract the following metrics at every 10 steps: model throughput as average samples per sec, the average allocated memory, and maximum allocated memory. We will also quantify our model reduction by measuring the largest input size per GPU that that is possible on each configuration (as in: smaller model means more samples in memory). All implementations tested use the same mixed precision representation, communication bucket sizes, microbatching, and activation checkpointing interval.
+To measure our performance, we will use the deepspeed logger to extract the following metrics at every 10 steps: model throughput as average samples per sec, the average allocated memory, and maximum allocated memory. All implementations tested use the same mixed precision representation, communication bucket sizes, microbatching, and activation checkpointing interval. Because we are interested in scalability, we decrease the memory consumption by having all communication bucket sizes decreased to `5e4`.  
 
 For reproducibility purposes, we are using `pytorch==2.01`, CUDA `11.7` and `deepspeed==0.10.3`. The code for the main loop is in <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a>, the GPT-lite and benchmark models are in <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> and <a href="/assets/GPT-lite-DeepSpeed/benchmark.py">`benchmark.py`</a>, and the launch script is in <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a>.
 
-We benchmarked five implementations (with the following configs):
+We benchmarked the following implementations (and configs):
 
-1. The serial single-GPU implementation (<a href="/assets/GPT-lite-DeepSpeed/ds_config_serial.json">`ds_config_serial.json`</a>);
-2. The distributed data parallel (DDP) implementation, ie no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ddp.json">`ds_config_ddp.json`</a>);
-3. The fully-shared DDP implementation with ZeRO-3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO3.json">`ds_config_ZeRO3.json`</a>);
-4. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
-5. The memory-efficient pipeline implementation with ZeRO-1 with 4 pipeline stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). Note that DeepSpeed will load-balance stages across GPUs - based on parameter count - and output that information to the command line:
+1. The distributed data parallel (DDP) implementation, ie no DeepSpeed (`stage: 0` in <a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO.json">`ds_config_ZeRO.json`</a>);
+2. The fully-shared DDP implementation with ZeRO stages 1, 2 and 3 (`stage :1`, `2` or `3` in <a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO.json">`ds_config_ZeRO.json`</a>);
+3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
+4. The memory-efficient pipeline implementation with ZeRO-1, 4 pipeline stages and micro-batch size of 4 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). Note that DeepSpeed will load-balance stages across GPUs, based on parameter count. As an example, DeepSpeed divides the 4-stage pipelining across 8 GPUs on the GPT-lite model as (adapted from terminal output):
 
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=21256704 (21.257M) \
@@ -557,10 +574,21 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
      10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
    ```
 
+   - **IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. I will wait for the fix to be published before adding the pipeline runs to the benchmark. 
 
-**IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. I will wait for the fix to be published before showing the final benchmark results. 
+We benchmark three models: a wide version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`); a deep benchmark model with a small latent space per layer and many layers (`W=256`, `L=1024`); and our GPT-lite model. The batch size was of 2048 for the benchmark model and 8 for the GPT-lite model per GPU. The results are the following:
 
-[//]: #So for the time being, I'll profile [AlexNet](https://en.wikipedia.org/wiki/AlexNet), a similar network also based on a sequence of blocks. The results are the following:
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
+ 
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
+
+A few observations:
+- the default communication bucket sizes (`5e9`) in the config leads to a very high memory usage, of approximately the double of the amounts in stages 2 and 3. In these scenarios, a large bucket size leads to a the max memory usage that becomes prohibitive;
+- note the difference between average memory and maximum memory. That's all memory dedicated to activations and residual buffers;
+- as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory increase and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay the performance price for the communication/offload of parameters;
+
 
 [//]: # {: style="text-align:center; font-size: small;"}
 [//]: #<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
