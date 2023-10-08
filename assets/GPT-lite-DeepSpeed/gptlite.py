@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import deepspeed
+import torch.distributed as dist
 
 # replicate GPT-3 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
 
@@ -206,4 +207,85 @@ class GPTlitePipeSpec(PipelineModule):
         LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ] + \
       [ LayerSpec(GPTlitePipeSpec.SwapAxes) ]
     super().__init__(layers=self.specs, **pipe_kwargs)
+
+    
+    
+
+
+def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
+  rank = dist.get_rank()
+
+  #load input data
+  with open(filename) as f:
+      text = f.read()
+  if rank==0: print("input data loaded. Length of text: ", len(text))
+
+  #collect all ordered and unique characters in the text
+  chars = sorted(list(set(text)))
+  if rank==0: print("unique chars: ", "".join(chars))
+  if rank==0: print("length of chars: ", len(chars))
+
+  #map characters to integers
+  stoi = { ch:i for i,ch in enumerate(chars) }
+  itos = { i:ch for i,ch in enumerate(chars) }
+  encode = lambda x: torch.tensor([stoi[ch] for ch in x], dtype=torch.long) #encode text to integers
+  decode = lambda x: ''.join([itos[i] for i in x]) #decode integers to text
+  vocab_size = len(stoi)
+  if rank==0: print("vocab size: ", vocab_size)
+  if rank==0: print(encode("Hello world"))
+  if rank==0: print(decode(encode("Hello world").tolist()))
+  if rank==0: print("character zero is:", decode([0]), "<end>")
+
+  # collect input data, break dataset in train/validation
+  data = encode(text)
+  n = int(0.9*len(data))
+  train_data, valid_data = data[:n], data[n:]
+  if rank==0: print("Train data encoded", data.shape, train_data.shape, valid_data.shape)
+  return train_data, valid_data, vocab_size
+  
+def get_dataset():
+  
+  class GPTliteDataset(torch.utils.data.Dataset):
+
+      def __init__(self, train_data, block_size):
+        self.train_data = train_data
+        self.block_size = block_size
+
+      def __len__(self):
+        return len(self.train_data)
+
+      def __getitem__(self, idx):
+        # generate 1 random offset on the data
+        ix = torch.randint(len(self.train_data)-self.block_size , size=())
+        # input is a random subset of tokens
+        x = self.train_data[ix   : ix+self.block_size]
+        # target is just x shifted right (ie the next predicted word)
+        y = self.train_data[ix+1 : ix+1+self.block_size]
+        return x, y
+
+  train_data, _, vocab_size = load_tiny_shakespeare_data() 
+  dataset = GPTliteDataset(train_data, block_size)
+  return dataset, vocab_size
+
+
+def get_model(vocab_size, criterion, pipeline_parallel_size=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
+
+  pipe_kwargs={
+    'num_stages': pipeline_parallel_size,
+    'activation_checkpoint_interval': activation_checkpoint_interval, 
+    'loss_fn': criterion,
+    }
+
+  if pipeline_parallel_size:
+
+    if pipeline_spec_layers:
+      model = GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
+    else:
+      device_str = f'cuda:{dist.get_rank()}'
+      model = GPTlite(vocab_size).to(device_str)
+      model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
+  else:
+    model = GPTlite(vocab_size,
+              activation_checkpoint_interval=activation_checkpoint_interval)  
+  return model
 

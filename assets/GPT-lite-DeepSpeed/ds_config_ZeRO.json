@@ -1,5 +1,6 @@
 {
-  "train_batch_size": 16,
+  "train_batch_size": 256,
+  "train_micro_batch_size_per_gpu": 1,
   "steps_per_print": 10,
   "optimizer": {
     "type": "AdamW",
@@ -22,7 +23,7 @@
     }
   },
   "fp16": {
-    "enabled": true
+    "enabled": false
   },
   "zero_optimization": {
     "stage": 3,
@@ -33,6 +34,6 @@
     "stage3_prefetch_bucket_size": 5e4,
     "stage3_max_live_parameters": 1e9,
     "stage3_max_reuse_distance": 1e9,
-    "stage3_gather_16bit_weights_on_model_save": true
+    "stage3_gather_16bit_weights_on_model_save": true,
   }
 }
