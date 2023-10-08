@@ -47,6 +47,8 @@ This is a resources allocation problem across the 3D volume in the data, paramet
 We start by matching the dimensions of our *GPT-lite* model architecture to the *GPT-3 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1), by changing the following variables in the original GPTlite implementation (<a href="/assets/GPT-lite/gptlite.py">`gptlite.py`</a>):
 
 ```python
+### gptlite.py
+
 # depth of the network as number of decoder blocks.
 n_layer = 12
 
@@ -69,6 +71,8 @@ dropout = 0.1
 We will define the methods `get_model()` and `get_dataset` inside `gptlite.py` to return our model and our dataset:
 
 ```python
+### gptlite.py
+
 def get_dataset():
   
   class GPTliteDataset(torch.utils.data.Dataset):
@@ -124,6 +128,8 @@ Pre-existing models do not define activation checkpointing layers and pipelining
 As an alternative model, if you want to test the response of the DeepSpeed scaling to models of different widths and depths, use this code for a simple DNN with layer width `W` and `L` layers, and you can play with the layer and depth sizes as you test:
 
 ```python
+### benchmark.py 
+
 class BenchmarkModel(nn.Module):
   """" DNN with W input features, W neurons per layer, W output classes and L layers """
 
@@ -167,6 +173,8 @@ We start integrating DeepSpeed in our main function by creating the `ArgumentPar
 The most correct way to do this is to call `deepspeed.add_config_arguments()`, that adds the `--deepspeed_config` and other DeepSpeed-specific argument:
 
 ```python
+### train.py
+
 import deepspeed
 
 def get_cmd_line_args(description='GPT lite on DeepSpeed'):
@@ -183,6 +191,8 @@ def get_cmd_line_args(description='GPT lite on DeepSpeed'):
 The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straighforward:
 
 ```python
+### train.py
+
 def main_deepspeed(n_epochs=100, random_seed=42):
 
   torch.manual_seed(random_seed)  #set random seed
@@ -199,6 +209,10 @@ def main_deepspeed(n_epochs=100, random_seed=42):
 Then we write the training loop, with a structure very similar to the PyTorch implementation. The only exception is that we dont perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `train_dataloader` is a `DistributedSampler` created by DeepSpeed`s `initialize()`, so multi-process runs will have each process automatically delegated to a different subset of data.
 
 ```python
+### train.py
+
+def main_deepspeed(n_epochs=100, random_seed=42):
+  # ...
   for epoch in range(n_epochs):
     for step, data in enumerate(train_dataloader):
       inputs = data[0].to(engine.device)
@@ -330,18 +344,22 @@ A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/
 We will make pipeline parallelism optional in our use case, as in many cases (e.g. for small models) it is not benefitial. We will enable by passing the number of stages as the `---pipeline_parallel_size` argument (default: 0, no pipelining) on the command line:
 
 ```python
+### train.py
+
 def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   # ...
   parser.add_argument('--pipeline-parallel-size', type=int, default=0,
                       help='enable pipeline parallelism with N stages (0 means disabled)')
+  # ...
 ```
 
 Note that the number of stages must divide the number of GPUs. Now we expose the pipeline parallelism in our model by creating a method a new model `GPTlitePipe` that inherits from `GPTlite` and includes the method `to_layers()` that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass of `GPTlite`, and that `self.blocks` is of type `nn.Sequential`:
 
 ```python
+### gptlite.py
+
 class GPTlite(nn.Module):
   # ...
-
   def to_layers(self):  
       layers = [
           lambda idx:
@@ -357,8 +375,9 @@ class GPTlite(nn.Module):
 
 As a next step, in our DeepSpeed initialization code, we must create a pipeline wrapper around our model, with one stage per every 2 blocks of computation, and this will be fed later to the `deepspeed.initialize()` as the `model` parameter:
 ```python
-def get_model(criterion, vocab_size, pipeline_parallel_size=0):
+### gptlite.py
 
+def get_model(criterion, vocab_size, pipeline_parallel_size=0):
   # ...
   if pipeline_parallel_size:
     deepspeed.runtime.utils.set_random_seed(random_seed)
@@ -375,6 +394,8 @@ def get_model(criterion, vocab_size, pipeline_parallel_size=0):
 Then we reduce the training code in the main loop to a single call to `engine.train_batch()`, that performs forward pass, back propagation and gradient updates for the pipelining use cases: 
 
 ```python
+### train.py
+
 def main_deepspeed(n_epochs=100, random_seed=42):
   # ...
   for epoch in range(n_epochs):
@@ -399,6 +420,8 @@ Finally, [Pipeline parallelism is not compatible with ZeRO stages 2 or 3](https:
 The implementation of pipelining for the `GPTlite` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` ([API](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker will allocate only the layers it’s assigned to. To do this, we will create a new class `GPTlitePipeSpec` with an `__init__` method that follows very closely the method in the original `GPTlite`. The tricky bit is that some operations, specificatlly the sum of embeddings and the `torch.swapaxes` are not a `nn.Module` so they can't be used as a `LayerSpec`. To overcome this, we create the classes `EmbeddingsSum` and `SwapAxes` that encapsulate those logics into an `nn.Module`. The implementation for the pipeline class is then:
 
 ```python
+### gptlite.py
+
 from deepspeed.pipe import PipelineModule, LayerSpec
 
 class GPTlitePipeSpec(PipelineModule):
@@ -441,6 +464,8 @@ class GPTlitePipeSpec(PipelineModule):
 then we add to the command line arguments, the flag `--pipeline_spec_layers` that will enable this efficient pipelining:
 
 ```python
+### train.py
+
 def get_cmd_line_args():
   # ...
   parser.add_argument("--pipeline_spec_layers", action="store_true",
@@ -450,11 +475,13 @@ def get_cmd_line_args():
 and change the `get_model()` method to retrieve the efficient pipeline variant as:
 
 ```python
+### gptlite.py
+
 def get_model(criterion, vocab_size, pipeline_parallel_size=0, pipeline_spec_layers=False):
 
   if pipeline_parallel_size:
-    if args.pipeline_spec_layers:
-      model = gptlite.GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
+    if pipeline_spec_layers:
+      model = GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
     else:
       # ... GPTlitePipe model as before 
 ```
@@ -467,13 +494,20 @@ Finally, we will not tune the [load balancing method for pipeline modules](https
 
 In our use case, and for simplicity, we will store activations at a given user-specified interval of the model layers. We start with an extra command line argument to dictate how often to checkpoint:
 ```python
+### train.py
+
+def get_cmd_line_args(description='GPT lite on DeepSpeed'):
+  # ...
   parser.add_argument('--activation_checkpoint_interval', type=int, default=0,
                       help='activation checkpoint interval (0 means disabled)')
+  # ...
 ```
 
 When using pipelining, introducing checkpoint at a fixed layer interval is easy, we just need to add the `activation_checkpoint_interval` argument to the `PipelineModule` constructor with: 
 
 ```python
+#gptlite.py
+
 def get_model(criterion, vocab_size, \
   pipeline_parallel_size=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
 
@@ -481,12 +515,13 @@ def get_model(criterion, vocab_size, \
     pipe_kwargs={ # ...
       'activation_checkpoint_interval': args.activation_checkpoint_interval, 
     }
-
   # ....
 ```
 
 When we are not using pipelining, we have to manually specify which layers to checkpoint. This requires calling [`deepspeed.checkpointing.checkpoint`](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html#using-activation-checkpointing) at every layer that we want to checkpoint. We will use the previous `lo_layers()` method to iterate over the model layers and filter those to be checkpointed in the `forward()` pass of `GPTlite` as:
 ```python
+### gptlite.py
+
 class GPTlite(nn.Module):
   #...
 
@@ -524,6 +559,8 @@ For more information on available flags, running `deepspeed --help` provides a b
 We can use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations, by calling the following method at the onset of execution:
 
 ```python
+### train.py
+
 def measure_parameters_memory(model):
   param_size_GB = sum([p.nelement() * p.element_size() for p in model.parameters()])/1024**3
   print(f"Native model parameters size: {round(param_size_GB, 2)}GB.")
