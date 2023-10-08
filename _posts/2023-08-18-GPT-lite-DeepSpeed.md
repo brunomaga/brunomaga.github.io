@@ -626,7 +626,7 @@ We benchmark three models: a wide version of our benchmark model, with a high pa
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
  
-Then we test a a deep benchmark model with a small latent space per layer and many layers (`W=256`, `L=1024`), and similartly, 2048 inputs per GPU:
+Then we test a a deep benchmark model with a small latent space per layer and many layers (`W=256`, `L=2048`), and similartly, 2048 inputs per GPU:
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
