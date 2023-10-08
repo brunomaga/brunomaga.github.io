@@ -585,13 +585,10 @@ We benchmark three models: a wide version of our benchmark model, with a high pa
 <img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
 
 A few observations:
-- the default communication bucket sizes (`5e9`) in the config leads to a very high memory usage, of approximately the double of the amounts in stages 2 and 3. In these scenarios, a large bucket size leads to a the max memory usage that becomes prohibitive;
-- note the difference between average memory and maximum memory. That's all memory dedicated to activations and residual buffers;
-- as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory increase and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay the performance price for the communication/offload of parameters;
+- Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we benchmarked several runs with default communication bucket sizes (`5e9`) and it led to a very high memory usage (of approximately double the amount in stages 2 and 3), and becomes prohibitive for some runs;
+- Again, note the difference between average memory and maximum memory. That volatility in memory consumption is due to all memory dedicated to activations, residual buffers and communication buffers;
+- In ideal scenarios, as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory increase and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay the performance price for the communication/offload of parameters. This is the pattern in the deep benchmark model. However, the shallow model does not respond similarly, and I am still trying to understand why.   
 
-
-[//]: # {: style="text-align:center; font-size: small;"}
-[//]: #<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark.png"/>
 
 ### More resources 
 
