@@ -9,7 +9,7 @@ export PIPELINING_ARG="--pipeline_parallel_size 4 --pipeline_spec_layers"
 export DEEPSPEED_ARGS="--num_gpus=8"
 
 # single node, single GPU:
-python train.py --deepspeed --deepspeed_config ds_config_serial.json $ACTIVATION_CHECKPOINT_ARG
+python train.py --deepspeed --deepspeed_config ds_config_ZeRO.json $ACTIVATION_CHECKPOINT_ARG
 
 # distributed data parallelism (stage: 0), ZeRO-1, ZeRO-2 and ZeRO-3 (stage: 1, 2 or 3)
 deepspeed $DEEPSPEED_ARGS train.py --deepspeed --deepspeed_config ds_config_ZeRO.json $ACTIVATION_CHECKPOINT_ARG
