@@ -25,10 +25,14 @@
     "enabled": true
   },
   "zero_optimization": {
-    "stage": 0,
+    "stage": 3,
     "overlap_comm": true,
-    "reduce_bucket_size": 5e8,
-    "allgather_bucket_size": 5e8
+    "allgather_bucket_size": 5e4,
+    "contiguous_gradients": true,
+    "reduce_bucket_size":  5e4,
+    "stage3_prefetch_bucket_size": 5e4,
+    "stage3_max_live_parameters": 1e9,
+    "stage3_max_reuse_distance": 1e9,
+    "stage3_gather_16bit_weights_on_model_save": true
   }
 }
-

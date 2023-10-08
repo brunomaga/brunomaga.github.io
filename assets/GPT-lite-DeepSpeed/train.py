@@ -45,7 +45,7 @@ def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
   return train_data, valid_data, vocab_size
 
 
-def get_deepspeed_args(description='GPT lite on DeepSpeed'):
+def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   import argparse
   parser = argparse.ArgumentParser(description=description)
   parser.add_argument('--local_rank', type=int, default=0,
@@ -53,11 +53,11 @@ def get_deepspeed_args(description='GPT lite on DeepSpeed'):
   parser.add_argument('--activation_checkpoint_interval', type=int, default=0,
                       help='activation checkpoint interval (0 means disabled)')
   parser.add_argument('--pipeline_parallel_size', type=int, default=0,
-                      help='enable pipeline parallelism with N stages')
+                      help='enable pipeline parallelism with N stages (0 means disabled)')
   parser.add_argument("--pipeline_spec_layers", action="store_true",
                       help="enable SpecLayers in pipeline parallelism")
-  parser.add_argument("--run_memory_estimation_only", action="store_true",
-                      help="run parameter memory estimation and quit")
+  parser.add_argument('--block_size', type=int, default=0,
+                      help='attention length, block size (0 means default)')
   # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config, ...)
   parser = deepspeed.add_config_arguments(parser)
   return parser.parse_args()
@@ -87,6 +87,28 @@ def get_dataset():
   dataset = GPTliteDataset(train_data, gptlite.block_size)
   return dataset, vocab_size
 
+
+def get_model(vocab_size, criterion, pipeline_parallel_size=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
+
+  pipe_kwargs={
+    'num_stages': pipeline_parallel_size,
+    'activation_checkpoint_interval': activation_checkpoint_interval, 
+    'loss_fn': criterion,
+    }
+
+  if pipeline_parallel_size:
+
+    if pipeline_spec_layers:
+      model = gptlite.GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
+    else:
+      device_str = f'cuda:{dist.get_rank()}'
+      model = gptlite.GPTlite(vocab_size).to(device_str)
+      model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
+  else:
+    model = gptlite.GPTlite(vocab_size,
+              activation_checkpoint_interval=activation_checkpoint_interval)  
+  return model
+
   
 def measure_parameters_memory(model, args):
 
@@ -107,39 +129,33 @@ def measure_parameters_memory(model, args):
     
   
 def main_deepspeed(n_epochs=100, random_seed=42):
-  deepspeed.init_distributed()
-  args = get_deepspeed_args() 
+  torch.manual_seed(random_seed)  #set random seed
+  deepspeed.runtime.utils.set_random_seed(random_seed)
+  deepspeed.init_distributed() #initialize distributed network
+  args = get_cmd_line_args() # get command line arguments
+  criterion = torch.nn.CrossEntropyLoss() #initialize loss function
+  if args.block_size: gptlite.block_size = args.block_size
+
+  get_model_kwargs = {
+    'criterion': criterion,
+    'pipeline_parallel_size': args.pipeline_parallel_size,
+    'pipeline_spec_layers': args.pipeline_spec_layers,
+    'activation_checkpoint_interval': args.activation_checkpoint_interval,
+    }
   train_dataset, vocab_size = get_dataset()
-  torch.manual_seed(random_seed)
-
-  if args.pipeline_parallel_size:
-    #inspired by DeepSpeedExamples/training/pipeline_parallelism/train.py
-    deepspeed.runtime.utils.set_random_seed(random_seed)
-    pipe_kwargs={
-      'num_stages': args.pipeline_parallel_size,
-      'activation_checkpoint_interval': args.activation_checkpoint_interval, 
-      'loss_fn': torch.nn.CrossEntropyLoss(),
-      }
-
-    if args.pipeline_spec_layers:
-      model = gptlite.GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
-    else:
-      device_str = f'cuda:{dist.get_rank()}'
-      model = gptlite.GPTlite(vocab_size).to(device_str)
-      model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
-  else:
-    model = gptlite.GPTlite(vocab_size,
-              activation_checkpoint_interval=args.activation_checkpoint_interval)
-    criterion = torch.nn.CrossEntropyLoss()
+  model = get_model(vocab_size, **get_model_kwargs)
     
+  import benchmark
+  W, L = 1024, 16
+  train_dataset = benchmark.get_dataset(W)
+  model = benchmark.get_model(W, L, **get_model_kwargs)
+
   #estimate parameters memory requirements
-  if args.run_memory_estimation_only:
-    measure_parameters_memory(model, args)
-    return
+  measure_parameters_memory(model, args)
 
   engine, _, train_dataloader , _ = deepspeed.initialize(
     args=args, model=model, training_data=train_dataset,
-    model_parameters=[p for p in model.parameters() if p.requires_grad] #optional
+    #model_parameters=[p for p in model.parameters() if p.requires_grad] #optional
     #config=args.deepspeed_config, #only needed when args.deepspeed_config does not exist
     )
 
@@ -159,11 +175,13 @@ def main_deepspeed(n_epochs=100, random_seed=42):
         engine.backward(loss) #backprop
         engine.step() #update weights, no zero-ing
 
+        # from deepspeed.runtime.utils import memory_status
+        # memory_status("Memory stats after training step")
+
     if engine.local_rank == 0: print(f"Epoch: {epoch}, Loss: {loss}")
   
 
 if __name__ == "__main__":
   main_deepspeed()
-
 
 
