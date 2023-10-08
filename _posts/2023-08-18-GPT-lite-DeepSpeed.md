@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Large-scale training of a GPT model with ZeRO and DeepSpeed"
+title:  "Large-scale training of a GPT model with DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -589,61 +589,51 @@ This metric is very useful as it gives a quick overview of scaling and is very f
 
 ### Benchmark
 
-To measure our performance, we will use the deepspeed logger to extract the following metrics at every 10 steps: model throughput as average samples per sec, the average allocated memory, and maximum allocated memory. All implementations tested use the same mixed precision representation, communication bucket sizes, microbatching, and activation checkpointing interval. Because we are interested in scalability, we decrease the memory consumption by having all communication bucket sizes decreased to `5e4`.  
+To measure our performance, we used the deepspeed logger to extract the following metrics from different runs at every 10 steps: model throughput as average number of samples per second, the average allocated memory, and maximum allocated memory. We used `pytorch==2.01`, CUDA `11.7` and `deepspeed==0.10.3`. The code for the main loop is in <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a>, the GPT-lite and benchmark models are in <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> and <a href="/assets/GPT-lite-DeepSpeed/benchmark.py">`benchmark.py`</a>, and the launch script is in <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a>.
 
-For reproducibility purposes, we are using `pytorch==2.01`, CUDA `11.7` and `deepspeed==0.10.3`. The code for the main loop is in <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a>, the GPT-lite and benchmark models are in <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> and <a href="/assets/GPT-lite-DeepSpeed/benchmark.py">`benchmark.py`</a>, and the launch script is in <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a>.
+All implementations use the same mixed precision representation, communication bucket sizes and other general config parameters. We are not including activation checkpointing in our benchmark due to an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. We benchmarked the following implementations (and configs):
 
-We benchmarked the following implementations (and configs):
-
-1. The distributed data parallel (DDP) implementation, ie no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `stage: 0`);
-2. The fully-shared DDP implementation with ZeRO stages 1, 2 and 3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `stage :1`, `2` or `3`);
-3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
-4. The memory-efficient pipeline implementation with ZeRO-1 and 4 pipeline stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `stage: 1` and launch with `--pipeline_num_stages <stages> --pipeline_spec_layers`). Note that DeepSpeed will load-balance stages across GPUs, based on parameter count. As an example, DeepSpeed divides the 4-stage pipelining across 8 GPUs on the small GPT-lite model as (adapted from terminal output):
-
+1. The distributed data parallel (DDP) implementation, ie no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
+2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
+3. The fully-sharded data parallel implementation with ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
+4. The memory-efficient pipeline implementation with ZeRO-1 (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage': 1` and launch with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`) where we tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of GPT-lite pipeline across 8 GPUs and 4 stages, it outputs:
+ 
    ```
-RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=21256704 (21.257M) \
-  TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)
-     0: <lambda>, 1: Block, 2: Block, 3: Block
-   ```
-   ```
-RANK=2 STAGE=1 LAYERS=3 [4, 7) STAGE_PARAMS=21256704 (21.257M) \
-  TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)
-     4: Block, 5: Block, 6: Block
-   ```
-   ```
-RANK=4 STAGE=2 LAYERS=3 [7, 10) STAGE_PARAMS=21256704 (21.257M) \
-  TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)
-     7: Block, 8: Block, 9: Block
-   ```
-   ```
-RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
-  TOTAL_PARAMS=85078272 (85.078M) UNIQUE_PARAMS=85078272 (85.078M)
-     10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
+RANK=0 STAGE=0 LAYERS=4 [0, 4)   STAGE_PARAMS=21256704 (21.257M)
+RANK=2 STAGE=1 LAYERS=3 [4, 7)   STAGE_PARAMS=21256704 (21.257M)
+RANK=4 STAGE=2 LAYERS=3 [7, 10)  STAGE_PARAMS=21256704 (21.257M)
+RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M)
    ```
 
-   - **IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. Thus, the following runs will not use activation checkpointing, which would be benefitial particularly for the pipeline runs.
-
-We benchmark three models. At first, a wide version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`) with a batch size of $$2^{14}$$ and $$2^{11}$$ inputs per GPU, ie `{ 'train_batch_size': 16384, 'train_micro_batch_size_per_gpu': 2048 }`:
+We tested three models. The first is a *wide* version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`). We used a batch size of $$2^{14}$$, and a micro-batch size of $$2^{11}$$ inputs per GPU, ie `'train_batch_size': 16384` and `'train_micro_batch_size_per_gpu': 2048`. The benchmark results are:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
  
-Then we test a a deep benchmark model with a small latent space per layer and many layers (`W=256`, `L=2048`), and similartly, 2048 inputs per GPU:
+Then we tested a *deep benchmark model* with a small parameter space but with (`W=256`), a high layer count (`L=2048`), and the same input sizes as the previous:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
 
-And finally our small variant of the GPT-lite model, with 1 input per GPU:
+And finally our GPT-lite (small) model, with 1 input per GPU:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_gptlite.png"/>
 
-Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we benchmarked several runs with default communication bucket sizes (`5e9`) and it led to a very high memory usage (of approximately double the amount in stages 2 and 3), and becomes prohibitive for some runs. Note the difference between average memory and maximum memory: that volatility in memory consumption is due to all memory dedicated to activations, residual buffers and communication buffers.
+**Memory overhead from communication buffers.** Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we also benchmarked several runs with the default communication bucket sizes (`5e9`) and it led to a very high memory usage (of approximately double the amount in stages 2 and 3), and becomes prohibitive for some runs.
 
-In ideal scenarios, as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory increase and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay the performance price for the communication/offload of parameters. This is the pattern in the deep benchmark model and our language model. However, the wide model does not respond similarly, and from stage 2 to stage 3 there is an increase in throughput. I believe this is due to ZeRO-3 distributing the fp16 model parameters, leading to a distributed parallelims of the very large sums of squares per layers (is it?). 
-Generally speaking, we observed a small improvement of memory efficiency, but still far from the claims of the original DeepSpeed team. One explanation is that we used a small network of 8 GPUs, compared to the 64 to 800 GPUs used by the authors in their benchmarks, therefore we achieve a much smaller memory reduction. Secondly, we did not combine pipelining with offloading and activation checkpointing, which adds even further hyper-parameters. Finally, our config file was an optimized ballpark figure of the default config file, and there is still plenty of work to be done to adapt it to the model and to the hardware, particularly via the exploration of the [autotuning](https://www.deepspeed.ai/tutorials/autotuning/) tools. 
+**Parameter vs residual memory.** Note the difference between average memory and maximum memory. That volatility in memory consumption is due to all memory dedicated to activations, residual buffers and communication buffers.
 
-### Final remarks
+**Communication vs computation trade-off from different stages in ZeRO.** In ideal scenarios, as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory consumption and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay the performance price for the communication/offload of parameters. This is the pattern in the deep benchmark model and our language model. However, the wide model does not respond similarly, and from stage 2 to stage 3 there is an increase in throughput. I believe this is due to ZeRO-3 distributing the fp16 model parameters, leading to a distributed parallelims of the very large sums of squares per layers (is it?).
+
+**Pipelining performance for variable number of stages.** As expected, increasing the number of stages strongly decreases the average memory consumption. This is due to the model being partitioned in smaller blocks. There was no substantial decrease in maximum memory consumption, and this is something I am yet to understand (any hints?). The throughput demonstrated some peculiar behaviour: in the deep benchmark model, the throughput increases with the increase of stage count, while the opposite happens on the GPT-lite model. I believe this is due to load imbalance across stages, or a lower ratio of computation vs communication as we increase the stage count on the GPT lite use case.
+
+**Offloaded vs in-memory parameters.** Offloading proved to be a consistent way to reduce memory usage with the drawback of a small reduction of throughput, as expected.  
+ 
+**Results disccusion.** Generally speaking, we observed a small improvement of memory efficiency, but still far from the claims of the original DeepSpeed team. One explanation is that we used a small network of 8 GPUs, compared to the 64 to 800 GPUs used by the authors in their benchmarks, therefore we achieved a much smaller memory reduction. Also, maximum memory seems to be the main scaling bottleneck in scaling. In most runs, the maximum memory is much higher than the average memory, making me believe that there are some sporadic memory allocation peaks due to temporary buffers. If these are mostly communication buffers and others that are hard-limited in the config, then it could be that the memory efficiency would be much higher on a network of more GPUs.
+Also, finding the best parallelism strategy, and choosing between different ZeRO stages, offloading, activation breakpointing intervals, pipeline parallelism stages, etc, is very hard, as it depends heavily on the ML model and hardware. In practice, our config file is a manually-optimized ballpark figure of the default config file, and there is still plenty of work to be done to make it optimal, possibly by exploring the [autotuning](https://www.deepspeed.ai/tutorials/autotuning/) tools in DeepSpeed. There is a lot of food for thought, and I will be updating this post as I find new insights...
+
+### Further resources
 
 We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored:
 - [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
@@ -654,9 +644,7 @@ We just scratched the surface of DeepSpeed capabilities. There are plenty of res
 - [Sparse attention kernels](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound;
 - [Communication optimizers](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining;
 - [Monitor](https://www.deepspeed.ai/training/#monitor) logs live training metrics to one or more monitoring backends to TensorBoard, csv file or other resource;
-- [Model Compression](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size,
-
-and for inference use cases:
+- [Model Compression](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size.
 - [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/) ([API](https://deepspeed.readthedocs.io/en/latest/moe.html))  for sparsity during inference; 
 - [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating pre-trained Hugging Face models into DeepSpeed;
 
