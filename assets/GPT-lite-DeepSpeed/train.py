@@ -3,12 +3,13 @@ import torch.distributed as dist
 import os
 import deepspeed
 import gptlite
+from datetime import datetime
 
 
 # DeepSpeed requires a distributed environment even when only one process is used.
 if os.environ.get("WORLD_SIZE") is None:
   os.environ["MASTER_ADDR"] = "localhost"
-  os.environ["MASTER_PORT"] = "9995"  # modify if RuntimeError: errno: 98 - Address already in use
+  os.environ["MASTER_PORT"] = "9991"  # modify if RuntimeError: errno: 98 - Address already in use
   os.environ["RANK"] = "0"
   os.environ["LOCAL_RANK"] = "0"
   os.environ["WORLD_SIZE"] = "1"
@@ -21,7 +22,7 @@ def get_cmd_line_args(description='GPT lite on DeepSpeed'):
                         help='local rank passed from distributed launcher')
   parser.add_argument('--activation_checkpoint_interval', type=int, default=0,
                       help='activation checkpoint interval (0 means disabled)')
-  parser.add_argument('--pipeline_parallel_size', type=int, default=0,
+  parser.add_argument('--pipeline_num_stages', type=int, default=0,
                       help='enable pipeline parallelism with N stages (0 means disabled)')
   parser.add_argument("--pipeline_spec_layers", action="store_true",
                       help="enable SpecLayers in pipeline parallelism")
@@ -33,7 +34,7 @@ def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   
 def measure_parameters_memory(model, args):
 
-  ranks = list(range(dist.get_world_size())) if args.pipeline_parallel_size else [0]
+  ranks = list(range(dist.get_world_size())) if args.pipeline_num_stages else [0]
   for r in ranks:
     if args.local_rank == r:
       print(f"\n\nEstimating memory requirements at local rank {r}")
@@ -58,7 +59,7 @@ def main_deepspeed(n_epochs=100, random_seed=42):
 
   get_model_kwargs = {
     'criterion': criterion,
-    'pipeline_parallel_size': args.pipeline_parallel_size,
+    'pipeline_num_stages': args.pipeline_num_stages,
     'pipeline_spec_layers': args.pipeline_spec_layers,
     'activation_checkpoint_interval': args.activation_checkpoint_interval,
     }
@@ -69,8 +70,8 @@ def main_deepspeed(n_epochs=100, random_seed=42):
     
   # uncomment to use deep/wide benchmark model instead
   # import benchmark
-  # W, L = 256, 2048 # deep model
   # W, L = 8192, 3 # wide model
+  # W, L = 256, 2048 # deep model
   # train_dataset = benchmark.get_dataset(W)
   # model = benchmark.get_model(W, L, **get_model_kwargs)
 
@@ -84,10 +85,10 @@ def main_deepspeed(n_epochs=100, random_seed=42):
     )
 
   assert engine.local_rank == dist.get_rank()
-  print(f"Starting training. Rank {engine.local_rank} on {engine.device}")
+  print(f"{str(datetime.now())[:22]} :: Starting training. Rank {engine.local_rank} on {engine.device}")
 
   for epoch in range(n_epochs):
-    if args.pipeline_parallel_size:
+    if args.pipeline_num_stages:
       loss = engine.train_batch()
     else:
       for step, data in enumerate(train_dataloader):
@@ -102,7 +103,8 @@ def main_deepspeed(n_epochs=100, random_seed=42):
         # from deepspeed.runtime.utils import memory_status
         # memory_status("Memory stats after training step")
 
-    if engine.local_rank == 0: print(f"Epoch: {epoch}, Loss: {loss}")
+    if engine.local_rank == 0: # time, epoch and loss
+      print(f"{str(datetime.now())[:22]} :: Epoch: {epoch}, Loss: {loss}")
   
 
 if __name__ == "__main__":
