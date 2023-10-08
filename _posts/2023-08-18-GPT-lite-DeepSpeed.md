@@ -66,11 +66,9 @@ block_size = 2048
 dropout = 0.1
 ```
 
-Then we write the code that returns our model and our dataset:
+We will define the methods `get_model()` and `get_dataset` inside `gptlite.py` to return our model and our dataset:
 
 ```python
-import gptlite
-
 def get_dataset():
   
   class GPTliteDataset(torch.utils.data.Dataset):
@@ -95,16 +93,14 @@ def get_dataset():
   dataset = GPTliteDataset(train_data, gptlite.block_size)
   return dataset, vocab_size
 
-def get_model(vocab_size):
-  return gptlite.GPTlite(vocab_size)
 
-train_dataset, vocab_size = get_dataset()
-model = get_model(vocab_size)
+def get_model(vocab_size):
+  return GPTlite(vocab_size)
 ```
 
 #### Detour: using other model and dataset
 
-As a side note, note that the `model` is of type `torch.nn.Module` and a `train_dataset` is of type `torch.utils.data.Dataset`. In practice, **any model and dataset can be used** in the code that follows. As an example, if you'd want to perform a 10-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd rewrite the previous code as:
+As a side note, note that the `model` is of type `torch.nn.Module` and a `train_dataset` is of type `torch.utils.data.Dataset`. In practice, **any model and dataset can be used** in the code that follows. As an example, if you'd want to perform a multi-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd rewrite the previous code as:
 
 ```python
 import torchvision
@@ -119,8 +115,8 @@ def get_dataset():
     root='./data', train=True, download=True, transform=transform)
   return dataset
 
-train_dataset = get_dataset()
-model = torchvision.models.resnet18(num_classes=10)
+def get_model(num_classes):
+  return torchvision.models.resnet18(num_classes=num_classes)
 ```
 
 Pre-existing models do not define activation checkpointing layers and pipelining layers, therefore these two features cannot be used directly. 
@@ -154,7 +150,13 @@ class BenchmarkDataset(torch.utils.data.Dataset):
       x = torch.Tensor(self.W).uniform_(-1, 1)
       y = int( x @ x % self.W)
       return x, torch.tensor(y, dtype=torch.long)
+
+
+get_dataset = lambda W: BenchmarkDataset(W)
+get_model = lambda W, L: BenchmarkModel(W, L)
 ```
+
+We will call the latter the *Benchmark Model* and we will use it for scaling analysis in our final results.
 
 ### Main code
 
@@ -184,19 +186,17 @@ The bulk of the code is pretty simple. In practice, all boilerplate code that Py
 def main_deepspeed(n_epochs=100, random_seed=42):
 
   torch.manual_seed(random_seed)  #set random seed
-  deepspeed.init_distributed() #initialize distributed network
-  args = get_cmd_line_args() # get command line arguments
-  criterion = torch.nn.CrossEntropyLoss() #initialize loss function
-
-  train_dataset, vocab_size = get_dataset() #initialize dataset
-  model = get_model(vocab_size) #initialize model
+  deepspeed.init_distributed()  #initialize distributed network
+  args = get_cmd_line_args()  # get command line arguments
+  criterion = torch.nn.CrossEntropyLoss()  # initialize loss function
+  train_dataset, vocab_size = gptlite.get_dataset()  # initializer dataset
+  model = gptlite.get_model(vocab_size)  # initialize torch model
 
   engine, optimizer, train_dataloader , _ = deepspeed.initialize(
-    args=args, model=model, training_data=train_dataset,)
-
+    args=args, model=model, training_data=train_dataset,) # initialize deepspeed
 ```
 
-Then we write the the training loop, with a structure very similar to the PyTorch implementation. The only exception is that we dont perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `train_dataloader` is a `DistributedSampler` created by DeepSpeed`s `initialize()`, so multi-process runs will have each process automatically delegated to a different subset of data.
+Then we write the training loop, with a structure very similar to the PyTorch implementation. The only exception is that we dont perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `train_dataloader` is a `DistributedSampler` created by DeepSpeed`s `initialize()`, so multi-process runs will have each process automatically delegated to a different subset of data.
 
 ```python
   for epoch in range(n_epochs):
@@ -204,12 +204,12 @@ Then we write the the training loop, with a structure very similar to the PyTorc
       inputs = data[0].to(engine.device)
       labels = data[1].to(engine.device)
               
-      outputs = engine(inputs) #fwd pass
+      outputs = engine(inputs)  # fwd pass
       loss = criterion(outputs, labels)
-      engine.backward(loss) #backprop
-      engine.step() #update weights, no zero-ing
+      engine.backward(loss)  # backprop
+      engine.step()  # update weights, no need for zero-ing
 
-  # print statistics
+  # print loss for epoch
   if engine.local_rank == 0: print(f"Epoch: {epoch}, Loss: {loss}")
 ```
  
@@ -270,9 +270,9 @@ On top of that, we can enable  **communication overlap** that attempts to overla
 {
   "zero_optimization": {
     "stage": 3,
-    "reduce_bucket_size": 5e5,          #default 5e9
-    "allgather_bucket_size": 5e5,       #default 5e9
-    "stage3_prefetch_bucket_size": 5e5, #default 5e9
+    "reduce_bucket_size": 4e5,
+    "allgather_bucket_size": 4e5,
+    "stage3_prefetch_bucket_size": 4e5,
     "overlap_comm": true,
   }
 }
@@ -355,8 +355,7 @@ class GPTlite(nn.Module):
       return layers
 ```
 
-As a next step, in our DeepSpeed initialization code, we must create a pipeline wrapper around our model, with one stage per every 2 blocks of computation, and this will be fed later to the `deepspeed.initialize()` as the `model` parameter. The epocs training loop is also reduced to a single `train_batch()` operation that performs forward pass, back propagation and gradient updates in a single code line: 
-
+As a next step, in our DeepSpeed initialization code, we must create a pipeline wrapper around our model, with one stage per every 2 blocks of computation, and this will be fed later to the `deepspeed.initialize()` as the `model` parameter:
 ```python
 def get_model(criterion, vocab_size, pipeline_parallel_size=0):
 
@@ -371,7 +370,12 @@ def get_model(criterion, vocab_size, pipeline_parallel_size=0):
     model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
   else:
     # ... as before: model = gptlite.GPTlite(vocab_size)
+```
 
+Then we reduce the training code in the main loop to a single call to `engine.train_batch()`, that performs forward pass, back propagation and gradient updates for the pipelining use cases: 
+
+```python
+def main_deepspeed(n_epochs=100, random_seed=42):
   # ...
   for epoch in range(n_epochs):
     if pipeline_parallel_size:
@@ -434,14 +438,18 @@ class GPTlitePipeSpec(PipelineModule):
     super().__init__(layers=self.specs, **pipe_kwargs)
 ```
 
-and the main code altered to:
+then we add to the command line arguments, the flag `--pipeline_spec_layers` that will enable this efficient pipelining:
 
 ```python
 def get_cmd_line_args():
   # ...
   parser.add_argument("--pipeline_spec_layers", action="store_true",
                       help="enable SpecLayers in pipeline parallelism")
+```
 
+and change the `get_model()` method to retrieve the efficient pipeline variant as:
+
+```python
 def get_model(criterion, vocab_size, pipeline_parallel_size=0, pipeline_spec_layers=False):
 
   if pipeline_parallel_size:
