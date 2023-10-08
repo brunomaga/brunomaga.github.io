@@ -4,45 +4,14 @@ import os
 import deepspeed
 import gptlite
 
+
 # DeepSpeed requires a distributed environment even when only one process is used.
 if os.environ.get("WORLD_SIZE") is None:
   os.environ["MASTER_ADDR"] = "localhost"
-  os.environ["MASTER_PORT"] = "9994"  # modify if RuntimeError: Address already in use
+  os.environ["MASTER_PORT"] = "9995"  # modify if RuntimeError: errno: 98 - Address already in use
   os.environ["RANK"] = "0"
   os.environ["LOCAL_RANK"] = "0"
   os.environ["WORLD_SIZE"] = "1"
-
-
-def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
-  rank = dist.get_rank()
-
-  #load input data
-  with open(filename) as f:
-      text = f.read()
-  if rank==0: print("input data loaded. Length of text: ", len(text))
-
-  #collect all ordered and unique characters in the text
-  chars = sorted(list(set(text)))
-  if rank==0: print("unique chars: ", "".join(chars))
-  if rank==0: print("length of chars: ", len(chars))
-
-  #map characters to integers
-  stoi = { ch:i for i,ch in enumerate(chars) }
-  itos = { i:ch for i,ch in enumerate(chars) }
-  encode = lambda x: torch.tensor([stoi[ch] for ch in x], dtype=torch.long) #encode text to integers
-  decode = lambda x: ''.join([itos[i] for i in x]) #decode integers to text
-  vocab_size = len(stoi)
-  if rank==0: print("vocab size: ", vocab_size)
-  if rank==0: print(encode("Hello world"))
-  if rank==0: print(decode(encode("Hello world").tolist()))
-  if rank==0: print("character zero is:", decode([0]), "<end>")
-
-  # collect input data, break dataset in train/validation
-  data = encode(text)
-  n = int(0.9*len(data))
-  train_data, valid_data = data[:n], data[n:]
-  if rank==0: print("Train data encoded", data.shape, train_data.shape, valid_data.shape)
-  return train_data, valid_data, vocab_size
 
 
 def get_cmd_line_args(description='GPT lite on DeepSpeed'):
@@ -56,58 +25,10 @@ def get_cmd_line_args(description='GPT lite on DeepSpeed'):
                       help='enable pipeline parallelism with N stages (0 means disabled)')
   parser.add_argument("--pipeline_spec_layers", action="store_true",
                       help="enable SpecLayers in pipeline parallelism")
-  parser.add_argument('--block_size', type=int, default=0,
-                      help='attention length, block size (0 means default)')
   # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config, ...)
   parser = deepspeed.add_config_arguments(parser)
   return parser.parse_args()
 
-  
-def get_dataset():
-  
-  class GPTliteDataset(torch.utils.data.Dataset):
-
-      def __init__(self, train_data, block_size):
-        self.train_data = train_data
-        self.block_size = block_size
-
-      def __len__(self):
-        return len(self.train_data)
-
-      def __getitem__(self, idx):
-        # generate 1 random offset on the data
-        ix = torch.randint(len(self.train_data)-self.block_size , size=())
-        # input is a random subset of tokens
-        x = self.train_data[ix   : ix+self.block_size]
-        # target is just x shifted right (ie the next predicted word)
-        y = self.train_data[ix+1 : ix+1+self.block_size]
-        return x, y
-
-  train_data, _, vocab_size = load_tiny_shakespeare_data() #load data encodings from file
-  dataset = GPTliteDataset(train_data, gptlite.block_size)
-  return dataset, vocab_size
-
-
-def get_model(vocab_size, criterion, pipeline_parallel_size=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
-
-  pipe_kwargs={
-    'num_stages': pipeline_parallel_size,
-    'activation_checkpoint_interval': activation_checkpoint_interval, 
-    'loss_fn': criterion,
-    }
-
-  if pipeline_parallel_size:
-
-    if pipeline_spec_layers:
-      model = gptlite.GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
-    else:
-      device_str = f'cuda:{dist.get_rank()}'
-      model = gptlite.GPTlite(vocab_size).to(device_str)
-      model = deepspeed.pipe.PipelineModule(layers=model.to_layers(), **pipe_kwargs)
-  else:
-    model = gptlite.GPTlite(vocab_size,
-              activation_checkpoint_interval=activation_checkpoint_interval)  
-  return model
 
   
 def measure_parameters_memory(model, args):
@@ -134,7 +55,6 @@ def main_deepspeed(n_epochs=100, random_seed=42):
   deepspeed.init_distributed() #initialize distributed network
   args = get_cmd_line_args() # get command line arguments
   criterion = torch.nn.CrossEntropyLoss() #initialize loss function
-  if args.block_size: gptlite.block_size = args.block_size
 
   get_model_kwargs = {
     'criterion': criterion,
@@ -142,13 +62,17 @@ def main_deepspeed(n_epochs=100, random_seed=42):
     'pipeline_spec_layers': args.pipeline_spec_layers,
     'activation_checkpoint_interval': args.activation_checkpoint_interval,
     }
-  train_dataset, vocab_size = get_dataset()
-  model = get_model(vocab_size, **get_model_kwargs)
+
+  # initialize GPT-lite model and dataset
+  train_dataset, vocab_size = gptlite.get_dataset()
+  model = gptlite.get_model(vocab_size, **get_model_kwargs)
     
-  import benchmark
-  W, L = 1024, 16
-  train_dataset = benchmark.get_dataset(W)
-  model = benchmark.get_model(W, L, **get_model_kwargs)
+  # uncomment to use deep/wide benchmark model instead
+  # import benchmark
+  # W, L = 256, 2048 # deep model
+  # W, L = 8192, 3 # wide model
+  # train_dataset = benchmark.get_dataset(W)
+  # model = benchmark.get_model(W, L, **get_model_kwargs)
 
   #estimate parameters memory requirements
   measure_parameters_memory(model, args)
@@ -183,5 +107,4 @@ def main_deepspeed(n_epochs=100, random_seed=42):
 
 if __name__ == "__main__":
   main_deepspeed()
-
 

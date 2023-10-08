@@ -7,7 +7,7 @@ import torch.distributed as dist
 class BenchmarkModel(nn.Module):
   """" DNN with W input features, W neurons per layer, W output classes and L layers """
 
-  def __init__(self, W=1024, L=16, activation_checkpoint_interval=0):
+  def __init__(self, W, L, activation_checkpoint_interval=0):
     super(BenchmarkModel, self).__init__()
     self.activation_checkpoint_interval = activation_checkpoint_interval
     self.layers = []
@@ -31,7 +31,7 @@ class BenchmarkModel(nn.Module):
 from deepspeed.pipe import PipelineModule, LayerSpec
 class BenchmarkModelPipeSpec(PipelineModule):
 
-  def __init__(self, W=1024, L=16, pipe_kwargs={}):
+  def __init__(self, W, L, pipe_kwargs={}):
     self.specs = []
     for _ in range(L):
       self.specs += [ LayerSpec(nn.Linear, W, W), LayerSpec(nn.ReLU) ]
@@ -39,7 +39,7 @@ class BenchmarkModelPipeSpec(PipelineModule):
     
 
 class BenchmarkDataset(torch.utils.data.Dataset):
-    def __init__(self, W=1024, len=2**16):
+    def __init__(self, W, len=2**16):
       self.W = W
       self.len = len
 
@@ -74,5 +74,3 @@ def get_model(W, L, criterion, pipeline_parallel_size=0, pipeline_spec_layers=Fa
 
 def get_dataset(W):
   return BenchmarkDataset(W)
-
-
