@@ -551,7 +551,7 @@ We benchmarked the following implementations (and configs):
 1. The distributed data parallel (DDP) implementation, ie no DeepSpeed (`stage: 0` in <a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO.json">`ds_config_ZeRO.json`</a>);
 2. The fully-shared DDP implementation with ZeRO stages 1, 2 and 3 (`stage :1`, `2` or `3` in <a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO.json">`ds_config_ZeRO.json`</a>);
 3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
-4. The memory-efficient pipeline implementation with ZeRO-1, 4 pipeline stages and micro-batch size of 4 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). Note that DeepSpeed will load-balance stages across GPUs, based on parameter count. As an example, DeepSpeed divides the 4-stage pipelining across 8 GPUs on the GPT-lite model as (adapted from terminal output):
+4. The memory-efficient pipeline implementation with ZeRO-1, 4 pipeline stages and micro-batch size of 4 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). Note that DeepSpeed will load-balance stages across GPUs, based on parameter count. As an example, DeepSpeed divides the 4-stage pipelining across 8 GPUs on the small GPT-lite model as (adapted from terminal output):
 
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=21256704 (21.257M) \
@@ -576,35 +576,42 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
 
    - **IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. I will wait for the fix to be published before adding the pipeline runs to the benchmark. 
 
-We benchmark three models: a wide version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`); a deep benchmark model with a small latent space per layer and many layers (`W=256`, `L=1024`); and our GPT-lite model. The batch size was of 2048 for the benchmark model and 8 for the GPT-lite model per GPU. The results are the following:
+We benchmark three models: a wide version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`) with a micro-batch size of `'train_micro_batch_size_per_gpu': 2048` inputs per GPU:
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
+<img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
  
+Then we test a a deep benchmark model with a small latent space per layer and many layers (`W=256`, `L=1024`), and similartly, 2048 inputs per GPU:
+
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
+<img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
 
-A few observations:
-- Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we benchmarked several runs with default communication bucket sizes (`5e9`) and it led to a very high memory usage (of approximately double the amount in stages 2 and 3), and becomes prohibitive for some runs;
-- Again, note the difference between average memory and maximum memory. That volatility in memory consumption is due to all memory dedicated to activations, residual buffers and communication buffers;
-- In ideal scenarios, as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory increase and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay the performance price for the communication/offload of parameters. This is the pattern in the deep benchmark model. However, the shallow model does not respond similarly, and I am still trying to understand why.   
+And finally our small variant of the GPT-lite model, with 1 input per GPU:
 
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/benchmark_gptlite.png"/>
 
-### More resources 
+Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we benchmarked several runs with default communication bucket sizes (`5e9`) and it led to a very high memory usage (of approximately double the amount in stages 2 and 3), and becomes prohibitive for some runs. Note the difference between average memory and maximum memory: that volatility in memory consumption is due to all memory dedicated to activations, residual buffers and communication buffers.
 
-We just touched the surface of the capabilities of DeepSpeed, and there are plenty of resources that should also be taken into account:
+In ideal scenarios, as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory increase and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay the performance price for the communication/offload of parameters. This is the pattern in the deep benchmark model and our language model. However, the wide model does not respond similarly, and from stage 2 to stage 3 there is an increase in throughput. I believe this is due to ZeRO-3 distributing the fp16 model parameters, leading to a distributed parallelims of the very large sums of squares per layers (is it?). 
+Generally speaking, we observed a small improvement of memory efficiency, but still far from the claims of the original DeepSpeed team. One explanation is that we used a small network of 8 GPUs, compared to the 64 to 800 GPUs used by the authors in their benchmarks, therefore we achieve a much smaller memory reduction. Secondly, our config file was an optimized ballpark figure of the default config file, and there is still plenty of work to be done to adapt it to the model and to the hardware, particularly via the exploration of the [autotuning](https://www.deepspeed.ai/tutorials/autotuning/) tools. 
+
+### Final remarks
+
+We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored:
 - [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
 - [Model Parallelism](https://www.deepspeed.ai/training/#model-parallelism) for the implementation of custom tensor parallelism of models that are not implemented in DeepSpeed;
 - [Activation Partitioning](https://www.deepspeed.ai/training/#activation-checkpointing-api) reduces the memory consumed by activations during model parallel training, by storing these activations in a partitioned state after the forward pass, and doing an allgather right before they are needed again on the backward propagation; 
 - [Model Checkpointing](https://deepspeed.readthedocs.io/en/latest/model-checkpointing.html) for saving and resuming execution state, applicable to large runs that are prune to failures and interrupts;
-- [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/) ([API](https://deepspeed.readthedocs.io/en/latest/moe.html))  for sparsity during inference; 
-- [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed;
 - [Flops profiler](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) measures the time, flops and parameters of a PyTorch model and shows which modules or layers are the bottleneck;
 - [Sparse attention kernels](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound;
 - [Communication optimizers](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining;
 - [Monitor](https://www.deepspeed.ai/training/#monitor) logs live training metrics to one or more monitoring backends to TensorBoard, csv file or other resource;
-- [Model Compression](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size;
+- [Model Compression](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size,
 
+and for inference use cases:
+- [Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/) ([API](https://deepspeed.readthedocs.io/en/latest/moe.html))  for sparsity during inference; 
+- [Using pre-trained models for inference](https://www.deepspeed.ai/tutorials/inference-tutorial/) for integrating Hugging Face models into DeepSpeed
 
-... and many more covered by the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
+For general documentation, I recommend the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
