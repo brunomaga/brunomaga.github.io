@@ -35,7 +35,7 @@ Finally, **ZeRO has three alternative execution modes, called stages**. Each sta
 <img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/DeepSpeed_stages.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Memory consumptions of the three different stages of DeepSpeed with the FSDP approach. Note that residual memory (activations, normalization layers, etc) are not displayed as FSDP does not shard them. Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
+Memory consumptions of the three different stages of DeepSpeed with the FSDP approach. Only on deep models. Note that residual memory (activations, normalization layers, etc) are not displayed as FSDP does not shard them. Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
 
 Additionaly, on top of stage 1 and 2, we can enable [**ZeRO-Offload**](https://www.deepspeed.ai/tutorials/zero-offload/) system for offloading optimizer and gradient states to CPU memory. For improved performance we can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857) on top of ZeRO-3. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication".
 
@@ -331,7 +331,7 @@ As a final note, the configuration file can also be extended with custom fields,
 
 ### Pipeline parallelism
 
-[Pipeline parallelism](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) improves both the memory and compute efficiency during training by partitioning the layers of a model into stages that can be processed in parallel. The pipeline parallelims implemented in DeepSpeed follows the [PipeDream-Flush implementation with 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/).
+[Pipeline parallelism](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) improves both the memory and compute efficiency during training by partitioning the layers of a model into stages that can be processed in parallel. The pipeline parallelims implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 Forward pass followed by 1 Backward pass, Figure 4 top on the [Megatron LM paper](https://browse.arxiv.org/pdf/2104.04473.pdf) ), however it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms.
 
 DeepSpeed enables pipelining by assuming all modules in a `nn.Sequential` container or `list` to be the sequence of layers that can be broken into pipelining stages. A stage is a range of layers that define a block of computation that will be assigned to a section of the pipeline.
 
@@ -341,7 +341,7 @@ DeepSpeed enables pipelining by assuming all modules in a `nn.Sequential` contai
 {: style="text-align:center; font-size: small;"}
 A 4-stage pipeline. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
-We will make pipeline parallelism optional in our use case, as in many cases (e.g. for small models) it is not benefitial. We will enable by passing the number of stages as the `---pipeline_parallel_size` argument (default: 0, no pipelining) on the command line:
+We will make pipeline parallelism optional in our use case, as in many cases (e.g. for small models) it is not benefitial. We will enable by passing the number of stages as the `---pipeline_num_stages` argument (default: 0, no pipelining) on the command line:
 
 ```python
 ### train.py
@@ -353,7 +353,7 @@ def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   # ...
 ```
 
-Note that the number of stages must divide the number of GPUs. Now we expose the pipeline parallelism in our model by creating a method a new model `GPTlitePipe` that inherits from `GPTlite` and includes the method `to_layers()` that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass of `GPTlite`, and that `self.blocks` is of type `nn.Sequential`:
+In this context, a *stage* is simply an independent pipeline, and the number of stages tells the number of pipelines to run in parallel, i.e. it must divide the number of GPUs. Now we expose the pipeline parallelism in our model by creating a method a new model `GPTlitePipe` that inherits from `GPTlite` and includes the method `to_layers()` that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass of `GPTlite`, and that `self.blocks` is of type `nn.Sequential`:
 
 ```python
 ### gptlite.py
@@ -377,12 +377,12 @@ As a next step, in our DeepSpeed initialization code, we must create a pipeline 
 ```python
 ### gptlite.py
 
-def get_model(criterion, vocab_size, pipeline_parallel_size=0):
+def get_model(criterion, vocab_size, pipeline_num_stages=0):
   # ...
-  if pipeline_parallel_size:
+  if pipeline_num_stages:
     deepspeed.runtime.utils.set_random_seed(random_seed)
     pipe_kwargs={
-      'num_stages': pipeline_parallel_size,
+      'num_stages': pipeline_num_stages,
       'loss_fn': criterion,
       }
     model = gptlite.GPTlite(vocab_size).to(device_str)
@@ -399,7 +399,7 @@ Then we reduce the training code in the main loop to a single call to `engine.tr
 def main_deepspeed(n_epochs=100, random_seed=42):
   # ...
   for epoch in range(n_epochs):
-    if pipeline_parallel_size:
+    if pipeline_num_stages:
       loss=engine.train_batch()
     else:
       # ... forward, backward, and update step as before
@@ -411,7 +411,7 @@ As an important remark, when using pipeline parallelism, the micro-batch argumen
 <img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
-"An illustration of how DeepSpeed will train a batch with eight micro-batches using hybrid two-way data parallelism and two-stage pipeline parallelism. GPUs 0 and 2 are arranged in a pipeline and will alternate forward (F) and backward (B) passes. They will then all-reduce (AR) gradients with their data parallel counterparts, GPUs 1 and 3, respectively. Finally, the two pipeline stages update their model weights". Source: [DeepSpeed pipelining documentation](https://www.deepspeed.ai/tutorials/pipeline/)
+"An illustration of how DeepSpeed will train a batch with eight micro-batches using hybrid two-way data parallelism and two-stage pipeline parallelism. GPUs 0 and 2 are arranged in a pipeline and will alternate forward (F) and backward (B) passes. They will then all-reduce (AR) gradients with their data parallel counterparts, GPUs 1 and 3, respectively. Finally, the two pipeline stages update their model weights". This is the 1F1B default pipeline algorithm. Source: [DeepSpeed pipelining documentation](https://www.deepspeed.ai/tutorials/pipeline/)
 
 Finally, [Pipeline parallelism is not compatible with ZeRO stages 2 or 3](https://deepspeed.readthedocs.io/en/latest/pipeline.html#pipeline-parallelism), as discussed [here](https://github.com/microsoft/DeepSpeed/issues/1110#issuecomment-850835817).
 
@@ -477,9 +477,9 @@ and change the `get_model()` method to retrieve the efficient pipeline variant a
 ```python
 ### gptlite.py
 
-def get_model(criterion, vocab_size, pipeline_parallel_size=0, pipeline_spec_layers=False):
+def get_model(criterion, vocab_size, pipeline_num_stages=0, pipeline_spec_layers=False):
 
-  if pipeline_parallel_size:
+  if pipeline_num_stages:
     if pipeline_spec_layers:
       model = GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
     else:
@@ -509,9 +509,9 @@ When using pipelining, introducing checkpoint at a fixed layer interval is easy,
 #gptlite.py
 
 def get_model(criterion, vocab_size, \
-  pipeline_parallel_size=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
+  pipeline_num_stages=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
 
-  if pipeline_parallel_size:
+  if pipeline_num_stages:
     pipe_kwargs={ # ...
       'activation_checkpoint_interval': args.activation_checkpoint_interval, 
     }
@@ -577,7 +577,7 @@ The output tells us that:
 - DeepSpeed ZeRO-2 requires 0.161GB and 0.484GB for the with and without offload optimizations;
 - DeepSpeed ZeRO-3 requires 0.009GB and 0.190GB for the with and without offload optimizations; 
 
-However, when activating pipelining, by launching the run with `--pipeline_parallel_size 4 --pipeline_spec_layers`:
+However, when activating pipelining, by launching the run with `--pipeline_num_stages 4 --pipeline_spec_layers`:
 - the base model requires 0.053GB for the parameters; 
 - ZeRO-2 requires 0.026GB and 0.079GB for the with and without offloading use cases;
 - ZeRO-3 requires 0.009GB and 0.038GB of memory, with and without offloading, respectively; 
@@ -593,10 +593,10 @@ For reproducibility purposes, we are using `pytorch==2.01`, CUDA `11.7` and `dee
 
 We benchmarked the following implementations (and configs):
 
-1. The distributed data parallel (DDP) implementation, ie no DeepSpeed (`stage: 0` in <a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO.json">`ds_config_ZeRO.json`</a>);
-2. The fully-shared DDP implementation with ZeRO stages 1, 2 and 3 (`stage :1`, `2` or `3` in <a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO.json">`ds_config_ZeRO.json`</a>);
+1. The distributed data parallel (DDP) implementation, ie no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `stage: 0`);
+2. The fully-shared DDP implementation with ZeRO stages 1, 2 and 3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `stage :1`, `2` or `3`);
 3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
-4. The memory-efficient pipeline implementation with ZeRO-1 and 4 pipeline stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). Note that DeepSpeed will load-balance stages across GPUs, based on parameter count. As an example, DeepSpeed divides the 4-stage pipelining across 8 GPUs on the small GPT-lite model as (adapted from terminal output):
+4. The memory-efficient pipeline implementation with ZeRO-1 and 4 pipeline stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `stage: 1` and launch with `--pipeline_num_stages <stages> --pipeline_spec_layers`). Note that DeepSpeed will load-balance stages across GPUs, based on parameter count. As an example, DeepSpeed divides the 4-stage pipelining across 8 GPUs on the small GPT-lite model as (adapted from terminal output):
 
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=21256704 (21.257M) \
@@ -619,28 +619,27 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M) \
      10: Block, 11: Block, 12: Block, 13: LayerNorm, 14: Linear, 15: <lambda>, loss: CrossEntropyLoss
    ```
 
-   - **IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. I will wait for the fix to be published before adding the pipeline runs to the benchmark. 
+   - **IMPORTANT**: there's an [open bug](https://github.com/microsoft/DeepSpeed/issues/4274) on DeepSpeed 0.10.3 related to activation checkpointing combined with pipelining. Thus, the following runs will not use activation checkpointing, which would be benefitial particularly for the pipeline runs.
 
-We benchmark three models: a wide version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`) with a micro-batch size of `'train_micro_batch_size_per_gpu': 2048` inputs per GPU:
+We benchmark three models. At first, a wide version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`) with a batch size of $$2^{14}$$ and $$2^{11}$$ inputs per GPU, ie `{ 'train_batch_size': 16384, 'train_micro_batch_size_per_gpu': 2048 }`:
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
  
 Then we test a a deep benchmark model with a small latent space per layer and many layers (`W=256`, `L=2048`), and similartly, 2048 inputs per GPU:
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
 
 And finally our small variant of the GPT-lite model, with 1 input per GPU:
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/GPT-lite-DeepSpeed/benchmark_gptlite.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_gptlite.png"/>
 
 Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we benchmarked several runs with default communication bucket sizes (`5e9`) and it led to a very high memory usage (of approximately double the amount in stages 2 and 3), and becomes prohibitive for some runs. Note the difference between average memory and maximum memory: that volatility in memory consumption is due to all memory dedicated to activations, residual buffers and communication buffers.
 
 In ideal scenarios, as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory increase and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay the performance price for the communication/offload of parameters. This is the pattern in the deep benchmark model and our language model. However, the wide model does not respond similarly, and from stage 2 to stage 3 there is an increase in throughput. I believe this is due to ZeRO-3 distributing the fp16 model parameters, leading to a distributed parallelims of the very large sums of squares per layers (is it?). 
-
-Generally speaking, we observed a small improvement of memory efficiency, but still far from the claims of the original DeepSpeed team. One explanation is that we used a small network of 8 GPUs, compared to the 64 to 800 GPUs used by the authors in their benchmarks, therefore we achieve a much smaller memory reduction. Secondly, our config file was an optimized ballpark figure of the default config file, and there is still plenty of work to be done to adapt it to the model and to the hardware, particularly via the exploration of the [autotuning](https://www.deepspeed.ai/tutorials/autotuning/) tools. 
+Generally speaking, we observed a small improvement of memory efficiency, but still far from the claims of the original DeepSpeed team. One explanation is that we used a small network of 8 GPUs, compared to the 64 to 800 GPUs used by the authors in their benchmarks, therefore we achieve a much smaller memory reduction. Secondly, we did not combine pipelining with offloading and activation checkpointing, which adds even further hyper-parameters. Finally, our config file was an optimized ballpark figure of the default config file, and there is still plenty of work to be done to adapt it to the model and to the hardware, particularly via the exploration of the [autotuning](https://www.deepspeed.ai/tutorials/autotuning/) tools. 
 
 ### Final remarks
 

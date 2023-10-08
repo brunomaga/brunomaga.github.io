@@ -268,15 +268,15 @@ def get_dataset():
   return dataset, vocab_size
 
 
-def get_model(vocab_size, criterion, pipeline_parallel_size=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
+def get_model(vocab_size, criterion, pipeline_num_stages=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
 
   pipe_kwargs={
-    'num_stages': pipeline_parallel_size,
+    'num_stages': pipeline_num_stages,
     'activation_checkpoint_interval': activation_checkpoint_interval, 
     'loss_fn': criterion,
     }
 
-  if pipeline_parallel_size:
+  if pipeline_num_stages:
 
     if pipeline_spec_layers:
       model = GPTlitePipeSpec(vocab_size, pipe_kwargs=pipe_kwargs)
