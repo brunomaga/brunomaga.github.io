@@ -596,7 +596,7 @@ We benchmarked the following implementations (and configs):
 1. The distributed data parallel (DDP) implementation, ie no DeepSpeed (`stage: 0` in <a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO.json">`ds_config_ZeRO.json`</a>);
 2. The fully-shared DDP implementation with ZeRO stages 1, 2 and 3 (`stage :1`, `2` or `3` in <a href="/assets/GPT-lite-DeepSpeed/ds_config_ZeRO.json">`ds_config_ZeRO.json`</a>);
 3. The fully-shared DDP implementation with ZeRO-3 and ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
-4. The memory-efficient pipeline implementation with ZeRO-1, 4 pipeline stages and micro-batch size of 4 (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). Note that DeepSpeed will load-balance stages across GPUs, based on parameter count. As an example, DeepSpeed divides the 4-stage pipelining across 8 GPUs on the small GPT-lite model as (adapted from terminal output):
+4. The memory-efficient pipeline implementation with ZeRO-1 and 4 pipeline stages (<a href="/assets/GPT-lite-DeepSpeed/ds_config_pipe.json">`ds_config_pipe.json`</a>). Note that DeepSpeed will load-balance stages across GPUs, based on parameter count. As an example, DeepSpeed divides the 4-stage pipelining across 8 GPUs on the small GPT-lite model as (adapted from terminal output):
 
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4) STAGE_PARAMS=21256704 (21.257M) \
