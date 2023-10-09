@@ -630,7 +630,7 @@ And finally our GPT-lite (small) model, with 1 input per GPU:
 
 **Pipelining performance for variable number of stages.** As expected, increasing the number of stages strongly decreases the average memory consumption. This is due to the model being partitioned in smaller blocks. There was no substantial decrease in maximum memory consumption, and this is something I am yet to understand (any hints?). The throughput demonstrated a peculiar behaviour: in the deep benchmark model, the throughput increases with the increase of stage count, while the opposite happens on the GPT-lite model. I believe this is due to load imbalance across stages, or a lower ratio of computation vs communication as we increase the stage count on the GPT lite use case.
 
-**Pipelining with optimized vs non-optimized memory efficiency implementation. ** Using the `SpecLayer`-based implementation of the `PipelileModule` in our pipeline runs, resulted in a reduction of about 40% in memory consumption for the GPT-lite and deep benchmark models, respectively, when running the highest possible stage count (8).
+**Pipelining with optimized vs non-optimized memory efficiency implementation.** Using the `SpecLayer`-based implementation of the `PipelileModule` in our pipeline runs, resulted in a reduction of about 40% in memory consumption for the GPT-lite and deep benchmark models, respectively, when running the highest possible stage count (8).
 
 ### General disccusion
 
