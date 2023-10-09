@@ -52,11 +52,11 @@ class BenchmarkDataset(torch.utils.data.Dataset):
       return x, torch.tensor(y, dtype=torch.long)
 
 
-def get_model(W, L, criterion, pipeline_parallel_size=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
+def get_model(W, L, criterion, pipeline_num_stages=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
 
-  if pipeline_parallel_size:
+  if pipeline_num_stages:
     pipe_kwargs={
-      'num_stages': pipeline_parallel_size,
+      'num_stages': pipeline_num_stages,
       'activation_checkpoint_interval': activation_checkpoint_interval, 
       'loss_fn': criterion,
       }
