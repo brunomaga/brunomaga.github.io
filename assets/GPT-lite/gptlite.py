@@ -159,7 +159,7 @@ wei[0]
 
 class Head(nn.Module):
   
-  def __init__(self, head_size=16):
+  def __init__(self, head_size):
     super().__init__()
     self.key   = nn.Linear(n_embd, head_size, bias=False) 
     self.query = nn.Linear(n_embd, head_size, bias=False)
