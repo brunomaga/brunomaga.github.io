@@ -46,7 +46,6 @@ class Head(nn.Module):
     wei = self.dropout(wei)
 
     #perform weighted aggregation of values
-    v = self.value(x) #shape (B,T, head_size)
     out = wei @ v # (B, T, T) @ (B, T, head_size) --> (B, T, head_size)
     return out
 
