@@ -146,7 +146,6 @@ print("after:", k.var(), k.var(), q.var(), wei.var())
 tril = torch.tril(torch.ones(T,T))
 wei = wei.masked_fill(tril==0, float('-inf')) #tokens only "talk" to previous tokens
 wei = F.softmax(wei, dim=-1) #equivalent to the normalization above (-inf in upper diagonal will be 0)
-v = value(x) #shape (B,T, head_size)
 out = wei @ v
 print(out.shape)
 wei[0]
