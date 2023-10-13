@@ -30,9 +30,6 @@ n_embd = 16
 # number of attention heads in the Multi-Attention mechanism
 n_head = 6
 
-# number of heads. this is the $d_k$ in the paper formulation of Attn. Mech
-head_size = 8
-
 # depth of the network as number of decoder blocks.
 # Each block contains a normalization, an attention and a feed forward unit
 n_layer = 5
