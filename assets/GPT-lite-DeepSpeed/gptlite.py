@@ -15,9 +15,6 @@ n_embd = 768
 # number of attention heads in the Multi-Attention mechanism
 n_head = 12
 
-# number of heads. this is the $d_k$ in the paper formulation of Attn. Mech
-head_size = 64
-
 # block size ie max number of training sequence, the $n_{ctx}$ in the paper .
 block_size = 2048
 
@@ -27,7 +24,7 @@ dropout = 0.1
 
 class Head(nn.Module):
 
-  def __init__(self, head_size=16):
+  def __init__(self, head_size):
     super().__init__()
     self.key   = nn.Linear(n_embd, head_size, bias=False)
     self.query = nn.Linear(n_embd, head_size, bias=False)
