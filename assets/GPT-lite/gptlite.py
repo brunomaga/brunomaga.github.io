@@ -138,6 +138,7 @@ value = nn.Linear(C, head_size, bias=False)
 #every input produces a key and a query (independent of the other inputs)
 k = key(x) #shape (B,T, head_size)
 q = query(x) #shape (B,T, head_size)
+v = value(x) #shape (B,T, head_size)
 wei = q @ k.transpose(-2, -1) #shape (B,T, head_size) @ (B,head_size,T) --> (B,T,T)
 print("before:", k.var(), k.var(), q.var(), wei.var())
 wei *= head_size**-0.5 #scale by sqrt(d_k) as per paper, so that variance of the wei is 1. minute 1:17:00
