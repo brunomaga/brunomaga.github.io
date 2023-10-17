@@ -172,7 +172,7 @@ class Head(nn.Module):
     
     #compute self-attention scores
     wei = q @ k.transpose(-2, -1) #shape (B,T, head_size) @ (B,head_size,T) --> (B,T,T)
-    wei *= head_size**-0.5 #scale by sqrt(d_k) as per paper, so that variance of the wei is 1
+    wei *= C**-0.5 #scale by sqrt(d_k) as per paper, so that variance of the wei is 1
     wei = wei.masked_fill(self.tril[:T,:T]==0, float('-inf')) # (B,T,T)
     wei = F.softmax(wei, dim=-1) # (B, T, T)
     wei = self.dropout(wei)
