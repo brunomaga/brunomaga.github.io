@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Building a GPT model from scratch, in C++ and TorchScript"
-categories: [machine learning, Transformer, GPT, LLM, C++]
+title:  "Building a GPT model in C++ and TorchScript from scratch"
+categories: [machine learning, Transformer, GPT, LLM, C++, TorchScript]
 tags: [machinelearning]
 ---
 
