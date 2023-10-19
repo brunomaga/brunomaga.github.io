@@ -23,7 +23,6 @@ Our GPT-lite will be written in the header-only format in the file `gptlite.h`. 
 #pragma once
 
 #include <torch/torch.h>
-#include <torch/script.h>
 
 // replicate GPT-3 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
 
@@ -99,21 +98,21 @@ Also, we do `register_buffer` instead of `register_parameter` on tril because it
 Finally, LibTorch does not allow named arguments like in Python e.g. `bias=False`, so these cant be passed *directly*. The possible constructors are `Linear(in_features, out_features)` or `Linear(LinearOptions(in_features, out_features).bias(False))`, so when we need to pass any named parameters, we use the second constructor and wrap all options inside `LinearOptions`. We now implement the forward pass of `Head`:
 
 ```cpp
-  forward(Tensor x){
+  Tensor forward(Tensor x){
     int B=x.size(0), T=x.size(1), C=x.size(2);
     Tensor k = key(x);   //shape (B,T, head_size)
     Tensor q = query(x); //shape (B,T, head_size)
     Tensor v = value(x); //shape (B,T, head_size)
 
     // compute self-attention scores
-    Tensor wei = torch::matmul(q, k.transpose(-2, -1)); //shape (B,T, head_size) @ (B,head_size,T) --> (B,T,T)
-    wei = wei * std::pow(C,-0.5); //scale by sqrt(d_k) as per paper, so that variance of the wei is 1
+    Tensor wei = torch::matmul(q, k.transpose(-2, -1)); //shape (B,T, T)
+    wei = wei * std::pow(C,-0.5); //scale by sqrt(d_k) 
     wei = wei.masked_fill(tril.slice(0, 0, T).slice(1, 0, T) == 0, -inf);
     wei = F::softmax(wei, -1); // (B, T, T)
     wei = this->dropout(wei);
 
     // perform weighted aggregation of values
-    Tensor out = torch::matmul(wei, v); // (B, T, T) @ (B, T, head_size) --> (B, T, head_size)
+    Tensor out = torch::matmul(wei, v); // shape (B, T, head_size)
     return out;
   }
 ```
@@ -165,10 +164,6 @@ The Feed-forward network simply a single-layer Deep Neural Network and is pretty
 The feed forward network in our model, emphasized in red.
 
 ```cpp
-};
-```
-
-```cpp
 struct FeedForward : nn::Module {
 
   FeedForward(int n_embd) {
@@ -184,7 +179,6 @@ struct FeedForward : nn::Module {
     return net->forward(x);
   }
 }
-
 ```
 
 ### The GPT Block
@@ -230,17 +224,6 @@ There's a subtle difference in the `LayerNorm` initialization. By design, `Layer
 Putting it all together:
 
 ```cpp
-
-  GPTlite(int vocab_size, torch::Device device);
-  Tensor forward(Tensor idx);
-  nn::Embedding token_embedding_table{nullptr}, position_embedding_table{nullptr};
-  nn::Sequential blocks;
-  nn::LayerNorm ln{nullptr};
-  nn::Linear lm_head{nullptr};
-};
-```
-
-```cpp
 struct GPTlite : nn::Module {
 
   GPTlite(int vocab_size){
@@ -279,6 +262,7 @@ struct GPTlite : nn::Module {
 
 We will also study a very simple benchmark model, a simple DNN with `L` layers of width `W`, with a ReLu activation between layers, and defined in `benchmark.h` as:
 ```cpp
+#pragma once
 #include <torch/torch.h>
 
 struct BenchmarkModel : torch::nn::Module {
@@ -304,19 +288,18 @@ struct BenchmarkModel : torch::nn::Module {
 Our `main.cpp` file will contain a loop that will benchmark the train and inference operations of a model for a random input:
 
 ```cpp
-const torch::Device device = torch::cuda::is_available() ? torch::kCUDA : torch::kCPU;
+torch::Device device = torch::cuda::is_available() ? torch::kCUDA : torch::kCPU;
 
 int main(int argc, const char* argv[]) {
 
-    const std::string model_name = "GPTlite";
     const int vocab_size = 65, batch_size=1; 
     const torch::ScalarType Long = torch::ScalarType::Long;
     torch::Tensor idx = torch::randint(0, vocab_size, {batch_size, block_size}, device).to(Long);
     torch::Tensor label = torch::randint(0, vocab_size, {batch_size, block_size}, device).to(Long);
     GPTlite model = GPTlite(vocab_size);
     model.to(device);
-    benchmark_train<GPTlite>(model, idx, label, model_name);
-    benchmark_inference<GPTlite>(model, idx, model_name);
+    benchmark_train<GPTlite>(model, idx, label);
+    benchmark_inference<GPTlite>(model, idx);
 }
 ```
 
@@ -328,7 +311,7 @@ const uint warmup_epochs = 30;
 const uint benchmark_epochs = 30;
 
 template <typename ModelType>
-void benchmark_train(ModelType & model, const torch::Tensor x, const torch::Tensor label, const std::string model_name) {
+void benchmark_train(ModelType & model, torch::Tensor x, torch::Tensor label) {
 
   clock_t start_time;
   torch::Tensor output, loss;
@@ -351,12 +334,62 @@ void benchmark_train(ModelType & model, const torch::Tensor x, const torch::Tens
   }
 
   double benchmark_time = double(clock() - start_time) / CLOCKS_PER_SEC;
-  std::cout << model_name << " train runtime: " << benchmark_time << " seconds" << std::endl;
-  std::cout << model_name << " train throughput: " << benchmark_epochs / benchmark_time << " epochs/second" << std::endl;
+  double throughput = benchmark_epochs / benchmark_time;
+  std::cout << "train runtime: " << benchmark_time << " seconds" << std::endl;
+  std::cout << "train throughput: " << throughput << " epochs/second" << std::endl;
 }
 ``` 
 
-The implementation of `benchmark_inference` is a much simpler loop with `model.eval()` instead and only the `model.forward(x)` instruction in the sample loop.
+The implementation of `benchmark_inference` is a much simpler loop with `model.eval()` instead and only the `model.forward(x)` in the epochs loop. However, it allows the templated types of both the model and input data, to account for the TorchScript-based inference that we will discuss later:
+
+```cpp
+template <typename ModelType, typename InputType = torch::Tensor>
+void benchmark_inference(ModelType & model, InputType x) {
+
+  clock_t start_time;
+  model.eval();
+  
+  { 
+    //no_grad scope, C++ equivalent to 'with torch.no_grad()' in Python
+    torch::NoGradGuard no_grad;
+
+    for (int64_t epoch = 0; epoch < warmup_epochs; ++epoch) 
+      model.forward(x);
+
+    start_time = clock();
+    for (int64_t epoch = 0; epoch < benchmark_epochs; ++epoch)
+      model.forward(x);
+  }
+
+  double benchmark_time = double(clock() - start_time) / CLOCKS_PER_SEC;
+  double throughput = benchmark_epochs / benchmark_time;
+  std::cout << "inference runtime: " << benchmark_time << " seconds" << std::endl;
+  std::cout << "inference throughput: " << throughput << " epochs/second" << std::endl;
+}
+```
+
+### Running inference on TorchScript
+
+We now have completed both the python and C++ implementations. Ideally, we would have the flexibility and speed of development of python, with the low memory footprint and high efficiency of C++. To do that, we will train a model in python, and then load and run in on C++. To do that, we run the following python code after training our model, and this will output the model as a `pt` file:
+
+```python
+model_jit = torch.jit.script(model) 
+# model_jit = torch.jit.trace(model, (x))
+model_jit.save('model_jit.pt')
+```
+
+In C++, we load that module and run it with the following code:
+
+```cpp
+#include <torch/script.h>
+using JitModule = torch::jit::Module;
+using JitInput  = std::vector<torch::jit::IValue>;
+
+JitModule model = torch::jit::load("model_jit.pt").to(device);
+benchmark_inference<JitModule, JitInput>(model, {x});
+```
+
+Note that the type of the model and input data is not `torch::nn::Module` and `torch::Tensor`. Instead, we have `torch::jit::Module` and `std::vector<torch::jit::IValue>`, respectively. Therefore,`benchmark_interface` requires a different templated call with those types in place.
 
 ### Compilation
 
@@ -378,4 +411,8 @@ set_property(TARGET main PROPERTY CXX_STANDARD 17)
 
 ### Benchmark
 
-See the original [source code repository](https://github.com/brunomaga/torchcpp-benchmark/) for all the implementation
+Coming soon
+
+### Download code
+
+See the original [source code repository](https://github.com/brunomaga/torchcpp-benchmark/) or download <a href="/assets/GPT-lite-cpp/torchcpp-benchmark-main.zip">`torchcpp-benchmark-main.zip`</a> for the complete implementation and run instructions.
