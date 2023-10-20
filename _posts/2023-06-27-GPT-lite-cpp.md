@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, LLM, C++, TorchScript]
 tags: [machinelearning]
 ---
 
-After reading the [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), I was keen to try was the new efficiency improvements that came from porting much of the python code into C++ primitives. According to the developers: "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++. Moving internals into C++ makes them less hackable and increases the barrier of entry for code contributions." Also, python's code interpretation and dynamic typing is not efficient, and in many use cases, using C++ compiled code is necessary for e.g. embedded systems, low memory usage and systems without a python runtime installed. The question is: how much faster are the C++ model implementations compared to Python? And did porting some of the Pytorch 1.3.1 code to C++ in the Pytorch 2.x really help? 
+In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/) the developers stated that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++. Moving internals into C++ makes them less hackable and increases the barrier of entry for code contributions." I was keen to try was the new efficiency improvements that came from porting much of the python code into C++ primitives. Python's interpreted execution with dynamic typing on the python runtime is not efficient. And in many use cases, using C++ compiled code is necessary for e.g. embedded systems, low memory usage and systems without a python runtime installed. The question is: how much faster are the C++ model implementations compared to Python? 
 
 In this post, we will look on how to implement the GPT2 model introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) and a Deep Neural Network of arbitrary width and depth in C++ using LibTorch. We will then benchmark these two models on three distinct implementations:
 - the train and inference steps using the original python implementation in python 1.3.1 and 2.1.0;
@@ -441,8 +441,24 @@ cmake .. -DCMAKE_BUILD_TYPE=Release -DCAFFE2_USE_CUDNN=1 -DCAFFE2_USE_CUSPARSELT
 
 ### Benchmark
 
-Coming soon.
+We compared throughput (samples/sec) and GPU memory usage (GBs) on three distinct implementations: the small variant of GPT lite, a deep benchmark model with 2048 layers of 256 activations, and a wide benchmark model of 3 layers of 8192 activations. So we test a very deep, a very shallow and a general case model. For each model, we tested the python PyTorch implementation of train and inference on python 1.3.1 and python 2.1.0, the C++ LibTorch 2.1.0 implementation of train and inference, and the C++ LibTorch inference of a PyTorch module output/loaded with TorchScript. 
+As an important remark, I noticed that both the python in C++ implementations of Torch leak memory on the GPU when several models are alocated in the same run, as the deallocation does not clear the memory completely. For that reason, I ran one run per model.
+The results are the following: 
 
-As an important remark, I noticed that both the python in C++ implementations of Torch leak memory on the GPU when you allocate several models in one row, as the deallocation does not clear the memory completely. So it is recommended to run one model per execution.
-Finally, if you want to replicate this results, see the original [source code repository](https://github.com/brunomaga/torchcpp-benchmark/) or download <a href="/assets/GPT-lite-cpp/torchcpp-benchmark-main.zip">`torchcpp-benchmark-main.zip`</a> for the complete implementation and run instructions.
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/GPT-lite-cpp/benchmark_wide.png"/>
+
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/GPT-lite-cpp/benchmark_deep.png"/>
+
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/GPT-lite-cpp/benchmark_gptlite.png"/>
+
+Looking at the memory usage, we see that - as expected - there are huge memory savings between train (navy blue, orange, and green bars) and inference steps (light blue), in the order of 4x to 10x. 
+
+Looking at performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.0 (navy blue to orange bars), so indeed, porting several PyTorch instructions to C++ really helped in performance, due to less python instruction on its runtime. There's also a small throughput increase of up to 10% on moving from PyTorch 2.1.0 to its C++ equivalent (from orange to green bars), and this is explained again by the python runtime overhead. Finally, the inference when comparing the pure C++ implementation and the TorchScript implementation (train in python, inference in C++) is neglegible, which means that TorchScript does a pretty good job in (de)serializing the model. All these gains were not visible in the Deep DNN model, and that is something that is counter-intuitive to me.
+
+The message here is simple: **for maximum train flexibility and inference efficiency, use PyTorch 2.x to train, LibTorch 2.x to do the inference, and TorchScript to glue both**.
+
+And are done here! If you want to replicate this results, see the original [source code repository](https://github.com/brunomaga/torchcpp-benchmark/) or download <a href="/assets/GPT-lite-cpp/torchcpp-benchmark-main.zip">`torchcpp-benchmark-main.zip`</a> for the complete implementation and run instructions.
 
