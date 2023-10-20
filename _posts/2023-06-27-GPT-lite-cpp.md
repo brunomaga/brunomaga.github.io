@@ -460,5 +460,5 @@ Looking at performance, there is a gain of up to 15% in throughput when moving f
 
 The message here is simple: **for maximum train flexibility and inference efficiency, use PyTorch 2.x to train, LibTorch 2.x to do the inference, and TorchScript to glue both**.
 
-And are done here! If you want to replicate this results, see the original [source code repository](https://github.com/brunomaga/torchcpp-benchmark/) or download <a href="/assets/GPT-lite-cpp/torchcpp-benchmark-main.zip">`torchcpp-benchmark-main.zip`</a> for the complete implementation and run instructions.
+And We are done! If you want to replicate this results, see the original [source code repository](https://github.com/brunomaga/torchcpp-benchmark/) or download <a href="/assets/GPT-lite-cpp/torchcpp-benchmark-main.zip">`torchcpp-benchmark-main.zip`</a> for the complete implementation and run instructions.
 
