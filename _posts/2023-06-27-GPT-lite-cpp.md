@@ -395,11 +395,11 @@ model_jit.save('model_jit.pt')
 ```
 
 As a side note, `torch.jit.script` requires optional arguments in python to be explicitly declared with their `typing` type e.g.:
-```
+```python
   def forward(self, idx, targets: Optional[torch.Tensor]=None):
 ```
 instead of:
-```
+```python
   def forward(self, idx, targets=None):
 ```
 
@@ -435,7 +435,7 @@ set_property(TARGET main PROPERTY CXX_STANDARD 17)
 ``` 
 
 and we will run cmake with 2 extra (optional) flags to compile our code with cuDNN and cuSPARSELt:
-```
+```shell
 cmake .. -DCMAKE_BUILD_TYPE=Release -DCAFFE2_USE_CUDNN=1 -DCAFFE2_USE_CUSPARSELT=1
 ```
 
