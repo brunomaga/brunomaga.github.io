@@ -5,9 +5,9 @@ categories: [machine learning, Transformer, GPT, LLM, C++, TorchScript]
 tags: [machinelearning]
 ---
 
-In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/) the developers stated that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++. Moving internals into C++ makes them less hackable and increases the barrier of entry for code contributions." I was keen to try was the new efficiency improvements that came from porting much of the python code into C++ primitives. Python's interpreted execution with dynamic typing on the python runtime is not efficient. And in many use cases, using C++ compiled code is necessary for e.g. embedded systems, low memory usage and systems without a python runtime installed. The question is: how much faster are the C++ model implementations compared to Python? 
+In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the developers stated that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++." I was keen to measure the new efficiency improvements that came from porting much of the python code into C++ primitives. In general, we know that python's execution of interpreted code with dynamic typing on a runtime is not efficient. And in many use cases, using C++ compiled code is necessary for e.g. embedded systems, low memory usage and systems without the python runtime installed. However, C++ code is harder and slow to write compared to python. The question is: is it worh it? How much faster are the C++ model implementations compared to Python? 
 
-In this post, we will look on how to implement the GPT2 model introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) and a Deep Neural Network of arbitrary width and depth in C++ using LibTorch. We will then benchmark these two models on three distinct implementations:
+In this post, we will look on how to implement in C++ the GPT2 model introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) and a Deep Neural Network of arbitrary width and depth. We will then benchmark these two models on three distinct implementations:
 - the train and inference steps using the original python implementation in python 1.3.1 and 2.1.0;
 - the train and inference steps using the C++ LibTorch 2.1.0 implementation;
 - the inference step, using [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html) 2.1.0 to output a model trained in python, and then load it with C++ Libtorch to perform inference;
@@ -18,15 +18,15 @@ In this post, we will look on how to implement the GPT2 model introduced in [Bui
 <img width="22%" height="22%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
-In this post, we will implement in C++ a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and a benchmark model which is a Deep Neural Network with an input and output of size W, and L layers of dimensionality W (right).
+We will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a Deep Neural Network with L layers of dimensionality W (right).
 
 ### GPTlite on LibTorch C++
 
-We will start with the GPT2 implementation in C++. The sections that follow match exactly the structure of the [post with the GPT2 implementation in Python]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %})
+We will start with the GPT implementation in C++. The sections that follow match exactly the structure of the [post with the GPTlite implementation in Python]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %})
 
 #### Hyperparameters
 
-Our GPT-lite will be written in the header-only format in the file `gptlite.h`. We start with the hyperparameter declarations:
+Our GPTlite will be written in the header-only format in the file `gptlite.h`. We start with the hyperparameter declarations:
 
 ```cpp
 #pragma once
@@ -50,14 +50,14 @@ const int block_size = 2048;
 // dropout rate (variable p) for dropout units, renamed to avoid ambiguity
 const float dropout_p = 0.1;
 
-// namespace and type shortcuts
+// namespace and data type aliases
 namespace nn = torch::nn;
 using Tensor = torch::Tensor;
 ```
 
 #### Multi-Head Masked Attention
 
-Remember the original formulation, where $$W^Q$$, $$W^K$$ and $$W^V$$ are matrices / projections / linear layers:
+Remember the original formulation of the multi-head shared attention heads, where $$W^Q$$, $$W^K$$ and $$W^V$$ are matrices / projections / linear layers:
 
 $$
 MultiHead(Q, K, V ) = Concat(head_1, ..., head_h)W^O
@@ -72,13 +72,15 @@ $$
 $$
 
 
+Together with the upper-diagonal mask, this is the underlying structure of each of the N attention blocks in the model:
+
 {: style="text-align:center; font-size: small;"}
 <img width="19%" height="19%" src="/assets/GPT-lite/gpt_lite_attention.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The multi-head (Nx) attention module in our model, emphasized in red.
+The multi-head (Nx) attention module in the GPTlite model, emphasized in red.
 
-So the for the multi-attention head follows the same logic. We start by defining a single attention head:
+The C++ code is analogous to the python implementation. We start by defining a single attention head:
 
 ```cpp
 struct Head : nn::Module {
@@ -119,16 +121,16 @@ struct Head : nn::Module {
 }
 ```
 
-In order to keep the code small and clean, `Head` is define as a `struct` and not as a `class`, so that all members are public and not private by default.
-Note the `register_module` operator that is not needed in the python implementation. Why do we need this? In practice, C++ has no reflection, so it cannot iterate over a class variables, unless they're declared somewhere. However, we need this features, so that LibTorch can iterate class members for e.g. parameter count, recursive copy of submodules to GPU when you call `moduel.to(device)`, etc. There are two options to create this iterator, and in this post we will use both:
-1. We can keep all modules inside an iterator that LibTorch understands e.g. `nn::Sequential` and apply paramater count of move-to-GPU operations on the whole collection;
-2. The other cleaner alternative, to avoid calling `module->to(device)` in every single module, is to run `register_parameter`, `register_buffer` and `register_module` to register them during initialization of the class.
+In order to keep the code small and clean, `Head` and all our modules that follow will be defined as a `struct` and not as a `class`, so that all members are public and not private by default.
+Note the `register_module` operator that is not needed in the python implementation. Why do we need this? In practice, C++ has no reflection, so it cannot iterate over a class variables, unless they're declared somewhere. However, we need this iterator feature, so that LibTorch can iterate class members for e.g. parameter count, recursive copy of submodules to a device, back propagation of weights among several heads, etc. There are two options to create this iterator, and in this post we will use both:
+1. We can keep all modules inside an LibTorch container such `nn::Sequential` or `nn::ModuleList`. Applying a function to the container will recursively apply it to every module inside;
+2. We can call `register_parameter`, `register_buffer` and `register_module` to register parameters, buffers or modules during initialization, and LibTorch will keep track of these internally.
 
-Also, we do `register_buffer` instead of `register_parameter` on tril because it is a tensor that is not a parameter, but is a state, i.e. torch will not record it's gradients.
+Also, in the code above, we do `register_buffer` on tril because it is a tensor that is not a parameter, but a state, i.e. torch will not record its gradients.
 
-Finally, LibTorch does not allow named arguments like in Python e.g. `bias=False`, so these cant be passed *directly*. The possible constructors are `Linear(in_features, out_features)` or `Linear(LinearOptions(in_features, out_features).bias(False))`, so when we need to pass any named parameters, we use the second constructor and wrap all options inside `LinearOptions`. We now implement the forward pass of `Head`:
+Finally, LibTorch does not allow named arguments like in Python e.g. `bias=False`, so these cannot be passed *directly*. The possible constructors are `Linear(in_features, out_features)` or `Linear(LinearOptions(in_features, out_features).bias(False))`, so when we need to pass any named parameters, we use the second constructor and wrap all options inside `LinearOptions`.
 
-We'll now combine (merge) the output of all heads into our Multi-Head Shared-Attention module.
+We will now combine (concatenate) the output of all heads into our multi-head shared-attention module:
 
 ```cpp
 struct MultiHeadAttention : nn::Module {
@@ -164,28 +166,28 @@ struct MultiHeadAttention : nn::Module {
 }
 ```
 
-We don't use `std` containers of C++ arrays to store modules, but `nn::ModuleList` or `nn::Sequential` instead, because it enforces the collection of modules to be called as a single module. Any function applied to the collection of modules - e.g. `.to(device)` - is then applied automatically to all modules inside. The tricky bit here is that `nn::ModuleList` stores elements of type `nn::Module` that need to be casted dynamically with `module->as<Head>()` before calling internal functions.
+Again, we used `nn::ModuleList` as a container, instead of any std-library container. Containers in C++ are declared for a given fixed element type. So, the tricky bit here is that `nn::ModuleList` stores elements of type `nn::Module` that needs to be casted dynamically to its base type `Head` with `module->as<Head>()` before calling the internal members of the instantiated `Head`.
 
 #### Feed Forward Network
 
-The Feed-forward network simply a single-layer Deep Neural Network and is pretty straighforward to implement:
+The Feed-forward network is a two-layer Deep Neural Network and is pretty straighforward to implement:
 
 {: style="text-align:center; font-size: small;"}
 <img width="19%" height="19%" src="/assets/GPT-lite/gpt_lite_feedforward.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The feed forward network in our model, emphasized in red.
+The feed forward network in the GPTlite model, emphasized in red.
 
 ```cpp
 struct FeedForward : nn::Module {
 
   FeedForward(int n_embd) {
     nn::Sequential net = nn::Sequential(
-        nn::Linear(n_embd, n_embd*4),
-        nn::ReLU(),
-        nn::Linear(n_embd*4, n_embd),
-        nn::Dropout(dropout_p)
-	);
+      nn::Linear(n_embd, n_embd*4),
+      nn::ReLU(),
+      nn::Linear(n_embd*4, n_embd),
+      nn::Dropout(dropout_p)
+      );
     register_module("net", net);
 
   Tensor forward(Tensor x) {
@@ -202,7 +204,7 @@ We'll call GPT *block* the sequence of a multi-head attention and a feedforward 
 <img width="19%" height="19%" src="/assets/GPT-lite/gpt_lite_blocks.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The GPT block(s) in our model, emphasized in red.
+The GPT block(s) in the GPTlite model, emphasized in red.
 
 ```cpp
 struct Block : nn::Module {
@@ -230,11 +232,11 @@ struct Block : nn::Module {
 }
 ```
 
-You will notice we will use heavily `shared_ptr` to wrap our classes. It is not accidental. In fact, all LitTorch modules are a shared pointer to the implementation of a given class. Thus, all `torch::nn` modules can be passed by value directly. E.g. the linear layer `nn::Linear` is just and alias for `std::shared_ptr<nn::LinearImpl>`, where `LinearImpl` is the implementation. Because of this, the documentation suggests initializing modules with `nullptr` as default value of the pointer, and initialize dynamically the classes lates, because the alternative would to call the default constructor `Linear()` which is not defined.
+You will notice we will be using `shared_ptr` to wrap our classes. It is not accidental. In fact, all LibTorch modules are a shared pointer to the implementation of a given class. Thus, all `torch::nn` modules can be passed by value directly. E.g. the linear layer `nn::Linear` is just an alias for `std::shared_ptr<nn::LinearImpl>`, where `nn::LinearImpl` is the implementation. Because of this, the documentation suggests initializing modules with `nullptr` as the default value of the pointer, and initializing the implementation dynamically later when needed. This is because the alternative of not initializing the pointer would call the default constructor e.g. `Linear()` which is not defined, and lead to a compilation error.
 
-There's a subtle difference in the `LayerNorm` initialization. By design, `LayerNorm` accepts a list of normalized dimensions as input. Alternatively, when a single `int` value is passed, only the last dimension of the input is normalized, and will resized to the integer argument value. This is the default behaviour in Python. However In C++, `LayerNorm` does not include the 'single integer' constructor initialization, so we have to pass it as a singleton list.
+There's also a subtle difference in the `LayerNorm` initialization. By design, `LayerNorm` accepts a list of normalized dimensions as input. Alternatively, in the python implementation, when a single `int` value is passed, only the last dimension of the input is normalized, and will be resized to the integer value. However, in C++, `LayerNorm` does not include the constructor initialization with a single integer argument, so we have to use the general constructor and pass it as a singleton list.
 
-#### Final Model
+#### Final GPTlite Model
 
 Putting it all together:
 
@@ -320,11 +322,11 @@ int main(int argc, const char* argv[]) {
 ```
 
 
-As an important remark, LibTorch does not include a C++ equivalent to `torch.set_default_device`, so we have to manually move to the GPU every sample, label and model. And because we registered every parameter, buffer and module previously, doing `model.to(device)` will recursively copy all the contents in the model. The final functions `benchmark_train` and `benchmark_inference` perform the benchmark of method several train and inference epochs, respectively. The implementation is (again) very similar to PyTorch:
+As an important remark, LibTorch does not include a C++ equivalent to `torch.set_default_device`, so we have to manually move to the GPU every datapoint and module. And because we registered every parameter, buffer and module previously, doing `model.to(device)` will recursively copy all the contents in the model to the device. The final functions `benchmark_train` and `benchmark_inference` perform the benchmark of method several train and inference epochs, respectively. The C++ implementation is analogous to its python counterpart, however we'll use a templated `typename ModelType` to cover all possible model implementations:
 
 ```cpp
-const uint warmup_epochs = 30;
-const uint benchmark_epochs = 30;
+const uint warmup_epochs = 30;  // number of epochs to run before benchmarking
+const uint benchmark_epochs = 30;  // number of epochs to benchmark
 
 template <typename ModelType>
 void benchmark_train(ModelType & model, torch::Tensor x, torch::Tensor label) {
@@ -356,7 +358,7 @@ void benchmark_train(ModelType & model, torch::Tensor x, torch::Tensor label) {
 }
 ``` 
 
-The implementation of `benchmark_inference` is a much simpler loop with `model.eval()` instead, the `torch::NoGradGuard` variable (equivalent to `with torch.no_grad():` in python), and only a forward pass in the epochs loop. However, it allows the templated types of both the model and input data, to account for the TorchScript-based inference that we will discuss later:
+The implementation of `benchmark_inference` is a much simpler loop with `model.eval()` instead, the `torch::NoGradGuard` variable (equivalent to `with torch.no_grad()` in python), and only a forward pass in the epochs loop. However, we add an extra templated type for the input data, to support the TorchScript-based inference that we will discuss in the next chapter:
 
 ```cpp
 template <typename ModelType, typename InputType = torch::Tensor>
@@ -386,7 +388,7 @@ void benchmark_inference(ModelType & model, InputType x) {
 
 ### Running inference on TorchScript
 
-In ideal scenarions, we would want the flexibility and speed of development of python, with the low memory footprint and high efficiency of C++. This is possible with [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html). To do that, we will train the model `model` in python and output it as a binary `model_jut.pt` file, via:
+In ideal scenarions, we would want the flexibility and speed of development of python, with the low memory footprint and high efficiency of C++. This is possible with [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html). To do that, we will train the model `model` in python and output it as the binary `model_jit.pt` file, via:
 
 ```python
 model_jit = torch.jit.script(model) 
@@ -394,16 +396,16 @@ model_jit = torch.jit.script(model)
 model_jit.save('model_jit.pt')
 ```
 
-As a side note, `torch.jit.script` requires optional arguments in python to be explicitly declared with their `typing` type e.g.:
-```python
-  def forward(self, idx, targets: Optional[torch.Tensor]=None):
-```
-instead of:
-```python
-  def forward(self, idx, targets=None):
-```
+[//]: # As a side note, `torch.jit.script` requires optional arguments in python to be explicitly declared with their `typing` type e.g.:
+[//]: # ```python
+[//]: #   def forward(self, idx, targets: Optional[torch.Tensor]=None):
+[//]: # ```
+[//]: # instead of:
+[//]: # ```python
+[//]: #   def forward(self, idx, targets=None):
+[//]: # ```
 
-In C++, we [follow the LibTorch documentation](https://pytorch.org/tutorials/advanced/cpp_export.html) to load and run inference on a model with the following code:
+On the inference side, in C++, we [follow the LibTorch documentation](https://pytorch.org/tutorials/advanced/cpp_export.html) and will load and run inference on that model with the following code:
 
 ```cpp
 #include <torch/script.h>
@@ -414,7 +416,7 @@ JitModule model = torch::jit::load("model_jit.pt").to(device);
 benchmark_inference<JitModule, JitInput>(model, {x});
 ```
 
-Note that the type of the model and input data is not `torch::nn::Module` and `torch::Tensor`. Instead, we have `torch::jit::Module` and `std::vector<torch::jit::IValue>`, respectively. Therefore,`benchmark_interface` requires a different templated call with those types in place.
+Note that the type of the model and input data is not `torch::nn::Module` and `torch::Tensor` as before. Instead, we have `torch::jit::Module` and `std::vector<torch::jit::IValue>`, respectively. This justifies the use of the templates on the definition of `benchmark_interface`.
 
 ### Compilation
 
@@ -434,15 +436,19 @@ target_link_libraries(main "${TORCH_LIBRARIES}")
 set_property(TARGET main PROPERTY CXX_STANDARD 17)
 ``` 
 
-and we will run cmake with 2 extra (optional) flags to compile our code with cuDNN and cuSPARSELt:
+and we will run cmake with 2 extra (optional) flags to compile our C++ code with the cuDNN and cuSPARSELt libraries:
 ```shell
 cmake .. -DCMAKE_BUILD_TYPE=Release -DCAFFE2_USE_CUDNN=1 -DCAFFE2_USE_CUSPARSELT=1
 ```
 
 ### Benchmark
 
-We compared throughput (samples/sec) and GPU memory usage (GBs) on three distinct implementations: the small variant of GPT lite, a deep benchmark model with 2048 layers of 256 activations, and a wide benchmark model of 3 layers of 8192 activations. So we test a very deep, a very shallow and a general case model. For each model, we tested the python PyTorch implementation of train and inference on python 1.3.1 and python 2.1.0, the C++ LibTorch 2.1.0 implementation of train and inference, and the C++ LibTorch inference of a PyTorch module output/loaded with TorchScript. 
-As an important remark, I noticed that both the python in C++ implementations of Torch leak memory on the GPU when several models are alocated in the same run, as the deallocation does not clear the memory completely. For that reason, I ran one run per model.
+We compared the throughput (samples/sec) and GPU memory usage (GBs) of three distinct implementations: the small variant of GPTlite, a deep benchmark model made of 2048 layers with 256 activations per layer, and a wide benchmark model of 3 layers with 8192 activations each. So we are testing a very deep, a very shallow and a large text generation model. For each model, we tested:
+- the python PyTorch implementation of training and inference on python 1.3.1 and python 2.1.0;
+- the C++ LibTorch 2.1.0 implementation of train and inference; and
+- the C++ LibTorch 2.1.0 inference of a model created with Pytorch and loaded with TorchScript. 
+
+As an important remark, I noticed that both the python and C++ implementations of Torch leak memory on the GPU when several models are allocated in the same run, as the deallocation does not clear the memory completely. For that reason, I executed a new run per benchmark value.
 The results are the following: 
 
 {: style="text-align:center; font-size: small;"}
@@ -454,11 +460,11 @@ The results are the following:
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/GPT-lite-cpp/benchmark_gptlite.png"/>
 
-Looking at the memory usage, we see that - as expected - there are huge memory savings between train (navy blue, orange, and green bars) and inference steps (light blue), in the order of 4x to 10x. 
+Looking at the memory usage, we see that there is a much smaller memory requirement for inference-only runs (light blue bars), compared to runs that performed train and inference (navy blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training leads to an increase in memory in the order of 4x to 10x. 
 
-Looking at performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.0 (navy blue to orange bars), so indeed, porting several PyTorch instructions to C++ really helped in performance, due to less python instruction on its runtime. There's also a small throughput increase of up to 10% on moving from PyTorch 2.1.0 to its C++ equivalent (from orange to green bars), and this is explained again by the python runtime overhead. Finally, the inference when comparing the pure C++ implementation and the TorchScript implementation (train in python, inference in C++) is neglegible, which means that TorchScript does a pretty good job in (de)serializing the model. All these gains were not visible in the Deep DNN model, and that is something that is counter-intuitive to me.
+Looking at the performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.0 (navy blue to orange bars), so indeed, porting several PyTorch instructions to C++ really helped in performance, due to less python instruction executed on the python runtime. There is also a small throughput increase of up to 10% when moving from python and PyTorch 2.1.0 to its C++ LibTorch equivalent (from orange to green bars), and this is explained again by the python runtime overhead. Finally, the inference when comparing the pure C++ implementation and the TorchScript implementation (train in python, inference in C++) is neglegible, which means that TorchScript does a pretty good job in (de)serializing the model. All these gains were not visible in the Deep DNN model, and that is something that is counter intuitive to me.
 
 The message here is simple: **for maximum train flexibility and inference efficiency, use PyTorch 2.x to train, LibTorch 2.x to do the inference, and TorchScript to glue both**.
 
-And We are done! If you want to replicate this results, see the original [source code repository](https://github.com/brunomaga/torchcpp-benchmark/) or download <a href="/assets/GPT-lite-cpp/torchcpp-benchmark-main.zip">`torchcpp-benchmark-main.zip`</a> for the complete implementation and run instructions.
+And we reached the end of this post! If you want to replicate these results, see the original [source code repository](https://github.com/brunomaga/torchcpp-benchmark/) or download <a href="/assets/GPT-lite-cpp/torchcpp-benchmark-main.zip">`torchcpp-benchmark-main.zip`</a> for the complete implementation and run instructions.
 
