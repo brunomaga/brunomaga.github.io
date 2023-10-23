@@ -30,7 +30,6 @@ Our GPTlite will be written in the header-only format in the file `gptlite.h`. W
 
 ```cpp
 #pragma once
-
 #include <torch/torch.h>
 
 // replicate GPT-3 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
@@ -306,6 +305,9 @@ struct BenchmarkModel : torch::nn::Module {
 Our `main.cpp` file will contain a loop that will benchmark the train and inference operations of a model for a random input:
 
 ```cpp
+#include "gptlite.h"
+#include "benchmark.h"
+
 torch::Device device = torch::cuda::is_available() ? torch::kCUDA : torch::kCPU;
 
 int main(int argc, const char* argv[]) {
