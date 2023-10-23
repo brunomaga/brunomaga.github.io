@@ -386,7 +386,7 @@ void benchmark_inference(ModelType & model, InputType x) {
 }
 ```
 
-### Running inference on TorchScript
+### TorchScript: python for training, C++ for inference
 
 In ideal scenarions, we would want the flexibility and speed of development of python, with the low memory footprint and high efficiency of C++. This is possible with [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html). To do that, we will train the model `model` in python and output it as the binary `model_jit.pt` file, via:
 
@@ -446,7 +446,7 @@ cmake .. -DCMAKE_BUILD_TYPE=Release -DCAFFE2_USE_CUDNN=1 -DCAFFE2_USE_CUSPARSELT
 We compared the throughput (samples/sec) and GPU memory usage (GBs) of three distinct implementations: the small variant of GPTlite, a deep benchmark model made of 2048 layers with 256 activations per layer, and a wide benchmark model of 3 layers with 8192 activations each. So we are testing a very deep, a very shallow and a large text generation model. For each model, we tested:
 - the python PyTorch implementation of training and inference on python 1.3.1 and python 2.1.0;
 - the C++ LibTorch 2.1.0 implementation of train and inference; and
-- the C++ LibTorch 2.1.0 inference of a model created with Pytorch and loaded with TorchScript. 
+- the TorchScript combo, using PyTorch 2.1.0 to train and output the model, and C++ LibTorch 2.1.0 to load and perform inference. 
 
 As an important remark, I noticed that both the python and C++ implementations of Torch leak memory on the GPU when several models are allocated in the same run, as the deallocation does not clear the memory completely. For that reason, I executed a new run per benchmark value.
 The results are the following: 
