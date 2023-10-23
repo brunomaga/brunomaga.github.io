@@ -305,7 +305,6 @@ struct BenchmarkModel : torch::nn::Module {
 Our `main.cpp` file will contain a loop that will benchmark the train and inference operations of a model for a random input:
 
 ```cpp
-#include <torch/script.h>
 #include "gptlite.h"
 #include "benchmark.h"
 
@@ -411,6 +410,7 @@ model_jit.save('model_jit.pt')
 On the inference side, in C++, we [follow the LibTorch documentation](https://pytorch.org/tutorials/advanced/cpp_export.html) and will load and run inference on that model with the following code:
 
 ```cpp
+#include <torch/script.h>
 using JitModule = torch::jit::Module;
 using JitInput  = std::vector<torch::jit::IValue>;
 
