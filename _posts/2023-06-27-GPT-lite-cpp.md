@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Building and Benchmarking a GPT model in C++ and TorchScript"
+title:  "Building a GPT model in C++, then benchmarking against Python and TorchScript"
 categories: [machine learning, Transformer, GPT, LLM, C++, TorchScript]
 tags: [machinelearning]
 ---
@@ -18,7 +18,7 @@ In this post, we will look on how to implement in C++ the GPT2 model introduced 
 <img width="22%" height="22%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
-We will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a Deep Neural Network with L layers of dimensionality W (right).
+In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark the C++, PyTorch and TorchScript implementations.
 
 ### GPTlite on LibTorch C++
 
