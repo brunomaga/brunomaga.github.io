@@ -464,7 +464,7 @@ Looking at the memory usage, we see that there is a much smaller memory requirem
 
 Looking at the performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.0 (navy blue to orange bars), so indeed, porting several PyTorch instructions to C++ really helped in performance, due to less python instruction executed on the python runtime. There is also a small throughput increase of up to 10% when moving from python and PyTorch 2.1.0 to its C++ LibTorch equivalent (from orange to green bars), and this is explained again by the python runtime overhead. Finally, the inference when comparing the pure C++ implementation and the TorchScript implementation (train in python, inference in C++) is neglegible, which means that TorchScript does a pretty good job in (de)serializing the model. All these gains were not visible in the Deep DNN model, and that is something that is counter intuitive to me.
 
-The message here is simple: **for maximum train flexibility and inference efficiency, use PyTorch 2.x to train, LibTorch 2.x to do the inference, and TorchScript to glue both**.
+The final message is: **for the best training flexibility and inference efficiency, use PyTorch 2.x to train, LibTorch 2.x to do inference, and TorchScript to glue both**.
 
 And we reached the end of this post! If you want to replicate these results, see the original [source code repository](https://github.com/brunomaga/torchcpp-benchmark/) or download <a href="/assets/GPT-lite-cpp/torchcpp-benchmark-main.zip">`torchcpp-benchmark-main.zip`</a> for the complete implementation and run instructions.
 
