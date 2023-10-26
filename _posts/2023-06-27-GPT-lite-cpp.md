@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Building and Benchmarking a GPT model in C++ and TorchScript"
+title:  "Building a GPT in C++ LibTorch, and benchmarking against PyTorch and TorchScript"
 categories: [machine learning, Transformer, GPT, LLM, C++, TorchScript]
 tags: [machinelearning]
 ---
