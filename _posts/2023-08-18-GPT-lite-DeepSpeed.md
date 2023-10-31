@@ -97,7 +97,7 @@ def get_model(vocab_size):
   return GPTlite(vocab_size)
 ```
 
-#### Detour: using other model or dataset
+#### Detour: using a torchvision model
 
 Note that `model` is of type `torch.nn.Module` and `train_dataset` is of type `torch.utils.data.Dataset`. In practice, **any model and dataset can be used** in the code that follows. As an example, if you'd want to perform a multi-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd rewrite the previous 2 methods as:
 
@@ -120,7 +120,17 @@ def get_model(num_classes):
 
 As a relevant remark, pre-existing models do not define activation checkpointing layers and pipelining layers that are required to activate these two features (discuss later). 
 
-If we'd want instead to test the response of DeepSpeed scaling to a simple model of varying widths and depths, we'd use this code for a simple DNN with layer width `W` and `L` layers:
+#### Detour: creating a benchmark model
+
+If we'd want instead to test the response of DeepSpeed scaling to a simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, and input and output of size `W`:
+
+{: style="text-align:center; font-size: small;"}
+<img width="20%" height="20%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The *benchmark model*, a DNN with L layers of dimensionality W (right)
+
+The C++ implementation in `benchmark.py` is straightforward:
 
 ```python
 ### benchmark.py 
