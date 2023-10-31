@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Large-scale training of a GPT model with DeepSpeed"
+title:  "Distributed training of a large GPT model with DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
