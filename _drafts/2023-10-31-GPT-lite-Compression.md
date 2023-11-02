@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Low latency, low footprint inference on a GPT model via model compression and distillation"
+title:  "Faster inference on a GPT model via model compression and distillation"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
