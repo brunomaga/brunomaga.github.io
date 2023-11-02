@@ -122,15 +122,15 @@ As a relevant remark, pre-existing models do not define activation checkpointing
 
 #### Detour: creating a benchmark model
 
-If we'd want instead to test the response of DeepSpeed scaling to a simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, and input and output of size `W`:
+If we'd want instead to test the response of DeepSpeed scaling to a simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, an input of size `W` and a categorical output of `W` labels. We create random input tensors drawn from an uniform distribution, and the assigned label computed as the modulum of the sum of squares of the input:
 
 {: style="text-align:center; font-size: small;"}
-<img width="20%" height="20%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
+<img width="22%" height="22%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The *benchmark model*, a DNN with L layers of dimensionality W (right)
 
-The C++ implementation in `benchmark.py` is straightforward:
+The implementation of the benchmark model in `benchmark.py` is straightforward:
 
 ```python
 ### benchmark.py 
@@ -597,7 +597,7 @@ This metric is very useful as it gives a quick overview of scaling and is very f
 
 ### Benchmark
 
-To measure our performance, we used the deepspeed logger to extract the following metrics from different runs at every 10 steps: model throughput as average number of samples per second, the average allocated memory, and the maximum allocated memory. We used `pytorch==2.01`, CUDA `11.7` and `deepspeed==0.10.3`. The code for the main loop is in <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a>, the GPT-lite and benchmark models are in <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> and <a href="/assets/GPT-lite-DeepSpeed/benchmark.py">`benchmark.py`</a>, and the launch script is in <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a>.
+To measure our performance, we used the deepspeed logger to extract the following metrics from different runs at every 10 steps: model throughput as average number of samples per second, the average allocated memory, and the maximum allocated memory. We used `pytorch==2.01`, CUDA `11.7` and `deepspeed==0.10.3`.
 
 All implementations use the same mixed-precision representation, communication bucket sizes, activation checkpointing (disabled), and other config parameters. We benchmarked the following implementations (and configs):
 
@@ -652,7 +652,7 @@ Finally, finding the best parallelism strategy, and choosing between different Z
 
 There is a lot of food for thought here, and I will be updating this post as I find new insights...
 
-### Further resources
+### Further resources and Code
 
 We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored:
 - [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
@@ -669,3 +669,4 @@ We just scratched the surface of DeepSpeed capabilities. There are plenty of res
 
 For general documentation, I recommend the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
+All done! If you want to try this on your own, the code for the main loop is in <a href="/assets/GPT-lite-DeepSpeed/train.py">`train.py`</a>, the GPT-lite and benchmark models are in <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a> and <a href="/assets/GPT-lite-DeepSpeed/benchmark.py">`benchmark.py`</a>, and the launch script is in <a href="/assets/GPT-lite-DeepSpeed/run.sh">`run.sh`</a>.
