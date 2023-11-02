@@ -1,10 +1,15 @@
-import torch
-import torch.nn.functional as F
 import os
 import time
+import torch
+import torch.nn.functional as F
+import sys
+sys.path.insert(0, os.path.join('..', 'GPT-lite-DeepSpeed'))
 
-import gptlite
 import benchmark
+import gptlite
+from benchmark import get_model, get_dataset
+from gptlite import get_model, get_dataset
+
 benchmark_model_W_L = (1024, 1024)
 
 label_filename = lambda batch, folder: os.path.join(folder,f"{batch}.pt") 
