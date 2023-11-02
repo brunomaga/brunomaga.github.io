@@ -15,7 +15,7 @@ In this post, we will look on how to implement in C++ the GPT2 model introduced 
 {: style="text-align:center; font-size: small;"}
 <img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="20%" height="20%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
+<img width="22%" height="22%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
 In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark the C++, PyTorch and TorchScript implementations.
@@ -276,7 +276,7 @@ struct GPTlite : nn::Module {
 
 ### Benchmark Model on LibTorch C++
 
-We will define a simple benchmark model, which is simply a DNN with `L` layers of width `W`, input of size `W`, output of size `W`, and a ReLu activation between layers. This is defined in `benchmark.h` as:
+We will define a simple benchmark model, which is simply a DNN with `L` layers of width `W`, input of size `W`, and a categorical output of `W` possible classes, with a ReLu activation between layers. This is defined in `benchmark.h` as:
 
 ```cpp
 #pragma once

@@ -16,15 +16,14 @@ Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Perf
 
 <!-- CSS of table defined in _includes/head.html -->
 <div class="Rtable Rtable--3cols Rtable--collapse">
-  <!-- <div class="Rtable-cell"> <a href="{{site.resume}}"><i class="far fa-file"></i> resume</a> </div> -->
-  <!-- <div class="Rtable-cell"> <a href="{{site.cv}}"><i class="far fa-file"></i> full cv</a> </div> -->
-  <div class="Rtable-cell"> <a href="mailto:{{ site.author.email }}?subject=Hello"><i class="far fa-envelope" title="Email"></i> {{site.author.email}}</a> </div>
-  <div class="Rtable-cell"> <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}"> <i class="fab fa-linkedin" ></i> {{ site.linkedin_username }}</a> </div>
-  <div class="Rtable-cell"> <a href="https://github.com/{{ site.github_username }}"><i class="fab fa-fw fa-github" ></i> {{ site.github_username}}</a> </div>
+  <!-- <div class="Rtable-cell"> <a href="{{site.resume}}"><i class="far fa-file">&nbsp;</i>resume</a> </div> -->
+  <div class="Rtable-cell"> <a href="mailto:{{ site.author.email }}?subject=Hello"><i class="far fa-envelope" title="Email">&nbsp;</i>{{site.author.email}}</a> </div>
+  <div class="Rtable-cell"> <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}"> <i class="fab fa-linkedin" >&nbsp;</i>{{ site.linkedin_username }}</a> </div>
+  <div class="Rtable-cell"> <a href="https://github.com/{{ site.github_username }}"><i class="fab fa-fw fa-github" >&nbsp;</i>{{ site.github_username}}</a> </div>
   <!-- <div class="Rtable-cell"> <a href="https://twitter.com/{{ site.twitter_username }}"> <i class="fab fa-fw fa-twitter" ></i> {{ site.twitter_username }}</a> </div> -->
-  <div class="Rtable-cell"> <a href="{{ site.google_scholar }}"> <i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> google scholar</a> </div>
-  <div class="Rtable-cell"> <a href="{{ site.url }}"><i class="fas fa-mouse-pointer"></i> {{site.url | replace:'http://','' | replace:'https://','' }}</a> </div>
-  <div class="Rtable-cell"> <i class="fas fa-passport" title="Nationality"></i> <a href="https://en.wikipedia.org/wiki/Lusitanians">Portuguese</a> and <a href="https://en.wikipedia.org/wiki/Helvetii">Swiss</a></div>
+  <div class="Rtable-cell"> <a href="{{ site.google_scholar }}"> <i class="ai ai-google-scholar ai-1x" title="Google Scholar">&nbsp;</i>google scholar</a> </div>
+  <div class="Rtable-cell"> <a href="{{ site.url }}"><i class="fas fa-mouse-pointer">&nbsp;</i>{{site.url | replace:'http://','' | replace:'https://','' }}</a> </div>
+  <div class="Rtable-cell"> <i class="fas fa-passport" title="Nationality"></i>&nbsp;<a href="https://en.wikipedia.org/wiki/Lusitanians">Portuguese</a> and <a href="https://en.wikipedia.org/wiki/Helvetii">Swiss</a></div>
 </div>
 
 
