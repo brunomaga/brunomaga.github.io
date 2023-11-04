@@ -52,9 +52,10 @@ class BenchmarkDataset(torch.utils.data.Dataset):
       return x, torch.tensor(y, dtype=torch.long)
 
 
-def get_model(W, L, criterion, pipeline_num_stages=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
+def get_model(W, L, criterion=None, pipeline_num_stages=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):
 
   if pipeline_num_stages:
+    assert criterion is not None, "for pipeline runs, need to specify criterion"
     pipe_kwargs={
       'num_stages': pipeline_num_stages,
       'activation_checkpoint_interval': activation_checkpoint_interval, 
