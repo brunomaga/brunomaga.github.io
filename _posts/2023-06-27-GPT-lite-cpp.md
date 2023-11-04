@@ -468,5 +468,5 @@ Looking at the performance, there is a gain of up to 15% in throughput when movi
 
 The final message is: **for the best training flexibility and inference efficiency, use PyTorch 2.x to train, LibTorch 2.x to do inference, and TorchScript to glue both**.
 
-And we reached the end of this post! If you want to replicate these results, see the [GPT-lite-cpp repo](https://github.com/brunomaga/gptlite/tree/main/GPT-lite-cpp/) or download <a href="/assets/GPT-lite-cpp/torchcpp-benchmark-main.zip">`torchcpp-benchmark-main.zip`</a> for the complete implementation and run instructions.
+And we reached the end of this post! If you want to replicate these results, see the [GPT-lite-cpp repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-cpp).
 
