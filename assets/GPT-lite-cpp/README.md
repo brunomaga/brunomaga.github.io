@@ -1,4 +1,4 @@
-Code for the post [Building a GPT model in C++ LibTorch, and benchmarking against PyTorch and TorchScript](https://brunomaga.github.io/GPT-lite-cpp).
+Support material for the post [Building a GPT model in C++ LibTorch, and benchmarking against PyTorch and TorchScript](https://brunomaga.github.io/GPT-lite-cpp).
 
 # How to:
 
