@@ -425,7 +425,7 @@ Note that the type of the model and input data is not `torch::nn::Module` and `t
 We follow the [instructions on the LibTorch documentation](https://pytorch.org/cppdocs/installing.html#installing-c-distributions-of-pytorch) and use the CMake build systems to generate our binaries. The `CMakeLists.txt` is:
 
 ```cmake
-cmake_minimum_required(VERSION 3.5 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.0 FATAL_ERROR)
 project(torch_cpp_benchmark)
 
 find_package(Torch REQUIRED)
