@@ -4,8 +4,9 @@ import torch
 import torch.nn.functional as F
 import sys
 
-#use the GPTlite and Benchmark models from the post GPT-lite-DeepSpeed
-sys.path.insert(0, os.path.join('..', 'GPT-lite-DeepSpeed'))
+#use the GPTlite and Benchmark models from the post GPT-lite-cpp
+current_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite-cpp'))
 import gptlite
 import benchmark
 
@@ -46,13 +47,12 @@ def inference(model, dataloader, output_labels=False):
   print(f"inference runtime: {float(time.time() - start_time)} seconds")
 
 
-def main(output_folder="output", model='gptlite', random_seed=42):
+def main(scale_factor=1.0, output_folder="output", model='gptlite', random_seed=42):
   
   torch.manual_seed(random_seed) 
   
   #if folder exists: it contains labels from the teacher, we're training student
-  model_is_teacher = not os.path.exists(output_folder)
-  scale_factor = 1.0 if model_is_teacher else 0.8
+  teacher_model = not os.path.exists(output_folder)
   os.makedirs(output_folder, exist_ok=True)
 
   # initialize GPT-model and dataset. Teacher model will be scaled
@@ -66,19 +66,21 @@ def main(output_folder="output", model='gptlite', random_seed=42):
   elif model.lower()=='benchmark':
     W, L = 8192, 3 # wide model
     # W, L = 256, 2048 # deep model
-    train_dataset = benchmark.get_dataset(W*scale_factor)
-    model = benchmark.get_model(W*scale_factor, L*scale_factor)
+    W, L = int(W*scale_factor), int(L*scale_factor)
+    train_dataset = benchmark.get_dataset(W)
+    model = benchmark.get_model(W, L)
   else:
     raise NotImplementedError(f"model {model} not implemented")
   
   #first run, fully train model and output soft labels
   #second run, load soft labels and train smaller model with it
-  training (model, train_dataset, teacher_model = model_is_teacher)
-  inference(model, train_dataset, output_labels = model_is_teacher)
+  training (model, train_dataset, teacher_model)
+  inference(model, train_dataset, output_labels=teacher_model)
 
   
 if __name__ == "__main__":
-  main()
+  main(scale_factor=1.0) # student of same size as teacher
+  # main(scale_factor=0.8) # student of 80% size of teacher
 
 
   
