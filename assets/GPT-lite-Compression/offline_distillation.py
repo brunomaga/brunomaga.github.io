@@ -12,25 +12,28 @@ import benchmark
 
 label_filename = lambda batch, folder: os.path.join(folder,f"logits_{batch}.pt") 
 
-def training(model, dataloader, teacher_model=False):
+def training(model, dataloader, epochs, teacher_model=False):
   # reminder: CrossEntropyLoss(x) = NLLLoss(LogSoftmax(x))
   # CrossEntropyLog expects unnormalized logits; NLLLoss expects log probabilities
   model.train()
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
   start_time = time.time()
-  for b, (x, label) in enumerate(dataloader):
-    optimizer.zero_grad() 
-    output = model(x)
-    if teacher_model:
-      loss = F.cross_entropy(output, label)
-    else:
-      student_log_probs = F.log_softmax(output, dim=-1)
-      teacher_logits = torch.load(label_filename(b)).to(model.device)
-      teacher_probs = F.softmax(teacher_logits, dim=-1)
-      loss = F.kl_div(student_log_probs, teacher_probs, log_target=False)
-    loss.backward()
-    optimizer.step()
-  print(f"{b}:: {loss.item()}")
+  for epoch in range(epochs):
+    running_loss = 0.0
+    for b, (x, label) in enumerate(dataloader):
+      optimizer.zero_grad() 
+      output = model(x)
+      if teacher_model:
+        loss = F.cross_entropy(output, label)
+      else:
+        student_log_probs = F.log_softmax(output, dim=-1)
+        teacher_logits = torch.load(label_filename(b)).to(model.device)
+        teacher_probs = F.softmax(teacher_logits, dim=-1)
+        loss = F.kl_div(student_log_probs, teacher_probs, log_target=False)
+      loss.backward()
+      optimizer.step()
+      running_loss += loss.item()
+    print(f"{epoch}:: loss {running_loss / (epoch+1)}")
   print(f"train runtime: {float(time.time() - start_time)} seconds")
 
 
@@ -47,15 +50,18 @@ def inference(model, dataloader, output_labels=False):
   print(f"inference runtime: {float(time.time() - start_time)} seconds")
 
 
-def main(scale_factor=1.0, output_folder="output", model='gptlite', random_seed=42):
-  
+def main(scale_factor=1.0, train_epochs=10, output_folder="output", model='gptlite', random_seed=42):
+  """
+  first run: train teacher model against hard labels and output soft labels
+  second run: load soft labels and train smaller model against soft labels
+  """
   torch.manual_seed(random_seed) 
   
-  #if folder exists: it contains labels from the teacher, we're training student
+  #if folder exists: it contains labels from the teacher, so we're training student
   teacher_model = not os.path.exists(output_folder)
   os.makedirs(output_folder, exist_ok=True)
 
-  # initialize GPT-model and dataset. Teacher model will be scaled
+  # initialize teacher model or a scaled version of the student model
   if model.lower()=='gptlite':
     gptlite.n_layer    = int(gptlite.n_layer*scale_factor)
     gptlite.n_embd     = int(gptlite.n_embd*scale_factor)
@@ -72,9 +78,7 @@ def main(scale_factor=1.0, output_folder="output", model='gptlite', random_seed=
   else:
     raise NotImplementedError(f"model {model} not implemented")
   
-  #first run, fully train model and output soft labels
-  #second run, load soft labels and train smaller model with it
-  training (model, train_dataset, teacher_model)
+  training (model, train_dataset, epochs=train_epochs, teacher_model=teacher_model)
   inference(model, train_dataset, output_labels=teacher_model)
 
   
