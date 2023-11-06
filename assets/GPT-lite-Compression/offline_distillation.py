@@ -46,7 +46,7 @@ def inference(model, dataloader, output_labels=False):
   print(f"inference runtime: {float(time.time() - start_time)} seconds")
 
 
-def main(scale_factor=0.8, output_folder="output", model='gptlite', random_seed=42):
+def main(output_folder="output", model='gptlite', random_seed=42):
   
   torch.manual_seed(random_seed) 
   
