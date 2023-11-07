@@ -9,7 +9,7 @@ Previously, in [Distributed training of a large GPT model with DeepSpeed]({{ sit
 
 ### Model and dataset
 
-Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we create the methods `get_dataset()` and `get_model()` that return a `torch.utils.data.Dataset` and `torch.nn.Module` for the two testbenches we will play with:
+Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we will analyse two testbenches:
 1. the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, implemented in <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a>, trained on the [tiny shakespeare](https://github.com/karpathy/char-rnn/blob/master/data/tinyshakespeare/input.txt) dataset, whose objective is to generate text by predicting the next character in a sequence;
 2. the **Benchark model**, implemented in <a href="/assets/GPT-lite-DeepSpeed/benchmark.py">`benchmark.py`</a>, a Deep Neural Network with user-defined width `W` and number of layers `L`, with input of size `W`, and a categorical output of `W` classes, whose objective is to compute the modulo of the sum of squares of a random input vector.
 
@@ -72,7 +72,9 @@ def training(model, dataloader, epochs, teacher_model=False):
   print(f"Train loss: {running_loss / (epoch+1)}. Runtime: {float(time.time() - start_time)} seconds")
 ```
 
-Note that KL-divergenge as the ~~metric~~ value to minimize when doing student training, instead of Cross Entropy (CE). In practice, Cross entropy loss is the same as the KL divergence off by the target distribution entropy (a constant). Mathematically speaking:
+Let's dissect our loss functions. In the teacher model, we try to maximize a log-likelihood of a distribution, so [NLLLoss](https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss) seems like the right options. It expects the input to be the log-probabilities of each class, ie the [LogSoftmax](https://pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html) of the output of our network. However, we use [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.h), where input is expected to contain the unnormalized logits for each class, so we area avoiding one extra layer in our model. In practice, `CrossEntropyLoss(x) = NLLLoss( LogSoftmax(x) )`, but CrossEntropy is our chouse because - despite mathematically equivalent - it is numerically more stable (avoids some $$\log$$ and $$\exp$$ operations). 
+
+Now we look at the loss of the student model. Note that [KL-divergence](https://pytorch.org/docs/stable/generated/torch.nn.functional.kl_div.html) is the ~~metric~~ value that we are minimizing when doing student training, instead of Cross Entropy (CE). In practice, Cross entropy loss is the same as the KL divergence off by a constant (the target distribution entropy). Mathematically speaking:
 
 $$
 \begin{equation}
@@ -85,16 +87,11 @@ D_{kl}(p \mid q) & = H(p,q) - \, H(p) \\
 \end{equation}
 $$
 
-Therefore, minimizing CE is equivalent to minimizing KL, however the loss value itself is not, as it will include the value of entropy. In practice the value of CE of equivalent distributions will change a constant (the target distribution entropy) at every mini-batch, while the value of KL will be zero when distributions match. Thus, Cross entropy is typically used on fixed-target distributions (binary labels), while KL divergence is more suitable for applications involving the aproximation of two probability distributions. There is also the claim that Mean Square Error is a better metric for Knowledge Distillation (in [Comparing Kullback-Leibler Divergence and Mean Squared Error Loss in Knowledge Distillation](https://arxiv.org/pdf/2105.08919.pdf) ) but we ignore that for now. 
+Therefore, minimizing CE is equivalent to minimizing KL. However the loss value itself is not, as the KL value of equivalent distributions will be zero and the CE will be the value of entropy of the target distribution, at every mini-batch. Thus, Cross entropy is typically used on fixed-target distributions (hard labels) as entropy is zero anyways, while KL divergence is more suitable for applications involving the aproximation of two probability distributions. In PyTorch, KL divergence loss expects an input to be a log-probability and a target that is by default passed as a probability. We also passed the target as probability as, but according to the documentation, "it is recommended to pass certain distributions (like softmax) in the log space to avoid numerical issues caused by explicit log"
 
-In the [NLLLoss documentation](https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss): 
-"The input given through a forward call is expected to contain log-probabilities of each class. [...] Obtaining log-probabilities in a neural network is easily achieved by adding a LogSoftmax layer in the last layer of your network. You may use CrossEntropyLoss instead, if you prefer not to add an extra layer". When using [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.h), the input is expected to contain the unnormalized logits for each class". [KL-divergence](https://pytorch.org/docs/stable/generated/torch.nn.functional.kl_div.html) expects an `input` and a `target` argument to be passed as log-probability and o
+Finally, There is also the claim that Mean Square Error is a better metric for Knowledge Distillation, in [Comparing Kullback-Leibler Divergence and Mean Squared Error Loss in Knowledge Distillation](https://arxiv.org/pdf/2105.08919.pdf), but we ignore that for now. Also, here we ignored the KD hypermarameter **Temperature parameter** that scales the teacher and student logits to control the convergeance of the learning. 
 
-Finally, here we ignored the KD hypermarameter **Temperature parameter** that scales the teacher and student logits to control the convergeance of the learning. And we use a single teacher model, where sometimes the best results come from using the avergage of an ensemble of models as teacher. This is better detailed in [Distilling the Knowledge in a Neural Network](https://arxiv.org/abs/1503.02531).
-
-docs:  It is recommended to pass certain distributions (like softmax) in the log space to avoid numerical issues caused by explicit log.
-
-The inference loop is pretty straightforward, with the subtle change that requires teacher model to output soft labels:
+Now, the inference loop is pretty straightforward, with the subtle change that requires teacher model to output soft labels:
 
 ```python
 def inference(model, dataloader, output_labels=False):
@@ -131,7 +128,14 @@ def main(scale_factor=1.0, train_epochs=30):
   model = gptlite.get_model(vocab_size).to(device)
 ```
 
-We then craete the `DataLoader`, where there is a small *nuance* to keep in mind. Because it has to go over the exact same batches of data (in the same order) between a teacher and a student runs, we have to make it deterministic by defining a `seed_init_fn` that resets all seeds every time the data loader is started (in the `enumerate` loop).
+We then create the `DataLoader`, where there is a small *nuance* to keep in mind. Because it has to go over the exact same batches of data (in the same order) between a teacher and a student runs, we have to make it deterministic by defining a `seed_init_fn` that resets all seeds every time the data loader is started (in the `enumerate` loop).
+
+```python
+  def seed_init_fn(seed=42):
+    np.random.seed(seed)
+    random.seed(seed)
+    torch.manual_seed(seed)
+```
 
 ```python
   dataloader_kwargs = {'batch_size': batch_size, 'shuffle': True, 'worker_init_fn': seed_init_fn }
@@ -139,18 +143,10 @@ We then craete the `DataLoader`, where there is a small *nuance* to keep in mind
   valid_dataloader = DataLoader(valid_dataset, **dataloader_kwargs)
 ```
 
-where
-```python
-def seed_init_fn(seed=42):
-  np.random.seed(seed)
-  random.seed(seed)
-  torch.manual_seed(seed)
-```
-
 The rest of the main loop is simple. We train the teacher on the train dataset, then we test its accuracy on the validation dataset, then iterate again the train dataset on inference mode to output its soft labels in order to train the student: 
 ```python
-  training (model, train_dataloader, epochs=train_epochs, teacher_model=teacher_model) #train teacher model
-  inference(model, valid_dataloader, output_labels=False) # test accuracy of teacher model
+  training (model, train_dataloader, epochs=train_epochs, teacher_model=teacher_model) #train teacher
+  inference(model, valid_dataloader, output_labels=False) # test accuracy of teacher
   inference(model, train_dataloader, output_labels=True) # output soft labels for next student
 ```
 
@@ -158,7 +154,6 @@ We can then compare the performance of the real size model, to a model that is d
 
 ```python
 if __name__ == "__main__":
-  import shutil
 
   # iteratively distil a model to smaller sizes until we reach 1/2 the original size
   if os.path.exists(output_folder): shutil.rmtree(output_folder)
