@@ -47,7 +47,7 @@ class BenchmarkDataset(torch.utils.data.Dataset):
       return self.len
 
     def __getitem__(self, _):
-      x = torch.Tensor(self.W).uniform_(-1, 1)
+      x = torch.Tensor(self.W).uniform_(-10, 10)
       y = int( x @ x % self.W)
       return x, torch.tensor(y, dtype=torch.long)
 
@@ -74,4 +74,4 @@ def get_model(W, L, criterion=None, pipeline_num_stages=0, pipeline_spec_layers=
 
 
 def get_dataset(W):
-  return BenchmarkDataset(W)
+  return BenchmarkDataset(W), BenchmarkDataset(W)
