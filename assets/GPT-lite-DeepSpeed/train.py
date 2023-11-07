@@ -71,8 +71,8 @@ def main_deepspeed(n_epochs=100, random_seed=42, model='gptlite'):
     import benchmark
     W, L = 8192, 3 # wide model
     W, L = 256, 2048 # deep model
-    train_dataset, _ = benchmark.get_dataset(W)
-    model = benchmark.get_model(W, L, **get_model_kwargs)
+    train_dataset, _ = benchmark.get_dataset(in_size=W, num_classes=W)
+    model = benchmark.get_model(W, L, in_size=W, num_classes=W, **get_model_kwargs)
 
   #estimate parameters memory requirements
   measure_parameters_memory(model, args)
