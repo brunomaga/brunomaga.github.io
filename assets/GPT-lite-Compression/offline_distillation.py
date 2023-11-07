@@ -21,7 +21,7 @@ tinyshakespeare_path = os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed', 'ti
 # method that returns the filename of the soft labels of each batch
 label_filename = lambda batch: os.path.join(output_folder,f"logits_{batch}.pt") 
 
-def training(model, dataloader, epochs, teacher_model=False):
+def training(model, dataloader, epochs, teacher_model=False, temperature=2):
   model.train()
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
   start_time = time.time()
@@ -34,9 +34,9 @@ def training(model, dataloader, epochs, teacher_model=False):
       if teacher_model:
         loss = F.cross_entropy(logits, label)
       else:
-        student_log_probs = F.log_softmax(logits, dim=-1)
+        student_log_probs = F.log_softmax(logits/temperature, dim=-1)
         teacher_logits = torch.load(label_filename(b)).to(device)
-        teacher_log_probs = F.log_softmax(teacher_logits, dim=-1)
+        teacher_log_probs = F.log_softmax(teacher_logits/temperature, dim=-1)
         loss = F.kl_div(student_log_probs, teacher_log_probs, log_target=True)
       loss.backward()
       optimizer.step()
