@@ -2,7 +2,6 @@ import torch
 import torch.distributed as dist
 import os
 import deepspeed
-import gptlite
 from datetime import datetime
 
 
@@ -50,7 +49,7 @@ def measure_parameters_memory(model, args):
     torch.distributed.barrier()
     
   
-def main_deepspeed(n_epochs=100, random_seed=42):
+def main_deepspeed(n_epochs=100, random_seed=42, model='gptlite'):
   torch.manual_seed(random_seed)  #set random seed
   deepspeed.runtime.utils.set_random_seed(random_seed)
   deepspeed.init_distributed() #initialize distributed network
@@ -64,16 +63,16 @@ def main_deepspeed(n_epochs=100, random_seed=42):
     'activation_checkpoint_interval': args.activation_checkpoint_interval,
     }
 
-  # initialize GPT-lite model and dataset
-  train_dataset, vocab_size = gptlite.get_dataset()
-  model = gptlite.get_model(vocab_size, **get_model_kwargs)
-    
-  # uncomment to use deep/wide benchmark model instead
-  # import benchmark
-  # W, L = 8192, 3 # wide model
-  # W, L = 256, 2048 # deep model
-  # train_dataset = benchmark.get_dataset(W)
-  # model = benchmark.get_model(W, L, **get_model_kwargs)
+  if model.lower()=='gptlite':
+    import gptlite
+    train_dataset, _, vocab_size = gptlite.get_dataset()
+    model = gptlite.get_model(vocab_size, **get_model_kwargs)
+  elif model.lower()=='benchmark':
+    import benchmark
+    W, L = 8192, 3 # wide model
+    W, L = 256, 2048 # deep model
+    train_dataset, _ = benchmark.get_dataset(in_size=W, num_classes=W)
+    model = benchmark.get_model(W, L, in_size=W, num_classes=W, **get_model_kwargs)
 
   #estimate parameters memory requirements
   measure_parameters_memory(model, args)
