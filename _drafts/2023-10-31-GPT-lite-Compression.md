@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Faster ML inference via knowledge distillation, pruning and quantization"
+title:  "Faster GPT inference via knowledge distillation, pruning, quantization and Mixture of Experts"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
