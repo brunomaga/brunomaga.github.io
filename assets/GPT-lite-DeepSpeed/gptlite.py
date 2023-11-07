@@ -209,7 +209,7 @@ class GPTlitePipeSpec(PipelineModule):
 
 
 def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
-  rank = dist.get_rank()
+  rank = dist.get_rank() if dist.is_initialized() else 0 
 
   #load input data
   with open(filename) as f:
@@ -239,7 +239,7 @@ def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
   if rank==0: print("Train data encoded", data.shape, train_data.shape, valid_data.shape)
   return train_data, valid_data, vocab_size
   
-def get_dataset():
+def get_dataset(filename="tinyshakespeare.txt"):
   
   class GPTliteDataset(torch.utils.data.Dataset):
 
@@ -259,9 +259,10 @@ def get_dataset():
         y = self.train_data[ix+1 : ix+1+self.block_size]
         return x, y
 
-  train_data, _, vocab_size = load_tiny_shakespeare_data() 
-  dataset = GPTliteDataset(train_data, block_size)
-  return dataset, vocab_size
+  train_data, valid_data, vocab_size = load_tiny_shakespeare_data(filename) 
+  train_dataset = GPTliteDataset(train_data, block_size)
+  valid_dataset = GPTliteDataset(valid_data, block_size)
+  return train_dataset, valid_dataset, vocab_size
 
 
 def get_model(vocab_size, criterion=None, pipeline_num_stages=0, pipeline_spec_layers=False, activation_checkpoint_interval=0):

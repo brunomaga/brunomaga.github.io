@@ -2,14 +2,17 @@ import os
 import time
 import torch
 import torch.nn.functional as F
+from torch.utils.data import DataLoader
 import sys
 
 #use the GPTlite and Benchmark models from the post GPT-lite-cpp
 current_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite-cpp'))
-import gptlite
-import benchmark
+sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed'))
 
+#input path for the tiny shakespeare dataset
+tinyshakespeare_path = os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed', 'tinyshakespeare.txt')
+
+# method that returns the filename of the soft labels of each batch
 label_filename = lambda batch, folder: os.path.join(folder,f"logits_{batch}.pt") 
 
 def training(model, dataloader, epochs, teacher_model=False):
@@ -57,29 +60,36 @@ def main(scale_factor=1.0, train_epochs=10, output_folder="output", model='gptli
   """
   torch.manual_seed(random_seed) 
   
-  #if folder exists: it contains labels from the teacher, so we're training student
+  #if folder exists: it contains labels from the teacher, so we're training a student
   teacher_model = not os.path.exists(output_folder)
   os.makedirs(output_folder, exist_ok=True)
 
   # initialize teacher model or a scaled version of the student model
   if model.lower()=='gptlite':
+    import gptlite
+    batch_size=1
     gptlite.n_layer    = int(gptlite.n_layer*scale_factor)
     gptlite.n_embd     = int(gptlite.n_embd*scale_factor)
     gptlite.n_head     = int(gptlite.n_head*scale_factor)
     gptlite.block_size = int(gptlite.block_size*scale_factor)
-    train_dataset, vocab_size = gptlite.get_dataset()
+    train_dataset, valid_dataset, vocab_size = gptlite.get_dataset(filename=tinyshakespeare_path)
     model = gptlite.get_model(vocab_size)
   elif model.lower()=='benchmark':
+    import benchmark
+    batch_size=2048
     W, L = 8192, 3 # wide model
     # W, L = 256, 2048 # deep model
     W, L = int(W*scale_factor), int(L*scale_factor)
-    train_dataset = benchmark.get_dataset(W)
+    train_dataset, valid_dataset = benchmark.get_dataset(W)
     model = benchmark.get_model(W, L)
   else:
     raise NotImplementedError(f"model {model} not implemented")
   
-  training (model, train_dataset, epochs=train_epochs, teacher_model=teacher_model)
-  inference(model, train_dataset, output_labels=teacher_model)
+  train_dataloader = DataLoader(train_dataset, batch_size=batch_size,   shuffle=True)
+  valid_dataloader = DataLoader(valid_dataset, batch_size=batch_size*4, shuffle=True)
+  training (model, train_dataloader, epochs=train_epochs, teacher_model=teacher_model)
+  inference(model, valid_dataloader, output_labels=False) #test accuracy of teacher model
+  inference(model, train_dataloader, output_labels=True)  #output soft labels for next student
 
   
 if __name__ == "__main__":
