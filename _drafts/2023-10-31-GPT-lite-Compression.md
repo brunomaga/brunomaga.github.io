@@ -25,11 +25,11 @@ The diagram our [GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite 
 
 #### Detour: background
 
-Knowledge Distillation (KD) is a technique used to train a smaller model (student) from a larger one (teacher). There are many claims of why we should perform KD instead of training a small model alone. The main rationale is that, in the case of multi-label classification, the soft labels (distribution of assignments) yielded by the trained large network is a more accurate representation of the distribution of the classes assigned to the input, when compared with the user-provided hard labels (binary). Thus, training a second network against a better distribution of labels allows the model capacity to be better utilized (yielding better performance) or to achieve similar performance with a smaller model.
+Knowledge Distillation (KD) is a technique used to train a (student) model from another (teacher) model. There are many claims of why KD works. But the main rationale is that, if you take as an example the use case of multi-label classification, the soft labels (distribution of assignments) yielded by the trained network is a more accurate representation of the distribution of the classes assigned to the input, when compared with the user-provided hard labels (binary). Thus, training a second network against a better distribution of labels allows the model capacity to be better utilized (yielding better performance) or to achieve similar performance with a smaller model.
 
-As a quick example, take the two-label (dog, cat) classification task. An image of a cat that looks like a dog cat will have the groundtruth label distribution `[0,1]` . After training the model, querying the model for that same image would yield an output simillar to `[0.4, 0.6]`, i.e. the model believes it's a cat, but could also be a dog. In practice, the soft label `[0.4, 0.6]` is a better classification than the hard label `[0,1]` and using this better labels to train a smaller models will allow the capacity of the smaller model to be used better (i.e. less capacity spent on learning noise).
+As a quick example, take the two-label (dog, cat) classification task. An image of a cat that looks like a dog cat will have the groundtruth label distribution `[0,1]` . After training the model, querying the model for that same image would yield an output simillar to `[0.4, 0.6]`, i.e. the model believes it's a cat, but could also be a dog. In practice, the soft label `[0.4, 0.6]` is a better classification than the hard label `[0,1]` and using this better labels to train another models will allow the capacity of that second model to be used better (i.e. less capacity spent on learning noise).
 
-There are several categories of KD methods. We can try to minimize the soft labels between student and teacher models (as the example above), intermediate layers such as logits, feature maps, etc. We can perform **offline distillation** where we train the teacher first, and then train the student against the output of the pre-trained teacher, or we can perform **online distillation**, where we train both the train and teacher simultaneously. We can use a single teacher or an ensemble of teachers. And we can use a student that is a scaled down version of the teacher's architecture, or a completely different architectures. If you are looking for details related to different KD methods, see [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525). 
+There are several categories of KD methods. As loss function, we can try to minimize the soft labels between student and teacher models (as the example above), intermediate layers such as logits, feature maps, etc. We can distil information between similar or different student and teacher model architectures, in order to **improve accuracy**. We can perform **offline distillation** where we train the teacher first, and then train the student against the output of the pre-trained teacher, or we can perform **online distillation**, where we train both the train and teacher simultaneously. We can use a single teacher or an ensemble of teachers. And we can use a student that is a scaled down version of the teacher's architecture, effectively performing **prunning via distillation**. If you are looking for details related to different KD methods, see [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525). 
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPT-lite-Compression/kd_methods.jpg"/>
@@ -51,7 +51,7 @@ label_filename = lambda batch: os.path.join(output_folder,f"logits_{batch}.pt")
 ```
 
 ```python
-def training(model, dataloader, epochs, teacher_model=False):
+def training(model, dataloader, epochs, teacher_model=False, temperature=2):
   model.train()
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
   start_time = time.time()
@@ -64,9 +64,9 @@ def training(model, dataloader, epochs, teacher_model=False):
       if teacher_model:
         loss = F.cross_entropy(logits, label)
       else:
-        student_log_probs = F.log_softmax(logits, dim=-1)
+        student_log_probs = F.log_softmax(logits / temperature, dim=-1)
         teacher_logits = torch.load(label_filename(b)).to(device)
-        teacher_log_probs = F.log_softmax(teacher_logits, dim=-1)
+        teacher_log_probs = F.log_softmax(teacher_logits / temperature, dim=-1)
         loss = F.kl_div(student_log_probs, teacher_log_probs, log_target=True)
       loss.backward()
       optimizer.step()
@@ -97,11 +97,19 @@ D_{kl}(p \mid q) & = H(p,q) - \, H(p) \\
 \end{equation}
 $$
 
-Therefore, minimizing CE is equivalent to minimizing KL. However the loss value itself is not, as the KL value of equivalent distributions will be zero and the CE will be the value of entropy of the target distribution, at every mini-batch. Thus, Cross entropy is typically used on fixed-target distributions (hard labels) as entropy is zero anyways, while KL divergence is more suitable for applications involving the aproximation of two probability distributions. In PyTorch, KL divergence loss expects an input to be a log-probability and a target that is by default passed as a probability. We also passed the target as probability as, but according to the documentation, "it is recommended to pass certain distributions (like softmax) in the log space to avoid numerical issues caused by explicit log"
+Therefore, minimizing CE is equivalent to minimizing KL. However the loss value itself is not, as the KL value of equivalent distributions will be zero and the CE will be the value of entropy of the target distribution, at every mini-batch. Thus, Cross entropy is typically used on fixed-target distributions (hard labels) as entropy is zero anyways, while KL divergence is more suitable for applications involving the aproximation of two probability distributions. In PyTorch, KL divergence loss expects an input to be a log-probability and a target that is by default passed as a probability. We also passed the target as probability as, but according to the documentation, "it is recommended to pass certain distributions (like softmax) in the log space to avoid numerical issues caused by explicit log".
 
-Finally, There is also the claim that Mean Square Error is a better metric for Knowledge Distillation, in [Comparing Kullback-Leibler Divergence and Mean Squared Error Loss in Knowledge Distillation](https://arxiv.org/pdf/2105.08919.pdf), but we ignore that for now. Also, here we ignored the KD hypermarameter **Temperature parameter** that controls the softness of the softmax distributions in order to control the difficulty and convergeance of learning (see Formulaton in (wiki entry for Knowledge Distillation)[https://en.wikipedia.org/wiki/Knowledge_distillation]). 
+Note that we did not tune the **Temperature hyparameter** that controls the softness of the softmax distributions in order to utilize rations of smaller probabilities, and can make the student learn better. In practice, for a temperature $$t$$, the ouput of a layer is a softmax in the form:
 
-Now, the inference loop is pretty straightforward, with the subtle change that requires teacher model to output soft labels:
+$$
+y_i (x \mid t) = \frac{ \exp\frac{z_i(x)}{t} }{ \sum_j \, \exp\frac{z_j(x)}{t} }
+$$
+
+
+Finally, There is also the claim that Mean Square Error is a better metric for Knowledge Distillation, in [Comparing Kullback-Leibler Divergence and Mean Squared Error Loss in Knowledge Distillation](https://arxiv.org/pdf/2105.08919.pdf), but we ignore that for now.
+
+
+Now, the inference loop is pretty straightforward. The only subtle change is to make the teacher model output soft labels when needed, with `output_labels=Trrue`:
 
 ```python
 def inference(model, dataloader, output_labels=False):
@@ -119,27 +127,27 @@ def inference(model, dataloader, output_labels=False):
   print(f"Inference runtime: {float(time.time() - start_time)} seconds")
 ```
 
-The main distillation loop needs to be executed twice: once to train the teacher, one to train the student. When the teacher runs, the `output` folder will be created with the soft labels, and that is the indicator for the second run to know that it must now train the student model. Also, just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we will define the methods `get_dataset()` and `get_model()` that return a `torch.utils.data.Dataset` and `torch.nn.Module` for the two models we will use as testbench:
+Our main loop starts by checking if the output folder exists. If it exists, it contains the soft labels used for training (and we are training a teacher). Otherwise, we are training a teacher against the user-provided hard labels:
+The main distillation loop needs to be executed twice: once to train the teacher, once to train the student. When the teacher runs, the output folder will be created with the soft labels. On the second run, the student will load the soft labels output by the teacher and train the model against them. 
+
 
 ```python
-
-def main(scale_factor=1.0, train_epochs=30):
-
+def main(train_epochs=30):
   #if folder does not exist: we are training our first teacher
   teacher_model = not os.path.exists(output_folder)
   os.makedirs(output_folder, exist_ok=True)
+```
 
-  batch_size=1
+We then load our model and dataset. Any model or dataset can be used. Here we'll simply use the `get_dataset()` and `get_model()` methods detailed in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), that return a `torch.utils.data.Dataset` and `torch.nn.Module` for our testbenches:
+
+```python
   import gptlite
-  gptlite.n_layer    = int(gptlite.n_layer*scale_factor)
-  gptlite.n_embd     = int(gptlite.n_embd*scale_factor)
-  gptlite.n_head     = int(gptlite.n_head*scale_factor)
-  gptlite.block_size = int(gptlite.block_size*scale_factor)
+  branch_size=1
   train_dataset, valid_dataset, vocab_size = gptlite.get_dataset(filename=tinyshakespeare_path)
   model = gptlite.get_model(vocab_size).to(device)
 ```
 
-We then create the `DataLoader`, where there is a small *nuance* to keep in mind. Because it has to go over the exact same batches of data (in the same order) between a teacher and a student runs, we have to make it deterministic by defining a `seed_init_fn` that resets all seeds every time the data loader is started (in the `enumerate` loop).
+We then create the `DataLoader`, and here there is a small *nuance* to keep in mind. Because it has to go over the exact same batches of data (in the same order) between a teacher and a student runs, we have to make it deterministic by defining a `seed_init_fn` that resets all seeds every time the data loader is started (in the `enumerate` loop).
 
 ```python
   def seed_init_fn(seed=42):
@@ -155,23 +163,49 @@ We then create the `DataLoader`, where there is a small *nuance* to keep in mind
 ```
 
 The rest of the main loop is simple. We train the teacher on the train dataset, then we test its accuracy on the validation dataset, then iterate again the train dataset on inference mode to output its soft labels in order to train the student: 
+
 ```python
   training (model, train_dataloader, epochs=train_epochs, teacher_model=teacher_model) #train teacher
   inference(model, valid_dataloader, output_labels=False) # test accuracy of teacher
-  inference(model, train_dataloader, output_labels=True) # output soft labels for next student
+  inference(model, train_dataloader, output_labels=True)  # output soft labels for next student
 ```
 
-We can then compare the performance of the real size model, to a model that is distilled iteratively from half of the original size, to a model that is trained directly with hald the size:
+All done. To perform distillation from a student to a teacher, we run:
+
+```python
+import gptlite
+if __name__ == "__main__":
+  main() # train teacher and output labels
+  main() # train student against labels output by teacher
+```
+
+# Prunning via Knowledge Distillation
+
+We will now perfor **prunning** of layers, activations or other architectural parameters we may need. We will introduce a varialbe `scale_factor` that reduces the architecture size by a given factor. We simply change the distillation loop to scale the model upon initialization:
+
+
+```python
+def main(scale_factor=1.0, train_epochs=30):
+  # ...
+
+  import gptlite
+  batch_size=1
+  gptlite.n_layer    = int(gptlite.n_layer*scale_factor)
+  gptlite.n_embd     = int(gptlite.n_embd*scale_factor)
+  gptlite.n_head     = int(gptlite.n_head*scale_factor)
+  gptlite.block_size = int(gptlite.block_size*scale_factor)
+  train_dataset, valid_dataset, vocab_size = gptlite.get_dataset(filename=tinyshakespeare_path)
+  model = gptlite.get_model(vocab_size).to(device)
+```
+
+and try to prune the model to half of its original size by iteratively reduce its size by 10% and distil knowledge to a new student recursively:
 
 ```python
 if __name__ == "__main__":
-
-  # iteratively distil a model to smaller sizes until we reach 1/2 the original size
-  if os.path.exists(output_folder): shutil.rmtree(output_folder)
   for scale_factor in [1.0, 0.9, 0.8, 0.7, 0.6, 0.5]:
     main(scale_factor=scale_factor)
-
-  # test a model that is half the size 
-  if os.path.exists(output_folder): shutil.rmtree(output_folder)
-  main(scale_factor=0.5)
 ```
+
+We can then compare the performance of the real size model, the model that was distilled iteratively to half of it original size, and the model that was trained directly with half the size.
+
+**COMING SOON**
