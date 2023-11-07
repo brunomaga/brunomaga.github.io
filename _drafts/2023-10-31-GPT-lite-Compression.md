@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Faster inference on a GPT model via model compression and distillation"
+title:  "Faster ML inference via knowledge distillation, pruning and quantization"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -76,7 +76,13 @@ def training(model, dataloader, epochs, teacher_model=False):
   print(f"Train runtime: {float(time.time() - start_time)} seconds")
 ```
 
-Let's dissect our loss functions. In the teacher model, we try to maximize a log-likelihood of a distribution, so [NLLLoss](https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss) seems like the right options. It expects the input to be the log-probabilities of each class, ie the [LogSoftmax](https://pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html) of the output of our network. However, we use [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.h), where input is expected to contain the unnormalized logits for each class, so we area avoiding one extra layer in our model. In practice, `CrossEntropyLoss(x) = NLLLoss( LogSoftmax(x) )`, but CrossEntropy is our chouse because - despite mathematically equivalent - it is numerically more stable (avoids some $$\log$$ and $$\exp$$ operations). 
+Let's dissect our loss functions. In the teacher model, we try to maximize a log-likelihood of a distribution, so [NLLLoss](https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss) seems like the right options. It expects the input to be the log-probabilities of each class, ie the [LogSoftmax](https://pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html) of the output of our network. However, we use [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.h), where input is expected to contain the unnormalized logits for each class, so we area avoiding one extra layer in our model. In practice:
+
+$$
+CrossEntropyLoss(x) = NLLLoss( LogSoftmax(x) )
+$$
+
+Nevertheless, we choose CrossEntropy as our loss function because - despite mathematically equivalent - it is numerically more stable (avoids some $$\log$$ and $$\exp$$ operations). 
 
 Now we look at the loss of the student model. Note that [KL-divergence](https://pytorch.org/docs/stable/generated/torch.nn.functional.kl_div.html) is the ~~metric~~ value that we are minimizing when doing student training, instead of Cross Entropy (CE). In practice, Cross entropy loss is the same as the KL divergence off by a constant (the target distribution entropy). Mathematically speaking:
 
@@ -93,7 +99,7 @@ $$
 
 Therefore, minimizing CE is equivalent to minimizing KL. However the loss value itself is not, as the KL value of equivalent distributions will be zero and the CE will be the value of entropy of the target distribution, at every mini-batch. Thus, Cross entropy is typically used on fixed-target distributions (hard labels) as entropy is zero anyways, while KL divergence is more suitable for applications involving the aproximation of two probability distributions. In PyTorch, KL divergence loss expects an input to be a log-probability and a target that is by default passed as a probability. We also passed the target as probability as, but according to the documentation, "it is recommended to pass certain distributions (like softmax) in the log space to avoid numerical issues caused by explicit log"
 
-Finally, There is also the claim that Mean Square Error is a better metric for Knowledge Distillation, in [Comparing Kullback-Leibler Divergence and Mean Squared Error Loss in Knowledge Distillation](https://arxiv.org/pdf/2105.08919.pdf), but we ignore that for now. Also, here we ignored the KD hypermarameter **Temperature parameter** that scales the teacher and student logits to control the convergeance of the learning. 
+Finally, There is also the claim that Mean Square Error is a better metric for Knowledge Distillation, in [Comparing Kullback-Leibler Divergence and Mean Squared Error Loss in Knowledge Distillation](https://arxiv.org/pdf/2105.08919.pdf), but we ignore that for now. Also, here we ignored the KD hypermarameter **Temperature parameter** that controls the softness of the softmax distributions in order to control the difficulty and convergeance of learning (see Formulaton in (wiki entry for Knowledge Distillation)[https://en.wikipedia.org/wiki/Knowledge_distillation]). 
 
 Now, the inference loop is pretty straightforward, with the subtle change that requires teacher model to output soft labels:
 
@@ -116,7 +122,6 @@ def inference(model, dataloader, output_labels=False):
 The main distillation loop needs to be executed twice: once to train the teacher, one to train the student. When the teacher runs, the `output` folder will be created with the soft labels, and that is the indicator for the second run to know that it must now train the student model. Also, just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we will define the methods `get_dataset()` and `get_model()` that return a `torch.utils.data.Dataset` and `torch.nn.Module` for the two models we will use as testbench:
 
 ```python
-import gptlite
 
 def main(scale_factor=1.0, train_epochs=30):
 
@@ -125,6 +130,7 @@ def main(scale_factor=1.0, train_epochs=30):
   os.makedirs(output_folder, exist_ok=True)
 
   batch_size=1
+  import gptlite
   gptlite.n_layer    = int(gptlite.n_layer*scale_factor)
   gptlite.n_embd     = int(gptlite.n_embd*scale_factor)
   gptlite.n_head     = int(gptlite.n_head*scale_factor)
