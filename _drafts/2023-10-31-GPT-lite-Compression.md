@@ -99,7 +99,7 @@ $$
 
 Therefore, minimizing CE is equivalent to minimizing KL. However the loss value itself is not, as the KL value of equivalent distributions will be zero and the CE will be the value of entropy of the target distribution, at every mini-batch. Thus, Cross entropy is typically used on fixed-target distributions (hard labels) as entropy is zero anyways, while KL divergence is more suitable for applications involving the aproximation of two probability distributions. In PyTorch, KL divergence loss expects an input to be a log-probability and a target that is by default passed as a probability. We also passed the target as probability as, but according to the documentation, "it is recommended to pass certain distributions (like softmax) in the log space to avoid numerical issues caused by explicit log".
 
-Note that we did not tune the **Temperature hyparameter** that controls the softness of the softmax distributions in order to utilize rations of smaller probabilities, and can make the student learn better. In practice, for a temperature $$t$$, the ouput of a layer is a softmax in the form:
+Note that we did not tune the **Temperature hyper-parameter** that controls the softness of the softmax distributions in order to utilize rations of smaller probabilities, and can make the student learn better. In practice, for a temperature $$t$$, the ouput of a layer is a softmax in the form:
 
 $$
 y_i (x \mid t) = \frac{ \exp\frac{z_i(x)}{t} }{ \sum_j \, \exp\frac{z_j(x)}{t} }
@@ -143,7 +143,7 @@ We then load our model and dataset. Any model or dataset can be used. Here we'll
 ```python
   import gptlite
   branch_size=1
-  train_dataset, valid_dataset, vocab_size = gptlite.get_dataset(filename=tinyshakespeare_path)
+  train_dataset, valid_dataset, vocab_size = gptlite.get_dataset()
   model = gptlite.get_model(vocab_size).to(device)
 ```
 
