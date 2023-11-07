@@ -46,9 +46,12 @@ We will start by training the teacher model, dump its soft labels to disk, and t
 In our implementation, the KD training loops require almost no changes compared to a regular training loop in PyTorch. The only change is the flat `teacher_model` that defines wether we perform the training of the teacher (training against hard labels) or the student (training against soft labels):  
 
 ```python
+output_folder = "output"
+label_filename = lambda batch: os.path.join(output_folder,f"logits_{batch}.pt")
+```
+
+```python
 def training(model, dataloader, epochs, teacher_model=False):
-  # reminder: CrossEntropyLoss(x) = NLLLoss(LogSoftmax(x))
-  # CrossEntropyLog expects unnormalized logits; NLLLoss expects log probabilities
   model.train()
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
   start_time = time.time()
@@ -69,7 +72,8 @@ def training(model, dataloader, epochs, teacher_model=False):
       optimizer.step()
       running_loss += loss.item()
     # print(f"{epoch}:: loss {running_loss / (epoch+1)}")
-  print(f"Train loss: {running_loss / (epoch+1)}. Runtime: {float(time.time() - start_time)} seconds")
+  print(f"Train loss: {running_loss / (epoch+1)}.")
+  print(f"Train runtime: {float(time.time() - start_time)} seconds")
 ```
 
 Let's dissect our loss functions. In the teacher model, we try to maximize a log-likelihood of a distribution, so [NLLLoss](https://pytorch.org/docs/stable/generated/torch.nn.NLLLoss.html#torch.nn.NLLLoss) seems like the right options. It expects the input to be the log-probabilities of each class, ie the [LogSoftmax](https://pytorch.org/docs/stable/generated/torch.nn.LogSoftmax.html) of the output of our network. However, we use [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.h), where input is expected to contain the unnormalized logits for each class, so we area avoiding one extra layer in our model. In practice, `CrossEntropyLoss(x) = NLLLoss( LogSoftmax(x) )`, but CrossEntropy is our chouse because - despite mathematically equivalent - it is numerically more stable (avoids some $$\log$$ and $$\exp$$ operations). 
@@ -105,7 +109,8 @@ def inference(model, dataloader, output_labels=False):
       running_acc += (x.argmax(-1)==label).sum()/len(x) 
       if output_labels:
         torch.save(output, label_filename(b))
-  print(f"Inference accuracy: {running_acc/(b+1)*100}%. Runtime: {float(time.time() - start_time)} seconds")
+  print(f"Inference accuracy: {running_acc/(b+1)*100}%.")
+  print(f"Inference runtime: {float(time.time() - start_time)} seconds")
 ```
 
 The main distillation loop needs to be executed twice: once to train the teacher, one to train the student. When the teacher runs, the `output` folder will be created with the soft labels, and that is the indicator for the second run to know that it must now train the student model. Also, just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we will define the methods `get_dataset()` and `get_model()` that return a `torch.utils.data.Dataset` and `torch.nn.Module` for the two models we will use as testbench:
