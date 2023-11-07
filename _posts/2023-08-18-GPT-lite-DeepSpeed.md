@@ -88,9 +88,10 @@ def get_dataset():
         y = self.train_data[ix+1 : ix+1+self.block_size]
         return x, y
 
-  train_data, _, vocab_size = load_tiny_shakespeare_data() #load encoded data from text file
-  dataset = GPTliteDataset(train_data, gptlite.block_size)
-  return dataset, vocab_size
+  train_data, valid_dataset, vocab_size = load_tiny_shakespeare_data() #load encoded data from text file
+  train_dataset = GPTliteDataset(train_data, gptlite.block_size)
+  valid_dataset = GPTliteDataset(valid_data, gptlite.block_size)
+  return train_dataset, valid_dataset, vocab_size
 
 
 def get_model(vocab_size):
@@ -163,7 +164,7 @@ class BenchmarkDataset(torch.utils.data.Dataset):
       return x, torch.tensor(y, dtype=torch.long)
 
 
-get_dataset = lambda W: BenchmarkDataset(W)
+get_dataset = lambda W: BenchmarkDataset(W), BenchmarkDataset(W)
 get_model = lambda W, L: BenchmarkModel(W, L)
 ```
 
@@ -205,7 +206,7 @@ def main_deepspeed(n_epochs=100, random_seed=42):
   deepspeed.init_distributed()  # initialize distributed DeepSpeed
   args = get_cmd_line_args()  # initialize command line arguments parser
   criterion = torch.nn.CrossEntropyLoss()  # initialize loss function
-  train_dataset, vocab_size = gptlite.get_dataset()  # initializer dataset
+  train_dataset, _, vocab_size = gptlite.get_dataset()  # initializer dataset
   model = gptlite.get_model(vocab_size)  # initialize model
 
   engine, optimizer, train_dataloader , _ = deepspeed.initialize(

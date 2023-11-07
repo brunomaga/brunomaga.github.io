@@ -39,15 +39,14 @@ There are several categories of KD methods. We can try to minimize the soft labe
 
 #### Implementing offline distillation using soft labels
 
-Here, we will perform offline distilallion of a student model using only the soft labels of a pre-trained teacher model. This is the simplest and most common implementation of distillation. This is particularly relevant nowadays where large pre-trained models are readily available online, and we have access to the model output during inference, so we can train a smaller version of a very-large teacher model that would be infeasible to train alone. 
+Here, we will implement offline distillation on a student model using only the soft labels of a pre-trained teacher model. This is the simplest and most common implementation of distillation. This is particularly relevant nowadays where large pre-trained models are readily available online, and we only have access to the model output during inference (no intermediatte layer outputs), so we can train a smaller version of a large teacher model that would be infeasible to train alone. 
 
-We will train a teacher model, dump its soft labels to disk, and then load a student model and training against those labels. This allows for KD to be implemented with a minimal code change, and perform several iterations of KD, where the student of one iteration becomes the teacher of the next one.
-As an alternative, you can have loaded both the teacher and student in memory, train the teacher, then perform inference while training a student. This alternative is faster, but requires both models to be loaded in memory, limiting the maximum size of the models, and only let's you do one distillation session. OThis is exemplified in the [Knowledge distillation tutorial on pytorch](https://pytorch.org/tutorials/beginner/knowledge_distillation_tutorial.html#knowledge-distillation-run).
+We will start by training the teacher model, dump its soft labels to disk, and then load a student model and training against those labels. This allows for KD to be implemented with a minimal code change, and perform several iterations of KD, where the student of one iteration can become the teacher of the next one. As an alternative, one could perform KD by loading both the teacher and student in memory. This alternative is faster to run, but requires both models to be loaded in memory, limiting the maximum size of the models, and only let's you do one distillation session. Also the code is not so *clean*, as you can see in the example in the [Knowledge distillation tutorial on pytorch](https://pytorch.org/tutorials/beginner/knowledge_distillation_tutorial.html#knowledge-distillation-run).
 
-The training loops requires almost no changes compared to a regular training loop in PyTorch, apart from the `teacher_model` that performs training as a teacher (training against hard labels) or student (training against soft labels):  
+In our implementation, the KD training loops require almost no changes compared to a regular training loop in PyTorch. The only change is the flat `teacher_model` that defines wether we perform the training of the teacher (training against hard labels) or the student (training against soft labels):  
 
 ```python
-/// method that returns the filename of the soft labels of each batch
+# method that returns the filename of the soft labels of each batch
 label_filename = lambda batch, folder: os.path.join(folder,f"logits_{batch}.pt")
 
 def training(model, dataloader, teacher_model=False):
