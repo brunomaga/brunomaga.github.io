@@ -42,8 +42,8 @@ def training(model, dataloader, epochs, teacher_model=False):
       loss.backward()
       optimizer.step()
       running_loss += loss.item()
-    print(f"{epoch}:: loss {running_loss / (epoch+1)}")
-  print(f"train runtime: {float(time.time() - start_time)} seconds")
+    # print(f"{epoch}:: loss {running_loss / (epoch+1)}")
+  print(f"Train loss: {running_loss / (epoch+1)}. Runtime: {float(time.time() - start_time)} seconds")
 
 
 def inference(model, dataloader, output_labels=False):
@@ -57,20 +57,25 @@ def inference(model, dataloader, output_labels=False):
       running_acc += (x.argmax(-1)==label).sum()/len(x) 
       if output_labels:
         torch.save(output, label_filename(b))
-  print(f"inference accuracy: {running_acc/(b+1)*100}%")
-  print(f"inference runtime: {float(time.time() - start_time)} seconds")
+  print(f"Inference accuracy: {running_acc/(b+1)*100}%. Runtime: {float(time.time() - start_time)} seconds")
 
 
-def main(scale_factor=1.0, train_epochs=3, model='benchmark', random_seed=42):
+def seed_init_fn(seed=42):
+  # reset the random seed each time the DataLoader is initialized (enumerated)
+  import random
+  import numpy as np
+  np.random.seed(seed)
+  random.seed(seed)
+  torch.manual_seed(seed)
+ 
+ 
+def main(scale_factor=1.0, train_epochs=30, model='benchmark'):
   """
   first run: train teacher model against hard labels and output soft labels
   second run: load soft labels and train smaller model against soft labels
   """
   print(f"==== starting run with scale factor {scale_factor} ====")
 
-  #reset seed so that batches from teacher and student runs are the same
-  torch.manual_seed(random_seed)
-  
   #if folder does not exist: we are training our first teacher
   teacher_model = not os.path.exists(output_folder)
   os.makedirs(output_folder, exist_ok=True)
@@ -90,7 +95,7 @@ def main(scale_factor=1.0, train_epochs=3, model='benchmark', random_seed=42):
     batch_size=2048
     # W, L = 8192, 3 # wide model
     # W, L = 256, 2048 # deep model
-    W, L = 256,256 # deep model
+    W, L = 128,128 # deep model
     train_dataset, valid_dataset = benchmark.get_dataset(in_size=W, num_classes=W)
     model = benchmark.get_model(
       W=int(W*scale_factor), L=int(L*scale_factor),
@@ -98,26 +103,20 @@ def main(scale_factor=1.0, train_epochs=3, model='benchmark', random_seed=42):
   else:
     raise NotImplementedError(f"model {model} is not implemented")
   
-  dataloader_kwargs = {'batch_size': batch_size, 'shuffle': True }
-  #reset seed so that batches from teacher and student runs are the same
-  torch.manual_seed(random_seed)
+  dataloader_kwargs = {'batch_size': batch_size, 'shuffle': True, 'worker_init_fn': seed_init_fn }
+
   train_dataloader = DataLoader(train_dataset, **dataloader_kwargs)
   valid_dataloader = DataLoader(valid_dataset, **dataloader_kwargs)
-  training (model, train_dataloader, epochs=train_epochs, teacher_model=teacher_model)
+  training (model, train_dataloader, epochs=train_epochs, teacher_model=teacher_model) #train teacher model
   inference(model, valid_dataloader, output_labels=False) # test accuracy of teacher model
-
-  #reset seed so that batches from teacher and student runs are the same
-  torch.manual_seed(random_seed)
-  train_dataloader = DataLoader(train_dataset, **dataloader_kwargs)
-  inference(model, train_dataloader, output_labels=True)  # output soft labels for next student
+  inference(model, train_dataloader, output_labels=True) # output soft labels for next student
 
   
 if __name__ == "__main__":
   import shutil
-  if os.path.exists(output_folder): shutil.rmtree(output_folder)
-  main(scale_factor=1.0) # student of same size as teacher
-  main(scale_factor=0.8) # student of 80% size of teacher
-  main(scale_factor=0.6) # student of 60% size of teacher
-
+  # if os.path.exists(output_folder): shutil.rmtree(output_folder)
+  # for scale_factor in [1.0, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05]:
+  #   main(scale_factor=scale_factor)
+  main(scale_factor=1.0)
 
   
