@@ -11,7 +11,7 @@ Previously, in [Distributed training of a large GPT model with DeepSpeed]({{ sit
 
 Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we create the methods `get_dataset()` and `get_model()` that return a `torch.utils.data.Dataset` and `torch.nn.Module` for the two testbenches we will play with:
 1. the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, implemented in <a href="/assets/GPT-lite-DeepSpeed/gptlite.py">`gptlite.py`</a>, trained on the [tiny shakespeare](https://github.com/karpathy/char-rnn/blob/master/data/tinyshakespeare/input.txt) dataset, whose objective is to generate text by predicting the next character in a sequence;
-2. the **Benchark model**, implemented in <a href="/assets/GPT-lite-DeepSpeed/benchmark.py">`benchmark.py`</a>, a Deep Neural Network with user-defined width `W` and number of layers `L`, with input of size `W`, and a categorical output of `W` classes, whose objective is to compute the modulo of the sum of squares of a random input dataset.
+2. the **Benchark model**, implemented in <a href="/assets/GPT-lite-DeepSpeed/benchmark.py">`benchmark.py`</a>, a Deep Neural Network with user-defined width `W` and number of layers `L`, with input of size `W`, and a categorical output of `W` classes, whose objective is to compute the modulo of the sum of squares of a random input vector.
 
 {: style="text-align:center; font-size: small;"}
 <img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>

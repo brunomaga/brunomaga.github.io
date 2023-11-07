@@ -2,83 +2,121 @@ import os
 import time
 import torch
 import torch.nn.functional as F
+from torch.utils.data import DataLoader
 import sys
 
-#use the GPTlite and Benchmark models from the post GPT-lite-DeepSpeed
-sys.path.insert(0, os.path.join('..', 'GPT-lite-DeepSpeed'))
-import gptlite
-import benchmark
+device = "cuda" if torch.cuda.is_available() else "cpu"
+# torch.set_default_device(device)
 
-label_filename = lambda batch, folder: os.path.join(folder,f"logits_{batch}.pt") 
+#use the GPTlite and Benchmark models from the post GPT-lite-cpp
+current_dir = os.path.dirname(os.path.realpath(__file__))
+output_folder = "output"
+sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed'))
 
-def training(model, dataloader, teacher_model=False):
+#input path for the tiny shakespeare dataset
+tinyshakespeare_path = os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed', 'tinyshakespeare.txt')
+
+# method that returns the filename of the soft labels of each batch
+label_filename = lambda batch: os.path.join(output_folder,f"logits_{batch}.pt") 
+
+def training(model, dataloader, epochs, teacher_model=False):
   # reminder: CrossEntropyLoss(x) = NLLLoss(LogSoftmax(x))
   # CrossEntropyLog expects unnormalized logits; NLLLoss expects log probabilities
   model.train()
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
   start_time = time.time()
-  for b, (x, label) in enumerate(dataloader):
-    optimizer.zero_grad() 
-    output = model(x)
-    if teacher_model:
-      loss = F.cross_entropy(output, label)
-    else:
-      student_log_probs = F.log_softmax(output, dim=-1)
-      teacher_logits = torch.load(label_filename(b)).to(model.device)
-      teacher_probs = F.softmax(teacher_logits, dim=-1)
-      loss = F.kl_div(student_log_probs, teacher_probs, log_target=False)
-    loss.backward()
-    optimizer.step()
-  print(f"{b}:: {loss.item()}")
-  print(f"train runtime: {float(time.time() - start_time)} seconds")
+  for epoch in range(epochs):
+    running_loss = 0.0
+    for b, (x, label) in enumerate(dataloader):
+      x, label = x.to(device), label.to(device)
+      optimizer.zero_grad() 
+      logits = model(x)
+      if teacher_model:
+        loss = F.cross_entropy(logits, label)
+      else:
+        student_log_probs = F.log_softmax(logits, dim=-1)
+        teacher_logits = torch.load(label_filename(b)).to(device)
+        teacher_log_probs = F.log_softmax(teacher_logits, dim=-1)
+        loss = F.kl_div(student_log_probs, teacher_log_probs, log_target=True)
+        # docs:  It is recommended to pass certain distributions (like softmax) in the log space to avoid numerical issues caused by explicit log.
+      loss.backward()
+      optimizer.step()
+      running_loss += loss.item()
+    # print(f"{epoch}:: loss {running_loss / (epoch+1)}")
+  print(f"Train loss: {running_loss / (epoch+1)}. Runtime: {float(time.time() - start_time)} seconds")
 
 
 def inference(model, dataloader, output_labels=False):
   model.eval()
   start_time = time.time()
+  running_acc=0
   with torch.no_grad():
     for b, (x, label) in enumerate(dataloader):
+      x, label = x.to(device), label.to(device)
       output = model(x)
-      accuracy = (x.argmax(1)==label).sum()/len(x) 
-      print(f"{b}: {accuracy}%")
+      running_acc += (x.argmax(-1)==label).sum()/len(x) 
       if output_labels:
         torch.save(output, label_filename(b))
-  print(f"inference runtime: {float(time.time() - start_time)} seconds")
+  print(f"Inference accuracy: {running_acc/(b+1)*100}%. Runtime: {float(time.time() - start_time)} seconds")
 
 
-def main(output_folder="output", model='gptlite', random_seed=42):
-  
-  torch.manual_seed(random_seed) 
-  
-  #if folder exists: it contains labels from the teacher, we're training student
-  model_is_teacher = not os.path.exists(output_folder)
-  scale_factor = 1.0 if model_is_teacher else 0.8
+def seed_init_fn(seed=42):
+  # reset the random seed each time the DataLoader is initialized (enumerated)
+  import random
+  import numpy as np
+  np.random.seed(seed)
+  random.seed(seed)
+  torch.manual_seed(seed)
+ 
+ 
+def main(scale_factor=1.0, train_epochs=30, model='benchmark'):
+  """
+  first run: train teacher model against hard labels and output soft labels
+  second run: load soft labels and train smaller model against soft labels
+  """
+  print(f"==== starting run with scale factor {scale_factor} ====")
+
+  #if folder does not exist: we are training our first teacher
+  teacher_model = not os.path.exists(output_folder)
   os.makedirs(output_folder, exist_ok=True)
 
-  # initialize GPT-model and dataset. Teacher model will be scaled
+  # initialize teacher model or a scaled version of the student model
   if model.lower()=='gptlite':
+    import gptlite
+    batch_size=1
     gptlite.n_layer    = int(gptlite.n_layer*scale_factor)
     gptlite.n_embd     = int(gptlite.n_embd*scale_factor)
     gptlite.n_head     = int(gptlite.n_head*scale_factor)
     gptlite.block_size = int(gptlite.block_size*scale_factor)
-    train_dataset, vocab_size = gptlite.get_dataset()
-    model = gptlite.get_model(vocab_size)
+    train_dataset, valid_dataset, vocab_size = gptlite.get_dataset(filename=tinyshakespeare_path)
+    model = gptlite.get_model(vocab_size).to(device)
   elif model.lower()=='benchmark':
-    W, L = 8192, 3 # wide model
+    import benchmark
+    batch_size=2048
+    # W, L = 8192, 3 # wide model
     # W, L = 256, 2048 # deep model
-    train_dataset = benchmark.get_dataset(W*scale_factor)
-    model = benchmark.get_model(W*scale_factor, L*scale_factor)
+    W, L = 128,128 # deep model
+    train_dataset, valid_dataset = benchmark.get_dataset(in_size=W, num_classes=W)
+    model = benchmark.get_model(
+      W=int(W*scale_factor), L=int(L*scale_factor),
+      in_size=W, num_classes=W).to(device)
   else:
-    raise NotImplementedError(f"model {model} not implemented")
+    raise NotImplementedError(f"model {model} is not implemented")
   
-  #first run, fully train model and output soft labels
-  #second run, load soft labels and train smaller model with it
-  training (model, train_dataset, teacher_model = model_is_teacher)
-  inference(model, train_dataset, output_labels = model_is_teacher)
+  dataloader_kwargs = {'batch_size': batch_size, 'shuffle': True, 'worker_init_fn': seed_init_fn }
+
+  train_dataloader = DataLoader(train_dataset, **dataloader_kwargs)
+  valid_dataloader = DataLoader(valid_dataset, **dataloader_kwargs)
+  training (model, train_dataloader, epochs=train_epochs, teacher_model=teacher_model) #train teacher model
+  inference(model, valid_dataloader, output_labels=False) # test accuracy of teacher model
+  inference(model, train_dataloader, output_labels=True) # output soft labels for next student
 
   
 if __name__ == "__main__":
-  main()
-
+  import shutil
+  # if os.path.exists(output_folder): shutil.rmtree(output_folder)
+  # for scale_factor in [1.0, 0.8, 0.6, 0.4, 0.2, 0.1, 0.05]:
+  #   main(scale_factor=scale_factor)
+  main(scale_factor=1.0)
 
   
