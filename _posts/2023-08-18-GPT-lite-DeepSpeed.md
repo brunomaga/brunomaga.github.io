@@ -42,7 +42,7 @@ We will see in this post that finding the optimal parallelism hyperparameters is
  
 ### Preparing the model and dataset
 
-We start by taking our previous *GPT-lite* implementation (<a href="/assets/GPT-lite/gptlite.py">`gptlite.py`</a>) and matching the architecture of the model to the *GPT-2 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1):
+We start by taking our previous *GPT-lite* implementation and matching the architecture of the model to the *GPT-2 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1):
 
 ```python
 ### gptlite.py
@@ -123,7 +123,7 @@ As a relevant remark, pre-existing models do not define activation checkpointing
 
 #### Detour: creating a benchmark model
 
-If we'd want instead to test the response of DeepSpeed scaling to a simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, for multi-label classification, whose objective is to compute the modulo of the sum of squares of a random input vector:
+If we'd want instead to test the response of DeepSpeed scaling of a very simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, for multi-label classification, whose objective is to compute the modulo of the sum of squares of a random input vector:
 
 {: style="text-align:center; font-size: small;"}
 <img width="22%" height="22%" src="/assets/GPT-lite/benchmark_model.png"/>
@@ -598,7 +598,7 @@ However, when activating pipelining, by launching the run with `--pipeline_num_s
 This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, it does not take activations or other residual buffers (e.g. normalization variables) into account, does not take the batch size and numerical precision (or any field in the config file) into account, it does not consider temporary (e.g. communication) buffers, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3.  
 
 
-### Benchmark
+### Results
 
 To measure our performance, we used the deepspeed logger to extract the following metrics from different runs at every 10 steps: model throughput as average number of samples per second, the average allocated memory, and the maximum allocated memory. We used `pytorch==2.01`, CUDA `11.7` and `deepspeed==0.10.3`.
 

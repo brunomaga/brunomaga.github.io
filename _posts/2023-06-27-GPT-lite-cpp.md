@@ -7,22 +7,26 @@ tags: [machinelearning]
 
 In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the developers stated that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++." I was keen to measure the new efficiency improvements that came from porting much of the python code into C++ primitives. In general, we know that python's execution of interpreted code with dynamic typing on a runtime is not efficient. And in many use cases, using C++ compiled code is necessary for e.g. embedded systems, low memory usage and systems without the python runtime installed. However, C++ code is harder and slow to write compared to python. The question is: is it worh it? How much faster are the C++ model implementations compared to Python? 
 
-In this post, we will look on how to implement in C++ the GPT2 model introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) and a Deep Neural Network of arbitrary width and depth. We will then benchmark these two models on three distinct implementations:
-- the train and inference steps using the original python implementation in python 1.3.1 and 2.1.0;
+In this post, we will benchmark the implementations of ML models with different backends:
+- the train and inference steps using the python implementation in PyTorch 1.3.1 and 2.1.0;
 - the train and inference steps using the C++ LibTorch 2.1.0 implementation;
 - the inference step, using [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html) 2.1.0 to output a model trained in python, and then load it with C++ Libtorch to perform inference;
+
+We will look at two different models, so just pick one based on your level of expertise and field of interest:
+1. the small variant of the GPT2 model introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), will be detailed in section [GPTlite on LibTorch C++](#gptlite-model), and is heavily foccused on Machine Learning and the use case of Large Language Models; 
+2. a simple Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch c++](#benchmark-model), for those interested on performance, engineering, and the C++, Python and TorchScript comparison based on much simpler ML model.  
 
 {: style="text-align:center; font-size: small;"}
 <img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="22%" height="22%" src="/assets/GPT-lite/benchmark_model.png"/>
+<img width="20%" height="20%" src="/assets/GPT-lite/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
-In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark the C++, PyTorch and TorchScript implementations.
+In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark their C++, PyTorch and TorchScript implementations.
 
-### GPTlite on LibTorch C++
+### GPTlite on LibTorch C++ {#gptlite-model}
 
-We will start with the GPT implementation in C++. The sections that follow match exactly the structure of the [post with the GPTlite implementation in Python]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %})
+We will start with the GPT implementation in C++. The subsections that follow match exactly the structure of the [post with the GPTlite implementation in Python]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}).
 
 #### Hyperparameters
 
@@ -274,7 +278,7 @@ struct GPTlite : nn::Module {
 ```
 
 
-### Benchmark Model on LibTorch C++
+### Benchmark Model on LibTorch C++ {#benchmark-model}
 
 We will define a simple benchmark model, which is simply a DNN with `L` layers of width `W`, with a ReLu activation between layers. This is defined in `benchmark.h` as:
 
