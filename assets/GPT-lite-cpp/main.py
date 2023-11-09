@@ -1,8 +1,13 @@
 import time
+import os
+import sys
 
 import torch
 import torch.nn.functional as F
 
+#use the GPTlite and Benchmark models from the folder GPT-lite
+current_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
 import benchmark
 from gptlite import GPTlite, block_size, n_embd
 

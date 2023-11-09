@@ -15,7 +15,7 @@ In this post, we will look on how to implement in C++ the GPT2 model introduced 
 {: style="text-align:center; font-size: small;"}
 <img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="22%" height="22%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
+<img width="22%" height="22%" src="/assets/GPT-lite/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
 In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark the C++, PyTorch and TorchScript implementations.
@@ -285,13 +285,16 @@ We will define a simple benchmark model, which is simply a DNN with `L` layers o
 struct BenchmarkModel : torch::nn::Module {
   /// DNN with W input features, W neurons per layer, W output classes and L layers
 
-  BenchmarkModel(int64_t W, int64_t L){
+  BenchmarkModel(int64_t W, int64_t L, int64_t in_size, int64_t out_size){
     torch::nn::Sequential layers = torch::nn::Sequential();
-    for (int64_t i = 0; i < L; ++i) {
-      layers->push_back(torch::nn::Linear(W, W));
+    for (int64_t l = 0; l < L; ++l) {
+      layers->push_back(torch::nn::Linear(
+        l==0   ? in_size  : W,
+        l==L-1 ? out_size : W));
       layers->push_back(torch::nn::ReLU());
-    }
+      }
     register_module("layers", layers);
+    this->to(device);
   }
 
   torch::Tensor forward(torch::Tensor input) {
@@ -438,9 +441,11 @@ target_link_libraries(main "${TORCH_LIBRARIES}")
 set_property(TARGET main PROPERTY CXX_STANDARD 17)
 ``` 
 
-and we will run cmake with 2 extra (optional) flags to compile our C++ code with the cuDNN and cuSPARSELt libraries:
+and we will run cmake in Release mode (for compile optimizations), and we specify the path of LibTorch, and (optionally) two extra flags to compile our C++ code with the cuDNN and cuSPARSELt libraries:
 ```shell
-cmake .. -DCMAKE_BUILD_TYPE=Release -DCAFFE2_USE_CUDNN=1 -DCAFFE2_USE_CUSPARSELT=1
+cmake .. -DCMAKE_BUILD_TYPE=Release \
+ -DCAFFE2_USE_CUDNN=1 -DCAFFE2_USE_CUSPARSELT=1 \
+ -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'` ..
 ```
 
 ### Benchmark

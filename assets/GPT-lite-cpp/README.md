@@ -4,6 +4,7 @@ Support material for the post [Building a GPT model in C++ LibTorch, and benchma
 
 1. Run `python main.py` to benchmark the Python implementations;
    - It will output several `*.pt` files, which are the binaries of the `torch::jit::Module` models benchmarked;
+   - Note: implementation of python models is in the [GPT-lite folder](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite).
 2. Use `cmake` to compute the C++ executable as `./main`. Then run `./main` to benchmark the C++ implementation;
    - Optionally, run `./main [pt-files-folder]` and it will load the `*pt` models output by step 1, and benchmark the `torch::jit::script` implementation as well
 

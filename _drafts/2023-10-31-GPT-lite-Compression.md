@@ -16,7 +16,7 @@ Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-li
 {: style="text-align:center; font-size: small;"}
 <img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="22%" height="22%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
+<img width="22%" height="22%" src="/assets/GPT-lite/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The diagram our [GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) model with N decoder blocks (left), and the benchmark model, a Deep Neural Network with L layers of dimensionality W (right).
