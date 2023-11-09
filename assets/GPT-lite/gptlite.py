@@ -61,6 +61,7 @@ class Head(nn.Module):
 
 class MultiHeadAttention(nn.Module):
   """ Multi-head attention as described in the paper. Simply a collection of heads with concatenated outputs."""
+
   def __init__(self, num_heads, head_size):
     super().__init__()
     self.heads = nn.ModuleList([Head(head_size) for _ in range(num_heads)])
@@ -75,6 +76,7 @@ class MultiHeadAttention(nn.Module):
 
 class FeedForward(nn.Module):
   """ the feed forward network (FFN) in the paper"""
+
   def __init__(self, n_embd):
     super().__init__()
     # Note: in the paper (section 3.3) we have d_{model}=512 and d_{ff}=2048.
@@ -110,6 +112,7 @@ class Block(nn.Module):
 
 
 class GPTlite(nn.Module):
+
   def __init__(self, vocab_size):
     super().__init__()
     

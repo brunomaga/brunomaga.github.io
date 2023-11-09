@@ -15,9 +15,6 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 output_folder = "output"
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed'))
 
-#input path for the tiny shakespeare dataset
-tinyshakespeare_path = os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed', 'tinyshakespeare.txt')
-
 # method that returns the filename of the soft labels of each batch
 label_filename = lambda batch: os.path.join(output_folder,f"logits_{batch}.pt") 
 

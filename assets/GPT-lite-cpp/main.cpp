@@ -92,10 +92,11 @@ int main(int argc, const char* argv[]) {
     // Deep DNN model (W=256, L=2048)
     const std::string model_name = "Deep DNN";
     const int W=256, L=2048, batch_size=2048;
-    torch::Tensor x = torch::randn({batch_size, W}, device);
-    torch::Tensor label = torch::randn({batch_size, W}, device);
+    const int in_size=W, out_size=W;
+    torch::Tensor x = torch::randn({batch_size, in_size}, device);
+    torch::Tensor label = torch::randn({batch_size, out_size}, device);
     {
-      BenchmarkModel model = BenchmarkModel(W, L, device);
+      BenchmarkModel model = BenchmarkModel(W, L, in_size, out_size, device);
       benchmark_train<BenchmarkModel>(model, x, label, model_name);
       benchmark_inference<BenchmarkModel>(model, x, model_name);
     }
@@ -109,10 +110,11 @@ int main(int argc, const char* argv[]) {
     // Wide DNN Model (W=8192, L=3)
     const std::string model_name = "Wide DNN";
     const int W=8192, L=3, batch_size=2048;
-    torch::Tensor x = torch::randn({batch_size, W}, device);
-    torch::Tensor label = torch::randn({batch_size, W}, device);
+    const int in_size=W, out_size=W;
+    torch::Tensor x = torch::randn({batch_size, in_size}, device);
+    torch::Tensor label = torch::randn({batch_size, out_size}, device);
     {
-      BenchmarkModel model = BenchmarkModel(W, L, device);
+      BenchmarkModel model = BenchmarkModel(W, L, in_size, out_size, device);
       benchmark_train<BenchmarkModel>(model, x, label, model_name);
       benchmark_inference<BenchmarkModel>(model, x, model_name);
     }if (argc==2)
