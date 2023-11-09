@@ -2,7 +2,6 @@ import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import gptlite
 
 # set the random seed, for reproducibility
 torch.manual_seed(42)
@@ -154,7 +153,13 @@ out = wei @ v
 print(out.shape)
 wei[0]
 
-# tutorial ended. We'll train the full model now
+
+## end of tutorial. Load full model an trained it from scratch
+import gptlite
+gptlite.n_layer = n_layer
+gptlite.n_embd = n_embd
+gptlite.n_head = n_head
+gptlite.block_size = block_size
 m  = gptlite.GPTlite(vocab_size).to(device)
 
 # train the model

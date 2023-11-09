@@ -13,13 +13,13 @@ In this post, we will benchmark the implementations of ML models with different 
 - the inference step, using [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html) 2.1.0 to output a model trained in python, and then load it with C++ Libtorch to perform inference;
 
 We will look at two different models, so just pick one based on your level of expertise and field of interest:
-1. the small variant of the GPT2 model introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), will be detailed in section [GPTlite on LibTorch C++](#gptlite-model), and is heavily foccused on Machine Learning and the use case of Large Language Models; 
-2. a simple Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch c++](#benchmark-model), for those interested on performance, engineering, and the C++, Python and TorchScript comparison based on much simpler ML model.  
+1. the small variant of the GPT2 model, introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), will be detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example that is specific to the use case of large language models; 
+2. a simple Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch c++](#benchmark-model). This is used to benchmark our metrics on models of varying depths and widths, and is for those interested on performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
 
 {: style="text-align:center; font-size: small;"}
 <img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="20%" height="20%" src="/assets/GPT-lite/benchmark_model.png"/>
+<img width="22%" height="22%" src="/assets/GPT-lite/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
 In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark their C++, PyTorch and TorchScript implementations.

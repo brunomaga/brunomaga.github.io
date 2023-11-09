@@ -5,8 +5,7 @@ categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}) and [AI Supercomputing (part 2)]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) posts, we summarized existing Machine Learning (ML) parallelism techniques. Later, in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite, the small variant of of the [GPT-2 model](https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf). In this post, we will perform large-scale parallel training of that GPT model on a network of 8 GPUs, using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer). The DeepSpeed API is a lightweight wrapper on PyTorch, and can be installed by the `deepspeed` package for `python`.
-
+Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}) and [AI Supercomputing (part 2)]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) posts, we summarized existing Machine Learning (ML) parallelism techniques. Later, in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite, the small variant of the [GPT-2 model](https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf). In this post, we will perform large-scale parallel training of a GPT model and a large DNN on a network of 8 GPUs, using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer). The DeepSpeed API is a lightweight wrapper on PyTorch, and can be installed by the `deepspeed` package for `python`.
 
 ### 3D Parallelism and ZeRO
 
@@ -40,7 +39,11 @@ Additionaly, on top of stage 1 and 2, we can enable [**ZeRO-Offload**](https://w
 
 We will see in this post that finding the optimal parallelism hyperparameters is a hard problem. This is a resources allocation problem across the 3D volume in the data, parameters and layers (pipeline) space. It aims at allocating different partitions on that 3D space to different processors, in a way that best balances the compute time or memory across resources. In practice, balanced computation yields a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
-### Preparing the model and dataset
+### Model and dataset
+
+The code that follows is applicable to any model of type `torch.nn.Module` and any dataset of type `torch.utils.data.Dataset`. So we will detail three use cases: an advanced use case, specific to a large language model (GPTlite), an out-of-the-box [pre-defined model from torchvision](#torchvision-model) and a [simple DNN model](#benchmark-model) of arbitrary width and depth used to simulate different ML workload conditions (we will call this our benchmark model).  
+
+#### GPTlite
 
 We start by taking our previous *GPT-lite* implementation and matching the architecture of the model to the *GPT-2 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1):
 
@@ -98,9 +101,9 @@ def get_model(vocab_size):
   return GPTlite(vocab_size)
 ```
 
-#### Detour: using a torchvision model
+#### Using a torchvision model {#torchvision-model}
 
-Note that `model` is of type `torch.nn.Module` and `train_dataset` is of type `torch.utils.data.Dataset`. In practice, **any model and dataset can be used** in the code that follows. As an example, if you'd want to perform a multi-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd rewrite the previous 2 methods as:
+If you'd want to perform a multi-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd define the previous 2 methods as:
 
 ```python
 import torchvision
@@ -121,7 +124,7 @@ def get_model(num_classes):
 
 As a relevant remark, pre-existing models do not define activation checkpointing layers and pipelining layers that are required to activate these two features (discuss later). 
 
-#### Detour: creating a benchmark model
+#### Benchmark model {#benchmark-model}
 
 If we'd want instead to test the response of DeepSpeed scaling of a very simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, for multi-label classification, whose objective is to compute the modulo of the sum of squares of a random input vector:
 
@@ -170,7 +173,7 @@ get_dataset = lambda W: BenchmarkDataset(W), BenchmarkDataset(W)
 get_model = lambda W, L: BenchmarkModel(W, L)
 ```
 
-We will call this the **Benchmark Model** and we will use it later in our benchmark section to test DeepSpeed.
+We will call this the **Benchmark Model** and we will use it later in our benchmark section to test DeepSpeed's response to models of varying width and depth..
 
 ### Main code
 
