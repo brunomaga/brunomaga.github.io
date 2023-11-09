@@ -123,7 +123,7 @@ As a relevant remark, pre-existing models do not define activation checkpointing
 
 #### Detour: creating a benchmark model
 
-If we'd want instead to test the response of DeepSpeed scaling to a simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, an input of size `W` and a categorical output of `W` labels. The objective is to compute the modulo of the sum of squares of a random input tensor:
+If we'd want instead to test the response of DeepSpeed scaling to a simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, for multi-label classification, whose objective is to compute the modulo of the sum of squares of a random input vector:
 
 {: style="text-align:center; font-size: small;"}
 <img width="22%" height="22%" src="/assets/GPT-lite-cpp/benchmark_model.png"/>
@@ -131,7 +131,7 @@ If we'd want instead to test the response of DeepSpeed scaling to a simple model
 {: style="text-align:center; font-size: small;"}
 The *benchmark model*, a DNN with L layers of dimensionality W (right)
 
-The implementation of the benchmark model in `benchmark.py` is straightforward:
+The implementation of the benchmark model in `benchmark.py` is straightforward (for simplicity we chose `W` as input size and number of output classes):
 
 ```python
 ### benchmark.py 
