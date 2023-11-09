@@ -63,18 +63,20 @@ def main():
   # Deep DNN model (W=256, L=2048)
   model_name = "Deep DNN"
   W, L, batch_size = 256, 2048, 2048
-  x = torch.randn(batch_size, W).to(device)
-  label = torch.randn(batch_size, W).to(device)
-  model = benchmark.BenchmarkModel(W, L).to(device)
+  in_size = out_size = W
+  x = torch.randn(batch_size, in_size).to(device)
+  label = torch.randn(batch_size, out_size).to(device)
+  model = benchmark.BenchmarkModel(W, L, in_size, out_size).to(device)
   benchmark_train(model, x, label, model_name)
   benchmark_inference(model, x, model_name)
 
   # Wide DNN Model (W=8192, L=3)
   model_name = "Wide DNN"
   W, L, batch_size = 8192, 3, 2048
-  x = torch.randn(batch_size, W).to(device)
-  label = torch.randn(batch_size, W).to(device)
-  model = benchmark.BenchmarkModel(W, L).to(device)
+  in_size = out_size = W
+  x = torch.randn(batch_size, in_size).to(device)
+  label = torch.randn(batch_size, out_size).to(device)
+  model = benchmark.BenchmarkModel(W, L, in_size, out_size).to(device)
   benchmark_train(model, x, label, model_name)
   benchmark_inference(model, x, model_name)
 
