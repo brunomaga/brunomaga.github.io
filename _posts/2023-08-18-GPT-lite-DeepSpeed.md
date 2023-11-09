@@ -131,7 +131,7 @@ If we'd want instead to test the response of DeepSpeed scaling to a simple model
 {: style="text-align:center; font-size: small;"}
 The *benchmark model*, a DNN with L layers of dimensionality W (right)
 
-The implementation of the benchmark model in `benchmark.py` is straightforward (for simplicity we chose `W` as input size and number of output classes):
+The implementation of the benchmark model in `benchmark.py` is straightforward:
 
 ```python
 ### benchmark.py 
@@ -616,12 +616,12 @@ RANK=4 STAGE=2 LAYERS=3 [7, 10)  STAGE_PARAMS=21256704 (21.257M)
 RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M)
    ```
 
-We tested three models. The first is a *wide* version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`). We used a batch size of $$2^{14}$$, and a micro-batch size of $$2^{11}$$ inputs per GPU, ie `'train_batch_size': 16384` and `'train_micro_batch_size_per_gpu': 2048`. The benchmark results are:
+We tested three models. The first is a *wide* version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`), and input and output of size 8192. We used a batch size of $$2^{14}$$, and a micro-batch size of $$2^{11}$$ inputs per GPU, ie `'train_batch_size': 16384` and `'train_micro_batch_size_per_gpu': 2048`. The benchmark results are:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
  
-Then we tested a *deep benchmark model* with a small parameter space (`W=256`), a high layer count (`L=2048`), and the same input sizes as the previous wide model:
+Then we tested a *deep benchmark model* with a small parameter space (`W=256`), a high layer count (`L=2048`), an input and output size of 256, and the same bath sizes as the previous wide model:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>

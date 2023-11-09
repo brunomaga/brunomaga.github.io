@@ -22,15 +22,6 @@ block_size = 2048
 dropout = 0.1
 
 
-def get_tinyshakespeare_text():
-  import os
-  current_dir = os.path.dirname(os.path.realpath(__file__))
-  txt_path = os.path.join(current_dir, 'tinyshakespeare.txt')
-  with open(txt_path) as f:
-    text = f.read()
-  return text
-
-
 class Head(nn.Module):
 
   def __init__(self, head_size):
