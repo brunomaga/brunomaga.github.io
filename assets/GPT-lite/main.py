@@ -1,3 +1,4 @@
+import os
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -51,7 +52,10 @@ dropout = 0.2
 
 
 # load tiny shakespeare
-text = gptlite.get_tinyshakespeare_text() 
+current_dir = os.path.dirname(os.path.realpath(__file__))
+txt_path = os.path.join(current_dir, 'tinyshakespeare.txt')
+with open(txt_path) as f:
+  text = f.read()
 
 #collect all ordered and unique characters in the text
 chars = sorted(list(set(text)))
