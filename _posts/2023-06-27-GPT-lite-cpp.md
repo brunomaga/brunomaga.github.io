@@ -14,7 +14,7 @@ In this post, we will benchmark the implementations of ML models with different 
 
 We will look at two different models, so just pick one based on your level of expertise and field of interest:
 1. the small variant of the GPT2 model, introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), will be detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example that is specific to the use case of large language models; 
-2. a simple Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch c++](#benchmark-model). This is used to benchmark our metrics on models of varying depths and widths, and is for those interested on performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
+2. a simple Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch C++](#benchmark-model). This will be used to benchmark our metrics on models of varying depths and widths, and it is meant for those interested on performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
 
 {: style="text-align:center; font-size: small;"}
 <img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>
