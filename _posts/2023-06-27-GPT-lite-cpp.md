@@ -276,23 +276,25 @@ struct GPTlite : nn::Module {
 
 ### Benchmark Model on LibTorch C++
 
-We will define a simple benchmark model, which is simply a DNN with `L` layers of width `W`, input of size `W`, and a categorical output of `W` possible classes, with a ReLu activation between layers. This is defined in `benchmark.h` as:
+We will define a simple benchmark model, which is simply a DNN with `L` layers of width `W`, with a ReLu activation between layers. This is defined in `benchmark.h` as:
 
 ```cpp
 #pragma once
 #include <torch/torch.h>
 
 struct BenchmarkModel : torch::nn::Module {
-  /// DNN with W input features, W neurons per layer, W output classes and L layers
+  /// DNN with L layers and W neurons per layer
 
   BenchmarkModel(int64_t W, int64_t L, int64_t in_size, int64_t out_size){
     torch::nn::Sequential layers = torch::nn::Sequential();
-    for (int64_t l = 0; l < L; ++l) {
-      layers->push_back(torch::nn::Linear(
-        l==0   ? in_size  : W,
-        l==L-1 ? out_size : W));
+    layers->push_back(torch::nn::Linear(in_size, W));
+    layers->push_back(torch::nn::ReLU());
+    for (int64_t l = 0; l<L-2; ++l) {
+      layers->push_back(torch::nn::Linear(W, W));
       layers->push_back(torch::nn::ReLU());
       }
+    layers->push_back(torch::nn::Linear(W, out_size));
+    layers->push_back(torch::nn::ReLU());
     register_module("layers", layers);
     this->to(device);
   }
@@ -303,7 +305,7 @@ struct BenchmarkModel : torch::nn::Module {
 }
 ```
 
-### Main Benchmark loop
+## Main loop
 
 Our `main.cpp` file will contain a loop that will benchmark the train and inference operations of a model for a random input:
 
@@ -325,7 +327,6 @@ int main(int argc, const char* argv[]) {
     benchmark_inference<GPTlite>(model, idx);
 }
 ```
-
 
 As an important remark, LibTorch does not include a C++ equivalent to `torch.set_default_device`, so we have to manually move to the GPU every datapoint and module. And because we registered every parameter, buffer and module previously, doing `model.to(device)` will recursively copy all the contents in the model to the device. The final functions `benchmark_train` and `benchmark_inference` perform the benchmark of method several train and inference epochs, respectively. The C++ implementation is analogous to its python counterpart, however we'll use a templated `typename ModelType` to cover all possible model implementations:
 
@@ -441,16 +442,22 @@ target_link_libraries(main "${TORCH_LIBRARIES}")
 set_property(TARGET main PROPERTY CXX_STANDARD 17)
 ``` 
 
-and we will run cmake in Release mode (for compile optimizations), and we specify the path of LibTorch, and (optionally) two extra flags to compile our C++ code with the cuDNN and cuSPARSELt libraries:
+and we will run cmake in Release mode (for compile optimizations), and we specify the path of LibTorch, and (optionally) two extra flags to compile our code with the cuDNN and cuSPARSELt libraries:
 ```shell
-cmake .. -DCMAKE_BUILD_TYPE=Release \
+cmake .. \
+ -DCMAKE_BUILD_TYPE=Release \
  -DCAFFE2_USE_CUDNN=1 -DCAFFE2_USE_CUSPARSELT=1 \
- -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'` ..
+ -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'`
 ```
 
 ### Benchmark
 
-We compared the throughput (samples/sec) and GPU memory usage (GBs) of three distinct implementations: the small variant of GPTlite, a deep benchmark model made of 2048 layers with 256 activations per layer, and a wide benchmark model of 3 layers with 8192 activations each. So we are testing a very deep, a very shallow and a large text generation model. For each model, we tested:
+We compared the throughput (samples/sec) and GPU memory usage (GBs) of three distinct implementations:
+1. the small variant of GPTlite;
+2. a deep benchmark model made of 2048 layers with 256 activations per layer, with input and output of size 2048; and
+3. a wide benchmark model of 3 layers with 8192 activations each, with input and output of size 2048.
+
+So in practice we are testing a very deep DNN, a very shallow DNN and a large language model. For each model, we tested:
 - the python PyTorch implementation of training and inference on python 1.3.1 and python 2.1.0;
 - the C++ LibTorch 2.1.0 implementation of train and inference; and
 - the TorchScript combo, using PyTorch 2.1.0 to train and output the model, and C++ LibTorch 2.1.0 to load and perform inference. 
