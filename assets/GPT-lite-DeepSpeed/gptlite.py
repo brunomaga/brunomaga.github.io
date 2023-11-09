@@ -208,12 +208,15 @@ class GPTlitePipeSpec(PipelineModule):
     
 
 
-def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
+def load_tiny_shakespeare_data():
   rank = dist.get_rank() if dist.is_initialized() else 0 
 
   #load input data
-  with open(filename) as f:
-      text = f.read()
+  current_dir = os.path.dirname(os.path.realpath(__file__))
+  txt_path = os.path.join(current_dir, '..', 'GPT-lite', 'tinyshakespeare.txt')
+  with open(txt_path) as f:
+    text = f.read()
+    
   if rank==0: print("input data loaded. Length of text: ", len(text))
 
   #collect all ordered and unique characters in the text
@@ -239,7 +242,7 @@ def load_tiny_shakespeare_data(filename="tinyshakespeare.txt"):
   if rank==0: print("Train data encoded", data.shape, train_data.shape, valid_data.shape)
   return train_data, valid_data, vocab_size
   
-def get_dataset(filename="tinyshakespeare.txt"):
+def get_dataset():
   
   class GPTliteDataset(torch.utils.data.Dataset):
 
@@ -259,7 +262,7 @@ def get_dataset(filename="tinyshakespeare.txt"):
         y = self.train_data[ix+1 : ix+1+self.block_size]
         return x, y
 
-  train_data, valid_data, vocab_size = load_tiny_shakespeare_data(filename) 
+  train_data, valid_data, vocab_size = load_tiny_shakespeare_data() 
   train_dataset = GPTliteDataset(train_data, block_size)
   valid_dataset = GPTliteDataset(valid_data, block_size)
   return train_dataset, valid_dataset, vocab_size
