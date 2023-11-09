@@ -2,13 +2,17 @@
 #include "benchmark.h"
 
 BenchmarkModel::BenchmarkModel(int64_t W, int64_t L, int64_t in_size, int64_t out_size, torch::Device device ){
+  /// DNN with L layers and W neurons per layer 
+
   layers = torch::nn::Sequential();
-	for (int64_t l = 0; l < L; ++l) {
-		layers->push_back(torch::nn::Linear(
-      l==0   ? in_size  : W,
-      l==L-1 ? out_size : W));
-		layers->push_back(torch::nn::ReLU());
+	layers->push_back(torch::nn::Linear(in_size, W));
+	layers->push_back(torch::nn::ReLU());
+	for (int64_t l = 0; l<L-2; ++l) {
+    layers->push_back(torch::nn::Linear(W, W));
+    layers->push_back(torch::nn::ReLU());
     }
+	layers->push_back(torch::nn::Linear(W, out_size));
+	layers->push_back(torch::nn::ReLU());
   register_module("layers", layers);
   this->to(device);
 }

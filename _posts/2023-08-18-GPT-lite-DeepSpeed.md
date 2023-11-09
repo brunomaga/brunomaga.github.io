@@ -137,13 +137,14 @@ The implementation of the benchmark model in `benchmark.py` is straightforward (
 ### benchmark.py 
 
 class BenchmarkModel(nn.Module):
-  """" DNN with W input features, W neurons per layer, W output classes and L layers """
+  """" DNN with L layers and W neurons per layer """
 
-  def __init__(self, W, L):
+  def __init__(self, W, L, in_size, out_size):
     super(BenchmarkModel, self).__init__()
-    self.layers = []
-    for _ in range(L):
+    self.layers = [nn.Linear(in_size, W), nn.ReLU()]
+    for _ in range(L-2):
       self.layers += [nn.Linear(W, W), nn.ReLU()]
+    self.layers += [nn.Linear(W, out_size), nn.ReLU()]
     self.layers = nn.Sequential(*self.layers)
 
   def forward(self, x):
@@ -151,16 +152,17 @@ class BenchmarkModel(nn.Module):
 
 
 class BenchmarkDataset(torch.utils.data.Dataset):
-    def __init__(self, W, len=2**16):
-      self.W = W
+    def __init__(self, in_size, out_size, len=2**16):
+      self.in_size = in_size
       self.len = len
+      self.out_size = out_size
 
     def __len__(self):
       return self.len
 
     def __getitem__(self, _):
-      x = torch.Tensor(self.W).uniform_(-1, 1)
-      y = int( x @ x % self.W)
+      x = torch.Tensor(self.in_size).uniform_(-10, 10)
+      y = int( x @ x % self.out_size)
       return x, torch.tensor(y, dtype=torch.long)
 
 
@@ -547,7 +549,7 @@ class GPTlite(nn.Module):
       return x
 ```
 
-Finally, when doing model parallelism, we can reduce memory substantially by partitioning activations and offloading those checkpoints to the CPU instead of saving them in memory. DeepSpeed does not support model/tensor parallelism natively so we will skip this, but check the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) if you are interested.
+where `self.activation_checkpoint_interval` is a value set during initialization of the class. Finally, when doing model parallelism, we can reduce memory substantially by partitioning activations and offloading those checkpoints to the CPU instead of saving them in memory. DeepSpeed does not support model/tensor parallelism natively so we will skip this, but check the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) if you are interested.
 
 ### Launching a distributed execution
 
