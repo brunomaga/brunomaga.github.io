@@ -9,7 +9,7 @@ In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started
 
 So the main questions are: how much faster are the C++ model implementations compared to Python? If python is the *de facto* language for training, can we perform inference efficiently on a C++ code? How good is `torch.compile` really?
 
-### PyTorch philosophy change: from python to C++ to python
+### Change of philosophy: from python to C++ to python
 
 Initial releases of pytorch were mostly written in python. Until the release of Python 2.x, the belief was that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++". In practice, python has the overhead of the runtime itself, dynamic typing, JIT, interpreted code, etc. So moving PyTorch API to C++ and using python as layer that calls C++ functions seemed logical.
 
