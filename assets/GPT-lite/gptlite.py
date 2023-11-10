@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from typing import Optional
 
 
-# replicate GPT-3 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
+# replicate GPT-2 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
 
 # depth of the network as number of decoder blocks.
 n_layer = 12
@@ -114,7 +114,7 @@ class GPTlite(nn.Module):
     #sequence of attention heads and feed forward layers
     self.blocks = nn.Sequential( *[Block(n_embd, n_head) for _ in range(n_layer)])
 
-    #one layer normalization layer after transformer blocs and before linear layer that oututs the vocabulary
+    #one layer normalization layer after transformer blocks and before linear layer that outputs the vocabulary
     self.ln = nn.LayerNorm(n_embd)
     self.lm_head = nn.Linear(n_embd, vocab_size, bias=False)
   
