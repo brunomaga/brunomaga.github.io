@@ -5,22 +5,22 @@ categories: [machine learning, Transformer, GPT, LLM, C++, TorchScript]
 tags: [machinelearning]
 ---
 
-In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the developers have changed tremendously the philosophy underlying the development of the PyTorch backend, moving from a python-wrapped implementation of C++ kernels (highly efficient), to an almost-full python implementation calling a reduced subset of primitive c++ kernels (highly developer friendly). They also announced `torch.compile` as a method to perform a JIT compilation and optimization of the execution graph that tremendously speeds up the execution.
+In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the developers have changed tremendously the philosophy underlying the development of the PyTorch backend, moving from a python-wrapped implementation of C++ kernels (highly efficient), to a python implementation calling a reduced subset of small primitive c++ kernels (highly developer friendly). They also announced `torch.compile` as a method to perform a JIT compilation and optimization of the execution graph that tremendously speeds up the execution.
 
 So the main questions are: how much faster are the C++ model implementations compared to Python? If python is the *de facto* language for training, can we perform inference efficiently on a C++ code? How good is `torch.compile` really? 
 
 #### Change of philosophy: from python to C++ to python
 
-Initial releases of pytorch were mostly written in python. Until the release of Python 2.x, the belief was that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++". In practice, python has the overhead of the runtime itself, dynamic typing, JIT, interpreted code, etc. So moving PyTorch API to C++ and using python as layer that calls C++ functions seemed logical.
+Initial releases of pytorch were mostly written in python. Until the release of Python 2.x, the belief was that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++". In practice, python has the overhead of the runtime itself, dynamic typing, JIT, interpreted code, etc. So moving PyTorch API to C++ and using python as a *thin* layer that calls the C++ compiled implementations seemed logical.
 
-Now, with PyTorch 2.0, they're going in the complete opposite direction, claiming that the "philosophy on PyTorch has always been to keep flexibility and hackability our top priority, and performance as a close second" and "moving internals into C++ makes them less hackable and increases the barrier of entry for code contributions". So in practice, the library of 2000+ operations in C++ is being reduced in size and the "goal is to provide a primitive and stable set of ~250 operators with simplified semantics, called PrimTorch".
+Now, with PyTorch 2.0, they're moving in the complete opposite direction, claiming that the "philosophy on PyTorch has always been to keep flexibility and hackability our top priority, and performance as a close second" and "moving internals into C++ makes them less hackable and increases the barrier of entry for code contributions". So in practice, the library of 2000+ operations written in C++ is being reduced and the "goal is to provide a primitive and stable set of ~250 [C++] operators with simplified semantics, called PrimTorch".
 
-In brief, in order to favour PyTorch contributors that prefered Python over C++, they are limiting the C++ code to a few hundred kernels, and have all the remaining code implemented in python only. Hardware vendors can then focus on their specific implementation of that subset of C++ methods, while the python runtime will execute the higher level operations. Sounds good, but the possibility of training a model using only C++ in the next releases of PyTorch remains uncertain.
+In brief, in order to favour PyTorch contributors that prefered Python over C++, they are limiting the C++ code to a few hundred kernels, and will have all the remaining code implemented in python only. Hardware vendors can then focus on their specific implementation of that subset of C++ methods, while the python runtime will execute the higher level operations. Sounds good, but the possibility of training a model using only C++ in the next releases of PyTorch remains uncertain.
 
 #### torch.compile
 
 The other big announcement was `torch.compile`, that "makes PyTorch code run faster by JIT-compiling PyTorch code into optimized kernels, all while requiring minimal code changes". Torch compile is based on three main steps:
-1. **graph acquisition** will break down instruction into (sets of primitive) operations and build an execution worflow (graph). Nodes that can be combined and optimized together will be merged, and subsequently, graph will be rewritten as a graph of subgraphs. Parallel (graph leaves) and sequential modules are now exposed.
+1. **graph acquisition** will build the execution graph of all PyTorch operations. Nodes that can be combined and optimized together will be merged, and subsequently, graph will be rewritten as a graph of subgraphs. Parallel (graph leaves) and sequential modules are now exposed.
 2. **graph lowering** will decompose the previous operations into kernels that are native to the specific backend.
 3. **graph compilation** will convert the kernels into low-level operations that are specific to the device.
 
