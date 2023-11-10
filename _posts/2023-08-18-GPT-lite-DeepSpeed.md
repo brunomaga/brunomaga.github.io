@@ -91,7 +91,7 @@ def get_dataset():
         y = self.train_data[ix+1 : ix+1+self.block_size]
         return x, y
 
-  train_data, valid_dataset, vocab_size = load_tiny_shakespeare_data() #load encoded data from text file
+  train_data, valid_dataset, vocab_size = load_tiny_shakespeare_data()
   train_dataset = GPTliteDataset(train_data, gptlite.block_size)
   valid_dataset = GPTliteDataset(valid_data, gptlite.block_size)
   return train_dataset, valid_dataset, vocab_size
