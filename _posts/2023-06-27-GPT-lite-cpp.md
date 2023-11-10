@@ -15,7 +15,7 @@ Initial releases of pytorch were mostly written in python. Until the release of 
 
 Now, with PyTorch 2.0, they're going in the complete opposite direction, claiming that the "philosophy on PyTorch has always been to keep flexibility and hackability our top priority, and performance as a close second" and "moving internals into C++ makes them less hackable and increases the barrier of entry for code contributions". So in practice, the library of 2000+ operations in C++ is being reduced in size and the "goal is to provide a primitive and stable set of ~250 operators with simplified semantics, called PrimTorch".
 
-In brief, in order to favour PyTorch contributors that prefered Python over C++, they are limiting the C++ code to a few hundred kernels, and have all the remaining PyTorch code implemented in python only. Hardware vendors can then focus on their C++ specific implementations of that subset of C++ methods, while the python runtime will do the rest. Sounds good, but the future of training a model using C++ only remains uncertain.
+In brief, in order to favour PyTorch contributors that prefered Python over C++, they are limiting the C++ code to a few hundred kernels, and have all the remaining code implemented in python only. Hardware vendors can then focus on their specific implementation of that subset of C++ methods, while the python runtime will execute the higher level operations. Sounds good, but the possibility of training a model using only C++ in the next releases of PyTorch remains uncertain.
 
 #### torch.compile
 
