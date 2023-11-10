@@ -5,11 +5,11 @@ categories: [machine learning, Transformer, GPT, LLM, C++, TorchScript]
 tags: [machinelearning]
 ---
 
-In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the developers have changed tremendously the philosophy underlying the development of PyTorch backend, moving from a python-wrapped implementation of C++ kernels (highly efficient), to an almost full python implementation around reduced subset of primitive c++ kernels (highly developer friendly). They also announced `torch.compile` as a method to perform JIT-compilations that optimize the kernels and tremendously speeds up the execution.
+In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the developers have changed tremendously the philosophy underlying the development of the PyTorch backend, moving from a python-wrapped implementation of C++ kernels (highly efficient), to an almost-full python implementation calling a reduced subset of primitive c++ kernels (highly developer friendly). They also announced `torch.compile` as a method to perform a JIT compilation and optimization of the execution graph that tremendously speeds up the execution.
 
-So the main questions are: how much faster are the C++ model implementations compared to Python? If python is the *de facto* language for training, can we perform inference efficiently on a C++ code? How good is `torch.compile` really?
+So the main questions are: how much faster are the C++ model implementations compared to Python? If python is the *de facto* language for training, can we perform inference efficiently on a C++ code? How good is `torch.compile` really? 
 
-### Change of philosophy: from python to C++ to python
+#### Change of philosophy: from python to C++ to python
 
 Initial releases of pytorch were mostly written in python. Until the release of Python 2.x, the belief was that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++". In practice, python has the overhead of the runtime itself, dynamic typing, JIT, interpreted code, etc. So moving PyTorch API to C++ and using python as layer that calls C++ functions seemed logical.
 
@@ -17,7 +17,7 @@ Now, with PyTorch 2.0, they're going in the complete opposite direction, claimin
 
 In brief, in order to favour PyTorch contributors that prefered Python over C++, they are limiting the C++ code to a few hundred kernels, and have all the remaining PyTorch code implemented in python only. Hardware vendors can then focus on their C++ specific implementations of that subset of C++ methods, while the python runtime will do the rest. Sounds good, but the future of training a model using C++ only remains uncertain.
 
-### torch.compile
+#### torch.compile
 
 The other big announcement was `torch.compile`, that "makes PyTorch code run faster by JIT-compiling PyTorch code into optimized kernels, all while requiring minimal code changes". Torch compile is based on three main steps:
 1. **graph acquisition** will break down instruction into (sets of primitive) operations and build an execution worflow (graph). Nodes that can be combined and optimized together will be merged, and subsequently, graph will be rewritten as a graph of subgraphs. Parallel (graph leaves) and sequential modules are now exposed.
@@ -31,7 +31,6 @@ The other big announcement was `torch.compile`, that "makes PyTorch code run fas
 A diagram of the three steps of `torch.compile`. Source: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
  
 ### About this post
-
 
 In this post, we will benchmark and analyse several implementations of ML train and inference performed on different backends: PyTorch 1.2.1 (python), PyTorch 2.1.0 (python), LibTorch 2.1.0 (python), TorchScript 2.1.0 (python and C++), and `torch.compile` (python).  
 We will look at two different models, so feel free to pick one based on your level of expertise and interest:
@@ -501,9 +500,9 @@ The results are the following:
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/GPT-lite-cpp/benchmark_gptlite.png"/>
 
-Looking at the memory usage, we see that there is a much smaller memory requirement for inference-only runs (light blue bars), compared to runs that performed train and inference (navy blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training leads to an increase in memory in the order of 4x to 10x. 
+Looking at the GPU memory usage, we see that there is a much smaller memory requirement for inference-only runs (light blue bars), compared to runs that performed train and inference (navy blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training leads to an increase in memory in the order of 4x to 10x.  
 
-Looking at the overall performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.0 (navy blue to orange bars). Also, there is also a small throughput increase of up to 10% when moving from PyTorch 2.1.0 to its C++ LibTorch equivalent (from orange to green bars), explained again by the python runtime overhead. Finally, the inference when comparing the pure C++ implementation and the TorchScript implementation (train in python, inference in C++) is neglegible, which means that TorchScript does a pretty good job in (de)serializing the model.
+Looking at the overall performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.0 (navy blue to orange bars). Also, there is also a small throughput increase of up to 10% when moving from PyTorch 2.1.0 to its C++ LibTorch equivalent (from orange to green bars), explained by the python overhead (runtime, dynamic typing, etc). Finally, the inference when comparing the pure C++ implementation and the TorchScript implementation (train in python, inference in C++) is neglegible, which means that TorchScript does a pretty good job in (de)serializing the model.
 
 The final message is: **running PyTorch 2.0 does not incur a massive loss of performance compared to LibTorch C++**, and this justifies the move of the Torch back to Python, to ease up development. Also, **performing training on PyTorch and inference on compiled LibTorch is a solution that is optimal to most hardware setups**. Now the main questions are: is C++ LibTorch going to become deprecated and eventually disappear? If not, will `torch.compile` be ported to LibTorch? And finally, and most importantly, will it be possible to write a training loop fully in C++ that allows it to run on systems that do not include a python runtime?
 
