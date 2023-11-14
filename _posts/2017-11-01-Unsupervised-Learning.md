@@ -7,7 +7,7 @@ tags: [machinelearning]
 
 Unsupervised Learning is the feld of Machine Learning dedicated to the methods of learning without supervision or reward signals. In practice, and contrarily to the fields of [Reinforcement Learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and  [Supervised Learning]({{ site.baseurl }}{% post_url  2017-02-17-Linear-Regression-and-Matrix-Factorization %}), the data is the only information provided to the methods. However, methods are still very powerful and are commonly used for applications such as image compression, dimensionality reduction and classification. 
 
-### Foreword: Hebbian Learning
+## Foreword: Hebbian Learning
 
 Among several *biologically-inspired* learning models, Hebbian learning ([Donald Hebb](https://en.wikipedia.org/wiki/Donald_O._Hebb),1949) is probably the oldest. Its general concept forms the basis for many learning algorithms, including backpropagation. The main rationale is based on the synaptic changes for neurons that spike in close instants in time (motto "*if they fire together, they wire together*"). It is known from the Spike-Timing-Dependent Plasticity ([STDP, Markram et al. Frontiers](https://www.frontiersin.org/articles/10.3389/fnsyn.2012.00002/full)) that the increase/decrease of a given synaptic strenght is correlated with the time difference between a pre- and a post-synaptic neuron spike times. In essence, if a neuron spikes and if it leads to the firing of the output neuron, the synapse is strengthned.
 
@@ -63,7 +63,7 @@ $$
 
 Typically used are the **sigmoidal functions** (click [here](https://en.wikipedia.org/wiki/Sigmoid_function#Examples) for a list of examples), which are more *powerful* ways of describing an output, compared to a linear function. Generally speaking, we can say that in unsupervised learning, $$\Delta w \propto F(pre,post)$$. When we add a reward signal to each operation, i.e. $$\Delta w \propto F(pre, post, reward)$$ then we enter the field of **reinforcement learning**. While unsupervised learning relates to the synaptic weight changes in the brain derived from [Long-Term Potentiation (LTP)](https://en.wikipedia.org/wiki/Long-term_potentiation) or [Long-Term Depression (LTD)](https://en.wikipedia.org/wiki/Long-term_depression), the reinforcement learning relates more to the Dopamine [reward system](https://en.wikipedia.org/wiki/Reward_system) in the brain, as it's an external factor that provides reward for learning for behaviour. 
 
-### Principal Component Analysis
+## Principal Component Analysis
 
 The Principal Component Analysis is a dimensionality (feature) reduction method that rotates data towards the direction that yields most data significance (variance), in such way that one can analyse data at the most meaningful dimensions and discards dimensions of low variance. Theoretically speaking, a quote from Gerstner's lecture notes in Unsupervised Learning:
 
@@ -96,7 +96,7 @@ $$
 D_c = F^{-T} D_n = F D_n
 $$
 
-### Independent Component Analysis
+## Independent Component Analysis
 
 This section was largely inspired on the lecture notes of Tatsuya Yokota, Assistant Professor at Nagoya Institute of Technology
 
@@ -172,7 +172,7 @@ Or... because the algorithm converges when $$w \propto \Delta w$$, and  $$w$$ an
 
 As a final remark, it is relevant to mention that *kurtosis is very weak with outliers because is a fourth order function*. An alternative often used method is the Neg-entropy, robust for outliers. I'll ommit it for brevity. If you're interested on details, check the [original lecture notes](https://www.slideshare.net/yokotatsuya/independent-component-analysis-11359849).
 
-### Competitive Learning and k-means
+## Competitive Learning and k-means
 
 Not to be confused with the [k-nearest neighbours algorithm (KNN)](https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm).
 
@@ -250,7 +250,7 @@ K-means has 2 main problems:
 
 Both problems can be fixed with Gaussian [Mixture Models](https://en.wikipedia.org/wiki/Mixture_model). A mixture model corresponds to the mixture of distributions --- in this case Gaussians --- that represents the probability distribution of observations in the overall population. This content is covered in [another post]({{ site.baseurl }}{% post_url 2019-07-01-Variational-Inference-GMM %}).
 
-### Self-Organizing Maps and Kohonen Maps
+## Self-Organizing Maps and Kohonen Maps
 
 A self-organizing map (SOM) is an unsupervised artificial neural network, typically applied on a 2D space, that represents a discretization of the input space (or the training set). Its main purpose is to represent training by localized regions (neurons) that represent agglomerates of inputs:
 
@@ -300,7 +300,7 @@ The input dataset and the `python` implementation are available in <a href="/ass
  
 For more examples, check the [wikipedia entry for Self Organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
 
-### The Curse of Dimensionality
+## The Curse of Dimensionality
 
 As a final remark, distance-based methods struggle with high dimensionality data. This is particularly relevant on Euclidian distances. This is due to a phenomen denominated the [Curse of Dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality) that states that the distance between any two given elements in a multidimensional space becomes similar as we increase the number of dimensions, deeming the distance metric almost irrelevant. I will not detail the soundness of the claim, but check this [blog post](https://towardsdatascience.com/that-cursing-dimensionality-ac317fb0fdcc) if you are interested in knowing the details.
 

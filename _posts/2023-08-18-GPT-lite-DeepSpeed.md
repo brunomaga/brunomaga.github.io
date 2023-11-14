@@ -7,7 +7,7 @@ tags: [machinelearning]
 
 Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}) and [AI Supercomputing (part 2)]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) posts, we summarized existing Machine Learning (ML) parallelism techniques. Later, in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite, the small variant of the [GPT-2 model](https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf). In this post, we will perform large-scale parallel training of a GPT model and a large DNN on a network of 8 GPUs, using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer). The DeepSpeed API is a lightweight wrapper on PyTorch, and can be installed by the `deepspeed` package for `python`.
 
-### 3D Parallelism and ZeRO
+## 3D Parallelism and ZeRO
 
 An ML model allows for three types of parallelism, that can be combined into what we call **3D parallelism**:
 1. **(Distributed) Data parallelism (DDP)**, by dividing the number of samples (batch size) across processors, and keeping copies of models across processors in sync, by using the average of the gradients across processors to perform the model updates.
@@ -39,16 +39,16 @@ Additionaly, on top of stage 1 and 2, we can enable [**ZeRO-Offload**](https://w
 
 We will see in this post that finding the optimal parallelism hyperparameters is a hard problem. This is a resources allocation problem across the 3D volume in the data, parameters and layers (pipeline) space. It aims at allocating different partitions on that 3D space to different processors, in a way that best balances the compute time or memory across resources. In practice, balanced computation yields a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
-### Model and dataset
+## Model and dataset
 
 The code that follows is applicable to any model of type `torch.nn.Module` and any dataset of type `torch.utils.data.Dataset`. So we will detail three use cases: an advanced use case, specific to a large language model (GPTlite), an out-of-the-box [pre-defined model from torchvision](#torchvision-model) and a [simple DNN model](#benchmark-model) of arbitrary width and depth used to simulate different ML workload conditions (we will call this our benchmark model).  
 
-#### GPTlite
+## GPTlite
 
 We start by taking our previous *GPT-lite* implementation and matching the architecture of the model to the *GPT-2 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1):
 
 ```python
-### gptlite.py
+## gptlite.py
 
 # depth of the network as number of decoder blocks.
 n_layer = 12
@@ -69,7 +69,7 @@ dropout = 0.1
 We then define the methods `get_model()` and `get_dataset()` that return our model and the [tiny shakespeare](https://github.com/karpathy/char-rnn/blob/master/data/tinyshakespeare/input.txt) dataset:
 
 ```python
-### gptlite.py
+## gptlite.py
 
 def get_dataset():
   
@@ -101,7 +101,7 @@ def get_model(vocab_size):
   return GPTlite(vocab_size)
 ```
 
-#### Using a torchvision model {#torchvision-model}
+## Using a torchvision model {#torchvision-model}
 
 If you'd want to perform a multi-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd define the previous 2 methods as:
 
@@ -124,7 +124,7 @@ def get_model(num_classes):
 
 As a relevant remark, pre-existing models do not define activation checkpointing layers and pipelining layers that are required to activate these two features (discuss later). 
 
-#### Benchmark model {#benchmark-model}
+## Benchmark model {#benchmark-model}
 
 If we'd want instead to test the response of DeepSpeed scaling of a very simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, for multi-label classification, whose objective is to compute the modulo of the sum of squares of a random input vector:
 
@@ -137,7 +137,7 @@ The *benchmark model*, a DNN with L layers of dimensionality W (right)
 The implementation of the benchmark model in `benchmark.py` is straightforward:
 
 ```python
-### benchmark.py 
+## benchmark.py 
 
 class BenchmarkModel(nn.Module):
   """" DNN with L layers and W neurons per layer """
@@ -175,7 +175,7 @@ get_model = lambda W, L: BenchmarkModel(W, L)
 
 We will call this the **Benchmark Model** and we will use it later in our benchmark section to test DeepSpeed's response to models of varying width and depth..
 
-### Main code
+## Main code
 
 We start integrating DeepSpeed in our code by creating the `ArgumentParser` object that is required by the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
 - the `--local_rank` parameter that is the local rank of each process in the network, and will be populated automatically by the `deepspeed` launcher when launching a script;
@@ -184,7 +184,7 @@ We start integrating DeepSpeed in our code by creating the `ArgumentParser` obje
 The most correct way to do this is to call `deepspeed.add_config_arguments()`, that adds the `--deepspeed_config` and other DeepSpeed-specific arguments:
 
 ```python
-### train.py
+## train.py
 
 import deepspeed
 
@@ -202,7 +202,7 @@ def get_cmd_line_args(description='GPT-lite on DeepSpeed'):
 The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straightforward:
 
 ```python
-### train.py
+## train.py
 
 def main_deepspeed(n_epochs=100, random_seed=42):
 
@@ -221,7 +221,7 @@ def main_deepspeed(n_epochs=100, random_seed=42):
 We then write the training loop, with a structure very similar to a PyTorch implementation. The only exception is that we don't perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `train_dataloader` is of type `torch.utils.data.distributed.DistributedSampler` and created automatically by the `initialize()`, so multi-process runs will have each process automatically delegated to a different subset of data.
 
 ```python
-### train.py
+## train.py
 
 def main_deepspeed(n_epochs=100, random_seed=42):
   # ...
@@ -239,7 +239,7 @@ def main_deepspeed(n_epochs=100, random_seed=42):
   if engine.local_rank == 0: print(f"Epoch: {epoch}, Loss: {loss}")
 ```
  
-### Config file
+## Config file
 
 The real *nuance* and complexity in using DeepSpeed is the `.json` config file. The number of possible optimizations is large, as it defines parallelism, floating point precision, logger, communication parameters, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output memory and throughput info at every 10 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
 
@@ -339,7 +339,7 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
 
 As a final note, the configuration file can also be extended with custom fields, that are e.g. specific to application or hardware, but for brevity we'll omit those details here. 
 
-### Pipeline parallelism
+## Pipeline parallelism
 
 [Pipeline parallelism](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) improves both the memory and compute efficiency during training by partitioning the layers of a model into stages that can be processed in parallel. The pipeline parallelims implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 Forward pass followed by 1 Backward pass, Figure 4 top on the [Megatron LM paper](https://browse.arxiv.org/pdf/2104.04473.pdf) ), however it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms.
 
@@ -352,7 +352,7 @@ Two-way data parallel pipelines with four stages each. Source: [Microsoft Resear
 We will make pipeline parallelism optional in our use case, as in many cases (e.g. for small models) it is not benefitial. We will enable it by passing the number of stages as the `---pipeline_num_stages` argument (default: 0, no pipelining) on the command line:
 
 ```python
-### train.py
+## train.py
 
 def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   # ...
@@ -372,7 +372,7 @@ The number of pipeline stages must divide the number of GPUs, so that DeepSpeed 
 DeepSpeed supports pipeline parallelism on any sequence of network blocks in a `nn.Sequential` container or `list`. The can be then broken into pipeline states. So we expose the pipeline parallelism in our model by creating a method `to_layers()` in `GPTlite`, that returns the sequence of actions to be executed. Note that `to_layers()` follows the same order as the `forward` pass of `GPTlite`, and that `self.blocks` is of type `nn.Sequential`:
 
 ```python
-### gptlite.py
+## gptlite.py
 
 class GPTlite(nn.Module):
   # ...
@@ -392,7 +392,7 @@ class GPTlite(nn.Module):
 As a next step, in our DeepSpeed initialization code, we must create a pipeline wrapper around our model. This wrapped model is the new `model` variable that will be passed to `deepspeed.initialize()`:
 
 ```python
-### gptlite.py
+## gptlite.py
 
 def get_model(criterion, vocab_size, pipeline_num_stages=0):
   # ...
@@ -411,7 +411,7 @@ def get_model(criterion, vocab_size, pipeline_num_stages=0):
 Finally, the training code in the main loop is reduced to a single call to `engine.train_batch()`, that handles the forward pass, backward pass and gradient updates for the pipelining use cases: 
 
 ```python
-### train.py
+## train.py
 
 def main_deepspeed(n_epochs=100, random_seed=42):
   # ...
@@ -424,14 +424,14 @@ def main_deepspeed(n_epochs=100, random_seed=42):
 
 As a final remark, [pipeline parallelism is not compatible with ZeRO stages 2 or 3](https://deepspeed.readthedocs.io/en/latest/pipeline.html#pipeline-parallelism), as discussed [here](https://github.com/microsoft/DeepSpeed/issues/1110#issuecomment-850835817).
 
-#### Increasing compute and memory efficiency with LayerSpec (optional) 
+## Increasing compute and memory efficiency with LayerSpec (optional) 
 
 The implementation of pipelining for the `GPTlite` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` ([API](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker allocate only the layers it’s assigned to. To do this, we will create a new model class `GPTlitePipeSpec` that inherits from `PipelineModule` with an `__init__` method that follows very closely the `forward()` pass in the original `GPTlite`.
 
 The tricky bit here is that the `LayerSpec` constructor only works with the type `nn.Module` as argument, and some operations, specifically the sum of embeddings and the `torch.swapaxes` in `forward()` are not of type `nn.Module`. To overcome this, we create the classes `EmbeddingsSum` and `SwapAxes` that encapsulate those logics into an `nn.Module`. The full implementation for the pipeline class is then:
 
 ```python
-### gptlite.py
+## gptlite.py
 
 from deepspeed.pipe import PipelineModule, LayerSpec
 
@@ -475,7 +475,7 @@ class GPTlitePipeSpec(PipelineModule):
 then we add the flag `--pipeline_spec_layers` to the command line arguments, so that we can optionally enable this feature:
 
 ```python
-### train.py
+## train.py
 
 def get_cmd_line_args():
   # ...
@@ -486,7 +486,7 @@ def get_cmd_line_args():
 and change the `get_model()` method to retrieve the efficient pipeline variant as:
 
 ```python
-### gptlite.py
+## gptlite.py
 
 def get_model(criterion, vocab_size, pipeline_num_stages=0, pipeline_spec_layers=False):
 
@@ -503,14 +503,14 @@ As a side note, we will not tune the [load balancing method for pipeline modules
 
 Finally, in the extreme case the 1F1B algorithm is not the pipeline algorithm we want, we can [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) with a different algorithm. 
 
-### Activation Checkpointing
+## Activation Checkpointing
 
 [**Activation Checkpointing**](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html) allows for a large reduction in memory requirements by not storing all the forward pass activations that are required for the backward propagation. The rationale is simply: instead of storing the output of every layer after the forward pass, only a small subset of (checkpoint) layer outputs are kept in memory, and the remaining are computed on-the-fly - during the backward pass - with a forward pass from the closest lower layer. Activation checkpointing is extremelly relevant for DeepSpeed, as activations are not sharded, therefore not storing all layer activations in memory reduces substantially the memory footprint.
 
 In our use case, and for simplicity, we will store layer activations at a user-specified interval. For that, we create the command line argument `--activation_checkpoint_interval` that specifies how often to store layer checkpoints:
 
 ```python
-### train.py
+## train.py
 
 def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   # ...
@@ -537,7 +537,7 @@ def get_model(criterion, vocab_size, pipeline_num_stages=0, \
 When not using pipelining, we have to manually specify which layers to checkpoint, by calling [`deepspeed.checkpointing.checkpoint`](https://deepspeed.readthedocs.io/en/latest/activation-checkpointing.html#using-activation-checkpointing) at the checkpoint layers. We will use the previous `lo_layers()` method to iterate over the layers of a model and assign the relevant checkpointing in the `forward()` pass of `GPTlite` as:
 
 ```python
-### gptlite.py
+## gptlite.py
 
 class GPTlite(nn.Module):
   #...
@@ -554,7 +554,7 @@ class GPTlite(nn.Module):
 
 where `self.activation_checkpoint_interval` is a value set during initialization of the class. Finally, when doing model parallelism, we can reduce memory substantially by partitioning activations and offloading those checkpoints to the CPU instead of saving them in memory. DeepSpeed does not support model/tensor parallelism natively so we will skip this, but check the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) if you are interested.
 
-### Launching a distributed execution
+## Launching a distributed execution
 
 The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that spaws a python script across compute nodes and GPUs, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
 
@@ -570,12 +570,12 @@ Few notes about distributed executions:
 
 For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
 
-### Detour: measuring memory allocated to parameters
+## Detour: measuring memory allocated to parameters
 
 We can use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations, by calling the following method at the onset of execution:
 
 ```python
-### train.py
+## train.py
 
 def measure_parameters_memory(model):
   param_size_GB = sum([p.nelement() * p.element_size() for p in model.parameters()])/1024**3
@@ -601,7 +601,7 @@ However, when activating pipelining, by launching the run with `--pipeline_num_s
 This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many fallacies: it only measures the parameters overheard, it does not take activations or other residual buffers (e.g. normalization variables) into account, does not take the batch size and numerical precision (or any field in the config file) into account, it does not consider temporary (e.g. communication) buffers, etc. Also, the pipeline metrics are not accurate due to pipeline parallelism not being compatible with ZeRO stages 2 or 3.  
 
 
-### Results
+## Results
 
 To measure our performance, we used the deepspeed logger to extract the following metrics from different runs at every 10 steps: model throughput as average number of samples per second, the average allocated memory, and the maximum allocated memory. We used `pytorch==2.01`, CUDA `11.7` and `deepspeed==0.10.3`.
 
@@ -646,7 +646,7 @@ And finally our GPT-lite model, with a micro-batch size of 1 sample per GPU:
 
 **Pipelining with optimized vs non-optimized memory efficiency implementation.** Using the `SpecLayer`-based implementation of the `PipelileModule` in our pipeline runs, resulted in a reduction of about 40% in memory consumption for the GPT-lite and deep benchmark models, when running pipeline parallelism with the highest stage count (8).
 
-### General disccusion
+## General disccusion
 
 We observed a small improvement of memory efficiency, but still far from the claims of the original DeepSpeed team. One explanation is that we used a small network of 8 GPUs, compared to the 64 to 800 GPUs used by the authors in their benchmarks, therefore we achieved a much smaller memory reduction.
 
@@ -658,7 +658,7 @@ Finally, finding the best parallelism strategy, and choosing between different Z
 
 There is a lot of food for thought here, and I will be updating this post as I find new insights...
 
-### Further resources and Code
+## Further resources and Code
 
 We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored:
 - [Autotuning](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) allows for the automatic finetuning of the allocation of computing (shards/layers) to processors, and is useful in very large models or large clusters; 
