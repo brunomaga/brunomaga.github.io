@@ -70,7 +70,7 @@ Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (20
 The left and right hand side components refer to the encoder and decoder, specifically.
 We will describe these components in the next sections, and ommit the implementation details to focus on computational complexity. If you're curious about its implementation, have a look at [The Annotated Transformer](https://nlp.seas.harvard.edu/2018/04/03/attention.html).
 
-#### Word and Positional Embeddig
+## Word and Positional Embeddig
 
 The first unit of importance in the transformer is the embedding unit combined with the positional encoding (red boxes and circles in the previous picture). The transformer model has no recurrence or convolution, so we need a **positional encoder** to learn the context of a sequence based on the order of its words. Without it, it can only learn from the input as a set of values, not as a sequence, and inputs with swapped tokens would yield the same output. According to the paper, the embedding position $$d$$ of a given word in the position $$pos$$ of a sentence is:
 
@@ -85,7 +85,7 @@ In practice, the embedding is given by the $$sine$$ and $$cosine$$ waves with a 
 
 The output of the positional encoding in the transformer architecture, for dimensions 4 to 7 of the embedding array, for a word with a sentence-positioning related to the x axis. Source: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
 
-#### Attention Mechanism
+## Attention Mechanism
 
 The main component of the transformer is the attention mechanism, that determines how the words in input and output sentences interact. In brief, it's the component that *learns* the relationship between words in such a way that it learns the relevant bits of information on each context (thus the naming *Attention* mechanism). The transformer architecture includes not one, but several of these mechanisms, executed in parallel, to allow the model to learn multiple relevant aspects of the input. This **Multi-head Attention Mechanism** solves for $$n$$ heads, *What part of the input should I focus on?*
 
@@ -145,7 +145,7 @@ The **Masked Multi-head Attention** component on the decoder is similar to the r
 Input of the masked attention mechanism on the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every word iterated. The mask component of the attention mechanism refers to replacing (in the attention matrix) the position of unseen words by zero. Source: unknown.
 
 
-#### Other components
+## Other components
 
 The other components on the transformer are not unique, and have been used previously in other machine learning models:
 - The *Feed Forward* is a regressor (single hidden-layer DNN) that transforms the attention vectors into a form that is valid as input to the decoder or to the next computation phase;
@@ -153,7 +153,7 @@ The other components on the transformer are not unique, and have been used previ
 - The *Softmax* operation transforms the output of the previous layer into a probability distribution. The word with the highest probability is picked as output;
 
 
-#### Computational Complexity
+## Computational Complexity
 
 Besides the great reduction in the number of iterations on the encoder size, the authors compare the computational complexity of four comparative models:
 
@@ -188,7 +188,7 @@ The BERT model, as a stack of Transformer encoders.
 
 The training is performed in two phases. A pre-training phase learns the contexts of the language. And a fine-tuning phase adapts the trained model to the task being solved. Let's start with the pre-training.
 
-#### Pre-training
+## Pre-training
 
 The pre-training phase is based on the simultaneous resolution of two self-supervised prediction tasks:
 1. Masked language model: given a sentence with works replaced with a flag (or masked), train it against the same sentence with those words in place;
@@ -213,7 +213,7 @@ The input of the BERT model. Position Emdebbings are similar to the transformer 
 
 As a side note, the authors trained this model on BooksCorpus (800M words) and English Wikipedia (2,500M words), using 24 BERT layers, batches of 256 sentences with 512 tokens each.
 
-#### Fine-tuning
+## Fine-tuning
 
 The fine-tuning phase adds an extra layer to the pre-trained BERT model, in order to train the model to the task at hand. This approach has been applied previously in other models, particularly on Convolutional Neural Nets, where the first layers are pre-trained and learnt edges and lines, and the remaining layers are added later and used on the training of the object-specific detection.
 
@@ -222,7 +222,7 @@ In the original paper, the authors demonstrated this model successfully being ap
 2. Single Sentence Classification Tasks: similar to the previous, but applied to a single sentence. Used for learning contexts like finding hateful speech, etc.;
 3. Question Answering Tasks: allows one to pass as input the concatenation of the question and a paragraph where the answer to the question is available. The output of the model is the input with the embeddings representing the start and end word of the answer replaced by a marker. As an example:
 	- input:  "[CLS] His name is John. John is a Swiss carpenter and he is 23 years old [SEP] How old is John";
-	- output: "[CLS] His name is John. John is a Swiss carpenter and ###he is 23 years old#### [SEP] How old is John";
+	- output: "[CLS] His name is John. John is a Swiss carpenter and ###he is 23 years old## [SEP] How old is John";
 4. Single Sentence Tagging tasks: retrieves the classes of individual words e.g. Name, Location, Job, etc, by replacing each relevant word with its class id. As an example:
 	- input: "[CLS] His name is John. John is a Swiss carpenter and he is 23 years old";
 	- output: "[CLS] His name is [NAME]. [NAME] is a [NATIONALITY] [OCCUPATION] and he is [AGE] years old".
@@ -255,11 +255,15 @@ To yield "optimal" memmory usage, ZeRO-DP claims to have the computation/efficie
 
 Thus, each processor is allocated a subset of data (DP) and a subset of the model (MP). When that data goes through its layers it will broadcast its layers parameters to other accelerators on the forward pass. Each GPU will run its own data using the received parameters. During the backward pass, gradients will be reduced. See bottom figure and [video here](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/).
 
-When compared to MP, "Zero-DP has better scaling efficiency than MP because MP reduces the granularity of the computation while also increasing the communication overhead" and "Zero-R removes the memory redundancies in MP by partitioning the activations checkpoints across GPUs, and uses allgather to reconstruct them on demand". The forward and backward pass schematics are as follows:
-- **forward pass:** the initial portion of model ($$M_0$$) assigned to $$GPU_0$$. It broadcasts its model parameters $$M_0$$ to all GPUs (red arrows). Each GPU will do a forward pass of *their own data* on the received parameters. As we move forward in the model, other GPUs similarly communicate their parameters. The partial activations for each layer are stored by all GPUs. The loss is then computed for each GPU's data;
-  - <img class="mt-3" width="70%" height="70%" src="/assets/publications/zero.png"/>
-- **backward propagation:** on the first iteration of the Backwards pass, GPUs 0,1 and 2 hold the gradients of the last GPU's model layers $$M_3$$ for data points 0, 1 and 2. Combined with the partial activation stored, the partial gradient updates can be computed locally. An all-reduce of all updates will compute the averaged gradient update for model portion $$M_3$$ in $$GPU_3$$ (green arrows). All remaining layers follow analogously.
-  - <img class="mt-3" width="60%" height="60%" src="/assets/publications/zero2.png"/>
+When compared to MP, "Zero-DP has better scaling efficiency than MP because MP reduces the granularity of the computation while also increasing the communication overhead" and "Zero-R removes the memory redundancies in MP by partitioning the activations checkpoints across GPUs, and uses allgather to reconstruct them on demand". Let's look into detail at the forward and backward passes.
+
+**Forward pass:** the initial portion of model ($$M_0$$) assigned to $$GPU_0$$. It broadcasts its model parameters $$M_0$$ to all GPUs (red arrows). Each GPU will do a forward pass of *their own data* on the received parameters. As we move forward in the model, other GPUs similarly communicate their parameters. The partial activations for each layer are stored by all GPUs. The loss is then computed for each GPU's data;
+
+<img class="mt-3" width="70%" height="70%" src="/assets/publications/zero.png"/>
+
+**Backward propagation:** on the first iteration of the Backwards pass, GPUs 0,1 and 2 hold the gradients of the last GPU's model layers $$M_3$$ for data points 0, 1 and 2. Combined with the partial activation stored, the partial gradient updates can be computed locally. An all-reduce of all updates will compute the averaged gradient update for model portion $$M_3$$ in $$GPU_3$$ (green arrows). All remaining layers follow analogously.
+
+<img class="mt-3" width="60%" height="60%" src="/assets/publications/zero2.png"/>
 
 Finally, ZeRO can be complemented with techniques that reduce activation memory such as compression, checkpointing and live analysis. CPU offloading is not recommended or used as "50% of training time can be spent on GPU-CPU-GPU transfers" and this would penalize performance heavily.
 

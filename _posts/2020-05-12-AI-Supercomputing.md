@@ -171,7 +171,7 @@ Where's the caveat? In fact, mixing forward and backward passes from different m
 
 In brief: for memory efficent pipelining use GPipe, and for compute efficient pipelining, gor for PipeDream.
 
-#### Memmory tradeoffs, activation breakpointing and invertible logic
+## Memmory tradeoffs, activation breakpointing and invertible logic
 
 The main pipelining issue is memory requirements. Even if the computation if 100% pipeline and distributed, achieving a high level of pipelining per accelerator (ie a large batch size) is hard due to memory constraints. The problem is the increasing size of backprogapation "tape", ie the ammount of activation functions that have to be stored in memory to allow for the back propagation, growing linearly with the batch size. There are few solutions around it:
 - Loading and storing activation on a local storage system e.g. hard drive -- typically slow;
@@ -227,7 +227,7 @@ A representation of (vertical) model parallelism at the layer level on a fully-c
 
 Looking at the previous picture, we notice a major drawback in this method. During training, the constant usage of sums of products using all dimensions on the input space will force processors to continuously communicate those variables among themselves (red lines in the picture). This creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. Moreover, since the number of weights between two layers grows quadratically with the increase of neurons (e.g. for layers with neuron count $$N_1$$ and $$N_2$$, the number of weights are $$N_1 * N_2$$ ), this method is not used *directly* on large input spaces, as the communication becomes a bottleneck: every processor needs to communicate to every other processor its own contribution of the sum of products happening at every layer.
 
-#### Overcomming the quadratic communication
+## Overcomming the quadratic communication
 
 To overcome the previous quadratic complexity, [Megraton-LM](https://arxiv.org/abs/1909.08053) uses a very simple technique to reduce the ammount of communication. On an MLP block, take the output of each block as $$Y = GeLU(XA)$$:
 - the typical approach is to split the weight matrix A along its rows and input X along its columns as (for 2 processors $$1$$ and $$2$$): $$X=[X_1, X_2]$$ and $$A=[A_1, A_2]^T$$. This partitioning will result in $$Y = GeLU(X_1A_1 + X_2A_2)$$. Since $$GeLU$$ is a nonlinear function, $$GeLU(X_1A_1+ X_2A_2) \neq GeLU(X_1A_1) + GeLU(X_2A_2)$$ and this approach will require a synchronization point (to sum both partial sums of products) before the $$GeLU$$ function.
@@ -235,7 +235,7 @@ To overcome the previous quadratic complexity, [Megraton-LM](https://arxiv.org/a
 
 Transformer models follow an analogous approach. For more details, see section *3. Model Parallel Transformers* of the [Megraton-LM paper](https://arxiv.org/abs/1909.08053) for the diagram on Multi-Layer Perceptron and Self-Attention modules. 
 
-#### Intra-layer Parallelism on CNNs
+## Intra-layer Parallelism on CNNs
 
 It is relevant to mention that vertical model parallelism has some use cases where it is applicable and highly efficient. A common example is on the parallelism of very high resolution pictures on [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}). In practice, due to the filter operator in CNNs, the dependencies (weights) between two neurons on sequential layers is not quadratic on the input (as before), but constant with size $$F*F$$ for a filter of size $$F$$.
 
@@ -265,7 +265,7 @@ $$ \frac{dL}{dx_{k,c,i,j}} = \sum_{j=0}^{F-1} \sum_{a=-O}^{O} \sum_{b=-O}^{O} \f
 Can you infer the data dependencies displayed in the picture (red and blue arrows) from these equations? We won't go on details here, but read the  [original paper](https://arxiv.org/pdf/1903.06681.pdf) if you are interested.
 
 
-#### Closing Remarks
+## Closing Remarks
 
 In this post, we have shown that:
 - Machine Learning problems are highly-parallelizable due to efficient Matrix-vector multiplication, and computational reductions that happen rarely;

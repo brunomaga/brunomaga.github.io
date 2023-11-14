@@ -17,7 +17,7 @@ Due to very sophisticated anatomical structure and behaviour of neurons, we util
 {: style="text-align:center; font-size: small;"}
 source: wikipedia
 
-#### Hodgkin-Huxley Model and Cable Theory
+## Hodgkin-Huxley Model and Cable Theory
 
 [hodgkin1952quantitative]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1392413/
 [cable-theory]: http://www.scholarpedia.org/article/Neuronal_cable_theory
@@ -34,7 +34,7 @@ Another important mechanism are the synapses, which represent the interneural co
 {: style="text-align:center; font-size: small;"}
 The voltage trajectory during an Action Potential (spike)source: unknown
 
-#### Mathematical Basis
+## Mathematical Basis
 
 The application of cable theory on the calculation of electrical signaling throughout neurons, resumes the activity of a neuron compartment to a second order partial differential equation that governs the change of axial current depending of time and distance, and reduces the relationship between current and voltage to a one-dimensional cable described by:
 
@@ -117,7 +117,7 @@ $$
 
 By substituting $$t = T \tau$$ and $$x = X \lambda$$ we scale equation \ref{equation349_neuronbook} to the time and space constants $$\tau = RC$$ and $$\lambda = (1/2) \sqrt{d R_m / R_a}$$, leading to a final formulation in the form of the Cable equation \ref{equation338_neuronbook}
 
-#### Ionic Currents
+## Ionic Currents
 
 All channels may be characterized by their resistance or by their conductance $$g = 1/R$$, and by gating variables that add the **open probability** of a given channel, that generalizes external events that may block an ion channel. Hodgkin and Huxley formulated the ionic component components of a membrane as:
 
@@ -127,7 +127,7 @@ $$
 
 where $$E$$ represents the reversal potentials and $$m$$, $$n$$ and $$h$$ the gating variables --- see the original HH paper for details of individual ODEs and reported values. The leak generalizes any other voltage-independent conductance and is represented by $$L$$. 
 
-#### Reversal Potential
+## Reversal Potential
 
 The reversal potential for a particular ion flux in a compartment is given by the Nernst equation
 
@@ -147,20 +147,20 @@ $$
 V = - \frac{RT}{F} ln \frac{P_{Na} [Na^+]_{out} + P_{K} [K^+]_{out} + P_{Cl} [Cl^-]_{in}} {P_{Na} [Na^+]_{in} + P_{K} [K^+]_{in} + P_{Cl} [Cl^-]_{out}} \approx -60 mV
 $$
 
-#### Boundary Conditions 
+## Boundary Conditions 
 
 The value of the normal derivative of the boundary function is a Neumann boundary condition assuming a neurite with a *free* ending point follows the form $$\frac{\partial v}{\partial x}=0$$, i.e. no current flows on the terminal of a cable.
 
-#### Branching Points
+## Branching Points
 
 Branching points are modeled as *idealized* portions of the neurite that do not have membrane properties yet have axial current. Spatial discretization is equivalent to reducing the spatially distributed neuron to a set of connected compartments, and results on a set of ordinary differential equation that respect Kirchoff's current law. Kirchoff's current law, based on the principle of conservation of electric charge, states that the sum of currents entering any junction is equal to the sum of currents leaving that junction.  
 
-### Numerical Resolution Methods in NEURON
+## Numerical Resolution Methods in NEURON
 
 [neuron]: https://www.neuron.yale.edu/neuron/
 
 Most equations that govern the brain mechanisms do not have an analytic solution. The [NEURON simulator][neuron] --- henceforth referred to simple as NEURON --- addresses such problems by allowing for a biologically realistic --- not infinitely detailed --- models of brain mechanisms, by utilizing several methods for accurate discretization of the neuronal activity into a discrete space. 
-#### The Hines Solver
+## The Hines Solver
 
 [hines1984efficient]: https://www.sciencedirect.com/science/article/pii/0020710184900084
 
@@ -187,14 +187,14 @@ which is the backwards triangulation applied. The substitution step in Hines is 
 
 An important feature of the Hines algorithm is that it allows parallelization at the junction level, by starting the computation at the branches without children (*terminal* branches), the individual contributions from children branches can be computed in parallel, and included recursively at the parent compartment's node.
 
-#### Mechanisms and Events
+## Mechanisms and Events
 
 [carnevale2002efficient]: https://www.researchgate.net/publication/267700936_EFFICIENT_DISCRETE_EVENT_SIMULATION_OF_SPIKING_NEURONS_IN_NEURON
 [hines2000expanding]: https://www.neuron.yale.edu/neuron/static/papers/nc2000/nmodl400.pdf
 
 In NEURON, extra-cellular activity, recording patches, voltage clamps, interneuron kinetics (such as synapses and gap junctions) or any other contribution that affects the membrane potential itself are introduced as **mechanisms**. A mechanisms with a specific execution time is called an **event**. Events in NEURON are managed by the event delivery delivery system ([Efficient discrete event simulation of spiking neurons in NEURON, Carnevale et al., ResearchGate][carnevale2002efficient]). Mechanisms are encoded in NMODL language [Expanding NEURON’s Repertoire of Mechanisms with NMODL, Hines et al.][hines2000expanding], where the main user-provided blocks are *BREAKPOINT* (the main computation block of the model where solves are integrated by a *SOLVE* statement), *DERIVATIVE* (if states are governed by differential equations, assigns values to the derivative), *PROCEDURE* and *FUNCTION* (function declaration and calls), *PARAMETER* and *CONSTANT* (for read-write and read-only variables, respectively) and *NET_RECEIVE* (a protocol to inform the variable time step scheduler that an event has occurred within the previous time step).
 
-### Fixed Time Stepping Interpolation
+## Fixed Time Stepping Interpolation
 
 We showed previously that the principle of conversation of charge between two or more coupled compartments, including an external source of current injection $$I_{inj}$$, can be stated by a set of equations of the form:
 
@@ -256,7 +256,7 @@ $$
 \label{eq_crank_nicholson_steps}
 $$
 
-#### Computational Implementation
+## Computational Implementation
 
 NEURON's workflow for the resolution based on interleaved time stepping is defined by a set of iterations that run sequentially for every computation and communication time step of duration $$\Delta t$$ and $$\Delta t_{comm}$$ respectively as:
 1. at instant $$t$$:
@@ -281,7 +281,7 @@ NEURON's implementation of fixed time step integrates the equation over the $$\D
 A strong argument supporting a fixed time step approach is the possibility of data vectorization. At every time step, several mechanisms run the same operations with different inputs, therefore allowing for a data layout in memory that takes advantage of hyperthreading or other vectorization modules on modern architectures.
 
 
-#### Handling of non-linearity
+## Handling of non-linearity
 
 Although nonlinear equations generally require an iterative resolution in order to maintain second order correcteness, the HH membrane properties allow the cable equation to be described linearly and solved without iterations, while keeping second-order error accuracy. NEURON's variant of Crank-Nicholson with staggered time stepping applies the Strang splitting method to calculate the values of the compartment voltage and Hodgkin-Huxley gating states on interleaved time intervals. Therefore it converts a large non-linear system into two linear systems and the problem has now second-order accuracy, with a computation cost *almost* identical to the Backward Euler method. As a side note, a direct solution of voltage equation using a linearized membrane current $$I(V,t)=g(V-E)$$ at a time step $$t \rightarrow t + \Delta t$$ is possible if the conductance $$g$$ and reversal potential $$E$$ have second-order accuracy at time $$t+\Delta t/2$$. as detailed in [The NEURON book][neuron-book]. Since the conduction of HH-type channels is given by a function of state variables $$n$$ ($$K^+$$), $$m$$ and $$h$$ ($$Na^+$$), this second-order accuracy at $$t+\Delta t/2$$ is achieved by performing a calculation with a time step offset of $$\Delta t/2$$ from the current voltage time step. In brief, to calculate the second-order accurate integration between $$t-\Delta t/2$$ and $$t+\Delta t/2$$ we only need the second-order correct value of voltage-dependent rates at the instant $$t$$.
 

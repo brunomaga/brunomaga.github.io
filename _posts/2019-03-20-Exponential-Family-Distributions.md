@@ -9,7 +9,7 @@ On the [previous post]({{ site.baseurl }}{% post_url 2018-08-20-Bayesian-Linear-
 
 However, this is not a property of the Gaussian distribution only. In fact, most common distributions including the exponential, log-normal, gamma, chi-squared, beta, Dirichlet, Bernoulli, categorical, Poisson, geometric, inverse Gaussian, von Mises and von Mises-Fisher distributions can be represented in a similar syntax, making it simple to compute as well. To the set of such distributions we call it the **Exponential Family of Distributions**, and we will discuss them next.
 
-#### Detour: relationship between common probability distributions
+## Detour: relationship between common probability distributions
 
 Probability distributions describe the probabilities of each outcome, with the common property that the probability of all events adds up to 1. They can also be classified in two subsets: the ones described by a probability **mass function** if specified for discrete values, or probability **density functions** if described within some continuous interval. There are dozens (hundreds?) of different distributions, even though only 15 of them are often mentioned and used, and have some kind of relationship among themselves: 
 
@@ -30,7 +30,7 @@ A bried summary of their relationship follows. For more details, check the origi
 - *Normal, Log-Normal, Student’s t, and Chi-squared*: if we take a set of values following the same (any) distribution and sum them, that sum of values follows approximatly the normal distribution --- this is true regardless of the underlying distribution, and this phenomenon is called the [**Central Limit Theorem**](https://en.wikipedia.org/wiki/Central_limit_theorem). The log-normal distribution relates to distributions whose logarithm is normally distributed. The exponentiation of a normally distribution is log-normally distributed. Student's t-distributions are normal distribution with a *fatter* tail, although is approaches normal distribution as the parameter increases. The chi-square distribution if the distribution of sum-of-squares of normally-distributed values;
 - *Gamma and Beta*: the gamma distribution is a generalization of the exponential and the chi-squared distributions. Like the exponential distribution, it is used to model waiting times e.g. the time until next $$n$$ events occur. It appears in machine learning as the conjugate prior to some distributions. The beta distribution is the conjugate prior to most of the other distributions mentioned here;
 
-### Exponential Family of distributions
+## Exponential Family of distributions
 
 The exponential family of distribution is the set of distributions parametrized by $$\theta \in \mathbf{R}^D$$ that can be described in the form:
 
@@ -107,7 +107,7 @@ $$
 
 Finally, the *exponential family distribution have conjugate priors* (i.e. prior and posterior distributions have distributions from the exponential family), and the *posterior predictive distribution has always a closed-form solution* (provided that the normalizing factor can also be stated in closed-form), both important properties for Bayesian statistics.
 
-### Example: Univariate Gaussian distribution
+## Example: Univariate Gaussian distribution
 
 The univariate Gaussian distribution is defined for an input $$x$$ as:
 
@@ -154,7 +154,7 @@ $$
 
 which is the standard deviation of our normal distribution, by definition.
 
-### Example: Bernoulli distribution
+## Example: Bernoulli distribution
 
 Similarly, to compute the exponential family parameters in the Bernoulli distribution we follow as:
 
@@ -192,7 +192,7 @@ $$
 
 which is the variance of a Bernoulli variable.
 
-### Parameters for common distributions
+## Parameters for common distributions
 
 The following table provides a summary of most common distributions in the exponential family and their exponential-family parameters. For a more exhaustive list, check the [Wikipedia entry for Exponential Family](https://en.wikipedia.org/wiki/Exponential_family).
 
@@ -390,7 +390,7 @@ where <span class="math inline">\(\textstyle\sum_{i=1}^k e^{\eta_i}=1\)</span></
 </table>
 </font>
 
-### Maximum Likelihood
+## Maximum Likelihood
 
 On the [previous post]({{ site.baseurl }}{% post_url 2018-08-20-Bayesian-Linear-Regression %}), we have computed the Maximum Likelihood Estimator (MLE) for a Gaussian distribution. In thos post, we have seen that Gaussian --- alongside plenty other distributions --- belongs to the Exponential Family of Distributions. We will now show that the MLE estimator can be generalized across all distributions in the Exponential Family.
 

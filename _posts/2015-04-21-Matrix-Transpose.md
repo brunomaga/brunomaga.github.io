@@ -11,7 +11,7 @@ This post details an efficient method to solve that problem, and shows how to im
 
 [wiki-transpose]: https://en.wikipedia.org/wiki/Transpose
 
-### The basics
+## The basics
 
 A graph $$G = (V, E)$$ is a data structure consisting of a set of nodes or **vertices** $$V$$, and a set of links **edges** $$E$$. An edge $$\{i,j,e\} \subset \{\mathbb{N}, \mathbb{N}, T\}$$ in $$E$$ represents a connection between vertices $$i$$ and $$j$$ in $$V$$ with edge information of type $$T$$, and can be either ordered or unordered, depending on whether the graph is directed on undirected.
 A matrix $$M$$ represents the connectivity $$E$$ in $$G$$, iff for all $$\{i,j,e\} \in E$$, if $$G$$ is ordered then $$M_{ij}=e$$, and if is unordered then $$M_{ij} = M_{ji} = e$$. Since $$M$$ holds the possible connectivity between nodes in $$V$$, then $$M$$ is a square matrix of size $$|V| \times |V|$$.
@@ -40,7 +40,7 @@ A common format utilised on the distributed storage of sparse matrix is the Comp
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="/assets/Matrix-Transpose/crs_format.png">
 
-### How to transpose it?
+## How to transpose it?
 
 A small trick is to show that a sparse matrix transposition is nothing more than a composition of two operations: a local matrix transpose and a view swap. The four data layouts can be illustrated as:
 
@@ -107,7 +107,7 @@ A memory realignment based on colum id and row id leads to the final distributed
 
 The full transpose algorithm performs only three collective communication calls, requiring an `MPI_Allgather` to compute the row offsets of ranks, and one `MPI_Alltoall` and `MPI_Alltoallv` for the metadata and cell values transpositions in the view swaep. Moreover, the involutory property of our transpose method is a property of high importance, as it guarantees that distributed transposition can be validly executed any number of times, while respecting the data integrity of a CSR-based graph problem representation. 
 
-### Algorithmic verification
+## Algorithmic verification
 
 Is this algorithm guaranteed to work independently of the dataset? We'll show it's mathematically sound.
 
@@ -118,7 +118,7 @@ The verification of the commuted involutory functions with $$Transpose (M) = (Vi
 
 [kubrusly2011elements]: https://link.springer.com/content/pdf/10.1007/978-0-8176-4998-2.pdf
 
-### Higher Cardinality Matrices
+## Higher Cardinality Matrices
 
 Single edges between pairs of nodes is a property that is often unavailable in real life situations. Take as an example the matrix representing information about common interests between pairs of users in a social network connectivity: some pairs of users may be connected by hundreds of common interests, while others may be connected by barely any interests in common; or 
 an URLs cross-referral map, where one may be required to store not only the number of hyperlinks between pages, but also additional information about every link. How to implement the new transpose?
@@ -146,7 +146,7 @@ Finally, the view swap is terminated by communicating the data, based on the met
 
 To finalize, the full transpose algorithm requires five collective communication calls, performing an `MPI_Allgather` to compute the row offsets of ranks, two `MPI_Alltoall` and two `MPI_Alltoallv` for the metadata and cell values transpositions. Moreover, the general applicability of the XCSR and the involutory property of our transpose method, are two properties of high importance as they guarantee that distributed transposition can be validly executed any number of times, while respecting the data integrity of a XCSR-based graph problem representation.
 
-### Further details
+## Further details
 
 For more information, implementation and benchmark, read the <a href="/assets/Matrix-Transpose/matrix-transposer.pdf">original publication (preprint)</a> or download the <a href="/assets/Matrix-Transpose/matrix-transposer.zip">source code</a>.
 
