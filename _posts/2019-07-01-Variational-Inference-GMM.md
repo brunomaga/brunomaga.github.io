@@ -31,7 +31,7 @@ The inference problem is to compute the conditional probability of the latent va
 
 **There are several approaches to inference**, comprising algorithms for exact inference (Brute force, The elimination algorithm, Message passing (sum-product algorithm, Belief propagation), Junction tree algorithm), and for approximate inference (Loopy belief propagation, Variational (Bayesian) inference, Stochastic simulation / sampling / Markov Chain Monte Carlo). Why do we need approximate methods after all? Simply because for many cases, we cannot directly compute the posterior distribution, i.e. the posterior is on an **intractable** form --- often involving integrals --- which cannot be (easily) computed. **This post focuses on the simplest approach to Variational Inference based on mean-field approximation**.
 
-### Detour: Markov Chain Monte Carlo
+## Detour: Markov Chain Monte Carlo
 
 Before moving into Variational Inference, let's understand the place of VI in this type of inference. For many years, the dominant approach was the [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). A simple high-level understanding of MCMC follows from the name itself:
 - [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters via generating random numbers. A simple example is to compute the area of a circle inside by generating random 2D coordinates whitin the bounding square around the circle, and estimate the value of $$\pi$$ or the area of the circle from the proportion of generated datapoints that fall inside vs outside the circlle in the square;
@@ -62,7 +62,7 @@ So as a golden rule, always use approximated methods, but if in doubt, double ch
 
 I will try to post about this topic in the near future, but if you're curious you can always check the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/Bayesian-Variational-Inference-GMM/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf) if you are interested on the theory behind it, or a practical explanation with code in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
 
-### Variational Inference
+## Variational Inference
 
 **IMPORTANT:** this section is outdated and the best resource for this topic is the wikipedia entry for [Variational Bayesian Methods](https://en.wikipedia.org/wiki/Variational_Bayesian_methods). 
 
@@ -85,7 +85,7 @@ Back to the topic. If both $$q$$ and $$p$$ are high, then we achieve a good solu
 
 The logic is that we want to minimize the divergence between our real posterior $$p(z \mid x)$$ and its approximated posterior $$q(z)$$. We cannot minimize this directly, but we can minimize a function that is *equal to it (up to a constant)*, known as the Evidence Lower Bound.
 
-### Evidence Lower Bound (ELBO)
+## Evidence Lower Bound (ELBO)
 
 Looking at equation \ref{eq_KLdiv}, we see a big issue: it includes the true posterior $$p(z \mid x)$$ which is exactly the value we do not know.
 However, we can rewrite the KL divergence as:
@@ -123,7 +123,7 @@ Now we have an optimization problem, how do we optimize?
  - Stochastic Variational Inference, faster
  - Automatic Differentiation Variational Inference: assume all distributions are Gaussian and optimizations can be done automatically without hand derivations;
 
-### Mean-field approximation
+## Mean-field approximation
 
 So far we foccused on a single posterior defined by a family with a single distributions $$q$$, whose posterior $$p(z \mid x)$$ is tractable. We now extend our analysis to complex families, where the posterior is not tractable. 
 
@@ -152,7 +152,7 @@ $$
 This setup is often called **generalized mean field** instead of **naive mean field**. Each latent variable $$z_j$$ is governed by its own variational factor, the density $$q_j(z_j)$$. For the formulation to be complete, we'd have to specify the parametric form of the individual variational factors. In principle, each can take on any parametric distribution to the corresponding random variable (e.g. a combination of Gaussian and Categorical distributions).
 
 
-### Coordinate Ascent Variational Inference 
+## Coordinate Ascent Variational Inference 
 
 The main objective is to **optimize the ELBO in the mean field variational inference**, or equivalently, to choose the variational factors that maximizes the ELBO (eq. \ref{eq_elbo}). A common approach is to  use the **coordinate ascent** method, by optimizing the variational approximation of each latent variable $$q_{z_j}$$, while holding the others fixed.
 
@@ -227,7 +227,7 @@ $$
 
 However, this provides the factorization or the template of the computation, but not the final form (i.e. application to a specific distribution family) of the optimal $$q_j$$. The form we choose influences the complexity or *easiness* of the coordinate update $$q^{\star}(z_j)$$.
 
-### Multivariate Gaussian Mixture Models
+## Multivariate Gaussian Mixture Models
 
 Credit: this section is a more verbose explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).
 
@@ -286,7 +286,7 @@ $$
 
 The CAVI (coordinate ascent variational inference) updates each variational parameter in turn, so we need to compute both updates.
 
-#### Update 1: Variational update for cluster assignment
+### Update 1: Variational update for cluster assignment
 
 We start with the variational update for the cluster assignment $$c_i$$. Using the mean-field recipe from equation \ref{eq_CAVI}:
 
@@ -322,7 +322,7 @@ $$
 $$
 
 
-#### Update 2: Variational update for cluster mean
+### Update 2: Variational update for cluster mean
 
 We now turn to the variational density $$q(\mu_k; m_k, s^2_k)$$ on equation \ref{eq_variational_family}. We use again \ref{eq_CAVI} (the exponentiated log of te joint) for the mean values $$\mu_k$$:
 
@@ -360,7 +360,7 @@ s^2_k = \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}\\
 \label{eq_algo_second_step}
 $$
 
-#### Algorithm and Vizualization
+### Algorithm and Vizualization
 
 Putting it all together, the algorithm follows as:
 
