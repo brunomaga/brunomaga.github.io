@@ -43,7 +43,7 @@ We want to compute the $$w$$ that minimizes the loss, or equivalently, where its
 Note that we used the trick $$\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$$ (<a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, eq 2.4.1). The results tells us that **if $$X^TX$$ is invertible**, this minimization problem has an unique closed-form solution given by that final form. As a side note, the **Gram matrix $$X^TX$$** is invertible if **X has full column rank**, i.e. $$rank(X)=D$$ (we'll ommit the proof). The rank of a matrix is defined as the maximum number of linearly independent column vectors in the matrix, therefore we assume that all columns are linearly independent.
 
 
-#### Regularization
+### Regularization
 
 It's a common practice to add to the loss a regulatization term $$\Omega$$ that penalizes complex models. Therefore our loss minimization problem becomes:
 
@@ -69,7 +69,7 @@ Other techniques that do not add the regularizer term to the loss function but h
 - [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a (deep) [neural network]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}) at every batch during training and using all neurons at validation. Shown to increase generalization by forcing the model to train wihtout relying on specific weights. (see [separate post]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}) for more details.
 - [layer, instance, batch, and group normalization](https://arxiv.org/abs/1803.08494): methods to reduce internal covariance shift by fitting the output of activation layers to a standard normal distributed. Learns optional scale and shift parameters that scale of standard deviation and shift of mean for improved performance over the standard normal distribution.  
 
-### Matrix Factorization
+## Matrix Factorization
 
 Matrix factorization can be used to discover underling latent factors and/or to predict missing values of the matrix. We aim to find $$W$$, $$Z$$ such that $$ W \approx WZ^T $$. I.e. we aim to predict $$x_{dn}$$, where $$d$$ is an element in $$Z$$, and $$n$$ is an element in $$W$$. For movie rating, $$Z$$ could be users, $$W$$ could be movies, and $$x_{dn}$$ the star rating.
 
@@ -139,7 +139,7 @@ We can also use **Alternating Least Squares (ALS)**. The ALS factorizes a given 
   $$
 
 
-#### Coordinate Descent 
+### Coordinate Descent 
 
 The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) optimization method iterates over individual coordinates (keeping others fixed), in order to minimize the loss function. 
 
@@ -154,7 +154,7 @@ source: wikipedia
 The main advantage is that it is extremely simple to implement and doesn’t require any knowledge of the derivative of the function. It’s really useful for extremely complicated functions or functions whose derivatives are far more expensive to compute than the function itself. However, due to its iterative nature, it's not a good candidate for parallelism. Another issue is that it has a a non-smooth multivariable function, thus it may be stuck in non-stationary point if the level curves of a function are not smooth (source: [wikipedia](https://en.wikipedia.org/wiki/Coordinate_descent#Limitations)).
 
 
-### Risk and Loss functions
+## Risk and Loss functions
 
 In ML, on non-probabilistic models, we follow the principle of empirical risk empirical risk minimization, in order to find good parameters.  The **risk** is the expected loss between the expected output $$y_n$$ and the predicted value $$\hat{y}_n$$, ie
 
