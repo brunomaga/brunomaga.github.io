@@ -9,7 +9,7 @@ In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started
 
 So the main questions are: how much faster are the C++ model implementations compared to Python? If python is the *de facto* language for training, can we perform inference efficiently on a C++ code? How good is `torch.compile` really? 
 
-## Change of philosophy: from python to C++ to python
+#### Change of philosophy: from python to C++ to python
 
 Initial releases of pytorch were mostly written in python. Until the release of Python 2.x, the belief was that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++". In practice, python has the overhead of the runtime itself, dynamic typing, JIT, interpreted code, etc. So moving PyTorch API to C++ and using python as a *thin* layer that calls the C++ compiled implementations seemed logical.
 
@@ -17,7 +17,7 @@ Now, with PyTorch 2.0, they're moving in the complete opposite direction, claimi
 
 In brief, in order to favour PyTorch contributors that prefered Python over C++, they are limiting the C++ code to a few hundred kernels, and will have all the remaining code implemented in python only. Hardware vendors can then focus on their specific implementation of that subset of C++ methods, while the python runtime will execute the higher level operations. Sounds good, but the possibility of training a model using only C++ in the next releases of PyTorch remains uncertain.
 
-## torch.compile
+#### torch.compile
 
 The other big announcement was `torch.compile`, that "makes PyTorch code run faster by JIT-compiling PyTorch code into optimized kernels, all while requiring minimal code changes". Torch compile is based on three main steps:
 1. **graph acquisition** will build the execution graph of all PyTorch operations. Nodes that can be combined and optimized together will be merged, and subsequently, graph will be rewritten as a graph of subgraphs. Parallel (graph leaves) and sequential modules are now exposed.
@@ -30,7 +30,7 @@ The other big announcement was `torch.compile`, that "makes PyTorch code run fas
 {: style="text-align:center; font-size: small;"}
 A diagram of the three steps of `torch.compile`. Source: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
  
-## About this post
+### About this post
 
 In this post, we will benchmark and analyse several implementations of ML training and inference performed on different backends: PyTorch 1.2.1 (python), PyTorch 2.1.0 (python), LibTorch 2.1.0 (C++), TorchScript 2.1.0 (python and C++), and PyTorch 2.1.0 with `torch.compile` (python).  
 We will look at two different testbenches, so feel free to pick one based on your level of expertise and interest:
@@ -45,11 +45,11 @@ We will look at two different testbenches, so feel free to pick one based on you
 {: style="text-align:center; font-size: small;"}
 In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark their C++, PyTorch, TorchScript and `torch.compile` implementations.
 
-## GPTlite on LibTorch C++ {#gptlite-model}
+### GPTlite on LibTorch C++ {#gptlite-model}
 
 We will start with the GPT implementation in C++. The subsections that follow match exactly the structure of the [post with the GPTlite implementation in Python]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}).
 
-## Hyperparameters
+#### Hyperparameters
 
 Our GPTlite will be written in the header-only format in the file `gptlite.h`. We start with the hyperparameter declarations:
 
@@ -79,7 +79,7 @@ namespace nn = torch::nn;
 using Tensor = torch::Tensor;
 ```
 
-## Multi-Head Masked Attention
+#### Multi-Head Masked Attention
 
 Remember the original formulation of the multi-head shared attention heads, where $$W^Q$$, $$W^K$$ and $$W^V$$ are matrices / projections / linear layers:
 
@@ -192,7 +192,7 @@ struct MultiHeadAttention : nn::Module {
 
 Again, we used `nn::ModuleList` as a container, instead of any std-library container. Containers in C++ are declared for a given fixed element type. So, the tricky bit here is that `nn::ModuleList` stores elements of type `nn::Module` that needs to be casted dynamically to its base type `Head` with `module->as<Head>()` before calling the internal members of the instantiated `Head`.
 
-## Feed Forward Network
+#### Feed Forward Network
 
 The Feed-forward network is a two-layer Deep Neural Network and is pretty straighforward to implement:
 
@@ -220,7 +220,7 @@ struct FeedForward : nn::Module {
 }
 ```
 
-## The GPT Block
+#### The GPT Block
 
 We'll call GPT *block* the sequence of a multi-head attention and a feedforward module. Similarly to the python implementation, we add skip connections and normalization before the attention and feed-forward network.
 
@@ -260,7 +260,7 @@ You will notice we will be using `shared_ptr` to wrap our classes. It is not acc
 
 There's also a subtle difference in the `LayerNorm` initialization. By design, `LayerNorm` accepts a list of normalized dimensions as input. Alternatively, in the python implementation, when a single `int` value is passed, only the last dimension of the input is normalized, and will be resized to the integer value. However, in C++, `LayerNorm` does not include the constructor initialization with a single integer argument, so we have to use the general constructor and pass it as a singleton list.
 
-## Final GPTlite Model
+#### Final GPTlite Model
 
 Putting it all together:
 
@@ -299,7 +299,7 @@ struct GPTlite : nn::Module {
 ```
 
 
-## Benchmark Model on LibTorch C++ {#benchmark-model}
+### Benchmark Model on LibTorch C++ {#benchmark-model}
 
 We will define a simple benchmark model, which is simply a DNN with `L` layers of width `W`, with a ReLu activation between layers. This is defined in `benchmark.h` as:
 
@@ -417,7 +417,7 @@ void benchmark_inference(ModelType & model, InputType x) {
 }
 ```
 
-## TorchScript: python for training, C++ for inference
+### TorchScript: python for training, C++ for inference
 
 In ideal scenarions, we would want the flexibility and speed of development of python, with the low memory footprint and high efficiency of C++. This is possible with [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html). To do that, we will train the model `model` in python and output it as the binary `model_jit.pt` file, via:
 
@@ -449,7 +449,7 @@ benchmark_inference<JitModule, JitInput>(model, {x});
 
 Note that the type of the model and input data is not `torch::nn::Module` and `torch::Tensor` as before. Instead, we have `torch::jit::Module` and `std::vector<torch::jit::IValue>`, respectively. This justifies the use of the templates on the definition of `benchmark_interface`.
 
-## Compilation
+### Compilation
 
 We follow the [instructions on the LibTorch documentation](https://pytorch.org/cppdocs/installing.html#installing-c-distributions-of-pytorch) and use the CMake build systems to generate our binaries. The `CMakeLists.txt` is:
 
@@ -475,7 +475,7 @@ cmake .. \
  -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'`
 ```
 
-## Benchmark
+### Benchmark
 
 We compared the throughput (samples/sec) and GPU memory usage (GBs) of three distinct implementations:
 1. the small variant of GPTlite;

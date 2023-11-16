@@ -23,7 +23,7 @@ This is the level of intractability common to DNNs with nonlinear hidden layers.
 
 The paper propose solutions to an efficient approximation of MAP estimation of parameters $$\theta$$, of the posterior inference of the latent variable $$z$$ and the marginal inference of the variable $$x$$. Similarly to other variational inference methods, **the intractable true posterior $$p_{\theta}(z \mid x)$$ is approximated by $$q_\phi(z  \mid  x)$$ (the Encoder)**, whose parameters $$\phi$$ are not computed by a closed-form expectation but by the Encoder DNN instead. $$p_\theta(x \mid z)$$ is the Decoder, that given a $$z$$ will produce/generate the output which is a distribution over the possible values of x. Given a datapoint $$x$$ the encoder produces produces a distribution (e.g. a Gaussian) over the possible values of the code $$z$$ from which the datapoint $$x$$ could have been generated.
 
-## Non-Variational vs Variational AutoEncoders
+### Non-Variational vs Variational AutoEncoders
 
 The VAE proposed includes a DNN decoder, a DNN decoder, with parameters $$\theta$$ and $$\phi$$ optimized together with the AEVB algorithm, where $$p_\theta(x \mid z)$$ is a Gaussian/Bernoulli with distribution parameters computed from $$z$$. Therefore the VAE can be viewed as two coupled, *independent* parameterized models: the encoder/recognition models, and the decoder/generative model (trained together), where the encoder delivers to the decoder an approximation to its posterior over latente random variables.
 
@@ -39,11 +39,11 @@ In practice, they can be vizualised  as:
 {: style="text-align:center; font-size: small;"}
 VAE vs AE structure (image credit: <a href="https://data-science-blog.com/blog/2022/04/19/variational-autoencoders/">Variational Autoencoders, Data Science Blog, by Sunil Yadav</a>))
 
-## Why VAE instead of Variational Inference
+### Why VAE instead of Variational Inference
 
 One advantage of the VAE framework, relative to ordinary Variational Inference, is that the encoder is now a stochastic function of the input variables, in contrast to VI where each data-case has a separate variational distribution, which *is inefficient for large datasets*.
 
-## The reparametrization Trick
+### The reparametrization Trick
 
 The authors noticed that the sampling induces sampling noise in the gradients required for learning (or that because $$z$$ is randomly generated and cannot be backpropagated), and to counteract that variance they use the “reparameterization trick”.
 
@@ -52,7 +52,7 @@ It goes as follows: the sample vector $$z$$ that is typically sampled from the m
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/Variational-Autoencoders/vae2.png"/>
 
-## The loss function
+### The loss function
 
 The loss function is a sum of two terms:
 
@@ -63,11 +63,11 @@ The first term is the reconstruction loss (or expected negative log-likelihood o
 
 The second term is the Kullback-Leibler divergence between the encoder’s distribution $$q_{\theta}(z \mid x)$$ and the standard Gaussians $$p(z)$$, where $$p(z)=\mathcal{N}(\mu=0, \sigma^2=1)$$. This divergence compares the latent vector with a zero mean, unit variance Gaussian distribution, and penalizes the VAE if it starts to produce latent vectors that are not from the desired distribution. If the encoder outputs representations $$z$$ that are different than those from a standard normal distribution, it will receive a penalty in the loss. This regularizer term means ‘keep the representations $$z$$ of each digit sufficiently diverse’.
 
-## Results
+### Results
 
 The paper tested the VAE on the MNIST and Frey Face datasets and compared the variational lower bound and estimated marginal likelihood, demonstrating improved results over the wake-sleep algorithm.
 
-## Detour: why do we maximize the Expected Value?
+### Detour: why do we maximize the Expected Value?
 
 In the Bayesian setup, it is common that the loss function is the sum of the expected values of several terms. Why?
 
