@@ -19,7 +19,9 @@ Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-li
 {: style="text-align:center; font-size: small;"}
 The diagram our [GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) model with N decoder blocks (left), and the benchmark model, a Deep Neural Network with L layers of dimensionality W (right).
 
-## Knowledge Distillation
+### Knowledge Distillation
+
+#### Detour: background
 
 Knowledge Distillation (KD) is a technique used to train a (student) model from another (teacher) model. There are many claims of why KD works. But the main rationale is that, if you take as an example the use case of multi-label classification, the soft labels (distribution of assignments) yielded by the trained network is a more accurate representation of the distribution of the classes assigned to the input, when compared with the user-provided hard labels (binary). Thus, training a second network against a better distribution of labels allows the model capacity to be better utilized (yielding better performance) or to achieve similar performance with a smaller model.
 
@@ -33,7 +35,7 @@ There are several categories of KD methods. As loss function, we can try to mini
 {: style="text-align:center; font-size: small;"}
  An illustration of the different knowledge distillation categories of methods and the different branches within each category. In this section, we will implement offline distillation using soft labels, underlined in red in the picture. Adapted from [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
 
-### Implementing offline distillation using soft labels
+#### Implementing offline distillation using soft labels
 
 Here, we will implement offline distillation on a student model using only the soft labels of a pre-trained teacher model. This is the simplest and most common implementation of distillation. This is particularly relevant nowadays where large pre-trained models are readily available online, and we only have access to the model output during inference (no intermediatte layer outputs), so we can train a smaller version of a large teacher model that would be infeasible to train alone. 
 
@@ -105,7 +107,7 @@ $$
 Finally, There is also the claim that Mean Square Error is a better metric for Knowledge Distillation, in [Comparing Kullback-Leibler Divergence and Mean Squared Error Loss in Knowledge Distillation](https://arxiv.org/pdf/2105.08919.pdf), but we ignore that for now.
 
 
-Now, the inference loop is pretty straightforward. The only subtle change is to make the teacher model output soft labels when needed, with `output_labels=True`:
+Now, the inference loop is pretty straightforward. The only subtle change is to make the teacher model output soft labels when needed, with `output_labels=Trrue`:
 
 ```python
 def inference(model, dataloader, output_labels=False):

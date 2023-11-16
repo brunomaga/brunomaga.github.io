@@ -6,7 +6,7 @@ title:  "Algebra for ML Engineers"
 A brief summary of topics in Algebra that are relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For the topics of statistics or probabilities, see the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-Statistics-for-ML %}) .
 
 
-## Properties of Matrices
+### Properties of Matrices
 
 - Matrices have the properties of associativity $$(AB)C = A(BC)$$ and distributivity $$(A+B)C = AC + BC$$ and $$A(B+C)=AB+AC$$;
 - There is no division operator defined between matrices. The equivalent is the multiplication by the inverse (when it exists) i.e. $$A/B = AB^{-1}$$.
@@ -17,7 +17,7 @@ A brief summary of topics in Algebra that are relevant to ML engineers on a dail
 - **Symmetric** iff $$A=A^{\intercal}$$. Thus $$A$$ is square. Also, if $$A$$ is symmetric and invertible then $$A^{\intercal}$$ is also invertible and $$A^{\intercal}=A^{-1}$$. Sum of symmetric matrices is a symmetric matrix, but product of symmetric matrices is usually not.
 
 
-## Systems of Linear Equations
+### Systems of Linear Equations
 
 A **System of Linear Equations** with equations of the type $$a_1x_1 + ...+ a_nx_n = b$$ for constants $$a_1$$ to $$a_n$$ and $$b$$ and unkownn $$x$$ can be defined as $$A x=b$$. The general solution of a SLE is found analytically or with **Gaussian Elimination** of the augmented matrix $$[A \mid b]$$;
 - We can have none, one or infinitely many solutions to such system (when there are more unknowns than equations). When no solution exists for $$Ax=b$$ we wave to resort to approximate solutions; 
@@ -39,7 +39,7 @@ To compute the **inverse** we find the matrix that satisfies $$AX=I$$, so that $
   - to solve $$Ax=b$$ iteratively, we set up an iteration of the form $$x^{(k+1)} = Cx^{(k)} + d$$, for a suitable $$C$$ and $$d$$ that minimized the residual error $$\mid x^{k+1}-x_* \mid$$ in every iteration and converges to $$x_*$$; 
 
 
-## Vector Spaces
+### Vector Spaces
  
 - The **norm** of vector $$x$$ is represented by $$\| x \|$$ or $$\mid x \mid$$. Examples of norms: manhattan and euclidian;
   - The **length of a vector** is $$\| x \| = \sqrt{<x,x>} = \sqrt{x^{\intercal}x}$$ and the **distance** between two vectors is $$d(x,y) = \| x-y \| = \sqrt{ <x-y, x-y>}$$;
@@ -68,7 +68,7 @@ the set, we will lose something in our representation;
   - note: **dimension** of a matrix is the number of vectors in *any* basis for the space to be spanned. Rank of a matrix is the dimension of the column space;
 
 
-## Linear Mapping
+### Linear Mapping
 
 A **Linear Mapping** (a.k.a linear transformation or map) is a function $$\phi: V \rightarrow W$$ for vector spaces $$V$$, $$W$$, such that: $$\phi (\lambda x + \psi y) = \lambda \phi(x) + \lambda \psi(y)$$, for constants $$\lambda, \psi$$ and $$x, y \in V$$. It can also be represented as a matrix (not only as a function).
 - $$\phi$$ is called **injective** if $$\phi(x)=\phi(y) \rightarrow x = y$$; $$\,\,$$ **Surjective** if $$\phi(V)=W$$; $$\,\,$$ **Bijective** if both;
@@ -89,7 +89,7 @@ A **Linear Mapping** (a.k.a linear transformation or map) is a function $$\phi: 
 - An **affine mapping / transformation** is a composition of linear transformations that defines translation, scaling, rotation and shearing. Affine transformations keep the structure invariant, and preserve parallelism and dimension.
 
 
-## Analytic Geometry
+### Analytic Geometry
 
 A bilinear mapping $$\Omega : V \times V \rightarrow V$$ is called **symmetric** if the order of the arguments doesnt matter for the final result, **positive definite** if $$∀x \in V \setminus {0} : Ω(x, x) > 0 , Ω(0, 0) = 0$$;
 
@@ -117,7 +117,7 @@ The **inner product** of two functions $$u : \mathbb{R} \rightarrow \mathbb{R} $
 
 Let $$V$$ be a vector space and $$U ⊆ V$$ a subspace of $$V$$. A linear mapping $$π : V → U$$ is called a **projection** if $$π^2 = π ◦ π = π$$ ie $$\pi$$. In the use case of matrices, $$P$$ is a projection iff $$P^2 = P$$.
 
-## Matrix Decompositions
+### Matrix Decompositions
 
 determinant properties:
 - $$det(AB) = det(A) det(B)$$; 
@@ -195,7 +195,7 @@ image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine L
 - the vectors of $$P$$ in ED are not necessarily orthogonal. The vectors in the matrices $$U$$ and $$V$$ in the SVD are orthonormal, so they do represent rotations;
 
 
-## Vector Calculus
+### Vector Calculus
 
 For $$h > 0$$ the **derivative** of $$f$$ at $$x$$ is defined as the limit:  $$\frac{df}{dx} = \lim_{x \rightarrow 0} \frac{f(x+h) - f(x)}{h}$$. In the limit, we obtain the $$tangent$$;
 
@@ -231,7 +231,7 @@ The **Hessian** of a function $$\triangledown^2_{x,y} f(x,y)$$ is a collection o
   <img width="33%" height="33%" src="/assets/Algebra-for-ML/Hessian.png"/>
 
 
-## Deep Neural Networks
+### Deep Neural Networks
 
 The output $$y$$ of a $$K$$-deep DNN is computed as: $$ y = (f_K ◦ f_{K−1} ◦ ... ◦ f_1)(x) = f_K(f_{K−1}( ... (f_1(x)) ... )) $$
 - The **chain rule** allows us to describe the partial derivatives as the following:  
@@ -252,7 +252,7 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
   (source: adapted from example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 
 
-## Continuous Optimization
+### Continuous Optimization
 
 - To check whether a stationary point is a minimum or maximum of a function, we need to take check if the second derivative is positive or negative at the stationary point. I.e. compute $$\frac{df(x)}{x^2}$$, then replace $$x$$ at all stationary points: If $$f′′(x)>0$$, function is concave up and that point is a maximum. If $$<0$$, it is concave down, and a minimum;
 - **Gradient Descent**: an optimization method to minimize an $$f$$ function iteratively. For iteration $$i$$ and step-size $$\gamma$$:

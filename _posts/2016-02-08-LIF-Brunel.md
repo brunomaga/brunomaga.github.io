@@ -57,7 +57,7 @@ To simulate the [Action Potential](https://en.wikipedia.org/wiki/Action_potentia
 
 Afterwards, for a given **refractory period**, the neuron potential is constant at rest, in order to simulate the [refraction](https://en.wikipedia.org/wiki/Refractory_period_(physiology)) of biological neurons. This may not be a very detailed simulation of neuron activity, but it is a good starting point of a simple neuron model, before we advance to more complicated models in future posts.
 
-## Resolution
+### Resolution
 
 We compute two different stepping methods from the analytical solution of the first order ODE. A two step algorithm:
 - Calculate decay from previous step: $$V_t \leftarrow V_{t- \Delta t} exp(\frac{-dt}{\tau})$$  
@@ -100,7 +100,7 @@ For the sake of comparison, we illustrate below the potential over time of a giv
 
 Note the vertical straight lines that refer to voltage reset after a spike, and the horizontal straight lines referring to the regractory period after firing.
 
-## Brunel Network
+### Brunel Network
 
 We've just mentioned network activity in the previous section. Indeed, a neuron without any kind of stimulus (either electric current injection or synaptic currents) will remain always at rest.
 
@@ -130,7 +130,7 @@ source: Brunel 2000
 
 Notice the proximity of our simulated network model with the theoretical behaviour observed in real neurons. For that reason, although being a simple model of approximation, the Brunel Network provides a powerful tool for studying network dynamics. The model is particularly useful in very long simulations of large networks as it is computationally inexpensive compared to more detailed models such as the [Hodgkin-Huxley](https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model).
 
-## Output
+### Output
 
 We implemented a `C++` based Brunel network model of LIF neurons and injected the appropriate stimuli to recreate the original paper. The outputs match the theoretical model, in terms of spike rate and trajectory oscilation frequency. Results are presented as a time line (left-to-right) of neuron spike times (a.k.a. *spike trace*, on the top) and the number of neurons that spike at a given instant (bottom). Enjoy.
  
@@ -150,7 +150,7 @@ We implemented a `C++` based Brunel network model of LIF neurons and injected th
 <img width="100%" height="100%" src="/assets/LIF-Brunel/raster_plot_G3_f2.png">
 
 
-## Other resources
+### Other resources
 
 - For a thorough explanation of the Leaky Integrate-And-Fire Model, check the relevant section in the online copy of the [Neuronal Dynamics Book from Wulfram Gerster at EPFL][lif-gerstner].
 - For a `Python` implementation of a Brunel network using the [NEST][nest] simulator, check [NEST by Example: An Introduction to the Neural Simulation Tool NEST, Marc Oliver, Springer Link][nest-brunel]

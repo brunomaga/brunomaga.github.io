@@ -35,7 +35,7 @@ where $$f$$ is the regression function of neurons, as previously. Some popular c
 - Leaky ReLU: $$\phi(x) = max \{\alpha x,x\}$$. Fixes the problem of *dying weights* in Non-leaky rectified linear units;
   - In brief, if the dot product of the input to a ReLU with its weights is negative, the output is 0. The gradient of $$ max\{ 0,x \} $$ is $$0$$ when the output is $$0$$. If for any reason the output is consistently $$0$$ (for example, if the ReLU has a large negative bias), then the gradient will be consistently 0. The error signal backpropagated from later layers gets multiplied by this 0, so no error signal ever passes to earlier layers. The ReLU has died.  With leaky ReLUs, the gradient is never 0, and this problem is avoided.  
 
-## Back-propagation
+### Back-propagation
 
 Similarly to previous regression use cases, we are required to minimize the loss in the system, using e.g. Stochastig Gradient Descent. As always when dealing with gradient descent we compute the gradient of the cost function for a particular input sample (with respect to all weights of the net and all bias terms) and then we take a small step in the direction opposite to this gradient. Computing the derivative with respect to a particular parameter is really just applying the chain rule of calculus. The cost function can be written as (details omitted):
 
@@ -98,13 +98,13 @@ The complete back propagation is then summarized as:
 2. **Backward pass**: set $$ \delta ^{(L+1)} $$ using the appropriate loss and activation function. Compute $$ \delta ^{(L+1)} $$ for $$ l = L, ..., 1 $$;
 3. **Final computation**: for all parameters compute $$ \frac{\partial L_n}{\partial w_{i,j}^{(l)}} $$ (eq. \ref{eq_w}) and $$ \frac{\partial L_n}{\partial b_{j}^{(l)}} $$ (eq. \ref{eq_b});
 
-## Automatic Differentiation
+### Automatic Differentiation
 
 The chain rule shows us the theoretical framework, but not how to compute it efficiently. In practice, contraritly to the back-propagation algorithm above, <a href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation ("autodiff")</a> algorithms such as <a href="https://pytorch.org/tutorials/beginner/introyt/autogradyt_tutorial.html">pytorch's autograd</a>, do not require the derivatives of the loss and activation functions to be specified explicitly.
 
 Instead, a graph of workflow operations and dependencies is created, and partial derivatives of basic arithmetic operations (sums, division, sins, ...) are computed on the fly. Derivatives of activations and loss functions are computed from the graph of these partial derivatives. For more details, refer to <a href="https://towardsdatascience.com/automatic-differentiation-explained-b4ba8e60c2ad">Chi-Feng Wang's post</a> for an illustrative example of the automatic differentiation graph, or the <a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">Princeton course COS 324 in automatic differentiation</a> for a thorough explanation of the whole process.
 
-## Dropout
+### Dropout
 
 [Dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5) is a method that drops neurons (in different layers) with a given probability $$p$$ during train time. For each training minibatch, a new network is sampled. 
 At test time, all neurons are used, with outgoing weights multiplied by $$p$$. Dropout helps reducing overfitting, as the network learns to never rely on any given activations, so it learns *redundant* ways of solving the task with multiple neurons. It also leads to sparse activations, similar to a regularization (L2).
@@ -115,7 +115,7 @@ Because a fully connected layer occupies most of the parameters, it is prone to 
 {: style="text-align:center; font-size: small;"}
 <img width="35%" height="35%" src="/assets/Deep-Neural-Networks/dropout.png">
 
-## Convolutional Neural Networks
+### Convolutional Neural Networks
  
 The disadvantage of large neural networks is that it has a very high number of parameters so it may require lots of data to be trained. In some scenarios, local training should suffice: e.g. in an audio stream, it is natural to process an input stream $$ x^{(0)}[n] $$ stream by running it through a linear time-invariant filter, whose output $$ x^{(1)}[n] $$ is given by the convolution of the input $$ x^{(0)}[n] $$ and the $$ f [n] $$, as:
 
@@ -152,7 +152,7 @@ The size of each picture typically gets smaller and smaller as we proceed throug
 
 Training follows from backpropagation, ignoring that some weights are shared, and considering each weight on each edge to be an independent variable. Once the gradient has been computed for this network with independent weights, just sum up the gradients of all edges that share the same weight. This gives us the gradient for the network with weight sharing. 
 
-## Skip connections
+### Skip connections
 
 An issue with very deep networks is that the performance of the model drops down with the increase in depth of the architecture. This is known as the *degradation problem*. One possible reason is overfitting: the models tends to overfit if given too much capacity. Other reasons are the vanishing gradients and/or exploding gradients. A way to improve is to use [normalization](https://arxiv.org/abs/1803.08494) techniques to ensure that gradients have healthy norms.
 
@@ -167,7 +167,7 @@ An example of a CNN with skip connections (DenseNet). source: <a href="https://a
 There is currently a plethora of different implementations of CNNs with several layouts of skip connections. If you are curious to know more, have a look at [ResNet](https://arxiv.org/abs/1512.03385), [DenseNet](https://arxiv.org/abs/1608.06993) and [U-net](https://arxiv.org/abs/1505.04597).
 
 
-## Embeddings
+### Embeddings
 
 Embeddings are a simpler representation of data characterized by variable size (e.g. lists, text) or multi-dimensionality (images, videos). We use embeddings as a way to represent our data in a simpler (linear) layout, in such a way that the model that inputs it (usually a DNN) can run in a feasible time and within memory requirements.
 
