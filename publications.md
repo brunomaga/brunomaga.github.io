@@ -31,6 +31,17 @@ There are two models, that refer to the two inference steps:
 <img width="65%" height="75%" src="/assets/publications/VALLE2.png"/>
 
 <br/>
+# 2023 [High-Fidelity Audio Compression with Improved RVQGAN, Descript, Inc](https://arxiv.org/abs/2306.06546)
+
+An audio encoder-decoder that supposedly beats Meta's encodec. Achieved by combining advances in high-fidelity audio generation with better vector quantization techniques from the image domain, along with improved adversarial and reconstruction losses. Methods:
+- to account for periodicity in audio inputs, they adopted the snake activation function for frequency $$\alpha$$ as $$snake(x) = x + \frac{1}{α} sin^2 (αx)$$.
+- vanilla VQ-VAEs struggle from low codebook usage due to poor initialization, leading to a significant portion of the codebook being unused. This leads to to poor reconstruction quality. To address this issue, they use two techniques: (1) factorized codes that decouples code lookup and code embedding, by performing code lookup in a low-dimensional space (section 3.2) and (2) L2-normalization of the encoded and codebook vectors converts euclidean distance to cosine similarity, which is helpful for stability and quality.
+- state-of-art applying quantizer dropout degrades the audio reconstruction quality at full bandwidth. To overcome it, they instead apply quantizer dropout to each input example with some probability $$p=0.5$$.
+- an improved STFT discriminator  at multiple time-scales, that works better in practice and leads to improved phase modeling, compared to Encodec and Soundstream.
+-  for **frequency domain reconstruction loss**, they use a mel-reconstruction loss to improve stability, fidelity and convergence speed; and multi-scale spectral losses to encourage modeling of frequencies in multiple time-scales. For **adversarial loss**, they use HingeGAN.  For **codebook learning**, they use commitment losses with stop-gradients from the original VQ-VAE formulation. All these losses are weighted to sum up to the final loss.
+
+
+<br/>
 # 2023 [Llama 2: Open Foundation and Fine-Tuned Chat Model](https://arxiv.org/abs/2307.09288)
 
 LLama 2 is a collection of pretrained and fine-tuned large language models (LLMs) ranging in scale from 7 billion to 70 billion parameters. Llama 2-Chat is a finetuned LLM optimized for dialogue use cases. The models outperform open-source chat models, and based on
