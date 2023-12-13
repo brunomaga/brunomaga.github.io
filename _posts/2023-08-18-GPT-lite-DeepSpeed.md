@@ -480,7 +480,7 @@ then we add the flag `--pipeline_spec_layers` to the command line arguments, so 
 def get_cmd_line_args():
   # ...
   parser.add_argument("--pipeline_spec_layers", action="store_true",
-                      help="enable SpecLayers in pipeline parallelism")
+                      help="enable LayerSpecs in pipeline parallelism")
 ```
 
 and change the `get_model()` method to retrieve the efficient pipeline variant as:

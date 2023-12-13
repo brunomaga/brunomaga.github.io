@@ -6,6 +6,30 @@ permalink: /publications/
 
 A summary of some interesting publications I came accross. Continuously updated.
 
+
+<br/>
+# 2023 [Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E)](https://arxiv.org/abs/2301.02111)
+
+The paper introduces a pipeline for text-to-speech translation (TTS), based on a neural codec language model (VALL-E) using discrete codes (encode/decode embeddings) derived from an off-the-shelf neural audio codec model (Encoded, Défossez et al., 2022).
+This mode treats TTS as a conditional language modeling task rather than continuous signal regression as in previous work.
+In practice, contrarily to e.g. AudioLM, a generative audio-to-audio / speech-to-speech model that predicts future audio from input audio, VALL-E is a TTS mode that takes as input a fixed-size text representation and the audio of the first 3 seconds of the text, and tries to predict the future audio that matches the remaining of the input text.
+VALL-E uses an audio codec code as intermediatte representation and language model as objective, contrary to previous models using mel spectrogram as intermediatte representaion and continuous signal regression as objective.
+VALL-E is trained with the LibriLight dataset, consisting of 60K hours of English speech with over 7000 unique speakers. This dataset is audio-only, so the authors employ a speech recognition model to generate the (text) transcriptions.
+
+**Background, quantization, tokenizer and encoding**: audio is typically stored as a sequence of 16-bit integer values, therefore a generative model is required to output $$2^{16}$$ = 65536 probabilities per timestep to synthesize the raw audio. Added to the high output size, its long sequence length makes it more intractable for audio synthesis. Therefore, speech **quantization** is required to compress integer values and sequence length. Common methods are $$\mu$$-law, vector quantization (HuBERT, vq-wav2vec), k-means/self-supervised method, etc.  As **audio tokenizer**, VALL-E uses a pre-trained neural audio codec model, EnCodec, a convolutional encoder-decoder model, whose input and output are both 24 kHz audio across variable bitrates. The encoder produces embeddings at 75 Hz for input waveforms at 24 kHz, which is a 320-fold reduction in the sampling rate.  Each embedding is modeled by residual vector quantization (RVQ), with eight hierarchy quantizers with 1024 entries each as shown in Figure 2.
+
+**Model architecture:** formally speaking, $$Encodec(y) = C^{T \times 8}$$, where $$C$$ represents the two-dimensional acoustic code matrix (the 8-channel audio embeddings), and $$T$$ is the downsample utterance length. Each row in $$C$$ represents the eight codes for a given time frame. After quantization, the neural codec decoder is able to reconstruct the waveform, i.e. $$Decodec(C) ≈ \hat{y}$$. Given an accoustic prompt matrix $$\hat{C}^{T \times 8}$$, the optimization objective of the TTS model is $$max\, p(C \mid x, \hat{C})$$, where $$x$$ is the corresponding phoneme transcription. I.e. the model learns to extract the content and speaker information from the phoneme sequence and the acoustic prompt, respectively.
+
+{: style="text-align:center; font-size: small;"}
+<img width="65%" height="75%" src="/assets/publications/VALLE.png"/>
+
+There are two models, that refer to the two inference steps:
+1. an auto-regressive (AR) model, a transformer decoder-only architecture, conditioned on the phoneme (text) and accoustic prompt (3-second audio), that gives the discrete tokens of the audio from the first quantizer (Formula 1).
+2. a non auto-regressive (NAR), a transformer decoder will full mask, that regressively predicts the remaining 7 quantizers from the first one (Formula 2).
+
+{: style="text-align:center; font-size: small;"}
+<img width="65%" height="75%" src="/assets/publications/VALLE2.png"/>
+
 <br/>
 # 2023 [Llama 2: Open Foundation and Fine-Tuned Chat Model](https://arxiv.org/abs/2307.09288)
 
@@ -124,6 +148,31 @@ cost". Gradient clipping plays an important role in the performance of sparse Mo
   - Note: Gradient clipping is standard practice for deep neural models to alleviate the gradient explosion problem. It is even more important for the sparse MoE models, which are more unstable in training.
 - **Transformer variants in the toolkit** available at [https://github.com/microsoft/torchscale](https://github.com/microsoft/torchscale): deep models (DeepNet),  Foundation Transformers (Magneto), sparsity ( X-MoE), RetNet, LongNet, parameter stability (SparseClip), ...  
   
+<br/>
+# 2022 [High Fidelity Neural Audio Compression (Encodec), Meta AI](https://arxiv.org/abs/2210.13438)
+
+Encoded is a neural network model for a real-time, high-fidelity, audio codec. It consists in a streaming encoder-decoder architecture with quantized latent space trained in an end-to-end fashion. For faster and simpler training, they use a single multiscale spectrogram  that efficiently reduces artifacts and produce high-quality samples.
+Two main problems arise in lossy neural compression of audio. The first one is overfitting to a subset of audio simples, and it was overcome by using (1) a large and diverse dataset and (2) discriminator networks that serve as perceptual loss. The second problem is compressing efficiently, both in compute time and in size, solved by using residual vector quantization of the neural encoder floating-point output. The authors claim that "designing end-to-end neural compression models is a set of intertwined choices, among which at least the encoder-decoder architecture, the quantization method, and the perceptual loss play key parts". To that extent, audio quality evaluations (MUSHRA) consist in having humans listen to, compare, and rate excerpts of speech or music compressed with competitive codecs.
+
+**Background and model:** An audio signal of duration d can be represented by a sequence $$x ∈ [−1, 1]^{C_a × T}$$ with $$C_a$$ the number of audio channels, $$T = d · f_{sr}$$ the number of audio samples at a given sample rate $$f_{sr}$$. The EnCodec model is composed of three main components:
+1. an encoder network $$E$$ that inputs an audio extract and outputs a latent representation $$z$$. It's simply a stack of 1D convolutions and pooling blocks, followed by a two-layer LSTM for sequence modelling, and a final 1D convolution with $$D$$ output channels. 
+2. a quantization layer $$Q$$ produces a compressed representation $$z_q$$, using vector quantization. They use Residual Vector Quantization (RVQ, Zeghidour et al. 2021) to quantize the output of the encoder. As background, general Vector Quantization consists in projecting an input vector onto the closest entry in a codebook of a given size. In this case, RVQ refines this process by computing the residual after quantization, and further quantizing it using a second codebook, and so forth.
+3. a decoder network $$G$$ that reconstructs the time-domain signal, $$\hat{x}$$, from the compressed latent representation $$z_q$$. The decoder's architecture is the inverse of the encoder, using transposed convolutions instead of strided convolutions.
+
+There are two variants of the model, targetted for the low-latency streamable setup, or a high fidelity non-streamable usage.
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/publications/Encodec.png"/>
+
+The train objective minimizer a linear combination of the following loss products:
+- **reconstruction loss**, comprised of a time and a frequency domain loss term, to minimize the L1 distance between the target and compressed audio over the time domain, i.e. $$l_t(x, \hat{x}) = \| x − \hat{x} \|_1$$. For the frequency domain loss $$l_f$$ (Note: type here, this $$l_s$$ in the picture above, as in *spectogram loss*), they use an averaged sum of the L1 and L2 losses between the elements of the input and output mel-spectograms. 
+- **discriminative loss**,  a perceptual loss term based on a multi-scale STFT-based (MS-STFT) discriminator, as in Figure 2.
+In practice, the decoder acts as a generator in a adversarial network and Encodec includes a discriminator module (in orange), with an adversarial loss for the generator as  $$l_g(\hat{x}) = \frac{1}{K} \sum_k max (0, 1 − Dk(\hat{x}))$$, where $$K$$ is the number of discriminators. They add a similar additionally matching loss for the generator, $$l_{feat} (x, \hat{x})$$, in Formula 2 (PS: where is this in Figure 1?).
+The discriminators are trained with the adversarial loss $$l_d(x, \hat{x}) = \frac{1}{K} \sum_{k-1}^K max (0, 1 − D_k(x)) + max(0, 1 + D_k(\hat{x}))$$, where $$K$$ is the number of discriminators.
+- **VQ commitment loss**.  To support Multi-bandwith learning, at 24 kHz, the model is trained to support the bandwidths 1.5, 3, 6, 12, and 24 kbps by selecting the appropriate number of codebooks to keep in the RVQ step (section 3.2). At 48 kHz, it's trained to support 3, 6, 12 and 24 kbps. They add a commitment loss $$l_w$$ between the output of the encoder, and its quantized value, with no gradient being computed for the quantized value. For each residual step $$c$$, where $$C$$ is the bandwidth: $$l_w = \sum_{c=1}^C \| z_c - q_c (z_c) \|_2$$, where $$q_c(z_c)$$ the nearest entry in the corresponding codebook.
+
+The authors also claim that "We introduce a loss balancer in order to stabilize training, in particular the varying scale of the gradients coming from the discriminators" and "We additionally train a small Transformer based language model (Vaswani et al., 2017) with the objective of keeping faster than real time end-to-end compression/decompression on a single CPU core." (Section 3.3) that I have skipped.
+
 <br/>
 # 2022 [Foundation Transformers (Magneto), Microsoft](https://arxiv.org/abs/2210.06423)
 
