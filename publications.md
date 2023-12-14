@@ -30,6 +30,7 @@ There are two models, that refer to the two inference steps:
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/VALLE2.png"/>
 
+
 <br/>
 # 2023 [High-Fidelity Audio Compression with Improved RVQGAN, Descript, Inc](https://arxiv.org/abs/2306.06546)
 
@@ -39,6 +40,7 @@ An audio encoder-decoder that supposedly beats Meta's encodec. Achieved by combi
 - state-of-art applying quantizer dropout degrades the audio reconstruction quality at full bandwidth. To overcome it, they instead apply quantizer dropout to each input example with some probability $$p=0.5$$.
 - an improved STFT discriminator  at multiple time-scales, that works better in practice and leads to improved phase modeling, compared to Encodec and Soundstream.
 -  for **frequency domain reconstruction loss**, they use a mel-reconstruction loss to improve stability, fidelity and convergence speed; and multi-scale spectral losses to encourage modeling of frequencies in multiple time-scales. For **adversarial loss**, they use HingeGAN.  For **codebook learning**, they use commitment losses with stop-gradients from the original VQ-VAE formulation. All these losses are weighted to sum up to the final loss.
+
 
 
 <br/>
@@ -53,6 +55,7 @@ The finetuning was performed with supervised fine-tuning (Section 3.1), initial 
 
 {: style="text-align:center; font-size: small;"}
 <img width="65%" height="65%" src="/assets/publications/llama2_gatt.png"/>
+
 
 <br/>
 # 2023 [LLaMA: Open and Efficient Foundation Language Models, Meta](https://arxiv.org/abs/2302.13971)
@@ -666,6 +669,21 @@ Existing standard language models are unidirectional and that's a major limitati
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/publications/bert2.png"/> 
 
+
+<br/>
+# 2017 [Neural Discrete Representation Learning (RQVAE), Google](https://arxiv.org/abs/1711.0093)
+
+The Vector Quantised Variational AutoEncoder (VQ-VAE)  aims at learning **discrete (not continuous) latent space** representations without supervision.
+It differs from VAEs in two key ways: the encoder network outputs discrete, rather than continuous, codes; and the prior is learnt rather than static.
+"During forward computation the nearest embedding $$z_q(x)$$ (equation 2) is passed to the decoder, and
+during the backwards pass the gradient $$∇_z$$L is passed unaltered to the encoder. Since the output
+representation of the encoder and the input to the decoder share the same $$D$$ dimensional space,
+the gradients contain useful information for how the encoder has to change its output to lower the
+reconstruction loss."
+Equation 3 specifies the overall loss function, which has some tricks to allow the model to learn from the discrete mapping of mapping from $$z_e(x)$$ to $$z_q(x)$$.
+
+{: style="text-align:center; font-size: small;"}
+<img width="75%" height="75%" src="/assets/publications/RQVAE.png"/> 
 
 <br/>
 # 2017 [Mixed Precision Training, Baidu and NVIDIA](https://arxiv.org/abs/1710.03740)
