@@ -304,6 +304,15 @@ To be compute optimal (in terms of accuracy vs energy cost), Kaplan et al. (2020
 
 An important paradigm of natural language processing consists of large-scale pretraining on general domain data and adaptation to particular tasks or domains. Finetuning by retraining all model parameters, can be too expensive or computationally infeasible. Two ways to mitigate this is: (1) to train some (and freeze other) parameters in the model, however falling short of the finetuning baseline; or (2) learning external modules for new tasks, however increasing model latency due to increased depth. Low-Rank Adaptation, or LoRA, freezes the pretrained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture, greatly reducing the number of trainable parameters for downstream tasks. "Compared to GPT-3 175B fine-tuned with Adam, LoRA can reduce the number of trainable parameters by 10,000 times and the GPU memory requirement by 3 times". 
 
+Previous work showed that the learned over-parametrized models reside on a low intrinsic dimension. In LoRA, they hypothesize that the change in weights during model adaptation also has a low “intrinsic rank”, i.e. a smaller transformation matrix leading to the proposed Low-Rank Adaptation (LoRA) approach. LoRA trains the dense layers of a neural network using this low-rank matrix, while keeping the layer of the large original model frozen. Moreover, we can perform multi-task adaptation by having a LoRA module per task (ie new A and B matrices below).
+
+{: style="text-align:center; font-size: small;"}
+<img width="25%" height="25%" src="/assets/publications/LoRA.png"/>
+
+It works as follows. Take the gradient matrix $$W_0 \in R^{d × k}$$. The gradient update  $$W_0 + ∆W$$ can be computed instead as  $$W_0 + B A$$, where $$B ∈ R^{d × r}$$, $$A ∈ R^{r×k}$$, and the rank $$r \lt \lt min(d, k)$$. During training, $$W_0$$ is frozen and only $$A$$ and $$B$$ are updated. The tricky bit: both $$W_0 and ∆W = B A$$ are multiplied with the same input, and their respective output vectors are summed coordinate-wise. Therefore, the forward pass (ie the inference operation) is now $$h = W_0x + ∆W x = W_0x + BAx$$, so we need to store the unchanged $$W_0$$ and trained $$A$$ and $$B$$. The algorithm is then:
+- $$A$$ is initialized with a random gaussian initialization, and $$B$$ is initialized as zero, so that $$\Delta W = BA$$ at the beginning.
+- We then scale $$∆W x$$ by $$\frac{α}{r}$$, where $$α$$ is a constant in $$r$$. The confusing bit: "When optimizing with Adam, tuning α is roughly the same as tuning the learning
+rate if we scale the initialization appropriately. As a result, we simply set α to the first $$r$$ we try and do not tune it."
 
 <br/>
 # 2021 [Learning Transferable Visual Models From Natural Language Supervision (CLIP), OpenAI](https://arxiv.org/abs/2103.00020)
