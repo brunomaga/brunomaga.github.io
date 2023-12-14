@@ -21,14 +21,14 @@ VALL-E is trained with the LibriLight dataset, consisting of 60K hours of Englis
 **Model architecture:** formally speaking, $$Encodec(y) = C^{T \times 8}$$, where $$C$$ represents the two-dimensional acoustic code matrix (the 8-channel audio embeddings), and $$T$$ is the downsample utterance length. Each row in $$C$$ represents the eight codes for a given time frame. After quantization, the neural codec decoder is able to reconstruct the waveform, i.e. $$Decodec(C) ≈ \hat{y}$$. Given an accoustic prompt matrix $$\hat{C}^{T \times 8}$$, the optimization objective of the TTS model is $$max\, p(C \mid x, \hat{C})$$, where $$x$$ is the corresponding phoneme transcription. I.e. the model learns to extract the content and speaker information from the phoneme sequence and the acoustic prompt, respectively.
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="75%" src="/assets/publications/VALLE.png"/>
+<img width="70%" height="70%" src="/assets/publications/VALLE.png"/>
 
 There are two models, that refer to the two inference steps:
 1. an auto-regressive (AR) model, a transformer decoder-only architecture, conditioned on the phoneme (text) and accoustic prompt (3-second audio), that gives the discrete tokens of the audio from the first quantizer (Formula 1).
 2. a non auto-regressive (NAR), a transformer decoder will full mask, that regressively predicts the remaining 7 quantizers from the first one (Formula 2).
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="75%" src="/assets/publications/VALLE2.png"/>
+<img width="70%" height="70%" src="/assets/publications/VALLE2.png"/>
 
 <br/>
 # 2023 [High-Fidelity Audio Compression with Improved RVQGAN, Descript, Inc](https://arxiv.org/abs/2306.06546)
@@ -223,6 +223,23 @@ It introduces a new chest X-ray (CXR) domain-specific language model (CXR-BERT),
 <img width="70%" height="70%" src="/assets/publications/biovil.png"/>
 
 
+<br/> 
+# 2022 [Robust Speech Recognition via Large-Scale Weak Supervision (Whisper), OpenAI](https://arxiv.org/abs/2212.04356)
+
+Whisper is an automatic speech recognition (ASR) system, that performs several tasks on a Speech-to-text setup. It is trained on 680K hours of multilingual and multitask supervised data collected from the web. I.e. it's a weakly supervised dataset. The authors "show that the use of such a large and diverse dataset leads to improved robustness to accents, background noise and technical language.
+
+The Whisper architecture (section 2.2) is an encoder-decoder Transformer. Input audio is split into 30-second chunks, converted into a log-Mel spectrogram, and then passed into an encoder. A decoder is trained to predict the corresponding text caption, intermixed with special tokens that direct the single model to perform tasks such as language identification, phrase-level timestamps, multilingual speech transcription, and to-English speech translation."
+Audio is re-sampled to 16,000 Hz, and an 80-channel logmagnitude Mel spectrogram representation is computed on 25-millisecond windows with a stride of 10 milliseconds. For feature normalization, the input is scaled between -1 and 1, and shifted in 0. The encoder and decoder have the same width and number of transformer blocks. Whisper uses the same Byte-Pair Encoding text tokenizer as in GPT2 for english-only models and refit the vocabulary for other languages. 
+
+For multi-tasking, they  use a simple format to specify all tasks and conditioning information as a sequence of input tokens to the decoder. The beginning of the prediction starts with the `<|startoftranscript|>` token. In the case where there is no speech in an audio segment, the model is trained to predict a `<|nospeech|>` token indicating this. The next token specifies the task (either transcription or translation) with an `<|transcribe|>` or `<|translate|>`. After this, they specify whether to predict timestamps or not by including a `<|notimestamps|>` token for that case. At this point, the task and desired format is fully specified, and the output begins. Lastly, they add a
+`<|endoftranscript|>` token.
+
+Whisper is evaluated in a zero-shot setting without using any of the training data for each of these datasets so that we are measuring broad generalization. They usei a variant of Word Error Rate to quantify quality. Figure 2 shows improved accuracy over LibriLight-based supervised models on a zero shot setting, and approximate human robustness. I ignored the rest of the paper...  
+
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/publications/Whisper.png"/>
+
+
 <br/>
 # 2022 [Emergent Abilities of Large Language Models, Google Research & Stanford](https://openreview.net/forum?id=yzkSU5zdwD)
 
@@ -280,6 +297,58 @@ To be compute optimal (in terms of accuracy vs energy cost), Kaplan et al. (2020
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models_2.png"/> 
+
+
+<br/>
+# 2021 [LoRA: Low-Rank Adaptation of Large Language Models, Microsoft](https://arxiv.org/abs/2106.09685)
+
+An important paradigm of natural language processing consists of large-scale pretraining on general domain data and adaptation to particular tasks or domains. Finetuning by retraining all model parameters, can be too expensive or computationally infeasible. Two ways to mitigate this is: (1) to train some (and freeze other) parameters in the model, however falling short of the finetuning baseline; or (2) learning external modules for new tasks, however increasing model latency due to increased depth. Low-Rank Adaptation, or LoRA, freezes the pretrained model weights and injects trainable rank decomposition matrices into each layer of the Transformer architecture, greatly reducing the number of trainable parameters for downstream tasks. "Compared to GPT-3 175B fine-tuned with Adam, LoRA can reduce the number of trainable parameters by 10,000 times and the GPU memory requirement by 3 times". 
+
+
+<br/>
+# 2021 [Learning Transferable Visual Models From Natural Language Supervision (CLIP), OpenAI](https://arxiv.org/abs/2103.00020)
+
+Motivation: State-of-art vision systems are trained on a fixed predetermined set of objects (labels). Additional labeled data is needed to specify any other visual concept. However, "the development of text-to-text as a standardized input-output interface has enabled taskagnostic architectures to zero-shot transfer to downstream datasets, removing the need for specialized output heads or dataset specific customization". A critical insight is that it is possible to leverage natural language as a flexible prediction space to enable generalization and transfer -- ie train a text model, and then specialize it on a non-textual task.
+In practice, natural language is able to express, and therefore supervise, a much wider set of visual concepts through its generality.
+Learning from natural language also has an important advantage over most unsupervised or self-supervised learning approaches in that it doesn’t “just” learn a representation but also connects that representation to language which enables flexible zero-shot transfer. 
+
+With that in mind, this paper introduces a neural network called CLIP (Contrastive Language–Image Pre-training) which efficiently learns visual concepts from natural language supervision. By design, the network can be instructed in natural language to perform a great variety of classification benchmarks, without directly optimizing for the benchmark’s performance, similar to the “zero-shot” capabilities.
+CLIP models can then be applied to nearly arbitrary visual classification tasks.
+Thus, the main keypoint is: by not directly optimizing the model for the benchmark, we show that it becomes much more representative.
+
+In practice, CLIP pre-trains an image encoder and a text encoder to predict which images were paired with which texts in our dataset.
+The dataset is an abundantly available source of supervision: 400 million pairs of text and respective images found across 500K queries from the internet.
+For the image encoder, the authors consider 5 differently-sized ResNet50 (with improvements such as attention pooling similar to a QKV attention), and 3 Vision Transformers. The text encoder is a transformer with masked self-attention, with Byte-Pair encoding with a 49152 vocab size. The max sequence length was capped at 76 (section 2.4).
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/publications/CLIP.png"/> 
+
+The pipeline for contrastive pre-training (1) is the following:
+- we pass an image through the image encoder (ViT or ResNet). Each image $$i$$ is pictured as $$I_i$$ above.
+- we pass the text through the text decoder (transformer). Each text $$i$$ is pictured as $$T_i$$, analogously.
+- the diagonal of the $$I_i T_j$$ matrix is the correct image/text labels (in blue).
+- We use contrastive learning and train related text and images to be maximally close, and unrelated to be minimally close. In practice, we maximize the inner product of `N` labels that go together (full row and full column of the diagonal cells) and minimize the inner product of the `N^2-N` labels that dont go together (full row and full column of the non-diagonals). We then interpret the product as a logit and then use the softmax on both directions to get the loss (ie it's a symmetric loss from text and image perspective).
+  - in practice, in contrastive learning, "the cosine similarity (i.e. cosine of the angle) of these embeddings is then calculated,  scaled by a temperature parameter τ , and normalized into a probability distribution via a softmax". See figure 3 for source code.
+scores. 
+- In practice, for each image input e.g. $$I_3$$, we get the classification distributions $$I_3 T_1$$, $$I_3 T_2$$,... $$I_3 T_N$$.  
+
+As you can tell from section (1) in the picture, minibatch size `N` is crytical. As the minibatch approximates the entire dataset, the representations are more detailed. And the computation of the matrix $$I_i T_j$$ increases (quadratically?). 
+
+During inference, in (2), we create a dataset by taking a set of labels and adding a prompt to all labels e.g. `A photo of a {label}`. We then put them through the text encoder, and that is our target set.
+Then, to perform zero-shot prediciton (3), we take an image, pass it through the image decoder, and gete the classification distribution of that image over the promptedlabels, from where we pick the top label - in the picture `A photo of a dog`.
+The main point is: there was zero training needed on the entire task, the image and test datasets can be entirely different, which is a fundamental difference to regular image qualification tasks that have fixed input/output datasets. In CLIP, the model learns the fundamental structure of a language, not just how to difference classes.
+
+Summary of results:
+- Figure 2 shows that " CLIP is much more efficient at zero-shot transfer than our image caption baseline" and "although highly expressive, they found that transformer-based language models are relatively weak at zero-shot ImageNet classification."
+- They also do ensembling and combined with prompts, with performs better (Figure 4) by showing better efficiency for the same compute, and equivalent efficient for higher efficiency, is the efficiency/ratio improved.
+- Figure 5 shows that zero-shot CLIP is competitive with fully supervised  baselines: in practice, we perform supervising learning of a ResNet model on the ImageNet dataset, then replace the last ResNet layer with a linear layer to allow it to perform a new task. This technique is called **Linear Probing** method as is based on the fact that the remaining ResNet includes a good representation of the basis. Surprisingly, even on ImageNet where RestNet was trained, the CLIP beats RestNeti50 by +1.9. On the STL10 dataset, the improvement is the highest observed, as this dataset has only a few elements per class, therefore supervised learning is very hard. Similarly, on e.g. MNIST where number of labels is reduced and there are many samples per label, ResNet beats CLIP.
+- In Figure 6, they compare CLIP to few-shot linear probes, and show that CLIP outperforms or matches existing supervised-learning models after linear probing, and that CLIP can improve with linear probing.   
+- Following the class count vs accuracy trade-off after linear probing from figure 5, in figure 7 the show the number of labeled examples per class a linear classifier on the same CLIP feature space requires to match the performance of the zero-shot classifier.  
+- Figure 9 shows that error goes down as we increase compute and model size. They observed a lot of noise in the results so the conclusions are drawn from the average of all experiments.
+- Figure 10 shows that the CLIP with linear probing beats all state-of-art computer vision models in computer vision tasks, averaged across 12 and 27 datasets.
+- Figure 13 shows the resiliency of the model to perturbation. As in a model is trained on a dataset, and as soon as we change the dataset (but not the labels), the perfomance decreases heavily. The accuracy gap between CLIP and ResNet increases and we degrade the data quality in the dataset (from ImageNet to sketches of ImageNet and adversarial images based on ImageNet).
+- Figure 14, shows that doing linear probe on top of CLIP for e.g. a given dataset, improves accuracy massively for that dataset, but degrades mildly the accuracy of other datasets.
+- Table 7 shows that the prompting matters, by showing that adding the label `child` to the dataset improves accuracy, dropping the percentage of non-numan or crime-related label assignments dramatically. 
 
 <br/>
 # 2021 [ZeRO-Infinity: Breaking the GPU Memory Wall for Extreme Scale Deep Learning, Microsoft](https://arxiv.org/abs/2104.07857)
