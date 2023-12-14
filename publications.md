@@ -150,6 +150,20 @@ LongNet is a Transformer variant that can scale the sequence length up to 1B tok
 &nbsp; &nbsp; &nbsp; &nbsp;
 <img width="19%" height="19%" src="/assets/publications/longnets2.png"/>
 
+<br>
+# 2023 [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691)
+
+From the abstract: "[... FlashAttention is still not nearly as fast as optimized matrix-multiply (GEMM) operations, reaching only 25-40% of the theoretical maximum FLOPs/s. We observe that the inefficiency is due to suboptimal work partitioning between different thread blocks and warps on the GPU, causing either low-occupancy or unnecessary shared memory reads/writes. We propose FlashAttention-2, with better work partitioning to address these issues. In particular, we (1) tweak the algorithm to reduce the number of non-matmul FLOPs (2) parallelize the attention computation, even for a single head, across different thread blocks to increase occupancy, and (3) within each thread block, distribute the work between warps to reduce communication through shared memory. These yield around 2× speedup compared to FlashAttention, reaching 50-73% of the theoretical maximum FLOPs/s on A100 and getting close to the efficiency of GEMM operations. We empirically validate that when used end-to-end to train GPT-style models, FlashAttention-2 reaches training speed of up to 225 TFLOPs/s per A100 GPU (72% model FLOPs utilization)."
+
+
+<br/>
+# 2022 [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)
+
+Transformers are slow and memory-hungry on long sequences, since the time and memory complexity of self-attention are quadratic in sequence length. The authors " argue that a missing principle is making attention algorithms IOaware—accounting for reads and writes between levels of GPU memory". To overcome it, Flash Attention improves the attention mechanism with one that uses tiling to reduce the number of memory reads/writes between GPU high bandwidth memory (HBM) and GPU on-chip SRAM. In practice, it tiles the square attention matrix into partial computations that can be computed on the block memory (on-chip SRAM) instead of the global memory (DRAM?). It also trains Transformers faster than existing baselines (15% on bert models and 3x on GPT-2).
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/publications/FlashAttention.png"/>
+
 <br/>
 # 2022 [TorchScale: Transformers at Scale, Microsoft](https://arxiv.org/abs/2211.13184)
 
@@ -604,6 +618,10 @@ image credit: adapted from images in [Microsoft Research Blog video](https://www
 
 {: style="text-align:center; font-size: small;"}
 image credit: adapted from images in [Microsoft Research Blog video](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) 
+
+
+<br/>
+# 2018 [Language Models are Unsupervised Multitask Learners (GPT-2)](https://d4mucfpksywv.cloudfront.net/better-language-models/language_models_are_unsupervised_multitask_learners.pdf)
 
 
 <br/>
