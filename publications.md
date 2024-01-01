@@ -13,7 +13,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2023 Better speech synthesis through scaling (TorToise), James Bekter](#2023-better-speech-synthesis-through-scaling-tortoise-james-bekter)
 - [2023 Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E), OpenAI](#2023-neural-codec-language-models-are-zero-shot-text-to-speech-synthesizers-vall-e-openai)
 - [2023 High-Fidelity Audio Compression with Improved RVQGAN, Descript Inc.](#2023-high-fidelity-audio-compression-with-improved-rvqgan-descript-inc)
-- [2023 Llama 2: Open Foundation and Fine-Tuned Chat Model](#2023-llama-2-open-foundation-and-fine-tuned-chat-model)
+- [2023 Llama 2: Open Foundation and Fine-Tuned Chat Model, Meta](#2023-llama-2-open-foundation-and-fine-tuned-chat-model-meta)
 - [2023 LLaMA: Open and Efficient Foundation Language Models, Meta](#2023-llama-open-and-efficient-foundation-language-models-meta)
 - [2023 Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](#2023-sparks-of-artificial-general-intelligence-experiments-with-an-early-version-of-gpt-4-microsoft)
 - [2023 GPTs are GPTs: An Early Look at the Labor Market Impact Potential of Large Language Models, OpenAI, OpenResearch, Univ. of Pennsylvania](#2023-gpts-are-gpts-an-early-look-at-the-labor-market-impact-potential-of-large-language-models-openai-openresearch-univ-of-pennsylvania)
@@ -158,7 +158,7 @@ An audio encoder-decoder that supposedly beats Meta's encodec. Achieved by combi
 
 
 <br/>
-# 2023 [Llama 2: Open Foundation and Fine-Tuned Chat Model](https://arxiv.org/abs/2307.09288)
+# 2023 [Llama 2: Open Foundation and Fine-Tuned Chat Model, Meta](https://arxiv.org/abs/2307.09288)
 
 LLama 2 is a collection of pretrained and fine-tuned large language models (LLMs) ranging in scale from 7 billion to 70 billion parameters. Llama 2-Chat is a finetuned LLM optimized for dialogue use cases. The models outperform open-source chat models, and based on
 human evaluations for helpfulness and safety, it outperforms open-source models and appear to be on par with closed-source models (although may not be a suitable substitute). Results on safety human evaluation for Llama 2-Chat are presented in Figure 3. The train dataset is only publicly available sources, which does not include data from Meta’s products or services, or sources that may include users' personal information. Table 2 presents the GPU compute hours, power consumption and carbon emissions of each model
