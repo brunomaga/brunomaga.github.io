@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of a GPT model with DeepSpeed, FSDP, offloading, pipelining, activation checkpointing and communication compression"
+title:  "Distributed training of a GPT model with DeepSpeed, FSDP, offloading, pipelining, activation checkpointing and communication quantization"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -35,9 +35,20 @@ Model parallelism refers mainly to two approaches:
 {: style="text-align:center; font-size: small;"}
 Memory consumption of the three different stages of ZeRO FSDP. Residual memory (activations, normalization layers, etc) is not included as FSDP does not shard them. Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
 
+### CPU/NVMe Offloading
+
 Additionaly, on top of stage 1 and 2, we can enable **[ZeRO-Offload](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory**. On top of stage 3, we can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine that extends ZeRO-offload with support to NVMe memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication".
 
-Finally, we can **optimize/compress communication with [Zero++](https://www.microsoft.com/en-us/research/publication/zero-extremely-efficient-collective-communication-for-giant-model-training/)**. Instead of quantization by scaling (reducing precision and multiplying by a constant factor), Zero++ performs per-block (ie per subset of parameter) quantization based on scaling and zero-point shifting, with a `fp16` to `int8` datatype reduction. It also allows for fast communication by trading GPU memory, where - contrarily to ZeRO 1/2/3' approach - keep a full copy of the weights in all GPUs, and this allows it to "replace the expensive cross-machine all-gather/broadcast on weights with intra-machine all-gather/broadcast, which is substantially faster due to much higher intra-machine communication bandwidth". 
+### Communication quantization
+
+Finally, we can **optimize/compress communication with [ZeRO++](https://www.microsoft.com/en-us/research/publication/zero-extremely-efficient-collective-communication-for-giant-model-training/)**. To understand ZeRO++'s gains, we should undertand the communication workflow first (from the [ZeRO++ paper](https://arxiv.org/abs/2306.10209)): "Assume the model size as 𝑀. During the forward pass, ZeRO conducts an all-gather operation to collect all the parameters (𝑀) needed to train for all model layers. In the backward pass, ZeRO re-collects parameters (𝑀) with all-gather first, then each GPU can compute local gradients. After that, ZeRO operates reducescatter function to aggregate and redistribute gradients (𝑀) across accelerators. In total, ZeRO has a total communication volume of 3𝑀, spreads evenly across 2 all-gather and 1 reduce-scatter."
+
+ZeRO++ introduces three new communication improvements:
+1. **Quantized Weight Communication for ZeRO (qwZ)**: perform block quantization of the forward all-gather, converting weights  from `FP16` (2 bytes) to `INT8` (1 byte). The main improvement is to replace the typical quantization algorithm (multiplying all parameters by a scalar), by a quantization per block (ie per parameter subset) that includes multiplication by a factor and shifting values by another factor;
+2. **Hierarchical Weight Partition for ZeRO (hpZ)**: data remapping that trades-off communication for more memory and reduces communication overhead of all-gather on weights during backward. Instead of having weights distributed across GPUs, we maintain a full copy on each machine, allowing us to replace the expensive cross-machine all-gather on weights with a faster intra-machine all-gather.
+3. **Quantized Gradient Communication for ZeRO (qgZ)**: replaces the gradients reduce-scatter collective, by doing (1) block-based quantization of gradients to `INT4` during communication to reduce the communication size, and recovering the full precision before the reduction operator to preserve training accuracy.
+
+ZeRO++ is interesting to the common use case but particularly relevant for networks of low-network latency and/or small batch sizes per GPU, where the memory increase of **qgZ** has no impact on scaling, and where collective communications are responsible for a large fraction of the overall runtime.
 
 We will see in this post that finding the optimal parallelism hyperparameters is a hard problem. This is a resources allocation problem across the 3D volume in the data, parameters and layers (pipeline) space. It aims at allocating different partitions on that 3D space to different processors, in a way that best balances the compute time or memory across resources. In practice, balanced computation yields a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
@@ -304,7 +315,7 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
 }
 ```
 
-[**ZeRO Infinity**](https://arxiv.org/abs/2104.07857) performs offloading of several variables in memory to CPU and VNMe for huge memory savings. It is only compatible with ZeRO-3 and can be enabled with: 
+[**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857) performs offloading of several variables in memory to CPU and VNMe for huge memory savings. It is only compatible with ZeRO-3 and can be enabled with: 
 
 ```json
 {
@@ -321,6 +332,16 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
   }
 }
 ```
+
+[**ZeRO++**](https://arxiv.org/abs/2306.10209) was detailed above and allows for communication reduction via compression via quantization. It can be enabled by [3 independent components](https://www.deepspeed.ai/tutorials/zeropp/#three-components-of-zero) -- Hierarchical Weight Partition for ZeRO (hpZ), Quantized Weight Communication for ZeRO (qwZ) and Quantized Gradient Communication for ZeRO (qgZ) -- enables as:
+```json
+{
+  "zero_hpz_partition_size": 8, 
+  "zero_quantized_weights": true,
+  "zero_quantized_gradients": true,
+}
+``` 
+Note that the according to documentation, the ideal value for `zero_hpz_partition_size` is the number of ranks (GPUs) per node. 
 
 [**Mixed precision representation**](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. It can be enabled by adding the `fp16` entry [in the config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options). As a side note, the `amp` config entry also enables mixed precision training that follows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation i.e. with the `O0` to `O3` opimization levels. However, [it is not compatible with ZeRO](https://www.deepspeed.ai/docs/config-json/#automatic-mixed-precision-amp-training-options), therefore we won't use it. The [`fp16` is equivalent to APEX optimization level O2](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), and according to the [documentation](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), "if you want to use ZeRO (currently) you must use this mode". We can enable it with the entry `"fp16: { enabled: true }` that is equivalent to the following default values:
 
@@ -611,7 +632,7 @@ This metric is very useful as it gives a quick overview of scaling and is very f
 
 To measure our performance, we used the deepspeed logger to extract the following metrics from different runs at every 10 steps: model throughput as average number of samples per second, the average allocated memory, and the maximum allocated memory. We used `pytorch==2.01`, CUDA `11.7` and `deepspeed==0.10.3`.
 
-All implementations use the same mixed-precision representation, communication bucket sizes, activation checkpointing (disabled), and other config parameters. We benchmarked the following implementations (and configs):
+All implementations use the same mixed-precision representation, communication bucket sizes, activation checkpointing (disabled), communication quatization (ZeRO++, disabled) and other config parameters. We benchmarked the following implementations (and configs):
 
 1. The distributed data parallel (DDP) implementation, i.e. no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
 2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
