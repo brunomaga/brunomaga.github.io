@@ -4,11 +4,122 @@ title: Publications bookmark
 permalink: /publications/
 ---
 
+
 A summary of some interesting publications I came accross. Continuously updated.
 
+<!-- NOTE: To create this table of contents, open VS code, install "Markdown All in one" extension, then Ctrl+Shift+P and "Markdown: create table of contents". To enable automatic update on save, go to settings, extensions, "Markdown all on one" and tick "update on save" -->
+
+- [2023 ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](#2023-zero-extremely-efficient-collective-communication-for-giant-model-training-microsoft)
+- [2023 Better speech synthesis through scaling (TorToise), James Bekter](#2023-better-speech-synthesis-through-scaling-tortoise-james-bekter)
+- [2023 Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E), OpenAI](#2023-neural-codec-language-models-are-zero-shot-text-to-speech-synthesizers-vall-e-openai)
+- [2023 High-Fidelity Audio Compression with Improved RVQGAN, Descript Inc.](#2023-high-fidelity-audio-compression-with-improved-rvqgan-descript-inc)
+- [2023 Llama 2: Open Foundation and Fine-Tuned Chat Model](#2023-llama-2-open-foundation-and-fine-tuned-chat-model)
+- [2023 LLaMA: Open and Efficient Foundation Language Models, Meta](#2023-llama-open-and-efficient-foundation-language-models-meta)
+- [2023 Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](#2023-sparks-of-artificial-general-intelligence-experiments-with-an-early-version-of-gpt-4-microsoft)
+- [2023 GPTs are GPTs: An Early Look at the Labor Market Impact Potential of Large Language Models, OpenAI, OpenResearch, Univ. of Pennsylvania](#2023-gpts-are-gpts-an-early-look-at-the-labor-market-impact-potential-of-large-language-models-openai-openresearch-univ-of-pennsylvania)
+- [2023 Segment Anything, Meta AI Research](#2023-segment-anything-meta-ai-research)
+- [2023 Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](#2023-retentive-network-a-successor-to-transformer-for-large-language-models-microsoft-and-tsinghua-university)
+- [2023 Operator Fusion in XLA: Analysis and Evaluation, UToronto](#2023-operator-fusion-in-xla-analysis-and-evaluation-utoronto)
+- [2023 LongNet: Scaling Transformers to 1,000,000,000 Tokens, Microsoft and Xi’an Jiaotong University](#2023-longnet-scaling-transformers-to-1000000000-tokens-microsoft-and-xian-jiaotong-university)
+- [2023 FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](#2023-flashattention-2-faster-attention-with-better-parallelism-and-work-partitioning)
+- [2022 FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](#2022-flashattention-fast-and-memory-efficient-exact-attention-with-io-awareness)
+- [2022 TorchScale: Transformers at Scale, Microsoft](#2022-torchscale-transformers-at-scale-microsoft)
+- [2022 High Fidelity Neural Audio Compression (Encodec), Meta AI](#2022-high-fidelity-neural-audio-compression-encodec-meta-ai)
+- [2022 Foundation Transformers (Magneto), Microsoft](#2022-foundation-transformers-magneto-microsoft)
+- [2022 DeepNet: Scaling Transformers to 1,000 Layers](#2022-deepnet-scaling-transformers-to-1000-layers)
+- [2022 Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](#2022-contrastive-deep-supervision-tsinghua-university-intel-corporation-and-xian-jiaotong)
+- [2022 Making the Most of Text Semantics to Improve Biomedical Vision-Language Processing, Microsoft](#2022-making-the-most-of-text-semantics-to-improve-biomedical-vision-language-processing-microsoft)
+- [2022 Robust Speech Recognition via Large-Scale Weak Supervision (Whisper), OpenAI](#2022-robust-speech-recognition-via-large-scale-weak-supervision-whisper-openai)
+- [2022 Emergent Abilities of Large Language Models, Google Research \& Stanford](#2022-emergent-abilities-of-large-language-models-google-research--stanford)
+- [2022 Rethinking Attention with Performers, Google, Cambridge, DeepMind and Alan Turing Institute](#2022-rethinking-attention-with-performers-google-cambridge-deepmind-and-alan-turing-institute)
+- [2022 Training Compute-Optimal Large Language Models, arXiv](#2022-training-compute-optimal-large-language-models-arxiv)
+- [2021 LoRA: Low-Rank Adaptation of Large Language Models, Microsoft](#2021-lora-low-rank-adaptation-of-large-language-models-microsoft)
+- [2021 Learning Transferable Visual Models From Natural Language Supervision (CLIP), OpenAI](#2021-learning-transferable-visual-models-from-natural-language-supervision-clip-openai)
+- [2021 ZeRO-Infinity: Breaking the GPU Memory Wall for Extreme Scale Deep Learning, Microsoft](#2021-zero-infinity-breaking-the-gpu-memory-wall-for-extreme-scale-deep-learning-microsoft)
+- [2021 GSPMD: General and Scalable Parallelization for ML Computation Graphs, Google](#2021-gspmd-general-and-scalable-parallelization-for-ml-computation-graphs-google)
+- [2021 Skilful precipitation nowcasting using deep generative models of radar, Google Deepmind](#2021-skilful-precipitation-nowcasting-using-deep-generative-models-of-radar-google-deepmind)
+- [2021 Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research, Google and Univ. California, NeurIPS 2021](#2021-reduced-reused-and-recycled-the-life-of-a-dataset-in-machine-learning-research-google-and-univ-california-neurips-2021)
+- [2021 MLP-Mixer: An all-MLP Architecture for Vision, Google, NeurIPS 2021](#2021-mlp-mixer-an-all-mlp-architecture-for-vision-google-neurips-2021)
+- [2021 Pay Attention to MLPs, Google, NeurIPS 2021](#2021-pay-attention-to-mlps-google-neurips-2021)
+- [2021 An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale, Google, ICLR 2021](#2021-an-image-is-worth-16x16-words-transformers-for-image-recognition-at-scale-google-iclr-2021)
+- [2021 Finetuned Language Models Are Zero-Shot Learners, Google, ICLR 2022](#2021-finetuned-language-models-are-zero-shot-learners-google-iclr-2022)
+- [2020 Scaling Laws for Neural Language Models, John Hopkins, OpenAI](#2020-scaling-laws-for-neural-language-models-john-hopkins-openai)
+- [2020 Language Models are Few-Shot Learners (GPT-3), OpenAI](#2020-language-models-are-few-shot-learners-gpt-3-openai)
+- [2020 Graph Transformers Networks, Korea University](#2020-graph-transformers-networks-korea-university)
+- [2019 No Language Left Behind: Scaling Human-Centered Machine Translation, Meta, Berkeley and Johns Hopkins](#2019-no-language-left-behind-scaling-human-centered-machine-translation-meta-berkeley-and-johns-hopkins)
+- [2019 Generating Long Sequences with Sparse Transformers, OpenAI](#2019-generating-long-sequences-with-sparse-transformers-openai)
+- [2019 ALBERT: A Lite BERT for Self-supervised Learning of Language Representations, Google and Toyota](#2019-albert-a-lite-bert-for-self-supervised-learning-of-language-representations-google-and-toyota)
+- [2019 ZeRO: Memory Optimizations Toward Training Trillion Parameter Models, Microsoft](#2019-zero-memory-optimizations-toward-training-trillion-parameter-models-microsoft)
+- [2018 Language Models are Unsupervised Multitask Learners (GPT-2)](#2018-language-models-are-unsupervised-multitask-learners-gpt-2)
+- [2018 Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](#2018-megatron-lm-training-multi-billion-parameter-language-models-using-model-parallelism)
+- [2018 Averaging Weights Leads to Wider Optima and Better Generalization (Stochastic Weight Averaging), Cornel \& Samsumg AI](#2018-averaging-weights-leads-to-wider-optima-and-better-generalization-stochastic-weight-averaging-cornel--samsumg-ai)
+- [2018 GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism, Google](#2018-gpipe-efficient-training-of-giant-neural-networks-using-pipeline-parallelism-google)
+- [2018 PipeDream: Fast and Efficient Pipeline Parallel DNN Training, Microsoft Research, Carnegie Mellon, Stanford](#2018-pipedream-fast-and-efficient-pipeline-parallel-dnn-training-microsoft-research-carnegie-mellon-stanford)
+- [2018 BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google](#2018-bert-pre-training-of-deep-bidirectional-transformers-for-language-understanding-google)
+- [2017 Neural Discrete Representation Learning (RQVAE), Google](#2017-neural-discrete-representation-learning-rqvae-google)
+- [2017 Mixed Precision Training, Baidu and NVIDIA](#2017-mixed-precision-training-baidu-and-nvidia)
+- [2018 Group Normalization, Facebook AI Research](#2018-group-normalization-facebook-ai-research)
+- [2016 Semi-Supervised Classification with Graph Convolutional Networks](#2016-semi-supervised-classification-with-graph-convolutional-networks)
+- [2016 Attention is all you need (Transformer), Google, NeurIPS 2017](#2016-attention-is-all-you-need-transformer-google-neurips-2017)
+- [2015 Distilling the Knowledge in a Neural Network, Google, and](#2015-distilling-the-knowledge-in-a-neural-network-google-and)
+- [2021 Knowledge distillation in deep learning and its applications, and](#2021-knowledge-distillation-in-deep-learning-and-its-applications-and)
+- [2020 Knowledge Distillation: A Survey](#2020-knowledge-distillation-a-survey)
+- [2015 Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](#2015-batch-normalization-accelerating-deep-network-training-by-reducing-internal-covariate-shift)
+- [2015 Siamese neural networks for one-shot image recognition, CS Toronto, ICML 2015](#2015-siamese-neural-networks-for-one-shot-image-recognition-cs-toronto-icml-2015)
+- [2015 Neural Machine Translation by Jointly Learning to Align and Translate (and Attention Mechanism), D. Bahdanau, K. Cho, Y. Bengio](#2015-neural-machine-translation-by-jointly-learning-to-align-and-translate-and-attention-mechanism-d-bahdanau-k-cho-y-bengio)
+- [2015 Spatial Transformer Networks, Google DeepMind, NeurIPS 2015](#2015-spatial-transformer-networks-google-deepmind-neurips-2015)
+- [2014 Deeply-supervised Nets, USCD and Microsoft](#2014-deeply-supervised-nets-uscd-and-microsoft)
+- [2014 Generative Adversarial Networks (GANs), Univ Montreal, NeurIPS 2014](#2014-generative-adversarial-networks-gans-univ-montreal-neurips-2014)
+- [2014 Sequence to Sequence Learning with Neural Networks, Google, NeurIPS 2014](#2014-sequence-to-sequence-learning-with-neural-networks-google-neurips-2014)
+- [2014 Dropout: a simple way to prevent neural networks from overfitting, Univ. Toronto, Journal of ML Research 2014](#2014-dropout-a-simple-way-to-prevent-neural-networks-from-overfitting-univ-toronto-journal-of-ml-research-2014)
+- [2013 Auto-Encoding Variational Bayes (Variational Autoencoders), Universiteit van Amsterdam, 2013 ](#2013-auto-encoding-variational-bayes-variational-autoencoders-universiteit-van-amsterdam-2013-)
+- [2011 Popular Ensemble Methods: An Empirical Study, 2011 ](#2011-popular-ensemble-methods-an-empirical-study-2011-)
+- [2011 Cyclical Learning Rates for Training Neural Networks, US Naval Research Lab, 2017](#2011-cyclical-learning-rates-for-training-neural-networks-us-naval-research-lab-2017)
+- [2006 Connectionist Temporal Classification: Labelling Unsegmented: Sequence Data with Recurrent Neural Networks, IDSIA Switzerland, ICML 2006](#2006-connectionist-temporal-classification-labelling-unsegmented-sequence-data-with-recurrent-neural-networks-idsia-switzerland-icml-2006)
+- [2006 Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss), New York Uni, CVPR 2006](#2006-dimensionality-reduction-by-learning-an-invariant-mapping-contrastive-loss-new-york-uni-cvpr-2006)
+
+<p><font size="4"><center><i class="fa-solid fa-robot"></i></center></font></p><br/>
 
 <br/>
-# 2023 [Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E)](https://arxiv.org/abs/2301.02111)
+# 2023 [ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](https://arxiv.org/abs/2306.10209)
+
+DeepSpeed ZeRO's compute throughput is limited by the high communication cost from gathering weights in forward pass, backward pass, and averaging gradients. This is mostly prominent on clusters with low-bandwidth, and at very small batch sizes per GPU.
+
+**Background, communication pipeline:** "Assume the model size as 𝑀. During the forward pass, ZeRO conducts an all-gather operation to collect all the parameters (𝑀) needed to train for all model layers. In the backward pass, ZeRO re-collects parameters (𝑀) with all-gather first, then each GPU can compute local gradients. After that, ZeRO operates reducescatter function to aggregate and redistribute gradients (𝑀) across accelerators. In total, ZeRO has a total communication volume of 3𝑀, spreads evenly across 2 all-gather and 1 reduce-scatter."
+
+The paper introduces three communication reduction techniques, packed as ZeRO++:
+1. **Quantized Weight Communication for ZeRO (qwZ):** perform block quantization of the forward all-gather, converting weights  from FP16 (2 bytes) to INT8 (1 byte). The main improvement is to replace the typical quantization algorithm (multiplying all parameters by a scalar), by a quantization per block (ie per parameter subset) that includes multiplication by a factor and shifting values by another factor;
+2. **Hierarchical Weight Partition for ZeRO (hpZ):** data remapping that trades-off communication for more memory and reduces communication overhead of all-gather on weights during backward. Instead of having weights distributed across GPUs, we maintain a full copy on each machine, allowing us to replace the expensive cross-machine all-gather on weights with a faster intra-machine all-gather.
+3. **Quantized Gradient Communication for ZeRO (qgZ):** replaces the gradients reduce-scatter collective, by doing (1) block-based quantization of gradients to `INT4` during communication to reduce the communication size, and recovering the full precision before the reduction operator to preserve training accuracy. Having a fully block-based quantization approach like in (1) was also considered but led to high precision loss and a high error propagation across layers during backpropagation. 
+
+The results sections claims that  ZeRO++ yields a communication reduction of 4x compared to ZeRO-3, leading to up to 2.16x higher compute throughput on 384 GPUs.
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/publications/ZeROplusplus.png"/>
+
+<br/>
+# 2023 [Better speech synthesis through scaling (TorToise), James Bekter](https://arxiv.org/abs/2305.07243)
+
+The paper describes a way to apply ML for generating images  to the speech
+synthesis. This result is TorToise, an expressive, multi-voice text-to-speech system. So far, TTS models were hard to train eficiently due to high sampling rate, unavailability of large datasets, or encoder-decoder challenges.
+
+Background: most modern text-to-speech systems operate on speech data that is encoded as a MEL spectrogram. Because of this, most efforts focus on the high-quality decoding of MEL spectrograms back into audio waveforms, a.k.a. a vocoder or a MEL inverter. The author dives in the state-of-art autoregressive transformers and DDPMs models:
+- **DALL-E**, a transformer model with a (quadratic complexity) full-sequence self-attention, that showed how an autoregressive decoder can be applied to text-toimage generation. The author believes that the "VQVAE decoder used by DALL-E is principally responsible for the blurry incoherence exhibited by most of it’s samples".
+  - DALL-E also introduced the process of **re-ranking**, that samples from the autoregressive model and picks the best output for downstream use. Re-ranking requires a a strong discriminator to tell good from bad text/image pairings. CLIP was used for this purpose.
+- Denoising diffusion probabilistic models (**DDPMs**) generate crisp high quality images, and are effective on using low-quality signals to reconstruct the high-dimensional space where those signals derived from. However, DDPMs rely on fixed output shapes, know beforehand. Thus, they " cannot learn to convert text into audio signals because they cannot solve the implicit alignment problem between text and audio". Also, DDPMs must be sampled from over multiple iterations, leading to high compute cost and latency. 
+
+With that in mind: **TorToise works by joining autoregressive decoders and DDPMs**: "the autoregressive model will be used to convert a sequence of text tokens to a sequence of tokens representing the output space (in our case, speech tokens). The DDPM will then be used to decode these tokens into a high quality representation of speech." In practice, for Text-To-Speech, we train the following neural networks:
+- An auto-regressive model on text tokens that yields the probability of each audio token;
+- A contrastive model that ranks outputs of the autoregressive decoder. DALL-E uses CLIP (for images), but TorToise uses Contrastive Language-Voice Pretrained Transformer (CLVP, for TTS). 
+- A DDPM to convert speech tokens back into speech spectrograms;
+
+The inputs of the auto-regressive and DDPM models include (or are conditioned to) an additional speech conditioning input, which is one or more audio clips (MEL spectograms) of the same speaker as the target. This allows the model to learn "infer vocal characteristics like tone and prosody" are desired in the target output audio. Finally, they apply the **TorToise trick**: the DDPM is first trained on converting discrete speech codes into MEL spectrograms,  and then **fine-tuned** on the latent space of the AR model outputs instead of the speech codes. "The logic here is that the AR latent space is far more semantically rich than discrete tokens. By fine-tuning on this latent space, we improve the efficiency of the downstream diffusion model"
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/publications/TorToise-v2.png"/>
+
+<br/>
+# 2023 [Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E), OpenAI](https://arxiv.org/abs/2301.02111)
 
 The paper introduces a pipeline for text-to-speech translation (TTS), based on a neural codec language model (VALL-E) using discrete codes (encode/decode embeddings) derived from an off-the-shelf neural audio codec model (Encoded, Défossez et al., 2022).
 This mode treats TTS as a conditional language modeling task rather than continuous signal regression as in previous work.
@@ -30,9 +141,11 @@ There are two models, that refer to the two inference steps:
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/VALLE2.png"/>
 
+Note to self: for the use case of synthethising audio in a different language, i.e. that differs from the 3-sec input language and text, see [VALL-E X](https://www.microsoft.com/en-us/research/project/vall-e-x/vall-e-x/).
+
 
 <br/>
-# 2023 [High-Fidelity Audio Compression with Improved RVQGAN, Descript, Inc](https://arxiv.org/abs/2306.06546)
+# 2023 [High-Fidelity Audio Compression with Improved RVQGAN, Descript Inc.](https://arxiv.org/abs/2306.06546)
 
 An audio encoder-decoder that supposedly beats Meta's encodec. Achieved by combining advances in high-fidelity audio generation with better vector quantization techniques from the image domain, along with improved adversarial and reconstruction losses. Methods:
 - to account for periodicity in audio inputs, they adopted the snake activation function for frequency $$\alpha$$ as $$snake(x) = x + \frac{1}{α} sin^2 (αx)$$.
@@ -390,7 +503,7 @@ requirements. Offloading techniques for different data types are detailed in sec
 <br/>
 # 2021 [GSPMD: General and Scalable Parallelization for ML Computation Graphs, Google](https://arxiv.org/pdf/2105.04663.pdf)
 
-also covered on a [google blog post](https://blog.research.google/2021/12/general-and-scalable-parallelization.html).
+( also covered on a [google blog post](https://blog.research.google/2021/12/general-and-scalable-parallelization.html) )
 
 GSPMD (General and Scalable Parallelization for ML Computation Graphs) is an open-source, automatic, compiler-based parallelization system based on the [XLA compiler](https://www.tensorflow.org/xla). Because different model architectures may be better suited to different parallelization strategies, GSPMD is designed to support a large variety of parallelism algorithms appropriate for different use cases (e.g. data parallelism for small models, pipelining parallelism for larger models, or a combination of both).
 
@@ -818,7 +931,9 @@ The optimization follows a standard backpropagation where the gradient is additi
 <img width="47%" height="47%" src="/assets/publications/siamese_networks.png"/> $$\, \, \,$$ <img width="47%" height="47%" src="/assets/publications/siamese_networks_2.png"/> 
 
 <br/>
-# 2015 [Neural Machine Translation by Jointly Learning to Align and Translate (and Attention Mechanism), D. Bahdanau, K. Cho, Y. Bengio](https://arxiv.org/abs/1409.0473) (also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}))
+# 2015 [Neural Machine Translation by Jointly Learning to Align and Translate (and Attention Mechanism), D. Bahdanau, K. Cho, Y. Bengio](https://arxiv.org/abs/1409.0473)
+
+(also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}))
 
 In most encoder-decoder models, encoders encode a sentence into a vector of fixed-length, from which a decoder generates the translation. Thus, neural network needs to be able to compress all the necessary information of a source sentence into a fixed-length vector. Here authores claim that fixed-length arrays are a bottleneck in performance on encoder-decoder architectures, particularly for long lentences. Therefore, the authors [quote] "propose to extend this by allowing a model to automatically (soft-)search for parts of a source sentence that are relevant to predicting a target word, without having to form these parts as a hard segment explicitly [...] The new architecture consists of a **bidirectional RNN as an encoder (BiRNN) and an uni-directional RNN decoder** that emulates searching through a source sentence during decoding.". A BiRNN consists of a forwards a a backward RNNs, containing the **summaries of the preceeding words and the following words**. The *annotation* of each word is the concatenation of the forward and backward states. The decoder receives the output of the previous decoded word, a hidden state for time $$i$$ (e.g. LSTM hidden state) and the context vector from a sequence of annotations - computed as a *weighted* sum of annotations. In practice, the encoder encodes the input sentence into a sequence of vectors and the decoder chooses a subset of these vectors adaptively while decoding the translation. 
 
@@ -920,7 +1035,7 @@ To efficiently calculate individual labellings, the authors describe the CTC for
 <img width="90%" height="90%" src="/assets/publications/CTC.png"/> 
 
 <br/>
-# 2006 [Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss), New York Uni, CVPR 2006](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf)]
+# 2006 [Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss), New York Uni, CVPR 2006](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf)
 
  The paper presents Dimensionality Reduction by Learning an Invariant Mapping (DrLIM) - for learning a globally coherent non-linear function that maps the data evenly to the output manifold. The problem is to find a function that maps high dimensional input patterns to lower dimensional outputs, given neighborhood relationships between samples in input space. It also presents the **Contrastive Loss Function**. The underlying rationale is that a meaningful mapping from high to low dimensional space maps similar input vectors to nearby points on the output manifold and dissimilar vectors to distant points. Therefore, the contrastive loss function runs over pairs of samples. The training is done by (1) collecting images of similar classes using prior knowledge, (2) pair a sample with all other training samples, and (3) traing them against the **binary classification** (1 or 0) to label them as belonging to the same or different classes, respectively. The neural network used is a **"siamese" architecture**, consisting of two copies of the function which share the same set of parameters, and a cost module. A loss module whose input is the output of this architecture is placed on top of it. The input to the entire system is a pair of images and a label Y. The images are passed through the functions, yielding two outputs $$G(X_1)$$ and $$G(X_2)$$. The cost module then generates the distance $$D_W(G_W(X_1), G_W(X_2))$$. The loss function combines $$D_W$$ with the label to produce the scalar loss $$L_S$$ or $$L_D$$. The **partial loss functions** $$L_S$$ and $$L_D$$ refer to the loss functions to optimize for similar and dissimilar objects. Experiments demonstrate the effectiveness of the method by learning a shift invariant mapping of MNIST samples and a learning temporal neighborhoods and lighting invariance of single objects (airplane). 
 
