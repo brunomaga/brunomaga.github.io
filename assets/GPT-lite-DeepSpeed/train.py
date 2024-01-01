@@ -88,7 +88,9 @@ def main_deepspeed(n_epochs=100, random_seed=42, model='gptlite'):
 
   for epoch in range(n_epochs):
     if args.pipeline_num_stages:
-      loss = engine.train_batch()
+      step_count = len(train_dataloader)//engine.gradient_accumulation_steps()
+      for step in range(step_count):
+        loss = engine.train_batch()
     else:
       for step, data in enumerate(train_dataloader):
         inputs = data[0].to(engine.device)

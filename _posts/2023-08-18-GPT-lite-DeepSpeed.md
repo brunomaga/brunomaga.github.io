@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of a large GPT model with DeepSpeed"
+title:  "Distributed training of a GPT model with DeepSpeed: ZeRO, FSDP, Offloading, Pipelining, Activation checkpointing"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -270,7 +270,7 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
 }
 ```
 
-**Gradient accumulation** based on **micro-batching** is a technique that simulates a large mini-batch as an iteration across several micro-batches. This is particularly relevant when the whole mini-batch does not fit into memory, and using an accumulation of micro-batches will overcome that limitation. This method is enabled by setting `train_micro_batch_size_per_gpu` (defaulted to `train_batch_size`) or `gradient_accumulation_steps` (defaulted to `1`). In our case, we will start with a micro-batch of 1 single input per GPU, that accummulate up to a batch size of 256 across all 8 GPUs, therefore resulting in 32 gradient accumulation steps: 
+**Gradient accumulation** based on **micro-batching** is a technique that simulates a large mini-batch as an iteration across several micro-batches. This is particularly relevant when the whole mini-batch does not fit into memory, and using an accumulation of micro-batches will overcome that limitation. This method is enabled by setting `train_micro_batch_size_per_gpu` (defaulted to `train_batch_size`) or `gradient_accumulation_steps` (defaulted to `1`). At runtime, the micro-batch size can be retrieved by `engine.gradient_accumulation_steps()`. In our case, we will start with a micro-batch of 1 single input per GPU, that accummulate up to a batch size of 256 across all 8 GPUs, therefore resulting in 32 gradient accumulation steps: 
 
 ```json
 {
@@ -408,7 +408,7 @@ def get_model(criterion, vocab_size, pipeline_num_stages=0):
     # ... as before: model = gptlite.GPTlite(vocab_size)
 ```
 
-Finally, the training code in the main loop is reduced to a single call to `engine.train_batch()`, that handles the forward pass, backward pass and gradient updates for the pipelining use cases: 
+Finally, the training iteration code in the pipelining use case is reduced to a call to `engine.train_batch()`, that is [equivalent to a forward pass, backward pass and gradient updates of an entire micro-batch](https://www.deepspeed.ai/tutorials/pipeline/#training-loops) of size `engine.gradient_accumulation_steps()`:
 
 ```python
 ## train.py
@@ -417,7 +417,9 @@ def main_deepspeed(n_epochs=100, random_seed=42):
   # ...
   for epoch in range(n_epochs):
     if pipeline_num_stages:
-      loss=engine.train_batch()
+      step_count = len(train_dataloader)//engine.gradient_accumulation_steps()
+      for step in range(step_count):
+        loss = engine.train_batch()
     else:
       # ... forward, backward, and update step as before
 ```
