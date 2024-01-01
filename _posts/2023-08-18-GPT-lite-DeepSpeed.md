@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of a GPT model with DeepSpeed: ZeRO, FSDP, Offloading, Pipelining, Activation checkpointing"
+title:  "Distributed training of a GPT model with DeepSpeed, FSDP, offloading, pipelining, and checkpointing"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
