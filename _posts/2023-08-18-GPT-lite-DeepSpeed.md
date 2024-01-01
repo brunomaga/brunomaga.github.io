@@ -334,7 +334,7 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
 }
 ```
 
-[**ZeRO++**](https://arxiv.org/abs/2306.10209) was detailed above and allows for communication reduction via compression via quantization. It can be enabled by [3 independent components](https://www.deepspeed.ai/tutorials/zeropp/#three-components-of-zero) -- Hierarchical Weight Partition for ZeRO (hpZ), Quantized Weight Communication for ZeRO (qwZ) and Quantized Gradient Communication for ZeRO (qgZ) -- enables as:
+[**ZeRO++**](https://arxiv.org/abs/2306.10209) was detailed above and allows for communication reduction via compression, quantization and memory tradeoff. It can be enabled by [3 independent components](https://www.deepspeed.ai/tutorials/zeropp/#three-components-of-zero) -- hierarchical Weight partition for ZeRO (hpZ), quantized weight communication for ZeRO (qwZ) and quantized gradient Communication for ZeRO (qgZ) -- enabled in the same order by:
 ```json
 {
   "zero_hpz_partition_size": 8, 
