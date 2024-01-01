@@ -48,7 +48,8 @@ ZeRO++ introduces three new communication improvements:
 2. **Hierarchical Weight Partition for ZeRO (hpZ)**: data remapping that trades-off communication for more memory and reduces communication overhead of all-gather on weights during backward. Instead of having weights distributed across GPUs, we maintain a full copy on each machine, allowing us to replace the expensive cross-machine all-gather on weights with a faster intra-machine all-gather.
 3. **Quantized Gradient Communication for ZeRO (qgZ)**: replaces the gradients reduce-scatter collective, by doing (1) block-based quantization of gradients to `INT4` during communication to reduce the communication size, and recovering the full precision before the reduction operator to preserve training accuracy.
 
-ZeRO++ is interesting to the common use case but particularly relevant for networks of low-network latency and/or small batch sizes per GPU, where the memory increase of **qgZ** has no impact on scaling, and where collective communications are responsible for a large fraction of the overall runtime.
+ZeRO++ is particularly relevant for clusters with a low-latency network where collective communications are responsible for a large fraction of the overall runtime. It is also important for executions with a small batch size per GPU, where the memory increase of **qgZ** has no impact on scaling.
+
 
 We will see in this post that finding the optimal parallelism hyperparameters is a hard problem. This is a resources allocation problem across the 3D volume in the data, parameters and layers (pipeline) space. It aims at allocating different partitions on that 3D space to different processors, in a way that best balances the compute time or memory across resources. In practice, balanced computation yields a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
