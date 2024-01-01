@@ -424,6 +424,8 @@ def main_deepspeed(n_epochs=100, random_seed=42):
       # ... forward, backward, and update step as before
 ```
 
+An important nuance: by default, pipeline parralelism expects all mini-batches of the dataset - i.e. in every call to `train_batch()` - to be of the same shape. If this is not the case, you can reset the shapes at the onset of every mini-batch by running `engine.reset_activation_shape()`, and this will infer an additional communication step to broadcast the shapes of the first micro-batch as the default for the remaining micro-batches. However, it is not possible to have different shapes across micro-batches, and the only work around is to trim or pad all micro-batches of a mini-batch to the same shape beforehand.
+
 As a final remark, [pipeline parallelism is not compatible with ZeRO stages 2 or 3](https://deepspeed.readthedocs.io/en/latest/pipeline.html#pipeline-parallelism), as discussed [here](https://github.com/microsoft/DeepSpeed/issues/1110#issuecomment-850835817).
 
 ### Increasing compute and memory efficiency with LayerSpec (optional) 
