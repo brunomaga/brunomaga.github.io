@@ -52,8 +52,9 @@ Material for the course <a href="https://edu.epfl.ch/coursebook/en/statistics-fo
 <br/>
 Other useful resources:
 <ul>
-          <li><a href="{{ site.assets }}/resources/latex_math_symbols.pdf">Latex Mathematical Symbols</a></li>
-          <li><a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a></li>
-          <li><a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">Computing Gradients with Backpropagation (Automatic Differentiation)</a>, from the Univ Princeton course COS-324, by Ryan P. Adams (<a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">pdf</a>)</li>
+  <li><a href="{{ site.assets }}/resources/latex_math_symbols.pdf">Latex Mathematical Symbols</a></li>
+  <li><a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a></li>
+  <li><a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">Computing Gradients with Backpropagation (Automatic Differentiation)</a>, from the Univ Princeton course COS-324, by Ryan P. Adams (<a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">pdf</a>)</li>
+  <li><a href="https://platform.openai.com/docs/guides/prompt-engineering">OpenAI's guide to Prompt Engineering</a></li>        
 </ul>
 
