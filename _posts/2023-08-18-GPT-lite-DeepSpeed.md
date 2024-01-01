@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of a GPT model with DeepSpeed, FSDP, offloading, pipelining, and checkpointing"
+title:  "Distributed training of a GPT model with DeepSpeed, FSDP, offloading, pipelining, activation checkpointing and communication compression"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -35,7 +35,9 @@ Model parallelism refers mainly to two approaches:
 {: style="text-align:center; font-size: small;"}
 Memory consumption of the three different stages of ZeRO FSDP. Residual memory (activations, normalization layers, etc) is not included as FSDP does not shard them. Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
 
-Additionaly, on top of stage 1 and 2, we can enable [**ZeRO-Offload**](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory. On top of stage 3, we can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication".
+Additionaly, on top of stage 1 and 2, we can enable **[ZeRO-Offload](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory**. On top of stage 3, we can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine that extends ZeRO-offload with support to NVMe memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication".
+
+Finally, we can **optimize/compress communication with [Zero++](https://www.microsoft.com/en-us/research/publication/zero-extremely-efficient-collective-communication-for-giant-model-training/)**. Instead of quantization by scaling (reducing precision and multiplying by a constant factor), Zero++ performs per-block (ie per subset of parameter) quantization based on scaling and zero-point shifting, with a `fp16` to `int8` datatype reduction. It also allows for fast communication by trading GPU memory, where - contrarily to ZeRO 1/2/3' approach - keep a full copy of the weights in all GPUs, and this allows it to "replace the expensive cross-machine all-gather/broadcast on weights with intra-machine all-gather/broadcast, which is substantially faster due to much higher intra-machine communication bandwidth". 
 
 We will see in this post that finding the optimal parallelism hyperparameters is a hard problem. This is a resources allocation problem across the 3D volume in the data, parameters and layers (pipeline) space. It aims at allocating different partitions on that 3D space to different processors, in a way that best balances the compute time or memory across resources. In practice, balanced computation yields a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
