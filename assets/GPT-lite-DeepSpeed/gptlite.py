@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 import deepspeed
 import torch.distributed as dist
+import os
 
 # replicate GPT-3 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
 
@@ -136,7 +137,7 @@ class GPTlite(nn.Module):
     x = self.blocks(x)
     x = self.ln(x)
     logits = self.lm_head(x) #shape (B,T,C)
-    return torch.swapaxes(logits,1,2) #shape (B,C,T)
+    return logits
 
   def generate(self, idx, max_new_tokens):
     """ given a context idx, generate max_new_tokens tokens and append them to idx """
@@ -155,16 +156,14 @@ class GPTlite(nn.Module):
 
 
   def to_layers(self):  
-      layers = [
+      return [
           lambda idx:
             self.token_embedding_table(idx) +
             self.position_embedding_table(torch.arange(idx.shape[1]).to(idx.device)),
           *self.blocks,
           self.ln,
           self.lm_head,
-          lambda logits: torch.swapaxes(logits,1,2)
       ]
-      return layers
 
 
 from deepspeed.pipe import PipelineModule, LayerSpec
@@ -185,27 +184,13 @@ class GPTlitePipeSpec(PipelineModule):
       return tok_emb + pos_emb
 
 
-  class SwapAxes(nn.Module):
-    """ converts  torch.swapaxes(logits,1,2) into an nn.Module. Required for LayerSpec"""
-
-    def __init__(self):
-      super().__init__()
-
-    def forward(self, logits):
-      return torch.swapaxes(logits,1,2)
-
-
   def __init__(self, vocab_size, pipe_kwargs):
     self.specs = \
       [ LayerSpec(GPTlitePipeSpec.EmbeddingsSum, vocab_size) ] + \
       [ LayerSpec(Block, n_embd, n_head) for _ in range(n_layer)] + \
       [ LayerSpec(nn.LayerNorm, n_embd),
-        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ] + \
-      [ LayerSpec(GPTlitePipeSpec.SwapAxes) ]
+        LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
     super().__init__(layers=self.specs, **pipe_kwargs)
-
-    
-    
 
 
 def load_tiny_shakespeare_data():
