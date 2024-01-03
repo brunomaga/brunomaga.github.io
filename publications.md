@@ -78,8 +78,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2006 Connectionist Temporal Classification: Labelling Unsegmented: Sequence Data with Recurrent Neural Networks, IDSIA Switzerland, ICML 2006](#2006-connectionist-temporal-classification-labelling-unsegmented-sequence-data-with-recurrent-neural-networks-idsia-switzerland-icml-2006)
 - [2006 Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss), New York Uni, CVPR 2006](#2006-dimensionality-reduction-by-learning-an-invariant-mapping-contrastive-loss-new-york-uni-cvpr-2006)
 
----
-<br/>
+<br/><center><font size="5"><i class="fa fa-regular fa-bars"></i></font></center><br/>
 
 <br/>
 # 2023 [ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](https://arxiv.org/abs/2306.10209)
