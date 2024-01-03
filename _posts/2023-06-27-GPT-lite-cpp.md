@@ -503,7 +503,7 @@ The benchmark for the bencmark models are in <a href="/assets/GPT-lite-cpp/bench
 
 Looking at the overall performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.2 (navy blue to orange bars). Also, there is also a small throughput increase of up to 10% when moving from PyTorch 2.1.2 to its C++ LibTorch equivalent (from orange to green bars), explained by the python overhead (runtime, dynamic typing, etc). Finally, the inference when comparing the pure C++ implementation and the TorchScript implementation (train in python, inference in C++) is neglegible, which means that TorchScript does a pretty good job in (de)serializing the model.
 
-We also tested the speed-up gains from using  `torch.compile` on our GPT-lite model. The base case without `torch.compile` performs the PyTorch-based training at a throughput of 1.41 samples/sec and inference at 4.28 samples/second. Let's compare with the optimized versions:
+We also tested the speed-up gains from using  `torch.compile` on our GPT-lite model. The base case without `torch.compile` performs the PyTorch-based training at a throughput of 1.41 samples/sec and inference at 4.28 samples/second. Let's compare it with the same model compiled at different modes and with(out) a full graph:
 
 | throughput (increase factor)  | `fullgraph=False` train | `fullgraph=False`, inference | `fullgraph=True`, train | `fullgraph=True`, inference |  
 |---|---|---|---|---|
