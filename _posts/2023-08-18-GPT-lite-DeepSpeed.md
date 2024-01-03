@@ -15,7 +15,7 @@ An ML model allows for three types of parallelism, that can be combined into wha
 3. **Model parallelism**, by dividing the *tensors* on each layer across processors.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="/assets/GPT-DeepSpeed/GPT_3D_parallelism_2.png"/>
+<img width="55%" height="55%" src="/assets/GPT-lite-DeepSpeed/GPT_3D_parallelism_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The 3D parallelism aims and partitioning (color-coded) computer resources  across the 3D space of data, layer and parameter dimensions. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
@@ -32,7 +32,7 @@ Model parallelism refers mainly to two approaches:
 - **ZeRO stage 3 (ZeRO-3)**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPT-DeepSpeed/DeepSpeed_stages.png"/>
+<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/DeepSpeed_stages.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Memory consumption of the three different stages of ZeRO FSDP. Residual memory (activations, normalization layers, etc) is not included as FSDP does not shard them. Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
@@ -370,7 +370,7 @@ As a final note, the configuration file can also be extended with custom fields,
 [Pipeline parallelism](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules) improves both the memory and compute efficiency during training by partitioning the layers of a model into stages that can be processed in parallel. The pipeline parallelims implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 Forward pass followed by 1 Backward pass, Figure 4 top on the [Megatron LM paper](https://browse.arxiv.org/pdf/2104.04473.pdf) ), however it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms.
 
 {: style="text-align:center; font-size: small;"}
-<img width="79%" height="80%" src="/assets/GPT-DeepSpeed/GPT_pipelining.png"/>
+<img width="79%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Two-way data parallel pipelines with four stages each. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
@@ -390,7 +390,7 @@ def get_cmd_line_args(description='GPT lite on DeepSpeed'):
 The number of pipeline stages must divide the number of GPUs, so that DeepSpeed automatically creates several parallel pipelines with the same stage count, and distributes them across GPUs.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPT-DeepSpeed/GPT_pipelining_2.png"/>
+<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 "An illustration of how DeepSpeed will train a batch with eight micro-batches using hybrid two-way data parallelism and two-stage pipeline parallelism. GPUs 0 and 2 are arranged in a pipeline and will alternate forward (F) and backward (B) passes. They will then all-reduce (AR) gradients with their data parallel counterparts, GPUs 1 and 3, respectively. Finally, the two pipeline stages update their model weights". This is the 1F1B pipeline algorithm. Source: [DeepSpeed pipelining documentation](https://www.deepspeed.ai/tutorials/pipeline/)
@@ -410,22 +410,20 @@ class GPTlite(nn.Module):
           *self.blocks,
           self.ln,
           self.lm_head,
-          lambda logits: torch.swapaxes(logits,1,2)
       ]
       return layers
 ```
 
-**Very important**: the `swapaxes` if you try to back-propragate the previous layers, you will bump into the error `RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn` (discussed in bug [4279](https://github.com/microsoft/DeepSpeed/issues/4274) and [4479](https://github.com/microsoft/DeepSpeed/issues/4479)). In practice, the `swapaxes` operation performs a transpose operation on the `logits` parameters array that *breaks* the back-progragation graph. This is then passed to the loss module, that will fail. To fix that, force gradients to be computed for the tensor that is output by the model, with `outputs = outputs.requires_grad_(True)`. Alternatively, remove `swapaxes` from the `to_layers()` operataion above and add the transpose logic directly into the loss function instead (will be useful later for the pipeline parallelism use case):
+Note that the output of `layers` is of shape `B,T,C` which is incompatible with [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) module in PyTorch. A quick fix is to simple add `lambda logits: torch.swapaxes(logits,1,2)` to `to_layers()` to make it of shape `B,C,T`. However when you try to back-propragate, you will bump into the error `RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn`, as discussed in bugs [4279](https://github.com/microsoft/DeepSpeed/issues/4274) and [4479](https://github.com/microsoft/DeepSpeed/issues/4479), and you'd have to use `outputs = outputs.requires_grad_(True)` to fix it. Alternatively, you can adapt the loss function to do the `swapaxes` or the `view` change instead. It is a cleaner approach, and will be useful later for the pipeline parallelism use case:
 
 ```python
 ## train.py
 
-class CrossEntropyLoss_TransposedLogits(torch.nn.Module):
+class CrossEntropyLoss_FlatView(torch.nn.Module):
   def forward(self, logits, labels):
-    # from shape (B,T,C) to (B,C,T)
-    logits = torch.swapaxes(logits,1,2)
-    # fix RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
-    logits = logits.requires_grad_(True) # https://github.com/microsoft/DeepSpeed/issues/4274
+    B, T, C = logits.shape
+    logits = logits.view(B*T,C)
+    labels = labels.view(-1)
     return torch.nn.functional.cross_entropy(logits, labels)
   
 def main_deepspeed(n_epochs=100, random_seed=42):
@@ -476,7 +474,7 @@ As a final remark, [pipeline parallelism is not compatible with ZeRO stages 2 or
 
 The implementation of pipelining for the `GPTlite` model above is neither memory efficient nor scalable as each GPU replicates the whole model in memory. See [Memory-Efficient Model Construction](https://www.deepspeed.ai/tutorials/pipeline/#memory-efficient-model-construction) for details. So we will use the DeepSpeed class `LayerSpec` ([API](https://deepspeed.readthedocs.io/en/latest/pipeline.html#deepspeed.pipe.LayerSpec)) that delays the construction of modules until the model layers have been partitioned across workers, therefore having each worker allocate only the layers it’s assigned to. To do this, we will create a new model class `GPTlitePipeSpec` that inherits from `PipelineModule` with an `__init__` method that follows very closely the `forward()` pass in the original `GPTlite`.
 
-The tricky bit here is that the `LayerSpec` constructor only works with the type `nn.Module` as argument, and some operations, specifically the sum of embeddings in `forward()` is not of type `nn.Module`. To overcome this, we create the classe `EmbeddingsSum` that encapsulate thoat logic into an `nn.Module`. We will also use `CrossEntropy_TransposedLogits` as the loss function, that does the `swapaxes` operation internally. The full implementation for the pipeline class is then:
+The tricky bit here is that the `LayerSpec` constructor only works with the type `nn.Module` as argument, and some operations, specifically the sum of embeddings in `forward()` is not of type `nn.Module`. To overcome this, we create the classe `EmbeddingsSum` that encapsulate thoat logic into an `nn.Module`. We will also use `CrossEntropy_FlatView` as the loss function. The full implementation for the pipeline class is then:
 
 ```python
 ## gptlite.py
@@ -643,11 +641,11 @@ To measure our performance, we used the deepspeed logger to extract the followin
 
 All implementations use the same mixed-precision representation, communication bucket sizes, disabled communication quatization (ZeRO++) and other config parameters. We benchmarked the following implementations (and configs):
 
-1. The distributed data parallel (DDP) implementation, i.e. no DeepSpeed (<a href="/assets/GPT-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
-2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="/assets/GPT-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
-3. The ZeRO-3 implementation with ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
+1. The distributed data parallel (DDP) implementation, i.e. no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
+2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
+3. The ZeRO-3 implementation with ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
 4. The ZeRO-3 implementation without activation checkpointing and with activation checkpointing at every block. 
-5. The memory-efficient pipeline implementation with ZeRO-1 (<a href="/assets/GPT-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage': 1` and launch with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`) without activation checkpointing (due to bug [4279](https://github.com/microsoft/DeepSpeed/issues/4274)), where we tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of GPT-lite pipeline across 8 GPUs and 4 stages, it outputs:
+5. The memory-efficient pipeline implementation with ZeRO-1 (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage': 1` and launch with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`) without activation checkpointing (due to bug [4279](https://github.com/microsoft/DeepSpeed/issues/4274)), where we tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of GPT-lite pipeline across 8 GPUs and 4 stages, it outputs:
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4)   STAGE_PARAMS=21256704 (21.257M)
 RANK=2 STAGE=1 LAYERS=3 [4, 7)   STAGE_PARAMS=21256704 (21.257M)
@@ -658,17 +656,17 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M)
 We tested three models. The first is a *wide* version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`), and input and output of size 8192. We used a batch size of $$2^{14}$$, and a micro-batch size of $$2^{11}$$ inputs per GPU, ie `'train_batch_size': 16384` and `'train_micro_batch_size_per_gpu': 2048`. The benchmark results are:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-DeepSpeed/benchmark_wide.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
  
 Then we tested a *deep benchmark model* with a small parameter space (`W=256`), a high layer count (`L=2048`), an input and output size of 256, and the same bath sizes as the previous wide model:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-DeepSpeed/benchmark_deep.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
 
 And finally our GPT-lite model, with a micro-batch size of 1 sample per GPU:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-DeepSpeed/benchmark_gptlite.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_gptlite.png"/>
 
 **Memory overhead from communication buffers.** Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we also benchmarked several runs with the default communication bucket sizes (`5e9`) and it led to a higher memory usage as expected (of approximately double the amount in stages 2 and 3), that became prohibitive for some runs.
 
@@ -682,7 +680,7 @@ And finally our GPT-lite model, with a micro-batch size of 1 sample per GPU:
 
 **Pipelining performance for variable number of stages.** Increasing the number of stages strongly decreases the average memory consumption, as expected. This is due to the model being partitioned in smaller blocks. There was no substantial decrease in maximum memory consumption, and this is something I am yet to understand (any hints?). The throughput demonstrated a peculiar behaviour: in the deep benchmark model, the throughput increases with the increase of stage count, while the opposite happens on the GPT-lite model. I believe this is due to load imbalance across stages, or a lower ratio of computation vs communication as we increase the stage count on the GPT-lite use case.
 
-**Pipelining with optimized vs non-optimized memory efficiency implementation.** Using the `SpecLayer`-based implementation of the `PipelileModule` in our pipeline runs, resulted in a reduction of about 40% in memory consumption for the GPT-lite and deep benchmark models, when running pipeline parallelism with the highest stage count (8).
+**Pipelining with optimized vs non-optimized memory efficiency implementation.** Using the `SpecLayer`-based implementation of the `PipelineModule` in our pipeline runs, resulted in a reduction of about 40% in memory consumption for the GPT-lite and deep benchmark models, when running pipeline parallelism with the highest stage count (8).
 
 ## General disccusion
 
@@ -712,4 +710,4 @@ We just scratched the surface of DeepSpeed capabilities. There are plenty of res
 
 For general documentation, I recommend the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
-All done! If you want to try this on your own, see the [GPT-DeepSpeed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-DeepSpeed).
+All done! If you want to try this on your own, see the [GPT-lite-DeepSpeed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-DeepSpeed).

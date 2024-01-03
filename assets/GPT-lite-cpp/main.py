@@ -11,18 +11,21 @@ sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
 import benchmark
 from gptlite import GPTlite, block_size, n_embd
 
-# torch.compile modes: "default", "reduce-overhead", or "max-autotune"
-torch_compile_kwargs = dict(mode="max-autotune", fullgraph=True)
+torch_compile_kwargs=dict(mode='default-overhead', fullgraph=False)
 warmup_epochs = 30
 benchmark_epochs = 30
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 torch.set_default_device(device)
 
-def compile_if_needed(model):
-  if torch_compile_kwargs is None:
-    return model
-  print(f"compiling model with kwargs {torch_compile_kwargs}...")
-  return torch.compile(model, **torch_compile_kwargs)
+def output_jit_model(model, model_name, x=None):
+  # output the model as binary (with trace or script)
+  if x is not None:
+    model_jit = torch.jit.trace(model, (x))
+  else:
+    model_jit = torch.jit.script(model) 
+  model_filename = f"{model_name.replace(' ', '_')}.pt"
+  model_jit.save(model_filename)
+  print(f"model saved to {model_filename}")
 
 def benchmark_train(model, x, label, model_name):
 
@@ -43,12 +46,6 @@ def benchmark_train(model, x, label, model_name):
   benchmark_time = float(time.time() - start_time)
   print(f"{model_name} train runtime: {benchmark_time} seconds")
   print(f"{model_name} train throughput: {benchmark_epochs / benchmark_time} epochs/second")
-
-  # output the model as binary (with trace or script)
-  model_jit = torch.jit.script(model) # or torch.jit.trace(model, (x))
-  model_filename = f"{model_name.replace(' ', '_')}.pt"
-  model_jit.save(model_filename)
-  print(f"model saved to {model_filename}")
 
 
 def benchmark_inference(model, x, model_name, epochs_multiplier=10):
@@ -78,18 +75,24 @@ def main():
   x = torch.randn(batch_size, in_size).to(device)
   label = torch.randn(batch_size, out_size).to(device)
   model = benchmark.BenchmarkModel(W, L, in_size, out_size).to(device)
-  model = compile_if_needed(model)
+  if torch_compile_kwargs is None:
+    output_jit_model(model, model_name)
+  else:
+    model = torch.compile(model, **torch_compile_kwargs)
   benchmark_train(model, x, label, model_name)
   benchmark_inference(model, x, model_name)
 
-  # # Wide DNN Model (W=8192, L=3)
+  # Wide DNN Model (W=8192, L=3)
   model_name = "Wide DNN"
   W, L, batch_size = 8192, 3, 2048
   in_size = out_size = W
   x = torch.randn(batch_size, in_size).to(device)
   label = torch.randn(batch_size, out_size).to(device)
   model = benchmark.BenchmarkModel(W, L, in_size, out_size).to(device)
-  model = compile_if_needed(model)
+  if torch_compile_kwargs is None:
+    output_jit_model(model, model_name)
+  else:
+    model = torch.compile(model, **torch_compile_kwargs)
   benchmark_train(model, x, label, model_name)
   benchmark_inference(model, x, model_name)
 
@@ -99,7 +102,10 @@ def main():
   idx = torch.randint(0, vocab_size, (batch_size, block_size)).to(device)
   label = torch.randint(0, vocab_size, (batch_size, block_size)).to(device)
   model = GPTlite(vocab_size).to(device)
-  model = compile_if_needed(model)
+  if torch_compile_kwargs is None:
+    output_jit_model(model, model_name)
+  else:
+    model = torch.compile(model, **torch_compile_kwargs)
   benchmark_train(model, idx, label, model_name)
   benchmark_inference(model, idx, model_name)
 
