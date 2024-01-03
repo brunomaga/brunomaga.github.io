@@ -11,11 +11,18 @@ sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
 import benchmark
 from gptlite import GPTlite, block_size, n_embd
 
+# torch.compile modes: "default", "reduce-overhead", or "max-autotune"
+torch_compile_kwargs = dict(mode="max-autotune", fullgraph=True)
 warmup_epochs = 30
 benchmark_epochs = 30
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 torch.set_default_device(device)
 
+def compile_if_needed(model):
+  if torch_compile_kwargs is None:
+    return model
+  print(f"compiling model with kwargs {torch_compile_kwargs}...")
+  return torch.compile(model, **torch_compile_kwargs)
 
 def benchmark_train(model, x, label, model_name):
 
@@ -62,8 +69,7 @@ def benchmark_inference(model, x, model_name, epochs_multiplier=10):
 
 def main():
 
-  if not torch.cuda.is_available():
-    print("WARNING: CUDA not available, using CPU.")
+  assert torch.cuda.is_available(), "CUDA not available"
 
   # Deep DNN model (W=256, L=2048)
   model_name = "Deep DNN"
@@ -72,25 +78,28 @@ def main():
   x = torch.randn(batch_size, in_size).to(device)
   label = torch.randn(batch_size, out_size).to(device)
   model = benchmark.BenchmarkModel(W, L, in_size, out_size).to(device)
+  model = compile_if_needed(model)
   benchmark_train(model, x, label, model_name)
   benchmark_inference(model, x, model_name)
 
-  # Wide DNN Model (W=8192, L=3)
+  # # Wide DNN Model (W=8192, L=3)
   model_name = "Wide DNN"
   W, L, batch_size = 8192, 3, 2048
   in_size = out_size = W
   x = torch.randn(batch_size, in_size).to(device)
   label = torch.randn(batch_size, out_size).to(device)
   model = benchmark.BenchmarkModel(W, L, in_size, out_size).to(device)
+  model = compile_if_needed(model)
   benchmark_train(model, x, label, model_name)
   benchmark_inference(model, x, model_name)
 
-  # GPTlite model: (B, T, C) = (batch_size_deep, block_size, n_embed)
+  # GPTlite model: (B, T, C) = (batch_size, block_size, n_embed)
   model_name = "GPTlite"
   vocab_size, batch_size = 65, 1 
   idx = torch.randint(0, vocab_size, (batch_size, block_size)).to(device)
   label = torch.randint(0, vocab_size, (batch_size, block_size)).to(device)
   model = GPTlite(vocab_size).to(device)
+  model = compile_if_needed(model)
   benchmark_train(model, idx, label, model_name)
   benchmark_inference(model, idx, model_name)
 

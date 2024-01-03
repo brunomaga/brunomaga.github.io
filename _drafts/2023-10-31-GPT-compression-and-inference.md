@@ -1,9 +1,20 @@
 ---
 layout: post
-title:  "Cheaper and faster GPT inference via knowledge distillation, pruning, quantization and Mixture of Experts"
+title:  "Efficient inference of a GPT model with knowledge distillation, pruning, quantization, Mixture of Experts, dynamic batching, and flash attention"
 categories: [machine learning, Transformer, GPT, DeepSpeed, pruning, distillation, quantization, mixture-of-experts]
 tags: [machinelearning]
 ---
+
+
+
+TODO see [here](https://sumanthrh.com/post/distributed-and-efficient-finetuning/#zero)
+
+See [ZeRO-Inference](https://www.deepspeed.ai/2022/09/09/zero-inference.html)
+
+Mention ZeRO++ for fine-tuning? Mention compression and LoRA for fine-tuning and faster inference?
+
+Speeding up transformer training/inference can be achieved by two memory optimization technique which does not require modification of the mode: flash attention and continuous batching. about continuous batching, see [here](https://www.anyscale.com/blog/continuous-batching-llm-inference)
+
 
 Previously, in [Distributed training of a large GPT model with DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we foccused on training a very large model on a distributed network of GPUs. The aim was to reduce training runtime via increased parallelism, and to increase model accuracy by increasing model size. In this post, we will look at the opposite problem in the ML spectrum: model compression for lower runtime and lower memory footprint during inference. This is particularly relevant for embeddeded and real time systems where time and cost are an issue.
 
