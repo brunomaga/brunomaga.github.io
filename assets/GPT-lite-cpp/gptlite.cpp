@@ -141,6 +141,7 @@ Tensor GPTlite::forward(Tensor idx){
 	x = blocks->forward(x);
 	x = ln(x);
 	Tensor logits = lm_head(x); //shape (B,T,C)
+	//Note: python implementation uses .view(B*T,C) instead: 
 	return logits.permute({0,2,1}); //shape (B,C,T)
 }
 

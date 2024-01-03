@@ -1,7 +1,6 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from typing import Optional
 
 
 # replicate GPT-2 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
@@ -119,7 +118,7 @@ class GPTlite(nn.Module):
     self.lm_head = nn.Linear(n_embd, vocab_size, bias=False)
   
 
-  def forward(self, idx, targets=None):
+  def forward(self, idx):
     """ call the model with idx and targets (training) or without targets (generation)"""
 
     #idx and targets are both of shape (B,T)
@@ -129,24 +128,17 @@ class GPTlite(nn.Module):
     x = tok_emb + pos_emb #shape (B,T,C)
     x = self.blocks(x)
     x = self.ln(x)
-    logits = self.lm_head(x) #shape (B,T,V)
-        
-    if targets is None: #when calling generate()
-      loss = None
-    else:
-      B, T, C  = logits.shape
-      logits = logits.view(B*T, C) #shape (B*T,C)
-      targets = targets.view(-1) #shape (B*T)
-      loss = F.cross_entropy(logits, targets)
-    return logits, loss
+    logits = self.lm_head(x) #shape (B,T,C)
+    logits = torch.swapaxes(logits, 1, 2) #shape (B,C,T) to comply with CrossEntropyLoss
+    return logits
 
 
   def generate(self, idx, max_new_tokens):
     """ given a context idx, generate max_new_tokens tokens and append them to idx """
     for _ in range(max_new_tokens):
       idx_cond = idx[:, -block_size:] #we can never have any idx longer than block_size
-      logits, _ = self(idx_cond) #call fwd without targets
-      logits = logits[:, -1, :] # shape (B, C)
+      logits = self(idx_cond) #call fwd without targets
+      logits = logits[:, :, -1] # take last token. shape (B, C)
       #convert logits to probabilities
       probs = F.softmax(logits, dim=-1) # shape (B, C)
       #randomly sample the next tokens, 1 for each of the previous probability distributions

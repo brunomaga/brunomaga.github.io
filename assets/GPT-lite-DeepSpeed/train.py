@@ -48,12 +48,14 @@ def measure_parameters_memory(model, args):
 
     torch.distributed.barrier()
     
-class CrossEntropyLoss_TransposedLogits(torch.nn.Module):
+class CrossEntropyLoss_FlatView(torch.nn.Module):
   def forward(self, logits, labels):
-    # from shape (B,T,C) to (B,C,T)
-    logits = torch.swapaxes(logits,1,2)
+    # from shape (B,T,C) to (B*T,C)
+    B, T, C = logits.shape
+    logits = logits.view(B*T,C)
+    labels = labels.view(-1)
     # fix RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
-    logits = logits.requires_grad_(True) # https://github.com/microsoft/DeepSpeed/issues/4274
+    # logits = logits.requires_grad_(True) # https://github.com/microsoft/DeepSpeed/issues/4274
     return torch.nn.functional.cross_entropy(logits, labels)
 
 def main_deepspeed(n_epochs=100, random_seed=42, model='gptlite'):
@@ -61,7 +63,7 @@ def main_deepspeed(n_epochs=100, random_seed=42, model='gptlite'):
   deepspeed.runtime.utils.set_random_seed(random_seed)
   deepspeed.init_distributed() #initialize distributed network
   args = get_cmd_line_args() # get command line arguments
-  criterion = CrossEntropyLoss_TransposedLogits() #initialize loss function
+  criterion = CrossEntropyLoss_FlatView() #initialize loss function
 
   get_model_kwargs = {
     'criterion': criterion,

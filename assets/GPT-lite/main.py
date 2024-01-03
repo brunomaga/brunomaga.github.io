@@ -91,14 +91,14 @@ def get_batch(source):
   return x.to(device), y.to(device)
 
 #test temporal batches
-xb, yb = get_batch(train_data)
-print("input:\n",xb)
-print("target:\n",yb)
+idx, targets = get_batch(train_data)
+print("input:\n",idx)
+print("target:\n",targets)
 for b in range(batch_size): #for every batches
   print(f"\n=== batch {b}:")
   for t in range(block_size): #for each sequence in block
-    context = xb[b,:t+1]
-    target = yb[b,t]
+    context = idx[b,:t+1]
+    target = targets[b,t]
     print(f"for input {context.tolist()} target is {target.tolist()}")
 
 
@@ -165,8 +165,9 @@ m  = gptlite.GPTlite(vocab_size).to(device)
 # train the model
 optimizer = torch.optim.Adam(m.parameters(), lr=learning_rate)
 for steps in range(max_iters):
-  xb, yb = get_batch(train_data)   #get a batch of training data
-  logits, loss = m(xb, yb)   #forward pass
+  idx, targets = get_batch(train_data)   #get a batch of training data
+  logits = m(idx)   #forward pass
+  loss = F.cross_entropy(logits, targets)
   loss.backward()   #backward pass
   optimizer.step()   #update parameters
   optimizer.zero_grad(set_to_none=True)  #sets to None instead of 0, to save memory
@@ -177,8 +178,9 @@ for steps in range(max_iters):
   @torch.no_grad()
   # eval loop: np backprop on this data, to avoid storing all intermediatte variables
   def eval_loss():
-    xb, yb = get_batch(valid_data)   #get a batch of validation data
-    _, loss = m(xb, yb)
+    idx, targets = get_batch(valid_data)   #get a batch of validation data
+    logits = m(idx)   #forward pass
+    loss = F.cross_entropy(logits, targets)
     print(f"step {steps}, eval loss {loss.item():.2f}")
     return loss
   
