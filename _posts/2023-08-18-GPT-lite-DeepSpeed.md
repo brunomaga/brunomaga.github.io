@@ -215,8 +215,7 @@ def get_cmd_line_args(description='GPT-lite on DeepSpeed'):
   return parser.parse_args()
 ```
 
-Note: the `--local_rank` exists for legacy support, and new versions of DeepSpeed compare it with `os.environ["LOCAL_RANK"]` and use the latter instead. So you can pass `--no_local_rank` to ignore the rank in `--local_rank`. If you launch the run with deepspeed, `--local_rank` is added automatically and can be removed with `sys.argv = [arg for arg in sys.argv if not arg.startswith("--local_rank")]`. 
-
+Note: the `--local_rank` exists for legacy support, and the new versions of DeepSpeed will compare it with `os.environ["LOCAL_RANK"]` and use the latter instead. So you can pass `--no_local_rank` to ignore it `--local_rank` for simplicity. However, if you launch the run with the `deepspeed` launcher, `--local_rank` is added automatically and it can be removed from `sys.arg` before calling `deeopseed.initialize()` (below).
 
 The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straightforward:
 
@@ -617,7 +616,7 @@ Few notes about distributed executions:
 - the batch size should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps or micro-batch size (when applicable). In brief, each process needs at least 1 input sample and:
 
 ```
-train_batch_size = train_micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
+batch_size = micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
 ```
 
 ## Detour: measuring memory allocated to parameters
