@@ -215,6 +215,9 @@ def get_cmd_line_args(description='GPT-lite on DeepSpeed'):
   return parser.parse_args()
 ```
 
+Note: the `--local_rank` exists for legacy support, and new versions of DeepSpeed compare it with `os.environ["LOCAL_RANK"]` and use the latter instead. So you can pass `--no_local_rank` to ignore the rank in `--local_rank`. If you launch the run with deepspeed, `--local_rank` is added automatically and can be removed with `sys.argv = [arg for arg in sys.argv if not arg.startswith("--local_rank")]`. 
+
+
 The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straightforward:
 
 ```python
@@ -596,13 +599,26 @@ The installation of DeepSpeed includes the `deepspeed` launcher, a network boots
 $ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
 ```
 
+Run `deepspeed --help` for a brief summary of the launcher options. With `torchrun`, it can be launched with:
+```shell
+$ torchrun --standalone --nproc_per_node=8 train.py --deepspeed --deepspeed_config ds_config.json --no_local_rank
+```
+
+and on a slurm-cluster execution, with:
+```shell
+slurm-torchrun --torch-script-path="train.py"  \
+  --torch-script-extra-args="--deepspeed --deepspeed_config ds_config.json --no_local_rank"
+```
+
 Few notes about distributed executions:
 - `--num_gpus` is optional: if not provided, it will default to the available GPUs returned by the cuda toolkit;
 - launching with `python` instead of `deepspeed` will perform a single-node single-GPU run;
 - if we were required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor file of nodes and gpus per node;
-- the batch size should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps or micro-batch size (when applicable). In brief, `train_batch_size` must be equal to `train_micro_batch_size_per_gpu` * `gradient_accumulation_steps` * `--num_gpus`. Also, each process needs at least 1 input sample.
+- the batch size should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps or micro-batch size (when applicable). In brief, each process needs at least 1 input sample and:
 
-For more information on available flags, running `deepspeed --help` provides a brief summary of all options.
+```
+train_batch_size = train_micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
+```
 
 ## Detour: measuring memory allocated to parameters
 
