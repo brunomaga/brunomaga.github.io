@@ -1,0 +1,200 @@
+digraph main_graph {
+	graph [bb="0,0,4759.6,595",
+		rankdir=LR
+	];
+	node [label="\N"];
+	"torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 ln1.weight\n \
+input2 ln1.bias\n output0 ln1_1"	[URL="javascript:alert('')",
+		height=1.7776,
+		pos="609.16,319",
+		width=12.895];
+	ln1_10	[height=0.5,
+		label=ln1_1,
+		pos="1217.6,342",
+		shape=octagon,
+		width=0.9592];
+	"torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 ln1.weight\n \
+input2 ln1.bias\n output0 ln1_1" -> ln1_10	[pos="e,1182.6,340.71 1057.3,335.96 1102.8,337.68 1142.7,339.2 1171.1,340.28"];
+	arg00	[height=0.5,
+		label=arg0,
+		pos="54.474,402",
+		shape=octagon,
+		width=0.82071];
+	arg00 -> "torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 ln1.weight\n \
+input2 ln1.bias\n output0 ln1_1"	[pos="e,293.53,366.25 84.411,397.65 124.17,391.68 200.16,380.27 282.18,367.95"];
+	"aten_add_2/aten_add (op#2)\n input0 arg0\n input1 sa_1\n output0 add"	[URL="javascript:alert('')",
+		height=1.4535,
+		pos="2235.4,334",
+		width=3.3489];
+	arg00 -> "aten_add_2/aten_add (op#2)\n input0 arg0\n input1 sa_1\n output0 add"	[pos="e,2127.2,357.57 84.199,402.39 214.72,404.11 765.03,411 1216.6,411 1216.6,411 1216.6,411 1673.2,411 1827.3,411 2002.9,382.17 2116.1,\
+359.79"];
+	"ln1.weight0"	[height=0.5,
+		label="ln1.weight",
+		pos="54.474,329",
+		shape=octagon,
+		width=1.5132];
+	"ln1.weight0" -> "torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 ln1.weight\n \
+input2 ln1.bias\n output0 ln1_1"	[pos="e,148.55,327.32 109.22,328.03 117.79,327.87 127.2,327.7 137.31,327.52"];
+	"ln1.bias0"	[height=0.5,
+		label="ln1.bias",
+		pos="54.474,275",
+		shape=octagon,
+		width=1.2054];
+	"ln1.bias0" -> "torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 ln1.weight\n \
+input2 ln1.bias\n output0 ln1_1"	[pos="e,205.93,286.98 97.925,278.38 122.59,280.34 156.39,283.03 194.94,286.1"];
+	"gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 sa.heads.0.key.weight\n input2 \
+sa.heads.0.query.weight\n input3 sa.heads.0.value.weight\n input4 sa.heads.0.tril\n input5 sa.proj.weight\n input6 sa.proj.bias\n \
+output0 sa_1"	[URL="javascript:alert('')",
+		height=3.074,
+		pos="1672.2,207",
+		width=8.6228];
+	ln1_10 -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 sa.heads.0.key.weight\n input2 \
+sa.heads.0.query.weight\n input3 sa.heads.0.value.weight\n input4 sa.heads.0.tril\n input5 sa.proj.weight\n input6 sa.proj.bias\n \
+output0 sa_1"	[pos="e,1440.9,280.99 1252,334.09 1273.3,328.95 1301.2,321.93 1325.8,315 1359.6,305.46 1395.2,294.92 1430.1,284.29"];
+	sa_10	[height=0.5,
+		label=sa_1,
+		pos="2048.7,311",
+		shape=octagon,
+		width=0.8361];
+	"gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 sa.heads.0.key.weight\n input2 \
+sa.heads.0.query.weight\n input3 sa.heads.0.value.weight\n input4 sa.heads.0.tril\n input5 sa.proj.weight\n input6 sa.proj.bias\n \
+output0 sa_1" -> sa_10	[pos="e,2018.9,302.99 1918.1,274.99 1952.8,284.65 1984.7,293.49 2008.1,299.99"];
+	"sa.heads.0.key.weight0"	[height=0.5,
+		label="sa.heads.0.key.weight",
+		pos="1217.6,234",
+		shape=octagon,
+		width=2.775];
+	"sa.heads.0.key.weight0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 sa.heads.0.key.weight\n input2 \
+sa.heads.0.query.weight\n input3 sa.heads.0.value.weight\n input4 sa.heads.0.tril\n input5 sa.proj.weight\n input6 sa.proj.bias\n \
+output0 sa_1"	[pos="e,1365.7,225.23 1317.9,228.07 1329.5,227.38 1341.7,226.65 1354.4,225.9"];
+	"sa.heads.0.query.weight0"	[height=0.5,
+		label="sa.heads.0.query.weight",
+		pos="1217.6,180",
+		shape=octagon,
+		width=3.0058];
+	"sa.heads.0.query.weight0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 sa.heads.0.key.weight\n input2 \
+sa.heads.0.query.weight\n input3 sa.heads.0.value.weight\n input4 sa.heads.0.tril\n input5 sa.proj.weight\n input6 sa.proj.bias\n \
+output0 sa_1"	[pos="e,1365.6,188.77 1326.1,186.42 1335.2,186.95 1344.5,187.51 1354.2,188.09"];
+	"sa.heads.0.value.weight0"	[height=0.5,
+		label="sa.heads.0.value.weight",
+		pos="1217.6,126",
+		shape=octagon,
+		width=2.9905];
+	"sa.heads.0.value.weight0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 sa.heads.0.key.weight\n input2 \
+sa.heads.0.query.weight\n input3 sa.heads.0.value.weight\n input4 sa.heads.0.tril\n input5 sa.proj.weight\n input6 sa.proj.bias\n \
+output0 sa_1"	[pos="e,1394.3,157.44 1293.1,139.33 1319.1,143.99 1350.1,149.54 1383,155.43"];
+	"sa.heads.0.tril0"	[height=0.5,
+		label="sa.heads.0.tril",
+		pos="1217.6,72",
+		shape=octagon,
+		width=1.8825];
+	"sa.heads.0.tril0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 sa.heads.0.key.weight\n input2 \
+sa.heads.0.query.weight\n input3 sa.heads.0.value.weight\n input4 sa.heads.0.tril\n input5 sa.proj.weight\n input6 sa.proj.bias\n \
+output0 sa_1"	[pos="e,1440.9,133.01 1269.5,84.19 1287.3,88.636 1307.5,93.842 1325.8,99 1359.6,108.54 1395.2,119.08 1430.1,129.71"];
+	"sa.proj.weight0"	[height=0.5,
+		label="sa.proj.weight",
+		pos="1217.6,18",
+		shape=octagon,
+		width=1.9133];
+	"sa.proj.weight0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 sa.heads.0.key.weight\n input2 \
+sa.heads.0.query.weight\n input3 sa.heads.0.value.weight\n input4 sa.heads.0.tril\n input5 sa.proj.weight\n input6 sa.proj.bias\n \
+output0 sa_1"	[pos="e,1494.2,116.04 1272.6,29.47 1289.8,33.688 1308.8,38.938 1325.8,45 1378.2,63.685 1433.4,87.54 1483.9,111.16"];
+	"sa.proj.bias0"	[height=0.5,
+		label="sa.proj.bias",
+		pos="1217.6,288",
+		shape=octagon,
+		width=1.6055];
+	"sa.proj.bias0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 sa.heads.0.key.weight\n input2 \
+sa.heads.0.query.weight\n input3 sa.heads.0.value.weight\n input4 sa.heads.0.tril\n input5 sa.proj.weight\n input6 sa.proj.bias\n \
+output0 sa_1"	[pos="e,1394.2,256.57 1270.5,278.71 1300.2,273.4 1339.9,266.29 1382.9,258.59"];
+	sa_10 -> "aten_add_2/aten_add (op#2)\n input0 arg0\n input1 sa_1\n output0 add"	[pos="e,2119.3,319.66 2079,314.64 2087.5,315.71 2097.4,316.94 2108,318.26"];
+	add0	[height=0.5,
+		label=add,
+		pos="2446.4,334",
+		shape=octagon,
+		width=0.75];
+	"aten_add_2/aten_add (op#2)\n input0 arg0\n input1 sa_1\n output0 add" -> add0	[pos="e,2419.1,334 2356.2,334 2374.9,334 2392.9,334 2407.9,334"];
+	"torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 ln2.weight\n \
+input2 ln2.bias\n output0 ln2_1"	[URL="javascript:alert('')",
+		height=1.7776,
+		pos="3001.1,424",
+		width=12.895];
+	add0 -> "torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 ln2.weight\n \
+input2 ln2.bias\n output0 ln2_1"	[pos="e,2699.4,375.03 2473.7,338.28 2514.9,344.98 2599,358.68 2688.2,373.21"];
+	"aten_add_5/aten_add (op#5)\n input0 add\n input1 ffwd_1\n output0 add_1"	[URL="javascript:alert('')",
+		height=1.4535,
+		pos="4530.7,338",
+		width=3.3489];
+	add0 -> "aten_add_5/aten_add (op#5)\n input0 add\n input1 ffwd_1\n output0 add_1"	[pos="e,4411,330.15 2473.9,333.23 2598.4,329.68 3139.7,315 3583.6,315 3583.6,315 3583.6,315 3981.4,315 4124.6,315 4288.7,322.93 4399.8,\
+329.48"];
+	ln2_10	[height=0.5,
+		label=ln2_1,
+		pos="3584.6,577",
+		shape=octagon,
+		width=0.9592];
+	"torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 ln2.weight\n \
+input2 ln2.bias\n output0 ln2_1" -> ln2_10	[pos="e,3551.3,568.5 3218.7,480.97 3336.8,512.05 3472.4,547.74 3540.3,565.59"];
+	"ln2.weight0"	[height=0.5,
+		label="ln2.weight",
+		pos="2446.4,406",
+		shape=octagon,
+		width=1.5132];
+	"ln2.weight0" -> "torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 ln2.weight\n \
+input2 ln2.bias\n output0 ln2_1"	[pos="e,2548.7,409.3 2501.2,407.75 2512,408.1 2524.1,408.5 2537.4,408.93"];
+	"ln2.bias0"	[height=0.5,
+		label="ln2.bias",
+		pos="2446.4,460",
+		shape=octagon,
+		width=1.2054];
+	"ln2.bias0" -> "torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 ln2.weight\n \
+input2 ln2.bias\n output0 ln2_1"	[pos="e,2580.3,451.34 2489.9,457.23 2510.7,455.88 2538,454.1 2569.2,452.07"];
+	"gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 ffwd.net.0.weight\n input2 ffwd.net.0.bias\n \
+input3 ffwd.net.2.weight\n input4 ffwd.net.2.bias\n output0 ffwd_1"	[URL="javascript:alert('')",
+		height=2.4258,
+		pos="3980.4,449",
+		width=7.68];
+	ln2_10 -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 ffwd.net.0.weight\n input2 ffwd.net.0.bias\n \
+input3 ffwd.net.2.weight\n input4 ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,3786.9,511.58 3615.5,567.27 3650.9,555.78 3713,535.6 3775.9,515.14"];
+	ffwd_10	[height=0.5,
+		label=ffwd_1,
+		pos="4333.5,395",
+		shape=octagon,
+		width=1.1285];
+	"gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 ffwd.net.0.weight\n input2 ffwd.net.0.bias\n \
+input3 ffwd.net.2.weight\n input4 ffwd.net.2.bias\n output0 ffwd_1" -> ffwd_10	[pos="e,4292.5,401.14 4229.5,410.84 4248.6,407.9 4266.3,405.18 4281.5,402.85"];
+	"ffwd.net.0.weight0"	[height=0.5,
+		label="ffwd.net.0.weight",
+		pos="3584.6,523",
+		shape=octagon,
+		width=2.3134];
+	"ffwd.net.0.weight0" -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 ffwd.net.0.weight\n input2 ffwd.net.0.bias\n \
+input3 ffwd.net.2.weight\n input4 ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,3742,493.61 3649.3,511.03 3672.8,506.62 3701,501.32 3730.9,495.7"];
+	"ffwd.net.0.bias0"	[height=0.5,
+		label="ffwd.net.0.bias",
+		pos="3584.6,469",
+		shape=octagon,
+		width=2.0056];
+	"ffwd.net.0.bias0" -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 ffwd.net.0.weight\n input2 ffwd.net.0.bias\n \
+input3 ffwd.net.2.weight\n input4 ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,3706.9,462.84 3656.9,465.38 3668.9,464.77 3682,464.11 3695.7,463.41"];
+	"ffwd.net.2.weight0"	[height=0.5,
+		label="ffwd.net.2.weight",
+		pos="3584.6,415",
+		shape=octagon,
+		width=2.3134];
+	"ffwd.net.2.weight0" -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 ffwd.net.0.weight\n input2 ffwd.net.0.bias\n \
+input3 ffwd.net.2.weight\n input4 ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,3713.2,426.01 3668.2,422.13 3678.8,423.04 3690,424.02 3701.8,425.03"];
+	"ffwd.net.2.bias0"	[height=0.5,
+		label="ffwd.net.2.bias",
+		pos="3584.6,361",
+		shape=octagon,
+		width=2.0056];
+	"ffwd.net.2.bias0" -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 ffwd.net.0.weight\n input2 ffwd.net.0.bias\n \
+input3 ffwd.net.2.weight\n input4 ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,3753.8,398.59 3640,373.14 3668,379.41 3704.4,387.55 3742.9,396.15"];
+	ffwd_10 -> "aten_add_5/aten_add (op#5)\n input0 add\n input1 ffwd_1\n output0 add_1"	[pos="e,4429.8,367.17 4368.9,384.94 4383.2,380.77 4400.7,375.67 4418.8,370.38"];
+	add_10	[height=0.5,
+		label=add_1,
+		pos="4723.4,338",
+		shape=octagon,
+		width=1.0054];
+	"aten_add_5/aten_add (op#5)\n input0 add\n input1 ffwd_1\n output0 add_1" -> add_10	[pos="e,4686.9,338 4651.7,338 4660,338 4668.1,338 4675.6,338"];
+}
