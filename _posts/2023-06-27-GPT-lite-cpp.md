@@ -35,7 +35,7 @@ Kernel fusion is complex, so there are two settings worth the mention. The optio
 - `reduce-overhead` reduces the overhead of python with [CUDA graphs](https://pytorch.org/blog/accelerating-pytorch-with-cuda-graphs/), it is faster than the previous model but uses some extra memory. It helps speed up small models. CUDA graphs allows an execution graph of kernels to be defined beforehand and launched only once from CPU, instead of having kernels launched individually;
 - `max-autotune` leverages Triton based matrix multiplications and convolutions It enables CUDA graphs by default. It produces the fastest model, but takes a very long time to compile. `max-autotune-no-cudagraphs` is analogous, but without the CUDA graphs.
 
-The flag `fullgraph` specifies whether the compilation outputs a single graph for the whole run, or it can be broken into several partial graphs (that can be reutilized across the main graph), and is only relevant for users that need to squeeze the very best performance. These two settings are specified by, and defaulted to `torch.compile(model, mode='default', fullgraph=False)`.
+The flag `fullgraph` specifies whether the compilation outputs a single graph for the whole run, or it can be broken into several partial graphs (that can be reutilized across the main graph), and is only relevant for users that need to squeeze the very best performance. This is in practice *similar* to the `inline` logic in the C programming language. These two settings are specified by, and defaulted to `torch.compile(model, mode='default', fullgraph=False)`.
 
 ## About this post
 

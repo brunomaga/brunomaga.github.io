@@ -16,7 +16,7 @@ In this we will look at the inference problem. We will look at
 
 # ONNX: Open Neural Network eXchange
 
-[ONNX (Open Neural Network eXchange)](https://onnx.ai/) is an open format built to represent machine learning models, that is [independent of the framework](https://onnx.ai/onnx/intro/converters.html) used to create the model (PyTorch, Tensorflow, Scikit, etc). The `onnx` data format can then by ran through the onnx runtime, or processed by other tools for further optimisation.  
+[ONNX (Open Neural Network eXchange)](https://onnx.ai/) is an open format built to represent machine learning models, that is [independent of the framework](https://onnx.ai/onnx/intro/converters.html) used to create the model (PyTorch, Tensorflow, Scikit, etc). The `onnx` data format can then by ran through the [onnx runtime](https://onnxruntime.ai/), or processed by other tools for further optimisation.  
 
 [ONNX via torch dynamo](https://cloudblogs.microsoft.com/opensource/2019/05/22/onnx-runtime-machine-learning-inferencing-0-4-release/) includes many beta features that are continuously being improved. Here we'll us torch 2.1.2. First install `onnx`, the `onnx runtime`, and `pydot` packages:
 
@@ -26,19 +26,58 @@ pip install onnx onnxruntime onnxscript pydot
 
 We will focus on our previous `GPTlite` model. Because it is a long sequence of embeddings, several blocks and objective function, we will focus on the main section: The multi-head attention block.
 
-We start by getting our model:
+We start by getting our model. For simplicity we want only 2 attention heads:
 
+```python
+import os
+import sys
+import torch
+
+current_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
+from gptlite import GPTlite, Block, block_size, n_embd, n_head
+n_head=2
+
+B, T, C = 2, block_size, n_embd
+embd = torch.ones((B, T, C)).to(device)
+model = Block(n_embd, n_head).to(device)
+```
 
 We then export our `torch.nn.Module` to a `onnx` file that contains the graph (inspired by the tutorials  [here](https://pytorch.org/tutorials/beginner/onnx/export_simple_model_to_onnx_tutorial.html) and [here](https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html)).
 We will export the model using two distinct methods, also [detailed here](https://pytorch.org/docs/stable/onnx.html#overview):
 - A Torch.script based converter, the stable ONNX converter, that creates the ONNX graph using TorchScript's [`trace` or `script` modes](https://glaringlee.github.io/onnx.html#tracing-vs-scripting). The graphic captured with `trace` is static (relates only to the input passed), therefore it does not capture control-flow statements like `ifs` or loops or dynamic type inputs. In `script`, despity capturing most logic, because "TorchScript itself is a subset of the Python language, so not all features in Python are supported, such as in-place operations."
-- TorchDynamo-based ONNX Exporter, the newest/beta exporter for `torch>=2.0`, that uses a feature called [Python frame evaluation](https://peps.python.org/pep-0523/) to get the bytecode into the [FX graph](https://pytorch.org/docs/stable/fx.html), to collect the ONNX graph, and contrarily to the previous, captures dynamic graphs.
+   ```python
+  def export_torch_jit_onnx(model, name, mode='eval'):
+      torch.onnx.export(
+        model.eval() if mode=='eval' else model.train(), # model being run
+        embd,                      # model input
+        f"{name}.onnx",            # where to save the model
+        input_names = ['input'],   # the model's input names
+        output_names = ['output'], # the model's output names
+        dynamic_axes={'input' : {0 : 'batch_size'}, 'output' : {0 : 'batch_size'}})
 
-Note: if we set the model to evaluation mode (`model.eval()`) the graphs will differ, because evaluation disables dropout, batchnorm layers will use their running stats to normalize the data, etc. So the train graphs are usually bigger. Also, trace graphs are smaller than script graphs because the graph is generated for a single input size and type, therefore operations such as cast are removed.  
+  export_torch_jit_onnx(model, "model")
+  export_torch_jit_onnx(torch.jit.trace(model, embd), "model_jit_trace") #same as above
+  export_torch_jit_onnx(torch.jit.script(model), "model_jit_script")
+   ```
+  - the models generated for the train step can be vizualised in [model_jit_trace_train.onnx.png](model_jit_trace_train.onnx.png) and [model_jit_script_train.onnx.png](model_jit_script_train.onnx.png). The evaluation models are fond in [model_jit_trace_train.onnx.png](model_jit_trace_train.onnx.png) and [model_jit_script_eval.onnx.png](model_jit_script_eval.onnx.png)
+- [TorchDynamo](https://pytorch.org/docs/stable/torch.compiler_deepdive.html)-based ONNX Exporter, the newest/beta exporter for `torch>=2.0`, that uses a feature called [Python frame evaluation](https://peps.python.org/pep-0523/) to convert a bytecode analysis into the [FX graph](https://pytorch.org/docs/stable/fx.html), that is then polished and translated into the ONNX graph, and contrarily to the previous, captures dynamic graphs;
+  - in this [great discussion](https://dev-discuss.pytorch.org/t/the-nuances-of-pytorch-graph-capture/501/9) detailing the differences between different export methods, the *de facto* method for graph capturing is converging towards TorchDynamo.
+  - Torch.FX includes a symbolic tracer that works the same as the `trace` mode above, but by feeding fake values to the trace operation (or optionally allowing user defined values, making it equivalent to the `torch.jit.trace`).
+   ```python
+  def export_dynamo_onnx(model, name, mode='eval'):
+    export_output = torch.onnx.dynamo_export(
+       model.eval() if mode=='eval' else model.train(), embd)
+    export_output.save(f"{name}.onnx")   
 
-To visualise the intermediate graphs, we will use the [plot_pipeline](https://onnxruntime.ai/docs/api/python/auto_examples/plot_pipeline.html) tools to export the model to the graphviz [`.dot` format](https://graphviz.org/doc/info/lang.html) and then convert it a `png` image by:
-- installing graphviz (`brew install graphviz`) and running `dot -Tpng input.dot > output.png` to generate the `png` image of the graph.
-- using the `Netron` app to vizualise the generated `onnx` files. 
+  export_dynamo_onnx(model, "model_dynamo")
+  export_dynamo_onnx(torch.compile(model), "model_compile_dynamo") #same as above, compile calls Dynamo
+   ```
+  - the models generated for the train and evalution steps can be vizualised in [model_dynamo_train.onnx.png](model_dynamo_train.onnx.png) and [model_dynamo_eval.onnx.png](model_dynamo_eval.onnx.png), respectively.
+
+To visualise the intermediate graphs, we can will run the code in [onnx_to_png.py](onnx_to_png.py) to generate a graphviz [`.dot` format](https://graphviz.org/doc/info/lang.html) and then convert it a `png` image, or simply use the [Netron app](https://netron.app/) to load a `onnx` file and then to vizualise/export the model.
+
+Few points worth mentioning when we look at the graphs. If we set the model to evaluation mode (`model.eval()`) the graphs will differ, because evaluation disables dropout, batchnorm layers will use their running stats to normalize the data, etc. So the train graphs are usually bigger. Also, trace graphs are smaller than script graphs because the graph is generated for a single input size and type, therefore operations such as cast are removed. Finally, the graphs generated with dynamo look smaller, but in practice, it's a multi-layer graph where each node represents a sub-graph of all operations inside each module - if you're using the Neutron app, [click the "f" symbol on the top-right corner](https://pytorch.org/docs/stable/onnx_dynamo.html#inspecting-the-onnx-model-using-gui) of each module to navigate the corresponding sub-graph.
 
 # torch compiler
 
