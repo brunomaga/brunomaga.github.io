@@ -1,0 +1,200 @@
+digraph main_graph {
+	graph [bb="0,0,5136.3,595",
+		rankdir=LR
+	];
+	node [label="\N"];
+	"torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 _orig_\
+mod.ln1.weight\n input2 _orig_mod.ln1.bias\n output0 ln1_1"	[URL="javascript:alert('')",
+		height=1.7776,
+		pos="703.34,319",
+		width=12.895];
+	ln1_10	[height=0.5,
+		label=ln1_1,
+		pos="1358.9,342",
+		shape=octagon,
+		width=0.9592];
+	"torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 _orig_\
+mod.ln1.weight\n input2 _orig_mod.ln1.bias\n output0 ln1_1" -> ln1_10	[pos="e,1323.9,340.81 1153.8,334.82 1218.2,337.09 1275.3,339.09 1312.5,340.4"];
+	arg00	[height=0.5,
+		label=arg0,
+		pos="101.56,402",
+		shape=octagon,
+		width=0.82071];
+	arg00 -> "torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 _orig_\
+mod.ln1.weight\n input2 _orig_mod.ln1.bias\n output0 ln1_1"	[pos="e,373.85,364.46 131.49,398 176.1,391.82 266.64,379.29 362.72,366"];
+	"aten_add_2/aten_add (op#2)\n input0 arg0\n input1 sa_1\n output0 add"	[URL="javascript:alert('')",
+		height=1.4535,
+		pos="2423.8,334",
+		width=3.3489];
+	arg00 -> "aten_add_2/aten_add (op#2)\n input0 arg0\n input1 sa_1\n output0 add"	[pos="e,2315.5,357.57 131.3,402.36 268.08,404.03 866.95,411 1357.9,411 1357.9,411 1357.9,411 1861.6,411 2015.6,411 2191.3,382.17 2304.4,\
+359.79"];
+	"_orig_mod.ln1.weight0"	[height=0.5,
+		label="_orig_mod.ln1.weight",
+		pos="101.56,329",
+		shape=octagon,
+		width=2.8212];
+	"_orig_mod.ln1.weight0" -> "torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 _orig_\
+mod.ln1.weight\n input2 _orig_mod.ln1.bias\n output0 ln1_1"	[pos="e,242.05,326.67 203.29,327.32 212.04,327.17 221.21,327.02 230.72,326.86"];
+	"_orig_mod.ln1.bias0"	[height=0.5,
+		label="_orig_mod.ln1.bias",
+		pos="101.56,275",
+		shape=octagon,
+		width=2.5134];
+	"_orig_mod.ln1.bias0" -> "torch_nn_modules_normalization_LayerNorm_ln1_1_0/torch_nn_modules_normalization_LayerNorm_ln1_1 (op#0)\n input0 arg0\n input1 _orig_\
+mod.ln1.weight\n input2 _orig_mod.ln1.bias\n output0 ln1_1"	[pos="e,292.47,288.93 192.36,281.59 218.41,283.5 248.72,285.72 281.33,288.11"];
+	"gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 _orig_mod.sa.heads.0.key.weight\n \
+input2 _orig_mod.sa.heads.0.query.weight\n input3 _orig_mod.sa.heads.0.value.weight\n input4 _orig_mod.sa.heads.0.tril\n input5 _\
+orig_mod.sa.proj.weight\n input6 _orig_mod.sa.proj.bias\n output0 sa_1"	[URL="javascript:alert('')",
+		height=3.074,
+		pos="1860.6,207",
+		width=8.6228];
+	ln1_10 -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 _orig_mod.sa.heads.0.key.weight\n \
+input2 _orig_mod.sa.heads.0.query.weight\n input3 _orig_mod.sa.heads.0.value.weight\n input4 _orig_mod.sa.heads.0.tril\n input5 _\
+orig_mod.sa.proj.weight\n input6 _orig_mod.sa.proj.bias\n output0 sa_1"	[pos="e,1632.7,282.54 1393.8,337.35 1425.3,332.74 1473.2,324.94 1514.2,315 1549.3,306.47 1586.1,296.31 1622.1,285.69"];
+	sa_10	[height=0.5,
+		label=sa_1,
+		pos="2237.1,311",
+		shape=octagon,
+		width=0.8361];
+	"gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 _orig_mod.sa.heads.0.key.weight\n \
+input2 _orig_mod.sa.heads.0.query.weight\n input3 _orig_mod.sa.heads.0.value.weight\n input4 _orig_mod.sa.heads.0.tril\n input5 _\
+orig_mod.sa.proj.weight\n input6 _orig_mod.sa.proj.bias\n output0 sa_1" -> sa_10	[pos="e,2207.3,302.99 2106.4,274.99 2141.2,284.65 2173,293.49 2196.5,299.99"];
+	"_orig_mod.sa.heads.0.key.weight0"	[height=0.5,
+		label="_orig_mod.sa.heads.0.key.weight",
+		pos="1358.9,234",
+		shape=octagon,
+		width=4.083];
+	"_orig_mod.sa.heads.0.key.weight0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 _orig_mod.sa.heads.0.key.weight\n \
+input2 _orig_mod.sa.heads.0.query.weight\n input3 _orig_mod.sa.heads.0.value.weight\n input4 _orig_mod.sa.heads.0.tril\n input5 _\
+orig_mod.sa.proj.weight\n input6 _orig_mod.sa.proj.bias\n output0 sa_1"	[pos="e,1553.5,223.54 1506.1,226.1 1517.8,225.47 1529.8,224.82 1542.1,224.15"];
+	"_orig_mod.sa.heads.0.query.weight0"	[height=0.5,
+		label="_orig_mod.sa.heads.0.query.weight",
+		pos="1358.9,180",
+		shape=octagon,
+		width=4.3138];
+	"_orig_mod.sa.heads.0.query.weight0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 _orig_mod.sa.heads.0.key.weight\n \
+input2 _orig_mod.sa.heads.0.query.weight\n input3 _orig_mod.sa.heads.0.value.weight\n input4 _orig_mod.sa.heads.0.tril\n input5 _\
+orig_mod.sa.proj.weight\n input6 _orig_mod.sa.proj.bias\n output0 sa_1"	[pos="e,1553.5,190.46 1511.8,188.21 1521.7,188.75 1531.9,189.3 1542.2,189.85"];
+	"_orig_mod.sa.heads.0.value.weight0"	[height=0.5,
+		label="_orig_mod.sa.heads.0.value.weight",
+		pos="1358.9,126",
+		shape=octagon,
+		width=4.2985];
+	"_orig_mod.sa.heads.0.value.weight0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 _orig_mod.sa.heads.0.key.weight\n \
+input2 _orig_mod.sa.heads.0.query.weight\n input3 _orig_mod.sa.heads.0.value.weight\n input4 _orig_mod.sa.heads.0.tril\n input5 _\
+orig_mod.sa.proj.weight\n input6 _orig_mod.sa.proj.bias\n output0 sa_1"	[pos="e,1577.5,161.28 1452.7,141.05 1485.8,146.42 1525.2,152.8 1566.2,159.44"];
+	"_orig_mod.sa.heads.0.tril0"	[height=0.5,
+		label="_orig_mod.sa.heads.0.tril",
+		pos="1358.9,72",
+		shape=octagon,
+		width=3.1905];
+	"_orig_mod.sa.heads.0.tril0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 _orig_mod.sa.heads.0.key.weight\n \
+input2 _orig_mod.sa.heads.0.query.weight\n input3 _orig_mod.sa.heads.0.value.weight\n input4 _orig_mod.sa.heads.0.tril\n input5 _\
+orig_mod.sa.proj.weight\n input6 _orig_mod.sa.proj.bias\n output0 sa_1"	[pos="e,1632.7,131.46 1443.5,84.608 1466.6,88.626 1491.4,93.483 1514.2,99 1549.3,107.53 1586.1,117.69 1622.1,128.31"];
+	"_orig_mod.sa.proj.weight0"	[height=0.5,
+		label="_orig_mod.sa.proj.weight",
+		pos="1358.9,18",
+		shape=octagon,
+		width=3.2213];
+	"_orig_mod.sa.proj.weight0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 _orig_mod.sa.heads.0.key.weight\n \
+input2 _orig_mod.sa.heads.0.query.weight\n input3 _orig_mod.sa.heads.0.value.weight\n input4 _orig_mod.sa.heads.0.tril\n input5 _\
+orig_mod.sa.proj.weight\n input6 _orig_mod.sa.proj.bias\n output0 sa_1"	[pos="e,1686.6,114.9 1450.2,29.669 1471.4,33.546 1493.8,38.571 1514.2,45 1568.3,62.11 1625,85.943 1676.4,110.07"];
+	"_orig_mod.sa.proj.bias0"	[height=0.5,
+		label="_orig_mod.sa.proj.bias",
+		pos="1358.9,288",
+		shape=octagon,
+		width=2.9135];
+	"_orig_mod.sa.proj.bias0" -> "gptlite_MultiHeadAttention_sa_1_1/gptlite_MultiHeadAttention_sa_1 (op#1)\n input0 ln1_1\n input1 _orig_mod.sa.heads.0.key.weight\n \
+input2 _orig_mod.sa.heads.0.query.weight\n input3 _orig_mod.sa.heads.0.value.weight\n input4 _orig_mod.sa.heads.0.tril\n input5 _\
+orig_mod.sa.proj.weight\n input6 _orig_mod.sa.proj.bias\n output0 sa_1"	[pos="e,1577.3,252.76 1437.1,275.48 1473.1,269.64 1518.5,262.28 1566.1,254.57"];
+	sa_10 -> "aten_add_2/aten_add (op#2)\n input0 arg0\n input1 sa_1\n output0 add"	[pos="e,2307.7,319.66 2267.4,314.64 2275.9,315.71 2285.8,316.94 2296.4,318.26"];
+	add0	[height=0.5,
+		label=add,
+		pos="2681.9,334",
+		shape=octagon,
+		width=0.75];
+	"aten_add_2/aten_add (op#2)\n input0 arg0\n input1 sa_1\n output0 add" -> add0	[pos="e,2654.8,334 2544.6,334 2580.5,334 2617.2,334 2643.5,334"];
+	"torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 _orig_\
+mod.ln2.weight\n input2 _orig_mod.ln2.bias\n output0 ln2_1"	[URL="javascript:alert('')",
+		height=1.7776,
+		pos="3283.7,424",
+		width=12.895];
+	add0 -> "torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 _orig_\
+mod.ln2.weight\n input2 _orig_mod.ln2.bias\n output0 ln2_1"	[pos="e,2967.6,376.73 2709,337.93 2754.6,344.76 2853.4,359.58 2956.4,375.04"];
+	"aten_add_5/aten_add (op#5)\n input0 add\n input1 ffwd_1\n output0 add_1"	[URL="javascript:alert('')",
+		height=1.4535,
+		pos="4907.4,338",
+		width=3.3489];
+	add0 -> "aten_add_5/aten_add (op#5)\n input0 add\n input1 ffwd_1\n output0 add_1"	[pos="e,4787.7,330.15 2709.3,333.29 2839.9,329.84 3429.9,315 3913.2,315 3913.2,315 3913.2,315 4358.1,315 4501.3,315 4665.4,322.93 4776.5,\
+329.48"];
+	ln2_10	[height=0.5,
+		label=ln2_1,
+		pos="3914.2,577",
+		shape=octagon,
+		width=0.9592];
+	"torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 _orig_\
+mod.ln2.weight\n input2 _orig_mod.ln2.bias\n output0 ln2_1" -> ln2_10	[pos="e,3879.4,570.33 3502,480.93 3589.4,503.28 3691.2,528.65 3783.9,550 3811.9,556.46 3843.5,563.06 3868.4,568.12"];
+	"_orig_mod.ln2.weight0"	[height=0.5,
+		label="_orig_mod.ln2.weight",
+		pos="2681.9,406",
+		shape=octagon,
+		width=2.8212];
+	"_orig_mod.ln2.weight0" -> "torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 _orig_\
+mod.ln2.weight\n input2 _orig_mod.ln2.bias\n output0 ln2_1"	[pos="e,2829.4,410.4 2783.6,409.02 2794.5,409.35 2806.1,409.7 2818.2,410.06"];
+	"_orig_mod.ln2.bias0"	[height=0.5,
+		label="_orig_mod.ln2.bias",
+		pos="2681.9,460",
+		shape=octagon,
+		width=2.5134];
+	"_orig_mod.ln2.bias0" -> "torch_nn_modules_normalization_LayerNorm_ln2_1_3/torch_nn_modules_normalization_LayerNorm_ln2_1 (op#3)\n input0 add\n input1 _orig_\
+mod.ln2.weight\n input2 _orig_mod.ln2.bias\n output0 ln2_1"	[pos="e,2857.1,449.54 2772.7,454.61 2794.4,453.31 2819.1,451.82 2845.6,450.23"];
+	"gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 _orig_mod.ffwd.net.0.weight\n input2 _orig_\
+mod.ffwd.net.0.bias\n input3 _orig_mod.ffwd.net.2.weight\n input4 _orig_mod.ffwd.net.2.bias\n output0 ffwd_1"	[URL="javascript:alert('')",
+		height=2.4258,
+		pos="4357.1,449",
+		width=7.68];
+	ln2_10 -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 _orig_mod.ffwd.net.0.weight\n input2 _orig_\
+mod.ffwd.net.0.bias\n input3 _orig_mod.ffwd.net.2.weight\n input4 _orig_mod.ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,4168.9,513.32 3949.3,570.94 3975.5,566.02 4012.6,558.51 4044.6,550 4081.6,540.16 4120.8,528.5 4158.3,516.66"];
+	ffwd_10	[height=0.5,
+		label=ffwd_1,
+		pos="4710.2,395",
+		shape=octagon,
+		width=1.1285];
+	"gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 _orig_mod.ffwd.net.0.weight\n input2 _orig_\
+mod.ffwd.net.0.bias\n input3 _orig_mod.ffwd.net.2.weight\n input4 _orig_mod.ffwd.net.2.bias\n output0 ffwd_1" -> ffwd_10	[pos="e,4669.2,401.14 4606.2,410.84 4625.3,407.9 4643,405.18 4658.2,402.85"];
+	"_orig_mod.ffwd.net.0.weight0"	[height=0.5,
+		label="_orig_mod.ffwd.net.0.weight",
+		pos="3914.2,523",
+		shape=octagon,
+		width=3.6214];
+	"_orig_mod.ffwd.net.0.weight0" -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 _orig_mod.ffwd.net.0.weight\n input2 _orig_\
+mod.ffwd.net.0.bias\n input3 _orig_mod.ffwd.net.2.weight\n input4 _orig_mod.ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,4112.4,489.9 3999.5,508.86 4029.4,503.84 4064.8,497.9 4101.5,491.74"];
+	"_orig_mod.ffwd.net.0.bias0"	[height=0.5,
+		label="_orig_mod.ffwd.net.0.bias",
+		pos="3914.2,469",
+		shape=octagon,
+		width=3.3136];
+	"_orig_mod.ffwd.net.0.bias0" -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 _orig_mod.ffwd.net.0.weight\n input2 _orig_\
+mod.ffwd.net.0.bias\n input3 _orig_mod.ffwd.net.2.weight\n input4 _orig_mod.ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,4083.2,461.38 4034,463.61 4046.1,463.06 4058.7,462.49 4071.7,461.9"];
+	"_orig_mod.ffwd.net.2.weight0"	[height=0.5,
+		label="_orig_mod.ffwd.net.2.weight",
+		pos="3914.2,415",
+		shape=octagon,
+		width=3.6214];
+	"_orig_mod.ffwd.net.2.weight0" -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 _orig_mod.ffwd.net.0.weight\n input2 _orig_\
+mod.ffwd.net.0.bias\n input3 _orig_mod.ffwd.net.2.weight\n input4 _orig_mod.ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,4088.1,428.33 4035.1,424.25 4048.5,425.28 4062.6,426.36 4077,427.47"];
+	"_orig_mod.ffwd.net.2.bias0"	[height=0.5,
+		label="_orig_mod.ffwd.net.2.bias",
+		pos="3914.2,361",
+		shape=octagon,
+		width=3.3136];
+	"_orig_mod.ffwd.net.2.bias0" -> "gptlite_FeedForward_ffwd_1_4/gptlite_FeedForward_ffwd_1 (op#4)\n input0 ln2_1\n input1 _orig_mod.ffwd.net.0.weight\n input2 _orig_\
+mod.ffwd.net.0.bias\n input3 _orig_mod.ffwd.net.2.weight\n input4 _orig_mod.ffwd.net.2.bias\n output0 ffwd_1"	[pos="e,4122.6,402.4 3988.5,375.63 4023.1,382.54 4066.7,391.22 4111.5,400.18"];
+	ffwd_10 -> "aten_add_5/aten_add (op#5)\n input0 add\n input1 ffwd_1\n output0 add_1"	[pos="e,4806.5,367.17 4745.6,384.94 4759.9,380.77 4777.4,375.67 4795.5,370.38"];
+	add_10	[height=0.5,
+		label=add_1,
+		pos="5100.1,338",
+		shape=octagon,
+		width=1.0054];
+	"aten_add_5/aten_add (op#5)\n input0 add\n input1 ffwd_1\n output0 add_1" -> add_10	[pos="e,5063.6,338 5028.4,338 5036.7,338 5044.8,338 5052.3,338"];
+}
