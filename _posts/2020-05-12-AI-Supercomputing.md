@@ -211,7 +211,7 @@ As as important note: there are several alternative ways to store and distribute
 
 To reduce the effects of the previous communication overhead, [Megraton-LM](https://arxiv.org/abs/1909.08053) uses a very simple technique to reduce the ammount of communication. On an MLP block, take the output of each block as $$Y = GeLU(XA)$$:
 - the typical approach is to split the weight matrix $$A$$ along its rows and the input matrix $$X$$ along its columns as (for 2 processors $$1$$ and $$2$$): $$X=[X_1, X_2]$$ and $$A=[A_1, A_2]^T$$. This partitioning will result in $$Y = GeLU(X_1A_1 + X_2A_2)$$. Since $$GeLU$$ is a nonlinear function, $$GeLU(X_1A_1+ X_2A_2) \neq GeLU(X_1A_1) + GeLU(X_2A_2)$$ and this approach will require a synchronization point (to sum both partial sums of products) before the $$GeLU$$ function.
-- the proposed option is to split $$A$$ along its columns, i.e. it's a feature- (not row-) wise partitioning. This allows the $$GeLU$$ nonlinearity to be independently applied to the output of each partitioned GEMM: $$[Y1, Y2] = [GeLU(XA1), GeLU(XA2)]$$. This removes the synchronization point.
+- the proposed option is to split $$A$$ along its columns, i.e. it's a feature- (not row-) wise partitioning. This allows the $$GeLU$$ nonlinearity to be independently applied to the output of each partitioned GEMM: $$[Y_1, Y_2] = [GeLU(XA_1), GeLU(XA_2)]$$. This removes the synchronization point.
 
 Transformer models follow an analogous approach. For more details, see section *3. Model Parallel Transformers* of the [Megraton-LM paper](https://arxiv.org/abs/1909.08053) for the diagram on Multi-Layer Perceptron and Self-Attention modules. 
 
