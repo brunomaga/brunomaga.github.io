@@ -500,6 +500,8 @@ memory redundancy, and its main goal is to offload all of the partitioned model 
 NVMe memory, or keep them on the GPU based on the memory
 requirements. Offloading techniques for different data types are detailed in section 5.
 
+It also introduces a memory-centric tiling for working memory (5.1.3) that breaks a large operator into a sequence of small operators, executed sequentially.
+
 <br/>
 # 2021 [GSPMD: General and Scalable Parallelization for ML Computation Graphs, Google](https://arxiv.org/pdf/2105.04663.pdf)
 
