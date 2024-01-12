@@ -1,128 +1,25 @@
 ---
 layout: post
-title:  "Efficient inference of a GPT model with knowledge distillation, pruning, quantization, Mixture of Experts, dynamic batching, and flash attention"
-categories: [machine learning, Transformer, GPT, DeepSpeed, pruning, distillation, quantization, mixture-of-experts]
+title:  "GPT model compression and acceleration via kernel fusion, distillation, pruning, quantization, flash attention and KV cache"
+categories: [machine learning, Transformer, GPT, pruning, distillation, quantization, pruning]
 tags: [machinelearning]
 ---
 
-In this we will look at the inference problem. We will look at 
-- how to improve accuracy via distillation,
-- how to fine-tune very large models using LoRA,
-- how to use KD to perform layer and parameter prunning, 
-- how to improve accuracy via mixture of experts
-- how to perform model compression via `torch.compile` and TensorRT
-- how to perform efficient GPt attention with FlashAttention and KV cache
-- how to perform backend graph optimization via TensorRT and torch.compile
-
-# ONNX: Open Neural Network eXchange
-
-[ONNX (Open Neural Network eXchange)](https://onnx.ai/) is an open format built to represent machine learning models, that is [independent of the framework](https://onnx.ai/onnx/intro/converters.html) used to create the model (PyTorch, Tensorflow, Scikit, etc). The `onnx` data format can then by ran through the [onnx runtime](https://onnxruntime.ai/), or processed by other tools for further optimisation.  
-
-[ONNX via torch dynamo](https://cloudblogs.microsoft.com/opensource/2019/05/22/onnx-runtime-machine-learning-inferencing-0-4-release/) includes many beta features that are continuously being improved. Here we'll us torch 2.1.2. First install `onnx`, the `onnx runtime`, and `pydot` packages:
-
-```
-pip install onnx onnxruntime onnxscript pydot
-```
-
-We will focus on our previous `GPTlite` model. Because it is a long sequence of embeddings, several blocks and objective function, we will focus on the main section: The multi-head attention block.
-
-We start by getting our model. For simplicity we want only 2 attention heads:
-
-```python
-import os
-import sys
-import torch
-
-current_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
-from gptlite import GPTlite, Block, block_size, n_embd, n_head
-n_head=2
-
-B, T, C = 2, block_size, n_embd
-embd = torch.ones((B, T, C)).to(device)
-model = Block(n_embd, n_head).to(device)
-```
-
-We then export our `torch.nn.Module` to a `onnx` file that contains the graph (inspired by the tutorials  [here](https://pytorch.org/tutorials/beginner/onnx/export_simple_model_to_onnx_tutorial.html) and [here](https://pytorch.org/tutorials/advanced/super_resolution_with_onnxruntime.html)).
-We will export the model using two distinct methods, also [detailed here](https://pytorch.org/docs/stable/onnx.html#overview):
-- A Torch.script based converter, the stable ONNX converter, that creates the ONNX graph using TorchScript's [`trace` or `script` modes](https://glaringlee.github.io/onnx.html#tracing-vs-scripting). The graphic captured with `trace` is static (relates only to the input passed), therefore it does not capture control-flow statements like `ifs` or loops or dynamic type inputs. In `script`, despity capturing most logic, because "TorchScript itself is a subset of the Python language, so not all features in Python are supported, such as in-place operations."
-   ```python
-  def export_torch_jit_onnx(model, name, mode='eval'):
-      torch.onnx.export(
-        model.eval() if mode=='eval' else model.train(), # model being run
-        embd,                      # model input
-        f"{name}.onnx",            # where to save the model
-        input_names = ['input'],   # the model's input names
-        output_names = ['output'], # the model's output names
-        dynamic_axes={'input' : {0 : 'batch_size'}, 'output' : {0 : 'batch_size'}})
-
-  export_torch_jit_onnx(model, "model")
-  export_torch_jit_onnx(torch.jit.trace(model, embd), "model_jit_trace") #same as above
-  export_torch_jit_onnx(torch.jit.script(model), "model_jit_script")
-   ```
-  - the models generated for the train step can be vizualised in [model_jit_trace_train.onnx.png](model_jit_trace_train.onnx.png) and [model_jit_script_train.onnx.png](model_jit_script_train.onnx.png). The evaluation models are fond in [model_jit_trace_train.onnx.png](model_jit_trace_train.onnx.png) and [model_jit_script_eval.onnx.png](model_jit_script_eval.onnx.png)
-- [TorchDynamo](https://pytorch.org/docs/stable/torch.compiler_deepdive.html)-based ONNX Exporter, the newest/beta exporter for `torch>=2.0`, that uses a feature called [Python frame evaluation](https://peps.python.org/pep-0523/) to convert a bytecode analysis into the [FX graph](https://pytorch.org/docs/stable/fx.html), that is then polished and translated into the ONNX graph, and contrarily to the previous, captures dynamic graphs;
-  - in this [great discussion](https://dev-discuss.pytorch.org/t/the-nuances-of-pytorch-graph-capture/501/9) detailing the differences between different export methods, the *de facto* method for graph capturing is converging towards TorchDynamo.
-  - Torch.FX includes a symbolic tracer that works the same as the `trace` mode above, but by feeding fake values to the trace operation (or optionally allowing user defined values, making it equivalent to the `torch.jit.trace`).
-   ```python
-  def export_dynamo_onnx(model, name, mode='eval'):
-    export_output = torch.onnx.dynamo_export(
-       model.eval() if mode=='eval' else model.train(), embd)
-    export_output.save(f"{name}.onnx")   
-
-  export_dynamo_onnx(model, "model_dynamo")
-  export_dynamo_onnx(torch.compile(model), "model_compile_dynamo") #same as above, compile calls Dynamo
-   ```
-  - the models generated for the train and evalution steps can be vizualised in [model_dynamo_train.onnx.png](model_dynamo_train.onnx.png) and [model_dynamo_eval.onnx.png](model_dynamo_eval.onnx.png), respectively.
-
-To visualise the intermediate graphs, we can will run the code in [onnx_to_png.py](onnx_to_png.py) to generate a graphviz [`.dot` format](https://graphviz.org/doc/info/lang.html) and then convert it a `png` image, or simply use the [Netron app](https://netron.app/) to load a `onnx` file and then to vizualise/export the model.
-
-Few points worth mentioning when we look at the graphs. If we set the model to evaluation mode (`model.eval()`) the graphs will differ, because evaluation disables dropout, batchnorm layers will use their running stats to normalize the data, etc. So the train graphs are usually bigger. Also, trace graphs are smaller than script graphs because the graph is generated for a single input size and type, therefore operations such as cast are removed. Finally, the graphs generated with dynamo look smaller, but in practice, it's a multi-layer graph where each node represents a sub-graph of all operations inside each module - if you're using the Neutron app, [click the "f" symbol on the top-right corner](https://pytorch.org/docs/stable/onnx_dynamo.html#inspecting-the-onnx-model-using-gui) of each module to navigate the corresponding sub-graph.
-
-# torch compiler
-
-
-# ZeRO Inference
-
-See [ZeRO-Inference](https://www.deepspeed.ai/2022/09/09/zero-inference.html)
-
-# ZeRO ++
-
-Mention ZeRO++ for fine-tuning? 
-
-# Speeding up finetuning
-
-Mention compression and LoRA for fine-tuning and faster inference?
-
-# Flash Attention
-
-Speeding up transformer training/inference can be achieved by two memory optimization technique which does not require modification of the mode: flash attention and continuous batching. about continuous batching, see [here](https://www.anyscale.com/blog/continuous-batching-llm-inference)
-
-
----
----
----
-
-
 Previously, in [Distributed training of a large GPT model with DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we foccused on training a very large model on a distributed network of GPUs. The aim was to reduce training runtime via increased parallelism, and to increase model accuracy by increasing model size. In this post, we will look at the opposite problem in the ML spectrum: model compression for lower runtime and lower memory footprint during inference. This is particularly relevant for embeddeded and real time systems where time and cost are an issue.
 
-Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we will analyse two testbenches:
-1. the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, trained on the [tiny shakespeare](https://github.com/karpathy/char-rnn/blob/master/data/tinyshakespeare/input.txt) dataset, whose objective is to generate text by predicting the next character in a sequence;
-2. the **Benchark model**, a Deep Neural Network with user-defined width `W` and number of layers `L`, for multi-label classification, whose objective is to compute the modulo of the sum of squares of a random input vector.
+
+Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), we will focus on the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, whose objective is to generate text by predicting the next character in a sequence.
+We will discuss and apply Knowledge distilation for improved accuracy and prunning/compression, TensorRT for quantization and acceleration via kernel fusion, `torch.compile` for model acceleration, and flash attention and KV-cache for lower memory and higher acceleration.
 
 {: style="text-align:center; font-size: small;"}
 <img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>
-&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="22%" height="22%" src="/assets/GPT-lite/benchmark_model.png"/>
 
-{: style="text-align:center; font-size: small;"}
-The diagram our [GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) model with N decoder blocks (left), and the benchmark model, a Deep Neural Network with L layers of dimensionality W (right).
 
 ## Knowledge Distillation
 
 ### Detour: background
 
-Knowledge Distillation (KD) is a technique used to train a (student) model from another (teacher) model. There are many claims of why KD works. But the main rationale is that, if you take as an example the use case of multi-label classification, the soft labels (distribution of assignments) yielded by the trained network is a more accurate representation of the distribution of the classes assigned to the input, when compared with the user-provided hard labels (binary). Thus, training a second network against a better distribution of labels allows the model capacity to be better utilized (yielding better performance) or to achieve similar performance with a smaller model.
+Knowledge Distillation (KD) is a technique used to train a (student) model from another (teacher) model. The goal is to co-train two models and pass label/embedding information from a larger or pre-trained *teacher* model to a smaller or untrained *student* model, to make the student smaller and/or batter than that teacher. There are many claims of why KD works. But the main rationale is that, if you take as an example the use case of multi-label classification, the soft labels (distribution of assignments) yielded by the trained network is a more accurate representation of the distribution of the classes assigned to the input, when compared with the user-provided hard labels (binary). Thus, training a second network against a better distribution of labels allows the model capacity to be better utilized (yielding better performance) or to achieve similar performance with a smaller model.
 
 As a quick example, take the two-label (dog, cat) classification task. An image of a cat that looks like a dog cat will have the groundtruth label distribution `[0,1]` . After training the model, querying the model for that same image would yield an output simillar to `[0.4, 0.6]`, i.e. the model believes it's a cat, but could also be a dog. In practice, the soft label `[0.4, 0.6]` is a better classification than the hard label `[0,1]` and using this better labels to train another models will allow the capacity of that second model to be used better (i.e. less capacity spent on learning noise).
 
@@ -306,3 +203,71 @@ if __name__ == "__main__":
 We can then compare the performance of the real size model, the model that was distilled iteratively to half of it original size, and the model that was trained directly with half the size.
 
 **COMING SOON**
+
+# ONNX: Open Neural Network eXchange
+
+[ONNX (Open Neural Network eXchange)](https://onnx.ai/) is an open format built to represent machine learning models, that is [independent of the framework](https://onnx.ai/onnx/intro/converters.html) used to create the model (PyTorch, Tensorflow, Scikit, etc). The `onnx` data format is a model description that can be run through the [onnx runtime](https://onnxruntime.ai/), or processed by other tools for further optimisation.
+
+To start with ONNX, install the pip packages `onnx`, the `onnx runtime`, and `onnxscript`.
+To visualise the intermediate graphs, we can will run the code in [onnx_to_png.py](onnx_to_png.py) to generate a graphviz [`.dot` format](https://graphviz.org/doc/info/lang.html) and then convert it a `png` image, or simply use the [Netron app](https://netron.app/) to load a `onnx` file and then to vizualise/export the model. 
+For the sake of simplicity, we will only load a two-head attention block of the `GPTlite` model (a GPT2 variant) that we focused on in the previous posts.
+
+```python
+import os
+import sys
+import torch
+
+current_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
+from gptlite import GPTlite, Block, block_size, n_embd, n_head
+n_head=2
+
+B, T, C = 2, block_size, n_embd
+embd = torch.ones((B, T, C)).to(device) # embedding as block input
+model = Block(n_embd, n_head).to(device)
+```
+
+We then export our `torch.nn.Module` to a `onnx` file that contains the graph we want to look at, using two distinct methods, following the onnx [tutorial](https://pytorch.org/docs/stable/onnx.html#overview). An **exporter based on Torch.script**, that creates the ONNX graph using TorchScript's [`trace` or `script` modes](https://glaringlee.github.io/onnx.html#tracing-vs-scripting). The graphic captured with `trace` is static (relates only to the input passed), therefore it does not capture control-flow statements like `ifs` or loops or dynamic type inputs. In `script` mode, because "TorchScript itself is a subset of the Python language, not all features in Python are supported, such as in-place operations."
+   ```python
+  def export_torch_jit_onnx(model, mode='train'
+      torch.onnx.export(
+        model.eval() if mode=='eval' else model.train(), # model being run
+        embd, "model.onnx",
+        input_names=['input'], output_names=['output'],
+        dynamic_axes={'input' : {0 : 'batch_size'}, 'output' : {0 : 'batch_size'}})
+
+  export_torch_jit_onnx(model, "model")
+  export_torch_jit_onnx(torch.jit.trace(model, embd), "model_jit_trace") #same as above
+  export_torch_jit_onnx(torch.jit.script(model), "model_jit_script")
+   ```
+
+The graph for the train model using jit trace can be seen below (for brevity, only layer names are displayed):
+
+  <img width="100%" height="100%" src="/assets/GPT-lite-Compression/model_jit_trace_train.onnx.png"/>
+
+Secondly, an **exporter based on [TorchDynamo](https://pytorch.org/docs/stable/torch.compiler_deepdive.html)** the newest/beta exporter for `torch>=2.0`, that uses a feature called [Python frame evaluation](https://peps.python.org/pep-0523/) to convert a bytecode analysis into the [FX graph](https://pytorch.org/docs/stable/fx.html), that is then polished and translated into the ONNX graph, and contrarily to the previous, captures dynamic graphs.
+Torch.FX includes a symbolic tracer that works the same as the `trace` mode above, but by feeding fake values to the trace operation (or optionally allowing user defined values, making it equivalent to the `torch.jit.trace`).
+In this [discussion](https://dev-discuss.pytorch.org/t/the-nuances-of-pytorch-graph-capture/501/9) detailing the differences between different export methods, it seems like the *de facto* method for graph capturing in the future will be this. To generate the onnx file we run:
+   ```python
+  def export_dynamo_onnx(model, name, mode='train'):
+    export_output = torch.onnx.dynamo_export(
+       model.eval() if mode=='eval' else model.train(), embd)
+    export_output.save(f"{name}.onnx")   
+
+  export_dynamo_onnx(model, "model_dynamo")
+  export_dynamo_onnx(torch.compile(model), "model_compile_dynamo") #same as above
+   ```
+
+   And the output for the train graph is:
+
+   <img width="100%" height="100%" src="/assets/GPT-lite-Compression/model_dynamo_train.onnx.png"/>
+
+
+Few points worth mentioning when we look at the graphs. The graphs refer to the graph in train mode. If we set the model to evaluation mode (`model.eval()`) the graphs will differ, because evaluation disables dropout, batchnorm layers will use their running stats to normalize the data, etc. So the train graphs are usually bigger. Also, trace graphs are smaller than script graphs because the graph is generated for a single input size and type, therefore operations such as castings are removed. As a side note, the graphs generated with dynamo look smaller, but in practice, it's displaying only the top-level modules, and the sub-graph inside each module can be visualized int the Neutron app, [clicking the "f" symbol on the top-right corner](https://pytorch.org/docs/stable/onnx_dynamo.html#inspecting-the-onnx-model-using-gui) of each module to navigate the corresponding sub-graph.
+Finally, if you are curious to see all train/eval graphs generated, check the [repo for this post](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-Compression).
+
+# Flash Attention
+
+Speeding up transformer training/inference can be achieved by two memory optimization technique which does not require modification of the mode: flash attention and continuous batching. about continuous batching, see [here](https://www.anyscale.com/blog/continuous-batching-llm-inference)
+
+
