@@ -24,7 +24,7 @@ A **System of Linear Equations** with equations of the type $$a_1x_1 + ...+ a_nx
 - The solution represents the interception of all lines (defined by diff. equations) in a geometric representation;
 - Analytically:
   - When $$A$$ is square and invertible, the solution for $$Ax=b$$ is $$x=A^{-1}b$$;
-  - Otherwise, $$Ax = b \Leftrightarrow A^{\intercal} Ax = A^{\intercal}b \Leftrightarrow x = (A^{\intercal}A)^{−1}A^{\intercal}b$$, which is also the **least-squares** solution;
+  - Otherwise, $$Ax = b \Leftrightarrow A^{\intercal} Ax = A^{\intercal}b \Leftrightarrow x = (A^{\intercal}A)^{−1}A^{\intercal}b$$, which is also the solution to the **Least Squares** problem;
     - $$(A^{\intercal}A)^{−1}A^{\intercal}$$ is also called the **pseudo-inverse** of $$A$$, which can be computed for non-square matrices $$A$$. It only requires that $$A^{\intercal}$$ is positive definite, which is the case if $$A$$ is full rank; 
     - $$\mathbb{E}[x] = (A^{\intercal}A)^{−1}A^{\intercal} \, \mathbb{E}[b] = (A^{\intercal}A)^{−1}A^{\intercal}(Ax) = x $$.
     - Let $$P=(A^{\intercal}A)^{−1}A^{\intercal}$$. \\
