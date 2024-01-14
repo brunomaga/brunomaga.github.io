@@ -588,6 +588,12 @@ class GPTlite(nn.Module):
 
 where `self.activation_checkpoint_interval` is a value set during initialization of the class. Finally, when doing model parallelism, we can reduce memory substantially by partitioning activations and offloading those checkpoints to the CPU instead of saving them in memory. DeepSpeed does not support model/tensor parallelism natively so we will skip this, but check the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) if you are interested.
 
+### Pitfalls of activation parallelism in distributed executions
+
+Combining activation checkpointing with distributed model parameters (ZeRO stage-3) is very tricky, and I really recommend against using both. The problem is that, if you need to perform a forward pass from the closest checkpoint layer to collect the weights required for the back propagation, and if those weights are distributed (stage 3), then there has to be an extra collective communication step at every layer (from checkpoint layer to current back-prop layer) to collect those weights. This incurs in a heavy communication burden, and in my experience, led to wrong results (`NaN` loss).
+
+Also, activation checkpointing is also tricky to configure when using pipelining, if the checkpoint layer falls in another GPU. The rationale is the same, it requires extra communication, to recompute and send the activations to the current process doing backpropagation. This is an use case that I believe DeepSpeed is not handling correctly.
+
 ## Launching a distributed execution
 
 The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that spaws a python script across compute nodes and GPUs, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
