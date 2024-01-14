@@ -9,27 +9,22 @@ Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-
 
 ## 3D Parallelism
 
-An ML model allows for three types of parallelism, that can be combined into what we call **3D parallelism**:
-1. **(Distributed) Data parallelism (DDP)**, by dividing the number of samples (batch size) across processors, and keeping copies of models across processors in sync, by using the average of the gradients across processors to perform the model updates.
-2. **Pipeline parallelism**, by delegating different layers (or blocks of layers) of the model to different processors.
-3. **Model parallelism**, by dividing the *tensors* on each layer across processors.
+An ML model allows for three types of parallelism, that can be combined into what we call **3D parallelism** on Data, Pipeline and Tensors/Models.
 
 {: style="text-align:center; font-size: small;"}
 <img width="55%" height="55%" src="/assets/GPT-lite-DeepSpeed/GPT_3D_parallelism_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The 3D parallelism aims and partitioning (color-coded) computer resources  across the 3D space of data, layer and parameter dimensions. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
+The 3D parallelism aims and partitioning (color-coded) computer resources  across the 3D space of data, pipeline and tensor (model) dimensions. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
-Model parallelism refers mainly to two approaches:
-- **ZeRO (Zero-Redundancy Optimizer)** implements **Fully-Sharded Data Parallelism (FSDP)** and is similar to data parallelism but includes also distributed storage of the model parameters. While in data parallelism, all processors hold a syncronized clone of the full model, in ZeRO the tensors for the parameter, gradients and optimizer states are distributed/partitioned/**sharded**. This requires a communication overhead due to the scatter/gather operations required to communicate parameters across processors, at every layer. Therefore, ZeRO provides memory savings compared to data parallelism because of the partitioning of the model parameters. An important remark is that the activations on the forward and backward passes still happen in full form i.e. they are not distributed and they are kept on all processors for the backpropagation to work;
-- **Tensor parallelism**, **vertical parallelism**, **intra-layer parallelism** or sometimes simply **model parallelism**, partitions  also the computation of activations in the forward and backward passes. This requires a modification of the workflow of the computation in order to work in a distributed manner, particularly on the matrix multiplications format, e.g. all-gather, all-reduce, scatter-reduced distributed matrix mult, etc. Therefore, it is model-specific, and is [supported but not provided by DeepSpeed](https://www.deepspeed.ai/training/#support-for-custom-model-parallelism), except in some built-in implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/);
-
-### ZeRO's FSDP
-
-**ZeRO has three alternative execution modes, called stages**. Each stage represents a different level of memory redundancy, corresponding to the partitioning of optimizer states, gradients, and parameters, respectively. These are enabled cumulatively. In practice, by increasing the stage we define the tradeoff between memory usage and communication:
-- **ZeRO stage 1 (ZeRO-1)**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition.
-- **ZeRO stage 2 (ZeRO-2)**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states.
-- **ZeRO stage 3 (ZeRO-3)**: the 16-bit model parameters are partitioned across the processes. ZeRO-3 will automatically collect and partition them during the forward and backward passes. 
+**Data parallelism**, by dividing the number of samples (batch size) across processors. Data parallelism refers mainly to either of the following approaches:
+- **Distributed Data Parallel** keeps a full copy of the model (weights, optimizer parameters and gradients) in all processors. All models are initialized equally. Each processor takes as input to its model a different minibatch and performs a forward pass to compute the loss. On the backward pass, at every layer of the model, each processor computes its own gradients for its batch, and mean-reduces acros all processors. This leads to all processors having then the same weight updates, keeping the model in sync throughout execution. 
+- **ZeRO-DP (Zero-Redundancy Optimizer, Data Parallel)** implement **Sharding**, sometimes reffered to **Fully-Sharded Data Parallelism (FSDP)**. Here, processors dont hold a full copy of the model, but only the parameters, optimizer states and gradients to different/distinct subsets of layers. Different processors input different mini-batches, and there is no sharding of activations i.e. they are kept fully on each processor (with activations that refer to the corresponding input).
+**ZeRO has three alternative execution modes, called stages**. Each stage represents a different level of memory redundancy, corresponding to different variables being communicated or not. These are enabled cumulatively. In practice, by increasing the stage we define the tradeoff between memory usage and communication:
+  -  **ZeRO stage 0** is equivalent to no distributed model variables, and to Distributed Data Parallelism;
+  - **ZeRO stage 1 (ZeRO-1)**: the optimizer states (e.g., for Adam optimizer, 32-bit weights, and the first, and second moment estimates) are partitioned across the processes, so that each process updates only its partition. Affects backward pass runtime.
+  - **ZeRO stage 2 (ZeRO-2)**: the reduced 32-bit gradients for updating the model weights are also partitioned such that each process retains only the gradients corresponding to its portion of the optimizer states. Also relevant only for the backward pass.
+  - **ZeRO stage 3 (ZeRO-3)**: the 16-bit model parameters are partitioned across the processes. Includes extra communication on **both** the forward and backward passes. 
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/DeepSpeed_stages.png"/>
@@ -37,9 +32,15 @@ Model parallelism refers mainly to two approaches:
 {: style="text-align:center; font-size: small;"}
 Memory consumption of the three different stages of ZeRO FSDP. Residual memory (activations, normalization layers, etc) is not included as FSDP does not shard them. Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
 
+**Pipeline parallelism** delegates different layers (or blocks of layers) of the model to different processors, as a pipeline. It requires an additional inter-layers overhead in communication, and the user-based definition of the pipeline blocks and stages.
+
+**Tensor parallelism**, **vertical parallelism**, **intra-layer parallelism** or sometimes simply **model parallelism**, partitions  also the computation of activations in the forward and backward passes. This requires a modification of the workflow of the computation in order to work in a distributed manner, particularly on the matrix multiplications format, e.g. all-gather, all-reduce, scatter-reduced distributed matrix mult, etc. Therefore, it is model-specific, and is [supported but not provided by DeepSpeed](https://www.deepspeed.ai/training/#support-for-custom-model-parallelism), except in some built-in implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/);
+
+We will see in this post that finding the optimal parallelism hyperparameters is a hard problem. This is a resources allocation problem on the 3D ML parallelism space, aiming at finding an optimal load balance of compute time,  memory usage or throughput across resources. In practice, balanced computation yields a low overall runtime, and balanced memory allows for an increase of the maximum model size.
+
 ### CPU/NVMe offloading
 
-Additionaly, on top of stage 1 and 2, we can enable **[ZeRO-Offload](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory**. On top of stage 3, we can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine that extends ZeRO-offload with support to NVMe memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication".
+Additionaly, on top of stages 1 and 2, we can enable **[ZeRO-Offload](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory**. On top of stage 3, we can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine that extends ZeRO-offload with support to NVMe memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication".
 
 ### Communication quantization
 
@@ -51,9 +52,6 @@ ZeRO++ introduces three new communication improvements:
 3. **Quantized Gradient Communication for ZeRO (qgZ)**: replaces the gradients reduce-scatter collective, by doing (1) block-based quantization of gradients to `INT4` during communication to reduce the communication size, and recovering the full precision before the reduction operator to preserve training accuracy.
 
 ZeRO++ is particularly relevant for clusters with a low-latency network where collective communications are responsible for a large fraction of the overall runtime. It is also important for executions with a small batch size per GPU, where the memory increase of **qgZ** has no impact on scaling.
-
-
-We will see in this post that finding the optimal parallelism hyperparameters is a hard problem. This is a resources allocation problem across the 3D volume in the data, parameters and layers (pipeline) space. It aims at allocating different partitions on that 3D space to different processors, in a way that best balances the compute time or memory across resources. In practice, balanced computation yields a low overall runtime, and balanced memory allows for an increase of the maximum model size.
  
 ## Model and dataset
 

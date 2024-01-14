@@ -902,7 +902,7 @@ The authors propose "a recurrent network to generate the model descriptions of n
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="65%" src="/assets/publications/NAS.png"/> 
+<img width="80%" height="80%" src="/assets/publications/NAS.png"/> 
 
 <br/>
 # 2016 [Attention is all you need (Transformer), Google, NeurIPS 2017](https://arxiv.org/abs/1706.03762)
