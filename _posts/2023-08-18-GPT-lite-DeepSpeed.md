@@ -363,6 +363,8 @@ Note that the according to documentation, the ideal value for `zero_hpz_partitio
 }
 ```
 
+However, if your hardware supports bfloat16 (brain floating point), this should be used in lieu of float16, as it has a longer integer (exponent) representation: 8 bits instead of the 5 in float16, ie the same 8 bits as in float32. This makes it more numerically stable and does not require loss scaling. bfloat16 can be activated by adding to the config `bf16 { "enabled": true }`.
+
 As a final note, the configuration file can also be extended with custom fields, that are e.g. specific to application or hardware, but for brevity we'll omit those details here. 
 
 ## Pipeline parallelism
