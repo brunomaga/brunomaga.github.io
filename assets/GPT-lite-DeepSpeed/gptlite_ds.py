@@ -15,6 +15,7 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
 from gptlite import n_layer, n_embd, n_head, block_size, Block
 
+
 ################ BASE MODEL WITH ACTIVATION CHECKPOINTING ######################
 
 class GPTlite(nn.Module):
@@ -82,6 +83,7 @@ class GPTlite(nn.Module):
       ]
 
 
+
 ################ PIPELINE VERSION ######################
 
 class GPTlitePipeSpec(PipelineModule):
@@ -108,6 +110,8 @@ class GPTlitePipeSpec(PipelineModule):
       [ LayerSpec(nn.LayerNorm, n_embd),
         LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
     super().__init__(layers=self.specs, **pipe_kwargs)
+
+
 
 ################ HELPERS ######################
 
