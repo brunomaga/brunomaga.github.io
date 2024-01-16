@@ -10,6 +10,7 @@ import gptlite
 from gptlite import block_size, n_embd, dropout
 
 # implements tensor parallelism as described in Megatron-LM: https://arxiv.org/abs/1909.08053
+# see https://pytorch.org/docs/stable/notes/extending.html for "how to extend pytorch fwd/backward passes"
 
 if not dist.is_initialized():
   dist.init_process_group()
