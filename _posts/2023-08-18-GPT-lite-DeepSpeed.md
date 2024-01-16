@@ -487,6 +487,6 @@ In this post we explored only the dimension of data parallelism. For pipeline pa
 
 For general documentation, I recommend the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
-All done! If you want to try this on your own, see the [GPT-lite-DeepSpeed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-DeepSpeed).
+And finally, if you want to try this on your own, see the [GPT-lite-DeepSpeed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-DeepSpeed).
 
 
