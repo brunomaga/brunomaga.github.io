@@ -475,17 +475,18 @@ And finally our GPT-lite model, with a micro-batch size of 1 sample per GPU:
 
 **Activation checkpointing** tested on GPTlite trades runtime for memory usage. It yielded a 4x memory reduction at the overhead of +20% in execution time.
 
-## General disccusion
+**Lack of superlinear speedup**: We observed a small improvement of memory efficiency, but still far from the claims of the original DeepSpeed team. One explanation is that we used a small network of 8 GPUs, compared to the 64 to 800 GPUs used by the authors in their benchmarks, therefore we achieved a much smaller memory reduction. A large network of GPUs also underlies their claim of superlinear speed up that we did not observe.
 
-We observed a small improvement of memory efficiency, but still far from the claims of the original DeepSpeed team. One explanation is that we used a small network of 8 GPUs, compared to the 64 to 800 GPUs used by the authors in their benchmarks, therefore we achieved a much smaller memory reduction. A large network of GPUs also underlies their claim of superlinear speed up that we did not observe.
+**Memory as main bottleneck:** In most runs, the maximum memory is much higher than the average memory. This is due to temporary buffers that drive the maximum memory up. On the GPTlite use case, most non-parameter memory is due to activations, and could have been improved with [Flash Attention](https://arxiv.org/abs/2307.08691) or [KV cache](https://arxiv.org/abs/2211.05102), that we did not include in this implementation. Maximum memory seems to be the main scaling bottleneck.
 
-Also, maximum memory seems to be the main scaling bottleneck. In most runs, the maximum memory is much higher than the average memory. This is due to temporary buffers that drive the maximum memory up. On the GPTlite use case, most non-parameter memory is due to activations, and could have been improved with [Flash Attention](https://arxiv.org/abs/2307.08691) or [KV cache](https://arxiv.org/abs/2211.05102), that we did not include in this implementation.   
+There is a lot of food for thought here, and I will be updating this post as I find new insights. 
 
-There is a lot of food for thought here, and I will be updating this post as I find new insights...
+## Resources and code
+
+In this post we explored only the dimension of data parallelism. For pipeline parallelism and tensor/model parallelism, see the [part 2 of this post]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-2 %}).
+
+For general documentation, I recommend the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
 All done! If you want to try this on your own, see the [GPT-lite-DeepSpeed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-DeepSpeed).
 
-For pipeline parallelism and tensor parallelism, see the [part 2 of this post]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-2 %}).
-
-For general documentation, I recommend the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
