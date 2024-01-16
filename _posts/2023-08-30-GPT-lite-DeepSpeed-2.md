@@ -258,9 +258,23 @@ are conjugate identity and all-reduce operations that c. f is an identity operat
 reduce in the backward pass while g is an all reduce in the forward
 pass and identity in the backward pass. Source: [Megatron-LM paper](https://arxiv.org/abs/1909.08053)
 
-Following the paper: "f is an identity operator in the forward pass and all
-reduce in the backward pass while g is an all reduce in the forward
-pass and identity in the backward pass". So we can implement this as:
+The rationale is the following: the MLP is sequence of (1) a MatMul $$AX$$, (2) a ReLU $$Y$$; a (3) MatMul $$YB$$ and a (4) dropout layer. Let's focus on the first two operations: 
+1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_ 2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point (*sum-reduce*) before the GeLU function". We can follow this approach - pictured below - for each of the 2 MatMuls, yielding a total of two communication steps.
+
+  {: style="text-align:center; font-size: small;"}
+  <img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/megatron_model_parallel_1.png">
+
+
+2. Another option is to don't split $$X$$ and split $$A$$ along its columns, that "allows the GeLU nonlinearity to be independently applied to the output of each partitioned GEMM". The output of the ReLU $$Y$$ is then $$[Y_1, Y_2] = [GeLU (X A_1), GeLU(X A_2)]$$ and this removes a synchrnization point.
+After the MatMul and ReLU is done, we must follow with another MatMul and a dropout. Note that if we follow this approach (pictured below), the output $$Y$$ of the first MatMul (which is the input for the second MatMul) is split column-wise. Therefore, Megatron will then use the previous approach for the second MatMul, that requires 1 collective communication step. We therefore perform 1 communication step for 2 MatMuls.
+
+  {: style="text-align:center; font-size: small;"}
+  <img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/megatron_model_parallel_2.png">
+
+
+The algorithm of the attention mechanism is analogous, except that instead of a single MatMul $$AX$$ at the beginning of the workflow, we perform three MatMuls $$XV$$, $$XQ$$ and $$XK$$ for the value, query and key matrices of the attention mechanism. Therefore, this algorithm requires one (not two) communication steps per MLP and attention block.
+
+Megatron-LM makes this implementation very simple, by adding only the $$f$$ and $$g$$ functions to the serial use case. Following the paper: "$$f$$ is an identity operator in the forward pass and all reduce in the backward pass while $$g$$ is an all reduce in the forward pass and identity in the backward pass". So we can implement this as:
 
 ```python
 class Megatron_f(torch.autograd.Function):
@@ -293,12 +307,10 @@ class Megatron_g(torch.autograd.Function):
       return gradient
 ```
 
-Note that we added an extra argument `mp_comm_group` that refers to the model-parallel communication group. This refers to the communication group is to allow us to combine MP with other types of parallelism. As an example, if you have 8 GPUs, you can have 2 data parallel groups of 4 model parallel GPUs.
-
-We now add model parallelism to the MLP by inserting `f` and `g` in the forward pass, at the beginning and end of the block, just like in the paper:
+Note that we added an extra argument `mp_comm_group` that refers to the model-parallel communication group. This refers to the communication group is to allow us to combine MP with other types of parallelism. As an example, if you have 8 GPUs, you can have 2 data parallel groups of 4 model parallel GPUs. We now add model parallelism to the MLP by inserting $$f$$ and $$g$$ in the forward pass, at the beginning and end of the block, just like in the paper:
 
 ```python
-class FeedForward(nn.Module):
+class Megatron_FeedForward(nn.Module):
   """ the feed forward network (FFN), with tensor parallelism as in Megatron-LM MLP block"""
 
   def __init__(self, n_embd, mp_comm_group=None):
@@ -331,7 +343,7 @@ class FeedForward(nn.Module):
 The attention head follows a similar approach, where we apply the tensor reduction to all the key, query and value tensors:
 
 ```python
-class Head(nn.Module):
+class Megatron_Head(nn.Module):
   """ the attention block with tensor parallelism as in Megatron-LM paper"""
 
   def __init__(self, head_size, mp_comm_group=None):
