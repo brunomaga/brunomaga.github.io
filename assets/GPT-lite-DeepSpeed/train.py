@@ -73,7 +73,7 @@ def main_deepspeed(n_epochs=100, random_seed=42, model='gptlite'):
     }
 
   if model.lower()=='gptlite':
-    import gptlite
+    import gptlite_ds as gptlite
     train_dataset, _, vocab_size = gptlite.get_dataset()
     model = gptlite.get_model(vocab_size, **get_model_kwargs)
   elif model.lower()=='benchmark':
@@ -119,4 +119,5 @@ def main_deepspeed(n_epochs=100, random_seed=42, model='gptlite'):
 
 if __name__ == "__main__":
   main_deepspeed()
+
 
