@@ -107,6 +107,7 @@ class GPTlitePipeSpec(PipelineModule):
         LayerSpec(nn.Linear, n_embd, vocab_size, bias=False) ]
     super().__init__(layers=self.specs, **pipe_kwargs)
 
+################ HELPERS ######################
 
 def load_tiny_shakespeare_data():
   rank = dist.get_rank() if dist.is_initialized() else 0 
@@ -142,7 +143,6 @@ def load_tiny_shakespeare_data():
   if rank==0: print("Train data encoded", data.shape, train_data.shape, valid_data.shape)
   return train_data, valid_data, vocab_size
 
-################ HELPERS ######################
 
 def get_dataset():
   
