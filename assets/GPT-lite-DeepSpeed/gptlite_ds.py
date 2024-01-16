@@ -15,6 +15,8 @@ current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
 from gptlite import n_layer, n_embd, n_head, block_size, Block
 
+################ BASE MODEL WITH ACTIVATION CHECKPOINTING ######################
+
 class GPTlite(nn.Module):
   def __init__(self, vocab_size, activation_checkpoint_interval=0):
     super().__init__()
