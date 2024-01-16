@@ -222,7 +222,7 @@ We saw before that we could activate the number of micro-batches per GPU, batch 
 <img width="60%" height="60%" src="/assets/GPT-lite-DeepSpeed/pipeline_4_stages_grad_accumulation.png"/>
 
 {: style="text-align:center; font-size: small;"}
-An illustration of a regular pipeline execution across 8 processes, 4 stages, with 6 micro-batches per mini-batch.
+An illustration of a regular pipeline execution across 8 processes, 4 stages, with no gradient accumulation (left) and with gradient accumulation of 6 micro-batches per mini-batch (right) .
 
 Finally, there are several algorithms for pipeline and micro-batch scheduling. The two most commonly used are:
 - the **regular** algorithm performs a sequence of all micro-batch forward passes, waits for their completion, then performs a sequence of backward passes, and waits for their completion, before starting a new mini-batch.
@@ -234,13 +234,13 @@ Finally, there are several algorithms for pipeline and micro-batch scheduling. T
 {: style="text-align:center; font-size: small;"}
 Regular and 1F1B pipeline algorithms diagram. Source: paper [Training and Serving System of Foundation Models: A Comprehensive Survey](https://arxiv.org/pdf/2401.02643.pdf)
 
+With that in mind, you can find the optimal parameters by setting the fields `train_micro_batch_size_per_gpu` (defaulted to `train_batch_size`) or `gradient_accumulation_steps` (defaulted to `1`) in the [DeepSpeed config file](https://www.deepspeed.ai/docs/config-json/). At runtime, the micro-batch size can be retrieved by `engine.gradient_accumulation_steps()`.
+
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 "An illustration of how DeepSpeed will train a batch with eight micro-batches using hybrid two-way data parallelism and two-stage pipeline parallelism. GPUs 0 and 2 are arranged in a pipeline and will alternate forward (F) and backward (B) passes. They will then all-reduce (AR) gradients with their data parallel counterparts, GPUs 1 and 3, respectively. Finally, the two pipeline stages update their model weights". This is the 1F1B pipeline algorithm. Source: [DeepSpeed pipelining documentation](https://www.deepspeed.ai/tutorials/pipeline/)
-
-With that in mind, you can find the optimal parameters by setting the fields `train_micro_batch_size_per_gpu` (defaulted to `train_batch_size`) or `gradient_accumulation_steps` (defaulted to `1`) in the [DeepSpeed config file](https://www.deepspeed.ai/docs/config-json/). At runtime, the micro-batch size can be retrieved by `engine.gradient_accumulation_steps()`.
 
 ## Communication quantization with ZeRO++
 
