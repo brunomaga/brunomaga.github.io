@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of a GPT model (part 2): pipeline parallelism, Megatron-LM tensor parallelism and communication quantization"
+title:  "Distributed training of a GPT model (part 2): pipeline parallelism, Megatron-LM model parallelism and communication quantization"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -267,9 +267,9 @@ To set the hierarchical Weight partition for ZeRO (hpZ), quantized weight commun
 
 Note that the according to documentation, the ideal value for `zero_hpz_partition_size` is the number of ranks (GPUs) per node. As a good engineering practice, it should be dynamically set with the API at runtime - not with the config file - to allow for a variable GPU count.
 
-## Model/Tensor parallelism
+## Megatron-LM model/tensor parallelism
 
-**Tensor parallelism**, **vertical parallelism**, **intra-layer parallelism**, **activation parallelism** or most commonly ad confusedly called **model parallelism**, is the third dimension of parallelism and aims at partitioning the computation of tensors (activations) in the forward and backward passes. This requires a modification of the workflow of the computation in order to work in a distributed manner, particularly on the matrix multiplications format: in practice we must decide for the dimension of tensor partitioning (row, wise, none) and adapt the communication and computation accordingly, leading to an all-gather, all-reduce, scatter-reduced distributed matrix multiplicatioon, etc. Therefore, it is a model-specific implementation, and is [supported but not provided](https://www.deepspeed.ai/training/#support-for-custom-model-parallelism) by DeepSpeed, except in some built-in implementations such as [Megatron-ML](https://www.deepspeed.ai/tutorials/megatron/), for BERT, T5, GPT2 and others.
+**Tensor parallelism**, **vertical parallelism**, **intra-layer parallelism**, **activation parallelism** or most commonly ad confusedly called **model parallelism**, is the third dimension of parallelism and aims at partitioning the computation of tensors (activations) in the forward and backward passes. This requires a modification of the workflow of the computation in order to work in a distributed manner, particularly on the matrix multiplications format: in practice we must decide for the dimension of tensor partitioning (row, wise, none) and adapt the communication and computation accordingly, leading to an all-gather, all-reduce, scatter-reduced distributed matrix multiplicatioon, etc. Therefore, it is a model-specific implementation, and is [supported but not provided](https://www.deepspeed.ai/training/#support-for-custom-model-parallelism) by DeepSpeed, except in some built-in implementations such as [Megatron-LM](https://www.deepspeed.ai/tutorials/megatron/), for BERT, T5, GPT2 and others.
 
 We can have a better understanding if we try to replicate the partitioning suggested by Megatron-LM in the paper [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053). The main rationale underlying the paper is that Transformer-based models have two main components - a feed-forward (MLP) and an attention head - and we can do a forward and a backward pass on each of these blocks with a single collective communication step.
 
