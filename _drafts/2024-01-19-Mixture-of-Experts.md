@@ -6,11 +6,13 @@ tags: [machinelearning]
 ---
 
 # 2017 [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}) )
+
 # 2014 [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}) )
+
 # 1991 [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf)
-
-Covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}) )
-
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}) )
 
 # 1991 [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf)
 
@@ -83,7 +85,7 @@ They built a 137B parameter recurrent language model where the *sparse* gating f
 To avoid the common effect of having few experts taking all the importance from the gating mechanism at early stages, they adopted a soft constraing approach (note: hard approach is fixing a maximum cap threshold). In practice, they add an additional **importance loss**, equal to the square of the coefficient of variation of the set of importance values, is added as:
 
 $$
-L_{importance} = w_{importance} \dot CV \, (Importance (X))^2
+L_{importance} = w_{importance} \cdot CV \, (Importance (X))^2
 $$ 
 
 where the $$Importance$$ of an expert to be the batchwise sum of the gate values for that expert. This loss ensures equal importance, but experts may receive different numbers of examples.
