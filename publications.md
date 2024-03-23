@@ -280,6 +280,61 @@ LongNet is a Transformer variant that can scale the sequence length up to 1B tok
 
 
 <br/>
+# 2022 [Efficiently Scaling Transformer Inference, Google](https://arxiv.org/abs/2211.05102)
+
+The paper focuses on efficient generative inference of Transformer models with large deep models, with tight latency targets and long sequence lengths. It claims its methods surpass the efficiency of [NVIDIA's FasterTransformer](https://github.com/NVIDIA/FasterTransformer). It is highly foccused on 3D-torus network layouts. 
+
+Section 3.1 provides an analysis of collective communication. Section 3.2 analyzes parallelism in the FeedForward module.  Notation used: $$BLE_{xyz}$$ means that the last dimension $$E$$ of a tensor of logical shape $$BLE$$ is split into $$X × Y × Z$$, ie the per-chip tensor is of shape $$[B, L, E/(X × Y × Z)]$$ (omitted axis are replicated). $$F$$ is the input size of the feed forward layer. It compares data splitting *a la Megatron* (1D weight-stationaly layout, section 3.2.1) where the partition layout for weights is $$EF_{xyz}$$ and $$F_{xyz}E$$, i.e. partitioned in to $$X × Y × Z = n_{chips}$$; with a 2D weight-stationary layout along both the E and F axes (section 3.2.2), where shards are square, compute cost is the same but communication is more efficient and scalable (particularly on more than 16 chips). Section 2.3.3 describes the *XYZweight-gathered* approach, where "the output of each per-chip matrix multiplication must then be aggregated between chips to be used as input to the subsequent operations", however "for very large batch sizes, it is best to keep the activations fully stationary between sequential matrix multiplications, requiring that we fully transfer the weights between all chips".
+
+Related to attention layers (section 3.3), "Multihead attention can be parallelized in essentially the same ways as a feedforward layer". The attention Keys and Values (aka the "KV cache")  incur significant memory capacity and bandwidth costs. Improving with [multi-query attention](https://arxiv.org/abs/1911.02150) reduces the size of the KV cache tensors by a factor of $$n_{heads}$$ and the time spent loading them in memory, but "removes an axis otherwise used for parallelism, so the KV cache and related computations need to be partitioned differently" in order to "minimize the memory time of repeatedly loading the KV cache that dominates the inference cost. [...]
+The most similar partitioning layout for multiquery attention (shown in Figure 4(b)) treats the KV cache the same as in multihead attention. Even though the key and value tensors are shared across all heads, they must be replicated on each chip and the memory cost savings of multiquery attention are lost". Instead the paper proposes " a partitioning strategy for the multiquery attention where the Q, K, and V matrices are partitioned over the batch $$B$$ dimension into $$n_{chips}$$ partitions". This reduces the cost of loading the KV cache per chip by a factor of $$n_{chips}$$ but incurs additional communication cost of resharding the input activation tensors. "With the proposed partitioning layout, multiquery attention enables using larger batch sizes and sequence lengths, thereby increasing throughput in addition to the latency reduction from reduced memory time".
+
+{: style="text-align:center; font-size: small;"}
+<img width="50%" height="50%" src="/assets/publications/Efficiently_Scaling_Transformer_Inference_MultiQuery.png"/>
+
+Section 3.4 details the gains of using [GPT-J](https://en.wikipedia.org/wiki/GPT-J#cite_note-Model_Card-2)'s approach to **compute attention heads and feed forward in parallel**, also applied to [PaLM](https://arxiv.org/abs/2204.02311). For comparison, the standard formulation of the transformer block is $$ y = x + MLP(LayerNorm(x + Attention(LayerNorm(x))) $$, whereas the parallel formulation is:
+$$y = x + MLP(LayerNorm(x)) + Attention(LayerNorm(x))$$. Using the parallel formulation has only one layernorm per layer instead of two,
+which reduces latency at small batch sizes. Also, some matrices can be fused which results in larger matrix multiplications that run more efficiently on accelerators. Finally, it removes  one of the two all-reduce operations in each layer.
+
+Finally, section 3.5 discusses low-level optimization (overlapping communication and computation, etc), and section 3.6 discusses `int8` quantization.  
+
+
+<br/>
+# 2022 [Random-LTD: Random and Layerwise Token Dropping Brings Efficient Training for Large-scale Transformers, Microsoft](https://arxiv.org/abs/2211.11586)
+
+Random-LTD (random and layerwise token dropping method) is a method to reduce the training costs of very large transformer models, which skips the computation of a subset of the input tokens at all middle layers (exclude first and last layers). Tokens are dropped in a purely random matther, thus Random-LTD requires no scoring or manual design. 
+
+Other alternatives of token dropping are:
+- attention score related metrics, where compute cost for LTD is too high since the metric has to be calculated for every layer); and
+- loss-/frequency-based metrics, where  accumulated loss or frequency is used and this accumulated metric would not be changed within the same iteration (forward pass), and this makes the dropped token to be the same for different layers, making the token dependency not be captured by the MHA of middle layers.
+
+To that extent, Random-LTD uses purely random dropping of tokens at every layer. To reduce the gradient variance introduced by random-LTD, for better training, the authors monotonically increase the kept sentence length throughout training, with a linear schedule. This method is called the **Monotonic Sequence Length Growth (MSLG)**.
+
+Related to the learning rate, not that: random-LTD reduces the effective batch size of middle layers at the initial warmup phase, and MSLG does not reach the full length until > 2/3 of training iterations for large compute saving. Therefore, the small learning rate during warmup cannot provide efficient training "dynamics" for Random-LTD. In practice, it is necessary to increase the warmup iterations and slow down the LR decay. So the paper also introduces the **LayerToken learning rate** (appendix C), wich scales the learning rate  based on the sum of consumed tokens of each layer. The point of `LayerToken` is to reduce the tuning effort for Random-LTD. 
+
+The results compare Random-LRD with the baseline, on GPT3 models with 350M and 1.3B parameters, and a dataset of up to 300B tokens. Here, Random-LTD shows similar evaluation losses as the baseline with 1/3 less LayerToken consumption. However, an important claim is that "reiterate that the LayerToken consumption saving ratio cannot directly transfer to GPU wall-clock training time saving ratio due to the implementation/hardware". Compared with a BERT and ViT model, similar results are shown. When compared with TokenBypass (a different technique that skips middle layers tokens), Random-LTD shows better train and validation perplexity. Also, MLSG also shows better perplexity than a constant-drop rate (table 6.4).
+
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/publications/Random_LTD.png"/>
+
+<br/>
+# 2022 [The Stability-Efficiency Dilemma: Investigating Sequence Length Warmup for Training GPT Models, Microsoft](https://openreview.net/forum?id=JpZ5du_Kdh)
+
+With that in mind, this paper investigates and demonstrates the importance of sequence length in GPT models. The paper presents a set of experiments on a GPT2 model on public datasets to study the **stability-efficiency dilemma**: "increasing the batch sizes and learning rates (commonly used for faster training) leads to better training efficiency but can also result in training instability, leading to poor generalization accuracy or failed runs". The paper results that **there is a strong correlation between training instability and extreme values of gradient variance** and **long sequence lengths contribute to these extreme gradient variance values, especially at the beginning of the training** (and this could be a source of traininig instability).
+
+**Background**: SoftFormer shows that by adding an additional first training
+stage with a shorter sequence length, language models can achieve the same perplexity with
+shorter total training time. However it's mostly foccused on solving the training efficiency instead of the efficiency-stability dilemma. And SoftFormer-2 falls short in overcoming the training instability on large models.
+
+
+To that extent, the paper presents the "**Sequence Length Warmup (SLW)** method (which starts
+training with short sequences and gradually increases the length)  that aims to solve the training stability-efficiency dilemma by avoiding extreme gradient variance values. Moreover, we present a lightweight hyperparameter tuning strategy that allows us to tune our method with just a small portion of the expensive full training".
+
+This method can be understood as a type of curriculum learning (CL), which presents easier/simpler examples earlier during training and gradually increases the sample difficulties. However here, the work aims to achieve both efficient convergence and better stability by enabling stable training with more aggressive hyperparameters, instead of keeping them constant as in the traditional CL.
+
+Results show improved stability, an increase of 4x in batch size, and 8x in learning rage on a 117M and 1.5B parameter GPT2 model. On a GPT3 model, it demonstrates 8x larger batch size and 40x larger learning rate, retaining 99% of one-shot accuracy using 10x less data and 17x less time.
+
+<br/>
 # 2022 [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)
 
 Transformers are slow and memory-hungry on long sequences, since the time and memory complexity of self-attention are quadratic in sequence length. The authors " argue that a missing principle is making attention algorithms IOaware—accounting for reads and writes between levels of GPU memory". To overcome it, Flash Attention improves the attention mechanism with one that uses tiling to reduce the number of memory reads/writes between GPU high bandwidth memory (HBM) and GPU on-chip SRAM. In practice, it tiles the square attention matrix into partial computations that can be computed on the block memory (on-chip SRAM) instead of the global memory (DRAM?). It also trains Transformers faster than existing baselines (15% on bert models and 3x on GPT-2).
@@ -586,6 +641,11 @@ An extension of the transformer architecture to images. Works by passing as inpu
 <img width="70%" height="70%" src="/assets/publications/visual_transformer.png"/> 
 
 <br/>
+# 2021 [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
+
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
+
+<br/>
 # 2021 [Finetuned Language Models Are Zero-Shot Learners, Google, ICLR 2022](https://arxiv.org/abs/2109.01652)
 
 The paper presents a simple method for improving the zero-shot learning abilities of language models. It shows that instruction tuning -- finetuning language models on a collection of tasks described via instructions -- substantially improves zero-shot performance on unseen tasks.
@@ -625,6 +685,11 @@ and stopping significantly short of convergence.
 
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/publications/scaling_laws_2.png"/>
+
+<br/>
+# 2020 [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668)
+
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
 
 <br/>
 # 2020 [Language Models are Few-Shot Learners (GPT-3), OpenAI](https://arxiv.org/abs/2005.14165)
@@ -679,6 +744,15 @@ for generating useful multi-hop connections".
 
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/publications/graph_transformer_networks.png"/> 
+
+<br/>
+# 2019 [Fast Transformer Decoding: One Write-Head is All You Need (multi-query attention)](https://arxiv.org/abs/1911.02150)
+
+Efficient training in transformers model is possible due to parallelism across the length dimension. However, decoding (where such parallelization is impossible) is slow due to continuously loading large keys and values tensors into memory. Thus, this introduces a variant of the multi-head attention that improves inference (decoding), called multi-query attention, "where the keys and values are shared across all of the different attention "heads", greatly reducing the size of these tensors and hence the memory bandwidth requirements of incremental decoding". This leads to a much faster decoding, with minor degradation of quality from the baseline. Section 2.1 and 2.2 detail the single-head and multi-head dot-product attention. Section 2.3 introduces additional batching of multiple non-interactive queries, and from several positions in the same sentence (that interact with the same keys and values). Section 2.4 covers the use case where an auto-regressive self-attention model forbids the processing of multiple sentence positions in parallel. Section 3 discusses multi-query attention. Quoting the authors:
+- Multi-head attention consists of multiple attention layers (heads) in parallel with different linear transformations on the queries, keys, values and outputs.
+- Multi-query attention is identical except that the different heads share a single set of keys and values.
+
+In practice, we reduce the memory-bandwidth requirements by a scale of the number of heads. The runtime during training is approximately the same for the base model and the multi-query model. The runtime during inference for  incremental greedy inference shows a small time decrese in the encoder module, and a 13x speed-up on the decoder module.
 
 <br/>
 # 2019 [No Language Left Behind: Scaling Human-Centered Machine Translation, Meta, Berkeley and Johns Hopkins](https://arxiv.org/abs/2207.04672)
@@ -810,6 +884,11 @@ Existing standard language models are unidirectional and that's a major limitati
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/publications/bert2.png"/> 
 
+
+<br/>
+# 2017 [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
+
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
 
 <br/>
 # 2017 [Neural Discrete Representation Learning (RQVAE), Google](https://arxiv.org/abs/1711.0093)
@@ -970,6 +1049,11 @@ In most encoder-decoder models, encoders encode a sentence into a vector of fixe
 <img width="85%" height="85%" src="/assets/publications/STN.png"/> 
 
 <br/>
+# 2014 [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
+
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
+
+<br/>
 # 2014 [Deeply-supervised Nets, USCD and Microsoft](https://arxiv.org/abs/1409.5185)
 
 The rationale of Deeply-supervised nets is the following: in general, a discriminative classifier trained on highly discriminative features will display better performance than a discriminative classifier trained on less discriminative features. If the features in question are the hidden layer feature maps of a deep network, this observation means that the performance of a discriminative classifier trained using these hidden layer feature maps can serve as a proxy for the quality/discriminativeness of those hidden layer feature maps, and further to the quality of the upper layer feature maps. The basic network architecture will be similar to the standard one used in the CNN framework. Our additional deep feedback is brought in by associating a companion local output with each hidden layer. Backpropagation of error now proceeds as usual, with the crucial difference that we now backpropagate not only from the final layer but also simultaneously from our local companion output. Results suggests that it acts as a kind of feature regularization (which leads to significant reduction to the testing error but not necessarily to the train error) and it results in faster convergence, especially in presence of small training data.   
@@ -1064,3 +1148,8 @@ To efficiently calculate individual labellings, the authors describe the CTC for
 
 {: style="text-align:center; font-size: small;"}
 <img width="45%" height="45%" src="/assets/publications/contrastive_loss.png"/>  <img width="47%" height="47%" src="/assets/publications/contrastive_loss_2.png"/> 
+
+<br/>
+# 1991 [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf)
+
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
