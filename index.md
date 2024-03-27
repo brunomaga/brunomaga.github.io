@@ -27,7 +27,7 @@ Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Perf
 </div>
 
 
-On the side, I maintain a [publications bookmark]({{ site.publications_permalink }}) where I summarize several papers of interest, and a [resources page]({{ site.resources_permalink }}) where I keep track of related books and material available online. My [google scholar page]({{ site.google_scholar }}) indexes most of my scientific publications. When time allows, I post about HPC and ML:
+On the side, I maintain a [publications bookmark]({{ site.publications_permalink }}) where I summarize several papers of interest, and a [resources page]({{ site.resources_permalink }}) where I keep track of related books and material available online. My [google scholar page]({{ site.google_scholar }}) indexes most of my scientific publications. When time allows, I contribute with [bug fixes and features](https://github.com/microsoft/DeepSpeed/pulls?q=is%3Apr+author%3Abm-synth+) for [DeepSpeed](https://github.com/microsoft/DeepSpeed), and I post about HPC and ML:
 
 <table style='border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
