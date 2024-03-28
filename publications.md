@@ -8,6 +8,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 <!-- NOTE: To create this table of contents, open VS code, install "Markdown All in one" extension, then Ctrl+Shift+P and "Markdown: create table of contents". To enable automatic update on save, go to settings, extensions, "Markdown all on one" and tick "update on save" -->
 
+- [2023 DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](#2023-deepspeed-zero-offload-6x-higher-training-throughput-via-collaborative-cpugpu-twin-flow)
 - [2023 ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](#2023-zero-extremely-efficient-collective-communication-for-giant-model-training-microsoft)
 - [2023 Better speech synthesis through scaling (TorToise), James Bekter](#2023-better-speech-synthesis-through-scaling-tortoise-james-bekter)
 - [2023 Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E), OpenAI](#2023-neural-codec-language-models-are-zero-shot-text-to-speech-synthesizers-vall-e-openai)
@@ -21,6 +22,9 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2023 Operator Fusion in XLA: Analysis and Evaluation, UToronto](#2023-operator-fusion-in-xla-analysis-and-evaluation-utoronto)
 - [2023 LongNet: Scaling Transformers to 1,000,000,000 Tokens, Microsoft and Xi’an Jiaotong University](#2023-longnet-scaling-transformers-to-1000000000-tokens-microsoft-and-xian-jiaotong-university)
 - [2023 FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](#2023-flashattention-2-faster-attention-with-better-parallelism-and-work-partitioning)
+- [2022 Efficiently Scaling Transformer Inference, Google](#2022-efficiently-scaling-transformer-inference-google)
+- [2022 Random-LTD: Random and Layerwise Token Dropping Brings Efficient Training for Large-scale Transformers, Microsoft](#2022-random-ltd-random-and-layerwise-token-dropping-brings-efficient-training-for-large-scale-transformers-microsoft)
+- [2022 The Stability-Efficiency Dilemma: Investigating Sequence Length Warmup for Training GPT Models, Microsoft](#2022-the-stability-efficiency-dilemma-investigating-sequence-length-warmup-for-training-gpt-models-microsoft)
 - [2022 FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](#2022-flashattention-fast-and-memory-efficient-exact-attention-with-io-awareness)
 - [2022 TorchScale: Transformers at Scale, Microsoft](#2022-torchscale-transformers-at-scale-microsoft)
 - [2022 High Fidelity Neural Audio Compression (Encodec), Meta AI](#2022-high-fidelity-neural-audio-compression-encodec-meta-ai)
@@ -41,10 +45,13 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2021 MLP-Mixer: An all-MLP Architecture for Vision, Google, NeurIPS 2021](#2021-mlp-mixer-an-all-mlp-architecture-for-vision-google-neurips-2021)
 - [2021 Pay Attention to MLPs, Google, NeurIPS 2021](#2021-pay-attention-to-mlps-google-neurips-2021)
 - [2021 An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale, Google, ICLR 2021](#2021-an-image-is-worth-16x16-words-transformers-for-image-recognition-at-scale-google-iclr-2021)
+- [2021 Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](#2021-switch-transformers-scaling-to-trillion-parameter-models-with-simple-and-efficient-sparsity)
 - [2021 Finetuned Language Models Are Zero-Shot Learners, Google, ICLR 2022](#2021-finetuned-language-models-are-zero-shot-learners-google-iclr-2022)
 - [2020 Scaling Laws for Neural Language Models, John Hopkins, OpenAI](#2020-scaling-laws-for-neural-language-models-john-hopkins-openai)
+- [2020 GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](#2020-gshard-scaling-giant-models-with-conditional-computation-and-automatic-sharding)
 - [2020 Language Models are Few-Shot Learners (GPT-3), OpenAI](#2020-language-models-are-few-shot-learners-gpt-3-openai)
 - [2020 Graph Transformers Networks, Korea University](#2020-graph-transformers-networks-korea-university)
+- [2019 Fast Transformer Decoding: One Write-Head is All You Need (multi-query attention)](#2019-fast-transformer-decoding-one-write-head-is-all-you-need-multi-query-attention)
 - [2019 No Language Left Behind: Scaling Human-Centered Machine Translation, Meta, Berkeley and Johns Hopkins](#2019-no-language-left-behind-scaling-human-centered-machine-translation-meta-berkeley-and-johns-hopkins)
 - [2019 Generating Long Sequences with Sparse Transformers, OpenAI](#2019-generating-long-sequences-with-sparse-transformers-openai)
 - [2019 ALBERT: A Lite BERT for Self-supervised Learning of Language Representations, Google and Toyota](#2019-albert-a-lite-bert-for-self-supervised-learning-of-language-representations-google-and-toyota)
@@ -55,10 +62,12 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2018 GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism, Google](#2018-gpipe-efficient-training-of-giant-neural-networks-using-pipeline-parallelism-google)
 - [2018 PipeDream: Fast and Efficient Pipeline Parallel DNN Training, Microsoft Research, Carnegie Mellon, Stanford](#2018-pipedream-fast-and-efficient-pipeline-parallel-dnn-training-microsoft-research-carnegie-mellon-stanford)
 - [2018 BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google](#2018-bert-pre-training-of-deep-bidirectional-transformers-for-language-understanding-google)
+- [2017 Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](#2017-outrageously-large-neural-networks-the-sparsely-gated-mixture-of-experts-layer)
 - [2017 Neural Discrete Representation Learning (RQVAE), Google](#2017-neural-discrete-representation-learning-rqvae-google)
 - [2017 Mixed Precision Training, Baidu and NVIDIA](#2017-mixed-precision-training-baidu-and-nvidia)
 - [2018 Group Normalization, Facebook AI Research](#2018-group-normalization-facebook-ai-research)
 - [2016 Semi-Supervised Classification with Graph Convolutional Networks](#2016-semi-supervised-classification-with-graph-convolutional-networks)
+- [2016 Neural Architecture Search with Reinforcement Learning, Google, ICLR 2017](#2016-neural-architecture-search-with-reinforcement-learning-google-iclr-2017)
 - [2016 Attention is all you need (Transformer), Google, NeurIPS 2017](#2016-attention-is-all-you-need-transformer-google-neurips-2017)
 - [2015 Distilling the Knowledge in a Neural Network, Google, and](#2015-distilling-the-knowledge-in-a-neural-network-google-and)
 - [2021 Knowledge distillation in deep learning and its applications, and](#2021-knowledge-distillation-in-deep-learning-and-its-applications-and)
@@ -67,6 +76,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2015 Siamese neural networks for one-shot image recognition, CS Toronto, ICML 2015](#2015-siamese-neural-networks-for-one-shot-image-recognition-cs-toronto-icml-2015)
 - [2015 Neural Machine Translation by Jointly Learning to Align and Translate (and Attention Mechanism), D. Bahdanau, K. Cho, Y. Bengio](#2015-neural-machine-translation-by-jointly-learning-to-align-and-translate-and-attention-mechanism-d-bahdanau-k-cho-y-bengio)
 - [2015 Spatial Transformer Networks, Google DeepMind, NeurIPS 2015](#2015-spatial-transformer-networks-google-deepmind-neurips-2015)
+- [2014 Learning Factored Representations in a Deep Mixture of Experts](#2014-learning-factored-representations-in-a-deep-mixture-of-experts)
 - [2014 Deeply-supervised Nets, USCD and Microsoft](#2014-deeply-supervised-nets-uscd-and-microsoft)
 - [2014 Generative Adversarial Networks (GANs), Univ Montreal, NeurIPS 2014](#2014-generative-adversarial-networks-gans-univ-montreal-neurips-2014)
 - [2014 Sequence to Sequence Learning with Neural Networks, Google, NeurIPS 2014](#2014-sequence-to-sequence-learning-with-neural-networks-google-neurips-2014)
@@ -76,6 +86,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2011 Cyclical Learning Rates for Training Neural Networks, US Naval Research Lab, 2017](#2011-cyclical-learning-rates-for-training-neural-networks-us-naval-research-lab-2017)
 - [2006 Connectionist Temporal Classification: Labelling Unsegmented: Sequence Data with Recurrent Neural Networks, IDSIA Switzerland, ICML 2006](#2006-connectionist-temporal-classification-labelling-unsegmented-sequence-data-with-recurrent-neural-networks-idsia-switzerland-icml-2006)
 - [2006 Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss), New York Uni, CVPR 2006](#2006-dimensionality-reduction-by-learning-an-invariant-mapping-contrastive-loss-new-york-uni-cvpr-2006)
+- [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
 
 <br/><center><font size="5"><i class="fa fa-regular fa-bars"></i></font></center><br/>
 
