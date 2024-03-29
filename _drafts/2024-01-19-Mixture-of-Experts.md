@@ -9,18 +9,20 @@ In foundational models, size matters. The question of how and how much to scale 
 
 Adding to that, details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) - the current reigning champion on the [ChatBot benchmark](https://chat.lmsys.org/) - were recently [leaked](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/). It mentions the usage of **Mixture-of-Experts (MoEs)**, with 16 different experts of circa 110 billion parameters each, totalling about 1.8 trillion parameters. Briefly after, [Mistral 7x8B](https://mistral.ai/news/mixtral-of-experts/) has been released as a MoE model of 8 experts with 7 billion parameters each, claiming its performance beats [GPT-3.5](https://en.wikipedia.org/wiki/GPT-3) with circa 175 billion parameters.
 
-Behind this success is the fact that MoEs provide more efficient training, faster inference due to sparsity, and better model accuracy for the same compute budget or parameter count. With that in mind, in this post, we will go through an historical overview of MoEs. We will foccus on efforts towards large-scale distributed/parallel MoE implementations. We will look at the following publications:
+Behind this success is the fact that MoEs provide more efficient training, faster inference due to sparsity, and better model accuracy for the same compute budget or parameter count. With that in mind, in this post, we will go through an historical overview of MoEs. We will finalize with an [implementation of Switch Transformer MoEs on PyTorch](#implementation-on-pytorch) and [DeepSpeed](#implementation-on-deepspped). We will look at the following publications: 
+  
 - [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
 - [2014 Learning Factored Representations in a Deep Mixture of Experts](#2014-learning-factored-representations-in-a-deep-mixture-of-experts)
 - [2017 Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](#2017-outrageously-large-neural-networks-the-sparsely-gated-mixture-of-experts-layer)
 - [2020 GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](#2020-gshard-scaling-giant-models-with-conditional-computation-and-automatic-sharding)
 - [2021 Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](#2021-switch-transformers-scaling-to-trillion-parameter-models-with-simple-and-efficient-sparsity)
-- [2022 Towards Understanding Mixture of Experts in Deep Learning](#2022-towards-understanding-mixture-of-experts-in-deep-learning)
-- [2022 ST-MoE: Designing Stable and Transferable Sparse Expert Models](#2022-st-moe-designing-stable-and-transferable-sparse-expert-models)
+  - [Implementation on PyTorch](#implementation-on-pytorch)
+  - [Implementation on DeepSpped](#implementation-on-deepspped)
+- [2022 MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](#2022-megablocks-efficient-sparse-training-with-mixture-of-experts)
+- [Other publications of interest](#other-publications-of-interest)
     - [Improving MoE's finetuning](#improving-moes-finetuning)
     - [When to use sparse MoE vs dense models?](#when-to-use-sparse-moe-vs-dense-models)
-- [2022 MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](#2022-megablocks-efficient-sparse-training-with-mixture-of-experts)
-- [2024 Mixtral of Experts](#2024-mixtral-of-experts)
+  - [2024 Mixtral of Experts](#2024-mixtral-of-experts)
 
 
 # 1991 [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf)
@@ -70,7 +72,7 @@ single expert for two of the four model sizes. Encouragingly, the DMoE performs 
 a fully-connected network (DNN) with the same number of parameters, even though this network
 imposes fewer constraints on its structure". 
 
-In practice, the total error on a Mixture of Experts takes into account the average of all expert errors, so the optimizer will focus on improving the experts that were assigned the most weights, and/or improve the assignments (gating network). An important results multivates exploring stacked MoEs.
+In practice, the total error on a Mixture of Experts takes into account the average of all expert errors, so the optimizer will focus on improving the experts that were assigned the most weights, and/or improve the assignments (gating network). An important result multivated the exploration of stacked MoEs:
 > we find that the Deep Mixture of Experts automatically learns to develop location-dependent ("where") experts at the first layer, and class-specific ("what") experts at the second layer.
 
 <!-- 
@@ -121,9 +123,21 @@ $$
 L_{importance} = w_{importance} \cdot CV \, (Importance (X))^2
 $$ 
 
-where the coefficient of variation ($$CV$$, or relative standard deviation) represents the dispersion of the probability distribution and is defined as the ratio of the standard deviation $$\sigma$$ to the mean $$\mu$$ as $$CV= \frac {\sigma }{\mu }$$. The $$Importance$$ of an expert is computed as the batchwise sum of the gate values for that expert, and $$w_{importance}$$ is a hand-tuned scaling factor. This loss ensures equal importance, but experts may receive different numbers of examples.
+where the coefficient of variation ($$CV$$, or relative standard deviation) represents the dispersion of the probability distribution and is defined as the ratio of the standard deviation $$\sigma$$ to the mean $$\mu$$ as $$CV= \frac {\sigma }{\mu }$$. The **Importance** of an expert is computed as the batchwise sum of the gate values for that expert, and $$w_{importance}$$ is a hand-tuned scaling factor. As an example, if you had a batch of 4 samples $$x_i$$ assigned across 5 experts $$E_j$$, with the following distribution:
 
-Moreover, as we deal with sequences of varying lengths, experts may receive a different number of examples, that can cause memory and performance issues on distributed hardware. To solve this, a second **load loss** $$L_{load}$$ is introduced to ensure load balancing. This loss encourages experts to receive a similar amount of training samples. However, note that the number of received tokens per expert is a constant and can not be backpropagated, so instead they use a smooth operator $$Load(X)$$ that can be back propagated, as:
+|-|-|-|-|-|-|
+| | $$E_1$$	| $$E_2$$ | $$E_3$$ | $$E_4$$ | $$E_5$$ |
+|-|-|-|-|-|-|
+| $$x_1$$ | 0.1 | 0.1 | 0 | 0.8 | 0 |
+| $$x_2$$ | 0 | 0 | 0.2 | 0.7 | 0.1 |
+| $$x_3$$ | 0.1 | 0 | 0 | 0.9 | 0 |
+| $$x_4$$ | 0 | 0 | 0 | 1 | 0 |
+| **Importance (sum)** | **0.2** | **0.1** | **0.2** | **2.4** | **0.1** |
+|-|-|-|-|-|-|
+
+, the mean of the importance is 0.6, and standard deviation is 0.9, thus the CV is 0.667. If experts would be assigned a similar importance, then the variance would've been smaller and the CV also smaller, thus reducing the importance loss. 
+
+This loss tries to balance overall importance across experts, but experts may receive different numbers of examples. This may lead memory and compute imbalance on distributed hardware, and to having experts that are undertrained. To solve this, a second **load loss** $$L_{load}$$ is introduced to encourages experts to receive a similar amount of training samples. However, note that the number of received tokens per expert is a constant and can not be backpropagated, so instead they use a smooth operator $$Load(X)$$ that can be back propagated, as:
 
 $$
 L_{load}(X)_i = \sum_{x \in X} P(x,i)
@@ -142,35 +156,46 @@ Another important message in this paper is that it is suggested that learning to
 
 # 2020 [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668)
 
-With the explosing increase in interest on Transformer-based architectures, it is not a surprise that Transformer-based MoE gained a special momentum. In 2023, GShard demonstrated scaling of MoEs on a model of 600 billion parameters sequence-to-sequence Transformer model with Sparsely-Gated Mixture-of-Experts layers. They claim that the their methods yield sub-linear computation cost and graph $$O(1)$$ compilation time on 2048 TPU devices.
-This performance was achieved via:
+So far we covered deep MoE models based on recursive LSTM and stacks of MoEs. In 2020, GShard explored the scaling of Transformer-based Sparsely-Gated MoEs on a model of 600 billion parameters on a sequence-to-sequence (machine translation) task. They claim that the their methods yield sub-linear computation cost and graph $$O(1)$$ compilation time on 2048 TPU devices. This performance was achieved via:
 - **Position-wise Sparsely-Gated MoEs**, just like the previous paper, that scales the capacity of RNN-based machine translation and language models and delivers sub-linear scaling;
 - **GShard module that separates model description from the parallel partitioning**. It consists of "of a set of simple APIs for annotations, and a compiler extension in XLA for automatic parallelization." This allows developers to write the module and the runtime will automatically partition it accross compute unitrs;
 - **compiler technique for SPMD (Single Program Multiple Data) transformation that generates a single program to run on all devices**, in order to keep the compilation time constant independent of the number of devices. 
 
-The model used for the  sequence-to-sequence task (machine translation) presented is a Transformer-based language model, made of stacks of encoder and decoder layers. Each Transformer block (made of self-attention, feed-forward and on the decoder's case, attention mask) was converted to a conditional computation by replacing **every other feed-forward layer** with a MoE layer with a variant of **top-2 gating** in both the encoder and the decoder. The encoder part can be represented as:
+The model used for the task presented is a Transformer-based language model, made of stacks of encoder and decoder layers. Each Transformer block (made of self-attention, feed-forward and on the decoder's case, attention mask) was converted into a conditional computation by **replacing the feed-forward layer in every second block with a MoE** layer with a variant of **top-2 gating** in both the encoder and the decoder. The encoder part can be represented as:
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/Mixture-of-Experts/MoE_GShard.png"/>
 
-Strangely enough, the paper does not mention why picking "replacing every second FFN by an MoE" instead of picking every third or every single FFN instead. The parallelism follows the hybrib sharded-MoEs with data-parallel FFN and gating, as in the previous paper - confusingly, the "model-parallel MoE" in the picture refers to sharding and not to tensor parallelism. The underlying formulation of the gating mechanism is the following: A MoE layer for Transformer consists of $$E$$ feed-forward networks $$FFN_1$$ ... $$FFN_E$$ where:
+Strangely enough, the paper does not mention why they introduced MoE in every second block, instead of every third or every single block instead. The parallelism follows the hybrib sharded-MoEs with data-parallel FFN and gating, as in the previous paper. As a side node, the "model-parallel MoE" in the picture refers to sharding and not to tensor/activation parallelism. The underlying formulation of the gating mechanism is the following: a MoE layer for Transformer consists of $$E$$ feed-forward networks $$FFN_1$$ ... $$FFN_E$$, formulated as:
 
 $$
 FFN_e(x_s) = wo_e · ReLU(wi_e · x_s)
+$$
 
+and
+
+$$
 y_x = \sum_{e=1}^{E} G_e(x_s) · FFN_e(x_s)
 $$
 
 where $$G_e(x_s)$$ is the probabilities (post-softmax) output by the gating mechanism for expert $$e$$ given input $$x_s$$, and $$y_x$$ is as before the weighted sum of products of the gating probabilities and the FFN outputs (FFN here refers to an expert). $$x_s$$ is the input token to the MoE layer, $$w_i$$ and $$w_o$$ are the input and output projection matrices for the feed-forward layer.
 
-The avoid few experts *stealing* most of the attention at the early stages of training, an **auxiliary loss** similar to the previous was also added. **Load balancing** was regulated by assigning a maximum number of tokens to each expert (not that batches are of heterogenous number of tokens per sentence, thus here they choose to balance not by number of samples but by total number of tokens across samples). Finally, they introducted the concept of **random routing**, where in a top-2 setup, "if the weight for the 2nd expert is very small, we can simply ignore the 2nd expert to conserve the overall expert capacity". 
+The total loss is described as $$L = l_{nll} + k ∗ l_{aux}$$, where $$l_{nll}$$ is the negative log-likelihood loss, and $$l_{aux}$$ is an auxiliary loss to help avoiding few experts *stealing* most of the attention at the early stages of training. This auxiliary loss is formulated as
 
-The parallel-partitioning is a combination of data-parallel and sharding. This is because (quoting the paper):
-1. the attention layer is parallelized by splitting along the batch dimension and replicating its weights to all devices; and 
-2. experts in the MoE layer are infeasible to be replicated in all the devices due to its sheer size and the only viable strategy is to shard experts into many devices.
+$$
+l_{aux} = \frac{1}{E} \sum^E_{e=1} \frac{c_e}{S} \, m_e
+$$
 
+where the term $$c_e/S$$ represents the fraction of input routed to each expert and $$m_e$$ is the mean gates per expert (note that $$m_e$$ is added because $$c_e/S$$ is a constant and is not differentiable).
+
+**Load balancing** was regulated by guaranteeing that the total number of tokens assigned to each expert is not below a given threshold (this is in contrast to have a threshold in the number of samples). Finally, they introducted the concept of **random routing**, where in a top-2 setup, "if the weight for the 2nd expert is very small, we can simply ignore the 2nd expert to conserve the overall expert capacity". 
+
+The parallel-partitioning is a combination of data-parallel and sharding: (1) "the attention layer is parallelized by splitting along the batch dimension and replicating its weights to all devices"; and (2) "experts in the MoE layer are infeasible to be replicated in all the devices due to its sheer size and the only viable strategy is to shard experts into many devices".
+
+<!--
 Finally, they mention **Mixing manual and automatic sharding**, where it allows user to manually specify the sharding by telling the runtime "on how operators are partitioned, and one example is that the user has more run-time knowledge beyond the operators’ semantics", more concretely the "user might know that a specific Gather operator shuffles data only within each partition".
 However, they claim that "the automatic sharding assignment is not the focus of this paper and we leave it as future work".
+-->
 
 # 2021 [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
 
@@ -188,7 +213,7 @@ In order to achieve scaling, the sparsely activated layers split *unique weights
 
 The regular top-$$k$$ routing mechanism used in common use cases was replaced by a **Switch Routing**.  Here, in contradiction to the paper [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538), where the authors claim that you need to compute a loss of at least 2 experts in order to train an MoE successfully, in **Switch Transformers they route to only a single expert**. The claim is that "simplification preserves model quality, reduces routing computation and performs better. This $$k=1$$ routing strategy is later referred to as a Switch layer". This leads to several benefits: reduced batch size as only a single expert is used, simpler routing and reduced communication.
 
-They introduce the concept of **expert capacity factor**, which is the number of tokens that each expert computes, computed at batch size divided by number of experts (as before), times a capacity factor. If this capacity factor is exceeded (ie if the router sends too many inputs to a given expert), then extra tokens do not have computation associeated with them and are instead passed to the next layer via a residual connection.
+They introduce the concept of **expert capacity factor**, which is the number of tokens that each expert computes, computed as batch size divided by number of experts (as before), times a capacity factor. If this capacity factor is exceeded (ie if the router sends too many inputs to a given expert), then extra tokens do not have computation associeated with them and are instead passed to the next layer via a residual connection.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/Mixture-of-Experts/MoE_Switch_Transformers_2.png"/>
@@ -201,29 +226,41 @@ One of the downsides of MoEs is the large number of parameters. If one wants to 
 small dense models. We reduce the model size by up to 99% while preserving 30% of
 the quality gains of the large sparse teacher.
 
-# 2022 [Towards Understanding Mixture of Experts in Deep Learning](https://arxiv.org/abs/2208.02813)
+## Implementation on PyTorch
 
-Training and inference MoEs is as follows: 
-- During training, all experts and the router/gating are training simultaneously. 
-- During inference, only a few (or all) experts are activated, depending on the routing algorithm.
+```python
+def foo():
+    pass
+```
 
-How does it work? if we have a high loss, either the gating will learn to pick a better expert, or the expert will learnt to perform that task better. It becomes interesting that experts can specialize in their own task, and do not collapse into a single model (task).
+## Implementation on DeepSpped
 
-The paper [Towards Understanding Mixture of Experts in Deep Learning](https://arxiv.org/abs/2208.02813) covers this topic and formally studies "how the MoE layer improves the performance of neural network learning and why the mixture model will not collapse into a single model". It claims that:
-- "cluster structure of the underlying problem and the non-linearity of the expert are pivotal to the success of MoE";
-- there needs to be non-linearity in the experts for an MoE system to work; and 
-- "the router can learn the cluster-center features, which helps divide the input complex problem into simpler linear classification sub-problems that individual experts can conquer".
+```python
+def foo():
+    pass
+```
 
-This was demonstrated using a top-1 MoE model on a task classification problem with intrinsic cluster structures, which is hard to learn using a single expert. Each expert is a two-layer Conv Net, trained on the CIFAR-10 classification, and in the following image, a 4 cluster dataset:
+
+# 2022 [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
+
+from [this](https://huggingface.co/blog/moe#switch-transformers) blog post:
+
+> Megablocks (Nov 2022) explores efficient sparse pretraining by providing new GPU kernels that can handle the dynamism present in MoEs. Their proposal never drops tokens and maps efficiently to modern hardware, leading to significant speedups. What’s the trick? Traditional MoEs use batched matrix multiplication, which assumes all experts have the same shape and the same number of tokens. In contrast, Megablocks expresses MoE layers as block-sparse operations that can accommodate imbalanced assignment.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Mixture-of-Experts/MoE_2022_Zixiang_Chen.png"/>
+<img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks.png"/>
 
 
-# 2022 [ST-MoE: Designing Stable and Transferable Sparse Expert Models](https://arxiv.org/abs/2202.08906)
+# Other publications of interest
 
-Mixture of Experts are "hindered by training instabilities and uncertain quality during fine-tuning". 
-We can use many methods to regularize the model to avoid instability. Dropout is generally a good option, except that reduces the model quality when experts are *small*. Adding complexity to the experts makes them mode capable but more prone to instability. Other options analysed that suffer from the same drawbacks are:
+**[2022 Towards Understanding Mixture of Experts in Deep Learning](https://arxiv.org/abs/2208.02813)** formally studies "how the MoE layer improves the performance of neural network learning and why the mixture model will not collapse into a single model". It experiments on a 4-cluster classification vision task and claims that: (1) "cluster structure of the underlying problem and the non-linearity of the expert are pivotal to the success of MoE"; (2) there needs to be non-linearity in the experts for an MoE system to work; and (3) "the router can learn the cluster-center features, which helps divide the input complex problem into simpler linear classification sub-problems that individual experts can conquer".
+
+**[2022 ST-MoE: Designing Stable and Transferable Sparse Expert Models](https://arxiv.org/abs/2202.08906)** is an analysis of training instabilities and uncertain quality during fine-tuning of very large MoEs, with several results:
+- Mixture of Experts are "hindered by training instabilities and uncertain quality during fine-tuning"
+- Dropout is generally a good option, except that reduces the model quality when experts are *small*.
+- Adding complexity to the experts makes them mode capable but more prone to instability.
+
+Other options analysed that suffer from the same drawbacks are:
 1. Remove multiplicative interactions, such as GEGLU and Root Mean Square Scare Parameters, detailed in section 3.1;
 2. Inject model noise, section 3.2;
 3. Constrain (clop) activations and gradients, where they shown that both update clipping and the router z-loss stabilize the model, but the update clipping significantly hurts the model quality, section 3.3, table 4.
@@ -312,18 +349,7 @@ from [this](https://huggingface.co/blog/moe#switch-transformers) blog post:
 > Experts are useful for high throughput scenarios with many machines. Given a fixed compute budget for pretraining, a sparse model will be more optimal. For low throughput scenarios with little VRAM, a dense model will be better.
 Note: one cannot directly compare the number of parameters between sparse and dense models, as both represent significantly different things.
 
-
-# 2022 [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
-
-
-from [this](https://huggingface.co/blog/moe#switch-transformers) blog post:
-
-> Megablocks (Nov 2022) explores efficient sparse pretraining by providing new GPU kernels that can handle the dynamism present in MoEs. Their proposal never drops tokens and maps efficiently to modern hardware, leading to significant speedups. What’s the trick? Traditional MoEs use batched matrix multiplication, which assumes all experts have the same shape and the same number of tokens. In contrast, Megablocks expresses MoE layers as block-sparse operations that can accommodate imbalanced assignment.
-
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks.png"/>
-
-# 2024 [Mixtral of Experts](https://arxiv.org/abs/2401.04088)
+## 2024 [Mixtral of Experts](https://arxiv.org/abs/2401.04088)
 
 The current state-of-art MoE model is the Mixtral 8x7B, a sparse mixture of expert, with the same architecture as Mixtral 7B except that it supports a fully dense context length of 32k tokens and the feed-forward blocks are replaced by a Mixture of 8 feed-forward network experts. Model architecture is detailed in Table 1. It performs a top-2 routing, and because tokens can be allocated to different experts, "each token has access to 47B parameters, but only uses 13B active parameters during inference".
 
