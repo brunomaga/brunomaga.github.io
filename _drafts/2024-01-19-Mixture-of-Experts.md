@@ -201,7 +201,7 @@ However, they claim that "the automatic sharding assignment is not the focus of 
 
 A big issue with large MoEs are training instability. With that in mind [Switch Transformers](https://arxiv.org/abs/2101.03961) tackle that problem by simplifying the routing algorithm and improving model specifications. There is also a strong motivational quote about the usage of MoEs, particularly to solve low-data problems:
 
-> The benefit of scale was exhaustively studied in Kaplan et al. (2020) which uncovered powerlaw scaling with model size, data set size and computational budget. Importantly, this work
+> The benefit of scale was exhaustively studied in [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361) which uncovered powerlaw scaling with model size, data set size and computational budget,  [and]
 advocates training large models on relatively small amounts of data as the computationally optimal approach.
 Heeding these results, we investigate a fourth axis: increase the parameter count while
 keeping the floating point operations (FLOPs) per example constant.
@@ -243,20 +243,37 @@ def foo():
 
 # 2022 [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
 
-from [this](https://huggingface.co/blog/moe#switch-transformers) blog post:
-
-> Megablocks (Nov 2022) explores efficient sparse pretraining by providing new GPU kernels that can handle the dynamism present in MoEs. Their proposal never drops tokens and maps efficiently to modern hardware, leading to significant speedups. What’s the trick? Traditional MoEs use batched matrix multiplication, which assumes all experts have the same shape and the same number of tokens. In contrast, Megablocks expresses MoE layers as block-sparse operations that can accommodate imbalanced assignment.
+MegaBlocks is "a system for efficient Mixture-of-Experts (MoE) training on GPUs", that addresses the **model quality vs hardware efficiency tradeoff** on the dynamic routing of MoE layers. In detail, the load-imbalanced computation on MoEs forces one to either (1) drop tokens from the computation or (2) waste computation and memory on padding, a parameter that is usually improved via hyperparameter tuning. However, we know that "The loss reached by the MoE models decreases significantly as expert capacity is increased, but at the cost of additional computation" and "the lowest loss is achieved by the 'max expert capacity value', which avoids dropping tokens through the dynamic
+capacity factor mechanism proposed by [Adaptive
+mixture-of-experts at scale (2002)](#)". So not dropping tokens is ideal.
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks.png"/>
+
+As a second motivation, "the sparse computation in MoEs does not map cleanly to the software primitives supported in major frameworks and libraries". 
+ To overcome these limitations, MegaBlocks "reformulates MoE computation in terms of block-sparse operations and develop new block-sparse GPU kernels that efficiently handle the dynamism present in MoEs".
+In practice, it proposes an approach of MoE routing based on **sparse primitives, that matches efficiently to GPUs and never drops tokens**, " enabling end-to-end training speedups of up to 40% and 2.4× over state of the art". This is achieved by performing block-sparse operations in the MoE layers to accommodate imbalanced assignment of tokens to experts. This is called **dropless-MoEs (dMoEs)** and contrasts with regular MoEs that use batched matrix multiplication instead. These dropless-MoEs kernels use blocked-CSR-COO encoding and transpose indices to enable efficient matrix products with sparse inputs.
 
 
 # Other publications of interest
 
 **[2022 Towards Understanding Mixture of Experts in Deep Learning](https://arxiv.org/abs/2208.02813)** formally studies "how the MoE layer improves the performance of neural network learning and why the mixture model will not collapse into a single model". It experiments on a 4-cluster classification vision task and claims that: (1) "cluster structure of the underlying problem and the non-linearity of the expert are pivotal to the success of MoE"; (2) there needs to be non-linearity in the experts for an MoE system to work; and (3) "the router can learn the cluster-center features, which helps divide the input complex problem into simpler linear classification sub-problems that individual experts can conquer".
 
-**[2022 ST-MoE: Designing Stable and Transferable Sparse Expert Models](https://arxiv.org/abs/2202.08906)** is an analysis of training instabilities and uncertain quality during fine-tuning of very large MoEs, with several results:
-- Mixture of Experts are "hindered by training instabilities and uncertain quality during fine-tuning"
+**[2022 ST-MoE: Designing Stable and Transferable Sparse Expert Models](https://arxiv.org/abs/2202.08906)** is a large-scale stability study of training and fine-tuning of very large sparse MoEs.
+The paper introduces the **router z-loss**, that resolves instability issues and improves slightly the model quality, and a 269B sparse model -- **the Stable Transferable Mixture-of-Experts** or ST-MoE-32B - that achieves state-of-the-art performance across several NLP benchmarks. The z-loss formulation is:
+
+$$
+L_z(x) = \frac{1}{B} \sum_{i=1}^B \left( \log \sum_{j=1}^N e^{x_j^{(i)}} \right)
+$$
+
+where B is the number of tokens, N is the number of experts, and $$x \in \mathbb{R}^{B×N}$$ are the logits going into the router. The rationale behind z-loss is that it penalizes large logits into the gating network. Therefore the final loss is now a scaled sum of Cross-Entropy loss, load balancing sum, and z-loss sum:
+
+$$
+L_{tot} = L_{CE} + c_BL_B + c_zL_Z
+$$
+
+It contains a very extensive list of results:
+- Mixture of Experts are "hindered by training instabilities and uncertain quality during fine-tuning. [...] these instabilities were later identified in other sparse models (see [GLaM: Efficient Scaling of Language Models with Mixture-of-Experts](https://arxiv.org/abs/2112.06905) )."
 - Dropout is generally a good option, except that reduces the model quality when experts are *small*.
 - Adding complexity to the experts makes them mode capable but more prone to instability.
 
@@ -265,27 +282,7 @@ Other options analysed that suffer from the same drawbacks are:
 2. Inject model noise, section 3.2;
 3. Constrain (clop) activations and gradients, where they shown that both update clipping and the router z-loss stabilize the model, but the update clipping significantly hurts the model quality, section 3.3, table 4.
 
-> necessary pre-training was hampered by training instabilities previously undetected during smaller scale studies. These instabilities were later identified in other sparse models (see [GLaM: Efficient Scaling of Language Models with Mixture-of-Experts](https://arxiv.org/abs/2112.06905) ). These results revealed a necessary balance of parameters and computation, but left an open question on how to reliably train these types of models. Our aim in this paper is to increase the practicality and reliability of sparse models. [...] We also put forth additional
-analysis and a design guide (or at least, our heuristics) for sparse expert models. Furthermore, this work emphasizes jointly optimizing both the upstream pre-training and the downstream fine-tuning metrics to avoid discrepancies.
 
-The sudy covers instability by training the baseline implementation with six random seeds, and the variants with three random seeds (to save compute).
-
-{: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Mixture-of-Experts/MoE_2022_ST-MoE.png"/>
-
-This paper introduces also the **router z-loss**, that resolves instability issues and improves slightly the model quality, and a 269B sparse model -- **the Stable Transferable Mixture-of-Experts** or ST-MoE-32B - that achieves state-of-the-art performance across several NLP benchmarks.
-
-$$
-L_z(x) = \frac{1}{B} \sum_{i=1}^B \left( \log \sum_{j=1}^N e^{x_j^{(i)}} \right)
-$$
-
-where B is the number of tokens, N is the number of experts, and $$x \in \mathbb{R}^{B×N}$$ are the logits going into the router. The rationale behind z-loss is that it penalizes large logits into the gating network. Therefore the final loss is now a scaled (by user-defined hyper-parameters) sum of Cross-Entropy loss, load balancing sum, and z-loss sum:
-
-$$
-L_{tot} = L_{CE} + c_BL_B + c_zL_Z
-$$
-
-> The batch B of input tokens is broken into G unique groups across the data-parallelism dimension. each with size B/G. The expert capacity is equal to CF · tokens/experts where CF is the capacity factor hyperparameter (1.25 for train and 2.0 for eval), and tokens is the group size (note: the global batch size is split into smaller groups, each of size *data-parallel* Group Size). 
 
 The authors also claim that sparse models are prone to overfit. In practice, sparse models do well when running on large datasets (pre-train), but can perform badly on smaller / finetuning datasets. This was demonstrated by running two tasks (Commitment Bank and ReCORD) of the SuperGLUE benchmakr. Each model contains 32 experts and was pre-trained on 500B tokens from the C4 corpus, and compared against a roughly equivalent (by FLOPs) dense T5 model.
 
