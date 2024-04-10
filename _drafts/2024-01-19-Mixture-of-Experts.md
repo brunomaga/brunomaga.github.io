@@ -1,15 +1,13 @@
 ---
 layout: post
 title:  "Mixture-of-Experts: a historical overview, with distributed DeepSpeed and Pytorch implementations"
-categories: [machine learning, Transformer, GPT, DeepSpeed, inference, mixture-of-experts]
+categories: [machine learning, Transformer, GPT, DeepSpeed, mixture-of-experts]
 tags: [machinelearning]
 ---
 
-In foundational models, size matters. The question of how and how much to scale in order to achieve complex problem solving skills have already been covered in [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361) and [Emergent Abilities of Large Language Models](https://openreview.net/forum?id=yzkSU5zdwD).
+Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) - the current reigning champion on the [ChatBot benchmark](https://chat.lmsys.org/) - were recently [leaked](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/). It mentions the usage of **Mixture-of-Experts (MoEs)**, with 16 different experts of circa 110 billion parameters each, totalling about 1.8 trillion parameters. Briefly after, [Mistral 7x8B](https://mistral.ai/news/mixtral-of-experts/) has been released as a MoE model of 8 experts with 7 billion parameters each, claiming its performance beats [GPT-3.5](https://en.wikipedia.org/wiki/GPT-3) with circa 175 billion parameters.
 
-Adding to that, details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) - the current reigning champion on the [ChatBot benchmark](https://chat.lmsys.org/) - were recently [leaked](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/). It mentions the usage of **Mixture-of-Experts (MoEs)**, with 16 different experts of circa 110 billion parameters each, totalling about 1.8 trillion parameters. Briefly after, [Mistral 7x8B](https://mistral.ai/news/mixtral-of-experts/) has been released as a MoE model of 8 experts with 7 billion parameters each, claiming its performance beats [GPT-3.5](https://en.wikipedia.org/wiki/GPT-3) with circa 175 billion parameters.
-
-Behind this success is the fact that MoEs provide more efficient training, faster inference due to sparsity, and better model accuracy for the same compute budget or parameter count. With that in mind, in this post, we will go through an historical overview of MoEs. We will finalize with an [implementation of Switch Transformer MoEs on PyTorch](#implementation-on-pytorch) and [DeepSpeed](#implementation-on-deepspped). We will look at the following publications:
+Behind this success is the fact that MoEs provide better training scaling and faster inference due to **sparsity**, yielding better model accuracy for the same compute budget or parameter count. The scaling and analysis of training non-sparse (dense) models have been already covered in [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361) and [Emergent Abilities of Large Language Models](https://openreview.net/forum?id=yzkSU5zdwD). In this post, we will go through an historical overview of training and fine-tuning of sparse models and MoEs and provide a [implementation on PyTorch](#implementation-on-pytorch) and an [implementation on DeepSpeed](#implementation-on-deepspped) of a large-scale distributed Switch Transformer MoE. We will go through the following publications:
   
 - [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
 - [2014 Learning Factored Representations in a Deep Mixture of Experts](#2014-learning-factored-representations-in-a-deep-mixture-of-experts)
@@ -19,12 +17,12 @@ Behind this success is the fact that MoEs provide more efficient training, faste
   - [Implementation on PyTorch](#implementation-on-pytorch)
   - [Implementation on DeepSpped](#implementation-on-deepspped)
 - [2022 MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](#2022-megablocks-efficient-sparse-training-with-mixture-of-experts)
+- [2022 Towards Understanding Mixture of Experts in Deep Learning](#2022-towards-understanding-mixture-of-experts-in-deep-learning)
+- [2022 GLaM: Efficient Scaling of Language Models with Mixture-of-Experts](#2022-glam-efficient-scaling-of-language-models-with-mixture-of-experts)
+- [2022 ST-MoE: Designing Stable and Transferable Sparse Expert Models](#2022-st-moe-designing-stable-and-transferable-sparse-expert-models)
+- [2023 Mixture-of-Experts Meets Instruction Tuning: a Winning Combination for Large Language Models](#2023-mixture-of-experts-meets-instruction-tuning-a-winning-combination-for-large-language-models)
 - [2024 Mixtral of Experts](#2024-mixtral-of-experts)
-- [Other papers related to stability, fine-tuning and understanding of MoEs](#other-papers-related-to-stability-fine-tuning-and-understanding-of-moes)
-  - [2022 Towards Understanding Mixture of Experts in Deep Learning](#2022-towards-understanding-mixture-of-experts-in-deep-learning)
-  - [2022 GLaM: Efficient Scaling of Language Models with Mixture-of-Experts](#2022-glam-efficient-scaling-of-language-models-with-mixture-of-experts)
-  - [2022 ST-MoE: Designing Stable and Transferable Sparse Expert Models](#2022-st-moe-designing-stable-and-transferable-sparse-expert-models)
-  - [2023 Mixture-of-Experts Meets Instruction Tuning:A Winning Combination for Large Language Models](#2023-mixture-of-experts-meets-instruction-tuninga-winning-combination-for-large-language-models)
+- [2024 Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](#2024-mixture-of-depths-dynamically-allocating-compute-in-transformer-based-language-models)
 
 ## 1991 [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf)
 
@@ -254,25 +252,21 @@ As a second motivation, "the sparse computation in MoEs does not map cleanly to 
  To overcome these limitations, MegaBlocks "reformulates MoE computation in terms of block-sparse operations and develop new block-sparse GPU kernels that efficiently handle the dynamism present in MoEs".
 In practice, it proposes an approach of MoE routing based on **sparse primitives, that matches efficiently to GPUs and never drops tokens**, " enabling end-to-end training speedups of up to 40% and 2.4× over state of the art". This is achieved by performing block-sparse operations in the MoE layers to accommodate imbalanced assignment of tokens to experts. This is called **dropless-MoEs (dMoEs)** and contrasts with regular MoEs that use batched matrix multiplication instead. These dropless-MoEs kernels use blocked-CSR-COO encoding and transpose indices to enable efficient matrix products with sparse inputs.
 
-## 2024 [Mixtral of Experts](https://arxiv.org/abs/2401.04088)
 
-The current state-of-art MoE model is the Mixtral 8x7B, a sparse mixture of expert, with the same architecture as Mixtral 7B except that it supports a fully dense context length of 32k tokens and the feed-forward blocks are replaced by a Mixture of 8 feed-forward network experts. Model architecture is detailed in Table 1. It performs a top-2 routing, and because tokens can be allocated to different experts, "each token has access to 47B parameters, but only uses 13B active parameters during inference". 
-
-The formulation of the model, in section 2.1, matches the GShard architecture (except that the MoE is in every layer instead of every second), with sparse top-$$k$$ MoE with gating $$G(x) = Softmax(TopK(x · Wg))$$ where $$TopK(ℓ)= −∞$$ for the non top-$$k$$ experts. As before, "in a Transformer model, the MoE layer is applied independently per token and replaces the feed-forward (FFN) sub-block of the transformer block". They use the [SwiGLU activation function](https://arxiv.org/abs/2002.05202v1) (same as Llama-2), and therefore for a given input $$x$$ the output is computed as:
-
-$$
-y = \sum_{i=0}^{n-1} Softmax(Top2(x · W_g))_i· SwiGLU_i(x).
-$$
-
-## Other papers related to stability, fine-tuning and understanding of MoEs
-
-### 2022 [Towards Understanding Mixture of Experts in Deep Learning](https://arxiv.org/abs/2208.02813)
+## 2022 [Towards Understanding Mixture of Experts in Deep Learning](https://arxiv.org/abs/2208.02813)
 
 Formally studies "how the MoE layer improves the performance of neural network learning and why the mixture model will not collapse into a single model". It experiments on a 4-cluster classification vision task and claims that: (1) "cluster structure of the underlying problem and the non-linearity of the expert are pivotal to the success of MoE"; (2) there needs to be non-linearity in the experts for an MoE system to work; and (3) "the router can learn the cluster-center features, which helps divide the input complex problem into simpler linear classification sub-problems that individual experts can conquer".
 
-### 2022 [GLaM: Efficient Scaling of Language Models with Mixture-of-Experts](https://arxiv.org/abs/2112.06905)
+## 2022 [GLaM: Efficient Scaling of Language Models with Mixture-of-Experts](https://arxiv.org/abs/2112.06905)
 
-### 2022 [ST-MoE: Designing Stable and Transferable Sparse Expert Models](https://arxiv.org/abs/2202.08906)
+Introduces GLaM (Generalist Language Model), a family of dense and sparse decoder-only language models, "which uses a sparsely activated mixture-of-experts architecture to scale the model capacity while also incurring substantially less training cost compared to dense variants". GLam has 1.2 trillion parameters (7x larger than ChatGPT-3) but requires 1/3 of the energy for training, and half of the computation flops for inference, while "achieving better overall zero, one and few-shot performance across 29 NLP tasks" (Table 1, Figure 1).
+
+Results were collected by training several variants of GLaM to study the behavior of MoE and dense models on the same training data (Table 4). The study highlights the that:
+- "the quality of the pretrained data also plays a critical role, specifically, in the performance of downstream tasks" (section 6.2);
+- sparse models scale better (section 6.3);
+- "MoE models require significantly less data than dense models of comparable FLOPs to achieve similar zero, one, and fewshot performance" (section 6.4).
+
+## 2022 [ST-MoE: Designing Stable and Transferable Sparse Expert Models](https://arxiv.org/abs/2202.08906)
 
 Presents a study with experiments, results and techniques related to the stability of training and fine-tuning of very large sparse MoEs. Also introduces the **router z-loss**, that resolves instability issues and improves slightly the model quality, and a 269B sparse model -- **the Stable Transferable Mixture-of-Experts** or ST-MoE-32B - that achieves state-of-the-art performance across several NLP benchmarks. The z-loss formulation is:
 
@@ -298,13 +292,9 @@ The paper provides the following 3 recommendations when designing sparse systems
 - the capacity factor can be changed during evaluation to adjust to new memory/compute requirements.
 - dense layer stacking and a multiplicative bias can boost quality (Appendix C).
 
-Related to the functioning of mixture of experts, the authors showed that **encoder** experts learn very shallow tasks, e.g. ponctuation, nouns, etc. Or rephrasing [this blog post](https://machinelearningmastery.com/mixture-of-experts/), MoEs perform a divide-and-conquer approach that subdivides a problem into smaller problems that can solved by different experts combined.  They did this by "visualizing how tokens are routed among (encoder) experts, [...] by passing a batch of tokens to the model and manually inspecting token assignment at each layer".
+Related to the functioning of mixture of experts, the authors showed that **encoder experts learn very shallow tasks**, e.g. ponctuation, nouns, etc. I.e., **MoEs subdivide a problem into smaller problems that can solved by different experts combined**. The authors show this by "visualizing how tokens are routed among (encoder) experts, [...] by passing a batch of tokens to the model and manually inspecting token assignment at each layer". They observed that at each layer, at least one expert specializes in **sentinel tokens** (mask tokens that represent blanks to fill-in); and some encoder experts exhibit clear specialization, with some experts primarily operating on punctuation, verbs, proper names, counting, etc. These are detailed in table 13 and 15.
 
-- At the encoder level, they observed that at each layer, at least one expert specializes in **sentinel tokens** (mask tokens that represent blanks to fill-in); and some encoder experts exhibit clear specialization, with some experts primarily operating on punctuation, verbs, proper names, counting, etc.
-
-These are detailed in table 13 and 15.
-
-- At the decoder level, "expert specialization is far less noticeable in the decoder", and meaningful specialization (semantics or syntax) are not visible in decoder experts:
+At the decoder level, "expert specialization is far less noticeable in the decoder", and meaningful specialization (semantics or syntax) are not visible in decoder experts:
   > We hypothesize that this lack of meaningful expert specialization is caused by the distribution of
 target tokens induced by the span corruption objective. In particular, (a) a smaller number of tokens
 are routed jointly in the decoder due to longer sequence lengths in the encoder (e.g. group size
@@ -313,7 +303,20 @@ are sentinel tokens in the decoder. As a result, target tokens in each group typ
 semantic space (compared to the encoder), perhaps explaining the lack of expert specialization in the
 decoder
 
-### 2023 [Mixture-of-Experts Meets Instruction Tuning:A Winning Combination for Large Language Models](https://arxiv.org/abs/2305.14705)
+## 2023 [Mixture-of-Experts Meets Instruction Tuning: a Winning Combination for Large Language Models](https://arxiv.org/abs/2305.14705)
 
 This paper claims that **Instruction tuning supplemented by further finetuning on individual downstream tasks outperforms fine-tuning or instruction-tuning alone**. To show that they perform single-task fine-tuning, multi-task instruction-tuning and multi-task instruction-tuning followed by single-task fine-tuning. They showed that MoEs benefit more from instruction tuning than other models and benefit more from a higher number of tasks. In practice:
   > in the absence of instruction tuning, MoE models fall short in performance when compared to dense models on downstream tasks. [...] When supplemented with instruction tuning, MoE models exceed the performance of dense models on downstream tasks, as well as on held-out zero-shot and few-shot tasks.
+
+## 2024 [Mixtral of Experts](https://arxiv.org/abs/2401.04088)
+
+The current state-of-art MoE model is the Mixtral 8x7B, a sparse mixture of expert, with the same architecture as Mixtral 7B except that it supports a fully dense context length of 32k tokens and the feed-forward blocks are replaced by a Mixture of 8 feed-forward network experts. Model architecture is detailed in Table 1. It performs a top-2 routing, and because tokens can be allocated to different experts, "each token has access to 47B parameters, but only uses 13B active parameters during inference". 
+
+The formulation of the model, in section 2.1, matches the GShard architecture (except that the MoE is in every layer instead of every second), with sparse top-$$k$$ MoE with gating $$G(x) = Softmax(TopK(x · Wg))$$ where $$TopK(ℓ)= −∞$$ for the non top-$$k$$ experts. As before, "in a Transformer model, the MoE layer is applied independently per token and replaces the feed-forward (FFN) sub-block of the transformer block". They use the [SwiGLU activation function](https://arxiv.org/abs/2002.05202v1) (same as Llama-2), and therefore for a given input $$x$$ the output is computed as:
+
+$$
+y = \sum_{i=0}^{n-1} Softmax(Top2(x · W_g))_i· SwiGLU_i(x).
+$$
+
+## 2024 [Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](https://arxiv.org/abs/2404.02258)
+
