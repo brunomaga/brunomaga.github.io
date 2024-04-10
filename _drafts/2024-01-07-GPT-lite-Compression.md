@@ -215,7 +215,7 @@ We can then compare the performance of the real size model, the model that was d
 
 **COMING SOON**
 
-# ONNX: Open Neural Network eXchange
+## ONNX: Open Neural Network eXchange
 
 [ONNX (Open Neural Network eXchange)](https://onnx.ai/) is an open format built to represent machine learning models, that is [independent of the framework](https://onnx.ai/onnx/intro/converters.html) used to create the model (PyTorch, Tensorflow, Scikit, etc). The `onnx` data format is a model description that can be run through the [onnx runtime](https://onnxruntime.ai/), or processed by other tools for further optimisation.
 
@@ -277,7 +277,7 @@ In this [discussion](https://dev-discuss.pytorch.org/t/the-nuances-of-pytorch-gr
 Few points worth mentioning when we look at the graphs. The graphs refer to the graph in train mode. If we set the model to evaluation mode (`model.eval()`) the graphs will differ, because evaluation disables dropout, batchnorm layers will use their running stats to normalize the data, etc. So the train graphs are usually bigger. Also, trace graphs are smaller than script graphs because the graph is generated for a single input size and type, therefore operations such as castings are removed. As a side note, the graphs generated with dynamo look smaller, but in practice, it's displaying only the top-level modules, and the sub-graph inside each module can be visualized int the Neutron app, [clicking the "f" symbol on the top-right corner](https://pytorch.org/docs/stable/onnx_dynamo.html#inspecting-the-onnx-model-using-gui) of each module to navigate the corresponding sub-graph.
 Finally, if you are curious to see all train/eval graphs generated, check the [repo for this post](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-Compression).
 
-# Flash Attention
+## Flash Attention
 
 Speeding up transformer training/inference can be achieved by two memory optimization technique which does not require modification of the mode: flash attention and continuous batching. about continuous batching, see [here](https://www.anyscale.com/blog/continuous-batching-llm-inference)
 
