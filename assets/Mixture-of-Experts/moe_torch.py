@@ -12,7 +12,7 @@ from torch.utils.data import DistributedSampler, DataLoader
 #use base GPTlite model from the GPT-lite post
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
-from gptlite import n_layer, n_embd, n_head, block_size, MultiHeadAttention, FeedForward, GPTlite
+from gptlite import n_embd, dropout, FeedForward, GPTlite
 
 #user helper functions from the GPT-lite deepspeed post
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed'))
@@ -31,48 +31,71 @@ class FeedForward_MoE(nn.Module):
     # number of devices is the same as number of experts, as per paper: " Switch Transformers
     # will allocate all of their cores to the data partitioning dimension n, which will also
     # correspond to the number of experts in the model."
-    self.n_experts = torch.cuda.device_count
+    self.n_experts = dist.get_world_size()
     self.k = k
-    self.router = DDP(FeedForward(n_embd).to(device), device_ids=[local_rank])
+    self.router = nn.Sequential(
+      nn.Dropout(dropout),
+      nn.Linear(n_embd, n_embd*4), nn.ReLU(),
+      nn.Linear(n_embd*4, n_embd*4), nn.ReLU(),
+      nn.Linear(n_embd*4, self.n_experts), nn.Softmax(dim=-1)
+    )
+    self.router = DDP(self.router.to(device), device_ids=[local_rank])
     self.expert = FeedForward(n_embd).to(device) # each GPU has 1 expert, so no DDP here
 
   def forward(self, x):
     B,T,C = x.shape
     assignments = self.router(x) #get assignements from router, shape B * T * n_experts
-    expert_values, expert_ids = torch.topk(assignments, k=self.k) # top-k experts per sentence
-    expert_probs = F.softmax(expert_values, dim=-1) #convert to probabilities
+    topk_probs, topk_ids = torch.topk(assignments, k=self.k) # top-k experts per sentence
 
-    # collect the tokens to send to each expert
+    # 1. PERMUTATION: collect the tokens to send to each expert, sort and send them
     tokens_per_expert = {i: [] for i in range(self.n_experts)}
-    for sentence_id, topk_tokens_in_sentence in enumerate(expert_ids):
-      for token_id, topk_experts_for_sentence in enumerate(topk_tokens_in_sentence):
-        for expert_id in topk_experts_for_sentence:
-          tokens_per_expert[expert_id].append( (sentence_id, token_id) )
+    for b in range(B):
+      for t in range(T):
+        for e in topk_ids[b, t]:
+          tokens_per_expert[e.item()].append( (b, t) )
+    tokens_per_expert = {expert: sorted(tokens) for expert, tokens in tokens_per_expert.items()}
 
     # each data-parallel unit has the assignments for each of its inputs, so
     # we'll do an all-to-all to exchange the count of inputs to send/receive to each processor
-    send_count = [torch.tensor([len(tokens)*C], dtype=torch.int64, device=device) for tokens in tokens_per_expert]
+    send_count = [torch.tensor([len(tokens)], dtype=torch.int64, device=device) for tokens in tokens_per_expert.values()]
     recv_count = [torch.tensor([0], dtype=torch.int64, device=device) for _ in tokens_per_expert]
     dist.all_to_all(recv_count, send_count)
+    fn_count = lambda tensor, scale=1: [x.item()*scale for x in tensor] 
+
+    # send the metadata sentence_id+token_id to the appropriate processors
+    M = 2 # metadata columns
+    send_meta = [ torch.tensor((b,t)) for expert_id in range(self.n_experts) for b,t in tokens_per_expert[expert_id] ]
+    send_meta = torch.cat(send_meta, dim=0).to(device) #flatten
+    recv_meta = torch.zeros(sum(recv_count)*M, dtype=send_meta.dtype).to(device)
+    dist.all_to_all_single(recv_meta, send_meta, fn_count(recv_count,M), fn_count(send_count,M))
+    recv_meta = recv_meta.view(-1, M) # reshape to M columns 
 
     # now we send the elements themselves to the appropriate processors, as flattened tensors
-    send = [ x[sentence_id, token_id] for expert_id in range(self.n_experts) for sentence_id, token_id in tokens_per_expert[expert_id] ]
-    send = torch.tensor(send, dim=0).flatten().to(device)
-    recv = torch.zeros(sum(recv_count), dtype=send.dtype).to(device)
-    send_count = [s.item() for s in send_count]  # convert to list of ints
-    recv_count = [r.item() for r in recv_count]
-    dist.all_to_all_single(recv, send, recv_count, send_count)
+    send_embd = [ x[b, t] for expert_id in range(self.n_experts) for b,t in tokens_per_expert[expert_id] ]
+    send_embd = torch.cat(send_embd, dim=0).to(device) #flatten
+    recv_embd = torch.zeros(sum(recv_count)*C, dtype=send_embd.dtype).to(device)
+    dist.all_to_all_single(recv_embd, send_embd, fn_count(recv_count,C), fn_count(send_count,C))
+    recv_embd = recv_embd.view(-1, C) # reshape to C columns 
 
-    # now we reshape the received tensor back to the original shape
-    recv = recv.view(-1, C) # B*T x C
-    #crop received items by padding to max capacity
-    recv = F.pad(recv, (0,0, 0, self.capacity-recv.shape[0], 0, 0), value=self.padding_token)
+    #crop or pad received items to max capacity
+    if recv_embd.shape[0]>self.capacity: #crop
+      recv_embd = recv_embd[:self.capacity]
+      recv_meta = recv_meta[:self.capacity]
+    else: # pad
+      recv_embd = F.pad(recv_embd, (0,0,0,self.capacity-recv_embd.shape[0]), value=self.padding_token)
+      recv_meta = F.pad(recv_meta, (0,0,0,self.capacity-recv_meta.shape[0]), value=self.padding_token)
 
-    # pass received tokens through this device's expert
-    x = self.expert(recv)
+    # 2. COMPUTATION: pass received tokens through this device's expert
+    x = self.expert(recv_embd)
 
-    # multiply by the probabilities of this expert
-    x = x * expert_probs
+    # 3. UN-PERMUTATION: revert to B * T * C shape 
+    send_count = [torch.tensor([len(tokens)], dtype=torch.int64, device=device) for tokens in tokens_per_expert.values()]
+    recv_count = [torch.tensor([0], dtype=torch.int64, device=device) for _ in tokens_per_expert]
+
+
+    # 4. SCALE: multiply by the probabilities assigned to each token
+    recv_topk_probs = recv_meta[:,2] 
+    x = x*recv_topk_probs.unsqueeze(1)
 
     # all reduce sum of expert outputs
     x = torch.distributed.all_reduce(x, op=torch.distributed.ReduceOp.SUM)
@@ -81,7 +104,7 @@ class FeedForward_MoE(nn.Module):
 
 if __name__ == "__main__":
   torch.manual_seed(local_rank)  #set random seed
-  vocab_size, batch_size = 65, 4 
+  vocab_size, batch_size = 65, 8 
   n_epochs = 100
   criterion = torch.nn.CrossEntropyLoss() #initialize loss function
   dataset, _, vocab_size = get_dataset()
@@ -89,17 +112,9 @@ if __name__ == "__main__":
   dataloader = DataLoader(dataset, batch_size=batch_size, sampler=sampler, num_workers=dist.get_world_size(), drop_last=True)
 
   # instantiate model and apply DDP to all layers except our MoE FeedForward
-  model = GPTlite(vocab_size).to(device)
-  model.token_embedding_table = DDP(model.token_embedding_table, device_ids=[local_rank])
-  model.position_embedding_table = DDP(model.position_embedding_table, device_ids=[local_rank])
-  model.ln = DDP(model.ln, device_ids=[local_rank])
-  model.lm_head = DDP(model.lm_head, device_ids=[local_rank])
-  for block in model.blocks:
-    block.sa = DDP(block.sa, device_ids=[local_rank])
-    block.ln1 = DDP(block.ln1, device_ids=[local_rank])
-    block.ln2 = DDP(block.ln2, device_ids=[local_rank])
-    del block.ffwd
-    block.ffwd = FeedForward_MoE().to(device)
+  model = DDP( GPTlite(vocab_size).to(device), device_ids=[local_rank])
+  for block in model.module.blocks:
+    block.ffwd = FeedForward_MoE().to(device) #replace DDP of FFN with MoE
 
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
   model.train()
