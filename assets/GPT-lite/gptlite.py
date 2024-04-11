@@ -67,7 +67,7 @@ class MultiHeadAttention(nn.Module):
 class FeedForward(nn.Module):
   """ the feed forward network (FFN) in the paper"""
 
-  def __init__(self, n_embd):
+  def __init__(self, n_embd=n_embd):
     super().__init__()
     # Note: in the paper (section 3.3) we have d_{model}=512 and d_{ff}=2048.
     # Therefore the inner layer is 4 times the size of the embedding layer
