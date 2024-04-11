@@ -12,7 +12,7 @@ from torch.utils.data import DistributedSampler, DataLoader
 #use base GPTlite model from the GPT-lite post
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
-from gptlite import n_layer, n_embd, n_head, MultiHeadAttention, FeedForward, GPTlite
+from gptlite import n_layer, n_embd, n_head, block_size, MultiHeadAttention, FeedForward, GPTlite
 
 #user helper functions from the GPT-lite deepspeed post
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed'))
@@ -22,26 +22,8 @@ local_rank = int(os.environ['LOCAL_RANK']) #set by torchrun
 device = torch.device(f"cuda:{local_rank}" if torch.cuda.is_available() else "cpu")
 dist.init_process_group(backend='nccl', init_method='env://')
 
-class Block_MoE(nn.Module):
-  """ Transformer block: comunication (attention) followed by computation (FFN) """
-
-  def __init__(self, n_embd=n_embd, n_head=n_head):
-    # n_embd: embedding dimension
-    # n_heads : the number of heads we'd like to use
-    super().__init__()
-    head_size = n_embd // n_head
-    self.sa = DDP(MultiHeadAttention(n_head, head_size).to(device), device_ids=[local_rank])
-    self.moes = MoE(n_embd).to(device)
-    self.ln1 = DDP(nn.LayerNorm(n_embd).to(device), device_ids=[local_rank])
-    self.ln2 = DDP(nn.LayerNorm(n_embd).to(device), device_ids=[local_rank])
-
-  def forward(self, x):
-    x = x + self.sa(self.ln1(x))
-    x = x + self.moes(self.ln2(x))
-    return x
-  
-class MoE(nn.Module):
-  def __init__(self, n_embd=n_embd, k=2, capacity=10, padding_token=0, local_rank=local_rank):
+class FeedForward_MoE(nn.Module):
+  def __init__(self, k=2, capacity=10, padding_token=0, local_rank=local_rank):
     super().__init__()
     self.capacity = capacity
     self.padding_token = padding_token
@@ -112,14 +94,12 @@ if __name__ == "__main__":
   model.position_embedding_table = DDP(model.position_embedding_table, device_ids=[local_rank])
   model.ln = DDP(model.ln, device_ids=[local_rank])
   model.lm_head = DDP(model.lm_head, device_ids=[local_rank])
-  model.blocks = nn.Sequential( *[Block_MoE(n_embd, n_head).to(device) for _ in range(n_layer)])
-
-  # for block in model.blocks:
-  #   block.sa = DDP(block.sa, device_ids=[local_rank])
-  #   block.ln1 = DDP(block.ln1, device_ids=[local_rank])
-  #   block.ln2 = DDP(block.ln2, device_ids=[local_rank])
-  #   del block.ffwd
-  #   block.ffwd = FeedForward_MoE().to(device)
+  for block in model.blocks:
+    block.sa = DDP(block.sa, device_ids=[local_rank])
+    block.ln1 = DDP(block.ln1, device_ids=[local_rank])
+    block.ln2 = DDP(block.ln2, device_ids=[local_rank])
+    del block.ffwd
+    block.ffwd = FeedForward_MoE().to(device)
 
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
   model.train()
