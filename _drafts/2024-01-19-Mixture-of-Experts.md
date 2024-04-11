@@ -9,7 +9,7 @@ Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) - the current reigning c
 
 Behind this success is the fact that MoEs provide better training scaling and faster inference due to **sparsity**, yielding better model accuracy for the same compute budget or parameter count.
 The scaling and analysis of training large non-sparse (dense) models have been already covered in [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361), [Scaling Properties of Speech Language Models](https://arxiv.org/abs/2404.00685) and [Emergent Abilities of Large Language Models](https://openreview.net/forum?id=yzkSU5zdwD).
-In this post, we will go through an historical overview of training and fine-tuning of sparse models and MoEs and provide a [implementation on PyTorch](#implementation-on-pytorch) and an [implementation on DeepSpeed](#implementation-on-deepspped) of a large-scale distributed Switch Transformer MoE. We will go through the following publications:
+In this post, we will go through an historical overview of training and fine-tuning of sparse models and MoEs and provide an [implementation on PyTorch](#implementation-on-pytorch) and an [implementation on DeepSpeed](#implementation-on-deepspped) of a large-scale distributed Switch Transformer MoE. We will go through the following publications:
   
 - [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
 - [2014 Learning Factored Representations in a Deep Mixture of Experts](#2014-learning-factored-representations-in-a-deep-mixture-of-experts)
@@ -321,4 +321,19 @@ y = \sum_{i=0}^{n-1} Softmax(Top2(x · W_g))_i· SwiGLU_i(x).
 $$
 
 ## 2024 [Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](https://arxiv.org/abs/2404.02258)
+
+As background, remember that we mentioned before that MoEs work by subdividing the problem domain into smaller problems that are solved individually by different experts. Now think that, not all problems require the same amount of effort to train a model accurately. This is explored in this work, via **Conditional computation**, a technique that "tries to reduce total compute by expending it only when needed". Here, "the network must learn how to dynamically allocate the available compute by making decisions per-token, in each layer, about where to spend compute from the availablebudget" - where this compute budget is a total number of FLOPs pre-defined beforehand by the user and remains unchanged throught the execution.
+
+In this work, for every token, the model decides to either apply a computation (as in the standard transformer), or skip the computation and passing it through a residual connection (remaining unchanged and saving compute). Moreover, contrarily to MoE, the **routing is applied to both the feedforward network and the multi-head attention**. In the multi-head routing, the router will not only decide on which tokens to update, but which tockens are made available to attend to. "We refer to this strategy as Mixture-of-Depths (MoD) to emphasize how individual tokens pass through different numbers of layers, or blocks, through the depth of the transformer". In practice: (1) the user picks a fixed compute budget beforehand; (2) during training, for every input, the router produces a scalar weight (importance) per token; and (3) we pick the top-$$k$$ tokens per sentence per block to participate in the transformer block computation. $$k$$ is a hyper-parameter that defined the max number of tokens passed to a block, thus the computation graph and tensor sizes remain static throughout the execution. As $$k$$ is set to be smaller than the sentence length, MoD allows one to trade off between performance and speed, while achieving a high level of accuracy for a given compute budget.
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/Mixture-of-Experts/Mixture_of_Depths.png"/>
+
+The big challenge is the routing scheme. The authors considered (1) token-choice where  a router produces per-token probability distributions across computational paths (experts); and the orthogonal approach (2) expert-choice where instead of having tokens choose the expert they prefer, each expert instead picks the top-$$k$$ tokens based on the tokens’ preferences. They ultimately adopted the expert-choise because it does not require load balancing, and "routers can try to ensure that the most critical tokens are among the
+top-$$k$$ by setting their weight appropriately".
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/Mixture-of-Experts/Mixture_of_Depths_2.png"/>
+
+At the time of writing of this post, this is still very recent work, so future will tell if MoDs become useful for the general use case.
 
