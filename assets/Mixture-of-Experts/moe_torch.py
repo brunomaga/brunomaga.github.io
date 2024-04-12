@@ -24,106 +24,109 @@ device = torch.device(f"cuda:{local_rank}" if torch.cuda.is_available() else "cp
 dist.init_process_group(backend='nccl', init_method='env://')
 
 class MoE(nn.Module):
-  def __init__(self, k=2, capacity=1000, padding_val=0, local_rank=local_rank):
+  def __init__(self, k=2, capacity_factor=1.25, padding_val=0, local_rank=local_rank):
     super().__init__()
-    self.capacity = capacity
+    self.capacity_factor = capacity_factor
     self.padding_val = padding_val
 
     # number of devices is the same as number of experts, as per paper: " Switch Transformers
     # will allocate all of their cores to the data partitioning dimension n, which will also
     # correspond to the number of experts in the model."
-    self.n_experts = dist.get_world_size()
+    self.num_experts = dist.get_world_size()
     self.k = k
     self.router = nn.Sequential( #a DNN to route tokens to experts
       nn.Dropout(dropout),
       nn.Linear(n_embd, n_embd*4), nn.ReLU(),
       nn.Linear(n_embd*4, n_embd*4), nn.ReLU(),
-      nn.Linear(n_embd*4, self.n_experts), nn.Softmax(dim=-1)
+      nn.Linear(n_embd*4, self.num_experts), nn.Softmax(dim=-1)
     )
     self.router = DDP(self.router.to(device), device_ids=[local_rank])
     self.expert = FeedForward(n_embd).to(device) # 1 expert per GPU
 
   def forward(self, x):
     B,T,C = x.shape
-    assignments = self.router(x) #get assignements from router, shape B * T * n_experts
-    topk_probs, topk_ids = torch.topk(assignments, k=self.k) # top-k experts per sentence
 
-    # 0. SETUP: collect batch size and first row index of each processor (if drop_last=False)
+    # 0. SETUP: collect batch size and first row index of each processor and expert
+    # if drop_last=False, then the batch size will be always B
     batch_size = torch.tensor([B], dtype=torch.int64, device=device)
-    batch_sizes = [torch.tensor([0], dtype=torch.int64, device=device) for _ in range(self.n_experts)]
+    batch_sizes = [torch.tensor([0], dtype=torch.int64, device=device) for _ in range(self.num_experts)]
     dist.all_gather(batch_sizes, batch_size)
     batch_inits = torch.cumsum(torch.tensor([0]+[b.item() for b in batch_sizes]), dim=0)
 
-    # 1. PERMUTATION: collect the tokens to send to each expert, sort and send them
-    tokens_per_expert = {i: [] for i in range(self.n_experts)}
-    for b in range(B):
-      for t in range(T):
-        for e in topk_ids[b, t]:
-          tokens_per_expert[e.item()].append( (b, t) )
-    tokens_per_expert = {expert: sorted(tokens) for expert, tokens in tokens_per_expert.items()}
+    # 1. ROUTING 
+    assignments = self.router(x) #get assignements from router, shape B * T * n_experts
+    topk_probs, topk_experts = torch.topk(assignments, k=self.k) # top-k experts per sentence
+
+    # 2. PERMUTATION: collect and sort the coordinates of the tokens to send to each expert
+    ids_per_expert = [ (topk_experts==expert).nonzero()[:,:2] for expert in range(self.num_experts) ]
+    ids_per_expert = [ sorted(tokens.tolist()) for tokens in ids_per_expert ]
 
     # all-to-all to exchange the count of inputs to send/receive to/from each processor
-    send_count = [torch.tensor([len(tokens)], dtype=torch.int64, device=device) for tokens in tokens_per_expert.values()]
-    recv_count = [torch.tensor([0], dtype=torch.int64, device=device) for _ in tokens_per_expert]
+    send_count = [torch.tensor([len(ids)], dtype=torch.int64, device=device) for ids in ids_per_expert]
+    recv_count = [torch.tensor([0], dtype=torch.int64, device=device) for _ in ids_per_expert]
     dist.all_to_all(recv_count, send_count)
     fn_count = lambda tensor, scale=1: [x.item()*scale for x in tensor] 
 
     # send/receive the metadata row_id+token_id to/from the appropriate processors
     M = 2 # metadata columns
-    send_meta = [ torch.tensor((batch_inits[global_rank]+b,t)) for e in tokens_per_expert for b,t in tokens_per_expert[e] ]
+    send_meta = [ torch.tensor((batch_inits[global_rank]+b,t)) for e in range(self.num_experts) for b,t in ids_per_expert[e] ]
     send_meta = torch.cat(send_meta, dim=0).to(device) #flatten
     recv_meta = torch.zeros(sum(recv_count)*M, dtype=send_meta.dtype).to(device)
     dist.all_to_all_single(recv_meta, send_meta, fn_count(recv_count,M), fn_count(send_count,M))
     recv_meta = recv_meta.view(-1, M) # reshape to M columns 
- 
+
     # group received metadata by row id 
     uniq_rows, uniq_count = recv_meta[:,0].unique(sorted=True, return_counts=True)
     recv_rows_idx = [0] + torch.cumsum(uniq_count, dim=0).tolist()
     recv_meta = { row.item(): recv_meta[recv_rows_idx[i]:recv_rows_idx[i+1]] for i, row in enumerate(uniq_rows) } # group by row id
 
     # send/receive input tokens to/from the appropriate processors
-    send_toks = [ x[b, t] for e in range(self.n_experts) for b,t in tokens_per_expert[e] ]
+    send_toks = [ x[b, t] for e in range(self.num_experts) for b,t in ids_per_expert[e] ]
     send_toks = torch.cat(send_toks, dim=0).to(device) #flatten
     recv_toks = torch.zeros(sum(recv_count)*C, dtype=send_toks.dtype).to(device)
     dist.all_to_all_single(recv_toks, send_toks, fn_count(recv_count,C), fn_count(send_count,C))
     recv_toks = recv_toks.view(-1, C) # reshape to C columns 
     recv_toks = { row.item(): recv_toks[recv_rows_idx[i]:recv_rows_idx[i+1]] for i, row in enumerate(uniq_rows) } #group by row id
 
-    #crop or pad received items per sentence to max capacity
-    # for row in recv_toks.keys():
-    #   token_count = recv_toks[row].shape[0]
-    #   if token_count>self.capacity: # crop
-    #     recv_toks[row] = recv_toks[row][:self.capacity]
-    #     recv_meta[row] = recv_meta[row][:self.capacity]
-    #   else: # pad
-    #     recv_toks[row] = F.pad(recv_toks[row], (0,0,0,self.capacity-token_count), value=self.padding_val)
-    #     recv_meta[row] = F.pad(recv_meta[row], (0,0,0,self.capacity-token_count), value=self.padding_val)
-    # recv_toks = torch.cat(list(recv_toks.values()), dim=0).to(device) #convert to B*T*C
-    # recv_meta = torch.cat(list(recv_meta.values()), dim=0).to(device) #convert to B*T*M
+    # crop or pad received items PER SENTENCE to max capacity
+    expert_batch_size = int( T / self.num_experts *self.capacity_factor)
+    for row in recv_toks.keys():
+      token_count = recv_toks[row].shape[0]
+      if token_count>expert_batch_size: # crop
+        ids = torch.linspace(0, token_count-1, expert_batch_size).int()
+        recv_toks[row] = recv_toks[row][ids]
+        recv_meta[row] = recv_meta[row][ids]
+      else: # pad
+        recv_toks[row] = F.pad(recv_toks[row], (0,0,0,expert_batch_size-token_count), value=self.padding_val)
+        recv_meta[row] = F.pad(recv_meta[row], (0,0,0,expert_batch_size-token_count), value=-1)
+    recv_toks = torch.stack(list(recv_toks.values())).to(device) #convert to Rows * Capacity * C
+    recv_meta = torch.stack(list(recv_meta.values())).to(device) #convert to Rows * Capacity * M
+    assert recv_meta.shape[:2] == recv_toks.shape[:2]
 
-    token_count = recv_toks.shape[0]
-    if token_count>self.capacity: # crop interleaved documents
-      ids = torch.linspace(0, token_count-1, self.capacity).int()
-      recv_toks = recv_toks[ids]
-      recv_meta = recv_meta[ids]
-    else: # pad
-      recv_toks = F.pad(recv_toks, (0,0,0,self.capacity-token_count), value=self.padding_val)
-      recv_meta = F.pad(recv_meta, (0,0,0,self.capacity-token_count), value=self.padding_val)
+    # 3. COMPUTATION: pass received tokens through this device's expert
+    recv_toks = self.expert(recv_toks) # Rows * Capacity * C
 
-    # 2. COMPUTATION: pass received tokens through this device's expert
-    x = self.expert(recv_toks)
+    # 4. UN-PERMUTATION: send results back to the appropriate data-loader processors 
+    expert_mask = lambda e : (recv_meta[:,:,0] >= batch_inits[e]) & (recv_meta[:,:,0] < batch_inits[e+1])
+    ids_per_expert = [ recv_meta[expert_mask(e)] for e in range(self.num_experts) ]
 
-    # 3. UN-PERMUTATION: revert to B * T * C shape 
-    tokens_per_expert = {i: [] for i in range(self.n_experts)}
-    for b in range(recv_meta.shape[0]):
-      for t in range(recv_meta.shape[1]):
-        for e in topk_ids[b, t]:
-          tokens_per_expert[e.item()].append( (b, t) )
-    tokens_per_expert = {expert: sorted(tokens) for expert, tokens in tokens_per_expert.items()}
+    # again, all-to-all to exchange the count of inputs to be sent/received
+    send_count = [torch.tensor([len(ids)], dtype=torch.int64, device=device) for ids in ids_per_expert]
+    recv_count = [torch.tensor([0], dtype=torch.int64, device=device) for _ in ids_per_expert]
+    dist.all_to_all(recv_count, send_count)
 
-    send_count = [torch.tensor([len(tokens)], dtype=torch.int64, device=device) for tokens in tokens_per_expert.values()]
-    recv_count = [torch.tensor([0], dtype=torch.int64, device=device) for _ in tokens_per_expert]
+    # again, send meta-data to the appropriate processors
+    send_meta = [ recv_meta[ids] for ids in ids_per_expert ]
+    send_meta = torch.cat(send_meta, dim=0).to(device) #flatten
+    recv_meta = torch.zeros(sum(recv_count)*M, dtype=send_meta.dtype).to(device)
+    dist.all_to_all_single(recv_meta, send_meta, fn_count(recv_count,M), fn_count(send_count,M))
+    recv_meta = recv_meta.view(-1, M) # reshape to M columns
 
+    # send results back to the appropriate processors
+    send_toks = [ recv_toks[ids] for ids in ids_per_expert.values() ]
+    recv_toks = torch.zeros(sum(recv_count)*C, dtype=send_toks.dtype).to(device)
+    dist.all_to_all_single(recv_toks, send_toks, fn_count(recv_count,C), fn_count(send_count,C))
+    recv_toks = recv_toks.view(-1, C) # reshape to C columns
 
     # 4. SCALE: multiply by the probabilities assigned to each token
     recv_topk_probs = recv_meta[:,2] 
