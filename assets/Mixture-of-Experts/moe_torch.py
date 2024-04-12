@@ -97,8 +97,8 @@ class MoE(nn.Module):
         recv_toks[row] = recv_toks[row][ids]
         recv_meta[row] = recv_meta[row][ids]
       else: # pad
-        recv_toks[row] = F.pad(recv_toks[row], (0,0,0,expert_batch_size-token_count), value=self.padding_val)
-        recv_meta[row] = F.pad(recv_meta[row], (0,0,0,expert_batch_size-token_count), value=-1)
+        recv_toks[row] = F.pad(recv_toks[row], (0, 0, 0, expert_batch_size-token_count), value=self.padding_val)
+        recv_meta[row] = F.pad(recv_meta[row], (0, 0, 0, expert_batch_size-token_count), value=-1)
     recv_toks = torch.stack(list(recv_toks.values())).to(device) #convert to Rows * Capacity * C
     recv_meta = torch.stack(list(recv_meta.values())).to(device) #convert to Rows * Capacity * M
     assert recv_meta.shape[:2] == recv_toks.shape[:2]
@@ -106,26 +106,23 @@ class MoE(nn.Module):
     # 3. COMPUTATION: pass received tokens through this device's expert
     recv_toks = self.expert(recv_toks) # Rows * Capacity * C
 
-    # 4. UN-PERMUTATION: send results back to the appropriate data-loader processors 
-    expert_mask = lambda e : (recv_meta[:,:,0] >= batch_inits[e]) & (recv_meta[:,:,0] < batch_inits[e+1])
-    ids_per_expert = [ recv_meta[expert_mask(e)] for e in range(self.num_experts) ]
-
+    # 4. UN-PERMUTATION: send metadata and results back to the appropriate data-loader processors 
     # again, all-to-all to exchange the count of inputs to be sent/received
-    send_count = [torch.tensor([len(ids)], dtype=torch.int64, device=device) for ids in ids_per_expert]
+    expert_mask = lambda e : (recv_meta[:,:,0] >= batch_inits[e]) & (recv_meta[:,:,0] < batch_inits[e+1])
+    send_meta = [ recv_meta[expert_mask(e)] for e in range(self.num_experts) ]
+    send_toks = [ recv_toks[expert_mask(e)] for e in range(self.num_experts) ]
+    send_count = [torch.tensor([len(meta)], dtype=torch.int64, device=device) for meta in send_meta]
     recv_count = [torch.tensor([0], dtype=torch.int64, device=device) for _ in ids_per_expert]
     dist.all_to_all(recv_count, send_count)
 
-    # again, send meta-data to the appropriate processors
-    send_meta = [ recv_meta[ids] for ids in ids_per_expert ]
-    send_meta = torch.cat(send_meta, dim=0).to(device) #flatten
-    recv_meta = torch.zeros(sum(recv_count)*M, dtype=send_meta.dtype).to(device)
-    dist.all_to_all_single(recv_meta, send_meta, fn_count(recv_count,M), fn_count(send_count,M))
+    send_meta = torch.cat(send_meta, dim=0).flatten().to(device)
+    recv_meta = torch.zeros(sum(recv_count)*M, dtype=send_meta[0].dtype).to(device)
+    dist.all_to_all_single(recv_meta, send_meta, fn_count(recv_count, M), fn_count(send_count, M))
     recv_meta = recv_meta.view(-1, M) # reshape to M columns
 
-    # send results back to the appropriate processors
-    send_toks = [ recv_toks[ids] for ids in ids_per_expert.values() ]
-    recv_toks = torch.zeros(sum(recv_count)*C, dtype=send_toks.dtype).to(device)
-    dist.all_to_all_single(recv_toks, send_toks, fn_count(recv_count,C), fn_count(send_count,C))
+    send_toks = torch.cat(send_toks, dim=0).flatten().to(device)
+    recv_toks = torch.zeros(sum(recv_count)*C, dtype=send_toks[0].dtype).to(device)
+    dist.all_to_all_single(recv_toks, send_toks, fn_count(recv_count, C), fn_count(send_count, C))
     recv_toks = recv_toks.view(-1, C) # reshape to C columns
 
     # 4. SCALE: multiply by the probabilities assigned to each token
