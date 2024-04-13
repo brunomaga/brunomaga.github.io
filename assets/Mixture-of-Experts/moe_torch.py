@@ -24,10 +24,11 @@ device = torch.device(f"cuda:{local_rank}" if torch.cuda.is_available() else "cp
 dist.init_process_group(backend='nccl', init_method='env://')
 
 class MoE(nn.Module):
-  def __init__(self, k=2, capacity_factor=1.25, padding_val=0, local_rank=local_rank):
+  def __init__(self, k=2, capacity_factor=1.25, padding_val=0, local_rank=local_rank, drop_last=False):
     super().__init__()
     self.capacity_factor = capacity_factor
     self.padding_val = padding_val
+    self.drop_last = drop_last
 
     # number of devices is the same as number of experts, as per paper: " Switch Transformers
     # will allocate all of their cores to the data partitioning dimension n, which will also
@@ -44,14 +45,15 @@ class MoE(nn.Module):
     self.expert = FeedForward(n_embd).to(device) # 1 expert per GPU
 
   def forward(self, x):
-    B,T,C = x.shape
-
     # 0. SETUP: collect batch size and first row index of each processor and expert
-    # if drop_last=False, then the batch size will be always B
-    batch_size = torch.tensor([B], dtype=torch.int64, device=device)
-    batch_sizes = [torch.tensor([0], dtype=torch.int64, device=device) for _ in range(self.num_experts)]
-    dist.all_gather(batch_sizes, batch_size)
-    batch_inits = torch.cumsum(torch.tensor([0]+[b.item() for b in batch_sizes]), dim=0)
+    B,T,C = x.shape
+    if self.drop_last: # batch size will be size B
+      batch_inits = torch.tensor( [i*B for i in range(self.num_experts+1)], dtype=torch.int64, device=device)
+    else: # batch size in last iteration may be smaller than B
+      batch_size = torch.tensor([B], dtype=torch.int64, device=device)
+      batch_sizes = [torch.tensor([0], dtype=torch.int64, device=device) for _ in range(self.num_experts)]
+      dist.all_gather(batch_sizes, batch_size)
+      batch_inits = torch.cumsum(torch.tensor([0]+[b.item() for b in batch_sizes]), dim=0)
 
     # 1. ROUTING 
     assignments = self.router(x) #get assignements from router, shape B * T * n_experts
