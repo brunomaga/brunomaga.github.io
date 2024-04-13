@@ -92,7 +92,7 @@ $$
 G_σ(x) = Softmax(x · W_g)
 $$
 
-Towards scaling this approach,  the 2017 paper [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538), introduces Sparsely-Gated Mixture-of-Experts layer (MoE), consisting of up to thousands experts (modelled as feed-forward networks) and a gating network. This MoE layer (with up to 137 billion) and is stacked recursively between stacked LSTM layers. Each MoE layer is The model architecture is composed of a stack of LSTMs. **"All parts of the network are trained jointly by back-propagation"**.
+Towards scaling this approach,  the 2017 paper [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538), introduces Sparsely-Gated Mixture-of-Experts layer (MoE), consisting of up to thousands experts (modelled as feed-forward networks) and a gating network. This MoE layer (with up to 137 billion) and is stacked recursively between stacked LSTM layers. The model architecture is composed of a stack of LSTMs. **"All parts of the network are trained jointly by back-propagation"**.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/Mixture-of-Experts/MoE_2017_Dean.png"/>
@@ -134,7 +134,7 @@ where the coefficient of variation ($$CV$$, or relative standard deviation) repr
 | **Importance (sum)** | **0.2** | **0.1** | **0.2** | **2.4** | **0.1** |
 |-|-|-|-|-|-|
 
-, the mean of the importance is 0.6, and standard deviation is 0.9, thus the CV is 0.667. If experts would be assigned a similar importance, then the variance would've been smaller and the CV also smaller, thus reducing the importance loss. 
+In this example, the mean of the importance is 0.6, and standard deviation is 0.9, thus the CV is 0.667. If experts would be assigned a similar importance, then the variance would've been smaller and the CV also smaller, thus reducing the importance loss. 
 
 This loss tries to balance overall importance across experts, but experts may receive different numbers of examples. This may lead memory and compute imbalance on distributed hardware, and to having experts that are undertrained. To solve this, a second **load loss** $$L_{load}$$ is introduced to encourages experts to receive a similar amount of training samples. However, note that the number of received tokens per expert is a constant and can not be backpropagated, so instead they use a smooth operator $$Load(X)$$ that can be back propagated, as:
 
@@ -336,4 +336,3 @@ top-$$k$$ by setting their weight appropriately".
 <img width="80%" height="80%" src="/assets/Mixture-of-Experts/Mixture_of_Depths_2.png"/>
 
 At the time of writing of this post, this is still very recent work, so future will tell if MoDs become useful for the general use case.
-
