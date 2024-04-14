@@ -19,6 +19,7 @@ from gptlite import n_embd, dropout, FeedForward, GPTlite
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite-DeepSpeed'))
 from gptlite_ds import get_dataset
 
+assert 'LOCAL_RANK' in os.environ and 'RANK' in os.environ, "env vars not set. Launch with torchrun."
 local_rank = int(os.environ['LOCAL_RANK']) #set by torchrun
 global_rank = int(os.environ['RANK']) #set by torchrun
 device = torch.device(f"cuda:{local_rank}" if torch.cuda.is_available() else "cpu")
@@ -89,26 +90,21 @@ class MoE(nn.Module):
     recv_row_slice = lambda row: slice(recv_row_offsets[row], recv_row_offsets[row+1])
 
     # crop or pad received items PER SENTENCE to max capacity. Batch shape: Rows * Capacity * C
-    # TODO shouldnt we crop from the beginning not the end of sentence???
     capacity = int( T / self.num_experts *self.capacity_factor)
     pad_fn = lambda toks, value = self.padding_val: F.pad(toks, (0,0,0,capacity-toks.shape[0]), value=value) #pad or crop
     batch_toks = torch.stack([ pad_fn(recv_toks[recv_row_slice(i)]) for i in range(len(uniq_rows))], dim=0).to(device)
 
     # 3. COMPUTATION: pass received tokens through this device's expert
     batch_toks = self.expert(batch_toks) # Rows * Capacity * C
+    batch_row_len = torch.tensor([ min(recv_row_lens[r], capacity) for r in range(len(batch_toks))])
 
     # 4. UN-PERMUTATION: send metadata and results back to the appropriate data-loader processors 
     # re-use send_count, recv_count, send_meta, recv_meta, send_toks, recv_toks to send back results
     recv_toks = recv_toks.fill_(self.padding_val) # reset recv_toks, will be used to SEND results
     send_toks = send_toks.fill_(self.padding_val).flatten() # reset send_toks, will be used to RECEIVE results
-    batch_tok_offsets = torch.concatenate([ pad_fn(recv_meta[recv_row_slice(i)])[:capacity] for i in range(len(uniq_rows))])
-    recv_tok_offsets = torch.concatenate( [ recv_row_offsets[i] + pad_fn(recv_meta[recv_row_slice(i)])[:capacity, 1] for i in range(len(uniq_rows))] )
-    recv_toks[recv_tok_offsets] = batch_toks[batch_tok_offsets] # fill recv_toks with results
-
-    # for row_id in range(len(uniq_rows)):
-    #   row_offset = recv_row_offsets[row_id]
-    #   token_ids = batch_meta[row_id,1]
-    #   recv_toks[row_offset+token_ids] = batch_toks[row_id, :len(token_ids)]
+    recv_tok_offsets  = np.concatenate([ range(recv_row_offsets[i], recv_row_offsets[i]+batch_row_len[i]) for i in range(len(uniq_rows)) ])
+    batch_tok_offsets = np.concatenate([ [ [i]*batch_row_len[i], range(batch_row_len[i]) ] for i in range(len(uniq_rows)) ], axis=1)
+    recv_toks[recv_tok_offsets] = batch_toks[batch_tok_offsets[0], batch_tok_offsets[1]] # fill recv_toks with results
     dist.all_to_all_single(send_toks, recv_toks.flatten(), fn_count(send_count,C), fn_count(recv_count,C))
     x = send_toks.view(B,T,C) # reshape received buffer to initial B*T*C columns
 
