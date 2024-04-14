@@ -125,9 +125,16 @@ if __name__ == "__main__":
   dataloader = DataLoader(dataset, batch_size=batch_size, sampler=sampler, num_workers=dist.get_world_size(), drop_last=True)
 
   # instantiate model and apply DDP to all layers except our MoE FeedForward
-  model = DDP( GPTlite(vocab_size).to(device), device_ids=[local_rank])
-  for block in model.module.blocks:
-    block.ffwd = MoE().to(device) #replace DDP of FFN with MoE
+  model = GPTlite(vocab_size).to(device)
+  model.token_embedding_table = DDP(model.token_embedding_table.to(device), device_ids=[local_rank])
+  model.position_embedding_table = DDP(model.position_embedding_table.to(device), device_ids=[local_rank])
+  model.ln = DDP(model.ln.to(device), device_ids=[local_rank])
+  model.lm_head = DDP(model.lm_head.to(device), device_ids=[local_rank])
+  for block in model.blocks: 
+    block.sa = DDP(block.sa.to(device), device_ids=[local_rank])
+    block.ln1 = DDP(block.ln1.to(device), device_ids=[local_rank])
+    block.ln2 = DDP(block.ln2.to(device), device_ids=[local_rank])
+    block.ffwd = MoE().to(device) #replace FeedForward with Mixture of Experts
 
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
   model.train()
@@ -139,6 +146,7 @@ if __name__ == "__main__":
         outputs = model(inputs) #fwd pass
         loss = criterion(outputs, labels)
         loss.backward() #backprop
+        print(f"Iteration: {step}, Loss: {loss}")
         optimizer.step() #update weights, no zero-ing
         optimizer.zero_grad()
 
