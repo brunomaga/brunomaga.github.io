@@ -85,26 +85,28 @@ class MoE(nn.Module):
     dist.all_to_all_single(recv_toks, send_toks.flatten(), fn_count(recv_count,C), fn_count(send_count,C))
     recv_toks = recv_toks.view(-1, C) # reshape to C columns 
 
-    # group received metadata by row id 
-    uniq_rows, recv_row_lens = recv_ids[:,0].unique(sorted=True, return_counts=True)
-    recv_row_offsets = [0] + torch.cumsum(recv_row_lens, dim=0).tolist()
-    recv_row_slice = lambda row: slice(recv_row_offsets[row], recv_row_offsets[row+1])
+    if len(recv_toks)>0:
+      # group received metadata by row id 
+      uniq_rows, recv_row_lens = recv_ids[:,0].unique(sorted=True, return_counts=True)
+      recv_row_offsets = [0] + torch.cumsum(recv_row_lens, dim=0).tolist()
+      recv_row_slice = lambda row: slice(recv_row_offsets[row], recv_row_offsets[row+1])
 
-    # crop or pad received items PER SENTENCE to max capacity. Batch shape: Rows * Capacity * C
-    capacity = int( T / self.num_experts *self.capacity_factor)
-    pad_fn = lambda toks, value = self.padding_val: F.pad(toks, (0,0,0,capacity-toks.shape[0]), value=value) #pad or crop
-    batch_toks = torch.stack([ pad_fn(recv_toks[recv_row_slice(i)]) for i in range(len(uniq_rows))], dim=0).to(device)
+      # crop or pad received items PER SENTENCE to max capacity. Batch shape: Rows * Capacity * C
+      capacity = int( T / self.num_experts *self.capacity_factor)
+      pad_fn = lambda toks, value = self.padding_val: F.pad(toks, (0,0,0,capacity-toks.shape[0]), value=value) #pad or crop
+      batch_toks = torch.stack([ pad_fn(recv_toks[recv_row_slice(i)]) for i in range(len(uniq_rows))], dim=0).to(device)
 
-    # 3. COMPUTATION: pass received tokens through this device's expert
-    batch_toks = self.expert(batch_toks) # Rows * Capacity * C
-    batch_row_len = torch.tensor([ min(recv_row_lens[r], capacity) for r in range(len(batch_toks))])
+      # 3. COMPUTATION: pass received tokens through this device's expert
+      batch_toks = self.expert(batch_toks) # Rows * Capacity * C
+      batch_row_len = torch.tensor([ min(recv_row_lens[r], capacity) for r in range(len(batch_toks))])
 
-    # 4. UN-PERMUTATION: send metadata and results back to the appropriate data-loader processors 
-    recv_toks = recv_toks.fill_(self.padding_val) # reset recv_toks, will be used to SEND results
+      # 4. UN-PERMUTATION: send metadata and results back to the appropriate data-loader processors 
+      recv_toks = recv_toks.fill_(self.padding_val) # reset recv_toks, will be used to SEND results
+      recv_tok_offsets  = np.concatenate([ range(recv_row_offsets[i], recv_row_offsets[i]+batch_row_len[i]) for i in range(len(uniq_rows)) ])
+      batch_tok_offsets = np.concatenate([ [ [i]*batch_row_len[i], range(batch_row_len[i]) ] for i in range(len(uniq_rows)) ], axis=1)
+      recv_toks[recv_tok_offsets] = batch_toks[batch_tok_offsets[0], batch_tok_offsets[1]] # fill recv_toks with results
+
     send_toks = send_toks.fill_(self.padding_val).flatten() # reset send_toks, will be used to RECEIVE results
-    recv_tok_offsets  = np.concatenate([ range(recv_row_offsets[i], recv_row_offsets[i]+batch_row_len[i]) for i in range(len(uniq_rows)) ])
-    batch_tok_offsets = np.concatenate([ [ [i]*batch_row_len[i], range(batch_row_len[i]) ] for i in range(len(uniq_rows)) ], axis=1)
-    recv_toks[recv_tok_offsets] = batch_toks[batch_tok_offsets[0], batch_tok_offsets[1]] # fill recv_toks with results
     dist.all_to_all_single(send_toks, recv_toks.flatten(), fn_count(send_count,C), fn_count(recv_count,C))
 
     # 5. SCALE: multiply by the probabilities assigned to each token
