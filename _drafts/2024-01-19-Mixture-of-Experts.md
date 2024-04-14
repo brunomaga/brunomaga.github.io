@@ -311,6 +311,13 @@ The **computation step** will reshuffle the received data into a 3D batch of siz
     batch_toks = self.expert(batch_toks) # Rows * Capacity * C
 ``` 
 
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/Mixture-of-Experts/AlltoAll.png"/>
+
+{: style="text-align:center; font-size: small;"}
+An illustration of the MPI all-to-all collective operation. When sending only 1 element per row, it is equivalent to a distributed matrix transpose - note row and column with red border. We use a single-element all-to-all to exchange the count of items to be sent received among processors. We then use those counts to perform a new all-to-all with variable-sized elements in the permutation step. Finally, in the un-permutation step, we perform another all-to-all that performs the converse communication, by swapping the send and receive counts.
+
+
 The ouput of the expert is stored in `batch_toks`. The following **Un-permutation step** will now perform an `all_to_all_single` that will perform the opposite communication of the permutation step. This will populate the all-to-all output buffer with the partial results all experts.
 
 ```python
@@ -332,6 +339,8 @@ Finally, the **scale step** performs a weighted sum of the top-k probabilities f
     x = torch.stack( [ x[send_ids[:,-1]==k] for k in range(self.k)]).sum(dim=0)
   return x.view(B,T,C)
 ```
+
+You can find the complete implemetation in the [Mixture-of-Experts repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/Mixture-of-Experts/moe_torch.py).
 
 ## 2022 [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
 
