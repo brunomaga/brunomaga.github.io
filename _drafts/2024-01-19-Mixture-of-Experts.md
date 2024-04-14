@@ -16,8 +16,7 @@ In this post, we will go through an historical overview of training and fine-tun
 - [2017 Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](#2017-outrageously-large-neural-networks-the-sparsely-gated-mixture-of-experts-layer)
 - [2020 GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](#2020-gshard-scaling-giant-models-with-conditional-computation-and-automatic-sharding)
 - [2021 Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](#2021-switch-transformers-scaling-to-trillion-parameter-models-with-simple-and-efficient-sparsity)
-  - [Implementation on PyTorch](#implementation-on-pytorch)
-  - [Implementation on DeepSpped](#implementation-on-deepspped)
+  - [Distributed implementation on PyTorch](#distributed-implementation-on-pytorch)
 - [2022 MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](#2022-megablocks-efficient-sparse-training-with-mixture-of-experts)
 - [2022 Towards Understanding Mixture of Experts in Deep Learning](#2022-towards-understanding-mixture-of-experts-in-deep-learning)
 - [2022 GLaM: Efficient Scaling of Language Models with Mixture-of-Experts](#2022-glam-efficient-scaling-of-language-models-with-mixture-of-experts)
@@ -226,29 +225,119 @@ One of the downsides of MoEs is the large number of parameters. If one wants to 
 small dense models. We reduce the model size by up to 99% while preserving 30% of
 the quality gains of the large sparse teacher.
 
-### Implementation on PyTorch
+### Distributed implementation on PyTorch
+
+We start by taking the [GPT2-based `GPTlite` model we built on a previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), and redifining all its modules as Distributed Data Parallel, except the feed-forward module in the transformer block, that we will replace by our mixture of experts:
 
 ```python
-def foo():
-    pass
+  model = GPTlite(vocab_size).to(device)
+  model.token_embedding_table = DDP(model.token_embedding_table.to(device), device_ids=[local_rank])
+  model.position_embedding_table = DDP(model.position_embedding_table.to(device), device_ids=[local_rank])
+  model.ln = DDP(model.ln.to(device), device_ids=[local_rank])
+  model.lm_head = DDP(model.lm_head.to(device), device_ids=[local_rank])
+  for block in model.blocks: 
+    block.sa = DDP(block.sa.to(device), device_ids=[local_rank])
+    block.ln1 = DDP(block.ln1.to(device), device_ids=[local_rank])
+    block.ln2 = DDP(block.ln2.to(device), device_ids=[local_rank])
+    block.ffwd = MoE().to(device) #replace FeedForward with Mixture of Experts
 ```
 
-### Implementation on DeepSpped
+We then define our mixture-of-experts block as `MoE`, with a sharded router and a local expert. We will allow `k>1`, contrarily to the Switch Transformer, but to support the other implementations like GShard:
 
 ```python
-def foo():
-    pass
+class MoE(nn.Module):
+  def __init__(self, k=2, capacity_factor=1.25, padding_val=0, local_rank=local_rank):
+    super().__init__()
+    self.capacity_factor = capacity_factor
+    self.padding_val = padding_val
+    self.num_experts = dist.get_world_size() # 1 expert per GPU
+    self.k = k
+
+    self.router = DDP(Router(n_embd, self.num_experts).to(device), device_ids=[local_rank])
+    self.expert = FeedForward(n_embd).to(device) # 1 expert per GPU, as per paper
 ```
 
+In here, the `Router` is a Deep Neural Network that takes as input the embedding of a token, and ouputs a distribution of allocations (probabilities) over the experts. Also, as per the paper, there is only one expert per process, thus the process id matches the expert id. The `forward` pass performs a four-step algorithm, best illustrated in the [MegaBlocks paper](https://arxiv.org/abs/2211.15841) (covered next): 
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks.png"/>
+
+The **routing step** computes the top-`k` expert assignments for each token, as expert id in `topk_experts` and corresponding probabilities `topk_probs`: 
+```python
+    probs = self.router(x) #get assignements from router, shape B * T * n_experts
+    topk_probs, topk_experts = torch.topk(probs, k=self.k) # top-k experts per sentence
+    ids_per_expert = [ (topk_experts==expert).nonzero() for expert in range(self.num_experts) ]
+    probs_per_expert = [ topk_probs[topk_experts==expert] for expert in range(self.num_experts) ]
+```
+
+The following **permutation step** selectively sends the tokens to each expert's processor. We will use collective communication, and perform this in two steps: an `all_to_all` operation to exchange the amount of items to be sent receive, followed by an `all_to_all_single` to exchange the metadata of the tokens and the token themselves (based on those counts): 
+
+```python
+    # all-to-all to exchange the count of inputs to send/receive to/from each processor
+    send_count = [torch.tensor([len(ids)], dtype=torch.int64, device=device) for ids in ids_per_expert]
+    recv_count = [torch.tensor([0], dtype=torch.int64, device=device) for _ in ids_per_expert]
+    dist.all_to_all(recv_count, send_count)
+    fn_count = lambda tensor, scale=1: [x.item()*scale for x in tensor] 
+
+    # send/receive the metadata row_id+token_id to/from the appropriate processors
+    M = ids_per_expert[0].shape[-1] # number of columns in metadata
+    send_ids = torch.cat(ids_per_expert, dim=0).to(device)
+    send_ids[:,0] += global_rank*B # add processor's batch offset
+    recv_ids = torch.zeros(sum(recv_count)*M, dtype=send_ids.dtype).to(device)
+    dist.all_to_all_single(recv_ids, send_ids.flatten(), fn_count(recv_count,M), fn_count(send_count,M))
+    recv_ids = recv_ids.view(-1, M) # reshape to M columns 
+
+    # send/receive input tokens to/from the appropriate processors
+    send_toks = torch.cat([ x[ids[:,:2].T.tolist()] for ids in ids_per_expert], dim=0).to(device)
+    recv_toks = torch.zeros(sum(recv_count)*C, dtype=x.dtype).to(device)
+    dist.all_to_all_single(recv_toks, send_toks.flatten(), fn_count(recv_count,C), fn_count(send_count,C))
+    recv_toks = recv_toks.view(-1, C) # reshape to C columns 
+```
+
+The **computation step** will reshuffle the received data into a 3D batch of size `Rows x Capacity x Embedding` that will either crap or pad sequences to the capacity of each export:
+
+```python
+    # group received metadata by row id 
+    uniq_rows, recv_row_lens = recv_ids[:,0].unique(sorted=True, return_counts=True)
+    recv_row_offsets = [0] + torch.cumsum(recv_row_lens, dim=0).tolist()
+    recv_row_slice = lambda row: slice(recv_row_offsets[row], recv_row_offsets[row+1])
+
+    # crop or pad received items PER SENTENCE to max capacity. Batch shape: Rows * Capacity * C
+    capacity = int( T / self.num_experts *self.capacity_factor)
+    pad_fn = lambda toks, value = self.padding_val: F.pad(toks, (0,0,0,capacity-toks.shape[0]), value=value) #pad or crop
+    batch_toks = torch.stack([ pad_fn(recv_toks[recv_row_slice(i)]) for i in range(len(uniq_rows))], dim=0).to(device)
+
+    batch_row_len = torch.tensor([ min(recv_row_lens[r], capacity) for r in range(len(uniq_rows))])
+    batch_toks = self.expert(batch_toks) # Rows * Capacity * C
+``` 
+
+The ouput of the expert is stored in `batch_toks`. The following **Un-permutation step** will now perform an `all_to_all_single` that will perform the opposite communication of the permutation step. This will populate the all-to-all output buffer with the partial results all experts.
+
+```python
+    recv_toks = recv_toks.fill_(self.padding_val) # reset recv_toks, will be used to SEND results
+    recv_tok_offsets  = np.concatenate([ range(recv_row_offsets[i], recv_row_offsets[i]+batch_row_len[i]) for i in range(len(uniq_rows)) ])
+    batch_tok_offsets = np.concatenate([ [ [i]*batch_row_len[i], range(batch_row_len[i]) ] for i in range(len(uniq_rows)) ], axis=1)
+    recv_toks[recv_tok_offsets] = batch_toks[batch_tok_offsets[0], batch_tok_offsets[1]] # fill recv_toks with results
+
+    send_toks = send_toks.fill_(self.padding_val).flatten() # reset send_toks, will be used to RECEIVE results
+    dist.all_to_all_single(send_toks, recv_toks.flatten(), fn_count(send_count,C), fn_count(recv_count,C))
+    x = send_toks.view(-1,C)
+```
+
+Finally, the **scale step** performs a weighted sum of the top-k probabilities for each token:
+
+```python
+  x *= torch.concatenate(probs_per_expert).view(-1,1) # multiply by router probabilities
+  if self.k>1: # sum over k probabilities for each input
+    x = torch.stack( [ x[send_ids[:,-1]==k] for k in range(self.k)]).sum(dim=0)
+  return x.view(B,T,C)
+```
 
 ## 2022 [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
 
 MegaBlocks is "a system for efficient Mixture-of-Experts (MoE) training on GPUs", that addresses the **model quality vs hardware efficiency tradeoff** on the dynamic routing of MoE layers. In detail, the load-imbalanced computation on MoEs forces one to either (1) drop tokens from the computation or (2) waste computation and memory on padding, a parameter that is usually improved via hyperparameter tuning. However, we know that "The loss reached by the MoE models decreases significantly as expert capacity is increased, but at the cost of additional computation" and "the lowest loss is achieved by the 'max expert capacity value', which avoids dropping tokens through the dynamic
 capacity factor mechanism proposed by [Adaptive
 mixture-of-experts at scale (2002)](#)". So not dropping tokens is ideal.
-
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks.png"/>
 
 As a second motivation, "the sparse computation in MoEs does not map cleanly to the software primitives supported in major frameworks and libraries". 
  To overcome these limitations, MegaBlocks "reformulates MoE computation in terms of block-sparse operations and develop new block-sparse GPU kernels that efficiently handle the dynamism present in MoEs".
