@@ -5,11 +5,11 @@ categories: [machine learning, Transformer, GPT, DeepSpeed, mixture-of-experts]
 tags: [machinelearning]
 ---
 
-Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) - the current reigning champion on the [ChatBot benchmark](https://chat.lmsys.org/) - were recently [leaked](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/). It mentions the usage of **Mixture-of-Experts (MoEs)**, with 16 different experts of circa 110 billion parameters each, totalling about 1.8 trillion parameters. Briefly after, [Mistral 7x8B](https://mistral.ai/news/mixtral-of-experts/) has been released as a MoE model of 8 experts with 7 billion parameters each, claiming its performance beats [GPT-3.5](https://en.wikipedia.org/wiki/GPT-3) with circa 175 billion parameters.
+Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) - the current [ChatBot benchmark](https://chat.lmsys.org/) reigning champion - were recently [leaked](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/). It mentions the usage of **Mixture-of-Experts (MoEs)**, with 16 different experts of circa 110 billion parameters each, totalling about 1.8 trillion parameters. Briefly after, [Mistral 7x8B](https://mistral.ai/news/mixtral-of-experts/) has been released as a MoE model of 8 experts with 7 billion parameters each, claiming its performance beats [GPT-3.5](https://en.wikipedia.org/wiki/GPT-3) with circa 175 billion parameters.
 
 Behind this success is the fact that MoEs provide better training scaling and faster inference due to **sparsity**, yielding better model accuracy for the same compute budget or parameter count.
 The scaling and analysis of training large non-sparse (dense) models have been already covered in [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361), [Scaling Properties of Speech Language Models](https://arxiv.org/abs/2404.00685) and [Emergent Abilities of Large Language Models](https://openreview.net/forum?id=yzkSU5zdwD).
-In this post, we will go through an historical overview of training and fine-tuning of sparse models and MoEs and provide an [implementation on PyTorch](#implementation-on-pytorch) and an [implementation on DeepSpeed](#implementation-on-deepspped) of a large-scale distributed Switch Transformer MoE. We will go through the following publications:
+In this post, we will go through an historical overview of training and fine-tuning of sparse models and MoEs. We will also provide an [implementation on PyTorch](#implementation-on-pytorch) and an [implementation on DeepSpeed](#implementation-on-deepspped) of a large-scale distributed Switch Transformer MoE. We will go through the following publications:
   
 - [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
 - [2014 Learning Factored Representations in a Deep Mixture of Experts](#2014-learning-factored-representations-in-a-deep-mixture-of-experts)
@@ -27,24 +27,42 @@ In this post, we will go through an historical overview of training and fine-tun
 
 ## 1991 [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf)
 
-In 1991, the Mixture of Experts (MoE) was introduced in paper [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf), as a system of parallel networks, of the same architecture but initialized differently, receiving the same input, alongside a **gating network** (a feed-forward network, also receiving the same input). The output of the networks are softmax-normalized and weighted by the probabilities output by the selector (gating mechanism) . In practice Mixtures of Experts combine the outputs of several "expert" networks, each of which specializes in a different part of the input space.
+The first reference to an architecture that resembles a Mixture of Experts was introduced in the paper [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf). It defines as MoE as a system of independent networks (of the same architecture but initialized differently) that receive the same input, alongside a **gating network** (a feed-forward network, also receiving the same input). The gating network outputs the distribution (importance) of each input across all experts. The output of the system is the sum of the expert outputs weighted by the expert distribution returned by the expert.
 
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="/assets/Mixture-of-Experts/MoE_1991.png" alt="MoE paper 1991"/>
 
-This can also be seen as a probability model, where the final probability over classes is marginalized over the selection of expert. The final output for all experts $$f_i$$ and a gating network $$g$$ is then:
+The rationale for using a combination of networks instead of a single large one is emphasized by:
 
-$$
-F(x) = \sum_{i=1}^N g_i(x)  softmax(f_i(x))
-$$
+> If backpropagation is used to train a single, multilayer network to perform different subtasks on different occasions, there will generally be strong interference effects that lead to slow learning and poor generalization.  
 
-if each $$f_i$$ maps an output to $$C$$ outputs (class $$c$$), for all experts $$e_i$$ then the previous follows to:
+One option to combine the expert outputs and compute a loss function is to use a weighted sum of expert outputs and gating probabilities, e.g. having the mean square error $$E = \| d - \sum_i p_i \, o_i \| ^2$$, where $$o_i$$ is the output *vector* of expert $$i$$, $$p_i$$ is the router's probability for the expert $$i$$, and $$d$$ is the correct label for the input. However the main drawback in using the linear combination $$p_i \, o_i$$ in the loss is that expert losses and not independent and to minimize the overral loss the system could adapt to have one expert dominate the assignments. To overcome that, they authors propose the loss function $$E = \sum_i p_i  \| d - \, o_i \| ^2$$, where assignments and expert residual errors are independent. Thus, to reduce the overall error, two behaviours are motivated: (1) the router learns to give higher probability to low error experts, and (2) experts with high probability learn to reduce their residual as it weights heavily.
 
-$$
-F(x) = \sum_{i=1}^N p(e_i \mid x) \, p(c \mid e_i, x) = p (c \mid x)
-$$
+This architecture and a running example is available in the [Mixture-of-Experts repository](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/Mixture-of-Experts/moe.py), but the relevant bit is the MoE model definition as:
+```python
+class MoE_1991(nn.Module):
 
-The authors "demonstrate that the learning procedure divides up a vowel discrimination task into appropriate subtasks, each of which can be solved by a very simple expert network".
+  def __init__(self, input_size, output_size, num_experts, dropout=0.1):
+    super().__init__()
+    self.router = Router(input_size, num_experts, dropout=dropout)
+    self.experts = nn.ModuleList([
+      FeedForward(input_size, output_size, dropout=dropout) for _ in range(num_experts)
+      ])
+
+  def forward(self, x):
+    probs = self.router(x)
+    outputs = torch.stack([ expert(x) for expert in self.experts ], dim=-2) # B*T*Experts*C
+    weighted_outputs = outputs * probs.unsqueeze(-1) # B*T*E*C x B*T*1*C -> B*T*E*C
+    weighted_sum = weighted_outputs.sum(dim=-2) # sum over experts: B*T*E*C -> B*T*C
+    return weighted_sum, probs, outputs
+
+  def loss_per_token(self, probs, outputs, labels):
+    one_hot_labels = torch.nn.functional.one_hot(labels, num_classes=outputs.shape[-1])
+    mse_expert_i = lambda i: (one_hot_labels-outputs[:,:,i,:]).square().mean()  # B*T*1 * B*T*classes
+    loss_per_expert = (torch.stack([mse_expert_i(i) for i in range(8)])*probs) # B*T*experts
+    return loss_per_expert.sum(-1) # B*T, 1 value per token
+```
+Finally, a relevant message in the paper is that "the learning procedure divides up a vowel discrimination task into appropriate subtasks, each of which can be solved by a very simple expert network".
 
 ## 2014 [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
 
@@ -179,7 +197,7 @@ $$
 
 where $$G_e(x_s)$$ is the probabilities (post-softmax) output by the gating mechanism for expert $$e$$ given input $$x_s$$, and $$y_x$$ is as before the weighted sum of products of the gating probabilities and the FFN outputs (FFN here refers to an expert). $$x_s$$ is the input token to the MoE layer, $$w_i$$ and $$w_o$$ are the input and output projection matrices for the feed-forward layer.
 
-The total loss is described as $$L = l_{nll} + k ∗ l_{aux}$$, where $$l_{nll}$$ is the negative log-likelihood loss, and $$l_{aux}$$ is an auxiliary loss to help avoiding few experts *stealing* most of the attention at the early stages of training. This auxiliary loss is formulated as
+The total loss is described as $$L = l_{nll} + k ∗ l_{aux}$$, where $$l_{nll}$$ is the negative log-likelihood loss, and $$l_{aux}$$ is an **auxiliary loss** to help avoiding few experts *stealing* most of the attention at the early stages of training. This auxiliary loss is formulated as
 
 $$
 l_{aux} = \frac{1}{E} \sum^E_{e=1} \frac{c_e}{S} \, m_e
