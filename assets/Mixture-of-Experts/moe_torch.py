@@ -10,8 +10,12 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 import torch.utils
 from torch.utils.data import DistributedSampler, DataLoader
 
-#use base GPTlite model from the GPT-lite post
+# use current diectory as import path
 current_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, os.path.join(current_dir))
+from moe import Router
+
+#use base GPTlite model from the GPT-lite post
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
 from gptlite import n_embd, dropout, FeedForward, GPTlite
 
@@ -25,21 +29,6 @@ global_rank = int(os.environ['RANK']) #set by torchrun
 device = torch.device(f"cuda:{local_rank}" if torch.cuda.is_available() else "cpu")
 dist.init_process_group(backend='nccl', init_method='env://')
 
-class Router(nn.Module):
-  """ a DNN to route tokens to experts """
-
-  def __init__(self, n_embd, num_experts):
-    super().__init__()
-    self.net = nn.Sequential(
-      nn.Dropout(dropout),
-      nn.Linear(n_embd, n_embd*4), nn.ReLU(),
-      nn.Linear(n_embd*4, n_embd*4), nn.ReLU(),
-      nn.Linear(n_embd*4, num_experts), nn.Softmax(dim=-1)
-    )
-
-  def forward(self, x):
-    return self.net(x)
-
 class MoE(nn.Module):
   def __init__(self, k=2, capacity_factor=1.25, padding_val=0, local_rank=local_rank):
     super().__init__()
@@ -51,7 +40,7 @@ class MoE(nn.Module):
     # correspond to the number of experts in the model."
     self.num_experts = dist.get_world_size()
     self.k = k
-    self.router = DDP(Router(n_embd, self.num_experts).to(device), device_ids=[local_rank])
+    self.router = DDP(Router(n_embd, self.num_experts, dropout=dropout).to(device), device_ids=[local_rank])
     self.expert = FeedForward(n_embd).to(device) # 1 expert per GPU
 
   def forward(self, x):
