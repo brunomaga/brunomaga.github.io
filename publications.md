@@ -47,6 +47,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2021 An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale, Google, ICLR 2021](#2021-an-image-is-worth-16x16-words-transformers-for-image-recognition-at-scale-google-iclr-2021)
 - [2021 Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](#2021-switch-transformers-scaling-to-trillion-parameter-models-with-simple-and-efficient-sparsity)
 - [2021 Finetuned Language Models Are Zero-Shot Learners, Google, ICLR 2022](#2021-finetuned-language-models-are-zero-shot-learners-google-iclr-2022)
+- [2021 Denoising Diffusion Probabilistic Models (Stable Diffusion)](#2021-denoising-diffusion-probabilistic-models-stable-diffusion)
 - [2020 Scaling Laws for Neural Language Models, John Hopkins, OpenAI](#2020-scaling-laws-for-neural-language-models-john-hopkins-openai)
 - [2020 GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](#2020-gshard-scaling-giant-models-with-conditional-computation-and-automatic-sharding)
 - [2020 Language Models are Few-Shot Learners (GPT-3), OpenAI](#2020-language-models-are-few-shot-learners-gpt-3-openai)
@@ -665,6 +666,16 @@ For each dataset, the authors manually compose ten unique templates that use nat
 
 {: style="text-align:center; font-size: small;"}
 <img width="67%" height="67%" src="/assets/publications/finetune_language_models.png"/> 
+
+<br/>
+## 2021 [Denoising Diffusion Probabilistic Models (Stable Diffusion)](https://arxiv.org/abs/2006.11239)
+
+The original **stable diffusion** paper. "A diffusion [probabilistic] model
+is a parameterized Markov chain trained using variational inference to produce samples matching the data after finite time. Transitions of this chain are learned to reverse a diffusion process, which is a Markov chain that gradually adds noise to the data in the opposite direction of sampling until signal is destroyed. When the diffusion consists of
+small amounts of Gaussian noise, it is sufficient to set the sampling chain transitions to conditional Gaussians too, allowing for a particularly simple neural network parameterization". 
+
+{: style="text-align:center; font-size: small;"}
+<img width="67%" height="67%" src="/assets/publications/StableDiffusion.png"/> 
 
 <br/>
 ## 2020 [Scaling Laws for Neural Language Models, John Hopkins, OpenAI](https://arxiv.org/abs/2001.08361)

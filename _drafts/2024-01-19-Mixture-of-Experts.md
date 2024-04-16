@@ -8,10 +8,18 @@ tags: [machinelearning]
 Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) - the current [ChatBot benchmark](https://chat.lmsys.org/) reigning champion - were recently [leaked](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/). It mentions the usage of **Mixture-of-Experts (MoEs)**, with 16 experts of circa 110 billion parameters each, totalling 1.8 trillion parameters. 
 <!-- Briefly after, [Mistral 7x8B](https://mistral.ai/news/mixtral-of-experts/) has been released as a MoE model of 8 experts with 7 billion parameters each, claiming its performance beats [GPT-3.5](https://en.wikipedia.org/wiki/GPT-3) with circa 175 billion parameters. -->
 
-Behind this success is the fact that MoEs uses **sparse computation** and **conditional computation** to provide better training scaling, faster inference and improved model accuracy compared to non-MoE systems, for the same compute budget or parameter count.
+Behind this success is the fact that MoEs uses **sparse computation** and **conditional computation** to provide better training scaling (despite difficulties to control **overfitting**), faster inference and improved model accuracy compared to non-MoE systems, for the same compute budget or parameter count.
 
 <!-- The scaling and analysis of training large non-sparse (dense) models have been already covered in [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361), [Scaling Properties of Speech Language Models](https://arxiv.org/abs/2404.00685) and [Emergent Abilities of Large Language Models](https://openreview.net/forum?id=yzkSU5zdwD). -->
-So in this post, we will go through an historical overview of training and fine-tuning of **sparse models** and MoEs.  We will cover the following publications and their implementations:
+So in this post, we will discuss MoEs development from early days, and provide implementations of single-node MoEs and large-scale distributed MoEs (using DeepSpeed and PyTorch distributed).
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks_no_legend.png"/>
+
+{: style="text-align:center; font-size: small;"}
+An overview of the computation steps underlying modern sparse Mixture-of-Experts (MoEs). Picture source: [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841). 
+
+We will cover the following publications, and credit where it's due, the storyline presented is inspired by the [hugging face MoE post](https://huggingface.co/blog/moe):
   
 - [1991-2014: from Mixture of Experts to Deep Mixture of Experts](#1991-2014-from-mixture-of-experts-to-deep-mixture-of-experts)
 - [2017 Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](#2017-outrageously-large-neural-networks-the-sparsely-gated-mixture-of-experts-layer)
@@ -26,12 +34,6 @@ So in this post, we will go through an historical overview of training and fine-
 - [2024 Mixtral of Experts](#2024-mixtral-of-experts)
 - [2024 Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](#2024-mixture-of-depths-dynamically-allocating-compute-in-transformer-based-language-models)
 
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks_no_legend.png"/>
-
-{: style="text-align:center; font-size: small;"}
-An overview of the computation steps underlying modern sparse Mixture-of-Experts (MoEs). In this post, we will discuss MoEs development from early days, and provide implementations of single-node MoEs and large-scale distributed MoEs (using DeepSpeed and PyTorch distributed). Picture source: [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841). 
-
 ## 1991-2014: from Mixture of Experts to Deep Mixture of Experts
 
 {: style="text-align:center; font-size: small;"}
@@ -40,19 +42,19 @@ An overview of the computation steps underlying modern sparse Mixture-of-Experts
 {: style="text-align:center; font-size: small;"}
 **Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). Source: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
 
-One of the earliest developments of architectures similar to MoEs were presented in [Adaptive Mixture of Local Experts (1991)](#1991-adaptive-mixture-of-local-experts) and [Task Decomposition Through Competition in a Modular Connectionist Architecture (1991)](https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog1502_2). The MoE was defined as a set of independent **experts** (feed-forward networks) alongside a **gating network** (also a feed-forward network). All the experts and the gating network receive the same input. The gating network outputs the distribution (importance) of each input across all experts. The output of the system is sum of the outputs of all experts weighted by the output of the gating network.
+One of the earliest developments of architectures similar to MoEs were presented in [Adaptive Mixture of Local Experts (1991)](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf) and [Task Decomposition Through Competition in a Modular Connectionist Architecture (1991)](https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog1502_2). The MoE was defined as a set of independent **experts** (feed-forward networks, $$f_i(x)$$ in the picture) alongside a **gating network** (also a feed-forward network, $$g(x)$$). All the experts and the gating network receive the same input $$x$$. The gating network outputs the distribution of each expert relevance/importance for the given input and is defined as by $$g(x) = Softmax(x · W_g) $$ in its simplest form, where $$W_g$$ is a (optional) learnable transformation. Finally, the output of the system ($$z$$) is the sum of the outputs of all experts weighted by the output of the gating network.
 
-The main motivation for using a mixture of experts instead of a single larger feedforward was:
+The main motivation for using a mixture of experts instead of a single large feed-forward was:
 
 > If backpropagation is used to train a single, multilayer network to perform different subtasks on different occasions, there will generally be strong interference effects that lead to slow learning and poor generalization.  
 
-Which eventually lead to the following hinton  the behaviour of MoEs as:
+Which eventually lead to the following discovery on the behaviour of MoEs:
 
 > the learning procedure divides up a vowel discrimination task into appropriate subtasks, each of which can be solved by a very simple expert network.
 
-A major difference between the two approaches is the loss function picked. One picks an error function $$E = \| d - \sum_i p_i \, o_i \| ^2$$,  where $$o_i$$ is the output *vector* of expert $$i$$, $$p_i$$ is the router's probability for the expert $$i$$, and $$d$$ is the correct label for the input. The other claims that the previous form leads to starvation of experts where some experts are never assigned any importance (and one expert is overpowered i.e. assigned most of the gating importance). It suggestes instead the error function $$E = \sum_i p_i  \| d - \, o_i \| ^2$$ and its negative log-likelihood variant to overcome this.
+A major difference between the two 1991 approaches is the loss function picked. One picks an error function $$E = \| d - \sum_i p_i \, o_i \| ^2$$,  where $$o_i$$ is the output *vector* of expert $$i$$, $$p_i$$ is the router's probability for the expert $$i$$, and $$d$$ is the correct label for the input. The other claims that the previous form leads to **starvation** of experts where some experts are never assigned any importance (and one expert is **overpowered** i.e. assigned most of the gating importance). It suggestes instead the error function $$E = \sum_i p_i  \| d - \, o_i \| ^2$$ and its variant form based on the negative log-likelihood to overcome this.
 
-The implementations of this MoE module is straighforward, and you can fine the full code with running examples in the [Mixture-of-Experts repository](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/Mixture-of-Experts/moe.py):
+The implementations of this MoE module is straighforward, and you can fine the full code with running examples in the [`moe.py` file in the supporting repository](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/Mixture-of-Experts/moe.py):
 
 ```python
 class MoE(nn.Module):
@@ -61,8 +63,7 @@ class MoE(nn.Module):
     super().__init__()
     self.router = Router(input_size, num_experts, dropout=dropout)
     self.experts = nn.ModuleList([
-      FeedForward(input_size, output_size, dropout=dropout) for _ in range(num_experts)
-      ])
+      FeedForward(input_size, output_size, dropout=dropout) for _ in range(num_experts) ])
 
   def forward(self, x):
     probs = self.router(x)
@@ -71,23 +72,21 @@ class MoE(nn.Module):
     weighted_sum = weighted_outputs.sum(dim=-2) # sum over experts: B*T*E*C -> B*T*C
     return weighted_sum, probs, outputs
 
-  def loss_per_token_1991(self, probs, outputs, labels):
+  def loss_per_token_Adaptive_Mixture_1991(self, probs, outputs, labels):
     one_hot_labels = torch.nn.functional.one_hot(labels, num_classes=outputs.shape[-1])
     mse_expert_i = lambda i: (one_hot_labels-outputs[:,:,i,:]).square().mean()  # B*T*1 * B*T*classes
     loss_per_expert = (torch.stack([mse_expert_i(i) for i in range(8)])*probs) # B*T*experts
     return loss_per_expert.sum(-1) # B*T, 1 value per token
 ```
 
-With the surge of Deep Neural Networks,  [Learning Factored Representations in a Deep Mixture of Experts (2014)](https://arxiv.org/abs/1312.4314) "extends the Mixture of Experts work (MoE) to a stacked model, the **Deep Mixture of Experts**, with multiple sets of gating and experts".
+With the surge of Deep Neural Networks, [Learning Factored Representations in a Deep Mixture of Experts (2014)](https://arxiv.org/abs/1312.4314) extended "the Mixture of Experts work (MoE) to a stacked model, the **Deep Mixture of Experts**, with multiple sets of gating and experts".
 
-During training, as before, the authors noticed that training leads to a **degenerate local minimum**: "experts at each layer that perform best for the first few examples end up overpowering the remaining experts”, because as they are better initially, then end up being picked more by the gates. This was overcome by **capping (*max clipping*)** the assignments to a maximum value, and re-normalizing across all (post max-clipping) gating probabilities. This **cap value is then removed in a second training stage**.
+During training, as before, the authors noticed that training led to a **degenerate local minimum**: "experts at each layer that perform best for the first few examples end up overpowering the remaining experts”, because as they are better initially, then end up being picked more by the gates. This was overcome by **capping (*max clipping*)** the assignments to a maximum value, and re-normalizing across all (post max-clipping) gating probabilities. This **cap value is then removed in a second training stage**.
 
 The benchmark compared a single MoE, a two-level MoE, a two-layer MoE where the information between layers is the concatenation of all layer-1 experts (instead of the weighted sum of outputs), and a regular feed-forward network with a similar number of parameters. Results showed that, "In most cases, the deeply stacked experts performs
-between the single and concatenated experts baselines on the training set, as expected. However, the deep models often suffer from **overfitting**: the mixture’s error on the test set is worse than that of the single expert for two of the four model sizes. Encouragingly, the DMoE performs almost as well as a fully-connected network (DNN) with the same number of parameters, even though this network imposes fewer constraints on its structure". An important result emphasizes the relevance of stacking MoEs into a deep model:
+between the single and concatenated experts baselines on the training set, as expected. However, the deep models often suffer from **overfitting**: the mixture’s error on the test set is worse than that of the single expert for two of the four model sizes. Encouragingly, the DMoE performs almost as well as a fully-connected network (DNN) with the same number of parameters, even though this network imposes fewer constraints on its structure".
 
-> we find that the Deep Mixture of Experts automatically learns to develop location-dependent ("where") experts at the first layer, and class-specific ("what") experts at the second layer.
-
-The deep MoE model can be coded simply by stacking the previous MoE:
+The deep MoE model can be coded simply by stacking the previous MoE (also available in  [`moe.py`](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/Mixture-of-Experts/moe.py)):
 
 ```python
 class MoE_deep(nn.Modue):
@@ -102,23 +101,23 @@ class MoE_deep(nn.Modue):
     return self.stack(x)
 ```
 
+An important result emphasizes the relevance of stacking MoEs into a deep model:
+
+> we find that the Deep Mixture of Experts automatically learns to develop location-dependent ("where") experts at the first layer, and class-specific ("what") experts at the second layer.
+
+And this led to the follow up work that explored having the gating being used not only to weight the sum of output of experts, but as well as a router of the input to individual experts.
+
 ## 2017 [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
 
-The previous MoE implementations had a big drawback: all experts receive all inputs, leading to high training costs, even for the experts of low relevance for each input. This led to the introduction of **Conditional Computation (aka Sparsity), a method where only a subset of experts are picked**. In practice, the gating mechanism is now moved now moved to the begining of the workflow and works as a **routing mechanism**, as it provides the distribution of the experts relevance for different experts. A new hyper-parameter $$k$$ is introduced, referring to the number of experts picked per iteration. A low or high $$k$$ lead to a situation where too few or too many experts are utilized, resulting in under- or over-computation.
+The previous MoE implementations had a big drawback: all experts process all inputs, leading to high training costs, even when there's low little relevance of some experts for some inputs. This led to the introduction of **Conditional Computation** or **Sparsity**, a method where only a subset of experts are picked per input. In practice, the distribution output by the gating mechanism is now used to pick only the highest-relevance experts for each task, and delegate the input only to those top-$$k$$ experts, effectively working as a **routing mechanism**. $$k$$ is a hyper-parameter that drives the trade-off between computation and *expertise*, and may ultimately result in under- or over-computation.
+In practice, the MoE selects for each token in the text a possibly different combination of experts. When $$g_i(x)=0$$ for a given expert $$i$$, then $$f_i(x)$$ is not computed.
 
-In practice, the MoE selects for each token in the text a possibly different combination of experts.
-When $$g_i(x)=0$$ for a given expert $$i$$, then $$f_i(x)$$ is not computed. The simplest gating mechanism - **Softmax Gating** - is formulated as a softmax over an input $$x$$ multiplied by a trainable matrix $$W_g$$, as:
-
-$$
-G_σ(x) = Softmax(x · W_g)
-$$
-
-Towards scaling this approach,  the 2017 paper [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538), introduces Sparsely-Gated Mixture-of-Experts layer (MoE), consisting of up to thousands experts (modelled as feed-forward networks) and a gating network. This MoE layer (with up to 137 billion) and is stacked recursively between stacked LSTM layers. The model architecture is composed of a stack of LSTMs. **"All parts of the network are trained jointly by back-propagation"**.
+Now note that scaling by pycking only the top-$$k$$ experts per iteration, once can increase the number of experts without incurring an aditional computational overhead. Thus, towards scaling this approach, the 2017 paper [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538) introduces an architecture of 137B parameters, consisting of thousands of experts. The architecture is used as a language model by processing sentences by recursively running tokens through a recursive LSTM+MoE structure:
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/Mixture-of-Experts/MoE_2017_Dean.png"/>
 
-The authors don't use the typical softmax gating. Instead, the paper proposes **noisy top-k gating**, where they add **tunable gaussian noise** $$H(X)$$ (controlled by $$W_{noise}$$, to help with load balance, Appendix A) before taking the softmax. To handle sparsity, it the output value of the non-picked experts to -∞ (which causes the corresponding gate values to equal 0)”:
+The authors don't use the typical softmax gating. Instead, the paper proposes **noisy top-k gating**, where they add **tunable gaussian noise** $$H(X)$$, controlled by $$W_{noise}$$, to the input value of each experts. To handle sparsity, the output value of the non-picked experts to -∞ (which causes the corresponding gate values to equal 0)”:
 
 $$
 G(x) = softmax( \, KeepTopK ( \, H(x), k) )
@@ -130,7 +129,9 @@ $$
 H(x)_i = (x · W_g)_i + StandardNormal() · Softplus ( (x · W_{noise})_i )
 $$
 
-Note: $$SoftPlus$$ is a smooth approximation to ReLU and is used to constrain its output to be always positive. In order to improve scaling, they **mix model and data parallelism** to allow memory- and compute-efficient scaling on expert on distributed systems: each processor has a data-parallel replica of the standard layers and the gating networks, and model-parallel shards of a subset of experts.  Batch is passed in a data-parallel fashion - each device receives a different micro-batch. This reduces the model size by a factor of the number of compute devices.
+Note: the $$SoftPlus$$ is here used to constrain its output to be always positive.
+
+To scale the MoE on distributed systems they use **model parallelism for the MoE blocks and data parallelism for non-MoE blocks**: each processor has a data-parallel replica of the standard layers and the gating networks, and a model-parallel shard of the experts (ie each device holds a subset of experts, and there is only 1 copy of each expert across the distributed system). Batch is passed in a data-parallel fashion - each device receives a different micro-batch.
 
 When applied to a language task, they take advantage of **Convolutionality**: " we apply the same MoE to each time step of the previous layer". As an example: in one single batch run, the expert 1 takes timestep 1 of all inputs, expert 2 takes timestep 2 of all inputs, etc, and this is repeated for each layer in the LSTM stack. "If we wait for the previous layer to finish, we can apply the MoE
 to all the time steps together as one big batch. Doing so increases the size of the input batch to the
