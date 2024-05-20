@@ -289,16 +289,28 @@ LongNet is a Transformer variant that can scale the sequence length up to 1B tok
 <br>
 ## 2023 [DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models](https://arxiv.org/abs/2309.14509)
 
-Explores a fourth parallelism dimension (3D parallelims so far: data, model, pipeline), the sentence length. Algorithm: "DeepSpeed-Ulysses partitions individual samples along the sequence dimension among participating GPUs. Then right before the attention computation, it employs all-to-all communication collective on the partitioned queries, keys and values such that each GPU receives the full sequence but only for a non-overlapping subset of the attention heads. This allows the participating GPUs to compute attention for different attention heads in parallel. Finally, DeepSpeed-Ulysses employs another all-to-all to gather the results along the attention heads while re-partitioning along the sequence dimension." The final result is that it enables "Transformer models 4x larger sequence lengths than existing systems, while enabling training with sequences with over a million tokens". It is also implementation agnostic, supports dense and sparse attention, and is orthogonal to (i.e. can be combined with) with data parallelism, ZeRO, FlashAttention and sparse attention. Compared to other sentence parallelims efforts:
+Explores a fourth parallelism dimension, the sentence length. 3D parallelism so far: data, model and pipeline. Algorithm: "DeepSpeed-Ulysses partitions individual samples along the sequence dimension among participating GPUs. Then right before the attention computation, it employs all-to-all communication collective on the partitioned queries, keys and values such that each GPU receives the full sequence but only for a non-overlapping subset of the attention heads. This allows the participating GPUs to compute attention for different attention heads in parallel. Finally, DeepSpeed-Ulysses employs another all-to-all to gather the results along the attention heads while re-partitioning along the sequence dimension." The final result is that it enables "Transformer models 4x larger sequence lengths than existing systems, while enabling training with sequences with over a million tokens". It is also implementation agnostic, supports dense and sparse attention, and is orthogonal to (i.e. can be combined with) with data parallelism, ZeRO, FlashAttention and sparse attention. Compared to other sentence parallelims efforts:
 - DeepSpeed Ulysses delivers $$O(M/P)$$ communication complexity (for message of size $$M$$ and $$P$$ devices), activation memory efficiency, parameter memory efficiency, and attention agnostic.
 - ColAI Sequence Parallelism ([Sequence Parallelism: Long Sequence Training from System Perspective](https://arxiv.org/abs/2105.13120)) yields comm. complexity $$O(M)$$ and activation memory efficiency. It is not attention agnostic, i.e. it requires a different (specific) kind of attention. It introduces a " ring self attention, a ring-like communication collective in which query projections are local whereas key and values projections are transmitted in a ring-style to compute global attention, resulting in communication complexity linear in message size, M".
 - Megatron Sequence Parallelism ([Reducing Activation Recomputation in Large Transformer Models](https://arxiv.org/abs/2205.05198))  also yields $$O(M)$$ complexity, activation memory efficiency, and is attention agnostic. It "partitions sequence along sequence dimensions and applies allgather and reduce scatter collective to aggregate QKV projections for attention computation".
 
-
-The illustration of a multi-head attention workflow with the corrresponding Ulysses communication follows:
+The algorithm is the following:
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/publications/DeepSpeed_Ulysses.png"/>
+
+The input consists of a sequence of size $$N$$ partitioned across $$P$$ processes, leading to an input of size $$N/P \times d$$ per batch. During the attention calculation, each input $$N/P \times d$$ is passed through the Key, Query and Value linear projection to collect embeddings, becoming $$N/P \times d$$ (left-most section of the diagram above). $$K$$ of size $$N/P$$ is transposed. The distributed implementation follows, in three steps:
+1. Leftmost all-to-alls convert:
+  - row-wise into column-wise distributed representation of $$K$$, transforming shape from $$[N/P, d]$$ to $$[N, d/P]$$.
+  - column-wise into row-wise distributed representation of $$Q^T$$, transforming shape from $$[d, N/P]$$ to $$[d/P, N]$$.
+  - row-wise into column-wise distributed representation of $$V$$, transforming shape from $$[N/P, d]$$ to $$[N, d/P]$$.
+  - this leads to a $$3Nd$$ communication cost.
+2. Computation of $$softmax(KQ^T)V$$ where $$KQ^T$$ is computed from shapes $$[N, d/P]$$ multiplied by  $$[d/P, N]$$, ie just a partial sum of full $$KQ^T$$ (that should multiply $$[N, d]$$ by $$[d , N]$$. All processes end up with a different $$[N,N]$$ matrix. So applying $$softmax$$ directly without summing all local $$[N,N]$$ takes just a subset of embeddings (the ones that refer to that local process) into accuont on the $$KQ^T$$. I believe an "all-reduce (sum)" is needed to sum all partial $$KQ^T$$ across processors before the $$softmax$$. What am I missing?
+3. rightmost all-to-all converts:
+  - colum-wise into row-wise distributed representation of $$softmax(KQ^T)V$$, transforming shape from $$[N, d/P]$$ to $$[N/P, d]$$.
+  - this has a communication cost of $$Nd$$
+
+This yields a total Total comm cost of 3 all-to-all  of $$Nd$$ elements + 1 all-to-all  of $$Nd$$ elements (where $$d$$ is the transformer hidden layer). This is supposedly less elements than the Megatron-LM implementation. I am not convinced, see [DeepSpeed discussion 5551](https://github.com/microsoft/DeepSpeed/discussions/5551).
 
 <br>
 ## 2023 [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691)
