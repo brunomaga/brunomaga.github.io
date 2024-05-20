@@ -1,25 +1,19 @@
 ---
 layout: post
-title:  "Mixture-of-Experts: a historical overview, with distributed DeepSpeed and Pytorch implementations"
+title:  "Mixture-of-Experts: a historical overview, with distributed Pytorch and DeepSpeed implementations"
 categories: [machine learning, Transformer, GPT, DeepSpeed, mixture-of-experts]
 tags: [machinelearning]
 ---
 
-Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) - the current [ChatBot benchmark](https://chat.lmsys.org/) reigning champion - were recently [leaked](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/). It mentions the usage of **Mixture-of-Experts (MoEs)**, with 16 experts of circa 110 billion parameters each, totalling 1.8 trillion parameters. 
+(**Disclaimer:** this post is continuously being updated.)
+
+
+Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4), the current [ChatBot benchmark](https://chat.lmsys.org/) reigning champion, were recently [leaked](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/). It mentions the usage of **Mixture-of-Experts (MoEs)**, with 16 experts of circa 110 billion parameters each, totalling 1.8 trillion parameters. 
 <!-- Briefly after, [Mistral 7x8B](https://mistral.ai/news/mixtral-of-experts/) has been released as a MoE model of 8 experts with 7 billion parameters each, claiming its performance beats [GPT-3.5](https://en.wikipedia.org/wiki/GPT-3) with circa 175 billion parameters. -->
 
-Behind this success is the fact that MoEs uses **sparse computation** and **conditional computation** to provide better training scaling (despite difficulties to control **overfitting**), faster inference and improved model accuracy compared to non-MoE systems, for the same compute budget or parameter count.
+Behind this success is the fact that MoEs uses **sparse computation** and **conditional computation** to provide better training scaling (despite difficulties to control **overfitting**), faster inference and improved model accuracy compared to non-MoE systems, for the same compute budget or parameter count. OpenAI goes further and cliams that [Expert Parallelism is the 4th dimension of parallelism](https://openai.com/research/techniques-for-training-large-neural-networks), in addition to data, model and pipeline parallelism.
 
-<!-- The scaling and analysis of training large non-sparse (dense) models have been already covered in [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361), [Scaling Properties of Speech Language Models](https://arxiv.org/abs/2404.00685) and [Emergent Abilities of Large Language Models](https://openreview.net/forum?id=yzkSU5zdwD). -->
-So in this post, we will discuss MoEs development from early days, and provide implementations of single-node MoEs and large-scale distributed MoEs (using DeepSpeed and PyTorch distributed).
-
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks_no_legend.png"/>
-
-{: style="text-align:center; font-size: small;"}
-An overview of the computation steps underlying modern sparse Mixture-of-Experts (MoEs). Picture source: [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841). 
-
-We will break our discussion in three parts - small single-node MoEs, large-scale distributed MoEs, and modenr MoE finetuning efforts, by going through the following publications:
+So in this post, we will discuss MoEs development from early days, and provide implementations of MoEs on a single node and large-scale distributed MoEs using PyTorch distributed and DeepSpeed implementations. We will also discuss loss functions, and finetuning. We will follows the following publications storyline (credit: partially inspired by the [MoE post from hugging face](https://huggingface.co/blog/moe)):
   
 - [Early days: small MoEs as a combination of weighted expert outputs](#early-days-small-moes-as-a-combination-of-weighted-expert-outputs)
   - [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
@@ -40,7 +34,7 @@ We will break our discussion in three parts - small single-node MoEs, large-scal
   - [2024 Mixtral of Experts](#2024-mixtral-of-experts)
   - [2024 Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](#2024-mixture-of-depths-dynamically-allocating-compute-in-transformer-based-language-models)
 
-## Early days: small MoEs as a combination of weighted expert outputs
+## Early days: small MoEs as a weighted sum of expert outputs
 
 ### 1991 [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf)
 ### 1991 [Task Decomposition Through Competition in a Modular Connectionist Architecture](https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog1502_2) 
@@ -127,36 +121,22 @@ And this led to the follow up work that explored having the gating being used no
 The previous MoE implementations had a big drawback: all experts process all inputs, leading to high training costs, even when there's low little relevance of some experts for some inputs. This led to the introduction of **Conditional Computation** or **Sparsity**, a method where only a subset of experts are picked per input. In practice, the distribution output by the gating mechanism is now used to pick only the highest-relevance experts for each task, and delegate the input only to those top-$$k$$ experts, effectively working as a **routing mechanism**. $$k$$ is a hyper-parameter that drives the trade-off between computation and *expertise*, and may ultimately result in under- or over-computation.
 In practice, the MoE selects for each token in the text a possibly different combination of experts. When $$g_i(x)=0$$ for a given expert $$i$$, then $$f_i(x)$$ is not computed.
 
-Now note that picking only the top-$$k$$ experts per iteration, one can increase the number of experts without incurring an aditional computational overhead, leading to great MoE scaling properties. The `forward` pass performs a four-step algorithm, best illustrated in the [MegaBlocks paper](https://arxiv.org/abs/2211.15841) (covered later): 
+To scale the MoE on distributed systems they use **model parallelism for the MoE blocks and data parallelism for non-MoE blocks**: each processor has a data-parallel replica of the standard layers and the gating networks, and a model-parallel shard of the experts (ie each device holds a subset of experts, and there is only 1 copy of each expert across the distributed system). Batch is passed in a data-parallel fashion - each device receives a different micro-batch.
+An important message is that, by picking only the top-$$k$$ experts per iteration, one can increase the number of experts without incurring an aditional computational overhead, leading to great MoE scaling properties.
+
+Modern large-scale MoE efforts improved on the ideas of sparsity, conditional computing, data- and model- parallelism to deliver very large scale MoEs. Moreover, MoEs became a replacement for feed-forward networks that improves scaling and accuracy in pre-existent architectures, as we will see later.
+
+### Distributed implementation on PyTorch
+
+The MoE processing performs a four-step algorithm, best illustrated in the [MegaBlocks paper](https://arxiv.org/abs/2211.15841) (detailled later): 
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks.png"/>
 
-To scale the MoE on distributed systems they use **model parallelism for the MoE blocks and data parallelism for non-MoE blocks**: each processor has a data-parallel replica of the standard layers and the gating networks, and a model-parallel shard of the experts (ie each device holds a subset of experts, and there is only 1 copy of each expert across the distributed system). Batch is passed in a data-parallel fashion - each device receives a different micro-batch.
-
-The following publications started on this concepts of sparsity, conditional computing, data- and model- parallelism to deliver very large scale MoEs. 
-
-### Distributed implementation on PyTorch
-
-We start by taking the [GPT2-based `GPTlite` model we built on a previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), and redifining all its modules as Distributed Data Parallel, except the feed-forward module in the transformer block, that we will replace by our mixture of experts:
+We start by defining our distributed mixture-of-experts block as `MoE_dist`, with a sharded router and a local expert:
 
 ```python
-  model = GPTlite(vocab_size).to(device)
-  model.token_embedding_table = DDP(model.token_embedding_table.to(device), device_ids=[local_rank])
-  model.position_embedding_table = DDP(model.position_embedding_table.to(device), device_ids=[local_rank])
-  model.ln = DDP(model.ln.to(device), device_ids=[local_rank])
-  model.lm_head = DDP(model.lm_head.to(device), device_ids=[local_rank])
-  for block in model.blocks: 
-    block.sa = DDP(block.sa.to(device), device_ids=[local_rank])
-    block.ln1 = DDP(block.ln1.to(device), device_ids=[local_rank])
-    block.ln2 = DDP(block.ln2.to(device), device_ids=[local_rank])
-    block.ffwd = MoE().to(device) #replace FeedForward with Mixture of Experts
-```
-
-We then define our mixture-of-experts block as `MoE`, with a sharded router and a local expert. We will allow `k>1`, contrarily to the Switch Transformer, but to support the other implementations like GShard:
-
-```python
-class MoE(nn.Module):
+class MoE_dist(nn.Module):
   def __init__(self, k=2, capacity_factor=1.25, padding_val=0, local_rank=local_rank):
     super().__init__()
     self.capacity_factor = capacity_factor
@@ -165,13 +145,14 @@ class MoE(nn.Module):
     self.k = k
 
     self.router = DDP(Router(n_embd, self.num_experts).to(device), device_ids=[local_rank])
-    self.expert = FeedForward(n_embd).to(device) # 1 expert per GPU, as per paper
+    self.expert = FeedForward(n_embd).to(device)
 ```
 
-In here, the `Router` is a Deep Neural Network that takes as input the embedding of a token, and ouputs a distribution of allocations (probabilities) over the experts. Also, as per the paper, there is only one expert per process, thus the process id matches the expert id. 
+In here, the `Router` is a feed-forward network that takes as input the embedding of a token, and ouputs a distribution of allocations (probabilities) over the experts. Also, we will assume there is only one expert per process, thus the process id matches the expert id, and the expert count matches the distributed network size. 
 
 The **routing step** computes the top-`k` expert assignments for each token, as expert id in `topk_experts` and corresponding probabilities `topk_probs`: 
 ```python
+  def forward(self, x):
     probs = self.router(x) #get assignements from router, shape B * T * n_experts
     topk_probs, topk_experts = torch.topk(probs, k=self.k) # top-k experts per sentence
     ids_per_expert = [ (topk_experts==expert).nonzero() for expert in range(self.num_experts) ]
@@ -202,6 +183,12 @@ The following **permutation step** selectively sends the tokens to each expert's
     recv_toks = recv_toks.view(-1, C) # reshape to C columns 
 ```
 
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/Mixture-of-Experts/AlltoAll.png"/>
+
+{: style="text-align:center; font-size: small;"}
+An illustration of the MPI all-to-all collective operation. When sending only 1 element per row, it is equivalent to a distributed matrix transpose - note the red row before the all-to-all (left) as a transposed column after the all-to-all (right). We use a single-element all-to-all to exchange the count of items to be sent received among processors. We then use those counts to perform a new all-to-all with variable-sized elements in the permutation step. Finally, in the un-permutation step, we perform another all-to-all that performs the converse communication, by swapping the send and receive counts and buffers.
+
 The **computation step** will reshuffle the received data into a 3D batch of size `Rows x Capacity x Embedding` that will either crap or pad sequences to the capacity of each export:
 
 ```python
@@ -219,13 +206,6 @@ The **computation step** will reshuffle the received data into a 3D batch of siz
     batch_toks = self.expert(batch_toks) # Rows * Capacity * C
 ``` 
 
-{: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="/assets/Mixture-of-Experts/AlltoAll.png"/>
-
-{: style="text-align:center; font-size: small;"}
-An illustration of the MPI all-to-all collective operation. When sending only 1 element per row, it is equivalent to a distributed matrix transpose - note row and column with red border. We use a single-element all-to-all to exchange the count of items to be sent received among processors. We then use those counts to perform a new all-to-all with variable-sized elements in the permutation step. Finally, in the un-permutation step, we perform another all-to-all that performs the converse communication, by swapping the send and receive counts.
-
-
 The ouput of the expert is stored in `batch_toks`. The following **Un-permutation step** will now perform an `all_to_all_single` that will perform the opposite communication of the permutation step. This will populate the all-to-all output buffer with the partial results all experts.
 
 ```python
@@ -242,30 +222,59 @@ The ouput of the expert is stored in `batch_toks`. The following **Un-permutatio
 Finally, the **scale step** performs a weighted sum of the top-k probabilities for each token:
 
 ```python
-  x *= torch.concatenate(probs_per_expert).view(-1,1) # multiply by router probabilities
-  if self.k>1: # sum over k probabilities for each input
-    x = torch.stack( [ x[send_ids[:,-1]==k] for k in range(self.k)]).sum(dim=0)
-  return x.view(B,T,C)
+    x *= torch.concatenate(probs_per_expert).view(-1,1) # multiply by router probabilities
+    if self.k>1: # sum over k probabilities for each input
+      x = torch.stack( [ x[send_ids[:,-1]==k] for k in range(self.k)]).sum(dim=0)
+    return x.view(B,T,C)
 ```
 
 You can find the complete implementation in the [Mixture-of-Experts repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/Mixture-of-Experts/moe_dist.py).
 
 ### Distributed implementation on DeepSpeed
 
-The previous code is a bit hairy to understand, particularly if you do not come from an HPC background. An easier way to implement this is to use a library that does all communication for us. Here we will use [DeepSpeed Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/). 
+The previous code is a bit complex to understand, particularly if you do not come from an HPC background. An easier way to implement this is to use a library that handles all communication under the hood. Here we will use [DeepSpeed Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/).  
+
+Our previous implementations was a GPU-only implementation of a data- and model-parallel MoE. DeepSpeed extends this by supporting CPU and GPU memory and to mix different parallelism techniques. Table from the [DeepSpeed MoE post](https://www.deepspeed.ai/tutorials/mixture-of-experts/#expert-groups-initialization):
+
+|-|-|-|
+| **Short Name** | **Flexible Parallelism Configurations** | **Benefit** |
+|-|-|-|
+| E | Expert | Scales the model size by increasing the number of experts |
+| E+D | Expert + Data | Accelerates training throughput by scaling to multiple data parallel groups |
+| E+Z | Expert + ZeRO-powered Data | Partitions the nonexpert parameters to support larger base models |
+| E+D+M | Expert + Data + Model | Supports massive hidden sizes and even larger base models than E+Z |
+| E + D + Z | Expert + Data + ZeRO-powered data | Supports massive hidden sizes and even larger base models than E+Z |
+| E + Z-Off + M | Expert + ZeRO-Offload + Model | Leverages both GPU and CPU memory for large MoE models on limited # of GPUs |
+|-|-|-|
 
 ```python
-TODO
+class MoE_ds(nn.Module):
+
+  def __init__(self, input_size, output_size, num_experts, dropout=0.1):
+    super().__init__()
+    self.router = Router(input_size, num_experts, dropout=dropout)
+    self.experts = nn.ModuleList([
+      FeedForward(input_size, output_size, dropout=dropout) for _ in range(num_experts) ])
+
+  def forward(self, x):
+    probs = self.router(x)
+    outputs = torch.stack([ expert(x) for expert in self.experts ], dim=-2) # B*T*Experts*C
+    weighted_outputs = outputs * probs.unsqueeze(-1) # B*T*E*C x B*T*1*C -> B*T*E*C
+    weighted_sum = weighted_outputs.sum(dim=-2) # sum over experts: B*T*E*C -> B*T*C
+    return weighted_sum, probs, outputs
 ```
+
+Remember that the previous code snippets cover the MoE module only, which is nothing more than a distributed representation of several feed-forward networks for experts and router. This is usually embedded as a single module of a larger module, as we will see next.
 
 ### 2017 [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
 
-Thus, towards scaling this approach, the 2017 paper [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538) introduces an architecture of 137B parameters, consisting of thousands of experts. The architecture is used as a language model by processing sentences by recursively running tokens through a recursive LSTM+MoE structure:
+The 2017 paper [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538) introduces an text processing model, consisting of a recursive LSTM architecture with thousands of MoEs, totalling 137B parameters:
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/Mixture-of-Experts/MoE_2017_Dean.png"/>
 
-The authors don't use the typical softmax gating. Instead, the paper proposes **noisy top-k gating**, where they add **tunable gaussian noise** $$H(X)$$, controlled by $$W_{noise}$$, to the input value of each experts. To handle sparsity, the output value of the non-picked experts to -∞ (which causes the corresponding gate values to equal 0)”:
+Few changes were added to the typical MoE block:
+- Instead of the typical softmax gating, the paper proposes a **noisy top-k gating**, where they add **tunable gaussian noise** $$H(X)$$, controlled by $$W_{noise}$$, to the input value of each experts. To handle sparsity, the output value of the non-picked experts to -∞ (which causes the corresponding gate values to equal 0)”:
 
 $$
 G(x) = softmax( \, KeepTopK ( \, H(x), k) )
@@ -277,14 +286,11 @@ $$
 H(x)_i = (x · W_g)_i + StandardNormal() · Softplus ( (x · W_{noise})_i )
 $$
 
+
 Note: the $$SoftPlus$$ is here used to constrain its output to be always positive.
 
-When applied to a language task, they take advantage of **Convolutionality**: " we apply the same MoE to each time step of the previous layer". As an example: in one single batch run, the expert 1 takes timestep 1 of all inputs, expert 2 takes timestep 2 of all inputs, etc, and this is repeated for each layer in the LSTM stack. "If we wait for the previous layer to finish, we can apply the MoE
-to all the time steps together as one big batch. Doing so increases the size of the input batch to the
-MoE layer by a factor of the number of unrolled time steps". By applying apply the same MoE to each time step of the previous layer.
- This allows one to apply the MoE to all the time steps together as one big batch., and reduces input the model size by a factor of unrolled time steps.
-
-To avoid having few experts taking all the importance from the gating mechanism at early stages, they adopted a soft constraing approach (as a side note, a hard approach would be fixing a maximum cap threshold). In practice, they add an additional **importance loss**, equal to the square of the [coefficient of variation](https://en.wikipedia.org/wiki/Coefficient_of_variation) of the set of importance values, as:
+- When applied to a language task, they take advantage of **Convolutionality** where each expert if applied to the same time step, recursively. This allows one to apply the MoE to all the time steps together as one big batch, increasing the size of the input batch by a factor of the number of unrolled time steps.
+- To handle overpowering / starvation of experts, they adopted a soft constraing approach (as a side note, a hard approach would be fixing a maximum cap threshold). In practice, they add an additional **importance loss**, equal to the square of the [coefficient of variation](https://en.wikipedia.org/wiki/Coefficient_of_variation) of the set of importance values, as:
 
 $$
 L_{importance} = w_{importance} \cdot CV \, (Importance (X))^2
@@ -312,7 +318,8 @@ $$
 
 where $$P(x,i) = Pr(h(x)_i) \gt kth\_excluding(H(x), k, i)$$ denotes  the probability that $$G(x)_i$$ is **non-zero,  given a new random choice of noise on element $$i$$, but keeping the already-sampled choices of noise on the other elements** (see Appendix A for details). Note that $$G(x)_i$$ is nonzero if and only if $$H(x)_i$$ is greater than the $$k$$th-greatest element of H(x).
 
-The experiments fixed a compute budgets and compared a baseline model with several configurations of MoE (variable number of experts, with and without hierarchy etc), on several language tasks. Results show MoE models beating baseline LSTM models (less perplexity/confusion), with hierarchical MoE beating non-hierarchichal (with a higher parameter count, but same compute). The perplexity improved significantly by increasing data size (from 10B to 100B Word Google News Corpus). In the machine translation task, on the Google Production dataset, the model achieved 1.01 higher test BLEU score even after training for only one sixth of the time.
+The experiments fixed a compute budgets and compared a baseline model with several configurations of MoE, including a hierarchical MoE, on several language tasks. Note: a **hierarchical MoE** is a structure were a primary gating
+network chooses a sparse weighted combination of experts, where each expert is by itself a MoE with its own gating network. Results show MoE models beating baseline LSTM models, with hierarchical MoE beating non-hierarchichal (with a higher parameter count, but same compute). The perplexity improved significantly by increasing data size (from 10B to 100B Word Google News Corpus). In the machine translation task, on the Google Production dataset, the model achieved 1.01 higher test BLEU score even after training for only one sixth of the time.
 
 An important message in the results is that **different experts specialize on different tasks based on syntax and semantics**, as shown in Appendix E table 9:
 
@@ -365,6 +372,24 @@ Finally, they mention **Mixing manual and automatic sharding**, where it allows 
 However, they claim that "the automatic sharding assignment is not the focus of this paper and we leave it as future work".
 -->
 
+We start by taking the [GPT2-based `GPTlite` model we built on a previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), and re-define all its modules as Distributed Data Parallel, except the feed-forward module in the transformer block, that we will replace by our mixture of experts:
+
+```python
+  model = GPTlite(vocab_size).to(device)
+  model.token_embedding_table = DDP(model.token_embedding_table.to(device), device_ids=[local_rank])
+  model.position_embedding_table = DDP(model.position_embedding_table.to(device), device_ids=[local_rank])
+  model.ln = DDP(model.ln.to(device), device_ids=[local_rank])
+  model.lm_head = DDP(model.lm_head.to(device), device_ids=[local_rank])
+  for b, block in enumerate(model.blocks): 
+    block.sa = DDP(block.sa.to(device), device_ids=[local_rank])
+    block.ln1 = DDP(block.ln1.to(device), device_ids=[local_rank])
+    block.ln2 = DDP(block.ln2.to(device), device_ids=[local_rank])
+    if b%2==0: 
+      block.ffwd = MoE().to(device) #replace FeedForward with Mixture of Experts
+    else:
+      block.ffwd = DDP(block.ffwd.to(device), device_ids=[local_rank])
+```
+
 ### 2021 [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
 
 A big issue with large MoEs are training instability. With that in mind [Switch Transformers](https://arxiv.org/abs/2101.03961) tackle that problem by simplifying the routing algorithm and improving model specifications. There is also a strong motivational quote about the usage of MoEs, particularly to solve low-data problems:
@@ -394,7 +419,7 @@ One of the downsides of MoEs is the large number of parameters. If one wants to 
 small dense models. We reduce the model size by up to 99% while preserving 30% of
 the quality gains of the large sparse teacher.
 
-## Towards the future: tweaking and improvements
+## Towards the future: tweaking, finetuning and improvements
 
 ### 2022 [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
 

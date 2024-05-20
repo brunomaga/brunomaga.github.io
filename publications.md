@@ -285,6 +285,21 @@ LongNet is a Transformer variant that can scale the sequence length up to 1B tok
 &nbsp; &nbsp; &nbsp; &nbsp;
 <img width="19%" height="19%" src="/assets/publications/longnets2.png"/>
 
+
+<br>
+## 2023 [DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models](https://arxiv.org/abs/2309.14509)
+
+Explores a fourth parallelism dimension (3D parallelims so far: data, model, pipeline), the sentence length. Algorithm: "DeepSpeed-Ulysses partitions individual samples along the sequence dimension among participating GPUs. Then right before the attention computation, it employs all-to-all communication collective on the partitioned queries, keys and values such that each GPU receives the full sequence but only for a non-overlapping subset of the attention heads. This allows the participating GPUs to compute attention for different attention heads in parallel. Finally, DeepSpeed-Ulysses employs another all-to-all to gather the results along the attention heads while re-partitioning along the sequence dimension." The final result is that it enables "Transformer models 4x larger sequence lengths than existing systems, while enabling training with sequences with over a million tokens". It is also implementation agnostic, supports dense and sparse attention, and is orthogonal to (i.e. can be combined with) with data parallelism, ZeRO, FlashAttention and sparse attention. Compared to other sentence parallelims efforts:
+- DeepSpeed Ulysses delivers $$O(M/P)$$ communication complexity (for message of size $$M$$ and $$P$$ devices), activation memory efficiency, parameter memory efficiency, and attention agnostic.
+- ColAI Sequence Parallelism ([Sequence Parallelism: Long Sequence Training from System Perspective](https://arxiv.org/abs/2105.13120)) yields comm. complexity $$O(M)$$ and activation memory efficiency. It is not attention agnostic, i.e. it requires a different (specific) kind of attention. It introduces a " ring self attention, a ring-like communication collective in which query projections are local whereas key and values projections are transmitted in a ring-style to compute global attention, resulting in communication complexity linear in message size, M".
+- Megatron Sequence Parallelism ([Reducing Activation Recomputation in Large Transformer Models](https://arxiv.org/abs/2205.05198))  also yields $$O(M)$$ complexity, activation memory efficiency, and is attention agnostic. It "partitions sequence along sequence dimensions and applies allgather and reduce scatter collective to aggregate QKV projections for attention computation".
+
+
+The illustration of a multi-head attention workflow with the corrresponding Ulysses communication follows:
+
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/publications/DeepSpeed_Ulysses.png"/>
+
 <br>
 ## 2023 [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691)
 

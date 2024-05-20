@@ -29,7 +29,7 @@ global_rank = int(os.environ['RANK']) #set by torchrun
 device = torch.device(f"cuda:{local_rank}" if torch.cuda.is_available() else "cpu")
 dist.init_process_group(backend='nccl', init_method='env://')
 
-class MoE(nn.Module):
+class MoE_dist(nn.Module):
   def __init__(self, k=2, capacity_factor=1.25, padding_val=0, local_rank=local_rank):
     super().__init__()
     self.capacity_factor = capacity_factor
@@ -125,7 +125,7 @@ if __name__ == "__main__":
     block.sa = DDP(block.sa.to(device), device_ids=[local_rank])
     block.ln1 = DDP(block.ln1.to(device), device_ids=[local_rank])
     block.ln2 = DDP(block.ln2.to(device), device_ids=[local_rank])
-    block.ffwd = MoE().to(device) #replace FeedForward with Mixture of Experts
+    block.ffwd = MoE_dist().to(device) #replace FeedForward with Mixture of Experts
 
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
   model.train()
