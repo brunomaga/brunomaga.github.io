@@ -305,11 +305,11 @@ participating GPUs to compute attention for different attention heads in paralle
   - row-wise into column-wise distributed representation of $$K$$, transforming shape from $$[N/P, d]$$ to $$[N, d/P]$$.
   - column-wise into row-wise distributed representation of $$Q^T$$, transforming shape from $$[d, N/P]$$ to $$[d/P, N]$$.
   - row-wise into column-wise distributed representation of $$V$$, transforming shape from $$[N/P, d]$$ to $$[N, d/P]$$.
-  - this leads to a $$3Nd$$ communication cost.
+  - this leads to a $$3Nh$$ communication cost (where $$h$$ is the transformer hidden layer).
 2. Computation of $$softmax(KQ^T)V$$ where $$KQ^T$$ is computed from shapes $$[N, d/P]$$ multiplied by  $$[d/P, N]$$, ie just a partial sum of full $$KQ^T$$ (that should multiply $$[N, d]$$ by $$[d , N]$$. All processes end up with a different $$[N,N]$$ matrix. So applying $$softmax$$ directly without summing all local $$[N,N]$$ takes just a subset of embeddings (the ones that refer to that local process) into accuont on the $$KQ^T$$. I believe an "all-reduce (sum)" is needed to sum all partial $$KQ^T$$ across processors before the $$softmax$$. What am I missing?
 3. rightmost all-to-all converts:
   - colum-wise into row-wise distributed representation of $$softmax(KQ^T)V$$, transforming shape from $$[N, d/P]$$ to $$[N/P, d]$$.
-  - this has a communication cost of $$Nd$$
+  - this has a communication cost of $$Nh$$
 
 This yields a total comm cost of 3 all-to-all of $$Nh$$ elements + 1 all-to-all of $$Nh$$ elements (where $$h$$ is the transformer hidden layer). This is supposedly less communication volume than state-of-art implementations. A more detailed explanation can be found in [DeepSpeed discussion 5551](https://github.com/microsoft/DeepSpeed/discussions/5551).
 
