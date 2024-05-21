@@ -299,7 +299,8 @@ The algorithm is the following:
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/publications/DeepSpeed_Ulysses.png"/>
 
-The input consists of a sequence of size $$N$$ partitioned across $$P$$ processes, leading to an input of size $$N/P \times d$$ per batch. During the attention calculation, each input $$N/P \times d$$ is passed through the Key, Query and Value linear projection to collect embeddings, becoming $$N/P \times d$$ (left-most section of the diagram above). $$K$$ of size $$N/P$$ is transposed. The distributed implementation follows, in three steps:
+The input consists of a sequence of size $$N$$ partitioned across $$P$$ processes, leading to an input of size $$N/P \times d$$ per batch. During the attention calculation, each input $$N/P \times d$$ is passed through the Key, Query and Value linear projection to collect embeddings, becoming $$N/P \times d$$ (left-most section of the diagram above). $$K$$ of size $$N/P$$ is transposed. "Right before the attention computation, it employs all-to-all communication collective on the partitioned queries, keys and values such that each GPU receives the full sequence but only for a non-overlapping subset of the attention heads. This allows the
+participating GPUs to compute attention for different attention heads in parallel." In the picture, `d = num_heads * head_dim`, ie it doesn't actually split the dimension of a head, but rather distributes the heads across different GPUs. In practice this performs model parallelism (per attention head) inside the attention module (blue rectangle above) and sequence parallelism outside. The distributed implementation follows, in three steps:
 1. Leftmost all-to-alls convert:
   - row-wise into column-wise distributed representation of $$K$$, transforming shape from $$[N/P, d]$$ to $$[N, d/P]$$.
   - column-wise into row-wise distributed representation of $$Q^T$$, transforming shape from $$[d, N/P]$$ to $$[d/P, N]$$.
@@ -310,7 +311,7 @@ The input consists of a sequence of size $$N$$ partitioned across $$P$$ processe
   - colum-wise into row-wise distributed representation of $$softmax(KQ^T)V$$, transforming shape from $$[N, d/P]$$ to $$[N/P, d]$$.
   - this has a communication cost of $$Nd$$
 
-This yields a total Total comm cost of 3 all-to-all  of $$Nd$$ elements + 1 all-to-all  of $$Nd$$ elements (where $$d$$ is the transformer hidden layer). This is supposedly less elements than the Megatron-LM implementation. I am not convinced, see [DeepSpeed discussion 5551](https://github.com/microsoft/DeepSpeed/discussions/5551).
+This yields a total comm cost of 3 all-to-all of $$Nh$$ elements + 1 all-to-all of $$Nh$$ elements (where $$h$$ is the transformer hidden layer). This is supposedly less communication volume than state-of-art implementations. A more detailed explanation can be found in [DeepSpeed discussion 5551](https://github.com/microsoft/DeepSpeed/discussions/5551).
 
 <br>
 ## 2023 [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691)
