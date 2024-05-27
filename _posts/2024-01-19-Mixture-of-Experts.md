@@ -198,14 +198,19 @@ where $$P(x,i) = Pr(h(x)_i) \gt kth\_excluding(H(x), k, i)$$ denotes  the probab
 
 #### Results 
 
-The experiments fixed a compute budgets and compared a baseline model with several configurations of MoE, including a hierarchical MoE, on several language tasks. Results show MoE models beating baseline LSTM models, with hierarchical MoE beating non-hierarchichal (with a higher parameter count, but same compute). The perplexity improved significantly by increasing data size (from 10B to 100B Word Google News Corpus). In the machine translation task, on the Google Production dataset, the model achieved 1.01 higher test BLEU score even after training for only one sixth of the time.
-In terms of scalability, the results claim to obtain "greater than 1000x improvements in model capacity with only minor losses in computational efficiency".
+The experiments fixed a compute budgets and compared a baseline model with several configurations of MoE, including a hierarchical MoE, on several language tasks. Results show that:
+- MoE models beating baseline LSTM models, with hierarchical MoE beating non-hierarchichal (with a higher parameter count, but same compute).
+- The perplexity improved significantly by increasing data size (from 10B to 100B Word Google News Corpus). 
+  - In the machine translation task, on the Google Production dataset, the model achieved 1.01 higher test BLEU score even after training for only one sixth of the time.
+- In terms of scalability, the results claim to obtain "greater than 1000x improvements in model capacity with only minor losses in computational efficiency".
+- Learning to route does not work without the ability to compare at least two experts (due to instability purposes).
 
-Another results suggests that learning to route does not work without the ability to compare at least two experts (due to instability purposes). Finally, they look at the input-to-expert assignments that demonstrates that **different experts specialize on different tasks based on syntax and semantics** (Appendix E table 9):
+Finally, they look at the input-to-expert assignments that demonstrates that **different experts specialize on different tasks based on syntax and semantics** (Appendix E table 9):
 
+<!--
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/Mixture-of-Experts/MoE_2017_Appendix_E_table_9.png"/>
-
+-->
 
 ### 2020 [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668)
 
