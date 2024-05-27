@@ -398,7 +398,7 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M)
 
 **Memory usage**: on pipeline parallelism, I noticed that the first GPU seems to require a higher ammount of memory when compared to the remaining GPUs. This should not be the case, particularly on the deep benchmark model where we can guarantee a quasi-ideal stage partitioning across GPUs. This disparity in memory usage on GPU 0 is the main indicator of the maximum memory required, and balancing this would bring that value down. I [opened a bug report](https://github.com/microsoft/DeepSpeed/issues/4477) with DeepSpeed and will wait for their feedback or fix to correct this analysis.
 
-I will add detailed results for model and pipeline parallelism in the future.
+Note: I will add detailed results for model and pipeline parallelism in the future when time allows.
 
 ### Final remarks and code
 

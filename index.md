@@ -10,7 +10,7 @@ layout: default
 <tr>
 <td width="20%" style='border:none; vertical-align: top;'> <img src="{{site.photo}}" alt="my photo" /> </td>
 <td style="border:none">
-Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Performance Computing (HPC). I work at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>, where I create large parallel-distributed ML models and pipelines on the cloud. <br/><br/>Prior to this, I completed a PhD at <a href="https://www.epfl.ch/en/">EPFL</a>, researching large-scale variable-step simulation of brain-inspired spiking neural networks. Before that, I was an HPC research engineer at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project at EPFL</a>, focused on distributed computing, storage and multicore/GPU algorithms on supercomputers.
+Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Performance Computing (HPC). I work at <a href="www.synthesia.io">Synthesia</a> as a research engineer for large-scale AI. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>, and before that I was an HPC engineer and PhD researcher at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a> at <a href="https://www.epfl.ch/en/">EPFL</a>, researching large-scale variable-step simulation of brain-inspired spiking neural networks on supercomputers.
 </td>
 </tr></table> 
 
@@ -27,7 +27,7 @@ Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Perf
 </div>
 
 
-On the side, I maintain a [publications bookmark]({{ site.publications_permalink }}) where I summarize several papers of interest, and a [resources page]({{ site.resources_permalink }}) where I keep track of related books and material available online. My [google scholar page]({{ site.google_scholar }}) indexes most of my scientific publications. When time allows, I post about HPC and ML:
+On the side, I maintain a [publications bookmark]({{ site.publications_permalink }}) where I summarize several papers of interest, and a [resources page]({{ site.resources_permalink }}) where I keep track of related books and material available online. My [google scholar page]({{ site.google_scholar }}) indexes most of my publications. When time allows, I post about HPC and ML:
 
 <table style='border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
