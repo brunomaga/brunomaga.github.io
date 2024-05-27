@@ -23,6 +23,10 @@ So in this post, we will discuss MoEs development from early days, and provide i
     - [Load loss](#load-loss)
     - [Results](#results)
   - [2020 GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](#2020-gshard-scaling-giant-models-with-conditional-computation-and-automatic-sharding)
+    - [Compiler and SPMD optimizations](#compiler-and-spmd-optimizations)
+    - [Model architecture](#model-architecture)
+    - [Random routing and expert capacity](#random-routing-and-expert-capacity)
+    - [Auxiliary loss and load balancing](#auxiliary-loss-and-load-balancing)
   - [2021 Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](#2021-switch-transformers-scaling-to-trillion-parameter-models-with-simple-and-efficient-sparsity)
 - [Distributed implementation in PyTorch](#distributed-implementation-in-pytorch)
     - [Applying the MoE to an existing LLM](#applying-the-moe-to-an-existing-llm)
@@ -205,18 +209,35 @@ Another results suggests that learning to route does not work without the abilit
 
 ### 2020 [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668)
 
-GShard explored the scaling of Transformer-based Sparsely-Gated MoEs on a model of 600 billion parameters on a sequence-to-sequence (machine translation) task. They claim that the their methods yield sub-linear computation cost and graph $$O(1)$$ compilation time on 2048 TPU devices. This performance was achieved via:
+GShard explored the scaling of Transformer-based Sparsely-Gated MoEs on a model of 600 billion parameters on a sequence-to-sequence (machine translation) task. They claim that the their methods yield sub-linear computation cost and graph $$O(1)$$ compilation time on 2048 TPU devices. 
 
-- **Position-wise Sparsely-Gated MoEs**, just like the previous paper, that scales the capacity of RNN-based machine translation and language models and delivers sub-linear scaling;
-- **GShard module that separates model description from the parallel partitioning**. It consists of "of a set of simple APIs for annotations, and a compiler extension in XLA for automatic parallelization." This allows developers to write the module and the runtime will automatically partition it accross compute unitrs;
-- **compiler technique for SPMD (Single Program Multiple Data) transformation that generates a single program to run on all devices**, in order to keep the compilation time constant independent of the number of devices. 
+It reutilizes some efficiency techniques from the previous paper. The first is the **position-wise Sparsely-Gated MoEs for language tasks** (section 2.2), delivering sub-linear scaling. The second is the **parallel partitioning as a combination of data-parallel and sharding**: (1) "the attention layer is parallelized by splitting along the batch dimension and replicating its weights to all devices"; and (2) "experts in the MoE layer are infeasible to be replicated in all the devices due to its sheer size and the only viable strategy is to shard experts into many devices". 
 
-The model is composed of stacks of Transformer encoder and decoder layers. Each Transformer block (made of self-attention, feed-forward and on the decoder's case, attention mask) was converted into a conditional computation module by **replacing the feed-forward layer in every second block with a MoE** layer with a variant of **top-2 gating** in both the encoder and the decoder. Strangely enough, the paper does not mention why they introduced MoE in every second block, instead of every third or every single block instead. The encoder part can be represented as:
+The main improvements come from compile optimizations with [Accelerated Linear Algebra (XLA)](https://en.wikipedia.org/wiki/Accelerated_Linear_Algebra) and user-flagged parallelism of tensors, as described next.
+
+#### Compiler and SPMD optimizations
+
+GShard allows for a **module that separates model description from the parallel partitioning**, consisting "of a set of simple APIs for annotations, and a compiler extension in XLA for automatic parallelization." In practice, GShard "**requires the user to annotate a few critical tensors (in the model) with partitioning policies**". This allows developers to write the module and the runtime will **automatically partition module accross compute units**. This allows for a **compiler technique for Single Program Multiple Data (SPMD) transformation that generates a single program to run on all devices**, in order to keep the compilation time constant independent of the number of devices (see Figure 2 for an illustration).
+
+The XLA SPMD Partitioner for GShard (implemented on the XLA compiler) "automatically partitions a computation graph
+based on sharding annotations. Sharding annotations inform the compiler about how each tensor
+should be distributed across devices". The need for parallelism annotations is described in section 3 as:
+
+> XLA models a computation as a dataflow graph where nodes are operators and edges are tensors
+flowing between operators. The core of the partitioner is per-operation handling that transforms a
+full-sized operator into a partition-sized operator according to the sharding specified on the input
+and output. When a computation is partitioned, various patterns of cross-device data transfers are
+introduced. In order to maximize the performance at large scale, it is essential to define a core set of
+communication primitives and optimize those for the target platform.
+
+#### Model architecture
+
+The model tested was a Transformer-based stack of encoder and decoder layers. Each Transformer block (made of self-attention, feed-forward and on the decoder's case, attention mask) was converted into a conditional computation module by **replacing the feed-forward layer in every second block with a MoE** layer with a variant of **top-2 gating** in both the encoder and the decoder. Strangely enough, the paper does not mention why they introduced MoE in every second block, instead of every third or every single block instead. The encoder part can be represented as:
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/Mixture-of-Experts/MoE_GShard.png"/>
 
-**The parallelism applies sharding of MoEs across devices, and keeps a replicated copy (data parallelism) of the remaining modules**. The underlying formulation of the gating mechanism is the following: an MoE layer for Transformer consists of $$E$$ feed-forward networks $$FFN_1$$ ... $$FFN_E$$, formulated as:
+<!-- The underlying formulation of the gating mechanism is the following: an MoE layer for Transformer consists of $$E$$ feed-forward networks $$FFN_1$$ ... $$FFN_E$$, formulated as:
 
 $$
 FFN_e(x_s) = wo_e · ReLU(wi_e · x_s)
@@ -228,9 +249,17 @@ $$
 y_x = \sum_{e=1}^{E} G_e(x_s) · FFN_e(x_s)
 $$
 
-where $$G_e(x_s)$$ is the probabilities (post-softmax) output by the gating mechanism for expert $$e$$ given input $$x_s$$, and $$y_x$$ is as before the weighted sum of products of the gating probabilities and the FFN outputs (FFN here refers to an expert). $$x_s$$ is the input token to the MoE layer, $$w_i$$ and $$w_o$$ are the input and output projection matrices for the feed-forward layer.
+where $$G_e(x_s)$$ is the probabilities (post-softmax) output by the gating mechanism for expert $$e$$ given input $$x_s$$, and $$y_x$$ is as before the weighted sum of products of the gating probabilities and the FFN outputs (FFN here refers to an expert). $$x_s$$ is the input token to the MoE layer, $$w_i$$ and $$w_o$$ are the input and output projection matrices for the feed-forward layer. -->
 
-The total loss is described as $$L = l_{nll} + k ∗ l_{aux}$$, where $$l_{nll}$$ is the negative log-likelihood loss, and $$l_{aux}$$ is an **auxiliary loss** to help avoiding few experts *stealing* most of the attention at the early stages of training. This auxiliary loss is formulated as
+#### Random routing and expert capacity
+
+The paper introduces the concept of **expert capacity**, which is the maximum number of tokens that an be assigned to an expert, per iteration, set to be of order $$O(N/E)$$ for sequence of size $$N$$ and $$E$$ experts. Tokens assigned to a expert at maximum capacity are considered **overflowed** tokens, and are passed to the next layer via a residual connection.
+
+The routing mechanism applies **random routing** where, in the top-2 setup, the top expert always receives a token, but the second expert has a probability (equal to its routing weight) of also receiving a token. I.e. it's a top-1 or top-2 setup, depending on wether the 2nd expert is picked. The underlying rationale is that if the 2nd expert has a very small routing weight, this it's close to insignificant, so the token only needs to be passed to the first expert, therefore reducing computation and token overflowing.
+
+#### Auxiliary loss and load balancing
+
+The total loss is described as $$L = l_{nll} + k ∗ l_{aux}$$, where $$l_{nll}$$ is the negative log-likelihood loss, $$k$$ is a constant, and $$l_{aux}$$ is an **auxiliary loss** to help avoiding few experts *stealing* most of the attention at the early stages of training. This auxiliary loss is formulated as
 
 $$
 l_{aux} = \frac{1}{E} \sum^E_{e=1} \frac{c_e}{S} \, m_e
@@ -238,10 +267,7 @@ $$
 
 where the term $$c_e/S$$ represents the fraction of input routed to each expert and $$m_e$$ is the mean gates per expert (note that $$m_e$$ is added because $$c_e/S$$ is a constant and is not differentiable).
 
-**Load balancing** was regulated by guaranteeing that the total number of tokens assigned to each expert is not below a given threshold (this is in contrast to have a threshold in the number of samples). Finally, they introducted the concept of **random routing**, where in a top-2 setup, "if the weight for the 2nd expert is very small, we can simply ignore the 2nd expert to conserve the overall expert capacity". 
-
-The parallel-partitioning is a combination of data-parallel and sharding: (1) "the attention layer is parallelized by splitting along the batch dimension and replicating its weights to all devices"; and (2) "experts in the MoE layer are infeasible to be replicated in all the devices due to its sheer size and the only viable strategy is to shard experts into many devices".
-
+**Load balancing** was regulated by guaranteeing that the total number of tokens assigned to each expert is not below a given threshold (this is in contrast to have a threshold in the number of samples). 
 
 ### 2021 [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
 
