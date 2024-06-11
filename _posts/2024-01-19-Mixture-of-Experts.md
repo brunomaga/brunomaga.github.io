@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Mixture-of-Experts: a historical overview, with serial, Pytorch distributed and DeepSpeed implementations"
-categories: [machine learning, Transformer, GPT, DeepSpeed, mixture-of-experts]
+title:  "Mixture-of-Experts: a historical overview, with serial and distributed implementations"
+categories: [machine learning, Transformer, GPT, mixture-of-experts]
 tags: [machinelearning]
 ---
 
 Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4), the current [ChatBot benchmark](https://chat.lmsys.org/) reigning champion, were recently [leaked](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/). It mentions the usage of **Mixture-of-Experts (MoEs)**, with 16 experts of circa 110 billion parameters each, totalling 1.8 trillion parameters. MoEs use **sparse computation** and **conditional computation** to provide better training scaling, faster inference and improved model accuracy, when compared to non-MoE systems for the same compute budget or parameter count. OpenAI goes further and cliams that [Expert Parallelism is the 4th dimension of parallelism](https://openai.com/research/techniques-for-training-large-neural-networks), in addition to data, model and pipeline parallelism.
 
-So in this post, we will discuss MoEs development from early days, and provide implementations of MoEs from single to multiple node, using the PyTorch distributed API and DeepSpeed. We will discuss key concepts such as routing, sparsity, load imbalance (and corresponding loss terms), parallelism, expert capacity, numerical instabilites, overfitting and finetuning. To do that, we will detail MoEs developments from early days, by following the publications storyline:
+So in this post, we will discuss MoEs development from early days, and provide implementations of MoEs from single to multiple node, using the PyTorch distributed API. We will discuss key concepts such as routing, sparsity, load imbalance (and corresponding loss terms), parallelism, expert capacity, numerical instabilites, overfitting and finetuning. To do that, we will detail MoEs developments from early days, by following the publications storyline:
  
 - [Early days: small MoEs as a weighted sum of expert outputs](#early-days-small-moes-as-a-weighted-sum-of-expert-outputs)
   - [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
@@ -30,7 +30,6 @@ So in this post, we will discuss MoEs development from early days, and provide i
   - [2021 Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](#2021-switch-transformers-scaling-to-trillion-parameter-models-with-simple-and-efficient-sparsity)
 - [Distributed implementation in PyTorch](#distributed-implementation-in-pytorch)
     - [Applying the MoE to an existing LLM](#applying-the-moe-to-an-existing-llm)
-- [Distributed implementation in DeepSpeed](#distributed-implementation-in-deepspeed)
 - [Other papers related to understanding, tweaking and finetuning](#other-papers-related-to-understanding-tweaking-and-finetuning)
   - [2022 MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](#2022-megablocks-efficient-sparse-training-with-mixture-of-experts)
   - [2022 Towards Understanding Mixture of Experts in Deep Learning](#2022-towards-understanding-mixture-of-experts-in-deep-learning)
@@ -429,9 +428,10 @@ Remember that the MoE module can be used to replace the feed-forward module in e
 
 The rest of the training and optimization algorithm needs no changes.
 
-## Distributed implementation in DeepSpeed
+Finally, note that the previous code is a bit complex to understand, particularly if you do not come from an HPC background. An easier way to implement this is to use a library that handles all communication under the hood, such as [DeepSpeed Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/). I will try to add the DeepSpeed implementation in the near future.
 
-The previous code is a bit complex to understand, particularly if you do not come from an HPC background. An easier way to implement this is to use a library that handles all communication under the hood. Here we will use [DeepSpeed Mixture of Experts](https://www.deepspeed.ai/tutorials/mixture-of-experts/).  
+<!-- 
+### Distributed implementation in DeepSpeed
 
 Our previous implementations was a GPU-only implementation of a data- and model-parallel MoE. DeepSpeed extends this by supporting CPU and GPU memory and to mix different parallelism techniques. Table from the [DeepSpeed MoE post](https://www.deepspeed.ai/tutorials/mixture-of-experts/#expert-groups-initialization):
 
@@ -451,6 +451,7 @@ The code is the following:
 ```python
   # coming soon
 ```
+-->
 
 ## Other papers related to understanding, tweaking and finetuning
 
