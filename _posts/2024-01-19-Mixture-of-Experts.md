@@ -310,7 +310,7 @@ One of the downsides of these MoEs was the large number of parameters. However, 
 small dense models. We reduce the model size by up to 99% while preserving 30% of
 the quality gains of the large sparse teacher.
 
-Finally, the paper details on improved training setups and experiments, that will be omitted for brevity.
+Finally, the paper includes several details on training techniques and experiments, that will be omitted for brevity.
 
 ## Distributed implementation in PyTorch
 
