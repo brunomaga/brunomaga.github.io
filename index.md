@@ -10,7 +10,7 @@ layout: default
 <tr>
 <td width="20%" style='border:none; vertical-align: top;'> <img src="{{site.photo}}" alt="my photo" /> </td>
 <td style="border:none">
-Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Performance Computing (HPC), currently working on large-scale AI at <a href="https://www.synthesia.io">Synthesia</a>. Previously, I was a senior researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. And before that I was an HPC engineer, PhD and postdoc researcher at the <a href="https://www.epfl.ch/research/domains/bluebrain/">Blue Brain Project</a> at <a href="https://www.epfl.ch/en/">EPFL</a>, researching variable-step simulation of brain-inspired spiking neural networks on supercomputers.
+Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Performance Computing (HPC), currently working on large-scale AI at <a href="https://www.synthesia.io">Synthesia</a>. Previously, I was a senior researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. And before that I was an HPC engineer, PhD and postdoc researcher at the <a href="https://www.epfl.ch/en/">EPFL</a>, researching variable-step simulation of brain-inspired spiking neural networks on supercomputers.
 </td>
 </tr></table> 
 
