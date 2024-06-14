@@ -10,6 +10,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 - [2023 DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](#2023-deepspeed-zero-offload-6x-higher-training-throughput-via-collaborative-cpugpu-twin-flow)
 - [2023 ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](#2023-zero-extremely-efficient-collective-communication-for-giant-model-training-microsoft)
+- [2023 QLoRA: Efficient Finetuning of Quantized LLMs, Washington Uni](#2023-qlora-efficient-finetuning-of-quantized-llms-washington-uni)
 - [2023 Better speech synthesis through scaling (TorToise), James Bekter](#2023-better-speech-synthesis-through-scaling-tortoise-james-bekter)
 - [2023 Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E), OpenAI](#2023-neural-codec-language-models-are-zero-shot-text-to-speech-synthesizers-vall-e-openai)
 - [2023 High-Fidelity Audio Compression with Improved RVQGAN, Descript Inc.](#2023-high-fidelity-audio-compression-with-improved-rvqgan-descript-inc)
@@ -21,7 +22,10 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2023 Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](#2023-retentive-network-a-successor-to-transformer-for-large-language-models-microsoft-and-tsinghua-university)
 - [2023 Operator Fusion in XLA: Analysis and Evaluation, UToronto](#2023-operator-fusion-in-xla-analysis-and-evaluation-utoronto)
 - [2023 LongNet: Scaling Transformers to 1,000,000,000 Tokens, Microsoft and Xi’an Jiaotong University](#2023-longnet-scaling-transformers-to-1000000000-tokens-microsoft-and-xian-jiaotong-university)
+- [2023 DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models](#2023-deepspeed-ulysses-system-optimizations-for-enabling-training-of-extreme-long-sequence-transformer-models)
 - [2023 FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](#2023-flashattention-2-faster-attention-with-better-parallelism-and-work-partitioning)
+- [2022 DyLoRA: Parameter Efficient Tuning of Pre-trained Models using Dynamic Search-Free Low-Rank Adaptation](#2022-dylora-parameter-efficient-tuning-of-pre-trained-models-using-dynamic-search-free-low-rank-adaptation)
+- [2022 Self-attention Does Not Need $$O(n^2)$$ Memory, Google](#2022-self-attention-does-not-need-on2-memory-google)
 - [2022 Efficiently Scaling Transformer Inference, Google](#2022-efficiently-scaling-transformer-inference-google)
 - [2022 Random-LTD: Random and Layerwise Token Dropping Brings Efficient Training for Large-scale Transformers, Microsoft](#2022-random-ltd-random-and-layerwise-token-dropping-brings-efficient-training-for-large-scale-transformers-microsoft)
 - [2022 The Stability-Efficiency Dilemma: Investigating Sequence Length Warmup for Training GPT Models, Microsoft](#2022-the-stability-efficiency-dilemma-investigating-sequence-length-warmup-for-training-gpt-models-microsoft)
@@ -118,6 +122,22 @@ The results sections claims that  ZeRO++ yields a communication reduction of 4x 
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/ZeROplusplus.png"/>
+
+
+<br/>
+## 2023 [QLoRA: Efficient Finetuning of Quantized LLMs, Washington Uni](https://arxiv.org/abs/2305.14314)
+
+"An efficient finetuning approach that reduces memory usage enough to finetune a 65B parameter model on a single 48GB GPU while
+preserving full 16-bit finetuning task performance. QLORA backpropagates gradients through a frozen, 4-bit quantized pretrained language model into Low Rank Adapters (LoRA). QLORA introduces multiple innovations designed to reduce memory use without sacrificing performance: (1) 4-bit NormalFloat, an information theoretically optimal quantization data type for
+normally distributed data that yields better empirical results than 4-bit Integers and 4-bit Floats.
+(2) Double Quantization, a method that quantizes the quantization constants, saving an average
+of about 0.37 bits per parameter (approximately 3 GB for a 65B model). (3) Paged Optimizers,
+using NVIDIA unified memory to avoid the gradient checkpointing memory spikes that occur when
+processing a mini-batch with a long sequence length.  We use QLORA
+to finetune more than 1,000 models, [and] results show that QLoRA
+finetuning on a small high-quality dataset leads to state-of-the-art results, even
+when using smaller models than the previous SoTA". Notes to self:
+- 4-bit NormalFloat Quantization rounds values to the nearest bin (in a 4-bit representation) where each bin is a normal distribution quantile. It's an expensive procedure, so they use  fast quantile approximation algorithms such as SRAM. It also yields high errors for outliers.
 
 <br/>
 ## 2023 [Better speech synthesis through scaling (TorToise), James Bekter](https://arxiv.org/abs/2305.07243)
@@ -318,6 +338,28 @@ This yields a total comm cost of 3 all-to-all of $$Nh$$ elements + 1 all-to-all 
 
 "FlashAttention is still not nearly as fast as optimized matrix-multiply (GEMM) operations, reaching only 25-40% of the theoretical maximum FLOPs/s. We observe that the inefficiency is due to suboptimal work partitioning between different thread blocks and warps on the GPU, causing either low-occupancy or unnecessary shared memory reads/writes. We propose FlashAttention-2, with better work partitioning to address these issues. In particular, we (1) tweak the algorithm to reduce the number of non-matmul FLOPs (2) parallelize the attention computation, even for a single head, across different thread blocks to increase occupancy, and (3) within each thread block, distribute the work between warps to reduce communication through shared memory. These yield around 2× speedup compared to FlashAttention, reaching 50-73% of the theoretical maximum FLOPs/s on A100 and getting close to the efficiency of GEMM operations. We empirically validate that when used end-to-end to train GPT-style models, FlashAttention-2 reaches training speed of up to 225 TFLOPs/s per A100 GPU (72% model FLOPs utilization)."
 
+
+<br/>
+## 2022 [DyLoRA: Parameter Efficient Tuning of Pre-trained Models using Dynamic Search-Free Low-Rank Adaptation](https://arxiv.org/abs/2210.07558)
+
+LoRA blocks "suffer from two major problems: first, the size of these blocks is fixed and cannot be modified after training (for example, if we need to change the rank of LoRA blocks, then we need to re-train them from scratch); second, optimizing their rank requires an exhaustive search and effort". Dynamic LoRA (DyLoRA) addresses these two problems. "DyLoRA method trains LoRA blocks for a range of ranks instead of a single rank by sorting the representation learned by the adapter module at different ranks during training". How does it work:
+- In each LoRA module, we have an up-projection ($$W_{up} ∈ R^{m×r}$$) and a down-projection matrix ($$W_{dw} ∈ R^{r×d}$$). Let’s assume that we would like to train the LoRA module to operate in the range of $$r ∈$$ Range $$[r_{min}, r_{max}]$$ where $$r_{min}$$ and $$r_{max}$$ are hyper-parameters.
+- At each training step, we sample $$b$$ (a value between ranks $$r_{min}$$ and $$r_{max}$$), and truncate $$W_{dw}$$ and $$W_{up}$$ to include only $$b$$ columns/rows, accordingly. The truncated matrices are represented as $$W_{dw↓b}$$ and $$W_{up↓b}$$, and they're the ones used in this training step: $$h = W_0x + \frac{α}{b} W_{up↓b} W_{dw↓b} x$$.
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/publications/DyLoRA.png"/>
+
+
+<br/>
+## 2022 [Self-attention Does Not Need $$O(n^2)$$ Memory, Google](https://arxiv.org/abs/2112.05682)
+
+An algorithm for attention that requires $$O(1)$$ memory with respect to sequence length and an extension to self-attention that requires $$O(log_n)$$ memory, with $$O(n^2)$$ compute complexity. This is in comparison with existing algorithms that require $$O(n^2)$$ complexity in runtime and memory. Contrarily to other implementations that claim being efficient, the final result is not an approximate.
+
+The trick is to perform the division by the denominator $$\sum_j e^{s_j}$$ in the attention head to the very end (the "lazy softmax" trick). The algorithm is then: "Given the query $$q$$, keys $$k_1, ..., k_n$$ and values $$v_1, ..., v_n$$, we **process the keys and values in sequence**. Given a key value pair $$k_i, v_i$$, we compute $$s_i = dot(q, k_i)$$ and update $$v^∗ ← v^∗ + v_i e^{s_i}$$ and $$s^∗ ← s∗ + e^{s_i}$$. After processing all keys and values, we divide $$v^∗ / s^*$$ to get the final result.
+
+The analysis of space complexity assumes that inputs are given in a particular order: we first read the query, and then a list of pairs of keys and values. If the inputs are provided in a different order, we have to additionally store an index into the sequence, requiring $$O(log n)$$ memory instead."
+
+See section 3 for numerical instability due to the sofmax exponentiating the score and how to overcome it with a normalization trick.
 
 <br/>
 ## 2022 [Efficiently Scaling Transformer Inference, Google](https://arxiv.org/abs/2211.05102)
@@ -544,9 +586,9 @@ Previous work showed that the learned over-parametrized models reside on a low i
 {: style="text-align:center; font-size: small;"}
 <img width="25%" height="25%" src="/assets/publications/LoRA.png"/>
 
-It works as follows. Take the gradient matrix $$W_0 \in R^{d × k}$$. The gradient update  $$W_0 + ∆W$$ can be computed instead as  $$W_0 + B A$$, where $$B ∈ R^{d × r}$$, $$A ∈ R^{r×k}$$, and the rank $$r \lt \lt min(d, k)$$. During training, $$W_0$$ is frozen and only $$A$$ and $$B$$ are updated. The tricky bit: both $$W_0 and ∆W = B A$$ are multiplied with the same input, and their respective output vectors are summed coordinate-wise. Therefore, the forward pass (ie the inference operation) is now $$h = W_0x + ∆W x = W_0x + BAx$$, so we need to store the unchanged $$W_0$$ and trained $$A$$ and $$B$$. The algorithm is then:
+It works as follows. Take the gradient matrix $$W_0 \in R^{d × k}$$. The gradient update  $$W_0 + ∆W$$ can be computed instead as  $$W_0 + B A$$, where $$B ∈ R^{d × r}$$, $$A ∈ R^{r×k}$$, and the rank $$r \lt \lt min(d, k)$$. And $$r$$ is also a hyper-parameter to be picked by the user. During training, $$W_0$$ is frozen and only $$A$$ and $$B$$ are updated. The forward pass (ie the inference operation) is now $$h = W_0x + ∆W x = W_0x + BAx$$, so we need to store the unchanged $$W_0$$ and the trained $$A$$ and $$B$$. The algorithm is then:
 - $$A$$ is initialized with a random gaussian initialization, and $$B$$ is initialized as zero, so that $$\Delta W = BA$$ at the beginning.
-- We then scale $$∆W x$$ by $$\frac{α}{r}$$, where $$α$$ is a constant in $$r$$. The confusing bit: "When optimizing with Adam, tuning α is roughly the same as tuning the learning
+- We then scale $$∆W x$$ by $$\frac{α}{r}$$, where $$α$$ is a constant in $$r$$ and is also a hyper-parameter. The confusing bit: "When optimizing with Adam, tuning α is roughly the same as tuning the learning
 rate if we scale the initialization appropriately. As a result, we simply set α to the first $$r$$ we try and do not tune it."
 
 <br/>
