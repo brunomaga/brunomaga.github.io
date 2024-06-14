@@ -24,6 +24,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2023 LongNet: Scaling Transformers to 1,000,000,000 Tokens, Microsoft and Xi’an Jiaotong University](#2023-longnet-scaling-transformers-to-1000000000-tokens-microsoft-and-xian-jiaotong-university)
 - [2023 DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models](#2023-deepspeed-ulysses-system-optimizations-for-enabling-training-of-extreme-long-sequence-transformer-models)
 - [2023 FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](#2023-flashattention-2-faster-attention-with-better-parallelism-and-work-partitioning)
+- [2022 Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer ($$\\mu$$Transfer), Microsoft](#2022-tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer-mutransfer-microsoft)
 - [2022 DyLoRA: Parameter Efficient Tuning of Pre-trained Models using Dynamic Search-Free Low-Rank Adaptation](#2022-dylora-parameter-efficient-tuning-of-pre-trained-models-using-dynamic-search-free-low-rank-adaptation)
 - [2022 Self-attention Does Not Need $$O(n^2)$$ Memory, Google](#2022-self-attention-does-not-need-on2-memory-google)
 - [2022 Efficiently Scaling Transformer Inference, Google](#2022-efficiently-scaling-transformer-inference-google)
@@ -338,6 +339,25 @@ This yields a total comm cost of 3 all-to-all of $$Nh$$ elements + 1 all-to-all 
 
 "FlashAttention is still not nearly as fast as optimized matrix-multiply (GEMM) operations, reaching only 25-40% of the theoretical maximum FLOPs/s. We observe that the inefficiency is due to suboptimal work partitioning between different thread blocks and warps on the GPU, causing either low-occupancy or unnecessary shared memory reads/writes. We propose FlashAttention-2, with better work partitioning to address these issues. In particular, we (1) tweak the algorithm to reduce the number of non-matmul FLOPs (2) parallelize the attention computation, even for a single head, across different thread blocks to increase occupancy, and (3) within each thread block, distribute the work between warps to reduce communication through shared memory. These yield around 2× speedup compared to FlashAttention, reaching 50-73% of the theoretical maximum FLOPs/s on A100 and getting close to the efficiency of GEMM operations. We empirically validate that when used end-to-end to train GPT-style models, FlashAttention-2 reaches training speed of up to 225 TFLOPs/s per A100 GPU (72% model FLOPs utilization)."
 
+
+<br/>
+## 2022 [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer ($$\mu$$Transfer), Microsoft](https://arxiv.org/abs/2203.03466)
+
+[Maximal Update Parametrization (muP)](https://arxiv.org/abs/2011.14522) showed that many optimal hyper-parameters remain constant as the mode size changes: "When (layer) width is large, every activation vector has roughly iid coordinates, at any time
+during training. Using Tensor Programs, we can recursively calculate such coordinate distributions, and consequently understand how the neural network function evolves".
+
+With that in mind, here, here they propose a hyper-parameter tuning paradigm called muTransfer: "parametrize the target model in muP, tune the HP indirectly on a smaller model, and zero-shot transfer them to the full-sized model". 
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/publications/muTransfer.png"/>
+
+{: style="text-align:center; font-size: small;"}
+Figure 1: Training loss against learning rate on Transformers of varying $$d_{model}$$ trained with Adam. Conventionally and in contrast with our technique, different widths do not share the same optimal hyperparameter; wider networks do not always perform better than narrower ones; in fact they underperform the same-width networks in our technique even after tuning learning rate (see dashed line).
+
+Hyperparameters That Can Be µTransferred, Not µTransferred, or µTransferred Across (Depth), with a few caveats discussed in Section 6.1. * means empirically validated only on Transformers, while all others additionally have theoretical justification.
+- µTransferable: optimization related (learning rate, momentum, Adam beta, LR schedule, etc), init (per-layer init variance), parameter multipliers (multiplicative constants after weight/biases, etc), etc
+- Not µTransferable: regularization  (dropout, weight decay, etc)
+- µTransferred Across (Depth): width, depth*, batch size*,  training time*, seq length*
 
 <br/>
 ## 2022 [DyLoRA: Parameter Efficient Tuning of Pre-trained Models using Dynamic Search-Free Low-Rank Adaptation](https://arxiv.org/abs/2210.07558)
