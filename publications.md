@@ -8,6 +8,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 <!-- NOTE: To create this table of contents, open VS code, install "Markdown All in one" extension, then Ctrl+Shift+P and "Markdown: create table of contents". To enable automatic update on save, go to settings, extensions, "Markdown all on one" and tick "update on save" -->
 
+- [2023 Training and inference of large language models using 8-bit floating point](#2023-training-and-inference-of-large-language-models-using-8-bit-floating-point)
 - [2023 DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](#2023-deepspeed-zero-offload-6x-higher-training-throughput-via-collaborative-cpugpu-twin-flow)
 - [2023 ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](#2023-zero-extremely-efficient-collective-communication-for-giant-model-training-microsoft)
 - [2023 QLoRA: Efficient Finetuning of Quantized LLMs, Washington Uni](#2023-qlora-efficient-finetuning-of-quantized-llms-washington-uni)
@@ -95,6 +96,11 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
 
 <br/><center><font size="5"><i class="fa fa-regular fa-bars"></i></font></center><br/>
+
+<br/>
+## 2023 [Training and inference of large language models using 8-bit floating point](https://arxiv.org/abs/2309.17224)
+
+The paper "presents a methodology to select the scalings for FP8 linear layers, based on dynamically updating per-tensor scales for the weights, gradients and activations." The FP8 representation tested is the FP8E4 and FP8E5, for 4 and 5 bits of exponent, respectively. Despite the naming, intermediatte computation is performed on 16 bits. The bias and scaling operations are applied to the exponent, not the final value. They tested two scaling techniques, AMAX (described before), or SCALE (keeping scale constant),  and noticed there isn't a major degradation. Results this fp8 to fp 16, but do not compare to `bfloat16` because hardware was not available at the time. Algorithm in Figure 3. Note to self: I dont understand how so operations in `float8` can be faster than half the executions in `bfloat16` (because the workflow is so large); so it's probably only faster than `float16` because also requires a longer workflow with scaling (?).
 
 <br/>
 ## 2023 [DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](https://github.com/microsoft/DeepSpeed/tree/offloadpp-news/blogs/deepspeed-offloadpp)
