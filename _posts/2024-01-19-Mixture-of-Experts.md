@@ -41,6 +41,7 @@ So in this post, we will discuss MoEs development from early days, and provide i
   - [2023 Mixture-of-Experts Meets Instruction Tuning: a Winning Combination for Large Language Models](#2023-mixture-of-experts-meets-instruction-tuning-a-winning-combination-for-large-language-models)
   - [2024 Mixtral of Experts](#2024-mixtral-of-experts)
   - [2024 Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](#2024-mixture-of-depths-dynamically-allocating-compute-in-transformer-based-language-models)
+  - [2024 From sparse to soft mixture of experts](#2024-from-sparse-to-soft-mixture-of-experts)
 
 ## Early days: small MoEs as a weighted sum of expert outputs
 
@@ -206,6 +207,8 @@ Finally, they look at the input-to-expert assignments that demonstrates that **d
 
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/Mixture-of-Experts/MoE_2017_Appendix_E_table_9.png"/>
+
+Due to lack of time, I am not providing an implementation, but for the record, a simple python implementation of this model is available in [this repo](https://github.com/lucidrains/mixture-of-experts).
 
 ### 2020 [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668)
 
@@ -463,6 +466,8 @@ The code is the following:
 ```
 -->
 
+A single device implementation of Switch Transformers is available in [this page](https://nn.labml.ai/transformers/switch/index.html). 
+
 ## Other papers related to understanding, tweaking and finetuning
 
 ### 2022 [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
@@ -557,3 +562,19 @@ top-$$k$$ by setting their weight appropriately".
 <img width="80%" height="80%" src="/assets/Mixture-of-Experts/Mixture_of_Depths_2.png"/>
 
 At the time of writing of this post, this is still very recent work, so future will tell if MoDs become useful for the general use case.
+
+
+### 2024 [From sparse to soft mixture of experts](https://arxiv.org/abs/2308.00951)
+
+Soft MoE is a fully-differentiable sparse Transformer that rather than employing a sparse
+and discrete router that tries to find a good hard assignment between tokens and experts (like regular MoEs), Soft MoEs instead perform a soft assignment by mixing tokens.
+
+In practice, it computes several weighted
+averages of all tokens (with weights depending on both tokens and experts) and then processes each weighted average by its corresponding expert.
+
+It addresses the challenges of current sparse MoEs: training instability, token dropping, inability to scale the number of experts, and ineffective finetuning.
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/Mixture-of-Experts/soft_MoEs.png"/>
+
+In the benchmark, Soft MoEs greatly outperforms dense Transformers (ViTs) and popular MoEs (Tokens Choice and Experts Choice) on a vision task, while training in a reduced time frame and being delivering faster at inference. 

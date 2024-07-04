@@ -8,6 +8,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 <!-- NOTE: To create this table of contents, open VS code, install "Markdown All in one" extension, then Ctrl+Shift+P and "Markdown: create table of contents". To enable automatic update on save, go to settings, extensions, "Markdown all on one" and tick "update on save" -->
 
+- [2024 From sparse to soft mixture of experts](#2024-from-sparse-to-soft-mixture-of-experts)
 - [2023 Training and inference of large language models using 8-bit floating point](#2023-training-and-inference-of-large-language-models-using-8-bit-floating-point)
 - [2023 DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](#2023-deepspeed-zero-offload-6x-higher-training-throughput-via-collaborative-cpugpu-twin-flow)
 - [2023 ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](#2023-zero-extremely-efficient-collective-communication-for-giant-model-training-microsoft)
@@ -96,6 +97,12 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
 
 <br/><center><font size="5"><i class="fa fa-regular fa-bars"></i></font></center><br/>
+
+
+<br/>
+## 2024 [From sparse to soft mixture of experts](https://arxiv.org/abs/2308.00951)
+
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}).
 
 <br/>
 ## 2023 [Training and inference of large language models using 8-bit floating point](https://arxiv.org/abs/2309.17224)
@@ -751,7 +758,7 @@ An extension of the transformer architecture to images. Works by passing as inpu
 <br/>
 ## 2021 [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
 
-covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}).
 
 <br/>
 ## 2021 [Finetuned Language Models Are Zero-Shot Learners, Google, ICLR 2022](https://arxiv.org/abs/2109.01652)
@@ -807,7 +814,7 @@ and stopping significantly short of convergence.
 <br/>
 ## 2020 [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668)
 
-covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}).
 
 <br/>
 ## 2020 [Language Models are Few-Shot Learners (GPT-3), OpenAI](https://arxiv.org/abs/2005.14165)
@@ -992,7 +999,7 @@ PipeDream is a parallel pipelining method that delivers perfect overlap of commu
 <br/>
 ## 2018 [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google](https://arxiv.org/abs/1810.04805)
 
-(also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) )
+(also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) ).
 
 Existing standard language models are unidirectional and that's a major limitation in performance, e.g. attending to previous tokens in the self-attention layers in the Transformer. This is an issue for many problems like question answering, it is crucial to incorporate context from both directions. BERT removes this unidirectionality by using a masked language model instead, that allows it to train a deep bidirectional Transformer. BERT model architecture is a multi-layer bidirectional sequence of Transformer encoder blocks. BERT models are trained in 2 steps: pre-training and fine-tuning. During pre-training, the model is trained on *unlabeled data* on different datasets. During fine-tuned, the pre-trained model is trained for a given specific task. Apart from output layers, the same architectures are used in both pre-training and fine-tuning. During fine-tuning, all parameters are fine-tuned. The input sentence may be a single sentence or a pair of sentences (e.g. question/answer) packed together. Words are embedded with WorkPiece embeddings. [CLS] is the first token of every sentence. [SEP] is a special separator token. To each token (word embedding) it is also added a learned embedding to indicate if it belongs to sentence A or B. Each input is then the sum of its position embedding, segment embedding and token embedding (Fig. 2). The pre-training happens in two unsupervised tasks: (1) Masked LM, by masking of 15% of input tokens at random and trying to predict them, and (2) and Next Sentence Prediction, by passing sentence pairs and predicting whether the second sentence is a logic follow up from the first, or not. The fine-tuning happens differently for every task: we pass the specific inputs and outputs to the BERT and do a regular training. The input is the sequences A and B and separators. The output is the answer to the task by: replacing [CLS] by the sentence or sentence-pair label when the task is to classify a sentence or pair or sentences; replacing the stard and end tokens to indicate the span of output answer tokens that answers the question passed in the input (when input is a question/answer pair, Fig 1); or the class of each word for Named Entity Recognition tasks.
 
@@ -1006,7 +1013,7 @@ Existing standard language models are unidirectional and that's a major limitati
 <br/>
 ## 2017 [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
 
-covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}).
 
 <br/>
 ## 2017 [Neural Discrete Representation Learning (RQVAE), Google](https://arxiv.org/abs/1711.0093)
@@ -1104,7 +1111,7 @@ The authors propose "a recurrent network to generate the model descriptions of n
 <br/>
 ## 2016 [Attention is all you need (Transformer), Google, NeurIPS 2017](https://arxiv.org/abs/1706.03762)
 
-(also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) )
+(also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}).
 
 State-of-art transduction models are based on recurrent encoder-decoder architectures (possibly with Attention Mechanisms). The Transformer uses only attention mechanisms, and no recurrence or convolutions. Results show it to be of better performance, more parallelizable (due to non-recurrence in model), and faster to train. Contrarily to recurrent models, the whole source sentence (in the encoder) and target sentence (in the decoder) are fed at once.
 Therefore, backpropagation happens on a single step as well. Because the concept of word sequence provided by the recurrence was removed, Transformers use positional encoding of the input embeddings based on the combination of sine and cosine waves of different frequencies. The encoder and decoder are composed of a stack of 6 layers each. Each encoder layer includes a multi-heard attention module and a feed forward network. The decoder includes also a third module, a *masked* multi-head attention, that ensures that sentence does not learn from subsequent words in sentence. An attention head is a mapping of a query to a set of key-value pairs. Key-Value pairs are output by the encoder, and Queries are output by the decoder.
@@ -1153,7 +1160,7 @@ The optimization follows a standard backpropagation where the gradient is additi
 <br/>
 ## 2015 [Neural Machine Translation by Jointly Learning to Align and Translate (and Attention Mechanism), D. Bahdanau, K. Cho, Y. Bengio](https://arxiv.org/abs/1409.0473)
 
-(also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}))
+(also covered in a [different post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %})).
 
 In most encoder-decoder models, encoders encode a sentence into a vector of fixed-length, from which a decoder generates the translation. Thus, neural network needs to be able to compress all the necessary information of a source sentence into a fixed-length vector. Here authores claim that fixed-length arrays are a bottleneck in performance on encoder-decoder architectures, particularly for long lentences. Therefore, the authors [quote] "propose to extend this by allowing a model to automatically (soft-)search for parts of a source sentence that are relevant to predicting a target word, without having to form these parts as a hard segment explicitly [...] The new architecture consists of a **bidirectional RNN as an encoder (BiRNN) and an uni-directional RNN decoder** that emulates searching through a source sentence during decoding.". A BiRNN consists of a forwards a a backward RNNs, containing the **summaries of the preceeding words and the following words**. The *annotation* of each word is the concatenation of the forward and backward states. The decoder receives the output of the previous decoded word, a hidden state for time $$i$$ (e.g. LSTM hidden state) and the context vector from a sequence of annotations - computed as a *weighted* sum of annotations. In practice, the encoder encodes the input sentence into a sequence of vectors and the decoder chooses a subset of these vectors adaptively while decoding the translation. 
 
@@ -1169,7 +1176,7 @@ In most encoder-decoder models, encoders encode a sentence into a vector of fixe
 <br/>
 ## 2014 [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
 
-covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}).
 
 <br/>
 ## 2014 [Deeply-supervised Nets, USCD and Microsoft](https://arxiv.org/abs/1409.5185)
@@ -1270,4 +1277,4 @@ To efficiently calculate individual labellings, the authors describe the CTC for
 <br/>
 ## 1991 [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf)
 
-covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %})
+covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}).
