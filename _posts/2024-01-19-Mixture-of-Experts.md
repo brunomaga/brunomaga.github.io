@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Mixture-of-Experts: a historical overview, with serial and distributed implementations"
+title:  "Mixture-of-Experts: a timeline, with serial and distributed implementations"
 categories: [machine learning, Transformer, GPT, mixture-of-experts]
 tags: [machinelearning]
 ---
