@@ -100,6 +100,60 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 
 <br/>
+## 2024 [Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)
+
+A simpler transformer architecture that claims similar results to state-of-art autoregressive
+decoder-only and BERT encoder-only models, with a  16% faster training throughput, while using 15% fewer parameters.
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/publications/simplifying_transformer_blocks.png"/>
+
+<br/>
+## 2024 [The Road Less Scheduled, Meta](https://arxiv.org/abs/2405.15682)
+
+"Existing learning rate schedules that do not require specification of the optimization stopping step T are greatly out-performed by learning rate schedules that depend on T." The Schedule-Free approach is an optimization method that does not need the specification of T by removing the need of schedulers entirely. It requires no new hyper-parameters.
+
+Backgroung: take the typical SGD optimization with step size $$γ$$ in the form $$z_{t+1} = z_t − γ_{g_t}$$, where $$g$$ is the gradient at step $$t$$. "Classical convergence theory suggests that the expected loss of this $$z$$ sequence is suboptimal, and that the Polyak-Ruppert (PR) average $$x$$ of the sequence should be returned instead" as $$x_{t+1} = (1 − c_{t+1}) x_t + c_{t+1} z_{t+1}$$. If we use $$c_{t+1} = 1/(t+1)$$, then $$x_t = \frac{1}{T} \sum_{t=1}^T z_t$$. As an example, after 4 steps we have:
+
+$$
+  \begin{align*}
+x_1 = & z_1\\
+x_2 = & \frac{1}{2} x_1 + \frac{1}{2} z_2, \\
+x_3 = & \frac{2}{3} x_2 + \frac{1}{3} z_3, \\  
+x_4 = & \frac{3}{4} x_3 + \frac{1}{4} z_4, \\
+x_5 = & \frac{4}{5} x_4 + \frac{1}{5} z_5, \\
+  \end{align*}
+$$
+
+However, "despite their theoretical optimality, PR averages give much worse results in practice than using the last-iterate of SGD":
+
+{: style="text-align:center; font-size: small;"}
+<img width="50%" height="50%" src="/assets/publications/schedule_free.png"/>
+
+Recently, Zamani and Glineur (2023) and Defazio et al. (2023) showed that the exact worst-case optimal rates can be achieved via carefully chosen learning rate schedules alone, without the use of averaging. However, LR schedulers requise the definition of the stopping time T in advance. So the question of the paper is:
+
+> Do there exist iterate averaging approaches that match the empirical performance of learning rate schedules, without sacrificing theoretical guarantees?
+
+This paper shows that it exists by introducing "a new approach to averaging that maintains the worst-case convergence rate theory of PR averaging, while matching and often exceeding the performance of schedule-based approaches", demonstrated on 28 problems.  Schedule-Free methods show strong performance, matching or out-performing heavily-tuned cosine schedules. The formulation of this **Schedule-Free SGD** is:
+
+$$
+  \begin{align*}
+y_t = \, & (1 − β) z_t + β x_t, \\
+z_{t+1} = \, & z_t − γ∇f(y_t, ζ_t), \\
+x_{t+1} = \, & (1 − c_{t+1}) x_t + c_{t+1} z_{t+1}, \\
+  \end{align*}
+$$
+
+where $$f(y_t, ζ_t)$$ is the loss between model output and random variable $$ζ$$, $$c_{t+1}$$ is defined as before and $$z_1 = x_1 $$. "Note that with this weighting, the $$x$$ sequence is just an online equal-weighted average of the $$z$$ sequence. This method has a momentum parameter $$β$$ that interpolates between Polyak-Ruppert averaging ($$β = 0$$) and Primal averaging ($$β = 1$$). Primal averaging is the same as PR except that gradient is evaluated at the averaged point $$x$$, instead of $$z$$ (see paper for definition), and "maintains the worst-case optimality of PR averaging but is generally considered to
+converge too slowly to be practical (Figure 2)."
+
+The main point is: "The advantage of our interpolation is that we get the
+best of both worlds. We can achieve the fast convergence of Polyak-Ruppert averaging (since the
+$$z$$ sequence moves much quicker than the $$x$$ sequence), while still keeping some coupling between
+the returned sequence $$x$$ and the gradient-evaluation locations $$y$$, which increases stability (Figure 2). Values of β similar to standard momentum values $$β ≈ 0.9$$ appear to work well in practice."
+
+
+<br/>
 ## 2024 [From sparse to soft mixture of experts](https://arxiv.org/abs/2308.00951)
 
 covered in a [different post]({{ site.baseurl }}{% post_url 2024-01-19-Mixture-of-Experts %}).
@@ -352,6 +406,24 @@ This yields a total comm cost of 3 all-to-all of $$Nh$$ elements + 1 all-to-all 
 
 "FlashAttention is still not nearly as fast as optimized matrix-multiply (GEMM) operations, reaching only 25-40% of the theoretical maximum FLOPs/s. We observe that the inefficiency is due to suboptimal work partitioning between different thread blocks and warps on the GPU, causing either low-occupancy or unnecessary shared memory reads/writes. We propose FlashAttention-2, with better work partitioning to address these issues. In particular, we (1) tweak the algorithm to reduce the number of non-matmul FLOPs (2) parallelize the attention computation, even for a single head, across different thread blocks to increase occupancy, and (3) within each thread block, distribute the work between warps to reduce communication through shared memory. These yield around 2× speedup compared to FlashAttention, reaching 50-73% of the theoretical maximum FLOPs/s on A100 and getting close to the efficiency of GEMM operations. We empirically validate that when used end-to-end to train GPT-style models, FlashAttention-2 reaches training speed of up to 225 TFLOPs/s per A100 GPU (72% model FLOPs utilization)."
 
+
+<br/>
+## 2022 [Reducing Activation Recomputation in Large Transformer Models (Megatron Sequence Parallelism)](https://arxiv.org/abs/2205.05198)
+
+Presents sequence parallelism and  selective activation recomputation, that when combined with tensor parallelism, reduces activations by 5×, and execution time overhead from activation recomputation by over 90%. This makes activation recomputation/checkpointing (accounting for  30% − 40% execution time overhead in their runs) unnecessary.
+
+Tensor parallelism is applied to the MLP and attention blocks, similarly to Megatron-LM. However, "this leaves the
+layer-norms as well as the dropouts after attention and MLP blocks intact and as a result, they are replicated across the tensor parallel group. These elements do not require a lot of compute but demand a considerable amount of activation memory." Moreover, these blocks are independent in the sequence dimension, so we can partition the input along that dimension.
+ 
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/publications/megatron_reducing_activation_recomputation.png"/>
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/publications/megatron_reducing_activation_recomputation_2.png"/>
+
+A variant with selective Activation Recomputation (activation checkpointing) is described in section 5.
+
+Results were tested on several models (Table 3) of 1 Trillion parameters, and the tensor parallel size is 8. Sequence length is set to s = 2048 and vocabulary size is set to v = 51200. There is no data parallelism, with a low batch size for the sake of analysis. The activations memory (Table 2) shows a reduction of the order $$sbh (34 + 5 as/h)$$ with no parallelims to $$sbh(34/t)$$ for the implementation with on tensor parallelism, sequence parallelism and activation checkpointing. Sequence parallelism allow for a 6% runtime reduction (only). The overhead for the selective activation checkpointing is of circa 11%, while the overhead of having activation checkpointing of the full layer is of circa 39%. When both selective activation checkpointing and sequence parallelism is combined, the overhead if 4%. The implementation is available in Megatron-LM and NeMo-Megatron.
 
 <br/>
 ## 2022 [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer ($$\mu$$Transfer), Microsoft](https://arxiv.org/abs/2203.03466)
