@@ -36,7 +36,7 @@ The tricky bit in the algorithm above is the distributed sorting that performs t
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="/assets/Distributed-Sort/sample_sort.png"> 
 
-The python implementtion of this distributed sorting algorithm is provided below. If you are interested in the remaining code for e.g. sequential writing of a distributed tensor to a single file, check the [DeepSpeed PR 5129](https://github.com/microsoft/DeepSpeed/pull/5129) where I implemented all this logic:
+The python implementtion of this distributed sorting algorithm is provided below.
 
 ```python
 def sample_sort(tensor, comm_group, num_workers, n_samples=100):
@@ -86,6 +86,9 @@ def sample_sort(tensor, comm_group, num_workers, n_samples=100):
     recv = torch.tensor(sorted(recv.tolist()), dtype=recv.dtype, device=recv.device)
     return recv
 ```
+
+ If you are interested in the remaining code, check the [DeepSpeed PR 5129](https://github.com/microsoft/DeepSpeed/pull/5129), where you can find the support code, including the method to write the post-sorting distributed tensor to a sequential file (method `file_write_ordered`).
+
 
 <br/>
 
@@ -230,7 +233,7 @@ You can find the complete implementation in my [DeepSpeed PR 5237](https://githu
 We have seen in a [previous post]({{ site.baseurl }}{% post_url 2023-06-27-GPT-lite-cpp %}) that just-in-time compilation of ML kernels via `torch.compile` leads to a substantial training speedup. So let's look at **compilation of variable-shaped inputs on distributed runs**.
 
 
-### Foreword: about CUDA graphs compilation on single- vs multi-process runs
+### CUDA graphs compilation on single- vs multi-process runs
 
 [CUDA graphs](https://developer.nvidia.com/blog/cuda-graphs/) allow several GPU kernels be executed entirely on the GPU as a workflow (graph), instead of individual GPU kernel executions that are driven by CPU calls. This is enabled to `torch.compile(mode='reduce-overhead')` and is very important on single-GPU runs but not supported on multi-GPU runs. Why?
 
@@ -278,7 +281,7 @@ The Distributed Data Parallel execution workflow on 2 GPUs, with compiled models
 
 Note that the subgraphs created may change depending on input sizes. And I have not been able to achieve a similar speed up on distributed compiled models on DeepSpeed ZeRO-0 as I got on Torch's DDP, possibly due to the lack of an optimization like `DDPOptimizer`.  
 
-### Variable-length static compilation
+### Static compilation of variable-shaped inputs
 
 Torch provides *some* support for compilation of tensors of variable shapes, with `torch.compile(dynamic=True)`. This yields a binary that is slower than the ones provided with static compilation, with the advantage that the input dimensions are not hard-coded in the binary and can change throught time. Dynamic compilation is slower, and as up to  `torch==2.4.0`, still doesn't work well for variable batch and length inputs. 
 
@@ -314,8 +317,8 @@ To finalize, when running multi-process execution of variable-size inputs with s
 ```python
 world_size = torch.distributed.get_world_size()
 torch_compile_kwargs={
+    "backend": "inductor", # default
     "mode": "reduce-overhead" if world_size == 1 else "default", # single- vs multi-GPU runs
-    "backend": "inductor",
     "dynamic": False, # force static compilation
 },
 torch.compile(model, **torch_compile_kwargs)
