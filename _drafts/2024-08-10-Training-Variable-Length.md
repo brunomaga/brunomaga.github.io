@@ -1,0 +1,82 @@
+---
+layout: post
+title:  "Distributed training of variable-length datasets: curriculum learning, variable batch size and learning rate, and static compilation"
+categories: [machine learning, distributed computing]
+tags: [machinelearning]
+---
+
+Many datasets include samples that are of variable length. To name a few, audio tracks have different durations, text sentences have a different number of words (tokens) and videos have a different number of frames. To train a machine learning model with such data, one faces two options: trim and pad all samples to a fixed length, or perform training with the original sample sizes. Here we foccus on the second approach, on a distributed (multi-node, multi-GPU) compute environment.
+
+A major bottleneck of variable-length datasets is the heterogeneity across sample lengths leading to a high load imbalance across processes. So in this post, we will introduce and implement three features that accelerate such use cases on distributed memory: (1) **curriculum learning** to make the model learn better across all lengths, (2) **variable batch size and learning rate** that better utilize hardware by allowing large batchs for small smaples and vice-versa, and (3) **kernels compilation** to accelerate the execution.
+
+## Curriculum Learning
+
+[Curriculum learning](https://arxiv.org/abs/2101.10382) is an ML training method that trains samples in the order of increasing difficulty (e.g. noise, human score, length), that has been shown to improve the model stability and performance. The underlying rationale is that if one presents difficult tasks to a model at the early stages of training, the model may have strong shifts of gradients (parameters) that may make learning hard or unstable. Showing samples ordered from an easy to a hard task overcomes this process as the model iteratively adapts and improves its performance as we increase the task difficulty. 
+
+The workflow of implementing curriculum learning in a single process run is pretty straightforward: (1) collect the difficulty of each sample; (2) sort samples by increasing difficulty, and (3) process samples in their new order. In distributed runs with very large datasets, this is much harder. The main struggle is due to data samples being loaded in a distributed fashion across processes - defaulted to an interleaved assignment if you use torch's `DistributedSampler`, as pictured in a) and b) in the picture below. There are two ways to overcome this:
+- the simple, slighly imbalanced, non-deterministic curriculum: load samples in a distributed fashion, sort locally the samples of each process, and use individual curriculum datasets - one per process - as in diagram c) below. The main issue here is potentially high load imbalance, runtime imbalance, and a run that is not deterministic for different process counts.
+- the complex, load balanced, deterministic curriculum: perform a distributed sorting of samples across all processes - diagram d) below - and re-assign that dataset in an interleaved fashion - diagram e) - that leads to an almost perfectly-balanced distributed of samples across processes - diagram f). 
+
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/Training-Variable-Length/curriculum_datasets.png"/>
+
+{: style="text-align:center; font-size: small;"}
+An illustration of the curricum dataset setup problem on a network of 4 ranks and a dataset of 16 samples, across 6 different steps explained in this post.
+
+### Distributed Sorting
+
+The tricky bit in the algorithm above is the distributed sorting that performs the transformation from b) to d) in the diagram above. In this post, we will user the Distributed Sample Sorting algorithm (pictured below) so that it scales well for a large number of processes, but there are [other distribubed sorting algorithms in this post]({{ site.baseurl }}{% post_url 2014-06-21-Distributed-Sort %}) that you could use. The workflow is the following:
+
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="/assets/Distributed-Sort/sample_sort.png"> 
+
+The python implementtion of this distributed sorting algorithm is provided below. If you are interested in the remaining code for e.g. sequential writing of a distributed tensor to a single file, check the [DeepSpeed PR 5129](https://github.com/microsoft/DeepSpeed/pull/5129) where I implemented all this logic:
+
+```python
+def sample_sort(tensor, comm_group, num_workers, n_samples=100):
+    """ perform a distributed random sort of a tensor, and returns the sorted partial tensor"""
+    device, dims = tensor.device, tensor.size()[1]
+
+    # 1 - sort rows by first column, then second column, then third, etc...
+    tensor = torch.tensor(sorted(tensor.tolist()), dtype=tensor.dtype, device=tensor.device)
+
+    # 2 - collect few samples per rank
+    idx = torch.round(torch.linspace(0, len(tensor) - 1, n_samples)).to(int)
+    samples = tensor[idx][:, 0].contiguous().to(device)  #only first column, all but last row
+
+    # 2 - Allgather samples
+    all_samples = [torch.zeros(n_samples, dtype=samples.dtype, device=device) for _ in range(num_workers)]
+    dist.all_gather(all_samples, samples, group=comm_group)
+    all_samples = torch.cat(all_samples, dim=0).to(device)
+
+    # 3 - Sort all samples and collect the ranges of each rank as equidistant
+    all_samples = all_samples.sort()[0]
+    idx = torch.round(torch.linspace(0, len(all_samples) - 1, num_workers + 1)).to(int)
+    ranges = all_samples[idx]  # range of each rank r as ranges[r] <= x < ranges[r+1]
+    ranges[-1] += 1  # increase upper limit of last rank so that x < ranges[r+1].
+
+    # 4 - collect elements to send to each rank, based on the rank ranges
+    send = []
+    for rank in range(num_workers):
+        mask = (tensor[:, 0] >= ranges[rank]) & (tensor[:, 0] < ranges[rank + 1])
+        send.append(tensor[mask])
+
+    # 5. all to all to communicate the sizes to be sent/recv
+    send_count = [torch.tensor([len(s) * dims], dtype=torch.int64, device=device) for s in send]
+    recv_count = list(torch.empty([num_workers], dtype=torch.int64, device=device).chunk(num_workers))
+    dist.all_to_all(recv_count, send_count, group=comm_group)
+
+    # 6. all-to-all-v to communicate the elements to be sent/recv as a single tensor
+    send = torch.cat(send, dim=0).flatten().to(device)
+    recv = torch.zeros(sum(recv_count), dtype=send.dtype).to(device)
+    send_count = [s.item() for s in send_count]  # convert to list of ints
+    recv_count = [r.item() for r in recv_count]
+    dist.all_to_all_single(recv, send, recv_count, send_count, group=comm_group)
+    del send
+
+    # 7. the received tensor is the 1D disjoint subset of the distributed tensor.
+    # We will recover the original dimensionality and sort it by columns again.
+    recv = recv.view(-1, dims)
+    recv = torch.tensor(sorted(recv.tolist()), dtype=recv.dtype, device=recv.device)
+    return recv
+```
