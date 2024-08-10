@@ -7,7 +7,7 @@ tags: [machinelearning]
 
 Many datasets include samples that are of variable length. To name a few, audio tracks have different durations, text sentences have a different number of words (tokens) and videos have a different number of frames. To train a machine learning model with such data, one faces two options: trim and pad all samples to a fixed length, or perform training with the original sample sizes. Here we foccus on the second approach, on a distributed (multi-node, multi-GPU) compute environment.
 
-A major bottleneck of variable-length datasets is the heterogeneity across sample lengths leading to a high load imbalance across processes. So in this post, we will introduce and implement three features that accelerate such use cases on distributed memory: (1) **curriculum learning** to make the model learn better across all lengths, (2) **variable batch size and learning rate** that better utilize hardware by allowing large batchs for small smaples and vice-versa, and (3) **kernels compilation** to accelerate the execution.
+A major bottleneck of variable-length datasets is the heterogeneity across sample lengths leading to a high load imbalance across processes. So in this post, we will introduce and implement three features that accelerate such use cases on distributed memory: (1) **curriculum learning** to make the model learn better across all lengths, (2) **variable batch size and learning rate** that better utilize hardware by allowing large batches of short samples and vice-versa, and (3) **kernels static compilation** to accelerate the execution.
 
 <br/>
 
@@ -217,3 +217,9 @@ def dataloader_for_variable_batch_size( dataset, microbatch_ids, batch_max_seqle
 ```
 
 You can find the complete implementation in my [DeepSpeed PR 5237](https://github.com/microsoft/DeepSpeed/pull/5237/). 
+
+<br/>
+
+<!-- ## Kernels compilation
+
+We have seen in a [previous post]({{ site.baseurl }}{% post_url 2023-06-27-GPT-lite-cpp %}) that just-in-time compilation of kernels via `torch.compile` leads to a substantial training speedup. Compiling varible-size shapes and function inputs (in the batch and length dimension in our use case) is complicted. -->

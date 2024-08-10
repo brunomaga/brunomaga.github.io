@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of a GPT model with DeepSpeed's ZeRO, sharding, offloading, activation checkpointing, and communication quantization"
+title:  "Distributed training of a GPT model: DeepSpeed ZeRO, sharding, offloading, activation checkpointing, and communication quantization"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
