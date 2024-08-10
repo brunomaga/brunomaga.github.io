@@ -15,15 +15,19 @@ A major bottleneck of variable-length datasets is the heterogeneity across sampl
 
 [Curriculum learning](https://arxiv.org/abs/2101.10382) is an ML training method that trains samples in the order of increasing difficulty (e.g. noise, human score, length), that has been shown to improve the model stability and performance. The underlying rationale is that if one presents difficult tasks to a model at the early stages of training, the model may have strong shifts of gradients (parameters) that may make learning hard or unstable. Showing samples ordered from an easy to a hard task overcomes this process as the model iteratively adapts and improves its performance as we increase the task difficulty. 
 
-The workflow of implementing curriculum learning in a single process run is pretty straightforward: (1) collect the difficulty of each sample; (2) sort samples by increasing difficulty, and (3) process samples in their new order. In distributed runs with very large datasets, this is much harder. The main struggle is due to data samples being loaded in a distributed fashion across processes - defaulted to an interleaved assignment if you use torch's `DistributedSampler`, as pictured in a) and b) in the picture below. There are two ways to overcome this:
-- the simple, slighly imbalanced, non-deterministic curriculum: load samples in a distributed fashion, sort locally the samples of each process, and use individual curriculum datasets - one per process - as in diagram c) below. The main issue here is potentially high load imbalance, runtime imbalance, and a run that is not deterministic for different process counts.
-- the complex, load balanced, deterministic curriculum: perform a distributed sorting of samples across all processes - diagram d) below - and re-assign that dataset in an interleaved fashion - diagram e) - that leads to an almost perfectly-balanced distributed of samples across processes - diagram f). 
+The workflow of implementing curriculum learning in a single process run is pretty straightforward: (1) collect the difficulty of each sample; (2) sort samples by increasing difficulty, and (3) process samples in their new order. In distributed runs with very large datasets, this is much harder. The main struggle is due to data samples being loaded in a distributed fashion across processes - defaulted to an interleaved assignment if you use torch's `DistributedSampler`, as pictured in a) and b) in the picture below.
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/Training-Variable-Length/curriculum_datasets.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the curricum dataset setup problem on a network of 4 ranks and a dataset of 16 samples, across 6 different steps explained in this post.
+
+There are two ways to overcome this:
+- the simple, slighly imbalanced, non-deterministic curriculum: load samples in a distributed fashion, sort locally the samples of each process, and use individual curriculum datasets - one per process - as in diagram c) below. The main issue here is potentially high load imbalance, runtime imbalance, and a run that is not deterministic for different process counts.
+- the complex, load balanced, deterministic curriculum: perform a distributed sorting of samples across all processes - diagram d) below - and re-assign that dataset in an interleaved fashion - diagram e) - that leads to an almost perfectly-balanced distributed of samples across processes - diagram f). 
+
+In the next sections we will detail the latter option.
 
 ### Distributed Sorting
 
@@ -220,6 +224,96 @@ You can find the complete implementation in my [DeepSpeed PR 5237](https://githu
 
 <br/>
 
-<!-- ## Kernels compilation
 
-We have seen in a [previous post]({{ site.baseurl }}{% post_url 2023-06-27-GPT-lite-cpp %}) that just-in-time compilation of kernels via `torch.compile` leads to a substantial training speedup. Compiling varible-size shapes and function inputs (in the batch and length dimension in our use case) is complicted. -->
+## Kernels compilation
+
+We have seen in a [previous post]({{ site.baseurl }}{% post_url 2023-06-27-GPT-lite-cpp %}) that just-in-time compilation of ML kernels via `torch.compile` leads to a substantial training speedup. So let's look at **compilation of variable-shaped inputs on distributed runs**.
+
+
+### Foreword: about CUDA graphs compilation on single- vs multi-process runs
+
+[CUDA graphs](https://developer.nvidia.com/blog/cuda-graphs/) allow several GPU kernels be executed entirely on the GPU as a workflow (graph), instead of individual GPU kernel executions that are driven by CPU calls. This is enabled to `torch.compile(mode='reduce-overhead')` and is very important on single-GPU runs but not supported on multi-GPU runs. Why?
+
+Imagine a feed-forward network composed of 3 linear layers and 3 activations, on a run with a single GPU. The data input loading, forward pass, backward pass and optimizer step can be illustrated as:
+
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/Training-Variable-Length/dnn_serial.png"/> 
+
+{: style="text-align:center; font-size: small;"}
+A single-GPU training iteration workflow (adapted from the original [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+
+In the example above, the GPU performs a total of 12 kernels in the forward+backward steps. If we compile it with CUDA graphs we have only 2 GPU kernels for the same 2 steps, which leads to a very good speedup: 
+
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/Training-Variable-Length/dnn_serial_compiled.png"/>
+
+{: style="text-align:center; font-size: small;"}
+A single-GPU training iteration workflow of a compiled model (adapted from the original [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+
+Now let's take the problem into scale, and imagine a 2-GPU distributed data parallel run. At every subset of layers/parameters, we perform an `all_reduce` communication step to communicate the gradients. But note that overlapping computation and communication of gradients is possible because in torch: `loss.backward()` does `w.grad += dL/dw` and `optimizer.step()` does `w += -lr * w.grad` so we only need to have `optimizer.step()` wait for all gradients to be received. And `loss.backward()` can send gradients of past layers asynchronously while computes the gradients of the following layers:
+
+{: style="text-align:center; font-size: small;"}
+<img width="55%" height="55%" src="/assets/Training-Variable-Length/dnn_multiproc.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The Distributed Data Parallel execution workflow on 2 GPUs. The optimizer needs to wait for all asynchronous communication of gradients to finish (source: [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+
+Note that the previous execution has 2 **graph breaks** (an interruption in the computation graph due to an operation that is not differentiable) that are introduced by the intermediatte communication steps. And that is one issue with having the previous model compiled, requiring CUDA graphs to be disabled in the compilation and running the the `mode='default'` instead.
+
+Another issue with the compilation relates to the communication. Compiling the model into a single graph would (or a small number of graphs, if graph breaks occur) require one to perform the synchronization only at the final layer, adding an overhead to the time that the optimizer must wait for:
+
+{: style="text-align:center; font-size: small;"}
+<img width="55%" height="55%" src="/assets/Training-Variable-Length/dnn_multiproc_compiled.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The Distributed Data Parallel execution workflow on 2 GPUs, with compiled models. All communication happens at the end. (source: [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+
+And this is overcome by torch's `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) that will compile intermediatte layers as subgraphs and then perform asynchronous synchronization at subgraph boundaries: 
+
+{: style="text-align:center; font-size: small;"}
+<img width="50%" height="50%" src="/assets/Training-Variable-Length/dnn_multiproc_optimized.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The Distributed Data Parallel execution workflow on 2 GPUs, with compiled models and `DDPOptimizer`. Graph is compiled in subgraphs and synchronisationo happens asynchronously between subgraphs. (source: [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+
+Note that the subgraphs created may change depending on input sizes. And I have not been able to achieve a similar speed up on distributed compiled models on DeepSpeed ZeRO-0 as I got on Torch's DDP, possibly due to the lack of an optimization like `DDPOptimizer`.  
+
+### Variable-length static compilation
+
+Torch provides *some* support for compilation of tensors of variable shapes, with `torch.compile(dynamic=True)`. This yields a binary that is slower than the ones provided with static compilation, with the advantage that the input dimensions are not hard-coded in the binary and can change throught time. Dynamic compilation is slower, and as up to  `torch==2.4.0`, still doesn't work well for variable batch and length inputs. 
+
+Static compilation is ideal, but how do it handle when we have a dataset of variable sizes samples and batches? The trick is to allow all processes to do a forward and a backward pass on every possible shape at the onset of the execution: 
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/Training-Variable-Length/torch_compile_dataset.png"/>
+
+{: style="text-align:center; font-size: small;"}
+Setting up the dataset to allow static compilation of variable-length datasets. **Top, a)**: default dataset performing default/interleaves assignment of samples to processors (color-coded). On a static compilation run, the green and yellow processors are presented with a new shape at the end of the dataset, leading to a runtime error.  **Bottom, b)**: reshuffling the dataset in order to present at the onset of execution one sample of each shape to each GPU, allows the processors to compile one binary per shape and the execution to run successfully.
+
+We can analyze the behaviour of toch compile and see the shapes he compiles by setting the environment variable `TORCH_LOGS=recompiles`. As an example, for a dataset with samples of 4 shapes with length `10`, `20`, `30` and `40`. On the first train iteration, torch will compile a model for an input of length `10`, as expected. In the second iteration, it will throw the following warning and recompile (and store in memory) another binary for the length `20`:
+
+```
+Recompiling function forward in train.py:145 triggered by the following guard failure(s):
+    - tensor 'L['timestep']' size mismatch at index 0. expected 10, actual 20
+```
+
+In third iteration will again throw a similar warning and recompile another binary for the length `30`:
+
+```
+Recompiling function forward in train.py:145 triggered by the following guard failure(s):
+    - tensor 'L['timestep']' size mismatch at index 0. expected 10, actual 30
+    - tensor 'L['timestep']' size mismatch at index 0. expected 20, actual 30
+```
+
+and so on. Finally, keep in mind that every new shapes will lead to a new compilation and storage in memory of new binaries. When the number of shapes is too high, this leads to an Out-Of-Memory (OOM) error. To overcome this, perform **binning** where you group samples of similar lengths, and then **padding** to have all samples inside each bin have the same shape. Still too many shapes and OOM error? You can train on few shapes and then run `torch.compiler.reset()` to reset the torch compile status in order to free memory of shapes that won't be used again. 
+
+So to finalize, for multi-process static compilation, the correct arguments to pass to `torch.compile` are:
+```python
+world_size = torch.distributed.get_world_size()
+torch_compile_kwargs={
+    "mode": "reduce-overhead" if world_size == 1 else "default", # single- vs multi-GPU runs
+    "backend": "inductor",
+    "dynamic": False, # force static compilation
+},
+torch.compile(model, **torch_compile_kwargs)
+```
