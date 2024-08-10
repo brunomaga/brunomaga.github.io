@@ -307,7 +307,10 @@ Recompiling function forward in train.py:145 triggered by the following guard fa
 
 and so on. Finally, keep in mind that every new shapes will lead to a new compilation and storage in memory of new binaries. When the number of shapes is too high, this leads to an Out-Of-Memory (OOM) error. To overcome this, perform **binning** where you group samples of similar lengths, and then **padding** to have all samples inside each bin have the same shape. Still too many shapes and OOM error? You can train on few shapes and then run `torch.compiler.reset()` to reset the torch compile status in order to free memory of shapes that won't be used again. 
 
-So to finalize, for multi-process static compilation, the correct arguments to pass to `torch.compile` are:
+To finalize, when running multi-process execution of variable-size inputs with static compilation, the recipe is:
+1. expect an execution faster than the non-compiled version, but slower than the single-process execution; 
+2. change the order in your dataset to present all shapes to all processes at the onset of execution; and
+3. pass the following arguments to `torch.compile` :
 ```python
 world_size = torch.distributed.get_world_size()
 torch_compile_kwargs={
@@ -317,3 +320,5 @@ torch_compile_kwargs={
 },
 torch.compile(model, **torch_compile_kwargs)
 ```
+
+Finally, note that I tested this on `torch==2.4.0` and may not work on earlier versions. 
