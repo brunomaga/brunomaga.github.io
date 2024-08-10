@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of variable-length datasets: curriculum learning, variable batch size and learning rate, and static compilation"
+title:  "Distributed training of samples of variable shapes: curriculum learning, variable batch size and learning rate, and static compilation"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
@@ -18,7 +18,7 @@ A major bottleneck of variable-length datasets is the heterogeneity across sampl
 The workflow of implementing curriculum learning in a single process run is pretty straightforward: (1) collect the difficulty of each sample; (2) sort samples by increasing difficulty, and (3) process samples in their new order. In distributed runs with very large datasets, this is much harder. The main struggle is due to data samples being loaded in a distributed fashion across processes - defaulted to an interleaved assignment if you use torch's `DistributedSampler`, as pictured in a) and b) in the picture below.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/Training-Variable-Length/curriculum_datasets.png"/>
+<img width="90%" height="90%" src="/assets/Training-Variable-Shapes/curriculum_datasets.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the curricum dataset setup problem on a network of 4 ranks and a dataset of 16 samples, across 6 different steps explained in this post.
@@ -109,7 +109,7 @@ In practice, the user picks the total token count per batch as the metric that d
 Imagine we picked a limit of `30` tokens per batch, and have set a reference `lr=1e-3` for a `train_batch_size=2` (in the deepspeed config). The batching algorithm for curriculum may pack the data into batches of short sentences (left) at the early stages, and batches of long sentences (right) as later stages, e.g.:
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/Training-Variable-Length/variable_batch_lr.png"/>
+<img width="90%" height="90%" src="/assets/Training-Variable-Shapes/variable_batch_lr.png"/>
 
 Above, we collected samples until we filled up the batch with at most 30 tokens. The batch sizes (number of samples) became then `10` and `4` on the left and right examples, respectively. Using the linear scaling rule, the LR for those batches become `5e-3` and `2e-3`.    
 
@@ -118,7 +118,7 @@ Above, we collected samples until we filled up the batch with at most 30 tokens.
 Pipeline parallelism requires the same batch size and same sequence length across all micro-batches in a batch, as the activation sizes must be fixed between gradient accumulation steps, so that the shapes of all pipeline steps is the same. Enforcing similar `BxTxE` between batches may lead to smaller micro-batches. As an example, below we can see an illustration of a 2-node 2-gradient-accumulation-step (ie 4 micro-batches) batching for the same dataset, when preparing data for the regular DDP (left) and for the pipeline parallelism use cases (right):
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/Training-Variable-Length/variable_batch_lr_pipeline.png"/>
+<img width="90%" height="90%" src="/assets/Training-Variable-Shapes/variable_batch_lr_pipeline.png"/>
 
 We can see that the pipeline use case (right) has the same `BxTxE` shape across all the 4 micro-batches in the same batch, and in order to respect that, it packs less samples in the batch, when compared to the standard use case (left hand size), and uses padding when needed to respect the expecte shapes. 
 
@@ -127,7 +127,7 @@ We can see that the pipeline use case (right) has the same `BxTxE` shape across 
 Attention is heavily used nowadays for any data format, and is a particular caveat in variable-length training. Usually, on fixed-size batching, an input of size `BxTxE` requires an attention mask of shape `TxT`. However, when samples have different sizes, we need a `BxTxT`  mask to allow a different mask per sample. This 3D attention matrix can be illustrated for the non-pipeline microbatch 1 (picture above, top-left, 4 sentences) as:
  
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Training-Variable-Length/variable_attn_matrix.png"/>
+<img width="80%" height="80%" src="/assets/Training-Variable-Shapes/variable_attn_matrix.png"/>
 
 
 Note the memory savings: the attention head has a size of `BxTxT`, i.e. a linear memory dependency on the batch size `B` and quadratic memory dependency on the largest sequence length `T` in the (micro-) batch. Thus, supporting a dynamic size `T` allows for an increase of `B`.
@@ -240,7 +240,7 @@ We have seen in a [previous post]({{ site.baseurl }}{% post_url 2023-06-27-GPT-l
 Imagine a feed-forward network composed of 3 linear layers and 3 activations, on a run with a single GPU. The data input loading, forward pass, backward pass and optimizer step can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/Training-Variable-Length/dnn_serial.png"/> 
+<img width="45%" height="45%" src="/assets/Training-Variable-Shapes/dnn_serial.png"/> 
 
 {: style="text-align:center; font-size: small;"}
 A single-GPU training iteration workflow (adapted from the original [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -248,7 +248,7 @@ A single-GPU training iteration workflow (adapted from the original [pytorch dev
 In the example above, the GPU performs a total of 12 kernels in the forward+backward steps. If we compile it with CUDA graphs we have only 2 GPU kernels for the same 2 steps, which leads to a very good speedup: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/Training-Variable-Length/dnn_serial_compiled.png"/>
+<img width="45%" height="45%" src="/assets/Training-Variable-Shapes/dnn_serial_compiled.png"/>
 
 {: style="text-align:center; font-size: small;"}
 A single-GPU training iteration workflow of a compiled model (adapted from the original [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -256,7 +256,7 @@ A single-GPU training iteration workflow of a compiled model (adapted from the o
 Now let's take the problem into scale, and imagine a 2-GPU distributed data parallel run. At every subset of layers/parameters, we perform an `all_reduce` communication step to communicate the gradients. But note that overlapping computation and communication of gradients is possible because in torch: `loss.backward()` does `w.grad += dL/dw` and `optimizer.step()` does `w += -lr * w.grad` so we only need to have `optimizer.step()` wait for all gradients to be received. And `loss.backward()` can send gradients of past layers asynchronously while computes the gradients of the following layers:
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="/assets/Training-Variable-Length/dnn_multiproc.png"/>
+<img width="55%" height="55%" src="/assets/Training-Variable-Shapes/dnn_multiproc.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The Distributed Data Parallel execution workflow on 2 GPUs. The optimizer needs to wait for all asynchronous communication of gradients to finish (source: [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -266,7 +266,7 @@ Note that the previous execution has 2 **graph breaks** (an interruption in the 
 Another issue with the compilation relates to the communication. Compiling the model into a single graph would (or a small number of graphs, if graph breaks occur) require one to perform the synchronization only at the final layer, adding an overhead to the time that the optimizer must wait for:
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="/assets/Training-Variable-Length/dnn_multiproc_compiled.png"/>
+<img width="55%" height="55%" src="/assets/Training-Variable-Shapes/dnn_multiproc_compiled.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The Distributed Data Parallel execution workflow on 2 GPUs, with compiled models. All communication happens at the end. (source: [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -274,7 +274,7 @@ The Distributed Data Parallel execution workflow on 2 GPUs, with compiled models
 And this is overcome by torch's `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) that will compile intermediatte layers as subgraphs and then perform asynchronous synchronization at subgraph boundaries: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="50%" height="50%" src="/assets/Training-Variable-Length/dnn_multiproc_optimized.png"/>
+<img width="50%" height="50%" src="/assets/Training-Variable-Shapes/dnn_multiproc_optimized.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The Distributed Data Parallel execution workflow on 2 GPUs, with compiled models and `DDPOptimizer`. Graph is compiled in subgraphs and synchronisationo happens asynchronously between subgraphs. (source: [pytorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -288,7 +288,7 @@ Torch provides *some* support for compilation of tensors of variable shapes, wit
 Static compilation is ideal, but how do it handle when we have a dataset of variable sizes samples and batches? The trick is to allow all processes to do a forward and a backward pass on every possible shape at the onset of the execution: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Training-Variable-Length/torch_compile_dataset.png"/>
+<img width="70%" height="70%" src="/assets/Training-Variable-Shapes/torch_compile_dataset.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Setting up the dataset to allow static compilation of variable-length datasets. **Top, a)**: default dataset performing default/interleaves assignment of samples to processors (color-coded). On a static compilation run, the green and yellow processors are presented with a new shape at the end of the dataset, leading to a runtime error.  **Bottom, b)**: reshuffling the dataset in order to present at the onset of execution one sample of each shape to each GPU, allows the processors to compile one binary per shape and the execution to run successfully.
