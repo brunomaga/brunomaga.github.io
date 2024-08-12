@@ -1,13 +1,13 @@
 ---
 layout: post
-title:  "Distributed training of samples of variable lengths: curriculum learning, variable batch size and learning rate, and static compilation"
+title:  "Distributed training of variable-length datasets: curriculum learning, adaptive batch size and learning rate, and kernel compilation"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
 
 Many datasets include samples of variable lengths. To name a few, audio tracks of variable durations, text sentences of variable number of words (tokens) and videos of variable number of frames. To train a machine learning model with such data, one usually trims and pads all samples to a fixed length, so batch shapes are consistent across training iterations. Alternatively, one can perform training with the original sample sizes, which adds some complexity, particularly on distributed (multi-node, multi-GPU) compute environment. 
 
-So in this post, we will introduce and implement three techniques that accelerate training of variable-length inputs on multi-process runs: (1) **curriculum learning** to make the model learn better and faster, (2) **variable batch size and learning rate** that better utilize hardware by allowing large batches of short samples and vice-versa with an adequate learning rate, and (3) **kernels static compilation** to accelerate the execution.
+So in this post, we will introduce and implement three techniques that accelerate training of variable-length inputs on multi-process runs: (1) **curriculum learning** to make the model learn better and faster, (2) **adaptive batch size and learning rate** that better utilize hardware by allowing large batches of short samples and vice-versa with an adequate learning rate, and (3) **kernels static compilation** to accelerate the execution.
 
 <br/>
 
@@ -92,7 +92,7 @@ def sample_sort(tensor, comm_group, num_workers, n_samples=100):
 
 <br/>
 
-## Variable batch size and learning rate
+## Adaptive batch size and learning rate
 
 When training variable-length datasets, batches of similar sizes may lead to inputs of very different lengths. Thus, a common practice is to pack batches by token count instead, by batching together samples whose sum of lengths add up to an user-provided value. As an example related to text datasets, in [Attention is all you need](https://arxiv.org/abs/1706.03762), section 5.1:
 
@@ -181,7 +181,7 @@ class VariableBatchSizeLR(LRScheduler):
             group['lr'] = scale_lr(self.base_batch_size, batch_size, group['lr'], self.lr_scaling_method)
 ```
 
-The variable batch size is implemented as a data loader that uses a *special* collate function that pack samples into batches, given a token count per sample:
+The adaptive batch size is implemented as a data loader that uses a *special* collate function that pack samples into batches, given a token count per sample:
 
 ```python 
 def dataloader_for_variable_batch_size( dataset, microbatch_ids, batch_max_seqlens,
