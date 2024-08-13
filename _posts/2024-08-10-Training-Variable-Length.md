@@ -9,8 +9,6 @@ Many datasets include samples of variable lengths. To name a few, audio tracks o
 
 So in this post, we will introduce and implement three techniques that accelerate training of variable-length inputs on multi-process runs: (1) **curriculum learning** to make the model learn better and faster, (2) **adaptive batch size and learning rate** that better utilize hardware by allowing large batches of short samples and vice-versa with an adequate learning rate, and (3) **kernels static compilation** to accelerate the execution.
 
-<br/>
-
 ## Curriculum Learning
 
 [Curriculum learning](https://arxiv.org/abs/2101.10382) is an ML training method that presentes training samples to the model in the order of increasing difficulty, e.g. by increasing increasing noise, human score, length. This has been shown to improve the model stability and performance. The underlying rationale is that presenting very difficult tasks at the early stages of training may leads to high gradients and strong shifts in parameter values that may make learning unstable. However, showing samples in increasing difficulty will lead to a smoother and more stable learning process. In terms of efficiency, packing short and long sentences in one batch forces the batch to be padded to the longest sentence, adding a substantial computation memory overhead. 
@@ -89,8 +87,6 @@ def sample_sort(tensor, comm_group, num_workers, n_samples=100):
 
  If you are interested in the remaining code, check my [DeepSpeed PR 5129](https://github.com/microsoft/DeepSpeed/pull/5129), where you can find the support code, including the method to write the post-sorting distributed tensor in d) to a sequential file (method `file_write_ordered`).
 
-
-<br/>
 
 ## Adaptive batch size and learning rate
 
@@ -225,8 +221,6 @@ def dataloader_for_variable_batch_size( dataset, microbatch_ids, batch_max_seqle
 ```
 
 If you're looking for an example, you can find the complete implementation in my [DeepSpeed PR 5237](https://github.com/microsoft/DeepSpeed/pull/5237/). 
-
-<br/>
 
 ## Kernels compilation
 
