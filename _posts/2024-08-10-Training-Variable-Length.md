@@ -323,4 +323,4 @@ torch_compile_kwargs={
 torch.compile(model, **torch_compile_kwargs)
 ```
 
-As a final remark, note that I tested this on `torch==2.4.0` and may not work in earlier versions. 
+As a final remark, note that I tested this on `torch==2.4.0` and it may not work in earlier versions. 
