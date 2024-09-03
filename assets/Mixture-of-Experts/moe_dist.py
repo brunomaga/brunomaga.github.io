@@ -6,7 +6,6 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.distributed as dist
-from torch.nn.parallel import DistributedDataParallel as DDP
 import torch.utils
 from torch.utils.data import DistributedSampler, DataLoader
 
@@ -29,6 +28,10 @@ global_rank = int(os.environ['RANK']) #set by torchrun
 device = torch.device(f"cuda:{local_rank}" if torch.cuda.is_available() else "cpu")
 dist.init_process_group(backend='nccl', init_method='env://')
 
+# how to do data-parallelism of non-MoEs: pick DDP or FSDP
+# DataParallel = lambda model: torch.distributed.fsdp.FullyShardedDataParallel(model.to(device), device_id=local_rank)
+DataParallel = lambda model: torch.nn.parallel.DistributedDataParallel(model.to(device), device_ids=[local_rank])
+
 class MoE_dist(nn.Module):
   def __init__(self, k=2, capacity_factor=1.25, padding_val=0, local_rank=local_rank):
     super().__init__()
@@ -40,7 +43,7 @@ class MoE_dist(nn.Module):
     # correspond to the number of experts in the model."
     self.num_experts = dist.get_world_size()
     self.k = k
-    self.router = DDP(Router(n_embd, self.num_experts, dropout=dropout).to(device), device_ids=[local_rank])
+    self.router = DataParallel(Router(n_embd, self.num_experts, dropout=dropout))
     self.expert = FeedForward(n_embd).to(device) # 1 expert per GPU
 
   def forward(self, x):
@@ -115,16 +118,16 @@ if __name__ == "__main__":
   sampler = DistributedSampler(dataset, num_replicas=dist.get_world_size(), rank=dist.get_rank(), drop_last=True)
   dataloader = DataLoader(dataset, batch_size=batch_size, sampler=sampler, num_workers=dist.get_world_size(), drop_last=True)
 
-  # instantiate model and apply DDP to all layers except our MoE FeedForward
+  # instantiate model and apply DataParallel to all layers except our MoE FeedForward
   model = GPTlite(vocab_size).to(device)
-  model.token_embedding_table = DDP(model.token_embedding_table.to(device), device_ids=[local_rank])
-  model.position_embedding_table = DDP(model.position_embedding_table.to(device), device_ids=[local_rank])
-  model.ln = DDP(model.ln.to(device), device_ids=[local_rank])
-  model.lm_head = DDP(model.lm_head.to(device), device_ids=[local_rank])
+  model.token_embedding_table = DataParallel(model.token_embedding_table)
+  model.position_embedding_table = DataParallel(model.position_embedding_table)
+  model.ln = DataParallel(model.ln)
+  model.lm_head = DataParallel(model.lm_head)
   for block in model.blocks: 
-    block.sa = DDP(block.sa.to(device), device_ids=[local_rank])
-    block.ln1 = DDP(block.ln1.to(device), device_ids=[local_rank])
-    block.ln2 = DDP(block.ln2.to(device), device_ids=[local_rank])
+    block.sa = DataParallel(block)
+    block.ln1 = DataParallel(block.ln1)
+    block.ln2 = DataParallel(block.ln2)
     block.ffwd = MoE_dist().to(device) #replace FeedForward with Mixture of Experts
 
   optimizer = torch.optim.Adam(model.parameters(), lr=2e-4)
