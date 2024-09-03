@@ -1,17 +1,20 @@
 title: "Bruno Magalhaes"
-email: brunomaga@gmail.com
+author:
+  name: Bruno Magalhaes
+  email: "brunomaga@gmail.com"
+repository: brunomaga/brunomaga.github.io
 assets: /assets/
-resume: /assets/cv.pdf
-photo: /assets/photo.jpeg
+resume: /resume.pdf
+cv: /cv.pdf
+photo: /photo.jpeg
 resources_permalink: /resources/
 publications_permalink: /publications/
 google_scholar: https://scholar.google.ch/citations?user=pirWLLgAAAAJ
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://brunomaga.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username:  ibrunomaga
+twitter_username:  brunomagax
 github_username:   brunomaga
 linkedin_username: brunomaga
-skype_username: brunomaga
 
 # for the links Statistics for Data Science at EPFL in the resources page
 statistics_lectures: https://github.com/brunomaga/Statistics_EPFL/raw/main/lecture-slides/lectureXXX.pdf
@@ -47,8 +50,10 @@ statistics_videos: {
         #'25': 1YrxidM0tYE,
 }
 
+# Google analytics
+google_analytics: UA-129707365-1
+
 # Build settings
-markdown: kramdown
 theme: minima
 plugins:
   - jekyll-feed
@@ -66,3 +71,4 @@ permalink: /:title  #replaces folder structure /YY/mm/dd/categories/title by onl
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
