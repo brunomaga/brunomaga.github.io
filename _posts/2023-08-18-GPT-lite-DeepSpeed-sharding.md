@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of a GPT model: DeepSpeed ZeRO, sharding, offloading, activation checkpointing, and communication quantization"
+title:  "Distributed training of a GPT model: sharding, offloading, activation checkpointing, and communication quantization via DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -22,7 +22,7 @@ Data parallelism refers to the parallel execution of different input samples acr
 - **ZeRO stage 3 (ZeRO-3)**: the 16-bit model parameters are partitioned across the processes. Includes extra communication on **both** the forward and backward passes. 
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/DeepSpeed_stages.png"/>
+<img width="80%" height="80%" src="/assets/GPT-lite-distributed/DeepSpeed_stages.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Memory consumption of the three different stages of ZeRO FSDP. Residual memory (activations, normalization layers, etc) is not included as FSDP does not shard them. Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
@@ -465,34 +465,34 @@ To measure our performance, we used the deepspeed logger to extract the followin
 
 All implementations use the same mixed-precision representation, communication bucket sizes, and other config parameters. We benchmarked the following implementations (and configs):
 
-1. The distributed data parallel (DDP) implementation, i.e. no DeepSpeed (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
-2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
-3. The ZeRO-3 implementation with ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-DeepSpeed/ds_config_offload.json">`ds_config_offload.json`</a>);
+1. The distributed data parallel (DDP) implementation, i.e. no DeepSpeed (<a href="/assets/GPT-lite-distributed/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
+2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="/assets/GPT-lite-distributed/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
+3. The ZeRO-3 implementation with ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-distributed/ds_config_offload.json">`ds_config_offload.json`</a>);
 
 We tested three models. The first is a *wide* version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`), and input and output of size 8192. We used a batch size of $$2^{14}$$, and a micro-batch size of $$2^{11}$$ inputs per GPU, ie `'train_batch_size': 16384` and `'train_micro_batch_size_per_gpu': 2048`. The benchmark results are:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_wide.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_wide.png"/>
  
 Then we tested a *deep benchmark model* with a small parameter space (`W=256`), a high layer count (`L=2048`), an input and output size of 256, and the same bath sizes as the previous wide model:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_deep.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_deep.png"/>
 
 And finally our GPT-lite model, with a micro-batch size of 1 sample per GPU:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_gptlite.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_gptlite.png"/>
 
 **Memory overhead from communication buffers.** Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we also benchmarked several runs with the default communication bucket sizes (`5e9`) and it led to a higher memory usage as expected (of approximately double the amount in stages 2 and 3), that became prohibitive for some runs.
 
 **Activation checkpointing.** On the GPT-lite model, the main memory driver is the activations memory on the attention matrix (grows quadratically with the sequence length and linearly with the batch size). Therefore, sharding alone does not yield a signification memory reduction. Adding activation checkpointing overcomes this memory bottleneck by keeping only the current attention matrix in memory, throughout the backward pass. Moreover, **mixed precision** has an important effect on throughtput as lower precision yields faster communication and computation. As an example, the results for ZeRO-1 with activation checkpointing and mixed precision are:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_gptlite_activation_ckpt_throughput.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_gptlite_activation_ckpt_throughput.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-DeepSpeed/benchmark_gptlite_activation_ckpt_memory_usage.png"/>
+<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_gptlite_activation_ckpt_memory_usage.png"/>
 
 **Parameter vs residual memory.** Note the difference between average memory and maximum memory. That gap in memory consumption is due to temporary memory dedicated to activations, residual buffers, communication buffers, etc. 
 
@@ -506,9 +506,9 @@ Finally, we did not use **communication quantization** as did not result in any 
 
 ## Resources and code
 
-In this post we explored only the dimension of data parallelism. For pipeline parallelism and tensor/model parallelism, see the [part 2 of this post]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-2 %}). For general documentation, I recommend the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
+In this post we explored only the dimension of data parallelism. For pipeline parallelism and tensor/model parallelism, see the [part 2 of this post]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline %}). For general documentation, I recommend the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
-There are a lot of results and food for thought here, so I will update this post as I find new insights. Meanwhile, if you want to try this on your own, see the [GPT-lite-DeepSpeed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-DeepSpeed).
+There are a lot of results and food for thought here, so I will update this post as I find new insights. Meanwhile, if you want to try this on your own, see the [GPT-lite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed).
 
 
 

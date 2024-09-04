@@ -1,14 +1,14 @@
 ---
 layout: post
-title:  "Distributed training of a GPT model (part 2): DeepSpeed pipeline parallelism"
+title:  "Distributed training of a GPT model (part 2): pipeline parallelism via DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-This post follows from the previous post [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed %}), where we implemented Data Parallelism on a GPT model. Model Parallelism is only one dimension on the **3D parallelism** of ML models, via Data, Pipeline and Tensors/Models parallelism. In this post we will discuss and implement pipeline parallelism.
+This post follows from the previous post [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed-sharding %}), where we implemented Data Parallelism on a GPT model. Model Parallelism is only one dimension on the **3D parallelism** of ML models, via Data, Pipeline and Tensors/Models parallelism. In this post we will discuss and implement pipeline parallelism.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="/assets/GPT-lite-DeepSpeed/GPT_3D_parallelism_2.png"/>
+<img width="55%" height="55%" src="/assets/GPT-lite-distributed/GPT_3D_parallelism_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The 3D parallelism aims and partitioning (color-coded) computer resources  across the 3D space of data, pipeline and tensor (model) dimensions. In this post of will focus on pipeline parallelism. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
@@ -22,7 +22,7 @@ It adds an additional overhead for the inter-layer communication in the GPU boun
 The pipeline parallelism algorithm implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 Forward pass followed by 1 Backward pass, Figure 4 top on the [Megatron LM paper](https://browse.arxiv.org/pdf/2104.04473.pdf) ), however it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms.
 
 {: style="text-align:center; font-size: small;"}
-<img width="79%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining.png"/>
+<img width="79%" height="80%" src="/assets/GPT-lite-distributed/GPT_pipelining.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Two-way data parallel pipelines with four stages each. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
@@ -42,11 +42,11 @@ def get_cmd_line_args(description='GPT lite on DeepSpeed'):
 The number of pipeline stages must divide the number of GPUs, so that DeepSpeed automatically creates several parallel pipelines with the same stage count, and distributes them across GPUs.
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="/assets/GPT-lite-DeepSpeed/pipeline_8_stages.png"/>
+<img width="30%" height="30%" src="/assets/GPT-lite-distributed/pipeline_8_stages.png"/>
 &nbsp;
-<img width="30%" height="30%" src="/assets/GPT-lite-DeepSpeed/pipeline_4_stages.png"/>
+<img width="30%" height="30%" src="/assets/GPT-lite-distributed/pipeline_4_stages.png"/>
 &nbsp;
-<img width="30%" height="30%" src="/assets/GPT-lite-DeepSpeed/pipeline_2_stages.png"/>
+<img width="30%" height="30%" src="/assets/GPT-lite-distributed/pipeline_2_stages.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of pipeline parallelism on a network of 8 workers for different number of pipeline stages. Left: 8 pipeline-parallel workers. Center: 2 data-parallel groups of 4 pipeline-parallel workers. Right: 4 data-parallel groups of 2 pipeline-parallel workers.
@@ -217,9 +217,9 @@ We saw before that we could activate the number of micro-batches per GPU, batch 
 - in pipeline parallelism, we pass inputs sequentially but we still need to accumulate in memory the activations for all forward passes in that mini-batch. This may lead to a substantial memory increase.
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="/assets/GPT-lite-DeepSpeed/pipeline_4_stages.png"/>
+<img width="30%" height="30%" src="/assets/GPT-lite-distributed/pipeline_4_stages.png"/>
 &nbsp;
-<img width="60%" height="60%" src="/assets/GPT-lite-DeepSpeed/pipeline_4_stages_grad_accumulation.png"/>
+<img width="60%" height="60%" src="/assets/GPT-lite-distributed/pipeline_4_stages_grad_accumulation.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of a regular pipeline execution across 8 processes, 4 stages, with no gradient accumulation (left) and with gradient accumulation of 6 micro-batches per mini-batch (right) .
@@ -229,7 +229,7 @@ Finally, there are several algorithms for pipeline and micro-batch scheduling. T
 - the **1F1B** implemented by DeepSpeed performs a sequence of forward passes, and asynchronously starts the backward pass for each micto-batch forward pass completed. It then wait for all forward and backward passes to complete before starting the new mini-batch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="/assets/GPT-lite-DeepSpeed/pipeline_algorithms.png"/>
+<img width="60%" height="60%" src="/assets/GPT-lite-distributed/pipeline_algorithms.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Regular and 1F1B pipeline algorithms diagram. Source: paper [Training and Serving System of Foundation Models: A Comprehensive Survey](https://arxiv.org/pdf/2401.02643.pdf)
@@ -238,7 +238,7 @@ With that in mind, you can define the micro-batching properties by setting the f
 
 <!--
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPT-lite-DeepSpeed/GPT_pipelining_2.png"/>
+<img width="80%" height="80%" src="/assets/GPT-lite-distributed/GPT_pipelining_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 "An illustration of how DeepSpeed will train a batch with eight micro-batches using hybrid two-way data parallelism and two-stage pipeline parallelism. GPUs 0 and 2 are arranged in a pipeline and will alternate forward (F) and backward (B) passes. They will then all-reduce (AR) gradients with their data parallel counterparts, GPUs 1 and 3, respectively. Finally, the two pipeline stages update their model weights". This is the 1F1B pipeline algorithm. Source: [DeepSpeed pipelining documentation](https://www.deepspeed.ai/tutorials/pipeline/)
@@ -246,7 +246,7 @@ With that in mind, you can define the micro-batching properties by setting the f
 
 ## Results
 
-We changed our config to <a href="/assets/GPT-lite-DeepSpeed/ds_config.json">`ds_config.json`</a> to run ZeRO stage 1 and tested our execution with different stage count and the memory-efficient `SpecLayer` implementation of our GPT model  (with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`). We did not use activation checkpointing due to an open bug [4279](https://github.com/microsoft/DeepSpeed/issues/4274). We tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of GPT-lite pipeline across 8 GPUs and 4 stages, it outputs:
+We changed our config to <a href="/assets/GPT-lite-distributed/ds_config.json">`ds_config.json`</a> to run ZeRO stage 1 and tested our execution with different stage count and the memory-efficient `SpecLayer` implementation of our GPT model  (with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`). We did not use activation checkpointing due to an open bug [4279](https://github.com/microsoft/DeepSpeed/issues/4274). We tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of GPT-lite pipeline across 8 GPUs and 4 stages, it outputs:
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4)   STAGE_PARAMS=21256704 (21.257M)
 RANK=2 STAGE=1 LAYERS=3 [4, 7)   STAGE_PARAMS=21256704 (21.257M)
@@ -262,4 +262,4 @@ Note: I will add detailed results for pipeline parallelism in the future when ti
 
 ### Implementation
 
-This code is available in the [GPT-lite-DeepSpeed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-DeepSpeed), if you feel like giving it a try.
+This code is available in the [GPT-lite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed), if you feel like giving it a try.
