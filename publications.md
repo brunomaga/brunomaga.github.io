@@ -112,6 +112,8 @@ Here they propose **Ring Attention**. It starts by spliting sequences in sub-seq
 
 On the outer loop, we have "each device managing its respective input block. For the inner loop, every device computes blockwise attention and feedforward operations specific to its designated input block. Host devices form a conceptual ring, where during the inner loop, each device sends a copy of its key-value blocks being used for blockwise computation to the next device in the ring, while simultaneously receiving key-value blocks from the previous one.". They also overlap the computation of the current block with the communication of the following one. The storage required is now quadratic in memory with respect to the block size, not the full attention matrix size.
 
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/publications/ring_attention.png"/>
 
 ## 2024 [Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)
 
