@@ -11,7 +11,7 @@ tags: [machinelearning]
 <img width="100%" height="100%" src="/assets/GPT-lite-distributed/ulysses_sequence_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Overtiew of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **Center:** the *fist all-to-all* changes the distributed tensor view from time- to head-split. Each process holds now a complete sententes and can compute attention independently. **Right**: the *second all-to-all* reverts the view to time-split.
+Overtiew of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **Center:** the *first all-to-all* changes the distributed tensor view from time- to head-split. Each process holds now a complete sententes and can compute attention independently. **Right**: the *second all-to-all* reverts the view to time-split.
 
 The main complexity here lies on the implementation of the swap of the distributed representation from `(H/P, B, T, E)` to `(H, B, T/P, E)` and vice-versa. We can implement if for a given `tensor` whose sentence distributed across the group `group` in the two functions that follow.
 
@@ -134,3 +134,9 @@ class MultiHeadAttention(nn.Module):
 ```
 
 Note that you can add several improvements to the communication, such as sending `q`, `k` and `v` simultaneously, ou asynchronously.
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/GPT-lite-distributed/ring_attention.png"/>
+
+{: style="text-align:center; font-size: small;"}
+Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **1st Ring Attention Step:** the first step of the ring attention. Each process holds its part of the Query, Value and Key tensors. Each process computes the block attention for those tensors. Asynchronously, processes perform an async send/recv of the Key and Value tensors to the next/previous process in the communication ring (clockwise). **2nd, 3rd, and 4th Ring Attention steps:** Each process its original Query block, and the previous processes' Key and Value blocks. Processes compute again the block attention for its Query and the received Key and Values. **After Ring Attention**: the Multi-head attention output is time-split across processes, similarly to the initial data format.
