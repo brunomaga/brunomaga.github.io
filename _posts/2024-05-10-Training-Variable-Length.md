@@ -32,7 +32,7 @@ In the next sections we will detail the latter option.
 The tricky bit in the algorithm above is the distributed sorting that performs the transformation from steps b) to d). There are [other distributed sorting algorithms]({{ site.baseurl }}{% post_url 2014-06-21-Distributed-Sort %}) that one could use. But here we will implement the Distributed Sample Sorting algorithm, as it scales well for a large number of processes. The workflow is the following:
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="/assets/Distributed-Sort/sample_sort.png"> 
+<img width="70%" height="70%" src="/assets/Distributed-Sort/sample_sort.png"> 
 
 The python implementtion of this distributed sorting algorithm is provided below.
 
