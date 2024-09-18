@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of a GPT model: sharding, offloading, activation checkpointing, and communication quantization via DeepSpeed"
+title:  "Distributed GPT model: sharding, offloading, activation checkpointing, and communication quantization via DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
