@@ -30,41 +30,40 @@ In practice, the implementation of Ulysses only requires the extra steps that sw
 
 
 ```python
-def dist_view_swap(tensor: torch.Tensor, old_dim: int, new_dim: int, group: dist.ProcessGroup):
-    """converts the distributed splie dimension of a tensor with shape (H, B, T, E) across P processes"""
+def dist_view_swap(tensor: torch.Tensor, old_split_dim: int, new_split_dim: int, group: dist.ProcessGroup):
+    """swaps the distributed split dimension of a tensor of shape (H, B, T, E) across P processes"""
     full_shape, P = list(tensor.shape), group.size()
-    full_shape[old_dim]*=P # full distributed shape
+    full_shape[old_split_dim]*=P # full distributed shape
     H, B, T, E = full_shape 
-    send = torch.cat([tensor.chunk(P, dim=new_dim)[r].contiguous() for r in range(P)])
+    send = torch.cat([tensor.chunk(P, dim=new_split_dim)[r].contiguous() for r in range(P)])
     recv = torch.zeros_like(send)
     dist.all_to_all_single(output=recv, input=send, group=group)
-    recv = torch.cat([recv.chunk(P)[r].view(H // P, B, T // P, E) for r in range(P)], dim=old_dim)
+    recv = torch.cat([recv.chunk(P)[r].view(H // P, B, T // P, E) for r in range(P)], dim=old_split_dim)
     return recv
 ```
 
 From here, the implementation is straightforward. The first all-to-all only needs to convert the distributed view from time-split to head-split ie from local shape `(H, B, T / P, E)` to `(H / P, B, T, E)`. The backward pass should then do the converse operation:
 
 ```python
-class first_alltoall(torch.autograd.Function):  # noqa
-    """the first all-to-all in Ulysses sequence parallelism"""
+class first_alltoall(torch.autograd.Function):
 
-    @staticmethod
-    def forward(ctx, x, ulysses_group=None):
-        ctx.ulysses_group = ulysses_group  # save for backward pass
-        return dist_view_swap(x, old_dim=0, new_dim=2, group=ctx.ulysses_group)
+    def forward(ctx, x, group=None):
+        ctx.group = group  # save for backward pass
+        return MultiHeadAttention.dist_view_swap(x, old_split_dim=2, new_split_dim=0, group=ctx.group)
 
-    @staticmethod
     def backward(ctx, dout):
-        dout = dist_view_swap(dout, old_dim=2, new_dim=0, group=ctx.ulysses_group)
+        dout = MultiHeadAttention.dist_view_swap(dout, old_split_dim=0, new_split_dim=2, group=ctx.group)
         return dout, None
 ```
 
 The second all-to-all is analogous, except that it performs the opposite view changes in the forward and backward passes. Now we can implement the `MultiHeadAttention` module by calling the previous all-to-alls as modules:
 
 ```python
+from flash_attn.flash_attn_interface import flash_attn_func
+
 class MultiHeadAttention(nn.Module):
 
-    def __init__(self, n_embd=256, d_head=128, n_heads=8, dropout_p=0.1, ulysses_group=None):
+    def __init__(self, n_embd=256, d_head=128, n_heads=8, dropout_p=0.1, group=None):
         """ An Ulysses multi-head attention. Variable names follow GPT-lite's post """
 
         super().__init__()
@@ -75,31 +74,31 @@ class MultiHeadAttention(nn.Module):
         self.values = nn.ModuleList([nn.Linear(n_embd, d_head, bias=False) for _ in range(n_heads)])
         self.proj = nn.Linear(n_heads * d_head, n_embd)
         self.dropout = nn.Dropout(dropout_p)
-        self.ulysses_group = ulysses_group  # Ulysses sequence parallelism group
-        if self.ulysses_group is None:
-            self.ulysses_group = dist.new_group(range(dist.get_world_size())) 
+        self.group = group  # Ulysses group
+        if self.group is None:
+            self.group = dist.new_group(range(dist.get_world_size())) 
 
-    def forward(self, x):
-        P = self.ulysses_group.size()
-        B, T, H, E = x.shape[0], x.shape[1] * P, self.n_heads, self.d_head
+   def forward(self, x):
+        P, B, T, = self.group.size(), x.shape[0], x.shape[1] * self.group.size()
 
-        # take K, Q and V, and collect all head embeddings: (B, T/P, E) -> (H, B, T/P, E)
-        k = torch.stack([k(x) for k in self.keys], dim=0)
+        # Q, K and V embeddings: (B, T/P, E) -> (H, B, T/P, E)
         q = torch.stack([q(x) for q in self.queries], dim=0)
+        k = torch.stack([k(x) for k in self.keys], dim=0)
         v = torch.stack([v(x) for v in self.values], dim=0)
 
-        if if P>1:  #  (H, B, T/P, E) -> (H/P, B, T, E)
-            k = MultiHeadAttention.first_alltoall.apply(k, self.ulysses_group)
-            q = MultiHeadAttention.first_alltoall.apply(q, self.ulysses_group)
-            v = MultiHeadAttention.first_alltoall.apply(v, self.ulysses_group)
+        if P>1:  #  (H, B, T/P, E) -> (H/P, B, T, E)
+            q = MultiHeadAttention.first_alltoall.apply(q, self.group)
+            k = MultiHeadAttention.first_alltoall.apply(k, self.group)
+            v = MultiHeadAttention.first_alltoall.apply(v, self.group)
 
-        # dropout in MHA randomly prevents some tokens from communicating with each other  # out: (H/P, B, T, E)
-        out = nn.functional.scaled_dot_product_attention(k, k, v)
+        dropout_p, softmax_scale = 0, q.shape[-1] ** (-0.5)
+        out = flash_attn_func(q, k, v, dropout_p, softmax_scale)
 
-        if P>1:  # (H/P, B, T, E) -> (H, B, T/P, E)
-            out = MultiHeadAttention.second_alltoall.apply(out, self.ulysses_group)
+        if P > 1:  # (H/P, B, T, E) -> (H, B, T/P, E)
+            out = MultiHeadAttention.second_alltoall.apply(out, self.group)
 
-        out = out.permute(1, 2, 0, 3).reshape(B, T // P, H * E)  # (H, B, T/P, E) -> (B, T/P, H, E) -> (B, T/P, H*E)
+        out = out.permute(1, 2, 0, 3)  # (H, B, T/P, E) -> (B, T/P, H, E)
+        out = out.reshape(B, T // P, -1)  # (B, T/P, H, E) -> (B, T/P, H*E)
         out = self.proj(out)  # (B, T/P, H*E) -> (B, T/P, E)
         out = self.dropout(out)
         return out
@@ -167,14 +166,125 @@ $$
 
 ### Implementation
 
-The forward pass will perform $$P$$ ring communication steps, and on each step, it will compute for the current $$K$$, $$Q$$ $$V$$ block, the attention output and the [LogSumExp](https://en.wikipedia.org/wiki/LogSumExp) of each row of the matrix $$QK^T$$ (variables `block_out` and `block_lse`, in order to do the accumulation:
+The forward pass will perform $$P$$ ring communication steps, and on each step, it will compute for the current $$K$$, $$Q$$ $$V$$ block, the attention output and the [LogSumExp](https://en.wikipedia.org/wiki/LogSumExp) of each row of the matrix $$QK^T$$ (variables `block_out` and `block_lse`), in order to do the accumulation:
+
+```python
+import flash_attn.flash_attn_interface as fa # flash attention
+
+class RingAttention(torch.autograd.Function):
+
+    @staticmethod
+    def forward( ctx, q, k, v, group ):
+
+        P = group.size()
+        q, k, v = q.contiguous(), k.contiguous(), v.contiguous() # (B, T/P, H, E)
+
+        out = lse = None  # accumulators
+        recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)  # recv buffers
+
+        for step in range(P): # do P ring steps
+
+            # send already the K and V for next step, asynchronously
+            reqs_k_v = RingAttention.isend_k_and_v(k, v, recv_k, recv_v, group)
+
+            # compute attention output and softmax lse for current block
+            dropout_p, softmax_scale = 0, q.shape[-1] ** (-0.5)
+            kwargs = dict(causal=False, window_size=(-1, -1), softcap=0.0, alibi_slopes=None, return_softmax=False)
+            block_out, _, _, _, _, block_lse, _, _ = fa._flash_attn_forward(q,k,v, dropout_p, softmax_scale, **kwargs)
+
+            # update out and lse
+            out, lse = RingAttention.accumulate_out_and_lse(out, lse, block_out, block_lse)
+
+            # wait for new K and V before starting the next iteration
+            [ req.wait() for req in reqs_k_v]
+            k, v = recv_k, recv_v
+
+        ctx.group = group # save for backward
+        out = out.to(dtype=q.dtype)
+        ctx.save_for_backward(q, k, v, out, lse)
+        return out
+```
+
+where `RingAttention.isend_k_and_v(k, v, recv_k, recv_v, group)` is the function that sends the tensors `k` and `v` to the next neighbour asynchronously, and receive the previous neighbour's `k` and `v` into `recv_k` and `recv_v`  asynchronously, and returns the communication futures/requests (that will then be waited as `req.wait()`).
 
 The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html#background) will takes as input the gradient of the loss with respect to the output ($$\nabla_{out} Loss$$ or `dout` in the code below), and return the gradients of the loss with respect to the parameters of the functions (gradients $$\nabla_{q} Loss$$, $$\nabla_{k} Loss$$, $$\nabla_{v} Loss$$, or `dq`, `dk`, `dv`). Something similar to:
 
+```python
+class RingAttention(torch.autograd.Function):
+
+    @staticmethod
+    def backward(ctx, dout, *args):
+
+        P = ctx.group.size()
+        q, k, v, out, softmax_lse = ctx.saved_tensors
+        softmax_lse = softmax_lse.squeeze(dim=-1).transpose(1, 2)
+
+        block_dq, block_dk, block_dv = torch.empty_like(q), torch.empty_like(k), torch.empty_like(v) # output buffers
+        dq, dk, dv = torch.zeros_like(q), torch.zeros_like(k), torch.zeros_like(v) # accumulators of gradients
+
+        recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)  # recv buffers for K and V
+        recv_dk, recv_dv = torch.empty_like(dk), torch.empty_like(dv)  # recv buffers for dK and dV
+
+        for step in range(P):
+
+            # send already the K and V for next step, asynchronously
+            reqs_k_v = MultiHeadAttention.isend_k_and_v(k, v, recv_k, recv_v, group)
+
+            # compute the gradients for the current block K, V and Q
+            dropout_p, softmax_scale = 0, q.shape[-1] ** (-0.5)
+            kwargs = dict(causal=False, window_size=(-1, -1), softcap=0.0, alibi_slopes=None, deterministic=False, rng_state=None)
+            fa._flash_attn_backward(dout, q, k, k, out, softmax_lse, block_dq, block_dk, block_dv, dropout_p, softmax_scale, **kwargs)
+
+            if step > 0:
+                # wait for dK and dV from the previous steps, they're the dK and dV accumulators
+                [ req.wait() for req in reqs_dk_dv]
+                dk, dv = recv_dk, recv_dv
+
+            dq += block_dq
+            dk += block_dk
+            dv += block_dv
+
+            reqs_dk_dv = MultiHeadAttention.isend_k_and_v(dk, dv, recv_dk, recv_dv, group)
+
+            # wait for new K and V before starting the next iteration
+            [ req.wait() for req in reqs_k_v]
+            k, v = recv_k, recv_v
+
+        # before returning, wait for the last dK and dV, that relate to this process block
+        [ req.wait() for req in reqs_dk_dv]
+        dk, dv = recv_dk, recv_dv
+        return dq, dk, dv, None
+```
+
 A small nuance in the backward pass is that the gradients of a given block will refer to the current $$K$$ and $$V$$ which is being *rotated* around processes. Therefore, its gradients `dv` and `dk` will also be accumulated by being rotated alongside the $$K$$ and $$V$$ blocks.
 
-## Final remarks
+Finally, the `forward` pass of the multi head attention is straighforward and will simply replace the call to the attention module with the call to ring attention's implementation:
 
-Deterministic behaviour across different networks in sequence parallelism is difficult due to random number generators producing different values on each node. As an example, during model initialization and dropout.
+```python
+     def forward(self, x):
+        P, B, T, = self.group.size(), x.shape[0], x.shape[1] * self.group.size()
 
-The big disavantadge in ring attention is the number of steps being proportional to the number of processes, and this may be a limiting factor on large compute networks where dividing sequence in such a granular fashion may leave to a small workload per process, and this not being able to mitigate the asynchronous computation. The ideal solution would then be a hybrid of Ulysses parallelism and Ring attention, which has been presented by [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719).
+        # take Q, K and V, and collect all head embeddings: (B, T/P, E) -> (H, B, T/P, E)
+        q = torch.stack([q(x) for q in self.queries], dim=0)
+        k = torch.stack([k(x) for k in self.keys], dim=0)
+        v = torch.stack([v(x) for v in self.values], dim=0)
+
+        if P == 1:
+            out = fa.flash_attn_func(q, k, v)
+        else:
+            out = MultiHeadAttention.RingAttention.apply( q, k, v, self.group)
+
+        out = out.permute(1, 2, 0, 3)  # (H, B, T/P, E) -> (B, T/P, H, E)
+        out = out.reshape(B, T // P, -1)  # (B, T/P, H, E) -> (B, T/P, H*E)
+        out = self.proj(out)  # (B, T/P, H*E) -> (B, T/P, E)
+        out = self.dropout(out)
+        return out
+```
+
+And we are done. Now, as you can see, the big disavantadge in ring attention is the number of steps communication being identical to the number of processes, and this may be a limiting factor on large compute networks where dividing sequence in such a granular fashion may lead to a small workload assigned to each process. This eventually will make computation not overlap completely the communication, leading to a poor executing efficiency.
+
+## Code and final remarks
+
+This code has been added to the [GPT-lite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed), if you want to try it. When you run it, keep in mind that deterministic behaviour on sequence parallelism across networks of different proces count  is difficult due to random number generators producing different values on each node - e.g. during model initialization and dropout. 
+
+Finally, the two methods have some drawbacks: Ulysses yields a reduced number of communication steps but low parallelism, while Ring Attention will give high parallelism but high communication. The ideal solution would then be a hybrid of Ulysses parallelism and Ring attention, and that is presented in [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719).
