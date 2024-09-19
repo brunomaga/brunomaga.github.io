@@ -1,12 +1,11 @@
 ---
 layout: post
-title:  "AI Supercomputing (part 2): Encoder-Decoder, Transformers, BERT, Sharding, and model compression"
+title:  "Learning from sequences: Encoder-Decoder, Transformers and BERT"
 categories: [machine learning, supercomputing]
 tags: [machinelearning]
 ---
 
-
-In our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}), we discussed different techniques and levels of parallelism (model, data, pipeline, CPU offloading) and showed that efficient parallelism (with almost-linear scaling) at scale is possible in Machine Learning problems. However, recursive models --- such as the ones used in translation and text interpretation tasks --- are not easy to parallelize. In this post we explain why.
+In this post we will look into alternative methods for ML training on sequential data, with an emphasis on efficiency and parallelism.
 
 ## Encoder-Decoder and Sequence-to-Sequence
 
@@ -237,43 +236,3 @@ Input and output of the fine-tuning phase of a BERT network, applied to four dif
 Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, Arxiv)</a>
 
 As a final note, information encoded by BERT is useful but, on its own, insufficient to perform a translation task. However, "BERT pre-training allows for a better initialization point for [an] Neural Machine Translation model" (source: [Clichant et al.,On the use of BERT for Neural Machine Translation, arXiv](https://arxiv.org/abs/1909.12744)). 
-
-## Sharding
-
-The limits of supercomputing in Machine Learning can been pushed to a far greater extent by combining several of previous approaches. As an example, one can combine Distributed Data Parallelism, Pipeline parallelism and gradient accumulation to achieve larger compute parallelism (shorter runtime), a larger model, and a larger batch size.
-
-On top of that, when using model parallelism such as pipelining, each processor can keep only the subset of model layers that it needs for its computation. In practice, the optimizer parameters and temporary buffers that each processor holds in memory refer only to the computation it is required to do. The model weights can also be divided the same way --- even though they have a much smaller memory footprint --- sacrificing memory reduction for a larger runtime. In this scenario, processors continuously communicate the activation and gradients (forward and backward passes) to the processors holding connecting layers in the network. This can also be combined with data parallelism, leading to a setup where each processor has a subset of the data batch and a subset of the model. This technique is called Sharding, where a shard is a subset of the model layers that is delegated to individual compute units. If you are interested in this topic, see [ZeRO and DeepSpeed work at Microsoft](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) ( [Turing-NLG blog post](ttps://www.microsoft.com/en-us/research/blog/turing-nlg-a-17-billion-parameter-language-model-by-microsoft/), [www.deepspeed.ai/](https://www.deepspeed.ai/), [ZeRO paper](https://www.microsoft.com/en-us/research/publication/zero-memory-optimizations-toward-training-trillion-parameter-models/)), the [Megatron work at NVIDIA](https://github.com/NVIDIA/Megatron-LM) and the [GPT work at OpenAI](https://en.wikipedia.org/wiki/GPT-3). 
-
-Let's take a look at the particular sharding implementation in the paper [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models, Microsoft](https://arxiv.org/abs/1910.02054). ZeRO (as in Zero Redundancy Optimizer) is a parallelism method that "eliminates memory redundancies in data- and model-parallel training while retaining low communication volume and high computational granularity, allowing us to scale the model size proportional to the number of devices with sustained high efficiency". The results presented show the (at the time) largest language model ever created (17B parameters), beating Bert-large (0.3B), GPT-2 (1.5B), Megatron-LM (8.3B), and T5 (11B). It also demonstrates super-linear speedup on 400 GPUs (due to an increase of batch size per accelerator). Sharding eliminates several drawbacks in sigle-approach parallelism. As an example, using only model parallelism that splits the model vertically (on each layer), leading to high communication and scaling limitations. Moreover, data parallelism alone has good compute/communication efficiency but poor memory efficiency. In practice, memory consumption of the existing systems on model training and classify it into two parts:
-- For large models, the majority of the memory is occupied by model states which include the optimizer states (such as momentum and variances in Adam), gradients, and parameters;
-- The remaining memory is consumed by activation, temporary buffers and unusable fragmented memory (residual states).
-
-To yield "optimal" memmory usage, ZeRO-DP claims to have the computation/efficiency of Data Parallelism (DP) while achieving memory efficiency of Model Parallelism (MP).  This is achieved by three cumulative optimizations: Optimizer State Partitioning ($$P_{os}$$, 4x memory reduction and same communication as DP), Gradient Partitioning ($$P_{os+g}$$, 8x memory reduction, same comm.) and Parameter Partitioning ($$P_{os+g+p}$$, memory reduction linear with number of accelerations $$N_d$$, 50\% increase in communication). ZeRO-DP is at least as memory-efficient and scalable as MP, or more when MP can't divide the model evenly. This is achieved by "removing the memory state redundancies across data-parallel processes by partitioning the model states instead of replicating them, and [..] using a dynamic communication schedule during training. In practice:
-- non-overlapping subsets of layers are delegated to different accelerators;
-- different optimization levels refer to what content is split or kept across GPUs, as in the figure below;
-- content that is not replicated but is instead divided in synchronized with dynamic communication across connecting layers.
-
-Thus, each processor is allocated a subset of data (DP) and a subset of the model (MP). When that data goes through its layers it will broadcast its layers parameters to other accelerators on the forward pass. Each GPU will run its own data using the received parameters. During the backward pass, gradients will be reduced. See bottom figure and [video here](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/).
-
-When compared to MP, "Zero-DP has better scaling efficiency than MP because MP reduces the granularity of the computation while also increasing the communication overhead" and "Zero-R removes the memory redundancies in MP by partitioning the activations checkpoints across GPUs, and uses allgather to reconstruct them on demand". The forward and backward pass schematics are as follows:
-- **forward pass:** the initial portion of model ($$M_0$$) assigned to $$GPU_0$$. It broadcasts its model parameters $$M_0$$ to all GPUs (red arrows). Each GPU will do a forward pass of *their own data* on the received parameters. As we move forward in the model, other GPUs similarly communicate their parameters. The partial activations for each layer are stored by all GPUs. The loss is then computed for each GPU's data;
-  - <img class="mt-3" width="70%" height="70%" src="/assets/publications/zero.png"/>
-- **backward propagation:** on the first iteration of the Backwards pass, GPUs 0,1 and 2 hold the gradients of the last GPU's model layers $$M_3$$ for data points 0, 1 and 2. Combined with the partial activation stored, the partial gradient updates can be computed locally. An all-reduce of all updates will compute the averaged gradient update for model portion $$M_3$$ in $$GPU_3$$ (green arrows). All remaining layers follow analogously.
-  - <img class="mt-3" width="60%" height="60%" src="/assets/publications/zero2.png"/>
-
-Finally, ZeRO can be complemented with techniques that reduce activation memory such as compression, checkpointing and live analysis. CPU offloading is not recommended or used as "50% of training time can be spent on GPU-CPU-GPU transfers" and this would penalize performance heavily.
-
-
-## Model compression for reduced memory footprint and runtime
-
-Many use cases will require model size to be small for deployment (particularly onto embedded systems), or require inter-layer communication to be small due to storage or network bandwidth limitations, or even benefit from a smaller numerical representation to increase vectorization. To handle that, some commonly used techniques are:  
-- [Pruning methods](https://arxiv.org/abs/2101.09671), where weights or neurons are *dropped* after training or during training (via a train-prune-train-prune-etc workflow). Note that prunning of weights alone will reduce memory footprint but not compute time in GPUs due to the registers being filled with the same neurons as pre-prunning;
-- [Quantization methods](https://arxiv.org/abs/2103.13630) to reduce the numerical representation, value ranges and bit counts of values. The common use case is to use reduce of mixed floating point representation of values, reducing memory footprint and runtime (by increasing vectorization). Few relevant topics:
-  - the paper [Mixed Precision Training](https://arxiv.org/abs/1710.03740) discusses which data types (parameters, gradients, accumulators) required which precision and provides good guidances on mixed precision training.
-  - a recent floating point representation called [bfloat16](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format) (*brain floating point*), a different 16-bit representation, is important for ML as it represents a wider dynamic range of numeric values than the regular 16-bit representation. This is due to having more bits reserved to the exponent (8 bits, just like 32-bit f.p.) compared to the traditional 16-bit representation (5 bit). In practice, it deliveres the range of a 32-bit representation with the memory consumption and runtime of a 16-bit representation, due to a tradeoff of range vs precision. 
-  - <img class="mt-3" width="80%" height="80%" src="/assets/AI-Supercomputing/floating_point_representation.png"/>
-  - reduced floating point representations (e.g. 16-bit) are commonly combined with [(dynamic) loss scaling](https://docs.nvidia.com/deeplearning/performance/mixed-precision-training/index.html), a technique that scales up the values of the gradients so that very small gradient values are not represented as zero in the fraction bits of the f.p. representation.  
-- [Knowledge distillation](https://research.google/pubs/pub44873/), a special case of model compression, that transfer learning from a larger to a smaller model. This allows the smaller model to be smaller and lighter, and *some times* of increased performance;
-- [Checkpointing](https://arxiv.org/abs/2012.00825) to avoid storing all activations of intermediate layers --- required for back-propagation --- *in lieu* of on-the-fly computation of activations from a previous checkpoint (layer). The ammount of checkpointed layers guides the tradeoff between runtime increase and memory decrease; 
-- [Neural architecture search (NAS)](https://en.wikipedia.org/wiki/Neural_architecture_search), a method to search for the parameters that define the architecture of the models (e.g. number of layers, layer sizes, etc). I have no applied exposure to this method, but found [this paper](https://arxiv.org/abs/2301.08727) to be very insightful in surveying existing methods;
-

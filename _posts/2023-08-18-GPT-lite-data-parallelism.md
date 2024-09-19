@@ -1,15 +1,14 @@
 ---
 layout: post
-title:  "Distributed GPT model: sharding, offloading, activation checkpointing, and communication quantization via DeepSpeed"
+title:  "Distributed GPT model: data parallelism, sharding, offloading, activation checkpointing, and communication quantization via DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-Previously, in the [AI Supercomputing]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %}) and [AI Supercomputing (part 2)]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}) posts, we summarized existing Machine Learning (ML) parallelism techniques. Later, in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite, the small variant of the [GPT-2 model](https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf). In this post, we will perform large-scale parallel training of a GPT model and a large DNN on a network of 8 GPUs, using [DeepSpeed and ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer). The DeepSpeed API is a lightweight wrapper on PyTorch, and can be installed by the `deepspeed` package for `python`.
+Previously, in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), we built GPT-lite, the small variant of the [GPT-2 model](https://d4mucfpksywv.cloudfront.net/better-language-models/language-models.pdf). In this post, we will perform distributed data parallelism on the training of the GPT model, on a network of 8 GPUs, using PyTorch's [DistributedDataParallel module](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer). DeepSpeed is a lightweight wrapper on PyTorch, and can be installed by the `deepspeed` package for `python`.
 
-An ML model allows for three types of parallelism, that can be combined into what we call **3D parallelism** on Data, Pipeline and Tensors/Models. This post will focus on Data Parallelism and out-of-the-box optimizations provided by DeepSpeed.
 
-## Data Parallelism
+## About Data Parallelism
 
 Data parallelism refers to the parallel execution of different input samples across processors. There are two main approches.
 
@@ -30,10 +29,6 @@ Memory consumption of the three different stages of ZeRO FSDP. Residual memory (
 Additionaly, on top of stages 1 and 2, we can enable **[ZeRO-Offload](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory**. On top of stage 3, we can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine that extends ZeRO-offload with support to NVMe memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication".
 
 ## Model and dataset setup
-
-The code that follows is applicable to any model of type `torch.nn.Module` and any dataset of type `torch.utils.data.Dataset`. So we will detail three use cases: an advanced use case, specific to a large language model (GPTlite), an out-of-the-box [pre-defined model from torchvision](#torchvision-model) and a [simple DNN model](#benchmark-model) of arbitrary width and depth used to simulate different ML workload conditions (we will call this our benchmark model).  
-
-### GPTlite
 
 We start by taking our previous *GPT-lite* implementation and matching the architecture of the model to the *GPT-2 Small* model description in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1):
 
@@ -91,9 +86,9 @@ def get_model(vocab_size):
   return GPTlite(vocab_size)
 ```
 
-### Using a torchvision model {#torchvision-model}
+### Detour: using a pre-existing model {#torchvision-model}
 
-If you'd want to perform a multi-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd define the previous 2 methods as:
+Note that code this code is applicable to any model of type `torch.nn.Module` and any dataset of type `torch.utils.data.Dataset`. As an example. jf you'd want to perform a multi-class classification using the `ResNet` network on the `CIFAR10` dataset available in `torchvision`, you'd define the previous 2 methods as:
 
 ```python
 import torchvision
@@ -114,57 +109,6 @@ def get_model(num_classes):
 
 As a relevant remark, pre-existing models do not define activation checkpointing layers and pipelining layers that are required to activate these two features (discuss later). 
 
-### Benchmark model {#benchmark-model}
-
-If we'd want instead to test the response of DeepSpeed scaling of a very simple model of varying width and depth, we could create a **benchmark model** which is simply a DNN of `L` layers of width `W`, for multi-label classification, whose objective is to compute the modulo of the sum of squares of a random input vector:
-
-{: style="text-align:center; font-size: small;"}
-<img width="22%" height="22%" src="/assets/GPT-lite/benchmark_model.png"/>
-
-{: style="text-align:center; font-size: small;"}
-The *benchmark model*, a DNN with L layers of dimensionality W (right)
-
-The implementation of the benchmark model in `benchmark.py` is straightforward:
-
-```python
-## benchmark.py 
-
-class BenchmarkModel(nn.Module):
-  """" DNN with L layers and W neurons per layer """
-
-  def __init__(self, W, L, in_size, out_size):
-    super(BenchmarkModel, self).__init__()
-    self.layers = [nn.Linear(in_size, W), nn.ReLU()]
-    for _ in range(L-2):
-      self.layers += [nn.Linear(W, W), nn.ReLU()]
-    self.layers += [nn.Linear(W, out_size), nn.ReLU()]
-    self.layers = nn.Sequential(*self.layers)
-
-  def forward(self, x):
-    return self.layers(x)
-
-
-class BenchmarkDataset(torch.utils.data.Dataset):
-    def __init__(self, in_size, out_size, len=2**16):
-      self.in_size = in_size
-      self.len = len
-      self.out_size = out_size
-
-    def __len__(self):
-      return self.len
-
-    def __getitem__(self, _):
-      x = torch.Tensor(self.in_size).uniform_(-10, 10)
-      y = int( x @ x % self.out_size)
-      return x, torch.tensor(y, dtype=torch.long)
-
-
-get_dataset = lambda W: BenchmarkDataset(W), BenchmarkDataset(W)
-get_model = lambda W, L: BenchmarkModel(W, L)
-```
-
-We will call this the **Benchmark Model** and we will use it later in our benchmark section to test DeepSpeed's response to models of varying width and depth..
-
 ## Main code
 
 We start integrating DeepSpeed in our code by creating the `ArgumentParser` object that is required by the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
@@ -181,15 +125,10 @@ import deepspeed
 def get_cmd_line_args(description='GPT-lite on DeepSpeed'):
   import argparse
   parser = argparse.ArgumentParser(description=description)
-  # mandatory argument for calls with deepseed
-  parser.add_argument('--local_rank', type=int, default=0,
-                        help='local rank passed from distributed launcher')
-  # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config, ...)
+  # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config)
   parser = deepspeed.add_config_arguments(parser)
   return parser.parse_args()
 ```
-
-Note: the `--local_rank` exists for legacy support, and the new versions of DeepSpeed will compare it with `os.environ["LOCAL_RANK"]` and use the latter instead. So you can pass `--no_local_rank` to ignore it `--local_rank` for simplicity. However, if you launch the run with the `deepspeed` launcher, `--local_rank` is added automatically and it can be removed from `sys.arg` before calling `deeopseed.initialize()` (below).
 
 The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straightforward:
 
@@ -210,7 +149,7 @@ def main_deepspeed(n_epochs=100, random_seed=42):
     args=args, model=model, training_data=train_dataset,) # initialize deepspeed
 ```
 
-We then write the training loop, with a structure very similar to a PyTorch implementation. The only exception is that we don't perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `train_dataloader` is of type `torch.utils.data.distributed.DistributedSampler` and created automatically by the `initialize()`, so multi-process runs will have each process automatically delegated to a different subset of data.
+We then write the training loop, with a structure very similar to a PyTorch implementation. The only exception is that we don't perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `initialize()` already returns a `train_dataloader` with an internal  `torch.utils.data.distributed.DistributedSampler` that assigns disjoiint subsets of data to each process.
 
 ```python
 ## train.py
@@ -233,7 +172,7 @@ def main_deepspeed(n_epochs=100, random_seed=42):
  
 ## Config file
 
-The real *nuance* and complexity in using DeepSpeed is the `.json` config file. The number of possible optimizations is large, as it defines parallelism, floating point precision, logger, communication parameters, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output memory and throughput info at every 10 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
+The *nuance* in using DeepSpeed is the `.json` config file. The number of possible optimizations is large, as it defines parallelism, floating point precision, logger, communication parameters, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output memory and throughput info at every 10 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
 
 ```json
 {
@@ -262,14 +201,6 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
 }
 ```
 
-**Gradient accumulation** based on **micro-batching** is a technique that simulates a large mini-batch as an iteration across several micro-batches. This is particularly relevant when the whole mini-batch does not fit into memory, and using an accumulation of micro-batches will overcome that limitation. This method is enabled by setting `train_micro_batch_size_per_gpu` (defaulted to `train_batch_size`) or `gradient_accumulation_steps` (defaulted to `1`). At runtime, the micro-batch size can be retrieved by `engine.gradient_accumulation_steps()`. In our case, we will start with a micro-batch of 1 single input per GPU, that accummulate up to a batch size of 256 across all 8 GPUs, therefore resulting in 32 gradient accumulation steps: 
-
-```json
-{
-  "train_batch_size": 256,
-  "train_micro_batch_size_per_gpu": 1
-}
-```
 
 **ZeRO Fully-Sharded Data Parallel** can be activated by specifying the relevant stage in the config file. If omitted, or when passing the stage 0, DeepSpeed is disabled and the execution follows a regular distributed data paralllel workflow:
 
@@ -278,6 +209,15 @@ The real *nuance* and complexity in using DeepSpeed is the `.json` config file. 
   "zero_optimization": {
     "stage": 3
   }
+}
+```
+
+**Gradient accumulation** - also known as **micro-batching** - is a technique that simulates a large mini-batch as an iteration across several micro-batches. This is particularly relevant when the whole mini-batch does not fit into memory, and using an accumulation of micro-batches will overcome that limitation. This method is enabled by setting `train_micro_batch_size_per_gpu` (defaulted to `train_batch_size`) or `gradient_accumulation_steps` (defaulted to `1`). At runtime, the micro-batch size can be retrieved by `engine.gradient_accumulation_steps()`. In our case, we will start with a micro-batch of 1 single input per GPU, that accummulate up to a batch size of 256 across all 8 GPUs, therefore resulting in 32 gradient accumulation steps: 
+
+```json
+{
+  "train_batch_size": 256,
+  "train_micro_batch_size_per_gpu": 1
 }
 ```
 
@@ -400,10 +340,9 @@ The non-reentrant equivalent in deepspeed in implemented by [`deepspeed.checkpoi
 The reentrant does not use hooks but calls the [`forward` autograd function](https://github.com/pytorch/pytorch/blob/670c5cf96249db28cde757da5a6aa97569760102/torch/utils/checkpoint.py#L75) instead. The gradient calculations are not part of the main computational graph anymore, and every checkpoint creates a mini-computational graph during the backward pass. One of the downsides, is that the whole `forward` function is computed for every call, while the non-reentrant counterpart can stop when the relevant activations are computed. Moreover, the whole graph is not stored (contrarily to non-reentrant) thus not allowing the backward to be run in the whole computational graph. More details in the [torch checkpoint documentation](https://pytorch.org/docs/stable/checkpoint.html).
 
 
+### About activation checkpointing with parameters sharding
 
-### Pitfalls of activation parallelism in distributed executions
-
-Combining activation checkpointing with distributed model parameters (ZeRO stage-3) is very tricky, and I really recommend against using both. The problem is that, if you need to perform a forward pass from the closest checkpoint layer to collect the weights required for the back propagation, and if those weights are distributed (stage 3), then there has to be an extra collective communication step at every layer (from checkpoint layer to current back-prop layer) to collect those weights. This incurs in a heavy communication burden, and in my experience, led to wrong results (`NaN` loss).
+Combining activation checkpointing with sharded model parameters (ZeRO stage-3) may lead to a substantial runtime overhead. The problem is that, if you need to perform a forward pass from the closest checkpoint layer to collect the parameters required for the back propagation, and if those parameters are distributed (stage 3), then there has to be an extra collective communication step at every layer (from checkpoint layer to current back-prop layer) to collect those weights. This adds an extra communication overhead.
 
 ## Launching a distributed execution
 
@@ -424,11 +363,7 @@ slurm-torchrun --torch-script-path="train.py"  \
   --torch-script-extra-args="--deepspeed --deepspeed_config ds_config.json --no_local_rank"
 ```
 
-Few notes about distributed executions:
-- `--num_gpus` is optional: if not provided, it will default to the available GPUs returned by the cuda toolkit;
-- launching with `python` instead of `deepspeed` will perform a single-node single-GPU run;
-- if we were required to run this on multiple compute nodes, we'd need to pass an extra parameter `--hostfile hostfile`, where `hostfile` is an MPI-style descriptor file of nodes and gpus per node;
-- the batch size should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps or micro-batch size (when applicable). In brief, each process needs at least 1 input sample and:
+Now that in distributed runs, the batch size should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps or micro-batch size (when applicable). In brief, each process needs at least 1 input sample and:
 
 ```
 batch_size = micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
@@ -469,24 +404,15 @@ All implementations use the same mixed-precision representation, communication b
 2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="/assets/GPT-lite-distributed/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
 3. The ZeRO-3 implementation with ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-distributed/ds_config_offload.json">`ds_config_offload.json`</a>);
 
-We tested three models. The first is a *wide* version of our benchmark model, with a high parametric space and a small layer count (`W=8192`, `L=3`), and input and output of size 8192. We used a batch size of $$2^{14}$$, and a micro-batch size of $$2^{11}$$ inputs per GPU, ie `'train_batch_size': 16384` and `'train_micro_batch_size_per_gpu': 2048`. The benchmark results are:
-
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_wide.png"/>
- 
-Then we tested a *deep benchmark model* with a small parameter space (`W=256`), a high layer count (`L=2048`), an input and output size of 256, and the same bath sizes as the previous wide model:
-
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_deep.png"/>
-
-And finally our GPT-lite model, with a micro-batch size of 1 sample per GPU:
+We tested our GPT-lite model, with a micro-batch size of 1 sample per GPU, and the results are:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_gptlite.png"/>
 
+
 **Memory overhead from communication buffers.** Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we also benchmarked several runs with the default communication bucket sizes (`5e9`) and it led to a higher memory usage as expected (of approximately double the amount in stages 2 and 3), that became prohibitive for some runs.
 
-**Activation checkpointing.** On the GPT-lite model, the main memory driver is the activations memory on the attention matrix (grows quadratically with the sequence length and linearly with the batch size). Therefore, sharding alone does not yield a signification memory reduction. Adding activation checkpointing overcomes this memory bottleneck by keeping only the current attention matrix in memory, throughout the backward pass. Moreover, **mixed precision** has an important effect on throughtput as lower precision yields faster communication and computation. As an example, the results for ZeRO-1 with activation checkpointing and mixed precision are:
+**Activation checkpointing.** On the GPT-lite model, the main memory driver is the activations memory on the attention matrix (grows quadratically with the sequence length and linearly with the batch size). Therefore, sharding alone does not yield a signification memory reduction. Adding activation checkpointing overcomes this memory bottleneck by keeping at most one attention matrix in memory (recomputed on the fly), throughout the whole backward pass. Moreover, **mixed precision** has an important effect on throughtput as lower precision yields faster communication and computation. As an example, the results for ZeRO-1 with activation checkpointing and mixed precision are:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_gptlite_activation_ckpt_throughput.png"/>
@@ -496,7 +422,7 @@ And finally our GPT-lite model, with a micro-batch size of 1 sample per GPU:
 
 **Parameter vs residual memory.** Note the difference between average memory and maximum memory. That gap in memory consumption is due to temporary memory dedicated to activations, residual buffers, communication buffers, etc. 
 
-**Communication vs computation trade-off from different stages in ZeRO.** In ideal scenarios, as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory consumption and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay a price in performance for the communication/offload of parameters. This is the pattern observed in the deep benchmark and GPT-lite models. However, the wide benchmark model does not respond similarly, as from stage 2 to stage 3 there is an increase in throughput. I believe this is due to ZeRO-3 distributing the fp16 model parameters, leading to a distributed parallelism of the very large sums of squares per layers.
+**Communication vs computation trade-off from different stages in ZeRO.** In ideal scenarios, as you move from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory consumption and throughput are reduced. As expected, we swap data locality for communication of parameters, and pay a price in performance for the communication/offload of parameters.
 
 **Offloaded vs in-memory parameters.** Offloading proved to be a consistent way to reduce memory usage with the drawback of a small reduction of throughput, as expected.
 
@@ -506,7 +432,7 @@ Finally, we did not use **communication quantization** as did not result in any 
 
 ## Resources and code
 
-In this post we explored only the dimension of data parallelism. For pipeline parallelism and tensor/model parallelism, see the [part 2 of this post]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline %}). For general documentation, I recommend the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
+In this post we explored only the dimension of data parallelism.  If you'd like to know more about DeepSpeed, check the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
 There are a lot of results and food for thought here, so I will update this post as I find new insights. Meanwhile, if you want to try this on your own, see the [GPT-lite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed).
 

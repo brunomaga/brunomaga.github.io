@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, pruning, distillation, quantiza
 tags: [machinelearning]
 ---
 
-Previously, in [Distributed training of a large GPT model with DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed-sharding %}), we foccused on training a very large model on a distributed network of GPUs. The aim was to reduce training runtime via increased parallelism, and to increase model accuracy by increasing model size. In this post, we will look at the opposite problem in the ML spectrum: model compression for lower runtime and lower memory footprint during inference. This is particularly relevant for embeddeded and real time systems where time and cost are an issue.
+Previously, in [Distributed training of a large GPT model with DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}), we foccused on training a very large model on a distributed network of GPUs. The aim was to reduce training runtime via increased parallelism, and to increase model accuracy by increasing model size. In this post, we will look at the opposite problem in the ML spectrum: model compression for lower runtime and lower memory footprint during inference. This is particularly relevant for embeddeded and real time systems where time and cost are an issue.
 
 Note: Easiest way to speed up the model is to save memory, allowing for faster batches, therefore higher throughput (as shown in ZeRO and ZeRO-infinity). There are several efforts
 
@@ -20,7 +20,7 @@ Note: Easiest way to speed up the model is to save memory, allowing for faster b
 - DeepSpeed zero presentation, Ulysses, etc
 - [DeepSpeed model compression](https://www.deepspeed.ai/tutorials/model-compression/)
 
-Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed-sharding %}), we will focus on the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, whose objective is to generate text by predicting the next character in a sequence.
+Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}), we will focus on the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, whose objective is to generate text by predicting the next character in a sequence.
 We will discuss and apply Knowledge distilation for improved accuracy and prunning/compression, TensorRT for quantization and acceleration via kernel fusion, `torch.compile` for model acceleration, and flash attention and KV-cache for lower memory and higher acceleration.
 
 {: style="text-align:center; font-size: small;"}
@@ -144,7 +144,7 @@ def main(train_epochs=30):
   os.makedirs(output_folder, exist_ok=True)
 ```
 
-We then load our model and dataset. Any model or dataset can be used. Here we'll simply use the `get_dataset()` and `get_model()` methods detailed in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed-sharding %}), that return a `torch.utils.data.Dataset` and `torch.nn.Module` for our testbenches:
+We then load our model and dataset. Any model or dataset can be used. Here we'll simply use the `get_dataset()` and `get_model()` methods detailed in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}), that return a `torch.utils.data.Dataset` and `torch.nn.Module` for our testbenches:
 
 ```python
   import gptlite

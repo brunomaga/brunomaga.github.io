@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Distributed GPT model (part 3): Megatron-LM model parallelism"
+title:  "Distributed GPT model (part 3): model parallelism via Megatron-LM"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-This post follows from the previous posts [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed-sharding %}) and [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline%}), where we implemented Data and Pipeline parallelism on a GPT model, 2 dimensions of parallelism on the **3D parallelism** of ML models, via Data, Pipeline and Tensors/Models parallelism. In this post, we will discuss model (tensor) parallelism, particularly the [Megatron-LM](https://www.deepspeed.ai/tutorials/megatron/) implementation.
+This post follows from the previous posts [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}) and [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline%}), where we implemented Data and Pipeline parallelism on a GPT model, 2 dimensions of parallelism on the **3D parallelism** of ML models, via Data, Pipeline and Tensors/Models parallelism. In this post, we will discuss model (tensor) parallelism, particularly the [Megatron-LM](https://www.deepspeed.ai/tutorials/megatron/) implementation.
 
 {: style="text-align:center; font-size: small;"}
 <img width="55%" height="55%" src="/assets/GPT-lite-distributed/GPT_3D_parallelism_2.png"/>

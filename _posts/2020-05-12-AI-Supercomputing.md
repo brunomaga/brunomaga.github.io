@@ -1,24 +1,26 @@
 ---
 layout: post
-title:  "AI Supercomputing: Levels of Parallelism, Linear Regression, Deep Neural Nets and Convolutional Neural Nets"
+title:  "AI Supercomputing: Data Parallelism, Sharding, Pipelining, Tensor parallelism and Convolutional Neural Nets"
 categories: [machine learning, supercomputing]
 tags: [machinelearning]
 ---
-Machine Learning is driven by non-linear optimization models that build an approximator that *learns* from data. With time, the size and complexity of the data increases, due e.g. to higher-resolution photos, larger text databases, higher number of observable features on input datapoints, etc. The computing power available *tends* to follow, or somehow adapt, as observed by [Moore's law](https://en.wikipedia.org/wiki/Moore%27s_law). However, in msny situations, the amount of data or a large ML model size leads to a problem that does not fit on a regular processor (typically due to insufficient memory), or leads to a very high training time. This is where AI Supercomputing comes to help. 
 
-AI Supercomputing focuses on how to distribute data (models, inputs) and computation across several compute units a.k.a processors. The goal is to make the learning problem fit the compute resources, by distributing data and parameters and parallelizing computation. The optimal assignment of data, model parameters and computation to the existing compute and memory resources is a hard problem. The ideal algorithm is characterized as the one that exhibits:
+Machine Learning is driven by a non-linear optimization model that builds an approximator that *learns* from data. Many problems require a large model and a large dataset. The computing power available per compute process tends to follow [Moore's law](https://en.wikipedia.org/wiki/Moore%27s_law). However, in many cases, a single compute process does not have enough capacity to train such large model and/or dataset. This is where AI Supercomputing comes to help. 
 
-1. homogeneous distribution of data across memory units, i.e. balanced memory usage, ideally without data repetitions;
-2. homogeneous amount of computation assigned to each compute unit, i.e. balanced computation;
-3. a minimal amount of communication across memory/compute units, or ideally a zero-communication overhead if overlaping of communication and computation is possible; **and**
-4. linear or super-linear scaling of the execution time of the algorithm based on the number of precessors. This means that, by increasing (e.g. doubling) the compute resources, we would decrease (halve) the computation.
+AI Supercomputing focuses on how to distribute data (models, inputs) and computation across several compute units. The goal is to allow for a faster training and/or a larger compute problem. The optimal assignment of data, model parameters and computation to the existing compute and memory resources is a hard problem. The ideal algorithm is characterized as the one that exhibits homogeneous distribution of data across processes,  homogeneous distribution of computation across processes, and reduced communication, and (super-)linear [weak and strong scaling](https://en.wikipedia.org/wiki/Scalability) properties.
 
-In practice, guaranteeing these properties is very hard in complex problems (particularly the perfectly-linear scaling), but a good solution can be achieved by cleverly designed algorithms. Let's start with the basics.
+Guaranteeing these properties is hard, and there is no universal solution as the spectrum of possible hardware specification across processors is also wide. From CPUs (Central Processing Unit) of high-frequency processors with relatively small core count, to GPUs (Graphics Processing Unit) of low latency, high core count processors with high vectorization, and most recently IPU/TPUs (Inteligent/Tensor Processing Units), a highly parallel, highly vectorizable processor, with a reduced instruction set and hardware design that is specific to ML. There are two main aspects that drive the design of processors: **power consumption** and **heat dissipation**. In practice, it is a trade-off problem. As an exmaple, to increase the clockspeed we can reduce the transistor size thus inserting [more transistors in the same chip](https://en.wikipedia.org/wiki/Transistor_count) or placing them more tightly in the same area. This leads to an increase of power comsumption and temperature that grows exponentially with the linear decrease in the processor size. Therefore, for a simillar throughput, many cores of low clock frequency yield the same results of few cores of high frequency, yet at a much lower power comsunption. For that reason, GPUs and TPUs are the hardware of choice for machine learning training. 
+
+{: style="text-align:center; font-size: small;"}
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/a53-power-curve.png"/>
+
+{: style="text-align:center; font-size: small;"}
+Exponential increase of power comsumption (y axis) for a linear increase of processor frequency (x axis), for processor with one to four cores (colour coded) of the Samsung Exynos 7420 processor. We see that, to efficiently maximize GHz/FLOPs throughput, one is much more efficient by having several processors of low clock frequency, instead of fewer of a higher frequency. This explains why GPUs tend to be the preferred choice to compute Machine Learning training problems. (source: <a href="https://www.anandtech.com/show/9330/exynos-7420-deep-dive/5">AnandTech</a>)
 
 
 ## Linear Regression and Mutual Exclusion
 
-Take a simple example of linear regression with input variables $$x$$, labels $$y$$, learnt weights $$w$$ and a loss function set as the Mean Absolute Error.
+Let's start with the basics. Take a simple example of linear regression with input variables $$x$$, labels $$y$$, learnt weights $$w$$ and a loss function set as the Mean Absolute Error.
 We want to minimize:
 
 $$
@@ -28,7 +30,7 @@ MAE(w)  = \frac{1}{N} \sum_{n=1}^N | y_n - f(x_n) | \text{, where } f(x_n) = \su
 $$
 
 
-To speed-up the solution, we can *parallelize* both sums in $$MAE$$ and $$f(x_n)$$ with several compute units (let's say $$T$$ compute threads) and decompose the computation as:
+To speed up the solution, we can *parallelize* both sums in $$MAE$$ and $$f(x_n)$$ with several compute units (let's say $$T$$ compute threads) and decompose the computation as:
 
 $$
 \begin{align*}
@@ -45,35 +47,6 @@ This operation is *memory-safe* for $$f(x_n)$$, but unsafe for $$MAE(w)$$. In pr
 4. finally, we try the same as before, but we compute the sums of each thread independently and perform a single concurrent memory update of the final variable once, and only at the end of the execution. This approach gives the correct result with an almost-linear scaling of the algorithm (<a href="/assets/AI-Supercomputing/AI_SC_4.cpp">AI\_SC\_4.cpp</a>);
 
 These examples give us three important message: (1) concurrent updates are computationally expensive; (3) parallelization is worth it; and (3) matrix-vector multiplications and updates (that underlie most operations in Machine Learning) can be performed efficiently when individual contributions from compute units are decomposed, computed independently and *reduced* at the end.
-
-Concurrent access is a big performance issue for some problems, and not all ML problems can be linearly-parallelizable without losing determinism in results. A common example is any method based on random number generation, such as [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). In such scenarios, where compute units *draw* random number(s) for every datapoint, we either have a central random generator that is concurrently accessed by all threads (reproducible but slow), or a random number per compute unit (efficient, but deterministic only across runs with the same processor count).
-
-## From CPU to GPU and TPU/IPU
-
-The spectrum of possible hardware across processors is wide. To name a few, CPUs (Central Processing Units) are high frequency processors with relatively small core count optimized for serial tasks; GPUs (Graphics Processing Unit) are low latency, high core count processors with high vectorization, designed for parallel tasks such as graphics processing or algebraic operations; and most recently IPU/TPUs (Inteligent/Tensor Processing Units), a highly parallel, highly vectorizable processor, with a reduced instruction set and hardware design that is specific to ML. 
-
-There are three main aspects that drive the design of processors: **power consumption**, **[heat dissipation](https://en.wikipedia.org/wiki/List_of_CPU_power_dissipation_figures)** and **temperature**. In practice, it is a trade-off problem. As an exmaple, to increase the clockspeed we can reduce the transistor size thus inserting [more transistors in the same chip](https://en.wikipedia.org/wiki/Transistor_count) or placing them more tightly in the same area. This leads to an increase of power comsumption and temperature that grows exponentially with the linear decrease in the processor size.
-
-Therefore, for a simillar throughput, many cores of low clock frequency yield the same results of few cores of high frequency, yet at a much lower power comsunption. Equivalently, For a fixed power consumption, one can extract more compute power from many low frequency cores than from a few high frequency cores. 
-
-{: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="/assets/AI-Supercomputing/a53-power-curve.png"/>
-
-{: style="text-align:center; font-size: small;"}
-Exponential increase of power comsumption (y axis) for a linear increase of processor frequency (x axis), for processor with one to four cores (colour coded) of the Samsung Exynos 7420 processor. (source: <a href="https://www.anandtech.com/show/9330/exynos-7420-deep-dive/5">AnandTech</a>)
-
-Looking at the previous plot, we see that, to efficiently maximize GHz/FLOPs throughput, one is much more efficient by having several processors of low clock frequency, instead of fewer of a higher frequency. This explains why GPUs tend to be the preferred choice to compute Machine Learning training problems. And this phylosophy led to the creation of TPUs and IPUs, that explore this trade-off of number of cores vs clock-frequency, with lower-precision floating point representations (to maximize [MIMD](https://en.wikipedia.org/wiki/Multiple_instruction,_multiple_data)). Let's check the  common CPU, GPU, and IPU specifications for processors used in compute clusters dedicated to ML tasks:
-
-
-|                    | **cores x clock-frequency**  $$\hspace{1cm}$$ | **FLOPs (32 bits representation)**  $$\hspace{1cm}$$ | **Max RAM** |
-|---------------------	|-----------------------------	|------------------------------------	|-------------	|
-| **Intel Xeon 8180** $$\hspace{1cm}$$ | 28x 2.5 Ghz 	| 1.36 TFLOPS 		| 768 GB       	|
-| **Tesla K80**       	| 4992x 0.56 Ghz             	| 8.73 TFLOPS                         	| 2x 12GB     	|
-| **Graphcore IPU**   	| 1216 x 1.6Ghz [1]           	| 31.1 TFLOPS                     	| 304 MiB [2] 	|
-|---------------------	|-----------------------------	|------------------------------------	|-------------	|
-
-
-Looking at the previous table, we notice that memory bandwidth increases from CPU to GPU to IPU, however its total capacity is reduced. In practice, small memory is compensated by a very low latency between processor and memory, allowing onloading of offloading of large datasets more efficiently. So how do we train large models when the memory available is too small for the problem representation?
 
 ## CPU offloading (virtual DNNs)
 
@@ -99,7 +72,7 @@ The important concept here is the **composition** of the $$f$$ function througho
 {: style="text-align:center; font-size: small;"}
 An overview of the vDNN(+) implementation on a convolutional neural network. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Blue arrows represent data flow during backward progagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
 
-For offloading to be possible, we'd ideally want a low latency connectivity between the processor and memory, to allow onloading and offloading to be done with a short communication time. To reduce the waiting time on pushing and pulling a layer to/from the GPU, a viable optimization is to overlap computation and communication, and copy the next layer to be computed while computing the current layer's update. This way, when the algorithm has finished computing a given layer, it can proceed immediately to the next one as it is already available in memory, thus removing the waiting time on the onloading step.
+To reduce the waiting time on pushing (pulling) a layer to (from) the GPU, we can overlap computation and communication, and copy the next layer to be computed while computing the current layer's update. This way, when the algorithm has finished computing a given layer, it can proceed immediately to the next one as it is already available in memory, thus removing the waiting time on the onloading step.
 
 Let's look at the offloading algorithm. We start with the forward pass. Looking at the initial formulation of $$x^{(l)}$$, we can isolate which variables are used during the forward pass of a given layer. For the computation of the output of a given layer, we need the weights of the neurons in the current layer ($$W^{(l)}$$) and the outputs of neurons on the previous layer $$x^{(l-1)}$$.
 Therefore, for a given layer, the forward pass is represented as:
@@ -129,7 +102,7 @@ The back propagation phase on the vDNN(+) implementation on convolutional neural
 ## Gradient Accumulation and Microbatching
 
 Gradient accumulation is a technique that allows for large batches the be computed, when normally this would be prohobitive due to high memory requirements. The rationale is to break the mini-batch into micro-batches and use the averaged loss and gradient updates at the end of all micro-batches to update the model. The algorithm is as follows:
-- At runtime, divide each minibatch in equal subsets of "microbatches";
+- At runtime, divide each minibatch in equal subsets of *microbatches*;
 - Pass each subset iteratively to the model, compute the forward pass and backpropagation, and compute the gradient updates of that microbatch (without updating the weights);
 - Take the average of all the gradients across all processors as the final gradient of the minibatch;
 - Use that gradient to do the weights update;
@@ -153,6 +126,26 @@ The main advantadge of this method is the linear increase in efficiency, i.e. by
 As a final note, DDP doesn't always guarantee a deterministic solution independent of the processor count. To guarantee a single communication step per epoch, some operations such as layer normalization are performed locally (at a processor level) leading to a weight update that changes with the data assigned per processor. 
 
 For a thorough analysis of the topic, take a look at the paper [Measuring the Effects of Data Parallelism on Neural Network Training (Google Labs, arXiv)](https://arxiv.org/abs/1811.03600)
+
+### Sharding
+
+An extension of Data Parallelism is sharding. This is based on the observation that in the previous Data Parallelism, all processes hold an identical copy of the same model. With sharding, each processor keeps a disjoint subset of model parameters, gradients and/or optimizer states. This leads to a substantial memory saving. The algorithm is simple. For every layer: 
+1. a collective communication step will broadcast those vales from the process that holds it to all the others;
+2. processes will now perform their forward/backward step for that layer;
+3. received data can now be discarded from memory;
+4. perform step 1 for next layer
+
+If you are interested in this topic, see [ZeRO and DeepSpeed work at Microsoft](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/).
+ The forward and backward pass schematics are illustrated as follows:
+
+- **forward pass:** the initial portion of model ($$M_0$$) assigned to $$GPU_0$$. It broadcasts its model parameters $$M_0$$ to all GPUs (red arrows). Each GPU will do a forward pass of *their own data* on the received parameters. As we move forward in the model, other GPUs similarly communicate their parameters. The partial activations for each layer are stored by all GPUs. The loss is then computed for each GPU's data;
+  - <img class="mt-3" width="70%" height="70%" src="/assets/publications/zero2.png"/>
+- **backward propagation:** on the first iteration of the Backwards pass, GPUs 0,1 and 2 hold the gradients of the last GPU's model layers $$M_3$$ for data points 0, 1 and 2. Combined with the partial activation stored, the partial gradient updates can be computed locally. An all-reduce of all updates will compute the averaged gradient update for model portion $$M_3$$ in $$GPU_3$$ (green arrows). All remaining layers follow analogously.
+  - <img class="mt-3" width="60%" height="60%" src="/assets/publications/zero3.png"/>
+
+Finally, ZeRO can be complemented with techniques that reduce activation memory such as compression, checkpointing and live analysis. CPU offloading is not recommended or used as "50% of training time can be spent on GPU-CPU-GPU transfers" and this would penalize performance heavily.
+
+
 
 
 ## Pipeline Parallelism (G-Pipe, PipeDream)
@@ -245,7 +238,16 @@ $$ \frac{dL}{dx_{k,c,i,j}} = \sum_{j=0}^{F-1} \sum_{a=-O}^{O} \sum_{b=-O}^{O} \f
 Can you infer the data dependencies displayed in the picture (red and blue arrows) from these equations? We won't go on details here, but read the  [original paper](https://arxiv.org/pdf/1903.06681.pdf) if you are interested.
 
 
-### Closing Remarks
 
-We reach the end of this introduction to model parallelism. There's a class of models that have not been covered: sequence data such as textual sentences. In such cases, the previous techniques can hardly be applied due to the recursive nature of the training algorithm. These topics will be covered in the [next post]({{ site.baseurl }}{% post_url 2020-05-28-AI-Supercomputing-2 %}).
+## Final remarks: model compression for reduced memory footprint and runtime
 
+Many use cases will require model size to be small for deployment (particularly onto embedded systems), or require inter-layer communication to be small due to storage or network bandwidth limitations, or even benefit from a smaller numerical representation to increase vectorization. To handle that, some commonly used techniques are:  
+- [Pruning methods](https://arxiv.org/abs/2101.09671), where weights or neurons are *dropped* after training or during training (via a train-prune-train-prune-etc workflow). Note that prunning of weights alone will reduce memory footprint but not compute time in GPUs due to the registers being filled with the same neurons as pre-prunning;
+- [Quantization methods](https://arxiv.org/abs/2103.13630) to reduce the numerical representation, value ranges and bit counts of values. The common use case is to use reduce of mixed floating point representation of values, reducing memory footprint and runtime (by increasing vectorization). Few relevant topics:
+  - the paper [Mixed Precision Training](https://arxiv.org/abs/1710.03740) discusses which data types (parameters, gradients, accumulators) required which precision and provides good guidances on mixed precision training.
+  - a recent floating point representation called [bfloat16](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format) (*brain floating point*), a different 16-bit representation, is important for ML as it represents a wider dynamic range of numeric values than the regular 16-bit representation. This is due to having more bits reserved to the exponent (8 bits, just like 32-bit f.p.) compared to the traditional 16-bit representation (5 bit). In practice, it deliveres the range of a 32-bit representation with the memory consumption and runtime of a 16-bit representation, due to a tradeoff of range vs precision. 
+  - <img class="mt-3" width="80%" height="80%" src="/assets/AI-Supercomputing/floating_point_representation.png"/>
+  - reduced floating point representations (e.g. 16-bit) are commonly combined with [(dynamic) loss scaling](https://docs.nvidia.com/deeplearning/performance/mixed-precision-training/index.html), a technique that scales up the values of the gradients so that very small gradient values are not represented as zero in the fraction bits of the f.p. representation.  
+- [Knowledge distillation](https://research.google/pubs/pub44873/), a special case of model compression, that transfer learning from a larger to a smaller model. This allows the smaller model to be smaller and lighter, and *some times* of increased performance;
+- [Activation/gradietn checkpointing](https://arxiv.org/abs/2012.00825) to avoid storing all activations of intermediate layers --- required for back-propagation --- *in lieu* of on-the-fly computation of activations from a previous checkpoint (layer). The ammount of checkpointed layers guides the tradeoff between runtime increase and memory decrease; 
+- [Neural architecture search (NAS)](https://en.wikipedia.org/wiki/Neural_architecture_search), a method to search for the parameters that define the architecture of the models (e.g. number of layers, layer sizes, etc). I have no applied exposure to this method, but found [this paper](https://arxiv.org/abs/2301.08727) to be very insightful in surveying existing methods;

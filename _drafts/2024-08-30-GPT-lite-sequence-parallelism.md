@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Distributed GPT model (part 4): sequence parallelism with Ulysses and Ring attention"
+title:  "Distributed GPT model (part 4): sequence parallelism via Ulysses and Ring attention"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
 
-We always thought about ML parallelism as a tridimensional, composed of [data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-DeepSpeed-sharding %}) (with or without sharding), [pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline %}), and [model/tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-GPT-lite-Megatron-LM-model-parallelism %}). In practice, if take an input of shape `(B, E)`, where `B` is the batch size and `E` is the size of the embeddings (channels), and we want to split that dataset across `P` processes, then:
+We always thought about ML parallelism as a tridimensional problem, composed of [data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}) (with or without sharding), [pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline %}), and [model/tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-GPT-lite-Megatron-LM-model-parallelism %}). In practice, if take an input of shape `(B, E)`, where `B` is the batch size and `E` is the size of the embeddings (channels), and we want to split that dataset across `P` processes, then:
 
 1. data parallelism splits the data dimension across processors, effectively leading to local (per-process) storage requirement of size `(B/P, E)`;
 2. pipeline parallelism requires the same `(B/P, E)` as input per processor, but processes each mini-batches as a pipeline of iterative micro-batches with gradient accumulation, leading to a memory requirement of `(B/P/Q, E)` , where `Q` is the micro-batch size;
@@ -105,7 +105,7 @@ class MultiHeadAttention(nn.Module):
         return out
 ```
 
-And that is it. If you are looking for the full implementation, check [gptlite_ulisses_sequence_parallelism.py](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed/gptlite_ulisses_sequence_parallelism.py).
+And that is it. It's pretty simple, but if you are looking for the full implementation, check [gptlite_ulisses_sequence_parallelism.py](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed/gptlite_ulisses_sequence_parallelism.py). All in all, the only downside is that the maximum parallelism is dictated by the number of attention heads (typically 8), and that the all-two-all requires blocking collective communication that may incur a heavy overhead. That's where Ring Attention comes into play.
 
 ## Ring Attention with Blockwise Transformers
 
