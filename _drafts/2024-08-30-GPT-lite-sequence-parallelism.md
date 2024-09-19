@@ -173,4 +173,8 @@ The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutori
 
 A small nuance in the backward pass is that the gradients of a given block will refer to the current $$K$$ and $$V$$ which is being *rotated* around processes. Therefore, its gradients `dv` and `dk` will also be accumulated by being rotated alongside the $$K$$ and $$V$$ blocks.
 
+## Final remarks
+
+Deterministic behaviour across different networks in sequence parallelism is difficult due to random number generators producing different values on each node. As an example, during model initialization and dropout.
+
 The big disavantadge in ring attention is the number of steps being proportional to the number of processes, and this may be a limiting factor on large compute networks where dividing sequence in such a granular fashion may leave to a small workload per process, and this not being able to mitigate the asynchronous computation. The ideal solution would then be a hybrid of Ulysses parallelism and Ring attention, which has been presented by [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719).
