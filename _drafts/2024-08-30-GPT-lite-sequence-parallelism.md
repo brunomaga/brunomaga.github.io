@@ -210,8 +210,6 @@ where `RingAttention.isend_k_and_v(k, v, recv_k, recv_v, group)` is the function
 The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html#background) will takes as input the gradient of the loss with respect to the output ($$\nabla_{out} Loss$$ or `dout` in the code below), and return the gradients of the loss with respect to the parameters of the functions (gradients $$\nabla_{q} Loss$$, $$\nabla_{k} Loss$$, $$\nabla_{v} Loss$$, or `dq`, `dk`, `dv`). Something similar to:
 
 ```python
-class RingAttention(torch.autograd.Function):
-
     @staticmethod
     def backward(ctx, dout, *args):
 
