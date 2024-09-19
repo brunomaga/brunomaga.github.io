@@ -5,13 +5,13 @@ categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
 
-We always thought about ML parallelism as a tridimensional problem, composed of [data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}) (with or without sharding), [pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline %}), and [model/tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-GPT-lite-Megatron-LM-model-parallelism %}). In practice, if take an input of shape `(B, E)`, where `B` is the batch size and `E` is the size of the embeddings (channels), and we want to split that dataset across `P` processes, then:
+We always thought about ML parallelism as a tridimensional problem, composed of [data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}) (with or without sharding), [pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline %}), and [model/tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-GPT-lite-Megatron-LM-model-parallelism %}). In practice, if take an input of shape `(B, E)`, where `B` is the batch size and `E` is the size of the embeddings (channels, features), and we want to split that dataset across `P` processes, then:
 
 1. data parallelism splits the data dimension across processors, effectively leading to local (per-process) storage requirement of size `(B/P, E)`;
-2. pipeline parallelism requires the same `(B/P, E)` as input per processor, but processes each mini-batches as a pipeline of iterative micro-batches with gradient accumulation, leading to a memory requirement of `(B/P/Q, E)` , where `Q` is the micro-batch size;
+2. pipeline parallelism requires the same `(B/P, E)` as input per processor, but processes each mini-batch as a pipeline of iterative micro-batches with gradient accumulation, leading to a memory requirement of `(B/P/Q, E)` , where `Q` is number of micro-batches;
 3. model parallelism splits the embeddings across processors, requiring a local storage of shape  `(B, E/P)`.
 
-However, many model inputs and activations include an extra dimension that represents the sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. In line with the previous syntax, this requires a local storage of `(B, T/P, E)` . With that in mind, in this post, we will detail and implement some existing techniques for sequence parallelism. We will focus our analysis on two modules that are the basis on any GPT block: a feed-forward network (FFN) and a multi-head attention (MHA) module.
+However, many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. By doing that, we would require a local storage of `(B, T/P, E)` per process. With that in mind, in this post, we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPT-like blocks]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), where each block is multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
 
 ## Ulysses sentence parallelism
 
@@ -42,7 +42,7 @@ def dist_view_swap(tensor: torch.Tensor, old_dim: int, new_dim: int, group: dist
     return recv
 ```
 
-From here, the implementation is straightforward. The first all-to-all only needs to convert the distributed view from time- (2nd dimension) to head-split (1st dimension) ie from `(H, B, T // P, E)` to `(H // P, B, T, E)`. The backward pass should then does the converse operation:
+From here, the implementation is straightforward. The first all-to-all only needs to convert the distributed view from time-split to head-split ie from local shape `(H, B, T / P, E)` to `(H / P, B, T, E)`. The backward pass should then do the converse operation:
 
 ```python
 class first_alltoall(torch.autograd.Function):  # noqa
@@ -105,83 +105,72 @@ class MultiHeadAttention(nn.Module):
         return out
 ```
 
-And that is it. It's pretty simple, but if you are looking for the full implementation, check [gptlite_ulisses_sequence_parallelism.py](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed/gptlite_ulisses_sequence_parallelism.py). All in all, the only downside is that the maximum parallelism is dictated by the number of attention heads (typically 8), and that the all-two-all requires blocking collective communication that may incur a heavy overhead. That's where Ring Attention comes into play.
+And that is it. It's pretty simple, but if you are looking for the full implementation, check [gptlite_ulisses_sequence_parallelism.py](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed/gptlite_ulisses_sequence_parallelism.py). All in all, the only downsides are that the maximum parallelism is dictated by the number of attention heads (typically 8), and that the all-two-all requires blocking collective communication that may incur a heavy overhead. That's where Ring Attention comes into play.
 
 ## Ring Attention with Blockwise Transformers
 
-The whole rationale was presented in the paper [Self-attention Does Not Need $$O(n^2)$$ Memory](https://arxiv.org/abs/2112.05682). The rationale is the following. Usually the attention for a given head, given a query $$q$$, key $$k$$ and value $$v$$, the attention calculation can be reduced to:
+Ring attention was presented in the paper  [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889) based on [Blockwise Parallel Transformer for Large Context Models](https://arxiv.org/abs/2305.19370). It performs a per-block computation of the attention matrix (almost like [Flash Attention](https://arxiv.org/abs/2205.14135)), that allows one to compute the attention $$softmax \left(QK^T \right)$$ without having access to the full inputs $$Q$$, $$K$$ and $$V$$. The whole rationale was presented in the paper [Self-attention Does Not Need $$O(n^2)$$ Memory](https://arxiv.org/abs/2112.05682). In practice, the attention for a given head, given a query $$q$$, key $$k$$ and value $$v$$, the attention calculation can be reduced to:
 
 $$
 \begin{align*}
 Attention(Q, K, V) & = softmax \left(QK^T \right) V \\
 & = softmax \left( \sum_i dot(q, k_i) \right) v_i & \text{(expanding dot-product on k)}\\
-& = \sum_i softmax \left( dot(q, k_i) \right) v_i & \text{(sofmax of sum = sum of softmax)}\\
-& = \sum_i \left( \frac{\exp \left( dot(q, k_i) \right)}{ \sum_j \exp\left( dot(q, k_j) \right)} \right) v_i & \text{(definition of softmax)}\\
-& = \frac{ \sum_i \exp\left( dot(q, k_i) \right) v_i }{ \sum_j \exp\left( dot(q, k_j) \right) }.
+& = softmax \left( \sum_i s_i  \right) v_i & \text{ (for simplicity, take } s_i = dot(q, k_i) \text{)} \\
+& = \sum_i softmax \left(  s_i \right) v_i & \text{(sofmax of sum = sum of softmax)}\\
+& = \sum_i \left( \frac{\exp \left(  s_i \right)}{ \sum_j \exp\left(  s_j \right)} \right) v_i & \text{(definition of softmax)}\\
+& = \frac{ \sum_i \exp\left(  s_i \right) v_i }{ \sum_j \exp\left(  s_j \right) }.
 \end{align*}
 $$
 
-The smart bit here is that we do not need to load the full $$v$$ and $$k$$ tensors or store the full attention matrix $$QK^T$$ im memory. Instead:
-1. we iterate over the $$i$$-th element of the tensors $$v$$ and $$k$$, and perform the accumulations $$v^{\star} \leftarrow v^{\star} + \exp(q^T k_i) v_i$$ (top of the fraction), and $$s^{\star} \leftarrow s^{\star} + \exp(q^T k_i)$$ (bottom of the fraction).
-2. after processing all keys and values, we divide $$\frac{v^{\star}}{s^{\star}}$$ to get the final value.
+The smart bit here is that we do not need to load the full $$v$$ and $$k$$ tensors or store the full attention matrix $$QK^T$$ in memory. Instead:
+1. in the forward pass, we iterate over the $$i$$-th element of the tensors $$v$$ and $$k$$, and perform the accumulations $$v^{\star} \leftarrow v^{\star} + \exp(s_i) v_i$$ (top of the fraction), and $$s^{\star} \leftarrow s^{\star} + \exp(s_i)$$ (bottom of the fraction).
+2. after processing all keys and values, we divide $$\frac{v^{\star}}{s^{\star}}$$ to get the final attention output value;
+3. the backward pass we compute the gradients iteratively for the same blocks, therefore not needing to store the whole attention matrix from the forward pass.
 
-There's also some numerical stability tricks explained on section 3.
+### Improving numerical stability
 
-Instead of having a single process iterating over the elements of the query and value tensors, we now want to perform sequence parallelism. We want to perform sequence parallelism, by splitting the tensors $$q$$, $$k$$ and $$v$$ across $$P$$ processes, in the time dimension. That's where ring attention comes into play - original paper [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889) based on [Blockwise Parallel Transformer for Large Context Models
-](https://arxiv.org/abs/2305.19370). To start, **each process hold a non-overlapping timeframe (block) of the $$q$$, $$k$$ and $$v$$ tensors**. After that, blocks for the $$q$$ and $$v$$ tensors will be sent to all processes, iteratively, in a ring fashion: at each step, each process sends its block of keys and values to the next process, and receives it from the previous. After $$P-1$$ communication steps, all processes will have received the full $$k$$ and $$v$$ tensors, in chunks. This pattern can be illustrated as:
+The previous formulation is not numerically stable using floating point arithmetic because the softmax exponents can lead to very large numbers. The solution, quoting section 3 of the original paper, is to implement softmax *by subtracting the maximum score from all scores. This does not change the result of the softmax, but avoids this numerical problem.* This is called the **safe softmax** trick and is well explained [in this post](https://coconut-mode.com/posts/ring-attention/) as:
+
+$$
+safe\_softmax(s_i) = \frac{\exp (s_i)}{ \sum_j \exp(  s_j )}  \cdot \frac{\exp (-s_{max})}{\exp (-s_{max})} = \frac{\exp (s_i - s_{max})}{ \sum_j \exp(  s_j - s_{max})} 
+$$
+
+And how to compute the max value, when the computation is done in blocks? Simply by keeping the max value *so far* . Example, if the current maximum at block $$j$$ is $$m_j$$ and the previous maximum value until then was $$m_{j-1}$$, then we update our results as:
+
+$$
+\begin{align*}
+v^{\star} \leftarrow & v^{\star} \cdot \exp ( m_{i-1} - m_{i}) + \exp \left( s_i- m_{i} \right) \, v_i \\
+s^{\star} \leftarrow & s^{\star} \cdot \exp( m_{j-1} - m_{j} ) +  \exp \left( s_j- m_{j} \right)
+\end{align*}
+$$
+
+### Distributed Algorithm
+
+Now that we know how to compute the attention outputs per block, we can parallelize the computation of the attention by by delegating a sub-block to each processor. We start with sequence parallelism of the tensors $$q$$, $$k$$ and $$v$$ across $$P$$ processes, ie **each process hold a non-overlapping timeframe (block) of the $$q$$, $$k$$ and $$v$$ tensors**. Just like Ulysses, this allows for parallelism on the Feed-forward network, but not on the MultiHead attention. During the computation of the MHA, sub-blocks of the $$q$$ and $$v$$ tensors will be *rotated* among processes in a ring fashion, iteratively: at each communication step (out of `P` steps), each process sends its block of keys and values to the next process, and receives the keys and values of the the previous processor in the ring. After $$P$$ communication steps, all processes will have received the full $$k$$ and $$v$$ tensors, in chunks, and will have its original tensors returned to its local memory. This pattern can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPT-lite-distributed/ring_attention.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **1st Ring Attention Step:** the first step of the ring attention. Each process holds its part of the Query, Value and Key tensors. Each process computes the block attention for those tensors. Asynchronously, processes perform an async send/recv of the Key and Value tensors to the next/previous process in the communication ring (clockwise). **2nd, 3rd, and 4th Ring Attention steps:** Each process its original Query block, and the previous processes' Key and Value blocks. Processes compute again the block attention for its Query and the received Key and Values. **After Ring Attention**: the Multi-head attention output is time-split across processes, similarly to the initial data format.
+Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **1st Ring Attention Step:** the first step of the ring attention. Each process holds its part of the Query, Value and Key tensors. Each process computes the block attention for those tensors. Asynchronously, processes perform an async send of the Key and Value tensors to the next process in the communication ring (clockwise). **2nd, 3rd, and 4th Ring Attention steps:** Each process receives the processes' Key and Value blocks and are now able to compute attention outpout for its original Query tensor and the received Key and Value tensors. **After Ring Attention**: the Multi-head attention output is already time-split across processes, similarly to the initial data format.
 
-From the standpoint of a process, it was presented a timeframe of $$q$$ and the full $$k$$ and $$v$$ (after all the ring steps). As an example, for the third (red) process above:
-
+From a local memory standpoint, each process was presented with a timeframe of $$q$$ and the full $$k$$ and $$v$$ tensors (after all the ring steps). As an example, for the third (red) process above, we'd have the following data presented:
 
 {: style="text-align:center; font-size: small;"}
 <img width="40%" height="40%" src="/assets/GPT-lite-distributed/ring_attention_qkv.png"/>
 
-This allows the computation of $$v^{\star}$$, $$s^{\star}$$ for the timeframe its $$q$$ refer to. (see the accumulation operation [here](https://github.com/zhuzilin/ring-flash-attention/pull/34) ). 
+This allows the accumulation of $$v^{\star}$$, $$s^{\star}$$ as it was mentioned above. In practice, we apply a small variation where we accumulate on the [LogSumExp](https://en.wikipedia.org/wiki/LogSumExp) of values instead of $$v^{\star}$$ and $$s^{\star}$$ (described [here](https://github.com/zhuzilin/ring-flash-attention/pull/34#issuecomment-2076126795) ), due to: 
 
 $$
 LSE (x_{1},\dots ,x_{n})=\log \left(\exp(x_{1})+\cdots +\exp(x_{n})\right)
 $$
 
-Note that for a given $$\mathbf {x} =(x_{1},\dots ,x_{n})$$, we have the partial derivatives:
+### Implementation
 
-$$
-{\frac {\partial }{\partial x_{i}}}{\mathrm {LSE} (\mathbf {x} )}={\frac {\exp x_{i}}{\sum _{j}\exp {x_{j}}}},
-$$
+The forward pass will perform $$P$$ ring communication steps, and on each step, it will compute for the current $$K$$, $$Q$$ $$V$$ block, the attention output and the [LogSumExp](https://en.wikipedia.org/wiki/LogSumExp) of each row of the matrix $$QK^T$$ (variables `block_out` and `block_lse`, in order to do the accumulation:
 
-which means the gradient of LogSumExp is the softmax function
+The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html#background) will takes as input the gradient of the loss with respect to the output ($$\nabla_{out} Loss$$ or `dout` in the code below), and return the gradients of the loss with respect to the parameters of the functions (gradients $$\nabla_{q} Loss$$, $$\nabla_{k} Loss$$, $$\nabla_{v} Loss$$, or `dq`, `dk`, `dv`). Something similar to:
 
-The forward pass will simply take as input the query, key and values tensor for each process and compute the output of the attention and the [LogSumExp](https://en.wikipedia.org/wiki/LogSumExp) of the [Softmax function](https://en.wikipedia.org/wiki/Softmax_function), ie:
+A small nuance in the backward pass is that the gradients of a given block will refer to the current $$K$$ and $$V$$ which is being *rotated* around processes. Therefore, its gradients `dv` and `dk` will also be accumulated by being rotated alongside the $$K$$ and $$V$$ blocks.
 
-```python
-block_out, block_lse, = attn_forward( q, k, v)
-out, lse = update_out_and_lse(out, lse, block_out, block_lse)
-```
-
-Note that the [backward propagation](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html#background) takes as input the gradient of the loss with respect to the output ($$\nabla_{out} Loss$$ or `dout` in the code below), and returns the derivatives of the loss with respect to the parameters of the functions (gradients $$\nabla_{q} Loss$$, $$\nabla_{k} Loss$$, $$\nabla_{v} Loss$$, or `dq`, `dk`, `dv`). Something similar to:
-
-
-```python
-block_dq, block_dk, block_dv = attn_backward(dout, q, k, v, out, lse)
-dq += block_dq
-dv += block_qv
-dk += block_qk 
-```
-
-Similarly to the forward pass, we will have to *rotate* `v` and `k` and also `dv` and `dk`. 
-
-The queries tensor is always local to a process, and we can compute `dq` by summing `block_dk` for every step of the backward (with different `k` and `v`). The caveat is on computing `dk` and `dv`: because `k` and `v` *rotate*  in the process ring in every iteration, then the gradients `dk` and `dv` for a given timeframe (ie process) will be computed at the process that computes that timeframe's `dv` and `dk`. Because of that, we will have an accumulator of gradients that also *rotates in the circle*. After all rotations, it will return the correct value to the process holding that timeframe.
-
-Note that the implementation of `backward` may be confusing. According to the [documentation](https://pytorch.org/docs/stable/generated/torch.autograd.Function.backward.html), "it must accept a context `ctx` as the first argument, followed by as many outputs as the `forward()` returned (`None` will be passed in for non tensor outputs of the forward function), and it should return as many tensors, as there were inputs to `forward()`".
-
-## Final remarks
-
-
-Note that you can add several improvements to the communication, such as sending `q`, `k` and `v` simultaneously, ou asynchronously. Also, runs are not deterministic across different process counts, due to the random number generators having different states. If you want determinism, for example for testing, remove all randomness in parameter initialization, dropouts, etc.
-
-Finally, notice that Ulysses parallelism has the limitation of allowing a maximum parallelism which is given by the number of attention heads (typically 8). On the other hand, Ring Attention requires several steps of communication, that grow with the network size. A good approach is to combine both methods, by doing a step of ulysses and for each ulysses process group, perform ring attention. This is described in [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719).
+The big disavantadge in ring attention is the number of steps being proportional to the number of processes, and this may be a limiting factor on large compute networks where dividing sequence in such a granular fashion may leave to a small workload per process, and this not being able to mitigate the asynchronous computation. The ideal solution would then be a hybrid of Ulysses parallelism and Ring attention, which has been presented by [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719).
