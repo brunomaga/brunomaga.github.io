@@ -86,15 +86,15 @@ class MultiHeadAttention(nn.Module):
         v = torch.stack([v(x) for v in self.values], dim=0)
 
         if P>1:  #  (H, B, T/P, E) -> (H/P, B, T, E)
-            q = MultiHeadAttention.first_alltoall.apply(q, self.group)
-            k = MultiHeadAttention.first_alltoall.apply(k, self.group)
-            v = MultiHeadAttention.first_alltoall.apply(v, self.group)
+            q = first_alltoall.apply(q, self.group)
+            k = first_alltoall.apply(k, self.group)
+            v = first_alltoall.apply(v, self.group)
 
         dropout_p, softmax_scale = 0, q.shape[-1] ** (-0.5)
         out = flash_attn_func(q, k, v, dropout_p, softmax_scale)
 
         if P > 1:  # (H/P, B, T, E) -> (H, B, T/P, E)
-            out = MultiHeadAttention.second_alltoall.apply(out, self.group)
+            out = second_alltoall.apply(out, self.group)
 
         out = out.permute(1, 2, 0, 3)  # (H, B, T/P, E) -> (B, T/P, H, E)
         out = out.reshape(B, T // P, -1)  # (B, T/P, H, E) -> (B, T/P, H*E)
