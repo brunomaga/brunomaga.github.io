@@ -60,6 +60,7 @@ plugins:
 
 permalink: /:title  #replaces folder structure /YY/mm/dd/categories/title by only /title
 
+
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
 # to override the default setting.
