@@ -1,5 +1,4 @@
 ---
-
 layout: post
 title:  "[DRAFT] Reinforcement Learning: an introduction"
 categories: [machine learning, reinforcement learning]

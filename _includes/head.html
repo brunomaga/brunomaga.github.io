@@ -1,0 +1,113 @@
+<!-- adapted from https://github.com/jekyll/minima/blob/2.5-stable/_includes/head.html -->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  {%- seo -%}
+  <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
+  {%- feed_meta -%}
+  {%- if jekyll.environment == 'production' and site.google_analytics -%}
+    {%- include google-analytics.html -%}
+  {%- endif -%}
+
+  <!DOCTYPE html>
+  <title>{{ page.title }}</title>
+
+  <!-- font awesome for social media icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css?v=7857324">
+
+  <!-- academicons to add missing icons to font awesome (e.g. google scholar) -->
+  <link rel="stylesheet" href="https://cdn.rawgit.com/jpswalsh/academicons/master/css/academicons.min.css">
+
+  <!-- fav icon -->
+  <link href="{{ "/favicon.ico" | relative_url }}" rel="shortcut icon" />
+
+  <!-- MathJax to render formulas -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>window.MathJax = { tex: { tags: 'all' } }; </script> <!-- NOTE: this adds numbering to equations, otherwise \ref{...} will fail -->
+
+
+<!-- CSS for table that collapses on smaller screens. source: https://css-tricks.com/accessible-simple-responsive-tables/ -->
+<style>
+
+/* increase top margins of ## ### #### and ##### headers (h1 is page title) */
+h2 {margin-top: 40px;}
+h3 {margin-top: 20px;}
+h4 {margin-top: 10px;}
+h5 {margin-top: 5px;}
+
+.Rtable {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 0 0;
+  padding: 0;
+  border: solid 0px rgb(232, 232, 232);
+}
+.Rtable-cell {
+  box-sizing: border-box;
+  flex-grow: 1;
+  width: 100%;
+  padding: 0.4em 1.2em;
+  overflow: hidden;
+  list-style: none;
+  /* background-color: rgb(250, 250, 250); */
+}
+.Rtable-cell > h1,
+.Rtable-cell > h2,
+.Rtable-cell > h3,
+.Rtable-cell > h4,
+.Rtable-cell > h5,
+.Rtable-cell > h6 {
+  margin: 0;
+}
+
+/* ==== Table column sizing ==== */
+.Rtable--2cols > .Rtable-cell {
+  width: 50%;
+}
+.Rtable--3cols > .Rtable-cell {
+  width: 33.33%;
+}
+.Rtable--4cols > .Rtable-cell {
+  width: 25%;
+}
+.Rtable--5cols > .Rtable-cell {
+  width: 20%;
+}
+.Rtable--6cols > .Rtable-cell {
+  width: 16.6%;
+}
+
+/* ==== Apply styles ==== */
+.Rtable {
+  position: relative;
+  top: 3px;
+  left: 3px;
+  margin-top: 0.7em;
+}
+.Rtable-cell {
+  margin: -3px 0 0 -3px;
+}
+
+/* ==== Responsive ==== */
+@media all and (max-width: 500px) {
+  .Rtable--collapse {
+    display: block;
+  }
+  .Rtable--collapse > .Rtable-cell {
+    width: 100% !important;
+  }
+  .Rtable--collapse > .Rtable-cell--foot {
+    margin-bottom: 1em;
+  }
+}
+.no-flexbox .Rtable {
+  display: block;
+}
+.no-flexbox .Rtable > .Rtable-cell {
+  width: 100%;
+}
+</style>
+
+</head>
