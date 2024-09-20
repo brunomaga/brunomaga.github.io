@@ -8,12 +8,12 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 <!-- NOTE: To create this table of contents, open VS code, install "Markdown All in one" extension, then Ctrl+Shift+P and "Markdown: create table of contents". To enable automatic update on save, go to settings, extensions, "Markdown all on one" and tick "update on save" -->
 
-- [2024 Ring Attention with Blockwise Transformers for Near-Infinite Context](#2024-ring-attention-with-blockwise-transformers-for-near-infinite-context)
 - [2024 Simplifying Transformer Blocks, ETH Zurich](#2024-simplifying-transformer-blocks-eth-zurich)
 - [2024 The Road Less Scheduled, Meta](#2024-the-road-less-scheduled-meta)
 - [2024 From sparse to soft mixture of experts](#2024-from-sparse-to-soft-mixture-of-experts)
 - [2023 Training and inference of large language models using 8-bit floating point](#2023-training-and-inference-of-large-language-models-using-8-bit-floating-point)
 - [2023 DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](#2023-deepspeed-zero-offload-6x-higher-training-throughput-via-collaborative-cpugpu-twin-flow)
+- [2023 Ring Attention with Blockwise Transformers for Near-Infinite Context](#2023-ring-attention-with-blockwise-transformers-for-near-infinite-context)
 - [2023 ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](#2023-zero-extremely-efficient-collective-communication-for-giant-model-training-microsoft)
 - [2023 QLoRA: Efficient Finetuning of Quantized LLMs, Washington Uni](#2023-qlora-efficient-finetuning-of-quantized-llms-washington-uni)
 - [2023 Better speech synthesis through scaling (TorToise), James Bekter](#2023-better-speech-synthesis-through-scaling-tortoise-james-bekter)
@@ -103,18 +103,6 @@ A summary of some interesting publications I came accross. Continuously updated.
 <center><font size="5"><i class="fa fa-regular fa-bars"></i></font></center>
 
 
-## 2024 [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889)
-
-Background: in order to reduce the quadratic memory complexity in Transformers, "One line of research leverages the observation that the softmax matrix in self-attention can be computed without materializing the full matrix which has led to the development of blockwise
-computation of self-attention and feedforward without making approximations."
-
-Here they propose **Ring Attention**. It starts by spliting sequences in sub-sequences whose local attention form blocks. In practice, Local attention can be computed in a blockwise (tiling) fashion, as in [Blockwise Parallel Transformer for Large Context Models](https://arxiv.org/abs/2305.19370). Here, they further rotate blocks across ranks in a ring fashion. This is a two-loop opration for all internal and external block (to a processor). 
-
-On the outer loop, we have "each device managing its respective input block. For the inner loop, every device computes blockwise attention and feedforward operations specific to its designated input block. Host devices form a conceptual ring, where during the inner loop, each device sends a copy of its key-value blocks being used for blockwise computation to the next device in the ring, while simultaneously receiving key-value blocks from the previous one.". They also overlap the computation of the current block with the communication of the following one. The storage required is now quadratic in memory with respect to the block size, not the full attention matrix size.
-
-{: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/publications/ring_attention.png"/>
-
 ## 2024 [Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)
 
 A simpler transformer architecture that claims similar results to state-of-art autoregressive
@@ -184,6 +172,18 @@ The paper "presents a methodology to select the scalings for FP8 linear layers, 
 
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="/assets/publications/ZeroOffloadPlusPlus.png"/>
+
+## 2023 [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889)
+
+Background: in order to reduce the quadratic memory complexity in Transformers, "One line of research leverages the observation that the softmax matrix in self-attention can be computed without materializing the full matrix which has led to the development of blockwise
+computation of self-attention and feedforward without making approximations."
+
+Here they propose **Ring Attention**. It starts by spliting sequences in sub-sequences whose local attention form blocks. In practice, Local attention can be computed in a blockwise (tiling) fashion, as in [Blockwise Parallel Transformer for Large Context Models](https://arxiv.org/abs/2305.19370). Here, they further rotate blocks across ranks in a ring fashion. This is a two-loop opration for all internal and external block (to a processor). 
+
+On the outer loop, we have "each device managing its respective input block. For the inner loop, every device computes blockwise attention and feedforward operations specific to its designated input block. Host devices form a conceptual ring, where during the inner loop, each device sends a copy of its key-value blocks being used for blockwise computation to the next device in the ring, while simultaneously receiving key-value blocks from the previous one.". They also overlap the computation of the current block with the communication of the following one. The storage required is now quadratic in memory with respect to the block size, not the full attention matrix size.
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/publications/ring_attention.png"/>
 
 ## 2023 [ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](https://arxiv.org/abs/2306.10209)
 
