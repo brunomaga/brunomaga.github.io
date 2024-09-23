@@ -109,7 +109,7 @@ Also, as an important note, there are other similar approaches to handle this pr
 
 ## Ring Attention with Blockwise Transformers
 
-Ring attention was presented in the paper  [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889) based on [Blockwise Parallel Transformer for Large Context Models](https://arxiv.org/abs/2305.19370). It performs a per-block computation of the attention matrix, that allows one to compute the attention $$softmax \left(QK^T \right)$$ without having access to the full inputs $$Q$$, $$K$$ and $$V$$. The whole rationale was presented in the paper [Self-attention Does Not Need $$O(n^2)$$ Memory](https://arxiv.org/abs/2112.05682). In practice, given a query $$q$$, key $$k$$ and value $$v$$ tensor, the output of an attention head can be reduced to:
+Ring attention was presented in the paper  [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889) based on [Blockwise Parallel Transformer for Large Context Models](https://arxiv.org/abs/2305.19370). It performs a per-block computation of the attention matrix, that allows one to compute the attention $$softmax \left(QK^T \right)$$ without having access to the full inputs $$Q$$, $$K$$ and $$V$$. It can be viewed as a distributed version of [Flash Attention](https://arxiv.org/abs/2205.14135). The whole rationale was presented in the paper [Self-attention Does Not Need $$O(n^2)$$ Memory](https://arxiv.org/abs/2112.05682). In practice, given a query $$q$$, key $$k$$ and value $$v$$ tensor, the output of an attention head can be reduced to:
 
 $$
 \begin{align*}

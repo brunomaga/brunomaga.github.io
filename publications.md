@@ -8,6 +8,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 <!-- NOTE: To create this table of contents, open VS code, install "Markdown All in one" extension, then Ctrl+Shift+P and "Markdown: create table of contents". To enable automatic update on save, go to settings, extensions, "Markdown all on one" and tick "update on save" -->
 
+- [2024 USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](#2024-usp-a-unified-sequence-parallelism-approach-for-long-context-generative-ai)
 - [2024 Simplifying Transformer Blocks, ETH Zurich](#2024-simplifying-transformer-blocks-eth-zurich)
 - [2024 The Road Less Scheduled, Meta](#2024-the-road-less-scheduled-meta)
 - [2024 From sparse to soft mixture of experts](#2024-from-sparse-to-soft-mixture-of-experts)
@@ -101,6 +102,12 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [1991 Adaptive Mixture of Local Experts](#1991-adaptive-mixture-of-local-experts)
 
 <center><font size="5"><i class="fa fa-regular fa-bars"></i></font></center>
+
+
+
+## 2024 [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719)
+
+This paper unifies state-of-the-art methods for sequence parallelism - Deepspeed Ulysses and Ring Attention, covered in a [different post]({{ site.baseurl }}{% post_url 2024-08-30-GPT-lite-sequence-parallelism %}). - and proposes an unified SP approach. It also  discusses the best practices for designing hybrid 4D parallelism involving SP. Ring Attention can be viewed as a distributed version of FlashAttention. "Megatron-DeepSpeed utilizes Ulysses, while Megatron-LM opts for Ring Attention for sequence parallelism". USP unifies both by doing first the all-to-all of Ulysses, then a distributed flash attention of Ring Attention, then the last all-to-all of Ulysses. The paper also introduces a load balancing algorithm for causal attention.
 
 
 ## 2024 [Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)
@@ -1198,7 +1205,7 @@ The rationale of Deeply-supervised nets is the following: in general, a discrimi
 
 ## 2014 [Generative Adversarial Networks (GANs), Univ Montreal, NeurIPS 2014](https://arxiv.org/abs/1406.2661)
 
-(also detailed on a [different blog post]({{ site.baseurl }}{% post_url 2020-02-01-Generative-Adversarial-Networks %})) 
+(also detailed on a [different blog post]({{ site.baseurl }}{% post_url 2019-10-12-VAE-and-GAN %})) 
 
 A new generative model composed of two models trained simultaneously: a generative model G that captures the data distributed, and a discriminative model D that estimates the probability that a sample came from the training data rather than G. The training procedure for G is to maximize the probability of D making a mistake. This framework is the minimax 2-player game. The adversarial framework comes from the generative model facing the discrinative model that learns wether a sample is from the model distribution or the data distribution. *"The generative model can be thought of as analogous to a team of counterfeiters, trying to produce fake currency and use it without detection, while the discriminative model is analogous to the police, trying to detect the counterfeit currency. Competition in this game drives both teams to improve their methods until the counterfeits are indistiguishable from the genuine articles."* The generative model generates samples by passing a random noise through a multilayer perceptron. The discriminative model is also a multilayer perceptron. Because both models are connected deep neural networks, training is performed regularly via backpropagation. 
 
@@ -1210,7 +1217,7 @@ image credit: Benjamin Striner, lecture notes CMU 11-785)
 
 ## 2014 [Sequence to Sequence Learning with Neural Networks, Google, NeurIPS 2014](https://arxiv.org/abs/1409.3215)
 
-(also detailed on a [different blog post]({{ site.baseurl }}{% post_url 2019-10-12-Variational-Autoencoders %})) 
+(also detailed on a [different blog post]({{ site.baseurl }}{% post_url 2019-10-12-VAE-and-GAN %})) 
 
 A sequence-to-sequence or Encoder-(to-)Decoder architecture built on Deep Neural Networks of LSTM neurons, demonstrating efficient results on an English-to-French translation task. The main idea is that both Encoder and Decoder are RNNs that use LSTM neurons and its hidden states as a fixed-dimensional vector representation of the sequence so far. That representation is then passed it (i.e. concatenated) to the next token of the sentence. Token [EOS] delimited end of input and output sentences. 
 
@@ -1226,7 +1233,7 @@ A method that drops neurons (in different layers) with a given **probability $$p
 
 ## 2013 [Auto-Encoding Variational Bayes (Variational Autoencoders), Universiteit van Amsterdam, 2013 ](https://arxiv.org/abs/1312.6114)
 
-and [An Introduction to Variational Autoencoders](https://arxiv.org/abs/1906.02691) from the same authors. Also detailed on a [different blog post]({{ site.baseurl }}{% post_url 2019-10-12-Variational-Autoencoders %}). 
+and [An Introduction to Variational Autoencoders](https://arxiv.org/abs/1906.02691) from the same authors. Also detailed on a [different blog post]({{ site.baseurl }}{% post_url 2019-10-12-VAE-and-GAN %}). 
 
 The VAE aims at approximating the distribution of the weights that generates an input, similarly to other variational inference. Te intractable true posterior $$p_{\theta}(z \mid x)$$ is approximated by $$q_\phi(z \mid x)$$ (the Encoder), whose parameters $$\phi$$ are not computed by a closed-form expectation but by the Encoder DNN instead. $$p_\theta(x \mid z)$$ is the Decoder, that given a $$z$$ will produce/generate the output which is a distribution over the possible values of x. Given a datapoint $$x$$ the encoder produces produces a distribution over the possible values of the code $$z$$ from which the datapoint $$x$$ could have been generated. The VAE proposed includes a DNN decoder, a DNN decoder, with parameters $$\theta$$ and $$\phi$$, where $$p_\theta(x \mid z)$$ is a Gaussian/Bernoulli with distribution parameters computed from $$z$$. Therefore the VAE can be viewed as two coupled, *independent* parameterized models: the encoder/recognition models, and the decoder/generative model (trained together), where the encoder delivers to the decoder an approximation to its posterior over latente random variables. One advantage of the VAE framework, relative to ordinary Variational Inference, is that the encoder is now a (stochastic) function of the input variables, in contrast to VI where each data-case has a separate variational distribution, which *is inefficient for large datasets*. Finally, the authors noticed that the sampling induces sampling noise in the gradients required for learning (or that because $$z$$ is randomly generated and cannot be backpropagated), and to can counteract that variance they use the “reparameterization trick”. It goes as follows: the sample vector $$z$$ that is typically sampled from the mean vector $$\mu$$ and variance $$\sigma$$ in the Gaussian scenario in now described as $$ z = \mu + \sigma \cdot \epsilon$$ where $$\epsilon$$ is always the standard gaussian ie $$\epsilon \sim N(0,1)$$. 
 
