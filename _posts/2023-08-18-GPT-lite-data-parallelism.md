@@ -133,45 +133,126 @@ def get_model(num_classes):
 
 As a relevant remark, pre-existing models do not define activation checkpointing layers and pipelining layers that are required to activate these two features (discuss later). 
 
-<!--
----
-
 
 ## Pytorch implementation
 
-Coming soon
+We start by colleting the global variables that are set by the [`torchrun`](https://pytorch.org/docs/stable/elastic/run.html) launcher (covered later):
 
-According to the [pytorch DDP implementation](https://pytorch.org/docs/master/notes/ddp.html#internal-design): the backward pass iteratively computes gradients (from last to first layer) and collects blocks of gradients to be communicated. These blocks will be mean-reduced asynchronously during the backward pass, while the computation for the backward pass proceeds. Therefore it overlaps backward pass computation with gradients communication. At the end of the backward pass, all GPUs wait for all gradient all-reduces to finish, and then triggers the parameter updates.
+```python
+import os
+rank = int(os.environ['RANK'])
+local_rank = int(os.environ['LOCAL_RANK'])
+world_size = int(os.environ['world_size'])
+```
 
-### Distributed Dataloader and sampler
+Now we define the [`DataLoader`](https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader) that tells how to iterate through the data:
 
-### Gradient checkpointing
+```python
+dataloader = torch.utils.data.DataLoader(
+  dataset, batch_size=4, sampler=sampler)
+```
 
-### Gradient accumulation / micro-batching
--->
+Note the argument `sampler`, that is a [`DistributedSampler`](DistributedSampler) that will delegate different samples from the dataloader to different processes.
+
+```python 
+sampler = torch.utils.data.distributed.DistributedSampler(
+  dataset, num_replicas=world_size, rank=rank)
+```
+
+We then place each model in a different GPU and wrap it model in the [`DistributedDataParallel`](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) or [`FullyShardedDataParallel`](https://pytorch.org/docs/stable/fsdp.html) wrapper:
+
+```python
+device = f"cuda:{local_rank}"
+dtype = torch.bfloat16
+model = model.to(device=device, dtype=dtype)
+
+if parallelism == "DDP":
+  model = torch.nn.parallel.DistributedDataParallel(
+    model, device_ids=[device],)
+elif parallelism == "FSDP":
+  model = torch.distributed.fsdp.FullyShardedDataParallel(
+      model,
+      device_id=self.device,
+      sharding_strategy=torch.distributed.fsdp.api.ShardingStrategy.SHARD_GRAD_OP, # define the stage here
+  )
+```
+
+And that's it. Now you can write your training loop normally and torch will do all communication and synchronization under the hood for you:
+
+```python
+criterion = torch.nn.CrossEntropyLoss()
+
+for step, data in enumerate(dataloader):
+  inputs = data[0].to(engine.device)
+  labels = data[1].to(engine.device)
+  outputs = engine(inputs)  # fwd pass
+  loss = criterion(outputs, labels) # loss
+  loss.backward() # compute gradients
+  optimizer.step() # update parameters
+  optimizer.zero_grad(set_to_none=True)
+```  
+
+Because gradients are computed and mean-reduced from top to bottom layer of the model, there is the possibility for an overlap of the gradients computation and communication. According to the [pytorch DDP implementation](https://pytorch.org/docs/master/notes/ddp.html#internal-design): the backward pass iteratively computes gradients (from last to first layer) and collects blocks of gradients to be communicated. These blocks will be mean-reduced asynchronously during the backward pass, while the computation for the backward pass proceeds. Therefore it overlaps backward pass computation with gradients communication. At the end of the backward pass, all GPUs wait for all gradient all-reduces to finish, and then triggers the parameter updates.
+
+As a side note, offloading of tensors can also be achieved via pytorch by using custom [hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html).
+
+Finally, you can launch the application by calling `torchrun`. Torchrun is a network bootstrapper that spaws a python script across compute all compute nodes in a network and set a the environmental variables that allows processes to be uniquely identifiable in the network. The usage is simple:
+
+```shell
+$ torch --standalone, --nproc_per_node=4, ./train.py
+```
+where `nproc_per_node` is the number of GPUs on each node.
 
 ## DeepSpeed implementation
 
-We start integrating DeepSpeed in our code by creating the `ArgumentParser` object that is required by the `initialize()` method in DeepSpeed. The `ArgumentParser` object must contain:
-- the `--local_rank` parameter that is the local rank of each process in the network, and will be populated automatically by the `deepspeed` launcher when launching a script;
-- optionally, we add the `--deepspeed_config` where we specify the path to the DeepSpeed config file. If you choose not to add it to the command line arguments, then it must be specified as the parameter `config` in the call to `deepspeed.initialize()`.
 
-The most correct way to do this is to call `deepspeed.add_config_arguments()`, that adds the `--deepspeed_config` and other DeepSpeed-specific arguments:
+Implementing an existing code in DeepSpeed is pretty simple.  
+DeepSpeed features can be activated via the deepspeed API or its [Configuration JSON](https://www.deepspeed.ai/docs/config-json/). The number of possible optimizations is large, as it defines parallelism, floating point precision, logger, communication parameters, etc. Here we start with a simple config, where we configure the DeepSpeed logger to output memory and throughput info at every 10 epochs (`steps_per_print`), we set the batch size to `4` and (optionally) define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
 
-```python
-## train.py
-
-import deepspeed
-
-def get_cmd_line_args(description='GPT-lite on DeepSpeed'):
-  import argparse
-  parser = argparse.ArgumentParser(description=description)
-  # Include DeepSpeed configuration arguments (--deepspeed, --deepspeed_config)
-  parser = deepspeed.add_config_arguments(parser)
-  return parser.parse_args()
+```json
+{
+  "train_batch_size": 4,
+  "steps_per_print": 10,
+  "optimizer": {
+    "type": "AdamW",
+    "params": { "lr": 0.001, "betas": [ 0.8, 0.999  ], "eps": 1e-8, "weight_decay": 3e-7 }
+  },
+  "scheduler": {
+    "type": "WarmupLR",
+    "params": { "warmup_min_lr": 0, "warmup_max_lr": 0.001, "warmup_num_steps": 1000 }
+  }
+}
 ```
 
-The bulk of the code is pretty simple. In practice, all boilerplate code that PyTorch requires for optimizers, learning rates, parallelism, data loaders etc, are all managed by DeepSpeed and are defined in its config file. So the initialization of a DeepSpeed run is pretty straightforward:
+Note that in DeepSpeed lingo, the `micro_batch_size_per_gpu` refers to the batch size loaded per dataloader (ie per node, per gradient accumulation step), while `train_batch_size` refers to the batch size across all gradient accumulation steps and processes in the network ie:
+
+```
+train_batch_size = micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
+```
+
+**ZeRO Fully-Sharded Data Parallelism** can be activated by specifying the relevant stage in the config file. If omitted, or when passing the stage 0, DeepSpeed is disabled and the execution follows a regular distributed data paralllel workflow:
+
+```json
+{
+  "zero_optimization": { "stage": 3 }
+}
+```
+
+We can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857) for offloading of several variables in memory to CPU and VNMe for huge memory savings. It is only compatible with ZeRO-3 and can be enabled with: 
+
+```json
+{
+  "zero_optimization": {
+    "stage": 3,
+    "offload_optimizer": { "device": "cpu", "pin_memory": true },
+    "offload_param": { "device": "cpu", "pin_memory": true },
+  }
+}
+```
+
+There's also similar field for [ZeRO-Offload](https://www.deepspeed.ai/tutorials/zero-offload/) for stage 2. 
+
+Once we have our config file, it's pretty simple. All boilerplate that PyTorch requires for parallelism and data loaders is managed internally by DeepSpeed. So the setup is pretty straightforward:
 
 ```python
 ## train.py
@@ -181,16 +262,16 @@ def main_deepspeed(n_epochs=100, random_seed=42):
   torch.manual_seed(random_seed)  #set random seed (used by DataLoader)
   deepspeed.runtime.utils.set_random_seed(random_seed) #set DeepSpeed seed
   deepspeed.init_distributed()  # initialize distributed DeepSpeed
-  args = get_cmd_line_args()  # initialize command line arguments parser
+  config = 'ds_config.json'  # load the DeepSpeed config
   criterion = torch.nn.CrossEntropyLoss()  # initialize loss function
-  train_dataset, _, vocab_size = gptlite.get_dataset()  # initializer dataset
-  model = gptlite.get_model(vocab_size)  # initialize model
+  train_dataset, _, vocab_size = gptlite.get_dataset()  # initialize GPT-lite dataset
+  model = gptlite.get_model(vocab_size)  # initialize GPT-lite model
 
   engine, optimizer, train_dataloader , _ = deepspeed.initialize(
-    args=args, model=model, training_data=train_dataset,) # initialize deepspeed
+    config=config, model=model, training_data=train_dataset,) # initialize deepspeed
 ```
 
-We then write the training loop, with a structure very similar to a PyTorch implementation. The only exception is that we don't perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `initialize()` already returns a `train_dataloader` with an internal  `torch.utils.data.distributed.DistributedSampler` that assigns disjoiint subsets of data to each process.
+We then write the training loop, with a structure very similar to the PyTorch implementation. The only exception is that we don't perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `initialize()` already returns a `train_dataloader` that that assigns disjoint subsets of data to each process, so we dont need to fiddle with samplers.
 
 ```python
 ## train.py
@@ -206,74 +287,15 @@ def main_deepspeed(n_epochs=100, random_seed=42):
       loss = criterion(outputs, labels)
       engine.backward(loss)  # backprop
       engine.step()  # update weights, no need for zero-ing
-
-  # print loss for epoch
-  if engine.local_rank == 0: print(f"Epoch: {epoch}, Loss: {loss}")
-```
- 
-### DeepSpeed config
-
-The *nuance* in using DeepSpeed is the `.json` config file. The number of possible optimizations is large, as it defines parallelism, floating point precision, logger, communication parameters, etc. These fields are detailed in the [DeepSpeed config documentation](https://www.deepspeed.ai/docs/config-json/). Here we start with a simple config, where the configure the DeepSpeed logger to output memory and throughput info at every 10 epochs (`steps_per_print`), and define the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
-
-```json
-{
-  "train_batch_size": 256,
-  "steps_per_print": 10,
-  "optimizer": {
-    "type": "AdamW",
-    "params": {
-      "lr": 0.001,
-      "betas": [
-        0.8,
-        0.999
-      ],
-      "eps": 1e-8,
-      "weight_decay": 3e-7
-    }
-  },
-  "scheduler": {
-    "type": "WarmupLR",
-    "params": {
-      "warmup_min_lr": 0,
-      "warmup_max_lr": 0.001,
-      "warmup_num_steps": 1000
-    }
-  }
-}
 ```
 
+Finally, we can launch our run with the `torchrun` launcher as shown previously, or with the launcher included in DeepSpeed as:
 
-**ZeRO Fully-Sharded Data Parallel** can be activated by specifying the relevant stage in the config file. If omitted, or when passing the stage 0, DeepSpeed is disabled and the execution follows a regular distributed data paralllel workflow:
-
-```json
-{
-  "zero_optimization": {
-    "stage": 3
-  }
-}
+```shell
+$ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
 ```
 
-
-[**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857) performs offloading of several variables in memory to CPU and VNMe for huge memory savings. It is only compatible with ZeRO-3 and can be enabled with: 
-
-```json
-{
-  "zero_optimization": {
-    "stage": 3,
-    "offload_optimizer": {
-      "device": "cpu",
-      "pin_memory": true
-    },
-    "offload_param": {
-      "device": "cpu",
-      "pin_memory": true
-    },
-  }
-}
-```
-
-As a side note, offloading of tensors can also be achieved via pytorch by using custom [hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html).
-
+<!--
 [**Mixed precision representation**](https://arxiv.org/abs/1710.03740) allows for calculus with value types (parameters, activations, accumulators) stored with different numerical representations, leading to a reduction of memory and compute time. It can be enabled by adding the `fp16` entry [in the config](https://www.deepspeed.ai/docs/config-json/#fp16-training-options). As a side note, the `amp` config entry also enables mixed precision training that follows the [NVIDIA Apex](https://nvidia.github.io/apex/) implementation i.e. with the `O0` to `O3` opimization levels. However, [it is not compatible with ZeRO](https://www.deepspeed.ai/docs/config-json/#automatic-mixed-precision-amp-training-options), therefore we won't use it. The [`fp16` is equivalent to APEX optimization level O2](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), and according to the [documentation](https://www.deepspeed.ai/docs/config-json/#fp16-training-options), "if you want to use ZeRO (currently) you must use this mode". We can enable it with the entry `"fp16: { enabled: true }` that is equivalent to the following default values:
 
 ```json
@@ -293,9 +315,6 @@ As a side note, offloading of tensors can also be achieved via pytorch by using 
 
 However, if your hardware supports bfloat16 (brain floating point), this should be used in lieu of float16, as it has a longer integer (exponent) representation: 8 bits instead of the 5 in float16, ie the same 8 bits as in float32. This makes it more numerically stable and does not require loss scaling. bfloat16 can be activated by adding to the config `bf16 { "enabled": true }`.
 
-As a final note, the configuration file can also be extended with custom fields, that are e.g. specific to application or hardware, but for brevity we'll omit those details here. 
-
-<!-- 
 **Limiting the size of communication buffers** is important when activating ZeRO. In practice, enabling ZeRO leads to the distribution of parameters across all processors. This in practice will add a communication overhead, that requires memory to be allocated for all buffers responsible for the data to be sent or received. This is an issue as these buffers may be large. To overcome this issue, we can decrease the maximum size of the communication buffers so that communication is performed in parcels of smaller buffers. We can also enable **communication overlap** that attempts to overlap the reduction of the gradients with backward computation. To enable these 2 optimizations, we add to the config:
 
 ```json
@@ -386,31 +405,6 @@ The reentrant does not use hooks but calls the [`forward` autograd function](htt
 
 Combining activation checkpointing with sharded model parameters (ZeRO stage-3) may lead to a substantial runtime overhead. The problem is that, if you need to perform a forward pass from the closest checkpoint layer to collect the parameters required for the back propagation, and if those parameters are distributed (stage 3), then there has to be an extra collective communication step at every layer (from checkpoint layer to current back-prop layer) to collect those weights. This adds an extra communication overhead.
 -->
-
-### Launching a distributed execution
-
-The installation of DeepSpeed includes the `deepspeed` launcher, a network bootstrapper that spaws a python script across compute nodes and GPUs, with different `--local_rank` argument and different environment variables for the *comm world*. In our example, to launch the script `train.py` on a compute node with 8 GPUs, with the DeepSpeed config file `ds_config.json`, we run on the shell:
-
-```shell
-$ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
-```
-
-Run `deepspeed --help` for a brief summary of the launcher options. With `torchrun`, it can be launched with:
-```shell
-$ torchrun --standalone --nproc_per_node=8 train.py --deepspeed --deepspeed_config ds_config.json --no_local_rank
-```
-
-and on a slurm-cluster execution, with:
-```shell
-slurm-torchrun --torch-script-path="train.py"  \
-  --torch-script-extra-args="--deepspeed --deepspeed_config ds_config.json --no_local_rank"
-```
-
-Now that in distributed runs, the batch size should take into consideration the number of compute nodes, the number of GPUs, and the number of gradient accumulation steps or micro-batch size (when applicable). In brief, each process needs at least 1 input sample and:
-
-```
-batch_size = micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
-```
 
 ### Detour: measuring memory allocated to parameters
 
