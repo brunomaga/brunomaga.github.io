@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed GPT model: data parallelism, sharding, offloading, activation checkpointing, and communication quantization via DeepSpeed"
+title:  "Distributed GPT model: data parallelism, sharding and offloading via Torch DDP and DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
