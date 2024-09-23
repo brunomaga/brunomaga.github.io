@@ -134,18 +134,18 @@ def get_model(num_classes):
 As a relevant remark, pre-existing models do not define activation checkpointing layers and pipelining layers that are required to activate these two features (discuss later). 
 
 
-## Pytorch implementation
+## PyTorch implementation
 
-We start by colleting the global variables that are set by the [`torchrun`](https://pytorch.org/docs/stable/elastic/run.html) launcher (covered later):
+We start by colleting the global variables that are set by the [`torchrun`](https://pytorch.org/docs/stable/elastic/run.html) launcher (detailed below):
 
 ```python
 import os
-rank = int(os.environ['RANK'])
-local_rank = int(os.environ['LOCAL_RANK'])
-world_size = int(os.environ['world_size'])
+rank = int(os.environ['RANK'])   # the unique id across all processes in all nodes
+local_rank = int(os.environ['LOCAL_RANK'])   # the unique id across this node
+world_size = int(os.environ['WORLD_SIZE'])   # the number of processes across all nodes
 ```
 
-Now we define the [`DataLoader`](https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader) that tells how to iterate through the data:
+Now we define the [`DataLoader`](https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader) that tells each process how to iterate through the data:
 
 ```python
 dataloader = torch.utils.data.DataLoader(
@@ -159,7 +159,7 @@ sampler = torch.utils.data.distributed.DistributedSampler(
   dataset, num_replicas=world_size, rank=rank)
 ```
 
-We then place each model in a different GPU and wrap it model in the [`DistributedDataParallel`](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) or [`FullyShardedDataParallel`](https://pytorch.org/docs/stable/fsdp.html) wrapper:
+We then place each model in a different GPU and wrap it with the [`DistributedDataParallel`](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) or [`FullyShardedDataParallel`](https://pytorch.org/docs/stable/fsdp.html) wrapper:
 
 ```python
 device = f"cuda:{local_rank}"
@@ -177,7 +177,7 @@ elif parallelism == "FSDP":
   )
 ```
 
-And that's it. Now you can write your training loop normally and torch will do all communication and synchronization under the hood for you:
+And that's it. Now you can write your training loop normally and torch will do all under-the-hood communication and synchronization for you:
 
 ```python
 criterion = torch.nn.CrossEntropyLoss()
@@ -192,9 +192,11 @@ for step, data in enumerate(dataloader):
   optimizer.zero_grad(set_to_none=True)
 ```  
 
-Because gradients are computed and mean-reduced from top to bottom layer of the model, there is the possibility for an overlap of the gradients computation and communication. According to the [pytorch DDP implementation](https://pytorch.org/docs/master/notes/ddp.html#internal-design): the backward pass iteratively computes gradients (from last to first layer) and collects blocks of gradients to be communicated. These blocks will be mean-reduced asynchronously during the backward pass, while the computation for the backward pass proceeds. Therefore it overlaps backward pass computation with gradients communication. At the end of the backward pass, all GPUs wait for all gradient all-reduces to finish, and then triggers the parameter updates.
+Because gradients are computed and mean-reduced from the top to the bottom layer of the model, we can overlap the computation of the gradients from the lower layers with communication of the upper layers, as we go along our backward pass. According to the [PyTorch DDP documentation](https://pytorch.org/docs/master/notes/ddp.html#internal-design):
 
-As a side note, offloading of tensors can also be achieved via pytorch by using custom [hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html).
+> The backward pass iteratively computes gradients (from last to first layer) and collects blocks of gradients to be communicated. These blocks will be mean-reduced asynchronously during the backward pass, while the computation for the backward pass proceeds. Therefore it overlaps backward pass computation with gradients communication. At the end of the backward pass, all GPUs wait for all gradient all-reduces to finish, and then triggers the parameter updates.
+
+As a side note, offloading of tensors can also be achieved via PyTorch by using custom [hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html).
 
 Finally, you can launch the application by calling `torchrun`. Torchrun is a network bootstrapper that spaws a python script across compute all compute nodes in a network and set a the environmental variables that allows processes to be uniquely identifiable in the network. The usage is simple:
 
@@ -255,8 +257,6 @@ There's also similar field for [ZeRO-Offload](https://www.deepspeed.ai/tutorials
 Once we have our config file, it's pretty simple. All boilerplate that PyTorch requires for parallelism and data loaders is managed internally by DeepSpeed. So the setup is pretty straightforward:
 
 ```python
-## train.py
-
 def main_deepspeed(n_epochs=100, random_seed=42):
 
   torch.manual_seed(random_seed)  #set random seed (used by DataLoader)
@@ -274,10 +274,6 @@ def main_deepspeed(n_epochs=100, random_seed=42):
 We then write the training loop, with a structure very similar to the PyTorch implementation. The only exception is that we don't perform zeroing of gradients, as this is managed internally by DeepSpeed. Also, `initialize()` already returns a `train_dataloader` that that assigns disjoint subsets of data to each process, so we dont need to fiddle with samplers.
 
 ```python
-## train.py
-
-def main_deepspeed(n_epochs=100, random_seed=42):
-  # ...
   for epoch in range(n_epochs):
     for step, data in enumerate(train_dataloader):
       inputs = data[0].to(engine.device)
@@ -395,7 +391,7 @@ class GPTlite(nn.Module):
 
 where `self.activation_checkpoint_interval` is a value set during initialization of the class. Finally, when doing model parallelism, we can reduce memory substantially by partitioning activations and offloading those checkpoints to the CPU instead of saving them in memory. DeepSpeed does not support model/tensor parallelism natively so we will skip this, but check the [json documentation](https://www.deepspeed.ai/docs/config-json/#activation-checkpointing) if you are interested.
 
-Finally, **activation checkpoint currently has two implementations: a reentrant and non-reentrant**. The non-reentrant will be the future default in pytorch and is implemented via pytorch saved variable hooks (as detailed [here](https://medium.com/pytorch/how-activation-checkpointing-enables-scaling-up-training-deep-learning-models-7a93ae01ff2d)). Non-checkpointed activations are not stored in memory, and instead replaced by a reference. Thus, the computation graph is not altered. The non-reentrant checkpointing allows for nested checkpointing (calling one checkpoint from another checkpoint function), allowing for **higher memory savings**.
+Finally, **activation checkpoint currently has two implementations: a reentrant and non-reentrant**. The non-reentrant will be the future default in PyTorch and is implemented via PyTorch saved variable hooks (as detailed [here](https://medium.com/pytorch/how-activation-checkpointing-enables-scaling-up-training-deep-learning-models-7a93ae01ff2d)). Non-checkpointed activations are not stored in memory, and instead replaced by a reference. Thus, the computation graph is not altered. The non-reentrant checkpointing allows for nested checkpointing (calling one checkpoint from another checkpoint function), allowing for **higher memory savings**.
 The non-reentrant equivalent in deepspeed in implemented by [`deepspeed.checkpointing.non_reentrant_checkpoint`](https://github.com/microsoft/DeepSpeed/blob/42a8eaa705ed30b4a656ac71bdb400772df2cb21/deepspeed/runtime/activation_checkpointing/checkpointing.py).
 
 The reentrant does not use hooks but calls the [`forward` autograd function](https://github.com/pytorch/pytorch/blob/670c5cf96249db28cde757da5a6aa97569760102/torch/utils/checkpoint.py#L75) instead. The gradient calculations are not part of the main computational graph anymore, and every checkpoint creates a mini-computational graph during the backward pass. One of the downsides, is that the whole `forward` function is computed for every call, while the non-reentrant counterpart can stop when the relevant activations are computed. Moreover, the whole graph is not stored (contrarily to non-reentrant) thus not allowing the backward to be run in the whole computational graph. More details in the [torch checkpoint documentation](https://pytorch.org/docs/stable/checkpoint.html).
@@ -411,8 +407,6 @@ Combining activation checkpointing with sharded model parameters (ZeRO stage-3) 
 We can use the [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations, by calling the following method at the onset of execution:
 
 ```python
-## train.py
-
 def measure_parameters_memory(model):
   param_size_GB = sum([p.nelement() * p.element_size() for p in model.parameters()])/1024**3
   print(f"Native model parameters size: {round(param_size_GB, 2)}GB.")
