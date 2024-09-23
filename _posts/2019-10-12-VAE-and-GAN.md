@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Variational Autoencoders (VAE) and Generative Adversatial Neural Network (GANs)"
+title:  "Variational Autoencoders (VAEs) and Generative Adversarial Neural Networks (GANs)"
 categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
