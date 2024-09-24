@@ -9,6 +9,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 <!-- NOTE: To create this table of contents, open VS code, install "Markdown All in one" extension, then Ctrl+Shift+P and "Markdown: create table of contents". To enable automatic update on save, go to settings, extensions, "Markdown all on one" and tick "update on save" -->
 
 - [2024 USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](#2024-usp-a-unified-sequence-parallelism-approach-for-long-context-generative-ai)
+- [2024 Universal Checkpointing: Efficient and Flexible Checkpointing for Large Scale Distributed Training](#2024-universal-checkpointing-efficient-and-flexible-checkpointing-for-large-scale-distributed-training)
 - [2024 Simplifying Transformer Blocks, ETH Zurich](#2024-simplifying-transformer-blocks-eth-zurich)
 - [2024 The Road Less Scheduled, Meta](#2024-the-road-less-scheduled-meta)
 - [2024 From sparse to soft mixture of experts](#2024-from-sparse-to-soft-mixture-of-experts)
@@ -109,6 +110,12 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 This paper unifies state-of-the-art methods for sequence parallelism - Deepspeed Ulysses and Ring Attention, covered in a [different post]({{ site.baseurl }}{% post_url 2024-08-30-GPT-lite-sequence-parallelism %}). - and proposes an unified SP approach. It also  discusses the best practices for designing hybrid 4D parallelism involving SP. Ring Attention can be viewed as a distributed version of FlashAttention. "Megatron-DeepSpeed utilizes Ulysses, while Megatron-LM opts for Ring Attention for sequence parallelism". USP unifies both by doing first the all-to-all of Ulysses, then a distributed flash attention of Ring Attention, then the last all-to-all of Ulysses. The paper also introduces a load balancing algorithm for causal attention.
 
+## 2024 [Universal Checkpointing: Efficient and Flexible Checkpointing for Large Scale Distributed Training](https://arxiv.org/abs/2406.18820)
+
+According to the paper, the issue with state-of-art distributed checkpointing (model save/resume) is that it requires "static allocation of GPU resources at the beginning of training and lacks the capability
+to resume training with a different parallelism strategy and hardware configuration" and usually it is not possible to resume when hardware changes during the training process. To this extent, the paper proposes "Universal Checkpointing, a technique that enables efficient checkpoint
+creation while providing the flexibility of resuming on arbitrary parallelism strategy" and " improved resilience to hardware failures through continued training on remaining healthy hardware, and reduced training time through opportunistic exploitation of elastic capacity". This is achieved by writing in the universal checkpoint format, which allows "mapping parameter
+fragments into training ranks of arbitrary model-parallelism configuration", and universal checkpoint language that allows for "converting distributed checkpoints into the universal checkpoint format". The UCP file is a gathering of all distributed saves into a single file per variable type (optimizer state, parameters, etc).
 
 ## 2024 [Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)
 
