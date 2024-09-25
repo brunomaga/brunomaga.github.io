@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Mixture-of-Experts: a timeline, with serial and distributed implementations"
+title:  "Mixture-of-Experts: publications timeline with serial and distributed implementations"
 categories: [machine learning, Transformer, GPT, mixture-of-experts]
 tags: [machinelearning]
 ---
@@ -38,6 +38,7 @@ So in this post, we will discuss MoEs development from early days, and provide i
   - [2022 Towards Understanding Mixture of Experts in Deep Learning](#2022-towards-understanding-mixture-of-experts-in-deep-learning)
   - [2022 GLaM: Efficient Scaling of Language Models with Mixture-of-Experts](#2022-glam-efficient-scaling-of-language-models-with-mixture-of-experts)
   - [2022 ST-MoE: Designing Stable and Transferable Sparse Expert Models](#2022-st-moe-designing-stable-and-transferable-sparse-expert-models)
+  - [2022 Tutel: Adaptive Mixture-of-Experts at Scale](#2022-tutel-adaptive-mixture-of-experts-at-scale)
   - [2023 Mixture-of-Experts Meets Instruction Tuning: a Winning Combination for Large Language Models](#2023-mixture-of-experts-meets-instruction-tuning-a-winning-combination-for-large-language-models)
   - [2024 Mixtral of Experts](#2024-mixtral-of-experts)
   - [2024 Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](#2024-mixture-of-depths-dynamically-allocating-compute-in-transformer-based-language-models)
@@ -531,6 +532,14 @@ are sentinel tokens in the decoder. As a result, target tokens in each group typ
 semantic space (compared to the encoder), perhaps explaining the lack of expert specialization in the
 decoder
 
+### 2022 [Tutel: Adaptive Mixture-of-Experts at Scale](https://arxiv.org/abs/2206.03382)
+
+According to the authors, existing sparsely-gated mixture-of-experts (MoE) "suffer inefficient computation due to their
+static execution, namely static parallelism and pipelining, which does not adapt to the dynamic workload". To that extent, they present Tutel, a system that delivers two main novelties: adaptive parallelism for optimal expert execution and adaptive pipelining for tackling inefficient and non-scalable dispatch/combine operations in MoE layers.
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/Mixture-of-Experts/tutel_moe_parallelism.png"/>
+
 ### 2023 [Mixture-of-Experts Meets Instruction Tuning: a Winning Combination for Large Language Models](https://arxiv.org/abs/2305.14705)
 
 This paper claims that **Instruction tuning supplemented by further finetuning on individual downstream tasks outperforms fine-tuning or instruction-tuning alone**. To show that they perform single-task fine-tuning, multi-task instruction-tuning and multi-task instruction-tuning followed by single-task fine-tuning. They showed that MoEs benefit more from instruction tuning than other models and benefit more from a higher number of tasks. In practice:
@@ -548,9 +557,9 @@ $$
 
 ### 2024 [Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](https://arxiv.org/abs/2404.02258)
 
-As background, remember that we mentioned before that MoEs work by subdividing the problem domain into smaller problems that are solved individually by different experts. Now think that, not all problems require the same amount of effort to train a model accurately. This is explored in this work, via **Conditional computation**, a technique that "tries to reduce total compute by expending it only when needed". Here, "the network must learn how to dynamically allocate the available compute by making decisions per-token, in each layer, about where to spend compute from the availablebudget" - where this compute budget is a total number of FLOPs pre-defined beforehand by the user and remains unchanged throught the execution.
+Remember that MoEs work by subdividing the problem domain into smaller problems that are solved individually by different experts. In this paper, they claim that not all problems require the same amount of effort to train a model accurately. To that extent, they introduce **Conditional computation**, a technique that "tries to reduce total compute by expending it only when needed". Here, "the network must learn how to dynamically allocate the available compute by making decisions per-token, in each layer, about where to spend compute from the availablebudget" - where this compute budget is a total number of FLOPs.
 
-In this work, for every token, the model decides to either apply a computation (as in the standard transformer), or skip the computation and passing it through a residual connection (remaining unchanged and saving compute). Moreover, contrarily to MoE, the **routing is applied to both the feedforward network and the multi-head attention**. In the multi-head routing, the router will not only decide on which tokens to update, but which tockens are made available to attend to. "We refer to this strategy as Mixture-of-Depths (MoD) to emphasize how individual tokens pass through different numbers of layers, or blocks, through the depth of the transformer". In practice: (1) the user picks a fixed compute budget beforehand; (2) during training, for every input, the router produces a scalar weight (importance) per token; and (3) we pick the top-$$k$$ tokens per sentence per block to participate in the transformer block computation. $$k$$ is a hyper-parameter that defined the max number of tokens passed to a block, thus the computation graph and tensor sizes remain static throughout the execution. As $$k$$ is set to be smaller than the sentence length, MoD allows one to trade off between performance and speed, while achieving a high level of accuracy for a given compute budget.
+For every token, the model decides to either apply a computation (as in the standard transformer), or skip the computation and passing it through a residual connection (remaining unchanged and saving compute). Moreover, contrarily to MoEs, the **routing is applied to both the feedforward network and the multi-head attention**. In the multi-head routing, the router will not only decide on which tokens to update, but which tockens are made available to attend to. "We refer to this strategy as Mixture-of-Depths (MoD) to emphasize how individual tokens pass through different numbers of layers, or blocks, through the depth of the transformer". In practice, during training, for every input, the router produces a scalar weight (importance) per token. The gating picks the top-$$k$$ tokens per sentence per block to participate in the transformer block computation. $$k$$ is a hyper-parameter that defined the max number of tokens passed to a block, thus the computation graph and tensor sizes remain static throughout the execution. Setting $$k$$ allows one to trade off between performance and speed, for a given compute budget.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/Mixture-of-Experts/Mixture_of_Depths.png"/>

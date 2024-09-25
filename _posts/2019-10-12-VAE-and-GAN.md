@@ -7,6 +7,7 @@ tags: [machinelearning]
 
 In our quest for understanding generative models in Machine Learning, we started by learning [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-Statistics-for-ML %}), then we looked at [Bayesian Linear Regression]({{ site.baseurl }}{% post_url 2018-08-20-Bayesian-Linear-Regression %}) and the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) to learn how to compute the Maximum Likelihood (MLE) and Maximum a Posteriori (MAP) estimators on parametric distributions. We then looked into [Variational Inference]({{ site.baseurl }}{% post_url 2019-07-01-Variational-Inference-GMM %}) as a method to perform generative ML on non-parametric or computationally-intractable Bayesian formulations. In this post, we continue our quest, and look at two new methods for non-parametric distributions based on neural networks: Variational Autoencoders (VAEs) and Generative Adversatial Neural Network (GANs).
 
+
 ## Variational Autoencoder (VAE)
 
 credit: most content in this post is a summary of the papers [Auto-Encoding Variational Bayes](https://arxiv.org/abs/1312.6114) and [An Introduction to Variational Autoencoders](https://arxiv.org/abs/1906.02691) from Diederik P. Kingma, Max Welling at the Uversiteit van Amsterdam. 
@@ -81,10 +82,8 @@ Imagine we are playing a game (BlackJack, Slots, Rock-Paper-Scissors) that is re
 
 So in practice, the law of large numbers will often guarantee a better outcome over the long run, and we maximize that outcome by maximizing the *expected* outcome of our optimisation in the long run. 
 
----
 
-## Generative Adversarial Neural Networks (GAN)
-
+## Generative Adversarial Neural Network (GAN)
 
 credit: most content in this post is a summary of the paper [Generative Adversarial Networks](https://arxiv.org/abs/1406.2661), published at NeurIPS 2014, by Ian Goodfellow and colleagues at the Unviersity of Montreal.
 

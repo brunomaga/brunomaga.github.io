@@ -10,6 +10,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 - [2024 USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](#2024-usp-a-unified-sequence-parallelism-approach-for-long-context-generative-ai)
 - [2024 Universal Checkpointing: Efficient and Flexible Checkpointing for Large Scale Distributed Training](#2024-universal-checkpointing-efficient-and-flexible-checkpointing-for-large-scale-distributed-training)
+- [2024 FastPersist: Accelerating Model Checkpointing in Deep Learning](#2024-fastpersist-accelerating-model-checkpointing-in-deep-learning)
 - [2024 Simplifying Transformer Blocks, ETH Zurich](#2024-simplifying-transformer-blocks-eth-zurich)
 - [2024 The Road Less Scheduled, Meta](#2024-the-road-less-scheduled-meta)
 - [2024 From sparse to soft mixture of experts](#2024-from-sparse-to-soft-mixture-of-experts)
@@ -49,6 +50,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2022 Emergent Abilities of Large Language Models, Google Research \& Stanford](#2022-emergent-abilities-of-large-language-models-google-research--stanford)
 - [2022 Rethinking Attention with Performers, Google, Cambridge, DeepMind and Alan Turing Institute](#2022-rethinking-attention-with-performers-google-cambridge-deepmind-and-alan-turing-institute)
 - [2022 Training Compute-Optimal Large Language Models, arXiv](#2022-training-compute-optimal-large-language-models-arxiv)
+- [2021 Breaking the Computation and Communication Abstraction Barrier in Distributed Machine Learning Workloads](#2021-breaking-the-computation-and-communication-abstraction-barrier-in-distributed-machine-learning-workloads)
 - [2021 LoRA: Low-Rank Adaptation of Large Language Models, Microsoft](#2021-lora-low-rank-adaptation-of-large-language-models-microsoft)
 - [2021 Learning Transferable Visual Models From Natural Language Supervision (CLIP), OpenAI](#2021-learning-transferable-visual-models-from-natural-language-supervision-clip-openai)
 - [2021 ZeRO-Infinity: Breaking the GPU Memory Wall for Extreme Scale Deep Learning, Microsoft](#2021-zero-infinity-breaking-the-gpu-memory-wall-for-extreme-scale-deep-learning-microsoft)
@@ -116,6 +118,10 @@ According to the paper, the issue with state-of-art distributed checkpointing (m
 to resume training with a different parallelism strategy and hardware configuration" and usually it is not possible to resume when hardware changes during the training process. To this extent, the paper proposes "Universal Checkpointing, a technique that enables efficient checkpoint
 creation while providing the flexibility of resuming on arbitrary parallelism strategy" and " improved resilience to hardware failures through continued training on remaining healthy hardware, and reduced training time through opportunistic exploitation of elastic capacity". This is achieved by writing in the universal checkpoint format, which allows "mapping parameter
 fragments into training ranks of arbitrary model-parallelism configuration", and universal checkpoint language that allows for "converting distributed checkpoints into the universal checkpoint format". The UCP file is a gathering of all distributed saves into a single file per variable type (optimizer state, parameters, etc).
+
+## 2024 [FastPersist: Accelerating Model Checkpointing in Deep Learning](https://arxiv.org/abs/2406.13768)
+
+FastPersist overcomes typical issues in deep learning checkpoints: Inefficient SSD Writes and Ineffective Checkpoint Decoupling from independent operations in subsequent iterations, and high recovery costs of recovering from save states recorded many iterations before failure. To do this, they propose: (1) accelerating checkpoint writes by using libraries that  include asynchronous and parallelism optimizations for extracting maximum NVMe performance; (2) parallelizing checkpoint writes by having different ranks outputting state in parallel; and (3) and pipelining checkpoint that overlaps checkpoint creation with independent operations of the next iteration in order to reduce or avoid training stalls.
 
 ## 2024 [Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)
 
@@ -656,7 +662,6 @@ A clearer explanation can be found on this [google research post](https://blog.r
 {: style="text-align:center; font-size: small;"}
 **Left:** Standard unidirectional attention requires masking the attention matrix to obtain its lower-triangular part. **Right:** Unbiased approximation on the LHS can be obtained via a prefix-sum mechanism, where the prefix-sum of the outer-products of random feature maps for keys and value vectors is built on the fly and left-multiplied by query random feature vector to obtain the new row in the resulting matrix.
 
-
 ## 2022 [Training Compute-Optimal Large Language Models, arXiv](https://arxiv.org/abs/2203.15556)
 
 Heavily related to HPC's performance modelling applied to large language models. The authors revisit the question "Given a fixed FLOPs budget, how should one trade-off model size and the number of training tokens?" to which they present three approaches: (1) fix model sizes and vary number of training tokens; (2) vary model sizes for 9 different FLOP counts; (3) fit a parametric loss function to the values retrived from the 2 approaches. Estimates were collected from a total of 400 runs. 
@@ -670,6 +675,14 @@ To be compute optimal (in terms of accuracy vs energy cost), Kaplan et al. (2020
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models_2.png"/> 
+
+
+## 2021 [Breaking the Computation and Communication Abstraction Barrier in Distributed Machine Learning Workloads](https://arxiv.org/abs/2105.05720)
+
+Abstract: the paper presents CoCoNet "with a DSL (Domain Specific Language) to express a program with both computation and communication. CoCoNeT contains several machine learning aware transformations to optimize a program and a compiler to generate high performance kernels. Providing both computation and communication as first class constructs allows users to work on a high-level abstraction and apply powerful optimizations, such as fusion or overlapping of communication and computation. CoCoNeT enables us to optimize data-, model-and pipeline-parallel workloads in large language models with only a few lines of code. "
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/publications/coconet.png"/> 
 
 
 ## 2021 [LoRA: Low-Rank Adaptation of Large Language Models, Microsoft](https://arxiv.org/abs/2106.09685)

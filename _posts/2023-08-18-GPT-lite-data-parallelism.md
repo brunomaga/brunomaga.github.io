@@ -120,8 +120,6 @@ def get_model(num_classes):
   return torchvision.models.resnet18(num_classes=num_classes)
 ```
 
-As a relevant remark, pre-existing models do not define activation checkpointing layers and pipelining layers that are required to activate these two features (discuss later). 
-
 
 ## PyTorch implementation
 
