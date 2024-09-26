@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "AI Supercomputing: Data Parallelism, Sharding, Pipelining, Tensor parallelism and Convolutional Neural Nets"
+title:  "AI Supercomputing overview: Data Parallelism, Sharding, Pipelining, Model parallelism and CPU offloading"
 categories: [machine learning, supercomputing]
 tags: [machinelearning]
 ---
