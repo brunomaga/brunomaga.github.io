@@ -184,7 +184,7 @@ A list of most common data types and embedding types:
   - skipgram: slower to train ("3 days"), better in capturing better semantic relationships, e.g. for 'cat' return 'dog' as a word with close embeddings;
   - CBOW: faster to train ("few hours"), better syntactic relationships between words, e.g. for 'cat' return 'cats';
 - text (word sequences): [BERT]({{ site.baseurl }}{% post_url 2020-02-28-learning-from-sequences %})
-- non-textual sequences: [Encoder-Decoders e.g. LSTMs RNNs]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %})
+- non-textual sequences: [Encoder-Decoders e.g. LSTMs RNNs]({{ site.baseurl }}{% post_url 2020-02-28-learning-from-sequences %})
 - point cluster or array: [Principal Component Analysis]({{ site.baseurl }}{% post_url 2017-11-01-Unsupervised-Learning %})
 - images: 
   - in a classification task: use the activation of the last layer *before* the layer that does logit/softmax. I.e. the input to the final layer, i.e. the ouput of the one before last;

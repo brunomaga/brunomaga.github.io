@@ -50,11 +50,37 @@ The higher the stage, the more communication we require, but the less memory we 
 {: style="text-align:center; font-size: small;"}
 Memory consumption of the three different stages of ZeRO FSDP.  Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
 
-Additionaly, on top of stages 1 and 2, we can enable [**ZeRO-Offload**](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory. On top of stage 3, we can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine that extends ZeRO-offload with support to NVMe memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication".
+## CPU Offloading
+
+Sometimes the model can be so big that even with sharding, it won't fit in a single process. A common technique to handle such memory limitations is CPU offloading - also referred to as virtual Deep Neural Networks by [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shiram et al)](https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf). The main goal of this method is to iteratively move to the GPU the portions of activations and model that are required for the current and following subset of computation steps. Previously-processed layers are moved from GPU to CPU while upcoming layers will be moved from the CPU to GPU.
+
+This is possible because as we've seen on a [previous post]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}), the loss (and its derivative) can be written as a composition of activations throughout layers, e.f. for MAE:
+
+$$
+L = \frac{1}{N} \sum_{n=1}^N | y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) |
+$$
+
+where $$f^{(l)}$$ is the activation function in layer $$l$$ and $$y$$ is the groundtruth. 
+The important concept here is the **composition** of the $$f$$ function throughout layers. To reduce the waiting time on pushing (pulling) a layer to (from) the GPU, we can overlap computation of current layers with communication of upcoming ones. The forward pass can be illustrated as:
+
+{: style="text-align:center; font-size: small;"}
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/vDNN2.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The forward pass on the vDNN(+) implementation on convolutional neural networks. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms.  Data not associated with the current layer being processed (layer N) is marked with a black cross and can safely be removed from the GPU's memory. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
+
+
+The backward propagation phase is trickier, as it also includes the gradients being propagated down the model:
+
+{: style="text-align:center; font-size: small;"}
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/vDNN3.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The back propagation phase on the vDNN(+) implementation on convolutional neural networks. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Blue arrows represent data flow during backward progagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Data not associated with the current layer being processed (layer 2) is marked with a black cross and can safely be removed from the GPU's memory. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
 
 ## Model and dataset setup
 
-We start out implementation by taking our previous *GPT-lite* with the specs matching the *GPT-2 Small* model in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1):
+We start our implementation by taking our previous *GPT-lite* with the specs matching the *GPT-2 Small* model in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1):
 
 ```python
 n_layer = 12   # depth of the network as number of decoder blocks.
@@ -135,8 +161,7 @@ world_size = int(os.environ['WORLD_SIZE'])   # the number of processes across al
 Now we define the [`DataLoader`](https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader) that tells each process how to iterate through the data:
 
 ```python
-dataloader = torch.utils.data.DataLoader(
-  dataset, batch_size=4, sampler=sampler)
+dataloader = torch.utils.data.DataLoader(dataset, batch_size=4, sampler=sampler)
 ```
 
 Note the argument `sampler`, that is a [`DistributedSampler`](DistributedSampler) that will delegate different samples from the dataloader to different processes. Without this, all processes would load exactly the same datapoints in every iteration.
@@ -217,12 +242,13 @@ Implementing an existing code in DeepSpeed is pretty simple. To start, DeepSpeed
 }
 ```
 
-Note that in DeepSpeed lingo, the `micro_batch_size_per_gpu` refers to the batch size loaded per dataloader (ie per node, per gradient accumulation step), while `train_batch_size` refers to the batch size across all gradient accumulation steps and processes in the network ie:
+Note that in DeepSpeed lingo, the `train_micro_batch_size_per_gpu` refers to the batch size loaded per dataloader (ie per node, per gradient accumulation step), while `train_batch_size` refers to the batch size across all gradient accumulation steps and processes in the network ie:
 
 ```
-train_batch_size = micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
+train_batch_size = train_micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
 ```
 
+Therefore, **Gradient accumulation** can be enable by simply setting `train_micro_batch_size_per_gpu`. 
 **ZeRO Fully-Sharded Data Parallelism** can be activated by specifying the relevant stage in the config file. If omitted, or when passing the stage 0, DeepSpeed is disabled and the execution follows a regular distributed data paralllel workflow:
 
 ```json
@@ -231,7 +257,7 @@ train_batch_size = micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_ac
 }
 ```
 
-CPU-offloading is called [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857) and performs offloading of several variables in memory to CPU and VNMe, providing huge memory savings. It is only compatible with ZeRO-3 and can be enabled with: 
+CPU offloading on DeepSpeed is called [**ZeRO-Offload**](https://www.deepspeed.ai/tutorials/zero-offload/), as a system for offloading optimizer and gradient states to CPU memory. On top of stage 3, we can enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine that extends ZeRO-offload with support to NVMe memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication". They can be enabled via:
 
 ```json
 {
@@ -242,8 +268,6 @@ CPU-offloading is called [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857) a
   }
 }
 ```
-
-There's also similar field called [ZeRO-Offload](https://www.deepspeed.ai/tutorials/zero-offload/) for stage 2. 
 
 We're almost done now. Once we have our config file properly calibrated, the implementation is straighforward. All boilerplate that PyTorch requires for parallelism and data loaders is managed internally by DeepSpeed. So we only need to setup DeepSpeed as:
 

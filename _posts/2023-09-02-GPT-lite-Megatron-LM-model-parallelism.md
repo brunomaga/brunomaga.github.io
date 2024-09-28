@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-This post follows from the previous posts [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}) and [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline%}), where we implemented Data and Pipeline parallelism on a GPT model, 2 dimensions of parallelism on the **3D parallelism** of ML models, via Data, Pipeline and Tensors/Models parallelism. In this post, we will discuss model (tensor) parallelism, particularly the [Megatron-LM](https://www.deepspeed.ai/tutorials/megatron/) implementation.
+This post follows from the previous posts [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}) and [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline%}), where we implemented Data and Pipeline parallelism on a GPT model. Data and pipeline parallelism are 2 dimensions of the **3D parallelism** of ML models, via Data, Pipeline and Tensors/Models parallelism. In this post, we will discuss model (tensor) parallelism, particularly the [Megatron-LM](https://www.deepspeed.ai/tutorials/megatron/) implementation.
 
 {: style="text-align:center; font-size: small;"}
 <img width="55%" height="55%" src="/assets/GPT-lite-distributed/GPT_3D_parallelism_2.png"/>
@@ -13,11 +13,23 @@ This post follows from the previous posts [Distributed training of a GPT model u
 {: style="text-align:center; font-size: small;"}
 The 3D parallelism aims and partitioning (color-coded) computer resources  across the 3D space of data, pipeline and tensor (model) dimensions. In this post of will focus on model/tensor parallelism. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
 
-## Megatron-LM model/tensor parallelism
 
-**Tensor parallelism**, **vertical parallelism**, **intra-layer parallelism**, **activation parallelism** or most commonly ad confusedly called **model parallelism**, is the third dimension of parallelism and aims at partitioning the computation of tensors (activations) in the forward and backward passes. This requires a modification of the workflow of the computation in order to work in a distributed manner, particularly on the matrix multiplications format: in practice we must decide for the dimension of tensor partitioning (row, wise, none) and adapt the communication and computation accordingly, leading to an all-gather, all-reduce, scatter-reduced distributed matrix multiplicatioon, etc. Therefore, it is a model-specific implementation, and is [supported but not provided](https://www.deepspeed.ai/training/#support-for-custom-model-parallelism) by DeepSpeed, except in some built-in implementations such as [Megatron-LM](https://www.deepspeed.ai/tutorials/megatron/), for BERT, T5, GPT2 and others.
+**Tensor parallelism**, **vertical parallelism**, **intra-layer parallelism**, **activation parallelism** or most commonly ad confusedly called **model parallelism**, is the third dimension of parallelism and aims at partitioning the computation on the activations dimension. This is a hard problem: in practice we must decide for the dimension of tensor partitioning (row, wise, none) and adapt the communication and computation accordingly. Therefore, it is a model- and data-specific implementation.
 
-We can have a better understanding if we try to replicate the partitioning suggested by Megatron-LM in the paper [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053). The main rationale underlying the paper is that Transformer-based models have two main components - a feed-forward (MLP) and an attention head - and we can do a forward and a backward pass on each of these blocks with a single collective communication step.
+{: style="text-align:center; font-size: small;"}
+<img width="55%" height="55%" src="/assets/AI-Supercomputing/DNN_model_parallelism.png"/>
+
+{: style="text-align:center; font-size: small;"}
+A representation of tensor parallelism on a fully-connected DNN, on two processors $$p0$$ and $$p1$$. Input dataset and each layer of the model are divided and allocated to different processors. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
+
+Looking at the previous picture, we notice a major drawback in this method. During training, processors need to continuously communicate activations that are needed across the processor network. This communication is synchronous and does not allow an overlap with compute. And it creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. 
+
+There are several alternative ways to distribute multi-dimensional tensors across several compute nodes, that aim at reducing number of comunication steps or ammount of communcation volue. In this post, we will detail and implemetent Megatron-LM paper.
+
+
+## Megatron-LM model parallelism
+
+We can have a better understanding if we try to replicate the partitioning suggested by Megatron-LM in the paper [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053). The main rationale in Megatron-LM is that Transformer-based models have two main components - a feed-forward (MLP) and an attention head - and we can do a forward and a backward pass on each of these blocks with a single collective communication step.
 
 {: style="text-align:center; font-size: small;"}
 <img width="55%" height="55%" src="/assets/GPT-lite-distributed/Megatron-LM.png"/>
@@ -151,7 +163,20 @@ class Megatron_Head(nn.Module):
     return out
 ``` 
 
-### Final remarks and code
+
+## Detour: model parallelism on Convolutional Neural Nets
+
+The whole point of Megatron-LM was to reduce the ammount of high volume communication steps due to the high volume of data involved per step. However, it is relevant to mention that model parallelism has some use cases where it can be efficient and of low volume communication. An example is on the parallelism of [Convolutional Neural Networks]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}). In practice, due to the kernel operator in CNNs (that has a short spatial span), the amount of activations to be communicated is limited to the ones ones that neighboring activations need. This method has been detailed by [Dryden et al. (Improving Strong-Scaling of CNN Training by Exploiting Finer-Grained Parallelism, Proc. IPDPS 2019)](https://arxiv.org/pdf/1903.06681.pdf). The functioning is illustrated in the picture below and is as follows:
+1. Input data and activations are split across the height and width dimensions among processors;
+2. For a given convolutional layer, the convolution can be computed in independently be each processor, with the exception of the activation in the split boundaries. These activations (the *halo region* in purple in the picture blow) will need to be communicated at every forward/step.
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/AI-Supercomputing/argonne_parallel_2.PNG"/>
+
+{: style="text-align:center; font-size: small;"}
+Illustration of model parallelism applied to Convolutional Neural network. **LEFT:** splitting of activations on a 2D input across four processors $$p0-p3$$. <b><span style="color: red;">red box</span></b>: center of the 3x3 convolution filter; <b><span style="color: red;">red arrow</span></b>: data movement required for updating neuron in center of filter; <b><span style="color: violet;">violet region:</span></b> <i>halo region</i> formed of the elements that need to be communicated at every step. <b>RIGHT:</b> communication between processors $$p0$$ and $$p1$$. <b><span style="color: red;">Red arrow</span></b>: forward pass dependencies; <b><span style="color: blue;">blue arrow</span></b>: backward pass dependencies;
+
+## Final remarks and code
 
 There is [ongoing work from PyTorch to support general model parallelism](https://pytorch.org/docs/stable/distributed.tensor.parallel.html), where the user can pick row-wise split, column-wise split and sharding of individual tensor. Also, combining data, pipeline and model parallelism requires one to define the corect strategy for [custom model parallelism](https://www.deepspeed.ai/training/#model-parallelism).
 
@@ -159,4 +184,4 @@ As an important remark: finding the best parallelism strategy is hard, due to th
 
 We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored. To name a few: [**autotuning**](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) for parallelism hyper-parameters discovery; [**flops profiler**](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) measures the time, flops and parameters of individual layers, [**sparse attention kernels**](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound; [**communication optimizers**](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining, [**monitor**](https://www.deepspeed.ai/training/#monitor) to log live training metrics to TensorBoard, csv file or other backend; [**model compression**](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size.
 
-Finally, this code has been added to the [GPT-lite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed), if you want to try it.
+Finally, the Megatron-LM model parallelism code has been added to the [GPT-lite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed), if you want to try it.

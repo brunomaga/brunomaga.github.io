@@ -48,8 +48,8 @@ For the sake of brevity, we will ommit these details and refer you to the [Pytor
 
 Parallelism, scaling and acceleration of such sequence-to-sequence models is an issue. There are four main reasons that explain this:
 - encoding/decoding is a recursive algorithm, and we can't parallelize recursive iterations, as each iteration depends on the hidden state of the previous one;
-- the DNN underlying the RNN architecture has only a single layer, therefore model parallelism like pipelining (covered in our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %})) won't provide any gains;
-- the hidden layer is composed of $$h$$ neurons, and $$h$$ is usually a value small enought to allow for acceleration at the layer level (e.g. the model parallelism showned in the our [previous post]({{ site.baseurl }}{% post_url 2020-05-12-AI-Supercomputing %});
+- the DNN underlying the RNN architecture has only a single layer, therefore model parallelism like pipelining (covered in our [previous post]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline %})) won't provide any gains;
+- the hidden layer is composed of $$h$$ neurons, and $$h$$ is usually a value small enought to allow for acceleration at the layer level (e.g. the model parallelism showned in the our [previous post]({{ site.baseurl }}{% post_url 2023-09-02-GPT-lite-Megatron-LM-model-parallelism %});
 - input and output sequences have different lengths, and each batch needs to be a set of input and output sentences of similar lenghts, which makes the batches small and inefficient to parallelize. In practice, some batching is possible by grouping sentences first by length of the encoder inputs, and for each encoder, group by length of decoder inputs. This is however very inneficient as we require an extremmly high number of sentences so that all groups of encoder/decoder pairs are large enough to fully utilize the compute resources at every training batch. Not impossible, but very unlikely.
 
 ## Transformer 

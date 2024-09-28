@@ -24,7 +24,7 @@ Hi! I'm a research engineer on the fields of Machine Learning (ML) and High Perf
 </tr>
 </table> 
 
-On the side, I maintain a [publications bookmark]({{ site.publications_permalink }}) and a [resources page]({{ site.resources_permalink }}) where I keep track of papers, books and other material of interest. My [scholar page]({{ site.google_scholar }}) indexes most of my publications. When time allows, I post about HPC and ML:
+On the side, I maintain a [publications bookmark]({{ site.publications_permalink }}) and a [resources page]({{ site.resources_permalink }}) where I keep track of papers, books and other material of interest. When time allows, I post about HPC and ML:
 
 <table style='border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
