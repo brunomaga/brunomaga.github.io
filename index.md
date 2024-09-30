@@ -16,7 +16,7 @@ layout: default
 <td style="border:none">
 Hi! I'm Bruno, a research engineer for large-scale AI at <a href="https://www.synthesia.io">Synthesia</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. And before that, an HPC engineer, PhD and postdoc at <a href="https://www.epfl.ch/en/">EPFL</a>, researching variable-step simulation of spiking neural networks on large supercomputers.
 
-On the side, I maintain a <a href="{{ site.publications_permalink }}">publications bookmark</a> and a <a href="{{ site.resources_permalink }}">resources page</a> where I track of material of interest. And I post about ML and HPC &#128640;.
+On the side, I maintain a <a href="{{ site.publications_permalink }}">publications bookmark</a> and a <a href="{{ site.resources_permalink }}">resources page</a> where I track material of interest, and I post about ML and HPC &#128640;.
 
 <!-- CSS of table defined in _includes/head.html -->
 <div class="Rtable Rtable--4cols Rtable--collapse">
