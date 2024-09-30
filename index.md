@@ -9,7 +9,7 @@ layout: default
 <table style='table-layout:fixed; border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
 <tr>
 
-<td width="19%" style='border:none; vertical-align: top;'>
+<td width="18%" style='border:none; vertical-align: top;'>
     <img src="{{site.photo}}"/>
 </td>
 
@@ -19,11 +19,12 @@ Hi! I'm Bruno, a research engineer for large-scale AI at <a href="https://www.sy
 On the side, I maintain a <a href="{{ site.publications_permalink }}">publications bookmark</a> and a <a href="{{ site.resources_permalink }}">resources page</a> where I track material of interest, and I post about ML and HPC &#128640;.
 
 <!-- CSS of table defined in _includes/head.html -->
-<div class="Rtable Rtable--4cols Rtable--collapse">
+<div class="Rtable Rtable--5cols Rtable--collapse">
   <div class="Rtable-cell"> <a href="mailto:{{ site.author.email }}?subject=Hello"><i class="far fa-envelope" title="Email">&nbsp;</i>email</a> </div>
   <div class="Rtable-cell"> <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}"> <i class="fab fa-linkedin" >&nbsp;</i>linkedin</a> </div>
   <div class="Rtable-cell"> <a href="https://github.com/{{ site.github_username }}"><i class="fab fa-fw fa-github" >&nbsp;</i>github</a> </div>
-  <div class="Rtable-cell"> <a href="{{ site.google_scholar }}"> <i class="ai ai-google-scholar ai-1x" title="Google Scholar">&nbsp;</i>google scholar</a> </div>
+  <div class="Rtable-cell"> <a href="{{ site.google_scholar }}"> <i class="ai ai-google-scholar ai-1x" title="Google Scholar">&nbsp;</i>scholar</a> </div>
+  <div class="Rtable-cell"> <a href="{{ "/feed.xml" | relative_url }}"><i class="fas fa-fw fa-rss" ></i>RSS</a></div>
 </div>
 
 </td>
