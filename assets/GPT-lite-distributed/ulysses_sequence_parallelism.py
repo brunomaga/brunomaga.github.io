@@ -8,7 +8,7 @@ from torch.nn.parallel import DistributedDataParallel
 
 from flash_attn.flash_attn_interface import flash_attn_func
 
-# use FeedForwars from base GPTlite model from the GPT-lite post
+# use FeedForward from base GPTlite model from the GPT-lite post
 current_dir = os.path.dirname(os.path.realpath(__file__))
 sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
 from gptlite import FeedForward

@@ -14,9 +14,9 @@ layout: default
 </td>
 
 <td style="border:none">
-Hi! I'm Bruno, a research engineer for large-scale AI at <a href="https://www.synthesia.io">Synthesia</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. And before that, an HPC engineer, PhD and postdoc at <a href="https://www.epfl.ch/en/">EPFL</a>, researching variable-step simulation of spiking neural networks on large supercomputers.
+Welcome 👋🏽. I am Bruno, a research engineer for large-scale AI at <a href="https://www.synthesia.io">Synthesia</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. And before that, an HPC engineer, PhD and postdoc at <a href="https://www.epfl.ch/en/">EPFL</a>, researching variable-step simulation of spiking neural networks on large supercomputers.
 
-In this space, I post about ML and HPC, and I keep track of related <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> &#128640;.
+In this space, I keep track of <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> of interest, and I post about ML and HPC 🚀.
 
 <!-- CSS of table defined in _includes/head.html -->
 <div class="Rtable Rtable--5cols Rtable--collapse">

@@ -173,9 +173,7 @@ Now that we have the forward and reverse diffusion processes, we can perform eve
 
 ## Diffusion transformers
 
-The publication [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement that outperformes the UNet-based diffusion in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). PUtting it simply
-
->  DiTs adhere to the best practices of [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), which have been shown to scale more effectively for visual recognition than traditional convolutional networks (e.g., ResNet).
+The publication [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement that outperformes the UNet-based diffusion in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4). VITs also also shown to have better scaling properties and accuracy than convolutional neural networks. Moreover, related to ViTs scaling, it shows that (1) ViT Gflops are strongly correlated with FID, (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
 
 >  We study the scaling behavior of transformers with respect to network complexity (in GFlops) vs. sample quality. We show that by constructing and benchmarking the DiT design space under the Latent Diffusion Models (LDMs) [48] framework, where diffusion models are trained within a VAE’s latent space, we can successfully replace the U-Net backbone with a transformer. 
 
@@ -185,8 +183,47 @@ The publication [Scalable Diffusion Models with Transformers](https://arxiv.org/
 
 Here they use implement a **conditional diffusion model** that takes as input extra information such as class $$c$$, and the reverse process becomes $$p_θ(x_{t−1} \mid  x_t, c)$$, where $$\epsilon_θ$$ and $$Σ_θ$$ are conditioned on $$c$$.
 
-> In this setting, classifier-free guidance can be used to encourage the sampling procedure to find $$x$$ such that $$\log p(c \mid x)$$ is high. By Bayes Rule, $$\log p(c \mid x) ∝ \log p(x \mid c) − \log p(x)$$, and hence $$∇_x \log p(c \mid x) ∝ ∇_x \log p(x \mid c) − ∇_x \log p(x)$$.  By interpreting the output of diffusion models as the score function, the DDPM sampling procedure can be guided to sample $$x$$ with high $$p(x \mid c)$$ by: $$\hat{\epsilon}_θ(x_t, c) = \epsilon_θ(x_t, ∅) + s · ∇_x \log p(x \mid c) ∝ \epsilon_θ(x_t, ∅) + s · (\epsilon_θ(x_t, c)−\epsilon_θ(x_t, ∅))$$, where $$s \gt 1$$ indicates the scale of the guidance (note that $$s = 1$$ recovers standard sampling). Evaluating the diffusion model with $$c = ∅$$ is done by randomly dropping out $$c$$ during training and replacing it with a learned “null” embedding $$∅$$. 
+> In this setting, **[classifier-free guidance](https://arxiv.org/abs/2207.12598)** can be used to encourage the sampling procedure to find $$x$$ such that $$\log p(c \mid x)$$ is high. By Bayes Rule, $$\log p(c \mid x) ∝ \log p(x \mid c) − \log p(x)$$, and hence $$∇_x \log p(c \mid x) ∝ ∇_x \log p(x \mid c) − ∇_x \log p(x)$$.  By interpreting the output of diffusion models as the score function, the DDPM sampling procedure can be guided to sample $$x$$ with high $$p(x \mid c)$$ by: $$\hat{\epsilon}_θ(x_t, c) = \epsilon_θ(x_t, ∅) + s · ∇_x \log p(x \mid c) ∝ \epsilon_θ(x_t, ∅) + s · (\epsilon_θ(x_t, c)−\epsilon_θ(x_t, ∅))$$, where $$s \gt 1$$ indicates the scale of the guidance (note that $$s = 1$$ recovers standard sampling). Evaluating the diffusion model with $$c = ∅$$ is done by randomly dropping out $$c$$ during training and replacing it with a learned “null” embedding $$∅$$. 
 
+The paper also mentions the notion of **[lattent diffusion model](https://arxiv.org/abs/2112.10752)** where diffusion is applied on the latent space of pretrained autoencoders (e.g. VAE) instaed of the image directly. This reduces computation by training diffusion on high-resolution images by training on its compressed representation instead. 
+
+To keep our architecture simple as simple as possible, we will ingnore the 4 variants described in DiT block design (in Section 3.2, in-context conditioning, cross-attention block, adaptive layer norm block and adaLN-Zero block) and we will use the regular PyTorch embedding `nn.Embedding` (a look-up table) instaed of the  frequency-based positional
+embeddings (the sine-cosine version).
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/from-Diffusion-to-SORA/DiT.png"/> 
+
+So we start the implementation with the boilerplace code that crops the input image into patches to be used by the visual attention module:
+
+```python
+    @staticmethod
+    def patchify(x, patch_size):
+        """ converts an image x into a list of patches of size patch_size x patch_size """
+        B, C, H, W = x.shape
+        x = x.unfold(2, patch_size, patch_size).unfold(3, patch_size, patch_size)
+        x = x.contiguous().view(B, C, -1, patch_size, patch_size)
+        x = x.permute(0, 2, 1, 3, 4)
+        return x
+```
+
+Our ViT is simply a positional embedding layer, a block of GPT blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a mean and variance for each channel and patch). Optionally, we add VAE that we may want to use to get a latent encoding and decoding:
+
+```python
+class ViT(nn.Module):
+    def __init__(self, channels, patch_size=4, n_embd=64, n_blocks=12) -> None:
+        super().__init__()
+        self.patch_size = patch_size
+        self.pos_emb = nn.Embedding(64, n_embd)
+        self.blocks = nn.Sequential(*[Block(64, 64) for _ in range(n_blocks)])
+        self.decoder = nn.Sequential( nn.LayerNorm(n_embd), nn.Linear(n_embd, channels) )
+        self.vae = diffusers.models.AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse")
+
+    def forward(self):
+        if self.vae:  x = self.vae.tiled_encode(x)
+        x = ViT.patchify(x, self.patch_size)
+        x += self.pos_emb(torch.arange(x.shape[0], device=x.device))
+        x = self.blocks(x)
+        x = self.decoder(x)
+        if self.vae:  x = self.vae.tiled_decode(x)
+        return x
+```

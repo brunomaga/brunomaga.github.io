@@ -11,6 +11,7 @@ from torchvision.transforms.functional import pil_to_tensor
 from torch.nn.parallel import DistributedDataParallel as DDP
 from torch.utils.data import DistributedSampler
 import diffusers
+from vit import ViT
 
 
 def extract(a, t, x_shape):
@@ -20,7 +21,7 @@ def extract(a, t, x_shape):
     return out.reshape(batch_size, *((1,) * (len(x_shape) - 1))).to(t.device)
 
 
-if __name__ == "__main__":
+def main(model_name='UNet'):
 
     torch.distributed.init_process_group(backend='nccl', init_method='env://')
     local_rank = int(os.environ['LOCAL_RANK'])
@@ -36,8 +37,11 @@ if __name__ == "__main__":
     dataloader = DataLoader(images, batch_size=batch_size, sampler=DistributedSampler(images))
 
     # load model and optimizer
-    model = diffusers.UNet2DModel(in_channels=channels, out_channels=channels).to(device)
-    model = DDP(model, device_ids=[local_rank])
+    if model_name == 'UNet':
+        model = diffusers.UNet2DModel(in_channels=channels, out_channels=channels)
+    elif model_name == 'ViT':
+        model = ViT(channels=channels, patch_size=4, n_embd=64, n_blocks=12)
+    model = DDP(model.to(device), device_ids=[local_rank])
     optimizer = SGD(model.parameters(), lr=1e-2)
 
     # linear variance scheduler. See here for more implementations: https://huggingface.co/blog/annotated-diffusion#defining-the-forward-diffusion-process
@@ -48,7 +52,6 @@ if __name__ == "__main__":
 
     results_folder = Path("./results")
     results_folder.mkdir(exist_ok = True)
-    save_and_sample_every = 1000
 
 
     @torch.no_grad()
@@ -139,3 +142,7 @@ if __name__ == "__main__":
             all_images = (all_images + 1) * 0.5
             save_image(all_images, str(results_folder / f'sample-{step}.png'), nrow = 6)
             
+
+if __name__ == "__main__":
+    main("Unet")
+    main("ViT")
