@@ -34,6 +34,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2023 FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](#2023-flashattention-2-faster-attention-with-better-parallelism-and-work-partitioning)
 - [2022 Reducing Activation Recomputation in Large Transformer Models (Megatron Sequence Parallelism)](#2022-reducing-activation-recomputation-in-large-transformer-models-megatron-sequence-parallelism)
 - [2022 Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer ($$\\mu$$Transfer), Microsoft](#2022-tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer-mutransfer-microsoft)
+- [2022 Scalable Diffusion Models with Transformers (Diffusion Transformers, DiT)](#2022-scalable-diffusion-models-with-transformers-diffusion-transformers-dit)
 - [2022 DyLoRA: Parameter Efficient Tuning of Pre-trained Models using Dynamic Search-Free Low-Rank Adaptation](#2022-dylora-parameter-efficient-tuning-of-pre-trained-models-using-dynamic-search-free-low-rank-adaptation)
 - [2022 Self-attention Does Not Need $$O(n^2)$$ Memory, Google](#2022-self-attention-does-not-need-on2-memory-google)
 - [2022 Efficiently Scaling Transformer Inference, Google](#2022-efficiently-scaling-transformer-inference-google)
@@ -456,6 +457,8 @@ Hyperparameters That Can Be µTransferred, Not µTransferred, or µTransferred A
 - µTransferable: optimization related (learning rate, momentum, Adam beta, LR schedule, etc), init (per-layer init variance), parameter multipliers (multiplicative constants after weight/biases, etc), etc
 - Not µTransferable: regularization  (dropout, weight decay, etc)
 - µTransferred Across (Depth): width, depth*, batch size*,  training time*, seq length*
+
+## 2022 [Scalable Diffusion Models with Transformers (Diffusion Transformers, DiT)](https://arxiv.org/abs/2212.09748)
 
 ## 2022 [DyLoRA: Parameter Efficient Tuning of Pre-trained Models using Dynamic Search-Free Low-Rank Adaptation](https://arxiv.org/abs/2210.07558)
 

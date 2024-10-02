@@ -20,11 +20,11 @@ The 3D parallelism aims and partitioning (color-coded) computer resources  acros
 <img width="55%" height="55%" src="/assets/AI-Supercomputing/DNN_model_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
-A representation of tensor parallelism on a fully-connected DNN, on two processors $$p0$$ and $$p1$$. Input dataset and each layer of the model are divided and allocated to different processors. Red lines represent weights that have to be communicated to a processor different than the one holding the state of the input data for the same dimension.
+A representation of tensor parallelism on a fully-connected DNN, on two processors $$p0$$ and $$p1$$. Input sample and activations are distributed across different processors. Red lines represents the activations that have to be communicated to a different processor.
 
 Looking at the previous picture, we notice a major drawback in this method. During training, processors need to continuously communicate activations that are needed across the processor network. This communication is synchronous and does not allow an overlap with compute. And it creates a major drawback on the execution as it requires a tremendous ammount of communication at every layer of the network and for every input batch. 
 
-There are several alternative ways to distribute multi-dimensional tensors across several compute nodes, that aim at reducing number of comunication steps or ammount of communcation volue. In this post, we will detail and implemetent Megatron-LM paper.
+There are several alternative ways to distribute multi-dimensional tensors across several compute nodes, that aim at reducing number of comunication steps or ammount of communcation volue. In this post, we will detail and implement Megatron-LM paper.
 
 
 ## Megatron-LM model parallelism
@@ -171,7 +171,7 @@ The whole point of Megatron-LM was to reduce the ammount of high volume communic
 2. For a given convolutional layer, the convolution can be computed in independently be each processor, with the exception of the activation in the split boundaries. These activations (the *halo region* in purple in the picture blow) will need to be communicated at every forward/step.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/AI-Supercomputing/argonne_parallel_2.PNG"/>
+<img width="100%" height="100%" src="/assets/AI-Supercomputing/argonne_parallel_2.PNG"/>
 
 {: style="text-align:center; font-size: small;"}
 Illustration of model parallelism applied to Convolutional Neural network. **LEFT:** splitting of activations on a 2D input across four processors $$p0-p3$$. <b><span style="color: red;">red box</span></b>: center of the 3x3 convolution filter; <b><span style="color: red;">red arrow</span></b>: data movement required for updating neuron in center of filter; <b><span style="color: violet;">violet region:</span></b> <i>halo region</i> formed of the elements that need to be communicated at every step. <b>RIGHT:</b> communication between processors $$p0$$ and $$p1$$. <b><span style="color: red;">Red arrow</span></b>: forward pass dependencies; <b><span style="color: blue;">blue arrow</span></b>: backward pass dependencies;

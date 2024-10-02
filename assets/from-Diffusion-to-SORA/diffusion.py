@@ -112,17 +112,15 @@ if __name__ == "__main__":
 
         # Algorithm 1 line 3: sample t uniformally for every example in the batch
         t = torch.randint(0, timesteps, (batch_size,), device=device).long()
-
         noise = torch.randn_like(batch)
         x_noisy = q_sample(x0=batch, t=t, noise=noise)
         predicted_noise = model(x_noisy, t)[0]
         loss = F.smooth_l1_loss(noise, predicted_noise) # Huber loss
+
         loss.backward()
         optimizer.step()
         optimizer.zero_grad(set_to_none=True)
         print(f"step {step} loss: {loss.item()}")
-
-        # save generated images
 
         @torch.no_grad()
         def num_to_groups(num, divisor):
@@ -133,6 +131,7 @@ if __name__ == "__main__":
                 arr.append(remainder)
             return arr
         
+        # save generated images
         if step != 0 and step % 10 == 0:
             batches = num_to_groups(4, batch_size)
             all_images_list = list(map(lambda n: p_sample_loop(model, shape=(n, channels, image_size, image_size)), batches))

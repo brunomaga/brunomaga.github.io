@@ -128,7 +128,7 @@ Now we compute the posterior variance   $$\tilde{\beta_t} = \frac{1-\hat{\alpha}
         return posterior_var_t
 ```
 
-and finally the sampling function $$p_θ(x_{t−1}\mid x_t) = \mathcal{N}(x_{t−1}; µ_θ (x_t, t), Σ_θ(x_t, t))$$, where $$Σ_θ(x_t, t) = 𝜎^2I$$ as in section 3.2:
+and finally the sampling function $$p_θ(x_{t−1}\mid x_t) = \mathcal{N}(x_{t−1}; µ_θ (x_t, t), Σ_θ(x_t, t))$$, where $$Σ_θ(x_t, t) = 𝜎^2I$$ due to being an isotropic Gaussian distributed, as in section 3.2:
 
 ```python
     @torch.no_grad()
@@ -156,6 +156,37 @@ Finally, to generate new images we must reverse the diffusion process (from time
         return img
 ```
 
-In their implementation, the authors picked the U-Net as the encoder-decoder architecture. The encoder-encoder inputs an image, passes through several downsampling and upsampling layers (with residual connections) and tries to reconstruct the original picture. 
+Now that we have the forward and reverse diffusion processes, we can perform every diffusion iteration as:
 
-We first start by taking a regular U-Net code, and extract dowsampling (encoder) and upsampling (decoder) blocks as in [here](https://github.com/clemkoa/u-net/blob/master/unet/unet.py). Then we add sinusoidal positional embeddings as in [here](https://huggingface.co/blog/annotated-diffusion#position-embeddings) or [RotaryPositionalEmbeddings](https://pytorch.org/torchtune/stable/generated/torchtune.modules.RotaryPositionalEmbeddings.html#rotarypositionalembeddings) (original [paper](https://arxiv.org/abs/2104.09864)).
+{: style="text-align:center; font-size: small;"}
+<img width="45%" height="45%" src="/assets/from-Diffusion-to-SORA/diffusion_alg1.png"/> 
+<img width="45%" height="45%" src="/assets/from-Diffusion-to-SORA/diffusion_alg2.png"/> 
+
+```python
+    # Algorithm 1 line 3: sample t uniformally for every example in the batch
+    t = torch.randint(0, timesteps, (batch_size,), device=device).long()
+    noise = torch.randn_like(batch)
+    x_noisy = q_sample(x0=batch, t=t, noise=noise)
+    predicted_noise = model(x_noisy, t)[0]
+    loss = F.smooth_l1_loss(noise, predicted_noise) # Huber loss
+```
+
+## Diffusion transformers
+
+The publication [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement that outperformes the UNet-based diffusion in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). PUtting it simply
+
+>  DiTs adhere to the best practices of [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), which have been shown to scale more effectively for visual recognition than traditional convolutional networks (e.g., ResNet).
+
+>  We study the scaling behavior of transformers with respect to network complexity (in GFlops) vs. sample quality. We show that by constructing and benchmarking the DiT design space under the Latent Diffusion Models (LDMs) [48] framework, where diffusion models are trained within a VAE’s latent space, we can successfully replace the U-Net backbone with a transformer. 
+
+> We further show that DiTs are scalable architectures for diffusion models: there is a strong correlation between the network complexity (measured by Gflops) vs. sample quality (measured by FID).
+
+> Background: Gaussian diffusion models assume a forward noising process which gradually applies noise to real data $$x_0: q(x_t \mid x_0 ) = \mathcal{N} (x_t ; \sqrt{α¯}_t x_ 0,(1 − α¯t)I)$$.  By applying the reparameterization trick, we can sample $$x_t = \sqrt{α¯_t} x_0 + \sqrt{1 − α¯_t} \epsilon_t, where \epsilon_t ∼ \mathcal{N} (0, I)$$. ETC section 3.1
+
+Here they use implement a **conditional diffusion model** that takes as input extra information such as class $$c$$, and the reverse process becomes $$p_θ(x_{t−1} \mid  x_t, c)$$, where $$\epsilon_θ$$ and $$Σ_θ$$ are conditioned on $$c$$.
+
+> In this setting, classifier-free guidance can be used to encourage the sampling procedure to find $$x$$ such that $$\log p(c \mid x)$$ is high. By Bayes Rule, $$\log p(c \mid x) ∝ \log p(x \mid c) − \log p(x)$$, and hence $$∇_x \log p(c \mid x) ∝ ∇_x \log p(x \mid c) − ∇_x \log p(x)$$.  By interpreting the output of diffusion models as the score function, the DDPM sampling procedure can be guided to sample $$x$$ with high $$p(x \mid c)$$ by: $$\hat{\epsilon}_θ(x_t, c) = \epsilon_θ(x_t, ∅) + s · ∇_x \log p(x \mid c) ∝ \epsilon_θ(x_t, ∅) + s · (\epsilon_θ(x_t, c)−\epsilon_θ(x_t, ∅))$$, where $$s \gt 1$$ indicates the scale of the guidance (note that $$s = 1$$ recovers standard sampling). Evaluating the diffusion model with $$c = ∅$$ is done by randomly dropping out $$c$$ during training and replacing it with a learned “null” embedding $$∅$$. 
+
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/from-Diffusion-to-SORA/DiT.png"/> 
