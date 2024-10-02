@@ -26,13 +26,13 @@ class Block(nn.Module):
 class ViT(nn.Module):
     """ A Vision Transformer model. """
 
-    def __init__(self, channels, patch_size=4, n_embd=64, n_blocks=12) -> None:
+    def __init__(self, channels, patch_size=4, n_embd=64, n_blocks=12, use_vae=False):
         super().__init__()
         self.patch_size = patch_size
         self.pos_emb = nn.Embedding(64, n_embd)
         self.blocks = nn.Sequential(*[Block(n_embd=n_embd) for _ in range(n_blocks)])
         self.decoder = nn.Sequential( nn.LayerNorm(n_embd), nn.Linear(n_embd, channels*2) )
-        self.vae = diffusers.models.AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse")
+        self.vae = diffusers.models.AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse") if use_vae else None
 
     @staticmethod
     def patchify(x, patch_size):

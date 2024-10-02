@@ -210,13 +210,13 @@ Our ViT is simply a positional embedding layer, a block of GPT blocks and a deco
 
 ```python
 class ViT(nn.Module):
-    def __init__(self, channels, patch_size=4, n_embd=64, n_blocks=12) -> None:
+    def __init__(self, channels, patch_size=4, n_embd=64, n_blocks=12, use_vae=False):
         super().__init__()
         self.patch_size = patch_size
         self.pos_emb = nn.Embedding(64, n_embd)
         self.blocks = nn.Sequential(*[Block(64, 64) for _ in range(n_blocks)])
         self.decoder = nn.Sequential( nn.LayerNorm(n_embd), nn.Linear(n_embd, channels) )
-        self.vae = diffusers.models.AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse")
+        self.vae = diffusers.models.AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse") if use_vae else None
 
     def forward(self):
         if self.vae:  x = self.vae.tiled_encode(x)
@@ -227,3 +227,34 @@ class ViT(nn.Module):
         if self.vae:  x = self.vae.tiled_decode(x)
         return x
 ```
+
+# Further reading
+- [OmniGen: Unified Image Generation](https://arxiv.org/abs/2409.11340), for text-to-image generation
+- [DALL-E 3](https://openai.com/index/dall-e-3/), for text-to-image generation
+
+## SORA
+
+We now move to the movie domain and study a text-to-video model, which is a basic implementation of [SORA](https://openai.com/index/video-generation-models-as-world-simulators/), a text-to-video, image-to-video, text-to-image (single frame video), and video-to-video model (for video editing, extension, etc).
+
+Just as in the previous example, we also use a VAE to compress the input into a smaller latent space. However, we compress videos into spatial and temporal patches.
+
+[Masked autoencoders (MAE)](Masked Autoencoders As Spatiotemporal Learners) have shown to be  scalable self-supervised learners for computer vision, in [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) and [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304).
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/from-Diffusion-to-SORA/sora_vae.png"/> 
+
+{: style="text-align:center; font-size: small;"}
+An overview of the lattent space in SORA. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". source: [Video generation models as world simulators, OpenAI](https://openai.com/index/video-generation-models-as-world-simulators/)
+
+### SORA variants
+
+- OpenSORA implementation from HPC AI Tech : [github](https://github.com/hpcaitech/Open-Sora/tree/main) and [report](https://github.com/hpcaitech/Open-Sora/blob/main/docs/report_03.md).
+- [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304)
+- [CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer](https://arxiv.org/abs/2408.06072)
+- [Latte: Latent Diffusion Transformer for Video Generation](https://arxiv.org/abs/2401.03048v1)
+- [Tora: Trajectory-oriented Diffusion Transformer for Video Generation](https://arxiv.org/abs/2407.21705) ( [webpage](https://ali-videoai.github.io/tora_video/))
+- [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113) ([github](https://github.com/facebookresearch/mae_st))
+- [PipeFusion: Displaced Patch Pipeline Parallelism for Inference of Diffusion Transformer Models](https://arxiv.org/abs/2405.14430) and [xDIT github](https://github.com/xdit-project/). PipeFusion splits images into patches and distributes the network layers across multiple devices. It employs a pipeline parallel manner to orchestrate communication and computations. xDIT is a parallel **inference** engine of DiTs using Universal Sequence Parallelism (including Ulysses attention and Ring attention), PipeFusion, and hybrid parallelism. It applies and benchmarks xDIT to the following DiT implementations: CogVideo, Flux, Latte, HunyuanDiT, Stable Diffusion 3, Pixart-Sigma, Pixart-alpha. 
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/from-Diffusion-to-SORA/pipefusion.png"/> 

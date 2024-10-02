@@ -28,6 +28,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 - [2023 GPTs are GPTs: An Early Look at the Labor Market Impact Potential of Large Language Models, OpenAI, OpenResearch, Univ. of Pennsylvania](#2023-gpts-are-gpts-an-early-look-at-the-labor-market-impact-potential-of-large-language-models-openai-openresearch-univ-of-pennsylvania)
 - [2023 Segment Anything, Meta AI Research](#2023-segment-anything-meta-ai-research)
 - [2023 Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](#2023-retentive-network-a-successor-to-transformer-for-large-language-models-microsoft-and-tsinghua-university)
+- [2023 RoFormer: Enhanced Transformer with Rotary Position Embedding (Rotary Embedding)](#2023-roformer-enhanced-transformer-with-rotary-position-embedding-rotary-embedding)
 - [2023 Operator Fusion in XLA: Analysis and Evaluation, UToronto](#2023-operator-fusion-in-xla-analysis-and-evaluation-utoronto)
 - [2023 LongNet: Scaling Transformers to 1,000,000,000 Tokens, Microsoft and Xi’an Jiaotong University](#2023-longnet-scaling-transformers-to-1000000000-tokens-microsoft-and-xian-jiaotong-university)
 - [2023 DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models](#2023-deepspeed-ulysses-system-optimizations-for-enabling-training-of-extreme-long-sequence-transformer-models)
@@ -371,6 +372,10 @@ Finally, the model uses $$h = d_{model}/d$$ retention heads in each layer, where
 
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="/assets/publications/RetNet.png"/>
+
+## 2023 [RoFormer: Enhanced Transformer with Rotary Position Embedding (Rotary Embedding)](https://arxiv.org/abs/2104.09864)
+
+TODO 
 
 ## 2023 [Operator Fusion in XLA: Analysis and Evaluation, UToronto](https://arxiv.org/abs/2301.13062)
 

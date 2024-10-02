@@ -19,7 +19,8 @@ Note: Easiest way to speed up the model is to save memory, allowing for faster b
 - KV caching and multi-query attention for decoding only
 - DeepSpeed zero presentation, Ulysses, etc
 - [DeepSpeed model compression](https://www.deepspeed.ai/tutorials/model-compression/)
-
+- [Deep Model Fusion: A Survey](https://arxiv.org/abs/2309.15698)
+- 
 Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}), we will focus on the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, whose objective is to generate text by predicting the next character in a sequence.
 We will discuss and apply Knowledge distilation for improved accuracy and prunning/compression, TensorRT for quantization and acceleration via kernel fusion, `torch.compile` for model acceleration, and flash attention and KV-cache for lower memory and higher acceleration.
 
