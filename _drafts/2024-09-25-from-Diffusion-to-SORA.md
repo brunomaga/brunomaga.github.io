@@ -244,10 +244,15 @@ An overview of the lattent space in SORA. The pre-processing step "turns videos 
 
 ## Further reading and resources
 
-- [Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633): presents Mixture of Experts of DiTs, with better scaling properties, an accuracy comparable to dense DiTs, and highly optimized inference and ; 
+- [Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633): presents Mixture of Experts of DiTs (MoE-DiT), delivering better scaling properties, an accuracy comparable to dense DiTs, and highly optimized inference; 
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/from-Diffusion-to-SORA/dit_moe.png"/> 
+
+- [LongVILA: Scaling Long-Context Visual Language Models for Long Videos](https://www.arxiv.org/abs/2408.10188) details a pipeline of 5 steps for training long-context visual-language models. The first 3 stages are multi-modal alignment, large-scale pre-training and short supervised fine-tuning from [VILA: On Pre-training for Visual Language Models](https://arxiv.org/abs/2312.07533v2). Stage 4 is context extension for LLMs, by increasing the sequence length of input samples (ie curriculum learning) up to 262K tokens. In Stage 5, the model is fine-tuned for long video understanding with Multi-Modal Sequence Parallelism (MM-SP) based on [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485).
+
+{: style="text-align:center; font-size: small;"}
+<img width="68%" height="68%" src="/assets/from-Diffusion-to-SORA/longvilla.png"/> 
 
 - [OmniGen: Unified Image Generation](https://arxiv.org/abs/2409.11340), for text-to-image generation
 - [DALL-E 3](https://openai.com/index/dall-e-3/), for text-to-image generation
