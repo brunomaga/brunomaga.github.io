@@ -171,7 +171,13 @@ Now that we have the forward and reverse diffusion processes, we can perform eve
     loss = F.smooth_l1_loss(noise, predicted_noise) # Huber loss
 ```
 
-### adding a temporal dimension to a UNets-based diffusion models
+### Other U-net based diffusion models for text-to-image and text-to-video tasks
+
+{::options parse_block_html="true" /}
+<details> <summary markdown="span">[Imagen: Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding](https://arxiv.org/abs/2205.11487)</summary>
+A Unet-based text-to-image diffusion model, where "key discovery is that generic large language models (e.g. T5), pretrained on text-only corpora, are surprisingly effective at encoding text for image synthesis: increasing the size of the language model in Imagen boosts both sample fidelity and image-text alignment much more than increasing the size of the image diffusion model".
+</details>
+{::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Stable Video Diffusion: Scaling Latent Video Diffusion Models to Large Datasets](https://arxiv.org/abs/2311.15127)</summary>
@@ -189,16 +195,25 @@ To train on videos and have 3D attention they use the method presented in [Align
 {::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
-<details> <summary markdown="span">[CyberHost: Taming Audio-driven Avatar Diffusion Model with Region Codebook Attention](https://arxiv.org/abs/2409.01876)</summary>
-TODO
+<details> <summary markdown="span">[Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation](https://arxiv.org/abs/2311.17117)</summary>
+An U-net based diffusion model that takes as input a reference image (photo of a human) and a video of a moving human annotation (*stick man*, the pose sequence) and outputs the video that animates the human with the movements of the stick man. The reference image is encoded with VAE and CLIP embeddings. The model structure includes 2 U-nets, the reference unet that *merges detail features via spatial attention* and a denoising/diffusion U-Net that is applied to the pose sequence to generate the final video. 
+
+3D attention is achieved by a spatial attention converts input $$B \times T \times H \times W \times C$$ into $$(B \times T ) \times (H \times W) \times C$$ to perform attention of patches within the same frame, followed by a temporal attention that converts input $$B \times T \times H \times W \times C$$ into $$(B \times H \times W) \times T \times C$$  that performs attention of the same patch across time.
+
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/from-Diffusion-to-SORA/anymate_anyone.png"/> 
+
 </details>
 {::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
-<details> <summary markdown="span">[Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation](https://arxiv.org/abs/2311.17117)</summary>
-TODO
+<details> <summary markdown="span">[CyberHost: Taming Audio-driven Avatar Diffusion Model with Region Codebook Attention](https://arxiv.org/abs/2409.01876)</summary>
+CyberHost is a U-net based diffusion model that takes audio as an input and generats valid human movements. The novelty, compared to AnymateAnyone is the Region Codebook Attention which *improves the generation
+quality of facial and hand animations by integrating fine-grained local features with
+learned motion pattern priors*.
 </details>
 {::options parse_block_html="false" /}
+
 
 ## Diffusion transformers
 
@@ -257,7 +272,7 @@ class ViT(nn.Module):
         return x
 ```
 
-### Multi-task text-to-image based on DiTs
+### Other DiT-based diffusion models for text-to-image and text-to-video tasks
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[OmniGen: Unified Image Generation](https://arxiv.org/abs/2409.11340)</summary>
@@ -270,7 +285,10 @@ OmniGen is is a diffusion model based on DiT and VAE for text-to-image tasks, ab
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Playground v3: Improving Text-to-Image Alignment with Deep-Fusion Large Language Models](https://arxiv.org/abs/2409.10695)</summary>
-TODO
+A text-to-image diffusion model, that replaces the commonly used T5 and CLIP for input text encoding with the latents on a a decoder-only LLM (Llama3-8B).
+
+{: style="text-align:center; font-size: small;"}
+<img width="68%" height="68%" src="/assets/from-Diffusion-to-SORA/playground_v3.png"/> 
 </details>
 {::options parse_block_html="false" /}
  
@@ -305,7 +323,18 @@ CogVideoX a large-scale DiT model for text-to-video generation. Model input is a
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Latte: Latent Diffusion Transformer for Video Generation](https://arxiv.org/abs/2401.03048v1)</summary>
-TODO
+
+Latte is a DiT-based text-to-image and text-to-video diffusion model. Latte first extracts spatio-temporal tokens from input videos and then adopts a series of Transformer blocks to model video distribution in the latent space. The paper experiments several methods for embedding, clip patch embedding, model variants, timestep-class information injection, temporal positional embedding, and learning strategies, etc and provides a report. An an example, it tests four variants of 3D transformer block: (1) with spatial Transformer blocks and temporal Transformer blocks, (2) a "late fusion" approach to combine spatial-temporal information, that consists of an equal number of Transformer blocks as in Variant 1, (3) that "initially computes self-attention only on the spatial dimension, followed by the temporal dimension, and as a result, each Transformer block captures both spatial and temporal information", and (4) one that uses use different attenion heads to handle tokens separately in spatial and temporal dimensions.
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/from-Diffusion-to-SORA/latte.png"/> 
+
+The paper also analyses 2 distinct methods for video patching embedding: (1) collect all patches of a frame, and then collect the patches for the following frame etc, as in ViT, (2) extracting patches in the temporal dimension as well (in a "tube") and move that tube in the spatial dimension: 
+
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/from-Diffusion-to-SORA/latte2.png"/> 
+
 </details>
 {::options parse_block_html="false" /}
 
