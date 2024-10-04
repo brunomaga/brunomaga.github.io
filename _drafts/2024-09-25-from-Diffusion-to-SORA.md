@@ -171,7 +171,7 @@ Now that we have the forward and reverse diffusion processes, we can perform eve
     loss = F.smooth_l1_loss(noise, predicted_noise) # Huber loss
 ```
 
-### Other U-net based diffusion models for text-to-image and text-to-video tasks
+### Example of U-net based diffusion models for text-to-image and text-to-video tasks
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Imagen: Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding](https://arxiv.org/abs/2205.11487)</summary>
@@ -272,7 +272,7 @@ class ViT(nn.Module):
         return x
 ```
 
-### Other DiT-based diffusion models for text-to-image and text-to-video tasks
+### Example of DiT-based diffusion models for text-to-image tasks
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[OmniGen: Unified Image Generation](https://arxiv.org/abs/2409.11340)</summary>
@@ -302,7 +302,7 @@ Just as in the previous example, we also use a VAE to compress the input into a 
 [Masked autoencoders (MAE)](Masked Autoencoders As Spatiotemporal Learners) have shown to be  scalable self-supervised learners for computer vision, in [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) and [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304).
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/from-Diffusion-to-SORA/sora_vae.png"/> 
+<img width="90%" height="90%" src="/assets/from-Diffusion-to-SORA/sora_vae.png"/> 
 
 {: style="text-align:center; font-size: small;"}
 An overview of the lattent space in SORA. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". source: [Video generation models as world simulators, OpenAI](https://openai.com/index/video-generation-models-as-world-simulators/)
@@ -340,14 +340,32 @@ The paper also analyses 2 distinct methods for video patching embedding: (1) col
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Tora: Trajectory-oriented Diffusion Transformer for Video Generation](https://arxiv.org/abs/2407.21705) ([webpage](https://ali-videoai.github.io/tora_video/))</summary>
-TODO
+
+Tora is capable of generating videos guided by trajectories, images, texts, or combinations thereof. "Spatial-Temporal Diffusion Transformer (ST-DiT) from OpenSora as its foundational model", ie 1 spacial attention followed by a temporal attention, just like variant 1 in [Latte](https://arxiv.org/abs/2401.03048v1) (above). **The big advantadge in using ST-DiT compared to using 3D attention is that it saves on computation and it utilizes pre-trained text-to-image models.** "The trajectory encoder converts the trajectory into motion patches, which inhabit the same latent space as the video patches".  Text encoding is provided by T5.
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/from-Diffusion-to-SORA/tora.png"/> 
+
 </details>
 {::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113) ([github](https://github.com/facebookresearch/mae_st))
 </summary>
-TODO
+It applies Masked AutoEncoders (MAE) to the video domain, demonstrating high compute efficiency:
+>  We randomly mask out
+spacetime patches in videos and learn an autoencoder to reconstruct them in pixels.
+Interestingly, we show that our MAE method can learn strong representations
+with almost no inductive bias on spacetime (only except for patch and positional
+embeddings), and spacetime-agnostic random masking performs the best. We
+observe that the optimal masking ratio is as high as 90% (vs. 75% on images [31]),
+supporting the hypothesis that this ratio is related to information redundancy of the
+data. A high masking ratio leads to a large speedup, e.g., > 4× in wall-clock time
+or even more.
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/from-Diffusion-to-SORA/masked_autoencoders.png"/> 
+
 </details>
 {::options parse_block_html="false" /}
 
