@@ -405,6 +405,14 @@ PipeFusion splits images into patches and distributes the network layers across 
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span"> OpenSORA implementation from HPC AI Tech : [github](https://github.com/hpcaitech/Open-Sora/tree/main) and [report](https://github.com/hpcaitech/Open-Sora/blob/main/docs/report_03.md)</summary>
-TODO
+
+An attempt to create an open-source implementation of [SORA](https://openai.com/index/video-generation-models-as-world-simulators/). Currently in version 1.2. Details collected from the [docs](https://github.com/hpcaitech/Open-Sora/tree/main/docs) section:
+- [acceleration](https://github.com/hpcaitech/Open-Sora/blob/main/docs/acceleration.md#accelerated-transformer) provided by kernel optimization (flash attention), fused layernorm kernel, and ones compiled by colossalAI. [Sequence parallelism](https://github.com/hpcaitech/Open-Sora/blob/main/docs/report_03.md#sequence-parallelism) is provided by Ulysses only;
+- [Spatial attention](https://github.com/hpcaitech/Open-Sora/blob/main/docs/acceleration.md#efficient-stdit) is provided by ST-DiT instead of full 3D attention as STDiT is more (compute) efficient as the number of frames increases.
+- Data processing are explained in the [Data Processing](https://github.com/hpcaitech/Open-Sora/blob/main/docs/data_processing.md) and [Datasets](https://github.com/hpcaitech/Open-Sora/blob/main/docs/datasets.md) pages;
+- Texts are encoded by T5 and videos by VAE: the 2D VAE is initialized with SDXL's VAE, and the 3D VAE is initialized with Magvit-v2. See the [VAE Report](https://github.com/hpcaitech/Open-Sora/blob/main/docs/vae.md) for additional info. The [video compression network](https://github.com/hpcaitech/Open-Sora/blob/main/docs/report_03.md#video-compression-network) used was 83M 2D VAE in previous version, yielding an 8x compression, with 1 frames picked in every 3 (to reduce the temporal dimension). To improve quality, in the 1.2, the authors first compress the video in the spatial dimension by 8x8 times, then compress the video in the temporal dimension by 4x times.
+- The training includes 3 steps: (1) freeze the 2D VAE in order to train features from the 3D VAE similar to the features from the 2D VAE; (2) remove the identity loss and just learn the 3D VAE; and (3) remove the loss and train the whole VAE to reconstruct the original videos. Training is performed with a curriculum of increasing video quality, in three stages, to better utilize compute ([source](https://github.com/hpcaitech/Open-Sora/blob/main/docs/report_03.md#more-data-and-better-multi-stage-training));
+- It used [rectified flow](https://arxiv.org/abs/2209.03003) instead of [DDPM](https://arxiv.org/abs/2006.11239) for diffusion ([source](https://github.com/hpcaitech/Open-Sora/blob/main/docs/report_03.md#rectified-flow-and-model-adaptation)).
+
 </details>
 {::options parse_block_html="false" /}
