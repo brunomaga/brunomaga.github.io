@@ -422,3 +422,12 @@ An attempt to create an open-source implementation of [SORA](https://openai.com/
 
 </details>
 {::options parse_block_html="false" /}
+
+{::options parse_block_html="true" /}
+<details> <summary markdown="span"> [Meta Movie Gen research paper](https://ai.meta.com/static-resource/movie-gen-research-paper)</summary>
+
+One of the most detailed technical reports of a very large DiT-based diffusion model, trained on 6,144 H100 GPUs, able to solve multiple tasks: text-to-video synthesis, video personalization, video editing, video-to-audio generation, and text-to-audio generation. "The largest video generation
+model is a 30B parameter transformer trained with a maximum context length of 73K video tokens,
+corresponding to a generated video of 16 seconds at 16 frames-per-second". Appendix A.2 "Model scaling and training efficiency" details 4-way parallelism via Data Parallelism with Sharding, Tensor parallelism, Sequence parallelism and [Context Parallelism](https://docs.nvidia.com/megatron-core/developer-guide/latest/api-guide/context_parallel.html). Also includes details on the overlapping of communication and computation, and the usage of activation checkpointing for improved memory efficiency.
+</details>
+{::options parse_block_html="false" /}
