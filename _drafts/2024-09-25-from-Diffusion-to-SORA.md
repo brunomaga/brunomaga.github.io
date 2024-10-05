@@ -214,6 +214,12 @@ learned motion pattern priors*.
 </details>
 {::options parse_block_html="false" /}
 
+{::options parse_block_html="true" /}
+<details> <summary markdown="span">[Emu: Enhancing Image Generation Models Using Photogenic Needles in a Haystack](https://arxiv.org/abs/2309.15807)</summary>
+Demonstrates the importance on fine-tuning text-to-image tasks with a very high quality dataset in order to achieve superior model quality: "in order to align the model towards highly aesthetic generations, quality matters significantly more than quantity in the fine-tuning dataset".
+</details>
+{::options parse_block_html="false" /}
+
 
 ## Diffusion transformers
 
@@ -404,9 +410,9 @@ PipeFusion splits images into patches and distributes the network layers across 
 {::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
-<details> <summary markdown="span"> OpenSORA implementation from HPC AI Tech : [github](https://github.com/hpcaitech/Open-Sora/tree/main) and [report](https://github.com/hpcaitech/Open-Sora/blob/main/docs/report_03.md)</summary>
+<details> <summary markdown="span"> [OpenSORA implementation from HPC AI Tech](https://github.com/hpcaitech/Open-Sora/tree/main)</summary>
 
-An attempt to create an open-source implementation of [SORA](https://openai.com/index/video-generation-models-as-world-simulators/). Currently in version 1.2. Details collected from the [docs](https://github.com/hpcaitech/Open-Sora/tree/main/docs) section:
+An attempt to create an open-source implementation of [SORA](https://openai.com/index/video-generation-models-as-world-simulators/). Currently in version 1.2. Details collected from the [docs](https://github.com/hpcaitech/Open-Sora/tree/main/docs) section, particularly the [technical reports](https://github.com/hpcaitech/Open-Sora/blob/main/docs/report_03.md):
 - [acceleration](https://github.com/hpcaitech/Open-Sora/blob/main/docs/acceleration.md#accelerated-transformer) provided by kernel optimization (flash attention), fused layernorm kernel, and ones compiled by colossalAI. [Sequence parallelism](https://github.com/hpcaitech/Open-Sora/blob/main/docs/report_03.md#sequence-parallelism) is provided by Ulysses only;
 - [Spatial attention](https://github.com/hpcaitech/Open-Sora/blob/main/docs/acceleration.md#efficient-stdit) is provided by ST-DiT instead of full 3D attention as STDiT is more (compute) efficient as the number of frames increases.
 - Data processing are explained in the [Data Processing](https://github.com/hpcaitech/Open-Sora/blob/main/docs/data_processing.md) and [Datasets](https://github.com/hpcaitech/Open-Sora/blob/main/docs/datasets.md) pages;
