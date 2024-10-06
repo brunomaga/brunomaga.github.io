@@ -49,6 +49,8 @@ def main(model_name='UNet'):
     betas = torch.tensor([ beta_1 + (beta_T - beta_1) / timesteps * t for t in range(timesteps) ])
     alphas = 1. - betas
     alphas_cumprod = torch.cumprod(alphas, axis=0)
+    alphas_cumprod_prev = F.pad(alphas_cumprod[:-1], (1, 0), value=1.0)
+    posterior_variance = betas * (1. - alphas_cumprod_prev) / (1. - alphas_cumprod)
 
     results_folder = Path("./results")
     results_folder.mkdir(exist_ok = True)
@@ -65,26 +67,17 @@ def main(model_name='UNet'):
         model_mean = one_over_sqrt_alphas_t * (x - betas_t * model(x, t) / sqrt_one_minus_alphas_cumprod_t)
         return model_mean
 
-    @torch.no_grad()
-    def posterior_variance(x, t):
-        alphas_cumprod_prev = F.pad(alphas_cumprod[:-1], (1, 0), value=1.0)
-        posterior_var = betas * (1. - alphas_cumprod_prev) / (1. - alphas_cumprod)
-        posterior_var_t = extract(posterior_var, t, x.shape)
-        return posterior_var_t
-
     # Generating new images from a diffusion model happens by reversing the diffusion process: we start from T and go to 1 (alg 2)
     @torch.no_grad()
     def p_sample(model, x, t, t_index):
         model_mean = predicted_mean(model, x, t)
-
         if t_index == 0:
             return model_mean
-
-        posterior_variance_t = posterior_variance(x,t)
-        noise = torch.randn_like(x)
-        # Algorithm 2 line 4:
-        return model_mean + torch.sqrt(posterior_variance_t) * noise 
-
+        else:
+            posterior_variance_t = extract(posterior_variance, t, x.shape)
+            noise = torch.randn_like(x)
+            return model_mean + torch.sqrt(posterior_variance_t) * noise 
+        
 
     # Algorithm 2 (including returning all images)
     @torch.no_grad()
@@ -118,7 +111,7 @@ def main(model_name='UNet'):
         noise = torch.randn_like(batch)
         x_noisy = q_sample(x0=batch, t=t, noise=noise)
         predicted_noise = model(x_noisy, t)[0]
-        loss = F.smooth_l1_loss(noise, predicted_noise) # Huber loss
+        loss = F.mse_loss(noise, predicted_noise) # Huber loss also ok
 
         loss.backward()
         optimizer.step()
