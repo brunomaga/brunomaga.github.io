@@ -16,13 +16,13 @@ data in the opposite direction of sampling until signal is destroyed.
 small amounts of Gaussian noise, it is sufficient to set the sampling chain transitions to conditional
 Gaussians too, allowing for a particularly simple neural network parameterization.
 
-The diffusion model is characterized by three main elements: a forward process that gradually adds noise to data, a learnable reverse diffusion process that learns the denoising process, and a sampling algorithm that generates data from pure noise.
+The diffusion model is characterized by three main elements: a forward process that gradually adds noise to data, a learnable reverse diffusion process that learns the denoising process, and a sampling algorithm that will generates data from pure noise using the trained model.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/from-Diffusion-to-SORA/diffusion.png"/> 
 
 {: style="text-align:center; font-size: small;"}
-A diffusion model is a $$T$$-step Markov chain, characterized by a forward pass $$q$$ and a trainable reverse pass $$q$$. Source: [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
+A diffusion model is a $$T$$-step Markov chain, characterized by a forward process $$q$$ and a trainable reverse process $$q$$. Source: [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
 
 Let's look at those processes in detail. Credit: mathematical formulation inspired by [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239), [https://huggingface.co/blog/annotated-diffusion](https://huggingface.co/blog/annotated-diffusion) and [Lil'Log: waht are diffusion models](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/).
 
@@ -51,25 +51,27 @@ where $$\alpha_t = 1 - \beta_t$$ and $$\bar{\alpha}_t = \prod_{s=1}^t \alpha_t$$
 We can start implementing our diffusion algorithm by defining the hyper-parameters $$\alpha$$ and for convenience, an additional $$\bar{\alpha}_t = \prod_{s=1}^t \alpha_t$$. There are [many $$\beta_t$$ variance schedulers]( https://huggingface.co/blog/annotated-diffusion#defining-the-forward-diffusion-process), but for simplicity, we will implement a linear scheduler $$\beta_t$$:
 
 ```python
-    betas = torch.tensor([ beta_1 + (beta_T - beta_1) / timesteps * t for t in range(timesteps) ])
+    timesteps, beta_1, beta_T = 100, 0.0001, 0.02
+    betas = torch.tensor([ beta_1 + (beta_T - beta_1) / timesteps * t for t in range(timesteps) ], device=device)
     alphas = 1. - betas
     alphas_cumprod = torch.cumprod(alphas, axis=0)
 ```
 
-Now we define the Sohl-Dickstein's forward diffusion pass $$q (\mathbf{x}_t \mid \mathbf{x}_0)$$ as:
+Now we define the Sohl-Dickstein's forward process $$q (\mathbf{x}_t \mid \mathbf{x}_0)$$ as:
 
 ```python
     @torch.no_grad()
     def q_sample(x0, t, noise=None):
-        noise = noise or torch.randn_like(x0)
+        if noise is None:
+            noise = torch.randn_like(x0)
         sqrt_alphas_cumprod = torch.sqrt(alphas_cumprod)
-        sqrt_alphas_cumprod_t = extract(sqrt_alphas_cumprod, t, x0.shape)
+        sqrt_alphas_cumprod_t = sqrt_alphas_cumprod[t][:, None, None, None]
         sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - alphas_cumprod)
-        sqrt_one_minus_alphas_cumprod_t = extract( sqrt_one_minus_alphas_cumprod, t, x0.shape)
+        sqrt_one_minus_alphas_cumprod_t = sqrt_one_minus_alphas_cumprod[t][:, None, None, None]
         return sqrt_alphas_cumprod_t * x0 + sqrt_one_minus_alphas_cumprod_t * noise 
 ```
 
-## Reverse pass
+## Reverse process
 
 We now look at the **learnable** backward/reverse diffusion step. We do not know the distribution of the denoising step $$p (\mathbf{x}_{t-1} \mid \mathbf{x}_t)$$, so we will use a neural network $$p_{\theta}$$ to approximate it. We will assume this distribution to be of a Gaussian shape with learnable mean $$\mu_\theta$$ and $$\Sigma_\theta$$ (Eq. 1 in paper):
 
@@ -83,14 +85,6 @@ Just like in VAEs, we perform a **reparameterization trick so that we learn the 
 
  In the original paper, only the mean is trained ("We ignore the fact that the forward process variances βt are learnable by reparameterization and
 instead fix them to constants (see Section 4 for details)"). The variance is set as $$\Sigma_\theta(\mathbf{x}_t, t) = \sigma^2_t I$$ and $$\sigma^2_t = \beta_t$$ or $$\sigma^2_t = \tilde{\beta}_t$$ (similar results), where $$\tilde{\beta}_t$$ is the **posterior variance** (Eq. 7 in paper):
-
-<!-- 
- The reverse pass is then simplified as (Eq 6 in paper)
-
-$$
-p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_t) = \mathcal{N}(\mathbf{x}_{t-1}; \boldsymbol{\tilde \mu}_\theta(\mathbf{x}_t, t), \tilde{\beta}_t)
-$$ 
--->
 
 $$
 \tilde{\beta_t} = \frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha_t}} \beta_t
@@ -115,13 +109,13 @@ To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors 
 ```python
     @torch.no_grad()
     def predicted_mean(model, x, t):
-        # Equation 11: use model (noise predictor) to predict the mean
-        betas_t = extract(betas, t, x.shape)
+        betas_t = betas[t][:, None, None, None]
         sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - alphas_cumprod)
-        sqrt_one_minus_alphas_cumprod_t = extract(sqrt_one_minus_alphas_cumprod, t, x.shape)
+        sqrt_one_minus_alphas_cumprod_t = sqrt_one_minus_alphas_cumprod[t][:, None, None, None]
         one_over_sqrt_alphas = torch.sqrt(1.0 / torch.cumprod(alphas, axis=0))
-        one_over_sqrt_alphas_t = extract(one_over_sqrt_alphas, t, x.shape)
-        model_mean = one_over_sqrt_alphas_t * (x - betas_t * model(x, t) / sqrt_one_minus_alphas_cumprod_t)
+        one_over_sqrt_alphas_t = one_over_sqrt_alphas[t][:, None, None, None]
+        epsilon = model(x, t)
+        model_mean = one_over_sqrt_alphas_t * (x - betas_t * epsilon  / sqrt_one_minus_alphas_cumprod_t)
         return model_mean
 ```
 
@@ -143,7 +137,7 @@ The step 6 samples $$\mathbf{x}_t$$ for a step $$t$$, by summing the predicted m
         if t_index == 0:
             return model_mean
         else:
-            posterior_variance_t = extract(posterior_variance, t, x.shape)
+            posterior_variance_t = posterior_variance[t][:, None, None, None]
             noise = torch.randn_like(x)
             return model_mean + torch.sqrt(posterior_variance_t) * noise 
 ```
@@ -153,24 +147,23 @@ The remaining steps are coded in a simple for loop:
 ```python
     @torch.no_grad()
     def p_sample_loop(model, shape):
-        img = torch.randn(shape, device=device) # start from pure noise
-        for i in range(timesteps,0,-1):
+        # start from pure noise (for each example in the batch)
+        img = torch.randn(shape, device=device)
+        for i in reversed(range(0, timesteps)):
             img = p_sample(model, img, torch.full((batch_size,), i, device=device, dtype=torch.long), i)
         return img
 ```
 
-
-
 ## Training algorithm
 
-We'll train our model with the `tiny-imagenet` dataset containing several 64x64 RGB images:
+We'll train our model with the CIFAR10 dataset containing several 32x32 RGB images of 10 means of transportation. We'll set our batch size to 64 images per batch.
 
 ```python
-    dataset = load_dataset("zh-plus/tiny-imagenet", split='train')
-    transform = lambda image: (pil_to_tensor(image)/255)*2-1 # normalize [-1,1]
-    images = [ transform(image) for image in dataset["image"]]
-    batch_size, channels, image_size = 16, images[0].shape[0], images[0].shape[1]
-    dataloader = DataLoader(images, batch_size=batch_size, sampler=DistributedSampler(images))
+    dataset = load_dataset("uoft-cs/cifar10", split='train')
+    transform = lambda image: (pil_to_tensor(image)/255)*2-1 # normalize to [-1,1]
+    images = [ transform(image) for image in dataset["img"]]
+    batch_size, channels = 64, images[0].shape[0]
+    dataloader = DataLoader(images, batch_size=batch_size, sampler=DistributedSampler(images), drop_last=True)
 ```
 
 Our model will be U-net model of the original publication available in the `diffusers` package, trained with an SGD optimizer:
@@ -199,7 +192,7 @@ where each training iteration (steps 2 to 6) can be coded as:
     noise = torch.randn_like(batch)
     x_noisy = q_sample(x0=batch, t=t, noise=noise)
     predicted_noise = model(x_noisy, t)[0]
-    loss = F.mse_loss(noise, predicted_noise) # Huber loss
+    loss = F.mse_loss(noise, predicted_noise) # Huber loss also ok
     loss.backward()
     optimizer.step()
     optimizer.zero_grad(set_to_none=True)
@@ -259,7 +252,7 @@ Demonstrates the importance on fine-tuning text-to-image tasks with a very high 
 
 ## Diffusion transformers
 
-The publication [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement that outperformes the UNet-based diffusion in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4). VITs also also shown to have better scaling properties and accuracy than convolutional neural networks. Moreover, related to ViTs scaling, it shows that (1) ViT Gflops are strongly correlated with FID, (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
+The publication [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement that outperforms the UNet-based diffusion in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4). VITs also also shown to have better scaling properties and accuracy than convolutional neural networks. Moreover, related to ViTs scaling, it shows that (1) ViT Gflops are strongly correlated with FID, (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
 
 >  We study the scaling behavior of transformers with respect to network complexity (in GFlops) vs. sample quality. We show that by constructing and benchmarking the DiT design space under the Latent Diffusion Models (LDMs) [48] framework, where diffusion models are trained within a VAE’s latent space, we can successfully replace the U-Net backbone with a transformer. 
 
