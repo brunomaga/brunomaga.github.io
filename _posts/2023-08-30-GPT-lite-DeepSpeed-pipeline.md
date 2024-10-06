@@ -50,17 +50,9 @@ A pipeline execution of a sequence of batches using the PipeDream strategy. Seve
 Where's the caveat? In practice, mixing forward and backward passes from different mini-batches lead to wrong weight updates. Therefore, the authors perform also versioning of the weights, effecticely having several version of the same weights in the model.  Therefore, the forward passes use the latest version of the model layers, and the backward may use a previous version of the model activations and optimizer parameters to compute the gradients. This leads to a substantial increase in memory requirements.
 
  
-## Pipeline parallelism on DeepSpeed
+## Implementing pipeline parallelism with DeepSpeed
 
-The pipeline parallelism algorithm implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 Forward pass followed by 1 Backward pass, Figure 4 top on the [Megatron LM paper](https://browse.arxiv.org/pdf/2104.04473.pdf) ), however it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms.
-
-{: style="text-align:center; font-size: small;"}
-<img width="79%" height="80%" src="/assets/GPT-lite-distributed/GPT_pipelining.png"/>
-
-{: style="text-align:center; font-size: small;"}
-Two-way data parallel pipelines with four stages each. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
-
-We will build pipeline parallelism taking the code from the previous post as base model, and enable it by passing the number of stages as the `---pipeline_num_stages` argument (default: 0, no pipelining) on the command line:
+The pipeline parallelism algorithm implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 Forward pass followed by 1 Backward pass, Figure 4 top on the [Megatron LM paper](https://browse.arxiv.org/pdf/2104.04473.pdf) ), however it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms. We will add pipeline parallelism to the `GPTlite` model implemented in the previous, and enable it by passing the number of stages as the `---pipeline_num_stages` argument (default: 0, no pipelining) on the command line:
 
 ```python
 ## train.py
