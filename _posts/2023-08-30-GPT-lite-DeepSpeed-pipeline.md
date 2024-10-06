@@ -16,7 +16,7 @@ The 3D parallelism aims and partitioning (color-coded) computer resources  acros
 Imagine we have a model that is too large to fit in the local memory of a single process. A simple way to overcome this is to simply split the model across the layers dimension and delegate a subset of layers to each process. Then we can do a forward and backward pass by communicating activations and gradients between *connecting* processes. Each process is responsible for a subset of layer and is called a **stage**. And this type or parallelism is called Pipeline parallelism. The following picture gives us a simple illustration of the process:
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline.PNG"/>
+<img width="50%" height="50%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline.PNG"/>
 
 {: style="text-align:center; font-size: small;"}
 Left-to-right timeline of a serial execution of the training of a model divided across 4 compute units (Workers) and 4 stages. Blue squares represent forward passes. Green squares represent backward passes and last for twice the ammount of the forward pass. The number on each square is the data sample index. Black squares represent moments of idleness, i.e. of a worker not performing  any computation. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
@@ -24,7 +24,7 @@ Left-to-right timeline of a serial execution of the training of a model divided 
 Now note that the above method would yield a low utilization of compute resources, and processes would always have to wait for connecting layers in different processes to be computed, before being able to do its share of the forward/backward compute. So pipeline parallelism is usually combined with **micro-batching / gradient accumulation**. In practice, we can split the mini-batch in several micro-batches and pass them sequentially to the first process of the pipeline. When a process finishes the current micro-batch, it sends its activations to the following process, and receives the next micro-batch activations from the previous process. This is mathematically equivalent regular gradient accumulation. This approach is detailled on the paper [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, ArXiv)](https://arxiv.org/abs/1811.06965) and can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel.PNG"/>
+<img width="60%" height="60%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel.PNG"/>
 
 {: style="text-align:center; font-size: small;"}
 A pipeline execution with gradient accumulation, computed as a sequence of 4 micro-batches. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
@@ -34,24 +34,24 @@ Setting a high micro-batching factor will lead to a high memory usage, as we hav
 The other hyper-parameter we have to define is the number of stages. Up until now, the examples above used a number of stages equivalent to the number of workes, ie the a single pipeline that spans all workers. However, we can have multiple pipelines in parallel and combine pipeline parallelism with other dimensions of parallelism. As an example, if you'd combine pipeline and data parallelism on an 8-GPU network:
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="/assets/GPT-lite-distributed/pipeline_8_stages.png"/>
+<img width="32%" height="32%" src="/assets/GPT-lite-distributed/pipeline_8_stages.png"/>
 &nbsp;
-<img width="30%" height="30%" src="/assets/GPT-lite-distributed/pipeline_4_stages.png"/>
+<img width="32%" height="32%" src="/assets/GPT-lite-distributed/pipeline_4_stages.png"/>
 &nbsp;
-<img width="30%" height="30%" src="/assets/GPT-lite-distributed/pipeline_2_stages.png"/>
+<img width="32%" height="32%" src="/assets/GPT-lite-distributed/pipeline_2_stages.png"/>
 
 {: style="text-align:center; font-size: small;"}
-An illustration of pipeline parallelism on a network of 8 workers for different number of pipeline stages. Left: 8 pipeline-parallel workers. Center: 2 data-parallel groups of 4 pipeline-parallel workers. Right: 4 data-parallel groups of 2 pipeline-parallel workers.
+An illustration of different combinations of pipeline and data parallelism. Left: 8 pipeline-parallel workers. Center: 2 data-parallel groups of 4 pipeline-parallel workers. Right: 4 data-parallel groups of 2 pipeline-parallel workers.
 
 
 You will notice that no matter the pipeline configuration we use, there are periods of idleness that we cannot remove.
 With this in mind, there is plenty of work ongoing to improve this. An an example, [PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/) is a pipeline method that overlaps forward and backward passes of different mini-batches, by keeping track of the version (micro batch id) and storing several versions of activations and parameters whose backward pass hasn't completed:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel_Microsoft.PNG"/>
+<img width="60%" height="60%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel_Microsoft.PNG"/>
 
 {: style="text-align:center; font-size: small;"}
-A pipeline execution of a sequence of batches using the PipeDream strategy. Several forward passes can be in flight, even if they derive from different micro-batches. Backward passes are prioritized over forward passes on each worker. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
+The PipeDream scheduling algorithm. Several forward passes can be in flight, even if they derive from different micro-batches. Backward passes are prioritized over forward passes on each worker. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 
 Where's the caveat? In practice, mixing forward and backward passes from different mini-batches lead to wrong parameter updates. Therefore, the authors perform versioning of the parameter, effecticely having several version of the same parameters in the model.  Therefore, the forward passes use the latest version of the model layers, and the backward may use a previous version of the model activations and optimizer parameters to compute the gradients. This leads to a substantial increase in memory requirements.
 
@@ -218,9 +218,9 @@ We will denominate the `LayerSpec`-based implementation of pipeline parallelism 
 
 For heterogeneous models, load balancing of the model across GPUs may be an issue. There are several metrics to load balance from: runtime, memory usage, parameter count, etc. Here, we will not tune the [load balancing method for pipeline modules](https://www.deepspeed.ai/tutorials/pipeline/#load-balancing-pipeline-modules), and will instead use the default `partition_method=parameters`. This assigns layers to stages in a way to load-balance the parameters, i.e. stages may have different lengths. Finally, in the extreme case the 1F1B algorithm is not the pipeline algorithm we want, we can [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) with a different algorithm. 
 
-### Adding activation checkpointing to pipeline parallelism
+### Activation checkpointing
 
-In case we are using pipelining, introducing checkpoint at a fixed layer interval is straightforward, we just need to specify it by the argument `activation_checkpoint_interval` in the `PipelineModule` constructor: 
+Introducing activation checkpoint at every X layers in our pipeline is straightforward, we just need to specify that interval in the argument `activation_checkpoint_interval` in the `PipelineModule` constructor: 
 
 ```python
 #gptlite.py
@@ -237,7 +237,7 @@ def get_model(criterion, vocab_size, pipeline_num_stages=0, \
 
 However, activation checkpointing is also tricky to configure when using pipelining, if the checkpoint layer falls in another GPU. The rationale is that if a checkpoint layer falls in a different GPU than the layer being back-propagatems, this requires extra communication. This is an use case that I believe DeepSpeed is not handling correctly, so make sure there's a checkpoint layer *at the beginning* of the first block on each GPU.
 
-### Gradient accumulation and micro-batching in pipeline parallelism
+### Gradient accumulation and micro-batching
 
 We can define the micro-batching level by setting the fields `train_micro_batch_size_per_gpu` (defaulted to `train_batch_size`) or `gradient_accumulation_steps` (defaulted to `1`) in the [DeepSpeed config file](https://www.deepspeed.ai/docs/config-json/). At runtime, the micro-batch size can be retrieved by `engine.gradient_accumulation_steps()`.
 
