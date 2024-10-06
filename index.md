@@ -2,7 +2,7 @@
 layout: default
 ---
 
-<h1 class="post-title p-name" itemprop="name headline">Bruno Magalhaes</h1>
+<h1 class="post-title p-name" itemprop="name headline">{{ site.author.name }} </h1>
 
 <h2 style='margin-top:0em; margin-bottom:1em'> Machine Learning and High Performance Computing</h2>
 
