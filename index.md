@@ -9,7 +9,7 @@ layout: default
 <table style='table-layout:fixed; border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
 <tr>
 
-<td width="18%" style='border:none; vertical-align: top;'>
+<td width="16%" style='border:none; vertical-align: top;'>
     <img src="{{site.photo}}"/>
 </td>
 
