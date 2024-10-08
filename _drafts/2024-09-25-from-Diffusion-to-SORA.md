@@ -28,25 +28,25 @@ Let's look at those processes in detail. Credit: mathematical formulation inspir
 
 ## Forward Process
 
-The forward diffusion process $$q$$ performs $$T$$ steps, where each step gradually adds gaussian noise to the previous step. Given a data point $$\mathbf{x}_0$$ for $$t=0$$, we sample and add gaussian noise at each step $$t$$ of the $$T$$ steps, producing noisy samples $$\mathbf{x}_0, ..., \mathbf{x}_T$$. An important property, is that **when $$T \rightarrow \infty$$, we end up with an isotropic Gaussian distribution at $$t=T$$**. An [isotropic gaussian](https://math.stackexchange.com/questions/1991961/gaussian-distribution-is-isotropic) is one where the covariance matrix $$Σ$$ is represented by $$Σ=𝜎^2I$$, where $$𝜎^2 \in \mathbb{R}$$ is the variance constant and $$I$$ is the identity matrix.
-
-The step sizes are controlled by a variance $$\beta_t \in (0,1)$$ at every step $$t$$, that is set by an user-defined variance scheduler that sets $$\beta_t$$ such that $$0 \lt \beta_1 \lt \beta_2 \lt  ... \lt \beta_T < 1$$. The forward process $$q$$ is then represented as (Eq. 2 in paper):
+The forward diffusion process $$q$$ is a Markov chain that performs $$T$$ steps, where each step gradually adds gaussian noise to the previous step, according to a variance $$\beta_t \in (0,1)$$ for all $$T$$ timesteps, where  $$0 \lt \beta_1 \lt \beta_2 \lt  ... \lt \beta_T < 1$$. $$\beta_t$$ can be learned or (in this case) fixed as a hyper-parameter. We start with our data as $$\mathbf{x}_0$$ for $$t=0$$ and gradually sample and add gaussian noise at each step, producing noisy samples $$\mathbf{x}_0, ..., \mathbf{x}_T$$.
+The forward process $$q$$ is then represented as (Eq. 2 in paper):
 
 $$
 q(\mathbf{x}_t \vert \mathbf{x}_{t-1}) = \mathcal{N}(\mathbf{x}_t; \sqrt{1 - \beta_t} \mathbf{x}_{t-1}, \beta_t\mathbf{I}) \quad
 $$
 
-ie each new sample $$\mathbf{x}_t$$ is drawn for a Gaussian distribution with mean $$μ_t = \sqrt{1−β_t} \mathbf{x}_{t−1}$$ and variance $$\sigma^2_t = \beta_t $$. This is equivalent sampling $$\epsilon ∼ \mathcal{N}$$ and then setting $$\mathbf{x}_t = \sqrt{1−β_t} \mathbf{x}_{t−1} + \sqrt{\beta_t}\epsilon$$.
+ie each new sample $$\mathbf{x}_t$$ is drawn for a Gaussian distribution with mean $$μ_t = \sqrt{1−β_t} \mathbf{x}_{t−1}$$ and variance $$\sigma^2_t = \beta_t $$.
+**When $$T \rightarrow \infty$$, we end up with an isotropic Gaussian distribution at $$t=T$$**. An [isotropic gaussian](https://math.stackexchange.com/questions/1991961/gaussian-distribution-is-isotropic) is one where the covariance matrix $$Σ$$ is represented by $$Σ=𝜎^2I$$, where $$𝜎^2 \in \mathbb{R}$$ is the variance constant and $$I$$ is the identity matrix.
 
+This is equivalent sampling $$\epsilon ∼ \mathcal{N}$$ and then setting $$\mathbf{x}_t = \sqrt{1−β_t} \mathbf{x}_{t−1} + \sqrt{\beta_t}\epsilon$$.
 
-Another property in the forward process, demonstrated by [Sohl-Dickstein et al.](https://arxiv.org/abs/1503.03585), is that because the sum of Gaussians is also a gaussian, we can sample $$\mathbf{x}_t$$ at any time $$t$$, conditioned directly on $$\mathbf{x}_0$$, instead of conditioned on $$\mathbf{x}_{t-1}$$ and computed iteratively. So we have that (Eq. 4 in paper):
+Another property in the forward process, demonstrated by [Sohl-Dickstein et al.](https://arxiv.org/abs/1503.03585), is that because the sum of Gaussians is also a gaussian, we can sample $$\mathbf{x}_t$$ at any time $$t$$, conditioned directly on $$\mathbf{x}_0$$, instead of conditioned on $$\mathbf{x}_{t-1}$$ (ie iteratively). So we have that (Eq. 4 in paper):
 
 $$
 q (\mathbf{x}_t \mid \mathbf{x}_0) = \mathcal{N} (\mathbf{x}_t ; \sqrt{\bar{\alpha}} \mathbf{x}_0, (1-\bar{\alpha}) \mathbf{I})
 $$
 
 where $$\alpha_t = 1 - \beta_t$$ and $$\bar{\alpha}_t = \prod_{s=1}^t \alpha_t$$.
-
 
 We can start implementing our diffusion algorithm by defining the hyper-parameters $$\alpha$$ and for convenience, an additional $$\bar{\alpha}_t = \prod_{s=1}^t \alpha_t$$. There are [many $$\beta_t$$ variance schedulers]( https://huggingface.co/blog/annotated-diffusion#defining-the-forward-diffusion-process), but for simplicity, we will implement a linear scheduler $$\beta_t$$:
 
@@ -71,33 +71,48 @@ Now we define the Sohl-Dickstein's forward process $$q (\mathbf{x}_t \mid \mathb
         return sqrt_alphas_cumprod_t * x0 + sqrt_one_minus_alphas_cumprod_t * noise 
 ```
 
-## Reverse process
+As a side note, learning a variance was later explored by [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672).
 
-We now look at the **learnable** backward/reverse diffusion step. We do not know the distribution of the denoising step $$p (\mathbf{x}_{t-1} \mid \mathbf{x}_t)$$, so we will use a neural network $$p_{\theta}$$ to approximate it. We will assume this distribution to be of a Gaussian shape with learnable mean $$\mu_\theta$$ and $$\Sigma_\theta$$ (Eq. 1 in paper):
+
+
+The other property is that the forward process if tractable when conditioned on $$\mathbf{x_0}$$ so it can be simplified as:
+
 
 $$
-p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_t) = \mathcal{N}(\mathbf{x}_{t-1}; \boldsymbol{\mu}_\theta(\mathbf{x}_t, t), \boldsymbol{\Sigma}_\theta(\mathbf{x}_t, t) )
-$$ 
+q(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0 ) = \mathcal{N} (\mathbf{x}_{t-1} ; \tilde{\mu}_t  (\mathbf{x}_t, \mathbf{x}_0), \, \tilde{\beta}_t \mathbf{I}) 
+$$
 
-In order to train $$p_\theta$$, we can treat the combination of $$q$$ and $$p_\theta$$ as a [variational auto-encoder](https://arxiv.org/abs/1312.6114), and we can then use the evidence lower bound (ELBO) to minimize the log-likelihood of the model output with respect to the input $$\mathbf{x}_0$$. The log of the product of losses can then be represented as a sum of terms, which [can be minimized by the KL divergence between 2 gaussian distributions](https://huggingface.co/blog/annotated-diffusion#defining-an-objective-function-by-reparametrizing-the-mean).
-
-Just like in VAEs, we perform a **reparameterization trick so that we learn the added noise $$\epsilon_\theta(\mathbf{x}, t)$$ for noise level $$t$$** instead of prediction the mean. We can then compute the mean as (Eq 11):
-
- In the original paper, only the mean is trained ("We ignore the fact that the forward process variances βt are learnable by reparameterization and
-instead fix them to constants (see Section 4 for details)"). The variance is set as $$\Sigma_\theta(\mathbf{x}_t, t) = \sigma^2_t I$$ and $$\sigma^2_t = \beta_t$$ or $$\sigma^2_t = \tilde{\beta}_t$$ (similar results), where $$\tilde{\beta}_t$$ is the **posterior variance** (Eq. 7 in paper):
+where $$\tilde{\beta}_t$$ is the **posterior variance**, a fixed hyper-parameter computed as (Eq. 7 in paper):
 
 $$
 \tilde{\beta_t} = \frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha_t}} \beta_t
 $$
 
-simply coded as:
+and that can be coded as:
 
 ```python
     alphas_cumprod_prev = F.pad(alphas_cumprod[:-1], (1, 0), value=1.0)
     posterior_variance = betas * (1. - alphas_cumprod_prev) / (1. - alphas_cumprod)
 ```
 
-As a side note, learning a variance was later explored by [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672).
+and $$\tilde{\mu}_t$$ is the **posterior mean** for the timestep $$t$$ (Eq. 7):
+
+$$
+\tilde{\mu_t} = \frac{\sqrt{\bar{\alpha}_{t-1}} \beta_t }{1-\bar{\alpha_t}} \textbf{x}_0 + \frac{\sqrt{\alpha_t}(1-\bar{\alpha}_{t-1})}{1-\bar{\alpha}_t}  \textbf{x}_t
+$$
+
+coded as the function:
+
+```python
+    @torch.no_grad()
+    def posterior_mean(x_0, x_t):
+        """ return posterior mean at step t, Equation 7 """
+        posterior_mean_coef1 =  betas * torch.sqrt(alphas_cumprod_prev) / (1.0 - alphas_cumprod)
+        posterior_mean_coef2 = (1.0 - alphas_cumprod_prev) * torch.sqrt(alphas) / (1.0 - alphas_cumprod)
+        posterior_mean = posterior_mean_coef1 * x_0 + posterior_mean_coef2 * x_t
+        return posterior_mean
+```
+
 
 To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors propose a parameterization trick (section 3.2) that allows for our model to learn the noise $$\epsilon_\theta(\mathbf{x}_t, t)$$ for step $$t$$ instead of predicting the mean. The mean can then be computed as (Eq. 11 in paper):
 
@@ -106,6 +121,7 @@ To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors 
  $$ 
 
  and coded as:
+
 ```python
     @torch.no_grad()
     def predicted_mean(model, x, t):
@@ -119,7 +135,34 @@ To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors 
         return model_mean
 ```
 
-where `model(x, t)` is the model output $$\epsilon_\theta(\mathbf{x}_t, t)$$.
+In the original paper, only the mean $$\mu_\theta(\mathbf{x}_t, t)$$ is learned: 
+
+> We ignore the fact that the forward process variances βt are learnable by reparameterization and instead fix them to constants (see Section 4 for details)".
+
+The variance is set as $$\Sigma_\theta(\mathbf{x}_t, t) = \sigma^2_t I$$ and $$\sigma^2_t = \beta_t$$ or $$\sigma^2_t = \tilde{\beta}_t$$ (similar results), 
+
+
+## Reverse process
+
+The reverse process is a Markov chain $$p_θ(\mathbf{x}_{0:T})$$ with **learned Gaussian transitions** starting at $$p(\mathbf{x}_T) = N (\mathbf{x}_T ; 0, \mathbf{I})$$, and:
+
+$$
+p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_t) = \mathcal{N}(\mathbf{x}_{t-1}; \boldsymbol{\mu}_\theta(\mathbf{x}_t, t), \boldsymbol{\Sigma}_\theta(\mathbf{x}_t, t) )
+$$ 
+
+We do not know the distribution of the denoising step $$p (\mathbf{x}_{t-1} \mid \mathbf{x}_t)$$, so we will use a neural network $$p_{\theta}$$ to approximate it. We will assume this distribution to be of a Gaussian shape with learnable mean $$\mu_\theta$$ and $$\Sigma_\theta$$ (Eq. 1 in paper):
+
+
+In order to train $$p_\theta$$, we can treat the combination of $$q$$ and $$p_\theta$$ as a [variational auto-encoder](https://arxiv.org/abs/1312.6114), and we can then use the evidence lower bound (ELBO) to minimize the log-likelihood of the model output with respect to the input $$\mathbf{x}_0$$. The log of the product of losses can then be represented as a sum of terms, which [can be minimized by the KL divergence between 2 gaussian distributions](https://huggingface.co/blog/annotated-diffusion#defining-an-objective-function-by-reparametrizing-the-mean).
+
+Just like in VAEs, we perform a **reparameterization trick so that we learn the added noise $$\epsilon_\theta(\mathbf{x}, t)$$ for noise level $$t$$** instead of prediction the mean. We can then compute the mean as (Eq 11):
+
+
+## Loss
+
+Our objective is to approximate our learned reverse process $$p_\theta$$ to the forward process $$q$$. We use ELBO for this (Eq. 3). **We use KL to compare $$p_θ(\mathbf{x}_{t−1} \mid \mathbf{x}_t)$$ against the forward process posteriors**. As the authors mention, ", all KL divergences in Eq. (5) are comparisons between Gaussians, so they can be calculated in a Rao-Blackwellized fashion". 
+
+
 
 ## Sampling
 
@@ -170,7 +213,7 @@ Our model will be U-net model of the original publication available in the `diff
 
 ```python
     model = diffusers.UNet2DModel(in_channels=channels, out_channels=channels).to(device)
-    model = DDP(model, device_ids=[local_rank])
+    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank])
     optimizer = SGD(model.parameters(), lr=1e-2)
 ``` 
 
@@ -288,7 +331,7 @@ So we start the implementation with the boilerplace code that crops the input im
 Our ViT is simply a positional embedding layer, a block of GPT blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a mean and variance for each channel and patch). Optionally, we add VAE that we may want to use to get a latent encoding and decoding:
 
 ```python
-class ViT(nn.Module):
+class DiT(nn.Module):
     def __init__(self, channels, patch_size=4, n_embd=64, n_blocks=12, use_vae=False):
         super().__init__()
         self.patch_size = patch_size
@@ -306,6 +349,38 @@ class ViT(nn.Module):
         if self.vae:  x = self.vae.tiled_decode(x)
         return x
 ```
+
+the loss is a bit more complicated, as we add the predicted variance term:
+
+> in order to train diffusion models with a learned reverse process covariance $$Σ_θ$$, the full $$D_{KL}$$ term needs to be optimized. We follow Nichol and Dhariwal’s approach [36]: train $$\epsilon_θ$$ with $$L_{simple}$$, and train $$Σ_θ$$ with the full $$L$$.
+
+because we are comparing two gaussians, we have a closed form solution for the KL divergence:
+
+```python
+    @torch.no_grad()
+    def eq11_from_ε_to_μ(x, ε_θ):
+        # Equation 11: use model (noise predictor) to predict the mean
+        sqrt_one_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
+        one_over_sqrt_α = torch.sqrt(1.0 / torch.cumprod(α, axis=0))
+        model_mean = one_over_sqrt_α * (x - β * ε_θ  / sqrt_one_minus_α_cumprod)
+        return model_mean
+
+    ε_θ, Σ_θ = model_output
+    Σ_θ_t = Σ_θ[t][:, None, None, None]
+    posterior_µ_t = posterior_µ(x_0, x_t)[t][:, None, None, None]
+    posterior_β_t = posterior_β[t][:, None, None, None]   
+    
+    # clip variance values to valid ones
+    Σ_θ = torch.clamp(Σ_θ, min=1e-5, max=1e5)
+    posterior_β_t = torch.clamp(posterior_β_t, min=1e-5, max=1e5)
+
+    μ_θ = eq11_from_ε_to_μ(x_t, ε_θ, t) # Eq. 11
+    μ_θ_t = μ_θ[:, None, None, None]
+    p = torch.distributions.Normal(μ_θ_t, Σ_θ_t.sqrt()) # Eq. 1
+    q = torch.distributions.Normal(posterior_µ_t, posterior_β_t.sqrt()) # Eq. 6
+    kl = torch.distributions.kl_divergence(p, q).mean(dim=(1, 2, 3))    
+```
+
 
 ### Example of DiT-based diffusion models for text-to-image tasks
 
