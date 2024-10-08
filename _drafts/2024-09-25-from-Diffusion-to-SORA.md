@@ -5,7 +5,13 @@ categories: [machine learning, diffusion, SORA]
 tags: [machinelearning]
 ---
 
+
+> **⚠️ Warning ⚠️**
+> This post is on its early days, development is still ongoing.
+ 
 Despite being an old idea first introduced back to 2015, diffusion models (DMs) started to be taken seriously after the refinements in the paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239). Just like GANs or VAEs, the diffusion models learn to convert noise from a distribution into a data sample - the "denoising" process. Quoting the paper:
+
+> Background: Gaussian diffusion models assume a forward noising process which gradually applies noise to real data $$\mathbf{x}_0: q(\mathbf{x}_t \mid \mathbf{x}_0 ) = \mathcal{N} (\mathbf{x}_t ; \sqrt{α¯}_t \mathbf{x}_ 0,(1 − α¯t)I)$$.  By applying the reparameterization trick, we can sample $$\mathbf{x}_t = \sqrt{α¯_t} \mathbf{x}_0 + \sqrt{1 − α¯_t} \epsilon_t, where \epsilon_t ∼ \mathcal{N} (0, I)$$. ETC section 3.1
 
 > A diffusion model is a parameterized Markov chain trained using
 variational inference to produce samples matching the data after finite time. Transitions of this chain
@@ -51,10 +57,10 @@ where $$\alpha_t = 1 - \beta_t$$ and $$\bar{\alpha}_t = \prod_{s=1}^t \alpha_t$$
 We can start implementing our diffusion algorithm by defining the hyper-parameters $$\alpha$$ and for convenience, an additional $$\bar{\alpha}_t = \prod_{s=1}^t \alpha_t$$. There are [many $$\beta_t$$ variance schedulers]( https://huggingface.co/blog/annotated-diffusion#defining-the-forward-diffusion-process), but for simplicity, we will implement a linear scheduler $$\beta_t$$:
 
 ```python
-    timesteps, beta_1, beta_T = 100, 0.0001, 0.02
-    betas = torch.tensor([ beta_1 + (beta_T - beta_1) / timesteps * t for t in range(timesteps) ], device=device)
-    alphas = 1. - betas
-    alphas_cumprod = torch.cumprod(alphas, axis=0)
+    T, β_1, β_T = 100, 0.0001, 0.02
+    β = torch.tensor([ β_1 + (β_T - β_1) / T * t for t in range(T) ], device=device)
+    α = 1. - β
+    α_cumprod = torch.cumprod(α, axis=0)
 ```
 
 Now we define the Sohl-Dickstein's forward process $$q (\mathbf{x}_t \mid \mathbf{x}_0)$$ as:
@@ -64,11 +70,11 @@ Now we define the Sohl-Dickstein's forward process $$q (\mathbf{x}_t \mid \mathb
     def q_sample(x0, t, noise=None):
         if noise is None:
             noise = torch.randn_like(x0)
-        sqrt_alphas_cumprod = torch.sqrt(alphas_cumprod)
-        sqrt_alphas_cumprod_t = sqrt_alphas_cumprod[t][:, None, None, None]
-        sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - alphas_cumprod)
-        sqrt_one_minus_alphas_cumprod_t = sqrt_one_minus_alphas_cumprod[t][:, None, None, None]
-        return sqrt_alphas_cumprod_t * x0 + sqrt_one_minus_alphas_cumprod_t * noise 
+        sqrt_α_cumprod = torch.sqrt(α_cumprod)
+        sqrt_α_cumprod_t = sqrt_α_cumprod[t][:, None, None, None]
+        sqrt_1_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
+        sqrt_1_minus_α_cumprod_t = sqrt_1_minus_α_cumprod[t][:, None, None, None]
+        return sqrt_α_cumprod_t * x0 + sqrt_1_minus_α_cumprod_t * noise 
 ```
 
 As a side note, learning a variance was later explored by [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672).
@@ -91,8 +97,10 @@ $$
 and that can be coded as:
 
 ```python
-    alphas_cumprod_prev = F.pad(alphas_cumprod[:-1], (1, 0), value=1.0)
-    posterior_variance = betas * (1. - alphas_cumprod_prev) / (1. - alphas_cumprod)
+    α_cumprod_prev = F.pad(α_cumprod[:-1], (1, 0), value=1.0)
+    posterior_β = β * (1. - α_cumprod_prev) / (1. - α_cumprod) # Eq 7
+    # compute log but clip first element because posterior_β is 0 at the beginning
+    posterior_log_β = torch.tensor([posterior_β[1].item()] + posterior_β[1:].tolist()).log().to(device)
 ```
 
 and $$\tilde{\mu}_t$$ is the **posterior mean** for the timestep $$t$$ (Eq. 7):
@@ -105,16 +113,19 @@ coded as the function:
 
 ```python
     @torch.no_grad()
-    def posterior_mean(x_0, x_t):
+    def posterior_µ(x_0, x_t, t):
         """ return posterior mean at step t, Equation 7 """
-        posterior_mean_coef1 =  betas * torch.sqrt(alphas_cumprod_prev) / (1.0 - alphas_cumprod)
-        posterior_mean_coef2 = (1.0 - alphas_cumprod_prev) * torch.sqrt(alphas) / (1.0 - alphas_cumprod)
-        posterior_mean = posterior_mean_coef1 * x_0 + posterior_mean_coef2 * x_t
-        return posterior_mean
+        α_t = α[t][:, None, None, None]
+        β_t = β[t][:, None, None, None]
+        α_cumprod_t = α_cumprod[t][:, None, None, None]
+        α_cumprod_prev_t = α_cumprod_prev[t][:, None, None, None]
+        coef1 =  β_t * torch.sqrt(α_cumprod_prev_t) / (1.0 - α_cumprod_t)
+        coef2 = (1.0 - α_cumprod_prev_t) * torch.sqrt(α_t) / (1.0 - α_cumprod_t)
+        return coef1 * x_0 + coef2 * x_t
 ```
 
 
-To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors propose a parameterization trick (section 3.2) that allows for our model to learn the noise $$\epsilon_\theta(\mathbf{x}_t, t)$$ for step $$t$$ instead of predicting the mean. The mean can then be computed as (Eq. 11 in paper):
+To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors propose a parameterization trick (section 3.2) that allows for our model to learn the noise $$\epsilon_\theta(\mathbf{x}_t, t)$$ for step $$t$$ instead of predicting the mean  $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$. The mean can then be computed as (Eq. 11 in paper):
 
  $$
  \mu_\theta(\mathbf{x}_t, t) = \frac{1}{\sqrt{\alpha_t}} \left( \mathbf{x}_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha_t}}} \epsilon_\theta(\mathbf{x}_t, t) \right)
@@ -123,23 +134,18 @@ To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors 
  and coded as:
 
 ```python
-    @torch.no_grad()
-    def predicted_mean(model, x, t):
-        betas_t = betas[t][:, None, None, None]
-        sqrt_one_minus_alphas_cumprod = torch.sqrt(1. - alphas_cumprod)
-        sqrt_one_minus_alphas_cumprod_t = sqrt_one_minus_alphas_cumprod[t][:, None, None, None]
-        one_over_sqrt_alphas = torch.sqrt(1.0 / torch.cumprod(alphas, axis=0))
-        one_over_sqrt_alphas_t = one_over_sqrt_alphas[t][:, None, None, None]
-        epsilon = model(x, t)
-        model_mean = one_over_sqrt_alphas_t * (x - betas_t * epsilon  / sqrt_one_minus_alphas_cumprod_t)
-        return model_mean
+    def eq11_μ_θ(x, ε_θ, t):
+        # Equation 11: use model (noise predictor) to predict the mean
+        β_t = β[t][:, None, None, None]
+        one_over_sqrt_α = torch.sqrt(1.0 / torch.cumprod(α, axis=0))
+        one_over_sqrt_α_t = one_over_sqrt_α[t][:, None, None, None]
+        sqrt_1_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
+        sqrt_1_minus_α_cumprod_t = sqrt_1_minus_α_cumprod[t][:, None, None, None]
+        μ_θ = one_over_sqrt_α_t * (x - β_t * ε_θ  / sqrt_1_minus_α_cumprod_t)
+        return μ_θ
 ```
 
-In the original paper, only the mean $$\mu_\theta(\mathbf{x}_t, t)$$ is learned: 
-
-> We ignore the fact that the forward process variances βt are learnable by reparameterization and instead fix them to constants (see Section 4 for details)".
-
-The variance is set as $$\Sigma_\theta(\mathbf{x}_t, t) = \sigma^2_t I$$ and $$\sigma^2_t = \beta_t$$ or $$\sigma^2_t = \tilde{\beta}_t$$ (similar results), 
+In the original paper, the variance $$\Sigma_\theta (\mathbf{x}_t, t)$$ is not learned, and it's set as $$\Sigma_\theta(\mathbf{x}_t, t) = \sigma^2_t I$$ and $$\sigma^2_t = \beta_t$$ or $$\sigma^2_t = \tilde{\beta}_t$$ (similar results), 
 
 
 ## Reverse process
@@ -157,13 +163,6 @@ In order to train $$p_\theta$$, we can treat the combination of $$q$$ and $$p_\t
 
 Just like in VAEs, we perform a **reparameterization trick so that we learn the added noise $$\epsilon_\theta(\mathbf{x}, t)$$ for noise level $$t$$** instead of prediction the mean. We can then compute the mean as (Eq 11):
 
-
-## Loss
-
-Our objective is to approximate our learned reverse process $$p_\theta$$ to the forward process $$q$$. We use ELBO for this (Eq. 3). **We use KL to compare $$p_θ(\mathbf{x}_{t−1} \mid \mathbf{x}_t)$$ against the forward process posteriors**. As the authors mention, ", all KL divergences in Eq. (5) are comparisons between Gaussians, so they can be calculated in a Rao-Blackwellized fashion". 
-
-
-
 ## Sampling
 
 Once the model is trained, to generate new images we must reverse the diffusion process (from time T to time 1):
@@ -174,26 +173,17 @@ Once the model is trained, to generate new images we must reverse the diffusion 
 The step 6 samples $$\mathbf{x}_t$$ for a step $$t$$, by summing the predicted mean $$ \mu_\theta(\mathbf{x}_t, t)$$ with noise $$\mathbf{z}_t$$ multiplied by the variance $$\sigma$$:
 
 ```python
-    @torch.no_grad()
-    def p_sample(model, x, t, t_index):
-        model_mean = predicted_mean(model, x, t)
-        if t_index == 0:
-            return model_mean
-        else:
-            posterior_variance_t = posterior_variance[t][:, None, None, None]
-            noise = torch.randn_like(x)
-            return model_mean + torch.sqrt(posterior_variance_t) * noise 
-```
-
-The remaining steps are coded in a simple for loop:
-
-```python
-    @torch.no_grad()
-    def p_sample_loop(model, shape):
-        # start from pure noise (for each example in the batch)
+    def alg2_p_sampling(model, shape):
         img = torch.randn(shape, device=device)
-        for i in reversed(range(0, timesteps)):
-            img = p_sample(model, img, torch.full((batch_size,), i, device=device, dtype=torch.long), i)
+        for t_index in reversed(range(0, T)):
+            t = torch.full((batch_size,), t_index, device=device, dtype=torch.long)
+            model_output = model(img, t)
+            ε_θ = model_output.sample # remove tensor from Unet2DOutput class
+            img = eq11_μ_θ(x_t, ε_θ, t) # Eq. 11
+            if t_index > 0:
+                posterior_β_t = posterior_β[t][:, None, None, None]
+                noise = torch.randn_like(img)
+                img += torch.sqrt(posterior_β_t) * noise 
         return img
 ```
 
@@ -217,7 +207,7 @@ Our model will be U-net model of the original publication available in the `diff
     optimizer = SGD(model.parameters(), lr=1e-2)
 ``` 
 
-As loss function, we follow the paper and use a simple mean square error (Eq. 14) between the sampled noise $$\epsilon$$ and the predicted noise $$\epsilon\_theta$$ (Huber loss or MAE are also popular choices):
+As loss function, we follow the paper and use a simple mean square error (Eq. 14) between the sampled noise $$\epsilon$$ and the predicted noise $$\epsilon_\theta$$ (Huber loss or MAE are also popular choices):
 
 $$
 \mathcal{L_{simple}(\theta)} = \mathop{\mathbb{E}}_{t, \mathbf{x_0}, \epsilon}  \| \epsilon - \epsilon_\theta(\sqrt{\bar{α}_t} \mathbf{x}_0 + \sqrt{1-\bar{α}_t} \epsilon, t)\| ^2
@@ -241,9 +231,139 @@ where each training iteration (steps 2 to 6) can be coded as:
     optimizer.zero_grad(set_to_none=True)
 ```
 
-### U-net based diffusion models for text-to-image and text-to-video tasks
+## Diffusion transformers
 
-The previous implementation was generating/sampling new images from a diffusion process. One can add conditioning for ...
+The publication [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement that outperforms the UNet-based diffusion in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4). VITs also also shown to have better scaling properties and accuracy than convolutional neural networks. Moreover, related to ViTs scaling, it shows that (1) ViT Gflops are strongly correlated with FID, (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
+
+>  We study the scaling behavior of transformers with respect to network complexity (in GFlops) vs. sample quality. We show that by constructing and benchmarking the DiT design space under the Latent Diffusion Models (LDMs) [48] framework, where diffusion models are trained within a VAE’s latent space, we can successfully replace the U-Net backbone with a transformer. 
+
+> We further show that DiTs are scalable architectures for diffusion models: there is a strong correlation between the network complexity (measured by Gflops) vs. sample quality (measured by FID).
+
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/from-Diffusion-to-SORA/DiT.png"/> 
+
+Our ViT is simply a positional embedding layer, a block of GPT blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a mean and variance for each channel and patch).
+To keep our architecture simple as simple as possible, we will ingnore the 4 variants described in DiT block design (in Section 3.2, in-context conditioning, cross-attention block, adaptive layer norm block and adaLN-Zero block) and we will use the regular PyTorch embedding `nn.Embedding` (a look-up table) instaed of the  frequency-based positional embeddings (the sine-cosine version).
+
+```python
+class DiT(nn.Module):
+    def __init__(self, timesteps, num_channels, img_size, patch_size=4, n_blocks=12):
+        super().__init__()
+        assert img_size % patch_size == 0, "Image size must be divisible by patch size"
+        self.patch_size = patch_size
+        n_embd = patch_size*patch_size*num_channels # values per img patch 
+
+        # temporal and positional embeddings
+        n_pos_emb = (img_size//patch_size)*(img_size//patch_size) # number of patches per image
+        self.t_embedding = nn.Embedding(timesteps, n_embd)
+        self.pos_embedding = nn.Embedding(n_pos_emb, n_embd)
+
+        # DiT blocks
+        self.blocks = nn.Sequential(*[Block(n_embd=n_embd) for _ in range(n_blocks)])
+
+        # decoder: "standard linear decoder to do this; we apply the layer norm and linearly decode each token into a p×p×2C tensor"
+        self.decoder = nn.Sequential( nn.LayerNorm(n_embd), nn.Linear(n_embd, n_embd*2) )
+```
+
+Then we need to add the boilerplace code that crops the input image into patches to be used by the visual attention module, and that merges back tiles images into one image:
+
+```python
+    def patchify(self, x, t):
+        """ break image (B, C, H, W) into patches (B, C, NH, NW, PH, PW) for NH*NW patches of size PHxPW """
+        B, C, H, W = x.shape
+        x = x.unfold(2, self.patch_size, self.patch_size).unfold(3, self.patch_size, self.patch_size)
+
+        # linearize patches and linearize patches and flatthen embeddings: (B, NH*NW, PH*PW*C)
+        _, _, NH, NW, PH, PW = x.shape    
+        x = x.permute(0, 2, 3, 4, 5, 1) # (B, NH, NW, PH, PW, C)
+        x = x.reshape(B, NH*NW, PH*PW*C)
+        return x, dict(B=B, C=C, H=H, W=W, NH=NH, NW=NW, PH=PH, PW=PW)
+
+    def unpatchify(self, x, shapes):
+        """ convert patches (B, NH*NW, C*PH*PW*2) back into mu and var of shape (B, C, H, W) = (B, C, NH*PH, NW*PW) """
+        B, C, H, W, NH, NW, PH, PW, = shapes.values()
+        assert x.shape == (B, NH*NW, PH*PW*C*2)
+        x = x.reshape(B, NH, NW, PH, PW, C, 2).permute(0, 5, 1, 3, 2, 4, 6) # (B, C, NH, PH, NW, PW, 2)
+        x = x.reshape(B, C, NH*PH, NW*PW, 2)
+        ε_θ, Σ_θ = x[...,0], x[...,1]
+        assert ε_θ.shape == Σ_θ.shape == (B, C, H, W) # original shape
+        return ε_θ, Σ_θ
+```
+
+In this use case, we are also learning the covariance $$Σ_θ$$. so we full KL-divergence needs to be optimized. To solve this, they "train $$\epsilon_θ$$ with $$L_{simple}$$, and train $$Σ_θ$$ with the full $$L$$". Because we are comparing two gaussians, we have a closed form solution for the KL divergence (an alternative implementation can be found on [Meta's DIT implementation](https://github.com/facebookresearch/DiT/blob/ed81ce2229091fd4ecc9a223645f95cf379d582b/diffusion/gaussian_diffusion.py#L682) ), whose KL divergence can be computed as:
+
+```python
+    ε_θ, Σ_θ = model_output
+    posterior_µ_t = posterior_µ(x_0, x_t, t)
+    posterior_β_t = posterior_β[t][:, None, None, None]   
+    
+    # clip variance values to a valid range
+    Σ_θ = torch.clamp(Σ_θ, min=1e-5, max=1e5)
+    posterior_β_t = torch.clamp(posterior_β_t, min=1e-5, max=1e5)
+
+    μ_θ = eq11_μ_θ(x_t, ε_θ, t) # Eq. 11
+    p = torch.distributions.Normal(μ_θ, Σ_θ.sqrt()) # Eq. 1
+    q = torch.distributions.Normal(posterior_µ_t, posterior_β_t.sqrt()) # Eq. 6
+    kl = torch.distributions.kl_divergence(p, q).mean(dim=(1, 2, 3))
+
+    # for t=0, return Negative Log Likelihood (NLL) of the decoder, otherwise return KL divergence
+    decoder_nll = F.gaussian_nll_loss(input=μ_θ, var=Σ_θ, target=x_0, reduction='none').mean(dim=(1, 2, 3))
+    loss = torch.where((t == 0), decoder_nll, kl) # loss per sample
+    loss = loss.mean()
+```
+
+In fact, the paper implements a **conditional diffusion model** that takes as input extra information such as class $$c$$, and the reverse process becomes $$p_θ(\mathbf{x}_{t−1} \mid  \mathbf{x}_t, c)$$, where $$\epsilon_θ$$ and $$Σ_θ$$ are conditioned on $$c$$. We'll look at that next.
+
+## Conditioning  and classifier-free guidance
+
+The previous model learns the simple task of generating a valid output that is drawn from the distribution of the input. On a dataset like CIFAR-10 that has 10 classes of objects, it would probably always generate an automobile. So it would be helpful to add some guidance to tell the model, what class we want to learn. We can do this by adding conditional information
+
+The previous implementation was generating/sampling new images from a diffusion process. One can add conditioning for the class id, input text, guiding image, or other information we want to train on.
+
+In our example above, we add class `label` as the additional information in the `forward` pass:
+
+```python
+class DiT(nn.Module):
+    
+    def __init__(self, timesteps, num_channels, num_labels=10 img_size, patch_size=4, n_blocks=12):
+        # [...]
+        self.class_embedding = nn.Embedding(num_labels, n_embd)
+
+    def forward(self, x, t, label = None):
+        # [...]
+        # add class embeddings
+        x += self.class_embedding(label).reshape(B, 1, E)
+```
+
+Another interesting features to improve quality are [classifier free guidance](https://arxiv.org/abs/2207.12598) and [exponential moving average](https://openreview.net/forum?id=2M9CUnYnBA) and for brevity will be ommited. Finally, conditioning allows us to train diffusion models with text, image or audio input as input signal.
+
+## Video Diffusion and 3D attention
+
+When we started applying diffusion to video datasets (sets of image frames), the large amount of data became prohibitive. This leads to an infeasible amount of computation, and this led to the creation of **[lattent diffusion model](https://arxiv.org/abs/2112.10752)** where diffusion is applied on the latent space of pretrained autoencoders (e.g. VAE) instead of the image directly. This reduces computation by training diffusion on high-resolution images by training on its compressed representation instead. 
+
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/from-Diffusion-to-SORA/sora_vae.png"/> 
+
+{: style="text-align:center; font-size: small;"}
+An overview of a VAE lattent space compression in SORA. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". source: [Video generation models as world simulators, OpenAI](https://openai.com/index/video-generation-models-as-world-simulators/)
+
+The other challenge in video datasets is the attention: how do we correlate image patches across the spatial domain in a picture, and across the time domain? Given an input of shape $$B \times T \times H \times W \times C$$ (batch, number of frames, height, width, colo channels), there are two main approaches:
+- a spatial attention that converts  input $$B \times T \times H \times W \times C$$ into $$(B * T ) \times (H * W) \times C$$ to perform attention of patches within the same frame, and then follow it by a temporal attention that converts it into $$(B * H * W) \times T \times C$$  that performs attention of the same patch across time. Doing this across several UNet of DiT blocks will expose image patches and lattent patches across time.
+- a full 3D attention, where we collect all patches of all frames and use that as the temporal dimension in the attention ie converting an input of shape $$B \times T \times H \times W \times C$$ into $$B \times (T * H * W) \times C$$. This leads to very large  temporal dimension, however, [Masked autoencoders (MAE)](https://arxiv.org/abs/2205.09113) allow us to use only a subset of $$T * H * W$$ patches and have shown to be  scalable self-supervised learners for computer vision, in [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) and [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304).
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/from-Diffusion-to-SORA/masked_autoencoders_cropped.png"/> 
+
+{: style="text-align:center; font-size: small;"}
+An illustration of a masked autoencoder randomly picking 10% of the initial videoframe patches, with enough representative power to reconstruct the original sequence. Source: [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377)
+
+## Multi-dimensional parallelism
+
+
+## Further Reading 
+
+Here are some examples of U-net based diffusion models for text-to-image and text-to-video tasks:
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Imagen: Photorealistic Text-to-Image Diffusion Models with Deep Language Understanding](https://arxiv.org/abs/2205.11487)</summary>
@@ -270,7 +390,7 @@ To train on videos and have 3D attention they use the method presented in [Align
 <details> <summary markdown="span">[Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation](https://arxiv.org/abs/2311.17117)</summary>
 An U-net based diffusion model that takes as input a reference image (photo of a human) and a video of a moving human annotation (*stick man*, the pose sequence) and outputs the video that animates the human with the movements of the stick man. The reference image is encoded with VAE and CLIP embeddings. The model structure includes 2 U-nets, the reference unet that *merges detail features via spatial attention* and a denoising/diffusion U-Net that is applied to the pose sequence to generate the final video. 
 
-3D attention is achieved by a spatial attention converts input $$B \times T \times H \times W \times C$$ into $$(B \times T ) \times (H \times W) \times C$$ to perform attention of patches within the same frame, followed by a temporal attention that converts input $$B \times T \times H \times W \times C$$ into $$(B \times H \times W) \times T \times C$$  that performs attention of the same patch across time.
+3D attention is achieved by a spatial attention converts input $$B \times T \times H \times W \times C$$ into $$(B \times T ) \times (H \times W) \times C$$ to perform attention of patches within the same frame, followed by a temporal attention that converts the shape $$(B * H * W) \times T \times C$$  that performs attention of the same patch across time.
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/from-Diffusion-to-SORA/anymate_anyone.png"/> 
@@ -292,97 +412,8 @@ Demonstrates the importance on fine-tuning text-to-image tasks with a very high 
 </details>
 {::options parse_block_html="false" /}
 
-
-## Diffusion transformers
-
-The publication [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement that outperforms the UNet-based diffusion in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4). VITs also also shown to have better scaling properties and accuracy than convolutional neural networks. Moreover, related to ViTs scaling, it shows that (1) ViT Gflops are strongly correlated with FID, (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
-
->  We study the scaling behavior of transformers with respect to network complexity (in GFlops) vs. sample quality. We show that by constructing and benchmarking the DiT design space under the Latent Diffusion Models (LDMs) [48] framework, where diffusion models are trained within a VAE’s latent space, we can successfully replace the U-Net backbone with a transformer. 
-
-> We further show that DiTs are scalable architectures for diffusion models: there is a strong correlation between the network complexity (measured by Gflops) vs. sample quality (measured by FID).
-
-> Background: Gaussian diffusion models assume a forward noising process which gradually applies noise to real data $$\mathbf{x}_0: q(\mathbf{x}_t \mid \mathbf{x}_0 ) = \mathcal{N} (\mathbf{x}_t ; \sqrt{α¯}_t \mathbf{x}_ 0,(1 − α¯t)I)$$.  By applying the reparameterization trick, we can sample $$\mathbf{x}_t = \sqrt{α¯_t} \mathbf{x}_0 + \sqrt{1 − α¯_t} \epsilon_t, where \epsilon_t ∼ \mathcal{N} (0, I)$$. ETC section 3.1
-
-Here they use implement a **conditional diffusion model** that takes as input extra information such as class $$c$$, and the reverse process becomes $$p_θ(\mathbf{x}_{t−1} \mid  \mathbf{x}_t, c)$$, where $$\epsilon_θ$$ and $$Σ_θ$$ are conditioned on $$c$$.
-
-> In this setting, **[classifier-free guidance](https://arxiv.org/abs/2207.12598)** can be used to encourage the sampling procedure to find $$x$$ such that $$\log p(c \mid x)$$ is high. By Bayes Rule, $$\log p(c \mid x) ∝ \log p(x \mid c) − \log p(x)$$, and hence $$∇_x \log p(c \mid x) ∝ ∇_x \log p(x \mid c) − ∇_x \log p(x)$$.  By interpreting the output of diffusion models as the score function, the DDPM sampling procedure can be guided to sample $$x$$ with high $$p(x \mid c)$$ by: $$\bar{\epsilon}_θ(\mathbf{x}_t, c) = \epsilon_θ(\mathbf{x}_t, ∅) + s · ∇_x \log p(x \mid c) ∝ \epsilon_θ(\mathbf{x}_t, ∅) + s · (\epsilon_θ(\mathbf{x}_t, c)−\epsilon_θ(\mathbf{x}_t, ∅))$$, where $$s \gt 1$$ indicates the scale of the guidance (note that $$s = 1$$ recovers standard sampling). Evaluating the diffusion model with $$c = ∅$$ is done by randomly dropping out $$c$$ during training and replacing it with a learned “null” embedding $$∅$$. 
-
-The paper also mentions the notion of **[lattent diffusion model](https://arxiv.org/abs/2112.10752)** where diffusion is applied on the latent space of pretrained autoencoders (e.g. VAE) instaed of the image directly. This reduces computation by training diffusion on high-resolution images by training on its compressed representation instead. 
-
-To keep our architecture simple as simple as possible, we will ingnore the 4 variants described in DiT block design (in Section 3.2, in-context conditioning, cross-attention block, adaptive layer norm block and adaLN-Zero block) and we will use the regular PyTorch embedding `nn.Embedding` (a look-up table) instaed of the  frequency-based positional
-embeddings (the sine-cosine version).
-
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/from-Diffusion-to-SORA/DiT.png"/> 
-
-So we start the implementation with the boilerplace code that crops the input image into patches to be used by the visual attention module:
-
-```python
-    @staticmethod
-    def patchify(x, patch_size):
-        """ converts an image x into a list of patches of size patch_size x patch_size """
-        B, C, H, W = x.shape
-        x = x.unfold(2, patch_size, patch_size).unfold(3, patch_size, patch_size)
-        x = x.contiguous().view(B, C, -1, patch_size, patch_size)
-        x = x.permute(0, 2, 1, 3, 4)
-        return x
-```
-
-Our ViT is simply a positional embedding layer, a block of GPT blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a mean and variance for each channel and patch). Optionally, we add VAE that we may want to use to get a latent encoding and decoding:
-
-```python
-class DiT(nn.Module):
-    def __init__(self, channels, patch_size=4, n_embd=64, n_blocks=12, use_vae=False):
-        super().__init__()
-        self.patch_size = patch_size
-        self.pos_emb = nn.Embedding(64, n_embd)
-        self.blocks = nn.Sequential(*[Block(64, 64) for _ in range(n_blocks)])
-        self.decoder = nn.Sequential( nn.LayerNorm(n_embd), nn.Linear(n_embd, channels) )
-        self.vae = diffusers.models.AutoencoderKL.from_pretrained("stabilityai/sd-vae-ft-mse") if use_vae else None
-
-    def forward(self):
-        if self.vae:  x = self.vae.tiled_encode(x)
-        x = ViT.patchify(x, self.patch_size)
-        x += self.pos_emb(torch.arange(x.shape[0], device=x.device))
-        x = self.blocks(x)
-        x = self.decoder(x)
-        if self.vae:  x = self.vae.tiled_decode(x)
-        return x
-```
-
-the loss is a bit more complicated, as we add the predicted variance term:
-
-> in order to train diffusion models with a learned reverse process covariance $$Σ_θ$$, the full $$D_{KL}$$ term needs to be optimized. We follow Nichol and Dhariwal’s approach [36]: train $$\epsilon_θ$$ with $$L_{simple}$$, and train $$Σ_θ$$ with the full $$L$$.
-
-because we are comparing two gaussians, we have a closed form solution for the KL divergence:
-
-```python
-    @torch.no_grad()
-    def eq11_from_ε_to_μ(x, ε_θ):
-        # Equation 11: use model (noise predictor) to predict the mean
-        sqrt_one_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
-        one_over_sqrt_α = torch.sqrt(1.0 / torch.cumprod(α, axis=0))
-        model_mean = one_over_sqrt_α * (x - β * ε_θ  / sqrt_one_minus_α_cumprod)
-        return model_mean
-
-    ε_θ, Σ_θ = model_output
-    Σ_θ_t = Σ_θ[t][:, None, None, None]
-    posterior_µ_t = posterior_µ(x_0, x_t)[t][:, None, None, None]
-    posterior_β_t = posterior_β[t][:, None, None, None]   
-    
-    # clip variance values to valid ones
-    Σ_θ = torch.clamp(Σ_θ, min=1e-5, max=1e5)
-    posterior_β_t = torch.clamp(posterior_β_t, min=1e-5, max=1e5)
-
-    μ_θ = eq11_from_ε_to_μ(x_t, ε_θ, t) # Eq. 11
-    μ_θ_t = μ_θ[:, None, None, None]
-    p = torch.distributions.Normal(μ_θ_t, Σ_θ_t.sqrt()) # Eq. 1
-    q = torch.distributions.Normal(posterior_µ_t, posterior_β_t.sqrt()) # Eq. 6
-    kl = torch.distributions.kl_divergence(p, q).mean(dim=(1, 2, 3))    
-```
-
-
-### Example of DiT-based diffusion models for text-to-image tasks
+<br/>
+And here are some examples of DiT inspired conditional diffusion models: 
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[OmniGen: Unified Image Generation](https://arxiv.org/abs/2409.11340)</summary>
@@ -402,22 +433,8 @@ A text-to-image diffusion model, that replaces the commonly used T5 and CLIP for
 </details>
 {::options parse_block_html="false" /}
  
-## Video Diffusion and SORA
-
-We now move to the movie domain and study a text-to-video model. 
-
-Several advancements later, it led to [SORA](https://openai.com/index/video-generation-models-as-world-simulators/), a text-to-video, image-to-video, text-to-image (single frame video), and video-to-video model (for video editing, extension, etc)
-Just as in the previous example, we also use a VAE to compress the input into a smaller latent space. However, we compress videos into spatial and temporal patches.
-
-[Masked autoencoders (MAE)](Masked Autoencoders As Spatiotemporal Learners) have shown to be  scalable self-supervised learners for computer vision, in [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) and [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304).
-
-{: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/from-Diffusion-to-SORA/sora_vae.png"/> 
-
-{: style="text-align:center; font-size: small;"}
-An overview of the lattent space in SORA. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". source: [Video generation models as world simulators, OpenAI](https://openai.com/index/video-generation-models-as-world-simulators/)
-
-### Other video diffusion models
+<br/>
+Here is some work on video diffusion and 3D attention:
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304)</summary>
@@ -479,7 +496,8 @@ or even more.
 </details>
 {::options parse_block_html="false" /}
 
-## Multi-dimensional SORA parallelism
+<br/>
+Multi-dimensional SORA parallelism
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633)</summary>
@@ -528,7 +546,7 @@ An attempt to create an open-source implementation of [SORA](https://openai.com/
 {::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
-<details> <summary markdown="span"> [Meta Movie Gen research paper](https://ai.meta.com/static-resource/movie-gen-research-paper)</summary>
+<details> <summary markdown="span"> [Movie Gen: A Cast of Media Foundation Models research paper](https://ai.meta.com/static-resource/movie-gen-research-paper)</summary>
 
 One of the most detailed technical reports of a very large DiT-based diffusion model, trained on 6,144 H100 GPUs, able to solve multiple tasks: text-to-video synthesis, video personalization, video editing, video-to-audio generation, and text-to-audio generation. "The largest video generation
 model is a 30B parameter transformer trained with a maximum context length of 73K video tokens,

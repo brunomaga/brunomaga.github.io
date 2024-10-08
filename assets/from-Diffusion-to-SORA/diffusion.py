@@ -65,41 +65,23 @@ def main(model_name='UNet'):
         coef2 = (1.0 - α_cumprod_prev_t) * torch.sqrt(α_t) / (1.0 - α_cumprod_t)
         return coef1 * x_0 + coef2 * x_t
 
-    @torch.no_grad()
-    def predicted_mean(model, x, t):
-        # Equation 11: use model (noise predictor) to predict the mean
-        β_t = β[t][:, None, None, None]
-        sqrt_one_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
-        sqrt_one_minus_α_cumprod_t = sqrt_one_minus_α_cumprod[t][:, None, None, None]
-        one_over_sqrt_α = torch.sqrt(1.0 / torch.cumprod(α, axis=0))
-        one_over_sqrt_α_t = one_over_sqrt_α[t][:, None, None, None]
-        model_output = model(x, t)
-        if model_name == 'UNet':
-            ε_θ = model_output.sample # remove tensor from Unet2DOutput class
-        elif model_name == 'DiT':
-            ε_θ, _ = model_output
-        model_mean = one_over_sqrt_α_t * (x - β_t * ε_θ  / sqrt_one_minus_α_cumprod_t)
-        return model_mean
-
-    # Generating new images from a diffusion model happens by reversing the diffusion process: we start from T and go to 1 (alg 2)
-    @torch.no_grad()
-    def p_sample(model, x, t, t_index):
-        model_mean = predicted_mean(model, x, t)
-        if t_index == 0:
-            return model_mean
-        else:
-            posterior_β_t = posterior_β[t][:, None, None, None]
-            noise = torch.randn_like(x)
-            return model_mean + torch.sqrt(posterior_β_t) * noise 
-        
-
     # Algorithm 2 (including returning all images)
     @torch.no_grad()
-    def p_sample_loop(model, shape):
+    def alg2_p_sampling(model, shape):
         # start from pure noise (for each example in the batch)
         img = torch.randn(shape, device=device)
-        for i in reversed(range(0, T)):
-            img = p_sample(model, img, torch.full((batch_size,), i, device=device, dtype=torch.long), i)
+        for t_index in reversed(range(0, T)):
+            t = torch.full((batch_size,), t_index, device=device, dtype=torch.long)
+            model_output = model(img, t)
+            if model_name == 'UNet':
+                ε_θ = model_output.sample # remove tensor from Unet2DOutput class
+            elif model_name == 'DiT':
+                ε_θ, _ = model_output
+            img = eq11_μ_θ(x_t, ε_θ, t) # Eq. 11
+            if t_index > 0:
+                posterior_β_t = posterior_β[t][:, None, None, None]
+                noise = torch.randn_like(img)
+                img += torch.sqrt(posterior_β_t) * noise 
         return img
 
     # forward diffusion (using Sohl-Dickstein property)
@@ -109,20 +91,20 @@ def main(model_name='UNet'):
             noise = torch.randn_like(x0)
         sqrt_α_cumprod = torch.sqrt(α_cumprod)
         sqrt_α_cumprod_t = sqrt_α_cumprod[t][:, None, None, None]
-        sqrt_one_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
-        sqrt_one_minus_α_cumprod_t = sqrt_one_minus_α_cumprod[t][:, None, None, None]
-        return sqrt_α_cumprod_t * x0 + sqrt_one_minus_α_cumprod_t * noise 
+        sqrt_1_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
+        sqrt_1_minus_α_cumprod_t = sqrt_1_minus_α_cumprod[t][:, None, None, None]
+        return sqrt_α_cumprod_t * x0 + sqrt_1_minus_α_cumprod_t * noise 
 
     @torch.no_grad()
-    def eq11_from_ε_to_μ(x, ε_θ, t):
+    def eq11_μ_θ(x, ε_θ, t):
         # Equation 11: use model (noise predictor) to predict the mean
         β_t = β[t][:, None, None, None]
         one_over_sqrt_α = torch.sqrt(1.0 / torch.cumprod(α, axis=0))
         one_over_sqrt_α_t = one_over_sqrt_α[t][:, None, None, None]
-        sqrt_one_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
-        sqrt_one_minus_α_cumprod_t = sqrt_one_minus_α_cumprod[t][:, None, None, None]
-        model_mean = one_over_sqrt_α_t * (x - β_t * ε_θ  / sqrt_one_minus_α_cumprod_t)
-        return model_mean
+        sqrt_1_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
+        sqrt_1_minus_α_cumprod_t = sqrt_1_minus_α_cumprod[t][:, None, None, None]
+        μ_θ = one_over_sqrt_α_t * (x - β_t * ε_θ  / sqrt_1_minus_α_cumprod_t)
+        return μ_θ
     
 
     # training loop
@@ -164,7 +146,7 @@ def main(model_name='UNet'):
                     # kl = normal_kl(posterior_mean_t, posterior_log_variance_t, ε_θ, model_log_variance_t)
                     # kl = kl.mean(dim=(1, 2, 3)) # mean over of non-batch dimensions
 
-                μ_θ = eq11_from_ε_to_μ(x_t, ε_θ, t) # Eq. 11
+                μ_θ = eq11_μ_θ(x_t, ε_θ, t) # Eq. 11
                 p = torch.distributions.Normal(μ_θ, Σ_θ.sqrt()) # Eq. 1
                 q = torch.distributions.Normal(posterior_µ_t, posterior_β_t.sqrt()) # Eq. 6
                 kl = torch.distributions.kl_divergence(p, q).mean(dim=(1, 2, 3))
@@ -183,7 +165,7 @@ def main(model_name='UNet'):
         # save generated images
         results_folder = Path("./results")
         results_folder.mkdir(exist_ok = True)
-        img = p_sample_loop(model, shape=x_0.shape)
+        img = alg2_p_sampling(model, shape=x_0.shape)
         img = (img + 1) * 0.5 # from [-1,1] to [0,1]
         save_image(img, str(results_folder / f'sample-{epoch}.png'), nrow = batch_size)
             

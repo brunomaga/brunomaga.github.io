@@ -112,8 +112,7 @@ class DiT(nn.Module):
         x = self.blocks(x)
 
         # decode patches, as per paper, output is 2x the size of input (mean and variance)
-        # (B, C, NH*PH, NW*PW) -> (B, C, NH*PH, NW*PW*2) 
-        x = self.decoder(x)
+        x = self.decoder(x)   # (B, C, NH*PH, NW*PW) -> (B, C, NH*PH, NW*PW*2) 
 
         ε_θ, Σ_θ = self.unpatchify(x, shapes)
         return ε_θ, Σ_θ
