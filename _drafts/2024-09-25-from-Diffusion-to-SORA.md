@@ -9,20 +9,7 @@ tags: [machinelearning]
 > **⚠️ Warning ⚠️**
 > This post is on its early days, development is still ongoing.
  
-Despite being an old idea first introduced back to 2015, diffusion models (DMs) started to be taken seriously after the refinements in the paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239). Just like GANs or VAEs, the diffusion models learn to convert noise from a distribution into a data sample - the "denoising" process. Quoting the paper:
-
-> Background: Gaussian diffusion models assume a forward noising process which gradually applies noise to real data $$\mathbf{x}_0: q(\mathbf{x}_t \mid \mathbf{x}_0 ) = \mathcal{N} (\mathbf{x}_t ; \sqrt{α¯}_t \mathbf{x}_ 0,(1 − α¯t)I)$$.  By applying the reparameterization trick, we can sample $$\mathbf{x}_t = \sqrt{α¯_t} \mathbf{x}_0 + \sqrt{1 − α¯_t} \epsilon_t, where \epsilon_t ∼ \mathcal{N} (0, I)$$. ETC section 3.1
-
-> A diffusion model is a parameterized Markov chain trained using
-variational inference to produce samples matching the data after finite time. Transitions of this chain
-are learned to reverse a diffusion process, which is a Markov chain that gradually adds noise to the
-data in the opposite direction of sampling until signal is destroyed.
-
-> When the diffusion consists of
-small amounts of Gaussian noise, it is sufficient to set the sampling chain transitions to conditional
-Gaussians too, allowing for a particularly simple neural network parameterization.
-
-The diffusion model is characterized by three main elements: a forward process that gradually adds noise to data, a learnable reverse diffusion process that learns the denoising process, and a sampling algorithm that will generates data from pure noise using the trained model.
+Despite backing to 2015, diffusion models (DMs) started getting momentum after the paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239). Just like GANs or VAEs, diffusion models are generative models that learn  to convert noise from a distribution into a data sample - the "denoising" process. A diffusion process is a Markov Chain of a forward and a reverse process: a forward process that gradually adds noise to data, and a **learnable** reverse diffusion process that learns the denoising process. The transitions of this chain is learned with variational inference. Once the model is trained, a sampling algorithm is able to generate data from pure noise using the trained model.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/from-Diffusion-to-SORA/diffusion.png"/> 
@@ -30,7 +17,7 @@ The diffusion model is characterized by three main elements: a forward process t
 {: style="text-align:center; font-size: small;"}
 A diffusion model is a $$T$$-step Markov chain, characterized by a forward process $$q$$ and a trainable reverse process $$q$$. Source: [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
 
-Let's look at those processes in detail. Credit: mathematical formulation inspired by [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239), [https://huggingface.co/blog/annotated-diffusion](https://huggingface.co/blog/annotated-diffusion) and [Lil'Log: waht are diffusion models](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/).
+Let's look at those processes in detail. Credit: formulation and U-Net implementation inspired by the paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239), huggingface's post [The Annotated Diffusion Model](https://huggingface.co/blog/annotated-diffusion) and Lilian Weng's post [Lil'Log: what are diffusion models](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/).
 
 ## Forward Process
 
@@ -224,8 +211,8 @@ where each training iteration (steps 2 to 6) can be coded as:
     t = torch.randint(0, timesteps, (batch_size,), device=device).long()
     noise = torch.randn_like(batch)
     x_noisy = q_sample(x0=batch, t=t, noise=noise)
-    predicted_noise = model(x_noisy, t)[0]
-    loss = F.mse_loss(noise, predicted_noise) # Huber loss also ok
+    ε_θ = model(x_t, t).sample
+    loss = F.mse_loss(noise, ε_θ)  # Huber loss and MAE are also ok
     loss.backward()
     optimizer.step()
     optimizer.zero_grad(set_to_none=True)
@@ -233,17 +220,12 @@ where each training iteration (steps 2 to 6) can be coded as:
 
 ## Diffusion transformers
 
-The publication [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement that outperforms the UNet-based diffusion in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4). VITs also also shown to have better scaling properties and accuracy than convolutional neural networks. Moreover, related to ViTs scaling, it shows that (1) ViT Gflops are strongly correlated with FID, (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
-
->  We study the scaling behavior of transformers with respect to network complexity (in GFlops) vs. sample quality. We show that by constructing and benchmarking the DiT design space under the Latent Diffusion Models (LDMs) [48] framework, where diffusion models are trained within a VAE’s latent space, we can successfully replace the U-Net backbone with a transformer. 
-
-> We further show that DiTs are scalable architectures for diffusion models: there is a strong correlation between the network complexity (measured by Gflops) vs. sample quality (measured by FID).
-
+With the advancement of Transformers as an important module in sequence-based ML, [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement to UNet-based diffusion, outperforming it in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4). VITs also also shown to have better scaling properties and accuracy than convolutional neural networks. Moreover, related to ViTs scaling, it shows that (1) ViT Gflops are strongly correlated with FID, (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/from-Diffusion-to-SORA/DiT.png"/> 
 
-Our ViT is simply a positional embedding layer, a block of GPT blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a mean and variance for each channel and patch).
+We will implement a ViT as simply a positional embedding layer, a block of GPT blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a mean and variance for each channel and patch).
 To keep our architecture simple as simple as possible, we will ingnore the 4 variants described in DiT block design (in Section 3.2, in-context conditioning, cross-attention block, adaptive layer norm block and adaLN-Zero block) and we will use the regular PyTorch embedding `nn.Embedding` (a look-up table) instaed of the  frequency-based positional embeddings (the sine-cosine version).
 
 ```python
@@ -291,7 +273,7 @@ Then we need to add the boilerplace code that crops the input image into patches
         return ε_θ, Σ_θ
 ```
 
-In this use case, we are also learning the covariance $$Σ_θ$$. so we full KL-divergence needs to be optimized. To solve this, they "train $$\epsilon_θ$$ with $$L_{simple}$$, and train $$Σ_θ$$ with the full $$L$$". Because we are comparing two gaussians, we have a closed form solution for the KL divergence (an alternative implementation can be found on [Meta's DIT implementation](https://github.com/facebookresearch/DiT/blob/ed81ce2229091fd4ecc9a223645f95cf379d582b/diffusion/gaussian_diffusion.py#L682) ), whose KL divergence can be computed as:
+In this use case, we are also learning the covariance $$Σ_θ$$. so we full KL-divergence needs to be optimized. To solve this, they train $$\epsilon_θ$$ with $$\mathcal{L_{simple}}$$, as before, and train $$Σ_θ$$ with the full $$\mathcal{L}$$. Because we are comparing two gaussians, we have a closed form solution for the KL divergence (an alternative implementation can be found on [Meta's DIT implementation](https://github.com/facebookresearch/DiT/blob/ed81ce2229091fd4ecc9a223645f95cf379d582b/diffusion/gaussian_diffusion.py#L682) ), whose KL divergence can be computed as:
 
 ```python
     ε_θ, Σ_θ = model_output
@@ -315,7 +297,7 @@ In this use case, we are also learning the covariance $$Σ_θ$$. so we full KL-d
 
 In fact, the paper implements a **conditional diffusion model** that takes as input extra information such as class $$c$$, and the reverse process becomes $$p_θ(\mathbf{x}_{t−1} \mid  \mathbf{x}_t, c)$$, where $$\epsilon_θ$$ and $$Σ_θ$$ are conditioned on $$c$$. We'll look at that next.
 
-## Conditioning  and classifier-free guidance
+## Conditioning
 
 The previous model learns the simple task of generating a valid output that is drawn from the distribution of the input. On a dataset like CIFAR-10 that has 10 classes of objects, it would probably always generate an automobile. So it would be helpful to add some guidance to tell the model, what class we want to learn. We can do this by adding conditional information
 
@@ -336,11 +318,11 @@ class DiT(nn.Module):
         x += self.class_embedding(label).reshape(B, 1, E)
 ```
 
-Another interesting features to improve quality are [classifier free guidance](https://arxiv.org/abs/2207.12598) and [exponential moving average](https://openreview.net/forum?id=2M9CUnYnBA) and for brevity will be ommited. Finally, conditioning allows us to train diffusion models with text, image or audio input as input signal.
+Another interesting features to improve quality are [classifier-free guidance](https://arxiv.org/abs/2207.12598) and [exponential moving average](https://openreview.net/forum?id=2M9CUnYnBA) and for brevity will be ommited. Finally, conditioning allows us to train diffusion models with text, image or audio input as input signal.
 
-## Video Diffusion and 3D attention
+## Video diffusion and 3D attention
 
-When we started applying diffusion to video datasets (sets of image frames), the large amount of data became prohibitive. This leads to an infeasible amount of computation, and this led to the creation of **[lattent diffusion model](https://arxiv.org/abs/2112.10752)** where diffusion is applied on the latent space of pretrained autoencoders (e.g. VAE) instead of the image directly. This reduces computation by training diffusion on high-resolution images by training on its compressed representation instead. 
+As diffusion naturally moved towards the domain of video, the large amount of data became prohibitive. This leads to an infeasible amount of computation, and this led to the creation of **[lattent diffusion model](https://arxiv.org/abs/2112.10752)** where diffusion is applied on the latent space of pretrained autoencoders (e.g. VAE) instead of the image directly. This reduces computation by training diffusion on high-resolution images by training on its compressed representation instead. 
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/from-Diffusion-to-SORA/sora_vae.png"/> 
@@ -350,7 +332,7 @@ An overview of a VAE lattent space compression in SORA. The pre-processing step 
 
 The other challenge in video datasets is the attention: how do we correlate image patches across the spatial domain in a picture, and across the time domain? Given an input of shape $$B \times T \times H \times W \times C$$ (batch, number of frames, height, width, colo channels), there are two main approaches:
 - a spatial attention that converts  input $$B \times T \times H \times W \times C$$ into $$(B * T ) \times (H * W) \times C$$ to perform attention of patches within the same frame, and then follow it by a temporal attention that converts it into $$(B * H * W) \times T \times C$$  that performs attention of the same patch across time. Doing this across several UNet of DiT blocks will expose image patches and lattent patches across time.
-- a full 3D attention, where we collect all patches of all frames and use that as the temporal dimension in the attention ie converting an input of shape $$B \times T \times H \times W \times C$$ into $$B \times (T * H * W) \times C$$. This leads to very large  temporal dimension, which remember, is an issue because computation in the attention mechanism grows quadratically with the sequence lenght. However, [Masked autoencoders (MAE)](https://arxiv.org/abs/2205.09113) allow us to use only a subset of $$T * H * W$$ patches and have shown to be  scalable self-supervised learners for computer vision, in [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) and [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304).
+- a full 3D attention, where we collect all patches of all frames and use that as the temporal dimension in the attention ie converting an input of shape $$B \times T \times H \times W \times C$$ into $$B \times (T * H * W) \times C$$. This leads to very large  temporal dimension, which remember, is an issue because computation in the attention mechanism grows quadratically with the sequence lenght. However, [Masked autoencoders (MAE)](https://arxiv.org/abs/2205.09113) allow us to use only a subset of all $$T * H * W$$ temporal patches and have shown to be  scalable self-supervised learners for computer vision, in [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) and [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304).
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/from-Diffusion-to-SORA/masked_autoencoders_cropped.png"/> 
