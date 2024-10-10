@@ -374,7 +374,7 @@ To train on videos and have 3D attention they use the method presented in [Align
 <details> <summary markdown="span">[Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation](https://arxiv.org/abs/2311.17117)</summary>
 An U-net based diffusion model that takes as input a reference image (photo of a human) and a video of a moving human annotation (*stick man*, the pose sequence) and outputs the video that animates the human with the movements of the stick man. The reference image is encoded with VAE and CLIP embeddings. The model structure includes 2 U-nets, the reference unet that *merges detail features via spatial attention* and a denoising/diffusion U-Net that is applied to the pose sequence to generate the final video. 
 
-3D attention is achieved by a spatial attention converts input $$B \times T \times H \times W \times C$$ into $$(B \times T ) \times (H \times W) \times C$$ to perform attention of patches within the same frame, followed by a temporal attention that converts the shape $$(B * H * W) \times T \times C$$  that performs attention of the same patch across time.
+3D attention is achieved by a spatial attention converts input $$B \times T \times H \times W \times C$$ into $$(B * T ) \times (H * W) \times C$$ to perform attention of patches within the same frame, followed by a temporal attention that converts the shape $$(B * H * W) \times T \times C$$  that performs attention of the same patch across time.
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/Diffusion/anymate_anyone.png"/> 

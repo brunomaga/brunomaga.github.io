@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed GPT model (part 4): sequence parallelism via Ulysses and Ring attention"
+title:  "Distributed GPT model (part 4): sequence parallelism with Ulysses and Ring attention"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
