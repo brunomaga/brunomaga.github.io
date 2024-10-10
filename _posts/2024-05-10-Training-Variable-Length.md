@@ -277,7 +277,7 @@ Note that the subgraphs created may change depending on input sizes. As a person
 
 Torch provides *some* support for compilation of tensors of variable shapes, with `torch.compile(dynamic=True)`. This yields a binary that is slower than the ones provided with static compilation, with the advantage that the input dimensions are not hard-coded in the binary and can change throughout time. Dynamic compilation is slower than static, and as up to  `torch==2.4.0`, didn't work in my tests of variable batch and length dimensions. 
 
-Static compilation is ideal, but how do it handle it with variable-shape inputs? The trick is to allow all processes to do a forward and a backward pass on every possible shape at the onset of the execution: 
+Static compilation is ideal, but how can we compile it statically with variable-shape inputs? The trick is to allow all processes to do a forward and a backward pass on every possible shape at the onset of the execution: 
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/Training-Variable-Length/torch_compile_dataset.png"/>

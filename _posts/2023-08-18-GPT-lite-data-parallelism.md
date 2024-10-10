@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed GPT model: data parallelism, sharding and offloading via Torch DDP and DeepSpeed"
+title:  "Distributed GPT model: data parallelism, sharding and CPU offloading via Torch DDP and DeepSpeed"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -12,7 +12,7 @@ Distributed data parallelism (DDP) refers to the parallel execution of different
 <img width="35%" height="35%" src="/assets/GPT-lite-distributed/data_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
-An illustration of the DDP data layout, split across 4 processes colorcoded as blue, yellow, read and green.
+An illustration of the DDP data layout, split across 4 processes colorcoded as blue, yellow, red and green.
 
 In this post, we will perform distributed data parallelism on the training process of the [GPT-lite model we built in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), on a network of 8 GPUs, using PyTorch's [PyTorch](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
 
@@ -54,7 +54,7 @@ Memory consumption of the three different stages of ZeRO FSDP.  Source: [Microso
 
 Sometimes the model can be so big that even with sharding, it won't fit in a single process. A common technique to handle such memory limitations is CPU offloading - also referred to as virtual Deep Neural Networks by [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shiram et al)](https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf). The main goal of this method is to iteratively move to the GPU the portions of activations and model that are required for the current and following subset of computation steps. Previously-processed layers are moved from GPU to CPU while upcoming layers will be moved from the CPU to GPU.
 
-This is possible because as we've seen on a [previous post]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}), the loss (and its derivative) can be written as a composition of activations throughout layers, e.f. for MAE:
+This is possible because as we've seen on a [previous post]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}), the loss (and its derivative) can be written as a composition of activations throughout layers, e.g. for MAE:
 
 $$
 L = \frac{1}{N} \sum_{n=1}^N | y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) |
