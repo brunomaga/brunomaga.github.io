@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of variable-length datasets: curriculum learning, adaptive batch size and learning rate, and kernel compilation"
+title:  "Distributed training of variable-length samples: curriculum learning, compilation, adaptive batch size and LR"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
