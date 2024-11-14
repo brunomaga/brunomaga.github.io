@@ -13,7 +13,7 @@ We always thought about ML parallelism as a tridimensional problem, composed of 
 
 However, many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. Following the same notation as above, sequence parallelism requires a local storage of `(B, T/P, E)` per process. With that in mind, in this post, we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPT-lite blocks]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), where each block is multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
 
-## Foreword: Context Parallelism
+## Context Parallelism
 
 Context parallelism is a parallelism scheme over the sequence dimension, and is best described [in this NVIDIA post](https://docs.nvidia.com/megatron-core/developer-guide/latest/api-guide/context_parallel.html) as:
 
@@ -23,7 +23,9 @@ In practice, parallelism on the sequence dimension works out-of-the-box on most 
 
 > As for attention, the Q (query) of each token needs to compute with the KV (key and value) of all tokens in the same sequence. Hence, CP requires additional all-gather across GPUs to collect the full sequence of KV. Correspondingly, reduce-scatter should be applied to the activation gradients of KV in backward propagation. To reduce activation memory footprint, each GPU only stores the KV of a sequence chunk in forward and gathers KV again in backward.
 
-In practice, one process needs its subset/chunk of queries, but needs the keys and values of the full sentence. This has two main drawbacks: an additional `all_gather` step to collect the full K and V, and the memory overhead to store those two tensors in full form. This is not ideal, therefore, in the following methods, we will look onto how to also parallelise the attention layer.
+In practice, to compute the attention module, one process needs its subset/chunk of queries, but needs the keys and values of the full sentence. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows in $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, then the dot-product $$Q_p K^T$$ will have shape `B, T/P, T`, that will be multiplied by $$V$$, resulting in the chunk of the attention related to that process with shape `B, T/P, E`.
+
+Requiring the full key and value tensors has two main drawbacks: an additional `all_gather` step to collect the full K and V, and the memory overhead to store those two tensors in full form. This is not ideal, therefore, in the following methods, we will look onto how to also parallelise the attention layer.
 
 ## Ulysses sentence parallelism
 
@@ -291,6 +293,12 @@ class MultiHeadAttention(nn.Module):
 ```
 
 And we are done. Now, as you can see, the big disavantadge in ring attention is the number of steps communication being identical to the number of processes. This may be a limiting factor on large compute networks where dividing sequences in such a granular fashion may lead to a small workload assigned to each process. This eventually will make computation very small and unable to mitigate completely the communication, leading to a poor executing efficiency.
+
+## Training with sequence- and multi-dimensional parallelism
+
+Pytorch does not have the notion of *partial sentences*, thus all samples being processed in parallel are assumed to be full-length samples on a data-parallel execution. To overcome this, when you run sequence parallelism of order `S`, you should perform `S` gradient accumulation steps with the corresponding gradients scaling, so that it processes the correct batch size per step, and gradients are properly averaged.  
+
+Moreover, when you perform multi-dimensional parallelism (e.g. at data- and sequence levels), you need to define the process groups for the data parallelel processes (the ones that load different samples) and the sequence parallel processes (the ones that load different chunks of the same sample and perform sequence parallelism for that sample). You can do this with Pytorch's device mesh or create your own process groups manually.
 
 ## Code and final remarks
 
