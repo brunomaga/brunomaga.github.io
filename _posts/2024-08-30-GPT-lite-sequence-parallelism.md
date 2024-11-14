@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed GPT model (part 4): sequence parallelism with Ulysses and Ring attention"
+title:  "Distributed GPT model (part 4): context and sequence parallelism with Ulysses and Ring attention"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
@@ -12,6 +12,18 @@ We always thought about ML parallelism as a tridimensional problem, composed of 
 3. model parallelism splits the embeddings/features across processors, requiring a local storage of shape  `(B, E/P)`.
 
 However, many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. Following the same notation as above, sequence parallelism requires a local storage of `(B, T/P, E)` per process. With that in mind, in this post, we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPT-lite blocks]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), where each block is multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
+
+## Foreword: Context Parallelism
+
+Context parallelism is a parallelism scheme over the sequence dimension, and is best described [in this NVIDIA post](https://docs.nvidia.com/megatron-core/developer-guide/latest/api-guide/context_parallel.html) as:
+
+> Context Parallelism (“CP”) is a parallelization scheme on the dimension of sequence length. Unlike prior SP (sequence parallelism) which only splits the sequence of Dropout and LayerNorm activations, CP partitions the network inputs and all activations along sequence dimension. With CP, all modules except attention (e.g., Linear, LayerNorm, etc.) can work as usual without any changes, because they do not have inter-token operations.
+
+In practice, parallelism on the sequence dimension works out-of-the-box on most layers for any input shaped  `(B, T/P, E)`. The model runtime scales perfectly with the context parallelism degree. However, when it comes to the attention layer:
+
+> As for attention, the Q (query) of each token needs to compute with the KV (key and value) of all tokens in the same sequence. Hence, CP requires additional all-gather across GPUs to collect the full sequence of KV. Correspondingly, reduce-scatter should be applied to the activation gradients of KV in backward propagation. To reduce activation memory footprint, each GPU only stores the KV of a sequence chunk in forward and gathers KV again in backward.
+
+In practice, one process needs its subset/chunk of queries, but needs the keys and values of the full sentence. This has two main drawbacks: an additional `all_gather` step to collect the full K and V, and the memory overhead to store those two tensors in full form. This is not ideal, therefore, in the following methods, we will look onto how to also parallelise the attention layer.
 
 ## Ulysses sentence parallelism
 
