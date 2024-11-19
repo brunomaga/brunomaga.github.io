@@ -19,13 +19,18 @@ Context parallelism is a parallelism scheme over the sequence dimension, and is 
 
 > Context Parallelism (“CP”) is a parallelization scheme on the dimension of sequence length. Unlike prior SP (sequence parallelism) which only splits the sequence of Dropout and LayerNorm activations, CP partitions the network inputs and all activations along sequence dimension. With CP, all modules except attention (e.g., Linear, LayerNorm, etc.) can work as usual without any changes, because they do not have inter-token operations.
 
-In practice, parallelism on the sequence dimension works out-of-the-box on most layers for any input shaped  `(B, T/P, E)`. The model runtime scales perfectly with the context parallelism degree. However, when it comes to the attention layer:
+In practice, parallelism on the sequence dimension works out-of-the-box on most layers for any input shaped  `(B, T/P, E)`. To implement Context Parallelism, all you only need is to a `DataLoader` and `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loading worker. 
+
+During training, the model runtime scales perfectly with the context parallelism degree. However, when it comes to the attention layer:
 
 > As for attention, the Q (query) of each token needs to compute with the KV (key and value) of all tokens in the same sequence. Hence, CP requires additional all-gather across GPUs to collect the full sequence of KV. Correspondingly, reduce-scatter should be applied to the activation gradients of KV in backward propagation. To reduce activation memory footprint, each GPU only stores the KV of a sequence chunk in forward and gathers KV again in backward.
 
-In practice, to compute the attention module, one process needs its subset/chunk of queries, but needs the keys and values of the full sentence. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows in $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, then the dot-product $$Q_p K^T$$ will have shape `B, T/P, T`, that will be multiplied by $$V$$, resulting in the chunk of the attention related to that process with shape `B, T/P, E`.
+In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values of the full sentence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows in $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, then the dot-product $$Q_p K^T$$ will have shape `B, T/P, T`. Because we are holding a full row of the dot-product, we can apply the $$softmax$$ without any changes and get an attention matrix also of shape `B, T/P, T`. When multiplied by $$V$$, this results in the attention output for that process shape `B, T/P, E`.
 
-Requiring the full key and value tensors has two main drawbacks: an additional `all_gather` step to collect the full K and V, and the memory overhead to store those two tensors in full form. This is not ideal, therefore, in the following methods, we will look onto how to also parallelise the attention layer.
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="/assets/GPT-lite-distributed/context_parallelism.png"/>
+
+Requiring the full key and value tensors has two main drawbacks: an additional `all_gather` step to collect the full K and V, and the memory overhead to store those two tensors in full form. This is not ideal, therefore, in the following methods, we will look into how to parallelise the attention layer as well.
 
 ## Ulysses sentence parallelism
 
