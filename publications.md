@@ -8,6 +8,7 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 <!-- NOTE: To create this table of contents, open VS code, install "Markdown All in one" extension, then Ctrl+Shift+P and "Markdown: create table of contents". To enable automatic update on save, go to settings, extensions, "Markdown all on one" and tick "update on save" -->
 
+- [2024 The Llama 3 Herd of Models, Meta](#2024-the-llama-3-herd-of-models-meta)
 - [2024 USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](#2024-usp-a-unified-sequence-parallelism-approach-for-long-context-generative-ai)
 - [2024 Universal Checkpointing: Efficient and Flexible Checkpointing for Large Scale Distributed Training](#2024-universal-checkpointing-efficient-and-flexible-checkpointing-for-large-scale-distributed-training)
 - [2024 FastPersist: Accelerating Model Checkpointing in Deep Learning](#2024-fastpersist-accelerating-model-checkpointing-in-deep-learning)
@@ -108,6 +109,41 @@ A summary of some interesting publications I came accross. Continuously updated.
 
 <center><font size="5"><i class="fa fa-regular fa-bars"></i></font></center>
 
+
+## 2024 [The Llama 3 Herd of Models, Meta](https://arxiv.org/abs/2407.21783)
+
+Llama 3 is "a herd of language models that natively support multilinguality, coding, reasoning, and tool usage." The models are made of 8B, 70B and 405B parameters and a context window of 128K tokens. Llama 3 405B uses an architecture with 126 layers, a token representation dimension of 16,384, and 128 attention heads. 
+Llama 3 405B is trained on up to 16K H100 GPUs, via 4D parallelism (tensor, pipeline, context and data).
+The authors used scaling laws (Hoffmann et al., 2022;) to determine the optimal model size for our flagship model given our pre-training compute budget (section 3.2.1), where they establish a sigmoidal relation between the log-likelihood (figure 4):
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="/assets/publications/llama3_scaling_laws.png"/>
+
+The model architecture does not deviate from Llama 2, except that they:
+
+1. use grouped query attention with 8 key-value heads to improve inference speed and to reduce the size of key-value caches during decoding, and
+2. "use an attention mask that prevents self-attention between different documents within the same sequence as is important in continued pre-training on very long sequences".
+3. vocabulary with 128K tokens: 100K from `tiktoken` and 28k for better non-english support.
+4. increase the RoPE base frequency hyperparameter to 500,000 to better support longer contexts.
+
+Training is performed in two stages: pre-training via next-token prediciton or captioning, and post-training where the model is "tuned to follow instructions, align with human preferences, and improve specific capabilities (for example, coding and reasoning)." The improvements were performed at 3 levels:
+1. at the data level, the authors improved quality, quantity, pre-processing and curation. The dataset includes "15T multilingual tokens, compared to 1.8T tokens for Llama 2."
+2. At the scale level, the model increased its size almost $$50 \times$$, reaching now $$3.8 \times 10^{25}$$ FLOPS; and 
+3. managing complexity, where they used a regular transformer with minor adaptations instead of a mixture of experts, and "a relatively simple post-training procedure based on supervised finetuning (SFT), rejection sampling (RS), and direct preference optimization (DPO), as opposed to more complex reinforcement learning algorithms." (section 4)
+
+The authors also experiment adding image, video, and speech capabilities, by adding three additional stages:
+- multi-modal encoder pre-training, where train and speech encoders are trained separately (sections 7 and 8). The image encoder is trained large amounts of image-text pairs, using self-supervised learning that "masks out parts of the speech inputs and tries to reconstruct the masked out parts via a discrete-token representation".
+- vision-adapter training, where the authors train an adapter on text-image pairs to align image representations with language representations. Then they train a video adapter on top of the image adapter on paired video-text data, to enable model to aggregate information across frames (section 7).
+- Speech adapter training: a third adapter converts speech encodings into token representations.
+
+The image encoder is a standard vision transformer trained to align images and text, the ViT-H/14 variant. They introduce cross-attention layers (Generalized Query Attention) between the visual token representations produced by the image encoder and the token representations produced by the language model, at every 4th layer.
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/publications/llama3_multi-model.png"/>
+
+Results (section 5) investigate the "performance of: (1) the pre-trained language model, (2) the post-trained language model, and (3) the safety characteristics of Llama 3".
+
+In section 6, they investigated two main techniques to make inference with the Llama 3 405B model efficient: (1) pipeline parallelism on 16 H100s with BF16 and (2) FP8 quantization. FP8 quantization is applied to most parameters and activations in feed-forward network but not to parameters of self-attention layers of the model. Similarly to Xiao et al 2024b they use dynamic scaling factors for better accuracy (with upper bound of 1200), and do not perform quantization in the first and last Transformer layers, and use row-wise quantization, computing scaling factors across rows for parameter and activation matrices.
 
 
 ## 2024 [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719)
