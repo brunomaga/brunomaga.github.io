@@ -310,7 +310,13 @@ And we are done. Now, as you can see, the big disavantadge in ring attention is 
 
 Pytorch does not have the notion of *partial sentences*, thus all samples being processed in parallel are assumed to be full-length samples on a data-parallel execution. To overcome this, when you run sequence parallelism of order `S`, you should perform `S` gradient accumulation steps with the corresponding gradients scaling, so that it processes the correct batch size per step, and gradients are properly averaged.  
 
-Moreover, when you perform multi-dimensional parallelism (e.g. at data- and sequence levels), you need to define the process groups for the data parallelel processes (the ones that load different samples) and the sequence parallel processes (the ones that load different chunks of the same sample and perform sequence parallelism for that sample). You can do this with Pytorch's device mesh or create your own process groups manually.
+Moreover, when you perform multi-dimensional parallelism (e.g. at data- and sequence levels), you need to define the process groups for the data parallelel processes (the ones that load different samples) and the sequence parallel processes (the ones that load different chunks of the same sample and perform sequence parallelism for that sample). You can do this with Pytorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) mesh or create your own process groups manually. For the sake of illustration, if you'd implement a $$2 \times 2$$ Data- and Ulysses sequence parallelism on 4 GPUs, this would be the memory layout before and during the Multi-Head Attention:
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="/assets/GPT-lite-distributed/sequence_and_data_parallelism.png"/>
+
+{: style="text-align:center; font-size: small;"}
+Activations allocation on a 4-GPU parallelism with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: blue and green processes belong to the same sequence-parallel group and share one sample; red and yellow processes form the other sequence-parallel group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts a token-level distributed storage into a head-level distributed storage. All four processes can compute the attention for full sentences.
 
 ## Code and final remarks
 
