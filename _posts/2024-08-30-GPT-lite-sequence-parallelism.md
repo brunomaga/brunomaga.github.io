@@ -25,7 +25,7 @@ In practice, parallelism on the sequence dimension works out-of-the-box on most 
 <img width="100%" height="100%" src="/assets/GPT-lite-distributed/SPDistributedSampler.png"/>
 
 {: style="text-align:center; font-size: small;"}
-An example of data parallelism (DP) and context parallelism (CP) on 4 processes/GPUs (color-coded) and 8 samples. First row: all 4 processes run on a distributed data parallelism execution. 2nd row: creating a custom `DistributedSampler` that yields chunks of sequences allows for a hybrid data- and context- parallelism execution of 2 groups of 2 context-parallel processes. Third row: no data-parallelism, all 4 processes execute context-parallelism of the same sample. 
+An example of data parallelism (DP) and context parallelism (CP) on 4 processes/GPUs (color-coded) and a dataset of 8 samples. First row: all 4 processes run on a distributed data parallelism execution. 2nd row: creating a custom `DistributedSampler` that yields chunks of sequences allows for a hybrid data- and context- parallelism execution of 2 groups of 2 context-parallel processes. Third row: no data-parallelism, all 4 processes execute context-parallelism of the same sample. 
 
 
 During training, the model runtime scales perfectly with the context parallelism degree. However, when it comes to the attention layer:
