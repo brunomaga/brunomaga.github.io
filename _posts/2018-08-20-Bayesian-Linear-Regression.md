@@ -68,7 +68,7 @@ To simplify the computation, we perform the *log-trick* and place the term to op
 $$
   \begin{align*}
 -\log \,\, p(y \mid w, X) & = -log \prod_{n=1}^N p(y_n \mid w_n, X_n) \\
-                                       & = - \sum_{n=1}^N log \,\, p(y \mid w, X)\\
+                                       & = - \sum_{n=1}^N log \,\, p(y_n \mid w_n, X_n)\\
   \end{align*}
 $$
 
