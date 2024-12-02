@@ -392,7 +392,7 @@ where <span class="math inline">\(\textstyle\sum_{i=1}^k e^{\eta_i}=1\)</span></
 
 ## Maximum Likelihood
 
-On the [previous post]({{ site.baseurl }}{% post_url 2018-08-20-Bayesian-Linear-Regression %}), we have computed the Maximum Likelihood Estimator (MLE) for a Gaussian distribution. In thos post, we have seen that Gaussian --- alongside plenty other distributions --- belongs to the Exponential Family of Distributions. We will now show that the MLE estimator can be generalized across all distributions in the Exponential Family.
+On the [previous post]({{ site.baseurl }}{% post_url 2018-08-20-Bayesian-Linear-Regression %}), we have computed the Maximum Likelihood Estimator (MLE) for a Gaussian distribution. In this post, we have seen that Gaussian --- alongside plenty other distributions --- belongs to the Exponential Family of Distributions. We will now show that the MLE estimator can be generalized across all distributions in the Exponential Family.
 
 As in the Gaussian use case, to compute the MLE we start by applying the log-trick to the general expression of the exponential family, and obtain the following log-likelihood:
 
