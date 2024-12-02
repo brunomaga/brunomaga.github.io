@@ -200,7 +200,7 @@ Testing:
 
 
 **Entropy**  measures the average level of *surprise* or *uncertainty* inherent to the channel:
-- $$ \mathrm {H} (X) = -\int_{x} p(x)\log p(x)=\mathbb {E} [-\log p(x)] dx$$.
+- $$ \mathrm {H} (X) = -\int_{x} p(x)\log p(x) dx=\mathbb {E} [-\log p(x)]$$.
 - Conditional Entropy: $$ H( Y \mid X) = - \int_x f(x) \int_y f(y \mid x) \log f(y \mid x) \,dy\,dx$$.
 - Joint Entropy: $$ H(X, Y) = - \int_{xy} f(x,y) \log f(x,y x) \,dx\,dy$$.
 - Entropy Chain Rule: $$ H(X,Y) = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y) $$.
