@@ -158,7 +158,7 @@ $$
 \hat{b} = max_b | k(b^T x(t)) |
 $$ 
 
-We aim to maximize the absolute value of the *kurtosis* , i.e. maximize $$| k(w^Tz) |$$ such that $$w^T w=1$$. The differential is:
+We aim to maximize the absolute value of the *kurtosis* , i.e. maximize $$\mid k(w^Tz) \mid$$ such that $$w^T w=1$$. The differential is:
 
 {: style="text-align:center; font-size: small;"}
 <img width="50%" height="50%" src="/assets/Unsupervised-Learning/ica_kurtosis.png">
