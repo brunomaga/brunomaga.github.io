@@ -7,6 +7,7 @@ permalink: /resources/
 Books available online, related to the topics discussed. Continuously updated. 
 
 <ul>
+          <li><a href="https://www.bishopbook.com/">Deep Learning - Foundations and Concepts, Christopher M. Bishop, High Bishop</a> (<a href="https://github.com/luzmontserrat/deep-learning/blob/main/Christopher%20M.%20Bishop%2C%20Hugh%20Bishop%20-%20Deep%20Learning_%20Foundations%20and%20Concepts-Springer%20(2024).pdf">pdf</a>)</li>
           <li><a href="https://www.springer.com/gp/book/9780387310732">Pattern Classification and Machine Learning, Christopher M. Bishop</a> (<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">pdf</a>)</li>
           <li><a href="http://mbmlbook.com/">Model-Based Machine Learning, John Winn et al.</a> (<a href="http://mbmlbook.com/MBMLbook.pdf">pdf</a>)</li>
           <li><a href="https://mml-book.github.io/">Mathematics for Machine Learning, Deisenroth, Aldo Faisal, Cheng S. Ong</a> (<a href="https://mml-book.github.io/book/mml-book.pdf">pdf</a>)</li>
