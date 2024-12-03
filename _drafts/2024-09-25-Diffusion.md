@@ -216,12 +216,14 @@ where each training iteration (steps 2 to 6) can be coded as:
 
 ## Diffusion transformers
 
-With the advancement of Transformers as an important module in sequence-based ML, [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement to UNet-based diffusion, outperforming it in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4). VITs also also shown to have better scaling properties and accuracy than convolutional neural networks. Moreover, related to ViTs scaling, it shows that (1) ViT Gflops are strongly correlated with FID, (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
+With the advancement of Transformers as an important module in sequence-based ML, [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement to UNet-based diffusion, outperforming it in scaling and accuracy measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance) (FID). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4). VITs also also shown to have better scaling properties and accuracy than convolutional neural networks. Moreover, related to ViTs scaling, it was shown that (1) ViT Gflops are strongly correlated with FID, (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/Diffusion/DiT.png"/> 
 
-We will implement a ViT as simply a positional embedding layer, a block of GPT blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a mean and variance for each channel and patch).
+In the adaLN-Zero architecture shown in the diagram, the adaptive layer normalization process applies dynamic conditioning into the model by learning the scaling $$γ$$ (gamma) values and shifting $$𝛽$$ factors, two parameters that depend on external conditioning inputs.
+
+Here, for the sake of simplicity, we will implement a simple ViT made of a positional embedding layer, a block of GPT blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a mean and variance for each channel and patch).
 To keep our architecture simple as simple as possible, we will ingnore the 4 variants described in DiT block design (in Section 3.2, in-context conditioning, cross-attention block, adaptive layer norm block and adaLN-Zero block) and we will use the regular PyTorch embedding `nn.Embedding` (a look-up table) instaed of the  frequency-based positional embeddings (the sine-cosine version).
 
 ```python

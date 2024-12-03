@@ -64,10 +64,16 @@ I will try to post about this topic in the near future, but if you're curious yo
 
 ## Variational Inference
 
-**The idea behind Variational Inference (VI) methods is to find a parametric distribution $$q(z)$$ that is an approximation of an intractable/non-parametric posterior $$p(z \mid x)$$**. To do that, we first define a function that gives the approximation/similarity/closeness/proximity between the two probabilities $$p$$ and $$q$$. So we define the [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) as: 
+**The idea behind Variational Inference (VI) methods is to find a parametric distribution $$q(z)$$ that is an approximation of an intractable/non-parametric posterior $$p(z \mid x)$$**. To do that, we first define a function that gives the approximation/similarity/closeness/proximity between the two probabilities $$p$$ and $$q$$. So we start by defining the [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) between two probabilities $$f(x)$$ and $$g(x)$$ as: 
 
 $$
-KL (q(z) || p(z \mid x)) =  \int q(z) \log \frac{q(z)}{p(z \mid x)} dz= \mathbf{E} \left[ \log \frac{q(z)}{p( z\mid x)} \right]
+KL (f(x) || g(x)) =  \int f(x) \log \frac{f(x)}{g(x)} dx= \mathbb{E} \left[ \log \frac{f(x)}{g(x)} \right] = \mathbb{E} \left[ \log f(x) \right] - \mathbb{E} \left[ \log g(x) \right]
+$$ 
+
+when applied to our use case:
+
+$$
+KL (q(z) || p(z \mid x)) =  \int q(z) \log \frac{q(z)}{p(z \mid x)} dz= \mathbb{E} \left[ \log \frac{q(z)}{p( z\mid x)} \right]
 \label{eq_KLdiv}
 $$ 
 
@@ -99,7 +105,7 @@ In practice, we replaced the original $$KL$$-divergence formulation we could't n
 Note that ELBO can also be described as, and is usually found expressed in terms of the expectations of the two variables as:
 
 $$
-ELBO(q,p) = \int q(z) \log \frac{p(z, x)}{q(z)} =  \int q(z) \log p(z, x) dz - \int q(z) \log q(z) dz  = \mathbf{E} [\log p(x,z)] - \mathbf{E}[\log q(z)]
+ELBO(q,p) = \int q(z) \log \frac{p(z, x)}{q(z)} =  \int q(z) \log p(z, x) dz - \int q(z) \log q(z) dz  = \mathbb{E} [\log p(x,z)] - \mathbb{E}[\log q(z)]
 \label{eq_elbo}
 $$
 
@@ -150,7 +156,7 @@ $$
 P\left(\bigcap_{k=1}^n X_k\right) = \prod_{k=1}^n P\left(X_k \,\Bigg|\, \bigcap_{j=1}^{k-1} X_j\right)
 $$
 
-Remember from eq. \ref{eq_elbo} that $$ELBO(q) = \mathbf{E} [\log p(z, x)] - \mathbf{E}[\log q(z)]$$.
+Remember from eq. \ref{eq_elbo} that $$ELBO(q) = \mathbb{E} [\log p(z, x)] - \mathbb{E}[\log q(z)]$$.
 We now apply the chain rule to the joint probablility $$p(z_{1:m}, x_{1:n})$$ for $$m$$ variational factors and $$n$$ datapoints we get:
 
 $$
@@ -161,7 +167,7 @@ $$
 and we can decompose the entropy term using the mean field variational approximation as: 
 
 $$
-\mathbf{E}_q [ \log q(z_{1:m})] = \sum_j^m \mathbf{E}_{q_j}[\log q(z_j)]
+\mathbb{E}_q [ \log q(z_{1:m})] = \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)]
 $$
 
 Inserting the two previous reductions in the ELBO equation, we can now express it for the mean field-variational approximation as:
@@ -169,9 +175,9 @@ Inserting the two previous reductions in the ELBO equation, we can now express i
 $$
 %source: assets: 10708-scribe-lecture13.pdf
 \begin{align*}
-ELBO(q) & = \mathbf{E}_q [\log p(x_{1:n},z_{1:m})] - \mathbf{E}_{q_j}[\log q(z_{1:m})] \\
-        & = \mathbf{E}_q \left[ \log \left ( p(x_{1:n}) \prod_{j=1}^m p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right) \right] - \sum_j^m \mathbf{E}_{q_j}[\log q(z_j)] \\
-        & = \log p(x_{1:n}) + \sum_j^m \mathbf{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbf{E}_{q_j}[\log q(z_j)] \\
+ELBO(q) & = \mathbb{E}_q [\log p(x_{1:n},z_{1:m})] - \mathbb{E}_{q_j}[\log q(z_{1:m})] \\
+        & = \mathbb{E}_q \left[ \log \left ( p(x_{1:n}) \prod_{j=1}^m p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \\
+        & = \log p(x_{1:n}) + \sum_j^m \mathbb{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \\
 \end{align*}
 $$
 
@@ -186,8 +192,8 @@ where $$\neq j$$ means *all indices except the $$j^{th}$$*. Now we want to deriv
 $$
 \begin{align*}
   & arg\,max_{q_j} \, ELBO (q)\\
-= & arg\,max_{q_j} \, \left( \log p(x_{1:n}) + \sum_j^m \mathbf{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbf{E}_{q_j}[\log q(z_j)] \right)\\  
-= & arg\,max_{q_j} \, \left( \mathbf{E}_q \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \mathbf{E}_{q_j}[\log q(z_j)] \right) & \text{(removing vars that don't depend on } q(z_j) \text{)} \\
+= & arg\,max_{q_j} \, \left( \log p(x_{1:n}) + \sum_j^m \mathbb{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \right)\\  
+= & arg\,max_{q_j} \, \left( \mathbb{E}_q \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \mathbb{E}_{q_j}[\log q(z_j)] \right) & \text{(removing vars that don't depend on } q(z_j) \text{)} \\
 = & arg\,max_{q_j} \, \left( \int q(z_j) \log p(z_j \mid z_{\neq j}, x) dz_j - \int q(z_j) \log q(z_j) dz_j \right) & \text{(def. Expected Value)} \\
 \end{align*}
 $$
@@ -195,15 +201,15 @@ $$
 To find this argmax, we take the derivative of the loss with respect to $$q(z_j)$$, use Lagrange multipliers, and set the derivative to zero:
 
 $$
-\frac{d\,L}{d\,q(z_j)} = \mathbf{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \log q(z_j) -1 = 0
+\frac{d\,L}{d\,q(z_j)} = \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \log q(z_j) -1 = 0
 $$
  
 Leading to the final coordinate ascent update:
 
 $$
 \begin{align}
-q^{\star}(z_j) & \propto exp \{ \mathbf{E}_{q_{\neq j}} [ \log p(z_j \mid z_{\neq j}, x)] \} \\
-               & \propto exp \{ \mathbf{E}_{q_{\neq j}} [ \log p(z_j, z_{\neq j}, x)] \} & \text{(mean-field assumption: latent vars are independent)} \label{eq_CAVI}\\
+q^{\star}(z_j) & \propto exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j \mid z_{\neq j}, x)] \} \\
+               & \propto exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j, z_{\neq j}, x)] \} & \text{(mean-field assumption: latent vars are independent)} \label{eq_CAVI}\\
 \end{align}
 $$
 
@@ -260,9 +266,9 @@ So we have two types of variational parameters: (1) the Gaussian parameters $$m_
 $$
 %source https://arxiv.org/pdf/1601.00670.pdf
 \begin{align}
-ELBO(m, s^2, \varphi) = & \sum_{k=1}^K \mathbf{E} \left[ \log p(\mu_k); m_k, s_k^2 \right] \\
-                        & + \sum_{i=1}^n \left( \mathbf{E} \left[ \log p(c_i); \varphi_i \right] + \mathbf{E} \left[ \log p(x_i \mid c_i, \mu); \varphi_i, m, s^2 \right] \right) \\
-                        & - \sum_{i=1}^n \left( \mathbf{E} \left[ \log q(c_i; \varphi_i) \right] - \sum_{k=1}^K \mathbf{E} \left[ \log q(\mu_k ; m_k, s_k^2) \right] \right) \label{eq_algo_elbo} \\
+ELBO(m, s^2, \varphi) = & \sum_{k=1}^K \mathbb{E} \left[ \log p(\mu_k); m_k, s_k^2 \right] \\
+                        & + \sum_{i=1}^n \left( \mathbb{E} \left[ \log p(c_i); \varphi_i \right] + \mathbb{E} \left[ \log p(x_i \mid c_i, \mu); \varphi_i, m, s^2 \right] \right) \\
+                        & - \sum_{i=1}^n \left( \mathbb{E} \left[ \log q(c_i; \varphi_i) \right] - \sum_{k=1}^K \mathbb{E} \left[ \log q(\mu_k ; m_k, s_k^2) \right] \right) \label{eq_algo_elbo} \\
 \end{align}
 $$
 
@@ -273,7 +279,7 @@ The CAVI (coordinate ascent variational inference) updates each variational para
 We start with the variational update for the cluster assignment $$c_i$$. Using the mean-field recipe from equation \ref{eq_CAVI}:
 
 $$
-q^{\star}(c_i; \varphi_i) \propto exp \left( \log p(c_i) + \mathbf{E} [ \log p(x_i \mid c_i, \mu); m, s^2] \right).
+q^{\star}(c_i; \varphi_i) \propto exp \left( \log p(c_i) + \mathbb{E} [ \log p(x_i \mid c_i, \mu); m, s^2] \right).
 $$
 
 The first term is the log prior of $$c_i$$, the same value for all values of $$c_i$$: $$\log p(c_i)= \log \frac{1}{K} = \log 1 - \log K = -\log K$$.  The second term is the expected log probability of the $$c_i^{th}$$ Gaussian density. Because $$c_i$$ is an [indicator vector](https://en.wikipedia.org/wiki/Indicator_vector) we can write:
@@ -286,20 +292,20 @@ i.e. because $$c_{ik} = \{0,1\}$$, this is a multiplication of terms that are on
 
 $$
 \begin{align*}
-  & \mathbf{E} [ \log p(x_i \mid c_i, \mu); m, s^2] \\
-= & \sum_k c_{ik} \mathbf{E} [ \log p(x_i \mid \mu_k); m_k, s_k^2] & \text{(sum of matching assignments } ik \text{)} \\
-= & \sum_k c_{ik} \mathbf{E} \left[ \log \mathcal{N}(x_i^T \mu, 1) \right] & \text{(likelihood eq. \ref{eq_gmm_likelihood})} \\
-= & \sum_k c_{ik} \mathbf{E} \left[ \log \left( \frac{1}{1 \sqrt{2\pi}} \right) - \frac{1}{2} \left( \frac{x_i - \mu_k}{1} \right)^2 ; m_k, s_k^2 \right] & \text{(log of normal distribution)} \\
-= & \sum_k c_{ik} \mathbf{E} \left[ -\frac{1}{2}(x_i - \mu_k)^2; m_k, s_k^2 \right] + const & \text{(removed terms that are constant with respect to } c_i \text{)} \\
-= & \sum_k c_{ik} \mathbf{E} \left[ -\frac{1}{2} x_i^2 + \mu x_i -\frac{1}{2} \mu^2; m_k, s_k^2 \right] + const & \text{(decomposed square of sum)} \\
-= & \sum_k c_{ik} \left( x_i \, \mathbf{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbf{E}[ \mu^2_k; m_k, s^2_k] \right) + const  & \text{(removed terms that are constant with respect to } c_i \text{)}  \\
+  & \mathbb{E} [ \log p(x_i \mid c_i, \mu); m, s^2] \\
+= & \sum_k c_{ik} \mathbb{E} [ \log p(x_i \mid \mu_k); m_k, s_k^2] & \text{(sum of matching assignments } ik \text{)} \\
+= & \sum_k c_{ik} \mathbb{E} \left[ \log \mathcal{N}(x_i^T \mu, 1) \right] & \text{(likelihood eq. \ref{eq_gmm_likelihood})} \\
+= & \sum_k c_{ik} \mathbb{E} \left[ \log \left( \frac{1}{1 \sqrt{2\pi}} \right) - \frac{1}{2} \left( \frac{x_i - \mu_k}{1} \right)^2 ; m_k, s_k^2 \right] & \text{(log of normal distribution)} \\
+= & \sum_k c_{ik} \mathbb{E} \left[ -\frac{1}{2}(x_i - \mu_k)^2; m_k, s_k^2 \right] + const & \text{(removed terms that are constant with respect to } c_i \text{)} \\
+= & \sum_k c_{ik} \mathbb{E} \left[ -\frac{1}{2} x_i^2 + \mu x_i -\frac{1}{2} \mu^2; m_k, s_k^2 \right] + const & \text{(decomposed square of sum)} \\
+= & \sum_k c_{ik} \left( x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k] \right) + const  & \text{(removed terms that are constant with respect to } c_i \text{)}  \\
 \end{align*}
 $$
 
-The calculation requires $$\mathbf{E} [\mu_k]$$ and $$\mathbf{E} [\mu_k^2]$$, computable from the variational Gaussian on the $$k^{th}$$ mixture component. Thus the variational update for the $$i^{th}$$ cluster assignment --- expressed as a function of the variational parameters for the mixture component only --- is:
+The calculation requires $$\mathbb{E} [\mu_k]$$ and $$\mathbb{E} [\mu_k^2]$$, computable from the variational Gaussian on the $$k^{th}$$ mixture component. Thus the variational update for the $$i^{th}$$ cluster assignment --- expressed as a function of the variational parameters for the mixture component only --- is:
 
 $$
-\varphi_{ik} \propto exp \left\{ x_i \, \mathbf{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbf{E}[ \mu^2_k; m_k, s^2_k \right\}
+\varphi_{ik} \propto exp \left\{ x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k \right\}
 \label{eq_algo_first_step}
 $$
 
@@ -309,13 +315,13 @@ $$
 We now turn to the variational density $$q(\mu_k; m_k, s^2_k)$$ on equation \ref{eq_variational_family}. We use again \ref{eq_CAVI} (the exponentiated log of te joint) for the mean values $$\mu_k$$:
 
 $$
-q(\mu_k) \propto \exp \{ \log p(\mu_k) + \sum_{i=1}^n \mathbf{E} [ \log p(x_i \mid c_i, \mu); \varphi_i, m_{k\neq}, s^2_{k\neq} ] \}
+q(\mu_k) \propto \exp \{ \log p(\mu_k) + \sum_{i=1}^n \mathbb{E} [ \log p(x_i \mid c_i, \mu); \varphi_i, m_{k\neq}, s^2_{k\neq} ] \}
 $$
 
 where the term $$\varphi_{ik}$$ represents as before the probabliity that the $$i^{th}$$ observation comes from the $$k^{th}$$ cluster, and $$c_i$$ is a one-hot (or indicator) vector. The computation of the log probability follows as:
 
 $$
-\log q(\mu_k) = \log p(\mu_k) + \sum_i \mathbf{E} [ \log p(x_i \mid c_i, \mu); \varphi_i, m_{\neq k}, s^2_{\neq k}] + const\\
+\log q(\mu_k) = \log p(\mu_k) + \sum_i \mathbb{E} [ \log p(x_i \mid c_i, \mu); \varphi_i, m_{\neq k}, s^2_{\neq k}] + const\\
 $$
 
 We will ommit this reduction, if you are looking for details, check equations 28-32 [here](https://arxiv.org/pdf/1601.00670.pdf). This calculation leads to :
@@ -347,7 +353,7 @@ $$
 Putting it all together, the algorithm follows as:
 
 - While ELBO has not converged:
-	1. for all $$i \in \{1, ..., n\}$$, set $$\varphi_{ik} \propto exp \left\{ x_i \, \mathbf{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbf{E}[ \mu^2_k; m_k, s^2_k \right\} $$ (equation \ref{eq_algo_first_step})
+	1. for all $$i \in \{1, ..., n\}$$, set $$\varphi_{ik} \propto exp \left\{ x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k \right\} $$ (equation \ref{eq_algo_first_step})
 	2. for $$k \in \{1, ..., K\}$$ do:
 		- set $$m_k \leftarrow \frac{\sum_i \varphi_{ik} x_i}{1/\sigma^2 + \sum_i \varphi_{ik}}$$ (equation \ref{eq_algo_second_step}) 
 		- set $$s^2_k \leftarrow \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}$$ (equation \ref{eq_algo_second_step})
