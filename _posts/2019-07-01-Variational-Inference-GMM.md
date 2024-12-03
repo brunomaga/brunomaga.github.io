@@ -64,16 +64,14 @@ I will try to post about this topic in the near future, but if you're curious yo
 
 ## Variational Inference
 
-**The idea behind Variational Inference (VI) methods is to find a parametric distribution $$q(z)$$ that is an approximation of an intractable/non-parametric posterior $$p(z \mid x)$$**. I.e. instead of computing the *real* posterior, we try to find the parameters $$z$$ of a new distribution $$q^\star$$ (the approximation to our real posterior).
-
-So we need to first define a metric of *approximation* or proximity. To that extent, the closeness (*proximity*) of two distributins $$p$$ and $$q$$ is a measurement of *probabilities similiarity* measured by the [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence): 
+**The idea behind Variational Inference (VI) methods is to find a parametric distribution $$q(z)$$ that is an approximation of an intractable/non-parametric posterior $$p(z \mid x)$$**. To do that, we first define a function that gives the approximation/similarity/closeness/proximity between the two probabilities $$p$$ and $$q$$. So we define the [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) as: 
 
 $$
 KL (q(z) || p(z \mid x)) =  \int q(z) \log \frac{q(z)}{p(z \mid x)} dz= \mathbf{E} \left[ \log \frac{q(z)}{p( z\mid x)} \right]
 \label{eq_KLdiv}
 $$ 
 
-Note that KL-divergence is a *dissimilarity function* and is *not a metric* as it's not symmetric. And that there are other divergence metrics other than KL divergence, part of the [f-divergence family](https://en.wikipedia.org/wiki/F-divergence).
+Note that **KL-divergence is a dissimilarity function and is not a metric** as it's not symmetric. And that there are other divergence metrics other than KL divergence, part of the [f-divergence family](https://en.wikipedia.org/wiki/F-divergence).
 
 Looking at equation \ref{eq_KLdiv}, we see an issue: it includes the true posterior $$p(z \mid x)$$ which is exactly the value we do not know. So we cannot minimize this directly, but we can minimize a function that is *equal to it (up to a constant)*, known as the Evidence Lower Bound.
 
