@@ -128,7 +128,7 @@ To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors 
  \mu_\theta(\mathbf{x}_t, t) = \frac{1}{\sqrt{\alpha_t}} \left( \mathbf{x}_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha_t}}} \epsilon_\theta(\mathbf{x}_t, t) \right)
  $$ 
 
- and coded as:
+where the model $$\epsilon_\theta(\mathbf{x}_t, t)$$ takes as input the image $$x_t$$ sampled at the timestep $$t$$, and also the [timestep $$t$$ that will be used to add the timestep embedding](https://github.com/huggingface/diffusers/blob/v0.31.0/src/diffusers/models/unets/unet_2d.py#L243). This is then coded as:
 
 ```python
     def eq11_μ_θ(x, ε_θ, t):
@@ -206,7 +206,7 @@ where each training iteration (steps 2 to 6) can be coded as:
 ```python
     t = torch.randint(0, timesteps, (batch_size,), device=device).long()
     noise = torch.randn_like(batch)
-    x_noisy = q_sample(x0=batch, t=t, noise=noise)
+    x_t = q_sample(x0=batch, t=t, noise=noise)
     ε_θ = model(x_t, t).sample
     loss = F.mse_loss(noise, ε_θ)  # Huber loss and MAE are also ok
     loss.backward()
