@@ -64,15 +64,9 @@ I will try to post about this topic in the near future, but if you're curious yo
 
 ## Variational Inference
 
-**IMPORTANT:** this section is outdated and the best resource for this topic is the wikipedia entry for [Variational Bayesian Methods](https://en.wikipedia.org/wiki/Variational_Bayesian_methods). 
+**The idea behind Variational Inference (VI) methods is to find a parametric distribution $$q(z)$$ that is an approximation of an intractable/non-parametric posterior $$p(z \mid x)$$**. I.e. instead of computing the *real* posterior, we try to find the parameters $$z$$ of a new distribution $$q^\star$$ (the approximation to our real posterior).
 
-**The idea behind Variational Inference (VI) methods is to propose a family of densities and find a member $$q^\star$$ of that family which is close to the target posterior $$p(z \mid x)$$**. I.e. instead of computing the *real* posterior, we try to find the parameters $$z$$ of a new distribution $$q^\star$$ (the approximation to our real posterior) such that:
-
-$$
-q^\star(z) = arg\,min \, KL(q(z) || p(z\mid x))
-$$
-
-The logic behing it is that we want to minimize the divergence between a real posterior and its approximated posterior, sometimes referred to as the *guide* distribution/posterior. So we need to first define a metric of *approximation* or proximity. To that extent, the closeness (*proximity*) of two distributins $$p$$ and $$q$$ is a measurement of *probabilities similiarity* measured by the [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence): 
+So we need to first define a metric of *approximation* or proximity. To that extent, the closeness (*proximity*) of two distributins $$p$$ and $$q$$ is a measurement of *probabilities similiarity* measured by the [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence): 
 
 $$
 KL (q(z) || p(z \mid x)) =  \int q(z) \log \frac{q(z)}{p(z \mid x)} dz= \mathbf{E} \left[ \log \frac{q(z)}{p( z\mid x)} \right]
@@ -81,14 +75,11 @@ $$
 
 Note that KL-divergence is a *dissimilarity function* and is *not a metric* as it's not symmetric. And that there are other divergence metrics other than KL divergence, part of the [f-divergence family](https://en.wikipedia.org/wiki/F-divergence).
 
-Back to the topic. If both $$q$$ and $$p$$ are high, then we achieve a good solution as the KL-divergence is low. If $$q$$ is high and $$p$$ is low, we have a high divergence and the solution *may* not be very good. Otherwise, if *q* is low, we dont care about *p*, since we achieve low divergence, independently of $$p$$. It would then make more sense to compute $$KL(p\|\|q)$$ instead, however we do not do this due to computational reasons, as we will see later.
-
-The logic is that we want to minimize the divergence between our real posterior $$p(z \mid x)$$ and its approximated posterior $$q(z)$$. We cannot minimize this directly, but we can minimize a function that is *equal to it (up to a constant)*, known as the Evidence Lower Bound.
+Looking at equation \ref{eq_KLdiv}, we see an issue: it includes the true posterior $$p(z \mid x)$$ which is exactly the value we do not know. So we cannot minimize this directly, but we can minimize a function that is *equal to it (up to a constant)*, known as the Evidence Lower Bound.
 
 ## Evidence Lower Bound (ELBO)
 
-Looking at equation \ref{eq_KLdiv}, we see a big issue: it includes the true posterior $$p(z \mid x)$$ which is exactly the value we do not know.
-However, we can rewrite the KL divergence as:
+We can rewrite the KL divergence as:
 
 $$
 \begin{align*}
@@ -98,30 +89,23 @@ KL (q(z) || p(z \mid x))
   & = \int q(z) \left( \log p(x) + q(z) \log \frac{q(z)}{p(z, x)} \right) dz  & \text{(expanding } \log \text{)}\\
   & = \log p(x) \int q(z) dz + \int q(z) \log \frac{q(z)}{p(z, x)} dz  & \text{(definition of conditional prob.)}\\
   & = \log p(x) - \int q(z) \log \frac{p(z, x)}{q(z)} dz  & \text{(negate log; } q(z) \text{ is a dist. thus } \int q(z) dz =1 \text{)}\\
+  &= \log p(x) - ELBO(q,p)\\
 \end{align*}
 $$
 
-Now there are two very important messages about both terms on the right:
-- We are minimizing the KL divergence over $$q$$, therefore the term $$\log p(x)$$ can be ignored as it does not contain $$q$$;
-- The second term $$\int ... dz $$ contains now only terms that we know:
-  - $$p(z,x)$$ is just the prior times the likelihood i.e. $$p(z,x) = p(z) \, p(x \mid z)$$, which are the inputs of the problem;
-  - this term is called the ELBO, which we will mininize, or since it's a negated term, that we will maximize!
+In practice, we replaced the original $$KL$$-divergence formulation we could't not minimize by an expression that we can minimize. Looking at the right-hand side of the expression:
+- We want to  minimize the KL divergence over $$q$$, so the term $$\log p(x)$$ can be ignored as it does not contain $$q$$.
+- We know all terms inside $$ELBO(q,p)$$, as $$p(z,x)$$ is just the prior times the likelihood  $$p(z,x) = p(z) \, p(x \mid z)$$, which are the inputs of the problem;
+- We know that the KL can not be negative. Thus $$\log p(x) \ge ELBO$$, i.e. the ELBO is always smaller than the evidence $$p(x)$$, and this explains the name **Evidence lower bound**.
 
-We know that the KL is not negative. Thus $$\log p(x) \ge ELBO$$, thus justifying the name "Evidence **lower bound**".
-
-Note that ELBO can also be described as, and is usually found expressed in terms of the expected values of the two variables as:
+Note that ELBO can also be described as, and is usually found expressed in terms of the expectations of the two variables as:
 
 $$
-ELBO(q) = \int q(z) \log \frac{p(z, x)}{q(z)} =  \int q(z) \log p(z, x) dz - \int q(z) \log q(z) dz  = \mathbf{E} [\log p(x,z)] - \mathbf{E}[\log q(z)]
+ELBO(q,p) = \int q(z) \log \frac{p(z, x)}{q(z)} =  \int q(z) \log p(z, x) dz - \int q(z) \log q(z) dz  = \mathbf{E} [\log p(x,z)] - \mathbf{E}[\log q(z)]
 \label{eq_elbo}
 $$
 
-One important remark. The KL is bounded to a minimum value of 0, so we can print the KL we can see how good we are performing across iterations, as the value ideally approaches 0. On the other hand, the ELBO grows and converges to an absolute value that *tells nothing* about the quality of our results. This "KL vs ELBO" is still a (well researched) open problem.
-
-Now we have an optimization problem, how do we optimize?
- - One option: coordinate descent in all $$q_1, ..., q_j$$, pretty slow, we have to hand-derive an algorithm to find out what the steps are;
- - Stochastic Variational Inference, faster
- - Automatic Differentiation Variational Inference: assume all distributions are Gaussian and optimizations can be done automatically without hand derivations;
+There are several options to solve the previous optimization problem: coordinate descent in all variables $$z_i$$ (slow, and requires one to derive by hand the formulation of the gradients), Stochastic Variational Inference (faster), Mean-field approximation, etc.
 
 ## Mean-field approximation
 
