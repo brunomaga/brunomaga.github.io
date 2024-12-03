@@ -111,6 +111,19 @@ coded as the function:
         return coef1 * x_0 + coef2 * x_t
 ```
 
+## Reverse process
+
+The reverse process is a Markov chain $$p_θ(\mathbf{x}_{0:T})$$ with **learned Gaussian transitions** starting at $$p(\mathbf{x}_T) = N (\mathbf{x}_T ; 0, \mathbf{I})$$, and:
+
+$$
+p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_t) = \mathcal{N}(\mathbf{x}_{t-1}; \boldsymbol{\mu}_\theta(\mathbf{x}_t, t), \boldsymbol{\Sigma}_\theta(\mathbf{x}_t, t) )
+$$ 
+
+We do not know the distribution of the denoising step $$p (\mathbf{x}_{t-1} \mid \mathbf{x}_t)$$, so we will use a neural network $$p_{\theta}$$ to approximate it. We will assume this distribution to be of a Gaussian shape with learnable mean $$\mu_\theta$$ and $$\Sigma_\theta$$ (Eq. 1 in paper):
+
+
+In order to train $$p_\theta$$, we can treat the combination of $$q$$ and $$p_\theta$$ as a [variational auto-encoder](https://arxiv.org/abs/1312.6114), and we can then use the evidence lower bound (ELBO) to minimize the log-likelihood of the model output with respect to the input $$\mathbf{x}_0$$. The log of the product of losses can then be represented as a sum of terms, which [can be minimized by the KL divergence between 2 gaussian distributions](https://huggingface.co/blog/annotated-diffusion#defining-an-objective-function-by-reparametrizing-the-mean).
+
 
 To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors propose a parameterization trick (section 3.2) that allows for our model to learn the noise $$\epsilon_\theta(\mathbf{x}_t, t)$$ for step $$t$$ instead of predicting the mean  $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$. The mean can then be computed as (Eq. 11 in paper):
 
@@ -133,22 +146,6 @@ To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors 
 ```
 
 In the original paper, the variance $$\Sigma_\theta (\mathbf{x}_t, t)$$ is not learned, and it's set as $$\Sigma_\theta(\mathbf{x}_t, t) = \sigma^2_t I$$ and $$\sigma^2_t = \beta_t$$ or $$\sigma^2_t = \tilde{\beta}_t$$ (similar results), 
-
-
-## Reverse process
-
-The reverse process is a Markov chain $$p_θ(\mathbf{x}_{0:T})$$ with **learned Gaussian transitions** starting at $$p(\mathbf{x}_T) = N (\mathbf{x}_T ; 0, \mathbf{I})$$, and:
-
-$$
-p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_t) = \mathcal{N}(\mathbf{x}_{t-1}; \boldsymbol{\mu}_\theta(\mathbf{x}_t, t), \boldsymbol{\Sigma}_\theta(\mathbf{x}_t, t) )
-$$ 
-
-We do not know the distribution of the denoising step $$p (\mathbf{x}_{t-1} \mid \mathbf{x}_t)$$, so we will use a neural network $$p_{\theta}$$ to approximate it. We will assume this distribution to be of a Gaussian shape with learnable mean $$\mu_\theta$$ and $$\Sigma_\theta$$ (Eq. 1 in paper):
-
-
-In order to train $$p_\theta$$, we can treat the combination of $$q$$ and $$p_\theta$$ as a [variational auto-encoder](https://arxiv.org/abs/1312.6114), and we can then use the evidence lower bound (ELBO) to minimize the log-likelihood of the model output with respect to the input $$\mathbf{x}_0$$. The log of the product of losses can then be represented as a sum of terms, which [can be minimized by the KL divergence between 2 gaussian distributions](https://huggingface.co/blog/annotated-diffusion#defining-an-objective-function-by-reparametrizing-the-mean).
-
-Just like in VAEs, we perform a **reparameterization trick so that we learn the added noise $$\epsilon_\theta(\mathbf{x}, t)$$ for noise level $$t$$** instead of prediction the mean. We can then compute the mean as (Eq 11):
 
 ## Sampling
 
