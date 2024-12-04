@@ -228,7 +228,7 @@ human evaluations for helpfulness and safety, it outperforms open-source models 
 
 The pretraining setting and model architecture are adopted from Llama 1, i.e. bytepair encoding (BPE), pre-normalization via RMSNorm, SwiGLU activations, rotary positional embeddings, AdamW optimizer, cosine learning rate scheduler. However, the primary architectural differences from Llama 1 include **increased context length** and **grouped-query attention (GQA)**.
 
-The finetuning was performed with supervised fine-tuning (Section 3.1), initial and iterative reward modeling (Section 3.2.2) and RLHF (Section 3.2.3). As drawback of RLHF, "initial RLHF models tended to forget the initial instruction after a few turns of dialogue (Figure 9, below, left). To address these limitations, we propose **Ghost Attention (GAtt)**, a very simple method inspired by Context Distillation (Bai et al., 2022b) that hacks the fine-tuning data to help the attention focus in a multi-stage process" (Figure 9, below, right).
+The finetuning was performed with supervised fine-tuning (Section 3.1), initial and iterative reward modeling (Section 3.2.2) and RLHF (Section 3.2.3). As drawback of RLHF, "initial RLHF models tended to forget the initial instruction after a few turns of dialogue (Figure 9, below, left). To address these limitations, we propose **Ghost Attention (GAtt)**, a very simple method inspired by Context Distillation (Bai et al., 2022b) that hacks the fine-tuning data to help the attention focus in a multi-stage process". In Gatt, ghost tokens are introduced at specific intervals or positions, and do not represent actual data but serve as intermediate "proxies" to summarize information across groups of tokens. (Figure 9, below, right).
 
 {: style="text-align:center; font-size: small;"}
 <img width="65%" height="65%" src="/assets/publications/llama2_gatt.png"/>
@@ -245,8 +245,8 @@ The models architecture is made of several improvements over the original Transf
 - **Rotary Embeddings [GPTNeo]:** positional embeddings are replaced by rotary positional embeddings (RoPE) at each layer of the output. 
 - **Optimization** performed with AdamW optimizer with $$β_1 = 0.9$$, $$β2 = 0.95$$ and $$eps = 10^{−5}$$.
 - **Cosine learning rate schedule** with a warmup of $$2000$$ steps, a weight decay of $$0.1$$, a gradient clipping of $$1.0$$ and a final learning of $$10%$$ of the initial value.
-- **Causal multi-Head attention** inspired by Rabe and Staats (2021) and uses the backward from Dao et al. (2022), replaces the regular transformer multi-head attention. "This is achieved by not storing the attention weights and not computing the key/query scores that are masked due to
-the causal nature of the language modeling task."
+- **Efficient causal multi-Head attention** achieved by not storing the attention weights and not computing the key/query scores that are masked due to
+the causal nature of the language modeling task.
 - **Activation checkpointing** was implemented to reduce memory. Yet it required manually implementing the Pytorch backward propagation function for the Transformer (insted of PyTorch autograd). This also required model and sequence parallelism (why?).
 - **Overlap of the computation of activations and the communication between GPUs** over the network, to reduce latency.   
 </details>
@@ -797,6 +797,23 @@ for generating useful multi-hop connections".
 </details>
 
 
+<details> <summary markdown="span"> 2019 [Root Mean Square Layer Normalization (RMSNorm)](https://arxiv.org/abs/1910.07467)</summary>
+ RMSNorm (Root Mean Square Normalization) is a simpler and computationally efficient alternative to LayerNorm. Instead of normalizing based on the mean and variance of the input features, it only scales the input using the root mean square of the features. The benefits are (1) Efficiency: RMSNorm is computationally lighter than LayerNorm, making it ideal for large-scale models like LLaMA; and (2) Stability: its reliance on the root mean square avoids potential instabilities from mean subtraction, which can introduce noise in large dimensions. Formulated as:
+
+$$
+\text{RMS}(x) = \sqrt{\frac{1}{d} \sum_{i=1}^d x_i^2}
+$$
+
+where $$x$$ is the input veector with dimensionality $$d$$, and
+
+$$
+\text{RMSNorm}(x) = \frac{x}{\text{RMS}(x)} \cdot \gamma
+$$
+
+where $$γ$$ is a learnable scaling parameter (similar to LayerNorm).
+
+</details>
+
 <details> <summary markdown="span"> 2019 [Fast Transformer Decoding: One Write-Head is All You Need (Multi-Query Attention)](https://arxiv.org/abs/1911.02150)</summary>
 
 Efficient training in transformers model is possible due to parallelism across the length dimension. However, decoding (where such parallelization is impossible) is slow due to continuously loading large keys and values tensors into memory. Thus, this introduces a variant of the multi-head attention that improves inference (decoding), called multi-query attention. While MHA consists of multiple attention layers (heads) in parallel with different linear transformations on the queries, keys, values and outputs,  MQA is identical except that the different heads share a single set of keys and values. This greatly reducing the size of these tensors and hence the memory bandwidth requirements of incremental decoding". This leads to a much faster decoding, with minor degradation of quality from the baseline. 
@@ -821,8 +838,8 @@ The paper introduces several **sparse factorizations of the attention matrix** t
 ALBERT ("A Lite BERT") lowers memory consumption and increase the training speed of BERT. It allows for better scaling, establishes new record performance in several benchmarks, and with fewer parameters than BERT. An ALBERT configuration similar to BERT-large has 18x fewer parameters and can be trained about 1.7x faster. The tecnniques introduced are:
 1. **Factorized embedding parameterization**, for parameter reduction.
 "Instead of projecting the one-hot vectors directly into the hidden space of size $$H$$, we first project them into a lower dimensional embedding space of size $$E$$, and then project it to the hidden space. By using this decomposition, we reduce the embedding parameters from $$O(V × H)$$ to $$O(V × E + E × H)$$". This separation of the size of the hidden layers from the size of vocabulary embedding, makes it easier to grow the hidden size without significantly increasing the parameter size of the vocabulary embeddings.
-2. **Cross-layer parameter sharing**, for parameter reduction. The authors mention that the parameter reduction also acts as regularisation/generalisation (reduces overfitting as the model learns a representation that generalizes well for all tasks). It does not improve the performance of the model though: "This approach slightly diminishes the accuracy, but the more compact size is well worth the tradeoff". This technique prevents the parameter from growing with the depth of the network. As a practical example, take a BERT model with 12 layers ie 12 Transformer encoder blocks: instead of learning unique parameters for each layer, ALBERT learns parameters of the first layer reuse the block in the remaining 11 layers. 
-3. **Self-supervised loss for sentence-order prediction (SOP)**, for performance improvement. Instead of BERT's additional loss called next-sentence prediction (NSP, a binary classification loss for predicting whether two segments appear consecutively in the original text), the authors propose SOP, focused on inter-sentence coherence which is designed to address the ineffectiveness of the NSP in BERT. The SOP loss uses as positive examples the same technique as BERT (two consecutive segments from the same document), and as negative examples the same two consecutive segments but with their order swapped. This forces the model to learn finer-grained distinctions about discourse-level coherence properties.
+1. **Cross-layer parameter sharing**, for parameter reduction. The authors mention that the parameter reduction also acts as regularisation/generalisation (reduces overfitting as the model learns a representation that generalizes well for all tasks). It does not improve the performance of the model though: "This approach slightly diminishes the accuracy, but the more compact size is well worth the tradeoff". This technique prevents the parameter from growing with the depth of the network. As a practical example, take a BERT model with 12 layers ie 12 Transformer encoder blocks: instead of learning unique parameters for each layer, ALBERT learns parameters of the first layer reuse the block in the remaining 11 layers. 
+2. **Self-supervised loss for sentence-order prediction (SOP)**, for performance improvement. Instead of BERT's additional loss called next-sentence prediction (NSP, a binary classification loss for predicting whether two segments appear consecutively in the original text), the authors propose SOP, focused on inter-sentence coherence which is designed to address the ineffectiveness of the NSP in BERT. The SOP loss uses as positive examples the same technique as BERT (two consecutive segments from the same document), and as negative examples the same two consecutive segments but with their order swapped. This forces the model to learn finer-grained distinctions about discourse-level coherence properties.
 </details>
 
 
