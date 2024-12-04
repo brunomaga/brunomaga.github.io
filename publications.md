@@ -4,7 +4,7 @@ title: Publications bookmark
 permalink: /publications/
 ---
 
-A summary of some interesting publications I came across. Continuously updated.
+A summary of some interesting publications I came across. Click $$\small{\blacktriangleright}$$ to expand. Continuously updated.
 
 {::options parse_block_html="true" /}
 
