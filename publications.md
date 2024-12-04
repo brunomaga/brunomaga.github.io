@@ -6,78 +6,10 @@ permalink: /publications/
 
 A summary of some interesting publications I came across. Continuously updated.
 
-<!-- NOTE: To create this table of contents, open VS code, install "Markdown All in one" extension, then Ctrl+Shift+P and "Markdown: create table of contents". To enable automatic update on save, go to settings, extensions, "Markdown all on one" and tick "update on save" -->
-
-- [2024 The Llama 3 Herd of Models, Meta](#2024-the-llama-3-herd-of-models-meta)
-- [2024 Universal Checkpointing: Efficient and Flexible Checkpointing for Large Scale Distributed Training](#2024-universal-checkpointing-efficient-and-flexible-checkpointing-for-large-scale-distributed-training)
-- [2024 Simplifying Transformer Blocks, ETH Zurich](#2024-simplifying-transformer-blocks-eth-zurich)
-- [2024 The Road Less Scheduled, Meta](#2024-the-road-less-scheduled-meta)
-- [2023 Training and inference of large language models using 8-bit floating point](#2023-training-and-inference-of-large-language-models-using-8-bit-floating-point)
-- [2023 DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](#2023-deepspeed-zero-offload-6x-higher-training-throughput-via-collaborative-cpugpu-twin-flow)
-- [2023 ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](#2023-zero-extremely-efficient-collective-communication-for-giant-model-training-microsoft)
-- [2023 QLoRA: Efficient Finetuning of Quantized LLMs, Washington Uni](#2023-qlora-efficient-finetuning-of-quantized-llms-washington-uni)
-- [2023 Better speech synthesis through scaling (TorToise), James Bekter](#2023-better-speech-synthesis-through-scaling-tortoise-james-bekter)
-- [2023 Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E), OpenAI](#2023-neural-codec-language-models-are-zero-shot-text-to-speech-synthesizers-vall-e-openai)
-- [2023 High-Fidelity Audio Compression with Improved RVQGAN, Descript Inc.](#2023-high-fidelity-audio-compression-with-improved-rvqgan-descript-inc)
-- [2023 Llama 2: Open Foundation and Fine-Tuned Chat Model, Meta](#2023-llama-2-open-foundation-and-fine-tuned-chat-model-meta)
-- [2023 LLaMA: Open and Efficient Foundation Language Models, Meta](#2023-llama-open-and-efficient-foundation-language-models-meta)
-- [2023 Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](#2023-sparks-of-artificial-general-intelligence-experiments-with-an-early-version-of-gpt-4-microsoft)
-- [2023 Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](#2023-retentive-network-a-successor-to-transformer-for-large-language-models-microsoft-and-tsinghua-university)
-- [2023 RoFormer: Enhanced Transformer with Rotary Position Embedding (Rotary Embedding)](#2023-roformer-enhanced-transformer-with-rotary-position-embedding-rotary-embedding)
-- [2023 Operator Fusion in XLA: Analysis and Evaluation, UToronto](#2023-operator-fusion-in-xla-analysis-and-evaluation-utoronto)
-- [2023 LongNet: Scaling Transformers to 1,000,000,000 Tokens, Microsoft and Xi’an Jiaotong University](#2023-longnet-scaling-transformers-to-1000000000-tokens-microsoft-and-xian-jiaotong-university)
-- [2023 FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](#2023-flashattention-2-faster-attention-with-better-parallelism-and-work-partitioning)
-- [2023 Flow Matching for Generative Modeling](#2023-flow-matching-for-generative-modeling)
-- [2022 Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow](#2022-flow-straight-and-fast-learning-to-generate-and-transfer-data-with-rectified-flow)
-- [2022 Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer ($$\\mu$$Transfer), Microsoft](#2022-tensor-programs-v-tuning-large-neural-networks-via-zero-shot-hyperparameter-transfer-mutransfer-microsoft)
-- [2022 DyLoRA: Parameter Efficient Tuning of Pre-trained Models using Dynamic Search-Free Low-Rank Adaptation](#2022-dylora-parameter-efficient-tuning-of-pre-trained-models-using-dynamic-search-free-low-rank-adaptation)
-- [2022 Efficiently Scaling Transformer Inference, Google](#2022-efficiently-scaling-transformer-inference-google)
-- [2022 Random-LTD: Random and Layerwise Token Dropping Brings Efficient Training for Large-scale Transformers, Microsoft](#2022-random-ltd-random-and-layerwise-token-dropping-brings-efficient-training-for-large-scale-transformers-microsoft)
-- [2022 The Stability-Efficiency Dilemma: Investigating Sequence Length Warmup for Training GPT Models, Microsoft](#2022-the-stability-efficiency-dilemma-investigating-sequence-length-warmup-for-training-gpt-models-microsoft)
-- [2022 FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](#2022-flashattention-fast-and-memory-efficient-exact-attention-with-io-awareness)
-- [2022 High Fidelity Neural Audio Compression (Encodec), Meta AI](#2022-high-fidelity-neural-audio-compression-encodec-meta-ai)
-- [2022 DeepNet: Scaling Transformers to 1,000 Layers](#2022-deepnet-scaling-transformers-to-1000-layers)
-- [2022 Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](#2022-contrastive-deep-supervision-tsinghua-university-intel-corporation-and-xian-jiaotong)
-- [2022 Robust Speech Recognition via Large-Scale Weak Supervision (Whisper), OpenAI](#2022-robust-speech-recognition-via-large-scale-weak-supervision-whisper-openai)
-- [2022 Emergent Abilities of Large Language Models, Google Research \& Stanford](#2022-emergent-abilities-of-large-language-models-google-research--stanford)
-- [2022 Rethinking Attention with Performers, Google, Cambridge, DeepMind and Alan Turing Institute](#2022-rethinking-attention-with-performers-google-cambridge-deepmind-and-alan-turing-institute)
-- [2022 Training Compute-Optimal Large Language Models, arXiv](#2022-training-compute-optimal-large-language-models-arxiv)
-- [2021 Breaking the Computation and Communication Abstraction Barrier in Distributed Machine Learning Workloads](#2021-breaking-the-computation-and-communication-abstraction-barrier-in-distributed-machine-learning-workloads)
-- [2021 LoRA: Low-Rank Adaptation of Large Language Models, Microsoft](#2021-lora-low-rank-adaptation-of-large-language-models-microsoft)
-- [2021 Learning Transferable Visual Models From Natural Language Supervision (CLIP), OpenAI](#2021-learning-transferable-visual-models-from-natural-language-supervision-clip-openai)
-- [2021 GSPMD: General and Scalable Parallelization for ML Computation Graphs, Google](#2021-gspmd-general-and-scalable-parallelization-for-ml-computation-graphs-google)
-- [2021 Skilful precipitation nowcasting using deep generative models of radar, Google Deepmind](#2021-skilful-precipitation-nowcasting-using-deep-generative-models-of-radar-google-deepmind)
-- [2021 Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research, Google and Univ. California, NeurIPS 2021](#2021-reduced-reused-and-recycled-the-life-of-a-dataset-in-machine-learning-research-google-and-univ-california-neurips-2021)
-- [2021 MLP-Mixer: An all-MLP Architecture for Vision, Google, NeurIPS 2021](#2021-mlp-mixer-an-all-mlp-architecture-for-vision-google-neurips-2021)
-- [2021 Pay Attention to MLPs, Google, NeurIPS 2021](#2021-pay-attention-to-mlps-google-neurips-2021)
-- [2021 An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale, Google, ICLR 2021](#2021-an-image-is-worth-16x16-words-transformers-for-image-recognition-at-scale-google-iclr-2021)
-- [2021 Finetuned Language Models Are Zero-Shot Learners, Google, ICLR 2022](#2021-finetuned-language-models-are-zero-shot-learners-google-iclr-2022)
-- [2020 Scaling Laws for Neural Language Models, John Hopkins, OpenAI](#2020-scaling-laws-for-neural-language-models-john-hopkins-openai)
-- [2020 Language Models are Few-Shot Learners (GPT-3), OpenAI](#2020-language-models-are-few-shot-learners-gpt-3-openai)
-- [2020 Graph Transformers Networks, Korea University](#2020-graph-transformers-networks-korea-university)
-- [2019 Fast Transformer Decoding: One Write-Head is All You Need (Multi-Query Attention)](#2019-fast-transformer-decoding-one-write-head-is-all-you-need-multi-query-attention)
-- [2019 Generating Long Sequences with Sparse Transformers, OpenAI](#2019-generating-long-sequences-with-sparse-transformers-openai)
-- [2019 ALBERT: A Lite BERT for Self-supervised Learning of Language Representations, Google and Toyota](#2019-albert-a-lite-bert-for-self-supervised-learning-of-language-representations-google-and-toyota)
-- [2018 Averaging Weights Leads to Wider Optima and Better Generalization (Stochastic Weight Averaging), Cornel \& Samsumg AI](#2018-averaging-weights-leads-to-wider-optima-and-better-generalization-stochastic-weight-averaging-cornel--samsumg-ai)
-- [2017 Neural Discrete Representation Learning (RQVAE), Google](#2017-neural-discrete-representation-learning-rqvae-google)
-- [2017 Mixed Precision Training, Baidu and NVIDIA](#2017-mixed-precision-training-baidu-and-nvidia)
-- [2018 Group Normalization, Facebook AI Research](#2018-group-normalization-facebook-ai-research)
-- [2016 Semi-Supervised Classification with Graph Convolutional Networks](#2016-semi-supervised-classification-with-graph-convolutional-networks)
-- [2016 Neural Architecture Search with Reinforcement Learning, Google, ICLR 2017](#2016-neural-architecture-search-with-reinforcement-learning-google-iclr-2017)
-- [2015 Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](#2015-batch-normalization-accelerating-deep-network-training-by-reducing-internal-covariate-shift)
-- [2015 Siamese neural networks for one-shot image recognition, CS Toronto, ICML 2015](#2015-siamese-neural-networks-for-one-shot-image-recognition-cs-toronto-icml-2015)
-- [2015 Neural Machine Translation by Jointly Learning to Align and Translate (and Attention Mechanism), D. Bahdanau, K. Cho, Y. Bengio](#2015-neural-machine-translation-by-jointly-learning-to-align-and-translate-and-attention-mechanism-d-bahdanau-k-cho-y-bengio)
-- [2015 Spatial Transformer Networks, Google DeepMind, NeurIPS 2015](#2015-spatial-transformer-networks-google-deepmind-neurips-2015)
-- [2014 Deeply-supervised Nets, USCD and Microsoft](#2014-deeply-supervised-nets-uscd-and-microsoft)
-- [2014 Dropout: a simple way to prevent neural networks from overfitting, Univ. Toronto, Journal of ML Research 2014](#2014-dropout-a-simple-way-to-prevent-neural-networks-from-overfitting-univ-toronto-journal-of-ml-research-2014)
-- [2011 Popular Ensemble Methods: An Empirical Study, 2011 ](#2011-popular-ensemble-methods-an-empirical-study-2011-)
-- [2011 Cyclical Learning Rates for Training Neural Networks, US Naval Research Lab, 2017](#2011-cyclical-learning-rates-for-training-neural-networks-us-naval-research-lab-2017)
-- [2006 Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss), New York Uni, CVPR 2006](#2006-dimensionality-reduction-by-learning-an-invariant-mapping-contrastive-loss-new-york-uni-cvpr-2006)
-
-<center><font size="5"><i class="fa fa-regular fa-bars"></i></font></center>
+{::options parse_block_html="true" /}
 
 
-## 2024 [The Llama 3 Herd of Models, Meta](https://arxiv.org/abs/2407.21783)
+<details> <summary markdown="span">2024 [The Llama 3 Herd of Models, Meta](https://arxiv.org/abs/2407.21783)</summary>
 
 Llama 3 is "a herd of language models that natively support multi-linguality, coding, reasoning, and tool usage." The models are made of 8B, 70B and 405B parameters and a context window of 128K tokens. Llama 3 405B uses an architecture with 126 layers, a token representation dimension of 16,384, and 128 attention heads. 
 Llama 3 405B is trained on up to 16K H100 GPUs, via 4D parallelism (tensor, pipeline, context and data).
@@ -111,23 +43,29 @@ The image encoder is a standard vision transformer trained to align images and t
 Results (section 5) investigate the "performance of: (1) the pre-trained language model, (2) the post-trained language model, and (3) the safety characteristics of Llama 3".
 
 In section 6, they investigated two main techniques to make inference with the Llama 3 405B model efficient: (1) pipeline parallelism on 16 H100s with BF16 and (2) FP8 quantization. FP8 quantization is applied to most parameters and activations in feed-forward network but not to parameters of self-attention layers of the model. Similarly to Xiao et al 2024b they use dynamic scaling factors for better accuracy (with upper bound of 1200), and do not perform quantization in the first and last Transformer layers, and use row-wise quantization, computing scaling factors across rows for parameter and activation matrices.
+</details>
 
-## 2024 [Universal Checkpointing: Efficient and Flexible Checkpointing for Large Scale Distributed Training](https://arxiv.org/abs/2406.18820)
+
+<details> <summary markdown="span">2024 [Universal Checkpointing: Efficient and Flexible Checkpointing for Large Scale Distributed Training](https://arxiv.org/abs/2406.18820)</summary>
 
 According to the paper, the issue with state-of-art distributed checkpointing (model save/resume) is that it requires "static allocation of GPU resources at the beginning of training and lacks the capability
 to resume training with a different parallelism strategy and hardware configuration" and usually it is not possible to resume when hardware changes during the training process. To this extent, the paper proposes "Universal Checkpointing, a technique that enables efficient checkpoint
 creation while providing the flexibility of resuming on arbitrary parallelism strategy" and " improved resilience to hardware failures through continued training on remaining healthy hardware, and reduced training time through opportunistic exploitation of elastic capacity". This is achieved by writing in the universal checkpoint format, which allows "mapping parameter
 fragments into training ranks of arbitrary model-parallelism configuration", and universal checkpoint language that allows for "converting distributed checkpoints into the universal checkpoint format". The UCP file is a gathering of all distributed saves into a single file per variable type (optimizer state, parameters, etc).
+</details>
 
-## 2024 [Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)
+
+<details> <summary markdown="span">[Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)</summary>
 
 A simpler transformer architecture that claims similar results to state-of-art autoregressive
 decoder-only and BERT encoder-only models, with a  16% faster training throughput, while using 15% fewer parameters.
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/simplifying_transformer_blocks.png"/>
+</details>
 
-## 2024 [The Road Less Scheduled, Meta](https://arxiv.org/abs/2405.15682)
+
+<details> <summary markdown="span"> 2024 [The Road Less Scheduled, Meta](https://arxiv.org/abs/2405.15682)</summary>
 
 "Existing learning rate schedules that do not require specification of the optimization stopping step T are greatly out-performed by learning rate schedules that depend on T." The Schedule-Free approach is an optimization method that does not need the specification of T by removing the need of schedulers entirely. It requires no new hyper-parameters.
 
@@ -169,13 +107,16 @@ The main point is: "The advantage of our interpolation is that we get the
 best of both worlds. We can achieve the fast convergence of Polyak-Ruppert averaging (since the
 $$z$$ sequence moves much quicker than the $$x$$ sequence), while still keeping some coupling between
 the returned sequence $$x$$ and the gradient-evaluation locations $$y$$, which increases stability (Figure 2). Values of β similar to standard momentum values $$β ≈ 0.9$$ appear to work well in practice."
+</details>
 
 
-## 2023 [Training and inference of large language models using 8-bit floating point](https://arxiv.org/abs/2309.17224)
+<details> <summary markdown="span"> 2023 [Training and inference of large language models using 8-bit floating point](https://arxiv.org/abs/2309.17224)</summary>
 
 The paper "presents a methodology to select the scalings for FP8 linear layers, based on dynamically updating per-tensor scales for the weights, gradients and activations." The FP8 representation tested is the FP8E4 and FP8E5, for 4 and 5 bits of exponent, respectively. Despite the naming, intermediatte computation is performed on 16 bits. The bias and scaling operations are applied to the exponent, not the final value. They tested two scaling techniques, AMAX (described before), or SCALE (keeping scale constant),  and noticed there isn't a major degradation. Results this fp8 to fp 16, but do not compare to `bfloat16` because hardware was not available at the time. Algorithm in Figure 3. Note to self: I dont understand how so operations in `float8` can be faster than half the executions in `bfloat16` (because the workflow is so large); so it's probably only faster than `float16` because also requires a longer workflow with scaling (?).
+</details>
 
-## 2023 [DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](https://github.com/microsoft/DeepSpeed/tree/offloadpp-news/blogs/deepspeed-offloadpp)
+
+<details> <summary markdown="span"> 2023 [DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](https://github.com/microsoft/DeepSpeed/tree/offloadpp-news/blogs/deepspeed-offloadpp)</summary>
 
 "System efficiency is still far from optimal when adopting ZeRO-Offload in some scenarios. Especially in the cases like small batch training, model that could not fit into GPU memory but not orders-of-magnitude bigger than GPU memory capacity, CPU offload not only introduce long end-to-end latency, but also underutilize GPU computation resources." With that in mind, Zero-Offload++ introduces 3 fetures:
 - Twin-Flow: instead having an all-or-nothing policy (ie offload all or none of) in the values to be offloaded, "Twin-Flow allows a portion of optimizer states to be held in CPU memory and the other portion of optimizer states remaining in GPU memory. When optimization step is triggered, both CPU and GPU can do parameter updates simultaneously." The user can choose the percentage of ratio of parameters in CPU and GPU. "Therefore, with Twin-Flow, we can achieve decent GPU memory and core utilization rate, at the same time reduce training iteation time in optimizer offloading cases." 
@@ -184,8 +125,10 @@ The paper "presents a methodology to select the scalings for FP8 linear layers, 
 
 {: style="text-align:center; font-size: small;"}
 <img width="50%" height="50%" src="/assets/publications/ZeroOffloadPlusPlus.png"/>
+</details>
 
-## 2023 [ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](https://arxiv.org/abs/2306.10209)
+
+<details> <summary markdown="span"> 2023 [ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](https://arxiv.org/abs/2306.10209)</summary>
 
 DeepSpeed ZeRO's compute throughput is limited by the high communication cost from gathering weights in forward pass, backward pass, and averaging gradients. This is mostly prominent on clusters with low-bandwidth, and at very small batch sizes per GPU.
 
@@ -200,9 +143,10 @@ The results sections claims that  ZeRO++ yields a communication reduction of 4x 
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/ZeROplusplus.png"/>
+</details>
 
 
-## 2023 [QLoRA: Efficient Finetuning of Quantized LLMs, Washington Uni](https://arxiv.org/abs/2305.14314)
+<details> <summary markdown="span"> 2023 [QLoRA: Efficient Finetuning of Quantized LLMs, Washington Uni](https://arxiv.org/abs/2305.14314)</summary>
 
 "An efficient finetuning approach that reduces memory usage enough to finetune a 65B parameter model on a single 48GB GPU while
 preserving full 16-bit finetuning task performance. QLORA backpropagates gradients through a frozen, 4-bit quantized pretrained language model into Low Rank Adapters (LoRA). QLORA introduces multiple innovations designed to reduce memory use without sacrificing performance: (1) 4-bit NormalFloat, an information theoretically optimal quantization data type for
@@ -215,8 +159,10 @@ to finetune more than 1,000 models, [and] results show that QLoRA
 finetuning on a small high-quality dataset leads to state-of-the-art results, even
 when using smaller models than the previous SoTA". Notes to self:
 - 4-bit NormalFloat Quantization rounds values to the nearest bin (in a 4-bit representation) where each bin is a normal distribution quantile. It's an expensive procedure, so they use  fast quantile approximation algorithms such as SRAM. It also yields high errors for outliers.
+</details>
 
-## 2023 [Better speech synthesis through scaling (TorToise), James Bekter](https://arxiv.org/abs/2305.07243)
+
+<details> <summary markdown="span"> 2023 [Better speech synthesis through scaling (TorToise), James Bekter](https://arxiv.org/abs/2305.07243)</summary>
 
 The paper describes a way to apply ML for generating images  to the speech
 synthesis. This result is TorToise, an expressive, multi-voice text-to-speech system. So far, TTS models were hard to train eficiently due to high sampling rate, unavailability of large datasets, or encoder-decoder challenges.
@@ -235,8 +181,10 @@ The inputs of the auto-regressive and DDPM models include (or are conditioned to
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/TorToise-v2.png"/>
+</details>
 
-## 2023 [Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E), OpenAI](https://arxiv.org/abs/2301.02111)
+
+<details> <summary markdown="span"> 2023 [Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E), OpenAI](https://arxiv.org/abs/2301.02111)</summary>
 
 The paper introduces a pipeline for text-to-speech translation (TTS), based on a neural codec language model (VALL-E) using discrete codes (encode/decode embeddings) derived from an off-the-shelf neural audio codec model (Encoded, Défossez et al., 2022).
 This mode treats TTS as a conditional language modeling task rather than continuous signal regression as in previous work.
@@ -259,9 +207,10 @@ There are two models, that refer to the two inference steps:
 <img width="70%" height="70%" src="/assets/publications/VALLE2.png"/>
 
 Note to self: for the use case of synthethising audio in a different language, i.e. that differs from the 3-sec input language and text, see [VALL-E X](https://www.microsoft.com/en-us/research/project/vall-e-x/vall-e-x/).
+</details>
 
 
-## 2023 [High-Fidelity Audio Compression with Improved RVQGAN, Descript Inc.](https://arxiv.org/abs/2306.06546)
+<details> <summary markdown="span"> 2023 [High-Fidelity Audio Compression with Improved RVQGAN, Descript Inc.](https://arxiv.org/abs/2306.06546)</summary>
 
 An audio encoder-decoder that supposedly beats Meta's encodec. Achieved by combining advances in high-fidelity audio generation with better vector quantization techniques from the image domain, along with improved adversarial and reconstruction losses. Methods:
 - to account for periodicity in audio inputs, they adopted the snake activation function for frequency $$\alpha$$ as $$snake(x) = x + \frac{1}{α} sin^2 (αx)$$.
@@ -269,9 +218,10 @@ An audio encoder-decoder that supposedly beats Meta's encodec. Achieved by combi
 - state-of-art applying quantizer dropout degrades the audio reconstruction quality at full bandwidth. To overcome it, they instead apply quantizer dropout to each input example with some probability $$p=0.5$$.
 - an improved STFT discriminator  at multiple time-scales, that works better in practice and leads to improved phase modeling, compared to Encodec and Soundstream.
 -  for **frequency domain reconstruction loss**, they use a mel-reconstruction loss to improve stability, fidelity and convergence speed; and multi-scale spectral losses to encourage modeling of frequencies in multiple time-scales. For **adversarial loss**, they use HingeGAN.  For **codebook learning**, they use commitment losses with stop-gradients from the original VQ-VAE formulation. All these losses are weighted to sum up to the final loss.
+</details>
 
 
-## 2023 [Llama 2: Open Foundation and Fine-Tuned Chat Model, Meta](https://arxiv.org/abs/2307.09288)
+<details> <summary markdown="span"> 2023 [Llama 2: Open Foundation and Fine-Tuned Chat Model, Meta](https://arxiv.org/abs/2307.09288)</summary>
 
 LLama 2 is a collection of pretrained and fine-tuned large language models (LLMs) ranging in scale from 7 billion to 70 billion parameters. Llama 2-Chat is a finetuned LLM optimized for dialogue use cases. The models outperform open-source chat models, and based on
 human evaluations for helpfulness and safety, it outperforms open-source models and appear to be on par with closed-source models (although may not be a suitable substitute). Results on safety human evaluation for Llama 2-Chat are presented in Figure 3. The train dataset is only publicly available sources, which does not include data from Meta’s products or services, or sources that may include users' personal information. Table 2 presents the GPU compute hours, power consumption and carbon emissions of each model
@@ -282,9 +232,10 @@ The finetuning was performed with supervised fine-tuning (Section 3.1), initial 
 
 {: style="text-align:center; font-size: small;"}
 <img width="65%" height="65%" src="/assets/publications/llama2_gatt.png"/>
+</details>
 
 
-## 2023 [LLaMA: Open and Efficient Foundation Language Models, Meta](https://arxiv.org/abs/2302.13971)
+<details> <summary markdown="span"> 2023 [LLaMA: Open and Efficient Foundation Language Models, Meta](https://arxiv.org/abs/2302.13971)</summary>
 
 LLaMa is a collection of Large Language Models (LLM) with 7B to 65B parameters trained in public datasets, with performance superior to GPT-3 and comparable with Chinchilla-70B and PaLM-540B. Training is inspired by the Chinchilla scaling laws. The datasets used for the pre-training data are presented in Table 1, with training hyperparameters in Table 2. String are tokenized using the bytepair encoding (BPE) algorithm, with circa 1.4T tokens after tokenization.
 
@@ -298,8 +249,10 @@ The models architecture is made of several improvements over the original Transf
 the causal nature of the language modeling task."
 - **Activation checkpointing** was implemented to reduce memory. Yet it required manually implementing the Pytorch backward propagation function for the Transformer (insted of PyTorch autograd). This also required model and sequence parallelism (why?).
 - **Overlap of the computation of activations and the communication between GPUs** over the network, to reduce latency.   
- 
-## 2023 [Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](https://arxiv.org/abs/2303.12712)
+</details>
+
+
+<details> <summary markdown="span"> 2023 [Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4, Microsoft](https://arxiv.org/abs/2303.12712)</summary>
 
 A summary paper reporting early results of the experiments with GPT-4 when it was still in active development by OpenAI. The authors "demonstrate that, beyond its mastery of language, GPT-4 can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more, without needing any special prompting. Moreover, in all of these tasks, GPT-4’s performance is strikingly close to human-level performance". The bulk of the paper contains dozens of examples that compare GPT-4 and Chat-GPT and demonstrate that GPU-4 surpasses ChatGPT in performance, in code generation, audio generation (output as musical notes), drawings (SVG, TIKZ), and mathematical resolutions (LaTeX). As weaknesses, besides the regular hallucinations it was also observed:
 - Incapacity of planning correctly, when planning is not a linear path.
@@ -312,8 +265,10 @@ But these can be overcome by including external APIs on training and making them
 - `Using CALC(x) as a calculator of the expression x, what's 151412 * 12412 / 12312 + 2?`, or
 - `Using SEARCH(x) to search for a query x, who's the president of the US?` or
 - `Using CALENDAR(subject, date, user) and MAIL(user, text), book a meeting with the title 'subject' on the day 'date' to the user 'user', then email 'user' all the information`. 
+</details>
 
-## 2023 [Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](https://arxiv.org/abs/2307.08621)
+
+<details> <summary markdown="span"> 2023 [Retentive Network: A Successor to Transformer for Large Language Models, Microsoft and Tsinghua University](https://arxiv.org/abs/2307.08621)</summary>
 
 (note: a simpler summary video of RetNet can be found [here](https://www.youtube.com/watch?v=JaIL1VAEwZ8))
 
@@ -333,34 +288,43 @@ Finally, the model uses $$h = d_{model}/d$$ retention heads in each layer, where
 
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="/assets/publications/RetNet.png"/>
+</details>
 
-## 2023 [RoFormer: Enhanced Transformer with Rotary Position Embedding (Rotary Embedding)](https://arxiv.org/abs/2104.09864)
+
+<details> <summary markdown="span"> 2023 [RoFormer: Enhanced Transformer with Rotary Position Embedding (Rotary Embedding)](https://arxiv.org/abs/2104.09864)</summary>
 
 TODO 
+</details>
 
-## 2023 [Operator Fusion in XLA: Analysis and Evaluation, UToronto](https://arxiv.org/abs/2301.13062)
+
+<details> <summary markdown="span"> 2023 [Operator Fusion in XLA: Analysis and Evaluation, UToronto](https://arxiv.org/abs/2301.13062)</summary>
 
 Kernel fusion is the most significant optimization operation in [XLA](https://www.tensorflow.org/xla). This paper details XLA and key compiler passes of XLA's source code. It also presents the speedup that kernel fusion can deliver, and what low-level effects it has on hardware.
+</details>
 
-## 2023 [LongNet: Scaling Transformers to 1,000,000,000 Tokens, Microsoft and Xi’an Jiaotong University](https://arxiv.org/abs/2307.02486)
+
+<details> <summary markdown="span"> 2023 [LongNet: Scaling Transformers to 1,000,000,000 Tokens, Microsoft and Xi’an Jiaotong University](https://arxiv.org/abs/2307.02486)</summary>
 
 LongNet is a Transformer variant that can scale the sequence length up to 1B tokens, and without sacrificing the performance on shorter sequences. This overcomes current limitations of attention size in regular transformers, that requires a tradeoff between computational complexity and the model expressivity. The main trick is based on the **dilated attention**, which is similar to strided attention but with exponentially increasing strides (e.g., attending to tokens at distances 1, 2, 4, 8, etc.).
+</details>
 
 
-## 2023 [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691)
+<details> <summary markdown="span"> 2023 [FlashAttention-2: Faster Attention with Better Parallelism and Work Partitioning](https://arxiv.org/abs/2307.08691)</summary>
 
 "FlashAttention is still not nearly as fast as optimized matrix-multiply (GEMM) operations, reaching only 25-40% of the theoretical maximum FLOPs/s. We observe that the inefficiency is due to suboptimal work partitioning between different thread blocks and warps on the GPU, causing either low-occupancy or unnecessary shared memory reads/writes. We propose FlashAttention-2, with better work partitioning to address these issues. In particular, we (1) tweak the algorithm to reduce the number of non-matmul FLOPs (2) parallelize the attention computation, even for a single head, across different thread blocks to increase occupancy, and (3) within each thread block, distribute the work between warps to reduce communication through shared memory. These yield around 2× speedup compared to FlashAttention, reaching 50-73% of the theoretical maximum FLOPs/s on A100 and getting close to the efficiency of GEMM operations. We empirically validate that when used end-to-end to train GPT-style models, FlashAttention-2 reaches training speed of up to 225 TFLOPs/s per A100 GPU (72% model FLOPs utilization)."
+</details>
 
 
-## 2023 [Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747)
+<details> <summary markdown="span"> 2023 [Flow Matching for Generative Modeling](https://arxiv.org/abs/2210.02747)</summary>
 
 Flow Matching is a a simulation-free approach for training CNFs (Continuous Normalizing Flows) that is compatible with a general family of Gaussian
 probability paths for transforming between noise and data samples, as required by the reverse process in diffusion models. "Furthermore, Flow Matching opens
 the door to training CNFs with other, non-diffusion probability paths. An instance of particular interest is using Optimal Transport (OT) displacement
-interpolation to define the conditional probability paths. These paths are more efficient than diffusion paths, provide faster training and sampling, and result in better generalization". See a good explanation in this [Cambridge ML group post](https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html) .
+interpolation to define the conditional probability paths. These paths are more efficient than diffusion paths, provide faster training and sampling, and result in better generalization". See a good explanation in this [Cambridge ML group post</summary>](https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html) .
+</details>
 
 
-## 2022 [Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow](https://arxiv.org/abs/2209.03003)
+<details> <summary markdown="span"> 2022 [Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow](https://arxiv.org/abs/2209.03003)</summary>
 
 Rectified flows aim at reducing the number of steps when transitioning between two distributions. This is important for e.g. diffusion models where we perform inference by performing $$T$$ sampling steps and we want to do it in less steps, by finding a flow between interleaved steps.  The rectified flow is an ODE model that transport distribution $$π_0$$ to $$π_1$$ by following straight line paths as much as possible. 
 The straight paths are preferred both theoretically because it is the shortest path between two end points, and computationally because it can be exactly simulated without time discretization
@@ -371,8 +335,10 @@ The straight paths are preferred both theoretically because it is the shortest p
  
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/publications/rectified_flow_2.png"/>
+</details>
 
-## 2022 [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer ($$\mu$$Transfer), Microsoft](https://arxiv.org/abs/2203.03466)
+
+<details> <summary markdown="span"> 2022 [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer ($$\mu$$Transfer), Microsoft](https://arxiv.org/abs/2203.03466)</summary>
 
 [Maximal Update Parametrization (muP)](https://arxiv.org/abs/2011.14522) showed that many optimal hyper-parameters remain constant as the mode size changes: "When (layer) width is large, every activation vector has roughly iid coordinates, at any time
 during training. Using Tensor Programs, we can recursively calculate such coordinate distributions, and consequently understand how the neural network function evolves".
@@ -389,8 +355,10 @@ Hyperparameters That Can Be µTransferred, Not µTransferred, or µTransferred A
 - µTransferable: optimization related (learning rate, momentum, Adam beta, LR schedule, etc), init (per-layer init variance), parameter multipliers (multiplicative constants after weight/biases, etc), etc
 - Not µTransferable: regularization  (dropout, weight decay, etc)
 - µTransferred Across (Depth): width, depth*, batch size*,  training time*, seq length*
+</details>
 
-## 2022 [DyLoRA: Parameter Efficient Tuning of Pre-trained Models using Dynamic Search-Free Low-Rank Adaptation](https://arxiv.org/abs/2210.07558)
+
+<details> <summary markdown="span"> 2022 [DyLoRA: Parameter Efficient Tuning of Pre-trained Models using Dynamic Search-Free Low-Rank Adaptation](https://arxiv.org/abs/2210.07558)</summary>
 
 LoRA blocks "suffer from two major problems: first, the size of these blocks is fixed and cannot be modified after training (for example, if we need to change the rank of LoRA blocks, then we need to re-train them from scratch); second, optimizing their rank requires an exhaustive search and effort". Dynamic LoRA (DyLoRA) addresses these two problems. "DyLoRA method trains LoRA blocks for a range of ranks instead of a single rank by sorting the representation learned by the adapter module at different ranks during training". How does it work:
 - In each LoRA module, we have an up-projection ($$W_{up} ∈ R^{m×r}$$) and a down-projection matrix ($$W_{dw} ∈ R^{r×d}$$). Let’s assume that we would like to train the LoRA module to operate in the range of $$r ∈$$ Range $$[r_{min}, r_{max}]$$ where $$r_{min}$$ and $$r_{max}$$ are hyper-parameters.
@@ -398,9 +366,10 @@ LoRA blocks "suffer from two major problems: first, the size of these blocks is 
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/publications/DyLoRA.png"/>
+</details>
 
 
-## 2022 [Efficiently Scaling Transformer Inference, Google](https://arxiv.org/abs/2211.05102)
+<details> <summary markdown="span"> 2022 [Efficiently Scaling Transformer Inference, Google](https://arxiv.org/abs/2211.05102)</summary>
 
 The paper focuses on efficient generative inference of Transformer models with large deep models, with tight latency targets and long sequence lengths. It claims its methods surpass the efficiency of [NVIDIA's FasterTransformer](https://github.com/NVIDIA/FasterTransformer). It is highly foccused on 3D-torus network layouts. 
 
@@ -417,9 +386,10 @@ $$y = x + MLP(LayerNorm(x)) + Attention(LayerNorm(x))$$. Using the parallel form
 which reduces latency at small batch sizes. Also, some matrices can be fused which results in larger matrix multiplications that run more efficiently on accelerators. Finally, it removes  one of the two all-reduce operations in each layer.
 
 Finally, section 3.5 discusses low-level optimization (overlapping communication and computation, etc), and section 3.6 discusses `int8` quantization.  
+</details>
 
 
-## 2022 [Random-LTD: Random and Layerwise Token Dropping Brings Efficient Training for Large-scale Transformers, Microsoft](https://arxiv.org/abs/2211.11586)
+<details> <summary markdown="span"> 2022 [Random-LTD: Random and Layerwise Token Dropping Brings Efficient Training for Large-scale Transformers, Microsoft](https://arxiv.org/abs/2211.11586)</summary>
 
 Random-LTD (random and layerwise token dropping method) is a method to reduce the training costs of very large transformer models, which skips the computation of a subset of the input tokens at all middle layers (exclude first and last layers). Tokens are dropped in a purely random matther, thus Random-LTD requires no scoring or manual design. 
 
@@ -435,8 +405,10 @@ The results compare Random-LRD with the baseline, on GPT3 models with 350M and 1
 
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="/assets/publications/Random_LTD.png"/>
+</details>
 
-## 2022 [The Stability-Efficiency Dilemma: Investigating Sequence Length Warmup for Training GPT Models, Microsoft](https://openreview.net/forum?id=JpZ5du_Kdh)
+
+<details> <summary markdown="span"> 2022 [The Stability-Efficiency Dilemma: Investigating Sequence Length Warmup for Training GPT Models, Microsoft](https://openreview.net/forum?id=JpZ5du_Kdh)</summary>
 
 This paper investigates and demonstrates the importance of sequence length in GPT models. The paper presents a set of experiments on a GPT2 model on public datasets to study the **stability-efficiency dilemma**: "increasing the batch sizes and learning rates (commonly used for faster training) leads to better training efficiency but can also result in training instability, leading to poor generalization accuracy or failed runs". The paper results that **there is a strong correlation between training instability and extreme values of gradient variance** and **long sequence lengths contribute to these extreme gradient variance values, especially at the beginning of the training** (and this could be a source of traininig instability).
 
@@ -444,15 +416,19 @@ The paper presents the "**Sequence Length Warmup (SLW)** method (which starts
 training with short sequences and gradually increases the length)  that aims to solve the training stability-efficiency dilemma by avoiding extreme gradient variance values. This method can be understood as a type of curriculum learning (CL), which presents easier/simpler examples earlier during training and gradually increases the sample difficulties. However here, the work aims to achieve both efficient convergence and better stability by enabling stable training with more aggressive hyperparameters, instead of keeping them constant as in the traditional CL.
 
 Results show improved stability, an increase of 4x in batch size, and 8x in learning rage on a 117M and 1.5B parameter GPT2 model. On a GPT3 model, it demonstrates 8x larger batch size and 40x larger learning rate, retaining 99% of one-shot accuracy using 10x less data and 17x less time.
+</details>
 
-## 2022 [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)
+
+<details> <summary markdown="span"> 2022 [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)</summary>
 
 Transformers are slow and memory-hungry on long sequences, since the time and memory complexity of self-attention are quadratic in sequence length. The authors " argue that a missing principle is making attention algorithms IOaware—accounting for reads and writes between levels of GPU memory". To overcome it, Flash Attention improves the attention mechanism with one that uses tiling to reduce the number of memory reads/writes between GPU high bandwidth memory (HBM) and GPU on-chip SRAM. In practice, it tiles the square attention matrix into partial computations that can be computed on the block memory (on-chip SRAM) instead of the global memory (DRAM?). It also trains Transformers faster than existing baselines (15% on bert models and 3x on GPT-2).
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/publications/FlashAttention.png"/>
+</details>
 
-## 2022 [High Fidelity Neural Audio Compression (Encodec), Meta AI](https://arxiv.org/abs/2210.13438)
+
+<details> <summary markdown="span"> 2022 [High Fidelity Neural Audio Compression (Encodec), Meta AI](https://arxiv.org/abs/2210.13438)</summary>
 
 Encoded is a neural network model for a real-time, high-fidelity, audio codec. It consists in a streaming encoder-decoder architecture with quantized latent space trained in an end-to-end fashion. For faster and simpler training, they use a single multiscale spectrogram  that efficiently reduces artifacts and produce high-quality samples.
 Two main problems arise in lossy neural compression of audio. The first one is overfitting to a subset of audio simples, and it was overcome by using (1) a large and diverse dataset and (2) discriminator networks that serve as perceptual loss. The second problem is compressing efficiently, both in compute time and in size, solved by using residual vector quantization of the neural encoder floating-point output. The authors claim that "designing end-to-end neural compression models is a set of intertwined choices, among which at least the encoder-decoder architecture, the quantization method, and the perceptual loss play key parts". To that extent, audio quality evaluations (MUSHRA) consist in having humans listen to, compare, and rate excerpts of speech or music compressed with competitive codecs.
@@ -475,36 +451,38 @@ The discriminators are trained with the adversarial loss $$l_d(x, \hat{x}) = \fr
 - **VQ commitment loss**.  To support Multi-bandwith learning, at 24 kHz, the model is trained to support the bandwidths 1.5, 3, 6, 12, and 24 kbps by selecting the appropriate number of codebooks to keep in the RVQ step (section 3.2). At 48 kHz, it's trained to support 3, 6, 12 and 24 kbps. They add a commitment loss $$l_w$$ between the output of the encoder, and its quantized value, with no gradient being computed for the quantized value. For each residual step $$c$$, where $$C$$ is the bandwidth: $$l_w = \sum_{c=1}^C \| z_c - q_c (z_c) \|_2$$, where $$q_c(z_c)$$ the nearest entry in the corresponding codebook.
 
 The authors also claim that "We introduce a loss balancer in order to stabilize training, in particular the varying scale of the gradients coming from the discriminators" and "We additionally train a small Transformer based language model (Vaswani et al., 2017) with the objective of keeping faster than real time end-to-end compression/decompression on a single CPU core." (Section 3.3) that I have skipped.
- 
-{: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/publications/magneto.png"/>
+</details>
 
-## 2022 [DeepNet: Scaling Transformers to 1,000 Layers](https://arxiv.org/abs/2203.00555)
+
+<details> <summary markdown="span"> 2022 [DeepNet: Scaling Transformers to 1,000 Layers](https://arxiv.org/abs/2203.00555)</summary>
 
 This paper introduces a normalization function (**DeepNorm**) to modify the residual connection in Transformer, accompanyed with theoretically derived initialization, in order to stabilize extremely deep Transformers.
 - Background: previous work had sown that better initialization methods improve the stability of the training of Transformer.
 - DeepNorm works by introducing a new normalization function at residual connections, which has theoretical justification of bounding the model update by a constant.
 - "The proposed method combines the best of two worlds, i.e., good performance of Post-LN and stable training of Pre-LN (picture above), making DeepNorm a preferred alternative.". 
 - Figure 2 shows the `deepnorm` (the normalization layer function), `deepnorm_init` (the weights initialization) and constants.
+</details>
 
 
-## 2022 [Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](https://arxiv.org/abs/2207.05306)
+<details> <summary markdown="span"> 2022 [Contrastive Deep Supervision, Tsinghua University, Intel Corporation, and Xi’an Jiaotong](https://arxiv.org/abs/2207.05306)</summary>
 
 From the abstract: "the traditional training method only supervises the neural network at its last layer and propagates the supervision layer-by-layer, which leads to hardship in optimizing the intermediate layers. Recently, deep supervision has been proposed to add auxiliary classifiers to the intermediate layers of deep neural networks. By optimizing these auxiliary classifiers with the supervised task loss, the supervision can be applied to the shallow layers directly. However, deep supervision conflicts with the well-known observation that the shallow layers learn low-level features instead of task-biased high-level semantic features. To address this issue, this paper proposes a novel training framework named Contrastive Deep Supervision, which supervises the intermediate layers with augmentation-based contrastive learning".  The rationale is that contrastive learning can provide better supervision for intermediate layers than the supervised task loss. Contrastive learning "regards two augmentations from the same image as a positive pair and different images as negative pairs. During training, the neural network is trained to minimize the distance of a positive pair while maximizing the distance of a negative pair. As a result, the network can learn the invariance to various data augmentation, such as Color Jitter and Random Gray Scale". Contrastive Deep Supervision starts from those advancements, and optimizes the intermediate layers with contrastive learning instead of traditional supervised learning. 
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/contrastive_deep_supervision.png"/>
+</details>
 
 
-## 2022 [Robust Speech Recognition via Large-Scale Weak Supervision (Whisper), OpenAI](https://arxiv.org/abs/2212.04356)
+<details> <summary markdown="span"> 2022 [Robust Speech Recognition via Large-Scale Weak Supervision (Whisper), OpenAI](https://arxiv.org/abs/2212.04356)</summary>
 
 Whisper is an automatic speech recognition (ASR) system, that performs several tasks on a Speech-to-text setup. It is trained on 680K hours of multilingual and multitask supervised data collected from the web. I.e. it's a weakly supervised dataset. The authors "show that the use of such a large and diverse dataset leads to improved robustness to accents, background noise and technical language.
 
 The Whisper architecture (section 2.2) is an encoder-decoder Transformer. Input audio is split into 30-second chunks, converted into a log-Mel spectrogram, and then passed into an encoder. A decoder is trained to predict the corresponding text caption, intermixed with special tokens that direct the single model to perform tasks such as language identification, phrase-level timestamps, multilingual speech transcription, and to-English speech translation."
 Audio is re-sampled to 16,000 Hz, and an 80-channel logmagnitude Mel spectrogram representation is computed on 25-millisecond windows with a stride of 10 milliseconds. Whisper uses the same Byte-Pair Encoding text tokenizer as in GPT2 for english-only models and refit the vocabulary for other languages. 
+</details>
 
 
-## 2022 [Emergent Abilities of Large Language Models, Google Research & Stanford](https://openreview.net/forum?id=yzkSU5zdwD)
+<details> <summary markdown="span"> 2022 [Emergent Abilities of Large Language Models, Google Research & Stanford](https://openreview.net/forum?id=yzkSU5zdwD)</summary>
 
 The paper discusses instead the phenomenon of **emergent abilities** of large language models. An ability is emergent if it is not present in smaller models but is present in larger models, and not extrapolated from scaling laws. *Phase transition* is the scale at which such abilities are exposed. Scale in this context may represent different compute budgets, data quality or other factors - the paper foccuses not on ideal training but on the discussion of such phenomena. As a disclaimer, "model scale is not the singular factor for unlocking an emergent ability" and "the science of training large language models progresses, certain abilities may be unlocked for smaller models with new architectures, higher-quality data, or improved training procedures".
 
@@ -517,9 +495,10 @@ A similar analysis with augmented prompting exposes the emergent property as rel
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/publications/Emergent_Abilities_2.png"/>
+</details>
 
 
-## 2022 [Rethinking Attention with Performers, Google, Cambridge, DeepMind and Alan Turing Institute](https://arxiv.org/abs/2009.14794)
+<details> <summary markdown="span"> 2022 [Rethinking Attention with Performers, Google, Cambridge, DeepMind and Alan Turing Institute](https://arxiv.org/abs/2009.14794)</summary>
 
 From the abstract: Performers are "Transformer architectures which **can estimate regular
 (softmax) full-rank-attention Transformers with provable accuracy**, but using only
@@ -543,8 +522,10 @@ A clearer explanation can be found on this [google research post](https://blog.r
 
 {: style="text-align:center; font-size: small;"}
 **Left:** Standard unidirectional attention requires masking the attention matrix to obtain its lower-triangular part. **Right:** Unbiased approximation on the LHS can be obtained via a prefix-sum mechanism, where the prefix-sum of the outer-products of random feature maps for keys and value vectors is built on the fly and left-multiplied by query random feature vector to obtain the new row in the resulting matrix.
+</details>
 
-## 2022 [Training Compute-Optimal Large Language Models, arXiv](https://arxiv.org/abs/2203.15556)
+
+<details> <summary markdown="span"> 2022 [Training Compute-Optimal Large Language Models, arXiv](https://arxiv.org/abs/2203.15556)</summary>
 
 Heavily related to HPC's performance modelling applied to large language models. The authors revisit the question "Given a fixed FLOPs budget, how should one trade-off model size and the number of training tokens?" to which they present three approaches: (1) fix model sizes and vary number of training tokens; (2) vary model sizes for 9 different FLOP counts; (3) fit a parametric loss function to the values retrived from the 2 approaches. Estimates were collected from a total of 400 runs. 
 
@@ -557,17 +538,21 @@ To be compute optimal (in terms of accuracy vs energy cost), Kaplan et al. (2020
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models_2.png"/> 
+</details>
 
 
-## 2021 [Breaking the Computation and Communication Abstraction Barrier in Distributed Machine Learning Workloads](https://arxiv.org/abs/2105.05720)
+
+<details> <summary markdown="span"> 2021 [Breaking the Computation and Communication Abstraction Barrier in Distributed Machine Learning Workloads](https://arxiv.org/abs/2105.05720)</summary>
 
 Abstract: the paper presents CoCoNet "with a DSL (Domain Specific Language) to express a program with both computation and communication. CoCoNeT contains several machine learning aware transformations to optimize a program and a compiler to generate high performance kernels. Providing both computation and communication as first class constructs allows users to work on a high-level abstraction and apply powerful optimizations, such as fusion or overlapping of communication and computation. CoCoNeT enables us to optimize data-, model-and pipeline-parallel workloads in large language models with only a few lines of code. "
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/publications/coconet.png"/> 
+</details>
 
 
-## 2021 [LoRA: Low-Rank Adaptation of Large Language Models, Microsoft](https://arxiv.org/abs/2106.09685)
+
+<details> <summary markdown="span"> 2021 [LoRA: Low-Rank Adaptation of Large Language Models, Microsoft](https://arxiv.org/abs/2106.09685)</summary>
 
 Low-Rank Adaptation (LoRA) is a technique used to efficiently fine-tune large machine learning models by injecting trainable low-rank parameter updates into the model's layers. It is particularly useful for adapting pre-trained models to new tasks or domains without retraining the entire model, which is computationally expensive and requires large storage resources.
 
@@ -577,8 +562,10 @@ A small, trainable low-rank matrix $$Δ𝑊$$ is added to the original weight ma
 
 {: style="text-align:center; font-size: small;"}
 <img width="25%" height="25%" src="/assets/publications/LoRA.png"/>
+</details>
 
-## 2021 [Learning Transferable Visual Models From Natural Language Supervision (CLIP), OpenAI](https://arxiv.org/abs/2103.00020)
+
+<details> <summary markdown="span"> 2021 [Learning Transferable Visual Models From Natural Language Supervision (CLIP), OpenAI](https://arxiv.org/abs/2103.00020)</summary>
 
 Motivation: State-of-art vision systems are trained on a fixed predetermined set of objects (labels). Additional labeled data is needed to specify any other visual concept. However, "the development of text-to-text as a standardized input-output interface has enabled taskagnostic architectures to zero-shot transfer to downstream datasets, removing the need for specialized output heads or dataset specific customization". A critical insight is that it is possible to leverage natural language as a flexible prediction space to enable generalization and transfer -- ie train a text model, and then specialize it on a non-textual task.
 In practice, natural language is able to express, and therefore supervise, a much wider set of visual concepts through its generality.
@@ -621,8 +608,10 @@ Summary of results:
 - Figure 13 shows the resiliency of the model to perturbation. As in a model is trained on a dataset, and as soon as we change the dataset (but not the labels), the perfomance decreases heavily. The accuracy gap between CLIP and ResNet increases and we degrade the data quality in the dataset (from ImageNet to sketches of ImageNet and adversarial images based on ImageNet).
 - Figure 14, shows that doing linear probe on top of CLIP for e.g. a given dataset, improves accuracy massively for that dataset, but degrades mildly the accuracy of other datasets.
 - Table 7 shows that the prompting matters, by showing that adding the label `child` to the dataset improves accuracy, dropping the percentage of non-numan or crime-related label assignments dramatically. 
+</details>
 
-## 2021 [GSPMD: General and Scalable Parallelization for ML Computation Graphs, Google](https://arxiv.org/pdf/2105.04663.pdf)
+
+<details> <summary markdown="span"> 2021 [GSPMD: General and Scalable Parallelization for ML Computation Graphs, Google](https://arxiv.org/pdf/2105.04663.pdf)</summary>
 
 ( also covered on a [google blog post](https://blog.research.google/2021/12/general-and-scalable-parallelization.html) )
 
@@ -638,27 +627,35 @@ all types of sharding, across the dimension(s) of batch, features, channels and/
 
 {: style="text-align:center; font-size: small;"}
 **Left:** A simplified feedforward layer of a Transformer model. Blue rectangles represent tensors with dashed red & blue lines overlaid representing the desired partitioning across a 2x2 mesh of devices. **Right:** A single partition, after GSPMD has been applied. **Source**: <a href="https://blog.research.google/2021/12/general-and-scalable-parallelization.html">google research post</a>.
+</details>
 
-## 2021 [Skilful precipitation nowcasting using deep generative models of radar, Google Deepmind](https://www.nature.com/articles/s41586-021-03854-z)
+
+<details> <summary markdown="span"> 2021 [Skilful precipitation nowcasting using deep generative models of radar, Google Deepmind](https://www.nature.com/articles/s41586-021-03854-z)</summary>
 
 Current weather predictions are done by using numerical weather predictions, by solving physical equations that descrive radar-based wind estimates. Alternative methods use machine learning to capture non-linear behaviour that is not described by the mathematical formalism of the weather-regulating equations. Two main problems arise: poor performance on rarer medium-to-heavy rain events, and weather forecast at high resolution for short-term intervals (2 hours, a.k.a. nowcasting).
 This paper solves demonstrates improvements in the skill of probabilistic precipitation nowcasting, by using an approach known as generative modelling, based on a deep generative model (DGM) for the probabilistic nowcasting of precipitation.
+</details>
 
-## 2021 [Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research, Google and Univ. California, NeurIPS 2021](https://arxiv.org/abs/2112.01716)
+
+<details> <summary markdown="span"> 2021 [Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research, Google and Univ. California, NeurIPS 2021](https://arxiv.org/abs/2112.01716)</summary>
 
 Winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021. Abstract: "We study how dataset usage patterns differ across machine learning subcommunities and across time from 2015-2020. We find increasing concentration on fewer and fewer datasets within task communities, significant adoption of datasets from other tasks, and concentration across the field on datasets that have been introduced by researchers situated within a small number of elite institutions." 
 
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/publications/reduced_recycled_datasets.png"/> 
+</details>
 
-## 2021 [MLP-Mixer: An all-MLP Architecture for Vision, Google, NeurIPS 2021](https://arxiv.org/abs/2105.01601)
+
+<details> <summary markdown="span"> 2021 [MLP-Mixer: An all-MLP Architecture for Vision, Google, NeurIPS 2021](https://arxiv.org/abs/2105.01601)</summary>
 
 The paper argues that neither (CNNs) convolution CNNs or (Transformers) attention are necessary for computer vision setups. To that extent, it presents MLP-mixers, a Multi-Layer Perceptron only architecture. "MLP-Mixer contains two types of layers: one with MLPs applied independently to image patches (i.e. "mixing" the per-location features), and one with MLPs applied across patches (i.e. "mixing" spatial information)." Results are competitive with existing methods.
  
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/mlp_mixer.png"/> 
+</details>
 
-## 2021 [Pay Attention to MLPs, Google, NeurIPS 2021](https://arxiv.org/abs/2105.08050)
+
+<details> <summary markdown="span"> 2021 [Pay Attention to MLPs, Google, NeurIPS 2021](https://arxiv.org/abs/2105.08050)</summary>
 
 The paper introduces gMLP (gated MLPs) and show that they can perform as well as Transformers in language and vision applications. It claims that "self-attention is not critical for Vision Transformers, as gMLP can achieve the same accuracy". In some BERT tasks it performed better than Transformers, and on finetuning tasks, it performed worse (but this can be overcome by making the gMLP model substantially larger).
 
@@ -673,15 +670,16 @@ where $$σ$$ is an activation function, $$U$$ and $$V$$ are linear projections a
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/pay_attention_to_mlps.png"/> 
 
-## 2021 [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale, Google, ICLR 2021](https://paperswithcode.com/paper/an-image-is-worth-16x16-words-transformers-1)
+<details> <summary markdown="span"> 2021 [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale, Google, ICLR 2021](https://paperswithcode.com/paper/an-image-is-worth-16x16-words-transformers-1)</summary>
 
 Introduces Visual Transformers (ViTs), an extension of the transformer architecture to images. Works by passing as input to the transformer a sequence of linear embeddings of image patches. Paper demonstrates better results on classification tasks, compared to CNNs, ResNets and native attention mechanism (that do not scale well as pixels attend to other pixels leading to a quadratic complexity). 
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/publications/visual_transformer.png"/> 
+</details>
 
 
-## 2021 [Finetuned Language Models Are Zero-Shot Learners, Google, ICLR 2022](https://arxiv.org/abs/2109.01652)
+<details> <summary markdown="span"> 2021 [Finetuned Language Models Are Zero-Shot Learners, Google, ICLR 2022](https://arxiv.org/abs/2109.01652)</summary>
 
 The paper presents a simple method for improving the zero-shot learning abilities of language models. It shows that instruction tuning -- finetuning language models on a collection of tasks described via instructions -- substantially improves zero-shot performance on unseen tasks.
 The intuition is that performing instruction tuning—finetuning of the model with datasets expressed via natural language instructions, substantially improves the zero-shot performance of the model.
@@ -691,8 +689,10 @@ For each dataset, the authors manually compose ten unique templates that use nat
 <img width="67%" height="67%" src="/assets/publications/finetune_language_models.png"/> 
 
 small amounts of Gaussian noise, it is sufficient to set the sampling chain transitions to conditional Gaussians too, allowing for a particularly simple neural network parameterization". 
+</details>
 
-## 2020 [Scaling Laws for Neural Language Models, John Hopkins, OpenAI](https://arxiv.org/abs/2001.08361)
+
+<details> <summary markdown="span"> 2020 [Scaling Laws for Neural Language Models, John Hopkins, OpenAI](https://arxiv.org/abs/2001.08361)</summary>
 
 Abstract: We study empirical scaling laws for language model performance on the cross-entropy loss.
 The loss scales as a power-law with model size, dataset size, and the amount of compute
@@ -721,8 +721,10 @@ and stopping significantly short of convergence.
 
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/publications/scaling_laws_2.png"/>
+</details>
 
-## 2020 [Language Models are Few-Shot Learners (GPT-3), OpenAI](https://arxiv.org/abs/2005.14165)
+
+<details> <summary markdown="span"> 2020 [Language Models are Few-Shot Learners (GPT-3), OpenAI](https://arxiv.org/abs/2005.14165)</summary>
 
 Up until now, substantial gains on many NLP tasks were achieved by pre-training on a large corpus of text followed by fine-tuning on a specific task. This method still requires task-specific fine-tuning datasets of thousands or tens of thousands of examples. This paper shows that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art finetuning approaches. This paper presents and tests GPT-3 (an autoregressive LLM with 175 billion parameters, 10x larger than previous models) in the few-shot setup. 
 
@@ -730,7 +732,6 @@ Up until now, substantial gains on many NLP tasks were achieved by pre-training 
 - Table 2.1 includes the 8 GPT-3 models built and their sizes/hyperparameters.
 - Fig. 2.2 shows the total compute used during training. Based on the analysis in [Scaling Laws For Neural Language Models](https://arxiv.org/abs/2001.08361) we train much larger models on many fewer tokens than is typical. 
 - Fig 3.1 shows the pattern of smooth scaling of performance with compute. Performance (cross-entropy loss) follows a power-law trend with the amount of compute used for training. 
-
 
 **Background (Fig 2.1):**
 - Fine-Tuning (FT) has been the most common approach in recent years, and involves updating the weights of
@@ -758,9 +759,10 @@ assignments to non-neutral assignments) decreases as model size increases.
 or QuAC. 
 - Fig 4.2 plots the benchmark contamination analysis. Data contamination has a minimal effect on GPT-3’s performance on most datasets, but the authors identify a few datasets where it could be inflating results:
 - Chaper 5 details the limitations. GPT-3 struggles with natural language inference tasks like the ANLI dataset, and some reading comprehension datasets like RACE
+</details>
 
 
-## 2020 [Graph Transformers Networks, Korea University](https://arxiv.org/abs/1911.06455)
+<details> <summary markdown="span"> 2020 [Graph Transformers Networks, Korea University](https://arxiv.org/abs/1911.06455)</summary>
 
 One limitation of most GNNs is that they assume the graph structure to be fixed and homogeneous, ie similar types of nodes and edges. From the abstract: "Graph Transformer Networks (GTNs) are capable of
 generating new graph structures, which involve identifying useful connections
@@ -773,12 +775,16 @@ for generating useful multi-hop connections".
 
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/publications/graph_transformer_networks.png"/> 
+</details>
 
-## 2019 [Fast Transformer Decoding: One Write-Head is All You Need (Multi-Query Attention)](https://arxiv.org/abs/1911.02150)
+
+<details> <summary markdown="span"> 2019 [Fast Transformer Decoding: One Write-Head is All You Need (Multi-Query Attention)](https://arxiv.org/abs/1911.02150)</summary>
 
 Efficient training in transformers model is possible due to parallelism across the length dimension. However, decoding (where such parallelization is impossible) is slow due to continuously loading large keys and values tensors into memory. Thus, this introduces a variant of the multi-head attention that improves inference (decoding), called multi-query attention. While MHA consists of multiple attention layers (heads) in parallel with different linear transformations on the queries, keys, values and outputs,  MQA is identical except that the different heads share a single set of keys and values. This greatly reducing the size of these tensors and hence the memory bandwidth requirements of incremental decoding". This leads to a much faster decoding, with minor degradation of quality from the baseline. 
+</details>
 
-## 2019 [Generating Long Sequences with Sparse Transformers, OpenAI](https://arxiv.org/abs/1904.10509)
+
+<details> <summary markdown="span"> 2019 [Generating Long Sequences with Sparse Transformers, OpenAI](https://arxiv.org/abs/1904.10509)</summary>
 
 Background: a **Sparse Transformer** is a variant of the standard Transformer architecture designed to improve computational efficiency by leveraging sparsity in its attention mechanism. Unlike the standard Transformer, which uses a dense full self-attention mechanism, sparse transformers focus attention only on a subset of token pairs, reducing the computational and memory requirements. Types of Sparsity Patterns: local attention, strided attention, dilated attention,  Global + Local Attention, learned sparsity, etc.
 
@@ -788,16 +794,20 @@ The paper introduces several **sparse factorizations of the attention matrix** t
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/publications/sparse_transformers.png"/> 
+</details>
 
-## 2019 [ALBERT: A Lite BERT for Self-supervised Learning of Language Representations, Google and Toyota](https://arxiv.org/abs/1909.11942)
+
+<details> <summary markdown="span"> 2019 [ALBERT: A Lite BERT for Self-supervised Learning of Language Representations, Google and Toyota](https://arxiv.org/abs/1909.11942)</summary>
 
 ALBERT ("A Lite BERT") lowers memory consumption and increase the training speed of BERT. It allows for better scaling, establishes new record performance in several benchmarks, and with fewer parameters than BERT. An ALBERT configuration similar to BERT-large has 18x fewer parameters and can be trained about 1.7x faster. The tecnniques introduced are:
 1. **Factorized embedding parameterization**, for parameter reduction.
 "Instead of projecting the one-hot vectors directly into the hidden space of size $$H$$, we first project them into a lower dimensional embedding space of size $$E$$, and then project it to the hidden space. By using this decomposition, we reduce the embedding parameters from $$O(V × H)$$ to $$O(V × E + E × H)$$". This separation of the size of the hidden layers from the size of vocabulary embedding, makes it easier to grow the hidden size without significantly increasing the parameter size of the vocabulary embeddings.
 2. **Cross-layer parameter sharing**, for parameter reduction. The authors mention that the parameter reduction also acts as regularisation/generalisation (reduces overfitting as the model learns a representation that generalizes well for all tasks). It does not improve the performance of the model though: "This approach slightly diminishes the accuracy, but the more compact size is well worth the tradeoff". This technique prevents the parameter from growing with the depth of the network. As a practical example, take a BERT model with 12 layers ie 12 Transformer encoder blocks: instead of learning unique parameters for each layer, ALBERT learns parameters of the first layer reuse the block in the remaining 11 layers. 
 3. **Self-supervised loss for sentence-order prediction (SOP)**, for performance improvement. Instead of BERT's additional loss called next-sentence prediction (NSP, a binary classification loss for predicting whether two segments appear consecutively in the original text), the authors propose SOP, focused on inter-sentence coherence which is designed to address the ineffectiveness of the NSP in BERT. The SOP loss uses as positive examples the same technique as BERT (two consecutive segments from the same document), and as negative examples the same two consecutive segments but with their order swapped. This forces the model to learn finer-grained distinctions about discourse-level coherence properties.
+</details>
 
-## 2018 [Averaging Weights Leads to Wider Optima and Better Generalization (Stochastic Weight Averaging), Cornel & Samsumg AI](https://arxiv.org/abs/1803.05407)
+
+<details> <summary markdown="span"> 2018 [Averaging Weights Leads to Wider Optima and Better Generalization (Stochastic Weight Averaging), Cornel & Samsumg AI](https://arxiv.org/abs/1803.05407)</summary>
 
 The authors present SWA, a "simple averaging of multiple points along the trajectory of SGD, with a cyclical or constant learning rate, that leads to better generalization than conventional training" and provides "much flatter solutions than SGD". The rationale is: (1) SGD with constant or cyclical LR  traverse regions of weight space that correspond to high-performing networks, never reaching their central points. (2) Fast Gradient Ensembles (FGE) for $$k$$ models required $$l$$ times more computation. SWA is an approximation of FGE with the efficiency of a single model, with a better solution that SGD. The algorithm is the following: Starting from $$\hat{w}$$ we continue training, using a cyclical or constant learning rate schedule: 
 
@@ -809,8 +819,10 @@ Next, we average the weights of all the captured networks $$w_i$$ to get our fin
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/publications/SWA.png"/> 
+</details>
 
-## 2017 [Neural Discrete Representation Learning (RQVAE), Google](https://arxiv.org/abs/1711.0093)
+
+<details> <summary markdown="span"> 2017 [Neural Discrete Representation Learning (RQVAE), Google](https://arxiv.org/abs/1711.0093)</summary>
 
 The Vector Quantised Variational AutoEncoder (VQ-VAE)  aims at learning **discrete (not continuous) latent space** representations without supervision.
 It differs from VAEs in two key ways: the encoder network outputs discrete, rather than continuous, codes; and the prior is learnt rather than static.
@@ -823,32 +835,35 @@ Equation 3 specifies the overall loss function, which has some tricks to allow t
 
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/publications/RQVAE.png"/> 
+</details>
 
-## 2017 [Mixed Precision Training, Baidu and NVIDIA](https://arxiv.org/abs/1710.03740)
+
+<details> <summary markdown="span"> 2017 [Mixed Precision Training, Baidu and NVIDIA](https://arxiv.org/abs/1710.03740)</summary>
 
 A method for training using half-precision floating point numbers, without losing model accuracy or having to modify hyperparameters. Due to the reduced range of 16- vs 32-bit representation, three techniques are proposed to prevent the loss of critical information (or numerical overflows):
 1. Maintaining a single-precision copy of weights that accumulates the gradients after each optimizer step. This copy must then be rounded to half-precision for the forward- and back-propagation.
 2. performing loss-scaling to preserve gradient values with small magnitudes. To implement scaling, scale the loss value computed in the forward pass by shifting the gradient values into FP16-representable range, prior to back-propagation. Weight gradients must be unscaled before weight update to maintain the update magnitudes as in FP32 training.
 3. Using half-precision arithmetic that accumulates into single-precision outputs, which are converted to half precision before storing to memory.  Different arithmetics (vector dot-products, reductions, and point-wise operations) require different treatment.
+</details>
 
-
-## 2018 [Group Normalization, Facebook AI Research](https://arxiv.org/abs/1803.08494)
+<details> <summary markdown="span"> 2018 [Group Normalization, Facebook AI Research](https://arxiv.org/abs/1803.08494)</summary>
 
 This paper presents Group normalization. GN surpasses Batch Normalization particularly on small batch sizes, due to error increasing rapidly when the batch size becomes smaller. Layer Normalization and Instance Normalization also avoid normalizing along the batch dimension. These methods are effective for training sequential models (RNN/LSTM) or generative models (GANs), but both have limited success in visual recognition, for which GN presented better results. 
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/publications/group_normalization.png"/>
+</details>
 
 
-## 2016 [Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)
+<details> <summary markdown="span"> 2016 [Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)</summary>
 
 Introduces GraphConvNets (GCNs), a variant of the Convolutional Neural Networks that operate on graphs. Similarly to CNNs, GCNs learn the features by inspecting neighboring nodes. The main difference is that CNNs are meant to operate on regular Euclidean structures (e.g. images), while GNNs are a generalized applicable to an arbitrary structure or order.
 
 {: style="text-align:center; font-size: small;"}
 <img width="65%" height="65%" src="/assets/publications/GraphConvNets.png"/> 
+</details>
 
-
-## 2016 [Neural Architecture Search with Reinforcement Learning, Google, ICLR 2017](https://arxiv.org/abs/1611.01578)
+<details> <summary markdown="span"> 2016 [Neural Architecture Search with Reinforcement Learning, Google, ICLR 2017](https://arxiv.org/abs/1611.01578)</summary>
 
 Neural Architecture Search (NAS) is a subfield of machine learning that focuses on automating the design of neural network architectures. Instead of manually designing the structure of a neural network (e.g., number of layers, number of neurons per layer, type of activation functions), NAS uses algorithms to search for optimal architectures within a defined search space.
 
@@ -856,32 +871,41 @@ The authors propose "a recurrent network to generate the model descriptions of n
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/publications/NAS.png"/> 
+</details>
 
-## 2015 [Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](https://arxiv.org/abs/1502.03167) 
+
+<details> <summary markdown="span"> 2015 [Batch Normalization: Accelerating Deep Network Training by Reducing Internal Covariate Shift](https://arxiv.org/abs/1502.03167) </summary>
 
 Batch Normalization (BatchNorm) is a technique used in deep learning to improve the training process of neural networks by normalizing the inputs to each layer within a mini-batch. It "reduces the internal covariate shift". Covariate shift means the distribution of the features is different in different parts of the training/test data, breaking the i.i.d assumption used across most of ML. This happens because, as the network learns and the weights are updated, the distribution of outputs of a specific layer in the network changes. This forces the higher layers to adapt to that drift, which slows down learning. BN helps by making the data flowing between intermediate layers of the network look like whitened data, this means you can use a higher learning rate. In the results, Batch Normalization achieves the same accuracy with 14 times fewer training steps, and beats the original model by a significant margin. 
+</details>
 
 
-## 2015 [Siamese neural networks for one-shot image recognition, CS Toronto, ICML 2015](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)
+<details> <summary markdown="span"> 2015 [Siamese neural networks for one-shot image recognition, CS Toronto, ICML 2015](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)</summary>
 
 The paper describes **siamese neural networks** (see below for details) for efficient **one-shot learning**. General strategy. 1) Train a model to discriminate between a collection of same/different pairs; 2) Generalize to evaluate new categories based on learned feature mappings for verification.  The architecture of each siamese network is a convolutional neural network, with a flattening and a feed-forward network in the head. The loss functions is a **binary cross-entropy** with a regularizer. 
 
 {: style="text-align:center; font-size: small;"}
 <img width="47%" height="47%" src="/assets/publications/siamese_networks.png"/> $$\, \, \,$$ <img width="47%" height="47%" src="/assets/publications/siamese_networks_2.png"/> 
+</details>
 
-## 2015 [Neural Machine Translation by Jointly Learning to Align and Translate (and Attention Mechanism), D. Bahdanau, K. Cho, Y. Bengio](https://arxiv.org/abs/1409.0473)
+
+<details> <summary markdown="span"> 2015 [Neural Machine Translation by Jointly Learning to Align and Translate (and Attention Mechanism), D. Bahdanau, K. Cho, Y. Bengio](https://arxiv.org/abs/1409.0473)</summary>
 
 An improvement of the sequence-to-sequence translation work in [Sequence to Sequence Learning with Neural Networks (Google, arXiv)](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)). Introduces the concept of attention and improves translation performance by utilising the latent space of every encoder iteration (not just the last) on the decoding steps, in order to increase the model capatiblities
 
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="/assets/publications/attention_mech.png"/> 
+</details>
 
-## 2015 [Spatial Transformer Networks, Google DeepMind, NeurIPS 2015](https://arxiv.org/abs/1506.02025) 
+
+<details> <summary markdown="span"> 2015 [Spatial Transformer Networks, Google DeepMind, NeurIPS 2015](https://arxiv.org/abs/1506.02025) </summary>
 
 {: style="text-align:center; font-size: small;"}
 <img width="85%" height="85%" src="/assets/publications/STN.png"/> 
+</details>
 
-## 2014 [Deeply-supervised Nets, USCD and Microsoft](https://arxiv.org/abs/1409.5185)
+
+<details> <summary markdown="span"> 2014 [Deeply-supervised Nets, USCD and Microsoft](https://arxiv.org/abs/1409.5185) </summary>
 
 A deeply supervised model in machine learning refers to a model architecture where intermediate layers are explicitly supervised during training, in addition to the supervision applied to the final output layer. This technique encourages better learning throughout the model by enforcing that earlier layers learn features useful for solving the task directly, rather than solely relying on gradients propagated from the final layer.
 
@@ -893,15 +917,19 @@ vanishes and no longer plays role in the learning process. [...] The empirical r
 companion objective: (1) it acts as a kind of **feature regularization** (although an unusual one), which
 leads to significant reduction to the testing error but not necessarily to the train error; (2) it results
 in faster convergence, especially in presence of small training data"
+</details>
 
-## 2014 [Dropout: a simple way to prevent neural networks from overfitting, Univ. Toronto, Journal of ML Research 2014](https://jmlr.org/papers/v15/srivastava14a.html)
+
+<details> <summary markdown="span"> 2014 [Dropout: a simple way to prevent neural networks from overfitting, Univ. Toronto, Journal of ML Research 2014](https://jmlr.org/papers/v15/srivastava14a.html)</summary>
 
 A method that **drops neurons (in different layers) with a given probability $$p$$ during train time**. For each training minibatch, a new network is sampled. Dropout can be improved by adding max-norm regularization, decaying learning rate and high momentum. **At test time, all neurons are used, with outgoing weights multiplied by $$p$$**. Dropout helps **reducing overfitting**, as the network learns to never rely on any given activations, so it learns "redundant" ways of solving the task with multiple neurons. It also leads to sparse activations, similar to a regularization (L2). Dropping 20% of input units and 50% of hidden units was often found to be optimal in the original publication. It's computationally less expensive than regular model averaging of multiple trained DNNs. However, it takes 2-3 times longer to train than single fully-connected DNNs because requires way more epochs, as parameter updates are very noisy. Because a fully connected layer occupies most of the parameters, it is prone to overfitting. Therefore, dropout **increases model generalization**. 
 
 {: style="text-align:center; font-size: small;"}
 <img width="50%" height="50%" src="/assets/publications/dropout.png"/> 
+</details>
 
-## 2011 [Popular Ensemble Methods: An Empirical Study, 2011 ](https://arxiv.org/abs/1106.0257)
+
+<details> <summary markdown="span"> 2011 [Popular Ensemble Methods: An Empirical Study, 2011 ](https://arxiv.org/abs/1106.0257)</summary>
 
 A summary of results and conclusions on ensemble methods (bagging, boosting) on DNNs and decision trees. Bagging ensemble generally produces a classifier that is more accurate than a standard classifier. About Boosting: for a few data sets Boosting produced dramatic reductions in error (even compared to Bagging), but for other data sets it actually increases in error over a single classifier (particularly with neural networks). Alternatively, an **ensemble of similar DNNs initialized with different random seeds is surprisingly effective**, often producing results as good as Bagging. An ideal ensemble consists of highly correct classifiers that disagree as much as possible.
 
@@ -911,12 +939,16 @@ A summary of results and conclusions on ensemble methods (bagging, boosting) on 
 
 {: style="text-align:center; font-size: small;"}
 <img width="45%" height="45%" src="/assets/publications/ensemble_methods.png"/> 
+</details>
 
-## 2011 [Cyclical Learning Rates for Training Neural Networks, US Naval Research Lab, 2017](https://arxiv.org/abs/1506.01186)
+
+<details> <summary markdown="span"> 2011 [Cyclical Learning Rates for Training Neural Networks, US Naval Research Lab, 2017](https://arxiv.org/abs/1506.01186)</summary>
 
 The author claims that cyclic learning rates improve time to convergence and increases accuracy of most models. It suggests triangular scheduler as a efficient method with similar results to other non-triangular cyclic schedulers. The paper also provides a method to find a good initial learning rate by doing several training short sessions (8 iterations) with different learning rates and picking the best initial learning rate from the analysis. Finally, provides "rule of thumb" parameters for min and max learning rates in the triangular scheduler proposed. 
+</details>
 
-## 2006 [Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss), New York Uni, CVPR 2006](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf)
+
+<details> <summary markdown="span"> 2006 [Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss), New York Uni, CVPR 2006](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf</summary>)
 
  The paper presents Dimensionality Reduction by Learning an Invariant Mapping (DrLIM). The problem is to find a function that maps high dimensional input patterns to lower dimensional outputs, given neighborhood relationships between samples in input space. It presents the **Contrastive Loss Function**. The contrastive loss trains 2 **siamese networks**. A Siamese Network is a type of neural network architecture designed to compare two inputs by learning their similarity or relationship. It consists of two identical subnetworks (hence the name "Siamese") that share the same architecture and weights. Each subnetwork processes one of the two inputs independently, and the outputs are then combined to compute a similarity score or distance metric.  The input to system is a pair of images (one to each of the siamese networks) and the dissimilarty label (0 for dissimilar images or 1 for similar images). The images are passed through the functions, yielding two outputs $$G(X_1)$$ and $$G(X_2)$$. The cost module then computes the euclidian distance between both outputs as $$D_W(G_W(X_1), G_W(X_2))$$. The objective is formulated in terms of the similarity label $$y$$ and the euclidian distance $$D$$ between the two images as:
 
@@ -925,5 +957,6 @@ L = \frac{1}{2} ⋅y⋅D + \frac{1}{2} ⋅(1−y)⋅max(0,m−D)^2
 $$
 
 where $$m$$ is a hyper-parameter. The architecture is a **siamese architecture**, two copies of the same network which share the same set of parameters, and a cost module.  The total gradient is the sum of the contributions from the two instances.
-
+</details>
  
+{::options parse_block_html="false" /}
