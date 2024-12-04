@@ -291,11 +291,28 @@ Finally, the model uses $$h = d_{model}/d$$ retention heads in each layer, where
 </details>
 
 
-<details> <summary markdown="span"> 2023 [RoFormer: Enhanced Transformer with Rotary Position Embedding (Rotary Embedding)](https://arxiv.org/abs/2104.09864)</summary>
+<details> <summary markdown="span"> 2023 [RoFormer: Enhanced Transformer with Rotary Position Embedding (Rotary Embedding, RoPe)](https://arxiv.org/abs/2104.09864)</summary>
 
-TODO 
+Traditional positional encoding methods, like sinusoidal or learned embeddings, struggle to generalize well to long sequences because they either: (1) Use absolute positions that are fixed and cannot model relative relationships effectively. (2) Lack a mechanism to extrapolate beyond the sequence lengths seen during training. Rotary embeddings address these issues by encoding **relative positional information** directly into the attention mechanism, improving efficiency and generalization. "RoPE encodes the absolute position with a rotation matrix
+and meanwhile incorporates the explicit relative position dependency in self-attention formulation".
+
+Rotary embeddings modify the query (𝑄) and key (K) embeddings in self-attention. They do this by applying rotations to the embeddings based on the positions of tokens in the sequence.
+
+$$
+R(x) = 
+\begin{bmatrix}
+\cos\theta & -\sin\theta \\
+\sin\theta & \cos\theta
+\end{bmatrix}
+\cdot
+\begin{bmatrix}
+x_1 \\
+x_2
+\end{bmatrix}
+$$
+
+The rotation angle $$𝜃_𝑝$$ for position $$p$$ is determined as $$𝜃_𝑝 = p \, w$$, where $$w$$ is a frequency determined by the dimensionality and scaling factors. Important bit: $$x_1$$ and $$x_2$$ are the input $$x$$ expressed in the 2D coordinates. To handle a $$d$$-dimensional input, we split $$x$$ into pairs of dimensions $$[ (x_1, x_2), \, (x_3, x_4), \, \dots, \, (x_{d-1}, x_d)]$$, apply the 2D rotation matrix to each pair, and then concatenate the results to reconstruct the rotated vector. If $$x$$ has an odd dimensionality $$d$$, the extra dimension is often left unrotated.
 </details>
-
 
 <details> <summary markdown="span"> 2023 [Operator Fusion in XLA: Analysis and Evaluation, UToronto](https://arxiv.org/abs/2301.13062)</summary>
 
