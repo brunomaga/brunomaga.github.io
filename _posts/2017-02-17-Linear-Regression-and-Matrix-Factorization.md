@@ -154,7 +154,7 @@ source: wikipedia
 The main advantage is that it is extremely simple to implement and doesn’t require any knowledge of the derivative of the function. It’s really useful for extremely complicated functions or functions whose derivatives are far more expensive to compute than the function itself. However, due to its iterative nature, it's not a good candidate for parallelism. Another issue is that it has a a non-smooth multivariable function, thus it may be stuck in non-stationary point if the level curves of a function are not smooth (source: [wikipedia](https://en.wikipedia.org/wiki/Coordinate_descent#Limitations)).
 
 
-## Risk and Loss functions
+## Risk and Loss Functions
 
 In ML, on non-probabilistic models, we follow the principle of empirical risk empirical risk minimization, in order to find good parameters.  The **risk** is the expected loss between the expected output $$y_n$$ and the predicted value $$\hat{y}_n$$, ie
 
@@ -172,11 +172,17 @@ $$
 
 We'll omit details on likelihood estimators, as they are covered in a [different post]({{ site.baseurl }}{% post_url 2018-08-20-Bayesian-Linear-Regression %}). 
 
-Back to non-probabilistic models. Most regression tasks use the Mean Squared Error loss function:
+### Mean Squared Error
+
+Most regression tasks use the Mean Squared Error loss function:
 
 $$
 MSE(\hat{y}_n) = \mathbb{E}\left[ (y_n - \hat{y}_n)^2 \right].
 $$
+
+or the Mean Absolute Error, similar to MSE but uses the absolute value instead of the squared value of the difference in $$y$$ and $$\hat{y}$$.
+
+### Cross-Entropy
 
 Most classification tasks use the binary or multi-class cross-entropy loss functions:
 - binary: $$H(p) = -(y \log p(x) + (1-y) \log (1-p(x)))$$.
@@ -186,11 +192,15 @@ The cross-entropy is equivalent to the negative of the log-likelihood (of the so
 
 There are some other loss functions of interest for specific use cases. I summarize a few below.
 
+### Triplet Loss
+
 **[Triplet loss](https://en.wikipedia.org/wiki/Triplet_loss)**: used on classification tasks where the number of classes is very large. Triplet loss helps by learning distributed embeddings representation of data points in a way that in the high dimensional vector space, contextually similar data points are projected in the near-by region whereas dissimilar data points are projected far away from each other. The network is trained against triplets of images: an **anchor image** of a person, **positive image** which is another image of the same person, and a **negative image** which is a picture of another person. The Triplet Loss minimizes the euclidian distance between an anchor and a positive and maximizes the distance between the Anchor and the negative. Tasks that we can perform: face recognition ("who's this person") and validation ("are these the same person?") and clustering ("find most similar people"). The formulation is:
 
 $${\displaystyle {\mathcal {L}}\left(A,P,N\right)=\operatorname {max} \left({\|\operatorname {f} \left(A\right)-\operatorname {f} \left(P\right)\|}^{2}-{\|\operatorname {f} \left(A\right)-\operatorname {f} \left(N\right)\|}^{2}+\alpha ,0\right)}$$
 
 where $$A$$ is an anchor input, $$P$$ is a positive input of the same class as $$A$$, $$N$$ is a negative input of a different class from $$A$$, $$\alpha$$ is a margin between positive and negative pairs, and $$f$$ is an embedding. For more details see the original paper [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832).
+
+### Contrastive Loss
 
 **[Contrastive loss](https://en.wikipedia.org/wiki/Siamese_neural_network)**: similar and often confused with triplet loss. Yet these solve different problems: for known similarity relationships, we use Contrastive loss. For only negative/positive relationships (like for face recognition where people's identity is the anchor), then Triplet loss is used. In practice, the triplet loss considers the anchor-neighbor-distant triplets while the contrastive loss deals with the anchor-neighbor and anchor-distant pairs of samples. The contrastive loss trains siamese networks against pairs of inputs labelled as similar or dissimilar (1 or 0). Contrastive loss is formulated in terms of the similarity label $$y$$ (1 for similar, 0 for assimilat), and the euclidian distance between two images $$D$$ as:
 
@@ -200,7 +210,63 @@ $$
 
 where $$m$$ is a hyper-parameter. For the original paper refer to [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf) or my summary in the <a href="{{ site.publications_permalink }}">publications bookmark</a>.
 
+
+### Connectionist Temporal Classification loss
+
 **[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)**: a classifier and loss function for noisy sequential unsegments input data, for training recurrent neural networks (RNNs) such as LSTM networks to tackle sequence problems where the timing is variable. Published on [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf). Already summarized in the <a href="{{ site.publications_permalink }}">publications bookmark</a> section.
 
-**[Focal Loss](https://arxiv.org/abs/1708.02002)**
+### Focal Loss
+
+**[Focal Loss](https://arxiv.org/abs/1708.02002)**: focal Loss is an extension of Cross-Entropy Loss designed to address class imbalance, a common issue in e.g. medical image segmentation where the background (non-lesion regions) is much more prevalent than the foreground (lesion regions). Focal Loss focuses on hard-to-classify examples and down-weights the loss contribution from easy examples.
+
+$$
+\mathcal{L}_{\text{focal}} = -\alpha (1 - p_t)^\gamma \log(p_t)
+$$
+
+where:
+- $$p_t$$ is the model’s estimated probability for the true class.
+- $$α$$ is a balancing factor to adjust the weight of the positive class (especially useful for imbalanced datasets).
+- $$γ$$ is the focusing parameter, usually set to 2, which adjusts the focus on hard-to-classify examples.
+
+For multi-class classification, Focal Loss can be generalized as:
+
+$$
+\mathcal{L}_{\text{focal}} = -\alpha_t (1 - p_t)^\gamma \log(p_t)
+$$
+
+where $$\alpha_t$$  is the balancing factor for class  $$t$$.
+
+### Dice Loss
+
+**[Dice loss](https://arxiv.org/abs/1707.03237)**: Dice Loss (or Dice Similarity Coefficient Loss) is a loss function used specifically for image segmentation tasks, especially when evaluating the overlap between predicted and ground truth segmentation masks. It measures the similarity between two sets, with values ranging from 0 (no overlap) to 1 (perfect overlap). Dice Loss is typically used when precise object boundaries are important, such as segmenting organs, tumors, or any region of interest in medical imaging where the goal is to accurately delineate the object of interest from the surrounding tissue. Key benefits of Dice Loss:
+- Direct Focus on Overlap: Dice loss directly optimizes the overlap between predicted and ground truth masks, which is crucial for segmentation tasks where precise boundary delineation matters.
+- Effective for Imbalanced Classes: It works well when there is a significant class imbalance between foreground and background, as it evaluates segmentation performance based on the overlap of the foreground regions rather than pixel accuracy.
+- Works Well with Small Objects: Dice loss is particularly effective in medical imaging tasks where the objects of interest (e.g., tumors, organs) might occupy a small portion of the image.
+
+$$
+\mathcal{L}_{\text{Dice}} = 1 - \frac{2 |A \cap B|}{|A| + |B|}
+$$
+
+Where:
+- $$A$$ is the set of predicted pixels.
+- $$B$$ is the set of ground truth pixels.
+- $$ \mid 𝐴 ∩ 𝐵 \mid$$ is the intersection of the predicted and ground truth sets, representing the overlap.
+
+For practical implementation, Dice Loss is often computed as:
+
+$$
+\mathcal{L}_{\text{Dice}} = 1 - \frac{2 \sum_{i=1}^{N} p_i g_i}{\sum_{i=1}^{N} p_i + \sum_{i=1}^{N} g_i}
+$$
+
+where
+- $$𝑝_𝑖$$ is the predicted value for the i-th pixel.
+- $$𝑔_𝑖$$ is the ground truth value for the i-th pixel.
+
+For multi-class segmentation, a generalized form of Dice Loss is:
+
+$$
+\mathcal{L}_{\text{Dice}} = 1 - \frac{2 \sum_{i=1}^{N} p_i g_i}{\sum_{i=1}^{N} p_i + \sum_{i=1}^{N} g_i}
+$$
+
+where $$N$$ is the number of classes.
 
