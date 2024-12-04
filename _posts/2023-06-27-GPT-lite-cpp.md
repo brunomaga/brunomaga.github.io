@@ -171,7 +171,7 @@ struct MultiHeadAttention : nn::Module {
     nn::ModuleList heads = torch::nn::ModuleList();
     for (int i=0; i<num_heads; i++)
       heads->push_back( Head(head_size) );
-    nn::Linear proj = nn::Linear(n_embd, n_embd);
+    nn::Linear proj = nn::Linear(num_heads*head_size, n_embd);
     nn::Dropout dropout = nn::Dropout(dropout_p);
     
     register_module("heads", heads);

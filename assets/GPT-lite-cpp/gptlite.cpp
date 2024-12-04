@@ -48,7 +48,7 @@ MultiHeadAttention::MultiHeadAttention(int num_heads, int head_size){
 	heads = torch::nn::ModuleList();
 	for (int i=0; i<num_heads; i++)
 		heads->push_back( Head(head_size) );
-    proj = nn::Linear(n_embd, n_embd);
+    proj = nn::Linear(num_heads*head_size, n_embd);
     this->dropout = nn::Dropout(dropout_p);
 
 	register_module("heads", heads);
