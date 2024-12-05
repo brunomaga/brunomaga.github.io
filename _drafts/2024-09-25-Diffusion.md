@@ -55,8 +55,11 @@ Now we define the Sohl-Dickstein's forward process $$q (\mathbf{x}_t \mid \mathb
 ```python
     @torch.no_grad()
     def q_sample(x0, t, noise=None):
+        # note that in Eq 4, it samples from a non-standard gaussian distribution, but here we implement it
+        # by sampling from the standard normal (0,1) and shifting and scaling it later, which is equivalent
+        # Detailed in paragraph between equations 8 and 9. And Applied in algorithm 1, step 4, the epsilon.
         if noise is None:
-            noise = torch.randn_like(x0)
+            noise = torch.randn_like(x0) # samples from N(0,1)
         sqrt_α_cumprod = torch.sqrt(α_cumprod)
         sqrt_α_cumprod_t = sqrt_α_cumprod[t][:, None, None, None]
         sqrt_1_minus_α_cumprod = torch.sqrt(1. - α_cumprod)

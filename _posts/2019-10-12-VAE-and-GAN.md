@@ -50,9 +50,15 @@ One advantage of the VAE framework, relative to ordinary Variational Inference, 
 
 ### The reparametrization Trick
 
-The authors noticed that the sampling induces sampling noise in the gradients required for learning (or that because $$z$$ is randomly generated and cannot be backpropagated), and to counteract that variance they use the “reparameterization trick”.
+The authors noticed that the sampling induces sampling noise in the gradients required for learning (or that because $$z$$ is randomly generated and cannot be back-propagated). In practice, randomness disrupts the deterministic computation of gradients, making it impossible to directly optimize the model via gradient descent. To counteract that, they authors propose the “reparameterization trick”.
 
-It goes as follows: the sample vector $$z$$ that is typically sampled from the mean vector $$\mu$$ and the variance $$\sigma^2$$ in the Gaussian scenario in now described as $$ z = \mu + \sigma \cdot \epsilon$$ where $$\epsilon$$ is the standard gaussian ie $$\epsilon \sim N(0,1)$$.
+The reparameterization trick decouples the sampling process from the stochasticity by introducing a deterministic transformation. Instead of sampling from $$z \sim N(\mu, \sigma^2)$$, we rewrite $$ z = \mu + \sigma \cdot \epsilon$$, where $$\epsilon$$ is the standard gaussian ie $$\epsilon \sim N(0,1)$$.
+
+Why does this work:
+- The randomness is now isolated in  $$𝜖$$, **which does not depend on the model parameters**.
+- The computation of $$𝑧$$ becomes a differentiable function of $$𝜇$$ and $$𝜎$$, allowing gradients to flow through $$𝜇$$ and $$𝜎$$ during backpropagation, because **the transformation 
+$$𝑧 = 𝜇 + 𝜎 ⋅ 𝜖$$ is fully differentiable with respect to these parameters**.
+
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/Variational-Autoencoders/vae2.png"/>
