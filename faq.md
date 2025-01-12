@@ -308,21 +308,32 @@ for m in range(M):
 
 - What's Byte Pair Encoding? How do LLMs handle out-of-vocabulary words?
 - How to measure the performance of an LLM?
-  - Perplexity, aka measure of uncertainty of a sample from a discrete prob. distribution. The larger the perplexity, the less likely it is that an observer can guess the value which will be drawn from the distribution ($$H(p)$$ is the entropy):
+  - **Perplexity**, aka measure of uncertainty of a sample from a discrete prob. distribution. The larger the perplexity, the less likely it is that an observer can guess the value which will be drawn from the distribution ($$H(p)$$ is the entropy):
 
 ![image](https://github.com/user-attachments/assets/29a548a6-1746-4e35-97d6-3290ebe3d440)
 
-  - BLEU (Bilingual Evaluation Understudy Score), exaluates the quality of text which has been machine-translated from one natural language to another. Quality is considered to be the correspondence between a machine's output and that of a human. BLEU evaluates the overlap of n-grams (contiguous sequences of 𝑛 tokens) between the candidate and reference(s). BLEU combines precision scores for multiple n-gram sizes (e.g., unigram to 4-gram) using a geometric mean. Drawbacks: Penalizes valid rephrasings or synonyms, sensitive to exact tokeniation, does not account for fluency or context. Formula ($$P_n$$ is the percentage of overlapping tokens of size $$n$$ between human and robot translation)
+  - **BLEU** (Bilingual Evaluation Understudy Score), exaluates the quality of text which has been machine-translated from one natural language to another. Quality is considered to be the correspondence between a machine's output and that of a human. BLEU evaluates the overlap of n-grams (contiguous sequences of 𝑛 tokens) between the candidate and reference(s). BLEU combines precision scores for multiple n-gram sizes (e.g., unigram to 4-gram) using a geometric mean. Drawbacks: Penalizes valid rephrasings or synonyms, sensitive to exact tokeniation, does not account for fluency or context. Formula ($$P_n$$ is the percentage of overlapping tokens of size $$n$$ between human and robot translation)
 
 ![image](https://github.com/user-attachments/assets/a2c9f720-d039-4620-89fb-4702cd372865)
 
-  - ROUGE (Recall-Oriented Understudy for Gisting Evaluation)
-  - F1 score, Accuracy (% of correct predictions)
-  - Task-Specific Metrics
-  - Human evaluation (Direct Proxy Optimization),
+  - **ROUGE** (Recall-Oriented Understudy for Gisting Evaluation). simillar to BLEU, variants: ROUGE-1 (overlatp of 1-grams), ROUGE-L (longers common subsequence), ROUGE-W (weighted longest common sequence), Rouge-S (Skip bigram, measures pairs of words in order but not adjacent, to capture long range dependencies)
+  - **F1 score** between correct(reference) and suggested (candidate) translations:
+
+![image](https://github.com/user-attachments/assets/163a36ce-00b1-49c5-82cf-677ea663d8fa)
+
   - Bias/toxicity metrics/scores,
-  - Adversarial Robustness,
+  - Adversarial Robustness (e.g. how many correct outputs to adversarial inputs such as "HelL@ W@rLd")
+  - accuracy (percentage of correct translations)
   - user satisfaction surveys,
   - ability to handle out of distribution data, zero-shot and few-shot performance,
   - existing benhchmarks   
+- What is LLM **Temperature**? controls exploration vs exploitation by "smoothing output of softmax".
+- What's prompt engineering? is designing and refining prompts to guide LLMs in generating accurate and relevant outputs.
+- Reduce computational complexity of an LLM? Sparse attention, pruning, quantization, distillation.
+- How to have some LLM interpretability? attention vizualization, saliency maps, model-agnostic methods (eg LIME), layer-wise relevance propagation
+- Difference between **zero-shot** (no training, provides the model with a task description without any examples), **few-shot** (no training, supplies a few examples along with the task description to guide the model), **chain-of-thought** (Breaks down a complex task into smaller, sequential steps the model can follow), **fine-tuning** (trained new examples), **pre-training** (all training towards a general model).
+- How to incorporate external knowledge into an LLM? Knowledge graph integration, Retrieval-Augmented Generation (RAG), fine-tuning, prompt engineering, few-short learning
+- How to handle model degradation? regular re-training with updated data, A/B testing to compare model versions, etc
+- Why use RLHF on LLMs? improve the quality and safety. Requires human anotation. Hard to scale, may inccur human bias.
 
+TODO: DPO, RHLF, 
