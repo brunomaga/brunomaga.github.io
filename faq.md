@@ -359,7 +359,7 @@ for m in range(M):
 - How does **Proximal Policy Optimization** work?
   - It's a policy gradient method that adjusts the method based on feedback/reward.   
 - How does KV cache work?
-- Fine-tuning techniques: quantization, distillation, LoRA, QLORA, PEFT (Parameter Efficient Fine Tuning), ...
+- Fine-tuning techniques: quantization, distillation, PEFT (Parameter Efficient Fine Tuning) such as LoRA, QLORA, Lora-XS (uses SVD), prefix prompt training, ...
 - What are different decoding strategies for picking output tokens? greedy, **beam search**, top-k, top-p, with(out) temperature sampling
 - What's **In-Context Learning**? when given a prompt that includes a few examples of the desired behavior. E.g. Zero-shot, few-shot, Chain of thought, instruction based learning.
 - What's hallucination and how to overcome it? fine-tuning, in context prompting, etc (?)
