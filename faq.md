@@ -327,13 +327,50 @@ for m in range(M):
   - user satisfaction surveys,
   - ability to handle out of distribution data, zero-shot and few-shot performance,
   - existing benhchmarks   
-- What is LLM **Temperature**? controls exploration vs exploitation by "smoothing output of softmax".
+- What is LLM **Temperature**? controls exploration vs exploitation by "smoothing output of softmax". A temperature value greater than 1.0 makes the distribution flatter.
 - What's prompt engineering? is designing and refining prompts to guide LLMs in generating accurate and relevant outputs.
 - Reduce computational complexity of an LLM? Sparse attention, pruning, quantization, distillation.
 - How to have some LLM interpretability? attention vizualization, saliency maps, model-agnostic methods (eg LIME), layer-wise relevance propagation
 - Difference between **zero-shot** (no training, provides the model with a task description without any examples), **few-shot** (no training, supplies a few examples along with the task description to guide the model), **chain-of-thought** (Breaks down a complex task into smaller, sequential steps the model can follow), **fine-tuning** (trained new examples), **pre-training** (all training towards a general model).
 - How to incorporate external knowledge into an LLM? Knowledge graph integration, Retrieval-Augmented Generation (RAG), fine-tuning, prompt engineering, few-short learning
 - How to handle model degradation? regular re-training with updated data, A/B testing to compare model versions, etc
-- Why use RLHF on LLMs? improve the quality and safety. Requires human anotation. Hard to scale, may inccur human bias.
+- How to fix bias in LLMs? better data, fine-tuning
 
-TODO: DPO, RHLF, 
+- Why use RLHF on LLMs? What is "reward hacking" in RLHF? improve the quality and safety. Requires human anotation. Hard to scale, may inccur human bias.
+- What is **catastrophic forgetting**? How does **Elastic Weight Consolidation (EWC)** and **Parameter-Efficient Fine-Tuning (PEFT)** help? PEFT selectively updates only a small subset of model parameters during fine-tuning, preserving the model’s ability to perform previously learned tasks. EWC assigns an importance score to the weights based on how crucial they are for previously learned tasks. When fine-tuning for a new task, these weights are less likely to be updated.
+- How does **Adaptive Softmax** speed up LLMs? Adaptive Softmax speeds up LLMs by dividing words into frequency groups, performing fewer computations for infrequent words. This technique reduces overall computational costs while maintaining accuracy, making it suitable for handling large vocabularies efficiently. Reduces complexity of softmax from $$O(V)$$ (for vocabulary size $$V$$) to $$O(C)+O(V_c)$$ for $$C$$ clusters and $$c \in C$$.
+- how do **Mixture of experts** work and how do they help with accuracy and computational efficiency?
+- How does **RAG** work? algorithm: Input Query, Retrieval (The retrieval module searches the knowledge source for relevant documents based on the query), Context Augmentation (combined input and retrieved info), Response generation. 
+- What are the **scaling laws of LLM?** How does scaling law analysis help optimize the design of LLMs? Scaling laws describe how model performance improves with increases in size, dataset quality, and compute resources. By studying these relationships optimize model size, improve compute efficiency and maximize performance.
+- How does **beam search** improve upon greedy decoding in LLMs? Beam search evaluates multiple possible sequences at each step, choosing the one with the highest cumulative probability, leading to higher-quality outputs
+- What is **vector indexing**, and why is it important in LLM applications?  Vector indexing organizes semantic representations of text into a searchable structure, enabling efficient retrieval of similar content. Useful in RAGs or recommnedation systems.
+- How does the **planner agent** in AgenticRAG handle complex queries? The planner agent in AgenticRAG decomposes complex queries into manageable sub-queries, distributing them across various retrieval pipelines.
+- What's the difference between **top-k** (outputs) and **top-p** (sum of probability) sampling in LLM decoding?
+- What is self-attentio, cross-attention, Multi-Query attention?
+  - self attention is the regular attention. Cross is when K+V come from different inputs, and MQA is a variation of the standard self-attention mechanism where all attention heads share the same key-query pairs, reducing the memory footprint and computational complexity.
+- How does **contrastive learning** improve LLM representations? Semantic representations, Robustness to noise, Generalization
+- How does knowledge graph integration enhance LLMs?  allows the model to incorporate structured, factual knowledge into its predictions.
+- What is **curriculum learning** and how does that improve learning on LLMs?
+- What are the steps of training a large llm? Pre-training, fine-tuning, RLHF (?)
+- How can RLHF be used to fine-tune a language model?
+  - after pre-training and fine-tuning, RHLF presents humans with a way to annotate the accuracy of responses (5-star, ranking, preference)
+  - a **reward model** is created, that learns to assign a numerical score (reward) to the model’s outputs based on human preferences.
+  - the language model is optimized with reinforcement learning. We use Proximal Policy Optimization (PPO), REINFORCE, Actor-Critic Methods, Q-Learning (and Deep Q-Networks).-
+- How does **Proximal Policy Optimization** work?
+  - It's a policy gradient method that adjusts the method based on feedback/reward.   
+- How does KV cache work?
+- Fine-tuning techniques: quantization, distillation, LoRA, QLORA, PEFT (Parameter Efficient Fine Tuning), ...
+- What are different decoding strategies for picking output tokens? greedy, **beam search**, top-k, top-p, with(out) temperature sampling
+- What's **In-Context Learning**? when given a prompt that includes a few examples of the desired behavior. E.g. Zero-shot, few-shot, Chain of thought, instruction based learning.
+- What's hallucination and how to overcome it? fine-tuning, in context prompting, etc (?)
+- When to use fine-tuning vs RAG? fine-tuning specialized on a task, RAG adds more "broad context", ie leverages an external source of data
+- What is chunking and why do we chunk our data? To break data into smaller, we do it to save memory, parallelize etc (example: tiling on VAEs).
+- What is **vector DB**? structure that stores high-dimensional vectors and performs efficient similarity search.
+- what is **transfer learning** in LLMs? refers to a technique where a model is initially trained on a large corpus of general data (pre-training) and then fine-tuned on a specific task or domain to improve its performance in that area.
+- explain the concept of word embeddings, particularly Word2Vec and GloVe.
+- Can you discuss some common techniques for handling **out-of-vocabulary (OOV) words** in NLP tasks? Subword Tokenization (WordPiece, BPE, SentencePiece), Character-level Models, Contextualized Embeddings (ELMo, BERT, GPT), Fallback to Special Tokens (e.g., <UNK>, <OOV>)
+- What is semi-supervised learning in NLP? Small labeled data + large unlabeled data. Useful when labeling data is expensive or time-consuming, but a large amount of unlabeled data is available. The model is first trained on a small set of labeled data and then improved using the vast amount of unlabeled data.  Training Process: The model uses labeled data for initial training and then applies the learned patterns to a larger pool of unlabeled data, often by generating pseudo-labels for the unlabeled data or by using the unlabeled data to regularize the model.
+- What are Rotary Embedding and how do they work?
+- How to increase the speed of vector search by several orders of magnitude? 
+
+TODO: DPO, PPO, RHLF, LORA/QLoRA, RAGs, PEFT, BERT, normalizations, overfitting/underfitting, semi-supervised learning,
