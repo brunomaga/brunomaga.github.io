@@ -5,7 +5,7 @@ permalink: /faq/
 ---
 
 
-### Maths/Stats
+## Maths/Stats
 
 Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-Algebra-for-ML %}) and [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-Statistics-for-ML %}). 
 
@@ -127,7 +127,7 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - How to sample from a Gaussian distribution?
 
 
-### Machine Learning
+## General Machine Learning
 
 - What is a regularizer? What is L1/L2 regularization and when are they used?
   - To discuss: regularize means to make things regular or acceptable; aims at reducing overfitting; L1 = absolute value = weight dropping; L2 = square of difference;
@@ -195,7 +195,7 @@ Answers are in [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-
 - What does stochastic mean?
   - “Stochastic” is a description that refers to outcomes based upon random probability. Or having a random probability distribution or pattern that may be analysed statistically but may not be predicted precisely.
 
-### ML software enginnering
+## ML software enginnering
 
 - Train, validation, test datasets? k-cross validation?
 - What is the back-propagation algorithm?
@@ -302,3 +302,27 @@ for m in range(M):
   - (??) because jacobians are produced as source of linearity so they can be averaged, while weights are not, so we can't reduce weights (??).
 - In transformers, why do we need the feed forward network?
   - (??) A simple feed-forward neural network is applied to every attention vector to transform the attention vectors into a form that is acceptable to the next encoder or decoder layer. (??)
+ 
+
+## LLMs
+
+- What's Byte Pair Encoding? How do LLMs handle out-of-vocabulary words?
+- How to measure the performance of an LLM?
+  - Perplexity, aka measure of uncertainty of a sample from a discrete prob. distribution. The larger the perplexity, the less likely it is that an observer can guess the value which will be drawn from the distribution ($$H(p)$$ is the entropy):
+
+![image](https://github.com/user-attachments/assets/29a548a6-1746-4e35-97d6-3290ebe3d440)
+
+  - BLEU (Bilingual Evaluation Understudy Score), exaluates the quality of text which has been machine-translated from one natural language to another. Quality is considered to be the correspondence between a machine's output and that of a human. BLEU evaluates the overlap of n-grams (contiguous sequences of 𝑛 tokens) between the candidate and reference(s). BLEU combines precision scores for multiple n-gram sizes (e.g., unigram to 4-gram) using a geometric mean. Drawbacks: Penalizes valid rephrasings or synonyms, sensitive to exact tokeniation, does not account for fluency or context. Formula ($$P_n$$ is the percentage of overlapping tokens of size $$n$$ between human and robot translation)
+
+![image](https://github.com/user-attachments/assets/a2c9f720-d039-4620-89fb-4702cd372865)
+
+  - ROUGE (Recall-Oriented Understudy for Gisting Evaluation)
+  - F1 score, Accuracy (% of correct predictions)
+  - Task-Specific Metrics
+  - Human evaluation (Direct Proxy Optimization),
+  - Bias/toxicity metrics/scores,
+  - Adversarial Robustness,
+  - user satisfaction surveys,
+  - ability to handle out of distribution data, zero-shot and few-shot performance,
+  - existing benhchmarks   
+
