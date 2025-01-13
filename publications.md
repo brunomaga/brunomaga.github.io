@@ -611,7 +611,7 @@ scores.
 As you can tell from section (1) in the picture, minibatch size `N` is crytical. As the minibatch approximates the entire dataset, the representations are more detailed. And the computation of the matrix $$I_i T_j$$ increases (quadratically?). 
 
 During inference, in (2), we create a dataset by taking a set of labels and adding a prompt to all labels e.g. `A photo of a {label}`. We then put them through the text encoder, and that is our target set.
-Then, to perform zero-shot prediciton (3), we take an image, pass it through the image decoder, and gete the classification distribution of that image over the promptedlabels, from where we pick the top label - in the picture `A photo of a dog`.
+Then, to perform zero-shot prediciton (3), we take an image, pass it through the image decoder, and get the classification distribution of that image over the prompted labels, from where we pick the top label - in the picture `A photo of a dog`.
 The main point is: there was zero training needed on the entire task, the image and test datasets can be entirely different, which is a fundamental difference to regular image qualification tasks that have fixed input/output datasets. In CLIP, the model learns the fundamental structure of a language, not just how to difference classes.
 
 Summary of results:
@@ -719,14 +719,14 @@ used for training, with some trends spanning more than seven orders of magnitude
 architectural details such as network width or depth have minimal effects within a wide
 range. Simple equations govern the dependence of overfitting on model/dataset size and the
 dependence of training speed on model size. These relationships allow us to determine the
-optimal allocation of a fixed compute budget. Larger models are significantly more sampleefficient, such that optimally compute-efficient training involves training very large models
+optimal allocation of a fixed compute budget. Larger models are significantly more sample efficient, such that optimally compute-efficient training involves training very large models
 on a relatively modest amount of data and stopping significantly before convergence.
 
 {: style="text-align:center; font-size: small;"}
 <img width="75%" height="75%" src="/assets/publications/scaling_laws.png"/>
 
 **Keypoints:**
-- Model performance depends most strongly on scale, which consists of three factors: the number of model parameters N, the size of the dataset D, and the amount of compute C used for training. Performance has a power-law relationship with each of the three scale factors (Fig.1).
+- Model performance depends most strongly on scale, which consists of three factors: the number of model parameters N, the size of the dataset D, and the amount of compute C used for training. Performance has a **power-law** relationship with each of the three scale factors (Fig.1).
 - Within reasonable limits, performance depends very weakly on other architectural hyperparameters such as depth vs. width.
 - Performance improves predictably as long as we scale up N and D in tandem,
 but enters a regime of diminishing returns if either N or D is held fixed while the other increases.
@@ -804,7 +804,7 @@ $$
 \text{RMS}(x) = \sqrt{\frac{1}{d} \sum_{i=1}^d x_i^2}
 $$
 
-where $$x$$ is the input veector with dimensionality $$d$$, and
+where $$x$$ is the input vector with dimensionality $$d$$, and
 
 $$
 \text{RMSNorm}(x) = \frac{x}{\text{RMS}(x)} \cdot \gamma
@@ -986,13 +986,13 @@ The author claims that cyclic learning rates improve time to convergence and inc
 
 <details> <summary markdown="span"> 2006 [Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss), New York Uni, CVPR 2006](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf)</summary>
 
- The paper presents Dimensionality Reduction by Learning an Invariant Mapping (DrLIM). The problem is to find a function that maps high dimensional input patterns to lower dimensional outputs, given neighborhood relationships between samples in input space. It presents the **Contrastive Loss Function**. The contrastive loss trains 2 **siamese networks**. A Siamese Network is a type of neural network architecture designed to compare two inputs by learning their similarity or relationship. It consists of two identical subnetworks (hence the name "Siamese") that share the same architecture and weights. Each subnetwork processes one of the two inputs independently, and the outputs are then combined to compute a similarity score or distance metric.  The input to system is a pair of images (one to each of the siamese networks) and the dissimilarty label (0 for dissimilar images or 1 for similar images). The images are passed through the functions, yielding two outputs $$G(X_1)$$ and $$G(X_2)$$. The cost module then computes the euclidian distance between both outputs as $$D_W(G_W(X_1), G_W(X_2))$$. The objective is formulated in terms of the similarity label $$y$$ and the euclidian distance $$D$$ between the two images as:
+ The paper presents Dimensionality Reduction by Learning an Invariant Mapping (DrLIM). The problem is to find a function that maps high dimensional input patterns to lower dimensional outputs, given neighborhood relationships between samples in input space. It presents the **Contrastive Loss Function**. The contrastive loss trains 2 **siamese networks**, and encourages the model to learn a representation space where similar samples are close together, and dissimilar samples are far apart.  A Siamese Network is a type of neural network architecture designed to compare two inputs by learning their similarity or relationship. It consists of two identical subnetworks (hence the name "Siamese") that share the same architecture and weights. Each subnetwork processes one of the two inputs independently, and the outputs are then combined to compute a similarity score or distance metric.  The input to system is a pair of images (one to each of the siamese networks) and the dissimilarty label (0 for dissimilar images or 1 for similar images). The images are passed through the functions, yielding two outputs $$G(X_1)$$ and $$G(X_2)$$. The cost module then computes the euclidian distance between both outputs as $$D_W(G_W(X_1), G_W(X_2))$$. The objective is formulated in terms of the similarity label $$y$$ (1 for similar, 0 for dissimilar) and the euclidian distance $$D$$ between the two images as:
 
 $$
-L = \frac{1}{2} ⋅y⋅D + \frac{1}{2} ⋅(1−y)⋅max(0,m−D)^2
+L = \frac{1}{2} ⋅y⋅D^2 + \frac{1}{2} ⋅(1−y)⋅max(0,m−D)^2
 $$
 
-where $$m$$ is a hyper-parameter. The architecture is a **siamese architecture**, two copies of the same network which share the same set of parameters, and a cost module.  The total gradient is the sum of the contributions from the two instances.
+where $$m$$ is a margin hyperparameter that sets the minimum distance for dissimilar pairs. The architecture is a **siamese architecture**, two copies of the same network which share the same set of parameters, and a cost module.  The total gradient is the sum of the contributions from the two instances.
 </details>
  
 {::options parse_block_html="false" /}
