@@ -173,20 +173,16 @@ There is currently a plethora of different implementations of CNNs with several 
 
 ## Embeddings
 
-Embeddings are a simpler representation of data characterized by variable size (e.g. lists, text) or multi-dimensionality (images, videos). We use embeddings as a way to represent our data in a simpler (linear) layout, in such a way that the model that inputs it (usually a DNN) can run in a feasible time and within memory requirements.
-
-Embeddings are also the backbone of multi-modal machine learning, i.e. ML applied to combination of different input types, where the representation of several datapoints as a single input is typically the concatenation of the embeddings of each data type.
-
-The technique to train embeddings is usually as follows: train a network for a given task on several inputs, as we would do normally; then take the trained model, pass the new datapoint, and collect its embedding as the activation or hidden state of a layer in that network.
+Embeddings in machine learning are dense, low-dimensional vector representations of data (e.g., words, images, or users) that capture their semantic or contextual meaning in a continuous vector space. Embeddings can be collected by passing input data (e.g., text, images) through a *trained* machine learning model (e.g., a neural network) and extracting the values from a specific intermediate layer, typically before the final output layer.
 
 A list of most common data types and embedding types:
-- words: [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (*skipgram* or *continuous bag of words*)
+- words: one-hot vectors or [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (*skipgram* or *continuous bag of words*)
   - skipgram: slower to train ("3 days"), better in capturing better semantic relationships, e.g. for 'cat' return 'dog' as a word with close embeddings;
   - CBOW: faster to train ("few hours"), better syntactic relationships between words, e.g. for 'cat' return 'cats';
 - text (word sequences): [BERT]({{ site.baseurl }}{% post_url 2020-02-28-learning-from-sequences %})
 - non-textual sequences: [Encoder-Decoders e.g. LSTMs RNNs]({{ site.baseurl }}{% post_url 2020-02-28-learning-from-sequences %})
 - point cluster or array: [Principal Component Analysis]({{ site.baseurl }}{% post_url 2017-11-01-Unsupervised-Learning %})
-- images: 
+- images:
   - in a classification task: use the activation of the last layer *before* the layer that does logit/softmax. I.e. the input to the final layer, i.e. the ouput of the one before last;
   - in an image-to-image task e.g. segmentation e.g. using a [U-net](https://arxiv.org/abs/1505.04597): use the activation the last downsampling layers which is the first layer of upsampling layers, i.e. the [*information bottleneck*](https://en.wikipedia.org/wiki/Information_bottleneck_method);
 - videos: input is now 5D (batch size, time, channels, height, width) where the input is a sequence of video frames stacked on the time dimension. Embeddings are collected similarly to a regular CNN (adapted to use 3D instead of 2D convolutions, etc);
