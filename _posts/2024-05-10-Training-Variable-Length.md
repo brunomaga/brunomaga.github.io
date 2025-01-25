@@ -315,12 +315,9 @@ Now keep in mind that every new shape will lead to a new compilation and will re
 Finally, pass the following arguments to `torch.compile` to implement this logic:
 ```python
 world_size = torch.distributed.get_world_size()
-torch_compile_kwargs={
-    "backend": "inductor", # default
-    "mode": "max-autotune" if world_size == 1 else "max-autotune-no-cudagraphs", # single- vs multi-GPU runs
-    "dynamic": False, # force static compilation
-},
-torch.compile(model, **torch_compile_kwargs)
+mode = "max-autotune" if world_size == 1 else "max-autotune-no-cudagraphs", # single- vs multi-GPU runs
+dynamic = False  # force static compilation
+model = torch.compile(model, { "backend": "inductor", "mode": mode, "dynamic": dynamic } )
 ```
 
 As a final remark, note that I tested this on `torch==2.4.0` and newer PyTorch releases are continuously improving the compilation process. Also, if you are looking for more detailed information related to compilation, check [`torch.compile` the missing manual](https://docs.google.com/document/d/1y5CRfMLdwEoF1nTk9q8qEu1mgMUuUtvhklPKJ2emLU8/)
