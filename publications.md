@@ -55,7 +55,7 @@ fragments into training ranks of arbitrary model-parallelism configuration", and
 </details>
 
 
-<details> <summary markdown="span">[Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)</summary>
+<details> <summary markdown="span">2023 [Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)</summary>
 
 A simpler transformer architecture that claims similar results to state-of-art autoregressive
 decoder-only and BERT encoder-only models, with a  16% faster training throughput, while using 15% fewer parameters.
