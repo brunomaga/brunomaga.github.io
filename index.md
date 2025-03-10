@@ -33,7 +33,7 @@ In this space, I keep track of <a href="{{ site.publications_permalink }}">publi
 
 <center>
 <div class="info-panel">
-<p> <strong>NEW (2025):</strong> if you like my content and would like to show appreciation, just donate instead to the <a href="https://ipoporto.pt/en/eu-doente/clinicas/">children's cancer hospital in Porto</a> via my <a href="https://www.gofundme.com/f/support-the-childrens-cancer-hospital-in-porto">GoFundMe campaign</a>, or via <a href="https://ipoporto-pt.translate.goog/nos-ipo/como-ajudar-o-ipo-porto/?_x_tr_sl=pt-PT&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp">bank transfer to the hospital</a>. Thank you for caring ❤️‍🩹</p>
+<p> <strong>NEW (2025):</strong> if you like my content and would like to show appreciation, please donate instead to the <a href="https://ipoporto.pt/en/eu-doente/clinicas/">children's cancer hospital in Porto</a> via my <a href="https://www.gofundme.com/f/support-the-childrens-cancer-hospital-in-porto">GoFundMe campaign</a> or a <a href="https://ipoporto-pt.translate.goog/nos-ipo/como-ajudar-o-ipo-porto/?_x_tr_sl=pt-PT&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp">bank transfer to the hospital</a>. Thank you for caring ❤️‍🩹</p>
 </div>
 </center>
 
