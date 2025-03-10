@@ -142,7 +142,7 @@ In section 4 (theoretical results) the authors show that indeed, when given enou
 
 ### Challenge: different convergence speed in the optimization of Generator and Discriminator
 
-Because the objective function is much simpler, the discriminator trains much faster than the discriminator. To overcome it, training is performed by alternating between $$k$$ steps of optimizing $$D$$ and one step of optimizing $$G$$. The underlying rationale is that "early in learning, when $$G$$ is poor, $$D$$ can reject samples with high confidence because they are clearly different from the training data. In this case,  $$log(1 − D(G(z)))$$ saturates.
+Because the objective function is much simpler, the discriminator trains much faster than the generator. To overcome it, training is performed by alternating between $$k$$ steps of optimizing $$D$$ and one step of optimizing $$G$$. The underlying rationale is that "early in learning, when $$G$$ is poor, $$D$$ can reject samples with high confidence because they are clearly different from the training data. In this case,  $$log(1 − D(G(z)))$$ saturates.
 
 ### Challenge: saturation of discriminator loss
 

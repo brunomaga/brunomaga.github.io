@@ -275,9 +275,9 @@ Note that the subgraphs created may change depending on input sizes. As a person
 
 ### Static compilation of variable-shaped inputs
 
-Torch provides *some* support for compilation of tensors of variable shapes, with `torch.compile(dynamic=True)`. This yields a binary that is slower than the ones provided with static compilation, with the advantage that the input dimensions are not hard-coded in the binary and can change throughout time. Dynamic compilation is slower than static, and as up to  `torch==2.4.0`, didn't work in my tests of variable batch and length dimensions. 
+Torch provides *some* support for compilation of tensors of variable shapes, with `torch.compile(dynamic=True)`. This yields a binary that is slower than the ones provided with static compilation, with the advantage that the input dimensions are not hard-coded in the binary and can change throughout time. Dynamic compilation is slower than static, and following my tests with  `torch==2.4.0`, doesn't work with dynamic batch and length dimensions. 
 
-Static compilation is ideal, but how can we compile it statically with variable-shape inputs? The trick is to allow all processes to do a forward and a backward pass on every possible shape at the onset of the execution: 
+Static compilation is ideal, but how can we compile it statically with variable-shape inputs? The trick is to allow all processes to do a forward and a backward pass on every possible shape at the onset of the execution, as detailed in the following picture: 
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/Training-Variable-Length/torch_compile_dataset.png"/>
@@ -308,19 +308,16 @@ Recompiling function forward in train.py:145 triggered by the following guard fa
     - tensor 'L['timestep']' size mismatch at index 0. expected 30, actual 40
 ```
 
-Now keep in mind that every new shape will lead to a new compilation and will require a new model binary to be stored in memory. Thus, when the number of binaries, this will lead to an Out-Of-Memory (OOM) error. To overcome this, you have two options:
+Now keep in mind that every new shape will lead to a new compilation and will require a new model binary to be stored in memory. Thus, when the number of binaries is very large, this will lead to an Out-Of-Memory (OOM) error. To overcome this, you have two options:
 1. perform **padding** of samples to reduce the number of different lengths across the dataset;
 2. order inputs by size, and call `torch.compiler.reset()` after few compilations to reset the torch compile status in order to free memory of previous shapes that won't be used again. 
 
 Finally, pass the following arguments to `torch.compile` to implement this logic:
 ```python
 world_size = torch.distributed.get_world_size()
-torch_compile_kwargs={
-    "backend": "inductor", # default
-    "mode": "reduce-overhead" if world_size == 1 else "default", # single- vs multi-GPU runs
-    "dynamic": False, # force static compilation
-},
-torch.compile(model, **torch_compile_kwargs)
+mode = "max-autotune" if world_size == 1 else "max-autotune-no-cudagraphs", # single- vs multi-GPU runs
+dynamic = False  # force static compilation
+model = torch.compile(model, { "backend": "inductor", "mode": mode, "dynamic": dynamic } )
 ```
 
-As a final remark, note that I tested this on `torch==2.4.0` and it may not work in earlier versions. And if you are looking for more information on compilation outside PyTorch documentation, check [`torch.compile` the missing manual](https://docs.google.com/document/d/1y5CRfMLdwEoF1nTk9q8qEu1mgMUuUtvhklPKJ2emLU8/)
+As a final remark, note that I tested this on `torch==2.4.0` and newer PyTorch releases are continuously improving the compilation process. Also, if you are looking for more detailed information related to compilation, check [`torch.compile` the missing manual](https://docs.google.com/document/d/1y5CRfMLdwEoF1nTk9q8qEu1mgMUuUtvhklPKJ2emLU8/)
