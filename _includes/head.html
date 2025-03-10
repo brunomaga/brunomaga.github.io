@@ -26,6 +26,29 @@
   <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <script>window.MathJax = { tex: { tags: 'all' } }; </script> <!-- NOTE: this adds numbering to equations, otherwise \ref{...} will fail -->
 
+  <style>
+    .info-panel {
+        /*background-color: #f0f0f0;*/ /* Light grey background */
+        max-width: 810px;
+        background-color: #e9f0f6;
+        border-radius: 10px; /* Rounded corners */
+        padding: 12px; /* Spacing inside */
+        /* width: 300px;/* /* Fixed width */
+        /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+        /*font-family: Arial, sans-serif;*/ /* Font style */
+        /*margin: 20px auto;*/ /* Center the panel */
+        text-align: center; /* Center text */
+        margin-bottom: 20px; /* Extra space after the box */
+        font-size: 0.95rem; /* Reduced text size */
+    }
+
+    /* Remove bottom margins */
+    .info-panel h2, .info-panel p { margin-bottom: 0; }
+
+    /* Optional: Reduce top margin for tighter spacing */
+    .info-panel h2 {margin-top: 0;}
+</style>
 
 <!-- CSS for table that collapses on smaller screens. source: https://css-tricks.com/accessible-simple-responsive-tables/ -->
 <style>
