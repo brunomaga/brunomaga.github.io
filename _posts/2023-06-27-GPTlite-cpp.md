@@ -25,7 +25,7 @@ The other big announcement was `torch.compile`, that "makes PyTorch code run fas
 3. **graph compilation** will convert the kernels into low-level operations that are specific to the device.
 
 {: style="text-align:center; font-size: small;"}
-<img width="85%" height="85%" src="/assets/GPT-lite-cpp/torch_compile.jpg"/>
+<img width="85%" height="85%" src="/assets/GPTlite-cpp/torch_compile.jpg"/>
 
 {: style="text-align:center; font-size: small;"}
 A diagram of the three steps of `torch.compile`. Source: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
@@ -41,20 +41,20 @@ The flag `fullgraph` specifies whether the compilation outputs a single graph fo
 
 In this post, we will benchmark and analyse several implementations of ML training and inference performed on different backends: PyTorch 1.3.1 (python), PyTorch 2.1.2 (python), LibTorch 2.1.2 (C++), TorchScript 2.1.2 (python and C++), and PyTorch 2.1.2 with `torch.compile` (python).  
 We will look at two different testbenches, so feel free to pick one based on your level of expertise and interest:
-1. the small variant of the GPT2 model, introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), will be detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example that is specific to the use case of large language models; 
+1. the small variant of the GPT2 model, introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), will be detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example that is specific to the use case of large language models; 
 2. a Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch C++](#benchmark-model). This is a very simple example that will be used to benchmark our metrics on models of varying depths and widths. It is mostly suitable for those who are interested in performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
 
 {: style="text-align:center; font-size: small;"}
-<img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>
+<img width="20%" height="20%" src="/assets/GPTlite/gptlite_compact.png"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="22%" height="22%" src="/assets/GPT-lite/benchmark_model.png"/>
+<img width="22%" height="22%" src="/assets/GPTlite/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
-In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark their C++, PyTorch, TorchScript and `torch.compile` implementations.
+In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark their C++, PyTorch, TorchScript and `torch.compile` implementations.
 
 ## GPTlite on LibTorch C++ {#gptlite-model}
 
-We will start with the GPT implementation in C++. The subsections that follow match exactly the structure of the [post with the GPTlite implementation in Python]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}).
+We will start with the GPT implementation in C++. The subsections that follow match exactly the structure of the [post with the GPTlite implementation in Python]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}).
 
 ### Hyperparameters
 
@@ -106,7 +106,7 @@ $$
 Together with the upper-diagonal mask, this is the underlying structure of each of the N attention blocks in the model:
 
 {: style="text-align:center; font-size: small;"}
-<img width="19%" height="19%" src="/assets/GPT-lite/gpt_lite_attention.png"/>
+<img width="19%" height="19%" src="/assets/GPTlite/gptlite_attention.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The multi-head (Nx) attention module in the GPTlite model, emphasized in red.
@@ -204,7 +204,7 @@ Again, we used `nn::ModuleList` as a container, instead of any std-library conta
 The Feed-forward network is a two-layer Deep Neural Network and is pretty straighforward to implement:
 
 {: style="text-align:center; font-size: small;"}
-<img width="19%" height="19%" src="/assets/GPT-lite/gpt_lite_feedforward.png"/>
+<img width="19%" height="19%" src="/assets/GPTlite/gptlite_feedforward.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The feed forward network in the GPTlite model, emphasized in red.
@@ -232,7 +232,7 @@ struct FeedForward : nn::Module {
 We'll call GPT *block* the sequence of a multi-head attention and a feedforward module. Similarly to the python implementation, we add skip connections and normalization before the attention and feed-forward network.
 
 {: style="text-align:center; font-size: small;"}
-<img width="19%" height="19%" src="/assets/GPT-lite/gpt_lite_blocks.png"/>
+<img width="19%" height="19%" src="/assets/GPTlite/gptlite_blocks.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The GPT block(s) in the GPTlite model, emphasized in red.
@@ -497,13 +497,13 @@ As an important remark, I noticed that both the python and C++ implementations o
 The results for the GPTlite modeo are the following: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/GPT-lite-cpp/benchmark_gptlite.png"/>
+<img width="90%" height="90%" src="/assets/GPTlite-cpp/benchmark_gptlite.png"/>
 
-The benchmark for the bencmark models are in <a href="/assets/GPT-lite-cpp/benchmark_wide.png">benchmark_wide.png</a> and <a href="/assets/GPT-lite-cpp/benchmark_deep.png">benchmark_deep.png</a>. Looking at the GPU memory usage, we see that there is a much smaller memory requirement for inference-only runs (light blue bars), compared to runs that performed train and inference (navy blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training leads to an increase in memory in the order of 4x to 10x.  
+The benchmark for the bencmark models are in <a href="/assets/GPTlite-cpp/benchmark_wide.png">benchmark_wide.png</a> and <a href="/assets/GPTlite-cpp/benchmark_deep.png">benchmark_deep.png</a>. Looking at the GPU memory usage, we see that there is a much smaller memory requirement for inference-only runs (light blue bars), compared to runs that performed train and inference (navy blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training leads to an increase in memory in the order of 4x to 10x.  
 
 Looking at the overall performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.2 (navy blue to orange bars). Also, there is also a small throughput increase of up to 10% when moving from PyTorch 2.1.2 to its C++ LibTorch equivalent (from orange to green bars), explained by the python overhead (runtime, dynamic typing, etc). Finally, the inference when comparing the pure C++ implementation and the TorchScript implementation (train in python, inference in C++) is neglegible, which means that TorchScript does a pretty good job in (de)serializing the model.
 
-We also tested the speed-up gains from using  `torch.compile` on our GPT-lite model. The base case without `torch.compile` performs the PyTorch-based training at a throughput of 1.41 samples/sec and inference at 4.28 samples/second. Let's compare it with the same model compiled at different modes and with(out) a full graph:
+We also tested the speed-up gains from using  `torch.compile` on our GPTlite model. The base case without `torch.compile` performs the PyTorch-based training at a throughput of 1.41 samples/sec and inference at 4.28 samples/second. Let's compare it with the same model compiled at different modes and with(out) a full graph:
 
 | throughput (increase factor)  | `fullgraph=False` train | `fullgraph=False`, inference | `fullgraph=True`, train | `fullgraph=True`, inference |  
 |---|---|---|---|---|
@@ -515,5 +515,5 @@ The final message is: **running PyTorch 2.1 does not incur a massive loss of per
 
 Now the main questions are: is C++ LibTorch going to become deprecated and eventually disappear? If not, will `torch.compile` allow the export of compiled models with `torch.jit.track` / `.script` so that we can load and run it on LibTorch C++? 
 
-And we reached the end of this post! If you want to replicate these results, see the [GPT-lite-cpp repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-cpp).
+And we reached the end of this post! If you want to replicate these results, see the [GPTlite-cpp repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-cpp).
 

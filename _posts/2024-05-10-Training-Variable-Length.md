@@ -111,7 +111,7 @@ Above, we collected samples until we filled up the batch with at most 30 tokens.
 
 ### Pipeline parallelism
 
-[Pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline%})
+[Pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPTlite-DeepSpeed-pipeline%})
  requires the same batch size and same sequence length across all micro-batches in a batch, as the activation sizes must be fixed between gradient accumulation steps. Enforcing similar `BxTxE` across micro-batches may lead to smaller micro-batches. As an example, we can see below an illustration of a setup of 2 processes, training with 2 gradient accumulation steps, ie 4 micro-batches in totlal, applied to the regular Distributed Dara Parallel (DDP, left) and for the pipeline parallelism use cases (right):
 
 {: style="text-align:center; font-size: small;"}
@@ -224,7 +224,7 @@ If you're looking for an example, you can find the complete implementation in my
 
 ## Kernels compilation
 
-We have seen in a [previous post]({{ site.baseurl }}{% post_url 2023-06-27-GPT-lite-cpp %}) that just-in-time compilation of ML kernels via `torch.compile` leads to a substantial training speedup. So let's look at two important aspects: (1) compilations on distributed runs and CUDA graphs, and (2) static vs dynamic compilation.
+We have seen in a [previous post]({{ site.baseurl }}{% post_url 2023-06-27-GPTlite-cpp %}) that just-in-time compilation of ML kernels via `torch.compile` leads to a substantial training speedup. So let's look at two important aspects: (1) compilations on distributed runs and CUDA graphs, and (2) static vs dynamic compilation.
 
 
 ### CUDA graphs compilation on single- vs multi-process runs

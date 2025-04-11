@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, pruning, distillation, quantiza
 tags: [machinelearning]
 ---
 
-Previously, in [Distributed training of a large GPT model with DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}), we foccused on training a very large model on a distributed network of GPUs. The aim was to reduce training runtime via increased parallelism, and to increase model accuracy by increasing model size. In this post, we will look at the opposite problem in the ML spectrum: model compression for lower runtime and lower memory footprint during inference. This is particularly relevant for embeddeded and real time systems where time and cost are an issue.
+Previously, in [Distributed training of a large GPT model with DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}), we foccused on training a very large model on a distributed network of GPUs. The aim was to reduce training runtime via increased parallelism, and to increase model accuracy by increasing model size. In this post, we will look at the opposite problem in the ML spectrum: model compression for lower runtime and lower memory footprint during inference. This is particularly relevant for embeddeded and real time systems where time and cost are an issue.
 
 Note: Easiest way to speed up the model is to save memory, allowing for faster batches, therefore higher throughput (as shown in ZeRO and ZeRO-infinity). There are several efforts
 
@@ -21,11 +21,11 @@ Note: Easiest way to speed up the model is to save memory, allowing for faster b
 - [DeepSpeed model compression](https://www.deepspeed.ai/tutorials/model-compression/)
 - [Deep Model Fusion: A Survey](https://arxiv.org/abs/2309.15698)
 - 
-Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}), we will focus on the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, whose objective is to generate text by predicting the next character in a sequence.
+Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}), we will focus on the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, whose objective is to generate text by predicting the next character in a sequence.
 We will discuss and apply Knowledge distilation for improved accuracy and prunning/compression, TensorRT for quantization and acceleration via kernel fusion, `torch.compile` for model acceleration, and flash attention and KV-cache for lower memory and higher acceleration.
 
 {: style="text-align:center; font-size: small;"}
-<img width="20%" height="20%" src="/assets/GPT-lite/gpt_lite_compact.png"/>
+<img width="20%" height="20%" src="/assets/GPTlite/gpt_lite_compact.png"/>
 
 
 ## Knowledge Distillation
@@ -39,12 +39,12 @@ As a quick example, take the two-label (dog, cat) classification task. An image 
 There are several categories of KD methods. As loss function, we can try to minimize the soft labels between student and teacher models (as the example above), intermediate layers such as logits, feature maps, etc. We can distil information between similar or different student and teacher model architectures, in order to **improve accuracy**. We can perform **offline distillation** where we train the teacher first, and then train the student against the output of the pre-trained teacher, or we can perform **online distillation**, where we train both the train and teacher simultaneously. We can use a single teacher or an ensemble of teachers.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/GPT-lite-Compression/model_distillation_offline_online.png"/>
+<img width="70%" height="70%" src="/assets/GPTlite-Compression/model_distillation_offline_online.png"/>
 
 We can use a student that is a scaled down version of the teacher's architecture, effectively performing **prunning via distillation**. If you are looking for details related to different KD methods, see [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525).  
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-Compression/kd_methods.jpg"/>
+<img width="100%" height="100%" src="/assets/GPTlite-Compression/kd_methods.jpg"/>
 
 {: style="text-align:center; font-size: small;"}
  An illustration of the different knowledge distillation categories of methods and the different branches within each category. In this section, we will implement offline distillation using soft labels, underlined in red in the picture. Adapted from [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
@@ -150,7 +150,7 @@ def main(train_epochs=30):
   os.makedirs(output_folder, exist_ok=True)
 ```
 
-We then load our model and dataset. Any model or dataset can be used. Here we'll simply use the `get_dataset()` and `get_model()` methods detailed in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}), that return a `torch.utils.data.Dataset` and `torch.nn.Module` for our testbenches:
+We then load our model and dataset. Any model or dataset can be used. Here we'll simply use the `get_dataset()` and `get_model()` methods detailed in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}), that return a `torch.utils.data.Dataset` and `torch.nn.Module` for our testbenches:
 
 ```python
   import gptlite
@@ -236,7 +236,7 @@ import sys
 import torch
 
 current_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, os.path.join(current_dir, '..', 'GPT-lite'))
+sys.path.insert(0, os.path.join(current_dir, '..', 'GPTlite'))
 from gptlite import GPTlite, Block, block_size, n_embd, n_head
 n_head=2
 
@@ -261,7 +261,7 @@ We then export our `torch.nn.Module` to a `onnx` file that contains the graph we
 
 The graph for the train model using jit trace can be seen below (for brevity, only layer names are displayed):
 
-  <img width="100%" height="100%" src="/assets/GPT-lite-Compression/model_jit_trace_train.onnx.png"/>
+  <img width="100%" height="100%" src="/assets/GPTlite-Compression/model_jit_trace_train.onnx.png"/>
 
 Secondly, an **exporter based on [TorchDynamo](https://pytorch.org/docs/stable/torch.compiler_deepdive.html)** the newest/beta exporter for `torch>=2.0`, that uses a feature called [Python frame evaluation](https://peps.python.org/pep-0523/) to convert a bytecode analysis into the [FX graph](https://pytorch.org/docs/stable/fx.html), that is then polished and translated into the ONNX graph, and contrarily to the previous, captures dynamic graphs.
 Torch.FX includes a symbolic tracer that works the same as the `trace` mode above, but by feeding fake values to the trace operation (or optionally allowing user defined values, making it equivalent to the `torch.jit.trace`).
@@ -278,11 +278,11 @@ In this [discussion](https://dev-discuss.pytorch.org/t/the-nuances-of-pytorch-gr
 
    And the output for the train graph is:
 
-   <img width="100%" height="100%" src="/assets/GPT-lite-Compression/model_dynamo_train.onnx.png"/>
+   <img width="100%" height="100%" src="/assets/GPTlite-Compression/model_dynamo_train.onnx.png"/>
 
 
 Few points worth mentioning when we look at the graphs. The graphs refer to the graph in train mode. If we set the model to evaluation mode (`model.eval()`) the graphs will differ, because evaluation disables dropout, batchnorm layers will use their running stats to normalize the data, etc. So the train graphs are usually bigger. Also, trace graphs are smaller than script graphs because the graph is generated for a single input size and type, therefore operations such as castings are removed. As a side note, the graphs generated with dynamo look smaller, but in practice, it's displaying only the top-level modules, and the sub-graph inside each module can be visualized int the Neutron app, [clicking the "f" symbol on the top-right corner](https://pytorch.org/docs/stable/onnx_dynamo.html#inspecting-the-onnx-model-using-gui) of each module to navigate the corresponding sub-graph.
-Finally, if you are curious to see all train/eval graphs generated, check the [repo for this post](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-Compression).
+Finally, if you are curious to see all train/eval graphs generated, check the [repo for this post](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-Compression).
 
 ## Flash Attention
 

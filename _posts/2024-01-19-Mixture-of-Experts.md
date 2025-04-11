@@ -383,7 +383,7 @@ You can find the complete implementation in the [Mixture-of-Experts repo](https:
 
 ### Applying the MoE to an existing LLM
 
-Remember that the MoE module can be used to replace the feed-forward module in existing architectures. So here we will apply it to the [GPT2-based `GPTlite` model we built on a previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}). This is straightforward, and all we need to do is to distribute its modules in a Distributed Data Parallel fashion, except the feed-forward module in the transformer block, that we will replace by our model-parallel mixture of experts:
+Remember that the MoE module can be used to replace the feed-forward module in existing architectures. So here we will apply it to the [GPT2-based `GPTlite` model we built on a previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}). This is straightforward, and all we need to do is to distribute its modules in a Distributed Data Parallel fashion, except the feed-forward module in the transformer block, that we will replace by our model-parallel mixture of experts:
 
 ```python
   # ddp function takes a torch module and distributes it in a data parallel fashion

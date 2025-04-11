@@ -5,13 +5,13 @@ categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
 
-We always thought about ML parallelism as a tridimensional problem, composed of [data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPT-lite-data-parallelism %}) (with or without sharding), [pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPT-lite-DeepSpeed-pipeline %}), and [model/tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-GPT-lite-Megatron-LM-model-parallelism %}). In practice, if take an input of shape `(B, E)`, where `B` is the batch size and `E` is the size of the embeddings (channels, features), and we want to split that dataset across `P` processes, then:
+We always thought about ML parallelism as a tridimensional problem, composed of [data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}) (with or without sharding), [pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPTlite-DeepSpeed-pipeline %}), and [model/tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-GPTlite-Megatron-LM-model-parallelism %}). In practice, if take an input of shape `(B, E)`, where `B` is the batch size and `E` is the size of the embeddings (channels, features), and we want to split that dataset across `P` processes, then:
 
 1. data parallelism splits the data dimension across processors, effectively leading to local (per-process) storage requirement of size `(B/P, E)`;
 2. pipeline parallelism requires the same `(B/P, E)` input per processor, but processes each mini-batch as a pipeline of iterative micro-batches with gradient accumulation, leading to a memory requirement of `(B/P/Q, E)` per iteration, where `Q` is micro-batch size;
 3. model parallelism splits the embeddings/features across processors, requiring a local storage of shape  `(B, E/P)`.
 
-However, many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. Following the same notation as above, sequence parallelism requires a local storage of `(B, T/P, E)` per process. With that in mind, in this post, we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPT-lite blocks]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), where each block is multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
+However, many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. Following the same notation as above, sequence parallelism requires a local storage of `(B, T/P, E)` per process. With that in mind, in this post, we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPTlite blocks]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), where each block is multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
 
 ## Context Parallelism
 
@@ -22,7 +22,7 @@ Context parallelism is a parallelism scheme over the sequence dimension, and is 
 In practice, parallelism on the sequence dimension works out-of-the-box on most layers for any input shaped  `(B, T/P, E)`. To implement Context Parallelism, all you only need is to a `DataLoader` and `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loading worker. 
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-distributed/SPDistributedSampler.png"/>
+<img width="100%" height="100%" src="/assets/GPTlite-distributed/SPDistributedSampler.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An example of data parallelism (DP) and context parallelism (CP) on 4 processes/GPUs (color-coded) and a dataset of 8 samples. First row: all 4 processes run on a distributed data parallelism execution. 2nd row: creating a custom `DistributedSampler` that yields chunks of sequences allows for a hybrid data- and context- parallelism execution of 2 groups of 2 context-parallel processes. Third row: no data-parallelism, all 4 processes execute context-parallelism of the same sample. 
@@ -35,7 +35,7 @@ During training, the model runtime scales perfectly with the context parallelism
 In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values of the full sentence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows in $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, then the dot-product $$Q_p K^T$$ will have shape `B, T/P, T`. Because we are holding a full row of the dot-product, we can apply the $$softmax$$ without any changes and get an attention matrix also of shape `B, T/P, T`. When multiplied by $$V$$, this results in the attention output for that process shape `B, T/P, E`.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/GPT-lite-distributed/context_parallelism.png"/>
+<img width="90%" height="90%" src="/assets/GPTlite-distributed/context_parallelism.png"/>
 
 Requiring the full key and value tensors has two main drawbacks: an additional `all_gather` step to collect the full K and V, and the memory overhead to store those two tensors in full form. This is not ideal, therefore, in the following methods, we will look into how to parallelise the attention layer as well.
 
@@ -45,7 +45,7 @@ Take the previous notation and assume a mini-batch split across the time dimensi
 If we pass such shape to a feed-forward network, we achieve a parallelism or order `P` , as the `T` dimension will be treated as batch by the linear layers. However, in the case of the multi-head attention, there is the need for process communication as the time dependency across the tokens require inter-token communication to compute the full attention matrix of shape `(H, B, T, T)`  for `H` attention heads and for a query, token and values tensor of local shape `(B, T/P, E)` . The [(DeepSpeed) Ulysses parallelism](https://arxiv.org/abs/2309.14509) approaches solves this by swapping the distributed view from time-split to head-split before and after the MHA attention module, as the following illustration:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-distributed/ulysses_sequence_parallelism.png"/>
+<img width="100%" height="100%" src="/assets/GPTlite-distributed/ulysses_sequence_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Overtiew of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **Center:** the *first all-to-all* changes the distributed tensor view from time- to head-split. Each process holds now complete sententes (ie not time-split) and can compute attention on the heads assigned to it, independently. **Right**: the *second all-to-all* reverts the view from head- to time-split.
@@ -89,7 +89,7 @@ from flash_attn.flash_attn_interface import flash_attn_func
 class MultiHeadAttention(nn.Module):
 
     def __init__(self, n_embd=256, d_head=128, n_heads=8, dropout_p=0.1, group=None):
-        """ An Ulysses multi-head attention. Variable names follow GPT-lite's post """
+        """ An Ulysses multi-head attention. Variable names follow GPTlite's post """
 
         super().__init__()
         self.d_head = d_head
@@ -129,7 +129,7 @@ class MultiHeadAttention(nn.Module):
         return out
 ```
 
-And that is it. It's pretty simple, but if you are looking for the full implementation, check [gptlite_ulisses_sequence_parallelism.py](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed/gptlite_ulisses_sequence_parallelism.py).
+And that is it. It's pretty simple, but if you are looking for the full implementation, check [gptlite_ulisses_sequence_parallelism.py](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed/gptlite_ulisses_sequence_parallelism.py).
 
 Also, as an important note, there are other similar approaches to handle this problem, such as [ColAI-SP](https://arxiv.org/abs/2105.13120) and [Megatron-SP](https://arxiv.org/abs/2205.05198), however the big advantage of [DeepSpeed Ulysses parallelism](https://arxiv.org/abs/2309.14509) is that it requires less communication than the alternatives. However, the only downsides are that the maximum parallelism is dictated by the number of attention heads (typically 8), and that the all-two-all requires blocking collective communication that may incur a heavy overhead on networks of processes wil slow communicaion. That's where Ring Attention comes into play.
 
@@ -181,7 +181,7 @@ $$
 Now that we know how to compute the attention output per block, we can parallelize the computation of the attention by delegating a sub-block to each processor. We start with sequence parallelism of the tensors $$q$$, $$k$$ and $$v$$ across $$P$$ processes, ie **each process hold a non-overlapping timeframe (block) of the $$q$$, $$k$$ and $$v$$ tensors**. Just like Ulysses, this allows for direct $$P$$-order parallelism on the Feed-forward network, but not on the MultiHead attention. Thus, the MHA algorithm is as follow. During the computation of the MHA, sub-blocks of the $$q$$ and $$v$$ tensors will be *rotated* among all $$P$$ processes in a ring fashion, iteratively: at each communication step (out of $$P$$ steps), each process sends its block of keys and values to the next process, and receives the keys and values of the previous processor in the ring. After $$P$$ communication steps, all processes will have received the full $$k$$ and $$v$$ tensors, in chunks, and will have its original tensors returned to its local memory. This pattern can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-distributed/ring_attention.png"/>
+<img width="100%" height="100%" src="/assets/GPTlite-distributed/ring_attention.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **1st Ring Attention Step:** the first step of the ring attention. Each process holds its part of the Query, Value and Key tensors. Each process computes the block attention for those tensors. Asynchronously, processes perform an async send of the Key and Value tensors to the next process in the communication ring (clockwise). **2nd, 3rd, and 4th Ring Attention steps:** Each process receives the previous process Key and Value blocks and are now able to compute attention outpout for its original Query tensor and the received Key and Value tensors. **After Ring Attention**: the Multi-head attention output is already time-split across processes, similarly to the initial data format.
@@ -189,7 +189,7 @@ Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial
 From a process standpoint, after all the ring steps, each process was presented with their own timeframe of $$q$$ and the full $$k$$ and $$v$$ tensors. As an example, for the third (red) process above, we'd have the following data presented:
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="/assets/GPT-lite-distributed/ring_attention_qkv.png"/>
+<img width="40%" height="40%" src="/assets/GPTlite-distributed/ring_attention_qkv.png"/>
 
 ### Implementation
 
@@ -313,13 +313,13 @@ Pytorch does not have the notion of *partial sentences*, thus all samples being 
 Moreover, when you perform multi-dimensional parallelism (e.g. at data- and sequence levels), you need to define the process groups for the data parallelel processes (the ones that load different samples) and the sequence parallel processes (the ones that load different chunks of the same sample and perform sequence parallelism for that sample). You can do this with Pytorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) mesh or create your own process groups manually. For the sake of illustration, if you'd implement a $$2 \times 2$$ Data- and Ulysses sequence parallelism on 4 GPUs, this would be the memory layout before and during the Multi-Head Attention:
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/GPT-lite-distributed/sequence_and_data_parallelism.png"/>
+<img width="70%" height="70%" src="/assets/GPTlite-distributed/sequence_and_data_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Activations allocation on a 4-GPU parallelism with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: blue and green processes belong to the same sequence-parallel group and share one sample; red and yellow processes form the other sequence-parallel group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts a token-level distributed storage into a head-level distributed storage. All four processes can compute the attention for full sentences.
 
 ## Code and final remarks
 
-This code has been added to the [GPT-lite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed), if you want to try it. When you run it, keep in mind that deterministic behaviour on sequence parallelism across networks of different proces count  is difficult due to random number generators producing different values on each node - e.g. during model initialization and dropout. 
+This code has been added to the [GPTlite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed), if you want to try it. When you run it, keep in mind that deterministic behaviour on sequence parallelism across networks of different proces count  is difficult due to random number generators producing different values on each node - e.g. during model initialization and dropout. 
 
 Finally, both two methods have some drawbacks: Ulysses yields a reduced number of communication steps but low parallelism, while Ring Attention will give high parallelism with communication steps. The ideal solution would then be a hybrid of Ulysses parallelism and Ring attention. This has already been presented in [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719). If you're looking for finer-granularity in sequence parallelism, check the head-parallel and context-parallel implementation of 2D-attention in [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485v1).

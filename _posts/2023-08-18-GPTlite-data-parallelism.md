@@ -9,19 +9,19 @@ tags: [machinelearning]
 Distributed data parallelism (DDP) refers to the parallel execution of different input samples across processors. If you consider any data input to be of shape $$B \times T \times E$$ as in batch size, sequence/temporal size, and embedding/features size, then data parallelism refers to the use case where we split the data across $$P$$ processes, leading to a local input of shape $$B/P \times T \times E$$:
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/GPT-lite-distributed/data_parallelism.png"/>
+<img width="35%" height="35%" src="/assets/GPTlite-distributed/data_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the DDP data layout, split across 4 processes colorcoded as blue, yellow, red and green.
 
-In this post, we will perform distributed data parallelism on the training process of the [GPT-lite model we built in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPT-lite %}), on a network of 8 GPUs, using PyTorch's [PyTorch](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
+In this post, we will perform distributed data parallelism on the training process of the [GPTlite model we built in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), on a network of 8 GPUs, using PyTorch's [PyTorch](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
 
 There are two main data parallelism approaches:
 
 **Distributed Data Parallelism** keeps a full copy of the model (weights, optimizer parameters and gradients) on each processor. All models are initialized equally. Each processor takes as input a different minibatch and performs a forward pass to compute the loss that relates to that batch. On the backward pass, at every layer of the model, all processes compute the gradients of that batch, and perform an all-reduce to get the mean gradients across all processors. This is then used to update the optimizer states. Because parameters are initialized equally, and the gradients are mean-reduced, and all parameters perform the same updates, the models across all processors are kept in an identical state throughout the execution. 
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/GPT-lite-distributed/workflow_data_parallelism.png"/>
+<img width="90%" height="90%" src="/assets/GPTlite-distributed/workflow_data_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Workflow for distributed data parallelism (DDP) across 4 color-coded processes. Each process holds a copy of a 4-layer feed-forward model, initialized identically. Each process performs a forward pass of its own data (arrow pointing up on the left of the model). On the backward pass, all processes compute the local gradients and mean-reduce them across the network (arrow pointing down on the right of the model). The mean of the gradients is then used by the optimizer to update the parameter states. 
@@ -37,7 +37,7 @@ Looking at the previous, we can see that each processor holds a copy of the mode
 An important remark is that activations are not sharded i.e. they are kept in *full shape* on each processor. And in modern models, **a huge chunk of memory is allocated to residual memory (activations, normalization layers, etc) which is not sharded by FSDP**. With that in mind, the following diagram illustrates the workflow of the stage 3 sharding (of parameters, gradients and optimizer states):
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-distributed/workflow_sharding.png"/>
+<img width="100%" height="100%" src="/assets/GPTlite-distributed/workflow_sharding.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Workflow for stage 3 sharding. Each processor contains a non-overlapping subset of parameters, gradients and optimiser data, split by assigning different layers to different processes. Each processor loads a different data batch. During forward and backward passes (represented by arrows on the left and right of model, respectively), when computing is needed for a given layer, the process who is responsible for those layers will broadcasts and gather those values to/from the remaining processes. Example for processor 1 (yellow): **Data loading:** yellow process loads data sample 1.  **Forward pass:** yellow process receives the parameters from rank 0 (blue) and computes the activations for layer 1. Afterwards, yellow process broadcasts its parameters to ranks 0, 2 and 3, so that they compute their activations for layer 2. Activations for layer 3 and 4 are computed similarly to layer 1, led by the red and green processes, specifically. **Backward pass:** the green process (3) broadcasts parameters to all other processes. Each process can use its activations and the received parameters to compute the gradients for the top layer. All processes gather their local gradients in process 3 that will use it to update the parameters of the last layer. For the remaining layers, the same happens, where the red, yellow and blue processes will be the ones doing the broadcast of parameters and gather of gradients (iteratively).
@@ -45,7 +45,7 @@ Workflow for stage 3 sharding. Each processor contains a non-overlapping subset 
 The higher the stage, the more communication we require, but the less memory we consume. These memory improvements are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPT-lite-distributed/DeepSpeed_stages.png"/>
+<img width="80%" height="80%" src="/assets/GPTlite-distributed/DeepSpeed_stages.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Memory consumption of the three different stages of ZeRO FSDP.  Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
@@ -80,7 +80,7 @@ The back propagation phase on the vDNN(+) implementation on convolutional neural
 
 ## Model and dataset setup
 
-We start our implementation by taking our previous *GPT-lite* with the specs matching the *GPT-2 Small* model in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1):
+We start our implementation by taking our previous *GPTlite* with the specs matching the *GPT-2 Small* model in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Fig 2.1):
 
 ```python
 n_layer = 12   # depth of the network as number of decoder blocks.
@@ -279,8 +279,8 @@ def main_deepspeed(n_epochs=100, random_seed=42):
   deepspeed.init_distributed()  # initialize distributed DeepSpeed
   config = 'ds_config.json'  # load the DeepSpeed config
   criterion = torch.nn.CrossEntropyLoss()  # initialize loss function
-  train_dataset, _, vocab_size = gptlite.get_dataset()  # initialize GPT-lite dataset
-  model = gptlite.get_model(vocab_size)  # initialize GPT-lite model
+  train_dataset, _, vocab_size = gptlite.get_dataset()  # initialize GPTlite dataset
+  model = gptlite.get_model(vocab_size)  # initialize GPTlite model
 
   engine, optimizer, train_dataloader , _ = deepspeed.initialize(
     config=config, model=model, training_data=train_dataset,) # initialize deepspeed
@@ -446,26 +446,26 @@ To measure our performance, we used the deepspeed logger to extract the followin
 
 All implementations use the same mixed-precision representation, communication bucket sizes, and other config parameters. We benchmarked the following implementations (and configs):
 
-1. The distributed data parallel (DDP) implementation, i.e. no DeepSpeed (<a href="/assets/GPT-lite-distributed/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
-2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="/assets/GPT-lite-distributed/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
-3. The ZeRO-3 implementation with ZeRO-Infinity for CPU offloading (<a href="/assets/GPT-lite-distributed/ds_config_offload.json">`ds_config_offload.json`</a>);
+1. The distributed data parallel (DDP) implementation, i.e. no DeepSpeed (<a href="/assets/GPTlite-distributed/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
+2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="/assets/GPTlite-distributed/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
+3. The ZeRO-3 implementation with ZeRO-Infinity for CPU offloading (<a href="/assets/GPTlite-distributed/ds_config_offload.json">`ds_config_offload.json`</a>);
 
-We tested our GPT-lite model, with a micro-batch size of 1 sample per GPU, and the results are:
+We tested our GPTlite model, with a micro-batch size of 1 sample per GPU, and the results are:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_gptlite.png"/>
+<img width="100%" height="100%" src="/assets/GPTlite-distributed/benchmark_gptlite.png"/>
 
 
 **Memory overhead from communication buffers.** Looking at the max vs average memory, note that the max memory in theory should be much higher at high ZeRO stages compared to low ZeRO stages and DPP. This is due to more parameters being communicated requiring more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we also benchmarked several runs with the default communication bucket sizes (`5e9`) and it led to a higher memory usage as expected (of approximately double the amount in stages 2 and 3), that became prohibitive for some runs.
 
 <!-- 
-**Activation checkpointing.** On the GPT-lite model, the main memory driver is the activations memory on the attention matrix (grows quadratically with the sequence length and linearly with the batch size). Therefore, sharding alone does not yield a signification memory reduction. Adding activation checkpointing overcomes this memory bottleneck by keeping at most one attention matrix in memory (recomputed on the fly), throughout the whole backward pass. Moreover, **mixed precision** has an important effect on throughtput as lower precision yields faster communication and computation. As an example, the results for ZeRO-1 with activation checkpointing and mixed precision are:
+**Activation checkpointing.** On the GPTlite model, the main memory driver is the activations memory on the attention matrix (grows quadratically with the sequence length and linearly with the batch size). Therefore, sharding alone does not yield a signification memory reduction. Adding activation checkpointing overcomes this memory bottleneck by keeping at most one attention matrix in memory (recomputed on the fly), throughout the whole backward pass. Moreover, **mixed precision** has an important effect on throughtput as lower precision yields faster communication and computation. As an example, the results for ZeRO-1 with activation checkpointing and mixed precision are:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_gptlite_activation_ckpt_throughput.png"/>
+<img width="100%" height="100%" src="/assets/GPTlite-distributed/benchmark_gptlite_activation_ckpt_throughput.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPT-lite-distributed/benchmark_gptlite_activation_ckpt_memory_usage.png"/>
+<img width="100%" height="100%" src="/assets/GPTlite-distributed/benchmark_gptlite_activation_ckpt_memory_usage.png"/>
 
 **Parameter vs residual memory.** Note the difference between average memory and maximum memory. That gap in memory consumption is due to temporary memory dedicated to activations, residual buffers, communication buffers, etc. 
 -->
@@ -482,7 +482,7 @@ Finally, we did not use **communication quantization** as did not result in any 
 
 In this post we explored only the dimension of data parallelism.  If you'd like to know more about DeepSpeed, check the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
-There are a lot of results and food for thought here, so I will update this post as I find new insights. Meanwhile, if you want to try this on your own, see the [GPT-lite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPT-lite-distributed).
+There are a lot of results and food for thought here, so I will update this post as I find new insights. Meanwhile, if you want to try this on your own, see the [GPTlite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed).
 
 
 
