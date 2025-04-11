@@ -1,5 +1,6 @@
 import torch
 import torch.nn.functional as F
+import os
 
 
 def get_batch(source, batch_size, seqlen):
@@ -29,3 +30,44 @@ def sin_cos_positional_embeddings(S, E):
   pe[:, odd_i]  = torch.cos( pos.unsqueeze(1) / div_term[odd_i].unsqueeze(0) )  # Cosine for odd indices
   return pe.unsqueeze(0) # from SxE to 1xSxE to sum over batch dimension
 
+
+def get_tiny_shakespeare_data():
+  # load tiny shakespeare
+  current_dir = os.path.dirname(os.path.realpath(__file__))
+  txt_path = os.path.join(current_dir, 'tinyshakespeare.txt')
+  with open(txt_path) as f:
+      text = f.read()
+
+  #collect all ordered and unique characters in the text
+  chars = sorted(list(set(text)))
+  print(f"{len(chars)} unique chars: {''.join(chars)}")
+
+  #map characters to integers
+  stoi = { ch:i for i,ch in enumerate(chars) }
+  itos = { i:ch for i,ch in enumerate(chars) }
+  encode_fn = lambda x: torch.tensor([stoi[ch] for ch in x], dtype=torch.long) #encode text to integers
+  decode_fn = lambda x: ''.join([itos[i] for i in x]) #decode integers to text
+  vocab_size = len(stoi)
+  print(encode_fn("Hello world"))
+  print(decode_fn(encode_fn("Hello world").tolist()))
+  print("character zero is:", decode_fn([0]), "<end>")
+
+  # collect input data, break dataset in train/validation
+  data = encode_fn(text)
+  data_split = int(0.9*len(data))
+  train_data, valid_data = data[:data_split], data[data_split:]
+  print(f"Data sizes: total {data.shape[0]}, train {train_data.shape[0]}, valid {valid_data.shape[0]}")
+
+  return vocab_size, train_data, valid_data, encode_fn, decode_fn
+
+
+def get_gpt2_small_model_parameters():
+  """GPT2-small model parameters (Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021") """
+
+  n_layers = 12 # depth of the network as number of decoder blocks.
+  d_model = 768 # size of the embeddings
+  n_heads = 12 # number of attention heads in the Multi-Attention mechanism
+  d_head = 64 # dimensionaly of the attn head
+  seqlen = 64  # sequence length, context size, or $n_{ctx}$ in the paper    
+  dropout_p = 0.1 # dropout rate for dropout units
+  return n_layers, d_model, n_heads, d_head, seqlen, dropout_p

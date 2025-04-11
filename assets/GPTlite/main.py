@@ -1,47 +1,13 @@
-import os
 import torch
 import torch.nn.functional as F
 from gptlite import GPTlite
-from utils import get_batch
+from utils import get_batch, get_tiny_shakespeare_data, get_gpt2_small_model_parameters
 
 
 if __name__=='__main__':
   torch.manual_seed(42) # random seed, for reproducibility
-
-  # load tiny shakespeare
-  current_dir = os.path.dirname(os.path.realpath(__file__))
-  txt_path = os.path.join(current_dir, 'tinyshakespeare.txt')
-  with open(txt_path) as f:
-      text = f.read()
-
-  #collect all ordered and unique characters in the text
-  chars = sorted(list(set(text)))
-  print(f"{len(chars)} unique chars: {''.join(chars)}")
-
-  #map characters to integers
-  stoi = { ch:i for i,ch in enumerate(chars) }
-  itos = { i:ch for i,ch in enumerate(chars) }
-  encode = lambda x: torch.tensor([stoi[ch] for ch in x], dtype=torch.long) #encode text to integers
-  decode = lambda x: ''.join([itos[i] for i in x]) #decode integers to text
-  vocab_size = len(stoi)
-  print(encode("Hello world"))
-  print(decode(encode("Hello world").tolist()))
-  print("character zero is:", decode([0]), "<end>")
-
-  # collect input data, break dataset in train/validation
-  data = encode(text)
-  data_split = int(0.9*len(data))
-  train_data, valid_data = data[:data_split], data[data_split:]
-  print(f"Data sizes: total {data.shape[0]}, train {train_data.shape[0]}, valid {valid_data.shape[0]}")
-
-  # Initialize the model
-  # Model parameters, same as GPT-2 Small in Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021"
-  n_layers = 12 # depth of the network as number of decoder blocks.
-  d_model = 768 # size of the embeddings
-  n_heads = 12 # number of attention heads in the Multi-Attention mechanism
-  d_head = 64 # dimensionaly of the attn head
-  seqlen = 64  # sequence length, context size, or $n_{ctx}$ in the paper    
-  dropout_p = 0.1 # dropout rate for dropout units
+  vocab_size, train_data, valid_data, encode_fn, decode_fn = get_tiny_shakespeare_data()
+  n_layers, d_model, n_heads, d_head, seqlen, dropout_p = get_gpt2_small_model_parameters()
 
   # Smaller model for debugging
   n_layers = 6
@@ -109,4 +75,4 @@ if __name__=='__main__':
 
       # print generated string
       idx_without_bos = idx[0, 1:].tolist() # remove batch dim and BOS token (\n)
-      print("Generated text:", decode(idx_without_bos))
+      print("Generated text:", decode_fn(idx_without_bos))
