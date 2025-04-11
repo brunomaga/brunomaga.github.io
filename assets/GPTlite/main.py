@@ -43,14 +43,14 @@ if __name__=='__main__':
   seqlen = 64  # sequence length, context size, or $n_{ctx}$ in the paper    
   dropout_p = 0.1 # dropout rate for dropout units
 
-  # DEBUG settings
+  # Smaller model for debugging
   n_layers = 6
   d_model = 384
   n_heads = 6
   d_head = 64
 
   # Train parameters
-  batch_size = 16   # Batch size
+  batch_size = 32   # Batch size
   eval_interval = 100  # evaluation interval
   train_iters = 50000  # number of training iterations
   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
