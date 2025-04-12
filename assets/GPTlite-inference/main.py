@@ -36,7 +36,7 @@ if __name__=='__main__':
   generated_texts = []
 
   # In this dummy example, use a random generated length. In a trained model this would be matching last token to EOS
-  random_answer_seqlens = np.random.randint(seqlen*2, seqlen*8, size=n_sequences)
+  random_answer_seqlens = np.random.randint(seqlen, seqlen*6, size=n_sequences)
   is_completed = lambda toks: len(toks)>=len(eos_tokens) and (toks[-len(eos_tokens):] == eos_tokens).all()
   
   # INFERENCE WITHOUT CONTINUOUS BATCH: parallelize over the batch dimension
@@ -73,7 +73,7 @@ if __name__=='__main__':
               
             # check if sequence was completed, and increase completed counter if that's the case
             if is_completed(seq_tokens):
-              print(f"Completed sequence {sequence_id+i} with length {len(seq_tokens)} in slot {i}.")	
+              # print(f"Completed sequence {sequence_id+i} with length {len(seq_tokens)} in slot {i}.")	
               completed += 1
               generated_texts[-1][sequence_id+i] = decode_fn(seq_tokens.tolist())
 
@@ -127,7 +127,7 @@ if __name__=='__main__':
             idx[i][-1] = prompts[active[i]] 
             next_to_be_processed+=1
           completed += 1
-          print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
+          # print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
 
   if torch.cuda.is_available():
     torch.cuda.synchronize()
