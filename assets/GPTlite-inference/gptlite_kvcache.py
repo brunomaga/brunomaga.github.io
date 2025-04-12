@@ -52,7 +52,7 @@ class MultiHeadAttention_KVCache(nn.Module):
     (past_keys, past_values) per layer, and we’ll trim it to a maximum sequence
     length (max_seqlen) during inference.
 
-    During training (cache=None), it processes the full sequence as usual. During inference
+    During training (kv_cache=None), it processes the full sequence as usual. During inference
     (cache provided), it appends the new token’s keys and values to the cached ones, trims
     to max_seqlen if necessary, and returns the updated cache.
     """
@@ -67,7 +67,7 @@ class MultiHeadAttention_KVCache(nn.Module):
         self.out_proj = nn.Linear(n_heads * d_head, d_model)
         self.dropout = nn.Dropout(dropout_p)
 
-    def forward(self, x, cache=None, causal_mask=True, max_seqlen=None):
+    def forward(self, x, kv_cache=None, causal_mask=True, max_seqlen=None):
         B, S, _ = x.shape
         H, D = self.n_heads, self.d_head
 
@@ -77,8 +77,8 @@ class MultiHeadAttention_KVCache(nn.Module):
         v = self.value_proj(x).view(B, S, H, D).transpose(1, 2)
 
         # If cache is provided (inference), concatenate past keys/values
-        if cache is not None:
-            past_keys, past_values = cache
+        if kv_cache is not None:
+            past_keys, past_values = kv_cache
             k = torch.cat([past_keys, k], dim=2)  # [B, H, S_past + S, D]
             v = torch.cat([past_values, v], dim=2)
             # Trim cache to max_seqlen if exceeded
@@ -96,7 +96,7 @@ class MultiHeadAttention_KVCache(nn.Module):
         out = self.dropout(out) if self.training else out
 
         # Return output and updated cache (if caching)
-        new_cache = (k, v) if cache is not None else None
+        new_cache = (k, v) if kv_cache is not None else None
         return out, new_cache
     
 
@@ -112,16 +112,16 @@ class Block_KVCache(nn.Module):
         self.ffwd = FeedForward(d_model, dropout_p)  # Assume FeedForward is defined elsewhere
         self.ln2 = nn.LayerNorm(d_model)
 
-    def forward(self, x, cache=None, max_seqlen=None):
+    def forward(self, x, kv_cache=None, max_seqlen=None):
         # Pre-layer normalization
-        mha_out, new_cache = self.mha(self.ln1(x), cache=cache, 
+        mha_out, new_cache = self.mha(self.ln1(x), kv_cache=kv_cache, 
                                      causal_mask=True, max_seqlen=max_seqlen)
         x = x + mha_out
         x = x + self.ffwd(self.ln2(x))
         return x, new_cache
     
 
-class GPTlite_Inference(nn.Module):
+class GPTlite_KVCache(nn.Module):
     """
     GPTlite that handles cache for all layers and adjust positional
     embeddings for inference with caching.
@@ -131,7 +131,7 @@ class GPTlite_Inference(nn.Module):
     beyond). Positional embeddings are capped at seqlen-1 to match training.
     """
 
-    def __init__(self, vocab_size, d_model, n_layers, n_heads, d_head, seqlen, dropout_p):
+    def __init__(self, vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen):
         super().__init__()
         self.token_embedding = nn.Embedding(vocab_size, d_model)
         self.position_embedding = nn.Embedding(seqlen, d_model)
@@ -142,13 +142,13 @@ class GPTlite_Inference(nn.Module):
         self.fc_out = nn.Linear(d_model, vocab_size)
         self.seqlen = seqlen
 
-    def forward(self, x, cache=None, max_seqlen=None):
+    def forward(self, x, kv_cache=None, max_seqlen=None):
         B, T = x.shape
         
         # Determine positions
-        if cache is not None and cache[0] is not None:
+        if kv_cache is not None and kv_cache[0] is not None:
             # During inference, use position based on past sequence length
-            S_past = cache[0][0].size(2)  # S_past from first layer's past_keys
+            S_past = kv_cache[0][0].size(2)  # S_past from first layer's past_keys
             position = min(S_past, self.seqlen - 1)
             positions = torch.tensor([position], device=x.device).unsqueeze(0).expand(B, T)
         else:
@@ -160,13 +160,13 @@ class GPTlite_Inference(nn.Module):
         x = self.token_embedding(x) + pos_embeddings  # [B, T, E]
 
         # Initialize cache if None
-        if cache is None:
-            cache = [None] * len(self.blocks)
+        if kv_cache is None:
+            kv_cache = [None] * len(self.blocks)
 
         # Process through blocks
         new_caches = []
-        for block, layer_cache in zip(self.blocks, cache):
-            x, new_cache = block(x, cache=layer_cache, max_seqlen=max_seqlen)
+        for block, layer_cache in zip(self.blocks, kv_cache):
+            x, new_cache = block(x, kv_cache=layer_cache, max_seqlen=max_seqlen)
             new_caches.append(new_cache)
 
         # Final layers
