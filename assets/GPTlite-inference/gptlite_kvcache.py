@@ -1,25 +1,15 @@
+import os
+import sys
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
 
-class FeedForward(nn.Module):
-  """ the feed forward network (FFN) in the paper"""
+# reuse some modules from the original GPTlite model
+current_dir = os.path.dirname(os.path.realpath(__file__))
+sys.path.insert(0, os.path.join(current_dir, '..', 'GPTlite'))
+from gptlite import FeedForward
 
-  def __init__(self, n_embd, dropout_p):
-    super().__init__()
-    # Note: in the paper (section 3.3) we have d_{model}=512 and d_{ff}=2048.
-    # Therefore the inner layer is 4 times the size of the embedding layer
-    self.net = nn.Sequential(
-        nn.Linear(n_embd, n_embd*4),
-        nn.ReLU(),
-        nn.Linear(n_embd*4, n_embd),
-        nn.Dropout(dropout_p)
-      )
-
-  def forward(self, x):
-    return self.net(x)
-  
 
 def scaled_dot_product_attention_kv_cache(Q, K, V, causal_mask=True, dropout=None):
     """
@@ -31,17 +21,19 @@ def scaled_dot_product_attention_kv_cache(Q, K, V, causal_mask=True, dropout=Non
     # Q: [B, H, Sq, D], K: [B, H, Sk, D], V: [B, H, Sk, D]
     scores = torch.matmul(Q, K.transpose(-2, -1)) / (K.size(-1) ** 0.5)  # [B, H, Sq, Sk]
     
-    if causal_mask and Q.size(2) == K.size(2):  # Apply mask only during training when Sq == Sk
+    # IMPORTANT: Apply mask only during training when Sq == Sk
+    # During inference (Sq=1, Sk=S_past+1), no mask is needed as the single query attends to all keys
+    if causal_mask and Q.size(2) == K.size(2):
         seqlen = Q.size(2)
         mask = torch.tril(torch.ones(seqlen, seqlen, device=Q.device))
+        mask = mask.to(scores.device)
         scores = scores.masked_fill(mask == 0, float('-inf'))
-    # During inference (Sq=1, Sk=S_past+1), no mask is needed as the single query attends to all keys
     
     weights = F.softmax(scores, dim=-1)  # [B, H, Sq, Sk]
     if dropout is not None:
         weights = dropout(weights)
     
-    output = torch.matmul(weights, V)  # [B, H, Sq, D]
+    output = weights @ V  # [B, H, Sq, D]
     return output
 
 
@@ -95,8 +87,8 @@ class MultiHeadAttention_KVCache(nn.Module):
         out = self.out_proj(out)
         out = self.dropout(out) if self.training else out
 
-        # Return output and updated cache (if caching)
-        new_cache = (k, v) if kv_cache is not None else None
+        # Return output and updated cache
+        new_cache = (k, v)
         return out, new_cache
     
 
