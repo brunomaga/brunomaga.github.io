@@ -1,13 +1,13 @@
 import torch
 import torch.nn.functional as F
 from gptlite import GPTlite
-from utils import get_batch, get_tiny_shakespeare_data, get_gptlite_draft_model_parameters
+from utils import get_batch, get_tiny_shakespeare_data, get_gptlite_distilled_model_parameters
 
 
 if __name__=='__main__':
   torch.manual_seed(42) # random seed, for reproducibility
   vocab_size, train_data, valid_data, encode_fn, decode_fn = get_tiny_shakespeare_data()
-  n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p = get_gptlite_draft_model_parameters()
+  n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p = get_gptlite_distilled_model_parameters()
 
   # Train parameters
   eval_interval = 100  # evaluation interval
@@ -48,8 +48,7 @@ if __name__=='__main__':
       loss = F.cross_entropy(logits.reshape(-1, vocab_size), targets.reshape(-1))
       print(f"Eval step {step}, eval loss {loss.item():.2f}")
 
-      # Generate one sample from the current state of the model
-
+      # Generate a sentence from the current state of the model
       # Begin of String (batch size 1): the token with id 0 (the \n character)
       idx = torch.zeros((1,1), dtype=torch.long, device=device)
       generated_seqlen = 100
@@ -59,10 +58,9 @@ if __name__=='__main__':
         logits = model(idx_cond).to(device) #call fwd without targets
         logits = logits[:, -1] # take last token. shape (B=1, C)
         probs = F.softmax(logits, dim=-1) # shape (B=1, C)
-        #randomly sample the next tokens, 1 for each of the previous probability distributions
-        #(one could take instead the argmax, but that would be deterministic and boring)
+        # sample the next token (we could take instead the argmax, but that would be deterministic and boring)
         idx_next = torch.multinomial(probs, num_samples=1) # shape (B=1, 1)
-        #append next token ix to the solution sequence so far
+        # append next token ix to the solution sequence so far
         idx = torch.cat([idx, idx_next], dim=-1) # shape (B=1, T+1)
 
       # print generated string

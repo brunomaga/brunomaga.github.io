@@ -84,7 +84,7 @@ def get_gptlite_model_parameters():
   return n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p
 
 
-def get_gptlite_draft_model_parameters():
+def get_gptlite_distilled_model_parameters():
   n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p = get_gptlite_model_parameters()
   d_model=256
   n_heads=4
