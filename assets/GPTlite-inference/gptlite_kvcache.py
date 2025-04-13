@@ -53,10 +53,14 @@ class MultiHeadAttention_KVCache(nn.Module):
         super().__init__()
         self.n_heads = n_heads
         self.d_head = d_head
+
+        # Create individual heads
         self.query_proj = nn.Linear(d_model, n_heads * d_head)
         self.key_proj = nn.Linear(d_model, n_heads * d_head)
         self.value_proj = nn.Linear(d_model, n_heads * d_head)
         self.out_proj = nn.Linear(n_heads * d_head, d_model)
+
+        # Output projection
         self.dropout = nn.Dropout(dropout_p)
 
     def forward(self, x, kv_cache=None, causal_mask=True, max_seqlen=None):
