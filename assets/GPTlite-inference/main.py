@@ -35,7 +35,7 @@ if __name__=='__main__':
 
   # inference / sequence generation settings
   batch_size = 4 # number of sequences to generate in parallel
-  n_sequences = 40 # total number of sequences to generate
+  n_sequences = 4 # total number of sequences to generate
   
   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
   bos_token = 0 # beginning of string is a dummy prompt of token 0 which is \n
@@ -89,15 +89,17 @@ if __name__=='__main__':
         tokens = torch.stack(prompts[batch_start:batch_start+batch_size], dim=0)  # batch of sequences 
         completed = 0
         while completed < batch_size:
-          if model_name == "kv cache":
+          if model_name == "original":
+            tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
+            logits = model_obj(tokens_in_context)
+          elif model_name == "kv cache":
             last_token = tokens[:, -1:].to(device)  # Pass only the latest token
             logits, kv_cache = model_obj(last_token, max_seqlen=seqlen, kv_cache=kv_cache)
-          elif model_name == "distilled":
+          elif model_name in "distilled":
             tokens_in_context = tokens[:, -seqlen_d:].to(device)
             logits = model_obj(tokens_in_context)
           else:
-            tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
-            logits = model_obj(tokens_in_context)
+            raise RuntimeError(f"Unknown model name: {model_name}")
           logits = logits[:, -1]  # Logits for the last position
           # for deterministic results use argmax of logits, instead of multinomial of the softmax of logits 
           next_token = torch.argmax(logits, dim=-1, keepdim=True)
@@ -119,7 +121,8 @@ if __name__=='__main__':
 
 
   #################################################################################################
-  #### INFERENCE WITH CONTINUOUS BATCHING: continuosly generate strings by filling up batch    ####
+  #### INFERENCE WITH CONTINUOUS BATCHING: continuosly append new sequences to input as soon   ####
+  #### as a sequence is completed, instead of waiting for the whole batch to be completed.     ####
   #################################################################################################
 
   tokens = torch.stack(prompts[:batch_size], dim=0) 
@@ -170,15 +173,15 @@ if __name__=='__main__':
 
 
   #################################################################################################
-  #### SPECULATIVE SAMPLING usng distilled model as draft and original model as target         ####
+  #### SPECULATIVE SAMPLING using distilled model as draft and original model as target        ####
   #################################################################################################
 
-  look_ahead_T = 5
+  draft_seqlen_K = 5
   generated_texts.append([None]*n_sequences) # list to store generated texts 
   start_time = benchmark_begin()
 
   # Same as GPTlite, but use draft model to generate the look ahead tokens
-  dist_draft_p = torch.zeros(look_ahead_T, batch_size, vocab_size, dtype=torch.float32, device=device)
+  dist_draft_p = torch.zeros(batch_size, draft_seqlen_K, vocab_size, dtype=torch.float32, device=device)
 
   with torch.inference_mode():
     for batch_start in range(0, n_sequences, batch_size):  # the 'while n<T do' in algorithm 2 in paper
@@ -187,37 +190,40 @@ if __name__=='__main__':
         # Step 1: generate look ahead tokens with draft model
         tokens = torch.stack(prompts[batch_start:batch_start+batch_size], dim=0)  # batch of sequences 
 
-        for t in range(look_ahead_T):  # the first 'for t=1:K do' in algorithm 2 in paper
-          tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
+        for t in range(draft_seqlen_K):  # the first 'for t=1:K do' in algorithm 2 in paper
+          tokens_in_context = tokens[:, -seqlen_d:].to(device)  # Use only the last seqlen tokens
           logits_draft = model_distilled(tokens_in_context)
           logits_draft = logits_draft[:, -1]  # Logits for the last position
-          dist_draft_p[t] = F.softmax(logits_draft, dim=-1)  # Store the distribution for the current token
+          dist_draft_p[:, t] = F.softmax(logits_draft, dim=-1)  # Store the distribution for the current token
 
         # Extract speculated tokens (last look_ahead_T tokens) from draft model
         tokens_draft = torch.argmax(dist_draft_p, dim=-1) # or polynomial sampling
         tokens = torch.cat([tokens, tokens_draft], dim=-1)  # append all speculated tokens to the final result
 
-        # Step 2: Perform Main model predictions for the same tokens
+        # Step 2: Perform target model predictions for the same tokens
         tokens_in_context = tokens[:, -seqlen:].to(device)
         logits_target = model(tokens_in_context)
         # VERY IMPORTANT: compared to before, we use ALL logits, not just the logits of the last token!!!
-        dist_target_q = F.softmax(logits_target[:, -look_ahead_T:], dim=-1)
+        dist_target_q = F.softmax(logits_target[:, -draft_seqlen_K:], dim=-1)
         # tokens_target = torch.argmax(dist_target_q, dim=-1)  # Get the tokens from the target model
 
-        for t in range(look_ahead_T):  # the second 'for t=1:K do' in algorithm 2 in paper
-          # sample r from an uniform distribution [0, 1]
+        # Note: if q(x) >= p(x) then accept token
+        # otherwise, the paper's rejection sampling scheme accepts token with prob q(x)/p(x)
+        # Therefore, combining both, we accept token when r < min( 1, q(x)/p(x) ), where r~Uniform[0, 1]
+        # (Why? see Theorem 1: modified rejection sampling recovers the target distribution)
+        for t in range(draft_seqlen_K):  # the second 'for t=1:K do' in algorithm 2 in paper
           r = torch.rand(batch_size, device=device)
-          prob_q = dist_target_q[:, t, tokens_draft[:, t]]  # probability of the token sampled by draft model
-          prob_p = dist_draft_p[:, t, tokens_draft[:, t]]  # probability of the token sampled by target model
-          if not (r <= min(1, prob_q/prob_p)).all():  # accept the token if all sequences agree
+          prob_q = torch.tensor([ dist_target_q[b, t, tokens_draft[b, t]] for b in range(batch_size)])  # probability of the token sampled by draft model
+          prob_p = torch.tensor([ dist_draft_p[b, t, tokens_draft[b, t]] for b in range(batch_size)]) # probability of the token sampled by target model
+          if not (r < torch.min( torch.ones(batch_size,), prob_q/prob_p)).all():  # accept the token if all sequences agree
             break # t is the index of the first token rejected
 
-        tokens = tokens[:, :-look_ahead_T+t]  # remove the rejected tokens from the batch
+        tokens = tokens[:, :-draft_seqlen_K+t]  # remove the rejected tokens from the batch
 
         # Step 3: Finalize remaining tokens with target model
-        if t<look_ahead_T: # handle rejected tokens
+        if t<draft_seqlen_K: # handle rejected tokens
           # sample from (dist_target_q - dist_draft_p)_+
-          q_minus_p = dist_target_q[t:] - dist_draft_p[t:]
+          q_minus_p = dist_target_q[:, t:] - dist_draft_p[:, t:]
           plus_fn = lambda fx: torch.clamp(fx, min=0) / torch.clamp(fx.sum(dim=-1, keepdim=True), min=1e-10)
           new_tokens = torch.argmax(plus_fn(q_minus_p), dim=-1)  # sample from the positive part of the difference
           tokens = torch.cat([tokens, new_tokens], dim=-1)  # append all accepted tokens to the final result
@@ -230,15 +236,15 @@ if __name__=='__main__':
             
           # check if sequence was completed, and increase completed counter if that's the case
           if is_completed(seq_tokens):
-            # print(f"Completed sequence {sequence_id+i} with length {len(seq_tokens)} in slot {i}.")	
+            print(f"Completed sequence {batch_start+i} with length {len(seq_tokens)} in slot {i}.")	
             completed.add(i)
             generated_texts[-1][batch_start+i] = decode_fn(seq_tokens.tolist())
 
-  benchmark_end("GPTlite (speculative sampling)", start_time)
+  benchmark_end("speculative sampling", start_time)
 
 
 
-  # final sanity check: make sure all generated texts match
+  # final sanity check: make sure all generated texts match. Will fail for when using small models
   for sequence_id, text in enumerate(generated_texts[0]):
     for j in range(1, len(generated_texts)):
       eos_offset = len(text) if text.find('\n') == -1 else text.find('\n')

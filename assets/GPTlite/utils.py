@@ -4,7 +4,7 @@ import os
 
 
 def get_batch(source, batch_size, seqlen):
-  """ get batch of size block_size from source """
+  """ get a GPT-model batch (as token ids) of size block_size from source """
   
   # generate `batch_size` random offsets on the data 
   offsets = torch.randint(len(source)-seqlen-1, (batch_size,) )
@@ -32,6 +32,11 @@ def sin_cos_positional_embeddings(S, E):
 
 
 def get_tiny_shakespeare_data():
+  """
+  The tiny shakespeare dataset from
+  https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
+  """ 
+
   # load tiny shakespeare
   current_dir = os.path.dirname(os.path.realpath(__file__))
   txt_path = os.path.join(current_dir, 'tinyshakespeare.txt')
@@ -75,6 +80,8 @@ def get_gpt3_small_model_parameters():
   return n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p
 
 def get_gptlite_model_parameters():
+  """ Parameters of a super small GPT3 model, for debugging and that can be trained on a laptop """
+
   n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p = get_gpt3_small_model_parameters()
   d_model = 512
   n_layers //= 2
@@ -85,6 +92,10 @@ def get_gptlite_model_parameters():
 
 
 def get_gptlite_distilled_model_parameters():
+  """
+  Parameters of a smaller model than get_gptlite_model_parameters used as e.g.
+  student model in distillation or draft model in speculative sampling.
+  """
   n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p = get_gptlite_model_parameters()
   d_model=256
   n_heads=4
