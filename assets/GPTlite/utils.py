@@ -61,13 +61,32 @@ def get_tiny_shakespeare_data():
   return vocab_size, train_data, valid_data, encode_fn, decode_fn
 
 
-def get_gpt2_small_model_parameters():
-  """GPT2-small model parameters (Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021") """
+def get_gpt3_small_model_parameters():
+  """GPT3-small model parameters (Table 2.1 in "Language Models are Few-Shot Learners, Brown et al, 2021") """
 
   n_layers = 12 # depth of the network as number of decoder blocks.
   d_model = 768 # size of the embeddings
   n_heads = 12 # number of attention heads in the Multi-Attention mechanism
-  d_head = 64 # dimensionaly of the attn head
-  seqlen = 64  # sequence length, context size, or $n_{ctx}$ in the paper    
+  d_head = 64 # dimensionality of the attn head
+  batch_size = 500_000 # batch size (0.5M)
+  lr = 6e-4 # learning rate
+  seqlen = 2048  # sequence length, context size, or $n_{ctx}$ in the paper    
   dropout_p = 0.1 # dropout rate for dropout units
-  return n_layers, d_model, n_heads, d_head, seqlen, dropout_p
+  return n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p
+
+def get_gptlite_model_parameters():
+  n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p = get_gpt3_small_model_parameters()
+  d_model = 512
+  n_layers //= 2
+  n_heads //= 2
+  batch_size = 32
+  seqlen = 128
+  return n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p
+
+
+def get_gptlite_draft_model_parameters():
+  n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p = get_gptlite_model_parameters()
+  d_model=256
+  n_heads=4
+  seqlen=64
+  return n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p
