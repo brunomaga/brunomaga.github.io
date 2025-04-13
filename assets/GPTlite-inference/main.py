@@ -27,22 +27,31 @@ if __name__=='__main__':
 
   # inference / sequence generation settings
   batch_size = 4 # number of sequences to generate in parallel
-  n_sequences = 20 # total number of sequences to generate
+  n_sequences = 40 # total number of sequences to generate
   
   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-  bos_token = 0 # Start and end of string is token 0 which is \n
-  eos_tokens = encode_fn("EOF\n") # End of string is
-  prompts = [ torch.full((1,), bos_token, dtype=torch.long, device=device) for i in range(n_sequences) ] # dummy single-token prompt
+  bos_token = 0 # beginning of string is a dummy prompt of token 0 which is \n
+  eos_tokens = encode_fn("\nEOF\n") # End of string is string "EOF"
+  prompts = [ torch.full((1,), bos_token, dtype=torch.long, device=device) for i in range(n_sequences) ] # input prompts
   generated_texts = []
 
   # In this dummy example, use a random generated length. In a trained model this would be matching last token to EOS
-  random_answer_seqlens = np.random.randint(seqlen, seqlen*6, size=n_sequences)
+  random_answer_seqlens = np.random.randint(seqlen, seqlen*4, size=n_sequences)
   is_completed = lambda toks: len(toks)>=len(eos_tokens) and (toks[-len(eos_tokens):] == eos_tokens).all()
   
-  # INFERENCE WITHOUT CONTINUOUS BATCH: parallelize over the batch dimension
-  for model_class in (GPTlite, GPTlite_KVCache):
-    torch.manual_seed(42) # random seed for model initialization, for reproducibility
-    model = model_class(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen).to(device).eval()
+
+
+  ##################################################################################################
+  #### REGULAR BATCHED INFERENCE: parallelize requests of diff length over the batch dimension  ####
+  #### Variants: GPTlite and GPTlite_KVCache (with KV cache)                                    ####
+  ##################################################################################################	
+
+  torch.manual_seed(42) # random seed for model initialization, for reproducibility
+  model = GPTlite(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen).to(device).eval()
+  torch.manual_seed(42) # random seed for model initialization, for reproducibility
+  model_kvcache = GPTlite_KVCache(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen).to(device).eval()
+
+  for model_obj in (model, model_kvcache):
     generated_texts.append([None]*n_sequences) # list to store generated texts
 
     if torch.cuda.is_available():
@@ -55,19 +64,20 @@ if __name__=='__main__':
         idx = torch.stack(prompts[sequence_id:sequence_id+batch_size], dim=0)  # batch of sequences 
         completed = 0
         while completed < batch_size:
-          if isinstance(model, GPTlite_KVCache):
+          if isinstance(model_obj, GPTlite_KVCache):
             last_idx = idx[:, -1:].to(device)  # Pass only the latest token
-            logits, kv_cache = model(last_idx, max_seqlen=seqlen, kv_cache=kv_cache)
+            logits, kv_cache = model_obj(last_idx, max_seqlen=seqlen, kv_cache=kv_cache)
           else:
             idx_cond = idx[:, -seqlen:].to(device)  # Use only the last seqlen tokens
-            logits = model(idx_cond)
+            logits = model_obj(idx_cond)
           logits = logits[:, -1]  # Logits for the last position
           probs = F.softmax(logits, dim=-1)
           idx_next = torch.argmax(probs, dim=-1, keepdim=True)  # argmax insted of multinomial for deterministic results
           idx = torch.cat([idx, idx_next], dim=-1)
 
-          # because model is not trained, we wont get EOS token, so we need to add it manually
           for i, seq_tokens in enumerate(idx):
+
+            # because model is not trained, we wont get EOS token, so we need to add it manually
             if len(seq_tokens) == random_answer_seqlens[sequence_id+i]:
               idx[i][-len(eos_tokens):] = eos_tokens # add EOS token to the sequence
               
@@ -80,11 +90,13 @@ if __name__=='__main__':
     # sync, measure runtime and collect generated string
     if torch.cuda.is_available():
       torch.cuda.synchronize()
-    print(f"Runtime for {model_class.__name__}: {(time.time() - start_time):.4f} seconds")
+    print(f"Runtime for {type(model_obj).__name__}: {(time.time() - start_time):.4f} seconds")
 
-  # INFERENCE WITH CONTINUOUS BATCHING: continuosly generate strings by filling up batch 
-  torch.manual_seed(42) # random seed for model initialization, for reproducibility
-  model = GPTlite(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen).to(device).eval()
+
+
+  #################################################################################################
+  #### INFERENCE WITH CONTINUOUS BATCHING: continuosly generate strings by filling up batch    ####
+  #################################################################################################
 
   idx = torch.stack(prompts[:batch_size], dim=0) 
   active = list(range(batch_size)) # list of active sequences as tuples as sequence_id 
@@ -110,7 +122,7 @@ if __name__=='__main__':
       # Add new sequences if possible
       for i, (sequence_id, seq_tokens) in enumerate(zip(active, idx)):
 
-        if sequence_id is None:
+        if sequence_id is None: # active slot in batch not being used, ignore
           continue
         
         # because model is not trained, we wont get EOS token, so we need to add it manually
@@ -118,20 +130,32 @@ if __name__=='__main__':
         if active_seqlens[i] == random_answer_seqlens[sequence_id]:
           seq_tokens[-len(eos_tokens):] = eos_tokens # add EOS token to the sequence
           
+        # if completed, load next prompt in the active slot
         if is_completed(seq_tokens):
           generated_texts[-1][sequence_id] = decode_fn(seq_tokens.tolist())
-          active[i] = next_to_be_processed if next_to_be_processed < n_sequences else None  # next sequence to be processed 
-          active_seqlens[i] = 0 # reset active sequence length
-          if active[i] is not None: # load next prompt
-            idx[i][-seqlen:-1].fill_(0)  # Reset the sequence
-            idx[i][-1] = prompts[active[i]] 
+          if next_to_be_processed < n_sequences:
+            active[i] = next_to_be_processed # next sequence id to be processed
+            next_prompt = prompts[next_to_be_processed]
+            idx[i][-seqlen:].fill_(0)  # Reset the whole context
+            idx[i][-len(next_prompt):] = next_prompt # load next prompt
+            active_seqlens[i] = 0 # reset active sequence length
             next_to_be_processed+=1
+            # print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
+          else:
+            active[i] = None # slot is not being used anymore   
           completed += 1
-          # print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
 
   if torch.cuda.is_available():
     torch.cuda.synchronize()
   print(f"Runtime for GPTlite (continuous batching): {(time.time() - start_time):.4f} seconds")
+
+
+
+  #################################################################################################
+  #### SPECULATIVE SAMPLING
+  #################################################################################################
+
+  model_draft = GPTlite(vocab_size, d_model//2, n_heads//2, d_head//2, n_layers, dropout_p, seqlen//2).to(device).eval()
 
   # sanity check: make sure all generated texts match
   for sequence_id, text in enumerate(generated_texts[0]):
