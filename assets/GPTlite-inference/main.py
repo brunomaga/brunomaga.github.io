@@ -56,19 +56,11 @@ if __name__=='__main__':
   prompts = [ torch.full((1,), bos_token, dtype=torch.long, device=device) for i in range(n_sequences) ] # input prompts
   generated_texts = []
 
-  n_layers, d_model, n_heads, d_head, _, _, seqlen, dropout_p = get_gptlite_model_parameters()
-
-  # In this dummy example, use a random generated length. In a trained model this would be matching last token to EOS
-  random_answer_seqlens = np.random.randint(seqlen, seqlen*4, size=n_sequences)
-  is_completed = lambda toks: len(toks)>=len(eos_tokens) and (toks[-len(eos_tokens):] == eos_tokens).all()
-  
-
-  ##################################################################################################
-  #### REGULAR BATCHED INFERENCE: parallelize requests of diff length over the batch dimension  ####
-  #### Variants: GPTlite, GPTlite with KV cache, and GPTlite distilled to a smaller model       ####
-  ##################################################################################################	
+ 
+  # Load models and states if available
 
   torch.manual_seed(42) # reset random seed before model initialization, for reproducibility
+  n_layers, d_model, n_heads, d_head, _, _, seqlen, dropout_p = get_gptlite_model_parameters()
   model = GPTlite(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen).to(device).eval()
   model = load_model_ckpt(GPTLITE_CKPT_PATH, model, "GPTlite", device)
 
@@ -83,6 +75,18 @@ if __name__=='__main__':
   n_layers_d, d_model_d, n_heads_d, d_head_d, _, _, seqlen_d, dropout_p_d = get_gptlite_distilled_model_parameters()
   model_distilled = GPTlite(vocab_size, d_model_d, n_heads_d, d_head_d, n_layers_d, dropout_p_d, seqlen_d).to(device).eval()
   model_distilled = load_model_ckpt(GPTLITE_DISTILLED_CKPT_PATH, model_distilled, "GPTlite_distilled", device)
+
+
+  # In this dummy example, use a random generated length. In a trained model this would be matching last token to EOS
+  random_answer_seqlens = np.random.randint(seqlen, seqlen*8, size=n_sequences)
+  is_completed = lambda toks: len(toks)>=len(eos_tokens) and (toks[-len(eos_tokens):] == eos_tokens).all()
+
+
+  ##################################################################################################
+  #### REGULAR BATCHED INFERENCE: parallelize requests of diff length over the batch dimension  ####
+  #### Variants: GPTlite, GPTlite with KV cache, and GPTlite distilled to a smaller model       ####
+  ##################################################################################################	
+
 
   for (model_obj, model_name) in (
     (model, "GPTlite"),
