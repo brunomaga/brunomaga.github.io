@@ -226,7 +226,7 @@ if __name__=='__main__':
             prob_q = dist_target_q[b][t][draft_token_picked]
             prob_p = dist_draft_p[b][t][draft_token_picked]
             r = np.random.uniform() # sample r~Uniform[0, 1)
-            if t==2: #not r < min( 1, prob_q/prob_p): # token reject, sample from (q(x) - p(x))_+
+            if not r < min( 1, prob_q/prob_p): # token reject, sample from (q(x) - p(x))_+
               # sample x_{n+t} from (dist_target_q - dist_draft_p)_+
               q_minus_p = dist_target_q[b, t] - dist_draft_p[b, t]
               plus_fn = lambda fx: torch.clamp(fx, min=0) / torch.clamp(fx.sum(dim=-1, keepdim=True), min=1e-10)
