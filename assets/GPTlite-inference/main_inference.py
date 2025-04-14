@@ -51,9 +51,8 @@ if __name__=='__main__':
   n_sequences = 20 # total number of sequences to generate
   
   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-  bos_token = 0 # beginning of string is a dummy prompt of token 0 which is \n
-  eos_tokens = encode_fn("\nEOF\n") # End of string is string "EOF"
-  prompts = [ torch.full((1,), bos_token, dtype=torch.long, device=device) for i in range(n_sequences) ] # input prompts
+  breakline = 0 # beginning of string is a dummy prompt of token 0 which is \n
+  prompts = [ torch.full((1,), breakline, dtype=torch.long, device=device) for i in range(n_sequences) ] # input prompts
   generated_texts = []
 
  
@@ -72,14 +71,20 @@ if __name__=='__main__':
   model_mqa = GPTlite_GQA(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen, n_groups=1).to(device).eval()
   model_mqa = load_model_ckpt(GPTLITE_MQA_CKPT_PATH, model_mqa, "GPTlite_GQA", device)
 
-  n_layers_d, d_model_d, n_heads_d, d_head_d, _, _, seqlen_d, dropout_p_d = get_gptlite_distilled_model_parameters()
-  model_distilled = GPTlite(vocab_size, d_model_d, n_heads_d, d_head_d, n_layers_d, dropout_p_d, seqlen_d).to(device).eval()
-  model_distilled = load_model_ckpt(GPTLITE_DISTILLED_CKPT_PATH, model_distilled, "GPTlite_distilled", device)
+  # n_layers_d, d_model_d, n_heads_d, d_head_d, _, _, seqlen_d, dropout_p_d = get_gptlite_distilled_model_parameters()
+  # model_distilled = GPTlite(vocab_size, d_model_d, n_heads_d, d_head_d, n_layers_d, dropout_p_d, seqlen_d).to(device).eval()
+  # model_distilled = load_model_ckpt(GPTLITE_DISTILLED_CKPT_PATH, model_distilled, "GPTlite_distilled", device)
 
+  torch.manual_seed(42) # reset random seed before model initialization, for reproducibility
+  n_layers_d, d_model_d, n_heads_d, d_head_d, _, _, seqlen_d, dropout_p_d = get_gptlite_model_parameters()
+  model_distilled = GPTlite(vocab_size, d_model_d, n_heads_d, d_head_d, n_layers_d, dropout_p, seqlen_d).to(device).eval()
+  model_distilled = load_model_ckpt(GPTLITE_CKPT_PATH, model, "GPTlite", device)
 
-  # In this dummy example, use a random generated length. In a trained model this would be matching last token to EOS
-  random_answer_seqlens = np.random.randint(seqlen, seqlen*8, size=n_sequences)
-  is_completed = lambda toks: len(toks)>=len(eos_tokens) and (toks[-len(eos_tokens):] == eos_tokens).all()
+  # assume sentence to be completed when it output few breaklines (useful when all models are trained)
+  # is_completed = lambda seq_toks, seq_id: (seq_toks==breakline).sum() == 50
+
+  # assume sentence to be completed when response reached a random length (good for models that are not trained)
+  is_completed = lambda seq_toks, seq_id: len(seq_toks) > seqlen*(seq_id%5+1)
 
 
   ##################################################################################################
@@ -89,10 +94,10 @@ if __name__=='__main__':
 
 
   for (model_obj, model_name) in (
-    (model, "GPTlite"),
-    (model_kvcache, "GPTlite_KVCache"),
+    # (model, "GPTlite"),
+    # (model_kvcache, "GPTlite_KVCache"),
     (model_mqa, "GPTlite_GQA"),
-    (model_distilled, "GPTlite_distilled"),
+    # (model_distilled, "GPTlite_distilled"),
   ):
     generated_texts.append([None]*n_sequences) # list to store generated texts
     start_time = benchmark_begin()
@@ -102,8 +107,8 @@ if __name__=='__main__':
       for batch_start in range(0, n_sequences, batch_size):
         # length of sequence to generate is the length of the longest string to be generated in the batch
         tokens = torch.stack(prompts[batch_start:batch_start+batch_size], dim=0)  # batch of sequences 
-        completed = 0
-        while completed < batch_size:
+        completed = set()
+        while len(completed) < batch_size:
           if model_name in ["GPTlite", "GPTlite_GQA"] :
             tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
             logits = model_obj(tokens_in_context)
@@ -116,22 +121,18 @@ if __name__=='__main__':
           else:
             raise RuntimeError(f"Unknown model name: {model_name}")
 
-          logits = logits[:, -1]  # Logits for the last position
           # for deterministic results use argmax of logits, instead of multinomial of the softmax of logits 
-          next_token = torch.argmax(logits, dim=-1, keepdim=True)
+          next_token = torch.argmax(logits[:, -1] , dim=-1, keepdim=True) # logits of last predicted token
           tokens = torch.cat([tokens, next_token], dim=-1)
 
           for i, seq_tokens in enumerate(tokens):
 
-            # because model is not trained, we wont get EOS token, so we need to add it manually
-            if len(seq_tokens) == random_answer_seqlens[batch_start+i]:
-              tokens[i][-len(eos_tokens):] = eos_tokens # add EOS token to the sequence
-              
             # check if sequence was completed, and increase completed counter if that's the case
-            if is_completed(seq_tokens):
-              print(f"Completed sequence {batch_start+i} with length {len(seq_tokens)} in slot {i}.")	
-              completed += 1
-              generated_texts[-1][batch_start+i] = decode_fn(seq_tokens.tolist())
+            sequence_id = batch_start+i
+            if is_completed(seq_tokens, sequence_id) and sequence_id not in completed:
+              print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}.")	
+              completed.add(sequence_id)
+              generated_texts[-1][sequence_id] = decode_fn(seq_tokens.tolist())
     benchmark_end(model_name, start_time)
 
 
@@ -143,20 +144,18 @@ if __name__=='__main__':
 
   tokens = torch.stack(prompts[:batch_size], dim=0) 
   active = list(range(batch_size)) # list of active sequences as tuples as sequence_id 
-  active_seqlens = [0]*batch_size # list of active sequence lengths
   generated_texts.append([None]*n_sequences) # list to store generated texts
   start_time = benchmark_begin()
 
   with torch.inference_mode():
-    completed = 0
+    completed = set()
     next_to_be_processed = batch_size
-    while completed < n_sequences:
+    while len(completed) < n_sequences:
           
       tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
       logits = model(tokens_in_context)
-      logits = logits[:, -1]  # Logits for the last position
       # for deterministic results use argmax of logits, instead of multinomial of the softmax of logits 
-      next_token = torch.argmax(logits, dim=-1, keepdim=True)
+      next_token = torch.argmax(logits[:, -1] , dim=-1, keepdim=True) # logits of last predicted token
       tokens = torch.cat([tokens, next_token], dim=-1)
 
       # Add new sequences if possible
@@ -165,25 +164,19 @@ if __name__=='__main__':
         if sequence_id is None: # active slot in batch not being used, ignore
           continue
         
-        # because model is not trained, we wont get EOS token, so we need to add it manually
-        active_seqlens[i] += 1 # increase active sequence length
-        if active_seqlens[i] == random_answer_seqlens[sequence_id]:
-          seq_tokens[-len(eos_tokens):] = eos_tokens # add EOS token to the sequence
-          
         # if completed, load next prompt in the active slot
-        if is_completed(seq_tokens):
+        if is_completed(seq_tokens, sequence_id) and sequence_id not in completed:
           generated_texts[-1][sequence_id] = decode_fn(seq_tokens.tolist())
           if next_to_be_processed < n_sequences:
             active[i] = next_to_be_processed # next sequence id to be processed
             next_prompt = prompts[next_to_be_processed]
             tokens[i][-seqlen:].fill_(0)  # Reset the whole context
             tokens[i][-len(next_prompt):] = next_prompt # load next prompt
-            active_seqlens[i] = 0 # reset active sequence length
             next_to_be_processed+=1
-            print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
           else:
-            active[i] = None # slot is not being used anymore   
-          completed += 1
+            active[i] = None # free slot: not being used anymore   
+          print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
+          completed.add(sequence_id)
   benchmark_end("continuous batching", start_time)
 
 
@@ -200,61 +193,57 @@ if __name__=='__main__':
   dist_draft_p = torch.zeros(batch_size, draft_seqlen_K, vocab_size, dtype=torch.float32, device=device)
 
   with torch.inference_mode():
+    logits_draft = torch.zeros(batch_size, draft_seqlen_K, vocab_size, dtype=torch.float32, device=device)
     for batch_start in range(0, n_sequences, batch_size):  # the 'while n<T do' in algorithm 2 in paper
       completed = set()
+      tokens = torch.stack(prompts[batch_start:batch_start+batch_size], dim=0)  # batch of sequences 
       while len(completed) < batch_size:
-        # Step 1: generate look ahead tokens with draft model
-        tokens = torch.stack(prompts[batch_start:batch_start+batch_size], dim=0)  # batch of sequences 
 
+        # Step 1: generate K tokens with draft model
         for t in range(draft_seqlen_K):  # the first 'for t=1:K do' in algorithm 2 in paper
           tokens_in_context = tokens[:, -seqlen_d:].to(device)  # Use only the last seqlen tokens
-          logits_draft = model_distilled(tokens_in_context)
-          logits_draft = logits_draft[:, -1]  # Logits for the last position
-          dist_draft_p[:, t] = F.softmax(logits_draft, dim=-1)  # Store the distribution for the current token
-
-        # Extract speculated tokens (last look_ahead_T tokens) from draft model
-        tokens_draft = torch.argmax(dist_draft_p, dim=-1) # or polynomial sampling
-        tokens = torch.cat([tokens, tokens_draft], dim=-1)  # append all speculated tokens to the final result
+          logits_draft[:, t] = model_distilled(tokens_in_context)[:, -1] # pick last logits
+          next_token = torch.argmax(logits_draft[:, t], dim=-1, keepdim=True)
+          tokens = torch.cat([tokens, next_token], dim=-1)  # append all speculated tokens to the final result
+        tokens_draft = tokens[:, -draft_seqlen_K:]  # tokens generated by draft model
 
         # Step 2: Perform target model predictions for the same tokens
-        tokens_in_context = tokens[:, -seqlen:].to(device)
-        logits_target = model(tokens_in_context)
-        # VERY IMPORTANT: compared to before, we use ALL logits, not just the logits of the last token!!!
-        dist_target_q = F.softmax(logits_target[:, -draft_seqlen_K:], dim=-1)
-        # tokens_target = torch.argmax(dist_target_q, dim=-1)  # Get the tokens from the target model
+        tokens_in_context = tokens[:, -seqlen-1:-1].to(device)
+        logits_target = model(tokens_in_context)[:, -draft_seqlen_K:] # IMPORTANT: use ALL logits, not just the logits of last token!
+        dist_target_q = F.softmax(logits_target, dim=-1)
+        dist_draft_p = F.softmax(logits_draft, dim=-1)
+        # tokens_target = torch.argmax(logits_target, dim=-1)  # tokens generated by target model
 
         # Note: if q(x) >= p(x) then accept token
         # otherwise, the paper's rejection sampling scheme accepts token with prob q(x)/p(x)
         # Therefore, combining both, we accept token when r < min( 1, q(x)/p(x) ), where r~Uniform[0, 1]
         # (Why? see Theorem 1: modified rejection sampling recovers the target distribution)
-        for t in range(draft_seqlen_K):  # the second 'for t=1:K do' in algorithm 2 in paper
-          r = torch.rand(batch_size, device=device)
-          prob_q = torch.tensor([ dist_target_q[b, t, tokens_draft[b, t]] for b in range(batch_size)])  # probability of the token sampled by draft model
-          prob_p = torch.tensor([ dist_draft_p[b, t, tokens_draft[b, t]] for b in range(batch_size)]) # probability of the token sampled by target model
-          if not (r < torch.min( torch.ones(batch_size,), prob_q/prob_p)).all():  # accept the token if all sequences agree
-            break # t is the index of the first token rejected
+        for b in range(batch_size):
 
-        tokens = tokens[:, :-draft_seqlen_K+t]  # remove the rejected tokens from the batch
+          # Look for first draft token that was rejected
+          draft_tokens_picked = tokens[b, -draft_seqlen_K:]  # tokens generated by draft model for each batch
+          prob_q = torch.tensor([dist_target_q[b][t][draft_tokens_picked[t]] for t in range(draft_seqlen_K)], device=device)
+          prob_p = torch.tensor([dist_draft_p[b][t][draft_tokens_picked[t]] for t in range(draft_seqlen_K)], device=device)
+          r = torch.rand(draft_seqlen_K, device=device) # sample r~Uniform[0, 1)
+          accepted = r < torch.min( torch.ones(draft_seqlen_K, device=device), prob_q/prob_p) # token is to be rejected
+          first_token_rejected = None if accepted.all() else torch.where(accepted==False)[0][0]  
 
-        # Step 3: Finalize remaining tokens with target model
-        if t<draft_seqlen_K: # handle rejected tokens
-          # sample from (dist_target_q - dist_draft_p)_+
-          q_minus_p = dist_target_q[:, t:] - dist_draft_p[:, t:]
-          plus_fn = lambda fx: torch.clamp(fx, min=0) / torch.clamp(fx.sum(dim=-1, keepdim=True), min=1e-10)
-          new_tokens = torch.argmax(plus_fn(q_minus_p), dim=-1)  # sample from the positive part of the difference
-          tokens = torch.cat([tokens, new_tokens], dim=-1)  # append all accepted tokens to the final result
+          # If one token has been rejected, finalize remaining tokens with target model
+          if first_token_rejected is not None:
+            # sample x_{n+t} from (dist_target_q - dist_draft_p)_+
+            q_minus_p = dist_target_q[b, first_token_rejected:] - dist_draft_p[b, first_token_rejected:]
+            plus_fn = lambda fx: torch.clamp(fx, min=0) / torch.clamp(fx.sum(dim=-1, keepdim=True), min=1e-10)
+            new_tokens = torch.argmax(plus_fn(q_minus_p), dim=-1)
+            tokens[b, -draft_seqlen_K+first_token_rejected:] = new_tokens  # append all accepted tokens to the final result
           
         for i, seq_tokens in enumerate(tokens):
 
-          # because model is not trained, we wont get EOS token, so we need to add it manually
-          if len(seq_tokens) >= random_answer_seqlens[batch_start+i] and i not in completed:
-            tokens[i][-len(eos_tokens):] = eos_tokens # add EOS token to the sequence
-            
           # check if sequence was completed, and increase completed counter if that's the case
-          if is_completed(seq_tokens):
-            print(f"Completed sequence {batch_start+i} with length {len(seq_tokens)} in slot {i}.")	
-            completed.add(i)
-            generated_texts[-1][batch_start+i] = decode_fn(seq_tokens.tolist())
+          sequence_id = batch_start+i
+          if is_completed(seq_tokens, sequence_id) and sequence_id not in completed:
+            print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}.")	
+            completed.add(sequence_id)
+            generated_texts[-1][sequence_id] = decode_fn(seq_tokens.tolist())
 
   benchmark_end("speculative sampling", start_time)
 
