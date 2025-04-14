@@ -87,97 +87,97 @@ if __name__=='__main__':
   is_completed = lambda seq_toks, seq_id: len(seq_toks) > seqlen*(seq_id%5+1)
 
 
-  ##################################################################################################
-  #### REGULAR BATCHED INFERENCE: parallelize requests of diff length over the batch dimension  ####
-  #### Variants: GPTlite, GPTlite with KV cache, and GPTlite distilled to a smaller model       ####
-  ##################################################################################################	
+  # ##################################################################################################
+  # #### REGULAR BATCHED INFERENCE: parallelize requests of diff length over the batch dimension  ####
+  # #### Variants: GPTlite, GPTlite with KV cache, and GPTlite distilled to a smaller model       ####
+  # ##################################################################################################	
 
 
-  for (model_obj, model_name) in (
-    # (model, "GPTlite"),
-    # (model_kvcache, "GPTlite_KVCache"),
-    (model_mqa, "GPTlite_GQA"),
-    # (model_distilled, "GPTlite_distilled"),
-  ):
-    generated_texts.append([None]*n_sequences) # list to store generated texts
-    start_time = benchmark_begin()
+  # for (model_obj, model_name) in (
+  #   (model, "GPTlite"),
+  #   (model_kvcache, "GPTlite_KVCache"),
+  #   (model_mqa, "GPTlite_GQA"),
+  #   (model_distilled, "GPTlite_distilled"),
+  # ):
+  #   generated_texts.append([None]*n_sequences) # list to store generated texts
+  #   start_time = benchmark_begin()
 
-    kv_cache = None  # Initialize cache for GPTlite_KVCache
-    with torch.inference_mode():
-      for batch_start in range(0, n_sequences, batch_size):
-        # length of sequence to generate is the length of the longest string to be generated in the batch
-        tokens = torch.stack(prompts[batch_start:batch_start+batch_size], dim=0)  # batch of sequences 
-        completed = set()
-        while len(completed) < batch_size:
-          if model_name in ["GPTlite", "GPTlite_GQA"] :
-            tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
-            logits = model_obj(tokens_in_context)
-          elif model_name == "GPTlite_KVCache":
-            last_token = tokens[:, -1:].to(device)  # Pass only the latest token
-            logits, kv_cache = model_obj(last_token, max_seqlen=seqlen, kv_cache=kv_cache)
-          elif model_name in "GPTlite_distilled":
-            tokens_in_context = tokens[:, -seqlen_d:].to(device)
-            logits = model_obj(tokens_in_context)
-          else:
-            raise RuntimeError(f"Unknown model name: {model_name}")
+  #   kv_cache = None  # Initialize cache for GPTlite_KVCache
+  #   with torch.inference_mode():
+  #     for batch_start in range(0, n_sequences, batch_size):
+  #       # length of sequence to generate is the length of the longest string to be generated in the batch
+  #       tokens = torch.stack(prompts[batch_start:batch_start+batch_size], dim=0)  # batch of sequences 
+  #       completed = set()
+  #       while len(completed) < batch_size:
+  #         if model_name in ["GPTlite", "GPTlite_GQA"] :
+  #           tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
+  #           logits = model_obj(tokens_in_context)
+  #         elif model_name == "GPTlite_KVCache":
+  #           last_token = tokens[:, -1:].to(device)  # Pass only the latest token
+  #           logits, kv_cache = model_obj(last_token, max_seqlen=seqlen, kv_cache=kv_cache)
+  #         elif model_name in "GPTlite_distilled":
+  #           tokens_in_context = tokens[:, -seqlen_d:].to(device)
+  #           logits = model_obj(tokens_in_context)
+  #         else:
+  #           raise RuntimeError(f"Unknown model name: {model_name}")
 
-          # for deterministic results use argmax of logits, instead of multinomial of the softmax of logits 
-          next_token = torch.argmax(logits[:, -1] , dim=-1, keepdim=True) # logits of last predicted token
-          tokens = torch.cat([tokens, next_token], dim=-1)
+  #         # for deterministic results use argmax of logits, instead of multinomial of the softmax of logits 
+  #         next_token = torch.argmax(logits[:, -1] , dim=-1, keepdim=True) # logits of last predicted token
+  #         tokens = torch.cat([tokens, next_token], dim=-1)
 
-          for i, seq_tokens in enumerate(tokens):
+  #         for i, seq_tokens in enumerate(tokens):
 
-            # check if sequence was completed, and increase completed counter if that's the case
-            sequence_id = batch_start+i
-            if is_completed(seq_tokens, sequence_id) and sequence_id not in completed:
-              print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}.")	
-              completed.add(sequence_id)
-              generated_texts[-1][sequence_id] = decode_fn(seq_tokens.tolist())
-    benchmark_end(model_name, start_time)
+  #           # check if sequence was completed, and increase completed counter if that's the case
+  #           sequence_id = batch_start+i
+  #           if is_completed(seq_tokens, sequence_id) and sequence_id not in completed:
+  #             print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}.")	
+  #             completed.add(sequence_id)
+  #             generated_texts[-1][sequence_id] = decode_fn(seq_tokens.tolist())
+  #   benchmark_end(model_name, start_time)
 
 
 
-  #################################################################################################
-  #### INFERENCE WITH CONTINUOUS BATCHING: continuosly append new sequences to input as soon   ####
-  #### as a sequence is completed, instead of waiting for the whole batch to be completed.     ####
-  #################################################################################################
+  # #################################################################################################
+  # #### INFERENCE WITH CONTINUOUS BATCHING: continuosly append new sequences to input as soon   ####
+  # #### as a sequence is completed, instead of waiting for the whole batch to be completed.     ####
+  # #################################################################################################
 
-  tokens = torch.stack(prompts[:batch_size], dim=0) 
-  active = list(range(batch_size)) # list of active sequences as tuples as sequence_id 
-  generated_texts.append([None]*n_sequences) # list to store generated texts
-  start_time = benchmark_begin()
+  # tokens = torch.stack(prompts[:batch_size], dim=0) 
+  # active = list(range(batch_size)) # list of active sequences as tuples as sequence_id 
+  # generated_texts.append([None]*n_sequences) # list to store generated texts
+  # start_time = benchmark_begin()
 
-  with torch.inference_mode():
-    completed = set()
-    next_to_be_processed = batch_size
-    while len(completed) < n_sequences:
+  # with torch.inference_mode():
+  #   completed = set()
+  #   next_to_be_processed = batch_size
+  #   while len(completed) < n_sequences:
           
-      tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
-      logits = model(tokens_in_context)
-      # for deterministic results use argmax of logits, instead of multinomial of the softmax of logits 
-      next_token = torch.argmax(logits[:, -1] , dim=-1, keepdim=True) # logits of last predicted token
-      tokens = torch.cat([tokens, next_token], dim=-1)
+  #     tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
+  #     logits = model(tokens_in_context)
+  #     # for deterministic results use argmax of logits, instead of multinomial of the softmax of logits 
+  #     next_token = torch.argmax(logits[:, -1] , dim=-1, keepdim=True) # logits of last predicted token
+  #     tokens = torch.cat([tokens, next_token], dim=-1)
 
-      # Add new sequences if possible
-      for i, (sequence_id, seq_tokens) in enumerate(zip(active, tokens)):
+  #     # Add new sequences if possible
+  #     for i, (sequence_id, seq_tokens) in enumerate(zip(active, tokens)):
 
-        if sequence_id is None: # active slot in batch not being used, ignore
-          continue
+  #       if sequence_id is None: # active slot in batch not being used, ignore
+  #         continue
         
-        # if completed, load next prompt in the active slot
-        if is_completed(seq_tokens, sequence_id) and sequence_id not in completed:
-          generated_texts[-1][sequence_id] = decode_fn(seq_tokens.tolist())
-          if next_to_be_processed < n_sequences:
-            active[i] = next_to_be_processed # next sequence id to be processed
-            next_prompt = prompts[next_to_be_processed]
-            tokens[i][-seqlen:].fill_(0)  # Reset the whole context
-            tokens[i][-len(next_prompt):] = next_prompt # load next prompt
-            next_to_be_processed+=1
-          else:
-            active[i] = None # free slot: not being used anymore   
-          print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
-          completed.add(sequence_id)
-  benchmark_end("continuous batching", start_time)
+  #       # if completed, load next prompt in the active slot
+  #       if is_completed(seq_tokens, sequence_id) and sequence_id not in completed:
+  #         generated_texts[-1][sequence_id] = decode_fn(seq_tokens.tolist())
+  #         if next_to_be_processed < n_sequences:
+  #           active[i] = next_to_be_processed # next sequence id to be processed
+  #           next_prompt = prompts[next_to_be_processed]
+  #           tokens[i][-seqlen:].fill_(0)  # Reset the whole context
+  #           tokens[i][-len(next_prompt):] = next_prompt # load next prompt
+  #           next_to_be_processed+=1
+  #         else:
+  #           active[i] = None # free slot: not being used anymore   
+  #         print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
+  #         completed.add(sequence_id)
+  # benchmark_end("continuous batching", start_time)
 
 
 
@@ -221,23 +221,29 @@ if __name__=='__main__':
         for b in range(batch_size):
 
           # Look for first draft token that was rejected
-          draft_tokens_picked = tokens[b, -draft_seqlen_K:]  # tokens generated by draft model for each batch
-          prob_q = torch.tensor([dist_target_q[b][t][draft_tokens_picked[t]] for t in range(draft_seqlen_K)], device=device)
-          prob_p = torch.tensor([dist_draft_p[b][t][draft_tokens_picked[t]] for t in range(draft_seqlen_K)], device=device)
-          r = torch.rand(draft_seqlen_K, device=device) # sample r~Uniform[0, 1)
-          accepted = r < torch.min( torch.ones(draft_seqlen_K, device=device), prob_q/prob_p) # token is to be rejected
-          first_token_rejected = None if accepted.all() else torch.where(accepted==False)[0][0]  
+          for t in range(draft_seqlen_K):
+            draft_token_picked = tokens[b, -draft_seqlen_K+t]  # tokens generated by draft model for each batch
+            prob_q = dist_target_q[b][t][draft_token_picked]
+            prob_p = dist_draft_p[b][t][draft_token_picked]
+            r = np.random.uniform() # sample r~Uniform[0, 1)
+            if t==2: #not r < min( 1, prob_q/prob_p): # token reject, sample from (q(x) - p(x))_+
+              # sample x_{n+t} from (dist_target_q - dist_draft_p)_+
+              q_minus_p = dist_target_q[b, t] - dist_draft_p[b, t]
+              plus_fn = lambda fx: torch.clamp(fx, min=0) / torch.clamp(fx.sum(dim=-1, keepdim=True), min=1e-10)
+              next_token = torch.argmax(plus_fn(q_minus_p), dim=-1, keepdim=True)
+              tokens[b, -draft_seqlen_K+t] = next_token  # append this token to the final result
+              break
 
-          # If one token has been rejected, finalize remaining tokens with target model
-          if first_token_rejected is not None:
+          # Use target model to sample all remaining tokens
+          for first_token_to_generate in range(t+1, draft_seqlen_K):
             # sample x_{n+t} from (dist_target_q - dist_draft_p)_+
-            q_minus_p = dist_target_q[b, first_token_rejected:] - dist_draft_p[b, first_token_rejected:]
-            plus_fn = lambda fx: torch.clamp(fx, min=0) / torch.clamp(fx.sum(dim=-1, keepdim=True), min=1e-10)
-            new_tokens = torch.argmax(plus_fn(q_minus_p), dim=-1)
-            tokens[b, -draft_seqlen_K+first_token_rejected:] = new_tokens  # append all accepted tokens to the final result
+            next_token_offset = -draft_seqlen_K+first_token_to_generate
+            tokens_in_context = tokens[[b], -seqlen+next_token_offset : next_token_offset].to(device)
+            logits = model(tokens_in_context)
+            next_token = torch.argmax(logits[:, -1] , dim=-1, keepdim=True) # logits of last predicted token
+            tokens[b, next_token_offset] = next_token
           
         for i, seq_tokens in enumerate(tokens):
-
           # check if sequence was completed, and increase completed counter if that's the case
           sequence_id = batch_start+i
           if is_completed(seq_tokens, sequence_id) and sequence_id not in completed:
