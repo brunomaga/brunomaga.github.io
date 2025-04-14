@@ -4,6 +4,7 @@ import torch
 import time
 import torch.nn.functional as F
 from gptlite_kvcache import GPTlite_KVCache
+from gptlite_gqa import GPTlite_GQA  # Grouped Query Attention
 import numpy as np
 
 
@@ -13,6 +14,7 @@ sys.path.insert(0, os.path.join(current_dir, '..', 'GPTlite'))
 from gptlite import GPTlite
 from utils import get_tiny_shakespeare_data, get_gptlite_model_parameters, get_gptlite_distilled_model_parameters
 GPTLITE_CKPT_PATH = os.path.join(current_dir, '..', 'GPTlite', 'gptlite.pth')
+GPTLITE_MQA_CKPT_PATH = os.path.join(current_dir, '..', 'GPTlite', 'gptlite_mqa.pth')
 GPTLITE_DISTILLED_CKPT_PATH = os.path.join(current_dir, '..', 'GPTlite', 'gptlite_distilled.pth')
 
 
@@ -29,13 +31,24 @@ def benchmark_end(name, start_time):
   print(f"Runtime for {name}: {(time.time() - start_time):.4f} seconds")
 
 
+def load_model_ckpt(path, model, model_name, device):
+  """ Load state dict into model """
+
+  if os.path.exists(path):
+    model.load_state_dict(torch.load(path, map_location=device))
+    print(f"Loaded model from {path} into {model_name}")
+  else:
+    print(f"Couldnt load model from {path} into {model_name}")
+  return model
+
+
 if __name__=='__main__':
   torch.manual_seed(42) # random seed, for reproducibility
   vocab_size, _, valid_data, encode_fn, decode_fn = get_tiny_shakespeare_data()
 
   # inference / sequence generation settings
   batch_size = 4 # number of sequences to generate in parallel
-  n_sequences = 4 # total number of sequences to generate
+  n_sequences = 20 # total number of sequences to generate
   
   device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
   bos_token = 0 # beginning of string is a dummy prompt of token 0 which is \n
@@ -55,29 +68,27 @@ if __name__=='__main__':
   #### Variants: GPTlite, GPTlite with KV cache, and GPTlite distilled to a smaller model       ####
   ##################################################################################################	
 
-  torch.manual_seed(42) # random seed for model initialization, for reproducibility
+  torch.manual_seed(42) # reset random seed before model initialization, for reproducibility
   model = GPTlite(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen).to(device).eval()
-  if os.path.exists(GPTLITE_CKPT_PATH):
-    model.load_state_dict(torch.load(GPTLITE_CKPT_PATH, map_location=device))
-    print(f"Loaded model from {GPTLITE_CKPT_PATH} into GPTlite")
+  model = load_model_ckpt(GPTLITE_CKPT_PATH, model, "GPTlite", device)
 
-  torch.manual_seed(42) # random seed for model initialization, for reproducibility
+  torch.manual_seed(42) # reset random seed before model initialization, for reproducibility
   model_kvcache = GPTlite_KVCache(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen).to(device).eval()
-  if os.path.exists(GPTLITE_CKPT_PATH):
-    model_kvcache.load_state_dict(torch.load(GPTLITE_CKPT_PATH, map_location=device))
-    print(f"Loaded model from {GPTLITE_CKPT_PATH} into GPTlite_KVCache")
+  model_kvcache = load_model_ckpt(GPTLITE_CKPT_PATH, model_kvcache, "GPTlite_KVCache", device)
+
+  torch.manual_seed(42) # reset random seed before model initialization, for reproducibility
+  model_mqa = GPTlite_GQA(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen, n_groups=1).to(device).eval()
+  model_mqa = load_model_ckpt(GPTLITE_MQA_CKPT_PATH, model_mqa, "GPTlite_GQA", device)
 
   n_layers_d, d_model_d, n_heads_d, d_head_d, _, _, seqlen_d, dropout_p_d = get_gptlite_distilled_model_parameters()
   model_distilled = GPTlite(vocab_size, d_model_d, n_heads_d, d_head_d, n_layers_d, dropout_p_d, seqlen_d).to(device).eval()
-  if os.path.exists(GPTLITE_DISTILLED_CKPT_PATH):
-    model_distilled.load_state_dict(torch.load(GPTLITE_DISTILLED_CKPT_PATH, map_location=device))
-    print(f"Loaded model from {GPTLITE_DISTILLED_CKPT_PATH} into GPTlite_KVCache")
-
+  model_distilled = load_model_ckpt(GPTLITE_DISTILLED_CKPT_PATH, model_distilled, "GPTlite_distilled", device)
 
   for (model_obj, model_name) in (
-    (model, "original"),
-    (model_kvcache, "kv cache"),
-    (model_distilled, "distilled"),
+    (model, "GPTlite"),
+    (model_kvcache, "GPTlite_KVCache"),
+    (model_mqa, "GPTlite_GQA"),
+    (model_distilled, "GPTlite_distilled"),
   ):
     generated_texts.append([None]*n_sequences) # list to store generated texts
     start_time = benchmark_begin()
@@ -89,17 +100,18 @@ if __name__=='__main__':
         tokens = torch.stack(prompts[batch_start:batch_start+batch_size], dim=0)  # batch of sequences 
         completed = 0
         while completed < batch_size:
-          if model_name == "original":
+          if model_name in ["GPTlite", "GPTlite_GQA"] :
             tokens_in_context = tokens[:, -seqlen:].to(device)  # Use only the last seqlen tokens
             logits = model_obj(tokens_in_context)
-          elif model_name == "kv cache":
+          elif model_name == "GPTlite_KVCache":
             last_token = tokens[:, -1:].to(device)  # Pass only the latest token
             logits, kv_cache = model_obj(last_token, max_seqlen=seqlen, kv_cache=kv_cache)
-          elif model_name in "distilled":
+          elif model_name in "GPTlite_distilled":
             tokens_in_context = tokens[:, -seqlen_d:].to(device)
             logits = model_obj(tokens_in_context)
           else:
             raise RuntimeError(f"Unknown model name: {model_name}")
+
           logits = logits[:, -1]  # Logits for the last position
           # for deterministic results use argmax of logits, instead of multinomial of the softmax of logits 
           next_token = torch.argmax(logits, dim=-1, keepdim=True)
@@ -113,7 +125,7 @@ if __name__=='__main__':
               
             # check if sequence was completed, and increase completed counter if that's the case
             if is_completed(seq_tokens):
-              # print(f"Completed sequence {sequence_id+i} with length {len(seq_tokens)} in slot {i}.")	
+              print(f"Completed sequence {batch_start+i} with length {len(seq_tokens)} in slot {i}.")	
               completed += 1
               generated_texts[-1][batch_start+i] = decode_fn(seq_tokens.tolist())
     benchmark_end(model_name, start_time)
@@ -164,7 +176,7 @@ if __name__=='__main__':
             tokens[i][-len(next_prompt):] = next_prompt # load next prompt
             active_seqlens[i] = 0 # reset active sequence length
             next_to_be_processed+=1
-            # print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
+            print(f"Completed sequence {sequence_id} with length {len(seq_tokens)} in slot {i}. Loaded next prompt {active[i]}")
           else:
             active[i] = None # slot is not being used anymore   
           completed += 1
