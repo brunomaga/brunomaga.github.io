@@ -178,7 +178,9 @@ $$
 
 ### Distributed Algorithm
 
-Now that we know how to compute the attention output per block, we can parallelize the computation of the attention by delegating a sub-block to each processor. We start with sequence parallelism of the tensors $$q$$, $$k$$ and $$v$$ across $$P$$ processes, ie **each process hold a non-overlapping timeframe (block) of the $$q$$, $$k$$ and $$v$$ tensors**. Just like Ulysses, this allows for direct $$P$$-order parallelism on the Feed-forward network, but not on the MultiHead attention. Thus, the MHA algorithm is as follow. During the computation of the MHA, sub-blocks of the $$q$$ and $$v$$ tensors will be *rotated* among all $$P$$ processes in a ring fashion, iteratively: at each communication step (out of $$P$$ steps), each process sends its block of keys and values to the next process, and receives the keys and values of the previous processor in the ring. After $$P$$ communication steps, all processes will have received the full $$k$$ and $$v$$ tensors, in chunks, and will have its original tensors returned to its local memory. This pattern can be illustrated as:
+Now that we know how to compute the attention output per block, we can parallelize the computation of the attention by delegating a sub-block to each processor. We start with sequence parallelism of the tensors $$q$$, $$k$$ and $$v$$ across $$P$$ processes, ie **each process hold a non-overlapping timeframe (block) of the $$q$$, $$k$$ and $$v$$ tensors**. Just like Ulysses, this allows for direct $$P$$-order parallelism on the Feed-forward network, but not on the MultiHead attention.
+
+The MHA algorithm is as follows. During the computation of the MHA, sub-blocks of the $$q$$ and $$v$$ tensors will be *rotated* among all $$P$$ processes in a ring fashion, iteratively: at each communication step (out of $$P$$ steps), each process sends its block of keys and values to the next process, and receives the keys and values of the previous processor in the ring. After $$P$$ communication steps, all processes will have received the full $$k$$ and $$v$$ tensors, in chunks, and will have its original tensors returned to its local memory. This pattern can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPTlite-distributed/ring_attention.png"/>
@@ -190,6 +192,8 @@ From a process standpoint, after all the ring steps, each process was presented 
 
 {: style="text-align:center; font-size: small;"}
 <img width="40%" height="40%" src="/assets/GPTlite-distributed/ring_attention_qkv.png"/>
+
+A very relevant mention is that while Ulysses performs communication synchronously, forcing all processes to halt computation to send/receive the new data, the Ring Attention algorithm performs asynchronous communication, which may lead in some scenarios to better performance.
 
 ### Implementation
 
