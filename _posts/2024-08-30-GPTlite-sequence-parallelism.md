@@ -193,7 +193,7 @@ From a process standpoint, after all the ring steps, each process was presented 
 {: style="text-align:center; font-size: small;"}
 <img width="40%" height="40%" src="/assets/GPTlite-distributed/ring_attention_qkv.png"/>
 
-A very relevant mention is that while Ulysses performs communication synchronously, forcing all processes to halt computation to send/receive the new data, the Ring Attention algorithm performs asynchronous communication, which may lead in some scenarios to better performance.
+A very relevant mention is that while Ulysses performs communication synchronously, forcing all processes to halt computation to send/receive the new data, the Ring Attention algorithm performs asynchronous communication. If the computation time of the flash attention of a block exceeds the transmission time, the communication overhead is masked by the computation. This may lead to a better performance in some hardware configurations, when compared to Ulysses.
 
 ### Implementation
 
