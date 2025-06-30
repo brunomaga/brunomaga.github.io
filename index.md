@@ -14,7 +14,7 @@ layout: default
 </td>
 
 <td style="border:none">
-Welcome 👋🏽. I am Bruno, a research engineer for large-scale AI at <a href="https://www.synthesia.io">Synthesia</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. And before that, an HPC engineer, PhD and postdoc at <a href="https://www.epfl.ch/en/">EPFL</a>.
+Welcome 👋🏽. I am Bruno, a researcher for large-scale AI at <a href="https://www.huawei.com/ch-en/corporate-information/local-states/">Huawei Research</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. And before that, an HPC engineer, PhD and postdoc at <a href="https://www.epfl.ch/en/">EPFL</a>.
 
 In this space, I keep track of <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> of interest, and I post about ML and HPC 🚀.
 
@@ -27,16 +27,12 @@ In this space, I keep track of <a href="{{ site.publications_permalink }}">publi
   <div class="Rtable-cell"> <a href="{{ "/feed.xml" | relative_url }}"><i class="fas fa-fw fa-rss" ></i>RSS</a></div>
 </div>
 
+<br/>
+<div class="info-warning"> <strong>WARNING:</strong> scammers are using my name and face (via AI) to impersonate me in job interviews. Please be careful and do the due diligence if you are talking to <i>*me*</i>.</div>
+
 </td>
 </tr>
 </table> 
-
-<center>
-<div class="info-panel">
-<p> <strong>NEW (2025):</strong> if you like my content and would like to show appreciation, please donate instead to the <a href="https://ipoporto.pt/en/eu-doente/clinicas/">children's cancer hospital in Porto</a> via this <a href="https://www.gofundme.com/f/support-the-childrens-cancer-hospital-in-porto">GoFundMe campaign</a> or a <a href="https://ipoporto-pt.translate.goog/nos-ipo/como-ajudar-o-ipo-porto/?_x_tr_sl=pt-PT&_x_tr_tl=en&_x_tr_hl=en-US&_x_tr_pto=wapp">bank transfer to the hospital</a>. Thank you for caring ❤️‍🩹</p>
-</div>
-</center>
-
 
 <table style='border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
@@ -51,5 +47,12 @@ In this space, I keep track of <a href="{{ site.publications_permalink }}">publi
 </tr>
 {% endfor %}
 </table>
+
+
+<center>
+<div class="info-panel">
+<strong>Support this blog!</strong> If you like this content and would like to show appreciation, please donate instead to the <a href="https://ipoporto.pt/en/eu-doente/clinicas/">children's cancer hospital in Porto</a> via this <a href="https://www.gofundme.com/f/support-the-childrens-cancer-hospital-in-porto">GoFundMe campaign</a>. Thank you very much for caring❤️‍🩹
+</div>
+</center>
 
 
