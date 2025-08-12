@@ -48,7 +48,7 @@ If we pass such shape to a feed-forward network, we achieve a parallelism or ord
 <img width="100%" height="100%" src="/assets/GPTlite-distributed/ulysses_sequence_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Overtiew of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **Center:** the *first all-to-all* changes the distributed tensor view from time- to head-split. Each process holds now complete sententes (ie not time-split) and can compute attention on the heads assigned to it, independently. **Right**: the *second all-to-all* reverts the view from head- to time-split.
+Overtiew of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **Center:** the *first all-to-all* changes the distributed tensor view from time- to head-split. Each process holds now complete sequences (ie not time-split) and can compute attention on the heads assigned to it, independently. **Right**: the *second all-to-all* reverts the view from head- to time-split.
 
 
 In practice, the implementation of Ulysses only requires the extra steps that swap the distributed view of the input tensor from e.g. `(H, B, T/P, E)` to  `(H/P, B, T, E)` and vice-versa. We can then implement the function `dist_view_swap()` that, given a `tensor` whose sequence is distributed across the process group `group`, swaps the distributed view by changing the split dimension from `old_split_dim` to `new_split_dim` as:.
