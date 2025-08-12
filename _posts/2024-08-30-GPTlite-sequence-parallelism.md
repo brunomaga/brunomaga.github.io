@@ -32,14 +32,14 @@ During training, the model runtime scales perfectly with the context parallelism
 
 > As for attention, the Q (query) of each token needs to compute with the KV (key and value) of all tokens in the same sequence. Hence, CP requires additional all-gather across GPUs to collect the full sequence of KV. Correspondingly, reduce-scatter should be applied to the activation gradients of KV in backward propagation. To reduce activation memory footprint, each GPU only stores the KV of a sequence chunk in forward and gathers KV again in backward.
 
-In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values of the full sentence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows in $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, then the dot-product $$Q_p K^T$$ will have shape `B, T/P, T`. Because we are holding a full row of the dot-product, we can apply the $$softmax$$ without any changes and get an attention matrix also of shape `B, T/P, T`. When multiplied by $$V$$, this results in the attention output for that process shape `B, T/P, E`.
+In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values of the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows in $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, then the dot-product $$Q_p K^T$$ will have shape `B, T/P, T`. Because we are holding a full row of the dot-product, we can apply the $$softmax$$ without any changes and get an attention matrix also of shape `B, T/P, T`. When multiplied by $$V$$, this results in the attention output for that process shape `B, T/P, E`.
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/GPTlite-distributed/context_parallelism.png"/>
 
 Requiring the full key and value tensors has two main drawbacks: an additional `all_gather` step to collect the full K and V, and the memory overhead to store those two tensors in full form. This is not ideal, therefore, in the following methods, we will look into how to parallelise the attention layer as well.
 
-## Ulysses sentence parallelism
+## Ulysses sequence parallelism
 
 Take the previous notation and assume a mini-batch split across the time dimension, with a local storage of `(B, T/P, E)` per process. 
 If we pass such shape to a feed-forward network, we achieve a parallelism or order `P` , as the `T` dimension will be treated as batch by the linear layers. However, in the case of the multi-head attention, there is the need for process communication as the time dependency across the tokens require inter-token communication to compute the full attention matrix of shape `(H, B, T, T)`  for `H` attention heads and for a query, token and values tensor of local shape `(B, T/P, E)` . The [(DeepSpeed) Ulysses parallelism](https://arxiv.org/abs/2309.14509) approaches solves this by swapping the distributed view from time-split to head-split before and after the MHA attention module, as the following illustration:
@@ -51,7 +51,7 @@ If we pass such shape to a feed-forward network, we achieve a parallelism or ord
 Overtiew of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) gpus, split by the time (T) dimension. **Center:** the *first all-to-all* changes the distributed tensor view from time- to head-split. Each process holds now complete sententes (ie not time-split) and can compute attention on the heads assigned to it, independently. **Right**: the *second all-to-all* reverts the view from head- to time-split.
 
 
-In practice, the implementation of Ulysses only requires the extra steps that swap the distributed view of the input tensor from e.g. `(H, B, T/P, E)` to  `(H/P, B, T, E)` and vice-versa. We can then implement the function `dist_view_swap()` that, given a `tensor` whose sentence is distributed across the process group `group`, swaps the distributed view by changing the split dimension from `old_split_dim` to `new_split_dim` as:.
+In practice, the implementation of Ulysses only requires the extra steps that swap the distributed view of the input tensor from e.g. `(H, B, T/P, E)` to  `(H/P, B, T, E)` and vice-versa. We can then implement the function `dist_view_swap()` that, given a `tensor` whose sequence is distributed across the process group `group`, swaps the distributed view by changing the split dimension from `old_split_dim` to `new_split_dim` as:.
 
 
 ```python
@@ -312,7 +312,7 @@ And we are done. Now, as you can see, the big disavantadge in ring attention is 
 
 ## Training with sequence- and multi-dimensional parallelism
 
-Pytorch does not have the notion of *partial sentences*, thus all samples being processed in parallel are assumed to be full-length samples on a data-parallel execution. To overcome this, when you run sequence parallelism of order `S`, you should perform `S` gradient accumulation steps with the corresponding gradients scaling, so that it processes the correct batch size per step, and gradients are properly averaged.  
+Pytorch does not have the notion of *partial sequences*, thus all samples being processed in parallel are assumed to be full-length samples on a data-parallel execution. To overcome this, when you run sequence parallelism of order `S`, you should perform `S` gradient accumulation steps with the corresponding gradients scaling, so that it processes the correct batch size per step, and gradients are properly averaged.  
 
 Moreover, when you perform multi-dimensional parallelism (e.g. at data- and sequence levels), you need to define the process groups for the data parallelel processes (the ones that load different samples) and the sequence parallel processes (the ones that load different chunks of the same sample and perform sequence parallelism for that sample). You can do this with Pytorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) mesh or create your own process groups manually. For the sake of illustration, if you'd implement a $$2 \times 2$$ Data- and Ulysses sequence parallelism on 4 GPUs, this would be the memory layout before and during the Multi-Head Attention:
 
@@ -320,7 +320,7 @@ Moreover, when you perform multi-dimensional parallelism (e.g. at data- and sequ
 <img width="70%" height="70%" src="/assets/GPTlite-distributed/sequence_and_data_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Activations allocation on a 4-GPU parallelism with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: blue and green processes belong to the same sequence-parallel group and share one sample; red and yellow processes form the other sequence-parallel group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts a token-level distributed storage into a head-level distributed storage. All four processes can compute the attention for full sentences.
+Activations allocation on a 4-GPU parallelism with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: blue and green processes belong to the same sequence-parallel group and share one sample; red and yellow processes form the other sequence-parallel group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts a token-level distributed storage into a head-level distributed storage. All four processes can compute the attention for full sequences.
 
 ## Code and final remarks
 
