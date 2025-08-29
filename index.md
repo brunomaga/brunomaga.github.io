@@ -32,7 +32,7 @@ In this space, I keep track of <a href="{{ site.publications_permalink }}">publi
 </tr>
 </table> 
 
-<center> <div class="info-warning"> <strong>WARNING:</strong> scammers are using my name and face (with AI) to impersonate me in job interviews. Please be careful and do the due diligence when you are talking with <i>*me*</i>.</div> </center>
+<center> <div class="info-warning"> <strong>WARNING:</strong> scammers are using my name and face (with AI) to impersonate me in job interviews. Please be careful and do the due diligence if you are talking with <i>*me*</i>.</div> </center>
 
 <table style='border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}

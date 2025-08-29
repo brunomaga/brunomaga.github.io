@@ -46,7 +46,7 @@ In section 6, they investigated two main techniques to make inference with the L
 </details>
 
 
-<details> <summary markdown="span">2024 [Universal Checkpointing: Efficient and Flexible Checkpointing for Large Scale Distributed Training](https://arxiv.org/abs/2406.18820)</summary>
+<details> <summary markdown="span">2024 [Universal Checkpointing: Efficient and Flexible Checkpointing for Large Scale Distributed Training, Microsoft DeepSpeed](https://arxiv.org/abs/2406.18820)</summary>
 
 According to the paper, the issue with state-of-art distributed checkpointing (model save/resume) is that it requires "static allocation of GPU resources at the beginning of training and lacks the capability
 to resume training with a different parallelism strategy and hardware configuration" and usually it is not possible to resume when hardware changes during the training process. To this extent, the paper proposes "Universal Checkpointing, a technique that enables efficient checkpoint
@@ -54,6 +54,16 @@ creation while providing the flexibility of resuming on arbitrary parallelism st
 fragments into training ranks of arbitrary model-parallelism configuration", and universal checkpoint language that allows for "converting distributed checkpoints into the universal checkpoint format". The UCP file is a gathering of all distributed saves into a single file per variable type (optimizer state, parameters, etc).
 </details>
 
+
+<details> <summary markdown="span">2024 [Domino: Eliminating Communication in LLM Training via Generic Tensor Slicing and Overlapping, Microsoft DeepSpeed](https://arxiv.org/abs/2409.15241)</summary>
+
+Domino "provides a generic scheme to hide communication behind computation" when training large LLMs where tensor parallelism (TP) is applied. "By breaking data dependency of a single batch training into smaller independent pieces, Domino pipelines these independent pieces training and provides generic strategy of fine-grained communication and computation overlapping. [...] comparing with Megatron-LM, Domino achieves up to 1.3x speedup for LLM training on Nvidia DGX-H100 GPUs". The rationale for the paper is: current efforts to overlap computation and communication during TP are not enough, especially "in the cases where collective communication takes much longer than a single GeMM computation, most of the communication time still stands out as the major training overhead". And "given that computation on the latest GPUs  is becoming faster,
+communication overhead is more pronounced". The paper proposes "Domino, a generic approach that breaks data dependency of transformer model training into pieces, and then pipelines these pieces training to overlap communication with computation [...].  Domino provides a much wider scope of computation and communication overlapping (e.g., AllReduce not only overlaps with a single GeMM, but also LayerNorm, DropOut, etc). [...] To hide TP communication behind computation, Domino provides extra and generic tensor partition in two dimensions on every GPU: row-wise split on inputs X and column-wise split on weights B on top of original TP model partitions. At high level, Domino generically breaks TP’s $$X \cdot A \cdot B$$ into smaller compute units without data dependency. Then it pipelines these independent compute units with collective communication to achieve fine-grained computation and communication overlapping [...] we keep $$A$$ untouched and do not conduct any tensor partitioning on $$A$$. Therefore, we only conduct tensor slicing on input tensor $$X$$ (section 3.2) and the second group of linear weights as $$B$$ (section 3.3). We also provide a hybrid tensor partition strategy of both $$X$$ and $$B$$ (section 3.4). After these tensor slicing, Domino breaks $$X \cdot A \cdot B$$ into pieces and removes data dependency. Then we enable computation-communication overlapping on these independent pieces to reduce communication overhead in TP."
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="/assets/publications/domino.png"/>
+
+</details>
 
 <details> <summary markdown="span">2023 [Simplifying Transformer Blocks, ETH Zurich](https://arxiv.org/abs/2311.01906)</summary>
 
