@@ -9,6 +9,7 @@ A summary of some interesting publications I came across. Continuously updated. 
 {::options parse_block_html="true" /}
 
 
+
 <details> <summary markdown="span">2025 [DeepCompile: A Compiler-Driven Approach to Optimizing Distributed Deep Learning Training, Microsoft DeepSpeed](https://arxiv.org/abs/2504.09983)</summary>
 
 DeepCompile extends the capabilities of deep learning compilers to support distributed training. "Distributed training has become essential for scaling today’s massive deep learning models. While deep learning compilers like PyTorch compiler dramatically improved single-GPU training performance through optimizations like kernel fusion and operator scheduling, they fall short when it comes to distributed workloads."
@@ -403,6 +404,24 @@ Hyperparameters That Can Be µTransferred, Not µTransferred, or µTransferred A
 - µTransferable: optimization related (learning rate, momentum, Adam beta, LR schedule, etc), init (per-layer init variance), parameter multipliers (multiplicative constants after weight/biases, etc), etc
 - Not µTransferable: regularization  (dropout, weight decay, etc)
 - µTransferred Across (Depth): width, depth*, batch size*,  training time*, seq length*
+</details>
+
+
+<details> <summary markdown="span">2022 [DeepSpeed Inference: Enabling Efficient Inference of Transformer Models at Unprecedented Scale, Microsoft DeepSpeed](https://arxiv.org/abs/2207.00032)</summary>
+
+Inference kernels must therefore achieve high memory bandwidth utilization and high compute utilization at small batch sizes, whereas training kernels simply need to achieve high compute utilization at much larger batch sizes. This makes developing inference kernels quite challenging.
+DeepSpeed Inference consists of two components:
+1. DeepSpeed Transformer:  DeepSpeed Inference can automatically scale a dense transformer model to multiple devices by partitioning transformer operators across multiple devices while also adding appropriate communication operations needed across GPUs. Under the hood, it leverages the single GPU kernels to maximize per GPU memory bandwidth utilization, while using NCCL all-reduce collectives to perform the necessary across GPU communication. This allows DeepSpeed Inference to achieve **excellent aggregate memory bandwidth utilization across several GPUs with a node**. However, **tensor slicing can not be scaled efficiently beyond a single node due to significant communication overhead. Thus to further scale to multi-node systems, DeepSpeed Inference uses pipeline parallelism**. DeepSpeed Transformer includes three transformer modules:
+  - a single GPU transformer kernels for minimizing latency and maximizing throughput via memory-bandwidthcentric fusion schedules and GeMM kernels (Sec. III).
+  - A many-GPU dense transformer inference system that combines tensor-parallelism to minimize latency with inference optimized pipeline parallelism schedules and memory optimizations to maximize throughput (Sec. IV).
+  - A massive-GPU sparse model inference system that combines: i) expert, data, and tensor parallelism, ii) novel communication optimizations and iii) sparse kernel optimizations to scale sparse inference on trillions of parameters across hundreds of GPUs (Sec. V).
+2. ZeRO-Inference that leverages CPU, NVMe and GPU memory along with GPU compute to make massive model inference accessible with limited resources (Sec. VI).
+
+The paper introduces two techniques: 
+1. **Deep-Fusion** to reduce kernel-invocation and data-movement overheads by fusing multiple kernels beyond element-wise operation. The rationale is: on GPU, if a data produced by a thread-block is consumed by a different one, a global memory synchronization is needed which invokes a new kernel. To avoid the need for a global synchronization, Deep-Fusion tiles the computation-space along dimensions of the iteration space which incur no cross-tile data-dependencies and executes them in parallel across different thread-blocks. The dimensions of the computation-space which does contain data dependencies are not tiled, and instead processed by the same thread-block. After this tiling, two operators can be fused using DeepFusion if each tile of the second operator depends on exactly one output tile of the first operator.  Deep-Fusion can fuse not only element-wise operations but also reductions, data transpositions, and GeMMs as long as there are no cross-tile dependencies.
+2. a **Custom GeMM implementation**  designed to be fusable with Deep-Fusion while achieving maximum memory bandwidth utilization. "We first tile the computation along the output dimension. That allows us to implement GeMM using a single kernel by keeping the reduction within a tile" Then, with the aforementioned tiling strategy, each warp in a thread block is responsible for producing a partially reduced result for a tile of outputs and a final reduction is needed across all the warps within the thread block. To avoid having to reduce the partial results in shared memory, we perform a single data-layout transpose in
+shared memory such that partial results of the same output element are contiguous in memory, and can be reduced by a single warp using cooperative-group collectives directly in registers. Finally, authors also transpose the weight matrix during initialization such that M rows for each column are contiguous in memory.
+
 </details>
 
 
