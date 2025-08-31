@@ -27,9 +27,8 @@ DeepCompile applies a fully sharded approach like ZeRO-3 and FSDP on top of Deep
 - Adaptive offloading. DeepCompile offloads optimizer states such as momentum and variance used by Adam [14] to CPU memory when GPU memory is insufficient. To reduce data transfer overhead, it offloads only the amount of data that exceeds the memory limit and schedules transfers to overlap with computation.
 
 It automatically implements distributed ZeRO-3, ZeRO-1, and offloading. Future directions include automated parallelization (sequence/tensor parallelisms), smarter memory management, and dynamic adaptation to runtime behavior.
-
-
 </details>
+
 
 <details> <summary markdown="span">2024 [The Llama 3 Herd of Models, Meta](https://arxiv.org/abs/2407.21783)</summary>
 
@@ -372,6 +371,15 @@ the door to training CNFs with other, non-diffusion probability paths. An instan
 interpolation to define the conditional probability paths. These paths are more efficient than diffusion paths, provide faster training and sampling, and result in better generalization". See a good explanation in this [Cambridge ML group post</summary>](https://mlg.eng.cam.ac.uk/blog/2024/01/20/flow-matching.html) .
 </details>
 
+
+<details> <summary markdown="span">2022 [Titans: Learning to Memorize at Test Time, Google Research](https://arxiv.org/abs/2501.00663)</summary>
+A model that utilizes recurrent logic and attention, like [mamba](https://arxiv.org/abs/2312.00752). From the abstract: "We present a new
+neural long-term memory module that learns to memorize historical context and helps an attention to attend to the
+current context while utilizing long past information. We show that this neural memory has the advantage of a fast
+parallelizable training while maintaining a fast inference. From a memory perspective, we argue that attention due to its
+limited context but accurate dependency modeling performs as a short-term memory, while neural memory due to its
+ability to memorize the data, acts as a long-term, more persistent, memory."
+</details>
 
 <details> <summary markdown="span"> 2022 [Flow Straight and Fast: Learning to Generate and Transfer Data with Rectified Flow](https://arxiv.org/abs/2209.03003)</summary>
 
