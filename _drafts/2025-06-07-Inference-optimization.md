@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "GPT model compression and acceleration via kernel fusion, distillation, pruning, quantization, flash attention and KV cache"
+title:  "GPT model inference optimization via kernel fusion, distillation, pruning, quantization, flash attention and KV cache"
 categories: [machine learning, Transformer, GPT, pruning, distillation, quantization, pruning]
 tags: [machinelearning]
 ---
@@ -20,7 +20,8 @@ Note: Easiest way to speed up the model is to save memory, allowing for faster b
 - DeepSpeed zero presentation, Ulysses, etc
 - [DeepSpeed model compression](https://www.deepspeed.ai/tutorials/model-compression/)
 - [Deep Model Fusion: A Survey](https://arxiv.org/abs/2309.15698)
-- 
+- [Lilian Weng blog: inference optimization](https://lilianweng.github.io/posts/2023-01-10-inference-optimization/)
+ 
 Just like in our [previous post]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}), we will focus on the small variant of the ([GPT2 model](https://arxiv.org/abs/2005.14165), that we call the **GPTlite model**, whose objective is to generate text by predicting the next character in a sequence.
 We will discuss and apply Knowledge distilation for improved accuracy and prunning/compression, TensorRT for quantization and acceleration via kernel fusion, `torch.compile` for model acceleration, and flash attention and KV-cache for lower memory and higher acceleration.
 
