@@ -111,7 +111,17 @@ Also, it is then logical that inference requires less memory than training, as t
 ## Dropout
 
 [Dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5) is a method that drops neurons (in different layers) with a given probability $$p$$ during train time. For each training minibatch, a new network is sampled. 
-At test time, all neurons are used, with outgoing weights multiplied by $$p$$. Dropout helps reducing overfitting, as the network learns to never rely on any given activations, so it learns *redundant* ways of solving the task with multiple neurons. It also leads to sparse activations, similar to a regularization (L2).
+The outputs of the kept neurons are scaled by $$1/(1-p)$$. At inference time, all neurons are used, and no dropout is applied. A simple code snippet to explain this is:
+
+```python
+class MyDropout(nn.Module):
+    def forward(self, X):
+        if self.training:
+            binomial = torch.distributions.binomial.Binomial(probs=1-self.p)
+            return X * binomial.sample(X.size()) * (1.0/(1-self.p))
+        return X
+```
+Dropout helps reducing overfitting, as the network learns to never rely on any given activations, so it learns *redundant* ways of solving the task with multiple neurons. It also leads to sparse activations, similar to a regularization (L2).
 Dropout can be improved by adding max-norm regularization, decaying learning rate and high momentum.
 Dropping 20% of input units and 50% of hidden units was often found to be optimal in the original publication. It's computationally less expensive than regular model averaging of multiple trained DNNs. However, it takes 2-3 times longer to train than single fully-connected DNNs because requires way more epochs, as parameter updates are very noisy.
 Because a fully connected layer occupies most of the parameters, it is prone to overfitting. Therefore, dropout increases model generalization.
@@ -192,3 +202,4 @@ A list of most common data types and embedding types:
   - $$\Box$$ is a differentiable, permutation invariant function e.g. sum, mean, max;
   - and $$\gamma$$ and $$\phi$$ are differentiable functions such as DNNs or RNNs (LSTMs, GRUs).
  
+

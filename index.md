@@ -51,8 +51,9 @@ In this space, I keep track of <a href="{{ site.publications_permalink }}">publi
 
 <center>
 <div class="info-panel">
-<strong>Support this blog!</strong> If you like this content and would like to show appreciation, please donate instead to the <a href="https://ipoporto.pt/en/eu-doente/clinicas/">children's cancer hospital in Porto</a> via this <a href="https://www.gofundme.com/f/support-the-childrens-cancer-hospital-in-porto">GoFundMe campaign</a>. Thank you for caring❤️‍🩹
+<strong>Support this blog!</strong> If you like this content and would like to show appreciation, please donate instead to the children's cancer hospital in Porto via this <a href="https://www.gofundme.com/f/support-the-childrens-cancer-hospital-in-porto">GoFundMe campaign</a>. Thank you for caring❤️‍🩹
 </div>
 </center>
+
 
 
