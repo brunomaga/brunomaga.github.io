@@ -14,9 +14,7 @@ layout: default
 </td>
 
 <td style="border:none">
-Welcome 👋🏽. I am Bruno, a Systems ML researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states/">Huawei Research</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>. And before that, an HPC engineer, PhD and postdoc at <a href="https://www.epfl.ch/en/">EPFL</a>.
-
-In this space, I keep track of <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> of interest, and I post about ML and HPC 🚀.
+Hi👋🏽. I am Bruno, an AI Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states/">Huawei Research</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research</a> on <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Project Silica</a>, and an HPC engineer, PhD and postdoc at <a href="https://www.epfl.ch/en/">EPFL</a>. In this space, I keep track of <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> of interest, and I post about ML/HPC 🚀.
 
 <!-- CSS of table defined in _includes/head.html -->
 <div class="Rtable Rtable--5cols Rtable--collapse">
@@ -54,6 +52,7 @@ In this space, I keep track of <a href="{{ site.publications_permalink }}">publi
 <strong>Support this blog!</strong> If you like this content and would like to show appreciation, please donate instead to the children's cancer hospital in Porto via this <a href="https://www.gofundme.com/f/support-the-childrens-cancer-hospital-in-porto">GoFundMe campaign</a>. Thank you for caring❤️‍🩹
 </div>
 </center>
+
 
 
 
