@@ -27,7 +27,7 @@ class Megatron_f(torch.autograd.Function):
   @staticmethod
   def backward(ctx, gradient):
       dist.all_reduce(gradient, dist.ReduceOp.SUM, group=ctx.mp_comm_group)
-      return gradient, None   # <-- FIX
+      return gradient, None
 
 
 class Megatron_g(torch.autograd.Function):
