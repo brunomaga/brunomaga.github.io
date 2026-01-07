@@ -249,7 +249,7 @@ with known number of trials <em>n</em></td>
 <tr>
 <td><a href="https://en.wikipedia.org/wiki/negative_binomial_distribution" title="wikilink">negative binomial distribution</a><br />
 with known number of failures <em>r</em></td>
-<td><span class="math inline">\( f(x; r, p) = \binom{x+r-1}{x} p^r(1-p)^x \)</span></td>
+<td><span class="math inline">\( f(x; r, p) = \binom{x+r-1}{x} p^x(1-p)^r \)</span></td>
 <td><span class="math inline">\(\log p\)</span></td>
 <td><span class="math inline">\(e^\eta\)</span></td>
 <td><span class="math inline">\({x+r-1 \choose x}\)</span></td>
@@ -422,3 +422,4 @@ $$
 $$
 
 Not surprisingly, the results relates to the data only via the sufficient statistics $$\sum_{n=1}^N T(x_i)$$, giving a meaning to our notion of sufficiency --- *in order to estimate parameters we retain only the sufficient statistic*. For distributions in which $$T(x) = X$$, which include the the Bernoulli, Poisson and multinomial distributions, it shows that the sample mean is the maximum likelihood estimate of the mean. For the univariate Gaussian distribution, the sample mean is the maximum likelihood estimate of the mean and the sample variance is the maximum likelihood estimate of the variance.
+
