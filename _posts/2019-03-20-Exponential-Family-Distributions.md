@@ -249,7 +249,7 @@ with known number of trials <em>n</em></td>
 <tr>
 <td><a href="https://en.wikipedia.org/wiki/negative_binomial_distribution" title="wikilink">negative binomial distribution</a><br />
 with known number of failures <em>r</em></td>
-<td><span class="math inline">\( f(x; r, p) = \binom{x+r-1}{x} p^r(1-p)^x \)</span></td>
+<td><span class="math inline">\( f(x; r, p) = \binom{x+r-1}{x} p^x(1-p)^r \)</span></td>
 <td><span class="math inline">\(\log p\)</span></td>
 <td><span class="math inline">\(e^\eta\)</span></td>
 <td><span class="math inline">\({x+r-1 \choose x}\)</span></td>
