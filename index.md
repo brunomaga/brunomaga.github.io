@@ -30,7 +30,7 @@ Hi👋🏽! I am Bruno, an AI Systems researcher at <a href="https://www.huawei.
 </tr>
 </table> 
 
-<center> <div class="info-warning"> <strong>WARNING:</strong> scammers are using my name and face (with AI) to impersonate me in job interviews.</div> </center>
+<center> <div class="info-warning"> <strong>Warning:</strong> scammers are using my name and face (with AI) to impersonate me in job interviews.</div> </center>
 
 <table style='border:none; border-collapse:collapse; cellspacing:0; cellpadding:0'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
@@ -52,6 +52,7 @@ Hi👋🏽! I am Bruno, an AI Systems researcher at <a href="https://www.huawei.
 <strong>Support this blog!</strong> If you like this content and would like to show appreciation, please donate instead to the children's cancer hospital in Porto via this <a href="https://www.gofundme.com/f/support-the-childrens-cancer-hospital-in-porto">GoFundMe campaign</a>. Thank you for caring❤️‍🩹
 </div>
 </center>
+
 
 
 
