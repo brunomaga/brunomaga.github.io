@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed GPT model (part 4): context and sequence parallelism with Ulysses and Ring attention"
+title:  "Distributed GPT model (part 4): sequence and context parallelism with Ulysses and Ring attention"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
@@ -11,33 +11,33 @@ We always thought about ML parallelism as a tridimensional problem, composed of 
 2. pipeline parallelism requires the same `(B/P, E)` input per processor, but processes each mini-batch as a pipeline of iterative micro-batches with gradient accumulation, leading to a memory requirement of `(B/P/Q, E)` per iteration, where `Q` is micro-batch size;
 3. model parallelism splits the embeddings/features across processors, requiring a local storage of shape  `(B, E/P)`.
 
-However, many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. Following the same notation as above, sequence parallelism requires a local storage of `(B, T/P, E)` per process. With that in mind, in this post, we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPTlite blocks]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), where each block is multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
+However, many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. Following the same notation as above, sequence parallelism requires a local storage of `(B, T/P, E)` per process. With that in mind, in this post, we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPTlite blocks]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), where each block is a multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
 
-## Context Parallelism
+Before we continue, we emphasize the following:
+- we call our algorithms of sequence parallelism even though several sources will also call this of context parallelism. In practice, **sequence parallelism splits the sequence (token) dimension across GPUs**, so each device processes a different chunk of tokens, mainly to scale activation memory/compute with longer sequences. **Context parallelism splits the attention context (keys/values) across GPUs**, so each device holds a slice of the KV context and computes partial attention that’s combined via communication, mainly to scale attention/KV-cache memory for very large context windows. In many scenarios - like in this post - we apply both: we split the input tokens and the KV elements of the attention.
+- **we will focus on the sequence parallelism algorithm for the training and inference prefill steps**. This is not to be confused with the sequence parallelism for the inference decode step which is a completely different algorithm that shards the KV cache instead of the input tokens (as it only processes one toke at a time). 
 
-Context parallelism is a parallelism scheme over the sequence dimension, and is best described [in this NVIDIA post](https://docs.nvidia.com/megatron-core/developer-guide/latest/api-guide/context_parallel.html) as:
+## Data loader setup 
 
-> Context Parallelism (“CP”) is a parallelization scheme on the dimension of sequence length. Unlike prior SP (sequence parallelism) which only splits the sequence of Dropout and LayerNorm activations, CP partitions the network inputs and all activations along sequence dimension. With CP, all modules except attention (e.g., Linear, LayerNorm, etc.) can work as usual without any changes, because they do not have inter-token operations.
-
-In practice, parallelism on the sequence dimension works out-of-the-box on most layers for any input shaped  `(B, T/P, E)`. To implement Context Parallelism, all you only need is to a `DataLoader` and `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loading worker. 
+To implement Sequence Parallelism, we first have to adapt our data loader to load data at the token level, in a way that matches our hybrid data- and sequence parallelism setup. All we need to do is to configure a `DataLoader` and `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader worker. 
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPTlite-distributed/SPDistributedSampler.png"/>
 
 {: style="text-align:center; font-size: small;"}
-An example of data parallelism (DP) and context parallelism (CP) on 4 processes/GPUs (color-coded) and a dataset of 8 samples. First row: all 4 processes run on a distributed data parallelism execution. 2nd row: creating a custom `DistributedSampler` that yields chunks of sequences allows for a hybrid data- and context- parallelism execution of 2 groups of 2 context-parallel processes. Third row: no data-parallelism, all 4 processes execute context-parallelism of the same sample. 
+An example of data loading for hybrid parallelism (DP) and sequence parallelism (SP) on 4 processes/GPUs (color-coded), on a dataset of 8 samples. First row: all 4 processes run on a distributed data parallelism execution. 2nd row: creating a custom `DistributedSampler` that yields chunks of sequences allows for a hybrid data- and sequence- parallelism execution of 2 groups of 2 sequence-parallel processes. Third row: no data-parallelism, all 4 processes execute sequence-parallelism of the same sample. 
 
+## Sequence parallelism leads to distributed attention
 
-During training, the model runtime scales perfectly with the context parallelism degree. However, when it comes to the attention layer:
+During training, the model runtime scales perfectly with the sequence parallelism degree, except for the attention layer. This is due to the fact that, to reduce activation memory footprint, each GPU only stores a sub set of the KV elements.
 
-> As for attention, the Q (query) of each token needs to compute with the KV (key and value) of all tokens in the same sequence. Hence, CP requires additional all-gather across GPUs to collect the full sequence of KV. Correspondingly, reduce-scatter should be applied to the activation gradients of KV in backward propagation. To reduce activation memory footprint, each GPU only stores the KV of a sequence chunk in forward and gathers KV again in backward.
-
-In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values of the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows in $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, then the dot-product $$Q_p K^T$$ will have shape `B, T/P, T`. Because we are holding a full row of the dot-product, we can apply the $$softmax$$ without any changes and get an attention matrix also of shape `B, T/P, T`. When multiplied by $$V$$, this results in the attention output for that process shape `B, T/P, E`.
+In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values of the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, it needs to access all elements of  $$K^T$$ and $$V$$ to be able to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product by $$V$$, resulting in the attention output per process of shape `B, T/P, E`:
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/GPTlite-distributed/context_parallelism.png"/>
 
-Requiring the full key and value tensors has two main drawbacks: an additional `all_gather` step to collect the full K and V, and the memory overhead to store those two tensors in full form. This is not ideal, therefore, in the following methods, we will look into how to parallelise the attention layer as well.
+Therefore, sequence parallelism requires some communication to make the relevant KV elements accessible across all GPUs.
+With that in mind, in the following sections we will look into two alternative algorithms for sequence parallelism.
 
 ## Ulysses sequence parallelism
 
@@ -133,7 +133,7 @@ And that is it. It's pretty simple, but if you are looking for the full implemen
 
 Also, as an important note, there are other similar approaches to handle this problem, such as [ColAI-SP](https://arxiv.org/abs/2105.13120) and [Megatron-SP](https://arxiv.org/abs/2205.05198), however the big advantage of [DeepSpeed Ulysses parallelism](https://arxiv.org/abs/2309.14509) is that it requires less communication than the alternatives. However, the only downsides are that the maximum parallelism is dictated by the number of attention heads (typically 8), and that the all-two-all requires blocking collective communication that may incur a heavy overhead on networks of processes wil slow communicaion. That's where Ring Attention comes into play.
 
-## Ring Attention with Blockwise Transformers
+## Ring Attention
 
 Ring attention was presented in the paper  [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889) based on [Blockwise Parallel Transformer for Large Context Models](https://arxiv.org/abs/2305.19370). It performs a per-block computation of the attention matrix, that allows one to compute the attention $$softmax \left(QK^T \right)$$ without having access to the full inputs $$Q$$, $$K$$ and $$V$$. It can be viewed as a distributed version of [Flash Attention](https://arxiv.org/abs/2205.14135). The whole rationale was presented in the paper [Self-attention Does Not Need $$O(n^2)$$ Memory](https://arxiv.org/abs/2112.05682). In practice, given a query $$q$$, key $$k$$ and value $$v$$ tensor, the output of an attention head can be reduced to:
 
@@ -326,4 +326,4 @@ Activations allocation on a 4-GPU parallelism with 2-GPU data parallelism and 2-
 
 This code has been added to the [GPTlite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed), if you want to try it. When you run it, keep in mind that deterministic behaviour on sequence parallelism across networks of different proces count  is difficult due to random number generators producing different values on each node - e.g. during model initialization and dropout. 
 
-Finally, both two methods have some drawbacks: Ulysses yields a reduced number of communication steps but low parallelism, while Ring Attention will give high parallelism with communication steps. The ideal solution would then be a hybrid of Ulysses parallelism and Ring attention. This has already been presented in [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719). If you're looking for finer-granularity in sequence parallelism, check the head-parallel and context-parallel implementation of 2D-attention in [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485v1).
+Finally, both two methods have some drawbacks: Ulysses yields a reduced number of communication steps but low parallelism, while Ring Attention will give high parallelism with communication steps. The ideal solution would then be a hybrid of Ulysses parallelism and Ring attention. This has already been presented in [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719). If you're looking for finer-granularity in sequence parallelism, check the head-parallel and sequence-parallel implementation of 2D-attention in [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485v1).

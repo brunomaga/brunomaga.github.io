@@ -422,3 +422,4 @@ $$
 $$
 
 Not surprisingly, the results relates to the data only via the sufficient statistics $$\sum_{n=1}^N T(x_i)$$, giving a meaning to our notion of sufficiency --- *in order to estimate parameters we retain only the sufficient statistic*. For distributions in which $$T(x) = X$$, which include the the Bernoulli, Poisson and multinomial distributions, it shows that the sample mean is the maximum likelihood estimate of the mean. For the univariate Gaussian distribution, the sample mean is the maximum likelihood estimate of the mean and the sample variance is the maximum likelihood estimate of the variance.
+
