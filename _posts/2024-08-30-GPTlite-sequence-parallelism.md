@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed GPT model (part 4): context and sequence parallelism with Ulysses and Ring attention"
+title:  "Distributed GPT model (part 4): sequence parallelism with Ulysses and Ring attention"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
@@ -11,33 +11,29 @@ We always thought about ML parallelism as a tridimensional problem, composed of 
 2. pipeline parallelism requires the same `(B/P, E)` input per processor, but processes each mini-batch as a pipeline of iterative micro-batches with gradient accumulation, leading to a memory requirement of `(B/P/Q, E)` per iteration, where `Q` is micro-batch size;
 3. model parallelism splits the embeddings/features across processors, requiring a local storage of shape  `(B, E/P)`.
 
-However, many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. Following the same notation as above, sequence parallelism requires a local storage of `(B, T/P, E)` per process. With that in mind, in this post, we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPTlite blocks]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), where each block is multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
+However, many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Few examples are temporal datasets with a shape  `(B, T, E)`, and attention mechanisms with an attention matrix of shape  `(B, T, T)`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. Following the same notation as above, sequence parallelism requires a local storage of `(B, T/P, E)` per process. With that in mind, in this post, we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPTlite blocks]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), where each block is multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections. We will focus on the training and inference prefill steps - note that sequence parallelism for the inference decode step is a completely different algorithm that shards the KV cache, instead of the input tokens and the full KV tensors. 
 
-## Context Parallelism
+## Data loader setup 
 
-Context parallelism is a parallelism scheme over the sequence dimension, and is best described [in this NVIDIA post](https://docs.nvidia.com/megatron-core/developer-guide/latest/api-guide/context_parallel.html) as:
-
-> Context Parallelism (“CP”) is a parallelization scheme on the dimension of sequence length. Unlike prior SP (sequence parallelism) which only splits the sequence of Dropout and LayerNorm activations, CP partitions the network inputs and all activations along sequence dimension. With CP, all modules except attention (e.g., Linear, LayerNorm, etc.) can work as usual without any changes, because they do not have inter-token operations.
-
-In practice, parallelism on the sequence dimension works out-of-the-box on most layers for any input shaped  `(B, T/P, E)`. To implement Context Parallelism, all you only need is to a `DataLoader` and `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loading worker. 
+To implement Sequence Parallelism, we first have to adapt our data loader to load data at the token level, in a way that matches our hybrid data- and sequence parallelism setup. All we need to do is to configure a `DataLoader` and `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader worker. 
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="/assets/GPTlite-distributed/SPDistributedSampler.png"/>
 
 {: style="text-align:center; font-size: small;"}
-An example of data parallelism (DP) and context parallelism (CP) on 4 processes/GPUs (color-coded) and a dataset of 8 samples. First row: all 4 processes run on a distributed data parallelism execution. 2nd row: creating a custom `DistributedSampler` that yields chunks of sequences allows for a hybrid data- and context- parallelism execution of 2 groups of 2 context-parallel processes. Third row: no data-parallelism, all 4 processes execute context-parallelism of the same sample. 
+An example of data loading for hybrid parallelism (DP) and sequence parallelism (SP) on 4 processes/GPUs (color-coded), on a dataset of 8 samples. First row: all 4 processes run on a distributed data parallelism execution. 2nd row: creating a custom `DistributedSampler` that yields chunks of sequences allows for a hybrid data- and sequence- parallelism execution of 2 groups of 2 sequence-parallel processes. Third row: no data-parallelism, all 4 processes execute sequence-parallelism of the same sample. 
 
+## Sequence parallelism leads to distributed attention
 
-During training, the model runtime scales perfectly with the context parallelism degree. However, when it comes to the attention layer:
+During training, the model runtime scales perfectly with the sequence parallelism degree, except for the attention layer. This is due to the fact that, to reduce activation memory footprint, each GPU only stores a sub set of the KV elements.
 
-> As for attention, the Q (query) of each token needs to compute with the KV (key and value) of all tokens in the same sequence. Hence, CP requires additional all-gather across GPUs to collect the full sequence of KV. Correspondingly, reduce-scatter should be applied to the activation gradients of KV in backward propagation. To reduce activation memory footprint, each GPU only stores the KV of a sequence chunk in forward and gathers KV again in backward.
-
-In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values of the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows in $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, then the dot-product $$Q_p K^T$$ will have shape `B, T/P, T`. Because we are holding a full row of the dot-product, we can apply the $$softmax$$ without any changes and get an attention matrix also of shape `B, T/P, T`. When multiplied by $$V$$, this results in the attention output for that process shape `B, T/P, E`.
+In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values of the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, it needs to access all elements of  $$K^T$$ and $$V$$ to be able to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product by $$V$$, resulting in the attention output per process of shape `B, T/P, E`:
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="/assets/GPTlite-distributed/context_parallelism.png"/>
 
-Requiring the full key and value tensors has two main drawbacks: an additional `all_gather` step to collect the full K and V, and the memory overhead to store those two tensors in full form. This is not ideal, therefore, in the following methods, we will look into how to parallelise the attention layer as well.
+Therefore, sequence parallelism requires some communication to make the relevant KV elements accessible across all GPUs.
+With that in mind, in the following sections we will look into two alternative algorithms for sequence parallelism.
 
 ## Ulysses sequence parallelism
 
