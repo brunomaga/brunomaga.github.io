@@ -17,7 +17,7 @@ Before we continue, we emphasize the following:
 - we call our algorithms of sequence parallelism even though several sources will also call this of context parallelism. In practice, **sequence parallelism splits the sequence (token) dimension across GPUs**, so each device processes a different chunk of tokens, mainly to scale activation memory/compute with longer sequences. **Context parallelism splits the attention context (keys/values) across GPUs**, so each device holds a slice of the KV context and computes partial attention that’s combined via communication, mainly to scale attention/KV-cache memory for very large context windows. In many scenarios - like in this post - we apply both: we split the input tokens and the KV elements of the attention.
 - **we will focus on the sequence parallelism algorithm for the training and inference prefill steps**. This is not to be confused with the sequence parallelism for the inference decode step which is a completely different algorithm that shards the KV cache instead of the input tokens (as it only processes one toke at a time). 
 
-## Data loader setup 
+## Data loader setup for Sequence Parallelism
 
 To implement Sequence Parallelism, we first have to adapt our data loader to load data at the token level, in a way that matches our hybrid data- and sequence parallelism setup. All we need to do is to configure a `DataLoader` and `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader worker. 
 
@@ -27,9 +27,11 @@ To implement Sequence Parallelism, we first have to adapt our data loader to loa
 {: style="text-align:center; font-size: small;"}
 An example of data loading for hybrid parallelism (DP) and sequence parallelism (SP) on 4 processes/GPUs (color-coded), on a dataset of 8 samples. First row: all 4 processes run on a distributed data parallelism execution. 2nd row: creating a custom `DistributedSampler` that yields chunks of sequences allows for a hybrid data- and sequence- parallelism execution of 2 groups of 2 sequence-parallel processes. Third row: no data-parallelism, all 4 processes execute sequence-parallelism of the same sample. 
 
-## Sequence parallelism leads to distributed attention
+Once this is in place, most layers - like the Feed Forward network - operate across the last/embedding dimension of the input, and are therefore able to run a sequence-parallel train/decode of the input without changes. The attention layer is an exception, and is covered next.
 
-During training, the model runtime scales perfectly with the sequence parallelism degree, except for the attention layer. This is due to the fact that, to reduce activation memory footprint, each GPU only stores a sub set of the KV elements.
+## Distributed Attention for Context Parallelism
+
+During training/inference, the model runtime scales perfectly with the sequence parallelism degree, except for the attention layer. This is due to the fact that, to reduce activation memory footprint, each GPU only stores a sub set of the KV elements.
 
 In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values of the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `B, T, E`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `B, T/P, E`, it needs to access all elements of  $$K^T$$ and $$V$$ to be able to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product by $$V$$, resulting in the attention output per process of shape `B, T/P, E`:
 
