@@ -126,48 +126,96 @@ class Megatron_FeedForward(nn.Module):
     return z
 ```
 
-Note that the sum-reduce is added after the matmul but before the bias of the second linear layer, for correctness. The attention head follows a similar approach, where we apply the tensor reduction to all the key, query and value tensors:
+Note that the sum-reduce is added after the matmul but before the bias of the second linear layer, for correctness. The attention head follows a similar approach, however:
+
+- Q/K/V projections are column-parallel: we split the output features (i.e., split the number of heads / hidden width), so each rank owns a subset of heads.
+- The attention softmax is computed locally per rank (because each rank’s heads are independent).
+- The output projection is row-parallel, and that’s where you typically do the all-reduce (to combine partial output contributions).
+
+The multi-head attention head and FFN can then be written as:
 
 ```python
-class Megatron_Head(nn.Module):
-  """ the attention block with tensor parallelism as in Megatron-LM paper"""
+class Megatron_MHA(nn.Module):
+  """
+  Megatron-LM tensor-parallel Multi-Head Self-Attention (Fig. 3b style):
 
-  def __init__(self, head_size, mp_comm_group=None):
+  - Q/K/V GEMM is column-parallel: each rank owns a subset of heads (local heads).
+    Use Megatron_f on the input (identity forward, all-reduce backward) to match
+    column-parallel input-gradient behavior.
+
+  - Attention (softmax path) is fully local per rank (no communication).
+
+  - Output projection is row-parallel: each rank projects its local concat heads
+    to n_embd, then Megatron_g all-reduces the output (sum) across ranks.
+  """
+
+  def __init__(self, n_embd, n_head, block_size, dropout, mp_comm_group=None):
     super().__init__()
     self.mp_comm_group = mp_comm_group
-    if mp_comm_group:
-        #Fig 3b. Self-attention: splits first GEMM across colums and second GEMM across rows
-        head_size //= dist.get_world_size()
+    self.n_embd = n_embd
+    self.n_head = n_head
 
-    self.key   = nn.Linear(n_embd, head_size, bias=False)
-    self.query = nn.Linear(n_embd, head_size, bias=False)
-    self.value = nn.Linear(n_embd, head_size, bias=False)
-    self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
-    self.dropout = nn.Dropout(dropout)
+    self.tp_size = dist.get_world_size(group=mp_comm_group) if mp_comm_group else 1
+    if n_head % self.tp_size != 0:
+      raise ValueError(f"n_head ({n_head}) must be divisible by tp_size ({self.tp_size}).")
+
+    self.n_head_local = n_head // self.tp_size
+
+    if n_embd % n_head != 0:
+      raise ValueError(f"n_embd ({n_embd}) must be divisible by n_head ({n_head}).")
+    self.head_dim = n_embd // n_head
+    self.hidden_local = self.n_head_local * self.head_dim
+
+    # Column-parallel QKV: each rank produces Q,K,V only for its local heads.
+    self.qkv = nn.Linear(n_embd, 3 * self.hidden_local, bias=False)
+
+    # Row-parallel output projection: consumes local heads and produces full n_embd,
+    # then we all-reduce (Megatron_g) to combine ranks.
+    self.proj = nn.Linear(self.hidden_local, n_embd, bias=False)
+
+    self.register_buffer("tril", torch.tril(torch.ones(block_size, block_size)))
+    self.attn_dropout = nn.Dropout(dropout)
+    self.out_dropout = nn.Dropout(dropout)
 
   def forward(self, x):
     B, T, C = x.shape
+    if C != self.n_embd:
+      raise ValueError(f"Expected x.shape[-1] == {self.n_embd}, got {C}.")
 
+    # Column-parallel input handling: identity forward, all-reduce on backward.
     if self.mp_comm_group:
       x = Megatron_f.apply(x, self.mp_comm_group)
 
-    k = self.key(x)
-    q = self.query(x)
-    v = self.value(x)
+    # Local QKV for local heads
+    qkv = self.qkv(x)  # (B, T, 3*hidden_local)
+    q, k, v = qkv.split(self.hidden_local, dim=-1)
 
-    # scores
-    wei = q @ k.transpose(-2, -1)  # (B,T,T)
+    # (B, T, hidden_local) -> (B, n_head_local, T, head_dim)
+    q = q.view(B, T, self.n_head_local, self.head_dim).transpose(1, 2)
+    k = k.view(B, T, self.n_head_local, self.head_dim).transpose(1, 2)
+    v = v.view(B, T, self.n_head_local, self.head_dim).transpose(1, 2)
 
-    if self.mp_comm_group:
-      wei = Megatron_g.apply(wei, self.mp_comm_group)  # <-- reduce BEFORE softmax
+    # Attention scores: (B, n_head_local, T, T)  -- LOCAL, no comm
+    wei = (q @ k.transpose(-2, -1)) * (self.head_dim ** -0.5)
 
-    wei *= (q.size(-1) ** -0.5)  # <-- scale by head dim
-    wei = wei.masked_fill(self.tril[:T, :T] == 0, float('-inf'))
+    # Causal mask (broadcasts over B and n_head_local)
+    wei = wei.masked_fill(self.tril[:T, :T] == 0, float("-inf"))
+
     wei = F.softmax(wei, dim=-1)
-    wei = self.dropout(wei)
+    wei = self.attn_dropout(wei)
 
-    #perform weighted aggregation of values
+    # Context: (B, n_head_local, T, head_dim)
     out = wei @ v
+
+    # Concat heads: (B, T, hidden_local)
+    out = out.transpose(1, 2).contiguous().view(B, T, self.hidden_local)
+
+    # Row-parallel output projection: local matmul then all-reduce sum on forward
+    out = self.proj(out)  # (B, T, n_embd) partial contribution
+    if self.mp_comm_group:
+      out = Megatron_g.apply(out, self.mp_comm_group)
+
+    out = self.out_dropout(out)
     return out
 ``` 
 
@@ -193,5 +241,6 @@ As an important remark: finding the best parallelism strategy is hard, due to th
 We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored. To name a few: [**autotuning**](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) for parallelism hyper-parameters discovery; [**flops profiler**](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) measures the time, flops and parameters of individual layers, [**sparse attention kernels**](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound; [**communication optimizers**](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining, [**monitor**](https://www.deepspeed.ai/training/#monitor) to log live training metrics to TensorBoard, csv file or other backend; [**model compression**](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size.
 
 Finally, the Megatron-LM tensor parallelism code has been added to the [GPTlite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed), if you want to try it.
+
 
 
