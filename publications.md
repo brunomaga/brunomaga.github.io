@@ -9,6 +9,21 @@ A summary of some interesting publications I came across. Continuously updated. 
 {::options parse_block_html="true" /}
 
 
+<details> <summary markdown="span">2025 [DeepSeek-V3.2-Exp: Boosting Long-Context Efficiency with DeepSeek Sparse Attention, DeepSeek-AI](https://aarnphm.xyz/thoughts/papers/DeepSeek_V3_2.pdf)</summary>
+
+DeepSeek-V3.2 is best understood as a systems/efficiency update on top of the DeepSeek-V3 line. V3.2-Exp’s core architectural change is **DeepSeek Sparse Attention (DSA)**: a fine-grained sparse attention mechanism that keeps the long-context experience (up to 128K in the V3.1-Terminus baseline) while lowering the end-to-end compute cost of attention for long sequences. What changed vs DeepSeek V3 (and why it matters):
+
+1. From dense to sparse attention for long context. DeepSeek V3/V3.1 rely on full attention-style computation whose dominant term scales like \(O(L^2)\) with sequence length \(L\). V3.2-Exp introduces DSA so the “main attention” work scales like \(O(Lk)\), where \(k \ll L\) is the number of selected tokens per query. Practically, this targets the regime where many “related works” start to blur together: V3.2’s differentiation is that it is *explicitly* an efficiency-driven sparse-attention variant of the same base model (continued-trained), rather than a brand-new architecture family.
+2. Lightning indexer + token selection.  DSA has two parts: a “lightning indexer” that scores which past tokens matter for a query token, and a top-k selection mechanism that uses those scores to choose which KV entries get attended to. The indexer still has an \(O(L^2)\) flavor, but the report emphasizes it is much cheaper than the full attention path it replaces, and that the combined result yields meaningful end-to-end gains on long contexts.
+3. DSA is instantiated under the model’s existing attention stack. To enable continued training from the existing checkpoints, V3.2-Exp introduces DSA in a way that fits the previous attention design (the report describes instantiation under the model’s MLA stack, implemented in an MQA-style sharing mode so each key-value entry can be reused across query heads efficiently).
+
+**Training / post-training differences**: DeepSeek-V3.2-Exp is produced by **continued pre-training + post-training** starting from a DeepSeek-V3.1-Terminus checkpoint whose context was already extended to 128K. A notable post-training change described in the report is collapsing what earlier DeepSeek pipelines treated as multiple RL stages into **one combined RL stage** (reasoning + agent + alignment together) to avoid catastrophic forgetting and keep performance balanced across domains.
+
+**Results snapshot (what improved, and what stayed similar)**: On standard capability benchmarks reported, V3.2-Exp is designed to keep performance roughly in-family with the V3.1-Terminus baseline (with small ups/downs depending on domain), while focusing the “headline improvement” on **long-context efficiency**. The report also includes *service-level* cost curves showing token cost vs position in a 128K context, benchmarking a deployed service on **H800 GPUs** (and discussing costs under a stated GPU-hour rental assumption). Separately, DeepSeek’s release notes for V3.2-Exp highlight **large API price cuts (50%+)**, consistent with the “efficiency-first” positioning.
+
+</details>
+
+
 
 <details> <summary markdown="span">2025 [DeepCompile: A Compiler-Driven Approach to Optimizing Distributed Deep Learning Training, Microsoft DeepSpeed](https://arxiv.org/abs/2504.09983)</summary>
 
@@ -1274,3 +1289,4 @@ where $$m$$ is a margin hyperparameter that sets the minimum distance for dissim
 </details>
  
 {::options parse_block_html="false" /}
+
