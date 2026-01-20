@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed GPT model (part 2): pipeline parallelism with DeepSpeed 1F1B"
+title:  "Distributed GPT model (part 2): pipeline parallelism"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
@@ -361,3 +361,4 @@ Note: I will add detailed results for pipeline parallelism in the future when ti
 ### Implementation
 
 This code is available in the [GPTlite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed), if you feel like giving it a try.
+
