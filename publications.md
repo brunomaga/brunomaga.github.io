@@ -8,6 +8,15 @@ A summary of some interesting publications I came across. Continuously updated. 
 
 {::options parse_block_html="true" /}
 
+<details> <summary markdown="span">2025 [SLA: Beyond Sparsity in Diffusion Transformers via Fine-Tunable Sparse-Linear Attention](https://arxiv.org/abs/2509.24006)</summary>
+
+SLA targets the attention bottleneck in Diffusion Transformers (DiTs), where long generation chains make per-step latency especially costly. Instead of committing to a single approximation (pure sparsity or pure linear attention), the paper proposes a hybrid view of attention weights: some interactions are critical and must remain “exact-ish,” while many are marginal or negligible and can be approximated or dropped.
+
+The method combines **sparse attention** (for the important interactions) with a **linear** component (to cheaply capture the broad, low-impact mass), and introduces a *fine-tunable* mechanism that can adapt which interactions belong to which bucket. This makes SLA behave like a “knob” between dense and approximate attention: you can dial sparsity/linearity while preserving fidelity, which helps differentiate it from static sparse masks or fixed-kernel linear attention.
+
+In their evaluation, SLA reports large compute reductions and practical wall-clock speedups: up to **95% attention computation reduction** and up to **20×** attention speedup in some settings, and **13.7×** attention speedup plus **2.2× end-to-end** video generation speedup on **Wan2.1-1.3B**.
+</details>
+
 
 <details> <summary markdown="span">2025 [DeepSeek-V3.2-Exp: Boosting Long-Context Efficiency with DeepSeek Sparse Attention, DeepSeek-AI](https://aarnphm.xyz/thoughts/papers/DeepSeek_V3_2.pdf)</summary>
 
@@ -156,6 +165,32 @@ How it differs from other “big fusion” lines:
 - Mirage reports speedups of **~1.03× to ~4.6×** on the forward pass across evaluated workloads and baselines.
 - For end-to-end training, it reports **~1.04× to ~1.14×** improvements over strong, tuned baselines—smaller than the biggest kernel-level wins, but meaningful given how optimized many training stacks already are.
 
+</details>
+
+
+<details> <summary markdown="span">2025 [SageAttention3: Microscaling FP8 Attention for Inference](https://arxiv.org/abs/2505.11594)</summary>
+
+SageAttention3 pushes the SageAttention line toward even more aggressive inference acceleration by combining **microscaling FP8** with attention-specific numerical tricks, aiming to keep attention accurate while driving GPU throughput. Conceptually, it sits between “attention kernels that assume FP16/BF16” and “end-to-end quantized models”: it focuses on the attention operator itself and is designed to be dropped into existing inference stacks.
+
+On **RTX 5090**, the paper reports that SageAttention3 can reach up to **7.4×** the OPS of FlashAttention3 (fp16) and up to **3.3×** the OPS of FlashAttention3 (fp8), while maintaining high accuracy.
+</details>
+
+
+<details> <summary markdown="span">2024 [SageAttention2: Efficient Attention with Thorough Outlier Smoothing and Per-thread INT4 Quantization](https://arxiv.org/abs/2411.10958)</summary>
+
+SageAttention2 builds on SageAttention by moving to **INT4** quantization for the expensive \(QK^\top\) path (at a *thread-level* granularity) while using **FP8** for the \,\(\widetilde{P}V\)\, product. The key idea is that attention has quantization pathologies that don’t show up as strongly in linear layers—especially outliers—so the paper adds attention-specific techniques to make low-bit arithmetic viable. 
+
+Concretely, it proposes (1) per-thread INT4 quantization for \(Q,K\), (2) a smoothing method for \(Q\) to improve INT4 \(QK^\top\) accuracy, and (3) a two-level accumulation strategy to improve FP8 \(\widetilde{P}V\) accuracy. The paper reports that on **RTX 4090**, SageAttention2’s OPS surpasses FlashAttention2 and xFormers by about **3×** and **4.5×**, respectively, and that it can match FlashAttention3(fp8) speed on Hopper while achieving higher accuracy.
+</details>
+
+
+<details> <summary markdown="span">2024 [SageAttention: Accurate 8-Bit Attention for Plug-and-play Inference Acceleration](https://arxiv.org/abs/2410.02367)</summary>
+
+SageAttention is an “attention-first” quantization paper: rather than quantizing an entire model, it targets the attention kernel and aims to make it plug-and-play for existing LLM inference. The motivation is that, even when linear layers are heavily optimized, attention can remain a major bottleneck—especially at long sequence lengths—because it mixes GEMMs, softmax, and reductions in ways that amplify numerical outliers.
+
+The core idea is to run attention with **8-bit** arithmetic while preserving accuracy via attention-aware scaling/handling of outliers (the paper emphasizes that naïvely quantizing \(QK^\top\) tends to break). Compared to later SageAttention2/3, this first version is less aggressive (INT8-style rather than INT4/FP8 microscaling) and functions as the baseline that demonstrates the feasibility of attention quantization with minimal integration work.
+
+For performance, the paper reports substantial throughput gains on consumer GPUs: on **RTX 4090**, SageAttention achieves up to **8.4×** higher OPS than FlashAttention2 (and up to **11.5×** over xFormers), and peaks at **983 TOPS** (head dim 128).
 </details>
 
 
@@ -1289,4 +1324,5 @@ where $$m$$ is a margin hyperparameter that sets the minimum distance for dissim
 </details>
  
 {::options parse_block_html="false" /}
+
 
