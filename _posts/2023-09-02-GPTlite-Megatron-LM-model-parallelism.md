@@ -153,12 +153,12 @@ class Megatron_MHA(nn.Module):
 
     self.tp_size = dist.get_world_size(group=mp_comm_group) if mp_comm_group else 1
     if n_head % self.tp_size != 0:
-      raise ValueError(f\"n_head ({n_head}) must be divisible by tp_size ({self.tp_size}).\")
+      raise ValueError(f"n_head ({n_head}) must be divisible by tp_size ({self.tp_size}).")
 
     self.n_head_local = n_head // self.tp_size
 
     if n_embd % n_head != 0:
-      raise ValueError(f\"n_embd ({n_embd}) must be divisible by n_head ({n_head}).\")
+      raise ValueError(f"n_embd ({n_embd}) must be divisible by n_head ({n_head}).")
     self.head_dim = n_embd // n_head
     self.hidden_local = self.n_head_local * self.head_dim
 
@@ -169,14 +169,14 @@ class Megatron_MHA(nn.Module):
     # then we all-reduce (Megatron_g) to combine ranks.
     self.proj = nn.Linear(self.hidden_local, n_embd, bias=False)
 
-    self.register_buffer(\"tril\", torch.tril(torch.ones(block_size, block_size)))
+    self.register_buffer("tril", torch.tril(torch.ones(block_size, block_size)))
     self.attn_dropout = nn.Dropout(dropout)
     self.out_dropout = nn.Dropout(dropout)
 
   def forward(self, x):
     B, T, C = x.shape
     if C != self.n_embd:
-      raise ValueError(f\"Expected x.shape[-1] == {self.n_embd}, got {C}.\")
+      raise ValueError(f"Expected x.shape[-1] == {self.n_embd}, got {C}.")
 
     # Column-parallel input handling: identity forward, all-reduce on backward.
     if self.mp_comm_group:
@@ -195,7 +195,7 @@ class Megatron_MHA(nn.Module):
     wei = (q @ k.transpose(-2, -1)) * (self.head_dim ** -0.5)
 
     # Causal mask (broadcasts over B and n_head_local)
-    wei = wei.masked_fill(self.tril[:T, :T] == 0, float(\"-inf\"))
+    wei = wei.masked_fill(self.tril[:T, :T] == 0, float("-inf"))
 
     wei = F.softmax(wei, dim=-1)
     wei = self.attn_dropout(wei)
@@ -237,4 +237,5 @@ As an important remark: finding the best parallelism strategy is hard, due to th
 We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored. To name a few: [**autotuning**](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) for parallelism hyper-parameters discovery; [**flops profiler**](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) measures the time, flops and parameters of individual layers, [**sparse attention kernels**](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound; [**communication optimizers**](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining, [**monitor**](https://www.deepspeed.ai/training/#monitor) to log live training metrics to TensorBoard, csv file or other backend; [**model compression**](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size.
 
 Finally, the Megatron-LM tensor parallelism code has been added to the [GPTlite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed), if you want to try it.
+
 
