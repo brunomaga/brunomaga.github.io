@@ -57,7 +57,7 @@ Megatron-LM makes this implementation very simple, by adding only the $$f$$ and 
 
 ```python
 class Megatron_f(torch.autograd.Function):
-  \"\"\" The f function in Figure 3 in Megatron paper \"\"\"
+  """ The f function in Figure 3 in Megatron paper """
 
   @staticmethod
   def forward(ctx, x, mp_comm_group=None):
@@ -74,7 +74,7 @@ and
 
 ```python
 class Megatron_g(torch.autograd.Function):
-  \"\"\" The g function in Figure 3 in Megatron paper \"\"\"
+  """ The g function in Figure 3 in Megatron paper """
 
   @staticmethod
   def forward(ctx, x, mp_comm_group=None):
@@ -90,7 +90,7 @@ Note that we added an extra argument `mp_comm_group` that refers to the model-pa
 
 ```python
 class Megatron_FeedForward(nn.Module):
-  \"\"\" the feed forward network (FFN) in the paper, with tensor parallelism as in Megatron-LM MLP block\"\"\"
+  """ the feed forward network (FFN) in the paper, with tensor parallelism as in Megatron-LM MLP block"""
 
   def __init__(self, n_embd, mp_comm_group=None):
     super().__init__()
@@ -132,7 +132,7 @@ The multi-head attention block and FFN can then be written as:
 
 ```python
 class Megatron_MHA(nn.Module):
-  \"\"\"
+  """
   Megatron-LM tensor-parallel Multi-Head Self-Attention (Fig. 3b style):
 
   - Q/K/V GEMM is column-parallel: each rank owns a subset of heads (local heads).
@@ -143,7 +143,7 @@ class Megatron_MHA(nn.Module):
 
   - Output projection is row-parallel: each rank projects its local concat heads
     to n_embd, then Megatron_g all-reduces the output (sum) across ranks.
-  \"\"\"
+  """
 
   def __init__(self, n_embd, n_head, block_size, dropout, mp_comm_group=None):
     super().__init__()
@@ -237,3 +237,4 @@ As an important remark: finding the best parallelism strategy is hard, due to th
 We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored. To name a few: [**autotuning**](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) for parallelism hyper-parameters discovery; [**flops profiler**](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) measures the time, flops and parameters of individual layers, [**sparse attention kernels**](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound; [**communication optimizers**](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining, [**monitor**](https://www.deepspeed.ai/training/#monitor) to log live training metrics to TensorBoard, csv file or other backend; [**model compression**](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size.
 
 Finally, the Megatron-LM tensor parallelism code has been added to the [GPTlite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed), if you want to try it.
+
