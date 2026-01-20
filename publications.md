@@ -30,6 +30,179 @@ It automatically implements distributed ZeRO-3, ZeRO-1, and offloading. Future d
 </details>
 
 
+<details> <summary markdown="span">2025 [Triton-distributed: Programming Overlapping Kernels on Distributed AI Systems with the Triton Compiler](https://arxiv.org/abs/2504.19442)</summary>
+
+Triton-distributed extends Triton with *distributed* primitives so you can write kernels that **compute and communicate inside the same program**, rather than launching a GEMM kernel and then calling NCCL as a separate step. The paper’s mental model is “a distributed kernel is a set of asynchronous tasks” that can **signal** one another and use **symmetric memory** (NVSHMEM-style) to move data directly between GPUs.
+
+The key difference vs “plain Triton + NCCL” is that communication becomes an explicit part of the kernel schedule: the compiler/runtime can overlap loads, math, and remote puts/gets at a much finer granularity than stream-level overlap of independent kernels. Compared to systems like Flux/TileLink that focus on specific LLM communication patterns, Triton-distributed tries to be a **general programming model** (primitives + compiler support) that you can reuse across operators and topologies.
+
+**Results / takeaways:**
+- The paper reports speedups ranging from **~1.1× to ~20.7×** on a set of distributed workloads (with the larger gains typically coming from communication-heavy patterns where fine-grained overlap matters).  
+- It also reports **~1.3× to ~2.4×** speedups on distributed MoE workloads by enabling fused compute–communication kernels rather than staging communication into separate NCCL phases.
+- In practice, it’s a “make the compiler responsible for overlap” approach: you write a single kernel that *contains* both compute and the collective-ish data movement, and the system handles the async orchestration.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [TileLink: Generating Efficient Compute–Communication Overlapping Kernels Using Tile-Centric Primitives](https://arxiv.org/abs/2503.20313)</summary>
+
+TileLink is a step toward **Flux-like performance** without requiring you to hand-craft a very specialized fused kernel for each operation. It introduces a tile-centric abstraction: tensors are mapped into **2D tiles**, and the system schedules computation and communication *per tile* (rather than per whole tensor), enabling overlap that approximates what highly tuned systems achieve.
+
+A useful way to distinguish TileLink from nearby work:
+- **Flux**: decomposes specific tensor-parallel LLM ops into finely sliced pieces, then fuses them into larger kernels to overlap up to “almost all” communication; highly effective, but quite tailored.
+- **Triton-distributed**: offers low-level in-kernel primitives (symmetric memory, signals, tasks) and a general programming model.
+- **TileLink**: sits in between—**higher-level than Triton-distributed**, more general and easier to program than Flux, but still explicitly models overlap at the *tile schedule* level.
+
+**Results / takeaways:**
+- The paper reports **~1.17× to ~20.76×** speedups compared to a baseline that uses standard PyTorch + NCCL-style communication patterns, depending on the operator and communication intensity.
+- Against Flux specifically, TileLink reports **~1.09× to ~1.14×** speedups on the workloads evaluated, positioning itself as competitive with (and sometimes slightly better than) a strong hand-optimized baseline—while aiming for broader applicability and simpler programming.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [MegaScale-MoE: Large-Scale Communication-Efficient Training of Mixture-of-Experts Models in Production](https://arxiv.org/abs/2505.11432)</summary>
+
+MegaScale-MoE is a production-oriented system for **communication-efficient MoE training**, where the “hard part” is not just computing experts but routing tokens and moving activations/gradients at scale. The paper’s central point is that MoE training becomes dominated by **many-to-many communication** (e.g., all-to-all between token routers and experts), and that you need a holistic strategy (parallelism + communication scheduling + careful micro-batching) to keep GPUs busy.
+
+How it differs from “kernel-level fusion” work (Flux / TileLink / Triton-distributed):
+- MegaScale-MoE is primarily a **system/runtime + parallelization strategy** for end-to-end training at very large scale, not a new kernel programming model.
+- It focuses on how to structure MoE training (expert placement, token routing, communication patterns, pipeline/micro-batch choices) so the cluster behaves well, even if the underlying collectives are still “standard”.
+
+**Results / takeaways (as reported):**
+- The paper reports up to **~2.0×** *end-to-end* training speedup on **32K H800 GPUs**, trained on **~5 trillion tokens**, for a **~7.5B-parameter** model.
+- The headline is that communication efficiency is not a rounding error at this scale; the system-level choices can plausibly double effective throughput in real production settings.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [MegaScale-Infer: Serving Mixture-of-Experts at Scale with Disaggregated Expert Parallelism](https://arxiv.org/abs/2504.02263)</summary>
+
+MegaScale-Infer targets **MoE serving**, where routing + expert execution creates sharp bottlenecks (many-to-many traffic, load imbalance, and memory-bound expert kernels). The key architectural idea is **disaggregated expert parallelism**: separate attention and expert “sides” so the system can schedule and pipeline them differently, and use a purpose-built communication substrate for the expert routing path.
+
+Compared to training-focused MoE systems (including MegaScale-MoE), this paper is more about:
+- **Latency/throughput in inference** (including scheduling under request load),
+- **Ping-pong / pipelined execution** between attention and expert nodes,
+- A custom many-to-many communication library and memory-bound kernel optimizations.
+
+**Results / takeaways (as reported):**
+- For a **220B MoE** model on **1024 A100 GPUs**, the paper reports **~2.6× to ~4.3×** speedup over baseline systems.
+- For a **3T MoE** model on **2048 H800 GPUs**, it reports **~2.9× to ~5.4×** speedup.
+- For *online* serving scenarios, it reports **~1.6×** (220B / 1024 A100) and **~2.5×** (3T / 2048 H800) improvements, emphasizing that the scheduling/communication choices help under realistic request patterns, not just offline throughput.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [Accelerating MoE Model Inference with Expert Sharding](https://proceedings.mlsys.org/paper_files/paper/2025/hash/4ebbaae5e3a4e2ff8244ea69bbbd5210-Abstract-Conference.html)</summary>
+
+Balmau et al. study MoE inference from a perspective that’s easy to underestimate: even if your attention path is well optimized, **expert execution and routing can dominate** in sparse MoE models, and naive expert placement can create large communication volume and poor load balance.
+
+Their approach, “expert sharding,” explores splitting experts across GPUs in a way that:
+- Improves **memory capacity** and *where* expert weights live,
+- Trades off **communication vs. replication** of weights,
+- Exposes when Megatron-style GEMM parallelism helps (and when it just moves the bottleneck into communication).
+
+This work is a useful complement to MegaScale-* systems: it is more about **exposing and characterizing** the performance envelope of sharded experts (and showing what makes it hard), whereas MegaScale focuses on a full production stack.
+
+**Results / takeaways:** the paper’s main value is the *systems analysis* and the evaluation of sharding strategies that highlight which communication patterns remain dominant and where more aggressive fusion/overlap could help.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [Look Ma, No Bubbles! Designing a Low-Latency Megakernel for Llama-1B](https://hazyresearch.stanford.edu/blog/2025-05-27-no-bubbles)</summary>
+
+This work targets an extreme low-latency regime: **single-sequence decoding** for a ~1B-parameter LLM, where performance is dominated by how efficiently the GPU can stream weights from global memory. The authors argue that modern inference engines still suffer from “pipeline bubbles” because a forward pass is split into **dozens to ~100 small kernels**, each incurring launch/teardown costs and synchronization stalls that prevent continuous memory streaming.
+
+Their solution is to fuse the *entire* forward pass into a single **megakernel** that effectively acts like an on-GPU interpreter: each SM executes a schedule of “instructions” (fused RMSNorm+QKV+RoPE, attention, projections, MLP pieces, etc.). They then focus on three practical problems that show up when you fuse “about a hundred” operations:
+1. How to *program* such a megakernel (an instruction abstraction + interpreter),
+2. How to avoid resource contention (e.g., **paged shared memory** to pipeline weight loads),
+3. How to synchronize without kernel boundaries (a lightweight **counter-based** scheme).
+
+**Results / takeaways (as reported):**
+- On an **H100**, they report using **~78%** of available memory bandwidth and outperforming popular engines by **>1.5×**; they also report that vLLM and SGLang can be limited to around **~50%** bandwidth in this setting.
+- In their end-to-end comparison (32-token prompt, 128 generated tokens, no speculation), they report the megakernel is **~2.5× faster than vLLM** and **>1.5× faster than SGLang** on **H100**.
+- On **B200**, they report **>3.5×** speedup over vLLM and still **>1.5×** over SGLang.
+- They highlight achieving a **<1 ms** forward pass for a 16-bit 1B+ model on H100, and **<680 µs** per forward pass on B200.
+
+This sits in a different part of the design space than Flux/TileLink/Triton-distributed: it’s about eliminating *kernel boundaries entirely* for single-GPU low-latency inference, rather than fusing compute with distributed communication.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [Mirage: A {Multi-Level} Superoptimizer for Tensor Programs (OSDI 2025)](https://arxiv.org/abs/2506.11295)</summary>
+
+Mirage is an *automatic* approach to generating deeply fused tensor programs, framing kernel fusion as a superoptimization problem over “µGraphs” (small fused subgraphs that can resemble hand-designed kernels like FlashAttention). The key point is **automation**: rather than manually designing a megakernel or a fused attention kernel, Mirage searches a large space of fused implementations and applies multi-level transformations to find fast code.
+
+How it differs from other “big fusion” lines:
+- Compared to **manual megakernels** (e.g., “No Bubbles”), Mirage aims to *discover* aggressive fusions automatically and generate optimized implementations.
+- Compared to **FlashAttention-style** work, Mirage is broader: it targets arbitrary tensor programs (not just attention), and can potentially find FlashAttention-like structures when they are profitable.
+- Compared to **compiler frameworks** like TVM/XLA, Mirage emphasizes superoptimization over small fused graphs to get performance that can beat hand tuning.
+
+**Results / takeaways (as reported in the paper):**
+- Mirage reports speedups of **~1.03× to ~4.6×** on the forward pass across evaluated workloads and baselines.
+- For end-to-end training, it reports **~1.04× to ~1.14×** improvements over strong, tuned baselines—smaller than the biggest kernel-level wins, but meaningful given how optimized many training stacks already are.
+
+</details>
+
+
+<details> <summary markdown="span">2024 [Centauri: Enabling Efficient Scheduling for Communication–Computation Overlap in Large Model Training via Communication Partitioning](https://doi.org/10.1145/3620666.3651379)</summary>
+
+Centauri tackles communication–computation overlap at the *operator scheduling* level. The core idea is to **decompose operators** and then schedule the decomposed pieces across multiple CUDA streams so that communication can be overlapped with useful compute more consistently than “whole-operator overlap.” The “communication partitioning” framing highlights that a large collective (or data movement phase) can be broken into smaller chunks that are scheduled earlier and more frequently, improving pipeline utilization.
+
+How to situate Centauri relative to Flux / TileLink / Triton-distributed:
+- Centauri is mainly about **multi-stream scheduling of decomposed operators** and improving overlap among (still separate) kernels; it does not require in-kernel collectives.
+- Flux/TileLink/Triton-distributed pursue **in-kernel** fusion of compute and communication, which can overlap at a finer granularity, but often requires more specialized codegen/primitives.
+- Centauri is therefore a good fit when your bottleneck is *orchestration* (stream scheduling, dependencies, coarse kernel granularity), whereas Flux-like approaches target cases where overheads persist even with aggressive stream overlap.
+
+**Results / takeaways:** the paper reports substantial training speedups on Llama-scale workloads by improving overlap through decomposition + scheduling. (If you end up writing your own fused kernels later, Centauri is still useful as a baseline: it shows what you can get “for free” from better scheduling alone.)
+
+</details>
+
+
+<details> <summary markdown="span">2024 [FLUX: Fast Software-based Communication Overlap on GPUs Through Kernel Fusion](https://arxiv.org/abs/2406.06858)</summary>
+
+Flux is explicitly designed around Megatron-LM-style tensor-parallel patterns. Instead of treating tensor-parallel layers as “one big GEMM + one big NCCL collective,” Flux **decomposes** those operations into fine-grained pieces (e.g., tiles/chunks) and then fuses them into kernels that can overlap communication with computation aggressively—claiming overlap levels that are hard to reach with standard multi-stream overlap of separate kernels.
+
+The most useful way to think about Flux in the related-work landscape:
+- Compared to Centauri, Flux aims for **overlap *within* the operator**, not just between independent kernels.
+- Compared to Triton-distributed, Flux is less about a general programming model and more about delivering peak performance for a *specific family* of LLM ops (Megatron tensor-parallel attention/MLP patterns).
+- TileLink is motivated partly by Flux’s effectiveness: it tries to preserve Flux-like performance while raising the programming level.
+
+**Results / takeaways (as reported):**
+- Flux reports up to **~96%** communication overlap.
+- For Megatron-LM Llama-style inference, it reports up to **~1.66×** speedup for **prefill** and **~1.3×** for **decoding**.
+- For training, Flux reports **~1.2× to ~1.5×** speedups for **Llama-3 8B** pretraining, evaluated on **8-node** and **3–5 node** clusters with **8 GPUs per node** (e.g., 24–64 GPUs total).
+
+</details>
+
+
+<details> <summary markdown="span">2024 [Optimizing Distributed ML Communication with Fused Computation–Collective Operations](https://arxiv.org/abs/2305.06942)</summary>
+
+Punniyamurthy et al. focus on identifying common “compute + collective” motifs that appear repeatedly in distributed training/inference graphs and then implementing them as **single fused kernels** with **in-kernel collectives**. The contribution is partly a taxonomy (“these patterns show up everywhere”) and partly a concrete engineering result: implementing fused kernels in Triton/HIP that reduce overheads from intermediate writes, kernel boundaries, and separated communication steps.
+
+The paper’s patterns are especially useful to keep in mind when comparing systems:
+- Flux is very focused on tensor-parallel LLM patterns; this paper’s catalog is **broader** (e.g., embedding + all-to-all, GEMV + all-reduce, GEMM + all-to-all).
+- Triton-distributed/TileLink offer programming models to build such fused kernels; this paper provides **hand-built instances** and measurements that show why the fusion matters.
+- Unlike INC/offload approaches, these fused kernels still assume the communication happens through GPU-side primitives (no in-network execution).
+
+**Results / takeaways (as reported):**
+- The paper reports latency reductions of about **29%** for **embedding + all-to-all**, **26%** for **GEMV + all-reduce**, and **35%** for **GEMM + all-to-all**, showing that the win can be material even for “simple” two-stage pipelines when communication is tightly coupled to the compute.
+
+</details>
+
+
+<details> <summary markdown="span">2024 [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)</summary>
+
+DeepSeek-V3 is a large-scale LLM system report that’s useful to read as a “what it takes in practice” reference: model architecture decisions, training stack choices, and the kinds of engineering trade-offs that are often omitted from purely algorithmic papers. The details are particularly relevant in a related-work section that discusses communication-heavy structures (like MoE) and the real limits of standard communication substrates.
+
+Where it fits in the landscape here:
+- DeepSeek-V3 demonstrates that you can hit strong scaling and quality with careful MoE architecture/routing and training practices, but it largely relies on **standard collectives/communication stacks** rather than pushing compute–communication fusion into the kernels or the network.
+- This makes it a good “control point” when discussing what incremental improvements from fused kernels or in-network compute might buy: you can compare against a strong end-to-end system that already works at scale.
+
+**Results / takeaways:** the report is a systems-and-training reference more than a single “one trick” optimization; it’s most valuable for its end-to-end design and empirical scaling observations, which help ground discussions about where communication becomes dominant and what kinds of optimizations remain on the table.
+
+</details>
+
+
 <details> <summary markdown="span">2024 [The Llama 3 Herd of Models, Meta](https://arxiv.org/abs/2407.21783)</summary>
 
 Llama 3 is "a herd of language models that natively support multi-linguality, coding, reasoning, and tool usage." The models are made of 8B, 70B and 405B parameters and a context window of 128K tokens. Llama 3 405B uses an architecture with 126 layers, a token representation dimension of 16,384, and 128 attention heads. 
@@ -415,6 +588,45 @@ Hyperparameters That Can Be µTransferred, Not µTransferred, or µTransferred A
 </details>
 
 
+<details> <summary markdown="span">2022 [Self-Attention Does Not Need \(O(n^2)\) Memory](https://arxiv.org/abs/2112.05682)</summary>
+
+Rabe & Staats formalize the idea that self-attention can be computed without storing the full \(n \times n\) attention matrix by using a streaming / online computation of the softmax-normalized attention. This is a conceptual ancestor of several practical kernels: it gives the mathematical justification for computing attention in blocks while maintaining numerical stability and correctness.
+
+Why it still matters in modern systems papers:
+- It provides a clean argument for why “don’t materialize \(QK^\top\)” is not just an approximation—it can be exact.
+- It underpins many attention kernels that trade memory for compute and enable long-context attention to be feasible.
+
+</details>
+
+
+
+<details> <summary markdown="span">2022 [DeepSpeed-Inference: Enabling Efficient Inference of Transformer Models at Unprecedented Scale (SC 2022)](https://arxiv.org/abs/2207.00032)</summary>
+
+DeepSpeed-Inference is a systems paper about getting Transformer inference to scale in practice: kernel fusion (to reduce memory traffic and launch overhead), parallelism strategies, and memory optimizations that allow very large models to run efficiently.
+
+In the context of fusion-heavy related work:
+- DeepSpeed-Inference aggressively fuses *compute* (Transformer kernels, projections, etc.) and optimizes the inference runtime, but generally keeps **communication as NCCL collectives outside** of those kernels.
+- This makes it a useful baseline class: it shows what you can get from strong kernel engineering and runtime scheduling *without* changing the underlying communication model.
+
+**Results / takeaways:** the paper demonstrates that systematic kernel/runtime optimizations can unlock large-scale inference and high throughput, and it established many techniques that later LLM serving stacks built on.
+
+</details>
+
+
+<details> <summary markdown="span">2022 [DeepSpeed-MoE: Advancing Mixture-of-Experts Inference and Training to Power Next-Generation AI Scale (ICML 2022)](https://arxiv.org/abs/2201.05596)</summary>
+
+DeepSpeed-MoE is an influential MoE system that focuses on making expert models train and run efficiently by addressing the MoE-specific bottlenecks: **token routing**, **all-to-all communication**, and balancing compute/communication across experts. It includes runtime techniques to overlap communication with local work and reduce overhead in the MoE pipeline.
+
+How it compares to later MoE system lines (MegaScale-*):
+- DeepSpeed-MoE provides a general MoE framework and many practical optimizations, but later production-scale systems often introduce more specialized parallelism strategies and communication libraries to handle extreme scale.
+- DeepSpeed-MoE is also representative of approaches that keep collectives “standard” (NCCL-style), whereas newer kernel-level work explores in-kernel collectives and fine-grained overlap.
+
+**Results / takeaways:** the paper demonstrates that MoE can scale effectively with careful engineering, and it helped popularize MoE as a practical path to scaling model capacity without proportional compute.
+
+</details>
+
+
+
 <details> <summary markdown="span">2022 [DeepSpeed Inference: Enabling Efficient Inference of Transformer Models at Unprecedented Scale, Microsoft DeepSpeed](https://arxiv.org/abs/2207.00032)</summary>
 
 Inference kernels must therefore achieve high memory bandwidth utilization and high compute utilization at small batch sizes, whereas training kernels simply need to achieve high compute utilization at much larger batch sizes. This makes developing inference kernels quite challenging.
@@ -501,6 +713,15 @@ Transformers are slow and memory-hungry on long sequences, since the time and me
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="/assets/publications/FlashAttention.png"/>
+
+FlashAttention is the canonical example of *algorithmic* fusion in attention: it avoids materializing the full \(QK^\top\) (and often avoids materializing large intermediate softmax buffers) by using a numerically stable streaming formulation. Instead of computing attention as “GEMM → softmax → GEMM” with large intermediate tensors in HBM, it tiles the computation so that data is reused from SRAM/shared memory.
+
+How it differs from “FFN fusion + in-kernel communication” work:
+- FlashAttention is primarily about **IO-aware tiling** of attention and a streaming softmax trick, not about overlapping distributed communication.
+- It shows that fusion can change the *algorithmic memory complexity* (and not just launch overhead), which is why it became such a cornerstone kernel.
+
+**Results / takeaways:** the original FlashAttention work reports large practical gains (commonly multiple× speedups in attention throughput and significant memory savings), and it established the template that later fusion work often emulates: fuse stages, tile aggressively, and never write big intermediates to HBM if you can stream them instead.
+
 </details>
 
 
