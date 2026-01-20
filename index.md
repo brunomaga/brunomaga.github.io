@@ -14,7 +14,7 @@ layout: default
 </td>
 
 <td style="border:none">
-Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states/">Huawei Research</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research</a> for <a href="https://www.microsoft.com/en-us/research/project/project-silica/">Silica</a>, and an HPC engineer, PhD and postdoc at <a href="https://www.epfl.ch/en/">EPFL</a>. In this space, I keep track of <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> of interest, and post about ML and HPC. Enjoy🚀!
+Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states/">Huawei Research</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research</a>, and an HPC engineer, PhD and postdoc at <a href="https://www.epfl.ch/en/">EPFL</a>. In this space, I keep track of <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> of interest, and post about ML and HPC. Enjoy🚀!
 
 <!-- CSS of table defined in _includes/head.html -->
 <div class="Rtable Rtable--5cols Rtable--collapse">
@@ -52,6 +52,7 @@ Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.
 <strong>Support this blog!</strong> If you like this content and would like to show appreciation, please donate instead to the children's cancer hospital in Porto via this <a href="https://www.gofundme.com/f/support-the-childrens-cancer-hospital-in-porto">GoFundMe campaign</a>. Thank you for caring❤️‍🩹
 </div>
 </center>
+
 
 
 
