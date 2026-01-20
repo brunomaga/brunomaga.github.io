@@ -190,6 +190,6 @@ def get_megatron_tensor_parallel_model(vocab_size, mp_comm_group=None):
 
     # Replace definition of base model's MLP with Megatron tensor-parallel version
     gptlite.FeedForward = lambda *args, **kwargs: Megatron_FeedForward(*args, mp_comm_group=mp_comm_group, **kwargs)
-    gptlite.MHA = lambda *args, **kwargs: Megatron_MHA(*args, mp_comm_group=mp_comm_group, **kwargs)
+    gptlite.MultiHeadAttention = lambda *args, **kwargs: Megatron_MHA(*args, mp_comm_group=mp_comm_group, **kwargs)
 
     return gptlite.GPTlite(vocab_size)
