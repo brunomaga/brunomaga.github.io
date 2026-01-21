@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, LLM, C++, TorchScript]
 tags: [machinelearning]
 ---
 
-In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the Torch developers decided to move that structure of PyTorch from a python interface of a C++ core (highly efficient) to a Python-based implementation that calls a small set of c++ kernels (developer friendly). They also announced `torch.compile` as a method to perform a JIT compilation and optimization of the execution graph that tremendously speeds up the execution.
+In the recent [PyTorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the Torch developers decided to move that structure of PyTorch from a python interface of a C++ core (highly efficient) to a Python-based implementation that calls a small set of c++ kernels (developer friendly). They also announced `torch.compile` as a method to perform a JIT compilation and optimization of the execution graph that tremendously speeds up the execution.
 
 So the main questions are: how much faster are the C++ model implementations compared to a Python one? If Python is the *de facto* corelanguage for training, can we perform inference efficiently on a compiled C++ code? How good is `torch.compile` really? 
 
@@ -115,41 +115,44 @@ The C++ code is analogous to the python implementation. We start by defining a s
 
 ```cpp
 struct Head : nn::Module {
-  Head(int head_size) {
-    int head_size = head_size;
-    nn::Linear key   = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
-    nn::Linear query = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
-    nn::Linear value = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
-    Tensor tril = torch::tril(torch::ones( {block_size, block_size} ));
-    nn::Dropout dropout = nn::Dropout(dropout_p);
-
-    register_module("key", key);
-    register_module("query", query);
-    register_module("value", value);
-    register_buffer("tril", tril);
-    register_module("dropout", this->dropout);
+  Head(int head_size_)
+      : head_size(head_size_),
+        key(register_module("key", nn::Linear(nn::LinearOptions(n_embd, head_size).bias(false)))),
+        query(register_module("query", nn::Linear(nn::LinearOptions(n_embd, head_size).bias(false)))),
+        value(register_module("value", nn::Linear(nn::LinearOptions(n_embd, head_size).bias(false)))),
+        dropout(register_module("dropout", nn::Dropout(dropout_p))) {
+    // lower-triangular causal mask (kept on the same device as the module)
+    tril = register_buffer("tril", torch::tril(torch::ones({block_size, block_size}, torch::kBool)));
   }
 
+  Tensor forward(const Tensor& x) {
+    // x: (B, T, C=n_embd)
+    const auto B = x.size(0);
+    const auto T = x.size(1);
 
-  Tensor forward(Tensor x){
-    int B=x.size(0), T=x.size(1), C=x.size(2);
-    Tensor k = key(x);   //shape (B,T, head_size)
-    Tensor q = query(x); //shape (B,T, head_size)
-    Tensor v = value(x); //shape (B,T, head_size)
+    Tensor k = key(x);    // (B, T, head_size)
+    Tensor q = query(x);  // (B, T, head_size)
+    Tensor v = value(x);  // (B, T, head_size)
 
-    // compute self-attention scores
-    Tensor wei = torch::matmul(q, k.transpose(-2, -1)); //shape (B,T, T)
-    wei = wei * std::pow(C,-0.5); //scale by sqrt(d_k)
-    wei = wei.masked_fill(tril.slice(0, 0, T).slice(1, 0, T) == 0, -inf);
-    wei = F::softmax(wei, -1); // (B, T, T)
-    wei = this->dropout(wei);
+    // scaled dot-product attention
+    Tensor wei = torch::matmul(q, k.transpose(-2, -1));        // (B, T, T)
+    wei = wei * std::pow(static_cast<double>(head_size), -0.5); // scale by 1/sqrt(d_k)
 
-    // perform weighted aggregation of values
-    Tensor out = torch::matmul(wei, v); // shape (B, T, head_size)
-    return out;
+    // apply causal mask (only attend to previous + current tokens)
+    Tensor mask = tril.slice(0, 0, T).slice(1, 0, T);
+    wei = wei.masked_fill(mask.logical_not(), -1e9);
+
+    wei = torch::softmax(wei, -1);
+    wei = dropout(wei);
+
+    return torch::matmul(wei, v);  // (B, T, head_size)
   }
 
-}
+  int head_size;
+  nn::Linear key{nullptr}, query{nullptr}, value{nullptr};
+  nn::Dropout dropout{nullptr};
+  Tensor tril;
+};
 ```
 
 In order to keep the code small and clean, `Head` and all our modules that follow will be defined as a `struct` and not as a `class`, so that all members are public and not private by default.
@@ -201,7 +204,7 @@ Again, we used `nn::ModuleList` as a container, instead of any std-library conta
 
 ### Feed Forward Network
 
-The Feed-forward network is a two-layer Deep Neural Network and is pretty straighforward to implement:
+The Feed-forward network is a two-layer Deep Neural Network and is pretty straightforward to implement:
 
 {: style="text-align:center; font-size: small;"}
 <img width="19%" height="19%" src="/assets/GPTlite/gptlite_feedforward.png"/>
