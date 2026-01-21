@@ -215,7 +215,7 @@ class Megatron_MHA(nn.Module):
     return out
 ``` 
 
-## Sharding input to reduce memory (all-reduce = reduce-scatter + all-gather)
+### Sharding input to reduce memory (all-reduce = reduce-scatter + all-gather)
 
 The main caveat of this method is that the input `X` is replicated across all GPUs. This is not ideal, as large inputs may require a large memory chunk and may not fit in one GPU. This is particularly relevant during training, where activations during the forward pass need to be stored for the backward pass. To reduce the memory consumption, one can only hold a shard/subset of the input data and activations on each GPU. To do this, we simply replace the all-reduce by a reduce-scatter (so that the output of the all-reduce is sharded across GPUs), and add an additional all-gather at the beginning of the execution (that will gather all shards of `X` onto the full `X`, as required by the first matmul). As activations, we only need to keep the shard of `X` produced between the reduce-scatter of the current block and the all-gather of the next.  With this, we increase the number of collective communication steps from 1 to 2, but reduce the activation memory linearly by the number of GPUs.   
 
@@ -240,6 +240,7 @@ As an important remark: finding the best parallelism strategy is hard, due to th
 We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored. To name a few: [**autotuning**](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) for parallelism hyper-parameters discovery; [**flops profiler**](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) measures the time, flops and parameters of individual layers, [**sparse attention kernels**](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound; [**communication optimizers**](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining, [**monitor**](https://www.deepspeed.ai/training/#monitor) to log live training metrics to TensorBoard, csv file or other backend; [**model compression**](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size.
 
 Finally, the Megatron-LM tensor parallelism code has been added to the [GPTlite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed), if you want to try it.
+
 
 
 
