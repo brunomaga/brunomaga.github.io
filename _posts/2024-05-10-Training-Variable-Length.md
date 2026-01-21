@@ -222,7 +222,7 @@ def dataloader_for_variable_batch_size(dataset, microbatch_ids, batch_max_seqlen
     )
 ```
 
-If you are looking for a complete example, see my [DeepSpeed PR 5237](https://github.com/microsoft/DeepSpeed/pull/5237/).
+If you are looking for a complete example, see my [DeepSpeed PR 7104](https://github.com/microsoft/DeepSpeed/pull/7104/).
 
 ## Kernels compilation
 
@@ -310,3 +310,4 @@ model = torch.compile(model, backend="inductor", mode=mode, dynamic=dynamic)
 ```
 
 As a final remark, I tested this on `torch==2.4.0`, and newer PyTorch releases continue to improve compilation for distributed and dynamic-shape workloads. For a deeper dive, see [“`torch.compile` the missing manual”](https://docs.google.com/document/d/1y5CRfMLdwEoF1nTk9q8qEu1mgMUuUtvhklPKJ2emLU8/).
+
