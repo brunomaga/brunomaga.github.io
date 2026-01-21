@@ -1,268 +1,94 @@
 ---
 layout: post
-title:  "Building a GPT model in PyTorch from scratch"
-categories: [machine learning, Transformer, GPT, LLM]
+title:  "Building a GPT model in C++, and benchmarking LibTorch, PyTorch, TorchScript and torch.compile"
+categories: [machine learning, Transformer, GPT, LLM, C++, TorchScript]
 tags: [machinelearning]
 ---
 
-In 2017, the Transformer model was presented in the paper [Attention is all you need](https://arxiv.org/abs/1706.03762). It presented a tool for translation based on an attention mechanism that was not recursive (unlike RNNs) but handled the dependency among tokens in a sequence by learning an attention matrix that *exposed* all tokens to every other tokens. Similarly to other translation methods it had two main components: an encoder that learns the structure of the source language, and a decode that learns the translation mechanism to the new language. The fundamental difference between the encoder and the decoder is the *mask* in their attention matrix that hides the subsequent tokens of a sequence in the decoding phase, so that the guess of which token comes next is computed only from previous tokens.
+In the recent [Pytorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the Torch developers decided to move that structure of PyTorch from a python interface of a C++ core (highly efficient) to a Python-based implementation that calls a small set of c++ kernels (developer friendly). They also announced `torch.compile` as a method to perform a JIT compilation and optimization of the execution graph that tremendously speeds up the execution.
 
-We soon realized that the Transformer had much more to offer and could be used in many datatypes (time-sequences, images, etc). And most importantly, that the components could be *stacked* as a sequence of blocks, to perform higher-level cognitive tasks. To the point where the Transformer is now the base model for most large and best performing ML models these days. An example of such models is [BERT]({{ site.baseurl }}{% post_url 2020-02-28-learning-from-sequences %}), a stack of Transformer encoders, used for regression and classification tasks. 
+So the main questions are: how much faster are the C++ model implementations compared to a Python one? If Python is the *de facto* corelanguage for training, can we perform inference efficiently on a compiled C++ code? How good is `torch.compile` really? 
 
-Here we will dissect and detail the implementation of a large model based on a stack of decoder-only modules - *a la [GPT-2](https://en.wikipedia.org/wiki/GPT-2)* - used for generating long sentences from a given input.
+### Change of philosophy: from Python to C++ to Python
 
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPTlite/all_models.png"/>
+Initial releases of pytorch were mostly written in python. Until the release of Python 2.x, the belief was that "to keep eager execution at high-performance, we’ve had to move substantial parts of PyTorch internals into C++". In practice, python has the overhead of the runtime itself, dynamic typing, JIT, interpreted code, etc. So moving PyTorch API to C++ and using python as a *thin* layer that calls the C++ compiled implementations seemed logical.
 
-{: style="text-align:center; font-size: small;"}
-<b>Left:</b> the original transformer structure with an endocer and a decoder block. <b>Middle:</b> a single-block decoder-only model architecture. <b>Right:</b> the multi-block GPT decoder-only architecture, detailed here. <b>Source:</b> adapted from <a href="https://arxiv.org/abs/1706.03762">Attention is all you need</a>.
+Now, with PyTorch 2.x, they're moving in the complete opposite direction, claiming that the "philosophy on PyTorch has always been to keep flexibility and hackability our top priority, and performance as a close second" and "moving internals into C++ makes them less hackable and increases the barrier of entry for code contributions". So in practice, the library of 2000+ operations written in C++ is being reduced and the "goal is to provide a primitive and stable set of ~250 [C++] operators with simplified semantics, called PrimTorch".
 
+In brief, in order to favour PyTorch contributors that prefered Python over C++, they are limiting the C++ code to a few hundred kernels, and will have all the remaining code implemented in python only. Hardware vendors can then focus on their specific implementation of that subset of C++ methods, while the python runtime will execute the higher level operations. Sounds good, but the possibility of training a model using only C++ in the next releases of PyTorch remains uncertain.
 
-## Hyperparameters
+### Kernel optimization via torch.compile
 
-The basic imports and the ML hyperparameters are:
-
-```python
-import torch
-import torch.nn as nn
-import torch.nn.functional as F
-
-# set the random seed, for reproducibility
-torch.manual_seed(42)
-
-# device: where to execute computation
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-
-# how often to do an evaluation step
-eval_interval = 100
-
-# number of training iterations
-max_iters = 500
-
-# optimizer's learning rate
-learning_rate=1e-4
-
-# minibatch size, how many inputs to 'pack' per iteration 
-batch_size = 3
-```
-
-and the ones specific to the GPT model are:
-
-```python
-
-# block size is the maximum sequence length used as input.
-# E.g. for block_size 4 and input ABCD, we have training samples A->B, AB->C, ABC->C, ABCD->E
-block_size = 4
-
-# size of the embeddings
-n_embd = 16
-
-# number of attention heads in Multi-Attention mechanism (the Nx in the GPT decoder diagram)
-n_head = 6
-
-# depth of the network as number of decoder blocks.
-# Each block contains a normalization, an attention and a feed forward unit
-n_layer = 6
-
-# dropout rate (variable p) for dropout units
-dropout = 0.2
-```
-
-As input dataset, we will use the [tiny shakespeare](https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt) text. First download it from a console:
-```
-$ wget https://raw.githubusercontent.com/karpathy/char-rnn/master/data/tinyshakespeare/input.txt
-```
-
-and then load it in python:
-
-```python
-with open("input.txt") as f:
-    text = f.read()
-```
-
-## Tokenization
-
-We need to create an embedding that maps input characters to a numerical representation of *tokens*. There are several possible *tokenizers*, the most simple being an embedding that maps characters to integers directly:
-
-```python
-# collect sorted list of input characters and create 
-# string-to-int (stoi) and int-to-string (itos) representations:
-chars = sorted(list(set(text)))
-stoi = { ch:i for i,ch in enumerate(chars) }
-itos = { i:ch for i,ch in enumerate(chars) }
-
-# define encode and decode functions that convert strings to arrays of tokens and vice-versa
-encode = lambda x: torch.tensor([stoi[ch] for ch in x], dtype=torch.long) #encode text to integers
-decode = lambda x: ''.join([itos[i] for i in x]) #decode integers to text
-vocab_size = len(stoi)
-``` 
-
-The vocabulary size `vocab_size` is simply the number of distinct tokens. In this case, `65` characters:
-```python
-
-!$&',-.3:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
-```
-
-, where the first character is the line break character `\n`.
-
+The other big announcement was `torch.compile`, that "makes PyTorch code run faster by JIT-compiling PyTorch code into optimized kernels, all while requiring minimal code changes". The torch compile algorithm runs three steps:
+1. **graph acquisition** will build the execution graph of all PyTorch operations. Nodes that can be combined and optimized together will be merged, and subsequently, graph will be rewritten as a graph of subgraphs. Parallel (graph leaves) and sequential modules are now exposed.
+2. **graph lowering** will decompose the previous operations into kernels that are native to the specific backend.
+3. **graph compilation** will convert the kernels into low-level operations that are specific to the device.
 
 {: style="text-align:center; font-size: small;"}
-<img width="19%" height="19%" src="/assets/GPTlite/gptlite_embedding.png"/>
+<img width="85%" height="85%" src="/assets/GPTlite-cpp/torch_compile.jpg"/>
 
 {: style="text-align:center; font-size: small;"}
-The embedding module in our model, emphasized in red.
-
-
-For better context and smaller embeddings, we can pack several characters into each token, instead of encoding a character per token. As an example, we can encode entire words or subwords. Other possibilities of pre-existent tokenizers are [google's sentencepiece](https://github.com/google/sentencepiece), the word or subword tokenizers by [huggingface](https://huggingface.co/docs/transformers/tokenizer_summary), or the  Byte-Pair-Encoding (BPE) `tiktoken` used by OpenAI's GPT:
-
-```python
-import tiktoken
-enc = tiktoken.encoding_for_model("gpt-4")
-print(enc.n_vocab)
-print(enc.encode("Hello world").tolist())
-```
-
-This would output vocabulary size of `100277` and `[9906, 1917]` and the encoding of `"Hello World"` as tokens and on itr original string representation.
-
-## Positional Encoddings
-
-The Attention mechanism returns a set of vectors. Only by adding positional encondings to each token we can introduce the notion of sequence. In the original paper the authors use a positional embedding based on the $$sin$$ and $$cos$$ frequencies (see my previous [Transformer post]({{ site.baseurl }}{% post_url 2020-02-28-learning-from-sequences %}) for details). For simplicity, we will use instead the `Embedding` function in pytorch. 
-
-```python
-token_embedding_table = nn.Embedding(vocab_size, n_embd)    # from tokens to embedding
-position_embedding_table = nn.Embedding(block_size, n_embd) # from position to embedding
-```
-
-{: style="text-align:center; font-size: small;"}
-<img width="19%" height="19%" src="/assets/GPTlite/gptlite_pos_enc.png"/>
-
-{: style="text-align:center; font-size: small;"}
-The positional encoding module in our model, emphasized in red.
-
-## Batching and dimensionality
-
-First, we will do a train-validation data split of 90% and 10%:
-
-```python
-data = encode(text)  #use any encoder here
-n = int(0.9*len(data))
-train_data, valid_data = data[:n], data[n:]
-```
-
-For this input: the full, train and validation datasets have `1115394`, `1003854` and `111540` elements, respectively.
-
-Batching in the attention mechanism is tricky. The model needs to accept a batch of several inputs, and each input will have a maximum size of `block_size`. For this to be possible, for a given input, the dataset includes all sequencies from size `1` to size `block_size`. For each input sequence from position `0` to `t`, the respective output is given by the element in positon `t+1`. This logic is better detailed by to following code:    
-
-```python
-def get_batch(source):
-  """ get batch of size block_size from source """
-  
-  # generate `batch_size` random offsets on the data 
-  ix = torch.randint(len(source)-block_size, (batch_size,) )
-  # collect `batch_size` subsequences of length `block_size` from source, as data and target
-  x = torch.stack([source[i:i+block_size] for i in ix])
-  # target is just x shifted right (ie the predicted token is the next in the sequence)
-  y = torch.stack([source[i+1:i+1+block_size] for i in ix])
-  return x.to(device), y.to(device)
-
-
-# test get_batch()
-xb, yb = get_batch(train_data)
-print("input:\n",xb)
-print("target:\n",yb)
-
-for b in range(batch_size): #for every batches
-  print(f"\n=== batch {b}:")
-  for t in range(block_size): #for each sequence in block
-    context = xb[b,:t+1]
-    target = yb[b,t]
-    print(f"for input {context.tolist()} target is {target.tolist()}")
-```
-
-this would output, for a `block_size=4` and `batch_size=3`:
-```
-input:
- tensor([[45, 57,  1, 59],
-        [ 1, 40, 43,  1],
-        [39, 52, 42,  1]])
-
-target:
- tensor([[57,  1, 59, 54],
-        [40, 43,  1, 56],
-        [52, 42,  1, 52]])
-
-=== batch 0:
-for input [45] target is 57
-for input [45, 57] target is 1
-for input [45, 57, 1] target is 59
-for input [45, 57, 1, 59] target is 54
-
-=== batch 1:
-for input [1] target is 40
-for input [1, 40] target is 43
-for input [1, 40, 43] target is 1
-for input [1, 40, 43, 1] target is 56
-
-=== batch 2:
-for input [39] target is 52
-for input [39, 52] target is 42
-for input [39, 52, 42] target is 1
-for input [39, 52, 42, 1] target is 52
-```
-
-## Multi-Head Masked Attention
-
-The point of the attention mask is to define which elements are "visible" to other elements in the attention matrix, and by how much. A common example is to use a lower-diagonal attention matrix, that presents to each row (token), the current and previous tokens in the sentence. Each value in the attention matrix holds the "importance" that the column token infers -- compared to all other columns of that row -- when the row token needs to take a decision. Thus, the easiest implementation of an attention matrix is to simply add uniform weights across each row, so that all tokens have the same weight/importance:
-
-Given a random input value  `x` (shaped batch x time x channels):
-```python
-B, T, C, = 4, 8, 2
-x = torch.randn(B,T,C) #shape (B,T,C)
-```
-
-Note, for simplicity, we'll use the following letters for the shapes of arrays:
-- size `C` for the *embedding size* of each token, defined by the `n_embed` on top;
-- size `B` for the *batch size* defined above by `batch_size`;
-- size `T` for the *time* dimension, or input sequence length, defined by `block_size`.  
-
-We can compute an *uniform* attention matrix as:
-```python
-#attention matrix (lower triangular), a mask used to only show previous items to predict next item
-wei = torch.tril(torch.ones((T,T), dtype=torch.float32, device=device))
-#normalize mask so that it sums to one. use keepdim to make broadcast operation work later
-wei /= wei.sum(dim=1, keepdim=True)
-``` 
-
-or in an alternative notation (useful later):
-```python
-tril = torch.tril(torch.ones(T,T))
-wei = wei.masked_fill(tril==0, float('-inf'))
-wei = F.softmax(wei, dim=-1) #equivalent to the normalization above
-```
-
-where both notations output as `wei` the following:
-
-```python
-tensor([[1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000],
-        [0.5000, 0.5000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000],
-        [0.3333, 0.3333, 0.3333, 0.0000, 0.0000, 0.0000, 0.0000, 0.0000],
-        [0.2500, 0.2500, 0.2500, 0.2500, 0.0000, 0.0000, 0.0000, 0.0000],
-        [0.2000, 0.2000, 0.2000, 0.2000, 0.2000, 0.0000, 0.0000, 0.0000],
-        [0.1667, 0.1667, 0.1667, 0.1667, 0.1667, 0.1667, 0.0000, 0.0000],
-        [0.1429, 0.1429, 0.1429, 0.1429, 0.1429, 0.1429, 0.1429, 0.0000],
-        [0.1250, 0.1250, 0.1250, 0.1250, 0.1250, 0.1250, 0.1250, 0.1250]])
-```
-
-Again, the `wei` matrix indicates how much *attention* each token should give to itself and previous tokens, normalized to 1. In this case, it's uniform.
-We can do a dot-product of the input `x` by the attention `wei` and see the output of the attention head for the given `x`:
-
-```python
-out = wei @ x   # dot product shape: (B,T,T) @ (B,T,C) = (B,T,C) ie ([4, 8, 2])
-```
-
-Both `x` and `out` have dimensionlity `[B, T, C]` ie `[4, 8, 2]`.  
+A diagram of the three steps of `torch.compile`. Source: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
  
-Now we move to the non-uniform attention matrix. The original paper formulates attention as:
+Kernel fusion is complex, so there are two settings worth the mention. The option `mode` selects the tradeoff between runtime and memory in the generated graph (from the [docs](https://pytorch.org/get-started/pytorch-2.0/#user-experience) and [API](https://pytorch.org/docs/stable/generated/torch.compile.html#torch.compile)):
+- `default` optimizes for large models, with low compile-time and no extra memory overhead. It is "a good balance between performance and overhead";
+- `reduce-overhead` reduces the overhead of python with [CUDA graphs](https://pytorch.org/blog/accelerating-pytorch-with-cuda-graphs/), it is faster than the previous model but uses some extra memory. It helps speed up small models. CUDA graphs allows an execution graph of kernels to be defined beforehand and launched only once from CPU, instead of having kernels launched individually;
+- `max-autotune` leverages Triton based matrix multiplications and convolutions It enables CUDA graphs by default. It produces the fastest model, but takes a very long time to compile. `max-autotune-no-cudagraphs` is analogous, but without the CUDA graphs.
+
+The flag `fullgraph` specifies whether the compilation outputs a single graph for the whole run, or it can be broken into several partial graphs (that can be reutilized across the main graph), and is only relevant for users that need to squeeze the very best performance. This is in practice *similar* to the `inline` logic in the C programming language. These two settings are specified by, and defaulted to `torch.compile(model, mode='default', fullgraph=False)`.
+
+## About this post
+
+In this post, we will benchmark and analyse several implementations of ML training and inference performed on different backends: PyTorch 1.3.1 (python), PyTorch 2.1.2 (python), LibTorch 2.1.2 (C++), TorchScript 2.1.2 (python and C++), and PyTorch 2.1.2 with `torch.compile` (python).  
+We will look at two different testbenches, so feel free to pick one based on your level of expertise and interest:
+1. the small variant of the GPT2 model, introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), will be detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example that is specific to the use case of large language models; 
+2. a Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch C++](#benchmark-model). This is a very simple example that will be used to benchmark our metrics on models of varying depths and widths. It is mostly suitable for those who are interested in performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
+
+{: style="text-align:center; font-size: small;"}
+<img width="20%" height="20%" src="/assets/GPTlite/gptlite_compact.png"/>
+&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+<img width="22%" height="22%" src="/assets/GPTlite/benchmark_model.png"/>
+
+{: style="text-align:center; font-size: small;"}
+In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark their C++, PyTorch, TorchScript and `torch.compile` implementations.
+
+## GPTlite on LibTorch C++ {#gptlite-model}
+
+We will start with the GPT implementation in C++. The subsections that follow match exactly the structure of the [post with the GPTlite implementation in Python]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}).
+
+### Hyperparameters
+
+Our GPTlite will be written in the header-only format in the file `gptlite.h`. We start with the hyperparameter declarations:
+
+```cpp
+#pragma once
+#include <torch/torch.h>
+
+// replicate GPT-2 Small, Table 2.1, "Language Models are Few-Shot Learners, Brown 2021)"
+
+// depth of the network as number of decoder blocks.
+const int n_layer = 12;
+
+// size of the embeddings (d_model)
+const int n_embd = 768;
+
+// number of attention heads in the Multi-Attention mechanism
+const int n_head = 12;
+
+// block size ie max number of training sequence, the $n_{ctx}$ in the paper .
+const int block_size = 2048;
+
+// dropout rate (variable p) for dropout units, renamed to avoid ambiguity
+const float dropout_p = 0.1;
+
+// namespace and data type aliases
+namespace nn = torch::nn;
+using Tensor = torch::Tensor;
+```
+
+### Multi-Head Masked Attention
+
+Remember the original formulation of the multi-head shared attention heads, where $$W^Q$$, $$W^K$$ and $$W^V$$ are matrices / projections / linear layers:
 
 $$
 MultiHead(Q, K, V ) = Concat(head_1, ..., head_h)W^O
@@ -277,354 +103,416 @@ $$
 $$
 
 
+Together with the upper-diagonal mask, this is the underlying structure of each of the N attention blocks in the model:
+
 {: style="text-align:center; font-size: small;"}
 <img width="19%" height="19%" src="/assets/GPTlite/gptlite_attention.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The multi-head (Nx) attention module in our model, emphasized in red.
+The multi-head (Nx) attention module in the GPTlite model, emphasized in red.
+
+The C++ code is analogous to the python implementation. We start by defining a single attention head:
+
+```cpp
+struct Head : nn::Module {
+  Head(int head_size) {
+    int head_size = head_size;
+    nn::Linear key   = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
+    nn::Linear query = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
+    nn::Linear value = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
+    Tensor tril = torch::tril(torch::ones( {block_size, block_size} ));
+    nn::Dropout dropout = nn::Dropout(dropout_p);
+
+    register_module("key", key);
+    register_module("query", query);
+    register_module("value", value);
+    register_buffer("tril", tril);
+    register_module("dropout", this->dropout);
+  }
 
 
-Let's start with the $$W^Q$$, $$W^K$$ and $$W^V$$ matrices, computed as a simple projection (*linear layer*):
+  Tensor forward(Tensor x){
+    int B=x.size(0), T=x.size(1), C=x.size(2);
+    Tensor k = key(x);   //shape (B,T, head_size)
+    Tensor q = query(x); //shape (B,T, head_size)
+    Tensor v = value(x); //shape (B,T, head_size)
 
-```python
-head_size=4
-key   = nn.Linear(C, head_size, bias=False) 
-query = nn.Linear(C, head_size, bias=False)
-value = nn.Linear(C, head_size, bias=False)
+    // compute self-attention scores
+    Tensor wei = torch::matmul(q, k.transpose(-2, -1)); //shape (B,T, T)
+    wei = wei * std::pow(C,-0.5); //scale by sqrt(d_k)
+    wei = wei.masked_fill(tril.slice(0, 0, T).slice(1, 0, T) == 0, -inf);
+    wei = F::softmax(wei, -1); // (B, T, T)
+    wei = this->dropout(wei);
+
+    // perform weighted aggregation of values
+    Tensor out = torch::matmul(wei, v); // shape (B, T, head_size)
+    return out;
+  }
+
+}
 ```
 
-We can now compute the $$Attention(Q,K,V)$$ as:
+In order to keep the code small and clean, `Head` and all our modules that follow will be defined as a `struct` and not as a `class`, so that all members are public and not private by default.
+Note the `register_module` operator that is not needed in the python implementation. Why do we need this? In practice, C++ has no reflection, so it cannot iterate over a class variables, unless they're declared somewhere. However, we need this iterator feature, so that LibTorch can iterate class members for e.g. parameter count, recursive copy of submodules to a device, back propagation of weights among several heads, etc. There are two options to create this iterator, and in this post we will use both:
+1. We can keep all modules inside an LibTorch container such `nn::Sequential` or `nn::ModuleList`. Applying a function to the container will recursively apply it to every module inside;
+2. We can call `register_parameter`, `register_buffer` and `register_module` to register parameters, buffers or modules during initialization, and LibTorch will keep track of these internally.
 
-```python
-k = key(x) #shape (B,T, head_size)
-q = query(x) #shape (B,T, head_size)
-wei = q @ k.transpose(-2, -1) #shape (B,T, head_size) @ (B,head_size,T) = (B,T,T)
-wei *= head_size**-0.5 #scale by sqrt(d_k) as per paper, so that variance of the wei is 1
+Also, in the code above, we do `register_buffer` on tril because it is a tensor that is not a parameter, but a state, i.e. torch will not record its gradients.
+
+Finally, LibTorch does not allow named arguments like in Python e.g. `bias=False`, so these cannot be passed *directly*. The possible constructors are `Linear(in_features, out_features)` or `Linear(LinearOptions(in_features, out_features).bias(False))`, so when we need to pass any named parameters, we use the second constructor and wrap all options inside `LinearOptions`.
+
+We will now combine (concatenate) the output of all heads into our multi-head shared-attention module:
+
+```cpp
+struct MultiHeadAttention : nn::Module {
+
+  MultiHeadAttention(int num_heads, int head_size) {
+
+    nn::ModuleList heads = torch::nn::ModuleList();
+    for (int i=0; i<num_heads; i++)
+      heads->push_back( Head(head_size) );
+    nn::Linear proj = nn::Linear(num_heads*head_size, n_embd);
+    nn::Dropout dropout = nn::Dropout(dropout_p);
+    
+    register_module("heads", heads);
+    register_module("proj", proj);
+    register_module("dropout", this->dropout);
+  }
+
+
+  Tensor forward(Tensor x){
+
+    //Concatenate the outputs of the heads along the last dimension
+    Tensor outputs[n_head];
+    for (int i=0; i<n_head; i++){
+      Head* head = heads[i]->as<Head>();
+      outputs[i] = head->forward(x);
+    }
+
+    Tensor out = torch::cat(outputs, -1);
+    out = proj(out);
+    out = this->dropout(out);
+    return out;
+  }
+}
 ```
 
-We then adapt the (alternative) notation of the uniform attention above, and compute the output of the non-uniform attention matrix as:
-```python
-tril = torch.tril(torch.ones(T,T))
-wei = wei.masked_fill(tril==0, float('-inf')) #tokens only "talk" to previous tokens
-wei = F.softmax(wei, dim=-1) #equivalent to the normalization above (-inf in upper diagonal will be 0)
-v = value(x) # shape (B,T, head_size)
-out = wei @ v # shape (B,T,T) @ (B,T,C) --> (B,T,C)
-```
+Again, we used `nn::ModuleList` as a container, instead of any std-library container. Containers in C++ are declared for a given fixed element type. So, the tricky bit here is that `nn::ModuleList` stores elements of type `nn::Module` that needs to be casted dynamically to its base type `Head` with `module->as<Head>()` before calling the internal members of the instantiated `Head`.
 
-Note that `out = wei @ x` is the same inner dot-product of the previous items, but this time the attention weights are not uniform, they are learnt parameters and change per query and over time. And **this is the main property and the main problem that the self-attention solves: non-uniform attention weights per query**. This is different than the uniform attention matrix where weights were uniform across all previous tokens, i.e. aggregation was just a raw average of all tokens in the sequence. Here we aggregate them by a "value of importance" for each token.
+### Feed Forward Network
 
-Also, without the $$\sqrt{d_k}$$ normalisation, we would have diffused values in `wei`, and it would approximate a one-hot vector. This normalization creates a more sparse `wei` vector.
-
-This mechanism we coded is called *self-attention* because the $$K$$, $$Q$$ and $$V$$ all come from the same input `x`. But attention is more general. `x` can be given by a data source, and $$K$$ ,$$Q$$ and $$V$$ may come from different sources -- this would be called *cross attention*.
-
-As final remarks, note that elements across batches are always independent, i.e. no cross-batch attention. And in many cases, e.g. a string representation of chemical compounds, or sentiment analysis, there can be no attention mask (i.e. all tokens can attend to all tokens), or there's a custom mask that fits the use case (e.g. main upper and lower diagonals to allow tokens to see their closest neighbour only). And here, we also don't have any cross atttention between the encoder and decoder.
-
-The decoder includes a multi-head attention, which is simply a concatenation of individual heads' outputs. The `Head` and `MultiHeadAttention` modules can then be implemented as:
-
-```python
-class Head(nn.Module):
-
-  def __init__(self, head_size):
-    super().__init__()
-    self.key   = nn.Linear(n_embd, head_size, bias=False)
-    self.query = nn.Linear(n_embd, head_size, bias=False)
-    self.value = nn.Linear(n_embd, head_size, bias=False)
-    self.register_buffer('tril', torch.tril(torch.ones(block_size, block_size)))
-    self.dropout = nn.Dropout(dropout)
-    #Note: this dropout randomly prevents some tokens from communicating with each other
-
-  def forward(self, x):
-    B,T,C = x.shape
-    k = self.key(x) #shape (B,T, head_size)
-    q = self.query(x) #shape (B,T, head_size)
-    v = self.value(x) #shape (B,T, head_size)
-
-    #compute self-attention scores
-    wei = q @ k.transpose(-2, -1) #shape (B,T, head_size) @ (B,head_size,T) --> (B,T,T)
-    wei *= C**-0.5 #scale by sqrt(d_k) as per paper, so that variance of the wei is 1
-    wei = wei.masked_fill(self.tril[:T,:T]==0, float('-inf')) # (B,T,T)
-    wei = F.softmax(wei, dim=-1) # (B, T, T)
-    wei = self.dropout(wei)
-
-    #perform weighted aggregation of values
-    out = wei @ v # (B, T, T) @ (B, T, head_size) --> (B, T, head_size)
-    return out
-```
-
-```python
-class MultiHeadAttention(nn.Module):
-  """ Multi-head attention as a collection of heads with concatenated outputs."""
-  def __init__(self, num_heads, head_size):
-    super().__init__()
-    self.heads = nn.ModuleList([Head(head_size) for _ in range(num_heads)])
-    self.proj  = nn.Linear(head_size*num_heads, n_embd) # combine all head outputs
-    self.dropout = nn.Dropout(dropout)
-
-  def forward(self, x):
-    out = torch.cat([head(x) for head in self.heads], dim=-1)
-    out = self.proj(out)
-    out = self.dropout(out)
-    return out
-```
-
-## Feed Forward Network
-
-
-The Feed-forward network (FFN) in the decoder is simply a single-layer Deep Neural Network and is pretty straighforward to implement:
-
-```python
-class FeedForward(nn.Module):
-  """ the feed forward network (FFN) in the paper"""
-
-  def __init__(self, n_embd):
-    super().__init__()
-    # Note: in the paper (section 3.3) we have d_{model}=512 and d_{ff}=2048.
-    # Therefore the inner layer is 4 times the size of the embedding layer
-    self.net = nn.Sequential(
-        nn.Linear(n_embd, n_embd*4),
-        nn.ReLU(),
-        nn.Linear(n_embd*4, n_embd),
-        nn.Dropout(dropout)
-      )
-
-  def forward(self, x):
-    return self.net(x)
-```
+The Feed-forward network is a two-layer Deep Neural Network and is pretty straighforward to implement:
 
 {: style="text-align:center; font-size: small;"}
 <img width="19%" height="19%" src="/assets/GPTlite/gptlite_feedforward.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The feed forward network in our model, emphasized in red.
+The feed forward network in the GPTlite model, emphasized in red.
 
-## The GPT Block
+```cpp
+struct FeedForward : nn::Module {
 
-We'll call GPT *block* the sequence of a multi-head attention and a feedforward module. There are some subtle improvements we'd like to emphasize. Because the network can become too deep (and hard to train) for a high number of sequential blocks, we added skip connections to each block. Also, in the original paper, the layer normalization operation is applied *after* the attention and the feed-forward network, but before the skip connection. In modern days, it is common to apply it in the *pre-norm formulation*, where normalization is applied before the attention and the FFN. That's also what we'll do in the following code: 
+  FeedForward(int n_embd) {
+    nn::Sequential net = nn::Sequential(
+      nn::Linear(n_embd, n_embd*4),
+      nn::ReLU(),
+      nn::Linear(n_embd*4, n_embd),
+      nn::Dropout(dropout_p)
+      );
+    register_module("net", net);
 
-```python
-class Block(nn.Module):
-  """ Transformer block: comunication (attention) followed by computation (FFN) """
-
-  def __init__(self, n_embd, n_head):
-    # n_embd: embedding dimension
-    # n_heads : the number of heads we'd like to use
-    super().__init__()
-    head_size = n_embd // n_head
-    self.sa = MultiHeadAttention(n_head, head_size)
-    self.ffwd = FeedForward(n_embd)
-    self.ln1 = nn.LayerNorm(n_embd)
-    self.ln2 = nn.LayerNorm(n_embd)
-
-  def forward(self, x):
-    x = x + self.sa(self.ln1(x))
-    x = x + self.ffwd(self.ln2(x))
-    return x
+  Tensor forward(Tensor x) {
+    return net->forward(x);
+  }
+}
 ```
+
+### The GPT Block
+
+We'll call GPT *block* the sequence of a multi-head attention and a feedforward module. Similarly to the python implementation, we add skip connections and normalization before the attention and feed-forward network.
 
 {: style="text-align:center; font-size: small;"}
 <img width="19%" height="19%" src="/assets/GPTlite/gptlite_blocks.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The GPT block(s) in our model, emphasized in red.
+The GPT block(s) in the GPTlite model, emphasized in red.
 
+```cpp
+struct Block : nn::Module {
 
-## Final Model
+  Block(int n_embd, int n_head) {
+    int head_size = (int) (n_embd / n_head);
+    std::shared_ptr<MultiHeadAttention> sa = 
+      std::shared_ptr<MultiHeadAttention>( new MultiHeadAttention(n_head, head_size) );
+    std::shared_ptr<FeedForward> ffwd =
+      std::shared_ptr<FeedForward>( new FeedForward(n_embd) );
+    nn::LayerNorm ln1 = nn::LayerNorm(  std::vector<int64_t> {n_embd} );
+    nn::LayerNorm ln2 = nn::LayerNorm(  std::vector<int64_t> {n_embd} );
 
-Putting it all together, our main model is wrapped as:
+    register_module("sa", sa);
+    register_module("ffwd", ffwd);
+    register_module("ln1", ln1);
+    register_module("ln2", ln2);
+  }
 
-```python
-class GPTlite(nn.Module):
-
-  def __init__(self, vocab_size):
-    super().__init__()
-    
-    # vocabulary embedding and positional embedding
-    self.token_embedding_table = nn.Embedding(vocab_size, n_embd)
-    self.position_embedding_table = nn.Embedding(block_size, n_embd)
-
-    #sequence of attention heads and feed forward layers
-    self.blocks = nn.Sequential( *[Block(n_embd, n_head) for _ in range(n_layer)])
-
-    #one layer normalization layer after transformer blocks
-    #and one before linear layer that outputs the vocabulary
-    self.ln = nn.LayerNorm(n_embd)
-    self.lm_head = nn.Linear(n_embd, vocab_size, bias=False)
-
-
-  def forward(self, idx):
-    """ call the model with idx and targets (training) or without targets (generation)"""
-
-    #idx and targets are both of shape (B,T)
-    B, T = idx.shape
-    tok_emb = self.token_embedding_table(idx) #shape (B,T,C)
-    pos_emb = self.position_embedding_table(torch.arange(T, device=idx.device)) #shape (T,C)
-    x = tok_emb + pos_emb #shape (B,T,C)
-    x = self.blocks(x)
-    x = self.ln(x)
-    logits = self.lm_head(x) #shape (B,T,C)
-    logits = torch.swapaxes(logits, 1, 2) #shape (B,C,T) to comply with CrossEntropyLoss
-    return logits
+  Tensor forward(Tensor x) {
+    x = x + sa->forward(ln1(x));
+    x = x + ffwd->forward(ln2(x));
+    return x;
+  }
+}
 ```
 
-and the inference (token generation) function is:
+You will notice we will be using `shared_ptr` to wrap our classes. It is not accidental. In fact, all LibTorch modules are a shared pointer to the implementation of a given class. Thus, all `torch::nn` modules can be passed by value directly. E.g. the linear layer `nn::Linear` is just an alias for `std::shared_ptr<nn::LinearImpl>`, where `nn::LinearImpl` is the implementation. Because of this, the documentation suggests initializing modules with `nullptr` as the default value of the pointer, and initializing the implementation dynamically later when needed. This is because the alternative of not initializing the pointer would call the default constructor e.g. `Linear()` which is not defined, and lead to a compilation error.
 
-```python
-  def generate(self, idx, max_new_tokens):
-    """ given a context idx, generate max_new_tokens tokens and append them to idx """
-    for _ in range(max_new_tokens):
-      idx_cond = idx[:, -block_size:] #we can never have any idx longer than block_size
-      logits = self(idx_cond) #call fwd without targets
-      logits = logits[:, :, -1] # take last token. from shape (B, C, T) to (B, C)
-      #convert logits to probabilities
-      probs = F.softmax(logits, dim=-1) # shape (B, C)
-      #randomly sample the next tokens, 1 for each of the previous probability distributions
-      #(one could take instead the argmax, but that would be deterministic and boring)
-      idx_next = torch.multinomial(probs, num_samples=1) # shape (B, 1)
-      #append next token ix to the solution sequence so far
-      idx = torch.cat([idx, idx_next], dim=-1) # shape (B, T+1)
-    return idx  
+There's also a subtle difference in the `LayerNorm` initialization. By design, `LayerNorm` accepts a list of normalized dimensions as input. Alternatively, in the python implementation, when a single `int` value is passed, only the last dimension of the input is normalized, and will be resized to the integer value. However, in C++, `LayerNorm` does not include the constructor initialization with a single integer argument, so we have to use the general constructor and pass it as a singleton list.
+
+### Final GPTlite Model
+
+Putting it all together:
+
+```cpp
+struct GPTlite : nn::Module {
+
+  GPTlite(int vocab_size){
+    nn::Embedding token_embedding_table = nn::Embedding(vocab_size, n_embd);
+    nn::Embedding position_embedding_table = nn::Embedding(block_size, n_embd);
+    nn::Sequential blocks = nn::Sequential();
+    for (int i=0; i<n_layer; i++)
+      blocks->push_back( Block(n_embd, n_head) );
+		
+    nn::LayerNorm ln = nn::LayerNorm(  std::vector<int64_t> {n_embd} );
+    nn::Linear lm_head = nn::Linear( nn::LinearOptions(n_embd, vocab_size).bias(false)  );
+
+    register_module("token_embedding_table", token_embedding_table);
+    register_module("position_embedding_table", position_embedding_table);
+    register_module("blocks", blocks);
+    register_module("ln", ln);
+    register_module("lm_head", lm_head);
+  }
+
+
+  Tensor forward(Tensor idx){
+    int T = idx.size(1);
+    Tensor tok_emb = token_embedding_table(idx); //shape (B,T,C)
+    Tensor pos_emb = position_embedding_table(torch::arange(T).to( idx.device() )); // (T,C)
+    Tensor x = tok_emb + pos_emb; //shape (B,T,C)
+    x = blocks->forward(x);
+    x = ln(x);
+    Tensor logits = lm_head(x); //shape (B,T,C)
+    return logits.permute({0,2,1}); //shape (B,C,T)
+  }
+}
 ```
 
 
-## Train loop
+## Benchmark Model on LibTorch C++ {#benchmark-model}
 
-Now we can instantiate the model and copy it to the compute device:
+We will define a simple benchmark model, which is simply a DNN with `L` layers of width `W`, with a ReLu activation between layers. This is defined in `benchmark.h` as:
 
-```python
-m  = GPTlite(vocab_size).to(device)
+```cpp
+#pragma once
+#include <torch/torch.h>
+
+struct BenchmarkModel : torch::nn::Module {
+  /// DNN with L layers and W neurons per layer
+
+  BenchmarkModel(int64_t W, int64_t L, int64_t in_size, int64_t out_size){
+    torch::nn::Sequential layers = torch::nn::Sequential();
+    layers->push_back(torch::nn::Linear(in_size, W));
+    layers->push_back(torch::nn::ReLU());
+    for (int64_t l = 0; l<L-2; ++l) {
+      layers->push_back(torch::nn::Linear(W, W));
+      layers->push_back(torch::nn::ReLU());
+      }
+    layers->push_back(torch::nn::Linear(W, out_size));
+    layers->push_back(torch::nn::ReLU());
+    register_module("layers", layers);
+    this->to(device);
+  }
+
+  torch::Tensor forward(torch::Tensor input) {
+    return layers->forward(input);
+  }
+}
 ```
 
-We then initialize the optimizer and perform the train loop:
+## Main loop
 
-```python
-# train the model
-optimizer = torch.optim.Adam(m.parameters(), lr=learning_rate)
-for steps in range(max_iters):
-  idx, targets = get_batch(train_data)   #get a batch of training data
-  logits = m(idx)   #forward pass
-  loss = F.cross_entropy(logits, targets)
-  loss.backward()   #backward pass
-  optimizer.step()   #update parameters
-  optimizer.zero_grad(set_to_none=True)  #sets to None instead of 0, to save memory
+Our `main.cpp` file will contain a loop that will benchmark the train and inference operations of a model for a random input:
 
-  #print progress
-  if steps % 100 == 0: print(f"step {steps}, loss {loss.item():.2f}")
-    
-  @torch.no_grad()
-  # eval loop: no backprop on this data, to avoid storing all intermediatte variables
-  def eval_loss():
-    idx, targets = get_batch(valid_data)   #get a batch of validation data
-    logits = m(idx)   #forward pass
-    loss = F.cross_entropy(logits, targets)
-    print(f"step {steps}, eval loss {loss.item():.2f}")
-    return loss
+```cpp
+#include "gptlite.h"
+#include "benchmark.h"
+
+torch::Device device = torch::cuda::is_available() ? torch::kCUDA : torch::kCPU;
+
+int main(int argc, const char* argv[]) {
+
+    const int vocab_size = 65, batch_size=1; 
+    const torch::ScalarType Long = torch::ScalarType::Long;
+    torch::Tensor idx = torch::randint(0, vocab_size, {batch_size, block_size}, device).to(Long);
+    torch::Tensor label = torch::randint(0, vocab_size, {batch_size, block_size}, device).to(Long);
+    GPTlite model = GPTlite(vocab_size);
+    model.to(device);
+    benchmark_train<GPTlite>(model, idx, label);
+    benchmark_inference<GPTlite>(model, idx);
+}
+```
+
+As an important remark, LibTorch does not include a C++ equivalent to `torch.set_default_device`, so we have to manually move to the GPU every datapoint and module. And because we registered every parameter, buffer and module previously, doing `model.to(device)` will recursively copy all the contents in the model to the device. The final functions `benchmark_train` and `benchmark_inference` perform the benchmark of method several train and inference epochs, respectively. The C++ implementation is analogous to its python counterpart, however we'll use a templated `typename ModelType` to cover all possible model implementations:
+
+```cpp
+const uint warmup_epochs = 30;  // number of epochs to run before benchmarking
+const uint benchmark_epochs = 30;  // number of epochs to benchmark
+
+template <typename ModelType>
+void benchmark_train(ModelType & model, torch::Tensor x, torch::Tensor label) {
+
+  clock_t start_time;
+  torch::Tensor output, loss;
   
-  if steps % eval_interval == 0: eval_loss().item()
-      
+  model.train();
+  torch::optim::Adam optimizer( model.parameters(),
+    torch::optim::AdamOptions(2e-4).betas(std::make_tuple(0.5, 0.5)));
+
+  for (int64_t epoch = 0; epoch < warmup_epochs + benchmark_epochs; ++epoch) {
+
+    if (epoch == warmup_epochs)
+      start_time = clock();
+
+    optimizer.zero_grad();
+    output = model.forward(x);
+    output = F::softmax(output, F::SoftmaxFuncOptions(1));
+    loss = torch::cross_entropy_loss(output, label);
+    loss.backward();
+    optimizer.step();
+  }
+
+  double benchmark_time = double(clock() - start_time) / CLOCKS_PER_SEC;
+  double throughput = benchmark_epochs / benchmark_time;
+  std::cout << "train runtime: " << benchmark_time << " seconds" << std::endl;
+  std::cout << "train throughput: " << throughput << " epochs/second" << std::endl;
+}
+``` 
+
+The implementation of `benchmark_inference` is a much simpler loop with `model.eval()` instead, the `torch::NoGradGuard` variable (equivalent to `with torch.no_grad()` in python), and only a forward pass in the epochs loop. However, we add an extra templated type for the input data, to support the TorchScript-based inference that we will discuss in the next chapter:
+
+```cpp
+template <typename ModelType, typename InputType = torch::Tensor>
+void benchmark_inference(ModelType & model, InputType x) {
+
+  clock_t start_time;
+  model.eval();
+  
+  { 
+    //no_grad scope, C++ equivalent to 'with torch.no_grad()' in Python
+    torch::NoGradGuard no_grad;
+
+    for (int64_t epoch = 0; epoch < warmup_epochs; ++epoch) 
+      model.forward(x);
+
+    start_time = clock();
+    for (int64_t epoch = 0; epoch < benchmark_epochs; ++epoch)
+      model.forward(x);
+  }
+
+  double benchmark_time = double(clock() - start_time) / CLOCKS_PER_SEC;
+  double throughput = benchmark_epochs / benchmark_time;
+  std::cout << "inference runtime: " << benchmark_time << " seconds" << std::endl;
+  std::cout << "inference throughput: " << throughput << " epochs/second" << std::endl;
+}
 ```
 
+## TorchScript: python for training, C++ for inference
 
-## Size matters
-
-We will now test the model. We pass a single token (the `\n` character, encoded as token `0`) to the model as initial character, and let it generate a sequence of 500 tokens: 
+In ideal scenarions, we would want the flexibility and speed of development of python, with the low memory footprint and high efficiency of C++. This is possible with [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html). To do that, we will train the model `model` in python and output it as the binary `model_jit.pt` file, via:
 
 ```python
-#a 1x1 tensor with batch size 1 and sequence length 1 and starting value 0 (0 is the \n character)
-idx = torch.zeros((1,1), dtype=torch.long, device=device)
-
-# test the same generate() function, now with the trained model
-print(decode(m.generate(idx, max_new_tokens=500).tolist()[0]))
+model_jit = torch.jit.script(model) 
+# model_jit = torch.jit.trace(model, (x))
+model_jit.save('model_jit.pt')
 ```
 
-and this will start blabbing some text, which looks a bit random for now:
+ The main difference between `script` and `trace` is that scripting computes the execution graph by looking at the the model definition (`nn.Module`) while tracing does a forward pass and freezes that execution graph to compute it. Thus, tracing ienforces a deterministic execution (no control flows allowed) and is limited to PyTorch tensors and PyTorch operations in the `forward` pass. In case of doubte, favor scripting for portability, and tracing for performance.
 
-```
-IVINILCHIUKI noes hereseoke
+**Important**: you cannot use `torch.jit.save` on a model optimized with `torch.compite`, or you'll get the error `Compiled functions can't take variable number of arguments or use keyword-only arguments with defaults`. You have to use instead `torch.jit.trace(model, (x))` .
 
-PIV:
-Ansto not 'dk thit, lighinglest in, the tole Himpams witecoond My me,
-Cothe pill cthermandunes
-The yould hankenou sonogher dovings age's eenat orshe:
-And? Camer ou heithande, sonteas
-Ans d th sonce;s ee e a
-Bet n severe ay an kin nthely; wid, min. se garfitin d,
-s I at nd d tlineay hanoro f;'s ikeff t maleanta t t'san bus weleng, c,
-Ther coressoonerves se ivenind s,
-An then, e g
-Anand nvienowhin, an somend tisefffospup thid meewgonevand s,
-pe
-Anony a onaneyou ynuplot fouthaies angen hr imoupe?
+On the inference side, in C++, we [follow the LibTorch documentation](https://pytorch.org/tutorials/advanced/cpp_export.html) and will load and run inference on that model with the following code:
 
-E CAsinoveatot toooven
-A cevet heplig tsest were sis d whelen fen CLUny cer:
-Aid: a d?
-UFrrand age thak?
+```cpp
+#include <torch/script.h>
+using JitModule = torch::jit::Module;
+using JitInput  = std::vector<torch::jit::IValue>;
 
-CEDUKINIG m.
-Hak's; te!
+JitModule model = torch::jit::load("model_jit.pt").to(device);
+benchmark_inference<JitModule, JitInput>(model, {x});
 ```
 
-This is because for the sake of this tutorial, we used very small parameters for our GPT lite model. Better results can be achieved by increasing several of the parameters above, such as batch size, larger attention and more GPT blocks. As an example, if you try the following:
+Note that the type of the model and input data is not `torch::nn::Module` and `torch::Tensor` as before. Instead, we have `torch::jit::Module` and `std::vector<torch::jit::IValue>`, respectively. This justifies the use of the templates on the definition of `benchmark_interface`.
 
-```python
-eval_interval = 100
-max_iters = 5000
-learning_rate=3e-4
-batch_size = 128
-block_size = 256
-n_embd = 300
-n_layer = 10
-dropout = 0.2
+## Compilation
+
+We follow the [instructions on the LibTorch documentation](https://pytorch.org/cppdocs/installing.html) and use the CMake build systems to generate our binaries. The `CMakeLists.txt` is:
+
+```cmake
+cmake_minimum_required(VERSION 3.18 FATAL_ERROR)
+project(torch_cpp_benchmark)
+
+# Fix error "CMAKE_CUDA_ARCHITECTURES must be non-empty if set."
+set(CMAKE_CUDA_ARCHITECTURES "native")
+
+find_package(Torch REQUIRED)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${TORCH_CXX_FLAGS}")
+
+set(SOURCE_FILES gptlite.h benchmark.h main.cpp)
+
+add_executable(main ${SOURCE_FILES} )
+target_link_libraries(main "${TORCH_LIBRARIES}")
+set_property(TARGET main PROPERTY CXX_STANDARD 17)
+``` 
+
+and we will run cmake in Release mode (for compile optimizations), and we specify the path of LibTorch, and (optionally) two extra flags to compile our code with the cuDNN and cuSPARSELt libraries:
+```shell
+cmake .. \
+ -DCMAKE_BUILD_TYPE=Release \
+ -DCAFFE2_USE_CUDNN=1 -DCAFFE2_USE_CUSPARSELT=1 \
+ -DCMAKE_PREFIX_PATH=`python3 -c 'import torch;print(torch.utils.cmake_prefix_path)'`
 ```
 
-You will get a significant performance improvement:
+## Benchmark
 
-```
-Pettience! if Tybalt ally kny to the waywards
-That we renow't I have satic I fain.
-Provotest the office Paul wains up the dudght.
+We compared the throughput (samples/sec) and GPU memory usage (GBs) of three distinct implementations:
+1. the small variant of GPTlite;
+2. a deep benchmark model made of 2048 layers with 256 activations per layer, with input and output of size 2048; and
+3. a wide benchmark model of 3 layers with 8192 activations each, with input and output of size 2048.
 
-And MOLEO:
-Then me findy,
-I do from the king him. How going in him.
+So in practice we are testing a very deep DNN, a very shallow DNN and a large language model. For each model, we tested:
+- the python PyTorch implementation of training and inference on versions 1.3.1 and 2.1.2;
+- the C++ LibTorch 2.1.2 implementation of train and inference; and
+- the TorchScript combo, using PyTorch 2.1.2 to train and output the model, and C++ LibTorch 2.1.2 to load and perform inference. 
+- the train and inference using `torch.compile` on Python 2.1.2; 
 
-TRANIO:
-Good mind beherd at the world hold I pray
-Toke you remect. If all my vernant youth I bear you
-Dod forth.
-
-DUKE VINCENTIO:
-And ambibed, my lords I am not thence unnat;
-Why, how said, too determoly fear is mercy,
-But whether by my swalind
-Tless and Rome: what guess the catter
-Than thou not pro
-```
-
-If you are interest on the real scale size, the paper [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) provide us with several details related to the GPT-3:
+As an important remark, I noticed that both the python and C++ implementations of Torch leak memory on the GPU when several models are allocated in the same run, as the deallocation does not clear the memory completely. For that reason, I executed a new run per benchmark value.
+The results for the GPTlite modeo are the following: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPTlite/table_gpt_size.png"/>
+<img width="90%" height="90%" src="/assets/GPTlite-cpp/benchmark_gptlite.png"/>
 
-## Finetuning
+The benchmark for the bencmark models are in <a href="/assets/GPTlite-cpp/benchmark_wide.png">benchmark_wide.png</a> and <a href="/assets/GPTlite-cpp/benchmark_deep.png">benchmark_deep.png</a>. Looking at the GPU memory usage, we see that there is a much smaller memory requirement for inference-only runs (light blue bars), compared to runs that performed train and inference (navy blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training leads to an increase in memory in the order of 4x to 10x.  
 
-The task that we detailed in this post is *only* the pre-training step of LLMs. This is the initial step that lets the model learn the text structure, grammar, syntax ans some *knowledge* of a general dataset. On top of that, it has been shown that a general model can then be finetuned to perform specific tasks with great performance by performing a follow up training on a smaller dataset of the related topic. See the paper [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) for details on LLM specialization using few- and zero-shot setups. 
+Looking at the overall performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.2 (navy blue to orange bars). Also, there is also a small throughput increase of up to 10% when moving from PyTorch 2.1.2 to its C++ LibTorch equivalent (from orange to green bars), explained by the python overhead (runtime, dynamic typing, etc). Finally, the inference when comparing the pure C++ implementation and the TorchScript implementation (train in python, inference in C++) is neglegible, which means that TorchScript does a pretty good job in (de)serializing the model.
 
-However, for a *better* GPT-like model, there are several training steps that are considered:
-1. the **pre-training** step detailed above, the most important computationally as it takes most of the overall compute time.
-2. the **supervised finetuning** step that optimizes the model to a specific task. It is a training step analogous to the pre-training, with a human-supervised dataset (ie feedback loop) that is specific to the task we want to specialize the model on.
-3. the **reward modelling** aka **Reinformcement Learning from Human Feedback (RLHF)** step. The dataset is now a set of comparisons. We take the model and generate multiple completions. Then a human annotator ranks the completions. The inputs become triplets `prompt, completion, reward` for each completion, and we perform supervised learning on the reward only (ie the models now have the capacity to output completions and the expected quality of each completion). This is then used to train the model.
-4. the **reinforcement learning** step, where the reward is the value predicted from the model trained on the previous step:
+We also tested the speed-up gains from using  `torch.compile` on our GPTlite model. The base case without `torch.compile` performs the PyTorch-based training at a throughput of 1.41 samples/sec and inference at 4.28 samples/second. Let's compare it with the same model compiled at different modes and with(out) a full graph:
 
-{: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPTlite/gpt_rl_training.png"/>
+| throughput (increase factor)  | `fullgraph=False` train | `fullgraph=False`, inference | `fullgraph=True`, train | `fullgraph=True`, inference |  
+|---|---|---|---|---|
+| `mode='default'`  | 1.591 | 5.124	| 1.581 |	5.11 |
+| `mode='reduce-overhead'`  | 1.625	| 5.256	| 1.624	| 5.258 |
+| `mode='max-autotune'`  | 1.636 |	5.258	| 1.635 |	5.26 |
 
-{: style="text-align:center; font-size: small;"}
-source: video <a href="https://www.youtube.com/watch?v=bZQun8Y4L2A">State of GPT</a>
+The final message is: **running PyTorch 2.1 does not incur a massive loss of performance compared to LibTorch C++**, and this justifies the move of the Torch team back to Python, to ease up development. Also, **it is viable to perform training on PyTorch and inference on compiled LibTorch to fit light hardware setups** that do not include the python runtime. However, **`torch.compile` increases the training throughput by 12% to 16%, and the inference throughput by 19% to 23%**, when compared to the Torch/LibTorch's implementation, and this is the most efficient setup for most users. In terms of compilation settings, there was no major visible gain in using a full torch graph in the compilation, and `reduce-overhead` yielded the best balance between compilation time, memory and runtime.
 
+Now the main questions are: is C++ LibTorch going to become deprecated and eventually disappear? If not, will `torch.compile` allow the export of compiled models with `torch.jit.track` / `.script` so that we can load and run it on LibTorch C++? 
 
-If you are interested in this particular GPT implementation or want to learn more about GPT in general, see the [original tutorial video](https://www.youtube.com/watch?v=kCc8FmEb1nY), [OpenAI GPT-3 paper](https://arxiv.org/abs/2005.14165), and the [nanoGPT repo](https://github.com/karpathy/nanoGPT). For an overview of the 4-step training process, see the video [State of GPT](https://www.youtube.com/watch?v=bZQun8Y4L2A) and the paper [Proximal Policy Optimization Algorithms](https://arxiv.org/abs/1707.06347).
-
-For a faster memory-efficient implementation of an *exact* attention mechanism, see [Flash Attention](https://arxiv.org/abs/2205.14135) and [Flash Attention 2](https://arxiv.org/abs/2307.08691).
-
-All done! For the full python implementation of the code presented, see the repo [GPTlite repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite).
+And we reached the end of this post! If you want to replicate these results, see the [GPTlite-cpp repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-cpp).
