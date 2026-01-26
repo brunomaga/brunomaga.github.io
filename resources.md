@@ -23,7 +23,7 @@ Books available online, related to the topics discussed. Continuously updated.
 Other useful short-form content:
 <ul>
   <li><a href="{{ site.assets }}/resources/In-Network_Collective_Operations_Game_Changer_or_Challenge_for_AI_Workloads.pdf">In-Network Collective Operations: Game Changer or Challenge for AI Workloads?</a></li>
-  <li><a href="[https://jax-ml.github.io/scaling-book](https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html#tp-ep-tensor-parallelism-for-moe-models)">AMD blog: The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism</a></li>
+  <li><a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html#tp-ep-tensor-parallelism-for-moe-models">AMD blog: The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism</a></li>
   <li><a href="https://jax-ml.github.io/scaling-book">Jax ML blog: how to scale your model</a></li>
   <li><a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters</a> (<a href="https://cdn-lfs-us-1.hf.co/repos/e7/07/e7077a163ab0f314cedbb8ddd44667d765205ee536e8b4785fdd0872534107db/274a19a2577ed220cd3a102b4469c44310e4a7c8e8f8ebc36842d907cb51e127?response-content-disposition=inline%3B+filename*%3DUTF-8%27%27The_Ultra-Scale_Playbook_Training_LLMs_on_GPU_Clusters.pdf%3B+filename%3D%22The_Ultra-Scale_Playbook_Training_LLMs_on_GPU_Clusters.pdf%22%3B&response-content-type=application%2Fpdf&Expires=1740407324&Policy=eyJTdGF0ZW1lbnQiOlt7IkNvbmRpdGlvbiI6eyJEYXRlTGVzc1RoYW4iOnsiQVdTOkVwb2NoVGltZSI6MTc0MDQwNzMyNH19LCJSZXNvdXJjZSI6Imh0dHBzOi8vY2RuLWxmcy11cy0xLmhmLmNvL3JlcG9zL2U3LzA3L2U3MDc3YTE2M2FiMGYzMTRjZWRiYjhkZGQ0NDY2N2Q3NjUyMDVlZTUzNmU4YjQ3ODVmZGQwODcyNTM0MTA3ZGIvMjc0YTE5YTI1NzdlZDIyMGNkM2ExMDJiNDQ2OWM0NDMxMGU0YTdjOGU4ZjhlYmMzNjg0MmQ5MDdjYjUxZTEyNz9yZXNwb25zZS1jb250ZW50LWRpc3Bvc2l0aW9uPSomcmVzcG9uc2UtY29udGVudC10eXBlPSoifV19&Signature=Zr1T25jD10fja6UTKtbB3Tm~Zn8EvHL~BeEc8s6~0xn0lIrG5zFizvcjXLvVGQPSjw22B59uChFCuBRfnXfvnq1CiaHf6oVDjqO47327bMeoLWaAJbELWIBEbIAlghkyLJ3Z05UrB0ZYoOfpqIVpLkbehsLaoTyoMcnx5naz-A9X5XuRe~bf~0HoJCSrp3Og62bgVtSwu4vCgt6yEvJXhXRqQi0LOJx~386MSSp4txoAkKtjwWIQ-zXykISjF9jUvN5hHyanyTzOlDT~4MwqRPSkVv1iiYeyK7TfDnDHeMSF~KPdREOFZu0Rb1YaVN7gFyBEO1Ggo-~rQPQ01wcISg__&Key-Pair-Id=K24J24Z295AEI9">pdf</a>)</li>
   <li><a href="{{ site.assets }}/resources/latex_math_symbols.pdf">Latex Mathematical Symbols</a></li>
@@ -63,6 +63,7 @@ Material for the course <a href="https://edu.epfl.ch/coursebook/en/statistics-fo
     distributions
 </li>
 </ul>
+
 
 
 
