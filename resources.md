@@ -20,7 +20,7 @@ Books available online, related to the topics discussed. Continuously updated.
 </ul>
 
 <br/>
-Other useful resources:
+Other useful short-form content:
 <ul>
   <li><a href="{{ site.assets }}/resources/In-Network_Collective_Operations_Game_Changer_or_Challenge_for_AI_Workloads.pdf">In-Network Collective Operations: Game Changer or Challenge for AI Workloads?</a></li>
   <li><a href="https://jax-ml.github.io/scaling-book">Jax ML blog: how to scale your model</a></li>
@@ -62,4 +62,5 @@ Material for the course <a href="https://edu.epfl.ch/coursebook/en/statistics-fo
     distributions
 </li>
 </ul>
+
 
