@@ -185,7 +185,7 @@ or the Mean Absolute Error, similar to MSE but uses the absolute value instead o
 ### Cross-Entropy
 
 The cross-entropy is equivalent to the negative of the log-likelihood (of the softmax when output of the model is not a distribution). However, for classification tasks, we use the cross-entropy formulation avoid numerical instabilities and overflows. Most classification tasks use the binary or multi-class cross-entropy loss functions:
-- binary: $$H(p) = -(y \log p(x) + (1-y) \log (1-p(x)))$$.
+- binary: $$H(p) = -(y \log p(x) + (1-y) \log (1-p(x)))$$, i.e. it simplifies to $$-\log p(x)$$ for true label $$y=1$$, and to $$-\log (1-p(x))$$ for true label $$y=0$$.
 - multi-class: $$H(p,q) = -\sum_x p(x) \log(q(x))$$, for true value $$p$$ and predicted value $$q$$.
 
 ### Triplet Loss
@@ -265,4 +265,5 @@ $$
 $$
 
 where $$N$$ is the number of classes.
+
 
