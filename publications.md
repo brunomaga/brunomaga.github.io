@@ -8,6 +8,79 @@ A summary of some interesting publications I came across. Continuously updated. 
 
 {::options parse_block_html="true" /}
 
+
+<details> <summary markdown="span">2025 [Helix Parallelism: Rethinking Sharding Strategies for Interactive Multi-Million-Token LLM Decoding, NVIDIA](https://arxiv.org/abs/2507.07120)</summary>
+
+Helix Parallelism targets real-time decoding when the KV history reaches *multi-million tokens* under a tight token-to-token latency (TTL) budget. Two bottlenecks dominate this regime: reading the **FFN weights** every step, and streaming the enormous **KV cache** from DRAM. The problem is that the standard fix for one hurts the other. Tensor Parallelism (TP) handles FFN weight reads well, but it scales poorly for attention: once the TP width exceeds the number of KV heads, the KV cache has to be *duplicated* across GPUs, which wastes memory bandwidth, caps parallelism, and limits batch size. Meanwhile KV DRAM reads grow linearly with batch size. No single uniform sharding strategy relieves both pressures at once—you're forced to trade KV duplication against FFN load.
+
+Helix Parallelism overcomes this by introducing a hybrid execution strategy that applies KV parallelism during attention to shard KV caches across GPUs, then reuses the same GPUs for TP in dense LLMs or TP×Expert Parallel (EP) in MoEs during FFN computation.
+
+Helix changes the parallelism layout between the attention phase and the FFN phase, within a single decode step, reusing the same GPUs.
+
+- Phase 1 — Attention, laid out as KV Parallelism (KVP). The KV cache is sharded along the sequence/token dimension. No GPU stores a duplicate of the KV cache. The algorithm is:
+  - The single query for the new token is broadcast to all GPUs.
+  - Each GPU computes attention between that query and only its local slice of the KV cache — producing a partial attention result (partial scores + a running softmax normalizer, FlashAttention-style).
+  - A lightweight communication step combines the partial results into the exact full attention output. This is a small reduction (the query/output is tiny; only the KV cache is huge, and that never moves). It's exact, not approximate.
+- Phase 2 — FFN/MoE, re-laid-out as Tensor Parallel. Now the same GPUs switch view. The attention output is re-sharded so the FFN runs as:
+  - TP for a dense model (each GPU holds a slice of the FFN weight matrices), or
+  - TP × Expert Parallel for an MoE (experts distributed across GPUs).
+
+To minimize the exposed communication cost, we introduce Helix HOP-B. Helix HOP-B effectively minimizes communication overhead through batchwise overlap.
+
+Compared to conventional parallelism approaches, Helix reduces TTL by up to 1.5x at fixed batch sizes and supports up to 32× larger batches under the same latency budget for DeepSeek-R1.
+
+<img width="503" height="596" alt="image" src="https://github.com/user-attachments/assets/2e699dd5-4cb9-4414-a8f4-b074f975b782" />
+
+</details>
+
+
+
+<details> <summary markdown="span">2025 [TPLA: Tensor Parallel Latent Attention for Efficient Disaggregated Prefill & Decode Inference, Peking University & Tencent](https://arxiv.org/abs/2508.15881)</summary>
+
+TPLA  fixes an incompatibility between Multi-Head Latent Attention (MLA) and tensor parallelism:
+- **MLA**, introduced in DeepSeek-V2, compresses the key–value state into a single low-rank latent vector `cKV` and caches only that, slashing KV-cache memory.
+- But Megatron-LM **tensor parallelism (TP)**—where attention heads are split across devices—every device still needs the *entire* `cKV` to compute its heads, so the cache is replicated on each GPU. That replication erodes MLA's whole advantage: per-device memory ends up no better than (or worse than) plain Grouped Query Attention. An existing alternative, Grouped Latent Attention (GLA), shards the latent but then each head only sees part of it, weakening representational capacity.
+
+TPLA's scheme **partitions both the latent representation and each head's input dimension across devices, runs attention independently on each shard, and combines the shard outputs with an all-reduce**. The key difference from GLA: every head in TPLA still attends to the *full* latent space (the partial results are summed back together), so it keeps MLA's full representational power while cutting the per-device KV cache.
+
+The split is asymmetric — TPLA uses MLA for prefill and TPLA for decode — because the two phases have different bottlenecks.
+
+- Prefill: keep standard (reparameterized) MLA. Prefill processes the whole prompt at once, so it's compute-bound, not memory-bound, no KV cache.
+
+- Decode: switch to TPLA — partition the latent across devices. Decode generates one token at a time, so it's memory-bound: every step you must reload the entire KV cache from HBM, and that's where MLA's full-cKV-on-every-device replication hurts. Here TPLA changes the layout: The latent vector cKV (and each head's input dimension) is sliced across the TP devices. Device 0 holds the first chunk of the latent, device 1 the next, etc; then each device runs attention independently on its local shard; then they sum-reduce individual contributions. Because each head's contribution is split and then summed, every head still effectively attends to the full latent space (just computed in pieces)
+
+On DeepSeek-V3 and Kimi-K2 at 32K context it delivers **1.79× and 1.93×** speedups while holding quality on commonsense and LongBench benchmarks, and it runs on FlashAttention-3 for real end-to-end gains. The "disaggregated" framing fits the prefill/decode split: compressed latent for memory-bound decode, full-latent attention preserved for quality.
+
+<img width="736" height="335" alt="image" src="https://github.com/user-attachments/assets/6310c491-9f82-4233-9ec5-97ca17fe9662" />
+
+</details>
+
+
+
+
+<details> <summary markdown="span">2025 [PipeFill: Using GPUs During Bubbles in Pipeline-parallel LLM Training](https://openreview.net/forum?id=650J0YFjnV)</summary>
+
+PipeFill improves GPU utilization in pipeline-parallel LLM training by filling idle "bubble" time—often 15–30% and sometimes over 60% of a job's allocation—with unrelated pending jobs rather than eliminating the bubbles themselves. It fits fill-job work to measured bubble durations and available memory, adds explicit pipeline-bubble instructions, and orchestrates execution inside the gaps, yielding up to 63% higher utilization with under 2% slowdown of the main job (about 2.6K extra GPUs' worth of work on an 8K-GPU run). This makes it complementary to schedule-optimization approaches like DualPipe, 1F1B, interleaving, and ZeroBubble, which instead shrink or hide bubbles by densifying the training job's own schedule through forward/backward and compute/communication overlap—PipeFill is a context-switching layer, not a pipeline schedule.
+
+Good fill jobs are workloads that tolerate interruption, with batch (offline) inference being ideal: generating embeddings for a corpus or running a smaller model over a prompt backlog. Such work is chunkable to match short bubble windows, latency-insensitive so pausing is fine, and small enough in memory to fit the spare capacity PipeFill frees up. The paper also uses other DL training jobs as fill work since training is long-running and interruption-tolerant, though inference is easier to slice into bubble-sized pieces.
+
+</details>
+
+
+
+
+<details> <summary markdown="span">2025 [Speculative Decoding with Blockwise Sparse Attention, MatX](https://matx.com/research/sd_nsa)</summary>
+
+This MatX article tackles a conflict that arises when you combine two popular decoding accelerators. **Speculative decoding (SD)** uses a small draft model to propose several tokens that the big target model then verifies in parallel, raising operational intensity (work done per byte loaded from HBM) and giving ~2× latency/throughput gains. **Blockwise sparse attention**—as in DeepSeek's Native Sparse Attention (NSA) and Moonshot's Mixture of Block Attention (MoBA)—divides the context into blocks and lets each token dynamically attend to only a subset of them, cutting the KV data moved from HBM and again raising operational intensity (important because long contexts otherwise leave modern accelerators underutilized).
+
+"Speculative decoding (SD) and blockwise sparse attention both accelerate LLM decoding, but when combined naively, the KV cache may lose sparsity during the verification step of SD. We show that forcing all draft tokens to attend to the same subset of the context restores sparsity while preserving model quality."
+
+The authors show NSA models trained this way match the language-modeling quality of baseline NSA, while achieving up to **3.5× higher operational intensity** during the verification step of speculative decoding. Conceptually it's a co-design point: rather than treating SD and sparse attention as independent layers, it reshapes the sparsity pattern so the two compose efficiently.
+
+</details>
+
+
+
 <details> <summary markdown="span">2025 [SLA: Beyond Sparsity in Diffusion Transformers via Fine-Tunable Sparse-Linear Attention](https://arxiv.org/abs/2509.24006)</summary>
 
 SLA targets the attention bottleneck in Diffusion Transformers (DiTs), where long generation chains make per-step latency especially costly. Instead of committing to a single approximation (pure sparsity or pure linear attention), the paper proposes a hybrid view of attention weights: some interactions are critical and must remain “exact-ish,” while many are marginal or negligible and can be approximated or dropped.
@@ -294,7 +367,7 @@ The paper’s patterns are especially useful to keep in mind when comparing syst
 </details>
 
 
-<details> <summary markdown="span">2024 [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)</summary>
+<details> <summary markdown="span">2024 [DeepSeek-V3 Technical Report (includes DualPipe)](https://arxiv.org/abs/2412.19437)</summary>
 
 DeepSeek-V3 is a large-scale LLM system report that’s useful to read as a “what it takes in practice” reference: model architecture decisions, training stack choices, and the kinds of engineering trade-offs that are often omitted from purely algorithmic papers. The details are particularly relevant in a related-work section that discusses communication-heavy structures (like MoE) and the real limits of standard communication substrates.
 
@@ -304,7 +377,47 @@ Where it fits in the landscape here:
 
 **Results / takeaways:** the report is a systems-and-training reference more than a single “one trick” optimization; it’s most valuable for its end-to-end design and empirical scaling observations, which help ground discussions about where communication becomes dominant and what kinds of optimizations remain on the table.
 
+DualPipe is a bidirectional pipeline-parallelism algorithm introduced in the DeepSeek-V3 Technical Report, designed to reduce pipeline bubbles while addressing the heavy communication overhead of cross-node expert parallelism (which gives DeepSeek-V3 a roughly 1:1 compute-to-communication ratio). Its core idea is to overlap computation and communication within a paired forward and backward chunk: each chunk is split into four components—attention, all-to-all dispatch, MLP, and all-to-all combine—which are rearranged so that one set of micro-batches runs forward while another runs backward, hiding communication behind compute. Micro-batches are fed symmetrically from both ends of the pipeline, keeping hardware more consistently busy than sequential schedules like 1F1B or ZeroBubble.
+
+The result is fewer bubbles and full forward/backward computation-communication overlap, at the cost of holding two copies of model parameters (one per direction) and higher activation memory. This memory tradeoff is acceptable for DeepSeek-V3 because the overlap let them train without costly tensor parallelism. Unlike PipeFill, which accepts bubbles and fills them with unrelated jobs, DualPipe attacks the bubbles directly by densifying the main job's own schedule—making the two approaches complementary rather than competing.
+
+<img width="1391" height="418" alt="image" src="https://github.com/user-attachments/assets/5a580ef6-139f-4ee9-891c-2b4f6832d790" />
+
 </details>
+
+
+
+<details> <summary markdown="span">2024 [Zero Bubble Pipeline Parallelism, Sea AI Lab](https://arxiv.org/abs/2401.10241)</summary>
+
+Zero Bubble is the first scheduling strategy to achieve zero pipeline bubbles under synchronous training semantics. The key insight is to split the backward pass into two independent computations—one that produces the input gradient (B) and one that produces the parameter/weight gradient (W)—since grouping them sequentially is unnecessary. Decoupling B and W reduces sequential dependencies, letting the later-starting W passes fill the tail-end bubbles that a standard 1F1B schedule leaves behind. The paper offers two handcrafted schedules plus an automatic scheduler: it formulates the problem as integer linear programming (solvable by an off-the-shelf ILP solver) and pairs it with a heuristic for large microbatch counts.
+
+The two variants trade memory for bubble reduction: ZB-H1 keeps the same peak activation memory as 1F1B but cuts the bubble to about a third of 1F1B's, while ZB-H2 eliminates bubbles entirely at the cost of higher peak memory (roughly 2× activations) and an extra optimizer validation/rollback step (it bypasses optimizer synchronization, then corrects after the step). The method is orthogonal to data, tensor, and ZeRO parallelism and can drop in as a replacement for the PP component. Like DualPipe, it attacks bubbles by reshaping the main job's schedule—contrasting with PipeFill, which leaves bubbles in place and fills them with other jobs.
+
+<img width="899" height="597" alt="image" src="https://github.com/user-attachments/assets/3deb5a12-5d63-4c32-898f-c966f18271a3" />
+
+</details>
+
+
+
+
+<details> <summary markdown="span">2024 [FP6-LLM: Efficiently Serving Large Language Models Through FP6-Centric Algorithm-System Co-Design, Microsoft](https://arxiv.org/abs/2401.14112)</summary>
+
+FP6-LLM makes six-bit floating-point (FP6) quantization practical for LLM inference on GPUs. FP6 is an appealing sweet spot: it shrinks model size and weight-loading time substantially while preserving quality more reliably than 4-bit—4-bit methods look fine on zero-shot benchmarks but degrade on harder tasks like code generation and summarization, whereas 6-bit stays robust. The catch is that no existing system gave FP6 real Tensor Core support, because an irregular 6-bit width causes unfriendly, misaligned memory accesses to model weights and incurs heavy runtime overhead from de-quantizing weights back to a format the Tensor Cores can multiply. The paper's answer is TC-FPx, the first full-stack GPU kernel design with unified Tensor Core support for floating-point weights at arbitrary quantization bit-widths, handling the memory-layout and on-the-fly de-quantization problems together.
+
+How TC-FPx works, short version:
+
+- We FP6 weights (1 sign + 3 exponent + 2 mantissa bits = 6 bits, denoted **E3M2**) feeding a **W6A16** linear layer (6-bit weights × FP16 activations).
+- Weights live in memory as 6-bit the whole time — that's the point, smaller footprint and faster loads from DRAM. They're pre-packed offline into an aligned layout (the odd 6-bit width is split into 2-bit + 4-bit fragments so loads aren't misaligned).
+- On the fly, FP6 → FP16 just before compute: SIMT cores load a slice, stitch the fragments back together with bit shifts/masks, and expand to FP16 in registers. Tensor Cores multiply in FP16, overlapped with the next slice's de-quant.
+- outputs are never converted back to FP6. Only the weights are quantized (W6A16 = 6-bit weights, 16-bit activations). Activations and the matmul results stay FP16 — there's no "store back as FP6" step.
+- The win is memory bandwidth: you move 6-bit weights instead of 16-bit, and the de-quant cost is hidden behind the Tensor Core math
+  - in practice, the dequant work is overlapped on cuda cores while the tensor core does matmuls. The kernel is software-pipelined so the dequant of slice N+1 on SIMT core overlaps with matmul of slice N on tensor core.
+  - Quantize = FP16 → FP6 (compress down). Done once, offline, before serving.
+  - De-quant = FP6 → FP16 (expanding the compressed 6-bit weight back up to 16-bit so the Tensor Cores can use it). Done on the fly at runtime, on the CUDA cores, every time the weights are loaded.
+
+Integrating TC-FPx into an existing inference stack yields the end-to-end FP6-LLM system (W6A16: 6-bit weights, 16-bit activations). Results: LLaMA-70B can be served on a single GPU, with 1.69×–2.65× higher normalized inference throughput than the FP16 baseline, and the 6-bit linear layer runs up to 1.45× faster than state-of-the-art 8-bit support. It's an algorithm-system co-design—the kernel-level work is what turns FP6's theoretical compression into actual serving speedups and better cost/quality trade-offs. Source code is available at [github.com/usyd-fsalab/fp6_llm](github.com/usyd-fsalab/fp6_llm).
+</details>
+
 
 
 <details> <summary markdown="span">2024 [The Llama 3 Herd of Models, Meta](https://arxiv.org/abs/2407.21783)</summary>
@@ -434,6 +547,44 @@ The paper "presents a methodology to select the scalings for FP8 linear layers, 
 {: style="text-align:center; font-size: small;"}
 <img width="50%" height="50%" src="/assets/publications/ZeroOffloadPlusPlus.png"/>
 </details>
+
+
+
+<details> <summary markdown="span">2023 [DistFlashAttn: Distributed Memory-efficient Attention for Long-context LLMs Training (LightSeq), UC Berkeley et al.](https://arxiv.org/abs/2310.03294)</summary>
+
+DistFlashAttn extends FlashAttention from a single GPU to a distributed, sequence-parallel setting for **training** long-context LLMs. FlashAttention already turns attention's quadratic peak memory into linear by computing it tile-by-tile with online softmax and never materializing the full score matrix. The split is by sequence (tokens), not by head or by feature dimension. Each GPU stores the Q, K, and V for its own token chunk only — full hidden dimension, all heads, just fewer rows. The challenge is doing this efficiently under *causal* attention, and the paper contributes three techniques
+
+1. **Token-level workload balancing:** causal masking means a token only attends to its prefix, so a GPU holding *early* tokens has little work while one holding *late* tokens does quadratically more—a severe imbalance in naive sequence parallelism. DistFlashAttn rebalances this work across devices so no worker sits idle waiting for the heavily loaded ones.
+
+2. **Overlapping KV communication:** like Ring Attention, K/V chunks are passed between GPUs so each device can attend to remote tokens, but DistFlashAttn overlaps that communication with the local attention computation, hiding the transfer latency behind useful work.
+
+3. **Rematerialization-aware gradient checkpointing:** standard checkpointing recomputes a layer's forward pass during the backward pass to save memory, but applied naively to FlashAttention it redundantly recomputes the attention—DistFlashAttn makes checkpointing aware of what FlashAttention already recomputes, avoiding the double work.
+
+One framing difference to Ring Attention: Ring Attention is a fairly general sequence-parallel attention mechanism (works for inference and training, causal or not). DistFlashAttn is specifically tuned for causal, long-context LLM training — the load imbalance and the checkpointing interaction are both problems that only really bite in that setting.
+
+Together these let it train **2–8× longer sequences** and run faster than the alternatives of the time: 4.45–5.64× over Ring Self-Attention, 1.24–2.01× over Megatron-LM with FlashAttention, and 1.26–1.88× over Ring Attention and DeepSpeed-Ulysses, tested on Llama-7B at 32K–512K tokens. It solves the causal load-imbalance and checkpointing problems specific to the backward pass. It's applied to training only, there's no inference use case. DistFlashAttn is essentially Ring Attention plus three fixes for causal training: Causal load balancing (the biggest one); Communication/computation overlap;  and 3. Rematerialization-aware gradient checkpointing.
+
+</details>
+
+
+
+
+<details> <summary markdown="span">2023 [Chimera: An Analytical Optimizing Framework for Effective Compute-intensive Operators Fusion, Peking Univ., Shanghai AI Lab](https://ieeexplore.ieee.org/document/10071018)</summary>
+
+Chimera (Zheng et al.) is a compiler framework that fuses *chains of compute-intensive operators*—like back-to-back GEMMs, or GEMM-then-softmax in attention—into single kernels to improve data locality. The motivation: as hardware compute throughput has outpaced memory bandwidth, even compute-heavy operators like GEMM and convolution end up memory-bound when run as a chain, because each operator writes its full output to memory only for the next to read it back. Existing ML compilers lacked both precise analysis and good optimization for these chains on different accelerators, so they left performance on the table. Chimera's key idea is to break each operator into a series of *computation blocks* and then optimize at two levels. For *inter-block* optimization it uses an analytical model to pick the block execution order that minimizes data movement between blocks (so intermediate results stay in fast on-chip memory instead of round-tripping to DRAM); for *intra-block* optimization it generates an efficient hardware-specific "micro-kernel."
+
+ Examples from the paper:
+
+- The GEMM→GEMM chain `C = A×B` and `E = C×D` where a tile of `C` will be immediately used to compute `E`, without fully instantiating `C`.
+  - if we had assinged to each GPU block a tile of `E`, there would be a lot of contention and the need to introduce atomic. Instead, here, they assign to each GPU block: a full row of `A` and `E`, it produces and immeidately iterates tiles of `C`, and iterates all columns of `B` and `D`.
+- Batch GEMM chain (attention). `Q×Kᵀ → softmax → ×V` — two batch GEMMs with a softmax in the middle.
+- Convolution chain (CNNs). A `3×3 conv → ReLU → 1×1 conv → ReLU` fused into one kernel — common in ResNet-style nets, memory-bound at certain input shapes.
+
+Because it relies on an analytical cost model rather than exhaustive auto-tuning, Chimera produces fused kernels in minutes instead of the hours search-based compilers like Ansor need. The three pieces each matter—on average the cost model contributes ~2.37×, fusion ~1.89×, and the micro-kernel ~1.61×. End to end, fusing GEMM-with-GEMM chains gives 2.62× over PyTorch, 4.78× over Relay, 1.40× over Ansor, and 3.28× over oneDNN, plus ~1.62× over PyTorch for GEMM-chain-plus-softmax. The work is hardware-portable, targeting both CPUs and Tensor Core GPUs.
+ 
+</details>
+
+
 
 
 <details> <summary markdown="span"> 2023 [ZeRO++: Extremely Efficient Collective Communication for Giant Model Training, Microsoft](https://arxiv.org/abs/2306.10209)</summary>
