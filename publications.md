@@ -97,17 +97,14 @@ How it differs from “kernel-level fusion” work (Flux / TileLink / Triton-dis
 
 <details> <summary markdown="span">2025 [MegaScale-Infer: Serving Mixture-of-Experts at Scale with Disaggregated Expert Parallelism](https://arxiv.org/abs/2504.02263)</summary>
 
-MegaScale-Infer targets **MoE serving**, where routing + expert execution creates sharp bottlenecks (many-to-many traffic, load imbalance, and memory-bound expert kernels). The key architectural idea is **disaggregated expert parallelism**: separate attention and expert “sides” so the system can schedule and pipeline them differently, and use a purpose-built communication substrate for the expert routing path.
-
-Compared to training-focused MoE systems (including MegaScale-MoE), this paper is more about:
-- **Latency/throughput in inference** (including scheduling under request load),
-- **Ping-pong / pipelined execution** between attention and expert nodes,
-- A custom many-to-many communication library and memory-bound kernel optimizations.
+MegaScale-Infer's answer to the memory-bound performance issue during decode is **Disaggregated Expert Parallelism (DEP)**: disaggregate the attention and expert modules, assigning them to separate GPUs,  so each can scale independently with its own parallelism. Attention modules are replicated using data parallelism, while FFN modules are scaled with expert parallelism; by consolidating requests from multiple attention replicas, the GPU utilization of each expert increases significantly as the batch size per attention replica grows.  In other words, many attention replicas funnel their tokens into the expert pool, restoring large per-expert batches and turning the FFNs back into efficient compute-bound work; it also allows **heterogeneous deployment**—cheaper/different GPUs for attention vs. experts—to cut cost. Two systems pieces make disaggregation pay off rather than stall on communication: **ping-pong pipeline parallelism**, which partitions a request batch into micro-batches and shuttles them between attention and FFNs  so the two GPU pools stay busy and communication hides behind compute, and a **high-performance M2N communication library** that eliminates unnecessary GPU-to-CPU data copies, group initialization overhead, and GPU synchronization  for the token dispatch/combine traffic. It targets models up to ~1.4T parameters. This is the MoE-serving analogue of the prefill/decode and attention/FFN disaggregation seen in Helix and TPLA—here the split is attention-vs-experts, exploiting sparsity to rebatch experts efficiently.
 
 **Results / takeaways (as reported):**
 - For a **220B MoE** model on **1024 A100 GPUs**, the paper reports **~2.6× to ~4.3×** speedup over baseline systems.
 - For a **3T MoE** model on **2048 H800 GPUs**, it reports **~2.9× to ~5.4×** speedup.
 - For *online* serving scenarios, it reports **~1.6×** (220B / 1024 A100) and **~2.5×** (3T / 2048 H800) improvements, emphasizing that the scheduling/communication choices help under realistic request patterns, not just offline throughput.
+
+<img width="360" height="224" alt="image" src="https://github.com/user-attachments/assets/ba7fd9f2-2827-4ede-8755-356735e699ec" />
 
 </details>
 
@@ -126,6 +123,20 @@ This work is a useful complement to MegaScale-* systems: it is more about **expo
 **Results / takeaways:** the paper’s main value is the *systems analysis* and the evaluation of sharding strategies that highlight which communication patterns remain dominant and where more aggressive fusion/overlap could help.
 
 </details>
+
+
+
+<details> <summary markdown="span">2025 [TransMLA: Multi-Head Latent Attention Is All You Need, Peking University & Xiaomi](https://arxiv.org/abs/2502.07864)</summary>
+
+TransMLA is a **post-training conversion** method that turns existing Conversational Question Answering  (GQA) -based models (LLaMA, Qwen, Mixtral) into MLA-based ones, without retraining from scratch. The motivation is an adoption gap. The paper's theoretical core is a proof that **GQA can always be rewritten exactly as MLA at the same KV-cache budget, but not vice versa**—i.e., MLA is strictly more expressive than GQA for a given cache size. That asymmetry means any GQA checkpoint can be losslessly re-expressed in MLA form and then *upgraded* to use the spare expressiveness MLA affords.
+
+TransMLA exploits this in two steps. First, it **equivalently converts** the model's GQA attention into MLA structure—reformulating the repeated KV heads of GQA as low-rank latent projections—producing a model directly compatible with DeepSeek's codebase and its optimized serving stacks (vLLM, SGLang), plus features like FP8 quantization and Multi-Token Prediction. Second, because the MLA form has representational headroom GQA wasn't using, it **fine-tunes** to boost quality *without growing the KV cache*—and this needs only ~6B tokens to match the original model across benchmarks. The payoff: compressing 93% of LLaMA-2-7B's KV cache yields a 10.6× inference speedup at 8K context while preserving output quality. It's the migration path that complements TPLA and Helix: rather than designing new MLA models or new sharding, TransMLA *retrofits* the large existing fleet of GQA models into the more efficient MLA family.
+
+Two observations:
+- For a fixed KV-cache budget, MLA is strictly more expressive than GQA.
+- Inference acceleration occurs only when MLA uses a smaller KV cache.
+</details>
+
 
 
 <details> <summary markdown="span">2025 [Look Ma, No Bubbles! Designing a Low-Latency Megakernel for Llama-1B](https://hazyresearch.stanford.edu/blog/2025-05-27-no-bubbles)</summary>
@@ -169,6 +180,53 @@ How it differs from other “big fusion” lines:
 SageAttention3 pushes the SageAttention line toward even more aggressive inference acceleration by combining **microscaling FP8** with attention-specific numerical tricks, aiming to keep attention accurate while driving GPU throughput. Conceptually, it sits between “attention kernels that assume FP16/BF16” and “end-to-end quantized models”: it focuses on the attention operator itself and is designed to be dropped into existing inference stacks.
 
 On **RTX 5090**, the paper reports that SageAttention3 can reach up to **7.4×** the OPS of FlashAttention3 (fp16) and up to **3.3×** the OPS of FlashAttention3 (fp8), while maintaining high accuracy.
+</details>
+
+
+<details> <summary markdown="span">2024 [DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model, DeepSeek-AI](https://arxiv.org/abs/2405.04434)</summary>
+
+DeepSeek-V2 introduces Multi-head Latent Attention (MLA) and DeepSeekMoE—the two architectural pillars later carried into V3 and R1. It's a 236B-total-parameter MoE model with only 21B activated per token and a 128K context. These innovations target the two big performance bottlenecks: the KV cache of vanilla Multi-Head Attention on decoding, and dense FFNs on training.
+
+**DeepSeekMoE** provides the FFN: fine-grained experts plus shared experts, so strong capacity comes from sparse activation at low compute. Two main ideas:
+1. **Shared experts**: a small number ($K_s$​) that every token always uses, no routing. Used for common knowledge. These aren't clones of each other; they're a fixed always-on set that absorbs common/general knowledge.
+2. **Fine-grained expert segmentation.** A regular MoE has $N$ experts, each a full-size FFN, and activates top-$K$. DeepSeekMoE slices each expert into $m$ smaller ones → $mN$ total experts, and activates $mK$ of them. Same total parameters, same FLOPs — but far more *combinations* of experts per token. Finely segmenting the experts into $mN$ ones and activating $mK$ from them allows for a more flexible combination of activated experts.
+
+**MLA** uses low-rank joint compression of keys and values: rather than caching full per-head K/V (or sharing heads as in GQA/MQA), it down-projects them into a single small latent vector `cKV` that is the only thing cached, then up-projects back to distinct per-head K/V at compute time—keeping full-MHA expressiveness while shrinking the cache. Because RoPE can't be absorbed through that up-projection, V2 adds the **decoupled-RoPE** trick: a separate set of small query dims plus one shared key carry the positional rotation, kept apart from the compressed "content" path.
+
+**Symbols:** $h_t$ = token's input hidden vector, where $t$ is the token's position index, $n_h$ = #heads, $d_h$ = per-head dim · $d_c$ = latent (cache) dim, $d_c \ll n_h d_h$ · $d_h^R$ = small RoPE dim · $W^{D\ast}$ = down-projections (compress), $W^{U\ast}$ = up-projections (reconstruct) · superscript $C$ = content part, $R$ = RoPE part · $j \le t$ = past tokens.
+Compress $h_t$ into the cached latent, then reconstruct distinct per-head K/V from it at compute time:
+
+$$c_t^{KV} = W^{DKV}\, h_t \quad (\in \mathbb{R}^{d_c},\ \text{the only cached vector}); \qquad k_t^{C} = W^{UK} c_t^{KV},\quad v_t^{C} = W^{UV} c_t^{KV}$$
+
+where $W^{DKV}$, $W^{UK}$ and $W^{UV}$ are learnt parameters that give a lower-rank transformations. Queries are also low-rank (saves activation memory, not cached):
+
+$$c_t^{Q} = W^{DQ}\, h_t, \qquad q_t^{C} = W^{UQ}\, c_t^{Q}$$
+
+- As a side note, when comparing with the regular attention, where the $W$ projections also give a lower-rank matrix: regular attention factors $W^K$ *by head* (and stays full-rank overall); MLA factors $W^K$ *through a shared low-dim latent* (and goes deliberately rank-deficient) — and that latent is the thing the KV cache stores.
+- Note on notation: $W^{DKV}$: **D**own projection on KV.  $W^{UK}$ and $W^{UV}$: **U**p projection on K and V.
+
+Decoupled RoPE — position rides a separate path: per-head rotary queries and one **shared** rotary key:
+
+$$q_t^{R} = \mathrm{RoPE}(W^{QR}\, c_t^{Q}), \qquad k_t^{R} = \mathrm{RoPE}(W^{KR}\, h_t)$$
+
+Final per-head query/key concatenate content + rotary parts:
+
+$$q_{t,i} = [\,q_{t,i}^{C}\,;\,q_{t,i}^{R}\,], \qquad k_{t,i} = [\,k_{t,i}^{C}\,;\,k_t^{R}\,]$$
+
+Then attention is standard:
+
+$$o_{t,i} = \sum_{j \le t} \mathrm{softmax}_j\!\left(\frac{q_{t,i}^\top k_{j,i}}{\sqrt{d_h + d_h^R}}\right) v_{j,i}^{C}, \qquad u_t = W^{O}\,[\,o_{t,1};\dots;o_{t,n_h}\,]$$
+
+**KV cache per token**
+
+| MHA | GQA | MQA | **MLA** |
+|---|---|---|---|
+| $2\,n_h\,d_h$ | $2\,g\,d_h$ | $2\,d_h$ | $d_c + d_h^R$ |
+
+The "absorb" trick folds $W^{UK}$ into $W^{UQ}$ and $W^{UV}$ into $W^{O}$ at decode time, so attention runs directly against `cKV` and the full per-head K/V are never materialized. DeepSeek-V2 settings: $d_c = 512$, $d_h^R = 64$ ($d_h = 128$) → cache $= 576$ scalars/token, comparable to GQA with ~2.25 groups but with full-MHA expressiveness.
+
+Improvements over the earlier dense DeepSeek 67B are concrete: 42.5% lower training cost, a **93.3% smaller KV cache**, and up to **5.76× higher maximum generation throughput**, while improving quality.
+
 </details>
 
 
