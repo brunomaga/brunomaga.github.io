@@ -8,6 +8,49 @@ A summary of some interesting publications I came across. Continuously updated. 
 
 {::options parse_block_html="true" /}
 
+<details> <summary markdown="span">2026 [FlashAttention-4: Algorithm and Kernel Pipelining Co-Design for Asymmetric Hardware Scaling, Princeton (Tri Dao et al.)](https://arxiv.org/abs/2603.05451)</summary>
+
+FlashAttention-4 (FA4) re-designs the attention kernel for NVIDIA Blackwell (B200/GB200) to confront what the authors call **asymmetric hardware scaling**: from Hopper to Blackwell, tensor-core (matmul) throughput jumped from ~1 to ~2.25 petaFLOPS, but the units that do everything else—the exponential unit for softmax, shared-memory bandwidth—did not speed up proportionally.  The consequence is a bottleneck flip from earlier FlashAttention versions: on Blackwell the tensor cores got much faster but the exponential unit (MUFU.EX2) did not, so softmax is no longer "just the thing between the two matmuls"—it becomes the bottleneck that must be carefully pipelined.  FA4's whole job is to keep those over-provisioned tensor cores busy by overlapping the matmuls with the now-relatively-slow softmax and memory work.
+
+The co-design has a few moving parts. New forward and backward software pipelines exploit Blackwell's fully asynchronous MMA and larger tile sizes to overlap tensor cores, the softmax exponential, and memory operations.  To beat the exponential bottleneck specifically, the forward pass emulates the exponential in software via a polynomial approximation on the FMA units, plus conditional (selective) online-softmax rescaling that only rescales when a new max actually shifts the result enough to matter.  On the backward pass, where shared-memory traffic dominates, FA4 stores intermediate results in Blackwell's new tensor memory (TMEM) to relieve shared-memory traffic, and uses the new 2-CTA MMA mode to cut shared-memory traffic and atomic reductions further.  It's also written entirely in **CuTe-DSL** (Python), giving 20–30× faster compile times than C++ template approaches while keeping full expressivity,  which lowers the barrier to prototyping new attention variants.
+
+Results: up to 1605 TFLOPs/s on B200 BF16 (71% utilization), 1.3× faster than cuDNN 9.13 and 2.7× faster than Triton—2–3× over FlashAttention-3,  bringing attention close to raw matmul speed and effectively pushing the bottleneck back onto memory and communication. This is the kernel-level companion to the systems papers above: where they reshape *what* runs where, FA4 squeezes the attention primitive itself to the hardware's asymmetric limits.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [LatentMoE: Toward Optimal Accuracy per FLOP and Parameter in Mixture of Experts, NVIDIA](https://arxiv.org/abs/2601.18089)</summary>
+
+In Nvidias LatentMoe, “tokens are projected from the model hidden dimension d into a smaller latent dimension ℓ for expert routing and computation, which reduces routed parameter loads and all-to-all traffic by a factor of d/ℓ. We use this efficiency to increase the total number of experts and the top-k active experts per token by the same factor d/ℓ”. The weighted sum of outputs (from the combined all-to-all) from all experts follows a converse projection that projects the smaller latent dimension into the original model hidden dimension, and then it’s summed with the shared experts output that do not have a dimensionality reduction. There’s only a single upward and downward projection across all experts, reducing memory bandwidth. As a side note, shared experts operate at the original model hidden space, ie without dimensionality down- and upward. They show expert computation to be restrained by HBM and then compute, in line with the max theoretical value of the roofline model.
+
+The payoff is that the freed budget can be spent on *more, finer experts* at the same cost: against a standard MoE scoring 48.30% on MMLU-Pro, a LatentMoE configuration with (N', K') = (512, 22) reaches 52.87% on MMLU-Pro and 55.14% on code (+3.19%) at similar runtime and FLOP count.  Validated by design-space exploration up to 95B parameters over a 1T-token horizon, LatentMoE consistently beats standard MoE on accuracy per FLOP and per parameter, and has been adopted by the flagship Nemotron-3 Super and Ultra models. 
+
+<img width="1758" height="1453" alt="image" src="https://github.com/user-attachments/assets/f6470954-b902-46d4-9cd9-dea0a60d040c" />
+
+</details>
+
+
+
+
+<details> <summary markdown="span">2025 [NVIDIA Nemotron 3: Efficient and Open Intelligence, NVIDIA](https://arxiv.org/abs/2512.20856)</summary>
+
+Nemotron 3 (NVIDIA) is a family of open models: Nano, Super and Ultra with a context of up to 1M tokens. 
+
+The report stacks four efficiency techniques:
+1. **LatentMoE:** publication LatentMoE.
+2. **hybrid Mamba-Transformer MoE**, for inference efficiency: rather than interleaving MoE layers with expensive self-attention—which must attend over a linearly growing KV cache during generation—Nemotron 3 predominantly interleaves MoE layers with cheaper Mamba-2 layers, which require storing only a constant state during generation, keeping just a select few attention layers.  .
+3. **Multi-Token Prediction:** (Super/Ultra): predicting several future tokens adds richer training signal (~2.4% average benchmark gain)  and doubles as a draft for speculative decoding—a lightweight MTP module reaches ~97% acceptance on the first two predicted tokens.  
+4. **NVFP4 4-bit training:** (Super/Ultra): stable, accurate pretraining on a hybrid Mamba-MoE for up to 25T tokens, with weights, activations, and gradients quantized to NVFP4 so the fprop, dgrad, and wgrad GEMMs all run in FP4 (3× peak throughput vs FP8 on GB300).  The recipe leans on 2D block scaling for weights, Random Hadamard Transforms on wgrad inputs, stochastic rounding on gradients, and keeping the last 15% of the network in high precision;  sensitive layers are protected too—QKV/attention projections (the few GQA layers use only 2 KV heads) stay in BF16, and Mamba output projections, which flush up to 40% of values to zero in NVFP4, are kept in MXFP8.  The loss gap stays under 1% vs BF16 on Nano and shrinks to under 0.6% on the 8B-active model, with the gap narrowing as model size grows.
+
+The design philosophy is a balance of three layer types: MoE for sparse parameter scaling, a few attention layers for high-fidelity all-to-all routing, and Mamba-2 for fixed-cost sequence modeling. Nemotron 3 Nano 30B-A3B achieves 3.3× higher throughput than Qwen3-30B-A3B, while staying competitive on reasoning and long-context (RULER @ 1M) benchmarks. 
+
+<img width="1744" height="547" alt="image" src="https://github.com/user-attachments/assets/229ddc64-b770-4ccf-b82d-003722cae9ca" />
+
+<img width="2182" height="1350" alt="image" src="https://github.com/user-attachments/assets/8f3fae96-31fa-45c4-bcd6-0759bf265d8e" />
+
+</details>
+
+
 
 <details> <summary markdown="span">2025 [Helix Parallelism: Rethinking Sharding Strategies for Interactive Multi-Million-Token LLM Decoding, NVIDIA](https://arxiv.org/abs/2507.07120)</summary>
 
@@ -254,6 +297,57 @@ SageAttention3 pushes the SageAttention line toward even more aggressive inferen
 
 On **RTX 5090**, the paper reports that SageAttention3 can reach up to **7.4×** the OPS of FlashAttention3 (fp16) and up to **3.3×** the OPS of FlashAttention3 (fp8), while maintaining high accuracy.
 </details>
+
+
+<details> <summary markdown="span">2024 [Mamba: Linear-Time Sequence Modeling with Selective State Spaces, CMU & Princeton](https://arxiv.org/abs/2312.00752)</summary>
+
+Mamba is the state-space model (SSM) that made a non-attention sequence model competitive with Transformers on language. SSMs keep a fixed-size recurrent state and scale **linearly** in sequence length, but earlier SSMs (S4) underperformed because their dynamics were fixed regardless of input. The fix is the **selection mechanism**: making the SSM parameters functions of the input lets the model selectively propagate or forget information depending on the current token—giving  content-based reasoning. Input-dependence breaks the convolution trick, so Mamba adds a **hardware-aware parallel scan** (kept in SRAM, FlashAttention-style) to stay fast. Payoff: 5× higher inference throughput than Transformers, linear scaling, and Mamba-3B matching Transformers twice its size.  Its constant-size state is what eliminates the growing KV cache—the property hybrids (Jamba, Nemotron-3) exploit.
+
+**Formula.** An SSM maps input $x_t$ → output $y_t$ through a hidden state $h_t \in \mathbb{R}^N$. Continuous params $(\Delta, A, B, C)$ are first **discretized**:
+
+$$\bar A = \exp(\Delta A), \qquad \bar B = (\Delta A)^{-1}(\exp(\Delta A) - I)\cdot \Delta B$$
+
+Then it runs as a **linear recurrence** (inference) or a **global convolution** (training):
+
+$$h_t = \bar A\,h_{t-1} + \bar B\,x_t, \qquad y_t = C\,h_t$$
+
+In S4 these params are **fixed across time** (LTI). Mamba's change: $B$, $C$, and $\Delta$ become **functions of $x_t$** (the S6 selective SSM), so $(\bar A, \bar B)$ vary per token — that's the selectivity, and what forces the scan-based instead of convolution-based compute.
+
+<img width="623" height="308" alt="image" src="https://github.com/user-attachments/assets/073ff296-7eea-431d-b7de-88facaa8fad8" />
+
+</details>
+
+
+
+<details> <summary markdown="span">2024 [Jamba: A Hybrid Transformer-Mamba Language Model, AI21 Labs](https://arxiv.org/abs/2403.19887)</summary>
+
+Jamba (Lieber, Lenz et al., AI21) is the first **production-scale hybrid** interleaving Transformer attention, Mamba SSM, and MoE layers. The core trade-off it balances: the KV cache becomes a limiting factor when scaling Transformers to long contexts, and trading attention layers for Mamba layers shrinks it—since  Mamba carries only a constant-size state, not a growing cache. Attention is kept sparingly (for high-fidelity recall), Mamba does the cheap long-range work, and MoE adds capacity without adding active compute.
+
+**Released config** (tunable knobs): 4 blocks of 8 layers, 1:7 attention-to-Mamba ratio, MoE every other layer, 16 experts with top-2 per token  → 52B total but only 12B active, fits on one 80GB GPU.  The 1:7 ratio is empirical (most of attention's quality, most of Mamba's memory benefit). Headline win is the cache: at 256K context Jamba needs ~4GB attention cache vs 32GB for Mixtral and 128GB for Llama-2-70B,  with SOTA long-context results. Jamba 1.5 later scaled the same design to 94B active / 398B total. It's the template Nemotron-3 follows—just adding LatentMoE and NVFP4.
+
+<img width="401" height="424" alt="image" src="https://github.com/user-attachments/assets/67898fc1-c338-494c-92b4-3c6ef8a42f9e" />
+
+</details>
+
+
+ <details> <summary markdown="span">2024 [Better & Faster Large Language Models via Multi-token Prediction, Meta (FAIR), ICML 2024](https://arxiv.org/abs/2404.19737)</summary>
+
+This is the paper that establishes Multi-Token Prediction (MTP) as a general training objective (Gloeckle et al., Meta). The premise is a critique of the standard recipe: LLMs like GPT and Llama are trained with a next-token-prediction loss, and the authors argue that training to predict multiple future tokens at once yields higher sample efficiency. 
+
+The model is trained with multiple "heads."
+The model predicts the following n tokens using n independent output heads sitting on top of a shared model trunk,  treating multi-token prediction as an **auxiliary task** layered on the usual objective. 
+While the main head predicts the next token $x_{n+1}$, auxiliary heads predict $x_{n+2}, x_{n+3}$, and so on.
+- Inference Trick: During generation, the model uses these auxiliary heads to produce a "draft" of the next few tokens simultaneously with the main token.
+- Parallel Verification: in the next step, the model takes those guesses and runs them through its main, high-fidelity blocks in one single forward pass.
+
+In a standard speculative decoding setup, the roles are split strictly between iterative guessing and parallel verification:
+1. The Draft Model (Iterative). The small model acts just like a standard LLM. It generates tokens one by one, sequentially. Process: It predicts token 1, feeds it back into itself, predicts token 2, feeds it back, and so on, until it has a "look-ahead" sequence (usually 3–5 tokens). Why: It is small enough that these multiple sequential passes are still much faster than a single pass of the large model.
+2. The Larger/Target Model (All at once). The large model performs a single parallel forward pass to check the draft model's work. Process: It takes the entire sequence of drafted tokens and processes them simultaneously using a causal mask. The "Magic": Because of how Transformers work, the large model can calculate the probability of "Token 4" being correct at the exact same time it calculates the probability for "Token 1." Outcome: In the time it would normally take the large model to generate one token, it verifies all the drafted tokens.
+
+MTP is used on DeepSeek-V3 and Nemotron 3: DeepSeek-V3 refined MTP into *sequential, cascaded* modules that preserve the full causal chain (rather than independent parallel heads), and Nemotron 3 adopts a lightweight MTP module reaching ~97% acceptance on its first two predicted tokens. 
+
+</details>
+
 
 
 <details> <summary markdown="span">2024 [DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model, DeepSeek-AI](https://arxiv.org/abs/2405.04434)</summary>
