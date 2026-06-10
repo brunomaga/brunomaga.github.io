@@ -50,6 +50,27 @@ The design philosophy is a balance of three layer types: MoE for sparse paramete
 
 </details>
 
+<details> <summary markdown="span">2025 [Comet: Fine-grained Computation-communication Overlapping for Mixture-of-Experts, ByteDance](https://arxiv.org/abs/2502.19811)</summary>
+
+The standard technique for **distributed MoE** efficienty is to pipeline that communication with computation. Comet argues existing schemes do it too coarsely: the reason is a granularity mismatch of an MoE op into a few big chunks to expose overlap either leaves communication exposed or shrinks the GEMM tiles enough to hurt kernel efficiency (the same tension FLUX identifies for tensor parallelism).
+
+Comet works in two parts. (1) Dependency resolving: it maps out which pieces of computation depend on which pieces of communication, then schedules them into a fine-grained pipeline so each can start the moment its data is ready. (2) Adaptive workload assignment: it splits GPU resources between comm and compute, and because the best split shifts with sequence length and parallelization strategy, it tunes that split per-configuration instead of fixing it.
+
+Authors note that the division point of how many computation vs communication SMs to be allocated depends on the model layer, input shape and level of paralllism:
+
+<img width="1066" height="1024" alt="image" src="https://github.com/user-attachments/assets/98139ecb-ae00-439c-b598-4f431e47760e" />
+
+"Comet’s library comprises multiple pre-compiled kernels, each with a distinct division point (of computation vs communication SM split). Prior to deployment, the optimal configuration for each setup is profiled and stored as metadata. During runtime, Comet utilizes this metadata to select the optimal kernel for execution." As an example, if you take the MoE workflow dispatch→MatMul→MatMul→combine, it fuses dispatch→MatMul into one kernel and MatMul→combine into other, and executes communication and computation at a tile level.
+
+<img width="1872" height="636" alt="image" src="https://github.com/user-attachments/assets/bd3a944f-fd78-421e-952f-c149d556d422" />
+ 
+The mechanism on Hopper is thread-block specialization. Comm and compute run in separate thread blocks. One fused kernel launches a fixed set of thread blocks. Each block is specialized — it's either a comm block or a compute block, not both. Because thread blocks occupy SMs, this effectively dedicates some SM capacity to comm and the rest to compute. When you fuse comm and compute into one kernel with specialized thread blocks, the compute blocks calls device-side functions running inside the compute thread blocks of the fused megakernel. The GEMM implementation (CUTLASS) is reused unchanged.
+
+How does it "map out" pieces of computation to communication? The idea: between a communication op and the computation op that consumes (or produces) its data, there is a shared tensor — the buffer that comm writes into and compute reads from (dispatch), or that compute writes and comm reads (combine). Comet analyzes that buffer to figure out the fine-grained dependencies. Two steps:
+- Decompose the shared tensor along a specific dimension.  
+- Reschedule computation to match data arrival order. Now the key move, "Mapping out the dependencies" means: for each tile of the GEMM, determine which slice(s) of the shared tensor it needs, then order the GEMM's tile traversal to consume slices in the order communication fills them.
+</details>
+
 
 
 <details> <summary markdown="span">2025 [Helix Parallelism: Rethinking Sharding Strategies for Interactive Multi-Million-Token LLM Decoding, NVIDIA](https://arxiv.org/abs/2507.07120)</summary>
