@@ -320,6 +320,13 @@ On **RTX 5090**, the paper reports that SageAttention3 can reach up to **7.4×**
 </details>
 
 
+
+<details> <summary markdown="span">2024 [LoongServe: Efficiently Serving Long-Context Large Language Models with Elastic Sequence Parallelism, Peking University](https://arxiv.org/abs/2404.09526)</summary>
+LoongServe does ring attention in the prefill phase and while rotating KV tensors across GPUs, each GPU keeps a subset of KV locally so that it is automatically available during decode. When it comes to the decode step, KV cache is sharded, so they follow the regular NOT so efficient decode parallelism algorithm, which is usually the execution bottleneck on context parallelism. they overlap comp/comm with cuda streams during prefill (ring attn), but not decode: what they claim is that while one node is sending its requests, it MAY be doing matmuls for requests it receives from other GPUs -> it's not guaranteed, it's opportunistic.
+</details>
+
+
+
 <details> <summary markdown="span">2024 [Mamba: Linear-Time Sequence Modeling with Selective State Spaces, CMU & Princeton](https://arxiv.org/abs/2312.00752)</summary>
 
 Mamba is the state-space model (SSM) that made a non-attention sequence model competitive with Transformers on language. SSMs keep a fixed-size recurrent state and scale **linearly** in sequence length, but earlier SSMs (S4) underperformed because their dynamics were fixed regardless of input. The fix is the **selection mechanism**: making the SSM parameters functions of the input lets the model selectively propagate or forget information depending on the current token—giving  content-based reasoning. Input-dependence breaks the convolution trick, so Mamba adds a **hardware-aware parallel scan** (kept in SRAM, FlashAttention-style) to stay fast. Payoff: 5× higher inference throughput than Transformers, linear scaling, and Mamba-3B matching Transformers twice its size.  Its constant-size state is what eliminates the growing KV cache—the property hybrids (Jamba, Nemotron-3) exploit.
