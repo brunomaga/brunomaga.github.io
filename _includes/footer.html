@@ -6,14 +6,11 @@
   <td style="border:none; text-align:left">
     <a href="{{ site.url }}"><i class="fas fa-arrow-left"></i></a> <a href="{{ site.url }}">back</a>
   </td>
-  {% else %}
-  <td style="border:none; text-align:left">
-    <!-- <a href="#top"><i class="fas fa-home"></i></a> -->
-  </td>
-  {% endif %}
   <td style="border:none; text-align:right">
-    <a href="mailto:{{ site.author.email }}?subject=About blog post: {{ post.title | url_encode }}"><i class="far fa-envelope" title="report bug"></i> <small>suggestions about this post?</small></a>
+    <!--<a href="mailto:{{ site.author.email }}?subject=About blog post: {{ post.title | url_encode }}"><i class="far fa-envelope" title="report bug"></i> <small>email me bugs or suggestions</small></a> -->
   </td>
+  {% else %}
+  {% endif %}
 </tr>
 </table>
 

@@ -9,9 +9,6 @@ publications_permalink: /publications/
 google_scholar: https://scholar.google.ch/citations?user=pirWLLgAAAAJ
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://brunomaga.github.io" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username:  brunomagax
-github_username:   brunomaga
-linkedin_username: brunomaga
 
 # for the links Statistics for Data Science at EPFL in the resources page
 statistics_lectures: https://github.com/brunomaga/Statistics_EPFL/raw/main/lecture-slides/lectureXXX.pdf
