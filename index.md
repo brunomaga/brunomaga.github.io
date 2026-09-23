@@ -30,7 +30,7 @@ layout: default
 
 <!-- Parágrafo de introdução -->
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-Hi! I am Bruno, an ML Systems researcher at <a href="https://huawei.com">Huawei Research</a>. Previously, I was an ML researcher at <a href="https://microsoft.com">Microsoft Research</a>, and an HPC engineer, PhD and postdoc at <a href="https://epfl.ch">EPFL</a>. In this space, I keep track of <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> of interest, and post about ML and HPC. Enjoy🚀!
+Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://huawei.com">Huawei Research</a>. Previously, I was an ML researcher at <a href="https://microsoft.com">Microsoft Research</a>, and an HPC engineer, PhD and postdoc at <a href="https://epfl.ch">EPFL</a>. In this space, I keep track of <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> of interest, and post about ML and HPC. Enjoy🚀!
 </p>
 
 <!-- Lista de Posts -->
