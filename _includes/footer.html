@@ -12,13 +12,7 @@
   </td>
   {% endif %}
   <td style="border:none; text-align:right">
-    <a href="mailto:{{ site.author.email }}?subject=Hello"><i class="fas fa-envelope" title="Email"></i></a>
-    <a href="https://github.com/{{ site.github_username }}"><i class="fab fa-fw fa-github-square" ></i></a>
-    <a href="https://www.linkedin.com/in/{{ site.linkedin_username }}"><i class="fab fa-linkedin" ></i></a>
-    <!-- <a href="https://twitter.com/{{ site.twitter_username }}"><i class="fab fa-fw fa-twitter" ></i></a> -->
-    <a href="{{ site.google_scholar }}"><i class="ai ai-google-scholar-square ai-1x" title="Google Scholar"></i></a>
-    <!-- <a href="{{ "/feed.xml" | relative_url }}"><i class="fas fa-fw fa-rss-square" ></i></a> -->
-    <!--<a href="mailto:{{ site.author.email }}?subject=bug in blog"><i class="fas fa-bug"></i> <small>email issue or improvement </small></a>-->
+    <a href="mailto:{{ site.author.email }}?subject=About blog post: {{ post.title | url_encode }}"><i class="far fa-envelope" title="report bug"></i> <small>suggestions about this post?</small></a>
   </td>
 </tr>
 </table>
