@@ -22,7 +22,7 @@ layout: default
   <!-- Fotografia de perfil -->
   <div style="flex-shrink: 0;">
     <img src="{{ '/photo.png' | relative_url }}" 
-         alt="Bruno Magalhaes" 
+         alt="photo" 
          style="width: 132px; height: 132px; border-radius: 50%; object-fit: cover; display: block; border: 1px solid #ddd;">
   </div>
 
