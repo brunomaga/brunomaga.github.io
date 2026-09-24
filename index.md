@@ -138,7 +138,41 @@ I also keep track of books and other resources available online, related to the 
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">lecture</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation (Automatic Differentiation), COS-324, Princeton Univ.</a> (<a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">pdf</a>)
+  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation - Automatic Differentiation (Princeton COS-324)</a> (<a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">pdf</a>)
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">lecture</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://edu.epfl.ch/coursebook/en/statistics-for-data-science-MATH-413">Statistics for data Science (EPFL MATH-413)</a>:
+  <ul style="margin-top: 0.2em; margin-bottom: 0;">
+    <li>lecture slides:
+      {% for i in (1..23) %}
+        <a href="{{ site.statistics_lectures | replace: 'XXX', i }}"> {{i}} </a>
+      {% endfor %}
+    </li>
+    <li>lecture videos:
+      {% for keyval in site.statistics_videos %}
+        <a href="{{site.statistics_videos_preffix}}{{ keyval[1] }}">{{ keyval[0] }}</a>
+      {% endfor %}
+    </li>
+    <li>exercises:
+      {% for i in (1..12) %}
+        <a href="{{ site.statistics_exercises | replace: 'XXX', i }}"> {{i}} </a>
+      {% endfor %}
+    </li>
+    <li>solutions:
+      {% for i in (1..12) %}
+        <a href="{{ site.statistics_solutions | replace: 'XXX', i }}"> {{i}} </a>
+      {% endfor %}
+    </li>
+    <li>probabilistic density, distribution and parameters for 
+        <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a>
+        and
+        <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a> 
+        distributions
+    </li>
+  </ul>
 </td>
 </tr>
 </table>
