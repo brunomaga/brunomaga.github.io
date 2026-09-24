@@ -16,7 +16,7 @@ statistics_exercises: https://github.com/brunomaga/Statistics_EPFL/raw/main/exer
 statistics_solutions: https://github.com/brunomaga/Statistics_EPFL/raw/main/exercises/solutionsXXX.pdf
 statistics_distributions_discrete: https://github.com/brunomaga/Statistics_EPFL/raw/main/formula-sheet-discrete-distributions.pdf
 statistics_distributions_continuous: https://github.com/brunomaga/Statistics_EPFL/raw/main/formula-sheet-continuous-distributions.pdf
-statistics_videos_preffix: https://www.youtube.com/watch?v=
+statistics_videos_prefix: https://www.youtube.com/watch?v=
 statistics_videos: {
         '1' : UL3sbuoRdr4,
         '2' : 17Cu_t3AlYE,
