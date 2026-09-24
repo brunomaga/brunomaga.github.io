@@ -7,7 +7,7 @@ layout: default
   
   <div style="flex: 1;">
     <h1 class="post-title p-name" itemprop="name headline" style="margin-top: 0; margin-bottom: 0.2em; line-height: 1.1;">{{ site.author.name }}</h1>
-    <h2 style='margin-top: 0em; margin-bottom: 0.3em; font-weight: normal; color: #555; font-size: 1.5em;'>Machine Learning and High Performance Computing</h2>
+    <h2 style='margin-top: 0em; margin-bottom: 0.3em; font-weight: normal; color: #555; font-size: 1.5em;'>Machine Learning and High-Performance Computing</h2>
     
     <div style="display: flex; flex-wrap: wrap; gap: 12px 24px; color: #444; line-height: 1.5;">
       <a href="https://linkedin.com/in/brunomaga" style="text-decoration: none; white-space: nowrap;"><i class="fab fa-linkedin"></i> linkedin</a>
@@ -34,7 +34,7 @@ Hi👋🏽! I am Bruno, an ML Systems Researcher at <a href="https://www.huawei.
 </p>
 
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-In this space, I post about past projects and topics related to my fields of interest:
+In this space, I write about my projects and topics related to my fields of interest:
 </p>
 
 <!-- blog posts -->
@@ -54,7 +54,7 @@ In this space, I post about past projects and topics related to my fields of int
 
 <!-- resources -->
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-I also keep track of books and other related resources that are available online: 
+I also keep a curated list of related books, articles, and reference materials available online:
 </p>
 
 <table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
@@ -79,7 +79,7 @@ I also keep track of books and other related resources that are available online
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://mml-book.github.io/">Mathematics for Machine Learning, Deisenroth, Aldo Faisal, Cheng S. Ong</a> (<a href="https://mml-book.github.io/book/mml-book.pdf">pdf</a>)
+  <a href="https://mml-book.github.io/">Mathematics for Machine Learning, Marc Peter Deisenroth, A. Aldo Faisal, Cheng Soon Ong</a> (<a href="https://mml-book.github.io/book/mml-book.pdf">pdf</a>)
 </td>
 </tr>
 <tr style="border: none;">
@@ -91,7 +91,7 @@ I also keep track of books and other related resources that are available online
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://fleuret.org/public/lbdl.pdf">The Little Book of Deep Learning, Francois Fleuret</a> (<a href="{{ site.assets }}/resources/lbdl.pdf">pdf</a>)
+  <a href="https://fleuret.org/public/lbdl.pdf">The Little Book of Deep Learning, François Fleuret</a> (<a href="{{ site.assets }}/resources/lbdl.pdf">pdf</a>)
 </td>
 </tr>
 <tr style="border: none;">
@@ -121,7 +121,7 @@ I also keep track of books and other related resources that are available online
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://jax-ml.github.io/scaling-book">How to scale your model (Jax ML)</a>
+  <a href="https://jax-ml.github.io/scaling-book">How to scale your model (JAX ML)</a>
 </td>
 </tr>
 <tr style="border: none;">
@@ -176,5 +176,5 @@ I also keep track of books and other related resources that are available online
 </table>
 
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-I also keep a bookmark of [related publications]({{ site.publications_permalink }}). Enjoy, and feel free to reach out with bugs, improvements, or questions 🚀!
+I also maintain a list of <a href="{{ site.publications_permalink }}">relevant publications</a>. Enjoy, and feel free to reach out with feedback, fixes, or questions 🚀!
 </p>
