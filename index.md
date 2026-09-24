@@ -31,7 +31,7 @@ layout: default
 <!-- introduction paragraph -->
 <p style="line-height: 1.6; margin-bottom: 1.8em; clear: both;">
 Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD, and postdoc at <a href="https://epfl.ch">EPFL</a>.
-My research focuses on improving edge-to-cloud ML system efficiency — from efficient on-device inference to thousand-GPU distributed training — for Transformer LLMs, MoE, diffusion models, and AI agents.
+My research focuses on improving edge-to-cloud ML system efficiency — from efficient on-device inference to distributed thousand-GPU pre-training — for Transformer LLMs, MoE, diffusion models, and AI agents.
 </p>
 
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
