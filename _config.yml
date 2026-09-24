@@ -6,7 +6,7 @@ repository: brunomaga/brunomaga.github.io
 assets: /assets/
 resources_permalink: /#resources-table
 publications_permalink: /publications/
-google_scholar: https://scholar.google.ch/citations?user=pirWLLgAAAAJ
+google_scholar: https://scholar.google.com/citations?user=pirWLLgAAAAJ
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://brunomaga.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
