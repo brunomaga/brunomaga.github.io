@@ -34,14 +34,14 @@ Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.
 </p>
 
 <!-- Lista de Posts -->
-<table style='width: 100%; border:none; border-collapse:collapse; cellspacing:0; cellpadding:0; margin-top: 1.5em;'>
+<table style='width: 100%; border:none; border-collapse:collapse; margin-top: 1.5em;'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
 {% for post in site.posts %}
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 2.2em; padding-bottom: 0.2em; color: #666;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">
 {{ post.date | date: date_format }}
 </td>
-<td class="align-top" style="border:none; padding-bottom: 0.2em;">
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
 <a href="{{ post.url }}">{{ post.title }}</a>
 </td>
 </tr>
