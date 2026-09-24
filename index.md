@@ -23,7 +23,7 @@ layout: default
   <div style="flex-shrink: 0;">
     <img src="{{ '/photo.png' | relative_url }}" 
          alt="photo" 
-         style="width: 132px; height: 132px; border-radius: 50%; object-fit: cover; display: block; border: 1px solid #ddd;">
+         style="width: 132px; height: 132px; border-radius: 50%; object-fit: cover; display: block; border: 1px solid #ddd;" />
   </div>
 
 </div>
@@ -154,7 +154,7 @@ I also keep a curated list of related books, articles, and reference materials a
     </li>
     <li>videos:
       {% for keyval in site.statistics_videos %}
-        <a href="{{site.statistics_videos_preffix}}{{ keyval[1] }}">{{ keyval[0] }}</a>
+        <a href="{{site.statistics_videos_prefix}}{{ keyval[1] }}">{{ keyval[0] }}</a>
       {% endfor %}
     </li>
     <li>exercises:
