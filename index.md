@@ -2,14 +2,13 @@
 layout: default
 ---
 
-<!-- Contentor do topo estruturado com Flexbox responsivo -->
+<!-- Top container with Flexbox responsiveness -->
 <div style="width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5em; gap: 20px;">
   
   <div style="flex: 1;">
     <h1 class="post-title p-name" itemprop="name headline" style="margin-top: 0; margin-bottom: 0.2em; line-height: 1.1;">{{ site.author.name }}</h1>
     <h2 style='margin-top: 0em; margin-bottom: 0.3em; font-weight: normal; color: #555; font-size: 1.5em;'>Machine Learning and High Performance Computing</h2>
     
-    <!-- Bloco de contactos otimizado para telemóveis com Feed RSS incluído -->
     <div style="display: flex; flex-wrap: wrap; gap: 12px 24px; color: #444; line-height: 1.5;">
       <a href="https://linkedin.com/in/brunomaga" style="text-decoration: none; white-space: nowrap;"><i class="fab fa-linkedin"></i> linkedin</a>
       <a href="https://github.com/brunomaga" style="text-decoration: none; white-space: nowrap;"><i class="fab fa-fw fa-github"></i> github</a>
@@ -20,7 +19,7 @@ layout: default
     </div>
   </div>
 
-  <!-- Fotografia de perfil -->
+  <!-- profile photo -->
   <div style="flex-shrink: 0;">
     <img src="{{ '/photo.png' | relative_url }}" 
          alt="photo" 
@@ -29,7 +28,7 @@ layout: default
 
 </div>
 
-<!-- Parágrafo de introdução -->
+<!-- introduction paragraph -->
 <p style="line-height: 1.6; margin-bottom: 1.5em; clear: both;">
 Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD, and postdoc at <a href="https://epfl.ch">EPFL</a>.
 My research focuses on improving edge-to-cloud ML system efficiency — from efficient on-device inference to thousand-GPU distributed training — for Transformer LLMs, MoE, diffusion models, and AI agents.
@@ -39,7 +38,7 @@ My research focuses on improving edge-to-cloud ML system efficiency — from eff
 In this space, I post about past projects and topics related to my fields of interest:
 </p>
 
-<!-- Lista de Posts -->
+<!-- blog posts -->
 <table style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.6em;'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
 {% for post in site.posts %}
@@ -54,6 +53,7 @@ In this space, I post about past projects and topics related to my fields of int
 {% endfor %}
 </table>
 
+<!-- resources -->
 I also keep track of books and other resources available online, related to the topics discussed: 
 
 <table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.4em;'>
