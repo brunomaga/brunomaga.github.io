@@ -167,7 +167,7 @@ I also keep track of books and other resources available online, related to the 
       {% endfor %}
     </li>
     <li>
-        Appendinx on <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}">continuous</a> and <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}">discrete</a> distributions
+        formula sheet on <a href="{{ site.statistics_distributions_continuous }}">continuous</a> and <a href="{{ site.statistics_distributions_discrete }}">discrete</a> distributions
     </li>
   </ul>
 </td>
