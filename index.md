@@ -53,7 +53,9 @@ In this space, I post about past projects and topics related to my fields of int
 </table>
 
 <!-- resources -->
+<p style="line-height: 1.6; margin-bottom: 0; clear: both;">
 I also keep track of books and other related resources that are available online: 
+</p>
 
 <table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
 <tr style="border: none;">
@@ -65,7 +67,7 @@ I also keep track of books and other related resources that are available online
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://www.springer.com/gp/book/9780387310732">Pattern Classification and Machine Learning, Christopher M. Bishop</a> (<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">pdf</a>)
+  <a href="https://www.springer.com/gp/book/9780387310732">Pattern Recognition and Machine Learning, Christopher M. Bishop</a> (<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">pdf</a>)
 </td>
 </tr>
 <tr style="border: none;">
@@ -113,19 +115,19 @@ I also keep track of books and other related resources that are available online
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html">The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism, AMD</a>
+  <a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html">The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism (AMD)</a>
 </td>
 </tr>
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://jax-ml.github.io/scaling-book">How to scale your model, Jax ML</a>
+  <a href="https://jax-ml.github.io/scaling-book">How to scale your model (Jax ML)</a>
 </td>
 </tr>
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters, huggingface</a> 
+  <a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters (huggingface)</a> 
 </td>
 </tr>
 <tr style="border: none;">
@@ -143,14 +145,14 @@ I also keep track of books and other related resources that are available online
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">lecture</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://edu.epfl.ch/coursebook/en/statistics-for-data-science-MATH-413">Statistics for data Science (EPFL MATH-413)</a>:
+  <a href="https://edu.epfl.ch/coursebook/en/statistics-for-data-science-MATH-413">Statistics for Data Science (EPFL MATH-413)</a>:
   <ul style="margin-top: 0.2em; margin-bottom: 0; list-style-type: circle;">
-    <li>lecture slides:
+    <li>slides:
       {% for i in (1..23) %}
         <a href="{{ site.statistics_lectures | replace: 'XXX', i }}"> {{i}} </a>
       {% endfor %}
     </li>
-    <li>lecture videos:
+    <li>videos:
       {% for keyval in site.statistics_videos %}
         <a href="{{site.statistics_videos_preffix}}{{ keyval[1] }}">{{ keyval[0] }}</a>
       {% endfor %}
@@ -173,4 +175,6 @@ I also keep track of books and other related resources that are available online
 </tr>
 </table>
 
+<p style="line-height: 1.6; margin-bottom: 0; clear: both;">
 I also keep a bookmark of [related publications]({{ site.publications_permalink }}). Enjoy, and feel free to reach out with bugs, improvements, or questions 🚀!
+</p>
