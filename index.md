@@ -138,4 +138,4 @@ I also keep track of resources available online, related to the topics discussed
 </tr>
 </table>
 
-And finally, I keep a personal bookmark of <a href="{{ site.publications_permalink }}">summary of relevant publications</a>. Enjoy🚀!
+And finally, I keep a personal bookmark with summaries of <a href="{{ site.publications_permalink }}">relevant publications</a>. Enjoy🚀!
