@@ -145,7 +145,7 @@ I also keep track of books and other resources available online, related to the 
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">lecture</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
   <a href="https://edu.epfl.ch/coursebook/en/statistics-for-data-science-MATH-413">Statistics for data Science (EPFL MATH-413)</a>:
-  <ul style="margin-top: 0.2em; margin-bottom: 0;">
+  <ul style="margin-top: 0.2em; margin-bottom: 0; list-style-type: circle;">
     <li>lecture slides:
       {% for i in (1..23) %}
         <a href="{{ site.statistics_lectures | replace: 'XXX', i }}"> {{i}} </a>
