@@ -54,7 +54,7 @@ In this space, I post about past projects and topics related to my fields of int
 {% endfor %}
 </table>
 
-I also keep track of resources available online, related to the topics discussed: 
+I also keep track of books and other resources available online, related to the topics discussed: 
 
 <table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.4em;'>
 <tr style="border: none;">
