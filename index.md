@@ -176,5 +176,5 @@ I also keep a curated list of related books, articles, and reference materials a
 </table>
 
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-I also maintain a list of <a href="{{ site.publications_permalink }}">relevant publications</a>. Enjoy, and feel free to reach out with feedback, fixes, or questions 🚀!
+And finally, I maintain a list of <a href="{{ site.publications_permalink }}">relevant publications</a>. Enjoy, and feel free to reach out with feedback, fixes, or questions 🚀!
 </p>
