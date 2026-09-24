@@ -166,11 +166,8 @@ I also keep track of books and other resources available online, related to the 
         <a href="{{ site.statistics_solutions | replace: 'XXX', i }}"> {{i}} </a>
       {% endfor %}
     </li>
-    <li>probabilistic density, distribution and parameters for 
-        <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a>
-        and
-        <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a> 
-        distributions
+    <li>
+        Appendinx on <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}">continuous</a> and <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}">discrete</a> distributions
     </li>
   </ul>
 </td>
