@@ -14,7 +14,7 @@ layout: default
       <a href="https://linkedin.com/in/brunomaga" style="text-decoration: none; white-space: nowrap;"><i class="fab fa-linkedin"></i> linkedin</a>
       <a href="https://github.com/brunomaga" style="text-decoration: none; white-space: nowrap;"><i class="fab fa-fw fa-github"></i> github</a>
       <a href="{{ site.google_scholar }}" style="text-decoration: none; white-space: nowrap;"><i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> scholar</a>
-      <a href="{{ '/resume.pdf' | relative_url }}" style="text-decoration: none; white-space: nowrap;"><i class="far fa-file-code" title="Resume"></i> resume</a>
+      <a href="{{ '/resume.pdf' | relative_url }}" style="text-decoration: none; white-space: nowrap;"><i class="far fa-file-alt" title="Resume"></i> resume</a>
       <a href="mailto:{{ site.author.email }}?subject=Hello" style="text-decoration: none; white-space: nowrap;"><i class="far fa-envelope" title="Email"></i> email</a>
       <a href="{{ '/feed.xml' | relative_url }}" style="text-decoration: none; white-space: nowrap;"><i class="fas fa-fw fa-rss"></i> RSS</a>
     </div>
@@ -31,7 +31,7 @@ layout: default
 
 <!-- Parágrafo de introdução -->
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD and postdoc at <a href="https://epfl.ch">EPFL</a>. In this space, I keep track of <a href="{{ site.publications_permalink }}">publications</a> and <a href="{{ site.resources_permalink }}">resources</a> of interest, and post about ML and HPC. Enjoy🚀!
+Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD and postdoc at <a href="https://epfl.ch">EPFL</a>. In this space, I post about some projects and topics related to my fields of interest.  Enjoy🚀!
 </p>
 
 <!-- Lista de Posts -->
@@ -48,3 +48,94 @@ Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.
 </tr>
 {% endfor %}
 </table>
+
+Some resources available online, related to the topics discussed. 
+<table style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.4em;'>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://www.bishopbook.com/">Deep Learning - Foundations and Concepts, Christopher M. Bishop, Hugh Bishop</a> (<a href="https://github.com/luzmontserrat/deep-learning/blob/main/Christopher%20M.%20Bishop%2C%20Hugh%20Bishop%20-%20Deep%20Learning_%20Foundations%20and%20Concepts-Springer%20(2024).pdf">pdf</a>)
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://www.springer.com/gp/book/9780387310732">Pattern Classification and Machine Learning, Christopher M. Bishop</a> (<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">pdf</a>)
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="http://mbmlbook.com/">Model-Based Machine Learning, John Winn et al.</a> (<a href="http://mbmlbook.com/MBMLbook.pdf">pdf</a>)
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://mml-book.github.io/">Mathematics for Machine Learning, Deisenroth, Aldo Faisal, Cheng S. Ong</a> (<a href="https://mml-book.github.io/book/mml-book.pdf">pdf</a>)
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a> (<a href="https://neuronaldynamics.epfl.ch/online/index.html">online</a>)
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://fleuret.org/public/lbdl.pdf">The Little Book of Deep Learning, Francois Fleuret</a> (<a href="{{ site.assets }}/resources/lbdl.pdf">pdf</a>)
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz and Shai Ben-David</a> (<a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf">pdf</a>)
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="http://www.inference.org.uk/mackay/itila/book.html">Information Theory, Inference, and Learning Algorithms, David MacKay</a> (<a href="http://www.inference.org.uk/itprnn/book.pdf">pdf</a>)
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">article</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="{{ site.assets }}/resources/In-Network_Collective_Operations_Game_Changer_or_Challenge_for_AI_Workloads.pdf">In-Network Collective Operations: Game Changer or Challenge for AI Workloads?</a>
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html">AMD blog: The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism</a>
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://jax-ml.github.io/scaling-book">Jax ML blog: how to scale your model</a>
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters</a> 
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">notes</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>
+</td>
+</tr>
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">lecture</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
+  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation (Automatic Differentiation)</a>, from the Univ Princeton course COS-324, by Ryan P. Adams (<a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">backup pdf</a>)
+</td>
+</tr>
+</table>
+
+
+Finally, I also keep a bookmark with a <a href="{{ site.publications_permalink }}">summary of relevant publications</a> that I came across.
