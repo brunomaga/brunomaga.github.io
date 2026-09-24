@@ -173,4 +173,4 @@ I also keep track of books and other related resources that are available online
 </tr>
 </table>
 
-And finally, I keep a curated list of summaries for <a href="{{ site.publications_permalink }}">relevant publications</a>. Enjoy, and feel free to reach out with bugs, improvements, or questions 🚀!
+I also keep a bookmark of [related publications]({{ site.publications_permalink }}). Enjoy, and feel free to reach out with bugs, improvements, or questions 🚀!
