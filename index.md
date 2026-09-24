@@ -114,19 +114,19 @@ I also keep track of books and other resources available online, related to the 
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html">AMD blog: The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism</a>
+  <a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html">The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism, AMD</a>
 </td>
 </tr>
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://jax-ml.github.io/scaling-book">Jax ML blog: how to scale your model</a>
+  <a href="https://jax-ml.github.io/scaling-book">How to scale your model, Jax ML</a>
 </td>
 </tr>
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">post</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters</a> 
+  <a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters, huggingface</a> 
 </td>
 </tr>
 <tr style="border: none;">
