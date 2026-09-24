@@ -31,7 +31,7 @@ layout: default
 
 <!-- Parágrafo de introdução -->
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD and postdoc at <a href="https://epfl.ch">EPFL</a>. In this space, I post about some projects and topics related to my fields of interest:
+Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD and postdoc at <a href="https://epfl.ch">EPFL</a>. In this space, I post about projects and topics related to my fields of interest:
 </p>
 
 <!-- Lista de Posts -->
