@@ -4,7 +4,7 @@ author:
   email: "brunomaga+blog@gmail.com"
 repository: brunomaga/brunomaga.github.io
 assets: /assets/
-resources_permalink: /resources/
+resources_permalink: /#resources-table
 publications_permalink: /publications/
 google_scholar: https://scholar.google.ch/citations?user=pirWLLgAAAAJ
 baseurl: "" # the subpath of your site, e.g. /blog

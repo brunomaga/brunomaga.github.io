@@ -50,7 +50,7 @@ Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.
 </table>
 
 Some resources available online, related to the topics discussed. 
-<table style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.4em;'>
+<table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.4em;'>
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
