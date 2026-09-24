@@ -132,7 +132,7 @@ Some resources available online, related to the topics discussed.
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">lecture</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation (Automatic Differentiation)</a>, from the Univ Princeton course COS-324, by Ryan P. Adams (<a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">backup pdf</a>)
+  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation (Automatic Differentiation), COS-324, Princeton Univ.</a> (<a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">pdf</a>)
 </td>
 </tr>
 </table>
