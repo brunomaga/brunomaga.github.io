@@ -31,7 +31,7 @@ layout: default
 
 <!-- Parágrafo de introdução -->
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD and postdoc at <a href="https://epfl.ch">EPFL</a>. In this space, I post about some projects and topics related to my fields of interest.  Enjoy🚀!
+Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD and postdoc at <a href="https://epfl.ch">EPFL</a>. In this space, I post about some projects and topics related to my fields of interest:
 </p>
 
 <!-- Lista de Posts -->
@@ -49,7 +49,8 @@ Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.
 {% endfor %}
 </table>
 
-Some resources available online, related to the topics discussed. 
+I also keep track of resources available online, related to the topics discussed: 
+
 <table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.4em;'>
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 2.2em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
@@ -137,5 +138,4 @@ Some resources available online, related to the topics discussed.
 </tr>
 </table>
 
-
-Finally, I also keep a bookmark with a <a href="{{ site.publications_permalink }}">summary of relevant publications</a> that I came across.
+And finally, I keep a personal bookmark of <a href="{{ site.publications_permalink }}">summary of relevant publications</a>. Enjoy🚀!
