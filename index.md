@@ -29,7 +29,7 @@ layout: default
 </div>
 
 <!-- introduction paragraph -->
-<p style="line-height: 1.6; margin-bottom: 1.5em; clear: both;">
+<p style="line-height: 1.6; margin-bottom: 2.0em; clear: both;">
 Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD, and postdoc at <a href="https://epfl.ch">EPFL</a>.
 My research focuses on improving edge-to-cloud ML system efficiency — from efficient on-device inference to thousand-GPU distributed training — for Transformer LLMs, MoE, diffusion models, and AI agents.
 </p>
@@ -39,7 +39,7 @@ In this space, I post about past projects and topics related to my fields of int
 </p>
 
 <!-- blog posts -->
-<table style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.6em;'>
+<table style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
 {% for post in site.posts %}
 <tr style="border: none;">
@@ -56,7 +56,7 @@ In this space, I post about past projects and topics related to my fields of int
 <!-- resources -->
 I also keep track of books and other resources available online, related to the topics discussed: 
 
-<table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.4em;'>
+<table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">book</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
