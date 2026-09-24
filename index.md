@@ -30,8 +30,13 @@ layout: default
 </div>
 
 <!-- Parágrafo de introdução -->
+<p style="line-height: 1.6; margin-bottom: 1.5em; clear: both;">
+Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD, and postdoc at <a href="https://epfl.ch">EPFL</a>.
+My research focuses on improving edge-to-cloud ML system efficiency — from efficient on-device inference to thousand-GPU distributed training — for Transformer LLMs, MoE, diffusion models, and AI agents.
+</p>
+
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-Hi👋🏽! I am Bruno, an ML Systems researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer, PhD and postdoc at <a href="https://epfl.ch">EPFL</a>. In this space, I post about projects and topics related to my fields of interest:
+In this space, I post about past projects and topics related to my fields of interest:
 </p>
 
 <!-- Lista de Posts -->
