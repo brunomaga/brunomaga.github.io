@@ -11,13 +11,8 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://brunomaga.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # for the links Statistics for Data Science at EPFL in the resources page
-statistics_lectures: https://github.com/brunomaga/Statistics_EPFL/raw/main/lecture-slides/lectureXXX.pdf
-statistics_exercises: https://github.com/brunomaga/Statistics_EPFL/raw/main/exercises/exercisesXXX.pdf
-statistics_solutions: https://github.com/brunomaga/Statistics_EPFL/raw/main/exercises/solutionsXXX.pdf
-statistics_distributions_discrete: https://github.com/brunomaga/Statistics_EPFL/raw/main/formula-sheet-discrete-distributions.pdf
-statistics_distributions_continuous: https://github.com/brunomaga/Statistics_EPFL/raw/main/formula-sheet-continuous-distributions.pdf
-statistics_videos_prefix: https://www.youtube.com/watch?v=
-statistics_videos: {
+epfl_statistics: https://github.com/brunomaga/Statistics_EPFL/raw/main/
+epfl_statistics_videos: {
         '1' : UL3sbuoRdr4,
         '2' : 17Cu_t3AlYE,
         '3' : aBvCZIpa8_M,
