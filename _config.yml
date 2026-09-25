@@ -11,8 +11,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://brunomaga.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 
 # for the links Statistics for Data Science at EPFL in the resources page
-epfl_statistics: https://github.com/brunomaga/Statistics_EPFL/raw/main/
-epfl_statistics_videos: https://www.youtube.com/playlist?list=PLT67rmYU7WyE
+epfl_statistics: https://github.com/brunomaga/Statistics_EPFL/blob/main/README.md
 
 # Google analytics
 google_analytics: UA-129707365-1
