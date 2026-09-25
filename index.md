@@ -145,32 +145,7 @@ I also keep a curated list of related books, articles, and reference materials a
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.4; vertical-align: top;">lecture</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.4; vertical-align: top;">
-  <a href="https://edu.epfl.ch/coursebook/en/statistics-for-data-science-MATH-413">Statistics for Data Science (EPFL MATH-413)</a>:
-  <ul style="margin-top: 0.2em; margin-bottom: 0; list-style-type: circle;">
-    <li>slides:
-      {% for i in (1..23) %}
-        <a href="{{ site.statistics_lectures | replace: 'XXX', i }}"> {{i}} </a>
-      {% endfor %}
-    </li>
-    <li>videos:
-      {% for keyval in site.statistics_videos %}
-        <a href="{{site.statistics_videos_prefix}}{{ keyval[1] }}">{{ keyval[0] }}</a>
-      {% endfor %}
-    </li>
-    <li>exercises:
-      {% for i in (1..12) %}
-        <a href="{{ site.statistics_exercises | replace: 'XXX', i }}"> {{i}} </a>
-      {% endfor %}
-    </li>
-    <li>solutions:
-      {% for i in (1..12) %}
-        <a href="{{ site.statistics_solutions | replace: 'XXX', i }}"> {{i}} </a>
-      {% endfor %}
-    </li>
-    <li>
-        formula sheet on <a href="{{ site.statistics_distributions_continuous }}">continuous</a> and <a href="{{ site.statistics_distributions_discrete }}">discrete</a> distributions
-    </li>
-  </ul>
+  <a href="https://edu.epfl.ch/coursebook/en/statistics-for-data-science-MATH-413">Statistics for Data Science (EPFL MATH-413)</a>: (<a href="{{ site.epfl_statistics | append: 'lecture-slides/' }}">lectures</a>, <a href="{{ site.epfl_statistics | append: 'exercises/' }}">exercises</a>, and formula sheet on <a href="{{ site.epfl_statistics | append: 'formula-sheet-continuous-distributions.pdf' }}">continuous</a> and <a href="{{ site.epfl_statistics | append: 'formula-sheet-discrete-distributions.pdf'  }}">discrete</a> probabilities.
 </td>
 </tr>
 </table>
