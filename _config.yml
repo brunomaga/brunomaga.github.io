@@ -12,33 +12,7 @@ url: "https://brunomaga.github.io" # the base hostname & protocol for your site,
 
 # for the links Statistics for Data Science at EPFL in the resources page
 epfl_statistics: https://github.com/brunomaga/Statistics_EPFL/raw/main/
-epfl_statistics_videos: {
-        '1' : UL3sbuoRdr4,
-        '2' : 17Cu_t3AlYE,
-        '3' : aBvCZIpa8_M,
-        '4a': Q9SeBF7qZ3M, '4b': qL8p_PJ3Oyg, '4c': O0Df2YKTEWU,
-        '5a': f_6yjyCNHHA, '5b': tv_SGJZpBwU, '5c': xe8gsdmD9Pg,
-        '6a': AY-r-pEJrl8, '6b': HoeVTGoJ4R8,
-        '7' : bKR4xEVy6OU,
-        '8' : Tz35WW5-Ssk,
-        '9' : LDOPp8TKpik,
-        '10': 1R80y3hoN7M,
-        '11': qojOhge0LmQ,
-        '12': aOXjJMyRhN0,
-        '13': wqAQ2438V-4,
-        '14': QpM2VVhXlkU,
-        '15': 6pg4Yra55e0,
-        '16': ehtVjfDdiN8,
-        '17': D93kbPIVgq0,
-        '18': KG-JtRg2vTk,
-        '19': TmXVMxcMLug,
-        '20': REQGAnbU3LQ,
-        '21': _Huuf8rIhNU,
-        '22': i1G4I38lClc,
-        '23': 2oAsWRTwBdw,
-        #'24': i1G4I38lClc,
-        #'25': 1YrxidM0tYE,
-}
+epfl_statistics_videos: https://www.youtube.com/playlist?list=PLT67rmYU7WyE
 
 # Google analytics
 google_analytics: UA-129707365-1
