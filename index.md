@@ -54,7 +54,7 @@ In this space, I write about my projects and topics related to my fields of inte
 
 <!-- resources -->
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
-I also keep a curated list of related books, articles, and reference materials available online:
+I also keep a curated list of related books and other resources available online:
 </p>
 
 <table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
