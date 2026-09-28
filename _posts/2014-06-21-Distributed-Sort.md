@@ -33,6 +33,8 @@ Most of these algorithms allow for a multicore implementation and the underlying
 
 However, if the list of elements is spread across a network of compute nodes --- i.e. a distributed memory environment --- the resolution is not trivial. With that in mind, we present two algorithms for the sorting of distributed lists.
 
+## Distributed Odd-Even Sort
+
 The first one is the **Odd-Even sort**, a distributed swap based sort algorithm. Its rationale is the following:
 1. compute nodes (ranks) are numbered iteratively. Each node has two neighbors that refer to the next and previous rank;
 2. at every iteration, every node sorts its elements, and sends the first half to a neighbor and the second half to the other neighbor;
@@ -44,6 +46,8 @@ The algorithm is illustrated with a sample dataset in the following workflow:
 <img width="70%" height="70%" src="/assets/Distributed-Sort/odd_even_sort.png">
 
 The algorithm has the advantage of being very *memory-stable* i.e. one can predict in advance the worst-case scenario in terms of memory consumption. Moreover, each compute node holds the same number of elements it started with, therefore load balancing is guaranteed across nodes. However, for a very large network of nodes, it is inefficient as it requires a high number of iterations.
+
+## Distributed Sample Sort
 
 A faster alternative is based on a distributed implementation of the **sample sort**. The algorithm is as follows:
 1. Each compute node sorts their local dataset and collects some samples from few equidistant values on the dataset;
