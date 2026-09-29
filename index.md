@@ -13,7 +13,7 @@ layout: default
       <a href="https://linkedin.com/in/brunomaga" style="text-decoration: none; white-space: nowrap;"><i class="fab fa-linkedin"></i> linkedin</a>
       <a href="https://github.com/brunomaga" style="text-decoration: none; white-space: nowrap;"><i class="fab fa-fw fa-github"></i> github</a>
       <a href="{{ site.google_scholar }}" style="text-decoration: none; white-space: nowrap;"><i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> scholar</a>
-      <a href="{{ '/resume.pdf' | relative_url }}" style="text-decoration: none; white-space: nowrap;"><i class="far fa-file-alt" title="Resume"></i> resume</a>
+      <!-- <a href="{{ '/resume.pdf' | relative_url }}" style="text-decoration: none; white-space: nowrap;"><i class="far fa-file-alt" title="Resume"></i> resume</a> -->
       <a href="mailto:{{ site.author.email }}?subject=Hello" style="text-decoration: none; white-space: nowrap;"><i class="far fa-envelope" title="Email"></i> email</a>
       <a href="{{ '/feed.xml' | relative_url }}" style="text-decoration: none; white-space: nowrap;"><i class="fas fa-fw fa-rss"></i> RSS</a>
     </div>
