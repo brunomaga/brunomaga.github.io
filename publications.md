@@ -4,9 +4,35 @@ title: Publications bookmark
 permalink: /publications/
 ---
 
+<style>
+details { margin-bottom: 0.6em; }
+</style>
+
 A summary of some interesting publications I came across. Continuously updated. Click $$\small{\blacktriangleright}$$ to expand.
 
 {::options parse_block_html="true" /}
+
+<details> <summary markdown="span">2026 [DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence, DeepSeek-AI](https://arxiv.org/abs/2606.19348)</summary>
+
+DeepSeek-V4 is a preview of DeepSeek's next MoE series: **DeepSeek-V4-Pro** (1.6T parameters, 49B activated, pre-trained on 33T tokens) and **DeepSeek-V4-Flash** (284B parameters, 13B activated, 32T tokens), both with a native one-million-token context. It keeps the DeepSeekMoE framework and the MTP modules of DeepSeek-V3, with minor MoE changes (a Sqrt(Softplus) affinity function instead of Sigmoid, no limit on the number of nodes a token is routed to, and hash-routed MoE layers replacing the first dense FFN layers), and introduces three upgrades:
+
+1. **Hybrid attention with CSA and HCA**, interleaved across layers. *Compressed Sparse Attention* (CSA) compresses the KV entries of every $$m$$ tokens into one entry (a learned, softmax-weighted combination over overlapping windows) and then applies DeepSeek Sparse Attention over the compressed entries: the lightning indexer picks the top-k compressed entries for each query, and a small sliding window of recent uncompressed tokens is added for local detail. *Heavily Compressed Attention* (HCA) compresses every $$m' \gg m$$ tokens into one entry and keeps dense attention over them. Other details include a shared-KV (MQA-style) layout with grouped output projection, partial RoPE and attention sinks.
+2. **mHC** (Manifold-Constrained Hyper-Connections, see its entry) instead of plain residual connections: the residual stream is widened to $$n_{hc}$$ parallel streams whose mixing matrix is projected onto the doubly stochastic matrices with Sinkhorn-Knopp iterations, which keeps signal propagation stable.
+3. The **Muon** optimizer, for faster convergence and more stable training.
+
+The headline is efficiency: at 1M tokens of context, V4-Pro needs only 27% of the single-token inference FLOPs and 10% of the KV cache of DeepSeek-V3.2 (V4-Flash: 10% and 7%), and the routed-expert weights are stored in FP4 (with FP4 quantization-aware training during post-training). The infrastructure is equally relevant to this page: a single fused MoE mega-kernel that overlaps computation, communication and memory access in expert parallelism, kernels written in TileLang, batch-invariant and deterministic kernels for bitwise reproducibility, two-stage context parallelism for the compressed attention, and a heterogeneous KV cache with on-disk storage for shared-prefix reuse. Post-training trains per-domain specialists (SFT, then GRPO RL) and merges them into one model with on-policy distillation. The maximum-reasoning mode, V4-Pro-Max, is reported as the best open model at release: ahead of GPT-5.2 and Gemini-3.0-Pro on standard reasoning benchmarks, slightly behind GPT-5.4 and Gemini-3.1-Pro.
+
+</details>
+
+
+<details> <summary markdown="span">2026 [Nemotron 3 Super: Open, Efficient Mixture-of-Experts Hybrid Mamba-Transformer Model for Agentic Reasoning, NVIDIA](https://arxiv.org/abs/2604.12374)</summary>
+
+The technical report of Nemotron 3 Super, a 120B-parameter (12B active) hybrid Mamba-2/attention MoE model, and the first model of the Nemotron 3 family (see the Nemotron 3 white-paper entry) to be **pre-trained in NVFP4**, to use **LatentMoE** experts, and to include **MTP layers** for native speculative decoding. It was pre-trained on 25T tokens and then post-trained with SFT and RL, with a strong emphasis on agentic capabilities.
+
+The final model supports up to 1M tokens of context and reaches accuracy comparable to GPT-OSS-120B and Qwen3.5-122B on common benchmarks, while delivering up to 2.2× and 7.5× higher inference throughput than them, respectively. The datasets and the base, post-trained and quantized (NVFP4, FP8, BF16) checkpoints are open. For this page, it is the large-scale validation of the LatentMoE and NVFP4 entries: the accuracy-per-byte expert design and 4-bit pre-training both hold up on a 120B model trained on 25T tokens.
+
+</details>
+
 
 <details> <summary markdown="span">2026 [FlashAttention-4: Algorithm and Kernel Pipelining Co-Design for Asymmetric Hardware Scaling, Zadouri, ..., Tri Dao (Princeton et al.), MLSys 2026](https://arxiv.org/abs/2603.05451)</summary>
 
@@ -15,6 +41,17 @@ FlashAttention-4 (FA4) re-designs the attention kernel for NVIDIA Blackwell (B20
 The co-design has a few moving parts. New forward and backward software pipelines exploit Blackwell's fully asynchronous MMA and larger tile sizes to overlap tensor cores, the softmax exponential, and memory operations.  To beat the exponential bottleneck specifically, the forward pass emulates the exponential in software via a polynomial approximation on the FMA units, plus conditional (selective) online-softmax rescaling that only rescales when a new max actually shifts the result enough to matter.  On the backward pass, where shared-memory traffic dominates, FA4 stores intermediate results in Blackwell's new tensor memory (TMEM) to relieve shared-memory traffic, and uses the new 2-CTA MMA mode to cut shared-memory traffic further and halve the number of global atomic adds.  It's also written entirely in **CuTe-DSL** (Python), giving 20–30× faster compile times than C++ template approaches while keeping full expressivity,  which lowers the barrier to prototyping new attention variants.
 
 Results: up to 1613 TFLOPs/s on B200 BF16 (71% utilization; the accompanying blog post quotes 1605), up to 1.3× faster than cuDNN 9.13 and 2.7× faster than Triton in the forward pass, and faster than all baselines in the backward pass at long sequence lengths. FlashAttention-3 is Hopper-only, so it is not a baseline here; several FA4 techniques were also upstreamed into cuDNN (9.13/9.14 onwards). This is the kernel-level companion to the systems papers below: where they reshape *what* runs where, FA4 squeezes the attention primitive itself to the hardware's asymmetric limits.
+
+</details>
+
+
+<details> <summary markdown="span">2026 [Multi-Head LatentMoE and Head Parallel: Communication-Efficient and Deterministic MoE Parallelism, Arizona State University (ICML 2026)](https://arxiv.org/abs/2602.04870)</summary>
+
+A follow-up to LatentMoE that targets the three limitations of Expert Parallelism (EP): communication volume and all-to-all latency grow linearly with the number of activated experts $$k$$ (each token is replicated $$k$$ times), expert load imbalance makes the all-to-all wait for the longest queue, and the data-dependent traffic needs an extra all-to-all to exchange metadata. LatentMoE reduces the bytes per token, but it still communicates *after* routing, so imbalance and non-determinism remain.
+
+**Multi-Head LatentMoE** projects each token with a learned $$d \times d$$ matrix and splits it into $$N_h$$ sub-tokens, each processed by an independent small MoE with its own router and experts; the outputs are concatenated and projected back. **Head Parallel (HP)** exploits this structure by moving the all-to-all *before* routing: each GPU owns a subset of the heads, receives all sub-tokens for those heads, and does all routing and expert computation locally. Each token is sent exactly once, so communication is $$O(1)$$ in $$k$$; every GPU sends and receives the same amount of data, so traffic is perfectly balanced and needs no metadata exchange (and no out-of-memory risk from hot experts); and HP composes with EP to scale beyond $$N_h$$ GPUs. To avoid multiplying memory traffic by $$N_h$$, they add exact IO-aware kernels: an online top-k router that keeps the scores in SRAM (Triton), and expert computation expressed as block-sparse attention on top of FlexAttention.
+
+At small scale (0.2B active, up to 4.2B total parameters, 10B FineWebEdu tokens), Multi-Head LatentMoE with HP trains up to 1.61× faster than a standard MoE with EP at identical quality and cuts inter-GPU traffic to 25% at $$k = 4$$; with doubled expert granularity it reaches higher accuracy while still being 1.11× faster.
 
 </details>
 
@@ -30,6 +67,82 @@ The payoff is that the freed budget can be spent on *more, finer experts* at the
 </details>
 
 
+
+
+<details> <summary markdown="span">2025 [mHC: Manifold-Constrained Hyper-Connections, DeepSeek-AI (ICML 2026)](https://arxiv.org/abs/2512.24880)</summary>
+
+Hyper-Connections (HC) widen the residual stream into $$n$$ parallel streams mixed by learnable matrices, decoupling the residual width from the layer width at little compute cost. The gains are real, but the unconstrained mixing breaks the identity-mapping property that makes deep residual networks trainable: in a 27B model, signals get amplified across layers and training shows loss spikes. HC also adds significant memory-access overhead.
+
+mHC constrains the stream-mixing (residual) matrix of each layer to the manifold of **doubly stochastic matrices** (the Birkhoff polytope: non-negative, with rows and columns summing to 1) using iterative Sinkhorn-Knopp row/column normalization, and makes the read-in and write-out mappings non-negative and bounded with sigmoids. A doubly stochastic matrix has spectral norm at most 1 (the residual mixing is non-expansive) and products of such matrices stay doubly stochastic, so signal propagation stays stable at any depth; with $$n = 1$$ it reduces to the ordinary identity residual. On the systems side, kernel fusion, recomputation and overlapping with DualPipe communication bring the cost of a 4× wider residual stream ($$n = 4$$) down to about 6.7% extra training time.
+
+In pre-training experiments on MoE models from 3B to 27B parameters, mHC trains stably where HC spikes and improves over the plain residual baseline, with the advantage holding across compute and token budgets. It was then adopted in DeepSeek-V4 (see its entry).
+
+</details>
+
+
+<details> <summary markdown="span">2025 [Mirage Persistent Kernel: A Compiler and Runtime for Mega-Kernelizing Tensor Programs, CMU et al. (OSDI 2026)](https://arxiv.org/abs/2512.22219)</summary>
+
+MPK automates the megakernel idea from the Hazy Research Llama-1B post (see its entry) and comes from the same group as Mirage: it is the first compiler and runtime that automatically turns multi-GPU model inference into a single persistent mega-kernel, instead of writing one by hand. The key abstraction is an **SM-level task graph** that captures data dependencies at the granularity of individual streaming multiprocessors rather than whole kernels, which enables optimizations that the kernel-per-operator model cannot express, such as cross-operator software pipelining (starting the next operator's loads while the current one computes) and fine-grained overlap of computation with inter-GPU communication.
+
+The MPK compiler lowers a tensor program into an optimized SM-level task graph and generates CUDA code for each task; an in-kernel parallel runtime then executes the tasks inside one persistent kernel with decentralized scheduling across SMs, so there are no kernel launches or host round-trips between operators. It is open source (in the Mirage repository) and reduces end-to-end inference latency by up to 1.7× compared to existing kernel-per-operator LLM serving systems, pushing LLM inference close to the limits of the hardware.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [DeepSeek-V3.2: Pushing the Frontier of Open Large Language Models, DeepSeek-AI](https://arxiv.org/abs/2512.02556)</summary>
+
+The formal report behind the DeepSeek-V3.2-Exp model card (see its entry). The architecture is the same as V3.2-Exp: the only change from DeepSeek-V3.1-Terminus is **DeepSeek Sparse Attention (DSA)**, added through continued training. A *lightning indexer* (a few heads, ReLU activation, runnable in FP8) scores each preceding token for the current query, and a fine-grained selection step keeps only the top-k key-value entries (k = 2048) for the main MLA attention, which reduces the core attention cost from $$O(L^2)$$ to $$O(Lk)$$ (the indexer itself is still quadratic, but much cheaper). The indexer is first trained alone to match the dense attention distribution (KL loss) while the main model is frozen, and then the whole model is trained with sparse attention.
+
+The rest of the report is about post-training: a scaled and stabilized GRPO-based RL recipe with a post-training compute budget above 10% of the pre-training cost, and a large-scale agentic task-synthesis pipeline (over 1,800 environments and 85,000 complex instructions) that makes V3.2 the first DeepSeek model to integrate thinking directly into tool use. DeepSeek-V3.2 performs comparably to GPT-5, and the high-compute variant **DeepSeek-V3.2-Speciale** (longer reasoning, no tool use) reaches gold-medal level at IMO 2025, CMO 2025, IOI 2025 and the ICPC World Finals 2025, on par with Gemini-3.0-Pro in reasoning, though with clearly worse token efficiency.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [Kimi Linear: An Expressive, Efficient Attention Architecture, Moonshot AI (Kimi Team)](https://arxiv.org/abs/2510.26692)</summary>
+
+Kimi Linear is a hybrid linear-attention architecture that, under matched training recipes, *outperforms* full attention across short-context, long-context and RL-style post-training tasks, which the authors claim is a first. Its core is **Kimi Delta Attention (KDA)**, a linear attention with a fixed-size RNN state that extends Gated DeltaNet with finer-grained gating: instead of one forget gate per head, each channel (feature dimension) gets its own decay rate, so the limited state memory is used more selectively. For hardware efficiency, KDA's transition uses a specialized Diagonal-Plus-Low-Rank (DPLR) form with a bespoke chunkwise-parallel algorithm that needs substantially less computation than general DPLR while staying consistent with the classical delta rule.
+
+The model interleaves KDA with periodic full-attention MLA layers in a uniform 3:1 ratio (48B total, 3B activated parameters). With an identical training recipe it beats a full-MLA baseline on all evaluated tasks, while cutting the KV cache by up to 75% (only one layer in four keeps a growing cache) and reaching up to 6× decoding throughput at 1M tokens of context. The KDA kernels, a vLLM implementation, and the pre-trained and instruction-tuned checkpoints are open.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [Pretraining Large Language Models with NVFP4, NVIDIA](https://arxiv.org/abs/2509.25149)</summary>
+
+The recipe for pre-training LLMs in 4-bit floating point with **NVFP4**, the Blackwell microscaling format: FP4 (E2M1) values in blocks of 16 elements, each block with an FP8 (E4M3) scale, plus a per-tensor FP32 scale. Compared to MXFP4 (blocks of 32 with power-of-two E8M0 scales), the smaller blocks and more precise scales capture the local dynamic range much better. FP4 GEMMs run at 2–3× the FP8 math throughput on Blackwell (GB200/GB300), but naive 4-bit training diverges or loses accuracy over long token horizons.
+
+The method combines four ingredients: (1) **Random Hadamard Transforms** on the inputs of the weight-gradient GEMMs, which spread block-level outliers into a more Gaussian-like distribution; (2) **2D (16×16) block scaling for weights**, so the forward and backward passes see the same quantized weights; (3) **stochastic rounding** for gradients, to avoid the bias of round-to-nearest; and (4) keeping a small fraction of numerically sensitive linear layers in higher precision.
+
+They validate it by training a 12B hybrid Mamba-Transformer on 10T tokens, the longest publicly documented 4-bit training run at the time: the loss tracks the FP8 baseline within about 1% relative error during the stable phase (slightly above 1.5% late in the learning-rate decay), and downstream accuracies match FP8. In a comparison on an 8B model, MXFP4 needed about 36% more tokens to reach the loss NVFP4 reached at 1T tokens. Support is in Transformer Engine, and NVFP4 pre-training was later used for Nemotron 3 Super (see its entry).
+
+</details>
+
+
+<details> <summary markdown="span">2025 [Insights into DeepSeek-V3: Scaling Challenges and Reflections on Hardware for AI Architectures, DeepSeek-AI (ISCA 2025)](https://arxiv.org/abs/2505.09343)</summary>
+
+A hardware/model co-design retrospective of DeepSeek-V3/R1 (ISCA 2025 industry track), complementary to the DeepSeek-V3 report on this page: how a 671B model was trained on only 2,048 H800 GPUs, and what hardware should change. On the model side it quantifies the choices: MLA cuts the KV cache to about 70 KB per token, versus 327 KB for Qwen-2.5 72B and 516 KB for LLaMA-3.1 405B (both GQA); the MoE design needs about 250 GFLOPs of training compute per token, versus about 2,448 for the dense LLaMA-3.1 405B; plus FP8 mixed-precision training and MTP for faster speculative decoding. On the infrastructure side it describes the **multi-plane two-layer fat-tree** network (each GPU's NIC sits on its own network plane, eight planes per node), which cuts cluster network cost while scaling to thousands of GPUs, and how expert parallelism and node-limited routing are shaped around the H800's bandwidth asymmetry (much faster NVLink than InfiniBand).
+
+The second half is a wish list for future AI hardware, drawn from the bottlenecks they hit: more precise low-precision compute units (e.g., higher FP8 accumulation precision and native support for fine-grained block scaling), convergence of scale-up and scale-out networks, and low-latency communication fabrics. It is a good companion to the communication-overlap papers on this page because it explains *why* those optimizations were needed on bandwidth-limited hardware.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [Native Sparse Attention: Hardware-Aligned and Natively Trainable Sparse Attention, DeepSeek-AI, Peking University & University of Washington (ACL 2025 Best Paper)](https://arxiv.org/abs/2502.11089)</summary>
+
+NSA argues that most sparse-attention methods fail in practice for two reasons: their theoretical savings don't turn into wall-clock speedups (scattered token-level memory access, poor fit with GQA/MQA where heads share KV, or speedups limited to only prefill or only decode), and they are applied post hoc to models trained with dense attention, so the sparsity pattern is never trained end to end. NSA is designed for both: each query attends through three branches whose outputs are combined by learned gates: (1) **compressed** attention over coarse summaries of token blocks (blocks of 32 tokens with stride 16, compressed by a learned MLP), (2) **selected** attention over the top-n most relevant fine-grained blocks, chosen by reusing the compression branch's attention scores so that selection is almost free, and (3) a **sliding window** over the most recent 512 tokens for local context.
+
+The kernel is hardware-aligned: block selection is shared across all heads of a GQA group, so each group loads contiguous KV blocks once into SRAM and keeps the arithmetic intensity balanced on Tensor Cores in the forward pass, the backward pass and decoding. A 27B-parameter MoE model (about 3B active) pre-trained from scratch with NSA on 260B tokens matches or beats the full-attention baseline on general benchmarks, long-context retrieval and chain-of-thought reasoning, while running up to 11.6× faster for decoding, 9.0× for the forward pass and 6.0× for the backward pass at 64K context. Its ideas (block compression plus learned selection) resurface in DeepSeek Sparse Attention (DeepSeek-V3.2) and in the CSA/HCA hybrid of DeepSeek-V4.
+
+</details>
+
+
+<details> <summary markdown="span">2025 [FlashInfer: Efficient and Customizable Attention Engine for LLM Inference Serving, University of Washington et al. (MLSys 2025)](https://arxiv.org/abs/2501.01005)</summary>
+
+FlashInfer is the attention kernel library underneath many serving stacks (it is integrated into SGLang, vLLM and MLC-Engine). It addresses three properties of serving workloads that a single FlashAttention kernel doesn't cover. First, **KV-cache heterogeneity**: paged, prefix-shared and sparse KV layouts are all represented in one **block-sparse format**, with composable formats for shared prefixes, so the same kernels serve all of them and redundant loads of shared KV are avoided. Second, **customization**: a customizable attention template (e.g., custom masks or logits transforms) is JIT-compiled into optimized block-sparse kernels, so new attention variants don't need hand-written CUDA. Third, **dynamism**: a load-balanced scheduler splits the work of variable-length requests across SMs (inspired by stream-K) while staying compatible with CUDA Graphs, which require a static launch configuration.
+
+Compared to state-of-the-art serving solutions, it achieves 29–69% lower inter-token latency than compiler backends on an LLM serving benchmark, 28–30% lower latency for long-context inference, and a 13–17% speedup for LLM serving with parallel generation.
+
+</details>
 
 
 <details> <summary markdown="span">2025 [NVIDIA Nemotron 3: Efficient and Open Intelligence, NVIDIA](https://arxiv.org/abs/2512.20856)</summary>
