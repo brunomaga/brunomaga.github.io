@@ -3,15 +3,16 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+
   {%- seo -%}
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
   {%- feed_meta -%}
+
   {%- if jekyll.environment == 'production' and site.google_analytics -%}
     {%- include google-analytics.html -%}
   {%- endif -%}
 
-  <!DOCTYPE html>
-  <title>{{ page.title }}</title>
+  <link href="{{ "/favicon.ico" | relative_url }}" rel="shortcut icon">
 
   <!-- font awesome for social media icons -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.7.2/css/all.css">
@@ -19,138 +20,84 @@
   <!-- academicons to add missing icons to font awesome (e.g. google scholar) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
-  <!-- fav icon -->
-  <link href="{{ "/favicon.ico" | relative_url }}" rel="shortcut icon" />
-
-  <!-- MathJax to render formulas -->
-  <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"
-  <script>window.MathJax = { tex: { tags: 'all' } }; </script> <!-- NOTE: this adds numbering to equations, otherwise \ref{...} will fail -->
+  <!-- MathJax. tags:'all' numbers equations so \ref{...} resolves -->
+  <script>window.MathJax = { tex: { tags: 'all' } };</script>
+  <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 
   <style>
-    .info-panel {
-        max-width: 720px;
-        background-color: #e9f0f6;
-        border-radius: 10px; /* Rounded corners */
-        padding: 12px; /* Spacing inside */
-        /* width: 300px;/* /* Fixed width */
-        /*box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
-        /*font-family: Arial, sans-serif;*/ /* Font style */
-        /*margin: 20px auto;*/ /* Center the panel */
-        text-align: center; /* Center text */
-        margin-bottom: 20px; /* Extra space after the box */
-        font-size: 0.95rem; /* Reduced text size */
-    }
+    /* ===== Images ===== */
 
-    .info-warning {
-        max-width: 720px;
-        background-color: #fff3cd; /* Light yellow for warning */
-        border-radius: 10px;
-        padding: 12px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 0.95rem;
-    }
+    img { height: auto; }
 
+    /* ===== Heading rhythm (h1 is the page title) ===== */
+
+    h2 { margin-top: 40px; }
+    h3 { margin-top: 20px; }
+    h4 { margin-top: 10px; }
+    h5 { margin-top: 5px; }
+
+    /* ===== Callout panels ===== */
+
+    .info-panel,
+    .info-warning,
     .info-danger {
-        max-width: 720px;
-        background-color: #f8d7da; /* Light red for danger */
-        border-radius: 10px;
-        padding: 12px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-        text-align: center;
-        margin-bottom: 20px;
-        font-size: 0.95rem;
+      max-width: 720px;
+      border-radius: 10px;
+      padding: 12px;
+      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
     }
 
-    /* Remove bottom margins */
-    .info-panel h2, .info-panel p { margin-bottom: 0; }
+    .info-panel   { background-color: #e9f0f6; }
+    .info-warning { background-color: #fff3cd; }
+    .info-danger  { background-color: #f8d7da; }
 
-    /* Optional: Reduce top margin for tighter spacing */
-    .info-panel h2 {margin-top: 0;}
-</style>
+    .info-panel h2, .info-panel p,
+    .info-warning h2, .info-warning p,
+    .info-danger h2, .info-danger p { margin-bottom: 0; }
 
-<!-- CSS for table that collapses on smaller screens. source: https://css-tricks.com/accessible-simple-responsive-tables/ -->
-<style>
+    .info-panel h2,
+    .info-warning h2,
+    .info-danger h2 { margin-top: 0; }
 
-/* increase top margins of ## ### #### and ##### headers (h1 is page title) */
-h2 {margin-top: 40px;}
-h3 {margin-top: 20px;}
-h4 {margin-top: 10px;}
-h5 {margin-top: 5px;}
+    /* ===== Responsive table =====
+       https://css-tricks.com/accessible-simple-responsive-tables/ */
 
-.Rtable {
-  display: flex;
-  flex-wrap: wrap;
-  margin: 0 0 0 0;
-  padding: 0;
-  border: solid 0px rgb(232, 232, 232);
-}
-.Rtable-cell {
-  box-sizing: border-box;
-  flex-grow: 1;
-  width: 100%;
-  padding: 0.4em 1.2em;
-  overflow: hidden;
-  list-style: none;
-  /* background-color: rgb(250, 250, 250); */
-}
-.Rtable-cell > h1,
-.Rtable-cell > h2,
-.Rtable-cell > h3,
-.Rtable-cell > h4,
-.Rtable-cell > h5,
-.Rtable-cell > h6 {
-  margin: 0;
-}
+    .Rtable {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0.7em 0 0;
+      padding: 0;
+    }
 
-/* ==== Table column sizing ==== */
-.Rtable--2cols > .Rtable-cell {
-  width: 50%;
-}
-.Rtable--3cols > .Rtable-cell {
-  width: 33.33%;
-}
-.Rtable--4cols > .Rtable-cell {
-  width: 25%;
-}
-.Rtable--5cols > .Rtable-cell {
-  width: 20%;
-}
-.Rtable--6cols > .Rtable-cell {
-  width: 16.6%;
-}
+    .Rtable-cell {
+      box-sizing: border-box;
+      flex-grow: 1;
+      width: 100%;
+      padding: 0.4em 1.2em;
+      overflow: hidden;
+      list-style: none;
+    }
 
-/* ==== Apply styles ==== */
-.Rtable {
-  position: relative;
-  top: 3px;
-  left: 3px;
-  margin-top: 0.7em;
-}
-.Rtable-cell {
-  margin: -3px 0 0 -3px;
-}
+    .Rtable-cell > h1,
+    .Rtable-cell > h2,
+    .Rtable-cell > h3,
+    .Rtable-cell > h4,
+    .Rtable-cell > h5,
+    .Rtable-cell > h6 { margin: 0; }
 
-/* ==== Responsive ==== */
-@media all and (max-width: 500px) {
-  .Rtable--collapse {
-    display: block;
-  }
-  .Rtable--collapse > .Rtable-cell {
-    width: 100% !important;
-  }
-  .Rtable--collapse > .Rtable-cell--foot {
-    margin-bottom: 1em;
-  }
-}
-.no-flexbox .Rtable {
-  display: block;
-}
-.no-flexbox .Rtable > .Rtable-cell {
-  width: 100%;
-}
-</style>
+    .Rtable--2cols > .Rtable-cell { width: 50%; }
+    .Rtable--3cols > .Rtable-cell { width: 33.33%; }
+    .Rtable--4cols > .Rtable-cell { width: 25%; }
+    .Rtable--5cols > .Rtable-cell { width: 20%; }
+    .Rtable--6cols > .Rtable-cell { width: 16.66%; }
 
+    @media all and (max-width: 500px) {
+      .Rtable--collapse { display: block; }
+      .Rtable--collapse > .Rtable-cell { width: 100% !important; }
+      .Rtable--collapse > .Rtable-cell--foot { margin-bottom: 1em; }
+    }
+  </style>
 </head>
