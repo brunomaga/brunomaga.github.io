@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Diffusion models: from single GPU to distributed VLMs"
+title:  "Diffusion models: DDPM, diffusion transformers, and video generation"
 categories: [machine learning, diffusion, SORA]
 tags: [machinelearning]
 ---
@@ -468,9 +468,6 @@ The other challenge in video datasets is the attention: how do we correlate imag
 
 {: style="text-align:center; font-size: small;"}
 An illustration of a masked autoencoder randomly picking 10% of the spacetime patches of a video, retaining enough representative power to reconstruct the original video. Source: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
-
-## Multi-dimensional parallelism
-
 
 ## Further Reading 
 
