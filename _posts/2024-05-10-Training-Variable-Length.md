@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training of variable-length samples: curriculum learning, compilation, adaptive batch size and LR"
+title:  "Distributed model training (5): variable sample lengths, curriculum learning, adaptive batch size and LR"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
@@ -115,7 +115,7 @@ Here, samples are collected until the batch reaches (at most) 30 tokens. The bat
 
 ### Pipeline parallelism
 
-[Pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPTlite-DeepSpeed-pipeline%})
+[Pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPTlite-pipeline-parallelism %})
 requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x T x E` across micro-batches can lead to smaller micro-batches and additional padding. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 processes and 2 gradient accumulation steps (4 micro-batches total):
 
 {: style="text-align:center; font-size: small;"}

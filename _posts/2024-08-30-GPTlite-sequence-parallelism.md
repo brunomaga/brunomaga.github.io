@@ -1,11 +1,11 @@
 ---
 layout: post
-title:  "Distributed GPT model (4): sequence and context parallelism with Ulysses and Ring attention"
+title:  "Distributed model training (6): sequence and context parallelism with Ulysses and Ring attention"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
 
-We always thought about ML parallelism as a three-dimensional problem, composed of [data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}) (with or without sharding), [pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPTlite-DeepSpeed-pipeline %}), and [model/tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-GPTlite-Megatron-LM-model-parallelism %}). In practice, if we take an input of shape `(B, E)`, where `B` is the batch size and `E` is the size of the embeddings (channels, features), and we want to split that dataset across `P` processes, then:
+We always thought about ML parallelism as a three-dimensional problem, composed of [data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}) (with or without sharding), [pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-GPTlite-pipeline-parallelism %}), and [model/tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-GPTlite-Megatron-LM-model-parallelism %}). In practice, if we take an input of shape `(B, E)`, where `B` is the batch size and `E` is the size of the embeddings (channels, features), and we want to split that dataset across `P` processes, then:
 
 1. data parallelism splits the data dimension across processors, effectively leading to a local (per-process) storage requirement of size `(B/P, E)`;
 2. pipeline parallelism requires the same `(B/P, E)` input per processor, but processes each mini-batch as a pipeline of iterative micro-batches with gradient accumulation, leading to a memory requirement of `(B/P/Q, E)` per iteration, where `Q` is the micro-batch size;
