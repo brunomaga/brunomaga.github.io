@@ -1,20 +1,23 @@
 import os
-import sys
 import torch
 import torch.nn.functional as F
-
-#use the default GPTlite model and utils from the post GPTlite
-current_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.insert(0, os.path.join(current_dir, '..', 'GPTlite'))
+from inference_utils import device, GPTLITE_CKPT_PATH, GPTLITE_DISTILLED_CKPT_PATH  # also adds GPTlite to the path
 from gptlite import GPTlite
 from utils import get_batch, get_tiny_shakespeare_data, get_gptlite_model_parameters, get_gptlite_distilled_model_parameters
-GPTLITE_CKPT_PATH = os.path.join(current_dir, '..', 'GPTlite', 'gptlite.pth')
-GPTLITE_DISTILLED_CKPT_PATH = os.path.join(current_dir, '..', 'GPTlite', 'gptlite_distilled.pth')
+
+
+def distillation_loss(logits_student, logits_teacher, temperature):
+  """ KL divergence between the softened teacher and student distributions, averaged per token, and
+      scaled by temperature^2 so that the size of the gradients does not depend on the temperature """
+  vocab_size = logits_student.size(-1)
+  log_softmax_student = F.log_softmax(logits_student.reshape(-1, vocab_size)/temperature, dim=-1)   #log softmax of student model
+  log_softmax_teacher = F.log_softmax(logits_teacher.reshape(-1, vocab_size)/temperature, dim=-1)   #log softmax of teacher model
+  return F.kl_div(log_softmax_student, log_softmax_teacher, log_target=True, reduction='batchmean') * (temperature ** 2)
+
 
 if __name__=='__main__':
   torch.manual_seed(42) # random seed, for reproducibility
   vocab_size, train_data, valid_data, _, decode_fn = get_tiny_shakespeare_data()
-  device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
   # Train parameters
   eval_interval = 100  # evaluation interval
@@ -43,9 +46,7 @@ if __name__=='__main__':
     logits_student = model_student(idx)   #forward pass
     with torch.no_grad():
       logits_teacher = model_teacher(idx)   #forward pass of the frozen teacher, without gradients
-    log_softmax_student = F.log_softmax(logits_student/temperature, dim=-1)   #log softmax of student model
-    log_softmax_teacher = F.log_softmax(logits_teacher/temperature, dim=-1)   #log softmax of teacher model
-    loss = F.kl_div(log_softmax_student, log_softmax_teacher, log_target=True) * (temperature ** 2)  #compute KL divergence loss
+    loss = distillation_loss(logits_student, logits_teacher, temperature)  #compute KL divergence loss
     loss.backward()   #backward pass
     torch.nn.utils.clip_grad_norm_(model_student.parameters(), max_norm=1.0) # gradient clipping to avoid exploding gradients
     optimizer.step()   #update parameters
@@ -65,9 +66,7 @@ if __name__=='__main__':
       idx = idx.to(device) #move data to GPU
       logits_student = model_student(idx)   #forward pass
       logits_teacher = model_teacher(idx)   
-      log_softmax_student = F.log_softmax(logits_student/temperature, dim=-1)   #log softmax of student model
-      log_softmax_teacher = F.log_softmax(logits_teacher/temperature, dim=-1)   #log softmax of teacher model
-      loss = F.kl_div(log_softmax_student, log_softmax_teacher, log_target=True) * (temperature ** 2)  
+      loss = distillation_loss(logits_student, logits_teacher, temperature)
       print(f"Eval step {step}, eval loss {loss.item():.4f}")
 
       # Generate a sentence from the current state of the model
