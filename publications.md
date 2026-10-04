@@ -5,7 +5,7 @@ permalink: /publications/
 ---
 
 <style>
-details { margin-bottom: 0.6em; }
+details { margin-bottom: 0.5em; }
 </style>
 
 A summary of some interesting publications I came across. Continuously updated. Click $$\small{\blacktriangleright}$$ to expand.
