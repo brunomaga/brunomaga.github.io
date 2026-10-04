@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Diffusion models: DDPM, diffusion transformers, and video generation"
+title:  "Diffusion models: from DDPMs to DiTs"
 categories: [machine learning, diffusion, SORA]
 tags: [machinelearning]
 ---
@@ -340,7 +340,7 @@ class DiT(nn.Module):
         self.blocks = nn.Sequential(*[Block(n_embd=n_embd) for _ in range(n_blocks)])
 
         # decoder: "standard linear decoder to do this; we apply the layer norm and linearly decode each token into a p×p×2C tensor"
-        self.decoder = nn.Sequential( nn.LayerNorm(n_embd), nn.Linear(n_embd, n_embd*2) )
+        self.decoder = nn.Sequential( nn.LayerNorm(nmbd), nn.Linear(n_embd, n_embd*2) )
 ```
 
 Then we need to add the boilerplate code that crops the input image into the patches used by the attention module, and that merges the patches back into a single image:
@@ -348,7 +348,7 @@ Then we need to add the boilerplate code that crops the input image into the pat
 ```python
     def patchify(self, x):
         """ break image (B, C, H, W) into patches (B, C, NH, NW, PH, PW) for NH*NW patches of size PHxPW """
-        BC, H, W = x.shape
+        B, C, H, W = x.shape
         x = x.unfold(2, self.patch_size, self.patch_size).unfold(3, self.patch_size, self.patch_size)
 
         # linearize patches and flatten embeddings: (B, NH*NW, PH*PW*C)
@@ -360,13 +360,16 @@ Then we need to add the boilerplate code that crops the input image into the pat
     def unpatchify(self, x, shapes):
         """ convert patches (B, NH*NW, PH*PW*C*2) back into the noise ε_θ and the vector v that parameterizes
             the variance Σ_θ, each of shape (B, C, H, W) = (B, C, NH*PH, NW*PW) """
-        B, C, H, W, NH, NW, PH, PW, = shapes.values()
+        B, , W, NH, NW, PH, PW, = shapes.values()
         assert x.shape == (B, NH*NW, PH*PW*C*2)
         x = x.reshape(B, NH, NW, PH, PW, C, 2).permute(0, 5, 1, 3, 2, 4, 6) # (B, C, NH, PH, NW, PW, 2)
         x = x.reshape(B, C, NH*PH, NW*PW, 2)
         ε_θ, v = x[...,0], x[...,1]
         assert ε_θ.shape == v.shape == (B, C, H, W) # original shape
-        return ε_Îhe forward pass then adds the positional and timestep embeddings to the patches (and the class embedding, discussed in the Conditioning section below), and runs the transformer blocks and the decoder:
+        return ε_θ, v
+```
+
+The forward pass then adds the positional and timestep embeddings to the patches (and the class embedding, discussed in the Conditioning s below), and runs the transformer blocks and the decoder:
 
 ```python
     def forward(self, x, t, label=None):
@@ -381,7 +384,7 @@ Then we need to add the boilerplate code that crops the input image into the pat
         return self.unpatchify(x, shapes) # ε_θ and v
 ```
 
-In this use case, we are also learning the covariance $$\Sigma_\theta$$, so we need to optimize the full variational bound $$L$$, as $$\mathcal{L}text{simple}$$ does not depend on $$\Sigma_\theta$$. Following [Improved DDPM](https://arxiv.org/abs/2102.09672), the model outputs a vector $$v$$ with one value per dimension, that interpolates the variance between its two extreme choices $$\beta_t$$ and $$\tilde{\beta}_t$$ (the upper and lower bounds of the reverse process entropy) in the log domain (Eq. 15 in Improved DDPM):
+In this use case, we are also learning the covariance $$\Sigma_\theta$$, so we need to optimize the full variational bound $$L$$, as $$\mathcal{L}_\text{simple}$$ does not depend on $$\Sigma_\theta$$. Following [Improved DDPM](https://arxiv.org/abs/2102.09672), the model outputs a vector $$$ with one value per dimension, that interpolates the variance between its two extreme choices $$\beta_t$$ and $$\tilde{\beta}_t$$ (the upper and lower bounds of the reverse process entropy) in the log domain (Eq. 15 in Improved DDPM):
 
 $$
 \Sigma_\theta(\mathbf{x}_t, t) = \exp \left( v \log \beta_t + (1-v) \log \tilde{\beta}_t \right)
@@ -392,16 +395,15 @@ coded as:
 ```python
     def learned_Σ_θ(v, t):
         """ Improved DDPM, Equation 15: interpolate log(Σ_θ) between log(β_t) and log(posterior_β_t) """
-        frac = (v + 1) / 2 # from the model output in [-1, 1] to [0, 1], as in the official implementation
+        fra + 1) / 2 # from the model output in [-1, 1] to [0, 1], as in the official implementation
         log_β_t = torch.log(β)[t][:, None, None, None]
         posterior_log_β_t = posterior_log_β[t][:, None, None, None]
         return torch.exp(frac * log_β_t + (1 - frac) * posterior_log_β_t)
 ```
 
-To train it, the authors train $$\epsilon_\theta$$ with $$\mathcsimple}$$, as before, and train $$\Sigma_\theta$$ with the full bound $$L$$, ie they minimize a hybrid loss (Eq. 16 in Improved DDPM):
+To train it, the authors train $$\epsilon_\theta$$ with $$\mathcal{L}_\text{simple}$$, as before, and train $$\Sigma_\theta$$ with the full bound $$L$$, ie they minimize a hybrid loss (Eq. 16 in Improved DDPM):
 
-$$
-L_\text{hybrid} = \mathcal{L}_\text{simple} + \lambda L_\text{vlb}
+$$xt{hybrid} = \mathcal{L}_\text{simple} + \lambda L_\text{vlb}
 $$
 
 where $$L_\text{vlb}$$ is the variational bound $$L$$ of Eq. 5, and $$\lambda = 0.001$$ prevents $$L_\text{vlb}$$ from overwhelming $$\mathcal{L}_\text{simple}$$. A stop-gradient on $$\mu_\theta$$ makes $$L_\text{vlb}$$ train only $$\Sigma_\theta$$. Each term $$L_{t-1}$$ of $$L_\text{vlb}$$ is a KL divergence between two Gaussians, that has a closed form solution (an alternative implementation can be found in [Meta's DiT implementation](https://github.com/facebookresearch/DiT/blob/ed81ce2229091fd4ecc9a223645f95cf379d582b/diffusion/gaussian_diffusion.py#L682)), and $$L_0$$ is the discretized decoder of Eq. 13. As we sample a single timestep per image, and $$L_\text{vlb}$$ sums the terms of $$T$$ timesteps, we estimate it as $$T$$ times the term of the sampled timestep, measured in bits per dimension as in the paper:
@@ -409,19 +411,19 @@ where $$L_\text{vlb}$$ is the variational bound $$L$$ of Eq. 5, and $$\lambda = 
 ```python
     def dit_loss(x_0, x_t, t, noise):
         """ L_hybrid = L_simple + λ L_vlb, Improved DDPM, Equation 16 """
-        ε_θ, v = model(x_t, t)
+       ε_θ, v = model(x_t, t)
         Σ_θ = learned_Σ_θ(v, t)
         μ_θ = eq11_μ_θ(x_t, ε_θ.detach(), t) # stop-gradient: L_vlb only trains Σ_θ
         p = torch.distributions.Normal(μ_θ, Σ_θ.sqrt()) # Eq. 1
         q = torch.distributions.Normal(posterior_μ(x_0, x_t, t), torch.exp(0.5 * posterior_log_β[t][:, None, None, None])) # Eq. 6
-        kl = .distributions.kl_divergence(q, p).mean(dim=(1, 2, 3)) # L_{t-1}
+        kl = torch.distributions.kl_divergence(q, p).mean(dim=(1, 2, 3)) # L_{t-1}
         nll = eq13_decoder_nll(x_0, p).mean(dim=(1, 2, 3)) # L_0
-        L_vlb = torch.where(t == 0, nll, kl) / math.log(2) # per sample, in bits per dimension (t=0 is the paper's t=1)
+        L_= torch.where(t == 0, nll, kl) / math.log(2) # per sample, in bits per dimension (t=0 is the paper's t=1)
         L_simple = F.mse_loss(ε_θ, noise)
         return L_simple + T / 1000 * L_vlb.mean() # λ = 1/1000, times T as L_vlb sums the losses of T timesteps
 ```
 
-In fact, the paper implements a **conditional diffusion model** that takes as input extra informatiouch as class $$c$$, and the reverse process becomes $$p_\theta(\mathbf{x}_{t-1} \mid  \mathbf{x}_t, c)$$, where $$\epsilon_\theta$$ and $$\Sigma_\theta$$ are conditioned on $$c$$. We'll look at that next.
+In fact, the paper implements a **conditional diffusion model** that takes as input extra information such as class $$c$$, and the reverse process becomes $$p_\theta(\mathbf{x}_{t-1} \mid  \mathbf{x}_t, c)$$, where $$\epsilon_\theta$$ and $$\Si_\theta$$ are conditioned on $$c$$. We'll look at that next.
 
 ## Conditioning
 
@@ -551,8 +553,8 @@ NaViT (Native Resolution ViT) uses sequence packing during training to process i
 {::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
-<details> <summary markdown="span">[CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer](https://arxiv.org/abs/2408.06072)<ummary>
-CogVideoX is a large-scale DiT model for text-to-video generation. Model input is a pair of video and text. Text input is encoded with T5. Video input is passed through a 3D causal VAE that compresses the video into the latent space, and then all video patches are unfolded into a long sequence. Text and video embeddings are then concatenated as input, and passed to a stack of *expert* transformer blocks. The model output is then unpatchified to restore the original latent shape, and decoded using a 3D causal VAE to reconstruct the video. The attention is provided by a 3D attention model (that unfolds all patches of all frames) instead of a separate spatial and temporal attention. 
+<details> <summary markdown="span">[CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer](https://arxiv.org/abs/2408.06072)</summary>
+CogVideoX is a large-scale DiT model for text-to-video generation. Model input is a pair of video and text. Text input is encoded with5. Video input is passed through a 3D causal VAE that compresses the video into the latent space, and then all video patches are unfolded into a long sequence. Text and video embeddings are then concatenated as input, and passed to a stack of *expert* transformer blocks. The model output is then unpatchified to restore the original latent shape, and decoded using a 3D causal VAE to reconstruct the video. The attention is provided by a 3D attention model (that unfolds all patches of all frames) instead of a separate spatial and temporal attention. 
 </details>
 {::options parse_block_html="false" /}
 
@@ -599,13 +601,13 @@ data. A high masking ratio leads to a large speedup, e.g., > 4× in wall-clock t
 or even more.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Diffusion/msked_autoencoders.png"/> 
+<img width="70%" height="70%" src="/assets/Diffusion/masked_autoencoders.png"/> 
 
 </details>
 {::options parse_block_html="false" /}
 
 <br/>
-And here is some work on multi-dimensional parallelism for large-scale models such as SORA:
+And here is some work on multi-dimensional parallelism for arge-scale models such as SORA:
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633)</summary>
