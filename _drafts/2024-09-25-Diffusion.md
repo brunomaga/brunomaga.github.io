@@ -16,7 +16,7 @@ In this post, we will look at the mathematical background behind diffusion model
 {: style="text-align:center; font-size: small;"}
 A diffusion model is a $$T$$-step Markov chain, characterized by a forward process $$q$$ and a trainable reverse process $$p_\theta$$. Source: [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
 
-Let's look at those processes in detail. Credit: formulation and U-Net implementation inspired by the paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239), Hugging Face's post [The Annotated Diffusion Model](https://huggingface.co/blog/annotated-diffusion) and Lilian Weng's post [Lil'Log: what are diffusion models](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/).
+Let's look at those processes in detail. Credit: formulation and U-Net implementation inspired by the paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239), Hugging Face's post [The Annotated Diffusion Model](https://huggingface.co/blog/annotated-diffusion) and Lilian Weng's post [Lil'Log: what are diffusion models](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/). The learned variance and the noise schedule for a smaller number of steps follow [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672) and its [official implementation](https://github.com/openai/improved-diffusion). The full code is available in [diffusion.py](https://github.com/brunomaga/brunomaga.github.io/blob/master/assets/Diffusion/diffusion.py) and [dit.py](https://github.com/brunomaga/brunomaga.github.io/blob/master/assets/Diffusion/dit.py).
 
 ## Forward Process
 
@@ -40,10 +40,11 @@ $$
 
 where $$\alpha_t = 1 - \beta_t$$ and $$\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$$.
 
-We can start implementing our diffusion algorithm by defining the hyper-parameters $$\beta_t$$ and $$\alpha_t$$ and, for convenience, an additional $$\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$$. There are [many $$\beta_t$$ variance schedulers](https://huggingface.co/blog/annotated-diffusion#defining-the-forward-diffusion-process), but for simplicity, we will implement a linear scheduler $$\beta_t$$:
+We can start implementing our diffusion algorithm by defining the hyper-parameters $$\beta_t$$ and $$\alpha_t$$ and, for convenience, an additional $$\bar{\alpha}_t = \prod_{s=1}^t \alpha_s$$. There are [many $$\beta_t$$ variance schedulers](https://huggingface.co/blog/annotated-diffusion#defining-the-forward-diffusion-process), but for simplicity, we will implement a linear scheduler $$\beta_t$$. Note that Eq. 4 also tells us how much of the signal $$\mathbf{x}_0$$ is left at the last step: $$\mathbf{x}_T$$ is close to pure noise $$\mathcal{N}(0, \mathbf{I})$$ only if $$\bar{\alpha}_T \approx 0$$. The paper uses $$T=1000$$ steps and a $$\beta_t$$ that increases linearly from $$\beta_1=10^{-4}$$ to $$\beta_T=0.02$$, leading to $$\sqrt{\bar{\alpha}_T} \approx 0.006$$. To sample faster, we will use $$T=100$$ steps instead. Keeping the same $$\beta_1$$ and $$\beta_T$$ would then lead to $$\sqrt{\bar{\alpha}_T} \approx 0.6$$, ie $$\mathbf{x}_T$$ would keep 60% of the amplitude of $$\mathbf{x}_0$$, and sampling from pure noise would not match what the model saw during training. So, as in the [official implementation](https://github.com/openai/improved-diffusion) of [Improved DDPM](https://arxiv.org/abs/2102.09672), we scale both values by $$1000/T$$, leading to $$\sqrt{\bar{\alpha}_T} \approx 0.005$$:
 
 ```python
-    T, β_1, β_T = 100, 0.0001, 0.02
+    T = 100 # the paper uses T=1000
+    β_1, β_T = 0.0001 * 1000 / T, 0.02 * 1000 / T # the paper's values, scaled by 1000/T
     # arrays are 0-indexed: index i holds the value of the paper's timestep t=i+1
     β = torch.linspace(β_1, β_T, T, device=device)
     α = 1. - β
@@ -64,7 +65,7 @@ Now we define the Sohl-Dickstein's forward process $$q (\mathbf{x}_t \mid \mathb
         sqrt_α_cumprod_t = sqrt_α_cumprod[t][:, None, None, None]
         sqrt_1_minus_α_cumprod = torch.sqrt(1. - α_cumprod)
         sqrt_1_minus_α_cumprod_t = sqrt_1_minus_α_cumprod[t][:, None, None, None]
-        return sqrt_α_cumprod_t * x0 + sqrt_1_minus_α_cumprod_t * noise 
+        return sqrt_α_cumprod_t * x0 + sqrt_1_minus_α_cumprod_t * noise
 ```
 
 The other property is that the forward process posterior is tractable when conditioned on $$\mathbf{x}_0$$, so it can be written as:
@@ -80,11 +81,13 @@ $$
 \tilde{\beta}_t = \frac{1-\bar{\alpha}_{t-1}}{1-\bar{\alpha}_t} \beta_t
 $$
 
-and that can be coded as:
+and that can be coded as below. We also compute its logarithm, that we will use later to learn the variance in the DiT section. As $$\tilde{\beta}_t$$ is zero at the first timestep, its log is clipped to the value of the second timestep, as in the official implementation:
 
 ```python
+    # posterior variance, and its log clipped at index 0 (where posterior_β is 0)
     α_cumprod_prev = F.pad(α_cumprod[:-1], (1, 0), value=1.0)
     posterior_β = β * (1. - α_cumprod_prev) / (1. - α_cumprod) # Eq 7
+    posterior_log_β = torch.log(torch.cat([posterior_β[1:2], posterior_β[1:]]))
 ```
 
 and $$\tilde{\mu}_t$$ is the **posterior mean** for the timestep $$t$$ (Eq. 7):
@@ -119,7 +122,35 @@ $$
 We do not know the distribution of the true denoising step $$q(\mathbf{x}_{t-1} \mid \mathbf{x}_t)$$, as it depends on the whole data distribution, so we approximate it with $$p_{\theta}$$, parameterized by a neural network. We assume this distribution to be Gaussian, with a learnable mean $$\mu_\theta$$ and covariance $$\Sigma_\theta$$ (Eq. 1 in the paper). This is a good approximation when the $$\beta_t$$ are small, as the reverse of a small Gaussian diffusion step is also (approximately) Gaussian.
 
 
-To represent the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$, the authors propose a parameterization trick (section 3.2) that allows for our model to learn the noise $$\epsilon_\theta(\mathbf{x}_t, t)$$ for step $$t$$ instead of predicting the mean  $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$. The mean can then be computed as (Eq. 11 in paper):
+In the original paper, the variance $$\Sigma_\theta (\mathbf{x}_t, t)$$ is not learned, and it's set as $$\Sigma_\theta(\mathbf{x}_t, t) = \sigma^2_t \mathbf{I}$$ and $$\sigma^2_t = \beta_t$$ or $$\sigma^2_t = \tilde{\beta}_t$$ (similar results). Learning $$\Sigma_\theta$$ was later explored by [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672), and we will use it in the DiT section below.
+
+In order to train $$p_\theta$$, we can treat the combination of $$q$$ and $$p_\theta$$ as a [variational auto-encoder](https://arxiv.org/abs/1312.6114), and maximize the evidence lower bound (ELBO) of the log-likelihood of the data $$\mathbf{x}_0$$, or equivalently minimize the variational bound $$L$$ on the negative log-likelihood (Eq. 3 in the paper):
+
+$$
+\mathbb{E} \left[ - \log p_\theta(\mathbf{x}_0) \right] \le \mathbb{E}_q \left[ - \log \frac{p_\theta(\mathbf{x}_{0:T})}{q(\mathbf{x}_{1:T} \vert \mathbf{x}_0)} \right] = \mathbb{E}_q \left[ - \log p(\mathbf{x}_T) - \sum_{t \ge 1} \log \frac{p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_t)}{q(\mathbf{x}_t \vert \mathbf{x}_{t-1})} \right] =: L
+$$
+
+Taking the log turns the products over timesteps into a sum of terms. Using the forward process posteriors $$q(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0)$$ defined above, this bound can be rewritten as (Eq. 5 in the paper):
+
+$$
+L = \mathbb{E}_q \bigg[ \underbrace{D_{KL}(q(\mathbf{x}_T \vert \mathbf{x}_0) \parallel p(\mathbf{x}_T))}_{L_T} + \sum_{t > 1} \underbrace{D_{KL}(q(\mathbf{x}_{t-1} \vert \mathbf{x}_t, \mathbf{x}_0) \parallel p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_t))}_{L_{t-1}} \underbrace{- \log p_\theta(\mathbf{x}_0 \vert \mathbf{x}_1)}_{L_0} \bigg]
+$$
+
+where $$L_T$$ has no learnable parameters (it's a constant), $$L_0$$ is the reconstruction term of the last denoising step, and each $$L_{t-1}$$ is a [KL divergence between 2 Gaussian distributions](https://huggingface.co/blog/annotated-diffusion#defining-an-objective-function-by-reparametrizing-the-mean) and therefore has a closed form.
+
+Let's look at the terms $$L_{t-1}$$ first. With $$\Sigma_\theta = \sigma_t^2 \mathbf{I}$$, the KL divergence between the posterior $$q(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0) = \mathcal{N}(\tilde{\mu}_t, \tilde{\beta}_t \mathbf{I})$$ and $$p_\theta(\mathbf{x}_{t-1} \mid \mathbf{x}_t) = \mathcal{N}(\mu_\theta, \sigma_t^2 \mathbf{I})$$ is (Eq. 8 in the paper):
+
+$$
+L_{t-1} = \mathbb{E}_q \left[ \frac{1}{2 \sigma_t^2} \| \tilde{\mu}_t(\mathbf{x}_t, \mathbf{x}_0) - \mu_\theta(\mathbf{x}_t, t) \|^2 \right] + C
+$$
+
+where $$C$$ is a constant that does not depend on $$\theta$$. So the most straightforward parameterization is a model $$\mu_\theta$$ that predicts the posterior mean $$\tilde{\mu}_t$$. However, we can expand it further by reparameterizing Eq. 4 as $$\mathbf{x}_t(\mathbf{x}_0, \epsilon) = \sqrt{\bar{\alpha}_t} \mathbf{x}_0 + \sqrt{1-\bar{\alpha}_t} \epsilon$$ for $$\epsilon \sim \mathcal{N}(0, \mathbf{I})$$, ie $$\mathbf{x}_0 = \frac{1}{\sqrt{\bar{\alpha}_t}} \left( \mathbf{x}_t - \sqrt{1-\bar{\alpha}_t} \epsilon \right)$$, and replacing $$\mathbf{x}_0$$ in the posterior mean $$\tilde{\mu}_t$$ of Eq. 7 (Eqs. 9 and 10 in the paper):
+
+$$
+L_{t-1} - C = \mathbb{E}_{\mathbf{x}_0, \epsilon} \left[ \frac{1}{2 \sigma_t^2} \left\| \frac{1}{\sqrt{\alpha_t}} \left( \mathbf{x}_t(\mathbf{x}_0, \epsilon) - \frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}} \epsilon \right) - \mu_\theta(\mathbf{x}_t(\mathbf{x}_0, \epsilon), t) \right\|^2 \right]
+$$
+
+So $$\mu_\theta$$ must predict $$\frac{1}{\sqrt{\alpha_t}} \left( \mathbf{x}_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}} \epsilon \right)$$ given $$\mathbf{x}_t$$. As $$\mathbf{x}_t$$ is already an input of the model, the authors propose a parameterization (section 3.2) where the model learns the noise $$\epsilon_\theta(\mathbf{x}_t, t)$$ for step $$t$$ instead of the mean $$\boldsymbol{\mu}_\theta(\mathbf{x}_t, t)$$. The mean can then be computed as (Eq. 11 in paper):
 
  $$
  \mu_\theta(\mathbf{x}_t, t) = \frac{1}{\sqrt{\alpha_t}} \left( \mathbf{x}_t - \frac{\beta_t}{\sqrt{1-\bar{\alpha}_t}} \epsilon_\theta(\mathbf{x}_t, t) \right)
@@ -139,21 +170,35 @@ where the model $$\epsilon_\theta(\mathbf{x}_t, t)$$ takes as input the image $$
         return μ_θ
 ```
 
-In the original paper, the variance $$\Sigma_\theta (\mathbf{x}_t, t)$$ is not learned, and it's set as $$\Sigma_\theta(\mathbf{x}_t, t) = \sigma^2_t \mathbf{I}$$ and $$\sigma^2_t = \beta_t$$ or $$\sigma^2_t = \tilde{\beta}_t$$ (similar results). Learning $$\Sigma_\theta$$ was later explored by [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672), and we will use it in the DiT section below.
-
-In order to train $$p_\theta$$, we can treat the combination of $$q$$ and $$p_\theta$$ as a [variational auto-encoder](https://arxiv.org/abs/1312.6114), and maximize the evidence lower bound (ELBO) of the log-likelihood of the data $$\mathbf{x}_0$$, or equivalently minimize the variational bound $$L$$ on the negative log-likelihood (Eq. 3 in the paper):
+Replacing $$\mu_\theta$$ by Eq. 11 in the loss above, each term $$L_{t-1}$$ becomes a weighted mean squared error between the sampled and the predicted noise (Eq. 12 in the paper):
 
 $$
-\mathbb{E} \left[ - \log p_\theta(\mathbf{x}_0) \right] \le \mathbb{E}_q \left[ - \log \frac{p_\theta(\mathbf{x}_{0:T})}{q(\mathbf{x}_{1:T} \vert \mathbf{x}_0)} \right] = \mathbb{E}_q \left[ - \log p(\mathbf{x}_T) - \sum_{t \ge 1} \log \frac{p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_t)}{q(\mathbf{x}_t \vert \mathbf{x}_{t-1})} \right] =: L
+L_{t-1} - C = \mathbb{E}_{\mathbf{x}_0, \epsilon} \left[ \frac{\beta_t^2}{2 \sigma_t^2 \alpha_t (1-\bar{\alpha}_t)} \| \epsilon - \epsilon_\theta(\sqrt{\bar{\alpha}_t} \mathbf{x}_0 + \sqrt{1-\bar{\alpha}_t} \epsilon, t) \|^2 \right]
 $$
 
-Taking the log turns the products over timesteps into a sum of terms. Using the forward process posteriors $$q(\mathbf{x}_{t-1} \mid \mathbf{x}_t, \mathbf{x}_0)$$ defined above, this bound can be rewritten as (Eq. 5 in the paper):
+The authors note that this objective resembles denoising score matching over multiple noise levels, and that sampling with Eq. 11 resembles Langevin dynamics with $$\epsilon_\theta$$ as a learned gradient of the data density.
+
+Finally, the last term $$L_0$$ uses a discrete decoder. Image pixels are integers in $$\{0, 1, ..., 255\}$$ scaled linearly to $$[-1, 1]$$, so the likelihood of each pixel value is the probability mass of $$p_\theta$$ in a bin of width $$2/255$$ around it, where the first and last bins extend to infinity (Eq. 13 in the paper):
 
 $$
-L = \mathbb{E}_q \bigg[ \underbrace{D_{KL}(q(\mathbf{x}_T \vert \mathbf{x}_0) \parallel p(\mathbf{x}_T))}_{L_T} + \sum_{t > 1} \underbrace{D_{KL}(q(\mathbf{x}_{t-1} \vert \mathbf{x}_t, \mathbf{x}_0) \parallel p_\theta(\mathbf{x}_{t-1} \vert \mathbf{x}_t))}_{L_{t-1}} \underbrace{- \log p_\theta(\mathbf{x}_0 \vert \mathbf{x}_1)}_{L_0} \bigg]
+p_\theta(\mathbf{x}_0 \mid \mathbf{x}_1) = \prod_{i=1}^D \int_{\delta_-(x_0^i)}^{\delta_+(x_0^i)} \mathcal{N}(x; \mu_\theta^i(\mathbf{x}_1, 1), \sigma_1^2) \, dx
+\quad \text{with} \quad
+\delta_+(x) = \begin{cases} \infty & \text{if } x = 1 \\ x + \frac{1}{255} & \text{if } x < 1 \end{cases}
+\quad \text{and} \quad
+\delta_-(x) = \begin{cases} -\infty & \text{if } x = -1 \\ x - \frac{1}{255} & \text{if } x > -1 \end{cases}
 $$
 
-where $$L_T$$ has no learnable parameters (it's a constant), $$L_0$$ is the reconstruction term of the last denoising step, and each $$L_{t-1}$$ is a [KL divergence between 2 Gaussian distributions](https://huggingface.co/blog/annotated-diffusion#defining-an-objective-function-by-reparametrizing-the-mean) and therefore has a closed form.
+where $$D$$ is the data dimensionality and $$i$$ indexes one coordinate. Its negative log-likelihood, per pixel value and for a given distribution $$p_\theta$$, can be coded as:
+
+```python
+    def eq13_decoder_nll(x_0, p):
+        """ Equation 13: negative log-likelihood of the discretized decoder p_θ(x_0|x_1), per pixel value """
+        cdf_upper = p.cdf(x_0 + 1/255) # CDF at δ+(x_0), for x_0 < 1
+        cdf_lower = p.cdf(x_0 - 1/255) # CDF at δ-(x_0), for x_0 > -1
+        # the CDF at -∞ and +∞ is 0 and 1 (evaluating it at ±∞ would make the gradients NaN)
+        prob = torch.where(x_0 < -0.999, cdf_upper, torch.where(x_0 > 0.999, 1 - cdf_lower, cdf_upper - cdf_lower))
+        return -torch.log(prob.clamp(min=1e-12))
+```
 
 ## Sampling
 
@@ -162,43 +207,56 @@ Once the model is trained, to generate new images we must reverse the diffusion 
 {: style="text-align:center; font-size: small;"}
 <img width="45%" height="45%" src="/assets/Diffusion/diffusion_alg2.png"/> 
 
-Step 4 samples $$\mathbf{x}_{t-1}$$ by summing the predicted mean $$\mu_\theta(\mathbf{x}_t, t)$$ with noise $$\mathbf{z}$$ multiplied by the standard deviation $$\sigma_t$$ (here, $$\sigma^2_t = \tilde{\beta}_t$$):
+Step 4 samples $$\mathbf{x}_{t-1}$$ by summing the predicted mean $$\mu_\theta(\mathbf{x}_t, t)$$ with noise $$\mathbf{z}$$ multiplied by the standard deviation $$\sigma_t$$, where $$\sigma^2_t = \tilde{\beta}_t$$ for the U-Net, and the learned variance $$\Sigma_\theta$$ for the DiT (see the DiT section below). As in the paper, the `model` used for sampling is an Exponential Moving Average of the trained model weights (see the training section below):
 
 ```python
     @torch.no_grad()
     def alg2_p_sampling(model, shape):
-        img = torch.randn(shape, device=device)
-        for t_index in reversed(range(0, T)):
+        img = torch.randn(shape, device=device) # step 1
+        for t_index in reversed(range(0, T)): # step 2
             t = torch.full((shape[0],), t_index, device=device, dtype=torch.long)
-            model_output = model(img, t)
-            ε_θ = model_output.sample # extract tensor from UNet2DOutput class
+            if model_name == 'UNet':
+                ε_θ = model(img, t).sample # extract tensor from UNet2DOutput class
+                σ2_t = posterior_β[t][:, None, None, None] # σ_t^2 = β̃_t
+            else:
+                ε_θ, v = model(img, t)
+                σ2_t = learned_Σ_θ(v, t) # σ_t^2 = Σ_θ, learned
             img = eq11_μ_θ(img, ε_θ, t) # Eq. 11
-            if t_index > 0: # z = 0 at the last step (paper's t=1)
-                posterior_β_t = posterior_β[t][:, None, None, None]
-                noise = torch.randn_like(img)
-                img += torch.sqrt(posterior_β_t) * noise 
+            if t_index > 0: # step 3: z = 0 at the last step (paper's t=1)
+                img += torch.sqrt(σ2_t) * torch.randn_like(img) # step 4
         return img
 ```
 
 ## Training algorithm
 
-We'll train our model with the CIFAR10 dataset containing 32x32 RGB images across 10 classes. We'll set our batch size to 64 images per batch.
+We'll train our model with the CIFAR10 dataset containing 32x32 RGB images across 10 classes. We'll set our batch size to 48 images per batch (per GPU):
 
 ```python
+    # load dataset from the hub
     dataset = load_dataset("uoft-cs/cifar10", split='train')
     transform = lambda image: (pil_to_tensor(image)/255)*2-1 # normalize to [-1,1]
     images = [ transform(image) for image in dataset["img"]]
-    batch_size, channels = 64, images[0].shape[0]
-    dataloader = DataLoader(images, batch_size=batch_size, sampler=DistributedSampler(images), drop_last=True)
+    batch_size, channels, img_size = 48, images[0].shape[0], images[0].shape[-1]
+    sampler = DistributedSampler(images)
+    dataloader = DataLoader(images, batch_size=batch_size, sampler=sampler, drop_last=True)
 ```
 
-Our model will be a U-Net similar to the one of the original publication, available in the `diffusers` package, trained with an SGD optimizer:
+Our model will be a U-Net similar to the one of the original publication, available in the `diffusers` package (the DiT model is detailed in the next section). As in the paper, we train it with the Adam optimizer and a learning rate of $$2 \times 10^{-4}$$, and keep an [exponential moving average](https://openreview.net/forum?id=2M9CUnYnBA) (EMA) of the model weights with a decay of $$0.9999$$, that we use to sample images. As in the `EMAModel` of `diffusers`, we add a warmup to the decay, so that the averaged model follows the trained model more closely at the start of the training:
 
 ```python
-    model = diffusers.UNet2DModel(in_channels=channels, out_channels=channels).to(device)
-    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank])
-    optimizer = SGD(model.parameters(), lr=1e-2)
-``` 
+    # load model, optimizer and the Exponential Moving Average (EMA) of the model weights
+    if model_name == 'UNet':
+        model = diffusers.UNet2DModel(in_channels=channels, out_channels=channels)
+    elif model_name == 'DiT':
+        model = DiT(T, channels, img_size, patch_size=4, n_blocks=4)
+    else:
+        raise ValueError(f"Model name {model_name} not recognized")
+    model = model.to(device=device)
+    ema_decay = lambda n: ((1 + n) / (10 + n)).clamp(max=0.9999) # 0.9999 as in the paper, with a warmup as in diffusers
+    ema = AveragedModel(model, avg_fn=lambda ema_p, p, n: ema_decay(n) * ema_p + (1 - ema_decay(n)) * p).eval()
+    model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank] if torch.cuda.is_available() else None)
+    optimizer = Adam(model.parameters(), lr=2e-4)
+```
 
 As a loss function, we follow the paper and use a simple mean square error (Eq. 14) between the sampled noise $$\epsilon$$ and the predicted noise $$\epsilon_\theta$$ (Huber loss or MAE are also popular choices):
 
@@ -206,24 +264,46 @@ $$
 \mathcal{L}_\text{simple}(\theta) = \mathop{\mathbb{E}}_{t, \mathbf{x}_0, \epsilon} \left[ \| \epsilon - \epsilon_\theta(\sqrt{\bar{\alpha}_t} \mathbf{x}_0 + \sqrt{1-\bar{\alpha}_t} \epsilon, t)\| ^2 \right]
 $$
 
-where $$t$$ is sampled uniformly between $$1$$ and $$T$$. This is a simplified version of the bound $$L$$ above, that drops the per-timestep weights of its terms and ignores the constant $$L_T$$. The authors found it to be simpler to implement and to yield better sample quality.
+where $$t$$ is sampled uniformly between $$1$$ and $$T$$. This is a simplified version of the bound $$L$$: the terms $$t>1$$ are the terms $$L_{t-1}$$ of Eq. 12 without their weights, the term $$t=1$$ approximates $$L_0$$, and the constant $$L_T$$ is ignored. As the weights of Eq. 12 are larger for small $$t$$, dropping them lets the model focus on the harder denoising tasks at larger $$t$$. The authors found it to be simpler to implement and to yield better sample quality. It can be coded as:
+
+```python
+    def unet_loss(x_t, t, noise):
+        """ L_simple, Equation 14 """
+        ε_θ = model(x_t, t).sample # extract tensor from UNet2DOutput class
+        return F.mse_loss(ε_θ, noise) # Huber loss and MAE are also ok
+```
 
 We can now put together our final training algorithm: 
 
 {: style="text-align:center; font-size: small;"}
 <img width="45%" height="45%" src="/assets/Diffusion/diffusion_alg1.png"/> 
 
-where each training iteration (steps 2 to 5) can be coded as:
+where each training iteration (steps 2 to 5) is implemented by the inner loop below. At the end of every epoch, we use the EMA model to generate and save new images:
 
 ```python
-    t = torch.randint(0, T, (batch_size,), device=device).long() # step 3 (0-indexed)
-    noise = torch.randn_like(batch) # step 4
-    x_t = q_sample(x0=batch, t=t, noise=noise)
-    ε_θ = model(x_t, t).sample
-    loss = F.mse_loss(noise, ε_θ)  # step 5. Huber loss and MAE are also ok
-    loss.backward()
-    optimizer.step()
-    optimizer.zero_grad(set_to_none=True)
+    # training loop
+    for epoch in range(20):
+        sampler.set_epoch(epoch) # shuffle the data differently at every epoch
+        for step, x_0 in enumerate(dataloader):
+            x_0 = x_0.to(device=device)
+            t = torch.randint(0, T, (batch_size,), device=device).long() # Algorithm 1, step 3 (0-indexed)
+            noise = torch.randn_like(x_0) # step 4
+            x_t = q_sample(x0=x_0, t=t, noise=noise)
+            loss = unet_loss(x_t, t, noise) if model_name == 'UNet' else dit_loss(x_0, x_t, t, noise) # step 5
+            loss.backward()
+            optimizer.step()
+            optimizer.zero_grad(set_to_none=True)
+            ema.update_parameters(model.module)
+            if dist.get_rank() == 0:
+                print(f"epoch {epoch}, step {step} loss: {loss.item()}")
+
+        # save images generated with the EMA model
+        if dist.get_rank() == 0:
+            results_folder = Path("./results")
+            results_folder.mkdir(exist_ok = True)
+            img = alg2_p_sampling(ema, shape=x_0.shape)
+            img = (img + 1) * 0.5 # from [-1,1] to [0,1]
+            save_image(img, str(results_folder / f'sample-{epoch}.png'), nrow = batch_size)
 ```
 
 ## Diffusion transformers
@@ -235,21 +315,26 @@ With the advancement of Transformers as an important module in sequence-based ML
 
 In the adaLN-Zero architecture shown in the diagram, the adaptive layer normalization process applies dynamic conditioning into the model: instead of learning the scale $$\gamma$$ and shift $$\beta$$ parameters of each layer norm directly, these are regressed by an MLP from the sum of the embeddings of the timestep $$t$$ and the class label $$y$$ (the conditioning inputs). adaLN-Zero additionally regresses dimension-wise scaling parameters $$\alpha$$ that are applied right before each residual connection, and initializes them to zero, so that each DiT block starts as the identity function. Note that these $$\alpha$$ and $$\beta$$ are unrelated to the $$\alpha_t$$ and $$\beta_t$$ of the noise schedule.
 
-Here, for the sake of simplicity, we will implement a simple ViT made of a positional embedding layer, a stack of transformer blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a predicted noise and a variance for each channel and pixel of the patch).
+Here, for the sake of simplicity, we will implement a simple ViT made of a positional embedding layer, a stack of transformer blocks and a decoder. The decoder is a layer-norm and a linear layer that outputs the shape $$p \times p \times 2C$$ (ie a predicted noise, and a value that parameterizes the variance, for each channel and pixel of the patch).
 To keep our architecture as simple as possible, we will ignore the 4 variants described in DiT block design (in Section 3.2, in-context conditioning, cross-attention block, adaptive layer norm block and adaLN-Zero block): we simply add a timestep embedding to every patch, and use a regular transformer `Block` (multi-head self-attention followed by a feed-forward network, as in our [GPT-lite post]({{ site.baseurl }}{% post_url 2023-02-28-GPTlite %})). We will also use the regular PyTorch embedding `nn.Embedding` (a look-up table) instead of the frequency-based positional embeddings (the sine-cosine version). Each token is a flattened image patch, so the embedding size is $$p \times p \times C$$.
 
 ```python
 class DiT(nn.Module):
-    def __init__(self, timesteps, num_channels, img_size, patch_size=4, n_blocks=12):
+    """ A Diffusion Transformer (DiT) model """
+
+    def __init__(self, timesteps, num_channels, img_size, patch_size=4, n_blocks=12, num_labels=None):
         super().__init__()
         assert img_size % patch_size == 0, "Image size must be divisible by patch size"
         self.patch_size = patch_size
-        n_embd = patch_size*patch_size*num_channels # values per img patch 
+        n_embd = patch_size*patch_size*num_channels # values per img patch
 
         # timestep and positional embeddings
         n_pos_emb = (img_size//patch_size)*(img_size//patch_size) # number of patches per image
         self.t_embedding = nn.Embedding(timesteps, n_embd)
         self.pos_embedding = nn.Embedding(n_pos_emb, n_embd)
+
+        # class embeddings, only for a class-conditional model
+        self.class_embedding = nn.Embedding(num_labels, n_embd) if num_labels else None
 
         # DiT blocks
         self.blocks = nn.Sequential(*[Block(n_embd=n_embd) for _ in range(n_blocks)])
@@ -267,59 +352,76 @@ Then we need to add the boilerplate code that crops the input image into the pat
         x = x.unfold(2, self.patch_size, self.patch_size).unfold(3, self.patch_size, self.patch_size)
 
         # linearize patches and flatten embeddings: (B, NH*NW, PH*PW*C)
-        _, _, NH, NW, PH, PW = x.shape    
+        _, _, NH, NW, PH, PW = x.shape
         x = x.permute(0, 2, 3, 4, 5, 1) # (B, NH, NW, PH, PW, C)
         x = x.reshape(B, NH*NW, PH*PW*C)
         return x, dict(B=B, C=C, H=H, W=W, NH=NH, NW=NW, PH=PH, PW=PW)
 
     def unpatchify(self, x, shapes):
-        """ convert patches (B, NH*NW, PH*PW*C*2) back into noise ε_θ and variance Σ_θ, each of shape (B, C, H, W) = (B, C, NH*PH, NW*PW) """
-        B, C, H, W, NH, NW, PH, PW, = shapes.values()
+        """ convert patches (B, NH*NW, PH*PW*C*2) back into the noise ε_θ and the vector v that parameterizes
+            the variance Σ_θ, each of shape (B, C, H, W) = (B, C, NH*PH, NW*PW) """
+       C, H, W, NH, NW, PH, PW, = shapes.values()
         assert x.shape == (B, NH*NW, PH*PW*C*2)
         x = x.reshape(B, NH, NW, PH, PW, C, 2).permute(0, 5, 1, 3, 2, 4, 6) # (B, C, NH, PH, NW, PW, 2)
         x = x.reshape(B, C, NH*PH, NW*PW, 2)
-        ε_θ, Σ_θ = x[...,0], x[...,1]
-        assert ε_θ.shape == Σ_θ.shape == (B, C, H, W) # original shape
-        return ε_θ, Σ_θ
+        ε_θ, v = x[...,0], x[...,1]
+        assert ε_θ.shape == v.shape == (B, C, H, W) # original shape
+        return ε_θ, v
 ```
 
-The forward pass then adds the positional and timestep embeddings to the patches, and runs the transformer blocks and the decoder:
+The forward pass then adds the positional and timestep embeddings to the patches (and the class embedding, discussed in the Conditionction below), and runs the transformer blocks and the decoder:
 
 ```python
-    def forward(self, x, t):
+    def forward(self, x, t, label=None):
         x, shapes = self.patchify(x) # (B, C, H, W) -> (B, N, E), for N patches of E=PH*PW*C values
         B, N, E = x.shape
         x += self.pos_embedding(torch.arange(N, device=x.device)).reshape(1, N, E) # positional embeddings
         x += self.t_embedding(t).reshape(B, 1, E) # timestep embedding, added to all patches of an image
+        if label is not None: # class embedding, added to all patches of an image
+            x += self.class_embedding(label).reshape(B, 1, E)
         x = self.blocks(x)
         x = self.decoder(x) # (B, N, E) -> (B, N, 2E)
-        return self.unpatchify(x, shapes) # ε_θ and Σ_θ
+        return self.unpatchify(x, shapes) # ε_θ and v
 ```
 
-In this use case, we are also learning the covariance $$\Sigma_\theta$$, so we need to optimize the full variational bound $$L$$, as $$\mathcal{L}_\text{simple}$$ does not depend on $$\Sigma_\theta$$. To do this, the authors train $$\epsilon_\theta$$ with $$\mathcal{L}_\text{simple}$$, as before, and train $$\Sigma_\theta$$ with the full $$L$$. Each term $$L_{t-1}$$ is a KL divergence between two Gaussians, that has a closed form solution (an alternative implementation can be found in [Meta's DiT implementation](https://github.com/facebookresearch/DiT/blob/ed81ce2229091fd4ecc9a223645f95cf379d582b/diffusion/gaussian_diffusion.py#L682)). The terms $$L_{t-1}$$ and $$L_0$$ can be computed as:
+In this use case, we are also learning the covariance $$\Sigma_\theta$$, so we need to optimize the full variational bound $$L$$, as $$\mathcal{L}_\text{simple}$$ does not depend on $$\Sigma_\theta$$. Following [Improved DDPM](https://arxiv.org/abs/2102.09672), the model outputs a vecr $$v$$ with one value per dimension, that interpolates the variance between its two extreme choices $$\beta_t$$ and $$\tilde{\beta}_t$$ (the upper and lower bounds of the reverse process entropy) in the log domain (Eq. 15 in Improved DDPM):
+
+$$
+\Sigma_\theta(\mathbf{x}_t, t) = \exp \left( v \log \beta_t + (1-v) \log \tilde{\beta}_t \right)
+$$
+
+coded as:
 
 ```python
-    ε_θ, Σ_θ = model_output
-    posterior_μ_t = posterior_μ(x_0, x_t, t)
-    posterior_β_t = posterior_β[t][:, None, None, None]   
-    
-    # clip variance values to a valid range
-    Σ_θ = torch.clamp(Σ_θ, min=1e-5, max=1e5)
-    posterior_β_t = torch.clamp(posterior_β_t, min=1e-5, max=1e5)
-
-    μ_θ = eq11_μ_θ(x_t, ε_θ, t) # Eq. 11
-    p = torch.distributions.Normal(μ_θ, Σ_θ.sqrt()) # Eq. 1
-    q = torch.distributions.Normal(posterior_μ_t, posterior_β_t.sqrt()) # Eq. 6
-    kl = torch.distributions.kl_divergence(q, p).mean(dim=(1, 2, 3)) # L_{t-1}
-
-    # L_0 for t=0 (the paper's t=1), L_{t-1} otherwise. L_0 is the Negative Log Likelihood (NLL) of
-    # a continuous Gaussian decoder, a simplification of the discretized decoder of the paper (Eq. 13)
-    decoder_nll = F.gaussian_nll_loss(input=μ_θ, var=Σ_θ, target=x_0, reduction='none').mean(dim=(1, 2, 3))
-    loss = torch.where((t == 0), decoder_nll, kl) # loss per sample
-    loss = loss.mean()
+    def learned_Σ_θ(v, t):
+        """ Improved DDPM, Equation 15: interpolate log(Σ_θ) between log(β_t) and log(posterior_β_t) """
+       = (v + 1) / 2 # from the model output in [-1, 1] to [0, 1], as in the official implementation
+        log_β_t = torch.log(β)[t][:, None, None, None]
+        posterior_log_β_t = posterior_log_β[t][:, None, None, None]
+        return torch.exp(frac * log_β_t + (1 - frac) * posterior_log_β_t)
 ```
 
-In fact, the paper implements a **conditional diffusion model** that takes as input extra information such as class $$c$$, and the reverse process becomes $$p_\theta(\mathbf{x}_{t-1} \mid  \mathbf{x}_t, c)$$, where $$\epsilon_\theta$$ and $$\Sigma_\theta$$ are conditioned on $$c$$. We'll look at that next.
+To train it, the authors train $$\epsilon_\theta$$ with $$\mathcal{L}_\text{simple}$$, as before, and train $$\Sigma_\theta$$ with the full bound $$L$$, ie they minimize a hybrid loss (Eq. 16 in Improved DDPM)L_\text{hybrid} = \mathcal{L}_\text{simple} + \lambda L_\text{vlb}
+$$
+
+where $$L_\text{vlb}$$ is the variational bound $$L$$ of Eq. 5, and $$\lambda = 0.001$$ prevents $$L_\text{vlb}$$ from overwhelming $$\mathcal{L}_\text{simple}$$. A stop-gradient on $$\mu_\theta$$ makes $$L_\text{vlb}$$ train only $$\Sigma_\theta$$. Each term $$L_{t-1}$$ of $$L_\text{vlb}$$ is a KL divergence between two Gaussians, that has a closed form solution (an alternative implementation can be found in [Meta's DiT implementation](https://github.com/facebookresearch/DiT/blob/ed81ce2229091fd4ecc9a223645f95cf379d582b/diffusion/gaussian_diffusion.py#L682)), and $$L_0$$ is the discretized decoder of Eq. 13. As we sample a single timestep per image, and $$L_\text{vlb}$$ sums the terms of $$T$$ timesteps, we estimate it as $$T$$ times the term of the sampled timestep, measured in bits per dimension as in the paper:
+
+```python
+    def dit_loss(x_0, x_t, t, noise):
+        """ L_hybrid = L_simple + λ L_vlb, Improved DDPM, Equation 16 """
+       ε_θ, v = model(x_t, t)
+        Σ_θ = learned_Σ_θ(v, t)
+        μ_θ = eq11_μ_θ(x_t, ε_θ.detach(), t) # stop-gradient: L_vlb only trains Σ_θ
+        p = torch.distributions.Normal(μ_θ, Σ_θ.sqrt()) # Eq. 1
+        q = torch.distributions.Normal(posterior_μ(x_0, x_t, t), torch.exp(0.5 * posterior_log_β[t][:, None, None, None])) # Eq. 6
+        kl = torch.distributions.kl_divergence(q, p).mean(dim=(1, 2, 3)) # L_{t-1}
+        nll = eq13_decoder_nll(x_0, p).mean(dim=(1, 2, 3)) # L_0
+     _vlb = torch.where(t == 0, nll, kl) / math.log(2) # per sample, in bits per dimension (t=0 is the paper's t=1)
+        L_simple = F.mse_loss(ε_θ, noise)
+        return L_simple + T / 1000 * L_vlb.mean() # λ = 1/1000, times T as L_vlb sums the losses of T timesteps
+```
+
+In fact, the paper implements a **conditional diffusion model** that takes as input extra information such as class $$c$$, and the reverse process becomes $$p_\theta(\mathbf{x}_{t-1} \mid  \mathbf{x}_t, c)$$, where $$\epsilon_\theta$$ and Sigma_\theta$$ are conditioned on $$c$$. We'll look at that next.
 
 ## Conditioning
 
@@ -327,23 +429,25 @@ The previous model learns to generate samples from the data distribution. On a d
 
 The previous implementation was generating/sampling new images from a diffusion process. One can add conditioning for the class id, input text, guiding image, or other information we want to train on.
 
-In our example above, we add class `label` as the additional information in the `forward` pass:
+Our DiT takes the class `label` as optional additional information: when created with a number of labels `num_labels`, it learns a class embedding that is added to all patches of an image, just like the timestep embedding:
 
 ```python
-class DiT(nn.Module):
-    
-    def __init__(self, timesteps, num_channels, img_size, num_labels=10, patch_size=4, n_blocks=12):
+    def __init__(self, timesteps, num_channels, img_size, patch_size=4, n_blocks=12, num_labels=None):
         # [...]
-        self.class_embedding = nn.Embedding(num_labels, n_embd)
+        # class embeddings, only for a class-conditional model
+        self.class_embedding = nn.Embedding(num_labels, n_embd) if num_labels else None
+        # [...]
 
     def forward(self, x, t, label=None):
-        # [...] patchify, add positional and timestep embeddings
-        if label is not None: # add class embeddings
+        # [...]
+        if label is not None: # class embedding, added to all patches of an image
             x += self.class_embedding(label).reshape(B, 1, E)
-        # [...] transformer blocks, decoder and unpatchify
+        # [...]
 ```
 
-Other interesting features that improve quality are [classifier-free guidance](https://arxiv.org/abs/2207.12598) and [exponential moving average](https://openreview.net/forum?id=2M9CUnYnBA) and for brevity they will be omitted. Finally, conditioning allows us to train diffusion models with text, image or audio as the input signal.
+Our training script trains an unconditional model, but a class-conditional one can be trained by also passing the CIFAR10 label of each image to the model.
+
+Another interesting feature that improves quality is [classifier-free guidance](https://arxiv.org/abs/2207.12598), that for brevity will be omitted. Finally, conditioning allows us to train diffusion models with text, image or audio as the input signal.
 
 ## Video diffusion and 3D attention
 
@@ -450,8 +554,8 @@ NaViT (Native Resolution ViT) uses sequence packing during training to process i
 {::options parse_block_html="false" /}
 
 {::options parse_block_html="true" /}
-<details> <summary markdown="span">[CogVideoX: Text-to-Video Diffusion Models with An Expert Tnsformer](https://arxiv.org/abs/2408.06072)</summary>
-CogVideoX is a large-scale DiT model for text-to-video generation. Model input is a pair of video and text. Text input is encoded with T5. Video input is passed through a 3D causal VAE that compresses the video into the latent space, and then all video patches are unfolded into a long sequence. Text and video embeddings are then concatenated as input, and passed to a stack of *expert* transformer blocks. The model output is then unpatchified to restore the original latent shape, and decoded using a 3D causal VAE to reconstruct the video. The attention is provided by a 3D attention model (that unfolds all patches of all frames) instead of a separate spatial and temporal attention. 
+<details> <summary markdown="span">[CogVideoX: Text-to-Video Diffusion Models with An Expert Transformer](https://arxiv.org/abs/2408.06072)</summary>
+CogVideoX is a large-scale DiT model for text-to-video generation. Model input is a pair of vio and text. Text input is encoded with T5. Video input is passed through a 3D causal VAE that compresses the video into the latent space, and then all video patches are unfolded into a long sequence. Text and video embeddings are then concatenated as input, and passed to a stack of *expert* transformer blocks. The model output is then unpatchified to restore the original latent shape, and decoded using a 3D causal VAE to reconstruct the video. The attention is provided by a 3D attention model (that unfolds all patches of all frames) instead of a separate spatial and temporal attention. 
 </details>
 {::options parse_block_html="false" /}
 
@@ -498,13 +602,13 @@ data. A high masking ratio leads to a large speedup, e.g., > 4× in wall-clock t
 or even more.
 
 {: style="text-align:center; font-size: small;"}
-<img widh="70%" height="70%" src="/assets/Diffusion/masked_autoencoders.png"/> 
+<img width="70%" height="70%" src="/assets/Diffusion/masked_autoencoders.png"/> 
 
 </details>
 {::options parse_block_html="false" /}
 
 <br/>
-And here is some work on multi-dimensional parallelism for large-scale models such as SORA:
+And here is some wok on multi-dimensional parallelism for large-scale models such as SORA:
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">[Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633)</summary>
