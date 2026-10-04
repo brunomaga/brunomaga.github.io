@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed GPT model (part 3): Megatron-LM tensor parallelism"
+title:  "Distributed GPT model (3): Megatron-LM tensor parallelism"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---

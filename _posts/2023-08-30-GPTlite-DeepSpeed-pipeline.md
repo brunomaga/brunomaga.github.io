@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed GPT model (part 2): pipeline parallelism"
+title:  "Distributed GPT model (2): pipeline parallelism"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
