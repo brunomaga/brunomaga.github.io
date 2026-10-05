@@ -14,14 +14,14 @@ So in this post, we will discuss MoEs development from early days, and provide i
 In 1991, the papers [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf) and [Task Decomposition Through Competition in a Modular Connectionist Architecture](https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog1502_2) introduced some of the earliest architectures similar to what we call nowadays an MoE.
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="65%" src="/assets/Mixture-of-Experts/MoE_2014_Ilya.png" alt="MoE paper 2014"/>
+<img width="65%" height="65%" src="{{ site.assets }}/Mixture-of-Experts/MoE_2014_Ilya.png" alt="MoE paper 2014"/>
 
 {: style="text-align:center; font-size: small;"}
 **Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). <br/>Source: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
 
 The MoE was defined as a set of independent **experts** (feed-forward networks, $$f_i(x)$$ in the picture) alongside a **gating network** (also a feed-forward network, $$g(x)$$). All the experts and the gating network receive the same input $$x$$. The gating network outputs a distribution of each expert's relevance/importance for the given input and can be defined in its simplest form as $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, where $$W_g$$ is an (optional) learnable transformation. Finally, the output of the system ($$z$$) is the sum of the outputs of all experts weighted by the output of the gating network.
 
-The implementation of a MoE module is straightforward, and you can find the full code with running examples in the [`moe.py` file in the supporting repository](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/Mixture-of-Experts/moe.py):
+The implementation of a MoE module is straightforward, and you can find the full code with running examples in the [`moe.py` file in the supporting repository]({{ site.assets }}/Mixture-of-Experts/moe.py):
 
 ```python
 class MoE(nn.Module):
@@ -64,7 +64,7 @@ An important observation related to the behaviour of MoEs, where the authors obs
 
 With the surge of deep neural networks, [Learning Factored Representations in a Deep Mixture of Experts (2014)](https://arxiv.org/abs/1312.4314) extended “Mixture of Experts” to a stacked model (“Deep Mixture of Experts”) with multiple sets of gating and experts.
 
-This deep MoE model can be coded simply by stacking several MoE layers (also available in [`moe.py`](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/Mixture-of-Experts/moe.py)):
+This deep MoE model can be coded simply by stacking several MoE layers (also available in [`moe.py`]({{ site.assets }}/Mixture-of-Experts/moe.py)):
 
 ```python
 class MoE_deep(nn.Module):
@@ -102,7 +102,7 @@ In practice, the MoE selects for each token in the text a possibly different com
 Towards better scaling, the 2017 paper [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538) presented a recurrent (LSTM-based) language model where the feed-forward subnetwork was replaced with an MoE structure. The objective was to do text processing (and translation) with thousands of experts, totalling 137B parameters:
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Mixture-of-Experts/MoE_2017_Dean.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/Mixture-of-Experts/MoE_2017_Dean.png"/>
 
 ### Processing and batching
 
@@ -175,7 +175,7 @@ The experiments fixed a compute budget and compared a baseline model with severa
 Finally, they look at input-to-expert assignments that demonstrate that **different experts specialize on different tasks based on syntax and semantics** (Appendix E table 9):
 
 {: style="text-align:center; font-size: small;"}
-<img width="75%" height="75%" src="/assets/Mixture-of-Experts/MoE_2017_Appendix_E_table_9.png"/>
+<img width="75%" height="75%" src="{{ site.assets }}/Mixture-of-Experts/MoE_2017_Appendix_E_table_9.png"/>
 
 Due to lack of time, I am not providing an implementation, but for the record, a simple python implementation of this model is available in [this repo](https://github.com/lucidrains/mixture-of-experts).
 
@@ -200,7 +200,7 @@ should be distributed across devices".
 The model tested was a Transformer-based stack of encoder and decoder layers. Each Transformer block (self-attention, feed-forward and, on the decoder's case, cross-attention) was converted into a conditional computation module by **replacing the feed-forward layer in every second block with a MoE layer (with top-2 gating)** in both the encoder and the decoder.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/Mixture-of-Experts/MoE_GShard.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/Mixture-of-Experts/MoE_GShard.png"/>
 
 ### Random routing and expert capacity
 
@@ -230,14 +230,14 @@ keeping the floating point operations (FLOPs) per example constant.
 In order to achieve scaling, the sparsely activated layers split *unique weights* across devices. As in GShard, the authors replace the feed-forward network with an MoE. In Switch Transformers, they use **Switch routing**: **each token is routed to only a single expert** (top-1). The claim is that this simplification preserves model quality while reducing routing computation and improving stability.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Mixture-of-Experts/MoE_Switch_Transformers.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/Mixture-of-Experts/MoE_Switch_Transformers.png"/>
 
 ### Expert Capacity
 
 They introduce the concept of **expert capacity factor**, which is the number of tokens that each expert computes, computed as tokens-per-expert times a capacity factor. If this capacity factor is exceeded (i.e. if the router sends too many inputs to a given expert), then extra tokens do not have computation associated with them and are instead passed to the next layer via a residual connection.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Mixture-of-Experts/MoE_Switch_Transformers_2.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/Mixture-of-Experts/MoE_Switch_Transformers_2.png"/>
 
 Related to the expert capacity hyperparameter:
 
@@ -271,7 +271,7 @@ Finally, the paper includes several details on training techniques and experimen
 The MoE workflow is a four-step algorithm, best illustrated in the [MegaBlocks paper](https://arxiv.org/abs/2211.15841) (detailed later): 
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/Mixture-of-Experts/MoE_MegaBlocks.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/Mixture-of-Experts/MoE_MegaBlocks.png"/>
 
 We start by defining our distributed mixture-of-experts block as `MoE_dist`, with a sharded router and a local expert. For the sake of simplicity, we will have a single expert per GPU, and will drop the tokens that exceed each expert's capacity:
 
@@ -334,7 +334,7 @@ The following **permutation step** selectively sends the tokens to each expert's
 ```
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="/assets/Mixture-of-Experts/AlltoAll.png"/>
+<img width="60%" height="60%" src="{{ site.assets }}/Mixture-of-Experts/AlltoAll.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the MPI all-to-all collective operation. When sending only 1 element per row, it is equivalent to a distributed matrix transpose - note the red row before the all-to-all (left) as a transposed column after the all-to-all (right). We use a single-element all-to-all to exchange the count of items to be sent received among processors. We then use those counts to perform a new all-to-all with variable-sized elements in the permutation step. Finally, in the un-permutation step, we perform another all-to-all that performs the converse communication, by swapping the send and receive counts and buffers.
@@ -382,7 +382,7 @@ Finally, the **scale step** performs a weighted sum of the top-k probabilities f
     return x.view(B,T,C)
 ```
 
-You can find the complete implementation in the [Mixture-of-Experts repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/Mixture-of-Experts/moe_dist.py).
+You can find the complete implementation in the [Mixture-of-Experts repo]({{ site.assets }}/Mixture-of-Experts/moe_dist.py).
 
 ### Applying the MoE to an existing LLM
 
@@ -491,7 +491,7 @@ According to the authors, existing sparsely-gated mixture-of-experts (MoE) "suff
 static execution, namely static parallelism and pipelining, which does not adapt to the dynamic workload". To that extent, they present Tutel, a system that delivers two main novelties: adaptive parallelism for optimal expert execution and adaptive pipelining for tackling inefficient and non-scalable dispatch/combine operations in MoE layers.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Mixture-of-Experts/tutel_moe_parallelism.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/Mixture-of-Experts/tutel_moe_parallelism.png"/>
 </details>
 {::options parse_block_html="false" /}
 
@@ -516,7 +516,7 @@ averages of all tokens (with weights depending on both tokens and experts) and t
 It addresses the challenges of current sparse MoEs: training instability, token dropping, inability to scale the number of experts, and ineffective finetuning.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Mixture-of-Experts/soft_MoEs.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/Mixture-of-Experts/soft_MoEs.png"/>
 
 In the benchmark, Soft MoEs greatly outperforms dense Transformers (ViTs) and popular MoEs (Token Choice and Experts Choice) on a vision task, while training in a reduced time frame and delivering faster inference. 
 
@@ -543,13 +543,13 @@ Remember that MoEs work by subdividing the problem domain into smaller problems 
 For every token, the model decides to either apply computation (as in the standard transformer), or skip computation and pass it through a residual connection (remaining unchanged and saving compute). Moreover, contrarily to MoEs, the **routing is applied to both the feedforward network and the multi-head attention**. In the multi-head routing, the router will not only decide on which tokens to update, but which tokens are made available to attend to. "We refer to this strategy as Mixture-of-Depths (MoD) to emphasize how individual tokens pass through different numbers of layers, or blocks, through the depth of the transformer". In practice, during training, for every input, the router produces a scalar weight (importance) per token. The gating picks the top-$$k$$ tokens per sentence per block to participate in the transformer block computation. $$k$$ is a hyper-parameter that defined the max number of tokens passed to a block, thus the computation graph and tensor sizes remain static throughout the execution. Setting $$k$$ allows one to trade off between performance and speed, for a given compute budget.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Mixture-of-Experts/Mixture_of_Depths.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/Mixture-of-Experts/Mixture_of_Depths.png"/>
 
 The big challenge is the routing scheme. The authors considered (1) token-choice where a router produces per-token probability distributions across computational paths (experts); and the orthogonal approach (2) expert-choice where instead of having tokens choose the expert they prefer, each expert instead picks the top-$$k$$ tokens based on the tokens’ preferences. They ultimately adopted the expert-choice because it does not require load balancing, and "routers can try to ensure that the most critical tokens are among the
 top-$$k$$ by setting their weight appropriately".
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Mixture-of-Experts/Mixture_of_Depths_2.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/Mixture-of-Experts/Mixture_of_Depths_2.png"/>
 
 At the time of writing of this post, this is still very recent work, so future will tell if MoDs become useful for the general use case.
 

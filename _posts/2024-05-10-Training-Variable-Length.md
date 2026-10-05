@@ -18,7 +18,7 @@ Curriculum learning can also improve efficiency for variable-length data. Mixing
 At a high level, curriculum learning is simple: (1) define a difficulty metric per sample, (2) sort samples by increasing difficulty, and (3) iterate through the sorted dataset. In distributed runs with large datasets, however, this becomes non-trivial. Samples are typically assigned to ranks in an interleaved fashion (e.g., via PyTorch’s `DistributedSampler`), which can lead to load imbalance if each rank sorts only its local shard—illustrated as (a) and (b) below.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/Training-Variable-Length/curriculum_datasets.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/Training-Variable-Length/curriculum_datasets.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the curriculum dataset setup problem on a network of 4 ranks and a dataset of 16 samples.
@@ -35,7 +35,7 @@ In the next sections we detail the latter option.
 The tricky part is the distributed sort that transforms (b) into (d). There are [other distributed sorting algorithms]({{ site.baseurl }}{% post_url 2014-06-21-Distributed-Sort %}) one could use, but here we implement the **Distributed Sample Sort** algorithm because it scales well to many processes. The workflow is:
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Distributed-Sort/sample_sort.png"> 
+<img width="70%" height="70%" src="{{ site.assets }}/Distributed-Sort/sample_sort.png"> 
 
 A Python implementation is provided below.
 
@@ -109,7 +109,7 @@ In practice, the hyperparameters are: (1) a target token count per batch, (2) a 
 Assume a limit of $$30$$ tokens per batch, a reference LR of $$10^{-3}$$, and a reference batch size of $$2$$. Early in curriculum learning (short sequences), batches will contain more samples than later (long sequences), as shown below:
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/Training-Variable-Length/variable_batch_lr.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/Training-Variable-Length/variable_batch_lr.png"/>
 
 Here, samples are collected until the batch reaches (at most) 30 tokens. The batch sizes (number of samples) become $$10$$ and $$4$$ in the left and right examples, respectively. Using linear scaling, the corresponding LRs are $$5 	imes 10^{-3}$$ and $$2 	imes 10^{-3}$$.
 
@@ -119,7 +119,7 @@ Here, samples are collected until the batch reaches (at most) 30 tokens. The bat
 requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x T x E` across micro-batches can lead to smaller micro-batches and additional padding. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 processes and 2 gradient accumulation steps (4 micro-batches total):
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/Training-Variable-Length/variable_batch_lr_pipeline.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/Training-Variable-Length/variable_batch_lr_pipeline.png"/>
 
 In the pipeline case (right), all micro-batches in the batch have the same `B x T x E` shape. To satisfy this constraint, fewer samples are packed per micro-batch compared to the non-pipeline case (left), and padding is used when needed.
 
@@ -128,7 +128,7 @@ In the pipeline case (right), all micro-batches in the batch have the same `B x 
 Attention is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x T x E` often uses a 2D attention mask of shape `T x T`, broadcast over the batch dimension. With variable lengths, we need a *per-sample* mask, which is naturally represented as a `B x T x T` tensor. For example, for the non-pipeline micro-batch 1 above (top-left; 4 sentences), the mask can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Training-Variable-Length/variable_attn_matrix.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/Training-Variable-Length/variable_attn_matrix.png"/>
 
 A useful way to think about the cost is that attention scales linearly with `B` and quadratically with the maximum `T` in the batch. Allowing `T` to vary (and adapting `B` accordingly) can therefore improve utilization by avoiding padding to an unnecessarily large `T`.
 
@@ -235,7 +235,7 @@ Compilation via [`torch.compile`](https://pytorch.org/docs/stable/generated/torc
 Consider a feed-forward network with 3 linear layers and 3 activations on a single GPU. The data loading, forward pass, backward pass, and optimizer step can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/Training-Variable-Length/dnn_serial.png"/> 
+<img width="45%" height="45%" src="{{ site.assets }}/Training-Variable-Length/dnn_serial.png"/> 
 
 {: style="text-align:center; font-size: small;"}
 A single-GPU training iteration workflow (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -243,7 +243,7 @@ A single-GPU training iteration workflow (adapted from the original [PyTorch dev
 In this example, the GPU executes many separate kernels in forward/backward. If captured as a CUDA graph, those kernels can be replayed with fewer launches, which often improves throughput:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/Training-Variable-Length/dnn_serial_compiled.png"/>
+<img width="45%" height="45%" src="{{ site.assets }}/Training-Variable-Length/dnn_serial_compiled.png"/>
 
 {: style="text-align:center; font-size: small;"}
 A single-GPU training iteration workflow of a compiled model (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -251,7 +251,7 @@ A single-GPU training iteration workflow of a compiled model (adapted from the o
 Now consider a 2-GPU Distributed Data Parallel (DDP) run. During backprop, DDP performs `all_reduce` operations to synchronize gradients across ranks. These collectives can overlap with gradient computation because `loss.backward()` accumulates into `w.grad` and `optimizer.step()` applies updates later; thus, gradients from earlier layers can be reduced while later-layer gradients are still being computed:
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="/assets/Training-Variable-Length/dnn_multiproc.png"/>
+<img width="55%" height="55%" src="{{ site.assets }}/Training-Variable-Length/dnn_multiproc.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The DDP execution workflow on 2 GPUs. The optimizer needs to wait for all asynchronous `all_reduce`s of gradients to finish (source: [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -259,7 +259,7 @@ The DDP execution workflow on 2 GPUs. The optimizer needs to wait for all asynch
 In a compiled setting, intermediate communication steps can introduce **graph breaks**. One naïve option is to compile a large graph and run the `all_reduce`s only at the end, but that reduces overlap and increases the time the optimizer waits:
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="/assets/Training-Variable-Length/dnn_multiproc_compiled.png"/>
+<img width="55%" height="55%" src="{{ site.assets }}/Training-Variable-Length/dnn_multiproc_compiled.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, increasing optimizer wait time (source: [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -267,7 +267,7 @@ The DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at t
 PyTorch’s `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) addresses this by compiling around graph breaks into subgraphs and triggering asynchronous synchronization at subgraph boundaries:
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="/assets/Training-Variable-Length/dnn_multiproc_optimized.png"/>
+<img width="55%" height="55%" src="{{ site.assets }}/Training-Variable-Length/dnn_multiproc_optimized.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization happens asynchronously between subgraphs (source: [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -281,7 +281,7 @@ PyTorch provides limited support for compiling variable-shaped tensors via `torc
 Static compilation is ideal, but how can we make it work with variable shapes? A practical approach is to ensure that each rank executes at least one forward+backward pass for every *shape* it will see later, near the beginning of training—so the compiler can generate (and cache) a binary per shape. The idea is illustrated below:
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Training-Variable-Length/torch_compile_dataset.png"/>
+<img width="70%" height="70%" src="{{ site.assets }}/Training-Variable-Length/torch_compile_dataset.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Setting up the dataset to allow static compilation for variable-length training on 3 processes. **Top (a):** default interleaved assignment (color-coded). The green and yellow ranks encounter a new shape later (red cross), triggering recompilation and potentially a runtime failure depending on settings. **Bottom (b):** reshuffling so each rank sees one sample of each shape early enables compiling one binary per shape and then running without surprises.

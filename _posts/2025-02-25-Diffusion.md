@@ -11,12 +11,12 @@ Despite dating back to 2015, diffusion models (DMs) only gained momentum after t
 In this post, we will look at the mathematical background behind diffusion models, and implement a U-Net- and a Transformer-based diffusion model. We will then look into high dimensionality inputs such as videos, and how video diffusion models handle them with compressed latent representations and spatio-temporal attention.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Diffusion/diffusion.png"/> 
+<img width="80%" height="80%" src="{{ site.assets }}/Diffusion/diffusion.png"/> 
 
 {: style="text-align:center; font-size: small;"}
 A diffusion model is a $$T$$-step Markov chain, characterized by a forward process $$q$$ and a trainable reverse process $$p_\theta$$. Source: [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
 
-Let's look at those processes in detail. Credit: formulation and U-Net implementation inspired by the paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239), Hugging Face's post [The Annotated Diffusion Model](https://huggingface.co/blog/annotated-diffusion) and Lilian Weng's post [Lil'Log: what are diffusion models](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/). The learned variance and the noise schedule for a smaller number of steps follow [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672) and its [official implementation](https://github.com/openai/improved-diffusion). The full code is available in [diffusion.py](https://github.com/brunomaga/brunomaga.github.io/blob/master/assets/Diffusion/diffusion.py) and [dit.py](https://github.com/brunomaga/brunomaga.github.io/blob/master/assets/Diffusion/dit.py).
+Let's look at those processes in detail. Credit: formulation and U-Net implementation inspired by the paper [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239), Hugging Face's post [The Annotated Diffusion Model](https://huggingface.co/blog/annotated-diffusion) and Lilian Weng's post [Lil'Log: what are diffusion models](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/). The learned variance and the noise schedule for a smaller number of steps follow [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672) and its [official implementation](https://github.com/openai/improved-diffusion). The full code is available in [diffusion.py]({{ site.assets }}/Diffusion/diffusion.py) and [dit.py]({{ site.assets }}/Diffusion/dit.py).
 
 ## Forward Process
 
@@ -205,7 +205,7 @@ where $$D$$ is the data dimensionality and $$i$$ indexes one coordinate. Its neg
 Once the model is trained, to generate new images we must reverse the diffusion process (from time T to time 1):
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/Diffusion/diffusion_alg2.png"/> 
+<img width="45%" height="45%" src="{{ site.assets }}/Diffusion/diffusion_alg2.png"/> 
 
 Step 4 samples $$\mathbf{x}_{t-1}$$ by summing the predicted mean $$\mu_\theta(\mathbf{x}_t, t)$$ with noise $$\mathbf{z}$$ multiplied by the standard deviation $$\sigma_t$$, where $$\sigma^2_t = \tilde{\beta}_t$$ for the U-Net, and the learned variance $$\Sigma_\theta$$ for the DiT (see the DiT section below). As in the paper, the `model` used for sampling is an Exponential Moving Average of the trained model weights (see the training section below):
 
@@ -276,7 +276,7 @@ where $$t$$ is sampled uniformly between $$1$$ and $$T$$. This is a simplified v
 We can now put together our final training algorithm: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/Diffusion/diffusion_alg1.png"/> 
+<img width="45%" height="45%" src="{{ site.assets }}/Diffusion/diffusion_alg1.png"/> 
 
 where each training iteration (steps 2 to 5) is implemented by the inner loop below. At the end of every epoch, we use the EMA model to generate and save new images:
 
@@ -311,7 +311,7 @@ where each training iteration (steps 2 to 5) is implemented by the inner loop be
 With the advancement of Transformers as an important module in sequence-based ML, [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement for U-Net-based diffusion, outperforming it in scaling and sample quality measured by [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance) (FID). Because the work presented is based on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), that operate on patches of images (Figure 4 in the paper). In practice, DiT operates on patches of the latent representation of the image produced by a pre-trained VAE, as in the latent diffusion models discussed below. ViTs have also been shown to have better scaling properties and accuracy than convolutional neural networks, when trained on large datasets. Moreover, related to DiT scaling, it was shown that (1) DiT Gflops are strongly correlated with FID (more Gflops, lower FID), (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/Diffusion/DiT.png"/> 
+<img width="100%" height="100%" src="{{ site.assets }}/Diffusion/DiT.png"/> 
 
 In the adaLN-Zero architecture shown in the diagram, the adaptive layer normalization process applies dynamic conditioning into the model: instead of learning the scale $$\gamma$$ and shift $$\beta$$ parameters of each layer norm directly, these are regressed by an MLP from the sum of the embeddings of the timestep $$t$$ and the class label $$y$$ (the conditioning inputs). adaLN-Zero additionally regresses dimension-wise scaling parameters $$\alpha$$ that are applied right before each residual connection, and initializes them to zero, so that each DiT block starts as the identity function. Note that these $$\alpha$$ and $$\beta$$ are unrelated to the $$\alpha_t$$ and $$\beta_t$$ of the noise schedule.
 
@@ -456,7 +456,7 @@ Another interesting feature that improves quality is [classifier-free guidance](
 Running diffusion directly on pixels is already expensive for high-resolution images. This led to the creation of the **[latent diffusion model](https://arxiv.org/abs/2112.10752)**, where diffusion is applied on the latent space of pretrained autoencoders (e.g. a VAE) instead of on the image directly. This reduces the cost of training on high-resolution images by working on their compressed representation instead. As diffusion moved towards the domain of video, the large amount of data per sample made this compression even more important, and video models now compress their input in both the spatial and temporal dimensions:
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/Diffusion/sora_vae.png"/> 
+<img width="90%" height="90%" src="{{ site.assets }}/Diffusion/sora_vae.png"/> 
 
 {: style="text-align:center; font-size: small;"}
 An overview of the latent space compression in SORA. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". Source: [Video generation models as world simulators, OpenAI](https://openai.com/index/video-generation-models-as-world-simulators/)
@@ -466,7 +466,7 @@ The other challenge in video datasets is the attention: how do we correlate imag
 - a full 3D attention, where we collect all patches of all frames and use them as the sequence dimension in the attention ie converting an input of shape $$B \times T \times H \times W \times C$$ into $$B \times (T * H * W) \times C$$. This leads to a very large sequence dimension, which is an issue because computation in the attention mechanism grows quadratically with the sequence length. However, [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) showed that masked autoencoders (MAE) are scalable self-supervised learners for computer vision that only need to encode a random subset of the patches (25% on images), and [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113) extended it to videos, where only 10% of the $$T * H * W$$ spacetime patches are needed. [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304) also uses random token dropping, together with sequence packing, to speed up training.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Diffusion/masked_autoencoders_cropped.png"/> 
+<img width="70%" height="70%" src="{{ site.assets }}/Diffusion/masked_autoencoders_cropped.png"/> 
 
 {: style="text-align:center; font-size: small;"}
 An illustration of a masked autoencoder randomly picking 10% of the spacetime patches of a video, retaining enough representative power to reconstruct the original video. Source: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
@@ -489,7 +489,7 @@ To train on videos, they use the method presented in [Align your Latents: High-R
 > first pre-train the diffusion model on images only; then, turn the image generator into a video generator by introducing a temporal dimension to the latent space diffusion model and fine-tuning on encoded image sequences, i.e., videos.
 
 {: style="text-align:center; font-size: small;"}
-<img width="68%" height="68%" src="/assets/Diffusion/align_your_latents.png"/> 
+<img width="68%" height="68%" src="{{ site.assets }}/Diffusion/align_your_latents.png"/> 
 
 {: style="text-align:center; font-size: small;"}
 **Left:** We turn a pre-trained LDM into a video generator by inserting temporal layers that learn to align frames into temporally consistent sequences. During optimization, the image backbone $$\theta$$ remains fixed and only the parameters $$\phi$$ of the temporal layers $$l^i_\phi$$ are trained, cf. Eq. (2). **Right:** During training, the base model $$\theta$$ interprets the input sequence of length $$T$$ as a batch of images. For the temporal layers $$l^i_\phi$$, these batches are reshaped into video format. Their output $$z'$$ is combined with the spatial output $$z$$, using a learned merge parameter $$\alpha$$. During inference, skipping the temporal layers ($$\alpha^i_\phi=1$$) yields the original image model. For illustration purposes, only a single U-Net Block is shown. $$c_S$$ is optional context frame conditioning, when training prediction models (Sec. 3.2). Source and caption: [Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2304.08818).
@@ -503,7 +503,7 @@ A U-Net based diffusion model that takes as input a reference image (photo of a 
 Spatio-temporal attention is achieved by a spatial attention that converts an input $$B \times T \times H \times W \times C$$ into $$(B * T ) \times (H * W) \times C$$ to perform attention of patches within the same frame, followed by a temporal attention that converts it into $$(B * H * W) \times T \times C$$ and performs attention of the same patch across time.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="/assets/Diffusion/anymate_anyone.png"/> 
+<img width="90%" height="90%" src="{{ site.assets }}/Diffusion/anymate_anyone.png"/> 
 
 </details>
 {::options parse_block_html="false" /}
@@ -530,7 +530,7 @@ And here are some examples of DiT inspired conditional diffusion models:
 OmniGen is a diffusion model made only of a VAE and a transformer (initialized from the Phi-3 LLM), able to perform several image generation tasks: text-to-image, image editing, subject-driven generation and visual-conditional generation. Text input is tokenized, and image inputs are transformed into embeddings via a VAE.
 
 {: style="text-align:center; font-size: small;"}
-<img width="68%" height="68%" src="/assets/Diffusion/omnigen.png"/> 
+<img width="68%" height="68%" src="{{ site.assets }}/Diffusion/omnigen.png"/> 
 </details>
 {::options parse_block_html="false" /}
 
@@ -539,7 +539,7 @@ OmniGen is a diffusion model made only of a VAE and a transformer (initialized f
 A text-to-image diffusion model, that replaces the commonly used T5 and CLIP for input text encoding with the latents of a decoder-only LLM (Llama3-8B).
 
 {: style="text-align:center; font-size: small;"}
-<img width="68%" height="68%" src="/assets/Diffusion/playground_v3.png"/> 
+<img width="68%" height="68%" src="{{ site.assets }}/Diffusion/playground_v3.png"/> 
 </details>
 {::options parse_block_html="false" /}
  
@@ -564,13 +564,13 @@ CogVideoX is a large-scale DiT model for text-to-video generation. Model input i
 Latte is a DiT-based text-to-image and text-to-video diffusion model. Latte first extracts spatio-temporal tokens from input videos and then adopts a series of Transformer blocks to model video distribution in the latent space. The paper experiments with several methods for embedding, clip patch embedding, model variants, timestep-class information injection, temporal positional embedding, and learning strategies, and provides a report. As an example, it tests four variants of 3D transformer block: (1) with spatial Transformer blocks and temporal Transformer blocks, (2) a "late fusion" approach to combine spatial-temporal information, that consists of an equal number of Transformer blocks as in Variant 1, (3) that "initially computes self-attention only on the spatial dimension, followed by the temporal dimension, and as a result, each Transformer block captures both spatial and temporal information", and (4) one that uses different attention heads to handle tokens separately in spatial and temporal dimensions.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Diffusion/latte.png"/> 
+<img width="70%" height="70%" src="{{ site.assets }}/Diffusion/latte.png"/> 
 
 The paper also analyses 2 distinct methods for video patch embedding: (1) collect all patches of a frame, and then collect the patches for the following frame etc, as in ViT, (2) extracting patches in the temporal dimension as well (in a "tube") and move that tube in the spatial dimension: 
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Diffusion/latte2.png"/> 
+<img width="70%" height="70%" src="{{ site.assets }}/Diffusion/latte2.png"/> 
 
 </details>
 {::options parse_block_html="false" /}
@@ -581,7 +581,7 @@ The paper also analyses 2 distinct methods for video patch embedding: (1) collec
 Tora is capable of generating videos guided by trajectories, images, texts, or combinations thereof. "Spatial-Temporal Diffusion Transformer (ST-DiT) from OpenSora as its foundational model", ie a spatial attention followed by a temporal attention, similar to variant 3 in [Latte](https://arxiv.org/abs/2401.03048v1) (above). **The big advantage of using ST-DiT compared to 3D attention is that it saves on computation and it can use pre-trained text-to-image models.** "The trajectory encoder converts the trajectory into motion patches, which inhabit the same latent space as the video patches".  Text encoding is provided by T5.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/Diffusion/tora.png"/> 
+<img width="80%" height="80%" src="{{ site.assets }}/Diffusion/tora.png"/> 
 
 </details>
 {::options parse_block_html="false" /}
@@ -601,7 +601,7 @@ data. A high masking ratio leads to a large speedup, e.g., > 4× in wall-clock t
 or even more.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Diffusion/masked_autoencoders.png"/> 
+<img width="70%" height="70%" src="{{ site.assets }}/Diffusion/masked_autoencoders.png"/> 
 
 </details>
 {::options parse_block_html="false" /}
@@ -615,7 +615,7 @@ And here is some work on multi-dimensional parallelism for arge-scale models suc
 Presents DiT-MoE, a sparse Mixture of Experts (MoE) version of DiT, delivering good scaling properties, a performance comparable to dense DiTs, and highly optimized inference. 
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Diffusion/dit_moe.png"/> 
+<img width="70%" height="70%" src="{{ site.assets }}/Diffusion/dit_moe.png"/> 
 </details>
 {::options parse_block_html="false" /}
 
@@ -625,7 +625,7 @@ Presents DiT-MoE, a sparse Mixture of Experts (MoE) version of DiT, delivering g
 LongVILA details a pipeline of 5 steps for training long-context visual-language models. The first 3 stages are multi-modal alignment, large-scale pre-training and short supervised fine-tuning from [VILA: On Pre-training for Visual Language Models](https://arxiv.org/abs/2312.07533v2). Stage 4 is context extension for LLMs, by increasing the sequence length of input samples (ie curriculum learning) up to 262K tokens. In Stage 5, the model is fine-tuned for long video understanding with Multi-Modal Sequence Parallelism (MM-SP) based on [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485).
 
 {: style="text-align:center; font-size: small;"}
-<img width="68%" height="68%" src="/assets/Diffusion/longvilla.png"/> 
+<img width="68%" height="68%" src="{{ site.assets }}/Diffusion/longvilla.png"/> 
 
 </details>
 {::options parse_block_html="false" /}
@@ -637,7 +637,7 @@ LongVILA details a pipeline of 5 steps for training long-context visual-language
 PipeFusion splits images into patches and distributes the network layers across multiple devices. It employs a pipeline parallel manner to orchestrate communication and computations. xDiT is a parallel **inference** engine of DiTs using Universal Sequence Parallelism (including Ulysses attention and Ring attention), PipeFusion, and hybrid parallelism. It applies and benchmarks xDiT on the following DiT implementations: CogVideo, Flux, Latte, HunyuanDiT, Stable Diffusion 3, PixArt-Sigma, PixArt-alpha. 
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Diffusion/pipefusion.png"/> 
+<img width="70%" height="70%" src="{{ site.assets }}/Diffusion/pipefusion.png"/> 
 </details>
 {::options parse_block_html="false" /}
 

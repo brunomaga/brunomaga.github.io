@@ -8,7 +8,7 @@ tags: [machinelearning]
 This post follows from the previous post where we perform [distributed training of a GPT model using Data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}), where we implemented Data Parallelism on a GPT model. Pipeline parallelism is one dimension of the **3D parallelism** of ML models, via Data, Pipeline and Tensor/Model parallelism. In this post we will discuss and implement pipeline parallelism.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="/assets/GPTlite-distributed/GPT_3D_parallelism_2.png"/>
+<img width="55%" height="55%" src="{{ site.assets }}/GPTlite-distributed/GPT_3D_parallelism_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The 3D parallelism aims and partitioning (color-coded) computer resources across the 3D space of data, pipeline and tensor (model) dimensions. In this post we will focus on pipeline parallelism. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
@@ -16,7 +16,7 @@ The 3D parallelism aims and partitioning (color-coded) computer resources across
 Imagine we have a model that is too large to fit in the local memory of a single process. A simple way to overcome this is to split the model across the layer dimension and delegate a subset of layers to each process. Then we can do a forward and backward pass by communicating activations and gradients between *connecting* processes. Each process is responsible for a subset of layers and is called a **stage**. This type of parallelism is called **pipeline parallelism**. The following picture gives us a simple illustration of the process:
 
 {: style="text-align:center; font-size: small;"}
-<img width="50%" height="50%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline.PNG"/>
+<img width="50%" height="50%" src="{{ site.assets }}/AI-Supercomputing/Pipedream_DNN_pipeline.PNG"/>
 
 {: style="text-align:center; font-size: small;"}
 Left-to-right timeline of a serial execution of the training of a model divided across 4 compute units (Workers) and 4 stages. Blue squares represent forward passes. Green squares represent backward passes and last for twice the amount of the forward pass. The number on each square is the data sample index. Black squares represent moments of idleness, i.e. of a worker not performing any computation. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
@@ -24,7 +24,7 @@ Left-to-right timeline of a serial execution of the training of a model divided 
 Now note that the above method would yield a low utilization of compute resources: processes would always have to wait for connecting layers in different processes to be computed before being able to do their share of the forward/backward compute. So pipeline parallelism is usually combined with **micro-batching / gradient accumulation**. In practice, we can split the mini-batch in several micro-batches and pass them sequentially to the first process of the pipeline. When a process finishes the current micro-batch, it sends its activations to the following process and receives the next micro-batch activations from the previous process. This is mathematically equivalent to regular gradient accumulation. This approach is detailed in the paper [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, arXiv)](https://arxiv.org/abs/1811.06965) and can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel.PNG"/>
+<img width="60%" height="60%" src="{{ site.assets }}/AI-Supercomputing/Pipedream_DNN_pipeline_parallel.PNG"/>
 
 {: style="text-align:center; font-size: small;"}
 A pipeline execution with gradient accumulation, computed as a sequence of 4 micro-batches. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
@@ -34,11 +34,11 @@ Setting a high micro-batching factor can lead to high memory usage, as we have t
 The other hyper-parameter we have to define is the number of stages. Up until now, the examples above used a number of stages equivalent to the number of workers, i.e. a single pipeline that spans all workers. However, we can have multiple pipelines in parallel and combine pipeline parallelism with other dimensions of parallelism. As an example, if you'd combine pipeline and data parallelism on an 8-GPU network:
 
 {: style="text-align:center; font-size: small;"}
-<img width="32%" height="32%" src="/assets/GPTlite-distributed/pipeline_8_stages.png"/>
+<img width="32%" height="32%" src="{{ site.assets }}/GPTlite-distributed/pipeline_8_stages.png"/>
 &nbsp;
-<img width="32%" height="32%" src="/assets/GPTlite-distributed/pipeline_4_stages.png"/>
+<img width="32%" height="32%" src="{{ site.assets }}/GPTlite-distributed/pipeline_4_stages.png"/>
 &nbsp;
-<img width="32%" height="32%" src="/assets/GPTlite-distributed/pipeline_2_stages.png"/>
+<img width="32%" height="32%" src="{{ site.assets }}/GPTlite-distributed/pipeline_2_stages.png"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of different combinations of pipeline and data parallelism. Left: 8 pipeline-parallel workers. Center: 2 data-parallel groups of 4 pipeline-parallel workers. Right: 4 data-parallel groups of 2 pipeline-parallel workers.
@@ -46,7 +46,7 @@ An illustration of different combinations of pipeline and data parallelism. Left
 You will notice that no matter the pipeline configuration we use, there are periods of idleness that we cannot remove. With this in mind, there is plenty of work ongoing to improve this. As an example, [PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/) is a pipeline method that overlaps forward and backward passes of different mini-batches, by keeping track of the version (micro-batch id) and storing several versions of activations and parameters whose backward pass hasn't completed:
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="/assets/AI-Supercomputing/Pipedream_DNN_pipeline_parallel_Microsoft.PNG"/>
+<img width="60%" height="60%" src="{{ site.assets }}/AI-Supercomputing/Pipedream_DNN_pipeline_parallel_Microsoft.PNG"/>
 
 {: style="text-align:center; font-size: small;"}
 The PipeDream scheduling algorithm. Several forward passes can be in flight, even if they derive from different micro-batches. Backward passes are prioritized over forward passes on each worker. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
@@ -154,7 +154,7 @@ This shows the core idea: **activations flow forward, gradients flow backward**.
 The pipeline parallelism algorithm implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 forward pass followed by 1 backward pass), however it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms. The 1F1B algorithm performs a sequence of forward passes, and asynchronously starts the backward pass for each micro-batch forward pass completed. It then waits for all forward and backward passes to complete before starting the new mini-batch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="/assets/GPTlite-distributed/pipeline_algorithms.png"/>
+<img width="60%" height="60%" src="{{ site.assets }}/GPTlite-distributed/pipeline_algorithms.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Regular and 1F1B pipeline algorithms diagram. Source: [Training and Serving System of Foundation Models: A Comprehensive Survey](https://arxiv.org/pdf/2401.02643.pdf)
@@ -336,7 +336,7 @@ We can define the micro-batching level by setting the fields `train_micro_batch_
 
 <!--
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="/assets/GPTlite-distributed/GPT_pipelining_2.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/GPTlite-distributed/GPT_pipelining_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 "An illustration of how DeepSpeed will train a batch with eight micro-batches using hybrid two-way data parallelism and two-stage pipeline parallelism. GPUs 0 and 2 are arranged in a pipeline and will alternate forward (F) and backward (B) passes. They will then all-reduce (AR) gradients with their data parallel counterparts, GPUs 1 and 3, respectively. Finally, the two pipeline stages update their model weights". This is the 1F1B pipeline algorithm. Source: [DeepSpeed pipelining documentation](https://www.deepspeed.ai/tutorials/pipeline/)
@@ -344,7 +344,7 @@ We can define the micro-batching level by setting the fields `train_micro_batch_
 
 ## Results
 
-We changed our config to <a href="/assets/GPTlite-distributed/ds_config.json">`ds_config.json`</a> to run ZeRO stage 1 and tested our execution with different stage count and the memory-efficient `SpecLayer` implementation of our GPT model (with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`). We did not use activation checkpointing due to an open bug [4279](https://github.com/microsoft/DeepSpeed/issues/4274). We tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of GPTlite pipeline across 8 GPUs and 4 stages, it outputs:
+We changed our config to <a href="{{ site.assets }}/GPTlite-distributed/ds_config.json">`ds_config.json`</a> to run ZeRO stage 1 and tested our execution with different stage count and the memory-efficient `SpecLayer` implementation of our GPT model (with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`). We did not use activation checkpointing due to an open bug [4279](https://github.com/microsoft/DeepSpeed/issues/4274). We tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of GPTlite pipeline across 8 GPUs and 4 stages, it outputs:
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4)   STAGE_PARAMS=21256704 (21.257M)
 RANK=2 STAGE=1 LAYERS=3 [4, 7)   STAGE_PARAMS=21256704 (21.257M)
@@ -356,7 +356,7 @@ RANK=6 STAGE=3 LAYERS=6 [10, 16) STAGE_PARAMS=21308160 (21.308M)
 
 **Memory usage**: on pipeline parallelism, I noticed that the first GPU seems to require a higher amount of memory when compared to the remaining GPUs. This should not be the case, particularly on the deep benchmark model where we can guarantee a quasi-ideal stage partitioning across GPUs. This disparity in memory usage on GPU 0 is the main indicator of the maximum memory required, and balancing this would bring that value down. I [opened a bug report](https://github.com/microsoft/DeepSpeed/issues/4477) with DeepSpeed and will wait for their feedback or fix to correct this analysis.
 
-This code is available in the [GPTlite-distributed repo](https://github.com/brunomaga/brunomaga.github.io/tree/master/assets/GPTlite-distributed), if you feel like giving it a try. I will try to add detailed results for pipeline parallelism in the future when time allows.
+This code is available in the [GPTlite-distributed repo](https://github.com/{{ site.repository }}/tree/master/assets/GPTlite-distributed), if you feel like giving it a try. I will try to add detailed results for pipeline parallelism in the future when time allows.
 
 
 ## Beyond 1F1B: reducing the pipeline bubble
@@ -370,7 +370,7 @@ The diagrams in this section were generated from the reference implementation of
 [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM (NVIDIA, 2021, arXiv)](https://arxiv.org/abs/2104.04473) assigns several non-contiguous chunks of layers (*virtual stages*) to each GPU, instead of a single block of consecutive layers. With 4 GPUs and 2 chunks per GPU, the model is split into 8 chunks, GPU 0 holds chunks 0 and 4, GPU 1 holds chunks 1 and 5, and so on, so every micro-batch loops through the GPUs twice. Smaller chunks make the pipeline fill and drain faster, and the bubble shrinks by the number of chunks per GPU `v`, to `(p-1)(F+B)/v`. The price is `v` times more point-to-point communication, and more activation memory, as the first GPU keeps more micro-batches in flight. The original implementation also requires the number of micro-batches to be a multiple of the number of GPUs. This schedule is available in Megatron-LM and as `ScheduleInterleaved1F1B` in PyTorch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPTlite-distributed/pipeline_interleaved_1f1b.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/GPTlite-distributed/pipeline_interleaved_1f1b.png"/>
 
 {: style="text-align:center; font-size: small;"}
 1F1B (top) and interleaved 1F1B with 2 model chunks per GPU (bottom). Light and dark cells refer to the first and second chunk on each GPU. Interleaving halves the bubble.
@@ -385,7 +385,7 @@ The diagrams in this section were generated from the reference implementation of
 There is a catch: the optimizer step usually synchronizes all stages, e.g. to compute the global gradient norm for gradient clipping, or to check for NaN/Inf values in mixed precision training, and this synchronization breaks the parallelogram. The authors replace it with an *optimizer post-validation*: each stage updates its weights right away and, in the rare case where gradient clipping or the NaN/Inf check is triggered, the update is rolled back and redone. They also provide an algorithm that searches for the best schedule, given the measured time of each pass and of the communication, and a memory limit. In their experiments, Zero Bubble outperformed the throughput of 1F1B by up to 23% under a similar memory limit, and by up to 31% with a relaxed memory limit. The implementation is available as a [fork of Megatron-LM](https://github.com/sail-sg/zero-bubble-pipeline-parallelism) and as `ScheduleInterleavedZeroBubble` in PyTorch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPTlite-distributed/pipeline_zero_bubble.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/GPTlite-distributed/pipeline_zero_bubble.png"/>
 
 {: style="text-align:center; font-size: small;"}
 ZB-H1 (top) and ZB-H2 (bottom). Every backward pass is split into a backward for inputs and a backward for weights, and the latter fill the bubbles. Faded cells in ZB-H2 belong to the previous and next iterations, which interlock with the current one when the optimizer step does not synchronize the stages.
@@ -395,7 +395,7 @@ ZB-H1 (top) and ZB-H2 (bottom). Every backward pass is split into a backward for
 The Zero Bubble paper also introduces **ZB-V**, which places two model chunks on each GPU in a *V shape*: the model is split into `2p` chunks and GPU `i` holds chunks `i` and `2p-1-i`. A micro-batch goes down the GPUs through the first half of the model and comes back up through the second half. The first and last chunks (embeddings and loss) are both on GPU 0, and no communication is needed at the turn on the last GPU. When the forward, backward for inputs and backward for weights take the same time, ZB-V has zero bubble (again with the optimizer post-validation) with the same peak activation memory as 1F1B, balanced across all GPUs. The price is twice the point-to-point communication of 1F1B. A follow-up paper, [Pipeline Parallelism with Controllable Memory (Sea AI Lab, 2024, arXiv)](https://arxiv.org/abs/2405.15362), generalizes V-shape schedules to a family that trades bubbles for memory, down to half (V-Half) and a third (V-Min) of the activation memory of 1F1B. ZB-V is available as `ScheduleZBVZeroBubble` in PyTorch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPTlite-distributed/pipeline_zb_v.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/GPTlite-distributed/pipeline_zb_v.png"/>
 
 {: style="text-align:center; font-size: small;"}
 ZB-V with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (chunks 0 to 3, going down) and dark cells to the second chunk (chunks 4 to 7, going back up). Faded cells belong to the previous and next iterations.
@@ -409,7 +409,7 @@ To have enough of these forward-backward pairs, DualPipe uses a *bidirectional* 
 Note that our diagrams model only computation, so DualPipe's bubble looks comparable to ZB-H1's. Its main advantage is that, within each black-bordered pair, the all-to-all communication of expert parallelism is hidden behind useful computation.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPTlite-distributed/pipeline_dualpipe.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/GPTlite-distributed/pipeline_dualpipe.png"/>
 
 {: style="text-align:center; font-size: small;"}
 DualPipe on 4 GPUs: micro-batches 1 to 4 (light) enter at GPU 0, and micro-batches 5 to 8 (dark) enter at GPU 3. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
@@ -419,7 +419,7 @@ DualPipe on 4 GPUs: micro-batches 1 to 4 (light) enter at GPU 0, and micro-batch
 Sea AI Lab later noticed that DualPipe is made of two mirrored halves, as GPUs `i` and `p-1-i` hold the same stages and run the same schedule ([DualPipe could be better without the Dual (Sea AI Lab, 2025)](https://huggingface.co/blog/ufotalent/cut-in-half)). Keeping only the first half of the GPUs and placing the remaining stages on them in a V shape, as in ZB-V, gives a schedule with the same bubble and activation memory as DualPipe for the same number of stages, but on half the GPUs and without duplicated parameters. DeepSeek adopted this *cut-in-half* schedule as **DualPipeV** in the DualPipe repository, and recent PyTorch versions provide it as `ScheduleDualPipeV`. As in ZB-V, all micro-batches enter at GPU 0, go down the GPUs and come back up, and the loss is computed on GPU 0.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="/assets/GPTlite-distributed/pipeline_dualpipev.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/GPTlite-distributed/pipeline_dualpipev.png"/>
 
 {: style="text-align:center; font-size: small;"}
 DualPipeV with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (going down) and dark cells to the second chunk (going back up). Cells with a shared black border are overlapped forward and backward passes of two different micro-batches.
