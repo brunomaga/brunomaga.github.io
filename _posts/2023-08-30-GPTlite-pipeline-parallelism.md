@@ -438,5 +438,5 @@ The table below compares the schedules in the diagrams above (4 GPUs and 8 micro
 | DualPipe | 2 | 5 | 2× | duplicated parameters, overlapped forward-backward implementation |
 | DualPipeV | 3 | 4.5 | 1× | overlapped forward-backward implementation |
 
-For ZB-H2 and ZB-V, the value in parentthe idle time when the optimizer step synchronizes all stages. DualPipe and DualPipeV also hide the all-to-all communication of expert parallelism behind computation, which is not captured in this table.
+For ZB-H2 and ZB-V, the value in parenthesis is the idle time when the optimizer step synchronizes all stages. DualPipe and DualPipeV also hide the all-to-all communication of expert parallelism behind computation, which is not captured in this table.
 
