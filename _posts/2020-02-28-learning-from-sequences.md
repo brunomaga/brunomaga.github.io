@@ -39,22 +39,15 @@ This algorithm can be illustrated as:
 {: style="text-align:center; font-size: small;"}
 The workflow of an encoder-decoder architecture training by learning the translation of the english sentence "Hello World." to the Frence sentence "Bonjour le monde.".
 
-
 Two relevant remarks about the Encoder-Decoder architecture:
 - Once the network is trained, the translation of a new sentence is executed by running encoder iterations until the flag *EOS* is output;
 - An improvement based on the concept of **Attention Mechanism** delivers improved results by utilising the hidden space of every encoder iteration (not just the last) on the decoding steps, in order to increase the model capatiblities (original paper: [Bahdanau et al. Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473));
 
 For the sake of brevity, we will ommit these details and refer you to the [Pytorch turorial "NLP from scratch: translation with a sequence to sequence network and attention"](https://pytorch.org/tutorials/intermediate/seq2seq_translation_tutorial.html) if you are curious about the implementation details of regular and attention-based encoder-decoders. Let's go back to the main subject of this post and the topic of computational complexity.
 
-Parallelism, scaling and acceleration of such sequence-to-sequence models is an issue. There are four main reasons that explain this:
-- encoding/decoding is a recursive algorithm, and we can't parallelize recursive iterations, as each iteration depends on the hidden state of the previous one;
-- the DNN underlying the RNN architecture has only a single layer, therefore model parallelism like pipelining (covered in our [previous post]({{ site.baseurl }}{% post_url 2023-08-30-GPTlite-pipeline-parallelism %})) won't provide any gains;
-- the hidden layer is composed of $$h$$ neurons, and $$h$$ is usually a value small enought to allow for acceleration at the layer level (e.g. the model parallelism showned in the our [previous post]({{ site.baseurl }}{% post_url 2023-09-02-GPTlite-Megatron-LM-model-parallelism %});
-- input and output sequences have different lengths, and each batch needs to be a set of input and output sentences of similar lenghts, which makes the batches small and inefficient to parallelize. In practice, some batching is possible by grouping sentences first by length of the encoder inputs, and for each encoder, group by length of decoder inputs. This is however very inneficient as we require an extremmly high number of sentences so that all groups of encoder/decoder pairs are large enough to fully utilize the compute resources at every training batch. Not impossible, but very unlikely.
+Accurate results, parallelism, scaling and acceleration of such sequence-to-sequence models is an issue, as recursive neural networks rely on recursive steps, and results tend to get *lost* after many recursive iterations. Scaling is limit, as we can't parallelize the recursive iterations, as each iteration depends on the outpu of the previous one. So the only possible acceleration is to parallelize the model itself across its parameter/activation dimensions, which leads to no speedup on *small* models.
 
 ## Transformer 
-
-Note: the original Transformer paper is also detailed in the section <a href="{{ site.publications_permalink }}">publications bookmark</a>.
 
 In 2017 the staff at Google introducted the Transformer (original paper [Attention is all you need (2017, Google, Arxiv)](https://arxiv.org/abs/1706.03762)), overcoming many of the previous issues, while demonstrating better results. The transformer architecture is the following:
 
