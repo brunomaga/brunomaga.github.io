@@ -366,6 +366,18 @@ class MultiHeadAttention(nn.Module):
 
 And we are done. As you can see, a key disadvantage in ring attention is that the number of communication steps equals the number of processes. This may be a limiting factor on large networks where very fine-grained sequence splits lead to small per-process workloads, making it harder to fully hide communication with computation.
 
+This code has been added to the [GPTlite-distributed repo](https://github.com/{{ site.repository }}/tree/master/assets/GPTlite-distributed), if you want to try it. Keep in mind that deterministic behaviour for sequence parallelism across networks of different node counts is difficult due to random number generators producing different values during model initialization and dropout.
+
+## When to use Ulysses and Ring attention
+
+Use Ulysses when the group sits on a fast interconnect like NVLink within a node and the degree is less-or-equal than the number of attention heads. That means you cannot use Ulysses with Multi-Query Attention (MQA), and it has limited use on Grouped Query Attention (GQA). A benefit of Ulysses is that any attention kernel works unchanged, and woks well for any mask. However, the disadvantage is that the all-to-all is hard to overlap with compute and slows down across nodes.
+
+Use Ring attention when you need a degree beyond the head count or across nodes. It has no head limit and hides communication, but only if each local chunk is long enough for compute to cover the transfer. However, Ring Attention is not ideal for any custom or arbitrary attention mask: while the fundamental blockwise formulation can mathematically support any masking pattern, its real-world implementation depends on overlapping communication with computation (so the mask should ideally yield computation on each step). In practice, most standard Ring Attention libraries natively support only causal masks (triangular masks used in autoregressive models) or general/document masks (unmasked bidirectional attention). To overcome this, variants like [**Striped Attention**](https://arxiv.org/abs/2311.09431 "Striped Attention Paper") and [**Llama 3 Zigzag Ring Attention**](https://arxiv.org/abs/2407.21783 "Llama 3 Paper") explicitly permute and optimize data chunks around the specific mathematical structure of a causal mask to balance the hardware workload.
+
+
+Both methods have drawbacks. The rule of thumb is to use a hybrid algorithm once you span multiple nodes: Ulysses inside each node and Ring across nodes, which usually beats either alone at scale. Hybrid algorithms for sequence parallelism are also discussed in [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719), [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485v1), and [Megatron's a2a+p2p](https://docs.nvidia.com/nemo/megatron-bridge/0.5.0/training/hierarchical-context-parallel.html) for Hierarchical Context Parallelism (HCP, where p2p is ring-exchange and a2a is ulysses-style parallelism).  
+
+
 ## Training with sequence- and multi-dimensional parallelism
 
 PyTorch does not have the notion of *partial sequences* in the same way data parallelism has a notion of *partial batches*; thus, samples processed in parallel are usually assumed to be full-length samples on a data-parallel execution. To overcome this, when you run sequence parallelism of order `S`, you typically perform `S` gradient accumulation steps with corresponding gradient scaling so that you effectively process the intended batch size and gradients are properly averaged.
@@ -377,17 +389,3 @@ Moreover, when you perform multi-dimensional parallelism (e.g. data + sequence),
 
 {: style="text-align:center; font-size: small;"}
 Activations allocation on a 4-GPU execution with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: blue and green processes belong to the same sequence-parallel group and share one sample; red and yellow processes form the other sequence-parallel group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes can compute attention for full sequences.
-
-
-## When to use Ulysses and Ring attention
-
-Use Ulysses when the group sits on a fast interconnect like NVLink within a node and the degree is less-or-equal than the number of attention heads. That means you cannot use Ulysses with Multi-Query Attention (MQA), and it has limited use on Grouped Query Attention (GQA). A benefit of Ulysses is that any attention kernel works unchanged, and woks well for any mask. However, the disadvantage is that the all-to-all is hard to overlap with compute and slows down across nodes.
-
-Use Ring attention when you need a degree beyond the head count or across nodes. It has no head limit and hides communication, but only if each local chunk is long enough for compute to cover the transfer. However, Ring Attention is not ideal for any custom or arbitrary attention mask: while the fundamental blockwise formulation can mathematically support any masking pattern, its real-world implementation depends on overlapping communication with computation (so the mask should ideally yield computation on each step). In practice, most standard Ring Attention libraries natively support only causal masks (triangular masks used in autoregressive models) or general/document masks (unmasked bidirectional attention). To overcome this, variants like [**Striped Attention**](https://arxiv.org/abs/2311.09431 "Striped Attention Paper") and [**Llama 3 Zigzag Ring Attention**](https://arxiv.org/abs/2407.21783 "Llama 3 Paper") explicitly permute and optimize data chunks around the specific mathematical structure of a causal mask to balance the hardware workload.
-
-
-Both methods have drawbacks. The rule of thumb is to use a hybrid algorithm once you span multiple nodes: Ulysses inside each node and Ring across nodes, which usually beats either alone at scale. Hybrid algorithms for sequence parallelism are also discussed in [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719), [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485v1), and [Megatron's a2a+p2p](https://docs.nvidia.com/nemo/megatron-bridge/0.5.0/training/hierarchical-context-parallel.html) for Hierarchical Context Parallelism (HCP, where p2p is ring-exchange and a2a is ulysses-style parallelism).  
-
-## Code and final remarks
-
-This code has been added to the [GPTlite-distributed repo](https://github.com/{{ site.repository }}/tree/master/assets/GPTlite-distributed), if you want to try it. Keep in mind that deterministic behaviour for sequence parallelism across networks of different node counts is difficult due to random number generators producing different values during model initialization and dropout.
