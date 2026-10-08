@@ -5,16 +5,9 @@ categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-This post follows from the previous posts [Distributed training of a GPT model using DeepSpeed]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}) and [Distributed training of a GPT model using DeepSpeed (pipeline parallelism)]({{ site.baseurl }}{% post_url 2023-08-30-GPTlite-pipeline-parallelism %}), where we implemented Data and Pipeline parallelism on a GPT model. Data and pipeline parallelism are 2 dimensions of the **3D parallelism** of ML models, via Data, Pipeline and Tensor/Model parallelism. In this post, we will discuss tensor (model) parallelism, particularly the [Megatron-LM](https://www.deepspeed.ai/tutorials/megatron/) implementation.
+In this post, we will discuss tensor (model) parallelism, particularly the [Megatron-LM](https://www.deepspeed.ai/tutorials/megatron/) implementation. Tensor parallelism is just another possible dimension of model parallelism on the universe of data, tensor, pipeline, tensor, context, sequence and expert parallelism. 
 
-{: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/GPTlite-distributed/GPT_3D_parallelism_2.png"/>
-
-{: style="text-align:center; font-size: small;"}
-The 3D parallelism aims at partitioning (color-coded) compute resources across the 3D space of data, pipeline and tensor (model) dimensions. In this post we will focus on model/tensor parallelism. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
-
-
-**Tensor parallelism**, **vertical parallelism**, **intra-layer parallelism**, **activation parallelism** or (most commonly and confusingly) **model parallelism**, is the third dimension of parallelism and aims at partitioning computation across the model’s tensor dimensions (e.g., sharding linear layer weights and corresponding activations). This is a hard problem: in practice we must decide the dimension of tensor partitioning (row-wise, column-wise, or none) and adapt the communication and computation accordingly. Therefore, it is a model- and data-specific implementation.
+Tensor parallelism aims at partitioning computation across the model’s tensor dimensions (e.g., sharding linear layer weights and corresponding activations). This is a hard problem: in practice we must decide the dimension of tensor partitioning (row-wise, column-wise, or none) and adapt the communication and computation accordingly. Therefore, it is a model- and data-specific implementation.
 
 {: style="text-align:center; font-size: small;"}
 <img width="55%" height="55%" src="{{ site.assets }}/AI-Supercomputing/DNN_model_parallelism.png"/>
