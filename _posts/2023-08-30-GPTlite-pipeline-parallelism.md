@@ -5,13 +5,7 @@ categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-This post follows from the previous post where we perform [distributed training of a GPT model using Data parallelism]({{ site.baseurl }}{% post_url 2023-08-18-GPTlite-data-parallelism %}), where we implemented Data Parallelism on a GPT model. Pipeline parallelism is one dimension of the **3D parallelism** of ML models, via Data, Pipeline and Tensor/Model parallelism. In this post we will discuss and implement pipeline parallelism.
-
-{: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/GPTlite-distributed/GPT_3D_parallelism_2.png"/>
-
-{: style="text-align:center; font-size: small;"}
-The 3D parallelism aims and partitioning (color-coded) computer resources across the 3D space of data, pipeline and tensor (model) dimensions. In this post we will focus on pipeline parallelism. Source: [Microsoft Research Blog](https://www.microsoft.com/en-us/research/blog/deepspeed-extreme-scale-model-training-for-everyone/)
+In this post we will discuss and implement pipeline parallelism. Pipeline parallelism is just another possible dimension of parallelism on the universe of data, model, pipeline, tensor, context, sequence and expert parallelism. 
 
 Imagine we have a model that is too large to fit in the local memory of a single process. A simple way to overcome this is to split the model across the layer dimension and delegate a subset of layers to each process. Then we can do a forward and backward pass by communicating activations and gradients between *connecting* processes. Each process is responsible for a subset of layers and is called a **stage**. This type of parallelism is called **pipeline parallelism**. The following picture gives us a simple illustration of the process:
 
