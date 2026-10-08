@@ -21,11 +21,10 @@ layout: default
 
   <!-- profile photo -->
   <div style="flex-shrink: 0;">
-    <img src="{{ '/photo.png' | relative_url }}" 
-         alt="photo" 
-         style="width: 132px; height: 132px; border-radius: 50%; object-fit: cover; display: block; border: 1px solid #ddd;" />
+    <img src="{{ '/photo.png' | relative_url }}"
+       alt="photo"
+       style="width: clamp(80px, 20vw, 132px); height: auto; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; display: block; border: 1px solid #ddd;" />
   </div>
-
 </div>
 
 <!-- introduction paragraph -->
