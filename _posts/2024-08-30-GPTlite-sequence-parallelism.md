@@ -379,7 +379,7 @@ Moreover, when you perform multi-dimensional parallelism (e.g. data + sequence),
 Activations allocation on a 4-GPU execution with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: blue and green processes belong to the same sequence-parallel group and share one sample; red and yellow processes form the other sequence-parallel group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes can compute attention for full sequences.
 
 
-## When to use what
+## When to use Ulysses and Ring attention
 
 Use Ulysses (an all-to-all that re-shards from sequence to heads, so each GPU computes full-sequence attention for a subset of heads) when the group sits on a fast interconnect like NVLink within a node and the degree is less-or-equal than the number of attention heads. That means you cannot use Ulysses with Multi-Query Attention (MQA), and it has limited use on Grouped Query Attention (GQA). Its per-GPU traffic stays constant as sequence length and degree grow together, and any attention kernel works unchanged, but the all-to-all is hard to overlap with compute and slows down across nodes.
 
