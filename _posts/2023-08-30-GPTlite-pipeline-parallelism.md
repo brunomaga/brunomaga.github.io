@@ -5,7 +5,7 @@ categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
 
-In this post we will discuss and implement pipeline parallelism. Pipeline parallelism is just another possible dimension of parallelism on the universe of data, model, pipeline, tensor, context, sequence and expert parallelism. 
+In this post we will discuss and implement pipeline parallelism. Pipeline parallelism is just another possible dimension of model parallelism on the universe of data, tensor, pipeline, tensor, context, sequence and expert parallelism. 
 
 Imagine we have a model that is too large to fit in the local memory of a single process. A simple way to overcome this is to split the model across the layer dimension and delegate a subset of layers to each process. Then we can do a forward and backward pass by communicating activations and gradients between *connecting* processes. Each process is responsible for a subset of layers and is called a **stage**. This type of parallelism is called **pipeline parallelism**. The following picture gives us a simple illustration of the process:
 
