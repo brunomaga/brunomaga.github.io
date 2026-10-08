@@ -14,7 +14,7 @@ Distributed data parallelism (DDP) refers to the parallel execution of different
 {: style="text-align:center; font-size: small;"}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.
 
-In this post, we will perform distributed data parallelism on the training process of the [GPTlite model we built in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), on a network of 8 GPUs, using PyTorch's(https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
+In this post, we will perform distributed data parallelism on the training process of the [GPTlite model we built in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-GPTlite %}), on a network of 8 GPUs, using [PyTorch Distributed Data Parallel (DDP)](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
 
 There are two main data parallelism approaches:
 
