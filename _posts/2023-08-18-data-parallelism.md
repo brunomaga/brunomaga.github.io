@@ -54,7 +54,7 @@ Memory consumption of the three different stages of ZeRO FSDP.  Source: [Microso
 
 Sometimes the model can be so big that even with sharding, it won't fit in a single process. A common technique to handle such memory limitations is CPU offloading - also referred to as virtual Deep Neural Networks by [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shiram et al)](https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf). The main goal of this method is to iteratively move to the GPU the portions of activations and model that are required for the current and following subset of computation steps. Previously-processed layers are moved from GPU to CPU while upcoming layers will be moved from the CPU to GPU.
 
-This is possible because as we've seen on a [previous post]({{ site.baseurl }}{% post_url 2018-03-27-Deep-Neural-Networks %}), the loss (and its derivative) can be written as a composition of activations throughout layers, e.g. for MAE:
+This is possible because the loss (and its derivative) can be written as a composition of activations throughout layers, e.g. for MAE:
 
 $$
 L = \frac{1}{N} \sum_{n=1}^N | y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) |
