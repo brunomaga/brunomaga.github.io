@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Inference optimization (3): faster attention"
+title:  "Efficient Inference: faster attention"
 categories: [machine learning, Transformer, GPT, inference, attention]
 tags: [machinelearning]
 ---
