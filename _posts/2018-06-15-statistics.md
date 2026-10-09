@@ -5,7 +5,7 @@ categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-A brief summary of topics in statistics and probability that are relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For a similar post related to the topics of Algebra, see [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-Algebra-for-ML %}). 
+A brief summary of topics in statistics and probability that are relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For a similar post related to the topics of Algebra, see [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-algebra %}). 
 
 
 **Basic definitions**:
@@ -18,7 +18,7 @@ A brief summary of topics in statistics and probability that are relevant to ML 
   - the **sum of independent random variables** is the **convolution**: $$ \int_{X+Y}(u) = \int_{-\infty}^{+\infty} f_X(u-v) \, f_Y(v) \, dv$$
 
 
-**Statistical distributions** can be either <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a> or <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a>. Most parametric continuous distributions belong to the [exponential family of distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) .
+**Statistical distributions** can be either <a href="{{ site.statistics_distributions | replace: 'XXX', 'CONTINUOUS' }}"> continuous </a> or <a href="{{ site.statistics_distributions | replace: 'XXX', 'DISCRETE' }}"> discrete </a>. Most parametric continuous distributions belong to the [exponential family of distributions]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}) .
 - $$P(X=x)$$ is called a **probabilistic mass function (pmf)** or a **probability density function (pdf)** for a discrete or continuous variable $$x$$, respectively; 
   - Any discrete (continuous) domain can be a probability as long as it only has non-negative values and all values sum (integrate) to 1; 
   - $$P(X \le x) = = \int^x_{-\infty} p(t) dt$$ is the **cumulative distribution function (cdf)**
@@ -102,7 +102,7 @@ $$.
 ---
 
 
-**Gaussian Distribution** (see the post about the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-03-20-Exponential-Family-Distributions %}) for more distributions): 
+**Gaussian Distribution** (see the post about the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}) for more distributions): 
 - univariate with mean $$\mu$$ and variance $$\sigma^2$$: $$\,\,\,p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$
 - multivariate with mean vector $$\mu \in \mathbb{R}^D$$ and covariance matrix $$\Sigma$$: $$p(x \mid \mu, \Sigma ) = (2 \pi)^{-\frac{D}{2}} \mid\Sigma\mid^{-\frac{1}{2}} \exp \left( -\frac{1}{2}(x-\mu)^{\intercal} \Sigma^{-1}(x-\mu) \right)$$
 - marginals and conditional of multivariate Gaussians are also Gaussians:
