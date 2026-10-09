@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Inference optimization (1): roofline model, KV/prefill/semantic cache, continuous batching, disaggregation"
+title:  "Efficient inference: prefill vs decode roofline, cache, continuous/ragged batching, disaggregation"
 categories: [machine learning, Transformer, GPT, inference]
 tags: [machinelearning]
 ---
