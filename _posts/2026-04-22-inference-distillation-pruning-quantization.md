@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Inference optimization (2): knowledge distillation, pruning and quantization"
+title:  "Efficient inference: knowledge distillation, pruning and quantization"
 categories: [machine learning, Transformer, GPT, inference, distillation, pruning, quantization]
 tags: [machinelearning]
 ---
