@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed model training (1): data parallelism, sharding and CPU offloading"
+title:  "Distributed training: data parallelism, sharding and CPU offloading"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---
