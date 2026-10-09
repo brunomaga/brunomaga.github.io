@@ -170,7 +170,7 @@ $$
 L_x(θ) = −log p(x | θ) .
 $$
 
-We'll omit details on likelihood estimators, as they are covered in a [different post]({{ site.baseurl }}{% post_url 2018-08-20-Bayesian-Linear-Regression %}). 
+We'll omit details on likelihood estimators, as they are covered in a [different post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}). 
 
 ### Mean Squared Error
 
