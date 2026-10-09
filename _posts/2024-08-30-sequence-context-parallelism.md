@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed model training (6): sequence and context parallelism with Ulysses and Ring attention"
+title:  "Distributed training: sequence and context parallelism with Ulysses and Ring attention"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
