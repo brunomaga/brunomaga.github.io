@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed model training: Mixture-of-Experts and Expert Parallelism"
+title:  "Distributed ML training: Mixture-of-Experts and Expert Parallelism"
 categories: [machine learning, Transformer, GPT, mixture-of-experts]
 tags: [machinelearning]
 ---
