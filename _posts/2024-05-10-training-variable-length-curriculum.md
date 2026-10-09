@@ -32,7 +32,7 @@ In the next sections we detail the latter option.
 
 ### Distributed Sorting
 
-The tricky part is the distributed sort that transforms (b) into (d). There are [other distributed sorting algorithms]({{ site.baseurl }}{% post_url 2014-06-21-Distributed-Sort %}) one could use, but here we implement the **Distributed Sample Sort** algorithm because it scales well to many processes. The workflow is:
+The tricky part is the distributed sort that transforms (b) into (d). There are [other distributed sorting algorithms]({{ site.baseurl }}{% post_url 2014-06-21-distributed-sort %}) one could use, but here we implement the **Distributed Sample Sort** algorithm because it scales well to many processes. The workflow is:
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="{{ site.assets }}/Distributed-Sort/sample_sort.png"> 
@@ -226,7 +226,7 @@ If you are looking for a complete example, see my [DeepSpeed PR 7104](https://gi
 
 ## Kernels compilation
 
-We have seen in a [previous post]({{ site.baseurl }}{% post_url 2023-06-27-GPTlite-cpp %}) that just-in-time compilation of ML kernels via `torch.compile` can lead to substantial speedups. Here we focus on two aspects: (1) compilation on distributed runs and CUDA graphs, and (2) static vs dynamic compilation.
+We have seen in a [previous post]({{ site.baseurl }}{% post_url 2023-06-27-gptlite-cpp %}) that just-in-time compilation of ML kernels via `torch.compile` can lead to substantial speedups. Here we focus on two aspects: (1) compilation on distributed runs and CUDA graphs, and (2) static vs dynamic compilation.
 
 ### CUDA graphs compilation on single- vs multi-process runs
 
