@@ -5,7 +5,7 @@ categories: [machine learning, unsupervised learning]
 tags: [machinelearning]
 ---
 
-Unsupervised Learning is the feld of Machine Learning dedicated to the methods of learning without supervision or reward signals. In practice, and contrarily to the fields of [Reinforcement Learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and  [Supervised Learning]({{ site.baseurl }}{% post_url  2017-02-17-Linear-Regression-and-Matrix-Factorization %}), the data is the only information provided to the methods. However, methods are still very powerful and are commonly used for applications such as image compression, dimensionality reduction and classification. 
+Unsupervised Learning is the feld of Machine Learning dedicated to the methods of learning without supervision or reward signals. In practice, and contrarily to the fields of [Reinforcement Learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and  [Supervised Learning]({{ site.baseurl }}{% post_url  2017-02-17-linear-regression-matrix-factorization %}), the data is the only information provided to the methods. However, methods are still very powerful and are commonly used for applications such as image compression, dimensionality reduction and classification. 
 
 ## Foreword: Hebbian Learning
 
@@ -248,7 +248,7 @@ K-means has 2 main problems:
 - forces the clusters to be spherical, but sometimes it is desirable to have elliptical clusters;
 - each element can only belong to a cluster, but this may not always be a good choice;
 
-Both problems can be fixed with Gaussian [Mixture Models](https://en.wikipedia.org/wiki/Mixture_model). A mixture model corresponds to the mixture of distributions --- in this case Gaussians --- that represents the probability distribution of observations in the overall population. This content is covered in [another post]({{ site.baseurl }}{% post_url 2019-07-01-Variational-Inference-GMM %}).
+Both problems can be fixed with Gaussian [Mixture Models](https://en.wikipedia.org/wiki/Mixture_model). A mixture model corresponds to the mixture of distributions --- in this case Gaussians --- that represents the probability distribution of observations in the overall population. This content is covered in [another post]({{ site.baseurl }}{% post_url 2019-07-01-variational-inference-gmm %}).
 
 ## Self-Organizing Maps and Kohonen Maps
 
