@@ -239,7 +239,7 @@ This approach increases computational efficiency as neurons are computed beyond 
 
 ### 2. Testing conditions alter spike rates
 
-[LIF-model-post]: {{ site.baseurl }}{% post_url 2016-02-08-LIF-Brunel %}
+[LIF-model-post]: {{ site.baseurl }}{% post_url 2016-02-08-lif-brunel %}
 
 Even though results sound promising, different mamals, brain regions and mental states can easily change the simulation conditions, leading to very different spiking rates. So the final test is to understand how these factors alter the simulation efficiency. Therefore, we applied the fully-asynchronous execution model and tested five different brain dynamics:
 - a model of *quiet dynamics* with a mean spiking rate of 0.25 Hz per neuron, representing neurons almost at rest and/or with little activity. This model provides an upper bound of the runtime of circa 90% of neurons in the brain during regular activity;
