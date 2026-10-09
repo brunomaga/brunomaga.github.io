@@ -61,6 +61,6 @@ Here is an illustrative workflow:
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="/assets/Distributed-Sort/sample_sort.png">
 
-This method is computationally very efficient as the number of communication operations is constant, independently of the input size of network size. However, it may lead to a highly heterogeneous number of elements across number nodes. This leads to a computational and memory imbalance. If necessary, a network balance operation may follow the sorting in order to balance the dataset across the network. This balancing operation and the sorting of spatial datasets are covered [in a different post]({{ site.baseurl }}{% post_url 2015-12-01-Slicing %}).
+This method is computationally very efficient as the number of communication operations is constant, independently of the input size of network size. However, it may lead to a highly heterogeneous number of elements across number nodes. This leads to a computational and memory imbalance. If necessary, a network balance operation may follow the sorting in order to balance the dataset across the network. This balancing operation and the sorting of spatial datasets are covered [in a different post]({{ site.baseurl }}{% post_url 2015-12-01-slicing %}).
 
 The `C++` implementation of both algorithms is available in <a href="/assets/Distributed-Sort/DistributedMemorySorter.cxx">DistributedMemorySorter.cxx</a> and <a href="/assets/Distributed-Sort/DistributedMemorySorter.h">DistributedMemorySorter.h</a>. 
