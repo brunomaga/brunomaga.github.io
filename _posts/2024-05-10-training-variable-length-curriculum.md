@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed model training (5): variable sequence lengths, curriculum learning, adaptive batch size and LR"
+title:  "Distributed training: variable sequence lengths, curriculum learning, adaptive batch size and LR"
 categories: [machine learning, distributed computing]
 tags: [machinelearning]
 ---
