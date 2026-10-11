@@ -790,7 +790,7 @@ The paper "presents a methodology to select the scalings for FP8 linear layers, 
 - CPUAdam optimization: details not available yet;
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="50%" height="50%" src="/assets/publications/ZeroOffloadPlusPlus.png"/>
+<img loading="lazy" width="50%" height="50%" src="/assets/publications/zerooffloadplusplus.png"/>
 </details>
 
 
@@ -846,7 +846,7 @@ The paper introduces three communication reduction techniques, packed as ZeRO++:
 The results section claims that  ZeRO++ yields a communication reduction of 4x compared to ZeRO-3, leading to up to 2.16x higher compute throughput on 384 GPUs.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="70%" height="70%" src="/assets/publications/ZeROplusplus.png"/>
+<img loading="lazy" width="70%" height="70%" src="/assets/publications/zeroplusplus.png"/>
 </details>
 
 
@@ -885,7 +885,7 @@ With that in mind: **TorToise works by joining autoregressive decoders and DDPMs
 The inputs of the auto-regressive and DDPM models include (or are conditioned to) an additional speech conditioning input, which is one or more audio clips (MEL spectrograms) of the same speaker as the target. This allows the model to "infer vocal characteristics like tone and prosody" desired in the target output audio. Finally, they apply the **TorToise trick**: the DDPM is first trained on converting discrete speech codes into MEL spectrograms,  and then **fine-tuned** on the latent space of the AR model outputs instead of the speech codes. "The logic here is that the AR latent space is far more semantically rich than discrete tokens. By fine-tuning on this latent space, we improve the efficiency of the downstream diffusion model"
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="70%" height="70%" src="/assets/publications/TorToise-v2.png"/>
+<img loading="lazy" width="70%" height="70%" src="/assets/publications/tortoise-v2.png"/>
 </details>
 
 
@@ -902,14 +902,14 @@ VALL-E is trained with the LibriLight dataset, consisting of 60K hours of Englis
 **Model architecture:** formally speaking, $$Encodec(y) = C^{T \times 8}$$, where $$C$$ represents the two-dimensional acoustic code matrix (the 8-channel audio embeddings), and $$T$$ is the downsampled utterance length. Each row in $$C$$ represents the eight codes for a given time frame. After quantization, the neural codec decoder is able to reconstruct the waveform, i.e. $$Decodec(C) ≈ \hat{y}$$. Given an acoustic prompt matrix $$\hat{C}^{T \times 8}$$, the optimization objective of the TTS model is $$max\, p(C \mid x, \hat{C})$$, where $$x$$ is the corresponding phoneme transcription. I.e. the model learns to extract the content and speaker information from the phoneme sequence and the acoustic prompt, respectively.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="70%" height="70%" src="/assets/publications/VALLE.png"/>
+<img loading="lazy" width="70%" height="70%" src="/assets/publications/valle.png"/>
 
 There are two models, that refer to the two inference steps:
 1. an auto-regressive (AR) model, a transformer decoder-only architecture, conditioned on the phoneme (text) and acoustic prompt (3-second audio), that gives the discrete tokens of the audio from the first quantizer (Formula 1).
 2. a non auto-regressive (NAR) model, a transformer decoder with full (non-causal) attention, that predicts the remaining 7 quantizers one level at a time, each conditioned on the text, the prompt and the previously predicted levels, for all time steps in parallel (Formula 2).
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="70%" height="70%" src="/assets/publications/VALLE2.png"/>
+<img loading="lazy" width="70%" height="70%" src="/assets/publications/valle2.png"/>
 
 Note to self: for the use case of synthesizing audio in a different language, i.e. that differs from the 3-sec input language and text, see [VALL-E X](https://www.microsoft.com/en-us/research/project/vall-e-x/vall-e-x/).
 </details>
@@ -992,7 +992,7 @@ two modules: a multi-scale retention (MSR) module, and a feed-forward network (F
 Finally, the model uses $$h = d_{model}/d$$ retention heads in each layer, where $$d$$ is the head dimension. The heads use different parameter matrices $$W_Q, W_K, W_V \in \mathbb{R}^{d \times d}$$ and scalar $$γ$$ per head. The overall architecture for a given layer $$l$$ of the RetNet is then $$Y_l = MSR(LayerNorm(X_l)) + X_l$$ and $$X_{l+1} = FFN(LN(Y_l)) + Y_l$$, ie similar to a regular transformer but replacing the attention by a retention head.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="60%" height="60%" src="/assets/publications/RetNet.png"/>
+<img loading="lazy" width="60%" height="60%" src="/assets/publications/retnet.png"/>
 </details>
 
 
@@ -1045,7 +1045,7 @@ during training. Using Tensor Programs, we can recursively calculate such coordi
 With that in mind, here they propose a hyper-parameter tuning paradigm called muTransfer: "parametrize the target model in muP, tune the HP indirectly on a smaller model, and zero-shot transfer them to the full-sized model". By transferring from a 40M-parameter proxy, they outperform the published numbers of the 6.7B GPT-3 with a tuning cost of only 7% of the total pretraining cost; transferring from a 13M-parameter model beats the published BERT-large (350M) numbers.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="/assets/publications/muTransfer.png"/>
+<img loading="lazy" width="80%" height="80%" src="/assets/publications/mutransfer.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Figure 1: Training loss against learning rate on Transformers of varying $$d_{model}$$ trained with Adam. Conventionally and in contrast with our technique, different widths do not share the same optimal hyperparameter; wider networks do not always perform better than narrower ones; in fact they underperform the same-width networks in our technique even after tuning learning rate (see dashed line).
@@ -1102,7 +1102,7 @@ LoRA blocks "suffer from two major problems: first, the size of these blocks is 
 They report training such dynamic, search-free models 4–7× faster than LoRA (depending on the task) without significantly compromising performance.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="100%" height="100%" src="/assets/publications/DyLoRA.png"/>
+<img loading="lazy" width="100%" height="100%" src="/assets/publications/dylora.png"/>
 </details>
 
 
@@ -1116,7 +1116,7 @@ Related to attention layers (section 3.3), "Multihead attention can be paralleli
 The most similar partitioning layout for multiquery attention (shown in Figure 4(b)) treats the KV cache the same as in multihead attention. Even though the key and value tensors are shared across all heads, they must be replicated on each chip and the memory cost savings of multiquery attention are lost". Instead the paper proposes "a partitioning strategy for the multiquery attention where the Q, K, and V matrices are partitioned over the batch $$B$$ dimension into $$n_{chips}$$ partitions". This reduces the cost of loading the KV cache per chip by a factor of $$n_{chips}$$ but incurs additional communication cost of resharding the input activation tensors. "With the proposed partitioning layout, multiquery attention enables using larger batch sizes and sequence lengths, thereby increasing throughput in addition to the latency reduction from reduced memory time".
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="50%" height="50%" src="/assets/publications/Efficiently_Scaling_Transformer_Inference_MultiQuery.png"/>
+<img loading="lazy" width="50%" height="50%" src="/assets/publications/efficiently_scaling_transformer_inference_multiquery.png"/>
 
 Section 3.4 details the gains of using [GPT-J](https://en.wikipedia.org/wiki/GPT-J#cite_note-Model_Card-2)'s approach to **compute attention heads and feed forward in parallel**, also applied to [PaLM](https://arxiv.org/abs/2204.02311). For comparison, the standard formulation of the transformer block is $$ y = x + MLP(LayerNorm(x + Attention(LayerNorm(x)))) $$, whereas the parallel formulation is:
 $$y = x + MLP(LayerNorm(x)) + Attention(LayerNorm(x))$$. Using the parallel formulation has only one layernorm per layer instead of two,
@@ -1141,7 +1141,7 @@ Related to the learning rate, note that: random-LTD reduces the effective batch 
 The results compare Random-LTD with the baseline, on GPT3 models with 350M and 1.3B parameters, and a dataset of up to 300B tokens. Here, Random-LTD shows similar evaluation losses as the baseline with 1/3 less LayerToken consumption. However, an important claim is that "reiterate that the LayerToken consumption saving ratio cannot directly transfer to GPU wall-clock training time saving ratio due to the implementation/hardware"; still, on GPT-3 1.3B they report 33.3% theoretical compute savings and 25.6% wall-clock savings with similar zero-shot accuracy. On BERT and ViT models, similar results are shown. When compared with TokenBypass (a different technique that skips middle layers tokens), Random-LTD shows better train and validation perplexity. Also, MSLG shows better perplexity than a constant-drop rate (table 6.4).
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="60%" height="60%" src="/assets/publications/Random_LTD.png"/>
+<img loading="lazy" width="60%" height="60%" src="/assets/publications/random_ltd.png"/>
 </details>
 
 
@@ -1162,7 +1162,7 @@ Results on GPT-2 (117M and 1.5B) show stable training with 8x larger batch size 
 Transformers are slow and memory-hungry on long sequences, since the time and memory complexity of self-attention are quadratic in sequence length. The authors "argue that a missing principle is making attention algorithms IO-aware—accounting for reads and writes between levels of GPU memory". To overcome it, Flash Attention improves the attention mechanism with one that uses tiling to reduce the number of memory reads/writes between GPU high bandwidth memory (HBM) and GPU on-chip SRAM. In practice, it tiles the square attention matrix into partial computations that can be computed in the on-chip SRAM (shared memory) instead of the GPU's global memory (HBM). It also trains Transformers faster than existing baselines (15% end-to-end on BERT-large vs. the MLPerf 1.1 record, 3× on GPT-2 and 2.4× on long-range arena).
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="/assets/publications/FlashAttention.png"/>
+<img loading="lazy" width="80%" height="80%" src="/assets/publications/flashattention.png"/>
 
 FlashAttention is the canonical example of *algorithmic* fusion in attention: it avoids materializing the full \(QK^\top\) (and often avoids materializing large intermediate softmax buffers) by using a numerically stable streaming formulation. Instead of computing attention as “GEMM → softmax → GEMM” with large intermediate tensors in HBM, it tiles the computation so that data is reused from SRAM/shared memory.
 
@@ -1188,7 +1188,7 @@ Two main problems arise in lossy neural compression of audio. The first one is o
 There are two variants of the model, targeted for the low-latency streamable setup, or a high fidelity non-streamable usage.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="/assets/publications/Encodec.png"/>
+<img loading="lazy" width="80%" height="80%" src="/assets/publications/encodec.png"/>
 
 The training objective minimizes a linear combination of the following losses:
 - **reconstruction loss**, comprised of a time and a frequency domain loss term, to minimize the L1 distance between the target and compressed audio over the time domain, i.e. $$l_t(x, \hat{x}) = \| x − \hat{x} \|_1$$. For the frequency domain loss $$l_f$$ (Note: typo here, this is $$l_s$$ in the picture above, as in *spectrogram loss*), they use an averaged sum of the L1 and L2 losses between the elements of the input and output mel-spectrograms. 
@@ -1239,12 +1239,12 @@ The paper discusses the phenomenon of **emergent abilities** of large language m
 The first analysis of emergent abilities focuses on the few-shot prompting paradigm, where outcome is emergent when a model has random performance until a certain scale, after which performance increases to well-above random. This was analysed on eight tasks across five model families (LaMDA, GPT-3, Gopher, Chinchilla, PaLM):
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="/assets/publications/Emergent_Abilities_1.png"/>
+<img loading="lazy" width="80%" height="80%" src="/assets/publications/emergent_abilities_1.png"/>
 
 A similar analysis with augmented prompting exposes the emergent property as related to when the model output starts having a positive effect (e.g. being able to do arithmetic only after a certain scale). A multi-step reasoning by providing a chain-of-thoughts as a sequence of intermediate steps was also analysed, and claimed to be exposed only after $$10^{23}$$ training FLOPs or approx. 100B parameters. Such scale is also required for instruction following tasks (ie new tasks without prior few-shots exemplars, and only by reading a set of instructions). Program execution tasks (a scratchpad for 8-digit addition) require $$9 \times 10^{19}$$ FLOPs or 40M parameters or larger. For model calibration (the ability of a model responding as True or False (or the correctness probability) to which questions they'll be able to predict correctly) requires $$3 \times 10^{23}$$ FLOPs or 52B parameters. It is summarized as:
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="/assets/publications/Emergent_Abilities_2.png"/>
+<img loading="lazy" width="80%" height="80%" src="/assets/publications/emergent_abilities_2.png"/>
 </details>
 
 
@@ -1257,10 +1257,10 @@ Heavily related to HPC's performance modelling applied to large language models.
 To be compute optimal (i.e., lowest loss for a given compute budget), Kaplan et al. (2020) claims that models should not be trained to their lowest possible loss, and for a 10× increase in computational budget, the model should increase by 5.5× and the training tokens by 1.8x. In this paper, the authors defend that model size and training tokens should be scaled in equal proportions. 
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models.png"/> 
+<img loading="lazy" width="80%" height="80%" src="/assets/publications/training_compute_optimal_large_language_models.png"/> 
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="/assets/publications/Training_Compute_Optimal_Large_Language_Models_2.png"/> 
+<img loading="lazy" width="80%" height="80%" src="/assets/publications/training_compute_optimal_large_language_models_2.png"/> 
 </details>
 
 
@@ -1344,7 +1344,7 @@ LoRA focuses on decomposing parameter updates into low-rank matrices, drasticall
 A small, trainable low-rank matrix $$Δ𝑊$$ is added to the original (frozen) weight matrix $$𝑊$$. The final output is $$W′=W+ΔW$$. Instead of directly learning $$Δ𝑊$$, it is factorized as $$ΔW=AB^⊤$$ where $$A$$ and $$B$$ are thin matrices of rank $$r$$ much smaller than the layer dimensions. One factor is initialised to zero (so training starts from the pretrained model), the update is scaled by $$α/r$$, and the paper applies it to the attention projections (e.g., $$W_q$$, $$W_v$$). Because $$ΔW$$ can be merged into $$W$$ after training, there is no extra inference latency. Compared to full fine-tuning of GPT-3 175B with Adam, LoRA reduces the number of trainable parameters by 10,000× and the GPU memory requirement by 3×, while matching or exceeding fine-tuning quality on RoBERTa, DeBERTa, GPT-2 and GPT-3.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="25%" height="25%" src="/assets/publications/LoRA.png"/>
+<img loading="lazy" width="25%" height="25%" src="/assets/publications/lora.png"/>
 </details>
 
 
@@ -1363,7 +1363,7 @@ The dataset is an abundantly available source of supervision: 400 million pairs 
 For the image encoder, the authors consider 5 ResNets (ResNet-50, ResNet-101 and three EfficientNet-style scaled-up ResNet-50s with 4×, 16× and 64× the compute), with improvements such as attention pooling similar to a QKV attention, and 3 Vision Transformers. The text encoder is a transformer with masked self-attention, with Byte-Pair encoding with a 49152 vocab size. The max sequence length was capped at 76 (section 2.4).
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="100%" height="100%" src="/assets/publications/CLIP.png"/> 
+<img loading="lazy" width="100%" height="100%" src="/assets/publications/clip.png"/> 
 
 The pipeline for contrastive pre-training (1) is the following:
 - we pass an image through the image encoder (ViT or ResNet). Each image $$i$$ is pictured as $$I_i$$ above.
@@ -1406,7 +1406,7 @@ The sharding properties are user-defined with `mesh_split(tensor, device_mesh, d
 all types of sharding, across the dimension(s) of batch, features, channels and/or others. The automatic partitioner in GSPMD is implemented as transformation/compiler passes in the XLA compiler (Section 3.5), using information about the operator (e.g. dot product is a generalized matrix multiply) or using iterative methods where  shardings assigned by the pass are refined incrementally over the iterations. GSPMD achieves 50% to 62% compute utilization on 128 to 2048 Cloud TPUv3 cores for models with up to one trillion parameters, and since it produces a single program for all devices, its compilation time stays constant as the number of devices grows.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="60%" height="60%" src="/assets/publications/GSPMD.png"/>
+<img loading="lazy" width="60%" height="60%" src="/assets/publications/gspmd.png"/>
 
 {: style="text-align:center; font-size: small;"}
 **Left:** A simplified feedforward layer of a Transformer model. Blue rectangles represent tensors with dashed red & blue lines overlaid representing the desired partitioning across a 2x2 mesh of devices. **Right:** A single partition, after GSPMD has been applied. **Source**: <a href="https://blog.research.google/2021/12/general-and-scalable-parallelization.html">google research post</a>.
@@ -1615,7 +1615,7 @@ The authors present SWA, a "simple averaging of multiple points along the trajec
 Next, we average the weights of all the captured networks $$w_i$$ to get our final model $$w_{SWA}$$. For cyclical learning rate schedule, the SWA algorithm is related to FGE, except that instead of averaging the predictions of the models, we average their weights, and we use a different type of learning rate cycle. SWA improves test accuracy over conventional SGD training on CIFAR-10, CIFAR-100 and ImageNet, with almost no computational overhead.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="90%" height="90%" src="/assets/publications/SWA.png"/> 
+<img loading="lazy" width="90%" height="90%" src="/assets/publications/swa.png"/> 
 </details>
 
 
@@ -1640,7 +1640,7 @@ reconstruction loss."
 Equation 3 specifies the overall loss: the reconstruction loss, a codebook loss $$\| sg[z_e(x)] - e \|_2^2$$ that moves the embeddings towards the encoder outputs, and a commitment loss $$\beta \| z_e(x) - sg[e] \|_2^2$$ that keeps the encoder committed to an embedding ($$sg$$ is the stop-gradient operator), with the gradient copied straight-through across the non-differentiable mapping from $$z_e(x)$$ to $$z_q(x)$$.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="75%" height="75%" src="/assets/publications/RQVAE.png"/> 
+<img loading="lazy" width="75%" height="75%" src="/assets/publications/rqvae.png"/> 
 </details>
 
 
@@ -1660,7 +1660,7 @@ It matches FP32 accuracy across a wide range of tasks (image classification and 
 Introduces the Graph Convolutional Network (GCN), a simple layer-wise propagation rule, $$H^{(l+1)} = \sigma(\tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} H^{(l)} W^{(l)})$$, with $$\tilde{A} = A + I$$ (the adjacency matrix with self-loops) and $$\tilde{D}$$ its degree matrix, derived as a first-order approximation of spectral graph convolutions. Similarly to CNNs, GCNs learn the features by aggregating information from neighboring nodes. The main difference is that CNNs are meant to operate on regular Euclidean structures (e.g. images), while GCNs generalize this to arbitrary graph structures. On semi-supervised node classification in citation networks (Citeseer, Cora, Pubmed) and a knowledge graph (NELL), it outperforms related methods by a significant margin.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="65%" height="65%" src="/assets/publications/GraphConvNets.png"/> 
+<img loading="lazy" width="65%" height="65%" src="/assets/publications/graphconvnets.png"/> 
 </details>
 
 <details> <summary markdown="span"> 2016 [Neural Architecture Search with Reinforcement Learning, Google, ICLR 2017](https://arxiv.org/abs/1611.01578)</summary>
@@ -1670,7 +1670,7 @@ Neural Architecture Search (NAS) is a subfield of machine learning that focuses 
 The authors propose "a recurrent network to generate the model descriptions of neural networks and train this RNN with reinforcement learning to maximize the expected accuracy of the generated architectures on a validation set." Basically, a DNN that defines the structure of another DNN using RL. The structure and connectivity of the model being designed (the **child network**) is represented as a variable-length string. This string is generated by the **controller** network - a recurrent neural network - that uses the child network's accuracy on the validation set as a reward signal. On CIFAR-10, the discovered architecture reaches 3.65% test error (0.09% better and 1.05× faster than the previous state of the art), and on Penn Treebank a newly discovered recurrent cell reaches 62.4 test perplexity (3.6 better than the previous state of the art).
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="/assets/publications/NAS.png"/> 
+<img loading="lazy" width="80%" height="80%" src="/assets/publications/nas.png"/> 
 </details>
 
 
@@ -1703,7 +1703,7 @@ An improvement over the RNN encoder–decoder for translation (Cho et al., 2014;
 A differentiable module that can be inserted anywhere in a CNN to spatially transform feature maps, conditioned on the input and learned without extra supervision. A localisation network regresses the transformation parameters (e.g., affine, projective or thin-plate spline), a grid generator produces the sampling grid, and a differentiable (e.g., bilinear) sampler warps the input. This gives the network learned invariance to translation, scale, rotation and more generic warping, yielding state-of-the-art results at the time on distorted MNIST, Street View House Numbers and CUB-200-2011 birds.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="85%" height="85%" src="/assets/publications/STN.png"/> 
+<img loading="lazy" width="85%" height="85%" src="/assets/publications/stn.png"/> 
 </details>
 
 

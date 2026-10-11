@@ -60,7 +60,7 @@ The main advantage of MCMC is that it provides an approximation of the *true* po
 
 So as a golden rule, always use approximated methods, but if in doubt, double check with the true MCMC-based posterior.
 
-I will try to post about this topic in the near future, but if you're curious you can always check the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/Bayesian-Variational-Inference-GMM/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf) if you are interested on the theory behind it, or a practical explanation with code in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
+I will try to post about this topic in the near future, but if you're curious you can always check the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/bayesian-variational-inference-gmm/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf) if you are interested on the theory behind it, or a practical explanation with code in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
 
 ## Variational Inference
 
@@ -362,7 +362,7 @@ Putting it all together, the algorithm follows as:
 The algorithm is iterative and will converge on a certain loss threshold (ELBO), based on the fitting of each Gaussian to the data points. The concept can be easily understood by looking at the illustration of several iterations of the fitting of Gaussian models to 4 clusters of points:   
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="/assets/Bayesian-Variational-Inference-GMM/GMM_iterations.JPG"/>
+<img width="60%" height="60%" src="/assets/bayesian-variational-inference-gmm/gmm_iterations.jpg"/>
 
 {: style="text-align:center; font-size: small;"}
 Example of the application of the CAVI algorithm to Gaussian Mixture Models. Dataset described by 2D points assigned to five color-coded clusters.

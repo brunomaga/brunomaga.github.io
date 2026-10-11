@@ -82,7 +82,7 @@ $$
 where $$ D \in R^{D \times K} $$ and $$ Z \in R^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ collects the indices of the observed ratings of the input matrix $$X$$.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%"  src="/assets/Linear-Regression-and-Matrix-Factorization/matrix-factorization.png">
+<img width="60%"  src="/assets/linear-regression-and-matrix-factorization/matrix-factorization.png">
 
 This cost function is not convex and not [identifiable](https://en.wikipedia.org/wiki/Identifiability). $$K$$ is the number of latent features (e.g. gender, age group, citizenship, etc). Large $$K$$ facilitates overfitting. We can add a regularizer to the function:
 
@@ -145,7 +145,7 @@ The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) o
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="/assets/Linear-Regression-and-Matrix-Factorization/coordinate_descent.svg.png">
+<img width="40%" height="40%" src="/assets/linear-regression-and-matrix-factorization/coordinate_descent.svg.png">
 
 {: style="text-align:center; font-size: small;"}
 source: wikipedia

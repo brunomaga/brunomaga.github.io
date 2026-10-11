@@ -20,6 +20,7 @@ google_analytics: UA-129707365-1
 theme: minima
 plugins:
   - jekyll-feed
+  - jekyll-redirect-from
 
 permalink: /:title  #replaces folder structure /YY/mm/dd/categories/title by only /title
 

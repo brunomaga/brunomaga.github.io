@@ -1,1 +1,1 @@
-assets/GPTlite/gptlite.pth filter=lfs diff=lfs merge=lfs -text
+assets/gptlite/gptlite.pth filter=lfs diff=lfs merge=lfs -text

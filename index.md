@@ -108,7 +108,7 @@ I also keep a curated list of related books and other resources available online
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">article</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
-  <a href="{{ site.assets }}/resources/In-Network_Collective_Operations_Game_Changer_or_Challenge_for_AI_Workloads.pdf">In-Network Collective Operations: Game Changer or Challenge for AI Workloads?</a>
+  <a href="{{ site.assets }}/resources/in-network_collective_operations_game_changer_or_challenge_for_ai_workloads.pdf">In-Network Collective Operations: Game Changer or Challenge for AI Workloads?</a>
 </td>
 </tr>
 <tr style="border: none;">

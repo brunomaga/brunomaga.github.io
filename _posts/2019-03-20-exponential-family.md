@@ -14,7 +14,7 @@ However, this is not a property of the Gaussian distribution only. In fact, most
 Probability distributions describe the probabilities of each outcome, with the common property that the probability of all events adds up to 1. They can also be classified in two subsets: the ones described by a probability **mass function** if specified for discrete values, or probability **density functions** if described within some continuous interval. There are dozens (hundreds?) of different distributions, even though only 15 of them are often mentioned and used, and have some kind of relationship among themselves: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="/assets/Exponential-Family-Distributions/common_distributions.png"/>
+<img width="70%" height="70%" src="/assets/exponential-family-distributions/common_distributions.png"/>
 
 {: style="text-align:center; font-size: small;"}
 15 most common probability distributions and their relationships.

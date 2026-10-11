@@ -12,7 +12,7 @@ Neurons are a very complex structure of the human body that govern behaviour, pa
 Due to very sophisticated anatomical structure and behaviour of neurons, we utilise numerical methods applied to approximation of neuron models in order to simulate the electrical activity on neural networks.
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="/assets/Numerical-Methods-Neuron/Neuron.svg">
+<img width="40%" height="40%" src="/assets/numerical-methods-neuron/neuron.svg">
 
 {: style="text-align:center; font-size: small;"}
 source: wikipedia
@@ -29,7 +29,7 @@ A neuron's membrane is formed by a phospholipid bilayer, a dielectric material, 
 Another important mechanism are the synapses, which represent the interneural connections of the circuit. Synapses can drive the post-synaptic membrane potential upwards or downwards based on the excitatory or inhibitory properties of the pre-synaptic cell. Synapses are initiated when the potential of a membrane hits a particular Action Potential (AP) threshold, and is characterized by a stiff change of membrane potential. The lowest AP threshold on a neuron is typically at the beginning of the axon (the Axon Initial Segment), where synapses are first initiated. Other AP may happen throughout the axonal arborization as a current propagation mechanism. Synapses are driven by a fast influx of Sodium ($$Na^+$$) ions, and by the slow outflux of the Potassium ($$K^+$$) channels. The chlorine ($$Cl^-$$) conductance helps to bring the membrane potential back to the rest state following an activation. Several other mechanisms such as gap junctions (active electrical synapses), extracellular space mechanisms, or second messengers also exist. In the cable approximation model, the complexity of these mechanisms are reduced to the measurement of their ionic conductance. When the conductance of these molecules is constant, we call it a leak (passive) conductance. A compartment in ionic equilibrium, i.e. influx and outflux of neurons cause no variation of its potential, is said to be at its reversal potential.
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="/assets/Numerical-Methods-Neuron/action_potential.jpg">
+<img width="40%" height="40%" src="/assets/numerical-methods-neuron/action_potential.jpg">
 
 {: style="text-align:center; font-size: small;"}
 The voltage trajectory during an Action Potential (spike)source: unknown
@@ -52,7 +52,7 @@ $$
 where $$i_a$$ is the axial current [mA], flowing through the compartment's region, and  $$\int_A i_m dA$$ is the transmembrane current density $$i_m$$ [mA/cm$$^2$$] over the membrane area $$A$$ [cm$$^2$$]. This concept is illustrated in the following picture:
 
 {: style="text-align:center; font-size: small;"}
-<img width="20%" height="20%" src="/assets/Numerical-Methods-Neuron/net_current_conservation.png">
+<img width="20%" height="20%" src="/assets/numerical-methods-neuron/net_current_conservation.png">
 
 A common assumption is that a neuron is spatially divided into compartments small enough in such way that the spatially varying $$i_m$$ is any compartment $$j$$ is well approximated to the value on its center, therefore
 
@@ -167,7 +167,7 @@ Most equations that govern the brain mechanisms do not have an analytic solution
 Due to the unique morphology of a cable model representation of a discretized neuron, NEURON implements an optimized linear solver for bifurcated trees, denominated as the Hines Algorithm ([Efficient computation of branched nerve equations, Hines et al. Elsevier][hines1984efficient]). Data is represented as a sparse tridiagonal matrix where the indices of the parent nodes (the ones immediately above on the tree structure) are provided by an extra vector $$p$$. The membrane potential of each compartment is represented by the main diagonal. The contribution from  a parent to its children compartments (and vice-versa) are represented by all cells on the same row (column) on the upper (lower) diagonal of the matrix. As each compartment can have only one parent, this enforces only one cell per row on the lower diagonal, and one cell per column on the upper diagonal. For completion, the followin pictures presents a neuron's dendritic arborization spatially discretized based on the cable model (left) and its sparse matrix representation according to the Hines algorithm (right).
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Numerical-Methods-Neuron/solver_compartment_neuron.png"> <img width="25%" height="25%" src="/assets/Numerical-Methods-Neuron/solver_grid_neuron.png">
+<img width="35%" height="35%" src="/assets/numerical-methods-neuron/solver_compartment_neuron.png"> <img width="25%" height="25%" src="/assets/numerical-methods-neuron/solver_grid_neuron.png">
 
 
 The main rationale behind the Hines algorithm is that if the we can number sequentially the compartments in such way that they all have an index greater than any of its children, then we can reduce the computational complexity of the solver from the $$O(n^3)$$ found on a typical Gaussian elimination to $$O(n)$$. Given a tridiagonal matrix with vectors $$d$$ (main diagonal), $$b$$ (lower diagonal) and $$a$$ (upper diagonal), representing a single cable without branching, we can show that the Hines algorithm is an inverted Gaussian elimination adapted for branched structures:

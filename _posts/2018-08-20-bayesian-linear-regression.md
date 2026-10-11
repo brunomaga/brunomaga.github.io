@@ -293,16 +293,16 @@ inline with equations 3.50 and 3.51 in [Chris Bishop's PRML book]({{ site.resour
 Online learning allows us to do iterative learning by continuously updating our posterior based on new observable data. The main principle is that --- following the $$posterior \propto likelihood * prior$$ principle --- at every iteration we turn our posterior into the new prior, i.e. the new initial knowledge is what we learnt previously. The main advantage is not requiring all the data at once for training and allowing us to learn from datasets that are not fully-available at once. An illustration of the principle is displayed below:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_1.png"/>
+<img width="45%" height="35%" src="/assets/bayesian-linear-regression/linear_bayesian_posterior_1.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_3.png"/>
+<img width="45%" height="35%" src="/assets/bayesian-linear-regression/linear_bayesian_posterior_3.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_4.png"/>
+<img width="45%" height="35%" src="/assets/bayesian-linear-regression/linear_bayesian_posterior_4.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_posterior_5.png"/>
+<img width="45%" height="35%" src="/assets/bayesian-linear-regression/linear_bayesian_posterior_5.png"/>
 
 {: style="text-align:center; font-size: small;"}
 illustration of four steps of online learning for the linear model $$y = w_0 + w_1x$$.
@@ -341,16 +341,16 @@ Similarly to the visualization displayed before, introducing new datapoints impr
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_predictive_distribution_0.png"/>
+<img width="35%" height="35%" src="/assets/bayesian-linear-regression/linear_bayesian_predictive_distribution_0.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_predictive_distribution_1.png"/>
+<img width="35%" height="35%" src="/assets/bayesian-linear-regression/linear_bayesian_predictive_distribution_1.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_predictive_distribution_2.png"/>
+<img width="35%" height="35%" src="/assets/bayesian-linear-regression/linear_bayesian_predictive_distribution_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Bayesian-Linear-Regression/linear_bayesian_predictive_distribution_3.png"/>
+<img width="35%" height="35%" src="/assets/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.png"/>
 
 {: style="text-align:center; font-size: small;"}
 illustration of four steps modelling a synthetic sinusoidal data. Pictures with blue groudntruth, red model mean approximation, and light-orange area of predictive variance. (inspired on fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Classification and Machine Learning, Chris Bishop</a>)
@@ -368,7 +368,7 @@ If we assume the same prior for both models, then the equation simplifies to $$\
 
 ## Final Remarks
 
-For more advanced topics on Bayesian Linear Regression refer to chapter 3 in Pattern Recognition and Machine Learning book from Chris Bishop and chapter 9.3 in Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}). To download the source code of the closed-form solutions and reproduce the examples above, download the <a href="{{ site.assets }}/Bayesian-Linear-Regression/Bayesian_Linear_Regression.ipynb">Bayesian Linear Regression notebook</a>.
+For more advanced topics on Bayesian Linear Regression refer to chapter 3 in Pattern Recognition and Machine Learning book from Chris Bishop and chapter 9.3 in Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}). To download the source code of the closed-form solutions and reproduce the examples above, download the <a href="{{ site.assets }}/bayesian-linear-regression/bayesian_linear_regression.ipynb">Bayesian Linear Regression notebook</a>.
 
 Finally, it has been shown that a kernelized Bayesian Linear Regression with the Kernel $$K(x, x′)=x^Tx′$$ is equivalent to a [Gaussian Process](https://en.wikipedia.org/wiki/Gaussian_process).  
  

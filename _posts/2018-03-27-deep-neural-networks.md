@@ -11,7 +11,7 @@ Deep Neural networks -- also known as Multi Layer Perceptrons -- are **[universa
 The structure of a basic NN is the following: one input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and one output layer. It is a **feedfoward network**: the computation performed by the network starts with the input from the left and flows to the right. There is no feedback loop. It can be used for regression (when input and output are provided) and for classification (when input are provided and new output is the classifier).
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="/assets/Deep-Neural-Networks/dnn.png">
+<img width="30%" height="30%" src="/assets/deep-neural-networks/dnn.png">
 
 {: style="text-align:center; font-size: small;"}
 source: Machine Learning lecture notes, M Jaggi, EPFL
@@ -127,7 +127,7 @@ Dropping 20% of input units and 50% of hidden units was often found to be optima
 Because a fully connected layer occupies most of the parameters, it is prone to overfitting. Therefore, dropout increases model generalization.
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Deep-Neural-Networks/dropout.png">
+<img width="35%" height="35%" src="/assets/deep-neural-networks/dropout.png">
 
 ## Convolutional Neural Networks
  
@@ -147,13 +147,13 @@ $$
 We see that the output $$ x^{(1)} $$ at position $$ [n, m] $$ only depends on the value of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. So we no longer need a fully connected network but  only the one that representes the local strucure, leading to fewer parameters to deal with. This structure implies that we should use the same filter (e.g., not only the same connection-pattern but also the same weights) at every position! This is called **weight sharing**, drastically reducing the number of parameters further. The difference between a locally/sparse connected and a fully connected is obvious:
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="/assets/Deep-Neural-Networks/fully_sparse_connectivity.png">
+<img width="35%" height="35%" src="/assets/deep-neural-networks/fully_sparse_connectivity.png">
 
 It is common to not only compute the output of a single filter but to use multiple filters. The various outputs are called channels. This introduces some additional parameters into the model.
 If we add several channels we do not end up with a 2D output in the next level but in fact with a 3D output. Per layer we have increasingly more channels but a smaller “footprint.” In brief, applying the local connectivity to a 2D input dataset on a *deep* neural network, we have the final structure as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="65%" src="/assets/Deep-Neural-Networks/cnn.png">
+<img width="65%" height="65%" src="/assets/deep-neural-networks/cnn.png">
 
 Notice the three types of operations involved:
 - convolutional layer: applies a convolution operation to the input, passing the result to the next layer. The convolution emulates the response of an individual neuron to visual stimuli;
@@ -173,7 +173,7 @@ An issue with very deep networks is that the performance of the model drops down
 A better way to improve this is to provide layers of the network with outputs from layers that are not directly connected. These connections will *skip* some of the layers in the neural network and feed the output of one layer as the input of the next layers --- justifying the name *skip connections*. In practive, the input to a given layer will be the combination (typically via addition or concatenation) of the input of several previous layers. 
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="65%" src="/assets/Deep-Neural-Networks/DenseNet.png">
+<img width="65%" height="65%" src="/assets/deep-neural-networks/densenet.png">
 
 {: style="text-align:center; font-size: small;"}
 An example of a CNN with skip connections (DenseNet). source: <a href="https://arxiv.org/abs/1512.03385">Deep Residual Learning for Image Recognition</a> 
