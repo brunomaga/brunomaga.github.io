@@ -5,7 +5,7 @@ import torch.nn.functional as F
 from inference_utils import load_model, sample_prompts, validation_loss, model_size_mb, Timer  # also adds GPTlite to the path
 from utils import get_tiny_shakespeare_data, get_gptlite_model_parameters
 from gptlite_kvcache import GPTlite_KVCache
-from main_kvcache import generate_kvcache
+from kvcache import generate_kvcache
 
 
 class QuantizedLinear(nn.Module):

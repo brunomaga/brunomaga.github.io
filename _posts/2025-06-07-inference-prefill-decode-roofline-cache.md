@@ -35,7 +35,7 @@ The [roofline model](https://en.wikipedia.org/wiki/Roofline_model), turns this c
 * **Y-Axis (Attainable Performance):** How fast your code actually runs (GFLOPs/s).
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/inference/roofline.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/roofline.png"/>
 
 {: style="text-align:center; font-size: small;"}
 A roofline plot. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound running below the peak performance. Adapted from [Wikipedia's Roofline Model](https://en.wikipedia.org/wiki/Roofline_model).
@@ -249,7 +249,7 @@ Two implementation details matter in practice:
 - A **dynamic cache** grows by concatenating the new keys and values to the cache at every step. This is simple, but every concatenation allocates a new tensor and copies the whole cache. A **static cache** preallocates a buffer for the maximum sequence length and writes each new entry in place.
 - Many models use **learned absolute positional embeddings** and a context window of `seqlen` tokens. When a sequence grows longer than `seqlen`, the model without a cache slides its window and re-encodes the last `seqlen` tokens at positions 0 to `seqlen-1`, at every step. A KV cache cannot reproduce this, because the cached keys and values were computed at their original positions and with the context available back then. The model with a cache therefore matches the original model exactly for the first `seqlen` tokens only. 
 
-The following code implements a KV cache in our [GPTlite model]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}). The full code is in [`gptlite_kvcache.py`]({{ site.assets }}/inference/gptlite_kvcache.py) and [`main_kvcache.py`]({{ site.assets }}/inference/main_kvcache.py) (text generation with and without the cache).
+The following code implements a KV cache in our [GPTlite model]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}). The full code is in [`gptlite_kvcache.py`]({{ site.assets }}/inference/gptlite_kvcache.py) and [`kvcache.py`]({{ site.assets }}/inference/kvcache.py) (text generation with and without the cache).
 - Our implementation keeps the last `seqlen` keys and values, and gives every new token the last position, `seqlen-1`: generation can continue past the context window, but its output no longer matches the original model. Models with relative positional encodings, such as RoPE, handle a sliding window more gracefully, but keeping only the most recent tokens still changes the output.
 - Our implementation also accepts several new tokens on top of a cache, which prefix caching and speculative decoding need: the causal mask is shifted, so that each new token attends to all the cached tokens and to the new ones up to itself.
 
@@ -314,7 +314,7 @@ class GPTlite_KVCache(nn.Module):
         # ...
         return x, new_caches
 
-# main_kvcache.py: process the prompt once (prefill), then one new token per step (decode)
+# kvcache.py: process the prompt once (prefill), then one new token per step (decode)
 def generate_kvcache(model, prompt, n_tokens, seqlen, kv_cache=None):
   logits, kv_cache = model(prompt, kv_cache=kv_cache, max_seqlen=seqlen)
   tokens = prompt
@@ -353,7 +353,7 @@ Automatic Prefix Caching does not require extra memory storage. It operates almo
 
 **What is kept.** The KV cache holds the keys and values of every token processed so far, in every layer: the prompt and all the generated tokens, not only the last decode step, since every new token attends to all of them. When a request finishes, its blocks are not freed right away: they stay in memory, marked as reusable, until the memory is needed for something else. Generated tokens are cached too, which is what makes multi-turn chat fast: the prompt of the next turn is the previous prompt, plus the previous answer, plus the new message. Thus, we put the static content first (system prompt, tools, documents) on the query, and the variable content last (the user's question, timestamps): anything that changes early in the prompt invalidates the cache for everything after it.
 
-The following code implements prefix caching on top of the KV cache: the keys and values of a shared prefix are computed once, and reused by every request. The full code is in [`main_prefix_cache.py`]({{ site.assets }}/inference/main_prefix_cache.py), which also checks that the outputs are the same as without prefix caching:
+The following code implements prefix caching on top of the KV cache: the keys and values of a shared prefix are computed once, and reused by every request. The full code is in [`prefix_cache.py`]({{ site.assets }}/inference/prefix_cache.py), which also checks that the outputs are the same as without prefix caching:
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -388,7 +388,7 @@ A semantic cache sits in front of the model, in the application. For every incom
 
 **Risks.** A semantic cache is approximate, so it can return a wrong answer: "how do I delete a file in Python?" and "how do I delete a folder in Python?" are very similar sentences with different answers. Answers also go stale, and queries that depend on the conversation history or on the user should not share answers. In practice, we tune the threshold on real traffic, scope the cache per user or tenant, add an expiration time, and optionally confirm hits with a more precise re-ranking model. The strict version of a semantic cache is the **exact-match cache**, which maps a hash of the full request (prompt, model and sampling parameters) to the response. It never returns a wrong answer, but only hits identical requests.
 
-The following code implements a minimal semantic cache with FAISS and a pre-trained sentence encoder. GPTlite is a character-level model trained on Shakespeare, so it cannot answer questions: here, it is only a stand-in for the LLM behind the cache. The full code is in [`main_semantic_cache.py`]({{ site.assets }}/inference/main_semantic_cache.py), which prints the similarity of each query to the closest cached one, to help choose the threshold:
+The following code implements a minimal semantic cache with FAISS and a pre-trained sentence encoder. GPTlite is a character-level model trained on Shakespeare, so it cannot answer questions: here, it is only a stand-in for the LLM behind the cache. The full code is in [`semantic_cache.py`]({{ site.assets }}/inference/semantic_cache.py), which prints the similarity of each query to the closest cached one, to help choose the threshold:
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -465,7 +465,7 @@ The simplest approach groups $$B$$ requests and runs them together until all of 
 {: style="text-align:center; font-size: small;"}
 Source: redhat post [Meet vLLM: For faster, more efficient LLM inference and serving](https://www.redhat.com/en/blog/meet-vllm-faster-more-efficient-llm-inference-and-serving)
 
-**Code.** The following code implements continuous batching. The full code is in [`main_continuous_batching.py`]({{ site.assets }}/inference/main_continuous_batching.py), which runs static and continuous batching on the same requests: both produce the same outputs, but continuous batching needs fewer steps, since its slots spend more time generating useful tokens:
+**Code.** The following code implements continuous batching. The full code is in [`continuous_batching.py`]({{ site.assets }}/inference/continuous_batching.py), which runs static and continuous batching on the same requests: both produce the same outputs, but continuous batching needs fewer steps, since its slots spend more time generating useful tokens:
 
 <details markdown="1">
 <summary>Show code</summary>

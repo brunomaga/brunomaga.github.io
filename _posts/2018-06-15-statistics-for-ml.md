@@ -1,11 +1,12 @@
 ---
 layout: post
 title:  "Statistics for ML Engineers"
+redirect_from: /statistics
 categories: [machine learning, algebra]
 tags: [machinelearning]
 ---
 
-A brief summary of topics in statistics and probability that are relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For a similar post related to the topics of Algebra, see [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-algebra %}). 
+A brief summary of topics in statistics and probability that are relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For a similar post related to the topics of Algebra, see [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-algebra-for-ml %}). 
 
 
 **Basic definitions**:
@@ -111,7 +112,7 @@ $$.
   - the marginal is also Gaussian: $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$.
 
   {: style="text-align:center; font-size: small;"}
-  <img width="45%" height="45%" src="/assets/statistics-for-ml/bivariate_gaussian.png"/>
+  <img width="45%" height="45%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.png"/>
 
   {: style="text-align:center; font-size: small;"}
   A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional disribution is a slice accross the X or Y dimension and is also a Gaussian. <b>Source:</b> wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a>
@@ -194,7 +195,7 @@ Testing:
 - the **confidence interval** refers to the probability that a population parameter will fall between a set of values for a certain proportion of times. Example, for a $$95%$$ **confidence level**:
 
   {: style="text-align:center; font-size: small;"}
-  <img width="30%" height="30%" src="/assets/statistics-for-ml/confidence_interval.png"/>
+  <img width="30%" height="30%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.png"/>
 
 ---
 
@@ -251,7 +252,7 @@ Using the previous axioms we can show that:
 - Example: $$p(A,B,C,D) = P(A)\cdot p(B \mid A) \cdot p( C \mid A) \cdot p ( D \mid A,C ) $$:
 
   {: style="text-align:center; font-size: small;"}
-  <img width="20%" height="20%" src="/assets/statistics-for-ml/directed_graph.png"/>
+  <img width="20%" height="20%" src="{{ site.assets }}/statistics-for-ml/directed_graph.png"/>
 
   {: style="text-align:center; font-size: small;"}
   Source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Graphical_model">Graphical model</a>
@@ -277,7 +278,7 @@ where $$K$$ is the kernel - a non-negative function - and $$h \gt 0$$ is a the s
 - an example of $$K$$ is the standard normal CDF.
   
   {: style="text-align:center; font-size: small;"}
-  <img width="60%" height="60%" src="/assets/statistics-for-ml/kde.png"/>
+  <img width="60%" height="60%" src="{{ site.assets }}/statistics-for-ml/kde.png"/>
 
   {: style="text-align:center; font-size: small;"}
   Source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel density estimation</a>

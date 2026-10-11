@@ -5,7 +5,7 @@ import torch.nn.functional as F
 from inference_utils import device, validation_loss  # also adds GPTlite to the path
 from gptlite import GPTlite
 from utils import get_batch, get_tiny_shakespeare_data, get_gptlite_model_parameters
-from main_dsa import lightning_index_scores, indexer_loss, top_k_indices
+from dsa import lightning_index_scores, indexer_loss, top_k_indices
 
 
 class Compressor(nn.Module):

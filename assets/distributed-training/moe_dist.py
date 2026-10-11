@@ -18,8 +18,7 @@ from moe import Router
 sys.path.insert(0, os.path.join(current_dir, "..", "gptlite"))
 from gptlite import n_embd, dropout, FeedForward, GPTlite
 
-# user helper functions from the GPT-lite deepspeed post
-sys.path.insert(0, os.path.join(current_dir, "..", "gptlite-distributed"))
+# helper functions of the DeepSpeed examples, in this folder
 from gptlite_ds import get_dataset
 
 assert "LOCAL_RANK" in os.environ and "RANK" in os.environ, "env vars not set. Launch with torchrun."

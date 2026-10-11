@@ -10,7 +10,7 @@ In this post, we will discuss tensor (model) parallelism, particularly the [Mega
 Tensor parallelism aims at partitioning computation across the model’s tensor dimensions (e.g., sharding linear layer weights and corresponding activations). This is a hard problem: in practice we must decide the dimension of tensor partitioning (row-wise, column-wise, or none) and adapt the communication and computation accordingly. Therefore, it is a model- and data-specific implementation.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/ai-supercomputing/dnn_model_parallelism.png"/>
+<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/dnn_model_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
 A representation of tensor parallelism on a fully-connected DNN, on two processors $$p0$$ and $$p1$$. Input sample and activations are distributed across different processors. Red lines represent the activations that have to be communicated to a different processor.
@@ -25,7 +25,7 @@ There are several alternative ways to distribute multi-dimensional tensors acros
 We can have a better understanding if we try to replicate the partitioning suggested by Megatron-LM in the paper [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053). The main rationale in Megatron-LM is that Transformer-based models have two main components - a feed-forward (MLP) and an attention block - and we can do a forward and a backward pass on each of these blocks with a single collective communication step.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/gptlite-distributed/megatron-lm.png"/>
+<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/megatron-lm.png"/>
 
 {: style="text-align:center; font-size: small;"}
 The MLP and self-attention blocks in the Megatron-LM implementation. $$f$$ and $$g$$ are conjugate identity and all-reduce operations: $$f$$ is an identity operator in the forward pass and all-reduce in the backward pass while $$g$$ is an all-reduce in the forward pass and identity in the backward pass. Source: [Megatron-LM paper](https://arxiv.org/abs/1909.08053)
@@ -34,14 +34,14 @@ The rationale is the following: the MLP is sequence of (1) a MatMul $$AX$$, (2) 
 1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point (*sum-reduce*) before the GeLU function". We can follow this approach - pictured below - for each of the 2 MatMuls, yielding a total of two communication steps.
 
   {: style="text-align:center; font-size: small;"}
-  <img width="100%" height="100%" src="{{ site.assets }}/gptlite-distributed/megatron_model_parallel_1.png">
+  <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.png">
 
 
 2. Another option is to not split $$X$$ and split $$A$$ along its columns, which "allows the GeLU nonlinearity to be independently applied to the output of each partitioned GEMM". The output of the GeLU $$Y$$ is then $$[Y_1, Y_2] = [GeLU (X A_1), GeLU(X A_2)]$$ and this removes a synchronization point.
 After the MatMul and GeLU is done, we must follow with another MatMul and a dropout. Note that if we follow this approach (pictured below), the output $$Y$$ of the first MatMul (which is the input for the second MatMul) is split column-wise. Therefore, Megatron will then use the previous approach for the second MatMul, which requires 1 collective communication step. We therefore perform 1 communication step for 2 MatMuls.
 
   {: style="text-align:center; font-size: small;"}
-  <img width="80%" height="80%" src="{{ site.assets }}/gptlite-distributed/megatron_model_parallel_2.png">
+  <img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_2.png">
 
 
 The algorithm of the attention mechanism is analogous, except that instead of a single MatMul $$AX$$ at the beginning of the workflow, we perform three MatMuls $$XV$$, $$XQ$$ and $$XK$$ for the value, query and key matrices of the attention mechanism. Therefore, this algorithm requires one (not two) communication step per MLP and attention block.
@@ -219,7 +219,7 @@ The whole point of Megatron-LM was to reduce the amount of high-volume communica
 2. For a given convolutional layer, the convolution can be computed independently by each processor, with the exception of the activations at the split boundaries. These activations (the *halo region* in purple in the picture below) will need to be communicated at every forward/backward step.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/ai-supercomputing/argonne_parallel_2.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/argonne_parallel_2.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Illustration of tensor parallelism applied to a Convolutional Neural network. **LEFT:** splitting of activations on a 2D input across four processors $$p0-p3$$. <b><span style="color: red;">red box</span></b>: center of the 3x3 convolution filter; <b><span style="color: red;">red arrow</span></b>: data movement required for updating neuron in center of filter; <b><span style="color: violet;">violet region:</span></b> <i>halo region</i> formed of the elements that need to be communicated at every step. <b>RIGHT:</b> communication between processors $$p0$$ and $$p1$$. <b><span style="color: red;">Red arrow</span></b>: forward pass dependencies; <b><span style="color: blue;">blue arrow</span></b>: backward pass dependencies;
@@ -232,7 +232,7 @@ As an important remark: finding the best parallelism strategy is hard, due to th
 
 We just scratched the surface of DeepSpeed capabilities. There are plenty of resources that should also be explored. To name a few: [**autotuning**](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) for parallelism hyper-parameters discovery; [**flops profiler**](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) measures the time, flops and parameters of individual layers, [**sparse attention kernels**](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound; [**communication optimizers**](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining, [**monitor**](https://www.deepspeed.ai/training/#monitor) to log live training metrics to TensorBoard, csv file or other backend; [**model compression**](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size.
 
-Finally, the Megatron-LM tensor parallelism code has been added to the [GPTlite-distributed repo](https://github.com/{{ site.repository }}/tree/master/assets/gptlite-distributed), if you want to try it.
+Finally, the Megatron-LM tensor parallelism code has been added to the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training), if you want to try it.
 
 
 

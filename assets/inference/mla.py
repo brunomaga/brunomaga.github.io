@@ -3,7 +3,7 @@ import torch.nn as nn
 from inference_utils import device, load_model, sample_prompts, validation_loss, train_steps, Timer  # also adds GPTlite to the path
 from utils import get_tiny_shakespeare_data, get_gptlite_model_parameters
 from gptlite_kvcache import GPTlite_KVCache, scaled_dot_product_attention_kv_cache
-from main_kvcache import generate_kvcache
+from kvcache import generate_kvcache
 
 
 class MultiHeadAttention_MLA(nn.Module):

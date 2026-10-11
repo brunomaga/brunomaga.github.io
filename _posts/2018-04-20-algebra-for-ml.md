@@ -1,9 +1,10 @@
 ---
 layout: post
 title:  "Algebra for ML Engineers"
+redirect_from: /algebra
 ---
 
-A brief summary of topics in Algebra that are relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For the topics of statistics or probabilities, see the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-statistics %}) .
+A brief summary of topics in Algebra that are relevant to ML engineers on a daily basis. Extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For the topics of statistics or probabilities, see the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-statistics-for-ml %}) .
 
 
 ## Properties of Matrices
@@ -152,7 +153,7 @@ Two vectors are called **codirected** if they point in the same direction and **
 - Graphical intuition: the direction of the two eigenvectors correspond to the canonical basis vectors i.e., to cardinal axes. Each axis is scaled by a factor equivalent to its eigenvalue: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="65%" src="/assets/algebra-for-ml/mml_eigenvalues_and_eigenvectors.png"/>
+<img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/mml_eigenvalues_and_eigenvectors.png"/>
 
 {: style="text-align:center; font-size: small;"}
 image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
@@ -167,7 +168,7 @@ image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine L
 **Singular Value Decomposition** is a decomposition of the form $$A = U \Sigma V^{\intercal}$$:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="/assets/algebra-for-ml/mml_svd.png"/>
+<img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/mml_svd.png"/>
 
 {: style="text-align:center; font-size: small;"}
 image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
@@ -184,7 +185,7 @@ image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine L
 - matrix approximation/compression is achieved by reconstructing the original matrix using less singular values $$\sigma$$. In practice, for a rank-$$k$$ approximation: $$\hat{A(k)} = \sum_{i=1}^{k} \sigma_i u_i v_i^{\intercal} = \sum_{i=1}^k \sigma_i A_i$$:
 
 {: style="text-align:center; font-size: small;"}
-<img width="43%" height="43%" src="/assets/algebra-for-ml/svd_example_2.png"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="/assets/algebra-for-ml/svd_example.png"/>
+<img width="43%" height="43%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.png"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="{{ site.assets }}/algebra-for-ml/svd_example.png"/>
 
 {: style="text-align:center; font-size: small;"}
 **Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequential transformations. TThe SVD of a matrix can be interpreted as a decomposition of a corresponding linear mapping into three operations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$. The third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: example of application of SVD. Image sources: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a> and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a>
@@ -215,7 +216,7 @@ The **Newton's method** is a root-finding algorithm which produces successively 
 - the minimum of a function can be found by computing the root of the derivative ie: $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$.
   - The division is not defined, so we replace it by the multiplication by the inverse i.e. $$x_{n+1}=x_{n}- f'(x_{n}) \, f''(x_{n})^{-1}$$.
 
-  <img width="45%" height="45%" src="/assets/algebra-for-ml/newton_method.gif"/>
+  <img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/newton_method.gif"/>
 
   (source: wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)
 
@@ -228,26 +229,26 @@ The **gradient** of **Jacobian** or $$\triangledown_x f(x)$$ of function $$f : \
 
 The **Hessian** of a function $$\triangledown^2_{x,y} f(x,y)$$ is a collection of all second-order partial derivatives of all variables with respect to all other variables, defined by the *symmetric* matrix:
 
-  <img width="33%" height="33%" src="/assets/algebra-for-ml/hessian.png"/>
+  <img width="33%" height="33%" src="{{ site.assets }}/algebra-for-ml/hessian.png"/>
 
 
 ## Deep Neural Networks
 
 The output $$y$$ of a $$K$$-deep DNN is computed as: $$ y = (f_K ◦ f_{K−1} ◦ ... ◦ f_1)(x) = f_K(f_{K−1}( ... (f_1(x)) ... )) $$
 - The **chain rule** allows us to describe the partial derivatives as the following:  
-  <img width="33%" height="33%" src="/assets/algebra-for-ml/dnn_partial_derivatives.png"/>
+  <img width="33%" height="33%" src="{{ site.assets }}/algebra-for-ml/dnn_partial_derivatives.png"/>
   - the orange terms are partial derivatives of a layer with respect to its inputs; 
   - the blue terms are partial derivatives of a layer with respect to its parameters; 
 
 Backpropagation is a special case of the **automatic differentiation** algorithm, a techniques to evaluate the gradient of a function by working with intermediate variables and dependencies and applying the chain rule. Example: 
 
-  <img width="55%" height="55%" src="/assets/algebra-for-ml/backprop.png"/>
+  <img width="55%" height="55%" src="{{ site.assets }}/algebra-for-ml/backprop.png"/>
 
   (source: section 5.6, <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 - "Writing out the gradient in this explicit way is often impractical since it often results in a very lengthy expression for a derivative. In practice, it means that, if we are not careful, the implementation of the gradient could be significantly more expensive than computing the function, which imposes unnecessary overhead."
 - If we use instead the automatic differentiation algorithm, we can do a *forward* pass efficiently by reutilizing intermediatte results, and can break the *back propagation* algorithm into partial derivatives that propagate backwards on the graph:
 
-  <img width="57%" height="57%" src="/assets/algebra-for-ml/autodiff.png"/>
+  <img width="57%" height="57%" src="{{ site.assets }}/algebra-for-ml/autodiff.png"/>
 
   (source: adapted from example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 

@@ -4,7 +4,7 @@ import faiss
 from inference_utils import device, load_model, Timer  # also adds GPTlite to the path
 from gptlite import GPTlite
 from utils import get_tiny_shakespeare_data, get_gptlite_model_parameters
-from main_kvcache import generate
+from kvcache import generate
 
 
 class SemanticCache:

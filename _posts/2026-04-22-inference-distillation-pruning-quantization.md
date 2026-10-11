@@ -16,12 +16,12 @@ As a quick example, take a two-label (dog, cat) classification task. An image of
 There are several categories of KD methods. The loss can match the soft labels of the student and the teacher, as in the example above, or intermediate representations such as feature maps. The student can be a scaled-down version of the teacher's architecture, or a different one. In **offline distillation**, the teacher is trained first and then frozen while the student learns from it; in **online distillation**, both are trained simultaneously. We can use a single teacher or an ensemble of teachers.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/inference/model_distillation_offline_online.png"/>
+<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.png"/>
 
 For details on the different methods, see [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525).
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/kd_methods.jpg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kd_methods.jpg"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the different categories of knowledge distillation methods, and of the branches within each category. In this section, we implement offline distillation using soft labels, underlined in red in the picture. Adapted from [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
@@ -52,7 +52,7 @@ $$
 
 A temperature above 1 flattens the distribution and reveals the relative probabilities of the unlikely tokens, which carry most of the extra information. Since the gradients of the softened loss scale with $$1/t^2$$, we multiply the loss by $$t^2$$, as proposed by Hinton et al., so that the size of the gradients does not depend on the temperature. A common variant adds the regular cross entropy with the ground-truth labels, weighted by a factor $$\alpha$$. There are also claims that the mean squared error between logits works better than the KL divergence ([Kim et al.](https://arxiv.org/abs/2105.08919)). For LLMs, recent methods also train the student on sequences it generated itself, scored by the teacher (*on-policy* distillation), which removes the mismatch between the sequences seen in training and in generation.
 
-The following code implements the distillation of GPTlite into a smaller student. The full code is in [`main_distillation.py`]({{ site.assets }}/inference/main_distillation.py):
+The following code implements the distillation of GPTlite into a smaller student. The full code is in [`distillation.py`]({{ site.assets }}/inference/distillation.py):
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -126,7 +126,7 @@ Deriving 8B and 4B models from a 15B one this way required up to 40 times fewer 
 
 We apply this recipe to GPTlite, removing half of the attention heads and MLP neurons of every block in two ways: in one shot, followed by distillation, and iteratively, removing 10% at a time and distilling after each step, with the same total number of distillation steps. As a baseline, we distill into the same small architecture from a random initialization.
 
-The following code implements the importance of heads and neurons, the structured pruning and the experiment. The full code is in [`main_pruning.py`]({{ site.assets }}/inference/main_pruning.py):
+The following code implements the importance of heads and neurons, the structured pruning and the experiment. The full code is in [`pruning.py`]({{ site.assets }}/inference/pruning.py):
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -193,7 +193,7 @@ Quantization stores numbers with fewer bits. Weights take less memory, fewer byt
 A floating point number has a sign bit, exponent bits that set its *range*, and mantissa (fraction) bits that set its *precision*. The picture below compares the three most common formats: FP32, FP16 and BF16. BF16 (*brain floating point*) keeps the 8 exponent bits of FP32 and only 7 mantissa bits, so it covers the same range as FP32 with the memory and speed of a 16-bit format. FP16 has more precision but a much smaller range (5 exponent bits), so large values can overflow. This is why BF16 is the default format of LLMs today.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/ai-supercomputing/floating_point_representation.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/floating_point_representation.png"/>
 
 Recent GPUs added smaller formats:
 
@@ -239,7 +239,7 @@ Other common formats are NF4, from [QLoRA](https://arxiv.org/abs/2305.14314), wh
 
 To see how it works, we write our own quantizer: symmetric INT8 quantization with one scale per output channel, and INT4 quantization with one scale per group of 64 weights, packing two 4-bit weights per byte. It quantizes the linear layers of the transformer blocks of GPTlite, and we compare the memory, the time per token and the validation loss against the FP32 and BF16 models. With one scale per output channel, the INT8 layer can apply the scale after the matrix multiplication, while the INT4 layer must dequantize the weights first. In plain PyTorch, both convert the weights back to floating point in memory before each multiplication, which saves memory but not time: actual speedups require kernels that dequantize in registers, such as those of torchao or Marlin, or a compiler that fuses the conversion into the multiplication.
 
-The following code implements our own weight-only INT8 and INT4 quantization of GPTlite. The full code is in [`main_quantization.py`]({{ site.assets }}/inference/main_quantization.py):
+The following code implements our own weight-only INT8 and INT4 quantization of GPTlite. The full code is in [`quantization.py`]({{ site.assets }}/inference/quantization.py):
 
 <details markdown="1">
 <summary>Show code</summary>

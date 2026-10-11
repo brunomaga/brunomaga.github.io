@@ -4,7 +4,7 @@ import torch.nn.functional as F
 from inference_utils import device, sample_prompts, validation_loss, Timer, GPTLITE_CKPT_PATH  # also adds GPTlite to the path
 from utils import get_batch, get_tiny_shakespeare_data, get_gptlite_model_parameters
 from gptlite_kvcache import GPTlite_KVCache
-from main_kvcache import generate_kvcache
+from kvcache import generate_kvcache
 
 
 def lightning_index_scores(q, w, k):

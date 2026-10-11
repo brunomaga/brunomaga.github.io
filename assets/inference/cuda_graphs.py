@@ -5,7 +5,7 @@ from inference_utils import load_model, sample_prompts, Timer  # also adds GPTli
 from gptlite import GPTlite
 from utils import get_tiny_shakespeare_data, get_gptlite_model_parameters
 from gptlite_kvcache import GPTlite_KVCache
-from main_kvcache import generate_kvcache
+from kvcache import generate_kvcache
 
 
 class GPTlite_StaticCache(nn.Module):

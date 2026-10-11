@@ -7,12 +7,12 @@ from gptlite import GPTlite
 from utils import get_tiny_shakespeare_data, get_gptlite_model_parameters, get_gptlite_distilled_model_parameters
 from gptlite_kvcache import GPTlite_KVCache
 from gptlite_gqa import GPTlite_GQA
-from main_kvcache import generate, generate_kvcache
-from main_flash_attention import use_sdpa
-from main_cuda_graphs import GPTlite_StaticCache, generate_static
-from main_quantization import quantize
-from main_speculative_decoding import generate_speculative, DraftModel
-from main_prompt_lookup import prompt_lookup
+from kvcache import generate, generate_kvcache
+from flash_attention import use_sdpa
+from cuda_graphs import GPTlite_StaticCache, generate_static
+from quantization import quantize
+from speculative_decoding import generate_speculative, DraftModel
+from prompt_lookup import prompt_lookup
 
 
 def benchmark(generate_fn, prompt, n_tokens):
@@ -59,7 +59,7 @@ if __name__=='__main__':
     "Speculative decoding (distilled draft)": (lambda p, n: generate_speculative(model_kvcache, p, n, DraftModel(model_distilled), n_drafts)[0], model_kvcache),
     "Prompt lookup decoding": (lambda p, n: generate_speculative(model_kvcache, p, n, prompt_lookup, n_drafts)[0], model_kvcache),
   }
-  if os.path.exists(GPTLITE_GQA_CKPT_PATH):  # created by main_gqa.py
+  if os.path.exists(GPTLITE_GQA_CKPT_PATH):  # created by gqa.py
     n_groups = torch.load(GPTLITE_GQA_CKPT_PATH, map_location=device)['blocks.0.mha.key_proj.weight'].size(0) // d_head
     model_gqa = load_model(GPTlite_GQA, vocab_size, ckpt_path=GPTLITE_GQA_CKPT_PATH, n_groups=n_groups)
     methods[f"KV cache, GQA with {n_groups} groups"] = (lambda p, n: generate_kvcache(model_gqa, p, n, seqlen), model_gqa)

@@ -45,9 +45,9 @@ We will look at two different testbenches, so feel free to pick one based on you
 2. a Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch C++](#benchmark-model). This is a very simple example that will be used to benchmark our metrics on models of varying depths and widths. It is mostly suitable for those who are interested in performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
 
 {: style="text-align:center; font-size: small;"}
-<img width="20%" height="20%" src="{{ site.assets }}/gptlite/gptlite_compact.png"/>
+<img width="20%" height="20%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.png"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="22%" height="22%" src="{{ site.assets }}/gptlite/benchmark_model.png"/>
+<img width="22%" height="22%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.png"/>
 
 {: style="text-align:center; font-size: small;"}
 In this post, we will detail and benchmark the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark their C++, PyTorch, TorchScript and `torch.compile` implementations.

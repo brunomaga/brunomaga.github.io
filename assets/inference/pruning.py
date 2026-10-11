@@ -4,7 +4,7 @@ import torch.nn as nn
 from inference_utils import device, load_model, validation_loss, model_size_mb  # also adds GPTlite to the path
 from gptlite import GPTlite
 from utils import get_batch, get_tiny_shakespeare_data, get_gptlite_model_parameters
-from main_distillation import distillation_loss
+from distillation import distillation_loss
 
 
 @torch.inference_mode()

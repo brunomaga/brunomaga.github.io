@@ -2,7 +2,7 @@ import torch
 from inference_utils import load_model, sample_prompts, Timer, GPTLITE_DISTILLED_CKPT_PATH  # also adds GPTlite to the path
 from utils import get_tiny_shakespeare_data, get_gptlite_model_parameters, get_gptlite_distilled_model_parameters
 from gptlite_kvcache import GPTlite_KVCache
-from main_kvcache import generate_kvcache
+from kvcache import generate_kvcache
 
 
 def truncate_cache(kv_cache, length):

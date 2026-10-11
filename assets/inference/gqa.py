@@ -3,7 +3,7 @@ from inference_utils import device, load_model, sample_prompts, validation_loss,
 from utils import get_tiny_shakespeare_data, get_gptlite_model_parameters
 from gptlite_kvcache import GPTlite_KVCache
 from gptlite_gqa import GPTlite_GQA, convert_mha_to_gqa
-from main_kvcache import generate_kvcache
+from kvcache import generate_kvcache
 
 
 if __name__=='__main__':

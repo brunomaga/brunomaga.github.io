@@ -153,7 +153,7 @@ class GPTlite_GQA(GPTlite_KVCache):
 </details>
 
 <br/>
-The following code converts the trained multi-head GPTlite into GQA by mean pooling its key and value heads, and uptrains it for a few steps. The full code is in [`main_gqa.py`]({{ site.assets }}/inference/main_gqa.py), which compares the size of the KV cache, the time per token and the validation loss of multi-head attention, GQA and MQA:
+The following code converts the trained multi-head GPTlite into GQA by mean pooling its key and value heads, and uptrains it for a few steps. The full code is in [`gqa.py`]({{ site.assets }}/inference/gqa.py), which compares the size of the KV cache, the time per token and the validation loss of multi-head attention, GQA and MQA:
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -169,7 +169,7 @@ def convert_mha_to_gqa(state_dict, n_heads, d_head, n_groups):
             gqa_state_dict[name] = heads.mean(dim=1).reshape(n_groups * d_head, *param.shape[1:])
     return gqa_state_dict
 
-# main_gqa.py: convert the trained model and uptrain it for a few steps
+# gqa.py: convert the trained model and uptrain it for a few steps
 model = GPTlite_GQA(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen, n_groups).to(device).eval()
 model.load_state_dict(convert_mha_to_gqa(model_mha.state_dict(), n_heads, d_head, n_groups))
 train_steps(model, train_data, uptrain_iters, lr, batch_size, seqlen)
@@ -236,7 +236,7 @@ The three run in a single fused GPU kernel, for both the forward and backward pa
 
 MLA accelerates both the decode and prefill phases, though through very different mechanisms. During decode, this is because MLA slashes the KV cache memory footprint to a fraction, and just like MQA and GQA is allows for memory efficiency. During prefill, where the prompt is processed in parallel, the KV down-projection matrices can be mathematically absorbed into the Query projection weights ($$W^Q$$ and $$W^K$$) - this avoids the need to explicitly up-project the full KV cache for every token during the attention computation, making the prefill phase efficient and avoiding the overhead penalties seen in other compressed-attention designs.
 
-The following code implements MLA in GPTlite, with absorbed attention and the conversion of a trained multi-head model. The full code is in [`main_mla.py`]({{ site.assets }}/inference/main_mla.py), which also checks that absorbed attention gives the same output as recomputing the keys and values:
+The following code implements MLA in GPTlite, with absorbed attention and the conversion of a trained multi-head model. The full code is in [`mla.py`]({{ site.assets }}/inference/mla.py), which also checks that absorbed attention gives the same output as recomputing the keys and values:
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -328,7 +328,7 @@ DSA was added to an already trained model, in two stages. During a short *dense 
 
 We do the same with GPTlite: we keep the weights of the trained model, add an indexer to every layer, train the indexers with the dense warm-up, and evaluate the model when each query attends to a quarter of the context window. We compare the indexer's selection with a simpler one of the same size, the most recent tokens. The KV cache also stores the indexer key of every token. Index scores are often tied, since the ReLU outputs many zeros, so the selection uses a stable sort, which breaks ties the same way whether the tokens are processed together or one at a time: decoding with the KV cache then gives the same result as processing the whole sequence.
 
-The following code implements DeepSeek Sparse Attention in GPTlite and the dense warm-up of its indexers. The full code is in [`main_dsa.py`]({{ site.assets }}/inference/main_dsa.py):
+The following code implements DeepSeek Sparse Attention in GPTlite and the dense warm-up of its indexers. The full code is in [`dsa.py`]({{ site.assets }}/inference/dsa.py):
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -436,7 +436,7 @@ Both use multi-query attention with a single key-value vector per entry, shared 
 
 We implement both attention types in GPTlite, alternating CSA and HCA across the blocks, with the overlapping compression, the lightning indexer, the shared key-value multi-query attention, the sliding window, the low-rank queries, RMSNorm, the attention sink and the grouped output projection. GPTlite adds learned positional embeddings to its input, so we don't need rotary embeddings, and we scale the compression rates, the window and the number of selected entries down to the short context of GPTlite. As in DSA, the indexer learns to imitate the attention over the compressed entries with the KL-divergence loss, from an input detached from the rest of the model. These attention types change the architecture, so we train the model from scratch, and compare it with the dense GPTlite trained with the same number of steps.
 
-The following code implements CSA and HCA in GPTlite. The full code is in [`main_csa_hca.py`]({{ site.assets }}/inference/main_csa_hca.py), which compares the validation loss and the size of the KV cache with those of dense attention:
+The following code implements CSA and HCA in GPTlite. The full code is in [`csa_hca.py`]({{ site.assets }}/inference/csa_hca.py), which compares the validation loss and the size of the KV cache with those of dense attention:
 
 <details markdown="1">
 <summary>Show code</summary>
