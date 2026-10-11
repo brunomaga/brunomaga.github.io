@@ -328,14 +328,6 @@ However, activation checkpointing is also tricky to configure when using pipelin
 
 We can define the micro-batching level by setting the fields `train_micro_batch_size_per_gpu` (defaulted to `train_batch_size`) or `gradient_accumulation_steps` (defaulted to `1`) in the [DeepSpeed config file](https://www.deepspeed.ai/docs/config-json/). At runtime, the number of micro-batches can be retrieved by `engine.gradient_accumulation_steps()`.
 
-<!--
-{: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/gptlite-distributed/gpt_pipelining_2.png"/>
-
-{: style="text-align:center; font-size: small;"}
-"An illustration of how DeepSpeed will train a batch with eight micro-batches using hybrid two-way data parallelism and two-stage pipeline parallelism. GPUs 0 and 2 are arranged in a pipeline and will alternate forward (F) and backward (B) passes. They will then all-reduce (AR) gradients with their data parallel counterparts, GPUs 1 and 3, respectively. Finally, the two pipeline stages update their model weights". This is the 1F1B pipeline algorithm. Source: [DeepSpeed pipelining documentation](https://www.deepspeed.ai/tutorials/pipeline/)
--->
-
 ## Results
 
 We changed our config to <a href="{{ site.assets }}/gptlite-distributed/ds_config.json">`ds_config.json`</a> to run ZeRO stage 1 and tested our execution with different stage count and the memory-efficient `SpecLayer` implementation of our GPT model (with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`). We did not use activation checkpointing due to an open bug [4279](https://github.com/microsoft/DeepSpeed/issues/4274). We tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of GPTlite pipeline across 8 GPUs and 4 stages, it outputs:

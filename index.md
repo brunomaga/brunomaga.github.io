@@ -144,7 +144,7 @@ I also keep a curated list of related books and other resources available online
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">course</td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
-  <a href="{{ site.epfl_statistics }}">Statistics for Data Science (EPFL course MATH-413)</a>
+  <a href="{{ site.epfl_statistics }}/README.md">Statistics for Data Science (EPFL course MATH-413)</a>
 </td>
 </tr>
 </table>

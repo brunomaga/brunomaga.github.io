@@ -43,6 +43,29 @@ def static_batching(model, requests, batch_size, seqlen):
   return outputs, n_steps
 
 
+def continuous_batching(model, requests, batch_size, seqlen):
+  """ Keeps batch_size slots busy: as soon as a request finishes, the next waiting request takes its slot """
+  outputs, n_steps = [None] * len(requests), 0
+  waiting = list(range(len(requests)))  # ids of the requests waiting for a slot
+  running = []  # (request id, tokens so far) of the requests in the batch
+  while waiting or running:
+    while waiting and len(running) < batch_size:  # fill the free slots
+      request_id = waiting.pop(0)
+      running.append((request_id, requests[request_id][0]))
+    tokens = next_tokens(model, [seq for _, seq in running], seqlen)
+    running = [(request_id, torch.cat([seq, token[None]])) for (request_id, seq), token in zip(running, tokens)]
+    n_steps += 1
+    still_running = []
+    for request_id, seq in running:  # finished requests leave the batch
+      prompt, n_tokens = requests[request_id]
+      if len(seq) == len(prompt) + n_tokens:
+        outputs[request_id] = seq
+      else:
+        still_running.append((request_id, seq))
+    running = still_running
+  return outputs, n_steps
+
+
 if __name__=='__main__':
   torch.manual_seed(42) # random seed, for reproducibility
   vocab_size, _, valid_data, _, _ = get_tiny_shakespeare_data()
@@ -50,15 +73,14 @@ if __name__=='__main__':
   model = load_model(GPTlite, vocab_size)
   batch_size, n_requests = 8, 32
   requests = make_requests(valid_data, n_requests, seqlen)
+  n_generated = sum(n_tokens for _, n_tokens in requests)
 
   with torch.inference_mode():
-    with Timer() as timer:
-      outputs, n_steps = static_batching(model, requests, batch_size, seqlen)
-    # reference: each request generated alone
+    # reference: each request generated alone (this also warms up the GPU before the timed runs)
     references = [generate(model, prompt[None], n_tokens, seqlen)[0] for prompt, n_tokens in requests]
-
-  n_generated = sum(n_tokens for _, n_tokens in requests)
-  print(f"Static batching: {timer.elapsed:.2f} seconds, {n_steps} steps, {n_generated / timer.elapsed:.1f} tokens/s")
-  print(f"Slots generating useful tokens: {100 * n_generated / (n_steps * batch_size):.1f}%")
-  print(f"Same outputs as generating each request alone: {all(torch.equal(o, r) for o, r in zip(outputs, references))}")
-
+    for name, batching in [("Static", static_batching), ("Continuous", continuous_batching)]:
+      with Timer() as timer:
+        outputs, n_steps = batching(model, requests, batch_size, seqlen)
+      print(f"{name} batching: {timer.elapsed:.2f} seconds, {n_steps} steps, {n_generated / timer.elapsed:.1f} tokens/s")
+      print(f"  slots generating useful tokens: {100 * n_generated / (n_steps * batch_size):.1f}%")
+      print(f"  same outputs as generating each request alone: {all(torch.equal(o, r) for o, r in zip(outputs, references))}")
