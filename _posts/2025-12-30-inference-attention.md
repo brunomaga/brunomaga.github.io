@@ -11,7 +11,7 @@ $$
 \text{Attention}(Q, K, V) = \text{softmax}\left( \frac{QK^T}{\sqrt{d_\text{head}}} \right) V
 $$
 
-During prefill, $$QK^T$$ compares every token with every previous token, so the compute grows quadratically with the prompt length, and a naive implementation stores an $$n \times n$$ matrix of scores per head. 
+During prefill, $$QK^T$$ compares every token with every previous token, so the compute grows quadratically with the prompt length, and a naive implementation stores an $$n \times n$$ matrix of scores per head. The following code implements this attention, with an optional mask, and the causal mask of a decoder; all the modules of this post reuse both functions:
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -41,17 +41,26 @@ def scaled_dot_product_attention(q, k, v, mask=None, scale=None):
 
     probs = F.softmax(scores, dim=-1)  # [B, H, Sq, Sk]
     return probs @ v                   # [B, H, Sq, Sk] @ [B, H, Sk, h] -> [B, H, Sq, h]
+
+
+def causal_mask(Sq, Sk, device=None):
+    """ Causal mask of the last Sq of Sk tokens: [Sq, Sk], True where query i can attend to a key, i.e. up to its
+        own position Sk - Sq + i. Without a KV cache, Sq == Sk. With a KV cache of P past tokens, Sk = P + Sq, and
+        the Sq new tokens see all the past tokens and the new ones up to themselves """
+    return torch.ones(Sq, Sk, dtype=torch.bool, device=device).tril(diagonal=Sk - Sq)
 ```
 
 </details>
 
-During decode, every new token reads the keys and values of the whole context, so the cost of each step grows linearly with the context. Attention dominates at long contexts, roughly once the context is longer than six times the model width: the authors of Native Sparse Attention (below) estimated that attention accounts for 70-80% of the latency when decoding with a 64K-token context. Long documents, long conversations, agents and reasoning models with long chains of thought all live in this regime.
+During decode, every new token reads the keys and values of the whole context from the KV cache, described in the [post on prefill, decode and the KV cache]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}), so the cost of each step grows linearly with the context. Attention dominates at long contexts, roughly once the context is longer than six times the model width: the authors of Native Sparse Attention (below) estimated that attention accounts for 70-80% of the latency when decoding with a 64K-token context. Long documents, long conversations, agents and reasoning models with long chains of thought all live in this regime.
 
 There are three families of solutions, which can be combined:
 
 - **compute exact attention faster**, with better kernels (FlashAttention, FlashDecoding) and lower precision (SageAttention);
 - **store fewer keys and values**, by sharing or compressing them (MQA, GQA and MLA);
 - **compute less attention**, by attending only to the most relevant tokens (sparse attention), or by replacing softmax attention with a linear-time alternative (linear attention and hybrid models).
+
+Prefill processes all the tokens of the prompt at once and is limited by compute, so it benefits most from faster kernels (FlashAttention and SageAttention). Decode processes one token at a time and is limited by memory bandwidth, so it benefits most from storing and reading fewer keys and values (MQA, GQA, MLA and KV eviction), and from kernels that spread the reading of a long KV cache over the whole GPU (FlashDecoding). Sparse attention, linear attention and hybrid models help both phases. The summary table at the end of the post lists where each method helps most.
 
 ## Multi-Head (MHA), Multi-Query (MQA) and Grouped-Query Attention (GQA)
 
@@ -62,10 +71,7 @@ Decode reads the whole KV cache at every step, so a smaller KV cache means faste
 
 GQA (Grouped-Query Attention) and MQA (Multi-Query Attention) primarily accelerate the decode phase, though they also provide a massive secondary benefit to overall system throughput by freeing up memory. These savings *only appear when there is a KV cache to read during decode*. Without a cache, GQA only saves a little compute in the key and value projections. 
 
-The following code implements the attention itself, $$\text{softmax}\left(QK^T / \sqrt{d_\text{head}}\right) V$$ with an optional mask, as  `scaled_dot_product_attention`
-
-
-The following code implements GQA. Its keys and values, which are what a KV cache stores, have $$G$$ heads instead of $$n_\text{heads}$$:
+The following code implements GQA, which is also MHA with `num_groups = num_heads` and MQA with `num_groups = 1`, with an optional KV cache. During decode, the module receives only the new tokens, appends their keys and values to the cache, and returns the updated cache, whose keys and values have $$G$$ heads instead of $$n_\text{heads}$$. The model must also give the new tokens the positions that follow the cached ones. MLA and DSA, below, follow the same convention: an optional `kv_cache` argument, and the new cache returned with the output:
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -73,7 +79,10 @@ The following code implements GQA. Its keys and values, which are what a KV cach
 ```python
 class GQA(nn.Module):
     """ Grouped-Query Attention: the H = num_heads query heads are split in G = num_groups groups, and the heads of
-        a group share the same key and value. GQA is MHA when num_groups == num_heads, and MQA when num_groups == 1 """
+        a group share the same key and value. GQA is MHA when num_groups == num_heads, and MQA when num_groups == 1.
+        For a prompt x: [B, S, E], followed by one new token x_new: [B, 1, E] at a time:
+            out, kv_cache = gqa(x, causal_mask(S, S))      # prefill: kv_cache holds the prompt's keys and values
+            out, kv_cache = gqa(x_new, kv_cache=kv_cache)  # decode: x_new attends to the cached tokens and itself """
 
     def __init__(self, input_dim, head_dim, num_heads=8, num_groups=2):
         super().__init__()
@@ -86,7 +95,7 @@ class GQA(nn.Module):
         self.wv = nn.Linear(input_dim, head_dim * num_groups)  # one value per group
         self.out = nn.Linear(head_dim * num_heads, input_dim)
 
-    def forward(self, x, mask=None):
+    def forward(self, x, mask=None, kv_cache=None):
         B, S, _ = x.shape
         H, G, h = self.num_heads, self.num_groups, self.head_dim
 
@@ -94,14 +103,20 @@ class GQA(nn.Module):
         k = self.wk(x).view(B, S, G, h).permute(0, 2, 1, 3)  # [B, S, E] -> [B, S, G*h] -> [B, G, S, h]
         v = self.wv(x).view(B, S, G, h).permute(0, 2, 1, 3)  # [B, S, E] -> [B, S, G*h] -> [B, G, S, h]
 
+        # KV cache: append the keys and values of the S new tokens to those of the P past tokens
+        if kv_cache is not None:
+            k = torch.cat([kv_cache[0], k], dim=2)  # [B, G, P, h], [B, G, S, h] -> [B, G, P+S, h]
+            v = torch.cat([kv_cache[1], v], dim=2)  # [B, G, P, h], [B, G, S, h] -> [B, G, P+S, h]
+        kv_cache = (k, v)
+
         # each group of H/G consecutive heads uses the key and value of its group, e.g. with 8 heads and 2 groups,
-        # heads 0-3 use group 0 and heads 4-7 use group 1: [B, G, S, h] -> [B, H, S, h]
+        # heads 0-3 use group 0 and heads 4-7 use group 1: [B, G, P+S, h] -> [B, H, P+S, h]
         k = k.repeat_interleave(H // G, dim=1)
         v = v.repeat_interleave(H // G, dim=1)
 
         attn = scaled_dot_product_attention(q, k, v, mask)               # [B, H, S, h]
         attn = attn.permute(0, 2, 1, 3).contiguous().view(B, S, H * h)  # [B, H, S, h] -> [B, S, H*h]
-        return self.out(attn)                                            # [B, S, H*h] -> [B, S, E]
+        return self.out(attn), kv_cache                                  # [B, S, H*h] -> [B, S, E]
 ```
 
 </details>
@@ -130,7 +145,7 @@ Each new version of FlashAttention adapted the algorithm to newer hardware:
 - [FlashAttention-3](https://arxiv.org/abs/2407.08608) targets NVIDIA Hopper GPUs (H100). It overlaps data movement, matrix multiplications and softmax using Hopper's asynchronous hardware, and supports FP8.
 - [FlashAttention-4](https://arxiv.org/abs/2603.05451) (2026) targets NVIDIA Blackwell GPUs (B200), whose tensor cores became much faster while the units computing exponentials and the shared memory did not. It emulates part of the exponentials in software, skips most of the rescaling steps of the online softmax, and keeps intermediate results in Blackwell's new tensor memory. On a B200, it reaches up to 1,613 TFLOP/s (71% utilization), up to 1.3 times faster than cuDNN 9.13 and 2.7 times faster than Triton.
 
-In PyTorch, `torch.nn.functional.scaled_dot_product_attention` (SDPA) computes the same result as the `scaled_dot_product_attention` function of the MHA code above, but dispatches to a FlashAttention or memory-efficient kernel when the inputs allow it, and FlexAttention generates fused kernels for custom masks.
+In PyTorch, `torch.nn.functional.scaled_dot_product_attention` (SDPA) computes the same result as the `scaled_dot_product_attention` function above, but dispatches to a FlashAttention or memory-efficient kernel when the inputs allow it, and FlexAttention generates fused kernels for custom masks.
 
 ## FlashDecoding
 
@@ -203,8 +218,9 @@ The following code implements MLA. With absorption (`absorb = True`), attention 
 ```python
 class MLA(nn.Module):
     """ Multi-head Latent Attention: the keys and values of all heads are computed from a single latent vector of
-        size C = latent_dim per token, and a KV cache stores only that vector. With absorption, the latent vectors
-        behave like a single key-value head shared by all heads (multi-query attention) """
+        size C = latent_dim per token, and the KV cache stores only that vector. With absorption, the latent vectors
+        behave like a single key-value head shared by all heads (multi-query attention). Implementations usually
+        prefill with absorb = False and decode with absorb = True """
 
     def __init__(self, input_dim, head_dim, num_heads=8, latent_dim=128):
         super().__init__()
@@ -217,12 +233,17 @@ class MLA(nn.Module):
         self.out = nn.Linear(head_dim * num_heads, input_dim)
         self.absorb = True  # attention directly over the latent vectors, without recomputing keys and values
 
-    def forward(self, x, mask=None):
+    def forward(self, x, mask=None, kv_cache=None):
         B, S, _ = x.shape
         H, h = self.num_heads, self.head_dim
 
         q = self.wq(x).view(B, S, H, h).permute(0, 2, 1, 3)  # [B, S, E] -> [B, S, H*h] -> [B, H, S, h]
         c = self.wkv_down(x)                                 # [B, S, E] -> [B, S, C]: the latent vectors
+
+        # KV cache: only the latent vectors, of the P past tokens followed by the S new ones
+        if kv_cache is not None:
+            c = torch.cat([kv_cache, c], dim=1)  # [B, P, C], [B, S, C] -> [B, P+S, C]
+        kv_cache = c
 
         if self.absorb:
             # absorb the key up-projection into the query: q.(W_uk c + b_uk) = (W_uk^T q).c + q.b_uk, where the last
@@ -230,8 +251,8 @@ class MLA(nn.Module):
             W_uk = self.wk_up.weight.view(H, h, -1)             # [H*h, C] -> [H, h, C]
             q_latent = torch.einsum('bhsd,hdc->bhsc', q, W_uk)  # [B, H, S, h] -> [B, H, S, C]
             # attention with the latent vectors as a single key-value head, scaled by 1/sqrt(h) as the original
-            # attention: [B, H, S, C] (queries), [B, 1, S, C] (keys and values) -> [B, H, S, C]
-            c = c.unsqueeze(1)                                  # [B, S, C] -> [B, 1, S, C]
+            # attention: [B, H, S, C] (queries), [B, 1, P+S, C] (keys and values) -> [B, H, S, C]
+            c = c.unsqueeze(1)                                  # [B, P+S, C] -> [B, 1, P+S, C]
             attn_latent = scaled_dot_product_attention(q_latent, c, c, mask, scale=h ** -0.5)
             # absorb the value up-projection: sum_t w_t (W_uv c_t + b_uv) = W_uv (sum_t w_t c_t) + b_uv,
             # as the attention weights w_t sum to 1
@@ -240,12 +261,12 @@ class MLA(nn.Module):
             attn = attn + self.wv_up.bias.view(H, 1, h)               # [B, H, S, h]
         else:
             # recompute the keys and values of all heads from the latent vectors
-            k = self.wk_up(c).view(B, S, H, h).permute(0, 2, 1, 3)  # [B, S, C] -> [B, S, H*h] -> [B, H, S, h]
-            v = self.wv_up(c).view(B, S, H, h).permute(0, 2, 1, 3)  # [B, S, C] -> [B, S, H*h] -> [B, H, S, h]
-            attn = scaled_dot_product_attention(q, k, v, mask)      # [B, H, S, h]
+            k = self.wk_up(c).view(B, -1, H, h).permute(0, 2, 1, 3)  # [B, P+S, C] -> [B, P+S, H*h] -> [B, H, P+S, h]
+            v = self.wv_up(c).view(B, -1, H, h).permute(0, 2, 1, 3)  # [B, P+S, C] -> [B, P+S, H*h] -> [B, H, P+S, h]
+            attn = scaled_dot_product_attention(q, k, v, mask)       # [B, H, S, h]
 
         attn = attn.permute(0, 2, 1, 3).contiguous().view(B, S, H * h)  # [B, H, S, h] -> [B, S, H*h]
-        return self.out(attn)                                            # [B, S, H*h] -> [B, S, E]
+        return self.out(attn), kv_cache                                  # [B, S, H*h] -> [B, S, E]
 ```
 
 </details>
@@ -264,7 +285,7 @@ DSA was added to an already trained model, in two stages. During a short *dense 
 
 With a KV cache, the indexer key of every token is cached too. Index scores are often tied, since the ReLU outputs many zeros, so the selection below uses a stable sort, which breaks ties the same way whether the tokens are processed together or one at a time: decoding with a KV cache then gives the same result as processing the whole sequence.
 
-The following code adds DeepSeek Sparse Attention to multi-head attention. It keeps the projections of `MHA`, so it can load the weights of a trained model, and adds an indexer. During the dense warm-up (`dense = True`), the queries attend to all past tokens and the module computes `indexer_loss`, which is backpropagated alone to train the indexer; afterwards, each query attends only to the `top_k` past tokens with the highest index scores:
+The following code adds DeepSeek Sparse Attention to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained multi-head attention, and adds an indexer. During the dense warm-up (`dense = True`), the queries attend to all past tokens and the module computes `indexer_loss`, which is backpropagated alone to train the indexer; afterwards, each query attends only to the `top_k` past tokens with the highest index scores:
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -299,9 +320,10 @@ def indexer_loss(index_scores, attention_scores, mask):
 
 class DSA(nn.Module):
     """ Causal multi-head attention with DeepSeek Sparse Attention: a small lightning indexer scores the past tokens
-        of each query, and all heads attend only to the top_k tokens with the highest scores. The selection is
-        applied as a mask over the scores of all tokens, which shows its effect on quality; the speedup needs a
-        kernel that reads only the keys and values of the selected tokens """
+        of each query, and all heads attend only to the top_k tokens with the highest scores. The KV cache holds the
+        keys, the values and the indexer keys of the past tokens. The selection is applied as a mask over the scores
+        of all tokens, which shows its effect on quality; the speedup needs a kernel that reads only the keys and
+        values of the selected tokens """
 
     def __init__(self, input_dim, head_dim, num_heads=8, top_k=64, index_heads=4, index_dim=16):
         super().__init__()
@@ -321,7 +343,7 @@ class DSA(nn.Module):
         self.dense = False        # dense warm-up: attend to all past tokens, and train the indexer to imitate them
         self.indexer_loss = None  # KL divergence between the attention and the indexer, during the dense warm-up
 
-    def forward(self, x):
+    def forward(self, x, kv_cache=None):
         B, S, _ = x.shape
         H, h, HI, DI = self.num_heads, self.head_dim, self.index_heads, self.index_dim
 
@@ -331,24 +353,34 @@ class DSA(nn.Module):
 
         # lightning indexer: it is trained on its own, without gradients into the rest of the model
         x_index = x.detach()
-        q_index = self.index_wq(x_index).view(B, S, HI, DI)              # [B, S, E] -> [B, S, HI*DI] -> [B, S, HI, DI]
-        w_index = self.index_w(x_index)                                   # [B, S, E] -> [B, S, HI]
-        k_index = self.index_wk(x_index)                                  # [B, S, E] -> [B, S, DI]
-        index_scores = lightning_index_scores(q_index, w_index, k_index)  # [B, S, S]
+        q_index = self.index_wq(x_index).view(B, S, HI, DI)  # [B, S, E] -> [B, S, HI*DI] -> [B, S, HI, DI]
+        w_index = self.index_w(x_index)                      # [B, S, E] -> [B, S, HI]
+        k_index = self.index_wk(x_index)                     # [B, S, E] -> [B, S, DI]
 
-        causal = torch.ones(S, S, dtype=torch.bool, device=x.device).tril()  # [S, S]
+        # KV cache: the keys, values and indexer keys of the P past tokens, followed by those of the S new ones
+        if kv_cache is not None:
+            k = torch.cat([kv_cache[0], k], dim=2)              # [B, H, P, h], [B, H, S, h] -> [B, H, P+S, h]
+            v = torch.cat([kv_cache[1], v], dim=2)              # [B, H, P, h], [B, H, S, h] -> [B, H, P+S, h]
+            k_index = torch.cat([kv_cache[2], k_index], dim=1)  # [B, P, DI], [B, S, DI] -> [B, P+S, DI]
+        kv_cache = (k, v, k_index)
+        Sk = k.size(2)  # P+S
+
+        index_scores = lightning_index_scores(q_index, w_index, k_index)  # [B, S, P+S]
+        causal = causal_mask(S, Sk, x.device)                             # [S, P+S]
         if self.dense:  # dense attention; the indexer learns to imitate it
             mask = causal
-            scores = q @ k.transpose(-1, -2) / h ** 0.5  # attention logits: [B, H, S, h] @ [B, H, h, S] -> [B, H, S, S]
+            # attention logits: [B, H, S, h] @ [B, H, h, P+S] -> [B, H, S, P+S]
+            scores = q @ k.transpose(-1, -2) / h ** 0.5
             self.indexer_loss = indexer_loss(index_scores, scores, causal)
-        else:  # the top_k past tokens with the highest index scores, the same for all heads
-            top = top_k_indices(index_scores.masked_fill(~causal, float('-inf')), min(self.top_k, S))  # [B, S, top_k]
-            mask = torch.zeros(B, S, S, dtype=torch.bool, device=x.device).scatter_(-1, top, True) & causal  # [B, S, S]
+        else:  # the top_k past tokens with the highest index scores, the same for all heads: [B, S, top_k]
+            top = top_k_indices(index_scores.masked_fill(~causal, float('-inf')), min(self.top_k, Sk))
+            mask = torch.zeros(B, S, Sk, dtype=torch.bool, device=x.device).scatter_(-1, top, True)  # [B, S, P+S]
+            mask = mask & causal
             self.indexer_loss = None
 
         attn = scaled_dot_product_attention(q, k, v, mask)               # [B, H, S, h]
         attn = attn.permute(0, 2, 1, 3).contiguous().view(B, S, H * h)  # [B, H, S, h] -> [B, S, H*h]
-        return self.out(attn)                                            # [B, S, H*h] -> [B, S, E]
+        return self.out(attn), kv_cache                                  # [B, S, H*h] -> [B, S, E]
 ```
 
 </details>
@@ -369,7 +401,7 @@ Both use multi-query attention with a single key-value vector per entry, shared 
 | DeepSeek-V4, CSA layers | compression by 4, then top-k | an entry and an indexer key every 4 tokens, plus the last 128 tokens | the top-k entries and the last 128 tokens |
 | DeepSeek-V4, HCA layers | compression by 128 | an entry every 128 tokens, plus the last 128 tokens | all the entries and the last 128 tokens |
 
-The following code implements both attention types in a single module, CSA when `top_k` is given and HCA otherwise, with the overlapping compression, the lightning indexer, the shared key-value multi-query attention, the sliding window, the low-rank queries, RMSNorm, the attention sink and the grouped output projection. A model alternates CSA and HCA across its blocks. The module expects positional information in its input, such as learned positional embeddings, so it omits rotary embeddings. As in DSA, the indexer learns to imitate the attention over the compressed entries with the KL-divergence loss `indexer_loss`, which is added to the training loss, from an input detached from the rest of the model. These attention types change the architecture, so a model that uses them is trained from scratch:
+The following code implements both attention types in a single module, CSA when `top_k` is given and HCA otherwise, with the overlapping compression, the lightning indexer, the shared key-value multi-query attention, the sliding window, the low-rank queries, RMSNorm, the attention sink and the grouped output projection. A model alternates CSA and HCA across its blocks. The module expects positional information in its input, such as learned positional embeddings, so it omits rotary embeddings. As in DSA, the indexer learns to imitate the attention over the compressed entries with the KL-divergence loss `indexer_loss`, which is added to the training loss, from an input detached from the rest of the model. These attention types change the architecture, so a model that uses them is trained from scratch. Unlike the other modules, this one has no KV cache, whose four parts are listed above: it processes whole sequences, as in training and prefill:
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -410,7 +442,8 @@ class Compressor(nn.Module):
 
 
 class CompressedAttention(nn.Module):
-    """ DeepSeek-V4 attention, always causal. Both types compress every m tokens into one entry:
+    """ DeepSeek-V4 attention, always causal, over whole sequences (without a KV cache). Both types compress every
+        m tokens into one entry:
         - CSA, e.g. CompressedAttention(E, h, m=4, top_k=512): with overlap, and a lightning indexer selects the
           top_k compressed entries of each query;
         - HCA, e.g. CompressedAttention(E, h, m=128): without overlap, and each query attends to all the entries.
