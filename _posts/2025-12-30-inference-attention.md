@@ -19,6 +19,61 @@ There are three families of solutions, which can be combined:
 - **store fewer keys and values**, by sharing or compressing them (MQA, GQA and MLA);
 - **compute less attention**, by attending only to the most relevant tokens (sparse attention), or by replacing softmax attention with a linear-time alternative (linear attention and hybrid models).
 
+## Multi-Head (MHA), Multi-Query Attention (MQA) and Grouped-Query Attention (GQA)
+
+Decode reads the whole KV cache at every step, so a smaller KV cache means faster decoding, and room for larger batches and longer contexts: 
+- **Multi-Head Attention** keeps one query, one key and one value per head.
+- **Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)) keeps one query per head, but all heads share a single key head and a single value head. The KV cache shrinks by a factor equal to the number of heads, at some cost in quality.
+- **Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)) is the middle ground, used by most current models: the heads are split into $$G$$ groups, and the heads of a group share one key head and one value head. The cache shrinks by a factor $$n_\text{heads} / G$$. GQA becomes multi-head attention when $$G = n_\text{heads}$$, and MQA when $$G = 1$$. A trained multi-head model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute.
+
+GQA (Grouped-Query Attention) and MQA (Multi-Query Attention) primarily accelerate the decode phase, though they also provide a massive secondary benefit to overall system throughput by freeing up memory. These savings *only appear when there is a KV cache to read during decode*. Without a cache, GQA only saves a little compute in the key and value projections. 
+
+The following code implements GQA. Its keys and values, which are what a KV cache stores, have $$G$$ heads instead of $$n_\text{heads}$$:
+
+<details markdown="1">
+<summary>Show code</summary>
+
+```python
+class GroupedQueryAttention(nn.Module):
+    """ - Grouped-Query Attention (GQA).
+        - GQA becomes Multi-Head Attention (MHA) when n_groups == n_heads
+        - GQA becomes Multi-Query Attention (MQA) when n_groups==1
+    """
+
+    def __init__(self, d_model, n_heads, d_head, dropout_p, n_groups):
+        super().__init__()
+        assert n_heads % n_groups == 0, "the number of heads must be a multiple of the number of groups"
+        self.n_heads = n_heads
+        self.d_head = d_head
+        self.n_groups = n_groups
+
+        # one query per head, but one key and one value per group
+        self.query_proj = nn.Linear(d_model, n_heads * d_head)
+        self.key_proj = nn.Linear(d_model, n_groups * d_head)
+        self.value_proj = nn.Linear(d_model, n_groups * d_head)
+        self.out_proj = nn.Linear(n_heads * d_head, d_model)
+        self.dropout = nn.Dropout(dropout_p)
+
+    def forward(self, x, causal_mask=True):
+        (B, S, _), H, G, D = x.shape, self.n_heads, self.n_groups, self.d_head
+
+        q = self.query_proj(x).view(B, S, H, D).transpose(1, 2)  # BxSxE -> BxSxHxD -> BxHxSxD
+        k = self.key_proj(x).view(B, S, G, D).transpose(1, 2)    # BxSxE -> BxSxGxD -> BxGxSxD
+        v = self.value_proj(x).view(B, S, G, D).transpose(1, 2)  # BxSxE -> BxSxGxD -> BxGxSxD
+
+        # enable_gqa: each group of H/G consecutive heads uses the key and value of its group, the same as
+        # repeating them with k.repeat_interleave(H // G, dim=1). E.g. with 12 heads and 4 groups, heads 0-2
+        # use group 0, heads 3-5 use group 1, etc.: BxHxSxD (queries), BxGxSxD (keys, values) -> BxHxSxD
+        out = F.scaled_dot_product_attention(q, k, v, is_causal=causal_mask, enable_gqa=True,
+                                             dropout_p=self.dropout.p if self.training else 0.0)
+
+        out = out.transpose(1, 2).reshape(B, S, H * D)  # BxHxSxD -> BxSxHxD -> BxSx(H*D)
+        out = self.out_proj(out)                        # BxSx(H*D) -> BxSxE
+        return self.dropout(out)
+```
+
+</details>
+
 ## FlashAttention
 
 GPUs have a small amount of very fast on-chip memory (SRAM, around 200 KB per streaming multiprocessor) and a large amount of slower high-bandwidth memory (HBM, tens of GB). A standard attention implementation writes the $$n \times n$$ score matrix $$S = QK^T$$ to HBM, reads it back to compute the softmax $$P$$, writes $$P$$, and reads it again to compute $$PV$$. These memory round-trips, not the math, dominate its runtime.
@@ -43,139 +98,11 @@ Each new version of FlashAttention adapted the algorithm to newer hardware:
 - [FlashAttention-3](https://arxiv.org/abs/2407.08608) targets NVIDIA Hopper GPUs (H100). It overlaps data movement, matrix multiplications and softmax using Hopper's asynchronous hardware, and supports FP8.
 - [FlashAttention-4](https://arxiv.org/abs/2603.05451) (2026) targets NVIDIA Blackwell GPUs (B200), whose tensor cores became much faster while the units computing exponentials and the shared memory did not. It emulates part of the exponentials in software, skips most of the rescaling steps of the online softmax, and keeps intermediate results in Blackwell's new tensor memory. On a B200, it reaches up to 1,613 TFLOP/s (71% utilization), up to 1.3 times faster than cuDNN 9.13 and 2.7 times faster than Triton.
 
-In PyTorch, `torch.nn.functional.scaled_dot_product_attention` (SDPA) dispatches to a FlashAttention or memory-efficient kernel when the inputs allow it, and FlexAttention generates fused kernels for custom masks. For GPTlite, it only changes a few lines of the attention module.
-
-The following code replaces the attention of GPTlite with PyTorch's fused scaled dot product attention, by changing the class of the attention module of every block, which keeps its weights.
-<details markdown="1">
-<summary>Show code</summary>
-
-```python
-class MultiHeadAttention_SDPA(MultiHeadAttention):
-  """ GPTlite's multi-head attention, computed by PyTorch's fused scaled_dot_product_attention, which
-      runs a FlashAttention (or memory-efficient) kernel when the GPU and the inputs allow it """
-
-  def forward(self, x, causal_mask=True):
-    (B, S, _), H, D = x.shape, self.n_heads, self.d_head
-    q = self.query_proj(x).view(B, S, H, D).transpose(1, 2)  # [B, H, S, D]
-    k = self.key_proj(x).view(B, S, H, D).transpose(1, 2)
-    v = self.value_proj(x).view(B, S, H, D).transpose(1, 2)
-    out = F.scaled_dot_product_attention(q, k, v, is_causal=causal_mask,
-                                         dropout_p=self.dropout.p if self.training else 0.0)
-    out = out.transpose(1, 2).reshape(B, S, H * D)
-    return self.dropout(self.out_proj(out))
-
-def use_sdpa(model):
-  """ Replaces the attention of every block by the fused one, keeping the weights """
-  for block in model.blocks:
-    block.mha.__class__ = MultiHeadAttention_SDPA
-  return model
-```
-
-</details>
+In PyTorch, `torch.nn.functional.scaled_dot_product_attention` (SDPA) dispatches to a FlashAttention or memory-efficient kernel when the inputs allow it, and FlexAttention generates fused kernels for custom masks. In a multi-head attention module, a single call to SDPA replaces the computation of the scores, the softmax and the weighted sum of the values:
 
 ## FlashDecoding
 
 FlashAttention parallelizes over the batch, the heads, and blocks of queries. During decode there is a single query per sequence, so with a small batch most of the GPU sits idle while a few thread blocks walk through a long KV cache. [Flash-Decoding](https://crfm.stanford.edu/2023/10/12/flashdecoding.html) also splits the keys and values along the sequence: the chunks are processed in parallel, each producing a partial output and its softmax statistics (maximum and sum), and a final reduction combines them with the same rescaling as the online softmax. This makes decoding with very long contexts up to 8 times faster. Kernel libraries such as [FlashInfer](https://github.com/flashinfer-ai/flashinfer) implement this split-KV strategy, together with attention over paged KV caches.
-
-## Multi Query Attention (MQA) and Grouped Query Attention (GQA)
-
-Decode reads the whole KV cache at every step, so a smaller KV cache means faster decoding, and room for larger batches and longer contexts: 
-- **Multi-Head Attention** keeps one query, one key and one value per head.
-- **Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)) keeps one query per head, but all heads share a single key head and a single value head. The KV cache shrinks by a factor equal to the number of heads, at some cost in quality.
-- **Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)) is the middle ground, used by most current models: the heads are split into $$G$$ groups, and the heads of a group share one key head and one value head. The cache shrinks by a factor $$n_\text{heads} / G$$. GQA becomes multi-head attention when $$G = n_\text{heads}$$, and MQA when $$G = 1$$. A trained multi-head model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute.
-
-GQA (Grouped-Query Attention) and MQA (Multi-Query Attention) primarily accelerate the decode phase, though they also provide a massive secondary benefit to overall system throughput by freeing up memory. These savings *only appear when there is a KV cache to read during decode*. Without a cache, GQA only saves a little compute in the key and value projections. 
-
-The following code implements GQA with a KV cache that stores only the grouped keys and values. The full code is in [`gptlite_gqa.py`]({{ site.assets }}/inference/gptlite_gqa.py):
-
-<details markdown="1">
-<summary>Show code</summary>
-
-```python
-class MultiHeadAttention_GQA(nn.Module):
-    """ Multi Head Attention with Grouped Query Attention (GQA) and an optional KV cache.
-        Every head has its own query, but the heads are split in n_groups groups, and the heads of a
-        group share the same key and value. GQA becomes Multi-Head Attention (MHA) when the number of
-        groups equals the number of heads, and Multi-Query Attention (MQA) when there is 1 group.
-        The cache stores the keys and values of the n_groups groups only.
-    """
-
-    def __init__(self, d_model, n_heads, d_head, dropout_p, n_groups):
-        super().__init__()
-        assert n_heads % n_groups == 0, "the number of heads must be a multiple of the number of groups"
-        self.n_heads = n_heads
-        self.d_head = d_head
-        self.n_groups = n_groups
-
-        # one query per head, but one key and one value per group
-        self.query_proj = nn.Linear(d_model, n_heads * d_head)
-        self.key_proj = nn.Linear(d_model, n_groups * d_head)
-        self.value_proj = nn.Linear(d_model, n_groups * d_head)
-        self.out_proj = nn.Linear(n_heads * d_head, d_model)
-        self.dropout = nn.Dropout(dropout_p)
-
-    def forward(self, x, kv_cache=None, causal_mask=True, max_seqlen=None):
-        (B, S, _), H, G, D = x.shape, self.n_heads, self.n_groups, self.d_head
-
-        q = self.query_proj(x).view(B, S, H, D).transpose(1, 2)  # [B, n_heads, S, d_head]
-        k = self.key_proj(x).view(B, S, G, D).transpose(1, 2)    # [B, n_groups, S, d_head]
-        v = self.value_proj(x).view(B, S, G, D).transpose(1, 2)
-
-        # If a cache is provided, prepend the past keys and values (of the groups only)
-        if kv_cache is not None:
-            past_keys, past_values = kv_cache
-            k = torch.cat([past_keys, k], dim=2)  # [B, n_groups, S_past + S, d_head]
-            v = torch.cat([past_values, v], dim=2)
-            if max_seqlen is not None and k.size(2) > max_seqlen:
-                k = k[:, :, -max_seqlen:, :]
-                v = v[:, :, -max_seqlen:, :]
-
-        # Each group of n_heads/n_groups consecutive heads uses the key and value of its group,
-        # e.g. with 12 heads and 4 groups, heads 0-2 use group 0, heads 3-5 use group 1, etc.
-        k_heads = k.repeat_interleave(H // G, dim=1)  # [B, n_heads, S_past + S, d_head]
-        v_heads = v.repeat_interleave(H // G, dim=1)
-        out = scaled_dot_product_attention_kv_cache(q, k_heads, v_heads, causal_mask=causal_mask,
-                                                    dropout=self.dropout if self.training else None)
-
-        out = out.transpose(1, 2).reshape(B, S, H * D)  # [B, S, n_heads*d_head]
-        out = self.dropout(self.out_proj(out))
-        return out, (k, v)
-
-class GPTlite_GQA(GPTlite_KVCache):
-    """ GPTlite with a KV cache, whose blocks use Grouped Query Attention """
-
-    def __init__(self, vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen, n_groups):
-        super().__init__(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen)
-        for block in self.blocks:
-            block.mha = MultiHeadAttention_GQA(d_model, n_heads, d_head, dropout_p, n_groups)
-```
-
-</details>
-
-<br/>
-The following code converts the trained multi-head GPTlite into GQA by mean pooling its key and value heads, and uptrains it for a few steps. The full code is in [`gqa.py`]({{ site.assets }}/inference/gqa.py), which compares the size of the KV cache, the time per token and the validation loss of multi-head attention, GQA and MQA:
-
-<details markdown="1">
-<summary>Show code</summary>
-
-```python
-def convert_mha_to_gqa(state_dict, n_heads, d_head, n_groups):
-    """ Converts the weights of a multi-head GPTlite into GQA: the key and value projections of the
-        heads of each group are replaced by their average (mean pooling) """
-    gqa_state_dict = dict(state_dict)
-    for name, param in state_dict.items():
-        if '.mha.key_proj.' in name or '.mha.value_proj.' in name:
-            heads = param.view(n_groups, n_heads // n_groups, d_head, -1)  # [n_groups, heads per group, d_head, d_model or 1]
-            gqa_state_dict[name] = heads.mean(dim=1).reshape(n_groups * d_head, *param.shape[1:])
-    return gqa_state_dict
-
-# gqa.py: convert the trained model and uptrain it for a few steps
-model = GPTlite_GQA(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen, n_groups).to(device).eval()
-model.load_state_dict(convert_mha_to_gqa(model_mha.state_dict(), n_heads, d_head, n_groups))
-train_steps(model, train_data, uptrain_iters, lr, batch_size, seqlen)
-```
-
-</details>
 
 
 ## Quantized attention: SageAttention
@@ -236,80 +163,60 @@ The three run in a single fused GPU kernel, for both the forward and backward pa
 
 MLA accelerates both the decode and prefill phases, though through very different mechanisms. During decode, this is because MLA slashes the KV cache memory footprint to a fraction, and just like MQA and GQA is allows for memory efficiency. During prefill, where the prompt is processed in parallel, the KV down-projection matrices can be mathematically absorbed into the Query projection weights ($$W^Q$$ and $$W^K$$) - this avoids the need to explicitly up-project the full KV cache for every token during the attention computation, making the prefill phase efficient and avoiding the overhead penalties seen in other compressed-attention designs.
 
-The following code implements MLA in GPTlite, with absorbed attention and the conversion of a trained multi-head model. The full code is in [`mla.py`]({{ site.assets }}/inference/mla.py), which also checks that absorbed attention gives the same output as recomputing the keys and values:
+The following code implements MLA. With absorption (`absorb = True`), attention runs directly over the latent vectors, and gives the same output as recomputing the keys and values of every head (`absorb = False`):
 
 <details markdown="1">
 <summary>Show code</summary>
 
 ```python
-class MultiHeadAttention_MLA(nn.Module):
-  """ Multi-head Latent Attention (MLA): the keys and values of all heads are computed from a single latent
-      vector per token, and only that vector is cached. The cache of a layer is a tuple with a tensor of
-      shape [B, 1, S, d_latent]: the latent vector behaves like a single key-value head shared by all heads """
+class MultiHeadLatentAttention(nn.Module):
+    """ Multi-head Latent Attention (MLA): the keys and values of all heads are computed from a single latent
+        vector of size d_latent (C) per token, and a KV cache stores only that vector. With absorption, the
+        latent vectors behave like a single key-value head shared by all heads (multi-query attention) """
 
-  def __init__(self, d_model, n_heads, d_head, dropout_p, d_latent):
-    super().__init__()
-    self.n_heads = n_heads
-    self.d_head = d_head
-    self.query_proj = nn.Linear(d_model, n_heads * d_head)
-    self.kv_down_proj = nn.Linear(d_model, d_latent, bias=False)  # compresses each token into a latent vector
-    self.key_up_proj = nn.Linear(d_latent, n_heads * d_head)      # recovers the keys of all heads
-    self.value_up_proj = nn.Linear(d_latent, n_heads * d_head)    # recovers the values of all heads
-    self.out_proj = nn.Linear(n_heads * d_head, d_model)
-    self.dropout = nn.Dropout(dropout_p)
-    self.absorb = True  # attention directly over the latent vectors, without recomputing keys and values
+    def __init__(self, d_model, n_heads, d_head, dropout_p, d_latent):
+        super().__init__()
+        self.n_heads = n_heads
+        self.d_head = d_head
+        self.query_proj = nn.Linear(d_model, n_heads * d_head)
+        self.kv_down_proj = nn.Linear(d_model, d_latent, bias=False)  # compresses each token into a latent vector
+        self.key_up_proj = nn.Linear(d_latent, n_heads * d_head)      # recovers the keys of all heads
+        self.value_up_proj = nn.Linear(d_latent, n_heads * d_head)    # recovers the values of all heads
+        self.out_proj = nn.Linear(n_heads * d_head, d_model)
+        self.dropout = nn.Dropout(dropout_p)
+        self.absorb = True  # attention directly over the latent vectors, without recomputing keys and values
 
-  def forward(self, x, kv_cache=None, causal_mask=True, max_seqlen=None):
-    (B, S, _), H, D = x.shape, self.n_heads, self.d_head
-    dropout = self.dropout if self.training else None
-    q = self.query_proj(x).view(B, S, H, D).transpose(1, 2)  # [B, H, S, D]
-    c = self.kv_down_proj(x).unsqueeze(1)                    # [B, 1, S, d_latent]
+    def forward(self, x, causal_mask=True):
+        (B, S, _), H, D = x.shape, self.n_heads, self.d_head
+        dropout_p = self.dropout.p if self.training else 0.0
 
-    # If a cache is provided, prepend the past latent vectors
-    if kv_cache is not None:
-      c = torch.cat([kv_cache[0], c], dim=2)  # [B, 1, S_past + S, d_latent]
-      if max_seqlen is not None and c.size(2) > max_seqlen:
-        c = c[:, :, -max_seqlen:]
+        q = self.query_proj(x).view(B, S, H, D).transpose(1, 2)  # BxSxE -> BxSxHxD -> BxHxSxD
+        c = self.kv_down_proj(x)                                 # BxSxE -> BxSxC: the latent vectors
 
-    if self.absorb:
-      # absorb the key up-projection into the query: q.(W_uk c + b_uk) = (W_uk^T q).c + q.b_uk, where the last
-      # term adds the same value to all the scores of a query, so the softmax is not affected by it
-      W_uk = self.key_up_proj.weight.view(H, D, -1)            # [H, D, d_latent]
-      q_latent = torch.einsum('bhsd,hdc->bhsc', q, W_uk)       # [B, H, S, d_latent]
-      # attention with the latent vectors as keys and values; the attention function divides the scores
-      # by sqrt(d_latent), so we rescale the queries to divide by sqrt(d_head) as in the original attention
-      q_latent = q_latent * (q_latent.size(-1) / D) ** 0.5
-      out_latent = scaled_dot_product_attention_kv_cache(q_latent, c, c, causal_mask=causal_mask, dropout=dropout)
-      # absorb the value up-projection: sum_t w_t (W_uv c_t + b_uv) = W_uv (sum_t w_t c_t) + b_uv
-      W_uv = self.value_up_proj.weight.view(H, D, -1)          # [H, D, d_latent]
-      out = torch.einsum('bhsc,hdc->bhsd', out_latent, W_uv) + self.value_up_proj.bias.view(H, 1, D)
-    else:
-      # recompute the keys and values of all heads from the latent vectors
-      k = self.key_up_proj(c[:, 0]).view(B, -1, H, D).transpose(1, 2)    # [B, H, S_past + S, D]
-      v = self.value_up_proj(c[:, 0]).view(B, -1, H, D).transpose(1, 2)
-      out = scaled_dot_product_attention_kv_cache(q, k, v, causal_mask=causal_mask, dropout=dropout)
+        if self.absorb:
+            # absorb the key up-projection into the query: q.(W_uk c + b_uk) = (W_uk^T q).c + q.b_uk, where the last
+            # term adds the same value to all the scores of a query, so the softmax is not affected by it
+            W_uk = self.key_up_proj.weight.view(H, D, -1)       # (H*D)xC -> HxDxC
+            q_latent = torch.einsum('bhsd,hdc->bhsc', q, W_uk)  # BxHxSxD -> BxHxSxC
+            # multi-query attention with the latent vectors as keys and values, scaled by 1/sqrt(d_head) as in
+            # the original attention: BxHxSxC (queries), Bx1xSxC (keys, values) -> BxHxSxC
+            kv = c.unsqueeze(1)                                 # BxSxC -> Bx1xSxC
+            out_latent = F.scaled_dot_product_attention(q_latent, kv, kv, is_causal=causal_mask, dropout_p=dropout_p,
+                                                        scale=D ** -0.5, enable_gqa=True)
+            # absorb the value up-projection: sum_t w_t (W_uv c_t + b_uv) = W_uv (sum_t w_t c_t) + b_uv,
+            # as the attention weights w_t sum to 1
+            W_uv = self.value_up_proj.weight.view(H, D, -1)           # (H*D)xC -> HxDxC
+            out = torch.einsum('bhsc,hdc->bhsd', out_latent, W_uv)    # BxHxSxC -> BxHxSxD
+            out = out + self.value_up_proj.bias.view(H, 1, D)         # BxHxSxD -> BxHxSxD
+        else:
+            # recompute the keys and values of all heads from the latent vectors
+            k = self.key_up_proj(c).view(B, S, H, D).transpose(1, 2)    # BxSxC -> BxSxHxD -> BxHxSxD
+            v = self.value_up_proj(c).view(B, S, H, D).transpose(1, 2)  # BxSxC -> BxSxHxD -> BxHxSxD
+            out = F.scaled_dot_product_attention(q, k, v, is_causal=causal_mask, dropout_p=dropout_p)  # BxHxSxD -> BxHxSxD
 
-    out = out.transpose(1, 2).reshape(B, S, H * D)
-    out = self.dropout(self.out_proj(out))
-    return out, (c,)
-
-def convert_mha_to_mla(state_dict, n_heads, d_head, d_latent):
-  """ Converts the weights of a multi-head GPTlite into MLA: the key and value projections are stacked
-      in a single matrix [W_k; W_v], and factorized with a truncated singular value decomposition (SVD)
-      into an up-projection (U sqrt(S)) times a down-projection (sqrt(S) V^T) of rank d_latent """
-  mla_state_dict = {name: param for name, param in state_dict.items()
-                    if '.mha.key_proj.' not in name and '.mha.value_proj.' not in name}
-  for prefix in {name[:name.index('mha.') + 4] for name in state_dict if '.mha.' in name}:
-    W = torch.cat([state_dict[prefix + 'key_proj.weight'], state_dict[prefix + 'value_proj.weight']])  # [2*H*D, d_model]
-    U, S, Vh = torch.linalg.svd(W, full_matrices=False)
-    sqrt_S = S[:d_latent].sqrt()
-    W_up = U[:, :d_latent] * sqrt_S  # [2*H*D, d_latent]
-    mla_state_dict[prefix + 'kv_down_proj.weight'] = sqrt_S[:, None] * Vh[:d_latent]  # [d_latent, d_model]
-    mla_state_dict[prefix + 'key_up_proj.weight'] = W_up[:n_heads * d_head]
-    mla_state_dict[prefix + 'value_up_proj.weight'] = W_up[n_heads * d_head:]
-    mla_state_dict[prefix + 'key_up_proj.bias'] = state_dict[prefix + 'key_proj.bias']
-    mla_state_dict[prefix + 'value_up_proj.bias'] = state_dict[prefix + 'value_proj.bias']
-  return mla_state_dict
+        out = out.transpose(1, 2).reshape(B, S, H * D)  # BxHxSxD -> BxSxHxD -> BxSx(H*D)
+        out = self.out_proj(out)                        # BxSx(H*D) -> BxSxE
+        return self.dropout(out)
 ```
 
 </details>
@@ -326,94 +233,94 @@ where $$q_{t,h}$$ are the queries of the indexer heads and $$w_{t,h}$$ their wei
 
 DSA was added to an already trained model, in two stages. During a short *dense warm-up*, the model keeps its dense attention and only the indexer is trained, to imitate the attention distribution of its layer (the attention weights summed over the heads and normalized) with a KL-divergence loss. Then the whole model is trained with sparse attention, and the input of the indexer is detached from the rest of the model, so the indexer learns only from its own loss.
 
-We do the same with GPTlite: we keep the weights of the trained model, add an indexer to every layer, train the indexers with the dense warm-up, and evaluate the model when each query attends to a quarter of the context window. We compare the indexer's selection with a simpler one of the same size, the most recent tokens. The KV cache also stores the indexer key of every token. Index scores are often tied, since the ReLU outputs many zeros, so the selection uses a stable sort, which breaks ties the same way whether the tokens are processed together or one at a time: decoding with the KV cache then gives the same result as processing the whole sequence.
+With a KV cache, the indexer key of every token is cached too. Index scores are often tied, since the ReLU outputs many zeros, so the selection below uses a stable sort, which breaks ties the same way whether the tokens are processed together or one at a time: decoding with a KV cache then gives the same result as processing the whole sequence.
 
-The following code implements DeepSeek Sparse Attention in GPTlite and the dense warm-up of its indexers. The full code is in [`dsa.py`]({{ site.assets }}/inference/dsa.py):
+The following code adds DeepSeek Sparse Attention to multi-head attention. It keeps the projections of `MultiHeadAttention`, so it can load the weights of a trained model, and adds an indexer. During the dense warm-up (`dense = True`), the queries attend to all past tokens and the module computes `indexer_loss`, which is backpropagated alone to train the indexer; afterwards, each query attends only to the `top_k` past tokens with the highest index scores:
 
 <details markdown="1">
 <summary>Show code</summary>
 
 ```python
 def lightning_index_scores(q, w, k):
-  """ Index scores I[t, s] = sum_h w[t, h] * ReLU(q[t, h] . k[s]) of the lightning indexer, for the queries
-      q [B, Sq, n_heads, d], the head weights w [B, Sq, n_heads] and a single key per entry k [B, Sk, d] """
-  dots = F.relu(torch.einsum('bqhd,bkd->bqhk', q, k))  # [B, Sq, n_heads, Sk]
-  return torch.einsum('bqhk,bqh->bqk', dots, w)        # [B, Sq, Sk]
+    """ Index scores I[t, s] = sum_h w[t, h] * ReLU(q[t, h] . k[s]) of the lightning indexer, for the queries
+        q (BxSqxHIxDI), their head weights w (BxSqxHI) and a single key per token or entry k (BxSkxDI), where
+        HI is the number of indexer heads and DI their size """
+    dots = F.relu(torch.einsum('bqhd,bkd->bqhk', q, k))  # BxSqxHIxDI, BxSkxDI -> BxSqxHIxSk
+    return torch.einsum('bqhk,bqh->bqk', dots, w)        # BxSqxHIxSk, BxSqxHI -> BxSqxSk
+
 
 def top_k_indices(scores, k):
-  """ Indices of the k highest scores of each row. A stable sort breaks ties by keeping the earliest entries, so the
-      selection is the same whether a sequence is processed at once or one token at a time """
-  return scores.sort(dim=-1, descending=True, stable=True).indices[..., :k]
+    """ Indices of the k highest scores of each row: BxSqxSk -> BxSqxk. A stable sort breaks ties by keeping the
+        earliest entries, so the selection is the same whether a sequence is processed at once or one token at a time """
+    return scores.sort(dim=-1, descending=True, stable=True).indices[..., :k]
+
 
 def indexer_loss(index_scores, attention_scores, visible):
-  """ KL divergence between the attention distribution (the target: attention weights summed over heads and
-      normalized) and the softmax of the index scores, over the entries each query can see.
-      index_scores: [B, Sq, Sk], attention_scores: [B, H, Sq, Sk] logits, visible: [Sq, Sk] or [B, Sq, Sk] """
-  with torch.no_grad():
-    target = F.softmax(attention_scores.masked_fill(~visible.unsqueeze(-3), -1e9), dim=-1).sum(dim=1) * visible
-    target = target / target.sum(dim=-1, keepdim=True).clamp(min=1e-9)
-  log_index = F.log_softmax(index_scores.masked_fill(~visible, -1e9), dim=-1).masked_fill(~visible, 0.0)
-  return F.kl_div(log_index.flatten(0, -2), target.flatten(0, -2), reduction='batchmean')
+    """ KL divergence between the attention distribution (the target: attention weights summed over heads and
+        normalized) and the softmax of the index scores, over the entries each query can see.
+        index_scores: BxSqxSk, attention_scores: BxHxSqxSk logits, visible: SqxSk or BxSqxSk """
+    with torch.no_grad():
+        weights = F.softmax(attention_scores.masked_fill(~visible.unsqueeze(-3), -1e9), dim=-1)  # BxHxSqxSk
+        target = weights.sum(dim=1) * visible                                                    # BxHxSqxSk -> BxSqxSk
+        target = target / target.sum(dim=-1, keepdim=True).clamp(min=1e-9)
+    log_index = F.log_softmax(index_scores.masked_fill(~visible, -1e9), dim=-1).masked_fill(~visible, 0.0)  # BxSqxSk
+    return F.kl_div(log_index.flatten(0, -2), target.flatten(0, -2), reduction='batchmean')
 
-class MultiHeadAttention_DSA(nn.Module):
-  # ...
 
-  def forward(self, x, kv_cache=None, causal_mask=True, max_seqlen=None):
-    (B, S, _), H, D = x.shape, self.n_heads, self.d_head
-    q = self.query_proj(x).view(B, S, H, D).transpose(1, 2)  # [B, H, S, D]
-    k = self.key_proj(x).view(B, S, H, D).transpose(1, 2)
-    v = self.value_proj(x).view(B, S, H, D).transpose(1, 2)
-    x_index = x.detach()  # the indexer is trained on its own, without gradients into the rest of the model
-    k_index = self.index_key_proj(x_index).unsqueeze(1)      # [B, 1, S, d_index]
+class DeepSeekSparseAttention(nn.Module):
+    """ Causal multi-head attention with DeepSeek Sparse Attention (DSA): a small lightning indexer scores the
+        past tokens of each query, and all heads attend only to the top_k tokens with the highest scores. The
+        selection is applied as a mask over the scores of all tokens, which shows its effect on quality; the
+        speedup needs a kernel that reads only the keys and values of the selected tokens """
 
-    # If a cache is provided, prepend the past keys, values and indexer keys
-    if kv_cache is not None:
-      past_k, past_v, past_k_index = kv_cache
-      k, v = torch.cat([past_k, k], dim=2), torch.cat([past_v, v], dim=2)
-      k_index = torch.cat([past_k_index, k_index], dim=2)
-      if max_seqlen is not None and k.size(2) > max_seqlen:
-        k, v, k_index = k[:, :, -max_seqlen:], v[:, :, -max_seqlen:], k_index[:, :, -max_seqlen:]
+    def __init__(self, d_model, n_heads, d_head, dropout_p, top_k, n_index_heads=4, d_index=16):
+        super().__init__()
+        self.n_heads, self.d_head, self.top_k = n_heads, d_head, top_k
+        self.n_index_heads, self.d_index = n_index_heads, d_index
+        self.query_proj = nn.Linear(d_model, n_heads * d_head)
+        self.key_proj = nn.Linear(d_model, n_heads * d_head)
+        self.value_proj = nn.Linear(d_model, n_heads * d_head)
+        self.out_proj = nn.Linear(n_heads * d_head, d_model)
+        self.dropout = nn.Dropout(dropout_p)
+        # lightning indexer: a few query heads, a single key per token, and a weight per head
+        self.index_query_proj = nn.Linear(d_model, n_index_heads * d_index)
+        self.index_key_proj = nn.Linear(d_model, d_index)
+        self.index_weight_proj = nn.Linear(d_model, n_index_heads)
+        self.dense = False        # dense warm-up: attend to all past tokens, and train the indexer to imitate them
+        self.indexer_loss = None  # KL divergence between the attention and the indexer, during the dense warm-up
 
-    Sk = k.size(2)
-    causal = torch.ones(S, Sk, dtype=torch.bool, device=x.device).tril(diagonal=Sk - S)  # [S, Sk]
-    scores = q @ k.transpose(-2, -1) / D ** 0.5  # [B, H, S, Sk]
-    self.indexer_loss = None
-    if self.selection == "local":  # the top_k most recent tokens of each query
-      n = min(self.top_k, Sk)
-      position = torch.arange(Sk - S, Sk, device=x.device)  # position of each query in the keys
-      top = (position[:, None] - torch.arange(n, device=x.device)).clamp(min=0).expand(B, S, n)
-      visible = torch.zeros(B, S, Sk, dtype=torch.bool, device=x.device).scatter_(-1, top, True) & causal
-    else:
-      q_index = self.index_query_proj(x_index).view(B, S, self.n_index_heads, self.d_index)
-      index_scores = lightning_index_scores(q_index, self.index_weight_proj(x_index), k_index[:, 0])  # [B, S, Sk]
-      if self.selection == "dense":  # dense attention; the indexer learns to imitate it
-        visible = causal
-        self.indexer_loss = indexer_loss(index_scores, scores, causal)
-      else:  # the top_k past tokens with the highest index scores
-        top = top_k_indices(index_scores.masked_fill(~causal, float('-inf')), min(self.top_k, Sk))
-        visible = torch.zeros(B, S, Sk, dtype=torch.bool, device=x.device).scatter_(-1, top, True) & causal
+    def forward(self, x, causal_mask=True):
+        assert causal_mask, "DSA is always causal"
+        (B, S, _), H, D = x.shape, self.n_heads, self.d_head
+        HI, DI = self.n_index_heads, self.d_index
 
-    weights = F.softmax(scores.masked_fill(~visible.unsqueeze(-3), float('-inf')), dim=-1)
-    out = (self.dropout(weights) if self.training else weights) @ v  # [B, H, S, D]
-    out = self.out_proj(out.transpose(1, 2).reshape(B, S, H * D))
-    out = self.dropout(out) if self.training else out
-    return out, (k, v, k_index)
+        q = self.query_proj(x).view(B, S, H, D).transpose(1, 2)  # BxSxE -> BxSxHxD -> BxHxSxD
+        k = self.key_proj(x).view(B, S, H, D).transpose(1, 2)    # BxSxE -> BxSxHxD -> BxHxSxD
+        v = self.value_proj(x).view(B, S, H, D).transpose(1, 2)  # BxSxE -> BxSxHxD -> BxHxSxD
+        scores = q @ k.transpose(-2, -1) / D ** 0.5              # BxHxSxD @ BxHxDxS -> BxHxSxS
 
-def warmup_indexer(model, data, n_steps, lr, batch_size, seqlen):
-  """ Dense warm-up of DeepSeek-V3.2: the model runs dense attention and only the indexers are trained, to
-      imitate the attention distribution of their layer """
-  indexer_params = [p for name, p in model.named_parameters() if '.index_' in name]
-  optimizer = torch.optim.Adam(indexer_params, lr=lr)
-  set_selection(model, "dense")
-  for _ in range(n_steps):
-    x, _ = get_batch(data, batch_size=batch_size, seqlen=seqlen)
-    model(x.to(device))
-    loss = sum(block.mha.indexer_loss for block in model.blocks)
-    loss.backward()  # only the indexers receive gradients: their input and target are detached
-    optimizer.step()
-    optimizer.zero_grad(set_to_none=True)
-  set_selection(model, "indexer")
-  return model
+        # lightning indexer: it is trained on its own, without gradients into the rest of the model
+        x_index = x.detach()
+        q_index = self.index_query_proj(x_index).view(B, S, HI, DI)       # BxSxE -> BxSxHIxDI
+        w_index = self.index_weight_proj(x_index)                         # BxSxE -> BxSxHI
+        k_index = self.index_key_proj(x_index)                            # BxSxE -> BxSxDI
+        index_scores = lightning_index_scores(q_index, w_index, k_index)  # BxSxS
+
+        causal = torch.ones(S, S, dtype=torch.bool, device=x.device).tril()  # SxS
+        if self.dense:  # dense attention; the indexer learns to imitate it
+            visible = causal  # SxS
+            self.indexer_loss = indexer_loss(index_scores, scores, causal)
+        else:  # the top_k past tokens with the highest index scores
+            top = top_k_indices(index_scores.masked_fill(~causal, float('-inf')), min(self.top_k, S))  # BxSxS -> BxSxtop_k
+            visible = torch.zeros(B, S, S, dtype=torch.bool, device=x.device).scatter_(-1, top, True) & causal  # BxSxS
+            self.indexer_loss = None
+
+        # attention over the visible tokens, the same for all heads: BxHxSxS -> BxHxSxS
+        weights = F.softmax(scores.masked_fill(~visible.unsqueeze(-3), float('-inf')), dim=-1)
+        out = self.dropout(weights) @ v                 # BxHxSxS @ BxHxSxD -> BxHxSxD
+        out = out.transpose(1, 2).reshape(B, S, H * D)  # BxHxSxD -> BxSxHxD -> BxSx(H*D)
+        out = self.out_proj(out)                        # BxSx(H*D) -> BxSxE
+        return self.dropout(out)
 ```
 
 </details>
@@ -434,104 +341,118 @@ Both use multi-query attention with a single key-value vector per entry, shared 
 | DeepSeek-V4, CSA layers | compression by 4, then top-k | an entry and an indexer key every 4 tokens, plus the last 128 tokens | the top-k entries and the last 128 tokens |
 | DeepSeek-V4, HCA layers | compression by 128 | an entry every 128 tokens, plus the last 128 tokens | all the entries and the last 128 tokens |
 
-We implement both attention types in GPTlite, alternating CSA and HCA across the blocks, with the overlapping compression, the lightning indexer, the shared key-value multi-query attention, the sliding window, the low-rank queries, RMSNorm, the attention sink and the grouped output projection. GPTlite adds learned positional embeddings to its input, so we don't need rotary embeddings, and we scale the compression rates, the window and the number of selected entries down to the short context of GPTlite. As in DSA, the indexer learns to imitate the attention over the compressed entries with the KL-divergence loss, from an input detached from the rest of the model. These attention types change the architecture, so we train the model from scratch, and compare it with the dense GPTlite trained with the same number of steps.
-
-The following code implements CSA and HCA in GPTlite. The full code is in [`csa_hca.py`]({{ site.assets }}/inference/csa_hca.py), which compares the validation loss and the size of the KV cache with those of dense attention:
+The following code implements both attention types in a single module, CSA when `top_k` is given and HCA otherwise, with the overlapping compression, the lightning indexer, the shared key-value multi-query attention, the sliding window, the low-rank queries, RMSNorm, the attention sink and the grouped output projection. A model alternates CSA and HCA across its blocks. The module expects positional information in its input, such as learned positional embeddings, so it omits rotary embeddings. As in DSA, the indexer learns to imitate the attention over the compressed entries with the KL-divergence loss `indexer_loss`, which is added to the training loss, from an input detached from the rest of the model. These attention types change the architecture, so a model that uses them is trained from scratch:
 
 <details markdown="1">
 <summary>Show code</summary>
 
 ```python
+# lightning_index_scores, top_k_indices and indexer_loss are defined in the DSA code above
+
 class Compressor(nn.Module):
-  """ Compresses the hidden states of every m tokens into one entry: a sum of per-token entries, weighted per
-      channel by a softmax over the tokens of the block, with learned positional biases. With overlap (CSA),
-      each entry also covers the m tokens of the previous block, through a second series of entries and weights.
-      The tokens of a trailing incomplete block are not compressed (the sliding window covers them) """
+    """ Compresses the hidden states of every m tokens into one entry: a sum of per-token entries, weighted per
+        channel by a softmax over the tokens of the block, with learned positional biases. With overlap (CSA),
+        each entry also covers the m tokens of the previous block, through a second series of entries and weights.
+        The tokens of a trailing incomplete block are not compressed (the sliding window covers them) """
 
-  def __init__(self, d_model, d_entry, m, overlap):
-    super().__init__()
-    self.m, self.overlap = m, overlap
-    n_series = 2 if overlap else 1
-    self.entry_proj = nn.Linear(d_model, n_series * d_entry, bias=False)   # C^a (and C^b)
-    self.weight_proj = nn.Linear(d_model, n_series * d_entry, bias=False)  # Z^a (and Z^b)
-    self.position_bias = nn.Parameter(torch.zeros(n_series, m, d_entry))  # B^a (and B^b)
+    def __init__(self, d_model, d_entry, m, overlap):
+        super().__init__()
+        self.m, self.overlap = m, overlap
+        n_series = 2 if overlap else 1
+        self.entry_proj = nn.Linear(d_model, n_series * d_entry, bias=False)   # C^a (and C^b)
+        self.weight_proj = nn.Linear(d_model, n_series * d_entry, bias=False)  # Z^a (and Z^b)
+        self.position_bias = nn.Parameter(torch.zeros(n_series, m, d_entry))  # B^a (and B^b)
 
-  def forward(self, h):
-    """ h: [B, S, d_model] -> compressed entries [B, S // m, d_entry] """
-    B, n_blocks = h.size(0), h.size(1) // self.m
-    h = h[:, :n_blocks * self.m]
-    C = self.entry_proj(h).view(B, n_blocks, self.m, -1)  # [B, n_blocks, m, n_series * d_entry]
-    Z = self.weight_proj(h).view(B, n_blocks, self.m, -1)
-    if self.overlap:
-      (Ca, Cb), (Za, Zb) = C.chunk(2, dim=-1), Z.chunk(2, dim=-1)
-      Za, Zb = Za + self.position_bias[0], Zb + self.position_bias[1]
-      Cb = F.pad(Cb, (0, 0, 0, 0, 1, 0))[:, :n_blocks]  # series b of the previous block (none for block 0)
-      Zb = F.pad(Zb, (0, 0, 0, 0, 1, 0), value=float('-inf'))[:, :n_blocks]
-      C, Z = torch.cat([Ca, Cb], dim=2), torch.cat([Za, Zb], dim=2)  # [B, n_blocks, 2m, d_entry]
-    else:
-      Z = Z + self.position_bias[0]
-    return (F.softmax(Z, dim=2) * C).sum(dim=2)
+    def forward(self, h):
+        """ h: BxSxE -> compressed entries: BxNxDE, with N = S // m blocks and DE = d_entry """
+        B, N = h.size(0), h.size(1) // self.m
+        h = h[:, :N * self.m]                           # BxSxE -> Bx(N*m)xE
+        C = self.entry_proj(h).unflatten(1, (N, self.m))   # Bx(N*m)xE -> BxNxmx(n_series*DE)
+        Z = self.weight_proj(h).unflatten(1, (N, self.m))  # Bx(N*m)xE -> BxNxmx(n_series*DE)
+        if self.overlap:
+            (Ca, Cb), (Za, Zb) = C.chunk(2, dim=-1), Z.chunk(2, dim=-1)    # BxNxmxDE each
+            Za, Zb = Za + self.position_bias[0], Zb + self.position_bias[1]
+            Cb = F.pad(Cb, (0, 0, 0, 0, 1, 0))[:, :N]  # series b of the previous block (none for block 0)
+            Zb = F.pad(Zb, (0, 0, 0, 0, 1, 0), value=float('-inf'))[:, :N]
+            C, Z = torch.cat([Ca, Cb], dim=2), torch.cat([Za, Zb], dim=2)  # BxNx(2m)xDE
+        else:
+            Z = Z + self.position_bias[0]
+        return (F.softmax(Z, dim=2) * C).sum(dim=2)  # BxNx(m or 2m)xDE -> BxNxDE
+
 
 class CompressedAttention(nn.Module):
-  # ...
+    """ DeepSeek-V4 attention, always causal. CSA (top_k given) compresses every m tokens with overlap, and a
+        lightning indexer selects the top_k compressed entries of each query. HCA (top_k None) compresses every
+        m tokens without overlap, and attends to all of them. Both use shared key-value multi-query attention:
+        each entry is both the key and the value of all query heads, together with uncompressed entries of the
+        last n_win tokens. The indexer is trained, as in DeepSeek Sparse Attention, to imitate the attention over
+        the compressed entries: in training, add indexer_loss to the loss. The input is expected to carry
+        positional information (e.g. learned positional embeddings), so DeepSeek-V4's partial RoPE is omitted """
 
-  def forward(self, x, causal_mask=True):
-    (B, S, _), H, D = x.shape, self.n_heads, self.d_head
-    c_q = self.q_down_proj(x)
-    q = self.q_norm(self.q_up_proj(c_q).view(B, S, H, D)).transpose(1, 2)  # [B, H, S, D]
-    entries = self.kv_norm(self.compressor(x))                             # [B, n_blocks, D]
-    window = self.kv_norm(self.window_proj(x))                             # [B, S, D]
-    n_blocks, t = entries.size(1), torch.arange(S, device=x.device)
+    def __init__(self, d_model, n_heads, d_head, dropout_p, m, n_win, top_k=None,
+                 n_groups=2, n_index_heads=4, d_index=16):
+        super().__init__()
+        self.n_heads, self.d_head, self.m, self.n_win, self.top_k = n_heads, d_head, m, n_win, top_k
+        self.n_index_heads, self.d_index = n_index_heads, d_index
+        d_q_latent = d_model // 2
+        self.q_down_proj = nn.Linear(d_model, d_q_latent)  # low-rank queries; the latent is shared with the indexer
+        self.q_up_proj = nn.Linear(d_q_latent, n_heads * d_head)
+        self.compressor = Compressor(d_model, d_head, m, overlap=top_k is not None)
+        self.window_proj = nn.Linear(d_model, d_head)  # uncompressed entries, for the sliding window
+        self.q_norm, self.kv_norm = nn.RMSNorm(d_head), nn.RMSNorm(d_head)
+        self.sink = nn.Parameter(torch.zeros(n_heads))  # attention sink: a learned logit per head, with no value
+        if top_k is not None:  # lightning indexer, with keys compressed like the entries
+            self.index_compressor = Compressor(d_model, d_index, m, overlap=True)
+            self.index_query_proj = nn.Linear(d_q_latent, n_index_heads * d_index)
+            self.index_weight_proj = nn.Linear(d_model, n_index_heads)
+        # grouped output projection: each group of heads is projected separately, then all groups together
+        self.n_groups, d_group_in, d_group = n_groups, n_heads // n_groups * d_head, d_model // n_groups
+        self.group_proj = nn.Parameter(torch.randn(n_groups, d_group_in, d_group) * d_group_in ** -0.5)
+        self.out_proj = nn.Linear(n_groups * d_group, d_model)
+        self.dropout = nn.Dropout(dropout_p)
+        self.indexer_loss = None  # KL divergence between the attention over the entries and the indexer, in training
 
-    # each query sees the compressed blocks before its own block, and the uncompressed last n_win tokens
-    block_visible = torch.arange(n_blocks, device=x.device)[None, :] < (t // self.m)[:, None]   # [S, n_blocks]
-    window_visible = (t[None, :] <= t[:, None]) & (t[None, :] > t[:, None] - self.n_win)        # [S, S]
-    block_visible = block_visible.expand(B, S, n_blocks)
-    self.indexer_loss = None
-    if self.top_k is not None and n_blocks > 0:  # CSA: keep the top_k visible blocks with the highest index scores
-      x_index, c_q_index = x.detach(), c_q.detach()  # the indexer is trained only by its own loss
-      q_index = self.index_query_proj(c_q_index).view(B, S, self.n_index_heads, self.d_index)
-      index_scores = lightning_index_scores(q_index, self.index_weight_proj(x_index), self.index_compressor(x_index))
-      if self.training:
-        self.indexer_loss = indexer_loss(index_scores, q @ entries.transpose(-2, -1).unsqueeze(1) / D ** 0.5, block_visible)
-      top = top_k_indices(index_scores.masked_fill(~block_visible, float('-inf')), min(self.top_k, n_blocks))
-      block_visible = torch.zeros_like(block_visible).scatter_(-1, top, True) & block_visible
+    def forward(self, x, causal_mask=True):
+        assert causal_mask, "CSA and HCA are always causal"
+        (B, S, _), H, D, G = x.shape, self.n_heads, self.d_head, self.n_groups
+        c_q = self.q_down_proj(x)                                               # BxSxE -> BxSx(E/2)
+        q = self.q_norm(self.q_up_proj(c_q).view(B, S, H, D)).transpose(1, 2)  # BxSx(E/2) -> BxSxHxD -> BxHxSxD
+        entries = self.kv_norm(self.compressor(x))                             # BxSxE -> BxNxD, with N = S // m blocks
+        window = self.kv_norm(self.window_proj(x))                             # BxSxE -> BxSxD
+        N, t = entries.size(1), torch.arange(S, device=x.device)
 
-    kv = torch.cat([entries, window], dim=1)[:, None]  # [B, 1, n_blocks + S, D]: keys and values of all heads
-    visible = torch.cat([block_visible, window_visible.expand(B, S, S)], dim=-1)  # [B, S, n_blocks + S]
-    scores = (q @ kv.transpose(-2, -1) / D ** 0.5).masked_fill(~visible[:, None], float('-inf'))
-    sink = self.sink.view(1, H, 1, 1).expand(B, H, S, 1)
-    weights = F.softmax(torch.cat([scores, sink], dim=-1), dim=-1)[..., :-1]  # the sink takes part of the weight
-    out = (self.dropout(weights) if self.training else weights) @ kv        # [B, H, S, D]
-    out = out.transpose(1, 2).reshape(B, S, self.n_groups, -1)
-    out = torch.einsum('bsgi,gio->bsgo', out, self.group_proj).reshape(B, S, -1)
-    return self.dropout(self.out_proj(out))
+        # each query sees the compressed blocks before its own block, and the uncompressed last n_win tokens
+        block_visible = torch.arange(N, device=x.device)[None, :] < (t // self.m)[:, None]   # SxN
+        window_visible = (t[None, :] <= t[:, None]) & (t[None, :] > t[:, None] - self.n_win)  # SxS
+        block_visible = block_visible.expand(B, S, N)                                        # SxN -> BxSxN
+        self.indexer_loss = None
+        if self.top_k is not None and N > 0:  # CSA: keep the top_k visible blocks with the highest index scores
+            HI, DI = self.n_index_heads, self.d_index
+            x_index, c_q_index = x.detach(), c_q.detach()  # the indexer is trained only by its own loss
+            q_index = self.index_query_proj(c_q_index).view(B, S, HI, DI)     # BxSx(E/2) -> BxSxHIxDI
+            w_index = self.index_weight_proj(x_index)                         # BxSxE -> BxSxHI
+            k_index = self.index_compressor(x_index)                          # BxSxE -> BxNxDI
+            index_scores = lightning_index_scores(q_index, w_index, k_index)  # BxSxN
+            if self.training:
+                entry_scores = q @ entries.transpose(-2, -1).unsqueeze(1) / D ** 0.5  # BxHxSxD @ Bx1xDxN -> BxHxSxN
+                self.indexer_loss = indexer_loss(index_scores, entry_scores, block_visible)
+            index_scores = index_scores.masked_fill(~block_visible, float('-inf'))            # BxSxN
+            top = top_k_indices(index_scores, min(self.top_k, N))                             # BxSxN -> BxSxtop_k
+            block_visible = torch.zeros_like(block_visible).scatter_(-1, top, True) & block_visible  # BxSxN
 
-def use_csa_hca(model, m, m_heavy, n_win, top_k):
-  """ Replaces the attention of every block: CSA in even blocks, HCA in odd blocks """
-  for i, block in enumerate(model.blocks):
-    d_model, n_heads, d_head, dropout_p = block.ln1.normalized_shape[0], block.mha.n_heads, block.mha.d_head, block.mha.dropout.p
-    if i % 2 == 0:
-      block.mha = CompressedAttention(d_model, n_heads, d_head, dropout_p, m, n_win, top_k=top_k)
-    else:
-      block.mha = CompressedAttention(d_model, n_heads, d_head, dropout_p, m_heavy, n_win)
-  return model.to(device)
+        # multi-query attention over the visible entries and window tokens; the sink takes part of the weight
+        kv = torch.cat([entries, window], dim=1)[:, None]                             # BxNxD, BxSxD -> Bx1x(N+S)xD
+        visible = torch.cat([block_visible, window_visible.expand(B, S, S)], dim=-1)  # BxSxN, BxSxS -> BxSx(N+S)
+        scores = (q @ kv.transpose(-2, -1) / D ** 0.5).masked_fill(~visible[:, None], float('-inf'))  # BxHxSx(N+S)
+        sink = self.sink.view(1, H, 1, 1).expand(B, H, S, 1)                          # H -> BxHxSx1
+        weights = F.softmax(torch.cat([scores, sink], dim=-1), dim=-1)[..., :-1]      # BxHxSx(N+S+1) -> BxHxSx(N+S)
+        out = self.dropout(weights) @ kv                                              # BxHxSx(N+S) @ Bx1x(N+S)xD -> BxHxSxD
 
-def train(model, data, n_steps, lr, batch_size, seqlen):
-  """ Trains a model with the cross entropy loss, plus the loss of the indexers of its CSA layers """
-  optimizer = torch.optim.Adam(model.parameters(), lr=lr)
-  model.train()
-  for _ in range(n_steps):
-    x, y = get_batch(data, batch_size=batch_size, seqlen=seqlen)
-    logits = model(x.to(device))
-    loss = F.cross_entropy(logits.reshape(-1, logits.size(-1)), y.to(device).reshape(-1))
-    loss = loss + sum(block.mha.indexer_loss for block in model.blocks if getattr(block.mha, 'indexer_loss', None) is not None)
-    loss.backward()
-    torch.nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
-    optimizer.step()
-    optimizer.zero_grad(set_to_none=True)
-  model.eval()
-  return model
+        # grouped output projection, with G = n_groups
+        out = out.transpose(1, 2).reshape(B, S, G, -1)              # BxHxSxD -> BxSxHxD -> BxSxGx(H/G*D)
+        out = torch.einsum('bsgi,gio->bsgo', out, self.group_proj)  # BxSxGx(H/G*D) -> BxSxGx(E/G)
+        out = self.out_proj(out.reshape(B, S, -1))                  # BxSxGx(E/G) -> BxSxE -> BxSxE
+        return self.dropout(out)
 ```
 
 </details>
@@ -551,5 +472,3 @@ def train(model, data, n_steps, lr, batch_size, seqlen):
 | Linear and hybrid attention (Kimi Linear) | changes the model | pre-training | KV cache, quadratic cost | very long contexts |
 | CSA and HCA (DeepSeek-V4) | changes the model | pre-training | KV cache, compute | very long contexts |
 | SLA | no (learned) | a few fine-tuning steps | compute | image and video diffusion |
-
-As before, all the code is in the [repository of this post](https://github.com/{{ site.repository }}/tree/master/assets/inference).
