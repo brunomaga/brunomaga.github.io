@@ -44,6 +44,8 @@ On a **log-log plot**, the two terms of the minimum form a "roof": a slanted lin
 - Computation to the left of the ridge point is **memory-bound**: the processor waits for data, and the only ways to speed it up are to move fewer bytes or to do more work per byte. This is typically where the **decode** step falls.
 - Computation to the right is **compute-bound**: only faster math, or less of it, helps. The gap shows how much is lost to other overheads, such as kernel launches, memory latencies or poor memory access patterns. This relates mostly to the **prefill** step, that is typically near to the roof line.
 
+**Double buffering** can help a program approach the Roofline model’s ideal assumption that data movement and computation overlap. With one buffer, memory loads and computation are executed iteratively in a loop — so transfer and compute times add. With two buffers, the program computes one tile while loading the next tile into the other buffer. The standard Roofline bound is based on the *slower* of compute and memory movement.
+
 We can move a point **right**, by providing more FLOPs per byte, via:
 - A larger batch or more tokens per pass, so each weight byte is reused across more rows. For decode, this means batching and speculative decoding, which verifies several draft tokens in one pass.
 - Better data reuse through tiling and blocking in shared memory or SRAM.
