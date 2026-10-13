@@ -29,7 +29,8 @@ The speedup therefore depends on how often the drafts are right and on how cheap
 
 ### Draft-model speculative decoding
 
-The original method ([Leviathan et al.](https://arxiv.org/abs/2211.17192), [Chen et al.](https://arxiv.org/abs/2302.01318)) drafts with a small language model that uses the same tokenizer as the target, ideally a distilled version of the target, such as the student we train in the [distillation section]({{ site.baseurl }}{% post_url 2026-04-22-inference-distillation-pruning-quantization %}#knowledge-distillation) of a previous post. Each iteration:
+The original method ([Leviathan et al.](https://arxiv.org/abs/2211.17192), [Chen et al.](https://arxiv.org/abs/2302.01318)) drafts with a small language model that uses the same tokenizer as the target, ideally a distilled version of the target. <!--, such as the student we train in the [distillation section]({{ site.baseurl }}{% post_url 2026-04-22-inference-distillation-pruning-quantization %}#knowledge-distillation) of a previous post. --> 
+Each iteration: 
 
 1. the draft model generates $$K$$ tokens autoregressively;
 2. the target model runs one forward pass over the context and the $$K$$ draft tokens, which gives its distribution at each of the $$K$$ draft positions, plus one more after the last draft;
