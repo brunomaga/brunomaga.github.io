@@ -1,11 +1,97 @@
 ---
 layout: post
-title:  "Efficient inference: speculative decoding and multi-token decoding"
-categories: [machine learning, Transformer, GPT, inference]
+title:  "Efficient inference: knowledge distillation, speculative decoding and multi-token decoding"
+categories: [machine learning, Transformer, GPT, inference, distillation]
+redirect_from: /speculative-multitoken-decoding
 tags: [machinelearning]
 ---
 
-In this post we look at techniques that generate several tokens per forward pass of the model: speculative decoding, where the drafts come from a small model, the context, extra heads, the features or early layers of the model, or a block diffusion model, and multi-token prediction, which builds the drafter into the model during pre-training. Most methods come with a short PyTorch snippet, which assumes `import torch`, `import torch.nn as nn` and `import torch.nn.functional as F`. Like the attention modules of the [post on attention]({{ site.baseurl }}{% post_url 2025-12-30-inference-attention %}), the models and the transformer blocks take an optional KV cache and return it, with the new tokens appended, together with their output.
+In this post we look at knowledge distillation, which trains a small model to behave like a large one, and at techniques that generate several tokens per forward pass of the model: speculative decoding, where the drafts come from a small model (ideally a distilled one), the context, extra heads, the features or early layers of the model, or a block diffusion model, and multi-token prediction, which builds the drafter into the model during pre-training. Most methods come with a short PyTorch snippet, which assumes `import torch`, `import torch.nn as nn` and `import torch.nn.functional as F`. Like the attention modules of the [post on attention]({{ site.baseurl }}{% post_url 2025-12-30-inference-attention %}), the models and the transformer blocks take an optional KV cache and return it, with the new tokens appended, together with their output.
+
+## Knowledge distillation
+
+Knowledge Distillation (KD) trains a *student* model from a *teacher* model. Information flows from a larger or pre-trained teacher to a smaller or untrained student, to make the student smaller and/or better than it would be if trained alone. The main rationale is that the *soft labels* produced by a trained network, i.e., its full output distribution, are a richer training signal than the user-provided *hard labels*.
+
+As a quick example, take a two-label (dog, cat) classification task. An image of a cat that looks like a dog has the ground-truth label distribution `[0,1]`. A trained model, queried with the same image, outputs something like `[0.4, 0.6]`: it believes it is a cat, but it could also be a dog. The soft label `[0.4, 0.6]` carries more information than the hard label `[0,1]`, and training a second model on such labels lets it use its capacity better, spending less of it on learning noise. In language modeling, the teacher's distribution over the next token tells the student not only which token is right, but also which alternatives are plausible.
+
+There are several categories of KD methods. The loss can match the soft labels of the student and the teacher, as in the example above, or intermediate representations such as feature maps. The student can be a scaled-down version of the teacher's architecture, or a different one. In **offline distillation**, the teacher is trained first and then frozen while the student learns from it; in **online distillation**, both are trained simultaneously. We can use a single teacher or an ensemble of teachers.
+
+{: style="text-align:center; font-size: small;"}
+<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.png"/>
+
+For details on the different methods, see [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525).
+
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kd_methods.jpg"/>
+
+{: style="text-align:center; font-size: small;"}
+An illustration of the different categories of knowledge distillation methods, and of the branches within each category. In this section, we implement offline distillation using soft labels, underlined in red in the picture. Adapted from [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
+
+### Implementing offline distillation with soft labels
+
+The teacher is a pre-trained model, and the student a smaller one, e.g., with fewer layers and a smaller embedding. The teacher is frozen: it runs in evaluation mode (no dropout), and its forward pass runs inside `torch.no_grad()`, so that no computation graph or gradients are created for it. At every training step, both models process the same batch, and the student learns to match the teacher's output distribution at every position of the sequence. We compute the teacher's soft labels on the fly instead of storing them on disk: storing them takes batch size × sequence length × vocabulary size values per batch, and only pays off when the teacher is too large to run next to the student (in that case, one usually stores only the top-k logits, together with the inputs they belong to).
+
+The loss is the Kullback-Leibler (KL) divergence between the teacher's distribution $$p$$ and the student's distribution $$q$$:
+
+$$
+\begin{equation}
+\begin{split}
+D_{KL}(p \parallel q) & = H(p,q) - H(p) \\
+ & = - \sum_i p_i \log (q_i) + \sum_i p_i \log (p_i) \\
+ & = \sum_i p_i \log \frac{p_i}{q_i}
+\end{split}
+\end{equation}
+$$
+
+where $$H(p,q)$$ is the cross entropy and $$H(p)$$ the entropy of the teacher's distribution. Since $$H(p)$$ does not depend on the student, minimizing the KL divergence is equivalent to minimizing the cross entropy. The loss *values* differ, though: the KL divergence is zero when both distributions match, while the cross entropy equals the entropy of the target. This is why the cross entropy is the usual loss for hard labels, whose entropy is zero, and the KL divergence is used to compare two distributions. In PyTorch, `F.kl_div` expects the student's log-probabilities as input. We also pass the teacher's distribution as log-probabilities (`log_target=True`), which the documentation recommends to avoid numerical issues. We flatten the logits to shape (batch × sequence length, vocabulary size) and use `reduction='batchmean'`, so that the loss is the mean KL divergence per token.
+
+The **temperature** $$t$$ controls how soft the distributions are. For logits $$z$$, the softened output is:
+
+$$
+y_i (x \mid t) = \frac{ \exp\frac{z_i(x)}{t} }{ \sum_j \, \exp\frac{z_j(x)}{t} }
+$$
+
+A temperature above 1 flattens the distribution and reveals the relative probabilities of the unlikely tokens, which carry most of the extra information. Since the gradients of the softened loss scale with $$1/t^2$$, we multiply the loss by $$t^2$$, as proposed by Hinton et al., so that the size of the gradients does not depend on the temperature. A common variant adds the regular cross entropy with the ground-truth labels, weighted by a factor $$\alpha$$. There are also claims that the mean squared error between logits works better than the KL divergence ([Kim et al.](https://arxiv.org/abs/2105.08919)). For LLMs, recent methods also train the student on sequences it generated itself, scored by the teacher (*on-policy* distillation), which removes the mismatch between the sequences seen in training and in generation.
+
+The following code implements the distillation loss, and a training step of the student:
+
+<details markdown="1">
+<summary>Show code</summary>
+
+```python
+def distillation_loss(logits_student, logits_teacher, temperature):
+    """ KL divergence between the softened distributions of the teacher and the student, averaged per token, and
+        scaled by temperature^2 so that the size of the gradients does not depend on the temperature.
+        logits_student, logits_teacher: [B, S, V] """
+    V = logits_student.size(-1)
+    log_p_student = F.log_softmax(logits_student.reshape(-1, V) / temperature, dim=-1)  # [B, S, V] -> [B*S, V]
+    log_p_teacher = F.log_softmax(logits_teacher.reshape(-1, V) / temperature, dim=-1)  # [B, S, V] -> [B*S, V]
+    return F.kl_div(log_p_student, log_p_teacher, log_target=True, reduction='batchmean') * temperature ** 2
+
+
+def distillation_step(student, teacher, tokens, optimizer, temperature=2.0):
+    """ One training step of the student on a batch of tokens: [B, S]. The teacher is frozen, in evaluation mode, and
+        runs without gradients. student(tokens) and teacher(tokens) return the logits: [B, S, V] and a KV cache """
+    student.train()
+    logits_student, _ = student(tokens)
+    with torch.no_grad():
+        logits_teacher, _ = teacher(tokens)
+    loss = distillation_loss(logits_student, logits_teacher, temperature)
+    loss.backward()
+    torch.nn.utils.clip_grad_norm_(student.parameters(), max_norm=1.0)  # against exploding gradients
+    optimizer.step()
+    optimizer.zero_grad(set_to_none=True)  # sets the gradients to None instead of 0, to save memory
+    return loss.item()
+
+
+# usage, with a pre-trained teacher and a smaller student:
+# teacher.eval()
+# optimizer = torch.optim.Adam(student.parameters(), lr=lr)
+# for tokens in batches:
+#     loss = distillation_step(student, teacher, tokens, optimizer)
+```
+
+</details>
 
 ## Speculative decoding: more than one token per forward pass
 
@@ -29,8 +115,7 @@ The speedup therefore depends on how often the drafts are right and on how cheap
 
 ### Draft-model speculative decoding
 
-The original method ([Leviathan et al.](https://arxiv.org/abs/2211.17192), [Chen et al.](https://arxiv.org/abs/2302.01318)) drafts with a small language model that uses the same tokenizer as the target, ideally a distilled version of the target. <!--, such as the student we train in the [distillation section]({{ site.baseurl }}{% post_url 2026-04-22-inference-distillation-pruning-quantization %}#knowledge-distillation) of a previous post. --> 
-Each iteration: 
+The original method ([Leviathan et al.](https://arxiv.org/abs/2211.17192), [Chen et al.](https://arxiv.org/abs/2302.01318)) drafts with a small language model that uses the same tokenizer as the target, ideally a distilled version of the target, such as the student of the [distillation section](#knowledge-distillation) above. Each iteration:
 
 1. the draft model generates $$K$$ tokens autoregressively;
 2. the target model runs one forward pass over the context and the $$K$$ draft tokens, which gives its distribution at each of the $$K$$ draft positions, plus one more after the last draft;

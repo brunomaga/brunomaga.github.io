@@ -1,96 +1,11 @@
 ---
 layout: post
-title:  "Efficient inference: knowledge distillation, pruning and quantization"
-categories: [machine learning, Transformer, GPT, inference, distillation, pruning, quantization]
+title:  "Efficient inference: pruning and quantization"
+categories: [machine learning, Transformer, GPT, inference, pruning, quantization]
 tags: [machinelearning]
 ---
 
-The most effective way to make a model faster is to make it smaller. Distillation trains a small model to behave like a large one; pruning removes parts of a large model. The two are usually combined. Quantization keeps all the parts of the model, but stores its numbers with fewer bits. As before, all the code is in the [repository of this post](https://github.com/{{ site.repository }}/tree/master/assets/inference).
-
-## Knowledge distillation
-
-Knowledge Distillation (KD) trains a *student* model from a *teacher* model. Information flows from a larger or pre-trained teacher to a smaller or untrained student, to make the student smaller and/or better than it would be if trained alone. The main rationale is that the *soft labels* produced by a trained network, i.e., its full output distribution, are a richer training signal than the user-provided *hard labels*.
-
-As a quick example, take a two-label (dog, cat) classification task. An image of a cat that looks like a dog has the ground-truth label distribution `[0,1]`. A trained model, queried with the same image, outputs something like `[0.4, 0.6]`: it believes it is a cat, but it could also be a dog. The soft label `[0.4, 0.6]` carries more information than the hard label `[0,1]`, and training a second model on such labels lets it use its capacity better, spending less of it on learning noise. In language modeling, the teacher's distribution over the next token tells the student not only which token is right, but also which alternatives are plausible.
-
-There are several categories of KD methods. The loss can match the soft labels of the student and the teacher, as in the example above, or intermediate representations such as feature maps. The student can be a scaled-down version of the teacher's architecture, or a different one. In **offline distillation**, the teacher is trained first and then frozen while the student learns from it; in **online distillation**, both are trained simultaneously. We can use a single teacher or an ensemble of teachers.
-
-{: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.png"/>
-
-For details on the different methods, see [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525).
-
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kd_methods.jpg"/>
-
-{: style="text-align:center; font-size: small;"}
-An illustration of the different categories of knowledge distillation methods, and of the branches within each category. In this section, we implement offline distillation using soft labels, underlined in red in the picture. Adapted from [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
-
-### Implementing offline distillation with soft labels
-
-Our teacher is the pre-trained GPTlite, and our student is a smaller GPTlite with fewer layers and a smaller embedding. The teacher is frozen: it runs in evaluation mode (no dropout), and its forward pass runs inside `torch.no_grad()`, so that no computation graph or gradients are created for it. At every training step, both models process the same batch, and the student learns to match the teacher's output distribution at every position of the sequence. We compute the teacher's soft labels on the fly instead of storing them on disk: storing them takes batch size × sequence length × vocabulary size values per batch, and only pays off when the teacher is too large to run next to the student (in that case, one usually stores only the top-k logits, together with the inputs they belong to).
-
-The loss is the Kullback-Leibler (KL) divergence between the teacher's distribution $$p$$ and the student's distribution $$q$$:
-
-$$
-\begin{equation}
-\begin{split}
-D_{KL}(p \parallel q) & = H(p,q) - H(p) \\
- & = - \sum_i p_i \log (q_i) + \sum_i p_i \log (p_i) \\
- & = \sum_i p_i \log \frac{p_i}{q_i}
-\end{split}
-\end{equation}
-$$
-
-where $$H(p,q)$$ is the cross entropy and $$H(p)$$ the entropy of the teacher's distribution. Since $$H(p)$$ does not depend on the student, minimizing the KL divergence is equivalent to minimizing the cross entropy. The loss *values* differ, though: the KL divergence is zero when both distributions match, while the cross entropy equals the entropy of the target. This is why the cross entropy is the usual loss for hard labels, whose entropy is zero, and the KL divergence is used to compare two distributions. In PyTorch, `F.kl_div` expects the student's log-probabilities as input. We also pass the teacher's distribution as log-probabilities (`log_target=True`), which the documentation recommends to avoid numerical issues. We flatten the logits to shape (batch × sequence length, vocabulary size) and use `reduction='batchmean'`, so that the loss is the mean KL divergence per token.
-
-The **temperature** $$t$$ controls how soft the distributions are. For logits $$z$$, the softened output is:
-
-$$
-y_i (x \mid t) = \frac{ \exp\frac{z_i(x)}{t} }{ \sum_j \, \exp\frac{z_j(x)}{t} }
-$$
-
-A temperature above 1 flattens the distribution and reveals the relative probabilities of the unlikely tokens, which carry most of the extra information. Since the gradients of the softened loss scale with $$1/t^2$$, we multiply the loss by $$t^2$$, as proposed by Hinton et al., so that the size of the gradients does not depend on the temperature. A common variant adds the regular cross entropy with the ground-truth labels, weighted by a factor $$\alpha$$. There are also claims that the mean squared error between logits works better than the KL divergence ([Kim et al.](https://arxiv.org/abs/2105.08919)). For LLMs, recent methods also train the student on sequences it generated itself, scored by the teacher (*on-policy* distillation), which removes the mismatch between the sequences seen in training and in generation.
-
-The following code implements the distillation of GPTlite into a smaller student. The full code is in [`distillation.py`]({{ site.assets }}/inference/distillation.py):
-
-<details markdown="1">
-<summary>Show code</summary>
-
-```python
-def distillation_loss(logits_student, logits_teacher, temperature):
-  """ KL divergence between the softened teacher and student distributions, averaged per token, and
-      scaled by temperature^2 so that the size of the gradients does not depend on the temperature """
-  vocab_size = logits_student.size(-1)
-  log_softmax_student = F.log_softmax(logits_student.reshape(-1, vocab_size)/temperature, dim=-1)   #log softmax of student model
-  log_softmax_teacher = F.log_softmax(logits_teacher.reshape(-1, vocab_size)/temperature, dim=-1)   #log softmax of teacher model
-  return F.kl_div(log_softmax_student, log_softmax_teacher, log_target=True, reduction='batchmean') * (temperature ** 2)
-
-# the teacher: the pre-trained GPTlite, frozen in evaluation mode
-n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p = get_gptlite_model_parameters()
-model_teacher = GPTlite(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen).to(device).eval()
-model_teacher.load_state_dict(torch.load(GPTLITE_CKPT_PATH, map_location=device))
-
-# the student: a smaller GPTlite
-n_layers, d_model, n_heads, d_head, batch_size, lr, seqlen, dropout_p = get_gptlite_distilled_model_parameters()
-model_student = GPTlite(vocab_size, d_model, n_heads, d_head, n_layers, dropout_p, seqlen).to(device)
-optimizer = torch.optim.Adam(model_student.parameters(), lr=lr)
-
-for step in range(1, train_iters+1):
-  model_student.train()
-  idx, _ = get_batch(train_data, batch_size=batch_size, seqlen=seqlen)   #get a batch of training data
-  idx = idx.to(device) #move data to GPU
-  logits_student = model_student(idx)   #forward pass
-  with torch.no_grad():
-    logits_teacher = model_teacher(idx)   #forward pass of the frozen teacher, without gradients
-  loss = distillation_loss(logits_student, logits_teacher, temperature)  #compute KL divergence loss
-  loss.backward()   #backward pass
-  torch.nn.utils.clip_grad_norm_(model_student.parameters(), max_norm=1.0) # gradient clipping to avoid exploding gradients
-  optimizer.step()   #update parameters
-  optimizer.zero_grad(set_to_none=True)  #sets to None instead of 0, to save memory
-```
-
-</details>
+The most effective way to make a model faster is to make it smaller. Pruning removes parts of a large model, and is usually combined with [knowledge distillation]({{ site.baseurl }}{% post_url 2026-07-21-inference-distillation-speculative-decoding %}#knowledge-distillation), which trains the smaller model to behave like the original one. Quantization keeps all the parts of the model, but stores its numbers with fewer bits. As before, all the code is in the [repository of this post](https://github.com/{{ site.repository }}/tree/master/assets/inference).
 
 ## Pruning
 
@@ -119,7 +34,7 @@ Pruning removes parts of a trained model. It is a hard problem, for three reason
 
 1. compute the importance of heads, MLP neurons and embedding channels from their activations, and the importance of each layer from how much removing it hurts, on a small calibration set of about a thousand samples;
 2. prune the model to the target architecture;
-3. retrain the pruned model by distilling from the original one (the KL divergence on the logits, from the previous section), using a few percent of the original training tokens;
+3. retrain the pruned model by distilling from the original one (the KL divergence on the logits), using a few percent of the original training tokens;
 4. repeat for smaller sizes.
 
 Deriving 8B and 4B models from a 15B one this way required up to 40 times fewer training tokens than training them from scratch, and gave better accuracy. A [follow-up](https://arxiv.org/abs/2408.11796) on Llama 3.1 8B found that width pruning (heads, neurons and channels) preserves more accuracy, while depth pruning (whole blocks) gives larger speedups. The key insight is that a pruned teacher is a much better starting point for the student than a random initialization.
