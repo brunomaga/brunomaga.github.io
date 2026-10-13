@@ -29,7 +29,7 @@ layout: default
 
 <!-- introduction paragraph -->
 <p style="line-height: 1.6; margin-bottom: 1.8em; clear: both;">
-Hi👋🏽! I am Bruno, an ML Systems Researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a> and <a href="https://epfl.ch">EPFL</a>. I focus on ML efficiency — from embedded inference to distributed training — across Transformer, MoE, diffusion and agentic models.
+  Hi 👋🏽! I am Bruno, a researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC engineer and PhD in Computational Neuroscience at <a href="https://epfl.ch">EPFL</a>. I focus on ML efficiency — from embedded inference to distributed training — across Transformer, MoE, diffusion, and agentic models.
 </p>
 
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
