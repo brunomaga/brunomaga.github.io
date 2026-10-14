@@ -1,0 +1,822 @@
+<mxfile host="drawio" version="21.1.6">
+  <diagram name="neuron-electrical-activity" id="neuron-electrical-activity">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="net_current_conservation-label" value="net_current_conservation.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="net_current_conservation-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="40" width="200" height="200.83" as="geometry" />
+        </mxCell>
+        <mxCell id="net_current_conservation-1" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.5;fontSize=12;curved=1;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="78.61" as="sourcePoint" />
+            <mxPoint x="100.33" y="0" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="2.16" y="78.61" />
+              <mxPoint x="6.8" y="78.61" />
+              <mxPoint x="11.44" y="78.61" />
+              <mxPoint x="16.09" y="78.58" />
+              <mxPoint x="20.7" y="78.38" />
+              <mxPoint x="25.44" y="77.91" />
+              <mxPoint x="29.95" y="77.28" />
+              <mxPoint x="34.73" y="76.49" />
+              <mxPoint x="39.34" y="75.59" />
+              <mxPoint x="43.85" y="74.33" />
+              <mxPoint x="48.62" y="72.41" />
+              <mxPoint x="53.57" y="69.92" />
+              <mxPoint x="57.58" y="67.1" />
+              <mxPoint x="62.52" y="62.92" />
+              <mxPoint x="66.47" y="58.38" />
+              <mxPoint x="70.38" y="53.64" />
+              <mxPoint x="73.63" y="48.86" />
+              <mxPoint x="76.38" y="44.51" />
+              <mxPoint x="79.27" y="39.9" />
+              <mxPoint x="82.12" y="35.16" />
+              <mxPoint x="84.64" y="30.45" />
+              <mxPoint x="87.3" y="25.78" />
+              <mxPoint x="89.68" y="21.23" />
+              <mxPoint x="92.24" y="16.46" />
+              <mxPoint x="94.49" y="11.91" />
+              <mxPoint x="96.92" y="7.33" />
+              <mxPoint x="99" y="3.06" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-2" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.5;fontSize=12;curved=1;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" y="103.65" as="sourcePoint" />
+            <mxPoint x="125.51" y="0" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="197.65" y="103.19" />
+              <mxPoint x="192.84" y="102.26" />
+              <mxPoint x="188.19" y="101.23" />
+              <mxPoint x="183.52" y="100.37" />
+              <mxPoint x="179.04" y="99.57" />
+              <mxPoint x="174.46" y="98.54" />
+              <mxPoint x="169.59" y="97.48" />
+              <mxPoint x="165.07" y="96.62" />
+              <mxPoint x="160.43" y="95.59" />
+              <mxPoint x="155.69" y="94.27" />
+              <mxPoint x="151.08" y="93.07" />
+              <mxPoint x="146.53" y="91.88" />
+              <mxPoint x="141.66" y="90.35" />
+              <mxPoint x="137.28" y="89.03" />
+              <mxPoint x="132.37" y="87.2" />
+              <mxPoint x="128.16" y="85.64" />
+              <mxPoint x="122.95" y="83.42" />
+              <mxPoint x="118.57" y="81.3" />
+              <mxPoint x="114.03" y="78.71" />
+              <mxPoint x="109.75" y="75.43" />
+              <mxPoint x="104.74" y="70.68" />
+              <mxPoint x="101.86" y="65.94" />
+              <mxPoint x="100.27" y="61.3" />
+              <mxPoint x="99.7" y="56.62" />
+              <mxPoint x="99.8" y="52.11" />
+              <mxPoint x="100.46" y="47.5" />
+              <mxPoint x="101.76" y="42.79" />
+              <mxPoint x="103.45" y="38.28" />
+              <mxPoint x="105.57" y="33.44" />
+              <mxPoint x="107.86" y="28.89" />
+              <mxPoint x="110.45" y="24.42" />
+              <mxPoint x="113.23" y="19.71" />
+              <mxPoint x="116.45" y="15" />
+              <mxPoint x="119.37" y="10.39" />
+              <mxPoint x="122.52" y="5.54" />
+              <mxPoint x="124.68" y="2.16" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.5;fontSize=12;curved=1;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="0" y="104.15" as="sourcePoint" />
+            <mxPoint x="123.02" y="200.83" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="2.16" y="104.15" />
+              <mxPoint x="6.8" y="104.15" />
+              <mxPoint x="11.44" y="104.15" />
+              <mxPoint x="16.09" y="104.32" />
+              <mxPoint x="20.83" y="104.55" />
+              <mxPoint x="25.24" y="104.91" />
+              <mxPoint x="30.18" y="105.54" />
+              <mxPoint x="34.63" y="106.07" />
+              <mxPoint x="39.34" y="106.8" />
+              <mxPoint x="43.78" y="107.67" />
+              <mxPoint x="48.49" y="108.69" />
+              <mxPoint x="53.3" y="110.15" />
+              <mxPoint x="57.74" y="111.55" />
+              <mxPoint x="62.82" y="113.54" />
+              <mxPoint x="66.97" y="115.43" />
+              <mxPoint x="71.71" y="117.88" />
+              <mxPoint x="76.22" y="120.6" />
+              <mxPoint x="81.19" y="124.25" />
+              <mxPoint x="85.7" y="128" />
+              <mxPoint x="90.35" y="132.51" />
+              <mxPoint x="94.33" y="137.28" />
+              <mxPoint x="97.81" y="142.03" />
+              <mxPoint x="100.8" y="146.67" />
+              <mxPoint x="103.32" y="151.21" />
+              <mxPoint x="105.7" y="155.83" />
+              <mxPoint x="108.03" y="160.5" />
+              <mxPoint x="110.12" y="165.08" />
+              <mxPoint x="112.04" y="169.76" />
+              <mxPoint x="113.86" y="174.53" />
+              <mxPoint x="115.66" y="179.14" />
+              <mxPoint x="117.35" y="183.79" />
+              <mxPoint x="118.91" y="188.33" />
+              <mxPoint x="120.5" y="193.17" />
+              <mxPoint x="121.99" y="197.75" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.5;fontSize=12;curved=1;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="200" y="128.93" as="sourcePoint" />
+            <mxPoint x="147.73" y="200.83" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="197.41" y="128.83" />
+              <mxPoint x="192.94" y="127.83" />
+              <mxPoint x="188.26" y="126.6" />
+              <mxPoint x="183.45" y="125.48" />
+              <mxPoint x="179.04" y="124.48" />
+              <mxPoint x="174.23" y="123.35" />
+              <mxPoint x="169.85" y="122.19" />
+              <mxPoint x="165.11" y="121.33" />
+              <mxPoint x="160.53" y="120.63" />
+              <mxPoint x="155.89" y="120.07" />
+              <mxPoint x="151.18" y="119.54" />
+              <mxPoint x="146.37" y="119.31" />
+              <mxPoint x="141.86" y="119.31" />
+              <mxPoint x="137.08" y="120" />
+              <mxPoint x="132.57" y="121.2" />
+              <mxPoint x="127.89" y="124.12" />
+              <mxPoint x="124.78" y="128.76" />
+              <mxPoint x="123.71" y="133.44" />
+              <mxPoint x="123.68" y="137.85" />
+              <mxPoint x="124.41" y="142.62" />
+              <mxPoint x="125.31" y="147.2" />
+              <mxPoint x="126.67" y="151.91" />
+              <mxPoint x="128.03" y="156.46" />
+              <mxPoint x="129.75" y="161.3" />
+              <mxPoint x="131.54" y="165.81" />
+              <mxPoint x="133.47" y="170.55" />
+              <mxPoint x="135.49" y="175.13" />
+              <mxPoint x="137.65" y="179.74" />
+              <mxPoint x="139.87" y="184.42" />
+              <mxPoint x="142.09" y="188.99" />
+              <mxPoint x="144.41" y="193.74" />
+              <mxPoint x="146.73" y="198.48" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="19.9" y="67.5" as="sourcePoint" />
+            <mxPoint x="19.9" y="117.58" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="83.91" y="11.45" as="sourcePoint" />
+            <mxPoint x="116.42" y="31.02" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-7" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="179.27" y="83.75" as="sourcePoint" />
+            <mxPoint x="169.32" y="134.17" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-8" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="101.49" y="173.3" as="sourcePoint" />
+            <mxPoint x="141.13" y="158.88" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-9" value="" style="endArrow=classicThin;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endFill=1;endSize=8;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="15.92" y="91.71" as="sourcePoint" />
+            <mxPoint x="33.83" y="91.71" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-10" value="" style="endArrow=classicThin;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endFill=1;endSize=8;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="103.48" y="15.76" as="sourcePoint" />
+            <mxPoint x="94.46" y="31.98" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-11" value="" style="endArrow=classicThin;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endFill=1;endSize=8;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="180.1" y="112.28" as="sourcePoint" />
+            <mxPoint x="162.16" y="108.46" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-12" value="" style="endArrow=classicThin;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endFill=1;endSize=8;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="121.39" y="171.98" as="sourcePoint" />
+            <mxPoint x="116.82" y="154.3" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-13" value="" style="endArrow=classicThin;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endFill=1;endSize=8;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="80.1" y="52.57" as="sourcePoint" />
+            <mxPoint x="63.12" y="40.97" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-14" value="" style="endArrow=classicThin;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endFill=1;endSize=8;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="105.31" y="83.42" as="sourcePoint" />
+            <mxPoint x="120.23" y="67" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-15" value="" style="endArrow=classicThin;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endFill=1;endSize=8;" edge="1" parent="net_current_conservation-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="79.1" y="112.28" as="sourcePoint" />
+            <mxPoint x="68.13" y="132.24" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="net_current_conservation-16" value="&lt;i&gt;i&lt;/i&gt;&lt;sub&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="1.96" y="80.68" width="14" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="net_current_conservation-17" value="&lt;i&gt;i&lt;/i&gt;&lt;sub&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="100.13" y="1.91" width="14" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="net_current_conservation-18" value="&lt;i&gt;i&lt;/i&gt;&lt;sub&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="180.06" y="103.4" width="14" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="net_current_conservation-19" value="&lt;i&gt;i&lt;/i&gt;&lt;sub&gt;a&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="120.2" y="169.9" width="14" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="net_current_conservation-20" value="&lt;i&gt;i&lt;/i&gt;&lt;sub&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="79.89" y="46.02" width="18" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="net_current_conservation-21" value="&lt;i&gt;i&lt;/i&gt;&lt;sub&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="93.65" y="77.36" width="18" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="net_current_conservation-22" value="&lt;i&gt;i&lt;/i&gt;&lt;sub&gt;m&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;" vertex="1" parent="net_current_conservation-figure">
+          <mxGeometry x="76.24" y="95.61" width="18" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-label" value="solver_compartment_neuron.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="320.83" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="360.83" width="365.3" height="91.39" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-1" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;curved=1;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="4.99" y="10.4104" as="sourcePoint" />
+            <mxPoint x="6.76" y="74.8904" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="8.89" y="10.4604" />
+              <mxPoint x="12.32" y="10.9304" />
+              <mxPoint x="15.65" y="11.5504" />
+              <mxPoint x="18.82" y="12.4404" />
+              <mxPoint x="21.79" y="13.6304" />
+              <mxPoint x="24.65" y="14.9304" />
+              <mxPoint x="27.4" y="16.2304" />
+              <mxPoint x="30" y="17.9504" />
+              <mxPoint x="32.29" y="19.9304" />
+              <mxPoint x="34.58" y="21.9504" />
+              <mxPoint x="36.66" y="24.1404" />
+              <mxPoint x="38.43" y="26.5304" />
+              <mxPoint x="39.99" y="29.1304" />
+              <mxPoint x="41.29" y="31.8304" />
+              <mxPoint x="42.28" y="34.6904" />
+              <mxPoint x="42.95" y="37.6604" />
+              <mxPoint x="43.32" y="40.8304" />
+              <mxPoint x="43.37" y="44.8304" />
+              <mxPoint x="42.85" y="48.1604" />
+              <mxPoint x="42.02" y="51.0204" />
+              <mxPoint x="40.92" y="53.8304" />
+              <mxPoint x="39.52" y="56.4804" />
+              <mxPoint x="37.91" y="58.9804" />
+              <mxPoint x="36.09" y="61.3704" />
+              <mxPoint x="34.06" y="63.5504" />
+              <mxPoint x="31.82" y="65.5304" />
+              <mxPoint x="29.48" y="67.5104" />
+              <mxPoint x="26.94" y="69.2204" />
+              <mxPoint x="24.18" y="70.6304" />
+              <mxPoint x="21.27" y="71.8704" />
+              <mxPoint x="18.3" y="73.1204" />
+              <mxPoint x="15.08" y="73.9504" />
+              <mxPoint x="11.75" y="74.5304" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-2" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="4.99" y="10.4104" as="sourcePoint" />
+            <mxPoint x="6.76" y="74.8904" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="4.94" y="19.2504" />
+              <mxPoint x="2.24" y="24.0904" />
+              <mxPoint x="3.85" y="28.0904" />
+              <mxPoint x="0" y="35.1104" />
+              <mxPoint x="3.64" y="43.4304" />
+              <mxPoint x="2.08" y="49.9304" />
+              <mxPoint x="4.68" y="56.6904" />
+              <mxPoint x="0.52" y="64.4904" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;curved=1;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="23.17" y="14.3904" as="sourcePoint" />
+            <mxPoint x="22.9" y="71.0404" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="20.89" y="15.4204" />
+              <mxPoint x="18.71" y="17.0404" />
+              <mxPoint x="16.68" y="19.2004" />
+              <mxPoint x="14.86" y="21.8604" />
+              <mxPoint x="13.27" y="24.9704" />
+              <mxPoint x="11.95" y="28.4504" />
+              <mxPoint x="10.93" y="32.2404" />
+              <mxPoint x="10.24" y="36.2604" />
+              <mxPoint x="9.87" y="40.4104" />
+              <mxPoint x="9.85" y="44.6204" />
+              <mxPoint x="10.17" y="48.7804" />
+              <mxPoint x="10.83" y="52.8204" />
+              <mxPoint x="11.82" y="56.6404" />
+              <mxPoint x="13.1" y="60.1604" />
+              <mxPoint x="14.66" y="63.3204" />
+              <mxPoint x="16.46" y="66.0404" />
+              <mxPoint x="18.46" y="68.2604" />
+              <mxPoint x="20.62" y="69.9404" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;curved=1;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="33.65" y="21.2104" as="sourcePoint" />
+            <mxPoint x="33.84" y="63.6404" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="32.12" y="21.8504" />
+              <mxPoint x="30.65" y="22.9204" />
+              <mxPoint x="29.27" y="24.4004" />
+              <mxPoint x="28.02" y="26.2504" />
+              <mxPoint x="26.91" y="28.4304" />
+              <mxPoint x="25.98" y="30.9004" />
+              <mxPoint x="25.23" y="33.6104" />
+              <mxPoint x="24.69" y="36.5004" />
+              <mxPoint x="24.37" y="39.5104" />
+              <mxPoint x="24.27" y="42.5904" />
+              <mxPoint x="24.4" y="45.6604" />
+              <mxPoint x="24.74" y="48.6604" />
+              <mxPoint x="25.31" y="51.5304" />
+              <mxPoint x="26.08" y="54.2104" />
+              <mxPoint x="27.04" y="56.6504" />
+              <mxPoint x="28.16" y="58.8004" />
+              <mxPoint x="29.43" y="60.6004" />
+              <mxPoint x="30.82" y="62.0304" />
+              <mxPoint x="32.3" y="63.0504" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-5" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=3.05;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="68.1564" y="32.0632" width="18.72" height="20.7584" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-6" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=2.57;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="112.9804" y="14.95" width="40.9032" height="13.6344" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-7" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=2.33;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="179.7796" y="0" width="40.7004" height="10.6288" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-8" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=1.52;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="235.8356" y="1.664" width="34.5644" height="7.3008" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-9" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=1.04;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="285.896" y="3.484" width="79.404" height="3.6608" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-10" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=1.78;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="181.7764" y="36.4832" width="26.7436" height="8.5904" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-11" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=1.52;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="224.4684" y="37.3412" width="17.3472" height="6.8744" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-12" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=1.04;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="257.504" y="38.35" width="94.744" height="4.8568" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-13" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=2.14;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="114.0776" y="61.9112" width="35.8852" height="12.1264" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-14" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=1.57;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="165.1312" y="63.726" width="37.9236" height="8.4968" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-15" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=1.49;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="218.3064" y="64.3812" width="17.2536" height="7.1864" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-16" value="" style="shape=cylinder3;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;size=1.04;direction=north;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.5;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="251.68" y="65.3744" width="44.2" height="5.2" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-17" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="36.4" y="42.4404" as="sourcePoint" />
+            <mxPoint x="71.21" y="42.4404" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-18" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="86.88" y="42.4404" as="sourcePoint" />
+            <mxPoint x="115.55" y="21.7704" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="102.23" y="42.4404" />
+              <mxPoint x="110.14" y="21.7704" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-19" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="102.23" y="42.4404" as="sourcePoint" />
+            <mxPoint x="116.22" y="67.9704" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="109.51" y="67.9704" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-20" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="153.88" y="21.7704" as="sourcePoint" />
+            <mxPoint x="182.11" y="5.3104" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="170.98" y="21.7704" />
+              <mxPoint x="176.49" y="5.3104" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-21" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="170.98" y="21.7704" as="sourcePoint" />
+            <mxPoint x="183.56" y="40.7804" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="178.88" y="40.7804" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-22" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="220.48" y="5.3104" as="sourcePoint" />
+            <mxPoint x="237.35" y="5.3104" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-23" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="270.4" y="5.3104" as="sourcePoint" />
+            <mxPoint x="286.94" y="5.3104" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-24" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="208.52" y="40.7804" as="sourcePoint" />
+            <mxPoint x="225.99" y="40.7804" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-25" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="241.82" y="40.7804" as="sourcePoint" />
+            <mxPoint x="258.54" y="40.7804" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-26" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="149.96" y="67.9704" as="sourcePoint" />
+            <mxPoint x="166.7" y="67.9704" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-27" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="203.05" y="67.9704" as="sourcePoint" />
+            <mxPoint x="219.79" y="67.9704" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-28" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="235.56" y="67.9704" as="sourcePoint" />
+            <mxPoint x="252.72" y="67.9704" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-29" value="0" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="38.5694" y="57.3504" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-30" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="71.3294" y="50.5904" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-31" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="132.6894" y="26.6704" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-32" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="193.0094" y="7.4304" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-33" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="249.4294" y="7.1704" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-34" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="309.4894" y="7.4304" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-35" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="193.5294" y="42.2704" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-36" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="229.6694" y="42.2704" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-37" value="8" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="299.6094" y="42.2704" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-38" value="9" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="131.1294" y="71.3904" width="11.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-39" value="10" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="170.9188" y="71.3904" width="19.5625" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-40" value="11" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="216.8016" y="71.3904" width="18.7969" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_compartment_neuron-41" value="12" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_compartment_neuron-figure">
+          <mxGeometry x="267.1187" y="71.3904" width="19.5625" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-label" value="solver_grid_neuron.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="532.2204" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="572.2204" width="278.78" height="280" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-1" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=12;opacity=40;" edge="1" parent="solver_grid_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="18.7812" y="20" as="sourcePoint" />
+            <mxPoint x="278.7812" y="280" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="278.7812" y="20" />
+              <mxPoint x="278.7812" y="40" />
+              <mxPoint x="18.7812" y="40" />
+              <mxPoint x="18.7812" y="60" />
+              <mxPoint x="278.7812" y="60" />
+              <mxPoint x="278.7812" y="80" />
+              <mxPoint x="18.7812" y="80" />
+              <mxPoint x="18.7812" y="100" />
+              <mxPoint x="278.7812" y="100" />
+              <mxPoint x="278.7812" y="120" />
+              <mxPoint x="18.7812" y="120" />
+              <mxPoint x="18.7812" y="140" />
+              <mxPoint x="278.7812" y="140" />
+              <mxPoint x="278.7812" y="160" />
+              <mxPoint x="18.7812" y="160" />
+              <mxPoint x="18.7812" y="180" />
+              <mxPoint x="278.7812" y="180" />
+              <mxPoint x="278.7812" y="200" />
+              <mxPoint x="18.7812" y="200" />
+              <mxPoint x="18.7812" y="220" />
+              <mxPoint x="278.7812" y="220" />
+              <mxPoint x="278.7812" y="240" />
+              <mxPoint x="18.7812" y="240" />
+              <mxPoint x="18.7812" y="260" />
+              <mxPoint x="278.7812" y="260" />
+              <mxPoint x="278.7812" y="280" />
+              <mxPoint x="18.7812" y="280" />
+              <mxPoint x="18.7812" y="280" />
+              <mxPoint x="18.7812" y="20" />
+              <mxPoint x="38.7812" y="20" />
+              <mxPoint x="38.7812" y="280" />
+              <mxPoint x="58.7812" y="280" />
+              <mxPoint x="58.7812" y="20" />
+              <mxPoint x="78.7812" y="20" />
+              <mxPoint x="78.7812" y="280" />
+              <mxPoint x="98.7812" y="280" />
+              <mxPoint x="98.7812" y="20" />
+              <mxPoint x="118.7812" y="20" />
+              <mxPoint x="118.7812" y="280" />
+              <mxPoint x="138.7812" y="280" />
+              <mxPoint x="138.7812" y="20" />
+              <mxPoint x="158.7812" y="20" />
+              <mxPoint x="158.7812" y="280" />
+              <mxPoint x="178.7812" y="280" />
+              <mxPoint x="178.7812" y="20" />
+              <mxPoint x="198.7812" y="20" />
+              <mxPoint x="198.7812" y="280" />
+              <mxPoint x="218.7812" y="280" />
+              <mxPoint x="218.7812" y="20" />
+              <mxPoint x="238.7812" y="20" />
+              <mxPoint x="238.7812" y="280" />
+              <mxPoint x="258.7812" y="280" />
+              <mxPoint x="258.7812" y="20" />
+              <mxPoint x="278.7812" y="20" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_grid_neuron-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="38.7812" y="20" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="18.7812" y="40" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="58.7812" y="40" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="38.7812" y="60" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="78.7812" y="60" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="58.7812" y="80" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="98.7812" y="80" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="78.7812" y="100" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-10" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="118.7812" y="100" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="98.7812" y="120" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="158.7812" y="140" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="138.7812" y="160" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="178.7812" y="160" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="158.7812" y="180" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="218.7812" y="200" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-17" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="198.7812" y="220" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="238.7812" y="220" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="218.7812" y="240" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="258.7812" y="240" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="238.7812" y="260" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-22" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="138.7812" y="60" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="58.7812" y="140" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="198.7812" y="40" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;opacity=40;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="38.7812" y="200" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-26" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="18.7812" y="20" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="38.7812" y="40" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="58.7812" y="60" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="78.7812" y="80" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="98.7812" y="100" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="118.7812" y="120" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="138.7812" y="140" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="158.7812" y="160" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="178.7812" y="180" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="198.7812" y="200" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="218.7812" y="220" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="238.7812" y="240" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#666666;strokeColor=#666666;fontSize=14;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="258.7812" y="260" width="20" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-39" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.5;fontSize=12;dashed=1;dashPattern=1 2;" edge="1" parent="solver_grid_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="148.7812" y="82.5" as="sourcePoint" />
+            <mxPoint x="148.7812" y="137.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_grid_neuron-40" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.5;fontSize=12;dashed=1;dashPattern=1 2;" edge="1" parent="solver_grid_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="81.2812" y="150" as="sourcePoint" />
+            <mxPoint x="136.2812" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_grid_neuron-41" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.5;fontSize=12;dashed=1;dashPattern=1 2;" edge="1" parent="solver_grid_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="208.7812" y="62.5" as="sourcePoint" />
+            <mxPoint x="208.7812" y="197.5" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_grid_neuron-42" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.5;fontSize=12;dashed=1;dashPattern=1 2;" edge="1" parent="solver_grid_neuron-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="61.2812" y="210" as="sourcePoint" />
+            <mxPoint x="196.2812" y="210" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="solver_grid_neuron-43" value="0" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="23.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-44" value="0" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="20" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-45" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="43.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-46" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="40" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-47" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="63.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-48" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="60" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-49" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="83.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-50" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="80" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-51" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="103.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-52" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="100" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-53" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="123.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-54" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="120" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-55" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="143.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-56" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="140" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-57" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="163.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-58" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="160" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-59" value="8" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="183.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-60" value="8" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="180" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-61" value="9" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="203.8906" y="0" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-62" value="9" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="3.8906" y="200" width="9.7812" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-63" value="10" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="220" y="0" width="17.5625" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-64" value="10" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="0" y="220" width="17.5625" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-65" value="11" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="240.3828" y="0" width="16.7969" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-66" value="11" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="0.3828" y="240" width="16.7969" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-67" value="12" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="260" y="0" width="17.5625" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="solver_grid_neuron-68" value="12" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="solver_grid_neuron-figure">
+          <mxGeometry x="0" y="260" width="17.5625" height="20" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
