@@ -96,7 +96,7 @@ def main():
   benchmark_train(model, x, label, model_name)
   benchmark_inference(model, x, model_name)
 
-  # GPTlite model: (B, T, C) = (batch_size, block_size, n_embed)
+  # GPTlite model: (B, S, E) = (batch_size, block_size, n_embed)
   model_name = "GPTlite"
   vocab_size, batch_size = 65, 1 
   idx = torch.randint(0, vocab_size, (batch_size, block_size)).to(device)

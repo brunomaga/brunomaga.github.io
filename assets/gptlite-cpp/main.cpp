@@ -125,7 +125,7 @@ int main(int argc, const char* argv[]) {
   }
 
   {
-    // GPTlite Model: (B, T, C) = (batch_size_deep, block_size, n_embed)
+    // GPTlite Model: (B, S, E) = (batch_size_deep, block_size, n_embed)
     const std::string model_name = "GPTlite";
     const int vocab_size = 65, batch_size=1; 
     const torch::ScalarType Long = torch::ScalarType::Long;

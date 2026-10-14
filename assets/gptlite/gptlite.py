@@ -123,12 +123,12 @@ class GPTlite(nn.Module):
     def forward(self, x):
         # SUM Embedding and positional encoding
         seqlen = x.size(1)
-        positions = torch.arange(seqlen, device=x.device).unsqueeze(0) # [1, T]
-        pos_embeddings = self.position_embedding(positions) # B, T, E
-        x = self.token_embedding(x) +  pos_embeddings # [B, T, embed_dim]
+        positions = torch.arange(seqlen, device=x.device).unsqueeze(0) # [1, S]
+        pos_embeddings = self.position_embedding(positions) # [1, S, embed_dim]
+        x = self.token_embedding(x) +  pos_embeddings # [B, S, embed_dim]
         
         # Pass through transformer layers
-        x = self.blocks(x) # [B, T, embed_dim]
+        x = self.blocks(x) # [B, S, embed_dim]
         
         # Do layer norm and then project to vocab size
         x = self.ln(x)

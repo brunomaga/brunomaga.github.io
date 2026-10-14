@@ -132,20 +132,20 @@ struct Head : nn::Module {
 
 
   Tensor forward(Tensor x){
-    int B=x.size(0), T=x.size(1), C=x.size(2);
-    Tensor k = key(x);   //shape (B,T, head_size)
-    Tensor q = query(x); //shape (B,T, head_size)
-    Tensor v = value(x); //shape (B,T, head_size)
+    int B=x.size(0), S=x.size(1), E=x.size(2);
+    Tensor k = key(x);   //shape (B,S, head_size)
+    Tensor q = query(x); //shape (B,S, head_size)
+    Tensor v = value(x); //shape (B,S, head_size)
 
     // compute self-attention scores
-    Tensor wei = torch::matmul(q, k.transpose(-2, -1)); //shape (B,T, T)
-    wei = wei * std::pow(C,-0.5); //scale by sqrt(d_k)
-    wei = wei.masked_fill(tril.slice(0, 0, T).slice(1, 0, T) == 0, -inf);
-    wei = F::softmax(wei, -1); // (B, T, T)
+    Tensor wei = torch::matmul(q, k.transpose(-2, -1)); //shape (B,S, S)
+    wei = wei * std::pow(E,-0.5); //scale by sqrt(d_k)
+    wei = wei.masked_fill(tril.slice(0, 0, S).slice(1, 0, S) == 0, -inf);
+    wei = F::softmax(wei, -1); // (B, S, S)
     wei = this->dropout(wei);
 
     // perform weighted aggregation of values
-    Tensor out = torch::matmul(wei, v); // shape (B, T, head_size)
+    Tensor out = torch::matmul(wei, v); // shape (B, S, head_size)
     return out;
   }
 
@@ -293,14 +293,14 @@ struct GPTlite : nn::Module {
 
 
   Tensor forward(Tensor idx){
-    int T = idx.size(1);
-    Tensor tok_emb = token_embedding_table(idx); //shape (B,T,C)
-    Tensor pos_emb = position_embedding_table(torch::arange(T).to( idx.device() )); // (T,C)
-    Tensor x = tok_emb + pos_emb; //shape (B,T,C)
+    int S = idx.size(1);
+    Tensor tok_emb = token_embedding_table(idx); //shape (B,S,E)
+    Tensor pos_emb = position_embedding_table(torch::arange(S).to( idx.device() )); // (S,E)
+    Tensor x = tok_emb + pos_emb; //shape (B,S,E)
     x = blocks->forward(x);
     x = ln(x);
-    Tensor logits = lm_head(x); //shape (B,T,C)
-    return logits.permute({0,2,1}); //shape (B,C,T)
+    Tensor logits = lm_head(x); //shape (B,S,C)
+    return logits.permute({0,2,1}); //shape (B,C,S)
   }
 }
 ```
