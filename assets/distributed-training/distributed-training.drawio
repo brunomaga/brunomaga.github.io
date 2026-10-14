@@ -1642,7 +1642,7 @@
         <mxCell id="benchmark_gptlite-43" value="6.2" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="508.3333" y="243" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-44" value="GPT lite (GPT-2 small)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-44" value="GPT lite (GPT-3 small)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="364" y="0" width="260" height="24" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#82b366;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
@@ -7802,7 +7802,7 @@
         <mxCell id="megatron_model_parallel_1-WKvsA9KYvX-taebg8_zK-79" value="&lt;font style=&quot;font-size: 50px;&quot;&gt;.&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="megatron_model_parallel_1-figure">
           <mxGeometry x="104" y="64" width="60" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="megatron_model_parallel_1-WKvsA9KYvX-taebg8_zK-27" value="ReLU" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="megatron_model_parallel_1-WKvsA9KYvX-taebg8_zK-26">
+        <mxCell id="megatron_model_parallel_1-WKvsA9KYvX-taebg8_zK-27" value="GeLU" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="megatron_model_parallel_1-WKvsA9KYvX-taebg8_zK-26">
           <mxGeometry x="-0.2694" relative="1" as="geometry">
             <mxPoint x="3" y="-1" as="offset" />
           </mxGeometry>
@@ -7824,7 +7824,7 @@
         <mxCell id="megatron_model_parallel_2-WKvsA9KYvX-taebg8_zK-46" value="&lt;span style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color); font-size: 14px;&quot;&gt;A&lt;/font&gt;&lt;sub style=&quot;border-color: var(--border-color);&quot;&gt;&lt;font style=&quot;border-color: var(--border-color);&quot;&gt;1&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;&lt;/font&gt;&lt;/sub&gt;&lt;font style=&quot;border-color: var(--border-color); font-size: 12px;&quot;&gt;:N x O/2&lt;/font&gt;&lt;br&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="megatron_model_parallel_2-figure">
           <mxGeometry x="141.0033" y="50" width="57.906976744186046" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="megatron_model_parallel_2-WKvsA9KYvX-taebg8_zK-47" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;A&amp;nbsp;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;:Nxo&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="megatron_model_parallel_2-figure">
+        <mxCell id="megatron_model_parallel_2-WKvsA9KYvX-taebg8_zK-47" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;A&amp;nbsp;&lt;/font&gt;&lt;font style=&quot;font-size: 12px;&quot;&gt;:NxO&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="megatron_model_parallel_2-figure">
           <mxGeometry x="169.96" y="0" width="57.91" height="30" as="geometry" />
         </mxCell>
         <mxCell id="megatron_model_parallel_2-WKvsA9KYvX-taebg8_zK-48-copy" value="" vertex="1" parent="megatron_model_parallel_2-figure" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;">
@@ -7884,7 +7884,7 @@
         <mxCell id="megatron_model_parallel_2-WKvsA9KYvX-taebg8_zK-75" value="&lt;font style=&quot;font-size: 50px;&quot;&gt;.&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="megatron_model_parallel_2-figure">
           <mxGeometry x="92.01" y="42" width="60" height="66" as="geometry" />
         </mxCell>
-        <mxCell id="megatron_model_parallel_2-WKvsA9KYvX-taebg8_zK-65" value="ReLU" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="megatron_model_parallel_2-WKvsA9KYvX-taebg8_zK-64">
+        <mxCell id="megatron_model_parallel_2-WKvsA9KYvX-taebg8_zK-65" value="GeLU" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];fontSize=12;" vertex="1" connectable="0" parent="megatron_model_parallel_2-WKvsA9KYvX-taebg8_zK-64">
           <mxGeometry x="-0.2694" relative="1" as="geometry">
             <mxPoint x="3" y="-1" as="offset" />
           </mxGeometry>

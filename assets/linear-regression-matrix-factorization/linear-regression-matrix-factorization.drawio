@@ -199,8 +199,8 @@
         <mxCell id="matrix-factorization-63" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=14;" vertex="1" parent="matrix-factorization-figure">
           <mxGeometry x="384" y="161.53" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-64" value="User features" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="24.26" y="5.28" width="88" height="20" as="geometry" />
+        <mxCell id="matrix-factorization-64" value="Movie features" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="18.37" y="5.28" width="99.78" height="20" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-65" value="W" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="matrix-factorization-figure">
           <mxGeometry x="141.4106" y="4.87" width="17.2188" height="20" as="geometry" />
@@ -223,14 +223,11 @@
         <mxCell id="matrix-factorization-71" value="d" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="matrix-factorization-figure">
           <mxGeometry x="320.7094" y="140.66" width="11.7812" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-72" value="Z&lt;sup style=&quot;font-size:14px&quot;&gt;T&lt;/sup&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="571.6931" y="35.61" width="21.0938" height="26" as="geometry" />
-        </mxCell>
-        <mxCell id="matrix-factorization-73" value="X&lt;sub style=&quot;font-size:14px&quot;&gt;nd&lt;/sub&gt; ≈ (WZ&lt;sup style=&quot;font-size:14px&quot;&gt;T&lt;/sup&gt;)&lt;sub style=&quot;font-size:14px&quot;&gt;dn&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="matrix-factorization-figure">
+        <mxCell id="matrix-factorization-73" value="X&lt;sub style=&quot;font-size:14px&quot;&gt;dn&lt;/sub&gt; ≈ (WZ&lt;sup style=&quot;font-size:14px&quot;&gt;T&lt;/sup&gt;)&lt;sub style=&quot;font-size:14px&quot;&gt;dn&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="matrix-factorization-figure">
           <mxGeometry x="544.8787" y="124.83" width="99.5625" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-74" value="Movie features" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;rotation=-90;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="131.3194" y="92.39" width="95.7812" height="18" as="geometry" />
+        <mxCell id="matrix-factorization-74" value="User features" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;rotation=-90;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="131.32" y="92.39" width="95.7812" height="18" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-75" value="Movies" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;rotation=-90;" vertex="1" parent="matrix-factorization-figure">
           <mxGeometry x="300.7759" y="75.83" width="48.3281" height="18" as="geometry" />
