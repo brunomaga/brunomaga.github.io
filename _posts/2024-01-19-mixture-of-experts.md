@@ -34,9 +34,9 @@ class MoE(nn.Module):
 
   def forward(self, x):
     probs = self.router(x)
-    outputs = torch.stack([ expert(x) for expert in self.experts ], dim=-2) # B*T*Experts*C
-    weighted_outputs = outputs * probs.unsqueeze(-1) # B*T*E*C x B*T*E*1 -> B*T*E*C
-    weighted_sum = weighted_outputs.sum(dim=-2) # sum over experts: B*T*E*C -> B*T*C
+    outputs = torch.stack([ expert(x) for expert in self.experts ], dim=-2) # B*S*n_experts*E
+    weighted_outputs = outputs * probs.unsqueeze(-1) # B*S*n_experts*E x B*S*n_experts*1 -> B*S*n_experts*E
+    weighted_sum = weighted_outputs.sum(dim=-2) # sum over experts: B*S*n_experts*E -> B*S*E
     return weighted_sum, probs, outputs
 ```
 
@@ -45,15 +45,15 @@ A major difference between the two 1991 approaches is the loss function used. On
 ```python
 def loss_per_token_Adaptive_Mixture_1991(probs, outputs, labels):
   """
-  outputs: B*T*E*Classes
-  probs:   B*T*E
-  labels:  B*T (class ids)
-  returns: B*T (loss per token)
+  outputs: B*S*n_experts*Classes
+  probs:   B*S*n_experts
+  labels:  B*S (class ids)
+  returns: B*S (loss per token)
   """
-  one_hot = torch.nn.functional.one_hot(labels, num_classes=outputs.shape[-1]).to(outputs.dtype) # B*T*Classes
-  # per-token MSE for each expert: B*T*E
+  one_hot = torch.nn.functional.one_hot(labels, num_classes=outputs.shape[-1]).to(outputs.dtype) # B*S*Classes
+  # per-token MSE for each expert: B*S*n_experts
   mse = (one_hot.unsqueeze(-2) - outputs).square().mean(dim=-1)  # mean over Classes
-  return (mse * probs).sum(dim=-1)  # weighted sum over experts -> B*T
+  return (mse * probs).sum(dim=-1)  # weighted sum over experts -> B*S
 ```
 
 An important observation related to the behaviour of MoEs, where the authors observed that
@@ -297,11 +297,11 @@ In here, the `Router` is a feed-forward network that takes as input the embeddin
 The **routing step** computes the top-`k` expert assignments for each token, as expert id in `topk_experts` and corresponding probabilities `topk_probs`: 
 ```python
   def forward(self, x):
-    # x: B*T*C
-    B, T, C = x.shape
+    # x: B*S*E
+    B, S, E = x.shape
     global_rank = dist.get_rank()
-    probs = self.router(x) # get assignments from router, shape B*T*n_experts
-    topk_probs, topk_experts = torch.topk(probs, k=self.k, dim=-1) # B*T*k
+    probs = self.router(x) # get assignments from router, shape B*S*n_experts
+    topk_probs, topk_experts = torch.topk(probs, k=self.k, dim=-1) # B*S*k
 
     ids_per_expert = [ (topk_experts==expert).nonzero() for expert in range(self.num_experts) ]
     probs_per_expert = [ topk_probs[topk_experts==expert] for expert in range(self.num_experts) ]
@@ -318,7 +318,7 @@ The following **permutation step** selectively sends the tokens to each expert's
     dist.all_to_all(recv_count, send_count)
     fn_count = lambda tensor, scale=1: [x.item()*scale for x in tensor] 
 
-    # send/receive the metadata (b, t, which_topk) to/from the appropriate processors
+    # send/receive the metadata (b, s, which_topk) to/from the appropriate processors
     M = ids_per_expert[0].shape[-1] # number of columns in metadata
     send_ids = torch.cat(ids_per_expert, dim=0).to(device)
     send_ids[:,0] += global_rank*B # add processor's batch offset
@@ -328,9 +328,9 @@ The following **permutation step** selectively sends the tokens to each expert's
 
     # send/receive input tokens to/from the appropriate processors
     send_toks = torch.cat([ x[ids[:,0], ids[:,1]] for ids in ids_per_expert], dim=0).to(device)
-    recv_toks = torch.zeros(sum(recv_count)*C, dtype=x.dtype, device=device)
-    dist.all_to_all_single(recv_toks, send_toks.flatten(), fn_count(recv_count,C), fn_count(send_count,C))
-    recv_toks = recv_toks.view(-1, C) # reshape to C columns 
+    recv_toks = torch.zeros(sum(recv_count)*E, dtype=x.dtype, device=device)
+    dist.all_to_all_single(recv_toks, send_toks.flatten(), fn_count(recv_count,E), fn_count(send_count,E))
+    recv_toks = recv_toks.view(-1, E) # reshape to E columns 
 ```
 
 {: style="text-align:center; font-size: small;"}
@@ -347,13 +347,13 @@ The **computation step** will reshuffle the received data into a 3D batch of siz
     recv_row_offsets = [0] + torch.cumsum(recv_row_lens, dim=0).tolist()
     recv_row_slice = lambda row: slice(recv_row_offsets[row], recv_row_offsets[row+1])
 
-    # crop or pad received items PER SENTENCE to max capacity. Batch shape: Rows * Capacity * C
-    capacity = int(T / self.num_experts * self.capacity_factor)
+    # crop or pad received items PER SENTENCE to max capacity. Batch shape: Rows * Capacity * E
+    capacity = int(S / self.num_experts * self.capacity_factor)
     pad_fn = lambda toks, value = self.padding_val: F.pad(toks, (0,0,0,capacity-toks.shape[0]), value=value) # pad or crop
     batch_toks = torch.stack([ pad_fn(recv_toks[recv_row_slice(i)][:capacity]) for i in range(len(uniq_rows))], dim=0).to(device)
 
     batch_row_len = torch.tensor([ min(recv_row_lens[r], capacity) for r in range(len(uniq_rows))], device=device)
-    batch_toks = self.expert(batch_toks) # Rows * Capacity * C
+    batch_toks = self.expert(batch_toks) # Rows * Capacity * E
 ``` 
 
 The output of the expert is stored in `batch_toks`. The following **Un-permutation step** will now perform an `all_to_all_single` that performs the opposite communication of the permutation step. This will populate the all-to-all output buffer with the partial results of all experts.
@@ -368,9 +368,9 @@ The output of the expert is stored in `batch_toks`. The following **Un-permutati
       cursor += int(recv_row_lens[r].item())
 
     # send back
-    send_toks = torch.empty(sum(send_count)*C, dtype=x.dtype, device=device)
-    dist.all_to_all_single(send_toks, out_flat.flatten(), fn_count(send_count,C), fn_count(recv_count,C))
-    x = send_toks.view(-1, C)
+    send_toks = torch.empty(sum(send_count)*E, dtype=x.dtype, device=device)
+    dist.all_to_all_single(send_toks, out_flat.flatten(), fn_count(send_count,E), fn_count(recv_count,E))
+    x = send_toks.view(-1, E)
 ```
 
 Finally, the **scale step** performs a weighted sum of the top-k probabilities for each token:
@@ -379,7 +379,7 @@ Finally, the **scale step** performs a weighted sum of the top-k probabilities f
     x *= torch.cat(probs_per_expert).view(-1,1) # multiply by router probabilities
     if self.k>1: # sum over k probabilities for each input
       x = torch.stack([ x[send_ids[:,-1]==kk] for kk in range(self.k)]).sum(dim=0)
-    return x.view(B,T,C)
+    return x.view(B,S,E)
 ```
 
 You can find the complete implementation in the [Mixture-of-Experts repo]({{ site.assets }}/distributed-training/moe_dist.py).

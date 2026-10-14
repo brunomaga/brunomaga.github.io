@@ -50,9 +50,9 @@ def measure_parameters_memory(model, args):
     
 class CrossEntropyLoss_FlatView(torch.nn.Module):
   def forward(self, logits, labels):
-    # from shape (B,T,C) to (B*T,C)
-    B, T, C = logits.shape
-    logits = logits.view(B*T,C)
+    # from shape (B,S,C) to (B*S,C)
+    B, S, C = logits.shape
+    logits = logits.view(B*S,C)
     labels = labels.view(-1)
     # fix RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn
     # logits = logits.requires_grad_(True) # https://github.com/microsoft/DeepSpeed/issues/4274

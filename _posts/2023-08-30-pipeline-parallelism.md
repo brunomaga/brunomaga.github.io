@@ -184,15 +184,15 @@ class GPTlite(nn.Module):
       return layers
 ```
 
-Note that the output of `layers` is of shape `B,T,C` which is incompatible with [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) in PyTorch. A quick fix is to simply add `lambda logits: torch.swapaxes(logits, 1, 2)` to `to_layers()` to make it of shape `B,C,T`. However when you try to back-propagate, you may bump into the error `RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn`, as discussed in bugs [4279](https://github.com/microsoft/DeepSpeed/issues/4274) and [4479](https://github.com/microsoft/DeepSpeed/issues/4479), and you'd have to use `outputs = outputs.requires_grad_(True)` to fix it. Alternatively, you can adapt the loss function to do the `view`/reshape change instead. It is a cleaner approach, and will be useful later for the pipeline parallelism use case:
+Note that the output of `layers` is of shape `B,S,C` which is incompatible with [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) in PyTorch. A quick fix is to simply add `lambda logits: torch.swapaxes(logits, 1, 2)` to `to_layers()` to make it of shape `B,C,S`. However when you try to back-propagate, you may bump into the error `RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn`, as discussed in bugs [4279](https://github.com/microsoft/DeepSpeed/issues/4274) and [4479](https://github.com/microsoft/DeepSpeed/issues/4479), and you'd have to use `outputs = outputs.requires_grad_(True)` to fix it. Alternatively, you can adapt the loss function to do the `view`/reshape change instead. It is a cleaner approach, and will be useful later for the pipeline parallelism use case:
 
 ```python
 ## train.py
 
 class CrossEntropyLoss_FlatView(torch.nn.Module):
   def forward(self, logits, labels):
-    B, T, C = logits.shape
-    logits = logits.view(B*T, C)
+    B, S, C = logits.shape
+    logits = logits.view(B*S, C)
     labels = labels.view(-1)
     return torch.nn.functional.cross_entropy(logits, labels)
 
@@ -262,9 +262,9 @@ class GPTlitePipeSpec(PipelineModule):
       self.position_embedding_table = nn.Embedding(block_size, n_embd)
 
     def forward(self, idx):
-      B, T = idx.shape
+      B, S = idx.shape
       tok_emb = self.token_embedding_table(idx)
-      pos_emb = self.position_embedding_table(torch.arange(T).to(idx.device))
+      pos_emb = self.position_embedding_table(torch.arange(S).to(idx.device))
       return tok_emb + pos_emb
 
   def __init__(self, vocab_size, pipe_kwargs):

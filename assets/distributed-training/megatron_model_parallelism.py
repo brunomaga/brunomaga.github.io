@@ -147,28 +147,28 @@ class Megatron_MHA(nn.Module):
         self.out_dropout = nn.Dropout(dropout)
 
     def forward(self, x):
-        B, T, C = x.shape
-        if C != n_embd:
-            raise ValueError(f"Expected x.shape[-1] == {n_embd}, got {C}.")
+        B, S, E = x.shape
+        if E != n_embd:
+            raise ValueError(f"Expected x.shape[-1] == {n_embd}, got {E}.")
 
         if self.mp_comm_group:
             x = Megatron_f.apply(x, self.mp_comm_group)
 
-        qkv = self.qkv(x)  # (B, T, 3*hidden_local)
+        qkv = self.qkv(x)  # (B, S, 3*hidden_local)
         q, k, v = qkv.split(self.hidden_local, dim=-1)
 
-        # (B, T, hidden_local) -> (B, n_head_local, T, head_dim)
-        q = q.view(B, T, self.n_head_local, self.head_dim).transpose(1, 2)
-        k = k.view(B, T, self.n_head_local, self.head_dim).transpose(1, 2)
-        v = v.view(B, T, self.n_head_local, self.head_dim).transpose(1, 2)
+        # (B, S, hidden_local) -> (B, n_head_local, S, head_dim)
+        q = q.view(B, S, self.n_head_local, self.head_dim).transpose(1, 2)
+        k = k.view(B, S, self.n_head_local, self.head_dim).transpose(1, 2)
+        v = v.view(B, S, self.n_head_local, self.head_dim).transpose(1, 2)
 
         wei = (q @ k.transpose(-2, -1)) * (self.head_dim ** -0.5)
-        wei = wei.masked_fill(self.tril[:T, :T] == 0, float("-inf"))
+        wei = wei.masked_fill(self.tril[:S, :S] == 0, float("-inf"))
         wei = F.softmax(wei, dim=-1)
         wei = self.attn_dropout(wei)
 
-        out = wei @ v  # (B, n_head_local, T, head_dim)
-        out = out.transpose(1, 2).contiguous().view(B, T, self.hidden_local)
+        out = wei @ v  # (B, n_head_local, S, head_dim)
+        out = out.transpose(1, 2).contiguous().view(B, S, self.hidden_local)
 
         out = self.proj(out)  # partial contribution
         if self.mp_comm_group:

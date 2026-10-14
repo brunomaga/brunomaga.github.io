@@ -58,14 +58,14 @@ class MoE_dist(nn.Module):
         self.expert = FeedForward(n_embd).to(device)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        # x: [B, T, C]  -> returns: [B, T, C]
-        B, T, C = x.shape
+        # x: [B, S, E]  -> returns: [B, S, E]
+        B, S, E = x.shape
 
         # 1) ROUTING
-        probs = self.router(x)  # [B, T, E]
-        topk_probs, topk_experts = torch.topk(probs, k=self.k, dim=-1)  # [B, T, k]
+        probs = self.router(x)  # [B, S, n_experts]
+        topk_probs, topk_experts = torch.topk(probs, k=self.k, dim=-1)  # [B, S, k]
 
-        # For each expert, collect the (b, t, kpos) indices that route to it,
+        # For each expert, collect the (b, s, kpos) indices that route to it,
         # and the corresponding routing probabilities.
         ids_per_expert = [(topk_experts == expert).nonzero(as_tuple=False) for expert in range(self.num_experts)]
         probs_per_expert = [topk_probs[topk_experts == expert] for expert in range(self.num_experts)]
@@ -86,7 +86,7 @@ class MoE_dist(nn.Module):
         # We shift row_id by global_rank*B so experts can group by the "global row".
         M = 3
         if sum(send_count_i) > 0:
-            send_ids = torch.cat(ids_per_expert, dim=0).to(device)  # [Nsend, 3] => (b, t, kpos)
+            send_ids = torch.cat(ids_per_expert, dim=0).to(device)  # [Nsend, 3] => (b, s, kpos)
             send_ids = send_ids.to(torch.int64)
             send_ids[:, 0] += global_rank * B
             send_ids_flat = send_ids.flatten()
@@ -110,22 +110,22 @@ class MoE_dist(nn.Module):
                 if ids.numel() == 0:
                     continue
                 b_idx = ids[:, 0]
-                t_idx = ids[:, 1]
-                per_expert_toks.append(x[b_idx, t_idx, :])  # [n, C]
-            send_toks = torch.cat(per_expert_toks, dim=0).contiguous().to(device)  # [Nsend, C]
+                s_idx = ids[:, 1]
+                per_expert_toks.append(x[b_idx, s_idx, :])  # [n, E]
+            send_toks = torch.cat(per_expert_toks, dim=0).contiguous().to(device)  # [Nsend, E]
             send_toks_flat = send_toks.flatten()
         else:
-            send_toks = torch.zeros((0, C), dtype=x.dtype, device=device)
+            send_toks = torch.zeros((0, E), dtype=x.dtype, device=device)
             send_toks_flat = send_toks.flatten()
 
-        recv_toks = torch.zeros(sum(recv_count_i) * C, dtype=x.dtype, device=device)
+        recv_toks = torch.zeros(sum(recv_count_i) * E, dtype=x.dtype, device=device)
         dist.all_to_all_single(
             recv_toks,
             send_toks_flat,
-            output_split_sizes=scaled_counts(recv_count_i, C),
-            input_split_sizes=scaled_counts(send_count_i, C),
+            output_split_sizes=scaled_counts(recv_count_i, E),
+            input_split_sizes=scaled_counts(send_count_i, E),
         )
-        recv_toks = recv_toks.view(-1, C)  # [Nrecv, C]
+        recv_toks = recv_toks.view(-1, E)  # [Nrecv, E]
 
         # 3) COMPUTATION (LOCAL EXPERT)
         # Group by row_id (sentence) and pad/crop per-row to a capacity.
@@ -138,7 +138,7 @@ class MoE_dist(nn.Module):
             def row_slice(i):
                 return slice(int(recv_row_offsets[i]), int(recv_row_offsets[i + 1]))
 
-            capacity = max(1, int((T / self.num_experts) * self.capacity_factor))
+            capacity = max(1, int((S / self.num_experts) * self.capacity_factor))
 
             def pad_or_crop(toks: torch.Tensor) -> torch.Tensor:
                 toks = toks[:capacity]
@@ -147,7 +147,7 @@ class MoE_dist(nn.Module):
                 return toks
 
             batch_toks = torch.stack([pad_or_crop(recv_toks[row_slice(i)]) for i in range(len(uniq_rows))], dim=0)
-            batch_toks = self.expert(batch_toks)  # [Rows, Capacity, C]
+            batch_toks = self.expert(batch_toks)  # [Rows, Capacity, E]
 
             # Flatten the computed results back into recv_toks layout (without padded tail).
             out_recv_toks = torch.full_like(recv_toks, fill_value=float(self.padding_val))
@@ -159,14 +159,14 @@ class MoE_dist(nn.Module):
             recv_toks = out_recv_toks
 
         # 4) UN-PERMUTATION (RETURN RESULTS)
-        send_toks_back = torch.full((sum(send_count_i), C), fill_value=float(self.padding_val), dtype=x.dtype, device=device)
+        send_toks_back = torch.full((sum(send_count_i), E), fill_value=float(self.padding_val), dtype=x.dtype, device=device)
         dist.all_to_all_single(
             send_toks_back.flatten(),
             recv_toks.flatten(),
-            output_split_sizes=scaled_counts(send_count_i, C),
-            input_split_sizes=scaled_counts(recv_count_i, C),
+            output_split_sizes=scaled_counts(send_count_i, E),
+            input_split_sizes=scaled_counts(recv_count_i, E),
         )
-        x_entries = send_toks_back  # [Nsend, C] in the same order as send_ids
+        x_entries = send_toks_back  # [Nsend, E] in the same order as send_ids
 
         # 5) SCALE + COMBINE (scatter-add over top-k routes)
         if sum(send_count_i) == 0:
@@ -175,14 +175,14 @@ class MoE_dist(nn.Module):
         probs_flat = torch.cat(probs_per_expert, dim=0).to(device).view(-1, 1)  # [Nsend, 1]
         x_entries = x_entries * probs_flat  # weight each routed copy
 
-        # Map each routed entry back to a local (b, t) and sum contributions.
+        # Map each routed entry back to a local (b, s) and sum contributions.
         local_b = (send_ids[:, 0] - (global_rank * B)).to(torch.int64)
-        local_t = send_ids[:, 1].to(torch.int64)
-        pos = local_b * T + local_t  # [Nsend]
+        local_s = send_ids[:, 1].to(torch.int64)
+        pos = local_b * S + local_s  # [Nsend]
 
-        out = torch.zeros((B * T, C), dtype=x.dtype, device=device)
+        out = torch.zeros((B * S, E), dtype=x.dtype, device=device)
         out.index_add_(0, pos, x_entries)
-        return out.view(B, T, C)
+        return out.view(B, S, E)
 
 
 if __name__ == "__main__":
@@ -224,7 +224,7 @@ if __name__ == "__main__":
             inputs = data[0].to(device, non_blocking=True)
             labels = data[1].to(device, non_blocking=True)
 
-            logits = model(inputs)  # [B, T, vocab]
+            logits = model(inputs)  # [B, S, vocab]
             loss = criterion(logits.view(-1, vocab_size), labels.view(-1))
 
             optimizer.zero_grad(set_to_none=True)

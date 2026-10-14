@@ -95,7 +95,7 @@ When training variable-length datasets, it is common to batch by *token count* i
 
 > Sentence pairs were batched together by approximate sequence length. Each training batch contained a set of sentence pairs containing approximately 25000 source tokens and 25000 target tokens.
 
-This helps equalize work across batches (and across ranks). It is also particularly relevant for curriculum learning: a batch with shape `B x T x E` (batch size × sequence length × embedding size) will often have high `B` and low `T` early in the curriculum (many short samples), and low `B` and high `T` later (fewer long samples).
+This helps equalize work across batches (and across ranks). It is also particularly relevant for curriculum learning: a batch with shape `B x S x E` (batch size × sequence length × embedding size) will often have high `B` and low `S` early in the curriculum (many short samples), and low `B` and high `S` later (fewer long samples).
 
 However, varying the batch size `B` typically requires adjusting the learning rate (LR). Two widely used scaling rules are:
 
@@ -111,26 +111,26 @@ Assume a limit of $$30$$ tokens per batch, a reference LR of $$10^{-3}$$, and a 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.png"/>
 
-Here, samples are collected until the batch reaches (at most) 30 tokens. The batch sizes (number of samples) become $$10$$ and $$4$$ in the left and right examples, respectively. Using linear scaling, the corresponding LRs are $$5 	imes 10^{-3}$$ and $$2 	imes 10^{-3}$$.
+Here, samples are collected until the batch reaches (at most) 30 tokens. The batch sizes (number of samples) become $$10$$ and $$4$$ in the left and right examples, respectively. Using linear scaling, the corresponding LRs are $$5 \times 10^{-3}$$ and $$2 \times 10^{-3}$$.
 
 ### Pipeline parallelism
 
 [Pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-pipeline-parallelism %})
-requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x T x E` across micro-batches can lead to smaller micro-batches and additional padding. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 processes and 2 gradient accumulation steps (4 micro-batches total):
+requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x S x E` across micro-batches can lead to smaller micro-batches and additional padding. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 processes and 2 gradient accumulation steps (4 micro-batches total):
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.png"/>
 
-In the pipeline case (right), all micro-batches in the batch have the same `B x T x E` shape. To satisfy this constraint, fewer samples are packed per micro-batch compared to the non-pipeline case (left), and padding is used when needed.
+In the pipeline case (right), all micro-batches in the batch have the same `B x S x E` shape. To satisfy this constraint, fewer samples are packed per micro-batch compared to the non-pipeline case (left), and padding is used when needed.
 
 ### Attention matrix
 
-Attention is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x T x E` often uses a 2D attention mask of shape `T x T`, broadcast over the batch dimension. With variable lengths, we need a *per-sample* mask, which is naturally represented as a `B x T x T` tensor. For example, for the non-pipeline micro-batch 1 above (top-left; 4 sentences), the mask can be illustrated as:
+Attention is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x S x E` often uses a 2D attention mask of shape `S x S`, broadcast over the batch dimension. With variable lengths, we need a *per-sample* mask, which is naturally represented as a `B x S x S` tensor. For example, for the non-pipeline micro-batch 1 above (top-left; 4 sentences), the mask can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.png"/>
 
-A useful way to think about the cost is that attention scales linearly with `B` and quadratically with the maximum `T` in the batch. Allowing `T` to vary (and adapting `B` accordingly) can therefore improve utilization by avoiding padding to an unnecessarily large `T`.
+A useful way to think about the cost is that attention scales linearly with `B` and quadratically with the maximum `S` in the batch. Allowing `S` to vary (and adapting `B` accordingly) can therefore improve utilization by avoiding padding to an unnecessarily large `S`.
 
 ### Implementation
 

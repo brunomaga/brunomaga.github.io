@@ -167,40 +167,40 @@ class Megatron_MHA(nn.Module):
     self.out_dropout = nn.Dropout(dropout)
 
   def forward(self, x):
-    B, T, C = x.shape
-    if C != self.n_embd:
-      raise ValueError(f"Expected x.shape[-1] == {self.n_embd}, got {C}.")
+    B, S, E = x.shape
+    if E != self.n_embd:
+      raise ValueError(f"Expected x.shape[-1] == {self.n_embd}, got {E}.")
 
     # Column-parallel input handling: identity forward, all-reduce on backward.
     if self.mp_comm_group:
       x = Megatron_f.apply(x, self.mp_comm_group)
 
     # Local QKV for local heads
-    qkv = self.qkv(x)  # (B, T, 3*hidden_local)
+    qkv = self.qkv(x)  # (B, S, 3*hidden_local)
     q, k, v = qkv.split(self.hidden_local, dim=-1)
 
-    # (B, T, hidden_local) -> (B, n_head_local, T, head_dim)
-    q = q.view(B, T, self.n_head_local, self.head_dim).transpose(1, 2)
-    k = k.view(B, T, self.n_head_local, self.head_dim).transpose(1, 2)
-    v = v.view(B, T, self.n_head_local, self.head_dim).transpose(1, 2)
+    # (B, S, hidden_local) -> (B, n_head_local, S, head_dim)
+    q = q.view(B, S, self.n_head_local, self.head_dim).transpose(1, 2)
+    k = k.view(B, S, self.n_head_local, self.head_dim).transpose(1, 2)
+    v = v.view(B, S, self.n_head_local, self.head_dim).transpose(1, 2)
 
-    # Attention scores: (B, n_head_local, T, T)  -- LOCAL, no comm
+    # Attention scores: (B, n_head_local, S, S)  -- LOCAL, no comm
     wei = (q @ k.transpose(-2, -1)) * (self.head_dim ** -0.5)
 
     # Causal mask (broadcasts over B and n_head_local)
-    wei = wei.masked_fill(self.tril[:T, :T] == 0, float("-inf"))
+    wei = wei.masked_fill(self.tril[:S, :S] == 0, float("-inf"))
 
     wei = F.softmax(wei, dim=-1)
     wei = self.attn_dropout(wei)
 
-    # Context: (B, n_head_local, T, head_dim)
+    # Context: (B, n_head_local, S, head_dim)
     out = wei @ v
 
-    # Concat heads: (B, T, hidden_local)
-    out = out.transpose(1, 2).contiguous().view(B, T, self.hidden_local)
+    # Concat heads: (B, S, hidden_local)
+    out = out.transpose(1, 2).contiguous().view(B, S, self.hidden_local)
 
     # Row-parallel output projection: local matmul then all-reduce sum on forward
-    out = self.proj(out)  # (B, T, n_embd) partial contribution
+    out = self.proj(out)  # (B, S, n_embd) partial contribution
     if self.mp_comm_group:
       out = Megatron_g.apply(out, self.mp_comm_group)
 

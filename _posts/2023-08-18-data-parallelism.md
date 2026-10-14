@@ -6,7 +6,7 @@ tags: [machinelearning]
 ---
 
 
-Distributed data parallelism (DDP) refers to the parallel execution of different input samples across processors. If you consider any data input to be of shape $$B \times T \times E$$ as in batch size, sequence/temporal size, and embedding/features size, then data parallelism refers to the use case where we split the data across $$P$$ processes, leading to a local input of shape $$B/P \times T \times E$$:
+Distributed data parallelism (DDP) refers to the parallel execution of different input samples across processors. If you consider any data input to be of shape $$B \times S \times E$$ as in batch size, sequence/temporal size, and embedding/features size, then data parallelism refers to the use case where we split the data across $$P$$ processes, leading to a local input of shape $$B/P \times S \times E$$:
 
 {: style="text-align:center; font-size: small;"}
 <img width="35%" height="35%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.png"/>

@@ -27,11 +27,11 @@ def _get_device_str() -> str:
 
 
 class CrossEntropyLoss_FlatView(nn.Module):
-    """Cross entropy for logits shaped (B, T, C) and labels shaped (B, T)."""
+    """Cross entropy for logits shaped (B, S, C) and labels shaped (B, S)."""
 
     def forward(self, logits: torch.Tensor, labels: torch.Tensor) -> torch.Tensor:
-        B, T, C = logits.shape
-        return F.cross_entropy(logits.view(B * T, C), labels.view(-1))
+        B, S, C = logits.shape
+        return F.cross_entropy(logits.view(B * S, C), labels.view(-1))
 
 
 ################ BASE MODEL WITH ACTIVATION CHECKPOINTING ######################
@@ -47,10 +47,10 @@ class GPTlite(nn.Module):
             self.position_embedding_table = nn.Embedding(block_size, n_embd)
 
         def forward(self, idx: torch.Tensor) -> torch.Tensor:
-            _B, T = idx.shape
-            tok_emb = self.token_embedding_table(idx)  # (B,T,C)
-            pos_emb = self.position_embedding_table(torch.arange(T, device=idx.device))  # (T,C)
-            return tok_emb + pos_emb  # (B,T,C)
+            _B, S = idx.shape
+            tok_emb = self.token_embedding_table(idx)  # (B,S,E)
+            pos_emb = self.position_embedding_table(torch.arange(S, device=idx.device))  # (S,E)
+            return tok_emb + pos_emb  # (B,S,E)
 
     def __init__(self, vocab_size: int, activation_checkpoint_interval: int = 0):
         super().__init__()
@@ -62,7 +62,7 @@ class GPTlite(nn.Module):
         self.lm_head = nn.Linear(n_embd, vocab_size, bias=False)
 
     def forward(self, idx: torch.Tensor, targets=None) -> torch.Tensor:
-        """Forward pass. idx is shape (B,T)."""
+        """Forward pass. idx is shape (B,S)."""
         if self.activation_checkpoint_interval and self.activation_checkpoint_interval > 0:
             x = idx
             for l, layer in enumerate(self.to_layers()):
@@ -73,14 +73,14 @@ class GPTlite(nn.Module):
         x = self.emb_sum(idx)
         x = self.blocks(x)
         x = self.ln(x)
-        return self.lm_head(x)  # (B,T,vocab)
+        return self.lm_head(x)  # (B,S,vocab)
 
     @torch.no_grad()
     def generate(self, idx: torch.Tensor, max_new_tokens: int) -> torch.Tensor:
         """Given a context idx, generate max_new_tokens tokens and append them to idx."""
         for _ in range(max_new_tokens):
             idx_cond = idx[:, -block_size:]
-            logits = self(idx_cond)  # (B,T,C)
+            logits = self(idx_cond)  # (B,S,C)
             logits = logits[:, -1, :]  # (B,C)
             probs = F.softmax(logits, dim=-1)  # (B,C)
             idx_next = torch.multinomial(probs, num_samples=1)  # (B,1)
@@ -105,9 +105,9 @@ class GPTlitePipeSpec(PipelineModule):
             self.position_embedding_table = nn.Embedding(block_size, n_embd)
 
         def forward(self, idx: torch.Tensor) -> torch.Tensor:
-            _B, T = idx.shape
+            _B, S = idx.shape
             tok_emb = self.token_embedding_table(idx)
-            pos_emb = self.position_embedding_table(torch.arange(T, device=idx.device))
+            pos_emb = self.position_embedding_table(torch.arange(S, device=idx.device))
             return tok_emb + pos_emb
 
     def __init__(self, vocab_size: int, pipe_kwargs: dict):
@@ -220,14 +220,14 @@ def split_layers_evenly(layers: List[nn.Module], num_stages: int) -> List[nn.Seq
 
 
 def _pipeline_expected_shape(
-    stage_id: int, num_stages: int, B: int, T: int, vocab_size: int
+    stage_id: int, num_stages: int, B: int, S: int, vocab_size: int
 ) -> Tuple[torch.Size, torch.dtype]:
     """Expected recv tensor shape/dtype for activations at a given stage (demo-specific)."""
     # stage 0 consumes token ids
     if stage_id == 0:
-        return torch.Size([B, T]), torch.long
+        return torch.Size([B, S]), torch.long
     # all intermediate stages (and the last stage input) consume hidden activations
-    return torch.Size([B, T, n_embd]), torch.float32
+    return torch.Size([B, S, n_embd]), torch.float32
 
 
 def pytorch_pipeline_train_step(
@@ -252,7 +252,7 @@ def pytorch_pipeline_train_step(
     loss_out = None
 
     for idx_mb, tgt_mb in zip(idx_mbs, tgt_mbs):
-        B_mb, T_mb = idx_mb.shape
+        B_mb, S_mb = idx_mb.shape
 
         # ---- Forward ----
         if stage_id == 0:
@@ -262,7 +262,7 @@ def pytorch_pipeline_train_step(
             act_in = None  # no previous stage
         elif stage_id < num_stages - 1:
             # receive activation from previous stage
-            recv_shape, recv_dtype = _pipeline_expected_shape(stage_id, num_stages, B_mb, T_mb, vocab_size)
+            recv_shape, recv_dtype = _pipeline_expected_shape(stage_id, num_stages, B_mb, S_mb, vocab_size)
             act_in = torch.empty(recv_shape, device=device, dtype=recv_dtype)
             dist.recv(act_in, src=stage_id - 1)
             act_in.requires_grad_(True)
@@ -270,11 +270,11 @@ def pytorch_pipeline_train_step(
             dist.send(act_out, dst=stage_id + 1)
         else:
             # last stage: receive, compute loss on logits
-            recv_shape, recv_dtype = _pipeline_expected_shape(stage_id, num_stages, B_mb, T_mb, vocab_size)
+            recv_shape, recv_dtype = _pipeline_expected_shape(stage_id, num_stages, B_mb, S_mb, vocab_size)
             act_in = torch.empty(recv_shape, device=device, dtype=recv_dtype)
             dist.recv(act_in, src=stage_id - 1)
             act_in.requires_grad_(True)
-            logits = stage(act_in)  # (B,T,vocab)
+            logits = stage(act_in)  # (B,S,vocab)
             loss = criterion(logits, tgt_mb.to(device))
             loss.backward()
             dist.send(act_in.grad, dst=stage_id - 1)
@@ -413,7 +413,7 @@ def _parse_args():
                     help="DeepSpeed pipeline / base model: activation checkpoint interval.")
     ap.add_argument("--batch-size", type=int, default=4, help="Micro-batch size per step.")
     ap.add_argument("--micro-batches", type=int, default=1, help="Gradient accumulation steps / number of micro-batches.")
-    ap.add_argument("--seq-len", type=int, default=block_size, help="Sequence length T.")
+    ap.add_argument("--seq-len", type=int, default=block_size, help="Sequence length S.")
     ap.add_argument("--steps", type=int, default=5, help="Number of training steps to run.")
     ap.add_argument("--lr", type=float, default=1e-3, help="Learning rate.")
     ap.add_argument("--seed", type=int, default=42, help="Random seed.")
