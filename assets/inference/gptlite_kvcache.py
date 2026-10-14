@@ -135,21 +135,21 @@ class GPTlite_KVCache(nn.Module):
         self.seqlen = seqlen
 
     def forward(self, x, kv_cache=None, max_seqlen=None):
-        B, T = x.shape
+        B, S = x.shape
         
         # Determine positions
         if kv_cache is not None and kv_cache[0] is not None:
             # During inference, the new tokens follow the S_past cached ones
             S_past = kv_cache[0][0].size(2)  # S_past from first layer's past_keys
-            positions = torch.arange(S_past, S_past + T, device=x.device).clamp(max=self.seqlen - 1)
-            positions = positions.unsqueeze(0).expand(B, T)
+            positions = torch.arange(S_past, S_past + S, device=x.device).clamp(max=self.seqlen - 1)
+            positions = positions.unsqueeze(0).expand(B, S)
         else:
             # During training or first inference step
-            positions = torch.arange(T, device=x.device).unsqueeze(0).expand(B, T)
+            positions = torch.arange(S, device=x.device).unsqueeze(0).expand(B, S)
         
         # Embeddings
-        pos_embeddings = self.position_embedding(positions)  # [B, T, E]
-        x = self.token_embedding(x) + pos_embeddings  # [B, T, E]
+        pos_embeddings = self.position_embedding(positions)  # [B, S, E]
+        x = self.token_embedding(x) + pos_embeddings  # [B, S, E]
 
         # Initialize cache if None
         if kv_cache is None:

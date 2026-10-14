@@ -43,20 +43,20 @@ class GPTlite_StaticCache(nn.Module):
     self.register_buffer('positions', torch.arange(max_seqlen, device=weight.device))
 
   def forward(self, tokens, input_pos):
-    """ tokens: [B, T] new tokens, input_pos: [T] their positions. Returns the logits [B, T, vocab_size] """
-    model, (B, T) = self.model, tokens.shape
+    """ tokens: [B, S] new tokens, input_pos: [S] their positions. Returns the logits [B, S, vocab_size] """
+    model, (B, S) = self.model, tokens.shape
     x = model.token_embedding(tokens) + model.position_embedding(input_pos)
-    mask = input_pos[:, None] >= self.positions[None, :]  # [T, max_seqlen]: attend to the positions up to itself
+    mask = input_pos[:, None] >= self.positions[None, :]  # [S, max_seqlen]: attend to the positions up to itself
     for i, block in enumerate(model.blocks):
       mha, H, D = block.mha, block.mha.n_heads, block.mha.d_head
       h = block.ln1(x)
-      q = mha.query_proj(h).view(B, T, H, D).transpose(1, 2)  # [B, H, T, D]
-      k = mha.key_proj(h).view(B, T, H, D).transpose(1, 2)
-      v = mha.value_proj(h).view(B, T, H, D).transpose(1, 2)
+      q = mha.query_proj(h).view(B, S, H, D).transpose(1, 2)  # [B, H, S, D]
+      k = mha.key_proj(h).view(B, S, H, D).transpose(1, 2)
+      v = mha.value_proj(h).view(B, S, H, D).transpose(1, 2)
       self.k_cache[i, :, :, input_pos] = k  # write the new keys and values in place
       self.v_cache[i, :, :, input_pos] = v
       out = F.scaled_dot_product_attention(q, self.k_cache[i], self.v_cache[i], attn_mask=mask)
-      x = x + mha.out_proj(out.transpose(1, 2).reshape(B, T, H * D))
+      x = x + mha.out_proj(out.transpose(1, 2).reshape(B, S, H * D))
       x = x + block.ffwd(block.ln2(x))
     return model.fc_out(model.ln(x))
 

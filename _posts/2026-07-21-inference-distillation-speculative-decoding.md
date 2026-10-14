@@ -349,21 +349,21 @@ def longest_accepted_path(tokens, parents, predictions):
 
 
 def medusa_step(model, heads, tokens, kv_cache, next_token, head_logits, top_k=2):
-    """ One step of greedy decoding with Medusa. tokens: [1, T], the accepted tokens, all in the KV cache; next_token:
+    """ One step of greedy decoding with Medusa. tokens: [1, S], the accepted tokens, all in the KV cache; next_token:
         the target's next token; head_logits: [num_heads, V], of the Medusa heads at the last accepted token.
         model(tokens, kv_cache, mask, positions) returns the logits [1, N, V] and the last hidden states [1, N, E] of
         the new tokens, and the cache with them appended """
     tree, parents, depths = medusa_tree(next_token, head_logits, top_k)  # [N]
-    T, device = tokens.size(1), tokens.device
+    S, device = tokens.size(1), tokens.device
 
     # one forward pass over the tree: every node sees the cached tokens and its ancestors, at the position after its
-    # parent: mask [N, T+N]
-    mask = torch.cat([torch.ones(len(tree), T, dtype=torch.bool), tree_attention_mask(parents)], dim=1)
-    logits, hidden, kv_cache = model(tree[None].to(device), kv_cache, mask.to(device), (T + depths).to(device))
+    # parent: mask [N, S+N]
+    mask = torch.cat([torch.ones(len(tree), S, dtype=torch.bool), tree_attention_mask(parents)], dim=1)
+    logits, hidden, kv_cache = model(tree[None].to(device), kv_cache, mask.to(device), (S + depths).to(device))
     path = longest_accepted_path(tree.tolist(), parents, logits[0].argmax(dim=-1).tolist())
 
     # keep the accepted path, and its entries in the cache
-    keep = torch.tensor(list(range(T)) + [T + i for i in path], device=device)
+    keep = torch.tensor(list(range(S)) + [S + i for i in path], device=device)
     kv_cache = [tuple(t[:, :, keep] for t in layer_cache) for layer_cache in kv_cache]
     tokens = torch.cat([tokens, tree[path][None].to(device)], dim=1)
 
@@ -622,12 +622,12 @@ class MTPModule(nn.Module):
 
 
 def mtp_loss(modules, h, tokens, lam=0.3):
-    """ DeepSeek-V3 MTP loss, added to the next-token loss of the main model. h: [B, T, E], output of the main model
-        for the input tokens: [B, T]. Module k predicts the tokens k+1 positions ahead, and the average of the
+    """ DeepSeek-V3 MTP loss, added to the next-token loss of the main model. h: [B, S, E], output of the main model
+        for the input tokens: [B, S]. Module k predicts the tokens k+1 positions ahead, and the average of the
         cross-entropy losses of the modules is weighted by lam """
     losses = []
     for k, module in enumerate(modules, start=1):
-        h, logits = module(h[:, :-1], tokens[:, k:])  # positions i = 0, ..., T-k-1: [B, T-k, E], [B, T-k, V]
+        h, logits = module(h[:, :-1], tokens[:, k:])  # positions i = 0, ..., S-k-1: [B, S-k, E], [B, S-k, V]
         losses.append(F.cross_entropy(logits[:, :-1].flatten(0, 1), tokens[:, k + 1:].flatten()))
     return lam * sum(losses) / len(losses)
 

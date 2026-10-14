@@ -82,7 +82,7 @@ if __name__=='__main__':
         # sample the next token (we could take instead the argmax, but that would be deterministic and boring)
         idx_next = torch.multinomial(probs, num_samples=1) # shape (B=1, 1)
         # append next token idx to the solution sequence so far
-        idx = torch.cat([idx, idx_next], dim=-1) # shape (B=1, T+1)
+        idx = torch.cat([idx, idx_next], dim=-1) # shape (B=1, S+1)
 
       # print generated string
       idx_without_bos = idx[0, 1:].tolist() # remove batch dim and BOS token (\n)

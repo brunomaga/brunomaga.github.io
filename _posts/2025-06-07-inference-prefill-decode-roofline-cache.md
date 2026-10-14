@@ -632,22 +632,22 @@ The following code packs sequences of different lengths into one flat sequence, 
 ```python
 def pack(sequences):
     """ Packs sequences of different lengths, a list of 1D tensors, into one flat sequence without padding. Returns the
-        tokens: [1, T], with T the total number of tokens; the position of every token in its own sequence: [T]; a
-        block-diagonal causal mask: [T, T], True where a token can attend to an earlier token of its own sequence; and
+        tokens: [1, S], with S the total number of tokens; the position of every token in its own sequence: [S]; a
+        block-diagonal causal mask: [S, S], True where a token can attend to an earlier token of its own sequence; and
         the index of the last token of every sequence: [B], where the logits that predict its next token are """
     device = sequences[0].device
     lengths = torch.tensor([len(seq) for seq in sequences], device=device)
-    seq_ids = torch.repeat_interleave(torch.arange(len(sequences), device=device), lengths)  # [T]: sequence ids
-    positions = torch.cat([torch.arange(n, device=device) for n in lengths.tolist()])        # [T]
-    t = torch.arange(len(seq_ids), device=device)
-    mask = (seq_ids[:, None] == seq_ids[None, :]) & (t[:, None] >= t[None, :])               # [T, T]
+    seq_ids = torch.repeat_interleave(torch.arange(len(sequences), device=device), lengths)  # [S]: sequence ids
+    positions = torch.cat([torch.arange(n, device=device) for n in lengths.tolist()])        # [S]
+    s = torch.arange(len(seq_ids), device=device)
+    mask = (seq_ids[:, None] == seq_ids[None, :]) & (s[:, None] >= s[None, :])               # [S, S]
     return torch.cat(sequences)[None], positions, mask, lengths.cumsum(0) - 1
 
 
 # usage: one forward pass for all the sequences, with a model that takes the mask and the positions. Real engines
 # give the lengths of the sequences to variable-length attention kernels, instead of building the mask
 # tokens, positions, mask, last = pack(sequences)
-# logits = model(tokens, mask=mask, positions=positions)  # [1, T, V]
+# logits = model(tokens, mask=mask, positions=positions)  # [1, S, V]
 # next_tokens = logits[0, last].argmax(dim=-1)            # [B]: the next token of every sequence
 ```
 
@@ -721,8 +721,8 @@ def next_tokens(model, sequences, seqlen):
         sequence reads its prediction at its own last position """
     windows = [seq[-seqlen:] for seq in sequences]                # the last seqlen tokens of each sequence
     lengths = torch.tensor([len(w) for w in windows], device=windows[0].device)
-    batch = nn.utils.rnn.pad_sequence(windows, batch_first=True)  # [B, T], padded with token 0
-    logits, _ = model(batch)                                      # [B, T, V]
+    batch = nn.utils.rnn.pad_sequence(windows, batch_first=True)  # [B, S], padded with token 0
+    logits, _ = model(batch)                                      # [B, S, V]
     return logits[torch.arange(len(windows), device=logits.device), lengths - 1].argmax(dim=-1)  # [B]
 
 
