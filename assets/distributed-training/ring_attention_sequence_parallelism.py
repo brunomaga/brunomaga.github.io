@@ -52,7 +52,7 @@ class MultiHeadAttention(nn.Module):
         def forward( ctx, q, k, v, group ):
 
             P = group.size()
-            q, k, v = q.contiguous(), k.contiguous(), v.contiguous() # (B, T/P, H, E)
+            q, k, v = q.contiguous(), k.contiguous(), v.contiguous() # (B, S/P, H, E)
 
             out = lse = None  # accumulators
             recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)  # recv buffers
@@ -133,9 +133,9 @@ class MultiHeadAttention(nn.Module):
         return dist.batch_isend_irecv([req_k_send, req_v_send, req_k_recv, req_v_recv])
 
     def forward(self, x):
-        P, B, T, = self.group.size(), x.shape[0], x.shape[1] * self.group.size()
+        P, B, S, = self.group.size(), x.shape[0], x.shape[1] * self.group.size()
 
-        # take Q, K and V, and collect all head embeddings: (B, T/P, E) -> (H, B, T/P, E)
+        # take Q, K and V, and collect all head embeddings: (B, S/P, E) -> (H, B, S/P, E)
         q = torch.stack([q(x) for q in self.queries], dim=0)
         k = torch.stack([k(x) for k in self.keys], dim=0)
         v = torch.stack([v(x) for v in self.values], dim=0)
@@ -145,9 +145,9 @@ class MultiHeadAttention(nn.Module):
         else:
             out = MultiHeadAttention.RingAttention.apply( q, k, v, self.group)
 
-        out = out.permute(1, 2, 0, 3)  # (H, B, T/P, E) -> (B, T/P, H, E)
-        out = out.reshape(B, T // P, -1)  # (B, T/P, H, E) -> (B, T/P, H*E)
-        out = self.proj(out)  # (B, T/P, H*E) -> (B, T/P, E)
+        out = out.permute(1, 2, 0, 3)  # (H, B, S/P, E) -> (B, S/P, H, E)
+        out = out.reshape(B, S // P, -1)  # (B, S/P, H, E) -> (B, S/P, H*E)
+        out = self.proj(out)  # (B, S/P, H*E) -> (B, S/P, E)
         out = self.dropout(out)
         return out
 
@@ -181,13 +181,13 @@ if __name__ == "__main__":
     # model constants (use these or import from GPT-lite post). Naming matches post
     P = dist.get_world_size()
     B = 4 # batch size
-    T = 2048 # the length of the sequence
+    S = 2048 # the length of the sequence
     H = 8 # the number of heads
     E = 128 # the size of the head
     n_embd = 256 # the hidden size of the model
     n_blocks = 12 # number of transformer blocks
 
-    x = torch.randint(0, 5, (B, T, n_embd)).to(device=device, dtype=dtype) # dummy input
+    x = torch.randint(0, 5, (B, S, n_embd)).to(device=device, dtype=dtype) # dummy input
     y = torch.ones_like(x) # dummy label
 
     # build model as sequence of blocks

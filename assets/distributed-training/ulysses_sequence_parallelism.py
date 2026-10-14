@@ -34,7 +34,7 @@ class MultiHeadAttention(nn.Module):
         @staticmethod
         def forward(ctx, x, group=None):
             ctx.group = group
-            # time-split -> head-split: (H, B, T/P, E) -> (H/P, B, T, E)
+            # sequence-split -> head-split: (H, B, S/P, E) -> (H/P, B, S, E)
             return MultiHeadAttention.dist_view_swap(x, old_split_dim=2, new_split_dim=0, group=ctx.group)
 
         @staticmethod
@@ -47,7 +47,7 @@ class MultiHeadAttention(nn.Module):
         @staticmethod
         def forward(ctx, x, group=None):
             ctx.group = group
-            # head-split -> time-split: (H/P, B, T, E) -> (H, B, T/P, E)
+            # head-split -> sequence-split: (H/P, B, S, E) -> (H, B, S/P, E)
             return MultiHeadAttention.dist_view_swap(x, old_split_dim=0, new_split_dim=2, group=ctx.group)
 
         @staticmethod
@@ -61,56 +61,56 @@ class MultiHeadAttention(nn.Module):
         """Swap the distributed split dimension of a tensor across P processes.
 
         Typical usage for Ulysses:
-          - time-split -> head-split: (H,   B, T/P, E) -> (H/P, B, T,   E)
-          - head-split -> time-split: (H/P, B, T,   E) -> (H,   B, T/P, E)
+          - sequence-split -> head-split: (H,   B, S/P, E) -> (H/P, B, S,   E)
+          - head-split -> sequence-split: (H/P, B, S,   E) -> (H,   B, S/P, E)
         """
         P = dist.get_world_size(group=group)
         full_shape = list(tensor.shape)
         full_shape[old_split_dim] *= P  # recover full distributed shape along old split dim
-        H, B, T, E = full_shape
+        H, B, S, E = full_shape
 
         send = torch.cat([tensor.chunk(P, dim=new_split_dim)[r].contiguous() for r in range(P)])
         recv = torch.zeros_like(send)
         dist.all_to_all_single(output=recv, input=send, group=group)
 
         # Reassemble into the new local layout
-        recv = torch.cat([recv.chunk(P)[r].view(H // P, B, T // P, E) for r in range(P)], dim=old_split_dim)
+        recv = torch.cat([recv.chunk(P)[r].view(H // P, B, S // P, E) for r in range(P)], dim=old_split_dim)
         return recv
 
     def forward(self, x):
-        # x is local chunk: (B, T/P, n_embd)
+        # x is local chunk: (B, S/P, n_embd)
         P = dist.get_world_size(group=self.group)
         B = x.shape[0]
-        T_local = x.shape[1]
-        T = T_local * P
+        S_local = x.shape[1]
+        S = S_local * P
 
-        # Q, K and V: (B, T/P, n_embd) -> (H, B, T/P, d_head)
+        # Q, K and V: (B, S/P, n_embd) -> (H, B, S/P, d_head)
         q = torch.stack([q(x) for q in self.queries], dim=0)
         k = torch.stack([k(x) for k in self.keys], dim=0)
         v = torch.stack([v(x) for v in self.values], dim=0)
 
-        if P > 1:  # (H, B, T/P, d_head) -> (H/P, B, T, d_head)
+        if P > 1:  # (H, B, S/P, d_head) -> (H/P, B, S, d_head)
             q = MultiHeadAttention.first_alltoall.apply(q, self.group)
             k = MultiHeadAttention.first_alltoall.apply(k, self.group)
             v = MultiHeadAttention.first_alltoall.apply(v, self.group)
 
-        # flash_attn expects (B, T, H_local, d_head)
+        # flash_attn expects (B, S, H_local, d_head)
         q_ = q.permute(1, 2, 0, 3)
         k_ = k.permute(1, 2, 0, 3)
         v_ = v.permute(1, 2, 0, 3)
 
         dropout_p, softmax_scale = 0.0, q_.shape[-1] ** (-0.5)
-        out_ = flash_attn_func(q_, k_, v_, dropout_p, softmax_scale)  # (B, T, H/P, d_head)
+        out_ = flash_attn_func(q_, k_, v_, dropout_p, softmax_scale)  # (B, S, H/P, d_head)
 
-        # back to (H/P, B, T, d_head) for the second all-to-all
+        # back to (H/P, B, S, d_head) for the second all-to-all
         out = out_.permute(2, 0, 1, 3)
 
-        if P > 1:  # (H/P, B, T, d_head) -> (H, B, T/P, d_head)
+        if P > 1:  # (H/P, B, S, d_head) -> (H, B, S/P, d_head)
             out = MultiHeadAttention.second_alltoall.apply(out, self.group)
 
-        out = out.permute(1, 2, 0, 3)  # (H, B, T/P, d_head) -> (B, T/P, H, d_head)
-        out = out.reshape(B, T // P, -1)  # (B, T/P, H, d_head) -> (B, T/P, H*d_head)
-        out = self.proj(out)  # (B, T/P, H*d_head) -> (B, T/P, n_embd)
+        out = out.permute(1, 2, 0, 3)  # (H, B, S/P, d_head) -> (B, S/P, H, d_head)
+        out = out.reshape(B, S // P, -1)  # (B, S/P, H, d_head) -> (B, S/P, H*d_head)
+        out = self.proj(out)  # (B, S/P, H*d_head) -> (B, S/P, n_embd)
         out = self.dropout(out)
         return out
 
@@ -144,18 +144,18 @@ if __name__ == "__main__":
     # model constants (use these or import from GPT-lite post). Naming matches post
     P = dist.get_world_size()
     B = 4      # batch size
-    T = 2048   # sequence length
+    S = 2048   # sequence length
     H = 8      # number of heads
     E = 128    # head dim (d_head)
     n_embd = 256
     n_blocks = 12
 
     # sanity checks
-    assert T % P == 0, "seqlen must be divisible by number of processes"
+    assert S % P == 0, "seqlen must be divisible by number of processes"
     assert H % P == 0, "n_heads must be divisible by number of processes"
 
     # NOTE: x should be float activations (not token IDs) for a pure attention/FFN benchmark.
-    x = torch.randn(B, T // P, n_embd, device=device, dtype=dtype)  # local chunk
+    x = torch.randn(B, S // P, n_embd, device=device, dtype=dtype)  # local chunk
     y = torch.ones_like(x)
 
     # build model as sequence of blocks

@@ -7,7 +7,7 @@ tags: [machinelearning]
 
 In this post we will discuss and implement context and sequence parallelism, a technique to parallelize computation across the sequence-length dimension. Sequence parallelism is just another possible dimension of model parallelism on the universe of data, tensor, pipeline, tensor, context, sequence and expert parallelism. 
 
-Many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. A few examples are temporal datasets with a shape `(B, T, E)` for text with batch size `B`, sequence length or token count `T` and embedding `E`. Also, videos of shape `(B, C, T, H, W)` for `C` channels, `T` frames, and `HxW` pixels per frame. And attention scores and probabilities, with shape `(B, H, T, T)` for `H` heads and sequences of length `T`. In these scenarios, we can explore parallelism on the sequence/time dimension `T`. Following the same notation as text, sequence parallelism requires a local storage of `(B, T/P, E)` per process. With that in mind, in this post we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPTlite blocks]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), where each block is a multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
+Many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. A few examples are temporal datasets with a shape `(B, S, E)` for text with batch size `B`, sequence length or token count `S` and embedding `E`. Also, videos of shape `(B, C, T, H, W)` for `C` channels, `T` frames, and `HxW` pixels per frame. And attention scores and probabilities, with shape `(B, H, S, S)` for `H` heads and sequences of length `S`. In these scenarios, we can explore parallelism on the sequence dimension `S` (or `T` for videos). Following the same notation as text, sequence parallelism requires a local storage of `(B, S/P, E)` per process. With that in mind, in this post we will implement two existing techniques for sequence parallelism: Ulysses and Ring Attention. Our use case will be a model composed of a sequence of [GPTlite blocks]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), where each block is a multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
 
 Before we continue, we emphasize the following:
 
@@ -30,7 +30,7 @@ Once this is in place, most layers (like the Feed Forward network) operate acros
 
 During training/inference, the model runtime can scale well with the sequence parallelism degree, except for the attention layer. This is due to the fact that, to reduce activation memory footprint, each GPU only stores a subset of the KV elements.
 
-In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values for the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `(B, T, E)`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `(B, T/P, E)`, it needs to access all elements of $$K^T$$ and $$V$$ to be able to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product by $$V$$, resulting in the attention output per process of shape `(B, T/P, E)`:
+In practice, to compute the attention module, one process needs its subset/chunk of queries, but **needs the keys and values for the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `(B, S, E)`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `(B, S/P, E)`, it needs to access all elements of $$K^T$$ and $$V$$ to be able to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product by $$V$$, resulting in the attention output per process of shape `(B, S/P, E)`:
 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.png"/>
@@ -39,38 +39,38 @@ Therefore, sequence parallelism requires some communication to make the relevant
 
 ## Ulysses sequence parallelism
 
-Take the previous notation and assume a mini-batch split across the time dimension, with a local storage of `(B, T/P, E)` per process.
-If we pass such a shape to a feed-forward network, we achieve parallelism of order `P`, as the `T` dimension will be treated as batch by the linear layers. However, in the case of multi-head attention, there is a need for process communication because time dependencies across the tokens require access to the full attention context.
+Take the previous notation and assume a mini-batch split across the sequence dimension, with a local storage of `(B, S/P, E)` per process.
+If we pass such a shape to a feed-forward network, we achieve parallelism of order `P`, as the `S` dimension will be treated as batch by the linear layers. However, in the case of multi-head attention, there is a need for process communication because time dependencies across the tokens require access to the full attention context.
 
-[(DeepSpeed) Ulysses parallelism](https://arxiv.org/abs/2309.14509) solves this by swapping the distributed view from time-split to head-split before and after the MHA module, as in the following illustration:
+[(DeepSpeed) Ulysses parallelism](https://arxiv.org/abs/2309.14509) solves this by swapping the distributed view from sequence-split to head-split before and after the MHA module, as in the following illustration:
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Overview of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) GPUs, split by the time (`T`) dimension. **Center:** the *first all-to-all* changes the distributed tensor view from time- to head-split. Each process now holds complete sequences (i.e., not time-split) for a subset of heads and can compute attention locally. **Right:** the *second all-to-all* reverts the view from head- to time-split.
+Overview of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) GPUs, split by the sequence (`S`) dimension. **Center:** the *first all-to-all* changes the distributed tensor view from sequence- to head-split. Each process now holds complete sequences (i.e., not sequence-split) for a subset of heads and can compute attention locally. **Right:** the *second all-to-all* reverts the view from head- to sequence-split.
 
-In practice, the implementation of Ulysses only requires extra steps that swap the distributed view of the input tensor from e.g. `(H, B, T/P, E)` to `(H/P, B, T, E)` and vice-versa. We can implement a function `dist_view_swap()` that, given a `tensor` whose sequence is distributed across the process group `group`, swaps the distributed view by changing the split dimension from `old_split_dim` to `new_split_dim`:
+In practice, the implementation of Ulysses only requires extra steps that swap the distributed view of the input tensor from e.g. `(H, B, S/P, E)` to `(H/P, B, S, E)` and vice-versa. We can implement a function `dist_view_swap()` that, given a `tensor` whose sequence is distributed across the process group `group`, swaps the distributed view by changing the split dimension from `old_split_dim` to `new_split_dim`:
 
 ```python
 def dist_view_swap(tensor: torch.Tensor, old_split_dim: int, new_split_dim: int, group: dist.ProcessGroup):
-    '''Swap the distributed split dimension of a tensor of local shape (H, B, T/P, E) across P processes.'''
+    '''Swap the distributed split dimension of a tensor of local shape (H, B, S/P, E) across P processes.'''
     full_shape, P = list(tensor.shape), group.size()
     full_shape[old_split_dim] *= P  # full distributed shape
-    H, B, T, E = full_shape
+    H, B, S, E = full_shape
 
     send = torch.cat([tensor.chunk(P, dim=new_split_dim)[r].contiguous() for r in range(P)])
     recv = torch.zeros_like(send)
     dist.all_to_all_single(output=recv, input=send, group=group)
 
     recv = torch.cat(
-        [recv.chunk(P)[r].view(H // P, B, T // P, E) for r in range(P)],
+        [recv.chunk(P)[r].view(H // P, B, S // P, E) for r in range(P)],
         dim=old_split_dim,
     )
     return recv
 ```
 
-From here, the implementation is straightforward. The first (leftmost) all-to-all in the Ulysses diagram above converts the distributed view from time-split to head-split, while the backward pass does the inverse view swap:
+From here, the implementation is straightforward. The first (leftmost) all-to-all in the Ulysses diagram above converts the distributed view from sequence-split to head-split, while the backward pass does the inverse view swap:
 
 ```python
 class first_alltoall(torch.autograd.Function):
@@ -126,37 +126,37 @@ class MultiHeadAttention(nn.Module):
             self.group = dist.new_group(range(dist.get_world_size()))
 
     def forward(self, x):
-        # x is local chunk: (B, T/P, E)
+        # x is local chunk: (B, S/P, E)
         P = self.group.size()
-        B, T_local = x.shape[0], x.shape[1]
-        T = T_local * P
+        B, S_local = x.shape[0], x.shape[1]
+        S = S_local * P
 
-        # Q, K and V embeddings: (B, T/P, E) -> (H, B, T/P, d_head)
+        # Q, K and V embeddings: (B, S/P, E) -> (H, B, S/P, d_head)
         q = torch.stack([q(x) for q in self.queries], dim=0)
         k = torch.stack([k(x) for k in self.keys], dim=0)
         v = torch.stack([v(x) for v in self.values], dim=0)
 
-        if P > 1:  # (H, B, T/P, d_head) -> (H/P, B, T, d_head)
+        if P > 1:  # (H, B, S/P, d_head) -> (H/P, B, S, d_head)
             q = first_alltoall.apply(q, self.group)
             k = first_alltoall.apply(k, self.group)
             v = first_alltoall.apply(v, self.group)
 
-        # flash_attn expects (B, T, H_local, d_head)
+        # flash_attn expects (B, S, H_local, d_head)
         q_ = q.permute(1, 2, 0, 3)
         k_ = k.permute(1, 2, 0, 3)
         v_ = v.permute(1, 2, 0, 3)
 
         dropout_p, softmax_scale = 0.0, q_.shape[-1] ** (-0.5)
-        out = flash_attn_func(q_, k_, v_, dropout_p, softmax_scale)  # (B, T, H/P, d_head)
+        out = flash_attn_func(q_, k_, v_, dropout_p, softmax_scale)  # (B, S, H/P, d_head)
 
-        out = out.permute(2, 0, 1, 3)  # (H/P, B, T, d_head)
+        out = out.permute(2, 0, 1, 3)  # (H/P, B, S, d_head)
 
-        if P > 1:  # (H/P, B, T, d_head) -> (H, B, T/P, d_head)
+        if P > 1:  # (H/P, B, S, d_head) -> (H, B, S/P, d_head)
             out = second_alltoall.apply(out, self.group)
 
-        out = out.permute(1, 2, 0, 3)  # (H, B, T/P, d_head) -> (B, T/P, H, d_head)
-        out = out.reshape(B, T // P, -1)  # (B, T/P, H, d_head) -> (B, T/P, H*d_head)
-        out = self.proj(out)  # (B, T/P, H*d_head) -> (B, T/P, E)
+        out = out.permute(1, 2, 0, 3)  # (H, B, S/P, d_head) -> (B, S/P, H, d_head)
+        out = out.reshape(B, S // P, -1)  # (B, S/P, H, d_head) -> (B, S/P, H*d_head)
+        out = self.proj(out)  # (B, S/P, H*d_head) -> (B, S/P, E)
         out = self.dropout(out)
         return out
 ```
@@ -208,7 +208,7 @@ $$
 
 ### Distributed algorithm
 
-Now that we know how to compute the attention output per block, we can parallelize attention by delegating a sub-block to each processor. We start with sequence parallelism of the tensors $$q$$, $$k$$ and $$v$$ across $$P$$ processes, i.e., **each process holds a non-overlapping time block of the $$q$$, $$k$$ and $$v$$ tensors**. Just like Ulysses, this allows for direct `P`-order parallelism on the feed-forward network, but not on multi-head attention.
+Now that we know how to compute the attention output per block, we can parallelize attention by delegating a sub-block to each processor. We start with sequence parallelism of the tensors $$q$$, $$k$$ and $$v$$ across $$P$$ processes, i.e., **each process holds a non-overlapping sequence block of the $$q$$, $$k$$ and $$v$$ tensors**. Just like Ulysses, this allows for direct `P`-order parallelism on the feed-forward network, but not on multi-head attention.
 
 During ring attention, each process keeps its local chunk of queries, and **rotates the key/value blocks** among all $$P$$ processes in a ring fashion: at each communication step (out of $$P$$ steps), each process sends its block of keys/values to the next process and receives the keys/values block from the previous process in the ring. After $$P$$ steps, every process has seen all key/value blocks and can compute attention for its local queries.
 
@@ -218,9 +218,9 @@ This pattern can be illustrated as:
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 (color-coded) GPUs, split by the time (`T`) dimension. **1st Ring Attention step:** each process holds its part of the Query, Key and Value tensors and computes block attention for those tensors. Asynchronously, processes send the Key and Value tensors to the next process in the ring (clockwise). **2nd, 3rd, and 4th steps:** each process receives the previous process' Key and Value blocks and computes attention output for its original Query tensor and the received Key/Value tensors. **After Ring Attention:** the MHA output is already time-split across processes, similarly to the initial data format.
+Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 (color-coded) GPUs, split by the sequence (`S`) dimension. **1st Ring Attention step:** each process holds its part of the Query, Key and Value tensors and computes block attention for those tensors. Asynchronously, processes send the Key and Value tensors to the next process in the ring (clockwise). **2nd, 3rd, and 4th steps:** each process receives the previous process' Key and Value blocks and computes attention output for its original Query tensor and the received Key/Value tensors. **After Ring Attention:** the MHA output is already sequence-split across processes, similarly to the initial data format.
 
-From a process standpoint, after all ring steps, each process has its own time block of $$q$$ and has iterated over the full $$k$$ and $$v$$ tensors (in chunks). As an example, for the third (red) process above, we'd have the following data presented:
+From a process standpoint, after all ring steps, each process has its own sequence block of $$q$$ and has iterated over the full $$k$$ and $$v$$ tensors (in chunks). As an example, for the third (red) process above, we'd have the following data presented:
 
 {: style="text-align:center; font-size: small;"}
 <img width="40%" height="40%" src="{{ site.assets }}/distributed-training/imgs/ring_attention_qkv.png"/>
@@ -240,7 +240,7 @@ class RingAttention(torch.autograd.Function):
     def forward(ctx, q, k, v, group):
 
         P = group.size()
-        q, k, v = q.contiguous(), k.contiguous(), v.contiguous()  # (B, T/P, H, E)
+        q, k, v = q.contiguous(), k.contiguous(), v.contiguous()  # (B, S/P, H, E)
 
         out = lse = None  # accumulators
         recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)  # recv buffers
@@ -336,15 +336,15 @@ Finally, the `forward` pass of multi-head attention is straightforward and simpl
 class MultiHeadAttention(nn.Module):
      def forward(self, x):
         P = self.group.size()
-        B, T_local = x.shape[0], x.shape[1]
-        T = T_local * P
+        B, S_local = x.shape[0], x.shape[1]
+        S = S_local * P
 
-        # take Q, K and V, and collect all head embeddings: (B, T/P, E) -> (H, B, T/P, E)
+        # take Q, K and V, and collect all head embeddings: (B, S/P, E) -> (H, B, S/P, E)
         q = torch.stack([q(x) for q in self.queries], dim=0)
         k = torch.stack([k(x) for k in self.keys], dim=0)
         v = torch.stack([v(x) for v in self.values], dim=0)
 
-        # convert to flash-attn layout (B, T/P, H, E)
+        # convert to flash-attn layout (B, S/P, H, E)
         q_ = q.permute(1, 2, 0, 3)
         k_ = k.permute(1, 2, 0, 3)
         v_ = v.permute(1, 2, 0, 3)
@@ -354,8 +354,8 @@ class MultiHeadAttention(nn.Module):
         else:
             out_ = RingAttention.apply(q_, k_, v_, self.group)
 
-        out = out_.reshape(B, T // P, -1)  # (B, T/P, H, E) -> (B, T/P, H*E)
-        out = self.proj(out)  # (B, T/P, H*E) -> (B, T/P, E)
+        out = out_.reshape(B, S // P, -1)  # (B, S/P, H, E) -> (B, S/P, H*E)
+        out = self.proj(out)  # (B, S/P, H*E) -> (B, S/P, E)
         out = self.dropout(out)
         return out
 ```
@@ -375,7 +375,7 @@ Both methods have drawbacks. The rule of thumb is to use a hybrid algorithm once
 
 ## Training with sequence- and multi-dimensional parallelism
 
-PyTorch does not have the notion of *partial sequences* in the same way data parallelism has a notion of *partial batches*. Thus, samples processed in parallel are usually assumed to be full-length samples on a data-parallel execution. To overcome this, when we run sequence parallelism of order `S`, we must perform `S` gradient accumulation steps with the corresponding **gradient scaling** so that we effectively process the intended batch size and gradients are properly averaged.
+PyTorch does not have the notion of *partial sequences* in the same way data parallelism has a notion of *partial batches*. Thus, samples processed in parallel are usually assumed to be full-length samples on a data-parallel execution. To overcome this, when we run sequence parallelism of order `P`, we must perform `P` gradient accumulation steps with the corresponding **gradient scaling** so that we effectively process the intended batch size and gradients are properly averaged.
 
 Moreover, when we perform multi-dimensional parallelism (e.g. data + sequence), we need to define process groups for the data-parallel processes (the ones that load different samples) and the sequence-parallel processes (the ones that load different chunks of the same sample). We can do this with PyTorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) or create oue own process groups manually. For the sake of illustration, if we'd implement a $$2 \times 2$$ data- and Ulysses sequence parallelism on 4 GPUs, this would be the memory layout before and during the multi-head attention:
 
