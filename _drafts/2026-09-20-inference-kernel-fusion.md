@@ -9,7 +9,7 @@ tags: [machinelearning]
 
 ### Why kernels matter
 
-Every PyTorch operation launches one or more GPU kernels. Each launch costs a few microseconds of CPU and driver time, and each kernel reads its inputs from GPU memory and writes its outputs back. For large models and batches, these costs hide behind the math. For small models and batches, like GPTlite, they dominate: a decode step launches hundreds of small kernels, and the GPU spends much of its time idle, waiting for the CPU to launch the next kernel, or for the memory round-trips between kernels.
+Every PyTorch operation launches one or more GPU kernels. Each launch costs a few microseconds of CPU and driver time, and each kernel reads its inputs from GPU memory and writes its outputs back. For large models and batches, these costs hide behind the math. For small models like GPTlite and small batches, they dominate: a decode step launches hundreds of small kernels, and the GPU spends much of its time idle, waiting for the CPU to launch the next kernel, or for the memory round-trips between kernels.
 
 ### Kernel fusion and torch.compile
 
@@ -91,7 +91,7 @@ Production deployments rarely hand-write these optimizations: inference engines 
 
 ## How to benchmark
 
-The following code allows one to benchmark the methods of our inference on GPTlite, measuring the time to first token, the time per output token, the throughput, the peak memory and the validation loss. The full code is in [`benchmark_all.py`]({{ site.assets }}/inference/benchmark_all.py):
+The following code benchmarks our inference methods on GPTlite, measuring the time to first token, the time per output token, the throughput, the peak memory and the validation loss. The full code is in [`benchmark_all.py`]({{ site.assets }}/inference/benchmark_all.py):
 
 <details markdown="1">
 <summary>Show code</summary>

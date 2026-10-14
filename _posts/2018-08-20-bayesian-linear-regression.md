@@ -5,21 +5,21 @@ categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
 
-Bayesian methods allows us to perform modelling of an input to an output by providing a measure of *uncertainty* or "how sure we are", based on the seen data. Unlike most *frequentist* methods commonly used, where the outpt of the method is a set of best fit parameters, the output of a Bayesian regression is a probability distribution of each model parameter, called the **posterior distribution**. 
+Bayesian methods allow us to model the relationship between an input and an output while providing a measure of *uncertainty*, or "how sure we are", based on the seen data. Unlike most commonly used *frequentist* methods, where the output of the method is a set of best-fit parameters, the output of a Bayesian regression is a probability distribution of each model parameter, called the **posterior distribution**. 
 
-For the sake of comparison, take the example of a simple linear regression $$y = mx + b$$. On the frequentist approach, one tries to find the constant that define the slope $$m$$ and bias $$b$$ values, with $$m \in \mathbb{R}$$ and $$b \in \mathbb{R}$$. On the other hand, the Bayesian approach would also compute $$y = mx + b$$, however, $$b$$ and $$m$$ are not assumed to be constant values but drawn from probability distributions instead. The parameters of those probabilities define the values to be learnt (or *tuned*) during training. A common approach is to assume as **prior knowledge** that $$m$$ and $$b$$ are independent and normally distributed --- i.e. $$b \thicksim \mathcal{N}(\mu_{b}, \sigma^2_{b})$$ and $$w \thicksim \mathcal{N}(\mu_{w}, \sigma^2_{w})$$ --- and the parameters to be learnt would then be all $$\mu$$ and $$\sigma$$. Additionally, on a Bayesian approach we can also add the model of the noise (inverse of the precision) constant $$\varepsilon$$ that models *how noisy* our data may be, by computing $$y = mx + b + \varepsilon$$ instead, with $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2_{\varepsilon})$$.
+For the sake of comparison, take the example of a simple linear regression $$y = mx + b$$. In the frequentist approach, one tries to find the constant values of the slope $$m$$ and bias $$b$$, with $$m \in \mathbb{R}$$ and $$b \in \mathbb{R}$$. On the other hand, the Bayesian approach also computes $$y = mx + b$$; however, $$b$$ and $$m$$ are not assumed to be constant values, but are drawn from probability distributions instead. The parameters of those distributions are the values to be learnt (or *tuned*) during training. A common approach is to assume as **prior knowledge** that $$m$$ and $$b$$ are independent and normally distributed --- i.e. $$b \thicksim \mathcal{N}(\mu_{b}, \sigma^2_{b})$$ and $$m \thicksim \mathcal{N}(\mu_{m}, \sigma^2_{m})$$ --- and the parameters to be learnt would then be all $$\mu$$ and $$\sigma$$. Additionally, in a Bayesian approach we can model the noise (whose variance is the inverse of the precision) with a term $$\varepsilon$$ that captures *how noisy* our data may be, by computing $$y = mx + b + \varepsilon$$ instead, with $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2_{\varepsilon})$$.
  
-Apart from the uncertainty quantification, another benefit of Bayesian is the possibility of **online learning**, i.e. a continuous update of the trained model (from previously-seen data) by looking at only the new data. This is a handy feature for e.g. datasets that are purged periodically.
+Apart from uncertainty quantification, another benefit of Bayesian methods is the possibility of **online learning**, i.e. a continuous update of the trained model (from previously-seen data) by looking only at the new data. This is a handy feature for e.g. datasets that are purged periodically.
 
 ### Refresher: Normal distribution
 
-A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. In the following post, we methods will be solely based on the [Normal distribution](https://en.wikipedia.org/wiki/Normal_distribution) defined for an input $$x$$ by:
-  - $$p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$ on an univariate notation, or
-  - $$p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{-D/2} \,\, det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)$$ with mean vector $$\mu$$ and covariance matrix $$\Sigma$$ on its multivariate (*matrix*) notation
+A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. In this post, our methods will be based solely on the [Normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), defined for an input $$x$$ by:
+  - $$p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$ in univariate notation, or
+  - $$p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{D/2} \,\, det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)$$ with mean vector $$\mu$$ and covariance matrix $$\Sigma$$ in its multivariate (*matrix*) notation
 
 ## Bayes Theorem
 
-From the field of probability, the **product rule** tells us that $$p(A, B) = p(A) p(B\mid A)$$. By symmetry we have that $$p(B,A) = p(B) p(A\mid B)$$. By equating both right hand sides of the equations and re-arranging the terms we obtain the **Bayes Theorem**:
+From the field of probability, the **product rule** tells us that $$p(A, B) = p(A) p(B\mid A)$$. By symmetry, we have that $$p(B,A) = p(B) p(A\mid B)$$. By equating the right-hand sides of both equations and rearranging the terms, we obtain **Bayes Theorem**:
 
 \begin{equation}
 \text{posterior} = \frac{\text{likelihood}\, \times \, \text{prior}}{\text{evidence}} = p(A\mid B) = \frac{p(B\mid A) p(A)}{p(B)}\end{equation}
@@ -31,19 +31,19 @@ p(\theta \mid X) = \frac{p(X\mid \theta) p(\theta)}{p(X)} \propto p(X \mid \thet
 \label{eq_prior_AB}
 $$
 
-,where evidence is
+where the evidence is
 $$
 p(X) = \int p(X \mid \theta) p(\theta) d\theta = \mathbb{E}_{\theta}[ p(X \mid \theta) ]
 $$   
 
-The idea behing Bayes Theorem in ML is to invert the relationship between the parameters $$θ$$ and the data $$X$$ to obtain the posterior;
+The idea behind Bayes Theorem in ML is to invert the relationship between the parameters $$θ$$ and the data $$X$$ to obtain the posterior.
 
-An important theoream called the **Bernstein-von Mises Theorem** states that:
-- for a sufficiently large sample size, the posterior distribution becomes independent of the prior (as long as the prior is neither 0 or 1)
-  - ie for a sufficiently large dataset, the prior just doesnt matter much anymore as the current data has enough information;
-  - if we let the datapoints go to infitiny, the posterior distribution will go to normal distribution, where the mean will be the maximum likelihood estimator;
+An important theorem, called the **Bernstein-von Mises Theorem**, states that:
+- for a sufficiently large sample size, the posterior distribution becomes independent of the prior (as long as the prior is neither 0 nor 1)
+  - i.e. for a sufficiently large dataset, the prior just doesn't matter much anymore, as the current data has enough information;
+  - if we let the number of datapoints go to infinity, the posterior distribution will converge to a normal distribution, whose mean is the maximum likelihood estimator;
     - this is a restatement of the central limit theorem, where the posterior distribution becomes the likelihood function;
-  - ie the effect of the prior decreases as the data increases;
+  - i.e. the effect of the prior decreases as the data increases;
 - we typically want to maximize the posterior, so we can drop the evidence term (as it's independent of $$\theta$$) and compute only the maximum of the term $$p(X \mid \theta) p(\theta)$$. 
 
 There are two main optimization problems that we discuss in Bayesian methods: Maximum Likelihood Estimator (MLE) and Maximum-a-Posteriori (MAP).
@@ -51,24 +51,24 @@ There are two main optimization problems that we discuss in Bayesian methods: Ma
 ## Maximum Likelihood Estimator (MLE)
 
 
-(In case the following reductions cause some confusion, check the [appendix at the bottom of the page](#appendix-lin-alg) for the rules used, or <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed overview of matrix operations.)
+(In case the following derivations cause some confusion, check the [appendix at the bottom of the page](#appendix-lin-alg) for the rules used, or <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed overview of matrix operations.)
 
 
 
-When we try to find *how likely is for an output $$y$$ to belong to a model defined by data $$X$$, weights $$w$$ and model parameters $$\sigma$$ (if any)*, or **maximize the likelihood $$p(y\mid w, X, \sigma^2)$$**, we perform a **Maximum Likelihood Estimator (MLE)**. Maximizing the likelihood means maximizing the probability that models the training data, given the model parameters, as:
+When we try to find *how likely it is for an output $$y$$ to belong to a model defined by data $$X$$, weights $$w$$ and model parameters $$\sigma$$ (if any)*, or **maximize the likelihood $$p(y\mid w, X, \sigma^2)$$**, we compute a **Maximum Likelihood Estimator (MLE)**. Maximizing the likelihood means maximizing the probability of the training data, given the model parameters, as:
 
 $$ w_{MLE} = argmax_w \,\, p(y \mid w, X)  $$
 
 Let us interpret what the probability density $$p(x \mid θ)$$ is modeling for a fixed value of θ. It is a distribution that models the uncertainty of the data for a given parameter setting. In a complementary view, if we consider the data to be fixed (because it has been observed), and we vary the parameters θ, what does the MLE tell us? It tells us how likely a particular setting of θ is for the observations x. Based on this second view, the maximum likelihood estimator gives us the most likely parameter θ for the set of data.  (MML book, section 8.3.1).
 
-When the distribution of the prior and posterior are computationally tractable, the optimization of the parameters that define the distribution can be performed using the [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent) method, an iterative method that was covered [in other post]({% post_url 2017-02-17-linear-regression-matrix-factorization %}). In practice we perform and iterative partial derivatives of the prior/posterior for the model parameters (e.g. mean $$\mu$$ and standard deviation $$\sigma$$ in a Gaussian environment) and move our weight estimation towards the direction of lowest loss.
+When the prior and posterior distributions are computationally tractable, the optimization of the parameters that define them can be performed using the [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent) method, an iterative method that was covered [in another post]({% post_url 2017-02-17-linear-regression-matrix-factorization %}). In practice, we iteratively compute the partial derivatives of the prior/posterior with respect to the model parameters (e.g. mean $$\mu$$ and standard deviation $$\sigma$$ in a Gaussian setting) and move our weight estimation towards the direction of lowest loss.
 
-To simplify the computation, we perform the *log-trick* and place the term to optimize into a log function. We can do this because $$log$$ is a monotonically-increasing function, thus applying it to any function won't change the input values where the minimum or maximum of the solution (ie where gradient is zero). Moreover, since Gaussian distribution is represented by a product of exponentials, by applying the $$log$$ function we *bring the power term out* of the exponential, making its computation simpler and faster. In practice, we apply the log-trick to the function we want to minimize and get: 
+To simplify the computation, we perform the *log-trick* and place the term to optimize inside a log function. We can do this because $$log$$ is a monotonically-increasing function, so applying it to any function won't change the input values at which the minimum or maximum is attained (i.e. where the gradient is zero). Moreover, since the Gaussian distribution is represented by a product of exponentials, by applying the $$log$$ function we *bring the power term out* of the exponential, making its computation simpler and faster. In practice, we apply the log-trick to the function we want to minimize and get: 
 
 $$
   \begin{align*}
--\log \,\, p(y \mid w, X) & = -log \prod_{n=1}^N p(y_n \mid w_n, X_n) \\
-                                       & = - \sum_{n=1}^N log \,\, p(y_n \mid w_n, X_n)\\
+-\log \,\, p(y \mid w, X) & = -log \prod_{n=1}^N p(y_n \mid w, X_n) \\
+                                       & = - \sum_{n=1}^N log \,\, p(y_n \mid w, X_n)\\
   \end{align*}
 $$
 
@@ -76,7 +76,7 @@ I.e. we turn a log of products into a sum of logs. In the linear regression mode
 
 $$
 \begin{align*}
-log \,\,  p(y \mid w, X, \sigma^2) & = \log \left( \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(y_n - x_n^Tw)^2}{2 \sigma^2} \right) \right)\\
+log \,\,  p(y_n \mid w, x_n, \sigma^2) & = \log \left( \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(y_n - x_n^Tw)^2}{2 \sigma^2} \right) \right)\\
 & =  - \frac{1}{2 \sigma^2} (y_n - x^T_n w)^2 + const \\
 \end{align*}
 \label{eq_lr_likelihood}
@@ -86,18 +86,18 @@ where $$const$$ includes all terms independent of $$w$$. Using the negative of t
 
 $$
   \begin{align*}
-L(w) & = \frac{1}{2 \sigma^2} \sum_{n=1}^N (y_n - Xw)^2 \\
+L(w) & = \frac{1}{2 \sigma^2} \sum_{n=1}^N (y_n - x_n^Tw)^2 \\
      & = \frac{1}{2 \sigma^2} (y - Xw)^T (y-Xw) \\ 
      & = \frac{1}{2 \sigma^2} \| y-Xw \|^2 \\
   \end{align*}
 $$
 
-The second trick here is that the previous equation is quadratic in $$w$$. Thus we have an unique global solution for minimizing the previous log-likelihood and compute the point of minimum loss as:
+The second trick here is that the previous equation is quadratic in $$w$$. Thus, we have a unique global solution for minimizing the loss, and we compute the point of minimum loss as:
 
 $$
   \begin{align*}
        & \frac{dL}{dw} = 0 \\
-   \Leftrightarrow & 0 = \frac{d}{dw} \left( \frac{1}{2 \sigma^2} (y-Xw)^T(t-Xw) \right) \\
+   \Leftrightarrow & 0 = \frac{d}{dw} \left( \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) \right) \\
    \Leftrightarrow & 0 =  \frac{1}{2 \sigma^2} \frac{d}{dw} \left( y^Ty - 2y^TXw + w^TX^TXw \right) \\
    \Leftrightarrow & 0 =  \frac{1}{2 \sigma^2} \left( -2y^TX + 2w^TX^TX \right) \\
    \Leftrightarrow & y^TX = w^TX^TX \\
@@ -106,26 +106,26 @@ $$
   \end{align*}
 $$
 
-Note that this solution is independent of the noise variance $$\sigma^2$$, and is the same as minimizing the Least Squares Problem, as we showed in a [previous post]({{ site.baseurl }}{% post_url 2017-02-17-linear-regression-matrix-factorization %}), with the same closed-form solution $$ w = (X^TX)^{-1} X^Ty$$. In practice, minimizing the Least Squares problem is equivalent to determining the most likely $$w$$ under the assumption that $$y$$ contains gaussian noise  i.e. $$y = wx + b + \varepsilon$$, with $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$$. 
+Note that this solution is independent of the noise variance $$\sigma^2$$, and matches the result of minimizing the Least Squares problem, as we showed in a [previous post]({{ site.baseurl }}{% post_url 2017-02-17-linear-regression-matrix-factorization %}), with the same closed-form solution $$ w = (X^TX)^{-1} X^Ty$$. In practice, minimizing the Least Squares problem is equivalent to determining the most likely $$w$$ under the assumption that $$y$$ contains Gaussian noise, i.e. $$y = wx + b + \varepsilon$$, with $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$$. 
 
 
 ### Adding regularization
 
-Regularizers can be added normally as in the non-Bayesian regression and may have as well an analytical solution. As an example, if we want ot add an $$L_2$$/Ridge regularizer:
+Regularizers can be added as in non-Bayesian regression, and may also have an analytical solution. As an example, if we want to add an $$L_2$$/Ridge regularizer:
 
 $$
   \begin{align*}
- & 0 = \frac{d}{dw} \left( L - \frac{\alpha}{2} w^Tw \right)\\
- \Leftrightarrow & 0 = \frac{d}{dw} \left( - \frac{D}{2} log ( 2 \pi \sigma^2) - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{\alpha}{2} w^Tw \right)\\
+ & 0 = \frac{d}{dw} \left( -L - \frac{\alpha}{2} w^Tw \right)\\
+ \Leftrightarrow & 0 = \frac{d}{dw} \left( - \frac{N}{2} log ( 2 \pi \sigma^2) - \frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{\alpha}{2} w^Tw \right)\\
  \Leftrightarrow & w_{MLE\_reg} = (X^TX + \lambda I )^{-1} X^Ty\\
   \end{align*}
 $$
 
-where $$\lambda = \alpha \sigma^2$$, therefore the solution is now noise-dependent, contrarily to the previous use case. Note that we picked the regularizer constant $$\alpha/2$$ on the first step to simplify the maths and *cancel out* the 2 when doing the derivative of the $$w^Tw$$.
+where $$\lambda = \alpha \sigma^2$$; therefore, the solution is now noise-dependent, contrary to the previous case. Note that we picked the regularizer constant $$\alpha/2$$ in the first step to simplify the maths and *cancel out* the 2 when taking the derivative of $$w^Tw$$.
 
 ### Estimating noise variance
 
-So far we assumed the noise $$\sigma^2$$ is known. However, we can use the same Maximum Likelihood principle to obtain the estimator $$\sigma^2_{MLE}$$ for the noise:
+So far, we assumed that the noise variance $$\sigma^2$$ is known. However, we can use the same Maximum Likelihood principle to obtain the estimator $$\sigma^2_{MLE}$$ for the noise:
 
 $$
   \begin{align*}
@@ -135,7 +135,7 @@ $$
   \end{align*}
 $$
 
-The partial derivative of the loss with respect to $$\sigma^2$$ and the MLE-estimation of $$\sigma^2$$ is then:
+The partial derivative of the log-likelihood with respect to $$\sigma^2$$, and the MLE of $$\sigma^2$$, are then:
 
 $$
   \begin{align*}
@@ -145,35 +145,35 @@ $$
   \end{align*}
 $$
 
-i.e. $$\sigma^2$$ is the mean of the squared distance between observations and noise-free values.
+i.e. $$\sigma^2$$ is the mean of the squared distances between the observations and the noise-free values.
 
 ## Maximum-a-Posteriori (MAP)
 
-Maximum likelihood without regularizer is prone to overfitting (details in section 9.2.2 of the [Mathematics for Machine Learning book]({{ site.resources_permalink }})). In the occurrence of overfitting, we run into very large parameter values. To mitigate the effect of huge values, we can place the prior on the parameter space, and seek now the parameters to estimate the posterior distribution. 
+Maximum likelihood without a regularizer is prone to overfitting (details in section 9.2.2 of the [Mathematics for Machine Learning book]({{ site.resources_permalink }})). When overfitting occurs, we run into very large parameter values. To mitigate the effect of huge values, we can place a prior on the parameter space, and now seek the parameters that maximize the posterior distribution. 
 
 If we have prior knowledge about the distribution of the parameters, we can multiply an additional term to the likelihood. This additional term is a prior probability distribution on parameters. For a given prior, after observing some data $$x$$, how should we update the distribution of the parameters? In other words, how should we represent the fact that we have more specific knowledge of the parameters after observing data $$x$$?
 
-This is called the Maximum-a-Posteriori estimation (MAP), and is obtained by applying the Bayes Theorem.
+This is called the Maximum-a-Posteriori estimation (MAP), and is obtained by applying Bayes Theorem.
 
-The problem in hand is to find the parameters of the distribution that best represent the data. Adapting the equation \ref{eq_prior_AB} of the prior to the problem of regression, we aim at computing:
+The problem at hand is to find the parameters of the distribution that best represent the data. Adapting equation \ref{eq_prior_AB} to the problem of regression, we aim to compute:
 
 $$
 p(w\mid X, y) = \frac{p(y\mid X, w) p(w)}{p(y \mid X)} \propto p(y\mid X, w) p(w)
 \label{posterior_w}
 $$
 
-The computation steps are similar to log-trick applied to the MLE use case. The *log-posterior* is then:
+The computation steps are similar to the log-trick applied in the MLE case. The *log-posterior* is then:
 
 $$
 log \,\, p(w\mid X, y) = log \,\, p(y \mid X, w) + log \,\, p(w) + const
 $$
 
-In practice, this is the sum of the log-likelihood $$ log \,\, p(y \mid X, w)$$ and the *log-prior* $$log \,\, p(w)$$, so the MAP estimation is a *compromise* between the prior and the likelihood. An alternative view is the idea of regularization, which introduces an additional term that biases the resulting parameters to be close to the original (MML book section 8.3.2). Similarly to the MLE, we compute the derivative of the negative log-posterior with respect to $$w$$ as:
+In practice, this is the sum of the log-likelihood $$ log \,\, p(y \mid X, w)$$ and the *log-prior* $$log \,\, p(w)$$, so the MAP estimation is a *compromise* between the prior and the likelihood. An alternative view is the idea of regularization, which introduces an additional term that biases the resulting parameters to be close to the origin (MML book section 8.3.2). Similarly to the MLE, we compute the derivative of the negative log-posterior with respect to $$w$$ as:
 
 $$
   \begin{align*}
    & - \frac{d \,\,  log \,\, p( w \mid X,y)}{dw} \\
- = & \frac{d \,\,  log \,\, p( y \mid X,w)}{dw} - \frac{d \,\,  log \,\, p(w)}{dw} \\ 
+ = & - \frac{d \,\,  log \,\, p( y \mid X,w)}{dw} - \frac{d \,\,  log \,\, p(w)}{dw} \\ 
  = & \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right)  & \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and prior } \mathcal{N}(0, b^2 I) \text{)}\\
  = & \frac{1}{\sigma^2}(w^TX^TX-y^TX) + \frac{1}{b^2}w^T & \text{(First-order derivative, rule 3)}\\
   \end{align*}
@@ -188,30 +188,30 @@ $$
 \Leftrightarrow & w^T \left( \frac{1}{\sigma^2}X^TX + \frac{1}{b^2}I \right) - \frac{1}{\sigma^2}y^TX = 0\\
 \Leftrightarrow & w^T \left( X^TX + \frac{\sigma^2}{b^2}I \right) = y^TX \\
 \Leftrightarrow & w^T = y^TX \left( X^TX + \frac{\sigma^2}{b^2}I \right)^{-1} \\
-\Leftrightarrow & w^T_{MAP} = \left( X^TX + \frac{\sigma^2}{b^2}I \right)^{-1} X^Ty\\   
+\Leftrightarrow & w_{MAP} = \left( X^TX + \frac{\sigma^2}{b^2}I \right)^{-1} X^Ty\\   
 \end{align*}
 $$
 
-Now we see that the only difference between the weights estimated using MAp($$w_{MAP}$$) and using MLE ($$w_{MLE}$$) is the additional term $$\frac{\sigma^2}{b^2}I$$ in the inverse matrix, acting as a regularizer.
+Now we see that the only difference between the weights estimated using MAP ($$w_{MAP}$$) and using MLE ($$w_{MLE}$$) is the additional term $$\frac{\sigma^2}{b^2}I$$ in the inverse matrix, acting as a regularizer.
 
 ## Closed-form solution for Bayesian Linear Regression
 
-Instead of computing a point estimate via MLE or MAP, a special case of Bayesian optimization is the linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is utilized very commonly, mainly since the result is not an estimation, and computing the analytical solution for the posteriors is *extremelly fast* to compute even for very large datasets and dimensionality.
+Instead of computing a point estimate via MLE or MAP, a special case of Bayesian inference is linear regression with normal priors and posterior. In this case, *the posterior has an analytical solution*. This approach is used very commonly, mainly because the result is not an estimate, and the analytical solution for the posteriors is *extremely fast* to compute, even for very large datasets and dimensionality.
 
-In brief, bayesian linear regression is a type of conditional modeling in which the mean of one variable is described by a linear combination of other variables, with the goal of obtaining the posterior probability of the regression coefficients (as well as other parameters describing the distribution of the regressand) and ultimately allowing the out-of-sample prediction of the regressand (often labelled {\displaystyle y}y) conditional on observed values of the regressors (source: [wikipedia page for Bayesian Linear Regression](https://en.wikipedia.org/wiki/Bayesian_linear_regression)). I.e. Bayesian linear regression pushes the idea of the parameter prior a step further and does not even attempt to compute a point estimate of the parameters, but instead the full posterior distribution over the parameters is taken into account when making predictions. This means we do not fit any parameters, but we compute a mean over all plausible parameters settings (according to the posterior).
+In brief, Bayesian linear regression is a type of conditional modeling in which the mean of one variable is described by a linear combination of other variables, with the goal of obtaining the posterior probability of the regression coefficients (as well as other parameters describing the distribution of the regressand) and ultimately allowing the out-of-sample prediction of the regressand (often labelled $$y$$) conditional on observed values of the regressors (source: [Wikipedia page for Bayesian Linear Regression](https://en.wikipedia.org/wiki/Bayesian_linear_regression)). I.e. Bayesian linear regression pushes the idea of the parameter prior a step further and does not even attempt to compute a point estimate of the parameters, but instead the full posterior distribution over the parameters is taken into account when making predictions. This means we do not fit any parameters, but we compute a mean over all plausible parameters settings (according to the posterior).
 
-We assume all our weights are drawn from a gaussian distribution and can be independent (if covariance matrix is diagonal) or not (otherwise). In practice, we start with the prior $$p(w) \thicksim \mathcal{N}(m_0, S_0)$$, with mean vector $$m_0$$, and (positive semi-definite) covariance matrix $$S_0$$ (following the variable notation found on [Chris Bishop's PRML book]({{ site.resources_permalink }})).
+We assume all our weights are drawn from a Gaussian distribution and can be independent (if the covariance matrix is diagonal) or not (otherwise). In practice, we start with the prior $$p(w) \thicksim \mathcal{N}(m_0, S_0)$$, with mean vector $$m_0$$ and (positive semi-definite) covariance matrix $$S_0$$ (following the variable notation found in [Chris Bishop's PRML book]({{ site.resources_permalink }})).
 
-We have then the following prior in multivariate notation:
+We then have the following prior in multivariate notation:
 
 $$
-p(w \mid m_0, S_0 ) = (2 \pi)^{-\frac{D}{2}} \,\, det(S_0)^{- \frac{1}{2}} \,\, exp \left( - \frac{1}{2}(w - m_0)^T S_0^{-1} (y-m_0) \right)
+p(w \mid m_0, S_0 ) = (2 \pi)^{-\frac{D}{2}} \,\, det(S_0)^{- \frac{1}{2}} \,\, exp \left( - \frac{1}{2}(w - m_0)^T S_0^{-1} (w-m_0) \right)
 $$ 
 
 And the likelihood:
 
 $$
-p(y \mid X, w) = \frac{1}{(2 \pi \sigma^2)^{D/2}} exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) \right)
+p(y \mid X, w) = \frac{1}{(2 \pi \sigma^2)^{N/2}} exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) \right)
 $$
 
 Going back to Equation \ref{posterior_w} and replacing the terms, we have:
@@ -225,38 +225,38 @@ p(w \mid X, y) & = \frac{p(y\mid X, w) p(w)}{p(y \mid X )} \\
 \end{align*}
 $$
 
-We now apply the log-trick, and factorize the expression so that we can isolate quadratic, linear and independent terms on $$w$$:
+We now apply the log-trick and factorize the expression, so that we can isolate quadratic, linear and independent terms in $$w$$:
 
 $$
   \begin{align}
    & log \,\, p(w \mid X, y)  \\
- = & -\frac{1}{2} (\sigma^{-2}(y-Xw)^T(y-XW) + (w-m_0)^TS_0^{-1}(w-m_0)) + const & \text{(ignore const due to zero-derivative)}\\
+ = & -\frac{1}{2} (\sigma^{-2}(y-Xw)^T(y-Xw) + (w-m_0)^TS_0^{-1}(w-m_0)) + const & \text{(ignore const due to zero-derivative)}\\
  = & - \frac{1}{2} \left( \sigma^{-2} y^T y - 2\sigma^{-2} y^T Xw + \sigma^{-2} w^T X^T Xw + w^TS_0^{-1}w - 2 m_0^T S_0^{-1} w + m_0^T S_0^{-1} m_0 \right) \\
    \label{eq1_sq}
  = & - \frac{1}{2} \left( w^T ( \sigma^{-2} X^TX + S_0^{-1}) w \right)   & \hspace{2cm}\text{(terms quadratic in } w \text{)} \\
    \label{eq1_lin}
-   & + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right)               &  \hspace{2cm}\text{(terms linear in } w \text{)} \\
+   & + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0 \right)^T w               &  \hspace{2cm}\text{(terms linear in } w \text{)} \\
    & - \frac{1}{2} \left( \sigma^{-2} y^T y + m_0^T S_0^{-1} m_0 \right) & \hspace{2cm}\text{(const terms independent of } w \text{)} \\
   \end{align}
 $$
 
-As a side note: looking at the last term, we can see that this function is quadratic in $$w$$. Because the unnormalized log-posterior distribution is a negative (quadratic), implies that *the posterior is Gaussian*, i.e.:
+As a side note: looking at the last equation, we can see that this function is quadratic in $$w$$. The fact that the unnormalized log-posterior distribution is a negative quadratic implies that *the posterior is Gaussian*, i.e.:
 
 $$
   \begin{align*}
- p(w\mid X, y) = & exp ( log \,\, p(w\mid y, X) ) ) \\
+ p(w\mid X, y) = & exp ( log \,\, p(w\mid y, X) ) \\
 \propto & exp ( log \,\, p(y\mid X, w) + log \,\, p(w) )  & \text{(Bayes equation)}\\
-\propto & exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0)^T w \right) \right) & \text{(quadratic and linear terms of } log \,\, p(w \mid X, y) \text{)}\\
+\propto & exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0 \right)^T w \right) & \text{(quadratic and linear terms of } log \,\, p(w \mid X, y) \text{)}\\
   \end{align*}
 $$
 
-where we used the linear and quadratic terms in $$w$$ and ignored the $$const$$ terms as their derivative is zero and do not change the proportional operation.
+where we used the linear and quadratic terms in $$w$$, and ignored the $$const$$ terms, as their derivative is zero and they do not change the proportionality.
 
-Going back to the main problem, we now need to bring this unnormalized Gaussian into the form proportional to $$ \mathcal{N} ( w \mid m_N, S_N )$$. We'll utilize the method for [completing the square](https://en.wikipedia.org/wiki/Completing_the_square) to find the values that fit $$m_N$$ and $$S_N$$. We want the following log-posterior:
+Going back to the main problem, we now need to bring this unnormalized Gaussian into the form proportional to $$ \mathcal{N} ( w \mid m_N, S_N )$$. We'll use the method of [completing the square](https://en.wikipedia.org/wiki/Completing_the_square) to find the values of $$m_N$$ and $$S_N$$. We want the following log-posterior:
 
 $$
   \begin{align}
-  \mathcal{N} ( w \mid m_N, S_N ) = & -\frac{1}{2}(w - \mu)^T S_N^{-1}(w-\mu)    \\ 
+  log \,\, \mathcal{N} ( w \mid m_N, S_N ) = & -\frac{1}{2}(w - m_N)^T S_N^{-1}(w-m_N) + const    \\ 
    \label{eq2_sq}
  = & -\frac{1}{2} \left(w^T S_N^{-1}w \right)   & \hspace{2cm}\text{(terms quadratic in } w \text{)} \\
    \label{eq2_lin}
@@ -265,7 +265,7 @@ $$
   \end{align}
 $$
 
-Thus, by matching the squared (\ref{eq1_sq}, \ref{eq2_sq}) and linear (\ref{eq1_lin}, \ref{eq2_lin}) expressions on the computed vs desired equations, we can find $$S_N$$ and $$m_N$$ as:
+Thus, by matching the quadratic (\ref{eq1_sq}, \ref{eq2_sq}) and linear (\ref{eq1_lin}, \ref{eq2_lin}) expressions of the computed and desired equations, we can find $$S_N$$ and $$m_N$$ as:
 
 $$
  \begin{align*}
@@ -280,17 +280,17 @@ and
 
 $$
  \begin{align*}
-                   & -2 m_N^T S_N^{-1}w = 2 (\sigma^{-2}X^Ty + S_0^{-1} m_0)^T w \\
+                   & -2 m_N^T S_N^{-1}w = -2 (\sigma^{-2}X^Ty + S_0^{-1} m_0)^T w \\
   \Leftrightarrow  & m_N^T S_N^{-1} = (\sigma^{-2}X^Ty + S_0^{-1} m_0)^T \\
-  \Leftrightarrow  & m_N^T = S_N (\sigma^{-2}X^Ty + S_0^{-1} m_0) \\
+  \Leftrightarrow  & m_N = S_N (\sigma^{-2}X^Ty + S_0^{-1} m_0) \\
  \end{align*}
 $$
 
-inline with equations 3.50 and 3.51 in [Chris Bishop's PRML book]({{ site.resources_permalink }}).
+in line with equations 3.50 and 3.51 in [Chris Bishop's PRML book]({{ site.resources_permalink }}).
 
 ## Online learning
 
-Online learning allows us to do iterative learning by continuously updating our posterior based on new observable data. The main principle is that --- following the $$posterior \propto likelihood * prior$$ principle --- at every iteration we turn our posterior into the new prior, i.e. the new initial knowledge is what we learnt previously. The main advantage is not requiring all the data at once for training and allowing us to learn from datasets that are not fully-available at once. An illustration of the principle is displayed below:
+Online learning allows us to learn iteratively, by continuously updating our posterior based on newly observed data. The main idea is that --- following the $$posterior \propto likelihood * prior$$ principle --- at every iteration we turn our posterior into the new prior, i.e. the new initial knowledge is what we learnt previously. The main advantage is that it does not require all the data at once for training, allowing us to learn from datasets that are not fully available at once. An illustration of the principle is displayed below:
 
 {: style="text-align:center; font-size: small;"}
 <img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_1.png"/>
@@ -305,15 +305,15 @@ Online learning allows us to do iterative learning by continuously updating our 
 <img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_5.png"/>
 
 {: style="text-align:center; font-size: small;"}
-illustration of four steps of online learning for the linear model $$y = w_0 + w_1x$$.
-(inspired on fig 3.7, <a href="{{ site.resources_permalink }}">Pattern Classification and Machine Learning, Chris Bishop</a>)
+Illustration of four steps of online learning for the linear model $$y = w_0 + w_1x$$.
+(inspired by fig 3.7, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
 
 
-We start with the prior knowledge that both weights ($$w_0$$ and $$w_1$$) are zero-centered, i.e. mean 0, and a std deviation of 1. When a new datapoint is introduced (blue circle on the top-right plot), the new posterior (top-left) is computed from the likelihood and our initial prior. Drawing models from the current priors leads to an innacurate regression model (yellow lines on the top-right plot) Another point is then introduced (2nd row, right), leading to a new posterior (second row, left), computed from the likelihood and the prior (i.e. the posterior of the previous iteration). The model is now more accurate and the earch space (covariance of the weights) is more reduced (second row, left). After two more iterations, the model is already very accurate with a reduce variance on the weights (bottom left) and better-tunned linear regression models (bottom right).
+We start with the prior knowledge that both weights ($$w_0$$ and $$w_1$$) are zero-centered, i.e. with mean 0 and a standard deviation of 1. When a new datapoint is introduced (blue circle on the top-right plot), the new posterior (top-left) is computed from the likelihood and our initial prior. Drawing models from the current priors leads to an inaccurate regression model (yellow lines on the top-right plot). Another point is then introduced (2nd row, right), leading to a new posterior (second row, left), computed from the likelihood and the prior (i.e. the posterior of the previous iteration). The model is now more accurate and the search space (covariance of the weights) is smaller (second row, left). After two more iterations, the model is already very accurate, with a reduced variance on the weights (bottom left) and better-tuned linear regression models (bottom right).
 
 ## Predictive Variance
 
-Remember that we wanted to model a noisy output defined by $$y = Xw + \varepsilon$$ with model parameters $$w \thicksim \mathcal{N}(\mu, \sigma^2)$$  and noise parameter $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$$. The closed-form solution that computes the distribution of $$w$$ was provided on the previous section. We'll now compute the distribution of $$\varepsilon$$. Note that drawing samples from the posterior $$p(y \mid X, w, \sigma^2)$$ is equivalent to drawing samples from $$y = Xw + \varepsilon$$.
+Remember that we wanted to model a noisy output defined by $$y = X^Tw + \varepsilon$$ with model parameters $$w \thicksim \mathcal{N}(\mu, \Sigma)$$ and noise parameter $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$$. The closed-form solution that computes the distribution of $$w$$ was provided in a previous section. We'll now compute the distribution of $$y$$. Note that drawing samples from the posterior $$p(y \mid X, w, \sigma^2)$$ is equivalent to drawing samples from $$y = X^Tw + \varepsilon$$.
 
 We can then compute the [expectation](https://en.wikipedia.org/wiki/Expected_value) of $$y$$ as:
 
@@ -325,14 +325,14 @@ $$
  \end{align*}
 $$
 
-i.e. because noise has a mean zero, it's a result equivalent to a linear regression where the weights are set to the close-form solution of their mean value. The [variance](https://en.wikipedia.org/wiki/Variance) of $$y$$ follows analogously (see Variance rules at the end of the post if in doubt):
+i.e. because the noise has zero mean, the result is equivalent to a linear regression where the weights are set to the closed-form solution of their mean value. The [variance](https://en.wikipedia.org/wiki/Variance) of $$y$$ follows analogously (see the Variance rules at the end of the post if in doubt):
 
 $$
   \begin{align*}
-  \mathbf{Var} \left[ y \right] & = \mathbf{Var} \left[ Xw + \varepsilon \right] \\
-                                & = \mathbf{Var} \left[ Xw  \right] + \mathbf{Var} \left[ \varepsilon \right] + 2\mathbf{Cov} \left[ X^Tw, \varepsilon \right] \\
-                                & = \mathbf{Var} \left[ Xw  \right] + \mathbf{Var} \left[ \varepsilon \right] & \text{(independent variables)}\\
-                                & = X^T \mathbf{Var} \left[ w  \right] X + \mathbf{Var} \left[ \varepsilon \right] & \text{(Var linear transformation, rule 6))}\\
+  \mathbf{Var} \left[ y \right] & = \mathbf{Var} \left[ X^Tw + \varepsilon \right] \\
+                                & = \mathbf{Var} \left[ X^Tw  \right] + \mathbf{Var} \left[ \varepsilon \right] + 2\mathbf{Cov} \left[ X^Tw, \varepsilon \right] \\
+                                & = \mathbf{Var} \left[ X^Tw  \right] + \mathbf{Var} \left[ \varepsilon \right] & \text{(independent variables)}\\
+                                & = X^T \mathbf{Var} \left[ w  \right] X + \mathbf{Var} \left[ \varepsilon \right] & \text{(Var linear transformation, rule 6)}\\
                                 & = X^T S_N X + \sigma^2 & ( \varepsilon \thicksim \mathcal{N}(0, \sigma^2 ) \text{ and noise variance } \sigma^2 \text{)}\\
  \end{align*}
 $$
@@ -353,28 +353,28 @@ Similarly to the visualization displayed before, introducing new datapoints impr
 <img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.png"/>
 
 {: style="text-align:center; font-size: small;"}
-illustration of four steps modelling a synthetic sinusoidal data. Pictures with blue groudntruth, red model mean approximation, and light-orange area of predictive variance. (inspired on fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Classification and Machine Learning, Chris Bishop</a>)
+Illustration of four steps modelling synthetic sinusoidal data. Pictures show the ground truth in blue, the model mean approximation in red, and the predictive variance as a light-orange area. (inspired by fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
 
 
 ## Comparing two Bayesian models
 
-If we want to compare two probabilistic models $$M_1,M_2$$, with posteriors given the same dataset $$D$$, we compute the ratio of the posteriors, a.k.a. the **posterior odds** as:
+If we want to compare two probabilistic models $$M_1,M_2$$ given the same dataset $$D$$, we compute the ratio of their posteriors, a.k.a. the **posterior odds**:
 
 $$
-\frac{M_1}{M_2} = \frac{ \frac{p(D \mid M_1) \, p(M_1)}{p(D)} }{ \frac{p(D \mid M_2) \, p(M_2)}{p(D)} } =  \frac{p(D \mid M_1) \, p(M_1)}{p(D \mid M_2) \, p(M_2)} 
+\frac{p(M_1 \mid D)}{p(M_2 \mid D)} = \frac{ \frac{p(D \mid M_1) \, p(M_1)}{p(D)} }{ \frac{p(D \mid M_2) \, p(M_2)}{p(D)} } =  \frac{p(D \mid M_1) \, p(M_1)}{p(D \mid M_2) \, p(M_2)} 
 $$
 
 If we assume the same prior for both models, then the equation simplifies to $$\frac{p(D \mid M_1)}{p(D \mid M_2)}$$. If this ratio is greater than $$1$$, we pick model $$M_1$$, otherwise we pick model $$M_2$$.
 
 ## Final Remarks
 
-For more advanced topics on Bayesian Linear Regression refer to chapter 3 in Pattern Recognition and Machine Learning book from Chris Bishop and chapter 9.3 in Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}). To download the source code of the closed-form solutions and reproduce the examples above, download the <a href="{{ site.assets }}/bayesian-linear-regression/bayesian_linear_regression.ipynb">Bayesian Linear Regression notebook</a>.
+For more advanced topics on Bayesian Linear Regression, refer to chapter 3 of the Pattern Recognition and Machine Learning book by Chris Bishop and section 9.3 of Mathematics for Machine Learning, both available on the [resources page]({{ site.resources_permalink }}). To get the source code of the closed-form solutions and reproduce the examples above, download the <a href="{{ site.assets }}/bayesian-linear-regression/bayesian_linear_regression.ipynb">Bayesian Linear Regression notebook</a>.
 
-Finally, it has been shown that a kernelized Bayesian Linear Regression with the Kernel $$K(x, x′)=x^Tx′$$ is equivalent to a [Gaussian Process](https://en.wikipedia.org/wiki/Gaussian_process).  
+Finally, it has been shown that a kernelized Bayesian Linear Regression with the kernel $$K(x, x′)=x^Tx′$$ is equivalent to a [Gaussian Process](https://en.wikipedia.org/wiki/Gaussian_process).  
  
 ### Misc: linear models of the exponential family
 
-For a set up related to an output which is non-Gaussian but is a member of the exponential family, check [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model).
+For a setup where the output is non-Gaussian but is a member of the exponential family, check [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model).
 
 
 
@@ -384,14 +384,14 @@ For a set up related to an output which is non-Gaussian but is a member of the e
 ### Appendix: refresher on Linear Algebra
 <div id="appendix-lin-alg" />
 
-Here are the list of algebraic rules used in this document. For further details, check <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a> for a more detailed list of matrix operations.
+Here is the list of algebraic rules used in this document. For a more detailed list of matrix operations, check <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>.
 
 1. **Multiplication:**
 	1. $$A(BC) = (AB)C$$;
 	2. $$A(B+C)=AB+AC$$;
 	3. $$(B+C)A=BA+CA$$;
 	4. $$r(AB)=(rA)B=A(rB)$$ for a scalar $$r$$;
-	5. $$I_mA=AI=AI_n$$;
+	5. $$I_mA=A=AI_n$$;
 	6. $$(A+B)^2 = (A+B)(A+B)^T$$;
 	7. $$(y - Xw)^2 = (y-Xw)^T(y-Xw)$$.
 
@@ -405,12 +405,12 @@ Here are the list of algebraic rules used in this document. For further details,
 	1. if $$rA=B$$, then $$r=BA^{-1}$$, for a scalar $$r$$;
 	2. if $$Ar=B$$, then $$r=A^{-1}B$$, for a scalar $$r$$;
 	3. $$Ax=b$$ is the system of linear equations $$a_{1,1}x_1 + a_{1,2}x_2 + ... + a_{1,n}x_n = b_1$$ for row $$1$$, repeated for every row;
-		- therefore, $$x = A^{-1}b$$, if matrix has $$A$$ an inverse;
+		- therefore, $$x = A^{-1}b$$, if matrix $$A$$ has an inverse;
 
 4. **Inverse:** 
 	1. $$AA^{-1}=A^{-1}A=I$$;
 	2. If $$A$$ is invertible, its inverse is unique;
-	3. If $$A$$ is invertible, then $$Ax=b$$ has an unique solution;
+	3. If $$A$$ is invertible, then $$Ax=b$$ has a unique solution;
 	4. If $$A$$ is invertible, $$(A^{-1})^{-1}=A$$;
 	5. $$rA^{-1} = (\frac{1}{r}A)^{-1}$$ for a scalar $$r$$;
 
@@ -422,13 +422,13 @@ Here are the list of algebraic rules used in this document. For further details,
 
 6. **Variance and Covariance:**
 	1. $$\mathbb{Var}(X) = \mathbb{Cov}(X,X)$$;
-	2. $$\mathbb{Var}(rX) = r \mathbb{Var}(X)$$, for scalar $$r$$;
+	2. $$\mathbb{Var}(rX) = r^2 \mathbb{Var}(X)$$, for scalar $$r$$;
 	3. $$\mathbb{Var}(X+Y) = \mathbb{Var}(X) + \mathbb{Var}(Y) + 2\mathbb{Cov}(X,Y)$$;
-	4. $$\mathbb{Var}(X+Y) = \mathbb{Var}(X) + \mathbb{Var}(Y)$$, if X and Y are independent (ie, zero covariance);
+	4. $$\mathbb{Var}(X+Y) = \mathbb{Var}(X) + \mathbb{Var}(Y)$$, if X and Y are independent (i.e. zero covariance);
 	5. $$\mathbb{Var}(X) = \mathbf{E}[(X-\mathbf{E}[X])^2 ] = \mathbf{E} \left[ X^2  - 2X\mathbf{E}[X] + \mathbf{E}[X]^2 \right] = \mathbf{E}[X^2] - 2\mathbf{E}[X]\mathbf{E}[X] + \mathbf{E}[X]^2 =  \mathbf{E}[X^2] -  \mathbf{E}[X]^2$$;
-	6. If $$y$$ is a linear transformation of univariate form $$y=mx+b$$ or multivariate form $$y=Xw+b$$ then:
-		- Variance in univariate form: $$\mathbb{Var}(y)=m^2 \,\, \mathbb{Var}(w)$$;
-		- Variance in multivariate form: $$Var (Xw + b) = Var (Xw) = X \mathbb{Var}(w) X^T = X \Sigma X^T$$, where $$\Sigma$$ is the covariance matrix of $$X$$;
-		- Expected Value in multivariate form: $$\mathbf{E}[Xw + b] = X \mathbf{E}[w] + b = X \mu + b$$, where $$\mu$$ is the mean of $$X$$ 
+	6. If $$y$$ is a linear transformation of univariate form $$y=mx+b$$ or multivariate form $$y=Xw+b$$, then:
+		- Variance in univariate form: $$\mathbb{Var}(y)=m^2 \,\, \mathbb{Var}(x)$$;
+		- Variance in multivariate form: $$Var (Xw + b) = Var (Xw) = X \mathbb{Var}(w) X^T = X \Sigma X^T$$, where $$\Sigma$$ is the covariance matrix of $$w$$;
+		- Expected Value in multivariate form: $$\mathbf{E}[Xw + b] = X \mathbf{E}[w] + b = X \mu + b$$, where $$\mu$$ is the mean of $$w$$ 
 			- formulas 6.50 and 6.51 in [Mathematics for Machine Learning]({{ site.resources_permalink }})
  
