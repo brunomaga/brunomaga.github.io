@@ -48,7 +48,7 @@ The higher the stage, the more communication we require, but the less memory we 
 <img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Memory consumption of the three different stages of ZeRO FSDP.  Source: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
+Memory consumption of the three different stages of ZeRO FSDP.  Source: adapted from [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
 
 ## CPU Offloading
 
@@ -67,7 +67,7 @@ The important concept here is the **composition** of the $$f$$ function througho
 <img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/vdnn2.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The forward pass on the vDNN(+) implementation on convolutional neural networks. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms.  Data not associated with the current layer being processed (layer N) is marked with a black cross and can safely be removed from the GPU's memory. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
+The forward pass on the vDNN(+) implementation on convolutional neural networks. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms.  Data not associated with the current layer being processed (layer N) is marked with a black cross and can safely be removed from the GPU's memory. Source: adapted from <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
 
 
 The backward propagation phase is trickier, as it also includes the gradients being propagated down the model:
@@ -76,7 +76,7 @@ The backward propagation phase is trickier, as it also includes the gradients be
 <img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/vdnn3.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The back propagation phase on the vDNN(+) implementation on convolutional neural networks. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Blue arrows represent data flow during backward progagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Data not associated with the current layer being processed (layer 2) is marked with a black cross and can safely be removed from the GPU's memory. Source: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
+The back propagation phase on the vDNN(+) implementation on convolutional neural networks. Red arrays represent the data flow of variables $$x$$ and $$y$$ (layers input and output) during forward propagation. Blue arrows represent data flow during backward progagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Data not associated with the current layer being processed (layer 2) is marked with a black cross and can safely be removed from the GPU's memory. Source: adapted from <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
 
 ## Model and dataset setup
 

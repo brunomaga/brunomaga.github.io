@@ -254,7 +254,7 @@ Now consider a 2-GPU Distributed Data Parallel (DDP) run. During backprop, DDP p
 <img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The DDP execution workflow on 2 GPUs. The optimizer needs to wait for all asynchronous `all_reduce`s of gradients to finish (source: [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+The DDP execution workflow on 2 GPUs. The optimizer needs to wait for all asynchronous `all_reduce`s of gradients to finish (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
 In a compiled setting, intermediate communication steps can introduce **graph breaks**. One naïve option is to compile a large graph and run the `all_reduce`s only at the end, but that reduces overlap and increases the time the optimizer waits:
 
@@ -262,7 +262,7 @@ In a compiled setting, intermediate communication steps can introduce **graph br
 <img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, increasing optimizer wait time (source: [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+The DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, increasing optimizer wait time (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
 PyTorch’s `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) addresses this by compiling around graph breaks into subgraphs and triggering asynchronous synchronization at subgraph boundaries:
 
@@ -270,7 +270,7 @@ PyTorch’s `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/t
 <img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization happens asynchronously between subgraphs (source: [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+The DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization happens asynchronously between subgraphs (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
 Note that subgraph boundaries may change with input shapes. As a personal note, I have not been able to achieve the same distributed speedups with DeepSpeed ZeRO-0 that I got with PyTorch DDP, possibly due to the lack of an equivalent optimization to `DDPOptimizer` in DeepSpeed.
 

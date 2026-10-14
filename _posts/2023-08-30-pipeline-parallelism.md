@@ -13,7 +13,7 @@ Imagine we have a model that is too large to fit in the local memory of a single
 <img width="50%" height="50%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Left-to-right timeline of a serial execution of the training of a model divided across 4 compute units (Workers) and 4 stages. Blue squares represent forward passes. Green squares represent backward passes and last for twice the amount of the forward pass. The number on each square is the data sample index. Black squares represent moments of idleness, i.e. of a worker not performing any computation. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
+Left-to-right timeline of a serial execution of the training of a model divided across 4 compute units (Workers) and 4 stages. Blue squares represent forward passes. Green squares represent backward passes and last for twice the amount of the forward pass. The number on each square is the data sample index. Gray squares represent moments of idleness, i.e. of a worker not performing any computation. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 
 Now note that the above method would yield a low utilization of compute resources: processes would always have to wait for connecting layers in different processes to be computed before being able to do their share of the forward/backward compute. So pipeline parallelism is usually combined with **micro-batching / gradient accumulation**. In practice, we can split the mini-batch in several micro-batches and pass them sequentially to the first process of the pipeline. When a process finishes the current micro-batch, it sends its activations to the following process and receives the next micro-batch activations from the previous process. This is mathematically equivalent to regular gradient accumulation. This approach is detailed in the paper [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, arXiv)](https://arxiv.org/abs/1811.06965) and can be illustrated as:
 
@@ -21,7 +21,7 @@ Now note that the above method would yield a low utilization of compute resource
 <img width="60%" height="60%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel.png"/>
 
 {: style="text-align:center; font-size: small;"}
-A pipeline execution with gradient accumulation, computed as a sequence of 4 micro-batches. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
+A pipeline execution with gradient accumulation, computed as a sequence of 4 micro-batches. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 
 Setting a high micro-batching factor can lead to high memory usage, as we have to store activations until we finish the backward pass for the current mini-batch. This can be improved by (1) **activation offloading**, which stores and loads activations to/from the CPU when needed; and (2) **activation checkpointing** at the beginning of every stage, which recomputes activations during the backward pass when needed instead of keeping them always in memory.
 
@@ -43,7 +43,7 @@ You will notice that no matter the pipeline configuration we use, there are peri
 <img width="60%" height="60%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel_microsoft.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The PipeDream scheduling algorithm. Several forward passes can be in flight, even if they derive from different micro-batches. Backward passes are prioritized over forward passes on each worker. Source: <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
+The PipeDream scheduling algorithm. Several forward passes can be in flight, even if they derive from different micro-batches. Backward passes are prioritized over forward passes on each worker. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 
 Where's the caveat? In practice, mixing forward and backward passes from different mini-batches can lead to wrong parameter updates. Therefore, the authors perform versioning of the parameters, effectively having several versions of the same parameters in the model. Forward passes use the latest version of the model layers, and the backward may use a previous version of activations and optimizer state to compute the gradients. This leads to a substantial increase in memory requirements.
 
@@ -151,7 +151,7 @@ The pipeline parallelism algorithm implemented in DeepSpeed is the [PipeDream-Fl
 <img width="60%" height="60%" src="{{ site.assets }}/distributed-training/imgs/pipeline_algorithms.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Regular and 1F1B pipeline algorithms diagram. Source: [Training and Serving System of Foundation Models: A Comprehensive Survey](https://arxiv.org/pdf/2401.02643.pdf)
+Regular and 1F1B pipeline algorithms diagram. Source: adapted from [Training and Serving System of Foundation Models: A Comprehensive Survey](https://arxiv.org/pdf/2401.02643.pdf)
 
 We will add pipeline parallelism to the `GPTlite` model implemented in the previous post, and enable it by passing the number of stages as the `---pipeline_num_stages` argument (default: 0, no pipelining) on the command line:
 
