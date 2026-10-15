@@ -9895,14 +9895,14 @@
         <mxCell id="moe_gshard-109" value="All-to-All Dispatch" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=14;" vertex="1" parent="moe_gshard-figure">
           <mxGeometry x="872.43" y="542.69" width="171.6" height="24.96" as="geometry" />
         </mxCell>
-        <mxCell id="moe_gshard-110" value="Transfomer&lt;br&gt;Encoder" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_gshard-figure">
-          <mxGeometry x="77.08" y="0" width="104.03" height="47.2" as="geometry" />
+        <mxCell id="moe_gshard-110" value="Transformer&lt;br&gt;Encoder" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_gshard-figure">
+          <mxGeometry x="77.08" y="0" width="105.39" height="47.2" as="geometry" />
         </mxCell>
-        <mxCell id="moe_gshard-111" value="MoE Transfomer&lt;br&gt;Encoder" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_gshard-figure">
-          <mxGeometry x="373.04" y="0" width="147.02" height="47.2" as="geometry" />
+        <mxCell id="moe_gshard-111" value="MoE Transformer&lt;br&gt;Encoder" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_gshard-figure">
+          <mxGeometry x="368.56" y="0" width="156.05" height="47.2" as="geometry" />
         </mxCell>
-        <mxCell id="moe_gshard-112" value="MoE Transfomer Encoder&lt;br&gt;with device placement" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_gshard-figure">
-          <mxGeometry x="846.21" y="0" width="224.04" height="47.2" as="geometry" />
+        <mxCell id="moe_gshard-112" value="MoE Transformer Encoder&lt;br&gt;with device placement" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_gshard-figure">
+          <mxGeometry x="841.69" y="0" width="233.08" height="47.2" as="geometry" />
         </mxCell>
         <mxCell id="moe_gshard-113" value="Nx" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="moe_gshard-figure">
           <mxGeometry x="229.46" y="423.87" width="23.11" height="20.8" as="geometry" />
@@ -10377,9 +10377,6 @@
         </mxCell>
         <mxCell id="moe_switch_transformers_2-5" value="•" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#333333;" vertex="1" parent="moe_switch_transformers_2-figure">
           <mxGeometry x="0" y="144.31" width="10.9" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="moe_switch_transformers_2-6" value="•" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#333333;" vertex="1" parent="moe_switch_transformers_2-figure">
-          <mxGeometry x="0" y="176.51" width="10.9" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="moe_switch_transformers_2-7" value="&lt;b style=&quot;font-size:16px&quot;&gt;Capacity Factor:&lt;/b&gt; Used when&lt;br&gt;calculating expert capacity. Expert&lt;br&gt;capacity allows more buffer to help&lt;br&gt;mitigate token overflow during&lt;br&gt;routing." style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=14;fontColor=#333333;spacing=0;spacingLeft=3;" vertex="1" parent="moe_switch_transformers_2-figure">
           <mxGeometry x="12.8" y="250.69" width="240" height="84.5" as="geometry" />
@@ -19104,7 +19101,7 @@
         <mxCell id="torch_compile_dataset-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="3885.2" width="472.5" height="268.8" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile_dataset-8KhQIsR3PBAN01NNNfWR-1" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 12px&quot;&gt;&lt;b&gt;a) &lt;/b&gt;original dataset of 39 samples (x), of 4 different lenghts (Y), spread across 3 processes (color-coded)&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;" parent="torch_compile_dataset-figure" vertex="1">
+        <mxCell id="torch_compile_dataset-8KhQIsR3PBAN01NNNfWR-1" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;&lt;font style=&quot;font-size: 12px&quot;&gt;&lt;b&gt;a) &lt;/b&gt;original dataset of 39 samples (x), of 4 different lengths (Y), spread across 3 processes (color-coded)&lt;/font&gt;&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;" parent="torch_compile_dataset-figure" vertex="1">
           <mxGeometry x="2.5" y="91" width="470" height="34.8" as="geometry" />
         </mxCell>
         <mxCell id="torch_compile_dataset-8KhQIsR3PBAN01NNNfWR-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" parent="torch_compile_dataset-figure" vertex="1">

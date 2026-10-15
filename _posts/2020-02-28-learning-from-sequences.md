@@ -9,7 +9,7 @@ In this post, we will look into alternative methods for ML training on sequentia
 
 ## Encoder-Decoder and Sequence-to-Sequence
 
-The Encoder-Decoder (original paper [Sequence to Sequence Learning with Neural Networks (Google, arXiv)](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)) is an AutoEncoder model that learns an encoding and a decoding task applied to two sequences, i.e. it trains for a sequence-to-sequence task such as the translation of a sentence from a source language to a target language. The learning mechanism is a two-phase recurrent algorithm, for the encoder and the decoder respectively, where each phase is a sequence of iterations over a recurrent neural network.
+The Encoder-Decoder (original paper [Sequence to Sequence Learning with Neural Networks (Google, arXiv)](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)) is a model that learns an encoding and a decoding task applied to two sequences, i.e. it trains for a sequence-to-sequence task such as the translation of a sentence from a source language to a target language. The learning mechanism is a two-phase recurrent algorithm, for the encoder and the decoder respectively, where each phase is a sequence of iterations over a recurrent neural network.
 
 The structure of its Recurrent Neural Network (RNN) is as follows:
 - Words are passed as part of the input, represented by an embedding of dimensionality $$d$$;

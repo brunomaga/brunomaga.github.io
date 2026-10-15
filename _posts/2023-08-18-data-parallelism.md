@@ -42,7 +42,7 @@ An important remark is that activations are not sharded, i.e. they are kept in *
 {: style="text-align:center; font-size: small;"}
 Workflow for stage 3 sharding. Each processor contains a non-overlapping subset of parameters, gradients and optimizer data, split by assigning different layers to different processes. Each processor loads a different data batch. During the forward and backward passes (represented by arrows on the left and right of the model, respectively), when a given layer needs to be computed, the process responsible for that layer broadcasts and gathers those values to/from the remaining processes. Example for processor 1 (yellow): **Data loading:** the yellow process loads data sample 1. **Forward pass:** the yellow process receives the parameters from rank 0 (blue) and computes the activations for layer 1. Afterwards, the yellow process broadcasts its parameters to ranks 0, 2 and 3, so that they compute their activations for layer 2. Activations for layers 3 and 4 are computed similarly to layer 1, led by the red and green processes, respectively. **Backward pass:** the green process (3) broadcasts its parameters to all other processes. Each process can use its activations and the received parameters to compute the gradients for the top layer. All processes gather their local gradients in process 3, which uses them to update the parameters of the last layer. The same happens for the remaining layers, with the red, yellow and blue processes (iteratively) broadcasting the parameters and gathering the gradients.
 
-The higher the stage, the more communication we require, but the less memory we consume. These memory improvements are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
+The higher the stage, the less memory we consume. Stages 1 and 2 communicate as much as regular data parallelism, and stage 3 communicates 1.5x as much. These memory improvements are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.png"/>
@@ -249,7 +249,7 @@ train_batch_size = train_micro_batch_size_per_gpu * num_gpus * num_nodes * gradi
 ```
 
 Therefore, **gradient accumulation** can be enabled simply by setting `train_micro_batch_size_per_gpu`. 
-**ZeRO Fully-Sharded Data Parallelism** can be activated by specifying the relevant stage in the config file. If omitted, or when passing stage 0, DeepSpeed is disabled and the execution follows a regular distributed data parallel workflow:
+**ZeRO Fully-Sharded Data Parallelism** can be activated by specifying the relevant stage in the config file. If omitted, or when passing stage 0, ZeRO is disabled and the execution follows a regular distributed data parallel workflow:
 
 ```json
 {

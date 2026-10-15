@@ -704,10 +704,10 @@ def schedule(decoding, prefilling, budget):
 - More capacity: FP8 KV cache, offloading, and evicting old prefix-cache blocks stretch the available memory.
 
 {: style="text-align:center; font-size: small;"}
-<img width="50%" height="50%" src="https://www.redhat.com/rhdc/managed-files/Continuous%20batching%20for%20requests.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/continuous_batching.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Source: Red Hat post [Meet vLLM: For faster, more efficient LLM inference and serving](https://www.redhat.com/en/blog/meet-vllm-faster-more-efficient-llm-inference-and-serving)
+Continuous batching, token by token. A request's first step processes its whole prompt (prefill) and gives its first token. Each following step (decode) gives one more token, until the request generates its end-of-sequence token and leaves the batch. A waiting request takes the free slot at the next step, so the prefill of a new request runs in the same step as the decode of the others. See also the Red Hat post [Meet vLLM: For faster, more efficient LLM inference and serving](https://www.redhat.com/en/blog/meet-vllm-faster-more-efficient-llm-inference-and-serving)
 
 **Code.** The following code implements static and continuous batching. Both produce the same outputs, but continuous batching needs fewer steps, since its slots spend more time generating useful tokens. To keep the code short, every step processes the whole sequences, without a KV cache:
 
@@ -773,7 +773,7 @@ def continuous_batching(model, requests, batch_size, seqlen):
 Prefill is compute-bound and decode is memory-bound, so they interfere when they share GPUs, and each would prefer a different batch size and parallelism. Disaggregated serving runs them on separate pools of GPUs: prefill workers compute the KV cache of each prompt and send it over a fast interconnect to decode workers, which generate the answer. Each pool is sized and tuned for its own latency target: TTFT for prefill, TPOT for decode. This is the design of [DistServe](https://arxiv.org/abs/2401.09670), [Splitwise](https://arxiv.org/abs/2311.18677) and [Mooncake](https://arxiv.org/abs/2407.00079), the serving platform of Moonshot AI's Kimi, and it is supported by open-source stacks such as NVIDIA Dynamo and llm-d.
 
 **The Core Issue: The KV Cache Handoff Bottleneck.** If a decode step runs on a separate NPU that lacks the KV cache, the model cannot generate the next token: the NPU needs the keys and values of the entire history up to that point. The system faces two choices:
-- Recomputation (The CPU/NPU Burden): The decode NPU could recompute the prompt itself to rebuild the KV cache. However, this completely defeats the purpose of disaggregation, burning massive compute resources and spiking latency.
+- Recomputation (The Compute Burden): The decode NPU could recompute the prompt itself to rebuild the KV cache. However, this completely defeats the purpose of disaggregation, burning massive compute resources and spiking latency.
 - Network Serialization (The Bandwidth Burden): The prefill NPU must serialize the multi-gigabyte KV cache tensor and send it over the network to the decode NPU.
 
 Prefill-decode disaggregation requires the KV cache to be transmitted between prefill and decode nodes. To avoid sending large KV cache chunks and waiting for them, modern engines use **Layer-Wise Streaming (a pipeline overlap of computation and communication)**: as soon as Layer 1 finishes its prefill, it starts transmitting its KV cache chunks over the network, while Layer 2 is still computing. The destination can be the High-Bandwidth Memory (HBM) of an NPU or, in more advanced cases, a shared cluster acting as a **KV Cache Store**, e.g., [Mooncake](https://www.zhongzhuzhou.org/blog/2026-05-28-mooncake-technical-review-en/) or [LMCache](https://docs.lmcache.ai/mp/disaggregated_prefill.html).

@@ -25,7 +25,7 @@ A **System of Linear Equations** (SLE) with equations of the type $$a_1x_1 + ...
 - In a geometric representation, the solution is the intersection of all the lines defined by the different equations;
 - Analytically:
   - When $$A$$ is square and invertible, the solution for $$Ax=b$$ is $$x=A^{-1}b$$;
-  - Otherwise, $$Ax = b \Leftrightarrow A^{\intercal} Ax = A^{\intercal}b \Leftrightarrow x = (A^{\intercal}A)^{−1}A^{\intercal}b$$, which is also the solution to the **Least Squares** problem;
+  - Otherwise, $$Ax = b \Rightarrow A^{\intercal} Ax = A^{\intercal}b$$ and, when $$A^{\intercal}A$$ is invertible, $$x = (A^{\intercal}A)^{−1}A^{\intercal}b$$, which is also the solution to the **Least Squares** problem;
     - $$(A^{\intercal}A)^{−1}A^{\intercal}$$ is also called the **pseudo-inverse** of $$A$$, which can be computed for non-square matrices $$A$$. It only requires that $$A^{\intercal}A$$ is positive definite, which is the case if $$A$$ is full rank; 
     - $$\mathbb{E}[\hat{x}] = (A^{\intercal}A)^{−1}A^{\intercal} \, \mathbb{E}[b] = (A^{\intercal}A)^{−1}A^{\intercal}(Ax) = x $$, where $$\hat{x}$$ is the solution above and $$x$$ the true value.
     - Let $$P=(A^{\intercal}A)^{−1}A^{\intercal}$$. \\
@@ -128,7 +128,7 @@ Determinant properties:
 - *Similar* matrices have the same determinant;
 - a matrix $$A$$ is **invertible** if $$det(A) \neq 0$$;
 - for a diagonal matrix, the determinant is the product of the diagonal elements;
-- the determinant is the signed volume of the parallelepiped formed by the columns of the matrix. It can also be computed as the product of the diagonal elements of the matrix in row-echelon form;
+- the determinant is the signed volume of the parallelepiped formed by the columns of the matrix. It can also be computed as the product of the diagonal elements of the matrix in row-echelon form, when this form is obtained without scaling rows, and with a sign change for each row swap;
   - Important: $$A$$ is invertible *iff* it has full rank; 
   - and a square matrix $$A \in \mathbb{R}^{n \times n}$$ has $$det(A) \neq 0$$ iff $$rank(A)=n$$.
 
@@ -146,7 +146,7 @@ Eigenvalues and eigenvectors:
 Two vectors are called **codirected** if they point in the same direction, and **collinear** if they point in the same or opposite directions. All vectors that are collinear to $$x$$ are also eigenvectors of $$A$$;
 - Non-uniqueness of eigenvectors: if $$x$$ is an eigenvector of $$A$$ associated with eigenvalue $$λ$$, then for any $$c ∈ \mathbb{R}\setminus\{0\}$$ it holds that $$cx$$ is an eigenvector of $$A$$ with the same eigenvalue;
 - a matrix and its transpose have the same eigenvalues, but not necessarily the same eigenvectors;
-- symmetric, positive definite matrices -- like the p.s.d. covariance matrix -- always have positive, real eigenvalues. The determinant is the product of the eigenvalues, thus it is not zero. Therefore, the matrix is also invertible;
+- symmetric, positive definite matrices -- like a non-singular covariance matrix -- always have positive, real eigenvalues. The determinant is the product of the eigenvalues, thus it is not zero. Therefore, the matrix is also invertible;
 - Given a matrix  $$A \in \mathbb{R}^{m \times n}$$, we can always obtain a symmetric positive semidefinite matrix $$S=A^{\intercal}A$$.
   - If $$rk(A)=n$$, then $$A^{\intercal}A$$ is symmetric positive definite;
   - there exist eigenvectors with real eigenvalues (spectral theorem), i.e. to check if $$S$$ is positive definite, check if all its eigenvalues are positive.
@@ -158,7 +158,7 @@ Two vectors are called **codirected** if they point in the same direction, and *
 {: style="text-align:center; font-size: small;"}
 image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
 
-**Cholesky Decomposition**: a symmetric, positive definite matrix $$A$$ can be factorized into a product $$A = LL^{\intercal}$$, where $$L$$ is a *lower-triangular matrix* with positive diagonal elements. $$L$$ is unique. This can be solved normally as an SLE. It is used e.g. to sample from Gaussian distributions and to compute determinants efficiently, as $$det(A) = det(L) det(L^⊤) = det(L)^2$$.
+**Cholesky Decomposition**: a symmetric, positive definite matrix $$A$$ can be factorized into a product $$A = LL^{\intercal}$$, where $$L$$ is a *lower-triangular matrix* with positive diagonal elements. $$L$$ is unique, and its entries can be computed one at a time, by expanding $$LL^{\intercal}$$ and comparing it with $$A$$. It is used e.g. to sample from Gaussian distributions and to compute determinants efficiently, as $$det(A) = det(L) det(L^⊤) = det(L)^2$$.
 
 **Diagonalizable**: a matrix $$A \in \mathbb{R}^{n \times n}$$ is diagonalizable if it is similar to a diagonal matrix, i.e. if there is an invertible matrix $$P \in \mathbb{R}^{n \times n}$$ such that $$D=P^{-1}AP$$. The inverse of a diagonal matrix is obtained by replacing all diagonal elements by their reciprocals, i.e. replacing $$a_{ii}$$ by $$\frac{1}{a_{ii}}$$.
 - a matrix $$A \in \mathbb{R}^{n \times n}$$ can be factored into $$A = PDP^{-1}$$, where $$P \in \mathbb{R}^{n \times n}$$ and $$D$$ is a diagonal matrix whose diagonal entries are the eigenvalues of $$A$$, iff the eigenvectors of $$A$$ form a basis of $$\mathbb{R}^n$$.
@@ -273,7 +273,7 @@ Backpropagation is a special case of the **automatic differentiation** algorithm
 - **Adam Optimizer** (ADAptive Moment estimation): uses estimates of the first and second moments of the gradient (the *curvature*, exponential moving average ? ) to adapt the learning rate for each weight of the neural network;  
   - Curvature is not the second derivative!! This would be too expensive to compute.
   - "The method computes individual adaptive learning rates for different parameters from estimates of first and second moments of the gradients."
-  - in some cases, Adam doesn't converge to the optimal solution, but SGD does. According to the authors, switching to SGD in some cases shows better generalization performance than Adam alone;
+  - in some cases, Adam doesn't converge to the optimal solution, but SGD does. According to Keskar and Socher (2017), switching to SGD in some cases shows better generalization performance than Adam alone;
   - it calculates the exponential moving averages of the gradients and the squared gradients. Parameters $$\beta_1$$ and $$\beta_2$$ control the decay rates of these moving averages. Adam is a combination of two gradient descent methods: Momentum and RMSP;
 - **Convex sets** are sets such that a straight line connecting any two elements of the set lies inside the set;
   - similarly, a **[convex function](https://en.wikipedia.org/wiki/Convex_function)** is a function where any line segment between any two distinct points on the graph of the function lies above the graph between the two points. It is concave up, therefore its second derivative is non-negative on its entire domain. A strictly convex function has at most one global minimum;

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training: pipeline parallelism (1F1B, Zero Bubble, Dual Pipe)"
+title:  "Distributed training: pipeline parallelism (1F1B, Zero Bubble, DualPipe)"
 categories: [machine learning, Transformer, GPT, DeepSpeed]
 tags: [machinelearning]
 ---

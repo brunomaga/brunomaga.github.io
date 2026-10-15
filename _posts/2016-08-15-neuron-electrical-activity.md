@@ -7,7 +7,7 @@ tags: [simulation]
 
 [number-of-neurons]: https://en.wikipedia.org/wiki/List_of_animals_by_number_of_neurons
 
-Neurons are very complex structures of the human body that govern behaviour, pain, feelings, motion, and most factors that affect our lives. The human body has approximately $$8.6 \times 10^{10}$$ neurons, connected by $$1.5 \times 10^{14}$$ synapses. For the sake of comparison, larvae have 231 neurons, mice have approximately $$71$$ million neurons, and the African elephant has almost three times as many neurons as humans, with $$25.7 \times 10^{10}$$ neurons --- see the Wikipedia entry [List of animals by number of neurons][number-of-neurons] for a longer list of neuron counts per animal. 
+Neurons are very complex structures of the human body that govern behaviour, pain, feelings, motion, and most factors that affect our lives. The human body has approximately $$8.6 \times 10^{10}$$ neurons, connected by $$1.5 \times 10^{14}$$ synapses. For the sake of comparison, the larva of the sea squirt *Ciona intestinalis* has 231 neurons, mice have approximately $$71$$ million neurons, and the African elephant has almost three times as many neurons as humans, with $$25.7 \times 10^{10}$$ neurons --- see the Wikipedia entry [List of animals by number of neurons][number-of-neurons] for a longer list of neuron counts per animal. 
 
 Due to the very sophisticated anatomical structure and behaviour of neurons, we utilise numerical methods to approximate neuron models and simulate the electrical activity of neural networks.
 
@@ -125,7 +125,7 @@ $$
 \sum_k I_k = g_{Na} m^3 h (u - E_{Na}) + g_K n^4 (u - E_K) + g_L (u - E_L)
 $$
 
-where $$E$$ represents the reversal potentials and $$m$$, $$n$$ and $$h$$ the gating variables --- see the original HH paper for details of the individual ODEs and reported values. The leak generalizes any other voltage-independent conductance and is represented by $$L$$. 
+where $$u$$ is the membrane potential, $$E$$ represents the reversal potentials and $$m$$, $$n$$ and $$h$$ the gating variables --- see the original HH paper for details of the individual ODEs and reported values. The leak generalizes any other voltage-independent conductance and is represented by $$L$$. 
 
 ### Reversal Potential
 
@@ -136,12 +136,12 @@ E = \frac{RT}{zF} \ln \frac{\text{[ion]}_{out}}{\text{[ion]}_{in}} \approx \frac
 $$
 
 where $$\text{[ion]}_{out}$$ and $$\text{[ion]}_{in}$$ denote the ionic concentration on the outside and inside of the cell, $$T$$ is the temperature in Kelvin (assumed to be $$307.15 K$$, or $$34 ^{\circ}\mathrm{C}$$), $$z$$ is the charge of the ion, and $$R$$ and $$F$$ are the gas ($$8.3144621 J$$ $$K^{-1}$$ $$mol^{-1}$$) and Faraday ($$96485.33289(59)$$ $$C$$ $$mol^{-1}$$) constants, respectively. The typical reversal potentials for the most common ions are approximately: 
-- $$E_{Cl^-}=-70 mV$$ with $$[Cl^-]_{in}=5 mM$$ and $$[Cl^-]_{out}=120 mM$$;
+- $$E_{Cl^-}=-84 mV$$ with $$[Cl^-]_{in}=5 mM$$ and $$[Cl^-]_{out}=120 mM$$;
 - $$E_{K^+}=-90 mV$$ with $$[K^+]_{in}=150 mM$$ and $$[K^+]_{out}=4 mM$$; 
 - $$E_{Na^+}=60 mV$$ with $$[Na^+]_{in}=12 mM$$ and $$[Na^+]_{out}=145 mM$$; and
 - $$E_{Ca^{2+}}=130 mV$$ with $$[Ca^{2+}]_{in}=0.1 \mu M$$ and $$[Ca^{2+}]_{out}=1 mM$$.
 
-The reversal potential of a typical HH compartment with $$Na^+$$, $$K^+$$ and $$Cl^-$$ ionic pumps is given by the Goldman–Hodgkin–Katz voltage equation as:
+The reversal potential of a typical HH compartment with $$Na^+$$, $$K^+$$ and $$Cl^-$$ ion channels is given by the Goldman–Hodgkin–Katz voltage equation as:
 
 $$
 V = \frac{RT}{F} \ln \frac{P_{Na} [Na^+]_{out} + P_{K} [K^+]_{out} + P_{Cl} [Cl^-]_{in}} {P_{Na} [Na^+]_{in} + P_{K} [K^+]_{in} + P_{Cl} [Cl^-]_{out}} \approx -60 mV
@@ -170,7 +170,7 @@ Due to the unique morphology of a cable model representation of a discretized ne
 <img width="35%" height="35%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.png"> <img width="25%" height="25%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.png">
 
 
-The main rationale behind the Hines algorithm is that if we can number the compartments sequentially in such a way that each one has an index greater than any of its children, then we can reduce the computational complexity of the solver from the $$O(n^3)$$ of a typical Gaussian elimination to $$O(n)$$. Given a tridiagonal matrix with vectors $$d$$ (main diagonal), $$b$$ (lower diagonal) and $$a$$ (upper diagonal), representing a single cable without branching, we can show that the Hines algorithm is an inverted Gaussian elimination adapted for branched structures:
+The main rationale behind the Hines algorithm is that if we can number the compartments sequentially in such a way that each one has an index greater than its parent's, then we can reduce the computational complexity of the solver from the $$O(n^3)$$ of a typical Gaussian elimination to $$O(n)$$. Given a tridiagonal matrix with vectors $$d$$ (main diagonal), $$b$$ (lower diagonal) and $$a$$ (upper diagonal), representing a single cable without branching, we can show that the Hines algorithm is an inverted Gaussian elimination adapted for branched structures:
 
 - Starting with the forward triangulation process on each $$cell_i$$ on row $$i$$:
   - $$cell_i \leftarrow cell_i - \frac{b_i}{d_{i-1}} row_{i-1}$$;
@@ -192,7 +192,7 @@ An important feature of the Hines algorithm is that it allows parallelization at
 [carnevale2002efficient]: https://www.researchgate.net/publication/267700936_EFFICIENT_DISCRETE_EVENT_SIMULATION_OF_SPIKING_NEURONS_IN_NEURON
 [hines2000expanding]: https://www.neuron.yale.edu/neuron/static/papers/nc2000/nmodl400.pdf
 
-In NEURON, extra-cellular activity, recording patches, voltage clamps, interneuron kinetics (such as synapses and gap junctions) or any other contribution that affects the membrane potential itself are introduced as **mechanisms**. A mechanism with a specific execution time is called an **event**. Events in NEURON are managed by the event delivery system ([Efficient discrete event simulation of spiking neurons in NEURON, Carnevale et al., ResearchGate][carnevale2002efficient]). Mechanisms are encoded in the NMODL language ([Expanding NEURON’s Repertoire of Mechanisms with NMODL, Hines et al.][hines2000expanding]), where the main user-provided blocks are *BREAKPOINT* (the main computation block of the model, where states are integrated by a *SOLVE* statement), *DERIVATIVE* (if states are governed by differential equations, assigns values to the derivatives), *PROCEDURE* and *FUNCTION* (function declaration and calls), *PARAMETER* and *CONSTANT* (for read-write and read-only variables, respectively) and *NET_RECEIVE* (a protocol to inform the variable time step scheduler that an event has occurred within the previous time step).
+In NEURON, extra-cellular activity, recording patches, voltage clamps, interneuron kinetics (such as synapses and gap junctions) or any other contribution that affects the membrane potential itself are introduced as **mechanisms**. A mechanism with a specific execution time is called an **event**. Events in NEURON are managed by the event delivery system ([Efficient discrete event simulation of spiking neurons in NEURON, Carnevale and Hines, ResearchGate][carnevale2002efficient]). Mechanisms are encoded in the NMODL language ([Expanding NEURON’s Repertoire of Mechanisms with NMODL, Hines and Carnevale][hines2000expanding]), where the main user-provided blocks are *BREAKPOINT* (the main computation block of the model, where states are integrated by a *SOLVE* statement), *DERIVATIVE* (if states are governed by differential equations, assigns values to the derivatives), *PROCEDURE* and *FUNCTION* (function declaration and calls), *PARAMETER* and *CONSTANT* (for read-write and read-only variables, respectively) and *NET_RECEIVE* (the actions taken when the mechanism receives an event, e.g. a synaptic input).
 
 ## Fixed Time Stepping Interpolation
 
@@ -231,7 +231,7 @@ $$
 
 Fixed time step interpolation is typically performed with either the [Euler][euler] or the [Crank-Nicolson][cn] method. The explicit Forward Euler provides first-order accuracy, and its time step must never be more than twice the smallest time constant in the system. As a reminder, a numerical solution to a differential equation is said to be of n$$^{th}$$-order if the error $$E$$ is proportional to the $$n^{th}$$ power of the step size $$h$$: $$E(h)=Ch^n$$. The gap between the analytic and the numerical solutions is particularly large when the system's voltage is changing rapidly, making it unstable. This has been described in detail in [The NEURON book][neuron-book]. For an extremely small time step of $$\Delta t=0.0001 ms$$, the system almost achieves equilibrium, at the cost of a very high computational load. Therefore, Forward Euler is not applied in NEURON. The Backward Euler method computes the solution of a set of nonlinear simultaneous equations at each step, therefore requiring a step size as large as possible to compensate for the extra work. For *reasonable* values of $$\Delta t$$, it produces fast simulations that are generally correct, explained by the fact that tightly coupled compartments do not generate large error oscillations and approach the system's equilibrium quickly. As its numerical error is proportional to $$\Delta t$$, the Backward Euler does not deal with non-linearities. A function or map $$f(x)$$ is said to be linear if it satisfies the properties of superposition ($$f(x+y) = f(x) + f(y)$$) and homogeneity ($$ f (\alpha x) = \alpha f (x)$$). The equation(s) of a non-linear system cannot be written as a linear combination of its unknown variables or functions.
 
-The accuracy of the Backward Euler is improved by the [Crank-Nicolson][cn] method, which provides a local error proportional to the square of the step size. As $$\Delta t$$ becomes large, the solution oscillates with decreasing amplitude, making it numerically stable --- see Hines et al. (1997) for a numerical resolution of passive compartments and action potentials. Computation-wise, the Crank-Nicolson method is stable and more accurate than the Backward Euler, while requiring the same number of computation steps as Backward Euler. This can be shown as follows: if we take implicit (Backward) Euler to be defined as
+The accuracy of the Backward Euler is improved by the [Crank-Nicolson][cn] method, which provides a local error proportional to the square of the step size. As $$\Delta t$$ becomes large, the solution oscillates with decreasing amplitude, making it numerically stable --- see Hines and Carnevale (1997) for a numerical resolution of passive compartments and action potentials. Computation-wise, the Crank-Nicolson method is stable and more accurate than the Backward Euler, while requiring the same number of computation steps as Backward Euler. This can be shown as follows: if we take implicit (Backward) Euler to be defined as
 
 $$
 y^{n+1}= y^n + \Delta t \,\, A y^{n+1} = (I - \Delta t \,\, A)^{-1} y^n 
@@ -249,7 +249,7 @@ $$
 y^{n+1} = y^n + \frac{1}{2}\Delta t \space{ } A y^{n+1} + \frac{1}{2}\Delta t \space{ } A y^{n} = \left( I - \frac{1}{2} \Delta t \,\, A \right)^{-1} \left(I + \frac{1}{2} \Delta t \,\, A \right) y^n
 $$
 
-which is 2 steps of implicit Euler, therefore requiring no extra computation for the added accuracy:
+which is one step of implicit Euler with half the step size, followed by a linear extrapolation, therefore requiring no extra computation for the added accuracy:
 
 $$
 2 y^{n+1} - y^n = (2(I - \Delta t \,\, A)^{-1} - I) y^n = (I - \Delta t \space{ } A)^{-1} (I + \Delta t \space{ } A) y^n
@@ -278,7 +278,7 @@ $$\Delta t$$ is defined by the fastest mechanisms requiring no data exchange bet
 
 NEURON's implementation of fixed time step integrates the equation over the $$\Delta t$$ step by calling all the *BREAKPOINT* blocks of the models at $$t + \Delta t /2$$ twice, with $$v$$ and $$v+.001$$, to compute the current and conductance contributions of each mechanism and form the matrix conductance × voltage = current. The matrix is then solved for $$v(t+ \Delta t)$$. Lastly, in line with the staggered time stepping scheme, the *SOLVE* statement of the models (within the *BREAKPOINT* block) is executed with $$t+ \Delta t$$ and the new $$v$$ in order to integrate those states, from the new $$t-\Delta t/2$$ to the new $$t+\Delta t/2$$.
 
-A strong argument supporting a fixed time step approach is the possibility of data vectorization. At every time step, several mechanisms run the same operations with different inputs, therefore allowing for a data layout in memory that takes advantage of hyperthreading or other vectorization modules on modern architectures.
+A strong argument supporting a fixed time step approach is the possibility of data vectorization. At every time step, several mechanisms run the same operations with different inputs, therefore allowing for a data layout in memory that takes advantage of the vectorization (SIMD) units of modern architectures.
 
 
 ### Handling of non-linearity

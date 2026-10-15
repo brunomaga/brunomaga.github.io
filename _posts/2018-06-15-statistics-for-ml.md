@@ -158,15 +158,15 @@ $$.
 
 
 
-**Moment Generating Function** is an alternative formulation of a pdf $$f(x)$$:
-- $$M(t) = \mathbb{E} \left[ e^{tX} \right] = \sum_{x \in S} e^{tx}\, f(x)$$.
+**Moment Generating Function** is an alternative formulation of a pmf or pdf $$f(x)$$:
+- $$M(t) = \mathbb{E} \left[ e^{tX} \right]$$, i.e. $$\sum_{x \in S} e^{tx}\, f(x)$$ for a pmf, or $$\int e^{tx}\, f(x) \, dx$$ for a pdf.
 - if the random variables are independent: $$M_{X+Y}(t) = M_X(t) * M_Y(t)$$.
 - it can be used to show e.g. that the sum of Gaussians is a Gaussian.
 
 ---
 
 
-**Law of Large Numbers**: Let $$Y_n$$ be independent random variables (of any form) with $$\mathbb{E}[Y_k]=\mu$$ for all $$k$$. Then $$\frac{1}{n} (Y_1 + ... + Y_n) \rightarrow \mu$$.
+**Law of Large Numbers**: Let $$Y_n$$ be iid random variables (of any form) with $$\mathbb{E}[Y_k]=\mu$$ for all $$k$$. Then $$\frac{1}{n} (Y_1 + ... + Y_n) \rightarrow \mu$$.
 
 
 **Central Limit Theorem**: Let $$\{ Y_n \}$$ be a sequence of iid random variables (of any form) with mean $$\mu$$ and variance $$\sigma^2$$. Then $$\sqrt{n} \left( \frac{1}{n} \sum_{i=1}^n (Y_i - \mu) \right) \rightarrow \mathcal{N}(0, \sigma^2)$$.
@@ -217,7 +217,7 @@ Testing:
 
 Arrangements of $$k$$ items out of a set of size $$n$$:
 - **Arrangement** is the arrangement of *some* items in which order matters: $$^nA_k=n^k$$ with replacement or $$\frac{n!}{(n-k)!}$$ without.
-- **Permutation** is the arrangement of *all* items in which order matters: $$^nP_k=\frac{n!}{(n-k)!}$$.
+- **Permutation** is the arrangement of *all* items in which order matters: $$^nP_n = n!$$, the case $$k=n$$ of $$^nP_k=\frac{n!}{(n-k)!}$$.
 - **Combination** is the arrangement of *some* items in which order *doesn't* matter: $$\binom nk = \, ^nC_k = \frac{1}{k!} ^nP_k = \frac{n!}{k!(n-k)!}$$.
 
 ---
@@ -239,7 +239,7 @@ Arrangements of $$k$$ items out of a set of size $$n$$:
   - De Morgan's Laws: $$(F1 ∪ F2)^c = F^c_1 ∩ F^c_2$$  and  $$(F1 ∩ F2)^c = F^c_1 ∪ F^c_2$$
 
 
-Using the previous axioms we can show that:
+Using these properties and the axioms of probability, we can show that:
 - $$Pr(F1 ∪ F2) = Pr(F1) − Pr(F1 ∩ F2) + Pr(F2)$$;
 - $$Pr(F1 ∩ F2) ≤ min\{Pr(F1), Pr(F2)\}$$;
 - $$F ∪ F^c = Ω$$, $$1 = Pr(Ω) = Pr(F) + Pr(F^c)$$, thus $$Pr(F^c) = 1 − Pr(F)$$

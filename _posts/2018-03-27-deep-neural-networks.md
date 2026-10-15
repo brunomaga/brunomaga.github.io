@@ -168,7 +168,7 @@ Training is done with backpropagation, ignoring that some weights are shared and
 
 ## Skip connections
 
-An issue with very deep networks is that the performance of the model drops as the depth of the architecture increases. This is known as the *degradation problem*. One possible reason is overfitting: models tend to overfit if given too much capacity. Other reasons are vanishing and/or exploding gradients. One way to improve this is to use [normalization](https://arxiv.org/abs/1803.08494) techniques to ensure that gradients have healthy norms.
+An issue with very deep networks is that the performance of the model drops as the depth of the architecture increases. This is known as the *degradation problem*. It is not caused by overfitting, since the training error increases as well. Possible reasons are vanishing and/or exploding gradients. One way to improve this is to use [normalization](https://arxiv.org/abs/1803.08494) techniques to ensure that gradients have healthy norms.
 
 A better way to improve this is to provide layers of the network with the outputs of layers that are not directly connected to them. These connections *skip* some of the layers in the neural network and feed the output of one layer as the input of later layers --- hence the name *skip connections*. In practice, the input to a given layer will be the combination (typically via addition or concatenation) of the outputs of several previous layers. 
 
@@ -196,8 +196,9 @@ A list of the most common data types and embedding types:
   - in a classification task: use the activation of the last layer *before* the layer that does logit/softmax, i.e. the input to the final layer, which is the output of the one before last;
   - in an image-to-image task, e.g. segmentation using a [U-net](https://arxiv.org/abs/1505.04597): use the activation of the last downsampling layer, which is the input of the first upsampling layer, i.e. the [*information bottleneck*](https://en.wikipedia.org/wiki/Information_bottleneck_method);
 - videos: the input is now 5D (batch size, time, channels, height, width), i.e. a sequence of video frames stacked on the time dimension. Embeddings are collected similarly to a regular CNN (adapted to use 3D instead of 2D convolutions, etc.);
-- graphs: the embedding of a graph is given by the embedding of a node after several steps of the [message passing algorithm](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html) as $$x_i^{(k)} = \gamma^{(k)} \left( x_i^{(k-1)}, \Box_{j} \, \phi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$, where:
+- graphs: the embedding of a graph is given by the embedding of a node after several steps of the [message passing algorithm](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html) as $$x_i^{(k)} = \gamma^{(k)} \left( x_i^{(k-1)}, \Box_{j \in \mathcal{N}(i)} \, \phi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$, where:
   - $$x_i^{(k)}$$ is the embedding of node $$i$$ at message passing step $$k$$;
+  - $$\mathcal{N}(i)$$ is the set of neighbors of node $$i$$;
   - $$e_{j,i}$$ is the embedding of the edge from node $$j$$ to node $$i$$;
   - $$\Box$$ is a differentiable, permutation-invariant function, e.g. sum, mean or max;
   - and $$\gamma$$ and $$\phi$$ are differentiable functions such as DNNs or RNNs (LSTMs, GRUs).

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Bayesian Linear Regression, Maximum Likelihood and Maximum-A-Priori"
+title:  "Bayesian Linear Regression, Maximum Likelihood and Maximum-A-Posteriori"
 categories: [machine learning, supervised learning, probabilistic programming]
 tags: [machinelearning]
 ---
@@ -32,6 +32,7 @@ p(\theta \mid X) = \frac{p(X\mid \theta) p(\theta)}{p(X)} \propto p(X \mid \thet
 $$
 
 where the evidence is
+
 $$
 p(X) = \int p(X \mid \theta) p(\theta) d\theta = \mathbb{E}_{\theta}[ p(X \mid \theta) ]
 $$   
@@ -309,7 +310,7 @@ Illustration of four steps of online learning for the linear model $$y = w_0 + w
 (inspired by fig 3.7, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
 
 
-We start with the prior knowledge that both weights ($$w_0$$ and $$w_1$$) are zero-centered, i.e. with mean 0 and a standard deviation of 1. When a new datapoint is introduced (blue circle on the top-right plot), the new posterior (top-left) is computed from the likelihood and our initial prior. Drawing models from the current priors leads to an inaccurate regression model (yellow lines on the top-right plot). Another point is then introduced (2nd row, right), leading to a new posterior (second row, left), computed from the likelihood and the prior (i.e. the posterior of the previous iteration). The model is now more accurate and the search space (covariance of the weights) is smaller (second row, left). After two more iterations, the model is already very accurate, with a reduced variance on the weights (bottom left) and better-tuned linear regression models (bottom right).
+We start with the prior knowledge that both weights ($$w_0$$ and $$w_1$$) are zero-centered, i.e. with mean 0 and a standard deviation of 1. When a new datapoint is introduced (blue circle on the top-right plot), the new posterior (top-left) is computed from the likelihood and our initial prior. Drawing models from the current priors leads to an inaccurate regression model (orange lines on the top-right plot). Another point is then introduced (2nd row, right), leading to a new posterior (second row, left), computed from the likelihood and the prior (i.e. the posterior of the previous iteration). The model is now more accurate and the search space (covariance of the weights) is smaller (second row, left). After two more iterations, the model is already very accurate, with a reduced variance on the weights (bottom left) and better-tuned linear regression models (bottom right).
 
 ## Predictive Variance
 
@@ -353,7 +354,7 @@ Similarly to the visualization displayed before, introducing new datapoints impr
 <img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Illustration of four steps modelling synthetic sinusoidal data. Pictures show the ground truth in blue, the model mean approximation in red, and the predictive variance as a light-orange area. (inspired by fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
+Illustration of four steps modelling synthetic sinusoidal data. Pictures show the ground truth in blue, the model mean approximation in orange, and the model mean plus and minus one predictive standard deviation as a light-orange area. (inspired by fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
 
 
 ## Comparing two Bayesian models

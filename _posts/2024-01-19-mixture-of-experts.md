@@ -225,7 +225,7 @@ $$
 l_{aux} = \frac{1}{E} \sum^E_{e=1} \frac{c_e}{S} \, m_e
 $$
 
-where the term $$c_e/S$$ represents the fraction of the input routed to each expert, and $$m_e$$ is the mean gate value of each expert (note that $$m_e$$ is added because $$c_e/S$$ is a constant and is not differentiable).
+where the term $$c_e/S$$ represents the fraction of the input routed to each expert, and $$m_e$$ is the mean gate value of each expert (note that $$m_e$$ is added because $$c_e/S$$ comes from the top-2 selection, which is not differentiable).
 
 ## Switch Transformers
 
