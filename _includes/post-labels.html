@@ -1,8 +1,8 @@
 <!-- date, category and tags of a post as boxed labels. Params: post, date_format -->
 <div class="post-labels">
-  <time class="post-label" datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: include.date_format }}</time>
+  <time class="post-label post-label--date" datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: include.date_format }}</time>
   {%- for category in include.post.categories %}
-  <span class="post-label">{{ category }}</span>
+  <span class="post-label post-label--category">{{ category }}</span>
   {%- endfor %}
   {%- for tag in include.post.tags %}
   <span class="post-label">{{ tag }}</span>
