@@ -28,10 +28,10 @@ Given a dense matrix representation of a graph connectivity $$E$$, the algorithm
  so $$V$$ is the same for $$G$$ and $$G^{\star}$$. The implementation of the distributed transpose is well known for a **dense** connectivity matrix, and is available via the `MPI_Alltoall` collective call, which takes as input (output) an array of elements, the size of the array, and the datatype of the elements to be sent (received).
 
 {: style="text-align:center; font-size: small;"}
-<img width="50%" height="50%" src="{{ site.assets }}/matrix-transpose/all_to_all.jpg"><span class="text-secondary">
+<img width="70%" height="70%" src="{{ site.assets }}/matrix-transpose/all_to_all.png"><span class="text-secondary">
 
 {: style="text-align:center; font-size: small;"}
-(image copyright: MPI Tutorial, Shao-Ching Huang, IDRE High Performance Computing Workshop, 2013-02-13)</span>
+(image adapted from: MPI Tutorial, Shao-Ching Huang, IDRE High Performance Computing Workshop, 2013-02-13)</span>
 
 For sparse matrices, the problem is not so trivial. A distributed memory data layout assumes that the vertices $$V$$ are distributed across $$R$$ compute nodes (**ranks**) and that only the rows local to each memory region are directly accessible to a rank. We will refer to $$G_{r} = (V_{r}, E_{r})$$ as the subset of $$G$$ that is stored in rank $$r$$, with vertices $$V_{r}$$ and edges $$E_{r}$$. Each rank holds a disjoint subset of rows of the initial graph $$G$$, such that the cover ($$\bigcup\limits_{r} G_{r} = G$$) and disjoint ($$G_{r} \bigcap G_{s} = \emptyset, \forall r \neq s$$) properties hold. Ranks only hold information about outgoing connectivity (edges from vertices in this rank to other vertices), i.e. $$E_{r} = \Big\{ \{i,j,e\} \in E $$ such that $$i \in V_r \Big\}$$. Thus, the same cover and disjoint properties also hold for edges.
 

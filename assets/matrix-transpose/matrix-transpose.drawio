@@ -1,0 +1,244 @@
+<mxfile host="drawio" version="21.1.6">
+  <diagram name="matrix-transpose" id="matrix-transpose">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="all_to_all-label" value="all_to_all.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="40" width="646" height="184" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-1" value="data" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="86" y="0" width="204" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-2" value="A&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="86" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-3" value="A&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="120" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-4" value="A&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="154" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-5" value="A&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="188" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-6" value="A&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="222" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-7" value="A&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="256" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-8" value="B&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="86" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-9" value="B&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="120" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-10" value="B&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="154" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-11" value="B&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="188" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-12" value="B&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="222" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-13" value="B&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="256" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-14" value="C&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="86" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-15" value="C&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="120" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-16" value="C&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="154" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-17" value="C&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="188" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-18" value="C&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="222" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-19" value="C&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="256" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-20" value="D&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="86" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-21" value="D&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="120" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-22" value="D&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="154" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-23" value="D&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="188" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-24" value="D&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="222" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-25" value="D&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="256" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-26" value="E&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="86" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-27" value="E&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="120" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-28" value="E&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="154" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-29" value="E&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="188" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-30" value="E&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="222" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-31" value="E&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="256" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-32" value="F&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="86" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-33" value="F&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="120" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-34" value="F&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="154" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-35" value="F&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="188" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-36" value="F&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="222" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-37" value="F&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="256" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-38" value="data" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="442" y="0" width="204" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-39" value="A&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="442" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-40" value="B&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="476" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-41" value="C&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="510" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-42" value="D&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="544" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-43" value="E&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="578" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-44" value="F&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="612" y="28" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-45" value="A&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="442" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-46" value="B&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="476" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-47" value="C&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="510" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-48" value="D&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="544" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-49" value="E&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="578" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-50" value="F&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="612" y="54" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-51" value="A&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="442" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-52" value="B&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="476" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-53" value="C&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="510" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-54" value="D&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="544" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-55" value="E&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="578" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-56" value="F&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="612" y="80" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-57" value="A&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="442" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-58" value="B&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="476" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-59" value="C&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="510" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-60" value="D&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="544" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-61" value="E&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="578" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-62" value="F&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="612" y="106" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-63" value="A&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="442" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-64" value="B&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="476" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-65" value="C&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="510" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-66" value="D&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="544" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-67" value="E&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="578" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-68" value="F&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="612" y="132" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-69" value="A&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="442" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-70" value="B&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="476" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-71" value="C&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="510" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-72" value="D&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="544" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-73" value="E&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="578" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-74" value="F&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="612" y="158" width="34" height="26" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-75" value="processes" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="0" y="28" width="80" height="156" as="geometry" />
+        </mxCell>
+        <mxCell id="all_to_all-76" value="MPI_Alltoall" style="shape=mxgraph.arrows2.arrow;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;dy=0.32;dx=19;notch=0;fontColor=#333333;" vertex="1" parent="all_to_all-figure">
+          <mxGeometry x="306" y="88" width="120" height="36" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
