@@ -39,7 +39,7 @@ The flag `fullgraph` specifies whether the compilation outputs a single graph fo
 
 ## About this post
 
-In this post, we will benchmark and analyse several implementations of ML training and inference performed on different backends: PyTorch 1.3.1 (Python), PyTorch 2.1.2 (Python), LibTorch 2.1.2 (C++), TorchScript 2.1.2 (Python and C++), and PyTorch 2.1.2 with `torch.compile` (Python).  
+In this post, we will benchmark and analyse several implementations of ML training and inference performed on different backends: PyTorch 1.3.1 (Python), PyTorch 2.1 (Python), LibTorch 2.1 (C++), TorchScript 2.1 (Python and C++), and PyTorch 2.1 with `torch.compile` (Python).  
 We will look at two different testbenches, so feel free to pick one based on your level of expertise and interest:
 1. the small variant of the GPT2 model, introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), will be detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example that is specific to the use case of large language models; 
 2. a Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch C++](#benchmark-model). This is a very simple example that will be used to benchmark our metrics on models of varying depths and widths. It is mostly suitable for those who are interested in performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
@@ -488,10 +488,10 @@ We compared the throughput (samples/sec) and GPU memory usage (GBs) of three dis
 3. a wide benchmark model of 3 layers with 8192 activations each, with input and output of size 2048.
 
 So, in practice, we are testing a very deep DNN, a very shallow DNN and a large language model. For each model, we tested:
-- the Python PyTorch implementation of training and inference, on versions 1.3.1 and 2.1.2;
-- the C++ LibTorch 2.1.2 implementation of train and inference;
-- the TorchScript combo, using PyTorch 2.1.2 to train and output the model, and C++ LibTorch 2.1.2 to load it and perform inference; and
-- the train and inference using `torch.compile` on PyTorch 2.1.2. 
+- the Python PyTorch implementation of training and inference, on versions 1.3.1 and 2.1;
+- the C++ LibTorch 2.1 implementation of train and inference;
+- the TorchScript combo, using PyTorch 2.1 to train and output the model, and C++ LibTorch 2.1 to load it and perform inference; and
+- the train and inference using `torch.compile` on PyTorch 2.1. 
 
 As an important remark, I noticed that both the Python and C++ implementations of Torch leak memory on the GPU when several models are allocated in the same run, as the deallocation does not clear the memory completely. For that reason, I executed a new run per benchmark value.
 The results for the GPTlite model are the following: 
@@ -501,7 +501,7 @@ The results for the GPTlite model are the following:
 
 The results for the benchmark models are in <a href="{{ site.assets }}/gptlite-cpp/benchmark_wide.png">benchmark_wide.png</a> and <a href="{{ site.assets }}/gptlite-cpp/benchmark_deep.png">benchmark_deep.png</a>. Looking at the GPU memory usage, we see a much smaller memory requirement for inference-only runs (purple bars) compared to runs that performed train and inference (blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training leads to an increase in memory in the order of 4x to 10x.  
 
-Looking at the overall performance, there is a gain of up to 15% in throughput when moving from PyTorch 1.3.1 to 2.1.2 (blue to orange bars). There is also a small throughput increase of up to 10% when moving from PyTorch 2.1.2 to its C++ LibTorch equivalent (from orange to green bars), explained by the Python overhead (runtime, dynamic typing, etc.). Finally, the difference in inference performance between the pure C++ implementation and the TorchScript implementation (train in Python, inference in C++) is negligible, which means that TorchScript does a pretty good job at (de)serializing the model.
+Looking at the overall performance, there is a gain of up to 19% in throughput when moving from PyTorch 1.3.1 to 2.1 (blue to orange bars). There is also a small throughput increase of up to 10% when moving from PyTorch 2.1 to its C++ LibTorch equivalent (from orange to green bars), explained by the Python overhead (runtime, dynamic typing, etc.). Finally, the difference in inference performance between the pure C++ implementation and the TorchScript implementation (train in Python, inference in C++) is negligible, which means that TorchScript does a pretty good job at (de)serializing the model.
 
 We also tested the speed-up gains from using `torch.compile` on our GPTlite model. The base case without `torch.compile` performs the PyTorch-based training at a throughput of 1.41 samples/sec and inference at 4.28 samples/second. Let's compare it with the same model compiled in different modes and with(out) a full graph:
 
