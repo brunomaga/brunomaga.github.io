@@ -2971,13 +2971,13 @@
         <mxCell id="continuous_batching-15" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="208" y="53" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-16" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-16" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="252" y="53" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-17" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-17" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="296" y="53" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-18" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-18" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="340" y="53" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="continuous_batching-19" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
@@ -2989,7 +2989,7 @@
         <mxCell id="continuous_batching-21" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="472" y="53" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-22" value="R7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-22" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="516" y="53" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="continuous_batching-23" value="slot 2" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_batching-figure">
@@ -2998,31 +2998,31 @@
         <mxCell id="continuous_batching-24" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="120" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-25" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-25" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="164" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-26" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-26" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="208" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-27" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-27" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="252" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-28" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-28" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="296" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-29" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-29" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="340" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-30" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-30" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="384" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-31" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-31" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="428" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-32" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-32" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="472" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-33" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-33" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="516" y="91" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="continuous_batching-34" value="slot 3" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_batching-figure">
@@ -3034,28 +3034,28 @@
         <mxCell id="continuous_batching-36" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="164" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-37" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-37" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="208" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-38" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-38" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="252" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-39" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-39" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="296" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-40" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-40" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="340" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-41" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-41" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="384" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-42" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-42" value="R7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="428" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-43" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-43" value="R7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="472" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="continuous_batching-44" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
+        <mxCell id="continuous_batching-44" value="R7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
           <mxGeometry x="516" y="129" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="continuous_batching-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="continuous_batching-figure">
