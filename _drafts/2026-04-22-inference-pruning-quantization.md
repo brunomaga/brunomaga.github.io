@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Efficient inference: pruning and quantization"
+title:  "Pruning and quantization"
 categories: ["Efficient Inference"]
 tags: ["LLM", "pruning", "quantization", "FP8", "KV cache"]
 ---

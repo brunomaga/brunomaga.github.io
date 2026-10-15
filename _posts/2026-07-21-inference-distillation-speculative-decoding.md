@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Efficient inference: knowledge distillation, speculative decoding and multi-token decoding"
+title:  "Knowledge distillation, speculative decoding and multi-token decoding"
 redirect_from: /speculative-multitoken-decoding
 categories: ["Efficient Inference"]
 tags: ["LLM", "distillation", "speculative decoding", "multi-token prediction", "EAGLE", "Medusa"]

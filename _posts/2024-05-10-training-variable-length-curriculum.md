@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training: variable sequence lengths, curriculum learning, adaptive batch size and LR"
+title:  "Variable sequence lengths, curriculum learning, adaptive batch size and LR"
 categories: ["Distributed Training"]
 tags: ["curriculum learning", "variable sequence length", "adaptive batch size", "CUDA graphs", "DeepSpeed"]
 ---

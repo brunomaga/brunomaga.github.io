@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Efficient inference: kernel fusion"
+title:  "Kernel fusion"
 categories: ["Efficient Inference"]
 tags: ["LLM", "kernel fusion", "torch.compile", "CUDA graphs", "inference engines"]
 ---

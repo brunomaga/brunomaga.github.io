@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Efficient inference: faster attention"
+title:  "Faster attention"
 categories: ["Efficient Inference"]
 tags: ["LLM", "attention", "FlashAttention", "sparse attention", "linear attention", "MLA", "DeepSeek"]
 ---

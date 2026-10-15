@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training: data parallelism, sharding and CPU offloading"
+title:  "Data parallelism, sharding and CPU offloading"
 categories: ["Distributed Training"]
 tags: ["data parallelism", "ZeRO", "FSDP", "CPU offloading", "activation checkpointing", "DeepSpeed", "PyTorch"]
 ---

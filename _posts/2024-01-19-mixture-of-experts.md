@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training: Mixture-of-Experts and Expert Parallelism"
+title:  "Mixture-of-Experts and Expert Parallelism"
 categories: ["Distributed Training"]
 tags: ["MoE", "expert parallelism", "load balancing", "Switch Transformer", "PyTorch"]
 ---

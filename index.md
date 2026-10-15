@@ -45,17 +45,7 @@ In this space, I write about my projects and topics related to my fields of inte
 {{ post.date | date: date_format }}
 </td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
-{%- comment -%} shown as "Category: title"; a title already starting with "Category:" is not prefixed twice {%- endcomment -%}
-{%- assign category = post.categories.first -%}
-{%- assign prefix = category | append: ":" | downcase -%}
-{%- assign prefix_size = prefix | size -%}
-{%- assign title_head = post.title | downcase | slice: 0, prefix_size -%}
-{%- if title_head == prefix -%}
-  {%- assign title = post.title | slice: prefix_size, 1000 | strip -%}
-{%- else -%}
-  {%- assign title = post.title -%}
-{%- endif %}
-<a href="{{ post.url }}">{{ category }}: {{ title }}</a>
+<a href="{{ post.url }}">{{ post.categories.first }}: {{ post.title }}</a>
 </td>
 </tr>
 {% endfor %}

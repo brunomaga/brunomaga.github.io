@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Distributed training: sequence and context parallelism with Ulysses and Ring attention"
+title:  "Sequence and context parallelism with Ulysses and Ring attention"
 categories: ["Distributed Training"]
 tags: ["sequence parallelism", "context parallelism", "Ulysses", "Ring attention", "attention"]
 ---

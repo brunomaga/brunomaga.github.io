@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Efficient inference: prefill vs decode, roofline, KV cache, continuous/ragged batching, disaggregation"
+title:  "Prefill vs decode, roofline, KV cache, continuous/ragged batching, disaggregation"
 categories: ["Efficient Inference"]
 tags: ["LLM", "prefill", "decode", "roofline", "KV cache", "batching", "disaggregation"]
 ---
