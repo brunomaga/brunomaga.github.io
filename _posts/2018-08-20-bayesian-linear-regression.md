@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Bayesian Linear Regression, Maximum Likelihood and Maximum-A-Posteriori"
-categories: [machine learning, supervised learning, probabilistic programming]
-tags: [machinelearning]
+categories: ["Probabilistic Learning"]
+tags: ["Bayesian inference", "linear regression", "MLE", "MAP"]
 ---
 
 Bayesian methods allow us to model the relationship between an input and an output while providing a measure of *uncertainty*, or "how sure we are", based on the seen data. Unlike most commonly used *frequentist* methods, where the output of the method is a set of best-fit parameters, the output of a Bayesian regression is a probability distribution of each model parameter, called the **posterior distribution**. 

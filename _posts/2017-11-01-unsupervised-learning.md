@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Unsupervised Learning basics and Principal Component Analysis"
-categories: [machine learning, unsupervised learning]
-tags: [machinelearning]
+categories: ["Machine Learning"]
+tags: ["unsupervised learning", "PCA", "clustering", "dimensionality reduction"]
 ---
 
 Unsupervised learning is the field of machine learning dedicated to learning without supervision or reward signals. Unlike [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning]({{ site.baseurl }}{% post_url  2017-02-17-linear-regression-matrix-factorization %}), the data is the only information given to the method. Still, these methods are very powerful, and are commonly used for image compression, dimensionality reduction, clustering and visualization, and to learn representations of the data that other models then build on.

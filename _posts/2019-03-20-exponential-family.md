@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Exponential Family of Distributions"
-categories: [machine learning, supervised learning, probabilistic programming]
-tags: [machinelearning]
+categories: ["Probabilistic Learning"]
+tags: ["probability distributions", "exponential family", "MLE"]
 ---
 
 In the [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}), we saw that computing the Maximum Likelihood estimator and the Maximum-a-Posteriori on a normally-distributed set of parameters becomes much easier once we apply the log-trick. The rationale is that since $$\log$$ is a monotonically increasing function, the maximum and minimum of the function to be optimized are attained at the same points as those of the original function inside the $$\log$$ operator. Thus, by applying the $$\log$$ function, the normal distribution becomes simpler and faster to compute, as we convert a product of exponentials into a sum. 

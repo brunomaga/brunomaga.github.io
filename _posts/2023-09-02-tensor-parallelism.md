@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Distributed training: tensor parallelism"
-categories: [machine learning, Transformer, GPT, DeepSpeed]
-tags: [machinelearning]
+categories: ["Distributed Training"]
+tags: ["tensor parallelism", "Megatron-LM", "collectives", "PyTorch"]
 ---
 
 In this post, we will discuss tensor (model) parallelism, particularly the [Megatron-LM](https://www.deepspeed.ai/tutorials/megatron/) implementation. Tensor parallelism is just one more dimension of parallelism, in a universe of data, tensor, pipeline, context, sequence and expert parallelism. 

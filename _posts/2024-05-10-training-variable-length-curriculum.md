@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Distributed training: variable sequence lengths, curriculum learning, adaptive batch size and LR"
-categories: [machine learning, distributed computing]
-tags: [machinelearning]
+categories: ["Distributed Training"]
+tags: ["curriculum learning", "variable sequence length", "adaptive batch size", "CUDA graphs", "DeepSpeed"]
 ---
 
 Many datasets include samples of variable length—for example, audio tracks of different durations, text sentences with different numbers of tokens, and videos with different numbers of frames. To train a machine learning model on such data, it is common to trim and pad all samples to a fixed length so batch shapes are consistent across training iterations. Alternatively, you can train on the original sample sizes, which adds complexity—especially in distributed (multi-node, multi-GPU) environments.

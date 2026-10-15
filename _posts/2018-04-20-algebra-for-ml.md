@@ -2,6 +2,8 @@
 layout: post
 title:  "Algebra for ML Engineers"
 redirect_from: /algebra
+categories: ["Mathematics for ML"]
+tags: ["linear algebra", "matrix decompositions", "vector calculus", "optimization"]
 ---
 
 A brief summary of topics in algebra that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For statistics and probability, see the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-statistics-for-ml %}).

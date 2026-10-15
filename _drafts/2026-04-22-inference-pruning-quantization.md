@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Efficient inference: pruning and quantization"
-categories: [machine learning, Transformer, GPT, inference, pruning, quantization]
-tags: [machinelearning]
+categories: ["Efficient Inference"]
+tags: ["LLM", "pruning", "quantization", "FP8", "KV cache"]
 ---
 
 The most effective way to make a model faster is to make it smaller. Pruning removes parts of a large model, and is usually combined with [knowledge distillation]({{ site.baseurl }}{% post_url 2026-07-21-inference-distillation-speculative-decoding %}#knowledge-distillation), which trains the smaller model to behave like the original one. Quantization keeps all the parts of the model, but stores its numbers with fewer bits. As before, all the code is in the [repository of this post](https://github.com/{{ site.repository }}/tree/master/assets/inference).

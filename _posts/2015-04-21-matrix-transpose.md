@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Distributed Matrix Transpose Algorithms"
-categories: [distributed algorithms, parallel algorithms]
-tags: [algorithms]
+categories: ["Distributed Algorithms"]
+tags: ["MPI", "linear algebra", "matrix transpose", "all-to-all"]
 ---
 
 [Matrix transpose][wiki-transpose] is a problem of high importance, especially in fields such as large-scale algebraic solvers and graph-based algorithms. The transpose of a graph provides the converse of its edge connectivity and the orthogonal view of its connectivity matrix. Although the transpose of an algebraic table (or, equivalently, of the connectivity matrix of a graph) may seem trivial when executed on a single compute node, it becomes a hard task when the dataset is distributed across multiple compute nodes.

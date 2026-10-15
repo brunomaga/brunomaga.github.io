@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Efficient inference: kernel fusion"
-categories: [machine learning, Transformer, GPT, inference]
-tags: [machinelearning]
+categories: ["Efficient Inference"]
+tags: ["LLM", "kernel fusion", "torch.compile", "CUDA graphs", "inference engines"]
 ---
 
 ## Compilers and kernels

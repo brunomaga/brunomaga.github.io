@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Closed-form Linear Regression and Matrix Factorization, and loss functions"
-categories: [machine learning, supervised learning]
-tags: [machinelearning]
+categories: ["Machine Learning"]
+tags: ["supervised learning", "linear regression", "matrix factorization", "loss functions"]
 ---
 
 Regression relates an input variable to an output, either to predict new outputs or to understand the effect of the input on the output. A regression dataset consists of a set of $$N$$ pairs $$(x_n, y_n)$$, with input $$x_n$$ and output/label $$y_n$$. For a new input $$x_n$$, the goal of regression is to find $$f$$ such that $$ y_n \approx f(x_n) $$. If we want to fit a multidimensional plane to the dataset, we are solving the (multivariate) linear regression problem, by finding the weights $$w$$ such that:

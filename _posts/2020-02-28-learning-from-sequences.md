@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Learning from sequences: Encoder-Decoder, Transformers and BERT"
-categories: [machine learning, supercomputing]
-tags: [machinelearning]
+categories: ["Machine Learning"]
+tags: ["Transformer", "attention", "encoder-decoder", "BERT"]
 ---
 
 In this post, we will look into alternative methods for ML training on sequential data, with an emphasis on efficiency and parallelism.

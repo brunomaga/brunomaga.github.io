@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Diffusion models: from DDPMs to DiTs"
-categories: [machine learning, diffusion, SORA]
-tags: [machinelearning]
+categories: ["Generative Models"]
+tags: ["diffusion", "DDPM", "DiT", "video generation"]
 ---
 
 
