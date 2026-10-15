@@ -68,42 +68,29 @@
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
-      margin-top: 0.4em;
+      margin-top: 0.6em;
     }
 
+    /* uppercase text has no descenders, so the top padding is larger to centre it visually */
     .post-label {
-      border: 1px solid #d0d0d0;
-      padding: 2px 7px;
+      display: inline-flex;
+      align-items: center;
+      padding: 6px 9px 4px;
+      border: 1px solid #e3e3e3;
+      border-radius: 3px;
+      background-color: #f3f3f3;
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       font-size: 0.7rem;
+      line-height: 1;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: #888;
+      color: #555;
       white-space: nowrap;
     }
 
-    /* tags use the lighter grey default above */
-    .post-label--date     { border-color: #111;    color: #111; }
-    .post-label--category { border-color: #828282; color: #555; }
-
-    /* smaller labels inline after the post title in the home page listing */
-    .post-labels--inline {
-      display: inline;
-      margin-left: 0.3em;
-    }
-
-    .post-labels--inline .post-label {
-      display: inline-block;
-      margin: 0.15em 0.2em 0.15em 0;
-      padding: 0 5px;
-      font-size: 0.6rem;
-      line-height: 1.5;
-      vertical-align: middle;
-      border-color: #e3e3e3;
-      color: #aaa;
-    }
-
-    .post-labels--inline .post-label--category { border-color: #c0c0c0; color: #828282; }
+    /* tags use the light grey default above */
+    .post-label--date     { border-color: #111;    background-color: #111;    color: #fdfdfd; }
+    .post-label--category { border-color: #2a7ae2; background-color: #2a7ae2; color: #fdfdfd; }
 
     /* ===== Responsive table =====
        https://css-tricks.com/accessible-simple-responsive-tables/ */
