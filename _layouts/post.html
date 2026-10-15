@@ -6,7 +6,7 @@ layout: default
 
   <header class="post-header">
     <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
-    {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+    {%- assign date_format = site.minima.date_format | default: "%b %Y" -%}
     {%- include post-labels.html post=page date_format=date_format -%}
   </header>
 
