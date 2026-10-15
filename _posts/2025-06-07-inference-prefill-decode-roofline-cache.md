@@ -93,7 +93,7 @@ Therefore, the roofline point ❌ of this example is $$\mathbf{(0.083, 10)}$$.
 For the multiplication of two matrices of shapes **$$A \times B$$** and **$$B \times C$$**, which gives an output matrix of shape **$$A \times C$$**, here are the FLOPs and the memory traffic, for a data type of **$$dt$$** bytes per element.
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="{{ site.assets }}/inference/imgs/matmul.png"/>
+<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/matmul.png"/>
 
 **Step 1: Floating Point Operations (FLOPs).** To compute each of the $$AC$$ elements of the output matrix, you perform a dot product of $$B$$ multiplications and $$B$$ additions. Each multiply-accumulate counts as $$2$$ FLOPs. Therefore:
 
@@ -697,11 +697,6 @@ def schedule(decoding, prefilling, budget):
 ```
 
 </details>
-
-**Memory pressure.** The KV cache is the real limit.
-- Admission: a request is admitted only if enough free blocks exist.
-- Preemption: if running sequences outgrow the cache, the scheduler evicts one, usually the newest. It then either drops its KV cache and recomputes it later (vLLM's approach) or swaps its blocks to CPU memory.
-- More capacity: FP8 KV cache, offloading, and evicting old prefix-cache blocks stretch the available memory.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/continuous_batching.png"/>
