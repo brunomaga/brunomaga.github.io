@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Algebra"
+title:  "Mathematics for ML"
 redirect_from: /algebra
-categories: ["Mathematics for ML"]
+categories: ["Machine Learning"]
 tags: ["linear algebra", "matrix decompositions", "vector calculus", "optimization"]
 ---
 
