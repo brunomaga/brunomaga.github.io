@@ -12,7 +12,7 @@
     {%- include google-analytics.html -%}
   {%- endif -%}
 
-  <link href="{{ "/favicon.ico" | relative_url }}" rel="shortcut icon">
+  <link href="{{ "/favicon.svg" | relative_url }}" rel="icon" type="image/svg+xml">
 
   <!-- font awesome for social media icons -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.7.2/css/all.css">
@@ -35,6 +35,18 @@
     }
 
     a:hover { text-decoration-thickness: 2px; }
+
+    /* ===== Code: light grey boxes ===== */
+
+    pre, code, .highlighter-rouge .highlight { background-color: #f5f5f5; }
+
+    /* ===== Syntax highlighting: the theme's blue and teal tokens in black and grey ===== */
+
+    .highlight .nc, .highlight .kt, .highlight .nt { color: #111; }
+    .highlight .nb, .highlight .na, .highlight .no, .highlight .nv,
+    .highlight .vc, .highlight .vg, .highlight .vi,
+    .highlight .m, .highlight .mf, .highlight .mh, .highlight .mi,
+    .highlight .mo, .highlight .il { color: #555; }
 
     /* ===== Images ===== */
 
