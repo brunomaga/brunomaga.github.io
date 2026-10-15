@@ -2,7 +2,7 @@
 layout: post
 title:  "Algebra for ML Engineers"
 redirect_from: /algebra
-categories: ["Mathematics for ML"]
+categories: ["ML Foundations"]
 tags: ["linear algebra", "matrix decompositions", "vector calculus", "optimization"]
 ---
 

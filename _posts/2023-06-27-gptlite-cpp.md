@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Building a GPT model in C++, and benchmarking LibTorch, PyTorch, TorchScript and torch.compile"
-categories: ["Language Models"]
-tags: ["GPT", "LLM", "C++", "LibTorch", "TorchScript", "torch.compile"]
+categories: ["Model Architectures"]
+tags: ["GPT", "LLM", "C++", "LibTorch", "TorchScript", "torch.compile", "benchmarking"]
 ---
 
 In the recent [PyTorch 2.x release announcement](https://pytorch.org/get-started/pytorch-2.0/), the Torch developers decided to move the structure of PyTorch from a Python interface over a C++ core (highly efficient) to a Python-based implementation that calls a small set of C++ kernels (developer-friendly). They also announced `torch.compile`, a method to perform JIT compilation and optimization of the execution graph that tremendously speeds up execution.

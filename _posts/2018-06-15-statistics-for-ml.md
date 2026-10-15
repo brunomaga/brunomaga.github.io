@@ -2,8 +2,8 @@
 layout: post
 title:  "Statistics for ML Engineers"
 redirect_from: /statistics
-categories: ["Mathematics for ML"]
-tags: ["statistics", "probability"]
+categories: ["ML Foundations"]
+tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "KL divergence"]
 ---
 
 A brief summary of topics in statistics and probability that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. For a similar post on algebra, see [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-algebra-for-ml %}). 

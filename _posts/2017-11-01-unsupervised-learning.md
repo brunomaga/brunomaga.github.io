@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Unsupervised Learning basics and Principal Component Analysis"
-categories: ["Machine Learning"]
+categories: ["ML Foundations"]
 tags: ["unsupervised learning", "PCA", "clustering", "dimensionality reduction"]
 ---
 

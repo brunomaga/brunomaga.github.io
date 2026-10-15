@@ -1,7 +1,7 @@
 ---
 layout: post
-title:  "Learning from sequences: Encoder-Decoder, Transformers and BERT"
-categories: ["Machine Learning"]
+title:  "Learning from sequences with Encoder-Decoder, Transformers and BERT"
+categories: ["Model Architectures"]
 tags: ["Transformer", "attention", "encoder-decoder", "BERT"]
 ---
 
