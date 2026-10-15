@@ -184,7 +184,7 @@ class GPTlite(nn.Module):
       return layers
 ```
 
-Note that the output of `layers` is of shape `B,S,C`, which is incompatible with [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) in PyTorch. A quick fix is to simply add `lambda logits: torch.swapaxes(logits, 1, 2)` to `to_layers()` to make it of shape `B,C,S`. However, when you try to back-propagate, you may bump into the error `RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn`, as discussed in bugs [4279](https://github.com/microsoft/DeepSpeed/issues/4274) and [4479](https://github.com/microsoft/DeepSpeed/issues/4479), and you'd have to use `outputs = outputs.requires_grad_(True)` to fix it. Alternatively, you can adapt the loss function to do the `view`/reshape change instead. This is a cleaner approach, and will be useful later for the pipeline parallelism use case:
+Note that the output of `layers` is of shape `B,S,C`, which is incompatible with [CrossEntropyLoss](https://pytorch.org/docs/stable/generated/torch.nn.CrossEntropyLoss.html) in PyTorch. A quick fix is to simply add `lambda logits: torch.swapaxes(logits, 1, 2)` to `to_layers()` to make it of shape `B,C,S`. However, when you try to back-propagate, you may bump into the error `RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn`, as discussed in bugs [4274](https://github.com/microsoft/DeepSpeed/issues/4274) and [4479](https://github.com/microsoft/DeepSpeed/issues/4479), and you'd have to use `outputs = outputs.requires_grad_(True)` to fix it. Alternatively, you can adapt the loss function to do the `view`/reshape change instead. This is a cleaner approach, and will be useful later for the pipeline parallelism use case:
 
 ```python
 ## train.py
@@ -330,7 +330,7 @@ We can define the micro-batching level by setting the fields `train_micro_batch_
 
 ## Results
 
-We changed our config to <a href="{{ site.assets }}/distributed-training/ds_config.json">`ds_config.json`</a> to run ZeRO stage 1, and tested our execution with different stage counts and the memory-efficient `LayerSpec` implementation of our GPT model (with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`). We did not use activation checkpointing due to an open bug [4279](https://github.com/microsoft/DeepSpeed/issues/4274). We tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of the GPTlite pipeline across 8 GPUs and 4 stages, it outputs:
+We changed our config to <a href="{{ site.assets }}/distributed-training/ds_config.json">`ds_config.json`</a> to run ZeRO stage 1, and tested our execution with different stage counts and the memory-efficient `LayerSpec` implementation of our GPT model (with `--pipeline_num_stages <num_stages> --pipeline_spec_layers`). We did not use activation checkpointing due to an open bug [4274](https://github.com/microsoft/DeepSpeed/issues/4274). We tested 1, 2, 4 and 8 pipeline stages per run. We rely on the default DeepSpeed algorithm for load balancing of stages, based on the parameter count. As an example, for the partitioning of the GPTlite pipeline across 8 GPUs and 4 stages, it outputs:
    ```
 RANK=0 STAGE=0 LAYERS=4 [0, 4)   STAGE_PARAMS=21256704 (21.257M)
 RANK=2 STAGE=1 LAYERS=3 [4, 7)   STAGE_PARAMS=21256704 (21.257M)
