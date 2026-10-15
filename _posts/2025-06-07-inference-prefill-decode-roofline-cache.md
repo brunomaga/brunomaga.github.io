@@ -262,7 +262,7 @@ Two implementation details matter in practice:
 
 The following code implements a KV cache in a small GPT-like model, and generates text with and without the cache:
 - It keeps the last `seqlen` keys and values and, once the window is full, gives every new token the last position, `seqlen-1`: generation can continue past the context window, but its output no longer matches that of the model without a cache. Models with relative positional encodings, such as RoPE, handle a sliding window more gracefully, but keeping only the most recent tokens still changes the output.
-- It also accepts several new tokens on top of a cache, which prefix caching, chunked prefill and speculative decoding need: the causal mask is shifted, so that each new token attends to all the cached tokens and to the new ones up to itself.
+- It also accepts several new tokens on top of a cache, as needed by prefix caching and chunked prefill (both covered below) and by speculative decoding: the causal mask is shifted, so that each new token attends to all the cached tokens and to the new ones up to itself.
 
 
 <details markdown="1">
@@ -415,7 +415,7 @@ class StaticKVCache:
 
 #### PagedAttention: memory management for the KV cache
 
-Continuous batching makes memory management hard, because the final length of each sequence is unknown. A naive engine reserves a contiguous KV buffer of the maximum length for every request, and most of that memory stays empty: the authors of [vLLM](https://arxiv.org/abs/2309.06180) measured that only 20% to 40% of the KV memory reserved by existing systems held actual tokens. PagedAttention borrows the idea of virtual memory from operating systems. The KV cache is split into fixed-size *blocks* (pages) that are allocated on demand, and a *block table* maps the logical blocks of each sequence to physical blocks anywhere in GPU memory. The attention kernel reads the blocks through this table. Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. A block can also be shared by several sequences, and copied only when one of them writes to it (copy-on-write), which is how prefix caching, parallel sampling and beam search share their common prefix.
+Serving many requests at once makes memory management hard, because the final length of each sequence is unknown. A naive engine reserves a contiguous KV buffer of the maximum length for every request, and most of that memory stays empty: the authors of [vLLM](https://arxiv.org/abs/2309.06180) measured that only 20% to 40% of the KV memory reserved by existing systems held actual tokens. PagedAttention borrows the idea of virtual memory from operating systems. The KV cache is split into fixed-size *blocks* (pages) that are allocated on demand, and a *block table* maps the logical blocks of each sequence to physical blocks anywhere in GPU memory. The attention kernel reads the blocks through this table. Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. A block can also be shared by several sequences, and copied only when one of them writes to it (copy-on-write), which is how prefix caching, parallel sampling and beam search share their common prefix.
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/paged_attention.png"/>
@@ -609,102 +609,13 @@ def sentence_transformer_embedder(model_name="all-MiniLM-L6-v2"):
 
 Batching is the most effective way to increase throughput. Because decode is memory-bound, a decode step for a batch of 32 sequences takes almost the same time as for a single sequence: the weights are read once and used 32 times. Throughput grows almost linearly with the batch size, until the GPU becomes compute-bound or runs out of memory for the KV caches. The difficulty is that requests arrive at different times and generate different numbers of tokens.
 
+### Static and continuous batching
+
 The simplest approach groups $$B$$ requests and runs them together until all of them finish. Sequences that finish early keep their slot and generate tokens that are thrown away, and new requests wait until the whole batch is done. Prompts of different lengths are padded to the same length. We pad on the right: with causal attention, real tokens never attend to the padding that follows them, so no padding mask is needed, and each sequence reads its next-token prediction at its own last position. Padding on the left would require a padding mask and shifted positions instead. This **static batching** is not ideal, as it requires unnecessary computation and memory for the padding tokens and for the sequences that already finished.
 
 **Continuous batching**, introduced by [Orca](https://www.usenix.org/conference/osdi22/presentation/yu) as *iteration-level scheduling*, makes the scheduling decision at every decode step instead of once per batch: as soon as a sequence finishes, it leaves the batch, and a waiting request takes its slot. The GPU stays busy, and new requests do not wait for the longest sequence of the previous batch. The implementation must track each sequence separately, by keeping the tokens of every running request apart, and rebuild the right-padded batch at every step, so a new request never sees the tokens of the previous occupant of its slot.
 
-{: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/batching.png"/>
-
-**Ragged/packed batching.** A GPU may run the prefill and the decode of different requests in the same step. Engines don't pad the sequences into a rectangular batch, as sequences of different lengths would require substantial padding. Instead, the sequences are concatenated, and **each step is one forward pass over a flat list of tokens from all running sequences**. The next token of each sequence is predicted by the output at the index of its last token. This is ragged/packed batching:
-- Linear layers: the MLP and the projections don't care which sequence a token belongs to, so they run as one large matrix multiplication over all the step's tokens.
-- Attention: it is the only per-sequence operation. Variable-length kernels (FlashAttention's varlen mode, FlashInfer, PagedAttention) use per-token metadata (sequence id, position, KV block table) so that each token attends only to its own sequence. To separate the sequences, the attention uses a block-diagonal causal mask, and the kernels skip the blocks outside its diagonal, instead of computing a dense, wasteful square matrix.
-- When the forward pass reaches the output layer, it doesn't compute predictions for every position. It looks up the metadata, isolates the indices of the last token of each sequence, and performs the argmax/sampling only on those tokens, to get the next token of every running sequence.
-
-{: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/ragged_batching.png"/>
-
-The following code packs sequences of different lengths into one flat sequence, with the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
-
-<details markdown="1">
-<summary>Show code</summary>
-
-```python
-def pack(sequences):
-    """ Packs sequences of different lengths, a list of 1D tensors, into one flat sequence without padding. Returns the
-        tokens: [1, S], with S the total number of tokens; the position of every token in its own sequence: [S]; a
-        block-diagonal causal mask: [S, S], True where a token can attend to itself or an earlier token of its sequence;
-        and the index of the last token of every sequence: [B], where the logits that predict its next token are """
-    device = sequences[0].device
-    lengths = torch.tensor([len(seq) for seq in sequences], device=device)
-    seq_ids = torch.repeat_interleave(torch.arange(len(sequences), device=device), lengths)  # [S]: sequence ids
-    positions = torch.cat([torch.arange(n, device=device) for n in lengths.tolist()])        # [S]
-    s = torch.arange(len(seq_ids), device=device)
-    mask = (seq_ids[:, None] == seq_ids[None, :]) & (s[:, None] >= s[None, :])               # [S, S]
-    return torch.cat(sequences)[None], positions, mask, lengths.cumsum(0) - 1
-
-
-# usage: one forward pass for all the sequences, with a model that takes the mask and the positions. Real engines
-# give the lengths of the sequences to variable-length attention kernels, instead of building the mask
-# tokens, positions, mask, last = pack(sequences)
-# logits = model(tokens, mask=mask, positions=positions)  # [1, S, V]
-# next_tokens = logits[0, last].argmax(dim=-1)            # [B]: the next token of every sequence
-```
-
-</details>
-
-**Mixing prefill and decode** improves performance. This is the roofline picture again. Decode tokens alone are memory-bound and leave most of the GPU's compute idle. But adding prefill chunks to the same step means many more tokens share each weight read, which pushes the step toward the ridge point: this is what [Sarathi-Serve](https://arxiv.org/abs/2403.02310) calls "stall-free batching". To further improve GPU utilization:
-- **Dynamic scheduling**. At every step the scheduler decides which requests run, how many tokens each contributes, which waiting requests to admit, and which ones to preempt. These decisions are bounded by the token budget and by the free KV cache blocks.
-  - **Token budget**. The scheduler assigns each step a fixed number of tokens. It adds every decode token first, to keep the time per output token low, and then fills the rest with prefill chunks.
-  - **Reducing CPU overhead** is done with CUDA graphs for the decode-only steps, and by scheduling the next step on the CPU while the GPU runs the current one (as SGLang does).
-- **Chunked prefill** means processing a long prompt in several smaller pieces instead of in one forward pass. Each chunk, say of 512 tokens, attends to the KV cache of the earlier chunks. Suppose an 8,000-token prompt arrives while 50 other sequences are decoding:
-  - Without chunking: one step must process all 8,000 prompt tokens plus the 50 decode tokens. That step takes far longer than a normal decode step, so all 50 users see their text pause.
-  - With chunking and a budget of 512 tokens per step: each step processes the 50 decode tokens plus 462 prompt tokens. The prompt finishes in about 18 steps, and the other users never notice.
-  - Note: because attention is causal, the **result is identical to processing the whole prompt at once**. In practice, it works by accumulating the KV cache chunk by chunk, and uses FlashAttention-style kernels to compute the partial attention correctly.
-  - With a causal mask, tokens only attend to previous tokens, so **attention is final after each chunk**. If the mask is not causal, the attention of the previous chunks needs an extra, final computation. This recomputation requires reloading the previous chunks into GPU SRAM, which increases the memory bandwidth overhead. For that reason, **chunked prefill is rarely used for non-causal models**.
-
-{: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/chunked_prefill.png"/>
-
-The following code implements chunked prefill, and the selection of the tokens of a step within a token budget:
-
-<details markdown="1">
-<summary>Show code</summary>
-
-```python
-def chunked_prefill(model, prompt, chunk_size, kv_cache=None):
-    """ Prefill of a long prompt: [1, S], in chunks of chunk_size tokens. Each chunk attends to the KV cache of the
-        earlier chunks and to itself, so the cache and the logits of the last token are the same as with a single
-        forward pass. Returns the logits of the last token: [1, V], and the KV cache """
-    for start in range(0, prompt.size(1), chunk_size):
-        logits, kv_cache = model(prompt[:, start:start + chunk_size], kv_cache)
-    return logits[:, -1], kv_cache
-
-
-def schedule(decoding, prefilling, budget):
-    """ Tokens of one step with chunked prefill: one token for every decoding sequence first, to keep the time per
-        output token low, then chunks of the waiting prompts, up to the token budget. decoding: the ids of the decoding
-        sequences; prefilling: pairs (id, number of prompt tokens left) of the waiting prompts. Returns pairs
-        (id, number of tokens) """
-    step = [(seq_id, 1) for seq_id in decoding]
-    budget -= len(decoding)
-    for seq_id, left in prefilling:
-        if budget <= 0:
-            break
-        step.append((seq_id, min(left, budget)))
-        budget -= min(left, budget)
-    return step
-```
-
-</details>
-
-{: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/continuous_batching.png"/>
-
-{: style="text-align:center; font-size: small;"}
-Continuous batching, token by token. A request's first step processes its whole prompt (prefill) and gives its first token. Each following step (decode) gives one more token, until the request generates its end-of-sequence token and leaves the batch. A waiting request takes the free slot at the next step, so the prefill of a new request runs in the same step as the decode of the others.
-
-**Code.** The following code implements static and continuous batching. Both produce the same outputs, but continuous batching needs fewer steps, since its slots spend more time generating useful tokens. To keep the code short, every step processes the whole sequences, without a KV cache:
+The following code implements static and continuous batching. Both produce the same outputs, but continuous batching needs fewer steps, since its slots spend more time generating useful tokens. To keep the code short, every step processes the whole sequences, without a KV cache:
 
 <details markdown="1">
 <summary>Show code</summary>
@@ -758,6 +669,111 @@ def continuous_batching(model, requests, batch_size, seqlen):
                 still_running.append((request_id, seq))
         running = still_running
     return outputs, n_steps
+```
+
+</details>
+
+### Chunked prefill
+
+With continuous batching, a waiting request takes a free slot as soon as one is available, so its prefill runs in the same step as the decode of the other requests. The prefill of a short prompt costs about as much as a decode step, but the prefill of a long prompt can take many times longer, and all the other requests of the batch wait for it: their text pauses, and their time per output token spikes. **Chunked prefill** solves this by processing a long prompt in several smaller pieces (chunks), one per step, instead of in one forward pass. Every step then takes about the same time, and the other requests keep generating one token per step.
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.png"/>
+
+{: style="text-align:center; font-size: small;"}
+The same 6 requests (R1 to R6) on 3 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R4 takes three. Static batching runs the requests in groups of 3, until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R4 stalls R1 and R3. With chunked prefill, R4 processes its prompt in 3 chunks of one time unit each, while R1 and R3 keep decoding.
+
+Each chunk, say of 512 tokens, attends to the KV cache of the earlier chunks. Suppose an 8,000-token prompt arrives while 50 other sequences are decoding:
+- Without chunking: one step must process all 8,000 prompt tokens plus the 50 decode tokens. That step takes far longer than a normal decode step, so all 50 users see their text pause.
+- With chunking and a budget of 512 tokens per step: each step processes the 50 decode tokens plus 462 prompt tokens. The prompt finishes in about 18 steps, and the other users never notice.
+- Note: because attention is causal, the **result is identical to processing the whole prompt at once**. In practice, it works by accumulating the KV cache chunk by chunk, and uses FlashAttention-style kernels to compute the partial attention correctly.
+- With a causal mask, tokens only attend to previous tokens, so **attention is final after each chunk**. If the mask is not causal, the attention of the previous chunks needs an extra, final computation. This recomputation requires reloading the previous chunks into GPU SRAM, which increases the memory bandwidth overhead. For that reason, **chunked prefill is rarely used for non-causal models**.
+
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/chunked_prefill.png"/>
+
+The following code implements chunked prefill:
+
+<details markdown="1">
+<summary>Show code</summary>
+
+```python
+def chunked_prefill(model, prompt, chunk_size, kv_cache=None):
+    """ Prefill of a long prompt: [1, S], in chunks of chunk_size tokens. Each chunk attends to the KV cache of the
+        earlier chunks and to itself, so the cache and the logits of the last token are the same as with a single
+        forward pass. Returns the logits of the last token: [1, V], and the KV cache """
+    for start in range(0, prompt.size(1), chunk_size):
+        logits, kv_cache = model(prompt[:, start:start + chunk_size], kv_cache)
+    return logits[:, -1], kv_cache
+```
+
+</details>
+
+### Ragged/packed batching
+
+With continuous batching and chunked prefill, a step runs the prefill chunks of some requests and the decode of others. Engines don't pad the sequences into a rectangular batch, as sequences of different lengths would require substantial padding. Instead, the sequences are concatenated, and **each step is one forward pass over a flat list of tokens from all running sequences**. The next token of each sequence is predicted by the output at the index of its last token. This is ragged/packed batching:
+- Linear layers: the MLP and the projections don't care which sequence a token belongs to, so they run as one large matrix multiplication over all the step's tokens.
+- Attention: it is the only per-sequence operation. Variable-length kernels (FlashAttention's varlen mode, FlashInfer, PagedAttention) use per-token metadata (sequence id, position, KV block table) so that each token attends only to its own sequence. To separate the sequences, the attention uses a block-diagonal causal mask, and the kernels skip the blocks outside its diagonal, instead of computing a dense, wasteful square matrix.
+- When the forward pass reaches the output layer, it doesn't compute predictions for every position. It looks up the metadata, isolates the indices of the last token of each sequence, and performs the argmax/sampling only on those tokens, to get the next token of every running sequence.
+
+{: style="text-align:center; font-size: small;"}
+<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/ragged_batching.png"/>
+
+The following code packs sequences of different lengths into one flat sequence, with the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
+
+<details markdown="1">
+<summary>Show code</summary>
+
+```python
+def pack(sequences):
+    """ Packs sequences of different lengths, a list of 1D tensors, into one flat sequence without padding. Returns the
+        tokens: [1, S], with S the total number of tokens; the position of every token in its own sequence: [S]; a
+        block-diagonal causal mask: [S, S], True where a token can attend to itself or an earlier token of its sequence;
+        and the index of the last token of every sequence: [B], where the logits that predict its next token are """
+    device = sequences[0].device
+    lengths = torch.tensor([len(seq) for seq in sequences], device=device)
+    seq_ids = torch.repeat_interleave(torch.arange(len(sequences), device=device), lengths)  # [S]: sequence ids
+    positions = torch.cat([torch.arange(n, device=device) for n in lengths.tolist()])        # [S]
+    s = torch.arange(len(seq_ids), device=device)
+    mask = (seq_ids[:, None] == seq_ids[None, :]) & (s[:, None] >= s[None, :])               # [S, S]
+    return torch.cat(sequences)[None], positions, mask, lengths.cumsum(0) - 1
+
+
+# usage: one forward pass for all the sequences, with a model that takes the mask and the positions. Real engines
+# give the lengths of the sequences to variable-length attention kernels, instead of building the mask
+# tokens, positions, mask, last = pack(sequences)
+# logits = model(tokens, mask=mask, positions=positions)  # [1, S, V]
+# next_tokens = logits[0, last].argmax(dim=-1)            # [B]: the next token of every sequence
+```
+
+</details>
+
+### Scheduling
+
+**Mixing prefill and decode** improves performance. This is the roofline picture again. Decode tokens alone are memory-bound and leave most of the GPU's compute idle. But adding prefill chunks to the same step means many more tokens share each weight read, which pushes the step toward the ridge point: this is what [Sarathi-Serve](https://arxiv.org/abs/2403.02310) calls "stall-free batching". To further improve GPU utilization:
+- **Dynamic scheduling**. At every step the scheduler decides which requests run, how many tokens each contributes, which waiting requests to admit, and which ones to preempt. These decisions are bounded by the token budget and by the free KV cache blocks.
+  - **Token budget**. The scheduler assigns each step a fixed number of tokens. It adds every decode token first, to keep the time per output token low, and then fills the rest with prefill chunks.
+  - **Reducing CPU overhead** is done with CUDA graphs for the decode-only steps, and by scheduling the next step on the CPU while the GPU runs the current one (as SGLang does).
+
+The following code selects the tokens of a step within a token budget:
+
+<details markdown="1">
+<summary>Show code</summary>
+
+```python
+def schedule(decoding, prefilling, budget):
+    """ Tokens of one step with chunked prefill: one token for every decoding sequence first, to keep the time per
+        output token low, then chunks of the waiting prompts, up to the token budget. decoding: the ids of the decoding
+        sequences; prefilling: pairs (id, number of prompt tokens left) of the waiting prompts. Returns pairs
+        (id, number of tokens) """
+    step = [(seq_id, 1) for seq_id in decoding]
+    budget -= len(decoding)
+    for seq_id, left in prefilling:
+        if budget <= 0:
+            break
+        step.append((seq_id, min(left, budget)))
+        budget -= min(left, budget)
+    return step
 ```
 
 </details>

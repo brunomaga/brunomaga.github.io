@@ -2243,200 +2243,523 @@
         <mxCell id="semantic_caching-13" value="embedding" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="semantic_caching-5">
           <mxGeometry x="13.17" y="82.41" width="78.66" height="22.8" as="geometry" />
         </mxCell>
-        <mxCell id="batching-label" value="batching.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="continuous_chunked_batching-label" value="continuous_chunked_batching.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="4787.71" width="600" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-figure" value="" style="group;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="4827.71" width="888.17" height="437" as="geometry" />
+        <mxCell id="continuous_chunked_batching-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="4827.71" width="969.12" height="659" as="geometry" />
         </mxCell>
-        <mxCell id="batching-3" value="static batching: 14 steps" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#000000;" vertex="1" parent="batching-figure">
-          <mxGeometry x="0" y="0" width="186.55" height="24" as="geometry" />
+        <mxCell id="continuous_chunked_batching-1" value="static batching" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="0" y="0" width="400" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="batching-4" value="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="132.6" y="27.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-2" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="27.8" width="40" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-5" value="2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="172.6" y="27.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-3" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="53" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-6" value="3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="212.6" y="27.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-4" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-7" value="4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="252.6" y="27.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-5" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-8" value="5" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="292.6" y="27.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-6" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="27.8" width="40" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-9" value="6" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="332.6" y="27.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-7" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="53" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-10" value="7" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="372.6" y="27.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-8" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-11" value="8" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="412.6" y="27.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-9" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-12" value="9" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="452.6" y="27.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-10" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="27.8" width="40" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-13" value="10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="489.19" y="27.8" width="21.61" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-11" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="53" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-14" value="11" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="529.65" y="27.8" width="20.71" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-12" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="91" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-15" value="12" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="569.19" y="27.8" width="21.61" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-13" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="129" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-16" value="13" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="609.19" y="27.8" width="21.61" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-14" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="252" y="27.8" width="40" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-17" value="14" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="649.19" y="27.8" width="21.61" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-15" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="252" y="53" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-18" value="slot 1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
+        <mxCell id="continuous_chunked_batching-16" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="252" y="91" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-17" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="252" y="129" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-18" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="296" y="27.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-19" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="296" y="53" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-20" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="296" y="91" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-21" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="296" y="129" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-22" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="27.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-23" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="53" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-24" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="91" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-25" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="129" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-26" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="27.8" width="128" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-27" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="53" width="128" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-28" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="91" width="128" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-29" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="129" width="128" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-30" value="8" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="516" y="27.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-31" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="516" y="53" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-32" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="516" y="91" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-33" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="516" y="129" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-34" value="9" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="560" y="27.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-35" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="560" y="53" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-36" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="560" y="91" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-37" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="560" y="129" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-38" value="slot 1" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
           <mxGeometry x="67.87" y="56.6" width="42.13" height="22.8" as="geometry" />
         </mxCell>
-        <mxCell id="batching-19" value="slot 2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
+        <mxCell id="continuous_chunked_batching-39" value="slot 2" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
           <mxGeometry x="67.87" y="94.6" width="42.13" height="22.8" as="geometry" />
         </mxCell>
-        <mxCell id="batching-20" value="slot 3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
+        <mxCell id="continuous_chunked_batching-40" value="slot 3" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
           <mxGeometry x="67.87" y="132.6" width="42.13" height="22.8" as="geometry" />
         </mxCell>
-        <mxCell id="batching-21" value="slot 4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
-          <mxGeometry x="67.87" y="170.6" width="42.13" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-22" value="R1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="122" y="53" width="196" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-23" value="idle" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;dashed=1;fontColor=#666666;strokeOpacity=40;" vertex="1" parent="batching-figure">
-          <mxGeometry x="322" y="53" width="116" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-24" value="R5" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="442" y="53" width="236" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-25" value="R2" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="122" y="91" width="116" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-26" value="idle" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;dashed=1;fontColor=#666666;strokeOpacity=40;" vertex="1" parent="batching-figure">
-          <mxGeometry x="242" y="91" width="196" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-27" value="R6" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="442" y="91" width="76" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-28" value="idle" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;dashed=1;fontColor=#666666;strokeOpacity=40;" vertex="1" parent="batching-figure">
-          <mxGeometry x="522" y="91" width="156" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-29" value="R3" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="122" y="129" width="316" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-30" value="R7" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="442" y="129" width="196" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-31" value="" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;dashed=1;fontColor=#666666;strokeOpacity=40;" vertex="1" parent="batching-figure">
-          <mxGeometry x="642" y="129" width="36" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-32" value="R4" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="122" y="167" width="156" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-33" value="idle" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;dashed=1;fontColor=#666666;strokeOpacity=40;" vertex="1" parent="batching-figure">
-          <mxGeometry x="282" y="167" width="156" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-34" value="idle" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;dashed=1;fontColor=#666666;strokeOpacity=40;" vertex="1" parent="batching-figure">
-          <mxGeometry x="442" y="167" width="236" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-35" value="R5, R6 and R7 wait until R3,&lt;br&gt;the longest request, finishes" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
-          <mxGeometry x="700" y="103" width="188.17" height="44" as="geometry" />
-        </mxCell>
-        <mxCell id="batching-36" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;dashed=1;" edge="1" parent="batching-figure">
-          <mxGeometry x="0" relative="1" as="geometry">
-            <mxPoint x="440" y="23" as="sourcePoint" />
-            <mxPoint x="440" y="205" as="targetPoint" />
+        <mxCell id="continuous_chunked_batching-41" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;" edge="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="384" y="171" as="sourcePoint" />
+            <mxPoint x="512" y="171" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="384" y="179" />
+              <mxPoint x="512" y="179" />
+            </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="batching-37" value="continuous batching: 10 steps" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#000000;" vertex="1" parent="batching-figure">
-          <mxGeometry x="0" y="240" width="229.02" height="24" as="geometry" />
+        <mxCell id="continuous_chunked_batching-42" value="the prompts are padded to the longest one" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="198" y="183" width="500" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="batching-38" value="1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="132.6" y="267.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-43" value="continuous batching" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="0" y="215" width="400" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="batching-39" value="2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="172.6" y="267.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-44" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="242.8" width="40" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-40" value="3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="212.6" y="267.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-45" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="268" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-41" value="4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="252.6" y="267.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-46" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="306" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-42" value="5" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="292.6" y="267.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-47" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="344" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-43" value="6" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="332.6" y="267.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-48" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="242.8" width="40" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-44" value="7" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="372.6" y="267.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-49" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="268" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-45" value="8" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="412.6" y="267.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-50" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="306" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-46" value="9" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="452.6" y="267.8" width="14.81" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-51" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="344" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-47" value="10" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="batching-figure">
-          <mxGeometry x="489.19" y="267.8" width="21.61" height="20.4" as="geometry" />
+        <mxCell id="continuous_chunked_batching-52" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="242.8" width="128" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-48" value="slot 1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
-          <mxGeometry x="67.87" y="296.6" width="42.13" height="22.8" as="geometry" />
+        <mxCell id="continuous_chunked_batching-53" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="268" width="128" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-49" value="slot 2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
-          <mxGeometry x="67.87" y="334.6" width="42.13" height="22.8" as="geometry" />
+        <mxCell id="continuous_chunked_batching-54" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="306" width="128" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-50" value="slot 3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
-          <mxGeometry x="67.87" y="372.6" width="42.13" height="22.8" as="geometry" />
+        <mxCell id="continuous_chunked_batching-55" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="344" width="128" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-51" value="slot 4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
-          <mxGeometry x="67.87" y="410.6" width="42.13" height="22.8" as="geometry" />
+        <mxCell id="continuous_chunked_batching-56" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="242.8" width="40" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-52" value="R1" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="122" y="293" width="196" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-57" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="268" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-53" value="R7" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="322" y="293" width="196" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-58" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="306" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-54" value="R2" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="122" y="331" width="116" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-59" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="344" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-55" value="R5" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="242" y="331" width="236" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-60" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="242.8" width="40" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-56" value="" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;dashed=1;fontColor=#666666;strokeOpacity=40;" vertex="1" parent="batching-figure">
-          <mxGeometry x="482" y="331" width="36" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-61" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="268" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-57" value="R3" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="122" y="369" width="316" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-62" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="306" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-58" value="idle" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;dashed=1;fontColor=#666666;strokeOpacity=40;" vertex="1" parent="batching-figure">
-          <mxGeometry x="442" y="369" width="76" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-63" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="344" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-59" value="R4" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="122" y="407" width="156" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-64" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="428" y="242.8" width="40" height="20.4" as="geometry" />
         </mxCell>
-        <mxCell id="batching-60" value="R6" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=0;" vertex="1" parent="batching-figure">
-          <mxGeometry x="282" y="407" width="76" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-65" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="428" y="268" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-61" value="idle" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;fontStyle=0;dashed=1;fontColor=#666666;strokeOpacity=40;" vertex="1" parent="batching-figure">
-          <mxGeometry x="362" y="407" width="156" height="30" as="geometry" />
+        <mxCell id="continuous_chunked_batching-66" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="428" y="306" width="40" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="batching-62" value="a request takes the slot of a&lt;br&gt;finished request at the next step" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="batching-figure">
-          <mxGeometry x="540" y="343" width="210.43" height="44" as="geometry" />
+        <mxCell id="continuous_chunked_batching-67" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="428" y="344" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-68" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="472" y="242.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-69" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="472" y="268" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-70" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="472" y="306" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-71" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="472" y="344" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-72" value="slot 1" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="67.87" y="271.6" width="42.13" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-73" value="slot 2" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="67.87" y="309.6" width="42.13" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-74" value="slot 3" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="67.87" y="347.6" width="42.13" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-75" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;" edge="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="208" y="386" as="sourcePoint" />
+            <mxPoint x="336" y="386" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="208" y="394" />
+              <mxPoint x="336" y="394" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-76" value="the long prefill of R4 stalls R1 and R3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="22" y="398" width="500" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-77" value="continuous batching with chunked prefill" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="0" y="430" width="400" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-78" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="457.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-79" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="483" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-80" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="521" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-81" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="120" y="559" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-82" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="457.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-83" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="483" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-84" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="521" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-85" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="164" y="559" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-86" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="457.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-87" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="483" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-88" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="521" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-89" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="208" y="559" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-90" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="252" y="457.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-91" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="252" y="483" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-92" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="252" y="521" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-93" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="252" y="559" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-94" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="296" y="457.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-95" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="296" y="483" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-96" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="296" y="521" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-97" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="296" y="559" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-98" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="457.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-99" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="483" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-100" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="521" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-101" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="340" y="559" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-102" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="457.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-103" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="483" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-104" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="521" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-105" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="384" y="559" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-106" value="8" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="428" y="457.8" width="40" height="20.4" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-107" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="428" y="483" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-108" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="428" y="521" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-109" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="428" y="559" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-110" value="slot 1" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="67.87" y="486.6" width="42.13" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-111" value="slot 2" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="67.87" y="524.6" width="42.13" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-112" value="slot 3" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="67.87" y="562.6" width="42.13" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-113" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;" edge="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="208" y="601" as="sourcePoint" />
+            <mxPoint x="336" y="601" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="208" y="609" />
+              <mxPoint x="336" y="609" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-114" value="R4 prefills in 3 chunks, while R1 and R3 keep decoding" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="22" y="613" width="500" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-115" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=12;" edge="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="120" y="649" as="sourcePoint" />
+            <mxPoint x="624" y="649" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-116" value="time" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontColor=#666666;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="630" y="639" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-117" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="664" y="59" width="20" height="12" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-118" value="prefill: the whole prompt (or one chunk of it)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="692" y="55" width="277.125" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="664" y="85" width="20" height="12" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-120" value="decode: one more token" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="692" y="81" width="158.9219" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="664" y="111" width="20" height="12" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-122" value="idle slot" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_chunked_batching-figure">
+          <mxGeometry x="692" y="107" width="55.4531" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-label" value="chunked_prefill.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="5566.71" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-figure" value="" style="group;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="5606.71" width="1020.98" height="392.4" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-3" value="without chunked prefill" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="0" y="0" width="175.45" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-4" value="prompt tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="71.52" y="38.6" width="98.48" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-5" value="decode tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="69.11" y="78.6" width="100.89" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-6" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="180" y="75" width="44" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-7" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="230" y="75" width="44" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-8" value="8,000 prompt tokens" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="280" y="35" width="460" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-9" value="50 decode tokens" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="280" y="75" width="460" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-10" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="746" y="75" width="44" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-11" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="796" y="75" width="44" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-12" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="chunked_prefill-figure">
+          <mxGeometry x="0" relative="1" as="geometry">
+            <mxPoint x="280" y="115" as="sourcePoint" />
+            <mxPoint x="740" y="115" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="280" y="123" />
+              <mxPoint x="740" y="123" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="chunked_prefill-13" value="one step of 8,050 tokens: the 50 decoding sequences pause" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="315.06" y="126.6" width="389.89" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-14" value="with chunked prefill" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="0" y="200" width="151.66" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-15" value="prompt tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="71.52" y="238.6" width="98.48" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-16" value="decode tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="69.11" y="278.6" width="100.89" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-17" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="180" y="275" width="44" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-18" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="230" y="275" width="44" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-19" value="462" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="280" y="235" width="64" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-20" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="280" y="275" width="64" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-21" value="462" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="350" y="235" width="64" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-22" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="350" y="275" width="64" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-23" value="462" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="420" y="235" width="64" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-24" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="420" y="275" width="64" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-25" value="…" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="496.82" y="254.2" width="26.36" height="27.6" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-26" value="146" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="536" y="235" width="64" height="32" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-27" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="536" y="275" width="64" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-28" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="606" y="275" width="44" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-29" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="656" y="275" width="44" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-30" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="chunked_prefill-figure">
+          <mxGeometry x="0" relative="1" as="geometry">
+            <mxPoint x="280" y="315" as="sourcePoint" />
+            <mxPoint x="600" y="315" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="280" y="323" />
+              <mxPoint x="600" y="323" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="chunked_prefill-31" value="18 steps of at most 512 tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="338.76" y="326.6" width="202.48" height="22.8" as="geometry" />
+        </mxCell>
+        <mxCell id="chunked_prefill-32" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;fontColor=#666666;fontSize=14;labelBackgroundColor=#ffffff;strokeWidth=1;" edge="1" parent="chunked_prefill-figure">
+          <mxGeometry x="0" relative="1" as="geometry">
+            <mxPoint x="180" y="381" as="sourcePoint" />
+            <mxPoint x="980" y="381" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="chunked_prefill-33" value="time" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#666666;" vertex="1" parent="chunked_prefill-figure">
+          <mxGeometry x="986" y="369.6" width="34.98" height="22.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-label" value="ragged_batching.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="0" y="5344.71" width="600" height="30" as="geometry" />
+          <mxGeometry x="0" y="6079.11" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-figure" value="" style="group;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="5384.71" width="926" height="473.4" as="geometry" />
+          <mxGeometry x="0" y="6119.11" width="926" height="473.4" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-3" value="padded batch: 3 x 4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="0" y="0" width="150.83" height="24" as="geometry" />
@@ -2804,289 +3127,11 @@
         <mxCell id="ragged_batching-124" value="mask: S x S, block-diagonal and causal" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="545.97" y="450.6" width="254.05" height="22.8" as="geometry" />
         </mxCell>
-        <mxCell id="chunked_prefill-label" value="chunked_prefill.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="0" y="5938.11" width="600" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-figure" value="" style="group;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="5978.11" width="1020.98" height="392.4" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-3" value="without chunked prefill" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="0" y="0" width="175.45" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-4" value="prompt tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="71.52" y="38.6" width="98.48" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-5" value="decode tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="69.11" y="78.6" width="100.89" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-6" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="180" y="75" width="44" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-7" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="230" y="75" width="44" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-8" value="8,000 prompt tokens" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="280" y="35" width="460" height="32" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-9" value="50 decode tokens" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="280" y="75" width="460" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-10" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="746" y="75" width="44" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-11" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="796" y="75" width="44" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-12" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="chunked_prefill-figure">
-          <mxGeometry x="0" relative="1" as="geometry">
-            <mxPoint x="280" y="115" as="sourcePoint" />
-            <mxPoint x="740" y="115" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="280" y="123" />
-              <mxPoint x="740" y="123" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="chunked_prefill-13" value="one step of 8,050 tokens: the 50 decoding sequences pause" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="315.06" y="126.6" width="389.89" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-14" value="with chunked prefill" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="0" y="200" width="151.66" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-15" value="prompt tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="71.52" y="238.6" width="98.48" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-16" value="decode tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="69.11" y="278.6" width="100.89" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-17" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="180" y="275" width="44" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-18" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="230" y="275" width="44" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-19" value="462" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="280" y="235" width="64" height="32" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-20" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="280" y="275" width="64" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-21" value="462" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="350" y="235" width="64" height="32" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-22" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="350" y="275" width="64" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-23" value="462" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="420" y="235" width="64" height="32" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-24" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="420" y="275" width="64" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-25" value="…" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="496.82" y="254.2" width="26.36" height="27.6" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-26" value="146" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="536" y="235" width="64" height="32" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-27" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="536" y="275" width="64" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-28" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="606" y="275" width="44" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-29" value="50" style="rounded=1;arcSize=12;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=0;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="656" y="275" width="44" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-30" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="chunked_prefill-figure">
-          <mxGeometry x="0" relative="1" as="geometry">
-            <mxPoint x="280" y="315" as="sourcePoint" />
-            <mxPoint x="600" y="315" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="280" y="323" />
-              <mxPoint x="600" y="323" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="chunked_prefill-31" value="18 steps of at most 512 tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="338.76" y="326.6" width="202.48" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-32" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#666666;fontColor=#666666;fontSize=14;labelBackgroundColor=#ffffff;strokeWidth=1;" edge="1" parent="chunked_prefill-figure">
-          <mxGeometry x="0" relative="1" as="geometry">
-            <mxPoint x="180" y="381" as="sourcePoint" />
-            <mxPoint x="980" y="381" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="chunked_prefill-33" value="time" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#666666;" vertex="1" parent="chunked_prefill-figure">
-          <mxGeometry x="986" y="369.6" width="34.98" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-label" value="continuous_batching.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="0" y="6450.51" width="600" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="6490.51" width="948.59" height="159" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-1" value="continuous batching, token by token" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=15;fontStyle=1;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="0" y="0" width="300" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-2" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="120" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-3" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="164" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-4" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="208" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-5" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="252" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-6" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="296" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-7" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="340" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-8" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="384" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-9" value="8" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="428" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-10" value="9" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="472" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-11" value="10" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="516" y="27.8" width="40" height="20.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-12" value="slot 1" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="67.87" y="56.6" width="42.13" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-13" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="120" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-14" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="164" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-15" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="208" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-16" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="252" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-17" value="R1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="296" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-18" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="340" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-19" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="384" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-20" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="428" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-21" value="R5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="472" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-22" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;arcSize=12;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="516" y="53" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-23" value="slot 2" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="67.87" y="94.6" width="42.13" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-24" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="120" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-25" value="R2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="164" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-26" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="208" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-27" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="252" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-28" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="296" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-29" value="R4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="340" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-30" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="384" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-31" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="428" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-32" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="472" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-33" value="R6" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="516" y="91" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-34" value="slot 3" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="67.87" y="132.6" width="42.13" height="22.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-35" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="120" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-36" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="164" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-37" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="208" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-38" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="252" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-39" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="296" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-40" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="340" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-41" value="R3" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="384" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-42" value="R7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="428" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-43" value="R7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="472" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-44" value="R7" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;arcSize=12;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="516" y="129" width="40" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="596" y="59" width="20" height="12" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-46" value="prefill: the whole prompt, which gives the first token" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="624" y="55" width="324.5938" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="596" y="85" width="20" height="12" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-48" value="decode: one more token" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="624" y="81" width="158.9219" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="596" y="111" width="20" height="12" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-50" value="decode: the end-of-sequence token" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="624" y="107" width="228.1719" height="20" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;dashed=1;strokeOpacity=40;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="596" y="137" width="20" height="12" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_batching-52" value="idle slot" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="continuous_batching-figure">
-          <mxGeometry x="624" y="133" width="55.4531" height="20" as="geometry" />
-        </mxCell>
         <mxCell id="disaggregation-label" value="disaggregation.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="0" y="6729.51" width="600" height="30" as="geometry" />
+          <mxGeometry x="0" y="6672.51" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="disaggregation-figure" value="" style="group;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="6769.51" width="1001.74" height="454.4" as="geometry" />
+          <mxGeometry x="0" y="6712.51" width="1001.74" height="454.4" as="geometry" />
         </mxCell>
         <mxCell id="disaggregation-11" value="" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#82b366;strokeWidth=2;" vertex="1" parent="disaggregation-figure">
           <mxGeometry x="666" y="0" width="198" height="212" as="geometry" />
@@ -3202,17 +3247,14 @@
         <mxCell id="semantic_caching-note" value="&lt;b&gt;Semantic caching&lt;/b&gt;&lt;br&gt;The cache returns the stored answer of the most similar past query, if their similarity is above a threshold; otherwise, it calls the model and stores the new pair" vertex="1" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;">
           <mxGeometry x="1400" y="4413.31" width="480" height="120" as="geometry" />
         </mxCell>
-        <mxCell id="batching-note" value="&lt;b&gt;Static and continuous batching&lt;/b&gt;&lt;br&gt;Seven requests R1 to R7, which generate 5, 3, 8, 4, 6, 2 and 5 tokens, on four slots: static batching waits for the longest request of each batch" vertex="1" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;">
-          <mxGeometry x="928.17" y="4827.71" width="480" height="120" as="geometry" />
+        <mxCell id="chunked_prefill-note" value="&lt;b&gt;Chunked prefill&lt;/b&gt;&lt;br&gt;An 8,000-token prompt arrives while 50 sequences decode: with a budget of 512 tokens per step, each step takes the 50 decode tokens, and a chunk of 462 prompt tokens" vertex="1" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;">
+          <mxGeometry x="1060.98" y="5606.71" width="480" height="120" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-note" value="&lt;b&gt;Padded and ragged batching&lt;/b&gt;&lt;br&gt;A padded batch is a rectangle with padding tokens; a ragged batch concatenates the sequences into one flat list of tokens, separated by a block-diagonal causal mask" vertex="1" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;">
-          <mxGeometry x="966" y="5384.71" width="480" height="120" as="geometry" />
-        </mxCell>
-        <mxCell id="chunked_prefill-note" value="&lt;b&gt;Chunked prefill&lt;/b&gt;&lt;br&gt;An 8,000-token prompt arrives while 50 sequences decode: with a budget of 512 tokens per step, each step takes the 50 decode tokens, and a chunk of 462 prompt tokens" vertex="1" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;">
-          <mxGeometry x="1060.98" y="5978.11" width="480" height="120" as="geometry" />
+          <mxGeometry x="966" y="6119.11" width="480" height="120" as="geometry" />
         </mxCell>
         <mxCell id="disaggregation-note" value="&lt;b&gt;Prefill-decode disaggregation&lt;/b&gt;&lt;br&gt;Prefill and decode run on separate pools of GPUs; the KV cache of each prompt goes from a prefill worker to a decode worker, layer by layer" vertex="1" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=14;">
-          <mxGeometry x="1041.74" y="6769.51" width="480" height="120" as="geometry" />
+          <mxGeometry x="1041.74" y="6712.51" width="480" height="120" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
