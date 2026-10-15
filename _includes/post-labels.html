@@ -1,10 +1,13 @@
-<!-- date, category and tags of a post as boxed labels. Params: post, date_format -->
-<div class="post-labels">
+<!-- boxed labels of a post: date (only if date_format is given), category and tags.
+     Params: post, date_format (optional), inline (optional, smaller labels that flow after the title) -->
+<span class="post-labels{% if include.inline %} post-labels--inline{% endif %}">
+  {%- if include.date_format %}
   <time class="post-label post-label--date" datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: include.date_format }}</time>
+  {%- endif %}
   {%- for category in include.post.categories %}
   <span class="post-label post-label--category">{{ category }}</span>
   {%- endfor %}
   {%- for tag in include.post.tags %}
   <span class="post-label">{{ tag }}</span>
   {%- endfor %}
-</div>
+</span>

@@ -72,28 +72,38 @@
     }
 
     .post-label {
-      border: 1px solid #ccc;
+      border: 1px solid #d0d0d0;
       padding: 2px 7px;
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
       font-size: 0.7rem;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: #666;
+      color: #888;
       white-space: nowrap;
     }
 
-    /* date: dark fill; category: brand blue; tags: light grey (default) */
-    .post-label--date {
-      border-color: #424242;
-      background-color: #424242;
-      color: #fdfdfd;
+    /* tags use the lighter grey default above */
+    .post-label--date     { border-color: #111;    color: #111; }
+    .post-label--category { border-color: #828282; color: #555; }
+
+    /* smaller labels inline after the post title in the home page listing */
+    .post-labels--inline {
+      display: inline;
+      margin-left: 0.3em;
     }
 
-    .post-label--category {
-      border-color: #2a7ae2;
-      background-color: #eaf2fd;
-      color: #2a7ae2;
+    .post-labels--inline .post-label {
+      display: inline-block;
+      margin: 0.15em 0.2em 0.15em 0;
+      padding: 0 5px;
+      font-size: 0.6rem;
+      line-height: 1.5;
+      vertical-align: middle;
+      border-color: #e3e3e3;
+      color: #aaa;
     }
+
+    .post-labels--inline .post-label--category { border-color: #c0c0c0; color: #828282; }
 
     /* ===== Responsive table =====
        https://css-tricks.com/accessible-simple-responsive-tables/ */

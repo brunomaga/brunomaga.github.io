@@ -37,15 +37,20 @@ In this space, I write about my projects and topics related to my fields of inte
 </p>
 
 <!-- blog posts -->
-<div style="margin-top: 0.5em; margin-bottom: 1.5em;">
+<table style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
 {%- assign date_format = site.minima.date_format | default: "%Y" -%}
 {% for post in site.posts %}
-<div style="padding-top: 0.5em; padding-bottom: 0.5em; line-height: 1.3;">
+<tr style="border: none;">
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">
+{{ post.date | date: date_format }}
+</td>
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
 <a href="{{ post.url }}">{{ post.title }}</a>
-{% include post-labels.html post=post date_format=date_format %}
-</div>
+{% include post-labels.html post=post inline=true %}
+</td>
+</tr>
 {% endfor %}
-</div>
+</table>
 
 <!-- resources -->
 <p style="line-height: 1.6; margin-bottom: 0; clear: both;">
