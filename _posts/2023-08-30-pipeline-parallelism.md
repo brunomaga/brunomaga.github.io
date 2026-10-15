@@ -13,12 +13,12 @@ Imagine we have a model that is too large to fit in the local memory of a single
 <img width="50%" height="50%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Left-to-right timeline of a serial execution of the training of a model divided across 4 compute units (Workers) and 4 stages. Blue squares represent forward passes. Green squares represent backward passes, which take twice as long as forward passes. The number on each square is the data sample index. Gray squares represent moments of idleness, i.e. of a worker not performing any computation. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
+Left-to-right timeline of a serial execution of the training of a model divided across 4 compute units (GPUs) and 4 stages. Blue cells represent forward passes. Green cells represent backward passes, which take twice as long as forward passes. The number on each cell is the data sample index. Gray cells represent moments of idleness, i.e. of a worker not performing any computation. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 
 Now note that the above method would yield a low utilization of compute resources: processes would always have to wait for the connecting layers in other processes to be computed before being able to do their share of the forward/backward compute. So pipeline parallelism is usually combined with **micro-batching / gradient accumulation**. In practice, we can split the mini-batch into several micro-batches and pass them sequentially to the first process of the pipeline. When a process finishes the current micro-batch, it sends its activations to the following process and receives the activations of the next micro-batch from the previous process. This is mathematically equivalent to regular gradient accumulation. This approach is detailed in the paper [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, arXiv)](https://arxiv.org/abs/1811.06965) and can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel.png"/>
+<img width="70%" height="70%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel.png"/>
 
 {: style="text-align:center; font-size: small;"}
 A pipeline execution with gradient accumulation, computed as a sequence of 4 micro-batches. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
@@ -148,7 +148,7 @@ This shows the core idea: **activations flow forward, gradients flow backward**.
 The pipeline parallelism algorithm implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 forward pass followed by 1 backward pass), but it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms. The 1F1B algorithm performs a sequence of forward passes, and asynchronously starts the backward pass of each micro-batch whose forward pass has completed. It then waits for all forward and backward passes to complete before starting the next mini-batch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/distributed-training/imgs/pipeline_algorithms.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_algorithms.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Regular and 1F1B pipeline algorithms diagram. Source: adapted from [Training and Serving System of Foundation Models: A Comprehensive Survey](https://arxiv.org/pdf/2401.02643.pdf)
