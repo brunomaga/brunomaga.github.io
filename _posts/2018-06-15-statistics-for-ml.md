@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Statistics for ML Engineers"
+title:  "Statistics"
 redirect_from: /statistics
 categories: ["Mathematics for ML"]
 tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "KL divergence"]

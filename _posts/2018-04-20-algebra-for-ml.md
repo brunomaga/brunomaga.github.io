@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Algebra for ML Engineers"
+title:  "Algebra"
 redirect_from: /algebra
 categories: ["Mathematics for ML"]
 tags: ["linear algebra", "matrix decompositions", "vector calculus", "optimization"]

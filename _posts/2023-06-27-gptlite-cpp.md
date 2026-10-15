@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Building a GPT model in C++, and benchmarking LibTorch, PyTorch, TorchScript and torch.compile"
-categories: ["Model Architectures"]
+categories: ["ML Architectures"]
 tags: ["GPT", "LLM", "C++", "LibTorch", "TorchScript", "torch.compile", "benchmarking"]
 ---
 

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Diffusion models, from DDPMs to DiTs"
-categories: ["Model Architectures"]
+categories: ["ML Architectures"]
 tags: ["generative models", "diffusion", "DDPM", "DiT", "video generation"]
 ---
 
