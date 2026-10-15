@@ -62,7 +62,7 @@
     .info-warning h2,
     .info-danger h2 { margin-top: 0; }
 
-    /* ===== Post labels (date, category, tags) ===== */
+    /* ===== Labels (post date, category and tags; resource types on the home page) ===== */
 
     .post-labels {
       display: flex;
@@ -96,6 +96,25 @@
     /* strongest first: date in the link colour, category in mid grey, tags in light grey (default above) */
     .post-label--date     { border-color: #2a7ae2; color: #2a7ae2; }
     .post-label--category { border-color: #999;    color: #444; }
+
+    /* resource types on the home page: equal-width labels centred on the title's first line,
+       with less vertical padding than on post pages so the rows keep their height */
+    #resources-table .post-label {
+      display: inline-block;
+      box-sizing: border-box;
+      width: 100%;
+      padding-top: 3px;
+      padding-bottom: 1px;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    @supports (text-box: trim-both cap alphabetic) {
+      #resources-table .post-label {
+        padding-top: 4px;
+        padding-bottom: 4px;
+      }
+    }
 
     /* ===== Responsive table =====
        https://css-tricks.com/accessible-simple-responsive-tables/ */
