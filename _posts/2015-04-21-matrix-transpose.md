@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Distributed Matrix Transpose Algorithms"
-categories: ["Parallel Computing"]
+categories: ["Distributed Algorithms"]
 tags: ["MPI", "linear algebra", "matrix transpose", "all-to-all"]
 ---
 

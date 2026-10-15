@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Distributed Sorting Algorithms"
-categories: ["Parallel Computing"]
+categories: ["Distributed Algorithms"]
 tags: ["MPI", "sorting", "sample sort", "odd-even sort"]
 ---
 

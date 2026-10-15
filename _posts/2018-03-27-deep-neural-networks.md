@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Deep Neural Networks, backpropagation, autodiff, dropout, CNNs and embeddings"
-categories: ["ML Foundations"]
+categories: ["Machine Learning"]
 tags: ["deep learning", "backpropagation", "autodiff", "CNN", "embeddings"]
 ---
 

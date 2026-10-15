@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Exponential Family of Distributions"
-categories: ["ML Foundations"]
+categories: ["Probabilistic Learning"]
 tags: ["probability distributions", "exponential family", "MLE"]
 ---
 

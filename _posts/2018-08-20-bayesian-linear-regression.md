@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Bayesian Linear Regression, Maximum Likelihood and Maximum-A-Posteriori"
-categories: ["ML Foundations"]
+categories: ["Probabilistic Learning"]
 tags: ["Bayesian inference", "linear regression", "MLE", "MAP"]
 ---
 
