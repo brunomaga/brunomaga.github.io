@@ -97,13 +97,23 @@
     .post-label--date     { border-color: #2a7ae2; color: #2a7ae2; }
     .post-label--category { border-color: #999;    color: #444; }
 
-    /* resource types on the home page: a label in front of the title, centred on its first line,
-       with less vertical padding than on post pages so the rows keep their height */
+    /* resource types on the home page: equal-width labels in a first column as wide as the widest one,
+       a small gap before the titles, and less vertical padding than on post pages so the rows keep
+       their height */
+    #resources-table td:first-child {
+      width: 1%;  /* shrinks the column to its widest label */
+      padding-right: 0;
+    }
+
+    #resources-table td + td { padding-left: 0.5em; }
+
     #resources-table .post-label {
       display: inline-block;
-      margin-right: 0.3em;
+      box-sizing: border-box;
+      width: 100%;
       padding-top: 3px;
       padding-bottom: 1px;
+      text-align: center;
       vertical-align: middle;
     }
 
