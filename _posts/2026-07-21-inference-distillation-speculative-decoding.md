@@ -55,9 +55,6 @@ A temperature above 1 flattens the distribution and reveals the relative probabi
 
 The following code implements the distillation loss, and a training step of the student:
 
-<details markdown="1">
-<summary>Show code</summary>
-
 ```python
 def distillation_loss(logits_student, logits_teacher, temperature):
     """ KL divergence between the softened distributions of the teacher and the student, averaged per token, and
@@ -90,8 +87,6 @@ def distillation_step(student, teacher, tokens, optimizer, temperature=2.0):
 # for tokens in batches:
 #     loss = distillation_step(student, teacher, tokens, optimizer)
 ```
-
-</details>
 
 ## Speculative decoding: more than one token per forward pass
 
@@ -138,9 +133,6 @@ In a batch, each sequence accepts a different number of tokens, so the sequences
 To keep it simple, the following code generates one sequence at a time, and the whole sequence must fit in the context window. Both models use a KV cache: after each verification, the cache of the target is truncated to the accepted tokens, and the draft model reuses the part of its own cache that is still valid.
 
 The following code implements greedy speculative decoding with a draft model, and gives the same output as greedy decoding with the target alone:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 def truncate_cache(kv_cache, n):
@@ -213,12 +205,7 @@ class DraftModel:
 # tokens = generate_speculative(target, prompt, n_tokens, DraftModel(draft), n_drafts=4)
 ```
 
-</details>
-
 The following code implements the acceptance rule of speculative sampling, which replaces the greedy acceptance in the loop above:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 def accept_sampling(drafts, p, q):
@@ -238,8 +225,6 @@ def accept_sampling(drafts, p, q):
 # the target are q = softmax(logits / temperature), and accept_sampling replaces the greedy acceptance
 ```
 
-</details>
-
 ### Prompt lookup decoding
 
 [Prompt lookup decoding](https://github.com/apoorvumang/prompt-lookup-decoding) needs no draft model at all. It takes the last few generated tokens (an n-gram), searches for the same n-gram earlier in the prompt or in the generated text, and proposes the tokens that followed it as drafts; the verification is the same as above. It costs almost nothing, and gives large speedups when the output copies from the input, as in summarization, code editing, question answering over documents, or rewriting a previous answer. Related methods draft from other sources: [lookahead decoding](https://arxiv.org/abs/2402.02057) collects n-grams from Jacobi iterations of the model itself, and [REST](https://arxiv.org/abs/2311.08252) retrieves continuations from a datastore of text.
@@ -248,9 +233,6 @@ def accept_sampling(drafts, p, q):
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/prompt_lookup.png"/>
 
 The following code implements prompt lookup decoding. It reuses the verification loop of speculative decoding, with a different source of drafts:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 def prompt_lookup(tokens, n_drafts, max_ngram=3):
@@ -274,8 +256,6 @@ def prompt_lookup(tokens, n_drafts, max_ngram=3):
 # tokens = generate_speculative(model, prompt, n_tokens, prompt_lookup, n_drafts=4)
 ```
 
-</details>
-
 ### Medusa
 
 [Medusa](https://arxiv.org/abs/2401.10774) adds a few extra *decoding heads* on top of the last hidden state of the target model: the original output head predicts the next token, and head $$i$$ predicts the token $$i+1$$ positions ahead. The top candidates of each head are combined into a tree of possible continuations, and all of them are verified in a single forward pass with *tree attention*, a mask that lets each candidate attend only to its own ancestors in the tree. The longest accepted path is kept. Training only the heads, with the model frozen (Medusa-1), gives speedups above 2.2 times; training the heads together with the model (Medusa-2) reaches 2.3 to 3.6 times. Medusa needs no separate draft model, but each head guesses its token independently, without seeing the tokens guessed by the other heads, so the accuracy drops quickly for later positions. For sampling, Medusa also proposes a faster *typical acceptance* rule, which is not exactly lossless.
@@ -284,9 +264,6 @@ def prompt_lookup(tokens, n_drafts, max_ngram=3):
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/medusa.png"/>
 
 The following code implements the Medusa heads, the tree of candidates and its attention mask, and one step of greedy decoding, which keeps only the KV cache of the accepted path:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 class MedusaHeads(nn.Module):
@@ -380,8 +357,6 @@ def medusa_step(model, heads, tokens, kv_cache, next_token, head_logits, top_k=2
 #     tokens, kv_cache, next_token, head_logits = medusa_step(model, heads, tokens, kv_cache, next_token, head_logits)
 ```
 
-</details>
-
 ### EAGLE
 
 [EAGLE](https://arxiv.org/abs/2401.15077) drafts at the level of *features* rather than tokens. Its draft model is a single lightweight transformer layer that takes the top-layer hidden states (features) of the target, together with the embeddings of the tokens sampled so far, predicts the next feature, and turns it into a token with the target's own output layer. Feature sequences are more regular than token sequences, so these drafts are much more accurate than Medusa's independent heads. [EAGLE-2](https://arxiv.org/abs/2406.16858) shapes the draft tree dynamically, expanding the branches where the draft model is confident. [EAGLE-3](https://arxiv.org/abs/2503.01840) (NeurIPS 2025) noticed that EAGLE barely improved with more training data, and traced this to its feature prediction objective. It drops feature prediction and predicts tokens directly, fuses low-, mid- and high-level features of the target instead of the top layer only, and uses *training-time test*: during training, the draft model is fed its own predictions, to simulate multi-step drafting. EAGLE-3 reaches speedups of up to 6.5 times, about 1.4 times more than EAGLE-2, and 1.38 times higher throughput at a batch size of 64 in SGLang. EAGLE-style drafting is supported by vLLM, SGLang and TensorRT-LLM.
@@ -390,9 +365,6 @@ def medusa_step(model, heads, tokens, kv_cache, next_token, head_logits, top_k=2
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/eagle.png"/>
 
 The following code implements an EAGLE drafter, and a drafting loop that the MTP modules below also use:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 class EagleDrafter(nn.Module):
@@ -437,8 +409,6 @@ def draft_with_features(drafter, features, tokens, n_drafts):
 # tokens = generate_speculative(target, prompt, n_tokens, propose, n_drafts=4)
 ```
 
-</details>
-
 ### DFlash
 
 [DFlash](https://arxiv.org/abs/2602.06036) (Chen, Liang and Liu, UC San Diego, ICML 2026) replaces the autoregressive drafter with a small *block diffusion* model. Autoregressive drafters such as EAGLE-3 need one forward pass per drafted token, so they are kept very shallow (a single transformer layer for EAGLE-3), which, according to the authors, limits their acceptance length and keeps practical speedups around 2-3 times. DFlash instead takes the last verified token, appends 15 mask tokens, and fills the whole block in a single forward pass, so its drafting cost barely grows with the block size (in the speedup formula above, $$cK$$ becomes about $$c$$) and it can afford a deeper drafter: a 5-layer DFlash fills a 16-token block faster than a 1-layer EAGLE-3 drafts 8 tokens, and gets more of them accepted.
@@ -458,9 +428,6 @@ On Qwen3-8B with greedy decoding, the paper reports about 6.5 tokens committed p
 <img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/layerskip.png"/>
 
 The following code implements a simplified LayerSkip: the early exit loss with layer dropout for training, and drafting with the first layers at inference:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 class LayerSkip(nn.Module):
@@ -509,8 +476,6 @@ class LayerSkip(nn.Module):
 # tokens = generate_speculative(model, prompt, n_tokens, DraftModel(early_exit), n_drafts=4)
 ```
 
-</details>
-
 ### Multi-token prediction
 
 Multi-token prediction (MTP) trains the model itself, during pre-training, to predict several future tokens at every position, instead of only the next one. This has two benefits. During training, every position gets a denser learning signal, which can improve the representations learned by the model. At inference, the extra predictions are drafts: the model drafts for itself, without a separate draft model, and the verification is the same as in speculative decoding.
@@ -535,9 +500,6 @@ As the vocabulary is large, holding the logits of all heads at once would domina
 <img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/mtp_parallel.png"/>
 
 The following code implements the parallel heads, and the backward pass that keeps the logits of only one head in memory:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 class MultiTokenHeads(nn.Module):
@@ -571,8 +533,6 @@ class MultiTokenHeads(nn.Module):
         return total
 ```
 
-</details>
-
 #### Sequential modules
 
 [DeepSeek-V3](https://arxiv.org/abs/2412.19437) predicts the extra tokens *sequentially* instead, keeping the complete causal chain at each prediction depth. It adds $$D$$ MTP modules, where module $$k$$ has its own transformer block $$\text{TRM}_k$$ and projection matrix $$M_k$$, and shares the embedding layer and the output head with the main model. For the token at position $$i$$, module $$k$$ combines the representation $$h_i^{k-1}$$ of the previous depth (the output of the main model, for $$k=1$$) with the embedding of the token $$t_{i+k}$$:
@@ -595,9 +555,6 @@ The authors report better results on most benchmarks, and suggest that MTP may m
 <img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/mtp_sequential.png"/>
 
 The following code implements the MTP modules of DeepSeek-V3 and their loss:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 class MTPModule(nn.Module):
@@ -635,8 +592,6 @@ def mtp_loss(modules, h, tokens, lam=0.3):
 # drafting with an MTP module, run again on its own outputs for more drafts, uses the drafting loop of EAGLE:
 # propose = lambda tokens, k: draft_with_features(module, features(tokens[:, :-1]), tokens[:, 1:], k)
 ```
-
-</details>
 
 #### Drafting with MTP modules
 

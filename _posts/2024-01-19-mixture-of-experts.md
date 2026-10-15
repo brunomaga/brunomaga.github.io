@@ -21,7 +21,7 @@ In 1991, the papers [Adaptive Mixture of Local Experts](https://www.cs.toronto.e
 
 The MoE was defined as a set of independent **experts** (feed-forward networks, $$f_i(x)$$ in the picture) alongside a **gating network** (also a feed-forward network, $$g(x)$$). All the experts and the gating network receive the same input $$x$$. The gating network outputs a distribution of each expert's relevance/importance for the given input and can be defined in its simplest form as $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, where $$W_g$$ is an (optional) learnable transformation. Finally, the output of the system ($$z$$) is the sum of the outputs of all experts weighted by the output of the gating network.
 
-The implementation of an MoE module is straightforward, and you can find the full code with running examples in the [`moe.py` file in the supporting repository]({{ site.assets }}/distributed-training/moe.py):
+The implementation of an MoE module is straightforward:
 
 ```python
 class MoE(nn.Module):
@@ -64,7 +64,7 @@ The authors made an important observation about the behavior of MoEs:
 
 With the rise of deep neural networks, [Learning Factored Representations in a Deep Mixture of Experts (2014)](https://arxiv.org/abs/1312.4314) extended the “Mixture of Experts” to a stacked model (“Deep Mixture of Experts”) with multiple sets of gating networks and experts.
 
-This deep MoE model can be coded simply by stacking several MoE layers (also available in [`moe.py`]({{ site.assets }}/distributed-training/moe.py)):
+This deep MoE model can be coded simply by stacking several MoE layers:
 
 ```python
 class MoE_deep(nn.Module):
@@ -382,7 +382,6 @@ Finally, the **scale step** computes, for each token, the sum of the outputs of 
     return x.view(B,S,E)
 ```
 
-You can find the complete implementation in the [Mixture-of-Experts repo]({{ site.assets }}/distributed-training/moe_dist.py).
 
 ### Applying the MoE to an existing LLM
 

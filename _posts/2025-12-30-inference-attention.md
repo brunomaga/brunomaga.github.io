@@ -18,9 +18,6 @@ During prefill, $$QK^T$$ compares every token with every previous token, so the 
 
 The following code implements this attention, with an optional mask, and the causal mask of a decoder; most modules of this post reuse both functions:
 
-<details markdown="1">
-<summary>Show code</summary>
-
 ```python
 def scaled_dot_product_attention(q, k, v, mask=None, scale=None):
     """ softmax(q @ k^T * scale) @ v, for the queries q: [B, H, Sq, h], and the keys k and values v: [B, H, Sk, h]
@@ -55,8 +52,6 @@ def causal_mask(Sq, Sk, device=None):
     return torch.ones(Sq, Sk, dtype=torch.bool, device=device).tril(diagonal=Sk - Sq)
 ```
 
-</details>
-
 During decode, every new token reads the keys and values of the whole context from the KV cache, described in the [post on prefill, decode and the KV cache]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}), so the cost of each step grows linearly with the context. Attention dominates at long contexts, roughly once the context is longer than six times the model width: the authors of Native Sparse Attention (below) estimated that attention accounts for 70-80% of the latency when decoding with a 64K-token context. Long documents, long conversations, agents and reasoning models with long chains of thought all live in this regime.
 
 There are three families of solutions, which can be combined:
@@ -89,9 +84,6 @@ Decode reads the whole KV cache at every step, so a smaller KV cache means faste
 GQA and MQA primarily accelerate the decode phase, though they also provide a massive secondary benefit to the overall system throughput by freeing up memory. These savings *only appear when there is a KV cache to read during decode*. Without a cache, GQA only saves a little compute in the key and value projections.
 
 The following code implements GQA with an optional KV cache; it is also MHA with `num_groups = num_heads`, and MQA with `num_groups = 1`. During decode, the module receives only the new tokens, appends their keys and values to the cache, and returns the updated cache, whose keys and values have $$G$$ heads instead of $$n_\text{heads}$$. The model must also give the new tokens the positions that follow the cached ones. MLA and DSA, below, follow the same convention: an optional `kv_cache` argument, and the new cache returned with the output:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 class GQA(nn.Module):
@@ -135,8 +127,6 @@ class GQA(nn.Module):
         attn = attn.permute(0, 2, 1, 3).contiguous().view(B, S, H * h)  # [B, H, S, h] -> [B, S, H*h]
         return self.out(attn), kv_cache                                  # [B, S, H*h] -> [B, S, E]
 ```
-
-</details>
 
 ## FlashAttention
 
@@ -232,9 +222,6 @@ MLA mainly accelerates decode, which is limited by memory bandwidth: like MQA an
 
 The following code implements MLA. With absorption (`absorb = True`), attention runs directly over the latent vectors, and gives the same output as recomputing the keys and values of every head (`absorb = False`):
 
-<details markdown="1">
-<summary>Show code</summary>
-
 ```python
 class MLA(nn.Module):
     """ Multi-head Latent Attention: the keys and values of all heads are computed from a single latent vector of
@@ -289,8 +276,6 @@ class MLA(nn.Module):
         return self.out(attn), kv_cache                                  # [B, S, H*h] -> [B, S, E]
 ```
 
-</details>
-
 ## DeepSeek-V3.2: DeepSeek Sparse Attention
 
 [DeepSeek-V3.2](https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp) keeps MLA and adds DeepSeek Sparse Attention (DSA). For each query token $$t$$, a small *lightning indexer* scores every past token $$s$$:
@@ -309,9 +294,6 @@ With a KV cache, the indexer key of every token is cached too. Index scores are 
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/dsa.png"/>
 
 The following code adds DeepSeek Sparse Attention to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained multi-head attention module, and adds an indexer. During the dense warm-up (`dense = True`), the queries attend to all past tokens and the module computes `indexer_loss`, which is backpropagated alone to train the indexer; afterwards, each query attends only to the `top_k` past tokens with the highest index scores:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 def lightning_index_scores(q, w, k):
@@ -406,8 +388,6 @@ class DSA(nn.Module):
         return self.out(attn), kv_cache                                  # [B, S, H*h] -> [B, S, E]
 ```
 
-</details>
-
 ## DeepSeek-V4: Compressed Sparse Attention and Heavily Compressed Attention
 
 [DeepSeek-V4](https://arxiv.org/abs/2606.19348) (2026) supports a context of one million tokens. It replaces MLA with two types of attention that compress the KV cache along the sequence, interleaved across the layers ([Hugging Face's implementation](https://huggingface.co/docs/transformers/en/model_doc/deepseek_v4) documents the details):
@@ -431,9 +411,6 @@ Both use multi-query attention with a single key-value vector per entry, shared 
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/hca.png"/>
 
 The following code implements both attention types in a single module, CSA when `top_k` is given and HCA otherwise, with the overlapping compression, the lightning indexer, the shared key-value multi-query attention, the sliding window, the low-rank queries, RMSNorm, the attention sink and the grouped output projection. A model alternates CSA and HCA across its blocks. The module expects positional information in its input, such as learned positional embeddings, so it omits rotary embeddings. As in DSA, the indexer receives an input detached from the rest of the model, and learns to imitate the attention over the compressed entries with the KL-divergence loss `indexer_loss`, which is added to the training loss. These attention types change the architecture, so a model that uses them is trained from scratch. Unlike the other modules, it has no KV cache (whose four parts are listed above), and processes whole sequences, as in training and prefill:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 # lightning_index_scores, top_k_indices and indexer_loss are defined in the DSA code above
@@ -554,8 +531,6 @@ class CompressedAttention(nn.Module):
         attn = torch.einsum('bsgi,gio->bsgo', attn, self.w_group)       # [B, S, G, H/G*h] -> [B, S, G, E/G]
         return self.out(attn.reshape(B, S, -1))                         # [B, S, G, E/G] -> [B, S, E] -> [B, S, E]
 ```
-
-</details>
 
 ## Summary of attention methods
 

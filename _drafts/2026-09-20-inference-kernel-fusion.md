@@ -21,10 +21,7 @@ Every PyTorch operation launches one or more GPU kernels. Each launch costs a fe
 
 Even after fusion, a decode step launches many kernels from Python, one after the other. A *CUDA graph* records the whole sequence of kernel launches once, and replays it with a single launch, removing almost all the CPU overhead. The recording fixes the shapes and memory addresses of all tensors, so the decode step must use static shapes: a preallocated KV cache of maximum length, with attention over the full buffer and a mask for the positions not yet filled. `torch.compile(model, mode="reduce-overhead")` uses CUDA graphs automatically. Combining these techniques with quantization and speculative decoding, the PyTorch team's [gpt-fast](https://pytorch.org/blog/accelerating-generative-ai-2/) made the decoding of Llama-7B almost 10 times faster, in plain PyTorch. Going one step further, recent work fuses a whole forward pass into a single persistent *megakernel*, removing the gaps between kernels altogether for low-latency decoding.
 
-The following code implements a static KV cache for GPTlite, and compiles its decode step with `torch.compile`, which records and replays CUDA graphs on a GPU. The full code is in [`cuda_graphs.py`]({{ site.assets }}/inference/cuda_graphs.py), which checks that the outputs are the same as with the dynamic KV cache:
-
-<details markdown="1">
-<summary>Show code</summary>
+The following code implements a static KV cache for GPTlite, and compiles its decode step with `torch.compile`, which records and replays CUDA graphs on a GPU:
 
 ```python
 class GPTlite_StaticCache(nn.Module):
@@ -77,8 +74,6 @@ decode_compiled = torch.compile(model_static, mode="reduce-overhead", fullgraph=
 tokens = generate_static(model_static, prompt, n_tokens, decode_compiled)
 ```
 
-</details>
-
 ### Inference engines
 
 Production deployments rarely hand-write these optimizations: inference engines combine most of the techniques in this post.
@@ -91,10 +86,7 @@ Production deployments rarely hand-write these optimizations: inference engines 
 
 ## How to benchmark
 
-The following code benchmarks our inference methods on GPTlite, measuring the time to first token, the time per output token, the throughput, the peak memory and the validation loss. The full code is in [`benchmark_all.py`]({{ site.assets }}/inference/benchmark_all.py):
-
-<details markdown="1">
-<summary>Show code</summary>
+The following code benchmarks our inference methods on GPTlite, measuring the time to first token, the time per output token, the throughput, the peak memory and the validation loss:
 
 ```python
 def benchmark(generate_fn, prompt, n_tokens):
@@ -121,8 +113,6 @@ for name, (generate_fn, model_obj) in methods.items():
   ttft, tpot, throughput, memory = benchmark(generate_fn, prompt, n_tokens)
   loss = validation_loss(model_obj, valid_data)
 ```
-
-</details>
 
 ## Further reading
 

@@ -162,7 +162,7 @@ class MultiHeadAttention(nn.Module):
         return out
 ```
 
-And that is it. It's conceptually simple, and the full implementation can be found in [ulysses_sequence_parallelism.py]({{ site.assets }}/distributed-training/ulysses_sequence_parallelism.py).
+And that is it. It's conceptually simple.
 
 As an important note, there are other similar approaches to this problem, such as [ColAI-SP](https://arxiv.org/abs/2105.13120) and [Megatron-SP](https://arxiv.org/abs/2205.05198). The big advantage of [DeepSpeed Ulysses parallelism](https://arxiv.org/abs/2309.14509) is that it requires less communication than the alternatives. Its main downsides are that the maximum parallelism is dictated by the number of attention heads (typically 8), and that the all-to-all is a blocking collective communication that may incur heavy overhead on slow interconnects. That's where Ring Attention comes into play.
 
