@@ -1,4 +1,5 @@
-<!-- date, category and tags of a post as boxed labels. Params: post, date_format -->
+<!-- date, category and tags of a post as boxed labels; nothing for undated pages. Params: post, date_format -->
+{%- if include.post.date %}
 <div class="post-labels">
   <time class="post-label post-label--date dt-published" itemprop="datePublished" datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: include.date_format }}</time>
   {%- for category in include.post.categories %}
@@ -8,3 +9,4 @@
   <span class="post-label">{{ tag }}</span>
   {%- endfor %}
 </div>
+{%- endif %}
