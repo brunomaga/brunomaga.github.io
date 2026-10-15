@@ -108,7 +108,7 @@ Quantization stores numbers with fewer bits. Weights take less memory, fewer byt
 A floating point number has a sign bit, exponent bits that set its *range*, and mantissa (fraction) bits that set its *precision*. The picture below compares the three most common formats: FP32, FP16 and BF16. BF16 (*brain floating point*) keeps the 8 exponent bits of FP32 and only 7 mantissa bits, so it covers the same range as FP32 with the memory and speed of a 16-bit format. FP16 has more precision but a much smaller range (5 exponent bits), so large values can overflow. This is why BF16 is the default format of LLMs today.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/floating_point_representation.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/floating_point_representation.svg"/>
 
 Recent GPUs added smaller formats:
 

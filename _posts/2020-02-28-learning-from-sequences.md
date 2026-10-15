@@ -84,7 +84,7 @@ The main component of the transformer is the attention mechanism, which determin
 Let's look at a single attention head for now. Take a sentence of $$N$$ words: how is each word related to every other word in that sentence? The output of a single attention mechanism is then the $$N \times N$$ matrix storing these inter-word importance metrics. Here's an example:
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.png"/>
+<img width="40%" height="40%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The attention mechanism output. For the sentence "The big red dog", of length $$N=4$$, each row of the attention matrix holds the normalized relevance metric of that word to every other word in the sentence. Source: unknown. 
