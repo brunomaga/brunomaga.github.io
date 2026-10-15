@@ -19,7 +19,7 @@ Before we continue, we emphasize the following:
 To implement sequence parallelism, we first have to adapt our data loader to load data at the token level, in a way that matches our hybrid data- and sequence-parallel setup. All we need to do is configure a `DataLoader` and a `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader workers.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 An example of data loading for hybrid data parallelism (DP) and sequence parallelism (SP) on 4 processes/GPUs (color-coded), on a dataset of 8 samples. First row: all 4 processes run distributed data parallelism. Second row: a custom `DistributedSampler` that yields chunks of sequences enables a hybrid data- and sequence-parallel execution with 2 groups of 2 sequence-parallel processes. Third row: no data parallelism — all 4 processes run sequence parallelism on the same sample.
@@ -33,7 +33,7 @@ During training/inference, the model runtime can scale well with the sequence pa
 In practice, to compute attention, each process uses its own subset/chunk of queries, but **needs the keys and values for the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$, where all tensors are shaped `(B, S, E)`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `(B, S/P, E)`, it needs to access all elements of $$K^T$$ and $$V$$ to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product with $$V$$, resulting in an attention output of shape `(B, S/P, E)` per process:
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.svg"/>
 
 Therefore, sequence parallelism requires some communication to make the relevant KV elements accessible across all GPUs. With that in mind, in the following sections we will look into two alternative algorithms for sequence/context-parallel attention.
 
@@ -45,7 +45,7 @@ If we pass a tensor of this shape to a feed-forward network, we achieve parallel
 [(DeepSpeed) Ulysses parallelism](https://arxiv.org/abs/2309.14509) solves this by swapping the distributed view from sequence-split to head-split before the MHA module, and back after it, as in the following illustration:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Overview of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) GPUs, split along the sequence (`S`) dimension. **Center:** the *first all-to-all* changes the distributed tensor view from sequence- to head-split. Each process now holds complete sequences (i.e., not sequence-split) for a subset of heads and can compute attention locally. **Right:** the *second all-to-all* reverts the view from head- to sequence-split.
@@ -216,7 +216,7 @@ During ring attention, each process keeps its local chunk of queries and **rotat
 This pattern can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 (color-coded) GPUs, split along the sequence (`S`) dimension. **1st Ring Attention step:** each process holds its part of the Query, Key and Value tensors and computes block attention for those tensors. Meanwhile, processes asynchronously send their Key and Value tensors to the next process in the ring (clockwise). **2nd, 3rd, and 4th steps:** each process receives the previous process' Key and Value blocks and computes the attention output for its original Query tensor and the received Key/Value tensors. **After Ring Attention:** the MHA output is already sequence-split across processes, similarly to the initial data format.
@@ -224,7 +224,7 @@ Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial
 From a process standpoint, after all ring steps, each process has kept its own sequence block of $$q$$ and has iterated over the full $$k$$ and $$v$$ tensors (in chunks). For example, the third (red) process above sees the following data:
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="{{ site.assets }}/distributed-training/imgs/ring_attention_qkv.png"/>
+<img width="40%" height="40%" src="{{ site.assets }}/distributed-training/imgs/ring_attention_qkv.svg"/>
 
 An important point is that, while Ulysses communicates synchronously (all-to-all), forcing processes to wait for the communication to complete, ring attention can use asynchronous point-to-point communication. If the computation time of a block exceeds its transmission time, the communication overhead can be hidden behind computation.
 
@@ -381,7 +381,7 @@ PyTorch does not have a notion of *partial sequences* in the same way that data 
 Moreover, when we perform multi-dimensional parallelism (e.g., data + sequence), we need to define process groups for the data-parallel processes (the ones that load different samples) and for the sequence-parallel processes (the ones that load different chunks of the same sample). We can do this with PyTorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) or by creating our own process groups manually. For the sake of illustration, if we implemented $$2 \times 2$$ data and Ulysses sequence parallelism on 4 GPUs, this would be the memory layout before and during multi-head attention:
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.png"/>
+<img width="70%" height="70%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Allocation of activations on a 4-GPU execution with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: blue and green processes belong to the same sequence-parallel group and share one sample; red and yellow processes form the other sequence-parallel group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes can then compute attention over full sequences.

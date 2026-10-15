@@ -28,7 +28,7 @@ Given a dense matrix representation of a graph connectivity $$E$$, the algorithm
  so $$V$$ is the same for $$G$$ and $$G^{\star}$$. The implementation of the distributed transpose is well known for a **dense** connectivity matrix, and is available via the `MPI_Alltoall` collective call, which takes as input (output) an array of elements, the size of the array, and the datatype of the elements to be sent (received).
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/matrix-transpose/all_to_all.png"><span class="text-secondary">
+<img width="70%" height="70%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg"><span class="text-secondary">
 
 {: style="text-align:center; font-size: small;"}
 (image adapted from: MPI Tutorial, Shao-Ching Huang, IDRE High Performance Computing Workshop, 2013-02-13)</span>

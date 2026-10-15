@@ -10,7 +10,7 @@ In this post, we will discuss tensor (model) parallelism, particularly the [Mega
 Tensor parallelism aims at partitioning computation across the model’s tensor dimensions (e.g., sharding linear layer weights and corresponding activations). This is a hard problem: in practice we must decide the dimension of tensor partitioning (row-wise, column-wise, or none) and adapt the communication and computation accordingly. Therefore, it is a model- and data-specific implementation.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/dnn_model_parallelism.png"/>
+<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/dnn_model_parallelism.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 A representation of tensor parallelism on a fully-connected DNN, on two processors $$p0$$ and $$p1$$. Input sample and activations are distributed across different processors. Red lines represent the activations that have to be communicated to a different processor.

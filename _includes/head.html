@@ -25,6 +25,17 @@
   <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 
   <style>
+    /* ===== Links: black and underlined; the underline thickens on hover ===== */
+
+    a, a:visited, a:hover {
+      color: #111;
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 2px;
+    }
+
+    a:hover { text-decoration-thickness: 2px; }
+
     /* ===== Images ===== */
 
     img { height: auto; }
@@ -50,7 +61,7 @@
       font-size: 0.95rem;
     }
 
-    .info-panel   { background-color: #e9f0f6; }
+    .info-panel   { background-color: #f2f2f2; }
     .info-warning { background-color: #fff3cd; }
     .info-danger  { background-color: #f8d7da; }
 
