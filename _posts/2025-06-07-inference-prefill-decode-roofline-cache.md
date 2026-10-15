@@ -707,7 +707,7 @@ def schedule(decoding, prefilling, budget):
 <img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/continuous_batching.png"/>
 
 {: style="text-align:center; font-size: small;"}
-Continuous batching, token by token. A request's first step processes its whole prompt (prefill) and gives its first token. Each following step (decode) gives one more token, until the request generates its end-of-sequence token and leaves the batch. A waiting request takes the free slot at the next step, so the prefill of a new request runs in the same step as the decode of the others. See also the Red Hat post [Meet vLLM: For faster, more efficient LLM inference and serving](https://www.redhat.com/en/blog/meet-vllm-faster-more-efficient-llm-inference-and-serving)
+Continuous batching, token by token. A request's first step processes its whole prompt (prefill) and gives its first token. Each following step (decode) gives one more token, until the request generates its end-of-sequence token and leaves the batch. A waiting request takes the free slot at the next step, so the prefill of a new request runs in the same step as the decode of the others.
 
 **Code.** The following code implements static and continuous batching. Both produce the same outputs, but continuous batching needs fewer steps, since its slots spend more time generating useful tokens. To keep the code short, every step processes the whole sequences, without a KV cache:
 

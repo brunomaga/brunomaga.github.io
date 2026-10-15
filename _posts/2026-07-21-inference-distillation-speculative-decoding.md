@@ -19,13 +19,10 @@ There are several categories of KD methods. The loss can match the soft labels o
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.png"/>
 
-{: style="text-align:center; font-size: small;"}
-Knowledge distillation with (a) a pre-trained teacher model (offline), and (b) a teacher model trained at the same time as the student (online). Adapted from [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
-
 For details on the different methods, see [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525).
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kd_methods.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kd_methods.jpg"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the different categories of knowledge distillation methods, and of the branches within each category. In this section, we implement offline distillation using soft labels, underlined in red in the picture. Adapted from [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).

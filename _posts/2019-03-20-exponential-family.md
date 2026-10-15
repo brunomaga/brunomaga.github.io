@@ -375,7 +375,7 @@ with known number of trials <em>n</em></td>
   <span class="math inline">\(
      f(x_1,\ldots,x_k;n,p_1,\ldots,p_k) = \\
    = \frac{n!}{x_1!\cdots x_k!} p_1^{x_1} \cdots p_k^{x_k} \\
-   \text{(where $$\sum_{i=1}^k p_i = 1$$)} 
+   \text{(where } \sum_{i=1}^k p_i = 1 \text{)} 
   \)</span></td>
 <td><span class="math inline">\(\begin{bmatrix} \log p_1 \\ \vdots \\ \log p_k \end{bmatrix}\)</span></td>
 <td><span class="math inline">\(\begin{bmatrix} e^{\eta_1} \\ \vdots \\ e^{\eta_k} \end{bmatrix}\)</span><br />

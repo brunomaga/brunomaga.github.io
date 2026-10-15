@@ -28,7 +28,7 @@ We can get a better understanding by replicating the partitioning suggested by M
 <img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/megatron-lm.png"/>
 
 {: style="text-align:center; font-size: small;"}
-The MLP and self-attention blocks in the Megatron-LM implementation. $$f$$ and $$g$$ are conjugate identity and all-reduce operations: $$f$$ is an identity operator in the forward pass and all-reduce in the backward pass, while $$g$$ is an all-reduce in the forward pass and identity in the backward pass. Source: adapted from [Megatron-LM paper](https://arxiv.org/abs/1909.08053)
+The MLP and self-attention blocks in the Megatron-LM implementation. $$f$$ and $$g$$ are conjugate identity and all-reduce operations: $$f$$ is an identity operator in the forward pass and all-reduce in the backward pass, while $$g$$ is an all-reduce in the forward pass and identity in the backward pass. Source: [Megatron-LM paper](https://arxiv.org/abs/1909.08053)
 
 The rationale is the following: the MLP is a sequence of (1) a MatMul $$XA$$, (2) a GeLU $$Y$$, (3) a MatMul $$YB$$ and (4) a dropout layer. Let's focus on the first two operations: 
 1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point (*sum-reduce*) before the GeLU function". We can follow this approach - pictured below - for each of the 2 MatMuls, yielding a total of two communication steps.
