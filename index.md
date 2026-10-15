@@ -38,16 +38,18 @@ In this space, I write about my projects and topics related to my fields of inte
 
 <!-- blog posts -->
 <table style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
-{%- assign date_format = site.minima.date_format | default: "%Y" -%}
+{%- assign previous_year = "" -%}
 {% for post in site.posts %}
+{%- assign year = post.date | date: "%Y" -%}
 <tr style="border: none;">
 <td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">
-{{ post.date | date: date_format }}
+{% if year != previous_year %}{{ year }}{% endif %}
 </td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
 <a href="{{ post.url }}">{{ post.categories.first }}: {{ post.title }}</a>
 </td>
 </tr>
+{%- assign previous_year = year -%}
 {% endfor %}
 </table>
 
@@ -64,43 +66,43 @@ I also keep a curated list of related books and other resources available online
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;"></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="https://www.springer.com/gp/book/9780387310732">Pattern Recognition and Machine Learning, Christopher M. Bishop</a> (<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">pdf</a>)
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;"></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="http://mbmlbook.com/">Model-Based Machine Learning, John Winn et al.</a> (<a href="http://mbmlbook.com/MBMLbook.pdf">pdf</a>)
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;"></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="https://mml-book.github.io/">Mathematics for Machine Learning, Marc Peter Deisenroth, A. Aldo Faisal, Cheng Soon Ong</a> (<a href="https://mml-book.github.io/book/mml-book.pdf">pdf</a>)
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;"></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a> (<a href="https://neuronaldynamics.epfl.ch/online/index.html">online</a>)
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;"></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="https://fleuret.org/public/lbdl.pdf">The Little Book of Deep Learning, François Fleuret</a> (<a href="{{ site.assets }}/resources/lbdl.pdf">pdf</a>)
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;"></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz and Shai Ben-David</a> (<a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf">pdf</a>)
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">book</td>
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;"></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="http://www.inference.org.uk/mackay/itila/book.html">Information Theory, Inference, and Learning Algorithms, David MacKay</a> (<a href="http://www.inference.org.uk/itprnn/book.pdf">pdf</a>)
 </td>
@@ -118,13 +120,13 @@ I also keep a curated list of related books and other resources available online
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">post</td>
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;"></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="https://jax-ml.github.io/scaling-book">How to scale your model (JAX ML)</a>
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">post</td>
+<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;"></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)</a>
 </td>
