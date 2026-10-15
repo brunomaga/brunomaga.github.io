@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Distributed training: sequence and context parallelism with Ulysses and Ring attention"
-categories: [machine learning, distributed computing]
-tags: [machinelearning]
+title:  "Sequence and context parallelism with Ulysses and Ring attention"
+categories: ["Distributed Training"]
+tags: ["sequence parallelism", "context parallelism", "Ulysses", "Ring attention", "attention"]
 ---
 
 In this post, we will discuss and implement context and sequence parallelism, techniques that parallelize computation across the sequence-length dimension. Sequence parallelism is just another dimension of model parallelism, in the universe of data, tensor, pipeline, context, sequence and expert parallelism. 

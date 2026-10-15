@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Variational Inference: ELBO, Mean-Field Approximation, CAVI and Gaussian Mixture Models"
-categories: [machine learning, unsupervised learning, probabilistic programming]
-tags: [machinelearning]
+title:  "Variational Inference (ELBO, Mean-Field Approximation, CAVI) and Gaussian Mixture Models"
+categories: ["Machine Learning"]
+tags: ["variational inference", "ELBO", "GMM", "MCMC"]
 ---
 
 We learnt in a [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}) about Bayesian inference that its goal is to compute the likelihood of the observed data and the mode of the density of the likelihood, marginal distribution and conditional distributions. Recall the formulation of the **posterior** of the latent variable $$z$$ given the observations $$x$$, derived from the Bayes rule, with and without the normalization term:

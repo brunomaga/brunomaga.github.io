@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Distributed Sorting Algorithms"
-categories: [distributed algorithms, parallel algorithms]
-tags: [algorithms]
+categories: ["Distributed Algorithms"]
+tags: ["MPI", "sorting", "sample sort", "odd-even sort"]
 ---
 
 Sorting is probably the most common algorithm in computer science. At some point in life, every CS student has studied the computational complexity of sorting algorithms, as measured by the [Big-O notation][bigo]. Serial sorting on a single compute node is a solved problem, with dozens of algorithms already available. To name a few:

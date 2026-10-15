@@ -1,9 +1,9 @@
 ---
 layout: post
-title:  "Efficient inference: knowledge distillation, speculative decoding and multi-token decoding"
-categories: [machine learning, Transformer, GPT, inference, distillation]
+title:  "Knowledge distillation, speculative decoding and multi-token decoding"
 redirect_from: /speculative-multitoken-decoding
-tags: [machinelearning]
+categories: ["Efficient Inference"]
+tags: ["LLM", "distillation", "speculative decoding", "multi-token prediction", "EAGLE", "Medusa"]
 ---
 
 In this post we look at knowledge distillation, which trains a small model to behave like a large one, and at techniques that generate several tokens per forward pass of the model: speculative decoding, where the drafts come from a small model (ideally a distilled one), the context, extra heads, the features or early layers of the model, or a block diffusion model; and multi-token prediction, which builds the drafter into the model during pre-training. Most methods come with a short PyTorch snippet, which assumes `import torch`, `import torch.nn as nn` and `import torch.nn.functional as F`. Like the attention modules of the [post on attention]({{ site.baseurl }}{% post_url 2025-12-30-inference-attention %}), the models and the transformer blocks take an optional KV cache and return it, with the new tokens appended, together with their output.

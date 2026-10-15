@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Efficient inference: prefill vs decode, roofline, KV cache, continuous/ragged batching, disaggregation"
-categories: [machine learning, Transformer, GPT, inference]
-tags: [machinelearning]
+title:  "Prefill vs decode, roofline, KV cache, continuous/ragged batching, disaggregation"
+categories: ["Efficient Inference"]
+tags: ["LLM", "prefill", "decode", "roofline", "KV cache", "batching", "disaggregation"]
 ---
 
 The goal of inference optimization is to generate text as fast and as cheaply as possible, with a small memory footprint, and with little or no loss of quality. This matters for real-time and embedded systems, and for any service where the cost per generated token adds up. We will focus on performance. Most methods come with a short PyTorch snippet, which assumes `import torch`, `import torch.nn as nn` and `import torch.nn.functional as F`. The snippets that run a model use the small GPT-like model defined in the section on the KV cache.

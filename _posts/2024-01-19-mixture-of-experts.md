@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Distributed training: Mixture-of-Experts and Expert Parallelism"
-categories: [machine learning, Transformer, GPT, mixture-of-experts]
-tags: [machinelearning]
+title:  "Mixture-of-Experts and Expert Parallelism"
+categories: ["Distributed Training"]
+tags: ["MoE", "expert parallelism", "load balancing", "Switch Transformer", "PyTorch"]
 ---
 
 Details of [GPT-4](https://en.wikipedia.org/wiki/GPT-4) have been the subject of much speculation and reporting, including a widely shared [leak report](https://the-decoder.com/gpt-4-architecture-datasets-costs-and-more-leaked/) that mentions the possible use of Mixture-of-Experts (MoEs): 16 experts of ~110B parameters each (≈1.8T total parameters). In practice, MoEs are attractive because they can increase *model capacity per FLOP*: you activate only a small subset of experts per token, which can improve scaling, efficiency, and quality compared to similarly expensive dense models.

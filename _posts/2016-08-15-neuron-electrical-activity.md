@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Numerical Resolution of the Electrical Activity of Detailed Neuron Models"
-categories: [numerical methods, simulation, biological neuron models]
-tags: [simulation]
+categories: ["Computational Neuroscience"]
+tags: ["Hodgkin-Huxley", "cable theory", "NEURON", "numerical methods", "simulation"]
 ---
 
 [number-of-neurons]: https://en.wikipedia.org/wiki/List_of_animals_by_number_of_neurons

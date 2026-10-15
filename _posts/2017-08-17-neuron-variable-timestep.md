@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "Variable Timestep Simulation of the Electrical Activity of Neurons"
-categories: [numerical methods, variable timestep, simulation, biological neuron models]
-tags: [simulation]
+categories: ["Computational Neuroscience"]
+tags: ["CVODE", "variable timestep", "numerical methods", "simulation", "HPC"]
 ---
 
 [neuron-methods-post]: {{ site.baseurl }}{% post_url 2016-08-15-neuron-electrical-activity %}

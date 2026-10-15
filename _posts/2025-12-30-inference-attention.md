@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Efficient inference: faster attention"
-categories: [machine learning, Transformer, GPT, inference, attention]
-tags: [machinelearning]
+title:  "Faster attention"
+categories: ["Efficient Inference"]
+tags: ["LLM", "attention", "FlashAttention", "sparse attention", "linear attention", "MLA", "DeepSeek"]
 ---
 
 This post focuses on attention, the only part of a transformer whose cost per token grows with the context length:

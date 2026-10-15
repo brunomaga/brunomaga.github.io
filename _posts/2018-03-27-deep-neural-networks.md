@@ -1,9 +1,8 @@
 ---
-
 layout: post
 title:  "Deep Neural Networks, backpropagation, autodiff, dropout, CNNs and embeddings"
-categories: [machine learning, supervised learning, deep neural networks]
-tags: [machinelearning]
+categories: ["Machine Learning"]
+tags: ["deep learning", "backpropagation", "autodiff", "CNN", "embeddings"]
 ---
 
 Deep Neural Networks -- also known as Multi-Layer Perceptrons -- are **[universal approximators](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. they can approximate any continuous function on a bounded domain. They're the most important and relevant ML tool in the field of supervised learning, as they're part of the models used for most supervised tasks.

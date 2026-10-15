@@ -1,8 +1,8 @@
 ---
 layout: post
-title:  "Distributed training: pipeline parallelism (1F1B, Zero Bubble, DualPipe)"
-categories: [machine learning, Transformer, GPT, DeepSpeed]
-tags: [machinelearning]
+title:  "Pipeline parallelism (1F1B, Zero Bubble, DualPipe)"
+categories: ["Distributed Training"]
+tags: ["pipeline parallelism", "1F1B", "zero bubble", "DualPipe", "DeepSpeed", "PyTorch"]
 ---
 
 In this post, we will discuss and implement pipeline parallelism. Pipeline parallelism is just another dimension of model parallelism, in the universe of data, tensor, pipeline, context, sequence and expert parallelism. 

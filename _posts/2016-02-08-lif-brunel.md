@@ -1,8 +1,8 @@
 ---
 layout: post
 title:  "The Leaky Integrate-and-Fire Neuron Model and The Brunel Network"
-categories: [neural dynamics, leaky integrate-and-fire, brunel network]
-tags: [neuraldynamics]
+categories: ["Computational Neuroscience"]
+tags: ["spiking neurons", "LIF", "Brunel network", "simulation"]
 ---
 
 [lif-gerstner]:https://neuronaldynamics.epfl.ch/online/Ch1.S3.html
