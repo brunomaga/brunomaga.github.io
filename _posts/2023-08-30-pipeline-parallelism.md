@@ -359,7 +359,7 @@ The diagrams in this section were generated from the reference implementation of
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_interleaved_1f1b.png"/>
 
 {: style="text-align:center; font-size: small;"}
-1F1B (top) and interleaved 1F1B with 2 model chunks per GPU (bottom). Light and dark cells refer to the first and second chunk on each GPU. Interleaving halves the bubble.
+1F1B (top) and interleaved 1F1B with 2 model chunks per GPU (bottom). Cells in the colors of the *2nd chunk* legend entry belong to the second chunk on each GPU. Interleaving halves the bubble.
 
 ### Zero Bubble (ZB-H1 and ZB-H2)
 
@@ -384,7 +384,7 @@ The Zero Bubble paper also introduces **ZB-V**, which places two model chunks on
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_v.png"/>
 
 {: style="text-align:center; font-size: small;"}
-ZB-V with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (chunks 0 to 3, going down) and dark cells to the second chunk (chunks 4 to 7, going back up). Faded cells belong to the previous and next iterations.
+ZB-V with 8 model chunks on 4 GPUs. Cells in the colors of the *2nd chunk* legend entry belong to the second chunk on each GPU (chunks 4 to 7, going back up), and the others to the first chunk (chunks 0 to 3, going down). Faded cells belong to the previous and next iterations.
 
 ### DualPipe
 
@@ -398,7 +398,7 @@ Note that our diagrams model only computation, so DualPipe's bubble looks compar
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.png"/>
 
 {: style="text-align:center; font-size: small;"}
-DualPipe on 4 GPUs: micro-batches 1 to 4 (light) enter at GPU 0, and micro-batches 5 to 8 (dark) enter at GPU 3. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
+DualPipe on 4 GPUs: micro-batches 1 to 4 enter at GPU 0, and micro-batches 5 to 8 (in the colors of the *Reverse direction* legend entry) enter at GPU 3. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
 
 ### DualPipeV
 
@@ -408,7 +408,7 @@ Sea AI Lab later noticed that DualPipe is made of two mirrored halves, as GPUs `
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipev.png"/>
 
 {: style="text-align:center; font-size: small;"}
-DualPipeV with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (going down) and dark cells to the second chunk (going back up). Cells with a shared black border are overlapped forward and backward passes of two different micro-batches.
+DualPipeV with 8 model chunks on 4 GPUs. Cells in the colors of the *2nd chunk* legend entry belong to the second chunk on each GPU (going back up), and the others to the first chunk (going down). Cells with a shared black border are overlapped forward and backward passes of two different micro-batches.
 
 ### Summary
 
