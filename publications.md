@@ -46,16 +46,21 @@ permalink: /publications/
   line-height: 1.5;
 }
 .pub-notes > :last-child { margin-bottom: 0; }
-/* the intro, with the back link on its right */
-.pub-intro { display: flex; align-items: center; justify-content: space-between; gap: 1em; margin-bottom: 15px; }
-.pub-intro p { margin: 0; }
+/* the intro as the table's first row: the back link in the year column, the text in the title column */
+.pub-intro td { padding-bottom: 1.2em; }
+.pub-table a.post-label--back, .pub-table a.post-label--back:visited { border-color: #2a7ae2; color: #2a7ae2; }
+.pub-table a.post-label--back:hover, .pub-table a.post-label--back:focus-visible { color: #fff; }
 </style>
-
-<div class="pub-intro"><p>A summary of some interesting publications I came across. Continuously updated.</p><a class="post-label post-label--back" href="{{ site.url }}"><i class="fas fa-arrow-left" aria-hidden="true"></i> back</a></div>
 
 {::options parse_block_html="true" /}
 
 <table class="label-table pub-table">
+<thead>
+<tr class="pub-intro">
+<td><a class="post-label post-label--back" href="{{ site.url }}"><i class="fas fa-arrow-left" aria-hidden="true"></i> back</a></td>
+<td>A summary of some interesting publications I came across. Continuously updated.</td>
+</tr>
+</thead>
 <tr>
 <td><span class="post-label">2026</span></td>
 <td markdown="block">
