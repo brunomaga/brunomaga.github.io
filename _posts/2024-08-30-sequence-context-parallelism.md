@@ -168,7 +168,7 @@ Other approaches to this problem include [ColAI-SP](https://arxiv.org/abs/2105.1
 
 Ring attention was presented in the paper [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889), building on [Blockwise Parallel Transformer for Large Context Models](https://arxiv.org/abs/2305.19370). It computes attention block by block, so that $$softmax \left(QK^T \right)V$$ is computed without materializing the full attention matrix or holding all keys/values at once. It can be viewed as a distributed variant of [Flash Attention](https://arxiv.org/abs/2205.14135). The core idea is also related to [Self-attention Does Not Need $$O(n^2)$$ Memory](https://arxiv.org/abs/2112.05682).
 
-Given scores $$s_i = dot(q, k_i)$$ for a single query row, the attention output can be written as:
+For a single query row with scores $$s_i = dot(q, k_i)$$, the attention output is:
 
 $$
 \text{Attention}(q, K, V) = \sum_i \text{softmax}(s)_i \, v_i
@@ -176,21 +176,21 @@ $$
 = \frac{\sum_i \exp(s_i)\, v_i}{\sum_j \exp(s_j)}.
 $$
 
-This formulation shows that the output is a fraction whose numerator and denominator are sums of terms. Therefore, we do not need to store the full attention matrix $$QK^T$$. Instead:
+The output is thus a fraction whose numerator and denominator are sums of terms. Therefore, the full attention matrix $$QK^T$$ does not need to be stored. Instead:
 
-1. In the forward pass, we iterate over blocks of keys/values and accumulate $$v^{\star} \leftarrow v^{\star} + \exp(s_i)\, v_i$$ (numerator) and $$s^{\star} \leftarrow s^{\star} + \exp(s_i)$$ (denominator);
-2. After processing all keys and values, we compute $$\frac{v^{\star}}{s^{\star}}$$ to get the final attention output;
-3. In the backward pass, we compute gradients blockwise, so we don't need to store the whole attention matrix from the forward pass.
+1. In the forward pass, the algorithm iterates over blocks of keys/values and accumulates $$v^{\star} \leftarrow v^{\star} + \exp(s_i)\, v_i$$ (numerator) and $$s^{\star} \leftarrow s^{\star} + \exp(s_i)$$ (denominator);
+2. After all keys and values are processed, the final attention output is $$\frac{v^{\star}}{s^{\star}}$$;
+3. In the backward pass, gradients are computed blockwise, so the whole attention matrix from the forward pass is not stored.
 
 ### Improving numerical stability
 
-The previous formulation is not numerically stable in floating-point arithmetic, because the softmax exponentials can become very large numbers. A standard solution is to compute the softmax *by subtracting the maximum score from all scores*. This does not change the result of the softmax but avoids overflow/underflow. This is called the **safe softmax** trick and is well explained [in this post](https://coconut-mode.com/posts/ring-attention/). The safe softmax formulation is:
+The previous formulation is not numerically stable in floating-point arithmetic, because the softmax exponentials can become very large. A standard solution is to *subtract the maximum score from all scores* before computing the softmax. This does not change the result of the softmax, but avoids overflow/underflow. This is called the **safe softmax** trick, and is well explained [in this post](https://coconut-mode.com/posts/ring-attention/). The safe softmax formulation is:
 
 $$
 safe\_softmax(s_i) = \frac{\exp (s_i - s_{max})}{ \sum_j \exp( s_j - s_{max})}.
 $$
 
-The issue is how to compute the maximum when the computation is done in blocks. We do this by keeping the maximum over all blocks *seen so far* in the loop over blocks. Then, if $$m_j$$ is the maximum over all blocks up to and including block $$j$$, and $$m_{j-1}$$ is the previous maximum (up to block $$j-1$$), the accumulators are updated as:
+When the computation is done in blocks, the global maximum is not known in advance. The solution is to keep the maximum over all blocks *seen so far* in the loop over blocks. If $$m_j$$ is the maximum over all blocks up to and including block $$j$$, and $$m_{j-1}$$ is the previous maximum (up to block $$j-1$$), the accumulators are updated as:
 
 $$
 \begin{align*}
@@ -199,7 +199,7 @@ s^{\star} \leftarrow & \, s^{\star} \cdot \exp( m_{j-1} - m_{j} ) + \sum_{i \in 
 \end{align*}
 $$
 
-Finally, in practice we often do not compute $$v^{\star}$$ and $$s^{\star}$$ directly, but apply a small variation that accumulates log-values (LogSumExp, or LSE) for better stability (described [here](https://github.com/zhuzilin/ring-flash-attention/pull/34#issuecomment-2076126795)), where the LSE is defined as:
+Finally, implementations often do not compute $$v^{\star}$$ and $$s^{\star}$$ directly, but use a small variation that accumulates log-values (LogSumExp, or LSE) for better stability (described [here](https://github.com/zhuzilin/ring-flash-attention/pull/34#issuecomment-2076126795)). The LSE is defined as:
 
 $$
 LSE (x_{1},\dots ,x_{n})=\log \left(\exp(x_{1})+\cdots +\exp(x_{n})\right).

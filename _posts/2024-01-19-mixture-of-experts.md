@@ -480,13 +480,13 @@ Several variants of GLaM were trained to compare the behavior of MoE and dense m
 
 {::options parse_block_html="true" /}
 <details> <summary markdown="span">2022 [ST-MoE: Designing Stable and Transferable Sparse Expert Models](https://arxiv.org/abs/2202.08906)</summary>
-Presents a study with experiments, results and techniques related to the stability of training and fine-tuning of very large sparse MoEs. Also introduces the **router z-loss**, which resolves instability issues and slightly improves model quality, and a 269B sparse model, **the Stable Transferable Mixture-of-Experts** or ST-MoE-32B, which achieves state-of-the-art performance across several NLP benchmarks. The z-loss formulation is:
+Presents a study with experiments, results and techniques on the stability of training and fine-tuning of very large sparse MoEs. Also introduces the **router z-loss**, which resolves instability issues and slightly improves model quality, and a 269B sparse model, **the Stable Transferable Mixture-of-Experts** or ST-MoE-32B, which achieves state-of-the-art performance across several NLP benchmarks. The z-loss is defined as:
 
 $$
 L_z(x) = \frac{1}{B} \sum_{i=1}^B \left( \log \sum_{j=1}^N e^{x_j^{(i)}} \right)^2
 $$
 
-where $$B$$ is the number of tokens, $$N$$ is the number of experts, and $$x \in \mathbb{R}^{B\times N}$$ are the logits going into the router. The rationale behind z-loss is that it penalizes large logits into the gating network.  The paper also contains a very extensive analysis of quality-stability trade-off techniques and results:
+where $$B$$ is the number of tokens, $$N$$ is the number of experts, and $$x \in \mathbb{R}^{B\times N}$$ are the logits going into the router. The z-loss penalizes large logits going into the gating network. The paper also contains an extensive analysis of quality-stability trade-off techniques and results:
 
 - "Sparse models often suffer from training instabilities (Figure 1) worse than those observed in standard densely-activated Transformers. [...] Some architectural improvements involve more multiplications than additions or do not sum many items at once": the paper studies GELU Gated Linear Units (GEGLU) and Root Mean Square Scale Parameters.
 - Adding noise (input-jitter) and dropout improves stability, but leads to a significant loss of model quality (Section 3.2).
