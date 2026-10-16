@@ -204,7 +204,7 @@ $$
 L = \frac{1}{2} ⋅y⋅D^2 + \frac{1}{2} ⋅(1−y)⋅max(0,m−D)^2
 $$
 
-where $$m$$ is a hyper-parameter. For the original paper, refer to [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf).
+where $$m$$ is a hyper-parameter. For the original paper, refer to [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf) or my summary in the <a href="{{ site.publications_permalink }}">publications bookmark</a>.
 
 
 ### Connectionist Temporal Classification loss

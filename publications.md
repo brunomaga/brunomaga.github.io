@@ -2270,6 +2270,25 @@ A method that **randomly drops neurons (in different layers) during train time, 
 </details>
 </td>
 </tr>
+<tr>
+<td><span class="post-label">2006</span></td>
+<td markdown="block">
+<details>
+<summary markdown="span"><span class="pub-title">Dimensionality Reduction by Learning an Invariant Mapping (contrastive loss)</span><span class="pub-meta">, Hadsell, Chopra & LeCun, New York Uni (CVPR 2006)</span><a class="pub-link" href="http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
+<div class="pub-notes" markdown="block">
+
+The paper presents Dimensionality Reduction by Learning an Invariant Mapping (DrLIM). The problem is to find a function that maps high dimensional input patterns to lower dimensional outputs, given neighborhood relationships between samples in input space. It presents the **Contrastive Loss Function**. The contrastive loss trains 2 **siamese networks**, and encourages the model to learn a representation space where similar samples are close together, and dissimilar samples are far apart.  A Siamese Network is a type of neural network architecture designed to compare two inputs by learning their similarity or relationship. It consists of two identical subnetworks (hence the name "Siamese") that share the same architecture and weights. Each subnetwork processes one of the two inputs independently, and the outputs are then combined to compute a similarity score or distance metric.  The input to system is a pair of images (one to each of the siamese networks) and the similarity label (0 for dissimilar images or 1 for similar images). The images are passed through the functions, yielding two outputs $$G(X_1)$$ and $$G(X_2)$$. The cost module then computes the Euclidean distance between both outputs as $$D_W(G_W(X_1), G_W(X_2))$$. The objective is formulated in terms of the similarity label $$y$$ (1 for similar, 0 for dissimilar; the paper itself uses the opposite convention) and the Euclidean distance $$D$$ between the two images as:
+
+$$
+L = \frac{1}{2} ⋅y⋅D^2 + \frac{1}{2} ⋅(1−y)⋅max(0,m−D)^2
+$$
+
+where $$m$$ is a margin hyperparameter that sets the minimum distance for dissimilar pairs. The architecture is a **siamese architecture**, two copies of the same network which share the same set of parameters, and a cost module.  The total gradient is the sum of the contributions from the two instances.
+
+</div>
+</details>
+</td>
+</tr>
 </table>
 
 {::options parse_block_html="false" /}
