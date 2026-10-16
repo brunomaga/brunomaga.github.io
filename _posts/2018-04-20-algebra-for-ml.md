@@ -269,7 +269,15 @@ $$
 
 The **Hessian** $$\triangledown^2_{x,y} f(x,y)$$ of a function is the matrix of all second-order partial derivatives of all variables with respect to all other variables. It is *symmetric* if the second-order partial derivatives are continuous:
 
-<img width="33%" height="33%" src="{{ site.assets }}/algebra-for-ml/hessian.png"/>
+$$
+\mathbf{H}_f =
+\begin{bmatrix}
+  \dfrac{\partial^2 f}{\partial x_1^2} & \dfrac{\partial^2 f}{\partial x_1\,\partial x_2} & \cdots & \dfrac{\partial^2 f}{\partial x_1\,\partial x_n} \\[2.2ex]
+  \dfrac{\partial^2 f}{\partial x_2\,\partial x_1} & \dfrac{\partial^2 f}{\partial x_2^2} & \cdots & \dfrac{\partial^2 f}{\partial x_2\,\partial x_n} \\[2.2ex]
+  \vdots & \vdots & \ddots & \vdots \\[2.2ex]
+  \dfrac{\partial^2 f}{\partial x_n\,\partial x_1} & \dfrac{\partial^2 f}{\partial x_n\,\partial x_2} & \cdots & \dfrac{\partial^2 f}{\partial x_n^2}
+\end{bmatrix}
+$$
 
 
 ## Deep Neural Networks
@@ -282,13 +290,33 @@ $$
 
 The **chain rule** gives the partial derivatives as follows:
 
-<img width="33%" height="33%" src="{{ site.assets }}/algebra-for-ml/dnn_partial_derivatives.png"/>
+$$
+\begin{align*}
+\frac{\partial L}{\partial \boldsymbol{\theta}_{K-1}} & = \frac{\partial L}{\partial \boldsymbol{f}_K} {\color{#0000FF} \frac{\partial \boldsymbol{f}_K}{\partial \boldsymbol{\theta}_{K-1}}} \\
+\frac{\partial L}{\partial \boldsymbol{\theta}_{K-2}} & = \frac{\partial L}{\partial \boldsymbol{f}_K} \boxed{ {\color{#FF7300} \frac{\partial \boldsymbol{f}_K}{\partial \boldsymbol{f}_{K-1}}} {\color{#0000FF} \frac{\partial \boldsymbol{f}_{K-1}}{\partial \boldsymbol{\theta}_{K-2}}} } \\
+\frac{\partial L}{\partial \boldsymbol{\theta}_{K-3}} & = \frac{\partial L}{\partial \boldsymbol{f}_K} {\color{#FF7300} \frac{\partial \boldsymbol{f}_K}{\partial \boldsymbol{f}_{K-1}}} \boxed{ {\color{#FF7300} \frac{\partial \boldsymbol{f}_{K-1}}{\partial \boldsymbol{f}_{K-2}}} {\color{#0000FF} \frac{\partial \boldsymbol{f}_{K-2}}{\partial \boldsymbol{\theta}_{K-3}}} } \\
+\frac{\partial L}{\partial \boldsymbol{\theta}_i} & = \frac{\partial L}{\partial \boldsymbol{f}_K} {\color{#FF7300} \frac{\partial \boldsymbol{f}_K}{\partial \boldsymbol{f}_{K-1}}} \cdots \boxed{ {\color{#FF7300} \frac{\partial \boldsymbol{f}_{i+2}}{\partial \boldsymbol{f}_{i+1}}} {\color{#0000FF} \frac{\partial \boldsymbol{f}_{i+1}}{\partial \boldsymbol{\theta}_i}} }
+\end{align*}
+$$
 
 where the orange terms are partial derivatives of a layer with respect to its inputs, and the blue terms are partial derivatives of a layer with respect to its parameters.
 
 Backpropagation is a special case of **automatic differentiation**, a technique that evaluates the gradient of a function through intermediate variables and their dependencies, by applying the chain rule. Example: 
 
-<img width="55%" height="55%" src="{{ site.assets }}/algebra-for-ml/backprop.png"/>
+Consider the function
+
+$$
+f(x) = \sqrt{x^2 + \exp(x^2)} + \cos\left(x^2 + \exp(x^2)\right) \, .
+$$
+
+By application of the chain rule, and noting that differentiation is linear, we compute the gradient
+
+$$
+\begin{align*}
+\frac{\mathrm{d}f}{\mathrm{d}x} & = \frac{2x + 2x \exp(x^2)}{2 \sqrt{x^2 + \exp(x^2)}} - \sin\left(x^2 + \exp(x^2)\right) \left(2x + 2x \exp(x^2)\right) \\
+& = 2x \left( \frac{1}{2 \sqrt{x^2 + \exp(x^2)}} - \sin\left(x^2 + \exp(x^2)\right) \right) \left(1 + \exp(x^2)\right) \, .
+\end{align*}
+$$
 
 (Source: section 5.6, <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 
