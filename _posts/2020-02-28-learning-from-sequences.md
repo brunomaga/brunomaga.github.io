@@ -52,11 +52,11 @@ Accurate results for long sentences are hard to obtain, because recurrent neural
 In 2017, researchers at Google introduced the Transformer (original paper [Attention is all you need (2017, Google, arXiv)](https://arxiv.org/abs/1706.03762)), which overcomes many of these issues and achieves better results. The transformer architecture is:
 
 {: style="text-align:center;"}
-<img width="35%" height="35%" src="{{ site.assets }}/learning-from-sequences/transformer.png"/>
+<img width="35%" height="35%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The transformer architecture. Grey regions represent the Encoder (left) and Decoder (right) architectures.
-Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
+Adapted from: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
 
 
 The left- and right-hand side components are the encoder and decoder, respectively.
@@ -73,9 +73,9 @@ The positional encoding is thus given by $$sine$$ and $$cosine$$ waves with a di
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/transformer-embedding.png"/>
+<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/transformer-embedding.svg"/>
 
-Output of the positional encoding of the transformer for dimensions 4 to 7 of the embedding array, for a word whose position in the sentence is given by the x axis. Source: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
+Output of the positional encoding of the transformer for dimensions 4 to 7 of the embedding array, for a word whose position in the sentence is given by the x axis. Adapted from: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
 
 ### Attention Mechanism
 
@@ -110,10 +110,10 @@ $$
 The term $$ \frac{1}{\sqrt{D^{QK}}} $$ keeps the range of values roughly unchanged, even for large $$D^{QK}$$. For each query, the final value is the sum of the input values weighted by the attention scores: $$Y_q = \sum_k A_{q,k} \, V_k $$. 
 
 {: style="text-align:center;"}
-<img width="50%" height="50%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_lbdl.png"/>
+<img width="50%" height="50%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_lbdl.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The attention operator matches every query $$Q_q$$ with all keys $$K_1, ..., K_{N^{KV}}$$ to obtain normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averages the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute $$Y_q$$ (right). Source: [The Little Book of Deep Learning]({{ site.resources_permalink }}). 
+The attention operator matches every query $$Q_q$$ with all keys $$K_1, ..., K_{N^{KV}}$$ to obtain normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averages the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute $$Y_q$$ (right). Adapted from: [The Little Book of Deep Learning]({{ site.resources_permalink }}). 
 
 
 In the transformer diagram, each attention module has three inputs (arrows), one for each of these variables. The attention mechanism at the start of the encoder and of the decoder takes keys, values and queries from its own input, and learns the context of the source and target languages, respectively. In one occurrence of the attention mechanism, however, the keys and values come from the encoder and the queries from the decoder: this module is trained for the translation at hand. 
@@ -171,7 +171,7 @@ The main rationale of the Transformer's Encoder-Decoder is that:
 The encoder is trained efficiently and learns a *context*. This raises the question: can the Encoder's context alone be used to learn complex tasks? This led to the BERT model (original paper [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google AI](https://arxiv.org/abs/1810.04805)). BERT is a stack of Transformer encoders that learns language contexts and performs interpretation tasks.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/learning-from-sequences/bert.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The BERT model, as a stack of Transformer encoders.
@@ -196,10 +196,10 @@ Output = [NotNext] the man went to the store [SEP] penguins like to jump [SEP]
 The Yes/No flag of the second task is passed as the first embedded word of the output. The layout of the input data is:
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/bert_input.png"/>
+<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/bert_input.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Input of the BERT model. Position embeddings are similar to those of the transformer described above. Segment embeddings flag each word as part of the first or second sentence. Token embeddings are the text embeddings of the input data. The input to the model is the sum of these three embeddings. Source: <a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018, Google, arXiv)</a>
+Input of the BERT model. Position embeddings are similar to those of the transformer described above. Segment embeddings flag each word as part of the first or second sentence. Token embeddings are the text embeddings of the input data. The input to the model is the sum of these three embeddings. Adapted from: <a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018, Google, arXiv)</a>
 
 The authors trained this model on BooksCorpus (800M words) and English Wikipedia (2,500M words), with 12 (BERT-base) or 24 (BERT-large) layers and batches of 256 sequences. Sequences have 128 tokens for 90% of the training steps and 512 tokens for the remaining 10%.
 
@@ -220,10 +220,10 @@ In the original paper, the authors successfully applied this model to four famil
 The inputs and outputs of the fine-tuning for these tasks are illustrated below: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.png"/>
+<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Input and output of the fine-tuning phase of a BERT network, applied to four different interpretation tasks.
-Source: <a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018, Google, arXiv)</a>
+Adapted from: <a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018, Google, arXiv)</a>
 
 Finally, the information encoded by BERT is useful but insufficient on its own for a translation task. However, "BERT pre-training allows for a better initialization point for [a] Neural Machine Translation model" (source: [Clinchant et al., On the use of BERT for Neural Machine Translation, arXiv](https://arxiv.org/abs/1909.12744)).
