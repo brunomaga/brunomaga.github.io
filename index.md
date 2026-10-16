@@ -42,10 +42,10 @@ In this space, I write about my projects and topics related to my fields of inte
 {% for post in site.posts %}
 {%- assign year = post.date | date: "%Y" -%}
 <tr style="border: none;">
-<td class="align-top" style="border:none; width: 3.0em; padding-top: 0.4em; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">
+<td class="align-top" style="border:none; width: 1%; padding-top: 0.4em; padding-right: 0; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">
 {% if year != previous_year %}{{ year }}{% endif %}
 </td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; padding-left: 0.5em; line-height: 1.3; vertical-align: top;">
 <a href="{{ post.url }}">{{ post.categories.first }}: {{ post.title }}</a>
 </td>
 </tr>
