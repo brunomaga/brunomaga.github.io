@@ -78,7 +78,7 @@ The three reduction models in the switch, for $$W=4$$ ranks: put-reduce, get-red
 The MoE layer is split into eight stages, each running on one class of unit: *matrix units* for matrix multiplications, *vector units* for all other computation, and the INC switch for the two collectives. The stages are `route`, `dispatch`, `regroup` (sort tokens by expert), the two matrix multiplications of the experts with a `SwiGLU` in between, `reduce` (weight and sum the expert outputs locally) and `combine`.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/moe_fusion_stages.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/moe_fusion_stages.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The eight stages of the fused MoE layer, colored by the class of unit that runs them. The blue frame holds the experts.
@@ -86,7 +86,7 @@ The eight stages of the fused MoE layer, colored by the class of unit that runs 
 A regular implementation launches one kernel per stage, and every stage stores its output to global memory (GM) and the next one loads it back. It also needs two extra stages: a `pack` that copies each token once per destination before the dispatch, and a `global reduce` that sums the $$W$$ partials after the combine. Fusion alone keeps the intermediate results of the experts in local (on-chip) memory, but still needs both extra stages. With fusion and INC, both extra stages disappear: the layer goes from ten kernel launches and ten round trips to global memory, to one launch and five.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/moe_fusion_data_movement.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/moe_fusion_data_movement.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Data movement for one microbatch. Each row is a stage (left box) and the tensor it stores in global memory (right box). $$\star$$ marks memory of the shared heap. **(a)** One kernel per stage. **(b)** One fused kernel, where the ranks issue the transfers. **(c)** One fused kernel, where the INC switch issues the transfers.
@@ -110,7 +110,7 @@ The kernel was evaluated on OLMoE-1B-7B (64 experts, top-$$k=8$$) under vLLM, on
 - **MegaKernel+INC**: one fused kernel, with All-to-All-Unique and All-to-All-Reduce in the switch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/moe_fusion_results.png"/>
+<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/moe_fusion_results.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Prefill time per iteration against batch size, both axes in $$\log_2$$ scale.

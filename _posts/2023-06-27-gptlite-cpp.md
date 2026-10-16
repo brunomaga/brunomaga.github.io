@@ -25,10 +25,10 @@ The other major announcement was `torch.compile`, which "makes PyTorch code run 
 3. **graph compilation** converts the kernels into low-level operations that are specific to the device.
 
 {: style="text-align:center; font-size: small;"}
-<img width="85%" height="85%" src="{{ site.assets }}/gptlite-cpp/torch_compile.jpg"/>
+<img width="85%" height="85%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-A diagram of the three steps of `torch.compile`. Source: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
+A diagram of the three steps of `torch.compile`. Adapted from: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
  
 Kernel fusion is complex, and two settings are worth mentioning. The option `mode` selects the trade-off between runtime and memory in the generated graph (from the [docs](https://pytorch.org/get-started/pytorch-2.0/#user-experience) and [API](https://pytorch.org/docs/stable/generated/torch.compile.html#torch.compile)):
 - `default` optimizes for large models, with low compile time and no extra memory overhead. It is "a good balance between performance and overhead";
@@ -520,9 +520,9 @@ Both the Python and C++ implementations of Torch leak GPU memory when several mo
 The results for the GPTlite model are: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/gptlite-cpp/benchmark_gptlite.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/gptlite-cpp/benchmark_gptlite.svg"/>
 
-The results for the benchmark models are in <a href="{{ site.assets }}/gptlite-cpp/benchmark_wide.png">benchmark_wide.png</a> and <a href="{{ site.assets }}/gptlite-cpp/benchmark_deep.png">benchmark_deep.png</a>. Inference-only runs (purple bars) require much less GPU memory than runs that perform training and inference (blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training increases memory usage by a factor of 4x to 10x.  
+The results for the benchmark models are in <a href="{{ site.assets }}/gptlite-cpp/benchmark_wide.svg">benchmark_wide.svg</a> and <a href="{{ site.assets }}/gptlite-cpp/benchmark_deep.svg">benchmark_deep.svg</a>. Inference-only runs (purple bars) require much less GPU memory than runs that perform training and inference (blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training increases memory usage by a factor of 4x to 10x.  
 
 In terms of overall performance, moving from PyTorch 1.13.1 to 2.1 (blue to orange bars) increases throughput by up to 19%. Moving from PyTorch 2.1 to its C++ LibTorch equivalent (orange to green bars) gives a small throughput increase of up to 10%, explained by the Python overhead (runtime, dynamic typing, etc.). Finally, the difference in inference performance between the pure C++ implementation and the TorchScript implementation (train in Python, inference in C++) is negligible. This shows that TorchScript (de)serializes the model efficiently.
 

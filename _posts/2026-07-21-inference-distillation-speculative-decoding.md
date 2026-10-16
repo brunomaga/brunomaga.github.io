@@ -17,15 +17,18 @@ As an example, consider a two-label (dog, cat) classification task. An image of 
 KD methods fall into several categories. The loss can match the soft labels of the student and the teacher, as in the example above, or intermediate representations such as feature maps. The student can be a scaled-down version of the teacher's architecture, or a different one. In **offline distillation**, the teacher is trained first and then frozen while the student learns from it. In **online distillation**, both are trained simultaneously. The teacher can be a single model or an ensemble of models.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.png"/>
+<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/)
 
 The different methods are detailed in [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525).
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kd_methods.jpg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kd_methods.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The categories of knowledge distillation methods, and the branches within each category. This section implements offline distillation using soft labels, underlined in red in the picture. Adapted from [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
+The categories of knowledge distillation methods, and the branches within each category. This section implements offline distillation using soft labels, underlined in red in the picture. Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
 
 ### Implementing offline distillation with soft labels
 
