@@ -20,16 +20,51 @@
   <!-- academicons to add missing icons to font awesome (e.g. google scholar) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
-  <!-- MathJax. tags:'all' numbers equations so \ref{...} resolves; displayOverflow:'linebreak' breaks a
-       display equation wider than the page over several lines; after typesetting, inline math wider than
-       its line is marked .math-scroll so it scrolls sideways (see the styles below) -->
+  <!-- MathJax. Display equations wider than the page break over several lines (displayOverflow), except
+       aligned equations whose left-hand side would itself break, which scroll sideways instead; inline math
+       wider than its line is marked .math-scroll so it scrolls sideways (see the styles below). Only
+       equations referenced with \ref or \eqref are numbered. -->
   <script>
     window.MathJax = {
       tex: { tags: 'all' },
       output: { displayOverflow: 'linebreak' },
       startup: {
+        ready() {
+          MathJax.startup.defaultReady();
+          /* the labels that the page references, read from its TeX source before typesetting */
+          const referenced = new Set(Array.from(document.body.textContent.matchAll(/\\(?:eq)?ref\{([^}]*)\}/g), (m) => m[1]));
+          const tags = MathJax.startup.input[0].parseOptions.tags;
+          const getTag = tags.getTag.bind(tags);
+          tags.getTag = (force) => {
+            if (tags.currentTag.tag == null && !referenced.has(tags.label)) {
+              tags.label = '';
+              return null;
+            }
+            return getTag(force);
+          };
+          const enTag = tags.enTag.bind(tags);
+          tags.enTag = (node, tag) => (tag ? enTag(node, tag) : node);
+        },
         pageReady() {
           return MathJax.startup.defaultPageReady().then(() => {
+            /* re-render with scrolling the aligned equations whose first column was broken over lines; the
+               output keeps the last line-break width, so it is reset to keep the columns whole */
+            const doc = MathJax.startup.document;
+            const output = doc.outputJax;
+            const splitLeft = (root) => Array.from(root.querySelectorAll('mjx-mtr, mjx-mlabeledtr')).some((row) => {
+              const cells = Array.from(row.children).filter((cell) => cell.tagName === 'MJX-MTD');
+              return cells.length > 1 && cells[0].querySelectorAll('mjx-linebox').length > 1;
+            });
+            const STATE = MathJax._.core.MathItem.STATE;
+            output.options.displayOverflow = 'scroll';
+            for (const item of Array.from(doc.math)) {
+              if (item.display && splitLeft(item.typesetRoot)) {
+                output.containerWidth = 1e6;
+                item.rerender(doc, STATE.CONVERT);
+              }
+            }
+            output.options.displayOverflow = 'linebreak';
+
             const range = document.createRange();
             const mark = () => document.querySelectorAll('mjx-container:not([display])').forEach((m) => {
               m.classList.remove('math-scroll');

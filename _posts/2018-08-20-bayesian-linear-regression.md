@@ -76,10 +76,10 @@ $$
 I.e. we turn a log of products into a sum of logs. In the linear regression model, the likelihood is Gaussian, due to the Gaussian noise term $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2_{\varepsilon})$$. Therefore:
 
 $$
-\begin{align*}
+\begin{aligned}
 log \,\,  p(y_n \mid w, x_n, \sigma^2) & = \log \left( \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(y_n - x_n^Tw)^2}{2 \sigma^2} \right) \right)\\
 & =  - \frac{1}{2 \sigma^2} (y_n - x^T_n w)^2 + const \\
-\end{align*}
+\end{aligned}
 \label{eq_lr_likelihood}
 $$ 
 
