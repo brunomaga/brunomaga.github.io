@@ -1,0 +1,17 @@
+// Images, headings and the footer
+
+img { height: auto; }
+
+// heading rhythm (h1 is the page title)
+h2 { margin-top: 40px; }
+h3 { margin-top: 20px; }
+h4 { margin-top: 10px; }
+h5 { margin-top: 5px; }
+
+// the footer: the back link, on every page but the home page, and space below
+.page-footer { padding-bottom: 30px; }
+
+.page-footer-back {
+  padding-top: 10px;
+  padding-bottom: 10px;
+}

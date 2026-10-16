@@ -1,20 +1,15 @@
 <!-- adapted from https://github.com/jekyll/minima/blob/2.5-stable/_includes/head.html -->
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   {%- seo -%}
   <link rel="stylesheet" href="{{ "/assets/main.css" | relative_url }}">
   {%- feed_meta -%}
 
-  {%- if jekyll.environment == 'production' and site.google_analytics -%}
-    {%- include google-analytics.html -%}
-  {%- endif -%}
-
   <link href="{{ "/favicon.svg" | relative_url }}" rel="icon" type="image/svg+xml">
 
-  <!-- font awesome for social media icons -->
+  <!-- font awesome icons -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.7.2/css/all.css">
 
   <!-- academicons to add missing icons to font awesome (e.g. google scholar) -->
@@ -22,7 +17,7 @@
 
   <!-- MathJax. Display equations wider than the page break over several lines (displayOverflow), except
        aligned equations whose left-hand side would itself break, which scroll sideways instead; inline math
-       wider than its line is marked .math-scroll so it scrolls sideways (see the styles below). Only
+       wider than its line is marked .math-scroll so it scrolls sideways (see _sass/site/_math.scss). Only
        equations referenced with \ref or \eqref are numbered. -->
   <script>
     window.MathJax = {
@@ -86,235 +81,4 @@
     };
   </script>
   <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
-
-  <style>
-    /* ===== Images ===== */
-
-    img { height: auto; }
-
-    /* ===== Heading rhythm (h1 is the page title) ===== */
-
-    h2 { margin-top: 40px; }
-    h3 { margin-top: 20px; }
-    h4 { margin-top: 10px; }
-    h5 { margin-top: 5px; }
-
-    /* ===== Callout panels ===== */
-
-    .info-panel,
-    .info-warning,
-    .info-danger {
-      max-width: 720px;
-      border-radius: 10px;
-      padding: 12px;
-      box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      margin-bottom: 20px;
-      font-size: 0.95rem;
-    }
-
-    .info-panel   { background-color: #e9f0f6; }
-    .info-warning { background-color: #fff3cd; }
-    .info-danger  { background-color: #f8d7da; }
-
-    .info-panel h2, .info-panel p,
-    .info-warning h2, .info-warning p,
-    .info-danger h2, .info-danger p { margin-bottom: 0; }
-
-    .info-panel h2,
-    .info-warning h2,
-    .info-danger h2 { margin-top: 0; }
-
-    /* ===== Labels (back link, post date, category and tags; years and resource types on the home page) ===== */
-
-    .post-labels {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-top: 0.6em;
-    }
-
-    .post-label {
-      padding: 6px 9px 4px;  /* uppercase text has no descenders: more top padding centres it */
-      border: 1px solid #e4e4e4;
-      border-radius: 3px;
-      background-color: #fff;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      font-size: 0.7rem;
-      line-height: 1;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: #777;
-      white-space: nowrap;
-    }
-
-    /* where supported, trim the line box to the capitals and centre them exactly */
-    @supports (text-box: trim-both cap alphabetic) {
-      .post-label {
-        padding: 7px 9px;
-        text-box: trim-both cap alphabetic;
-      }
-    }
-
-    /* left to right: back link in the link colour (below), date in charcoal, category in mid grey,
-       tags in light grey (default above); the category's border and text are halfway in lightness
-       between those of the date and the tags */
-    .post-label--date     { border-color: #333;    color: #333; }
-    .post-label--category,
-    .label-table .post-label { border-color: #868686; color: #555; }  /* home-page years and resource types too */
-
-    /* back link, before the post date and in the footer: a label in the link colour that fills on hover */
-    a.post-label--back,
-    a.post-label--back:visited {
-      display: inline-block;
-      border-color: #2a7ae2;
-      color: #2a7ae2;
-      text-decoration: none;
-      transition: background-color 0.15s, color 0.15s;
-    }
-
-    a.post-label--back:hover,
-    a.post-label--back:focus-visible {
-      background-color: #2a7ae2;
-      color: #fff;
-      text-decoration: none;
-    }
-
-    a.post-label--back .fa-arrow-left { font-size: 0.9em; }  /* as tall as the capitals */
-
-    /* the label tables (blog posts and resources on the home page, and the publications): no borders,
-       and rows spaced like a list */
-    .label-table {
-      width: 100%;
-      border: none;
-      border-collapse: collapse;
-    }
-
-    .label-table tr,
-    .label-table td { border: none; }
-
-    .label-table td {
-      padding-top: 0.4em;
-      padding-bottom: 0.4em;
-      line-height: 1.3;
-      vertical-align: top;
-    }
-
-    /* their years and resource types: labels of one width in all tables, so their first columns match,
-       with the same space on both sides of them, and less vertical padding than on post pages so the
-       rows keep their height */
-    .label-table td:first-child {
-      width: 1%;  /* shrinks the column to its widest label */
-      padding-left: 0.5em;
-      padding-right: 0.5em;
-    }
-
-    .label-table td + td { padding-left: 0; }
-
-    .label-table .post-label {
-      display: inline-block;
-      box-sizing: border-box;
-      width: 100%;
-      min-width: calc(6 * (1ch + 0.05em) + 21px);  /* the widest resource type, six letters (COURSE), plus
-                                                     padding, border and 1px to spare, so the years get the
-                                                     same width */
-      padding-top: 3px;
-      padding-bottom: 1px;
-      text-align: center;
-      vertical-align: middle;
-    }
-
-    @supports (text-box: trim-both cap alphabetic) {
-      .label-table .post-label {
-        padding-top: 4px;
-        padding-bottom: 4px;
-      }
-    }
-
-    /* on phones the first column gives its width to the text: each label sits on its own line above the
-       first row of its group, and the empty first cells of the other rows are hidden */
-    @media screen and (max-width: 600px) {
-      .label-table,
-      .label-table thead,
-      .label-table tbody,
-      .label-table tr,
-      .label-table td { display: block; }
-
-      .label-table td:first-child {
-        width: auto;
-        padding-bottom: 0;
-      }
-
-      .label-table td:first-child:empty { display: none; }
-
-      .label-table td + td { padding-left: 0.5em; }
-
-      .label-table .post-label { width: auto; }
-    }
-
-    /* ===== Narrow screens: equations, tables and inline code stay within the page ===== */
-
-    /* a display equation that MathJax cannot break over lines (see displayOverflow above) scrolls sideways */
-    mjx-container[overflow="linebreak"][display] {
-      overflow-x: auto;
-      overflow-y: hidden;
-      min-width: initial !important;  /* MathJax gives numbered equations a min-width as wide as the equation */
-    }
-
-    /* inline math wider than its line (marked by the MathJax script above) scrolls sideways */
-    mjx-container.math-scroll {
-      display: inline-block;
-      max-width: 100%;
-      overflow-x: auto;
-      overflow-y: hidden;
-      vertical-align: middle;
-    }
-
-    /* post tables, wrapped by _layouts/post.html, scroll sideways when wider than the page */
-    .table-scroll {
-      overflow-x: auto;
-      overflow-y: hidden;
-    }
-
-    /* long inline code, such as a dotted module path, wraps instead of running off the page */
-    :not(pre) > code { overflow-wrap: anywhere; }
-
-    /* ===== Responsive table =====
-       https://css-tricks.com/accessible-simple-responsive-tables/ */
-
-    .Rtable {
-      display: flex;
-      flex-wrap: wrap;
-      margin: 0.7em 0 0;
-      padding: 0;
-    }
-
-    .Rtable-cell {
-      box-sizing: border-box;
-      flex-grow: 1;
-      width: 100%;
-      padding: 0.4em 1.2em;
-      overflow: hidden;
-      list-style: none;
-    }
-
-    .Rtable-cell > h1,
-    .Rtable-cell > h2,
-    .Rtable-cell > h3,
-    .Rtable-cell > h4,
-    .Rtable-cell > h5,
-    .Rtable-cell > h6 { margin: 0; }
-
-    .Rtable--2cols > .Rtable-cell { width: 50%; }
-    .Rtable--3cols > .Rtable-cell { width: 33.33%; }
-    .Rtable--4cols > .Rtable-cell { width: 25%; }
-    .Rtable--5cols > .Rtable-cell { width: 20%; }
-    .Rtable--6cols > .Rtable-cell { width: 16.66%; }
-
-    @media all and (max-width: 500px) {
-      .Rtable--collapse { display: block; }
-      .Rtable--collapse > .Rtable-cell { width: 100% !important; }
-      .Rtable--collapse > .Rtable-cell--foot { margin-bottom: 1em; }
-    }
-  </style>
 </head>
