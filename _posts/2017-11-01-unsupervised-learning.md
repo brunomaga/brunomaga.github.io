@@ -202,10 +202,10 @@ This type of partitioning underlies problems such as the [Voronoi diagram](https
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="{{ site.assets }}/unsupervised-learning/voronoi.png">
+<img width="30%" height="30%" src="{{ site.assets }}/unsupervised-learning/voronoi.svg">
 
 {: style="text-align:center; font-size: small;"}
-source: wikipedia
+adapted from: wikipedia
 
 
 These methods apply to e.g. image compression, where every RGB pixel in the range $$[0-255, 0-255, 0-255]$$ is reduced to the closest color of a smaller set. The (squared) reconstruction error is the sum of the errors of all data points over all clusters $$C_k$$:
@@ -235,10 +235,10 @@ which is the definition of the center of mass of cluster $$i$$. The error decrea
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/unsupervised-learning/k-means.png">
+<img width="70%" height="70%" src="{{ site.assets }}/unsupervised-learning/k-means.svg">
 
 {: style="text-align:center; font-size: small;"}
-source: wikipedia
+adapted from: wikipedia
 
 
 In a 2D space, a run with 3 clusters looks as follows:
@@ -329,10 +329,10 @@ A self-organizing map (SOM) is an unsupervised artificial neural network, typica
 
 {: style="text-align:center; font-size: small;"}
 <img width="40%" height="40%" src="{{ site.assets }}/unsupervised-learning/kohonen.png">
-<img width="43%" height="43%" src="{{ site.assets }}/unsupervised-learning/kohonen2.png">
+<img width="43%" height="43%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
 
 {: style="text-align:center; font-size: small;"}
-source: Unsupervised and Reinforcement Learning lecture notes from W. Gerstner at EPFL
+source (left) and adapted from (right): Unsupervised and Reinforcement Learning lecture notes from W. Gerstner at EPFL
 
 
 The algorithm is:

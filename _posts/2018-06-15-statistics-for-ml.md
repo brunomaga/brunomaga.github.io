@@ -344,7 +344,7 @@ The KL divergence is not a metric, because it is not symmetric: $$  KL ( q \| p 
 The **quantile** is the inverse of the CDF. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$\alpha \in [0,1]$$. The **p-value** (or observed significance level) is the smallest value of $$α$$ for which the null hypothesis would be rejected at level $$α$$. The **confidence interval** refers to the probability that a population parameter falls between a set of values for a certain proportion of times. As an example, for a $$95\%$$ **confidence level**:
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.png"/>
+<img width="30%" height="30%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
 
 ---
 
@@ -444,10 +444,10 @@ p(A,B,C,D) = p(A)\cdot p(B \mid A) \cdot p( C \mid A) \cdot p ( D \mid A,C )
 $$
 
 {: style="text-align:center; font-size: small;"}
-<img width="20%" height="20%" src="{{ site.assets }}/statistics-for-ml/directed_graph.png"/>
+<img width="20%" height="20%" src="{{ site.assets }}/statistics-for-ml/directed_graph.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Source: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Graphical_model">Graphical model</a>
+Adapted from: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Graphical_model">Graphical model</a>
 
 ---
 
@@ -469,10 +469,10 @@ $$
 where $$K$$ is the kernel, a non-negative function, and $$h \gt 0$$ is the smoothing parameter (*bandwidth*). $$h$$ controls the bias-variance trade-off: a large $$h$$ yields a flat estimator, and a small $$h$$ a wiggly one. An example of $$K$$ is the standard normal pdf.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/statistics-for-ml/kde.png"/>
+<img width="60%" height="60%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Source: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel density estimation</a>
+Adapted from: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel density estimation</a>
 
 The following table summarizes the method for each use case:
 

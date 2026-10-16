@@ -82,7 +82,7 @@ $$
 where $$ W \in R^{D \times K} $$ and $$ Z \in R^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ contains the indices of the observed ratings of the input matrix $$X$$.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.png">
+<img width="60%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
 
 This cost function is neither convex nor [identifiable](https://en.wikipedia.org/wiki/Identifiability). $$K$$ is the number of latent features (e.g. gender, age group, citizenship, etc.). A large $$K$$ facilitates overfitting. A regularizer can be added to the function:
 
