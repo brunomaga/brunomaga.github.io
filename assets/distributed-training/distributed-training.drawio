@@ -256,7 +256,7 @@
             <mxPoint x="0" y="0.0027" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_data_parallelism-wy6qLgDCr9qcwiBPnr2v-70" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=6.9565217391304355;endSize=7.147826086956523;endWidth=4.385633270321361;strokeWidth=2;" parent="workflow_data_parallelism-figure" edge="1">
+        <mxCell id="workflow_data_parallelism-wy6qLgDCr9qcwiBPnr2v-70" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=6.9565217391304355;endSize=7.147826086956523;endWidth=4.385633270321361;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_data_parallelism-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="199" y="2.1248" as="sourcePoint" />
             <mxPoint x="198" y="390.0244" as="targetPoint" />
@@ -268,7 +268,7 @@
             <mxPoint x="319" y="2.1183" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_data_parallelism-wy6qLgDCr9qcwiBPnr2v-75" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=6.9565217391304355;endSize=7.147826086956523;endWidth=4.385633270321361;strokeWidth=2;" parent="workflow_data_parallelism-figure" edge="1">
+        <mxCell id="workflow_data_parallelism-wy6qLgDCr9qcwiBPnr2v-75" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=6.9565217391304355;endSize=7.147826086956523;endWidth=4.385633270321361;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_data_parallelism-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="513.35" y="2.1204" as="sourcePoint" />
             <mxPoint x="512.35" y="390.02" as="targetPoint" />
@@ -280,7 +280,7 @@
             <mxPoint x="647" y="0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_data_parallelism-wy6qLgDCr9qcwiBPnr2v-79" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=6.9565217391304355;endSize=7.147826086956523;endWidth=4.385633270321361;strokeWidth=2;" parent="workflow_data_parallelism-figure" edge="1">
+        <mxCell id="workflow_data_parallelism-wy6qLgDCr9qcwiBPnr2v-79" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=6.9565217391304355;endSize=7.147826086956523;endWidth=4.385633270321361;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_data_parallelism-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="847" y="0.0021" as="sourcePoint" />
             <mxPoint x="846" y="387.9017" as="targetPoint" />
@@ -292,7 +292,7 @@
             <mxPoint x="960" y="2.1162" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_data_parallelism-wy6qLgDCr9qcwiBPnr2v-83" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=6.9565217391304355;endSize=7.147826086956523;endWidth=4.385633270321361;strokeWidth=2;" parent="workflow_data_parallelism-figure" edge="1">
+        <mxCell id="workflow_data_parallelism-wy6qLgDCr9qcwiBPnr2v-83" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=6.9565217391304355;endSize=7.147826086956523;endWidth=4.385633270321361;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_data_parallelism-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1157.35" y="2.1183" as="sourcePoint" />
             <mxPoint x="1156.35" y="390.0179" as="targetPoint" />
@@ -452,19 +452,19 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-122" value="input 2" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontStyle=1;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="729.67" y="397.02" width="77.51" height="25.48" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-142" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-142" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="32.66" y="378.9" as="sourcePoint" />
             <mxPoint x="55.18" y="330.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-144" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-144" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="36.66" y="378.13" as="sourcePoint" />
             <mxPoint x="14.18" y="330.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-151" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-151" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="28.01" y="79.17" as="sourcePoint" />
             <mxPoint x="28.01" y="35.32" as="targetPoint" />
@@ -473,13 +473,13 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-152" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 3&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="0" y="72.56" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-126" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-126" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="34.66" y="380.81" as="sourcePoint" />
             <mxPoint x="34.66" y="326.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-162" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-162" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="28.01" y="179.17" as="sourcePoint" />
             <mxPoint x="28.01" y="135.32" as="targetPoint" />
@@ -488,7 +488,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-163" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 2&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="0" y="172.56" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-164" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-164" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="28.01" y="279.17" as="sourcePoint" />
             <mxPoint x="28.01" y="235.32" as="targetPoint" />
@@ -497,7 +497,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-165" value="&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;receive&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 1&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="0" y="272.56" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-173" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-173" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="237.34" y="332.79" as="sourcePoint" />
             <mxPoint x="237.18" y="375.38" as="targetPoint" />
@@ -506,13 +506,13 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-174" value="&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;broadcast params 0,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;gather&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;gradients&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;1+2+3&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="170.35" y="367.56" width="130.08" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-175" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-175" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="260.18" y="341.38" as="sourcePoint" />
             <mxPoint x="242.18" y="374.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-176" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-176" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="217.18" y="341.38" as="sourcePoint" />
             <mxPoint x="230.18" y="375.38" as="targetPoint" />
@@ -527,7 +527,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-249" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 1,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 0&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="182.92" y="274.56" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-252" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-252" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="567.34" y="226.79" as="sourcePoint" />
             <mxPoint x="567.18" y="269.38" as="targetPoint" />
@@ -536,13 +536,13 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-253" value="&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;broadcast params 1,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;gather&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;gradients 0&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;+2+3&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="500.35" y="262.56" width="130.08" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-254" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-254" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="590.18" y="236.38" as="sourcePoint" />
             <mxPoint x="572.18" y="269.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-255" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-255" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="547.18" y="236.38" as="sourcePoint" />
             <mxPoint x="560.18" y="270.38" as="targetPoint" />
@@ -551,7 +551,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-256" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 3,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 1&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="508.92" y="80.56" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-257" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-257" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="559.18" y="40.38" as="sourcePoint" />
             <mxPoint x="559.16" y="86.26" as="targetPoint" />
@@ -560,7 +560,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-258" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 2,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 1&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="508.92" y="176.74" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-259" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-259" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="559.18" y="140.38" as="sourcePoint" />
             <mxPoint x="559.16" y="182.44" as="targetPoint" />
@@ -569,25 +569,25 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-260" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 0,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 1&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="508.92" y="367.56" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-261" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-261" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="559.18" y="330.38" as="sourcePoint" />
             <mxPoint x="559.16" y="373.26" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-262" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-262" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="343.66" y="285.9" as="sourcePoint" />
             <mxPoint x="366.18" y="237.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-263" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-263" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="347.66" y="285.13" as="sourcePoint" />
             <mxPoint x="325.18" y="237.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-264" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-264" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="345.01" y="79.17" as="sourcePoint" />
             <mxPoint x="345.01" y="35.32" as="targetPoint" />
@@ -596,13 +596,13 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-265" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 3&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="317" y="72.56" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-266" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-266" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="345.66" y="287.81" as="sourcePoint" />
             <mxPoint x="345.66" y="233.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-268" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-268" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="345.01" y="179.17" as="sourcePoint" />
             <mxPoint x="345.01" y="135.32" as="targetPoint" />
@@ -611,7 +611,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-269" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 2&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="317" y="172.56" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-270" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;strokeColor=#d6b656;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-270" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#fff2cc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="348.18" y="376.23" as="sourcePoint" />
             <mxPoint x="348.18" y="332.38" as="targetPoint" />
@@ -620,25 +620,25 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-271" value="&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;receive&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 0&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="320.17" y="369.62" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-275" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-275" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="230.18" y="41.38" as="sourcePoint" />
             <mxPoint x="230.16" y="87.26" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-276" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-276" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="230.18" y="141.38" as="sourcePoint" />
             <mxPoint x="230.16" y="183.44" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-277" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;strokeColor=#6c8ebf;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-277" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#dae8fc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="229.18" y="237.38" as="sourcePoint" />
             <mxPoint x="229.16" y="279.44" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-280" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-280" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="885.34" y="136.79" as="sourcePoint" />
             <mxPoint x="885.18" y="179.38" as="targetPoint" />
@@ -647,13 +647,13 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-281" value="&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;broadcast params 2,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;gather&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;gradients 0&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;+1+3&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="830.35" y="172.56" width="130.08" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-282" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-282" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="908.18" y="146.38" as="sourcePoint" />
             <mxPoint x="890.18" y="179.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-283" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-283" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="865.18" y="146.38" as="sourcePoint" />
             <mxPoint x="878.18" y="180.38" as="targetPoint" />
@@ -662,7 +662,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-284" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 3,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 2&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="826.92" y="80.56" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-285" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-285" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="877.18" y="40.38" as="sourcePoint" />
             <mxPoint x="877.16" y="86.26" as="targetPoint" />
@@ -671,7 +671,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-286" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 1,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 2&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="826.92" y="276.74" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-287" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-287" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="877.18" y="240.38" as="sourcePoint" />
             <mxPoint x="877.16" y="282.44" as="targetPoint" />
@@ -680,25 +680,25 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-288" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 0,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 2&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="826.92" y="367.56" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-289" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-289" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="877.18" y="330.38" as="sourcePoint" />
             <mxPoint x="877.16" y="373.26" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-290" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-290" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="671.66" y="190.9" as="sourcePoint" />
             <mxPoint x="694.18" y="142.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-291" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-291" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="675.66" y="190.13" as="sourcePoint" />
             <mxPoint x="653.18" y="142.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-292" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-292" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="673.01" y="79.17" as="sourcePoint" />
             <mxPoint x="673.01" y="35.32" as="targetPoint" />
@@ -707,13 +707,13 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-293" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 3&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="645" y="72.56" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-294" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-294" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="673.66" y="192.81" as="sourcePoint" />
             <mxPoint x="673.66" y="138.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-296" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-296" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="673.01" y="279.17" as="sourcePoint" />
             <mxPoint x="673.01" y="235.32" as="targetPoint" />
@@ -722,7 +722,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-297" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 1&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="645" y="272.56" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-298" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;strokeColor=#b85450;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-298" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#f8cecc;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="676.18" y="376.23" as="sourcePoint" />
             <mxPoint x="676.18" y="332.38" as="targetPoint" />
@@ -731,7 +731,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-299" value="&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;receive&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 0&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="648.17" y="369.62" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-301" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-301" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1205.34" y="46.79" as="sourcePoint" />
             <mxPoint x="1205.18" y="89.38" as="targetPoint" />
@@ -740,13 +740,13 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-302" value="&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;broadcast params 3,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;gather&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;gradients 0&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;+1+2&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="1138.35" y="82.56" width="130.08" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-303" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-303" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1228.18" y="56.38" as="sourcePoint" />
             <mxPoint x="1210.18" y="89.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-304" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-304" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1185.18" y="56.38" as="sourcePoint" />
             <mxPoint x="1198.18" y="90.38" as="targetPoint" />
@@ -755,7 +755,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-305" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 1,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 3&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="1148.72" y="268.74" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-306" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-306" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1198.98" y="228.56" as="sourcePoint" />
             <mxPoint x="1198.96" y="274.44" as="targetPoint" />
@@ -764,7 +764,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-307" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 2,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 3&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="1146.92" y="176.74" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-308" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-308" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1197.18" y="140.38" as="sourcePoint" />
             <mxPoint x="1197.16" y="182.44" as="targetPoint" />
@@ -773,25 +773,25 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-309" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&amp;nbsp;&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;params 0,&lt;/span&gt;&lt;div&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); font-size: 12px; text-wrap: nowrap;&quot;&gt;send grads 3&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="1146.92" y="367.56" width="101.36" height="47.82" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-310" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-310" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1197.18" y="330.38" as="sourcePoint" />
             <mxPoint x="1197.16" y="373.26" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-311" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-311" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="981.66" y="95.9" as="sourcePoint" />
             <mxPoint x="1004.18" y="47.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-312" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-312" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="985.66" y="95.13" as="sourcePoint" />
             <mxPoint x="963.18" y="47.38" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-313" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-313" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="983.01" y="183.17" as="sourcePoint" />
             <mxPoint x="983.01" y="139.32" as="targetPoint" />
@@ -800,13 +800,13 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-314" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 2&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="955" y="176.56" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-315" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-315" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="983.66" y="97.81" as="sourcePoint" />
             <mxPoint x="983.66" y="43.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-317" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-317" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="983.01" y="279.17" as="sourcePoint" />
             <mxPoint x="983.01" y="235.32" as="targetPoint" />
@@ -815,7 +815,7 @@
         <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-318" value="&lt;span style=&quot;font-size: 12px; text-wrap: nowrap; background-color: rgb(255, 255, 255);&quot;&gt;receive&lt;/span&gt;&lt;br&gt;&lt;div&gt;&lt;span style=&quot;font-size: 12px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; background-color: rgb(255, 255, 255); text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; float: none; display: inline !important;&quot;&gt;params 1&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;align=center;" parent="workflow_sharding-figure" vertex="1">
           <mxGeometry x="955" y="272.56" width="56.02" height="34.8" as="geometry" />
         </mxCell>
-        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-319" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeWidth=2;" parent="workflow_sharding-figure" edge="1">
+        <mxCell id="workflow_sharding-wy6qLgDCr9qcwiBPnr2v-319" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;fillColor=#d5e8d4;width=4.63768115942029;endSize=3.2376811594202897;endWidth=7.061541692921655;strokeColor=#000000;strokeWidth=1.6;" parent="workflow_sharding-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="986.18" y="376.23" as="sourcePoint" />
             <mxPoint x="986.18" y="332.38" as="targetPoint" />
@@ -10094,7 +10094,7 @@
         <mxCell id="ulysses_sequence_parallelism-GqbEpFNVcH-FoVS1KwiD-190" value="E" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;fontStyle=1" parent="ulysses_sequence_parallelism-GqbEpFNVcH-FoVS1KwiD-192" vertex="1">
           <mxGeometry x="101" y="5" width="20" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ulysses_sequence_parallelism-GqbEpFNVcH-FoVS1KwiD-239" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=21.58790170132325;endSize=10.104347826086956;width=32.173913043478265;fillColor=#f5f5f5;strokeColor=#666666;" parent="ulysses_sequence_parallelism-GqbEpFNVcH-FoVS1KwiD-192" edge="1">
+        <mxCell id="ulysses_sequence_parallelism-GqbEpFNVcH-FoVS1KwiD-239" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=21.58790170132325;endSize=10.104347826086956;width=32.173913043478265;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" parent="ulysses_sequence_parallelism-GqbEpFNVcH-FoVS1KwiD-192" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="-43" y="89.13" as="sourcePoint" />
             <mxPoint x="27" y="90.5" as="targetPoint" />
@@ -10234,7 +10234,7 @@
         <mxCell id="ulysses_sequence_parallelism-GqbEpFNVcH-FoVS1KwiD-235" value="&lt;div&gt;Attention heads&amp;nbsp;can be computed independently&lt;/div&gt;&lt;div&gt;Local attention shape: B x H/P x S x E&lt;br&gt;&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="ulysses_sequence_parallelism-figure" vertex="1">
           <mxGeometry x="287" y="196.5" width="267" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ulysses_sequence_parallelism-GqbEpFNVcH-FoVS1KwiD-242" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=21.58790170132325;endSize=10.104347826086956;width=32.173913043478265;fillColor=#f5f5f5;strokeColor=#666666;" parent="ulysses_sequence_parallelism-figure" edge="1">
+        <mxCell id="ulysses_sequence_parallelism-GqbEpFNVcH-FoVS1KwiD-242" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=21.58790170132325;endSize=10.104347826086956;width=32.173913043478265;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" parent="ulysses_sequence_parallelism-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="522" y="89.81" as="sourcePoint" />
             <mxPoint x="592" y="91.18" as="targetPoint" />
@@ -10257,7 +10257,7 @@
         <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-380" value="" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="448" y="84" width="90" height="47" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-287" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=26;endSize=12;width=48;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;" parent="ring_attention-figure" edge="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-287" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=26;endSize=12;width=48;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.6;" parent="ring_attention-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="218" y="180" as="sourcePoint" />
             <mxPoint x="317" y="180" as="targetPoint" />
@@ -10475,16 +10475,16 @@
         <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-402" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;values&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="495" y="250" width="30" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-405" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="ring_attention-figure" vertex="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-405" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="395.5" y="101" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-409" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.58;dx=16.47;notch=0;arrowHead=17.6;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=-90;" parent="ring_attention-figure" vertex="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-409" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.58;dx=16.47;notch=0;arrowHead=17.6;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=-90;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="394" y="211" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-410" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=90;" parent="ring_attention-figure" vertex="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-410" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=90;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="546" y="104" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-411" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=-180;" parent="ring_attention-figure" vertex="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-411" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=-180;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="546" y="213" width="45" height="50" as="geometry" />
         </mxCell>
         <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-432" value="&lt;div&gt;&lt;br/&gt;&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
@@ -10571,19 +10571,19 @@
         <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-459" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;values&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="936" y="250" width="30" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-460" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" parent="ring_attention-figure" vertex="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-460" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="836.5" y="101" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-461" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.58;dx=16.47;notch=0;arrowHead=17.6;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=-90;" parent="ring_attention-figure" vertex="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-461" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.58;dx=16.47;notch=0;arrowHead=17.6;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=-90;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="835" y="211" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-462" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=90;" parent="ring_attention-figure" vertex="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-462" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=90;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="987" y="104" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-463" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=-180;" parent="ring_attention-figure" vertex="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-463" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=-180;strokeColor=#000000;strokeWidth=0.8;" parent="ring_attention-figure" vertex="1">
           <mxGeometry x="987" y="213" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-509" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=26;endSize=12;width=48;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;" parent="ring_attention-figure" edge="1">
+        <mxCell id="ring_attention-GqbEpFNVcH-FoVS1KwiD-509" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=26;endSize=12;width=48;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.6;" parent="ring_attention-figure" edge="1">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="680" y="180" as="sourcePoint" />
             <mxPoint x="748" y="181" as="targetPoint" />
@@ -10718,7 +10718,7 @@
         <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-104" value="&lt;div style=&quot;forced-color-adjust: none; font-family: Helvetica; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;isend/&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;forced-color-adjust: none; font-family: Helvetica; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial;&quot;&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;irecv&lt;/span&gt;&lt;br&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;fontColor=default;labelBackgroundColor=none;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="686" y="158.5" width="60" height="22.5" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-105" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=28;endSize=11.194736842105263;width=50;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;" edge="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-105" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=28;endSize=11.194736842105263;width=50;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="ring_attention-figure">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="935" y="342" as="sourcePoint" />
             <mxPoint x="935" y="402" as="targetPoint" />
@@ -10811,19 +10811,19 @@
         <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-139" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;values&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="937.5" y="629" width="30" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-140" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-140" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="838" y="480" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-141" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.58;dx=16.47;notch=0;arrowHead=17.6;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=-90;" vertex="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-141" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.58;dx=16.47;notch=0;arrowHead=17.6;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=-90;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="836.5" y="590" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-142" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=90;" vertex="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-142" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=90;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="988.5" y="483" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-143" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=-180;" vertex="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-143" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=-180;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="988.5" y="592" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-144" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=26;endSize=12;width=48;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;" edge="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-144" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=26;endSize=12;width=48;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="ring_attention-figure">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="752" y="565" as="sourcePoint" />
             <mxPoint x="681" y="565" as="targetPoint" />
@@ -10916,19 +10916,19 @@
         <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-173" value="&lt;div style=&quot;text-align: center;&quot;&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;values&lt;/span&gt;&lt;/div&gt;" style="text;whiteSpace=wrap;html=1;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="500" y="631" width="30" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-174" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;" vertex="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-174" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="400.5" y="482" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-175" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.58;dx=16.47;notch=0;arrowHead=17.6;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=-90;" vertex="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-175" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.58;dx=16.47;notch=0;arrowHead=17.6;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=-90;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="399" y="592" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-176" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=90;" vertex="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-176" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=90;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="551" y="485" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-177" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;rotation=-180;" vertex="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-177" value="" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.bendArrow;dy=3.49;dx=18.06;notch=0;arrowHead=15.59;rounded=1;fillColor=#f5f5f5;fontColor=#333333;rotation=-180;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ring_attention-figure">
           <mxGeometry x="551" y="594" width="45" height="50" as="geometry" />
         </mxCell>
-        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-179" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=26;endSize=12;width=48;fillColor=#f5f5f5;strokeColor=#666666;strokeWidth=2;" edge="1" parent="ring_attention-figure">
+        <mxCell id="ring_attention-y4HOhwScAJo7vnwQhUdL-179" value="" style="shape=flexArrow;endArrow=classic;html=1;rounded=0;endWidth=26;endSize=12;width=48;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="ring_attention-figure">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="309" y="565" as="sourcePoint" />
             <mxPoint x="213" y="565" as="targetPoint" />
@@ -11560,10 +11560,10 @@
         <mxCell id="sequence_and_data_parallelism-KzxnbteXfyFtNd1PhaOD-267" value="H" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontStyle=1" parent="sequence_and_data_parallelism-figure" vertex="1">
           <mxGeometry x="370" y="75" width="20" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="sequence_and_data_parallelism-Um0Cb-BG9jEUE1YHMW2H-1" value="before MHA" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.32;dx=19.14;notch=11.85;fillColor=#f5f5f5;fontColor=#333333;strokeColor=#666666;fontSize=14;" parent="sequence_and_data_parallelism-figure" vertex="1">
+        <mxCell id="sequence_and_data_parallelism-Um0Cb-BG9jEUE1YHMW2H-1" value="before MHA" style="html=1;shadow=0;dashed=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.32;dx=19.14;notch=11.85;fillColor=#f5f5f5;fontColor=#333333;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" parent="sequence_and_data_parallelism-figure" vertex="1">
           <mxGeometry x="248" y="43" width="100" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="sequence_and_data_parallelism-Um0Cb-BG9jEUE1YHMW2H-2" value="" style="html=1;shadow=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.36;dx=12.24;notch=12.85;fontSize=14;strokeColor=#666666;fillColor=#f5f5f5;fontColor=#333333;rotation=-180;" parent="sequence_and_data_parallelism-figure" vertex="1">
+        <mxCell id="sequence_and_data_parallelism-Um0Cb-BG9jEUE1YHMW2H-2" value="" style="html=1;shadow=0;align=center;verticalAlign=middle;shape=mxgraph.arrows2.arrow;dy=0.36;dx=12.24;notch=12.85;fontSize=14;fillColor=#f5f5f5;fontColor=#333333;rotation=-180;strokeColor=#000000;strokeWidth=0.8;" parent="sequence_and_data_parallelism-figure" vertex="1">
           <mxGeometry x="249" y="85" width="100" height="30" as="geometry" />
         </mxCell>
         <mxCell id="sequence_and_data_parallelism-Um0Cb-BG9jEUE1YHMW2H-3" value="&lt;span style=&quot;color: rgb(51, 51, 51); font-family: Helvetica; font-size: 14px; font-style: normal; font-variant-ligatures: normal; font-variant-caps: normal; font-weight: 400; letter-spacing: normal; orphans: 2; text-align: center; text-indent: 0px; text-transform: none; widows: 2; word-spacing: 0px; -webkit-text-stroke-width: 0px; white-space: nowrap; text-decoration-thickness: initial; text-decoration-style: initial; text-decoration-color: initial; display: inline !important; float: none;&quot;&gt;after MHA&lt;/span&gt;" style="text;whiteSpace=wrap;html=1;fillColor=none;" parent="sequence_and_data_parallelism-figure" vertex="1">
