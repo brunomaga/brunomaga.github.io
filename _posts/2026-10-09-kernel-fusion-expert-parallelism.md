@@ -23,11 +23,11 @@ The method in this post adds ranks whose only job is to run the collectives: *In
 The router produces a routing table that maps each token to its experts and to the ranks that hold them. In a regular all-to-all, a token selected by experts on $$d$$ ranks is sent $$d$$ times by its owner. The combine is the reverse all-to-all, and the owner then sums the $$W$$ partial results of each token. This puts $$W^2$$ transfers on the network per collective.
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/ep_routing_table.svg"/>
+<img width="40%" height="40%" src="{{ site.assets }}/inference/imgs/ep_routing_table.svg"/>
 <br/>
-<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/ep_all_to_all.svg"/>
+<img width="50%" height="50%" src="{{ site.assets }}/inference/imgs/ep_all_to_all.svg"/>
 <br/>
-<img width="52%" height="52%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
+<img width="48%" height="48%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 **Top:** the routing table of tokens A to C (owned by ranks $$P_0$$ to $$P_2$$) to experts $$E_0$$ to $$E_5$$, with top-$$k=4$$. **Middle:** the regular all-to-all dispatch and combine, through a switch that only relays packets. **Bottom:** the same exchange through the INC switch, with $$W$$ transfers in and $$W$$ out. $$A_0$$ is the sum of the expert outputs of rank 0 for token A, $$\Sigma_A$$ the sum across ranks, and $$\emptyset$$ a header-only packet.
@@ -40,15 +40,15 @@ The INC switch replaces the two collectives with two new ones:
 This cuts the packets crossing the switch from $$2W^2$$ to $$2W$$ per collective, and the data sent or received by each rank by up to a factor of $$W$$. Each rank issues a single `put_signal` for the dispatch and a single `signal` for the combine. All other transfers are issued by the switch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
+<img width="28%" height="28%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 A dispatch and combine seen from rank $$P_2$$. On the dispatch, $$P_2$$ puts its token C into the switch, which sends A and C to $$P_0$$, and B and C to $$P_1$$. On the combine, the switch pulls the outputs of each rank with a `get` when its flag rises, sums them, and sends $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls.
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_reduce.svg"/>
+<img width="27%" height="27%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_reduce.svg"/>
 &nbsp; &nbsp;
-<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_unique.svg"/>
+<img width="27%" height="27%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_unique.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The two INC collectives on $$W=4$$ ranks, from top to bottom. **Left:** All-to-All-Reduce. **Right:** All-to-All-Unique. $$T_x$$ are the tokens of rank $$P_x$$, $$E_x$$ their expert ids and weights, and $$f_x$$ its ready flag on the switch.
@@ -56,7 +56,7 @@ The two INC collectives on $$W=4$$ ranks, from top to bottom. **Left:** All-to-A
 The same two ideas apply to the AllGather-ReduceScatter backend, which sends every token to every rank instead of only to the ranks that need it. The four combinations are shown below.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_communication_models.svg"/>
+<img width="63%" height="63%" src="{{ site.assets }}/inference/imgs/ep_communication_models.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The four communication models for $$W=3$$ ranks holding one token each. **Left:** a regular switch that relays packets. **Right:** an INC switch. **Top:** AllGather-ReduceScatter. **Bottom:** all-to-all.
@@ -68,7 +68,7 @@ The dispatch *pushes* its data into the switch, because only the sender knows ho
 The switch can fold the partials into $$B \le W$$ buffers. With $$B=1$$ (*get-reduce*) it uses the least memory, and with $$B=W$$ (*put-reduce*) it runs the most transfers in parallel. For a payload of $$S$$ bytes, the switch needs at most $$S(B+1)+4W$$ bytes, independently of the model.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_reduction_models.svg"/>
+<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/ep_reduction_models.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The three reduction models in the switch, for $$W=4$$ ranks: put-reduce, get-reduce and hybrid-reduce with $$B$$ buffers.
