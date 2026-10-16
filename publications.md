@@ -723,6 +723,21 @@ MTP is used on DeepSeek-V3 and Nemotron 3: DeepSeek-V3 refined MTP into *sequent
 <td></td>
 <td markdown="block">
 <details>
+<summary markdown="span"><span class="pub-title">DeepSeek LLM: Scaling Open-Source Language Models with Longtermism</span><span class="pub-meta">, DeepSeek-AI</span><a class="pub-link" href="https://arxiv.org/abs/2401.02954" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
+<div class="pub-notes" markdown="block">
+
+The first DeepSeek release (DeepSeek-V1) introduced dense 7B and 67B models, trained on 2T tokens. It predates MoE and MLA, which came with DeepSeekMoE and DeepSeek-V2. The architecture follows LLaMA: pre-norm with RMSNorm, SwiGLU FFNs and rotary position embeddings. The 7B model has 30 layers and the 67B model has 95 layers and uses Grouped-Query Attention (GQA) to reduce the cost of inference.
+
+The main contribution is a study of scaling laws. It fits the optimal batch size and learning rate as functions of the compute budget, and the optimal split of the compute between model size and data, measuring the model size in non-embedding FLOPs per token instead of parameters. These fits set the configurations of both models; "longtermism" refers to planning future models with these laws. The chat models are aligned with supervised fine-tuning (SFT) followed by Direct Preference Optimization (DPO). DeepSeek LLM 67B outperforms LLaMA-2 70B, particularly on code, math and reasoning, and the 67B chat model outperforms GPT-3.5 in open-ended evaluations.
+
+</div>
+</details>
+</td>
+</tr>
+<tr>
+<td></td>
+<td markdown="block">
+<details>
 <summary markdown="span"><span class="pub-title">DeepSeek-V2: A Strong, Economical, and Efficient Mixture-of-Experts Language Model</span><span class="pub-meta">, DeepSeek-AI</span><a class="pub-link" href="https://arxiv.org/abs/2405.04434" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
@@ -882,6 +897,13 @@ Where it fits in the landscape here:
 - This makes it a good “control point” when discussing what incremental improvements from fused kernels or in-network compute might buy: you can compare against a strong end-to-end system that already works at scale.
 
 **Results / takeaways:** the report is a systems-and-training reference more than a single “one trick” optimization; it’s most valuable for its end-to-end design and empirical scaling observations, which help ground discussions about where communication becomes dominant and what kinds of optimizations remain on the table.
+
+Three of the training techniques deserve more detail:
+- **FP8 training.** DeepSeek-V3 is the first frontier-scale model trained in FP8. Unlike earlier recipes, which use E4M3 in the forward pass and E5M2 for the gradients, it uses E4M3 for all tensors. This works because of fine-grained scaling: activations are scaled per tile of 1×128 values and weights per block of 128×128, so an outlier only affects its own group. The scales are computed online from the current values, and the GEMMs accumulate in higher precision. The optimizer moments are kept in BF16, and a few sensitive operators stay in higher precision.
+- **Sequential multi-token prediction.** Unlike the parallel heads of [Gloeckle et al.](https://arxiv.org/abs/2404.19737), each MTP module is a single Transformer layer that takes the hidden states of the previous depth and the embedding of the next token, so the causal chain is kept. The modules share the embedding and the output head with the main model, and each adds its own cross-entropy loss. DeepSeek-V3 uses one module, which can also serve as a draft model for speculative decoding: its second token is accepted 85% to 90% of the time, for about 1.8× more tokens per second.
+- **Auxiliary-loss-free load balancing.** A bias per expert is added to the routing scores, but only to select the top-k experts, not to weight their outputs. After each step, the bias of overloaded experts is decreased and that of underloaded experts is increased. This balances the load without a loss term that competes with the language modeling objective; only a very small sequence-wise balance loss is kept, to avoid extreme imbalance within a sequence.
+
+Post-training distills the reasoning ability of DeepSeek-R1 (trained with large-scale reinforcement learning on top of DeepSeek-V3-Base) into DeepSeek-V3: R1 generates the reasoning data, and V3 is fine-tuned on it, which improves its math and code without the length and style of a pure reasoning model.
 
 DualPipe is a bidirectional pipeline-parallelism algorithm introduced in the DeepSeek-V3 Technical Report, designed to reduce pipeline bubbles while addressing the heavy communication overhead of cross-node expert parallelism (which gives DeepSeek-V3 a roughly 1:1 compute-to-communication ratio). Its core idea is to overlap computation and communication within a paired forward and backward chunk: each chunk is split into four components—attention, all-to-all dispatch, MLP, and all-to-all combine (with the backward attention/MLP further split into input- and weight-gradient parts, as in ZeroBubble)—which are rearranged so that one set of micro-batches runs forward while another runs backward, hiding communication behind compute. Micro-batches are fed symmetrically from both ends of the pipeline, keeping hardware more consistently busy than sequential schedules like 1F1B or ZeroBubble.
 
