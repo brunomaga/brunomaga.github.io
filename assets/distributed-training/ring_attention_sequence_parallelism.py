@@ -37,12 +37,9 @@ class MultiHeadAttention(nn.Module):
         @staticmethod
         def accumulate_out_and_lse(out, lse, block_out, block_lse):
             # source: https://github.com/zhuzilin/ring-flash-attention/pull/34#issuecomment-2076126795
-
-            if out is None: 
-                out = block_out
-                lse = block_lse.transpose(-2, -1).unsqueeze(dim=-1)
-
             block_lse = block_lse.transpose(-2, -1).unsqueeze(dim=-1)
+            if out is None:  # first block
+                return block_out, block_lse
 
             out = out - F.sigmoid(block_lse - lse) * (out - block_out)
             lse = lse - F.logsigmoid(lse - block_lse)

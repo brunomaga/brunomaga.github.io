@@ -269,7 +269,7 @@ class RingAttention(torch.autograd.Function):
         return out
 ```
 
-where `isend_k_and_v(k, v, recv_k, recv_v, group)` asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`:
+where `isend_k_and_v(k, v, recv_k, recv_v, group)` asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`; and `accumulate_out_and_lse(out, lse, block_out, block_lse)` merges the output and LogSumExp of the current block into the accumulated ones, rescaling both so that the softmax is normalized over all the blocks seen so far:
 
 ```python
 def isend_k_and_v(k, v, recv_k, recv_v, group):
@@ -281,6 +281,19 @@ def isend_k_and_v(k, v, recv_k, recv_v, group):
     req_k_recv = dist.P2POp(dist.irecv, recv_k, src, group)
     req_v_recv = dist.P2POp(dist.irecv, recv_v, src, group)
     return dist.batch_isend_irecv([req_k_send, req_v_send, req_k_recv, req_v_recv])
+
+
+def accumulate_out_and_lse(out, lse, block_out, block_lse):
+    # source: https://github.com/zhuzilin/ring-flash-attention/pull/34#issuecomment-2076126795
+    block_lse = block_lse.transpose(-2, -1).unsqueeze(dim=-1)  # (B, H, S/P) -> (B, S/P, H, 1)
+    if out is None:  # first block
+        return block_out, block_lse
+
+    # out = (1-w) * out + w * block_out, with w = exp(block_lse) / (exp(lse) + exp(block_lse)) = sigmoid(block_lse - lse)
+    out = out - F.sigmoid(block_lse - lse) * (out - block_out)
+    # lse = log(exp(lse) + exp(block_lse))
+    lse = lse - F.logsigmoid(lse - block_lse)
+    return out, lse
 ```
 
 The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html#background) takes as input the gradient of the loss with respect to the output ($$\nabla_{out} Loss$$ or `dout` in the code below), and returns the gradients with respect to the inputs (gradients $$\nabla_{q} Loss$$, $$\nabla_{k} Loss$$, $$\nabla_{v} Loss$$, or `dq`, `dk`, `dv`):
