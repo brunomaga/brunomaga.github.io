@@ -2,42 +2,36 @@
 layout: default
 ---
 
-<!-- Top container with Flexbox responsiveness -->
-<div style="width: 100%; display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.5em; gap: 20px;">
-  
-  <div style="flex: 1;">
-    <h1 class="post-title p-name" itemprop="name headline" style="margin-top: 0; margin-bottom: 0.2em; line-height: 1.1;">{{ site.author.name }}</h1>
-    <h2 style='margin-top: 0em; margin-bottom: 0.3em; font-weight: normal; color: #555; font-size: 1.5em;'>Machine Learning and High-Performance Computing</h2>
-    
-    <div style="display: flex; flex-wrap: wrap; gap: 12px 24px; color: #444; line-height: 1.5;">
-      <a href="https://linkedin.com/in/brunomaga" style="text-decoration: none; white-space: nowrap;"><i class="fab fa-linkedin"></i> linkedin</a>
-      <a href="https://github.com/brunomaga" style="text-decoration: none; white-space: nowrap;"><i class="fab fa-fw fa-github"></i> github</a>
-      <a href="{{ site.google_scholar }}" style="text-decoration: none; white-space: nowrap;"><i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> scholar</a>
+<!-- name, field and links, with the photo on the right -->
+<div class="home-header">
+  <div class="home-header-text">
+    <h1 class="post-title p-name" itemprop="name headline">{{ site.author.name }}</h1>
+    <h2>Machine Learning and High-Performance Computing</h2>
+
+    <div class="home-links">
+      <a href="https://linkedin.com/in/brunomaga"><i class="fab fa-linkedin"></i> linkedin</a>
+      <a href="https://github.com/brunomaga"><i class="fab fa-fw fa-github"></i> github</a>
+      <a href="{{ site.google_scholar }}"><i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> scholar</a>
       <!-- <a href="{{ '/resume.pdf' | relative_url }}" style="text-decoration: none; white-space: nowrap;"><i class="far fa-file-alt" title="Resume"></i> resume</a> -->
-      <a href="mailto:{{ site.author.email }}?subject=Hello" style="text-decoration: none; white-space: nowrap;"><i class="far fa-envelope" title="Email"></i> email</a>
-      <a href="{{ '/feed.xml' | relative_url }}" style="text-decoration: none; white-space: nowrap;"><i class="fas fa-fw fa-rss"></i> RSS</a>
+      <a href="mailto:{{ site.author.email }}?subject=Hello"><i class="far fa-envelope" title="Email"></i> email</a>
+      <a href="{{ '/feed.xml' | relative_url }}"><i class="fas fa-fw fa-rss"></i> RSS</a>
     </div>
   </div>
 
-  <!-- profile photo -->
-  <div style="flex-shrink: 0;">
-    <img src="{{ '/photo.png' | relative_url }}"
-       alt="photo"
-       style="width: clamp(80px, 20vw, 132px); height: auto; aspect-ratio: 1 / 1; border-radius: 50%; object-fit: cover; display: block; border: 1px solid #ddd;" />
-  </div>
+  <img class="home-photo" src="{{ '/photo.png' | relative_url }}" alt="photo" />
 </div>
 
 <!-- introduction paragraph -->
-<p style="line-height: 1.6; margin-bottom: 1.8em; clear: both;">
+<p class="home-intro">
 Hi 👋🏽! I am Bruno, an ML Systems Researcher at <a href="https://www.huawei.com/ch-en/corporate-information/local-states">Huawei Research Switzerland</a>. Previously, I was an ML Researcher at <a href="https://www.microsoft.com/en-us/research/lab/microsoft-research-cambridge/">Microsoft Research Cambridge</a>, and an HPC Engineer and PhD in Computational Neuroscience at <a href="https://epfl.ch">EPFL</a>. I focus on ML efficiency — from embedded inference to distributed training — across Transformer, MoE, diffusion, and agentic models.
 </p>
 
-<p style="line-height: 1.6; margin-bottom: 0; clear: both;">
+<p class="home-text">
 In this space, I write about my projects and topics related to my fields of interest:
 </p>
 
 <!-- blog posts -->
-<table class="label-table" style="margin-top: 0.5em;">
+<table class="label-table home-table">
 {%- assign previous_year = "" -%}
 {% for post in site.posts %}
 {%- assign year = post.date | date: "%Y" -%}
@@ -52,11 +46,11 @@ In this space, I write about my projects and topics related to my fields of inte
 </table>
 
 <!-- resources -->
-<p style="line-height: 1.6; margin-bottom: 0; clear: both;">
+<p class="home-text">
 I also keep a curated list of related books and other resources available online:
 </p>
 
-<table id="resources-table" class="label-table" style="margin-top: 0.5em;">
+<table id="resources-table" class="label-table home-table">
 <tr>
 <td><span class="post-label">book</span></td>
 <td>
@@ -143,6 +137,6 @@ I also keep a curated list of related books and other resources available online
 </tr>
 </table>
 
-<p style="line-height: 1.6; margin-bottom: 0; clear: both;">
+<p class="home-text">
 And finally, I maintain a list of <a href="{{ site.publications_permalink }}">relevant publications</a>. Enjoy, and feel free to reach out with feedback, fixes, and questions 🚀!
 </p>
