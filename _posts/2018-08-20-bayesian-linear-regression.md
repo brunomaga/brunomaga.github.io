@@ -16,13 +16,13 @@ Apart from uncertainty quantification, another benefit of Bayesian methods is th
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. In this post, our methods will be based solely on the [Normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), defined for an input $$x$$ by:
 
 $$
-p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
+p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
 $$
 
 for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$ in univariate notation, or
 
 $$
-p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{D/2} \,\, det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)
+p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{D/2} \,\, \det(\Sigma)^{-1/2} \exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)
 $$
 
 with mean vector $$\mu$$ and covariance matrix $$\Sigma$$ in its multivariate (*matrix*) notation.
@@ -87,7 +87,7 @@ I.e. we turn a log of products into a sum of logs. In the linear regression mode
 
 $$
 \begin{aligned}
-log \,\,  p(y_n \mid w, x_n, \sigma^2) & = \log \left( \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(y_n - x_n^Tw)^2}{2 \sigma^2} \right) \right)\\
+log \,\,  p(y_n \mid w, x_n, \sigma^2) & = \log \left( \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, \exp \left( - \frac{(y_n - x_n^Tw)^2}{2 \sigma^2} \right) \right)\\
 & =  - \frac{1}{2 \sigma^2} (y_n - x^T_n w)^2 + const \\
 \end{aligned}
 \label{eq_lr_likelihood}
@@ -218,13 +218,13 @@ We assume all our weights are drawn from a Gaussian distribution and can be inde
 We then have the following prior in multivariate notation:
 
 $$
-p(w \mid m_0, S_0 ) = (2 \pi)^{-\frac{D}{2}} \,\, det(S_0)^{- \frac{1}{2}} \,\, exp \left( - \frac{1}{2}(w - m_0)^T S_0^{-1} (w-m_0) \right)
+p(w \mid m_0, S_0 ) = (2 \pi)^{-\frac{D}{2}} \,\, \det(S_0)^{- \frac{1}{2}} \,\, \exp \left( - \frac{1}{2}(w - m_0)^T S_0^{-1} (w-m_0) \right)
 $$ 
 
 And the likelihood:
 
 $$
-p(y \mid X, w) = \frac{1}{(2 \pi \sigma^2)^{N/2}} exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) \right)
+p(y \mid X, w) = \frac{1}{(2 \pi \sigma^2)^{N/2}} \exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) \right)
 $$
 
 Going back to Equation \ref{posterior_w} and replacing the terms, we have:
@@ -234,9 +234,9 @@ $$
 p(w \mid X, y) & = \frac{p(y\mid X, w) p(w)}{p(y \mid X )} \\
                 & \propto p(y\mid X, w) p(w) \\
                   & \qquad \text{(dropped constant term in division)} \\
-                & \propto exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{1}{2}(w-m_0)^TS_0^{-1}(w-m_0) \right) \\
+                & \propto \exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{1}{2}(w-m_0)^TS_0^{-1}(w-m_0) \right) \\
                   & \qquad \text{(dropped constant in multiplication)} \\
-                & = exp \left( -\frac{1}{2} \left( \sigma^{-2} (y-Xw)^T(y-Xw) + (w-m_0)^TS_0^{-1}(w-m_0) \right) \right)\\
+                & = \exp \left( -\frac{1}{2} \left( \sigma^{-2} (y-Xw)^T(y-Xw) + (w-m_0)^TS_0^{-1}(w-m_0) \right) \right)\\
 \end{align*}
 $$
 
@@ -260,10 +260,10 @@ As a side note: looking at the last equation, we can see that this function is q
 
 $$
   \begin{align*}
- p(w\mid X, y) = & exp ( log \,\, p(w\mid y, X) ) \\
-\propto & exp ( log \,\, p(y\mid X, w) + log \,\, p(w) ) \\
+ p(w\mid X, y) = & \exp ( log \,\, p(w\mid y, X) ) \\
+\propto & \exp ( log \,\, p(y\mid X, w) + log \,\, p(w) ) \\
   & \qquad \text{(Bayes equation)} \\
-\propto & exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0 \right)^T w \right) \\
+\propto & \exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0 \right)^T w \right) \\
   & \qquad \text{(quadratic and linear terms of } log \,\, p(w \mid X, y) \text{)} \\
   \end{align*}
 $$

@@ -33,9 +33,11 @@ The inference problem is to compute the conditional probability of the latent va
 
 ## Detour: Markov Chain Monte Carlo
 
-Before moving on to Variational Inference, let's understand the place of VI in this type of inference. For many years, the dominant approach was [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). A simple high-level understanding of MCMC follows from the name itself:
-- [Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters by generating random numbers. A simple example is to compute the area of a circle by generating random 2D coordinates within the bounding square around the circle, and to estimate the value of $$\pi$$ or the area of the circle from the proportion of generated datapoints that fall inside vs outside the circle in the square;
-- A [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain) is a stochastic model describing a sequence of events in which the probability of moving to the next state depends *only* on the current state and not on the previous ones; an example would be the probability of the next character in a word, for all *27* possible characters, given the current character.
+Before moving on to Variational Inference, let's understand the place of VI in this type of inference. For many years, the dominant approach was [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). A simple high-level understanding of MCMC follows from the name itself.
+
+[Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters by generating random numbers. A simple example is to compute the area of a circle by generating random 2D coordinates within the bounding square around the circle, and to estimate the value of $$\pi$$ or the area of the circle from the proportion of generated datapoints that fall inside vs outside the circle in the square.
+
+A [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain) is a stochastic model describing a sequence of events in which the probability of moving to the next state depends *only* on the current state and not on the previous ones; an example would be the probability of the next character in a word, for all *27* possible characters, given the current character.
 
 Therefore, MCMC methods are used to approximate the distribution (state) of parameters at the next iteration by random sampling from a probabilistic space defined by the current state. MCMC is based on the assumption that the prior-likelihood product $$ P(x \mid z) \, P(z)$$ can be computed, i.e. is known, for a given $$z$$. However, we can do this without any knowledge of the function of $$z$$. But we know that, from a mathematical perspective (eq. \ref{eq_bayes}), the posterior density is expressed as:
 
@@ -367,12 +369,24 @@ $$
 
 Putting it all together, the algorithm is as follows:
 
-- While the ELBO has not converged:
-	1. for all $$i \in \{1, ..., n\}$$, set $$\varphi_{ik} \propto \exp \left\{ x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k] \right\} $$ (equation \ref{eq_algo_first_step})
-	2. for $$k \in \{1, ..., K\}$$ do:
-		- set $$m_k \leftarrow \frac{\sum_i \varphi_{ik} x_i}{1/\sigma^2 + \sum_i \varphi_{ik}}$$ (equation \ref{eq_algo_second_step}) 
-		- set $$s^2_k \leftarrow \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}$$ (equation \ref{eq_algo_second_step})
-	3. compute $$ELBO(m, s^2, \varphi)$$ (equation \ref{eq_algo_elbo})
+While the ELBO has not converged:
+
+1. for all $$i \in \{1, ..., n\}$$, set (equation \ref{eq_algo_first_step}):
+
+   $$
+   \varphi_{ik} \propto \exp \left\{ x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k] \right\}
+   $$
+
+2. for $$k \in \{1, ..., K\}$$, set (equation \ref{eq_algo_second_step}):
+
+   $$
+   \begin{align*}
+   m_k & \leftarrow \frac{\sum_i \varphi_{ik} x_i}{1/\sigma^2 + \sum_i \varphi_{ik}} \\
+   s^2_k & \leftarrow \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}
+   \end{align*}
+   $$
+
+3. compute $$ELBO(m, s^2, \varphi)$$ (equation \ref{eq_algo_elbo})
 
 The algorithm is iterative and will converge on a certain loss threshold (ELBO), based on the fitting of each Gaussian to the data points. The concept can be easily understood by looking at the illustration of several iterations of the fitting of Gaussian models to five clusters of points:   
 
