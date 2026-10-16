@@ -59,27 +59,29 @@
           output.preFilters.add(({ math }) => {
             if (scrolls(math)) output.containerWidth = 1e6;
           });
+          /* inline math wider than its line is marked .math-scroll, again after any inline formula is rendered
+             again (the new rendering does not keep the class) and whenever the window is resized */
+          const range = document.createRange();
+          const mark = () => document.querySelectorAll('mjx-container:not([display])').forEach((m) => {
+            m.classList.remove('math-scroll');
+            range.selectNodeContents(m);  /* covers every part of the formula, also when it breaks over lines */
+            if (range.getBoundingClientRect().right > m.parentElement.getBoundingClientRect().right + 1) {
+              m.classList.add('math-scroll');
+            }
+          });
+          let marking;
           output.postFilters.add(({ math, document: doc, data }) => {
             if (math.display && !scrolls(math) && splitLeft(data)) {
               math.root.attributes.set('overflow', 'scroll');
               setTimeout(() => math.rerender(doc, STATE.CONVERT));
             }
+            if (!math.display) {
+              clearTimeout(marking);
+              marking = setTimeout(mark, 50);
+            }
           });
+          window.addEventListener('resize', mark);
         },
-        pageReady() {
-          return MathJax.startup.defaultPageReady().then(() => {
-            const range = document.createRange();
-            const mark = () => document.querySelectorAll('mjx-container:not([display])').forEach((m) => {
-              m.classList.remove('math-scroll');
-              range.selectNodeContents(m);  /* covers every part of the formula, also when it breaks over lines */
-              if (range.getBoundingClientRect().right > m.parentElement.getBoundingClientRect().right + 1) {
-                m.classList.add('math-scroll');
-              }
-            });
-            mark();
-            window.addEventListener('resize', mark);
-          });
-        }
       }
     };
   </script>
