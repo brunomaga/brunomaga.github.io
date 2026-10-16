@@ -1782,7 +1782,7 @@
         <mxCell id="matrix-transposition-crs-33" value="T" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="116.24" y="75.45" width="11.33" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-transposition-crs-34" value="" style="shape=mxgraph.arrows2.arrow;dy=0.5;dx=16;notch=0;fillColor=#d9d9d9;strokeColor=none;" vertex="1" parent="matrix-transposition-crs-figure">
+        <mxCell id="matrix-transposition-crs-34" value="" style="shape=mxgraph.arrows2.arrow;dy=0.5;dx=16;notch=0;fillColor=#d9d9d9;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-transposition-crs-figure">
           <mxGeometry x="210.3" y="74.67" width="45.5" height="16.9" as="geometry" />
         </mxCell>
         <mxCell id="matrix-transposition-crs-35" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="matrix-transposition-crs-figure">
@@ -3032,40 +3032,40 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="xcrs_format-119" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-119" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="387.45" y="51.95" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-120" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-120" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="412.93" y="51.95" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-121" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-121" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="489.37" y="51.95" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-122" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-122" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="463.89" y="77.43" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-123" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-123" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="387.45" y="112.15" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-124" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-124" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="438.41" y="112.15" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-125" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-125" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="361.97" y="137.63" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-126" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-126" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="463.89" y="137.63" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-127" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-127" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="387.45" y="175.15" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-128" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-128" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="489.37" y="175.15" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-129" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-129" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="361.97" y="200.63" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_format-130" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_format-figure">
+        <mxCell id="xcrs_format-130" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
           <mxGeometry x="438.41" y="200.63" width="5" height="5" as="geometry" />
         </mxCell>
         <mxCell id="xcrs_format-131" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Helvetica;fontSize=12;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_format-figure">
@@ -3716,40 +3716,40 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="xcrs_transpose_1-73" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-73" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="70.72" y="27.96" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-74" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-74" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="93.15" y="27.96" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-75" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-75" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="160.43" y="27.96" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-76" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-76" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="138" y="50.38" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-77" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-77" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="70.72" y="80.95" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-78" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-78" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="115.57" y="80.95" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-79" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-79" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="48.29" y="103.37" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-80" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-80" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="138" y="103.37" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-81" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-81" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="70.72" y="136.4" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-82" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-82" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="160.43" y="136.4" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-83" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-83" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="48.29" y="158.83" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-84" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-84" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="115.57" y="158.83" width="5" height="5" as="geometry" />
         </mxCell>
         <mxCell id="xcrs_transpose_1-85" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Helvetica;fontSize=12;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
@@ -4019,7 +4019,7 @@
         <mxCell id="xcrs_transpose_1-164" value="by column&lt;br&gt;and row id" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="569.17" y="127.64" width="59.36" height="31" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-165" value="" style="shape=mxgraph.arrows2.arrow;dy=0.5;dx=16;notch=0;fillColor=#d9d9d9;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-165" value="" style="shape=mxgraph.arrows2.arrow;dy=0.5;dx=16;notch=0;fillColor=#d9d9d9;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="579.91" y="166.83" width="44.56" height="12.6" as="geometry" />
         </mxCell>
         <mxCell id="xcrs_transpose_1-166" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="xcrs_transpose_1-figure">
@@ -4337,40 +4337,40 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="xcrs_transpose_1-238" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-238" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="690.09" y="72.94" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-239" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-239" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="690.09" y="95.28" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-240" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-240" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="712.6" y="139.97" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-241" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-241" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="690.09" y="162.31" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-242" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-242" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="765.94" y="50.59" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-243" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-243" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="743.43" y="72.94" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-244" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-244" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="743.43" y="117.63" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-245" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-245" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="765.94" y="139.97" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-246" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-246" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="820.12" y="50.59" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-247" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-247" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="797.61" y="72.94" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-248" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-248" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="820.12" y="117.63" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_1-249" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_1-figure">
+        <mxCell id="xcrs_transpose_1-249" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
           <mxGeometry x="797.61" y="162.31" width="5" height="5" as="geometry" />
         </mxCell>
         <mxCell id="xcrs_transpose_1-250" value="A" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Helvetica;fontSize=12;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_1-figure">
@@ -4552,7 +4552,7 @@
         <mxCell id="xcrs_transpose_2-33" value="T" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="xcrs_transpose_2-figure">
           <mxGeometry x="116.24" y="75.45" width="11.33" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_2-34" value="" style="shape=mxgraph.arrows2.arrow;dy=0.5;dx=16;notch=0;fillColor=#d9d9d9;strokeColor=none;" vertex="1" parent="xcrs_transpose_2-figure">
+        <mxCell id="xcrs_transpose_2-34" value="" style="shape=mxgraph.arrows2.arrow;dy=0.5;dx=16;notch=0;fillColor=#d9d9d9;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_2-figure">
           <mxGeometry x="210.3" y="74.67" width="45.5" height="16.9" as="geometry" />
         </mxCell>
         <mxCell id="xcrs_transpose_2-35" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;" edge="1" parent="xcrs_transpose_2-figure">
@@ -5834,7 +5834,7 @@
         <mxCell id="xcrs_transpose_3-137" value="by row and&lt;br&gt;column id" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="420.32" y="101.18" width="62.69" height="31" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-138" value="" style="shape=mxgraph.arrows2.arrow;dy=0.5;dx=16;notch=0;fillColor=#d9d9d9;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-138" value="" style="shape=mxgraph.arrows2.arrow;dy=0.5;dx=16;notch=0;fillColor=#d9d9d9;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="430.3" y="138.1" width="44.52" height="14.28" as="geometry" />
         </mxCell>
         <mxCell id="xcrs_transpose_3-139" value="Final data representation" style="text;html=1;align=left;verticalAlign=middle;spacing=0;fontFamily=Helvetica;fontSize=12;fontStyle=1;" vertex="1" parent="xcrs_transpose_3-figure">
@@ -6224,40 +6224,40 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="xcrs_transpose_3-235" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-235" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="796.03" y="29.02" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-236" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-236" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="840.13" y="29.02" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-237" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-237" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="729.88" y="51.08" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-238" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-238" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="773.99" y="51.08" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-239" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-239" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="818.08" y="51.08" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-240" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-240" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="729.88" y="82.57" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-241" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-241" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="773.99" y="104.62" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-242" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-242" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="840.13" y="104.62" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-243" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-243" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="751.93" y="133.19" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-244" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-244" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="796.03" y="133.19" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-245" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-245" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="818.08" y="155.23" width="5" height="5" as="geometry" />
         </mxCell>
-        <mxCell id="xcrs_transpose_3-246" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=none;" vertex="1" parent="xcrs_transpose_3-figure">
+        <mxCell id="xcrs_transpose_3-246" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">
           <mxGeometry x="729.88" y="155.23" width="5" height="5" as="geometry" />
         </mxCell>
         <mxCell id="xcrs_transpose_3-247" value="J" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontFamily=Helvetica;fontSize=12;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="xcrs_transpose_3-figure">

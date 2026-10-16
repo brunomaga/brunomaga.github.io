@@ -837,10 +837,10 @@
         <mxCell id="transformer_attention_masked-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="1385.3" width="228" height="86" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_masked-1" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;right=0;" vertex="1" parent="transformer_attention_masked-figure">
+        <mxCell id="transformer_attention_masked-1" value="" style="shape=partialRectangle;html=1;fillColor=none;right=0;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="0" y="0" width="4" height="64" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_masked-2" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;left=0;" vertex="1" parent="transformer_attention_masked-figure">
+        <mxCell id="transformer_attention_masked-2" value="" style="shape=partialRectangle;html=1;fillColor=none;left=0;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="32" y="0" width="4" height="64" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention_masked-3" value="1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
@@ -858,10 +858,10 @@
         <mxCell id="transformer_attention_masked-7" value="Le" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="0" y="70" width="36" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_masked-8" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;right=0;" vertex="1" parent="transformer_attention_masked-figure">
+        <mxCell id="transformer_attention_masked-8" value="" style="shape=partialRectangle;html=1;fillColor=none;right=0;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="64" y="0" width="4" height="64" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_masked-9" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;left=0;" vertex="1" parent="transformer_attention_masked-figure">
+        <mxCell id="transformer_attention_masked-9" value="" style="shape=partialRectangle;html=1;fillColor=none;left=0;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="96" y="0" width="4" height="64" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention_masked-10" value="0.1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
@@ -879,10 +879,10 @@
         <mxCell id="transformer_attention_masked-14" value="gros" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="64" y="70" width="36" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_masked-15" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;right=0;" vertex="1" parent="transformer_attention_masked-figure">
+        <mxCell id="transformer_attention_masked-15" value="" style="shape=partialRectangle;html=1;fillColor=none;right=0;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="128" y="0" width="4" height="64" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_masked-16" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;left=0;" vertex="1" parent="transformer_attention_masked-figure">
+        <mxCell id="transformer_attention_masked-16" value="" style="shape=partialRectangle;html=1;fillColor=none;left=0;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="160" y="0" width="4" height="64" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention_masked-17" value="0.05" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
@@ -900,10 +900,10 @@
         <mxCell id="transformer_attention_masked-21" value="chien" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="128" y="70" width="36" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_masked-22" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;right=0;" vertex="1" parent="transformer_attention_masked-figure">
+        <mxCell id="transformer_attention_masked-22" value="" style="shape=partialRectangle;html=1;fillColor=none;right=0;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="192" y="0" width="4" height="64" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention_masked-23" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;left=0;" vertex="1" parent="transformer_attention_masked-figure">
+        <mxCell id="transformer_attention_masked-23" value="" style="shape=partialRectangle;html=1;fillColor=none;left=0;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="transformer_attention_masked-figure">
           <mxGeometry x="224" y="0" width="4" height="64" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention_masked-24" value="0.16" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
@@ -1377,31 +1377,31 @@
         <mxCell id="bert_tasks-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="0" y="58.1" width="389.2" height="191.1" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-2" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-2" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="10.5" y="114.1" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-3" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-3" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="72.1" y="114.1" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-4" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-4" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="133" y="114.1" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-5" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-5" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="332.5" y="114.1" width="35" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-6" value="..." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#6c8ebf;opacity=35;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="226.1" y="124.6" width="42" height="21" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-7" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-7" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="10.5" y="155.4" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-8" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-8" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="72.1" y="155.4" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-9" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-9" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="133" y="155.4" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-10" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-10" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="332.5" y="155.4" width="35" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-11" value="..." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#6c8ebf;opacity=35;" vertex="1" parent="bert_tasks-figure">
@@ -1772,31 +1772,31 @@
         <mxCell id="bert_tasks-90" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="490" y="58.1" width="390.6" height="191.1" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-91" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-91" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="507.5" y="114.1" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-92" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-92" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="567" y="114.1" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-93" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-93" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="628.6" y="114.1" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-94" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-94" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="822.5" y="114.1" width="35" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-95" value="..." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#6c8ebf;opacity=35;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="714.7" y="124.6" width="42" height="21" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-96" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-96" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="507.5" y="155.4" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-97" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-97" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="567" y="155.4" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-98" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-98" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="628.6" y="155.4" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-99" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-99" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="822.5" y="155.4" width="35" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-100" value="..." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#6c8ebf;opacity=35;" vertex="1" parent="bert_tasks-figure">
@@ -2112,31 +2112,31 @@
         <mxCell id="bert_tasks-164" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="7" y="508.2" width="389.2" height="191.1" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-165" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-165" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="17.5" y="564.2" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-166" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-166" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="79.1" y="564.2" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-167" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-167" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="140" y="564.2" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-168" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-168" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="339.5" y="564.2" width="35" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-169" value="..." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#6c8ebf;opacity=35;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="233.1" y="574.7" width="42" height="21" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-170" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-170" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="17.5" y="605.5" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-171" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-171" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="79.1" y="605.5" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-172" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-172" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="140" y="605.5" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-173" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-173" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="339.5" y="605.5" width="35" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-174" value="..." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#6c8ebf;opacity=35;" vertex="1" parent="bert_tasks-figure">
@@ -2510,31 +2510,31 @@
         <mxCell id="bert_tasks-254" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="483" y="508.2" width="390.6" height="191.1" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-255" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-255" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="500.5" y="564.2" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-256" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-256" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="560" y="564.2" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-257" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-257" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="621.6" y="564.2" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-258" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-258" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="815.5" y="564.2" width="35" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-259" value="..." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#6c8ebf;opacity=35;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="707.7" y="574.7" width="42" height="21" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-260" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-260" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="500.5" y="605.5" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-261" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-261" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="560" y="605.5" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-262" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-262" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="621.6" y="605.5" width="35" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="bert_tasks-263" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;opacity=35;" vertex="1" parent="bert_tasks-figure">
+        <mxCell id="bert_tasks-263" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;opacity=35;strokeColor=#000000;strokeWidth=1.34;" vertex="1" parent="bert_tasks-figure">
           <mxGeometry x="815.5" y="605.5" width="35" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="bert_tasks-264" value="..." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontColor=#6c8ebf;opacity=35;" vertex="1" parent="bert_tasks-figure">
