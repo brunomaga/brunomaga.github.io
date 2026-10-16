@@ -108,12 +108,6 @@ I also keep a curated list of related books and other resources available online
 </td>
 </tr>
 <tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"><span class="post-label">article</span></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
-  <a href="{{ site.assets }}/resources/in-network_collective_operations_game_changer_or_challenge_for_ai_workloads.pdf">In-Network Collective Operations: Game Changer or Challenge for AI Workloads?</a>
-</td>
-</tr>
-<tr style="border: none;">
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"><span class="post-label">post</span></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
   <a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html">The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism (AMD)</a>
