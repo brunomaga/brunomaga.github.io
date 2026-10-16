@@ -128,7 +128,7 @@ At small scale (0.2B active, up to 4.2B total parameters, 10B FineWebEdu tokens)
 <summary markdown="span"><span class="pub-title">In-Network Collective Operations: Game Changer or Challenge for AI Workloads?</span><span class="pub-meta">, Torsten Hoefler et al. (ETH Zürich, Microsoft, AMD, Broadcom, HPE) (IEEE Computer 2026)</span><a class="pub-link" href="https://arxiv.org/abs/2601.19132" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
-Offloading collectives to the NICs (edge-INC) or switches (core-INC, as in NVIDIA SHARP) can halve Allreduce and Allgather traffic. Low-precision types, sparse reductions, reproducibility, switch coordination and encryption stand in the way. And Amdahl's law limits the speedup, so the authors expect slow adoption, led by single-switch systems.
+Offloading collectives to the NICs (edge-INC) or switches (core-INC, as in NVIDIA SHARP) can halve Allreduce traffic. Low-precision types, sparse reductions, reproducibility and encryption stand in the way. And Amdahl's law limits the speedup, so the authors expect slow adoption.
 
 </div>
 </details>
