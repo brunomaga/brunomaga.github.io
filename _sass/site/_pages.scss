@@ -23,14 +23,6 @@
   color: #555;
 }
 
-.home-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-}
-
-.home-links a { text-decoration: none; }  // not underlined on hover either
-
 .home-photo {
   flex-shrink: 0;
   width: clamp(80px, 20vw, 132px);
