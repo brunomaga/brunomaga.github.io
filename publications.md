@@ -7,9 +7,7 @@ permalink: /publications/
 <style>
 /* the home-page label table: the year on the first paper of each year, then the title in the link colour
    with who and venue in grey and a link to the paper, and a chevron on the right that opens the notes */
-.pub-table { width: 100%; margin-top: 1.4em; border: none; border-collapse: collapse; }
-.pub-table tr, .pub-table td { border: none; }
-.pub-table td { padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top; }
+.pub-table { margin-top: 1.4em; }
 
 .pub-table summary { position: relative; padding-right: 2em; list-style: none; cursor: pointer; }
 .pub-table summary::-webkit-details-marker { display: none; }

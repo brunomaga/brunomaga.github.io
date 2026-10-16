@@ -37,15 +37,13 @@ In this space, I write about my projects and topics related to my fields of inte
 </p>
 
 <!-- blog posts -->
-<table class="label-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
+<table class="label-table" style="margin-top: 0.5em;">
 {%- assign previous_year = "" -%}
 {% for post in site.posts %}
 {%- assign year = post.date | date: "%Y" -%}
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
-{% if year != previous_year %}<span class="post-label">{{ year }}</span>{% endif %}
-</td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td>{% if year != previous_year %}<span class="post-label">{{ year }}</span>{% endif %}</td>
+<td>
 <a href="{{ post.url }}">{{ post.categories.first }}: {{ post.title }}</a>
 </td>
 </tr>
@@ -58,88 +56,88 @@ In this space, I write about my projects and topics related to my fields of inte
 I also keep a curated list of related books and other resources available online:
 </p>
 
-<table id="resources-table" class="label-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"><span class="post-label">book</span></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<table id="resources-table" class="label-table" style="margin-top: 0.5em;">
+<tr>
+<td><span class="post-label">book</span></td>
+<td>
   <a href="https://www.bishopbook.com/">Deep Learning - Foundations and Concepts, Christopher M. Bishop, Hugh Bishop</a> (<a href="https://github.com/luzmontserrat/deep-learning/blob/main/Christopher%20M.%20Bishop%2C%20Hugh%20Bishop%20-%20Deep%20Learning_%20Foundations%20and%20Concepts-Springer%20(2024).pdf">pdf</a>)
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="https://www.springer.com/gp/book/9780387310732">Pattern Recognition and Machine Learning, Christopher M. Bishop</a> (<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">pdf</a>)
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="http://mbmlbook.com/">Model-Based Machine Learning, John Winn et al.</a> (<a href="http://mbmlbook.com/MBMLbook.pdf">pdf</a>)
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="https://mml-book.github.io/">Mathematics for Machine Learning, Marc Peter Deisenroth, A. Aldo Faisal, Cheng Soon Ong</a> (<a href="https://mml-book.github.io/book/mml-book.pdf">pdf</a>)
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a> (<a href="https://neuronaldynamics.epfl.ch/online/index.html">online</a>)
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="https://fleuret.org/public/lbdl.pdf">The Little Book of Deep Learning, François Fleuret</a> (<a href="{{ site.assets }}/resources/lbdl.pdf">pdf</a>)
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz and Shai Ben-David</a> (<a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf">pdf</a>)
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="http://www.inference.org.uk/mackay/itila/book.html">Information Theory, Inference, and Learning Algorithms, David MacKay</a> (<a href="http://www.inference.org.uk/itprnn/book.pdf">pdf</a>)
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"><span class="post-label">blog</span></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td><span class="post-label">blog</span></td>
+<td>
   <a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html">The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism (AMD)</a>
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="https://jax-ml.github.io/scaling-book">How to scale your model (JAX ML)</a>
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)</a>
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"><span class="post-label">course</span></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td><span class="post-label">course</span></td>
+<td>
   <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation - Automatic Differentiation (Princeton course COS-324)</a> (<a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">pdf</a>)
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td></td>
+<td>
   <a href="{{ site.epfl_statistics }}/README.md">Statistics for Data Science (EPFL course MATH-413)</a>
 </td>
 </tr>
-<tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"><span class="post-label">misc</span></td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<tr>
+<td><span class="post-label">misc</span></td>
+<td>
   <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>
 </td>
 </tr>
