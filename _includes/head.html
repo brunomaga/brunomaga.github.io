@@ -62,7 +62,7 @@
     .info-warning h2,
     .info-danger h2 { margin-top: 0; }
 
-    /* ===== Labels (back link, post date, category and tags; resource types on the home page) ===== */
+    /* ===== Labels (back link, post date, category and tags; years and resource types on the home page) ===== */
 
     .post-labels {
       display: flex;
@@ -93,41 +93,41 @@
       }
     }
 
-    /* strongest first: back link in charcoal (below), date in the link colour, category in mid grey,
+    /* left to right: back link in the link colour (below), date in charcoal, category in mid grey,
        tags in light grey (default above) */
-    .post-label--date     { border-color: #2a7ae2; color: #2a7ae2; }
+    .post-label--date     { border-color: #333;    color: #333; }
     .post-label--category { border-color: #999;    color: #444; }
 
-    /* back link, before the post date and in the footer: a charcoal label that fills on hover */
+    /* back link, before the post date and in the footer: a label in the link colour that fills on hover */
     a.post-label--back,
     a.post-label--back:visited {
       display: inline-block;
-      border-color: #333;
-      color: #333;
+      border-color: #2a7ae2;
+      color: #2a7ae2;
       text-decoration: none;
       transition: background-color 0.15s, color 0.15s;
     }
 
     a.post-label--back:hover,
     a.post-label--back:focus-visible {
-      background-color: #333;
+      background-color: #2a7ae2;
       color: #fff;
       text-decoration: none;
     }
 
     a.post-label--back .fa-arrow-left { font-size: 0.9em; }  /* as tall as the capitals */
 
-    /* resource types on the home page: equal-width labels in a first column as wide as the widest one,
-       a small gap before the titles, and less vertical padding than on post pages so the rows keep
-       their height */
-    #resources-table td:first-child {
+    /* years and resource types in the home-page tables: equal-width labels in a first column as wide
+       as the widest one, a small gap before the titles, and less vertical padding than on post pages
+       so the rows keep their height */
+    .label-table td:first-child {
       width: 1%;  /* shrinks the column to its widest label */
       padding-right: 0;
     }
 
-    #resources-table td + td { padding-left: 0.5em; }
+    .label-table td + td { padding-left: 0.5em; }
 
-    #resources-table .post-label {
+    .label-table .post-label {
       display: inline-block;
       box-sizing: border-box;
       width: 100%;
@@ -138,7 +138,7 @@
     }
 
     @supports (text-box: trim-both cap alphabetic) {
-      #resources-table .post-label {
+      .label-table .post-label {
         padding-top: 4px;
         padding-bottom: 4px;
       }
