@@ -14,8 +14,18 @@ Apart from uncertainty quantification, another benefit of Bayesian methods is th
 ### Refresher: Normal distribution
 
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. In this post, our methods will be based solely on the [Normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), defined for an input $$x$$ by:
-  - $$p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$ in univariate notation, or
-  - $$p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{D/2} \,\, det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)$$ with mean vector $$\mu$$ and covariance matrix $$\Sigma$$ in its multivariate (*matrix*) notation
+
+$$
+p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
+$$
+
+for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$ in univariate notation, or
+
+$$
+p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{D/2} \,\, det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)
+$$
+
+with mean vector $$\mu$$ and covariance matrix $$\Sigma$$ in its multivariate (*matrix*) notation.
 
 ## Bayes Theorem
 
