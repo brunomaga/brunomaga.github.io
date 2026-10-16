@@ -164,8 +164,6 @@ To summarize, the encoder-decoder architecture of the transformer allows a faste
 
 ## BERT: Bidirectional Encoder Representation from Transformers
 
-Note: the original BERT paper is also detailed in the <a href="{{ site.publications_permalink }}">publications bookmark</a> section.
-
 Going back to the previous section, the main rationale of the Transformer's Encoder-Decoder is that:
 - The encoder learns the context of the input language (English in the previous example);
 - The decoder learns the task of mapping the input to the output language (the English-to-French translation);
