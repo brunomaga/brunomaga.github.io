@@ -173,8 +173,13 @@ $$
 
 where $$b^T x(t)$$ is constrained to unit variance. On the whitened data, $$b^T x(t) = w^T z(t)$$, where $$w^T = b^T V^{-1}$$ is a row of $$U$$, and the unit-variance constraint becomes $$w^T w=1$$. ICA therefore maximizes the absolute value of the *kurtosis* $$\mid k(w^Tz) \mid$$, subject to $$w^T w=1$$. The gradient is:
 
-{: style="text-align:center; font-size: small;"}
-<img width="50%" height="50%" src="{{ site.assets }}/unsupervised-learning/ica_kurtosis.png">
+$$
+\begin{align*}
+\frac{\partial |\mathrm{kurt}(\boldsymbol{w}^T \boldsymbol{z})|}{\partial \boldsymbol{w}} & = \frac{\partial}{\partial \boldsymbol{w}} \left| \mathrm{E}\{(\boldsymbol{w}^T \boldsymbol{z})^4\} - 3\mathrm{E}\{(\boldsymbol{w}^T \boldsymbol{z})^2\}^2 \right| \\
+& = \frac{\partial}{\partial \boldsymbol{w}} \left| \mathrm{E}\{(\boldsymbol{w}^T \boldsymbol{z})^4\} - 3\{||\boldsymbol{w}||^2\}^2 \right| \quad \text{(because } \mathrm{E}(\boldsymbol{z} \boldsymbol{z}^T) = I) \\
+& = 4\mathrm{sign}[\mathrm{kurt}(\boldsymbol{w}^T \boldsymbol{z})] \left[ \mathrm{E}\{\boldsymbol{z} (\boldsymbol{w}^T \boldsymbol{z})^3\} - 3\boldsymbol{w} ||\boldsymbol{w}||^2 \right]
+\end{align*}
+$$
 
 Gradient ascent then solves the problem:
 - $$\Delta w \propto \text{sign} [ k(w^T z)] \, ( E [ z(w^T z)^3 ] - 3w )$$;
