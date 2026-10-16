@@ -21,9 +21,25 @@ In 1991, the papers [Adaptive Mixture of Local Experts](https://www.cs.toronto.e
 
 The MoE was defined as a set of independent **experts** (feed-forward networks, $$f_i(x)$$ in the picture) alongside a **gating network** (also a feed-forward network, $$g(x)$$). All the experts and the gating network receive the same input $$x$$. The gating network outputs a distribution of each expert's relevance/importance for the given input and can be defined in its simplest form as $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, where $$W_g$$ is an (optional) learnable transformation. Finally, the output of the system ($$z$$) is the sum of the outputs of all experts weighted by the output of the gating network.
 
-The implementation of an MoE module is straightforward:
+The implementation of an MoE module is straightforward. The router is a small feed-forward network that outputs, for every token, a probability per expert, and each expert is a regular feed-forward network:
 
 ```python
+class Router(nn.Module):
+  """ a DNN to route tokens to experts """
+
+  def __init__(self, n_embd, num_experts, dropout=0.1):
+    super().__init__()
+    self.net = nn.Sequential(
+      nn.Dropout(dropout),
+      nn.Linear(n_embd, n_embd*4), nn.ReLU(),
+      nn.Linear(n_embd*4, n_embd*4), nn.ReLU(),
+      nn.Linear(n_embd*4, num_experts), nn.Softmax(dim=-1)
+    )
+
+  def forward(self, x):
+    return self.net(x)
+
+
 class MoE(nn.Module):
 
   def __init__(self, input_size, output_size, num_experts, dropout=0.1):

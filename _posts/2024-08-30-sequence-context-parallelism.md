@@ -269,7 +269,19 @@ class RingAttention(torch.autograd.Function):
         return out
 ```
 
-where `isend_k_and_v(k, v, recv_k, recv_v, group)` is the function that asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`.
+where `isend_k_and_v(k, v, recv_k, recv_v, group)` asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`:
+
+```python
+def isend_k_and_v(k, v, recv_k, recv_v, group):
+    P, rank = group.size(), group.rank()
+    dst = (rank + 1) % P  # the rank of the next process
+    src = (rank - 1) % P  # the rank of the previous process
+    req_k_send = dist.P2POp(dist.isend, k, dst, group)
+    req_v_send = dist.P2POp(dist.isend, v, dst, group)
+    req_k_recv = dist.P2POp(dist.irecv, recv_k, src, group)
+    req_v_recv = dist.P2POp(dist.irecv, recv_v, src, group)
+    return dist.batch_isend_irecv([req_k_send, req_v_send, req_k_recv, req_v_recv])
+```
 
 The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html#background) takes as input the gradient of the loss with respect to the output ($$\nabla_{out} Loss$$ or `dout` in the code below), and returns the gradients with respect to the inputs (gradients $$\nabla_{q} Loss$$, $$\nabla_{k} Loss$$, $$\nabla_{v} Loss$$, or `dq`, `dk`, `dv`):
 
