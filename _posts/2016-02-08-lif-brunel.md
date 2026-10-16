@@ -114,16 +114,39 @@ Adapted from: Brunel 2000
 
 The hard part is defining the network parameters, such as connectivity, synaptic weights and firing threshold. The original [paper][brunel-paper] describes them in detail, and the table below summarizes them: 
 
-{: style="text-align:center; font-size: small;"}
-<img width="50%" height="50%" src="{{ site.assets }}/lif-brunel/summary-of-the-network-parameters-for-the-model-proposed-by-brunel-2000.png">
+| G &nbsp; Network Parameters |  |
+| Parameter | Value |
+|:--|--:|
+| Number of excitatory neurons $$N_E$$ | 8000 |
+| Number of inhibitory neurons $$N_I$$ | 2000 |
+| Excitatory synapses per neuron $$C_E$$ | 800 |
+| Inhibitory synapses per neuron $$C_E$$ | 200 |
+
+| H &nbsp; Neuron Parameters |  |
+| Parameter | Value |
+|:--|--:|
+| Membrane time constant $$\tau_m$$ | 20 ms |
+| Refractory period $$\tau_{\text{rp}}$$ | 2 ms |
+| Firing threshold $$V_{\text{th}}$$ | 20 mV |
+| Membrane capatitance $$C_m$$ | 1pF |
+| Resting potential $$V_E$$ | 0 mV |
+| Reset potential $$V_{\text{reset}}$$ | 10 mV |
+| Excitatory PSP amplitude $$J_E$$ | 0.1 mV |
+| Inhibitory PSP amplitude $$J_I$$ | -0.5 mV |
+| Synaptic delay $$D$$ | 1.5 ms |
+| Background rate $$\eta$$ | 2.0 |
 
 {: style="text-align:center; font-size: small;"}
 source: Marc-Oliver Gewaltig, ResearchGate
 
 Network activity is regulated by adjusting the stimuli parameters. Brunel defines models for slow, regular and fast network dynamics, with the following average neuron spiking rates (Hz) and global oscillation frequencies (Hz) of voltage trajectories:
 
-{: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="{{ site.assets }}/lif-brunel/frequencies.png">
+|  | Firing rate |  | Global frequency |  |
+|  | Simulation | Theory | Simulation | Theory |
+|:--|:-:|:-:|:-:|:-:|
+| SI, fast | 60.7 Hz | 55.8 Hz | 180 Hz | 190 Hz |
+| AI | 37.7 Hz | 38.0 Hz | — | — |
+| SI, slow | 5.5 Hz | 6.5 Hz | 22 Hz | 29 Hz |
 
 {: style="text-align:center; font-size: small;"}
 source: Brunel 2000

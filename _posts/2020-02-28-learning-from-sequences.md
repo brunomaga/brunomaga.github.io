@@ -149,8 +149,12 @@ The other components of the transformer are not specific to it, and were used be
 
 Besides the large reduction in the number of iterations on the encoder side, the authors compare the computational complexity of four different models:
 
-{: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/transformer_table.png"/>
+| Layer Type | Complexity per Layer | Sequential Operations | Maximum Path Length |
+|:--|:-:|:-:|:-:|
+| **Self-Attention** | $$O(n^2 \cdot d)$$ | $$O(1)$$ | $$O(1)$$ |
+| Recurrent | $$O(n \cdot d^2)$$ | $$O(n)$$ | $$O(n)$$ |
+| Convolutional | $$O(k \cdot n \cdot d^2)$$ | $$O(1)$$ | $$O(log_k(n))$$ |
+| **Self-Attention** (restricted) | $$O(r \cdot n \cdot d)$$ | $$O(1)$$ | $$O(n/r)$$ |
 
 {: style="text-align:center; font-size: small;"}
 Computational complexity of four different learning models. Key: $$n$$: sequence length, $$d$$: representation dim., $$k$$: kernel size, $$r$$: size of neighbourhood. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
