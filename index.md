@@ -8,12 +8,12 @@ layout: default
     <h1 class="post-title">{{ site.author.name }}</h1>
     <h2>Machine Learning and High-Performance Computing</h2>
 
-    <div class="home-links">
-      <a href="https://linkedin.com/in/brunomaga"><i class="fab fa-linkedin"></i> linkedin</a>
-      <a href="https://github.com/brunomaga"><i class="fab fa-fw fa-github"></i> github</a>
-      <a href="{{ site.google_scholar }}"><i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> scholar</a>
-      <a href="mailto:{{ site.author.email }}?subject=Hello"><i class="far fa-envelope" title="Email"></i> email</a>
-      <a href="{{ '/feed.xml' | relative_url }}"><i class="fas fa-fw fa-rss"></i> RSS</a>
+    <div class="post-labels">
+      <a class="post-label post-label--link" href="https://linkedin.com/in/brunomaga"><i class="fab fa-linkedin" aria-hidden="true"></i> linkedin</a>
+      <a class="post-label post-label--link" href="https://github.com/brunomaga"><i class="fab fa-github" aria-hidden="true"></i> github</a>
+      <a class="post-label post-label--link" href="{{ site.google_scholar }}"><i class="ai ai-google-scholar" aria-hidden="true"></i> scholar</a>
+      <!-- <a class="post-label post-label--link" href="{{ '/resume.pdf' | relative_url }}"><i class="far fa-file-lines" aria-hidden="true"></i> resume</a> -->
+      <a class="post-label post-label--link" href="mailto:{{ site.author.email }}?subject=Hello"><i class="far fa-envelope" aria-hidden="true"></i> email</a>
     </div>
   </div>
 

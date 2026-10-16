@@ -1,5 +1,5 @@
 // Labels: the back link, date, category and tags of a post (_layouts/post.html), the back link at its end and on
-// the 404 page, and the years and resource types of the label tables
+// the 404 page, the links of the home page, and the years and resource types of the label tables
 
 .post-labels {
   display: flex;
@@ -42,22 +42,23 @@
   color: $label-category-color;
 }
 
-// back link: a label in the link colour, visited or not, that fills on hover
-a.post-label--back {
+// links (the back link, and the links of the home page): labels in the link colour, visited or not, that fill on
+// hover
+a.post-label--link {
   border-color: $brand-color;
   color: $brand-color;
   transition: background-color 0.15s, color 0.15s;
 }
 
-a.post-label--back:hover,
-a.post-label--back:focus-visible {
+a.post-label--link:hover,
+a.post-label--link:focus-visible {
   background-color: $brand-color;
   color: #fff;
   text-decoration: none;
 }
 
-a.post-label--back .fa-arrow-left {
-  font-size: 0.9em;  // as tall as the capitals
+a.post-label--link i {
+  font-size: 0.9em;  // as tall as the capitals (the GitHub and LinkedIn logos a little taller)
   line-height: 0;    // so that it doesn't make the label taller where text-box isn't supported
 }
 
