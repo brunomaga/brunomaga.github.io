@@ -37,15 +37,15 @@ In this space, I write about my projects and topics related to my fields of inte
 </p>
 
 <!-- blog posts -->
-<table class="label-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
+<table style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
 {%- assign previous_year = "" -%}
 {% for post in site.posts %}
 {%- assign year = post.date | date: "%Y" -%}
 <tr style="border: none;">
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
-{% if year != previous_year %}<span class="post-label">{{ year }}</span>{% endif %}
+<td class="align-top" style="border:none; width: 1%; padding-top: 0.4em; padding-right: 0; padding-bottom: 0.4em; color: #666; line-height: 1.3; vertical-align: top;">
+{% if year != previous_year %}{{ year }}{% endif %}
 </td>
-<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
+<td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; padding-left: 0.75em; line-height: 1.3; vertical-align: top;">
 <a href="{{ post.url }}">{{ post.categories.first }}: {{ post.title }}</a>
 </td>
 </tr>
@@ -58,7 +58,7 @@ In this space, I write about my projects and topics related to my fields of inte
 I also keep a curated list of related books and other resources available online:
 </p>
 
-<table id="resources-table" class="label-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
+<table id="resources-table" style='width: 100%; border:none; border-collapse:collapse; margin-top: 0.5em;'>
 <tr style="border: none;">
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;"><span class="post-label">book</span></td>
 <td class="align-top" style="border:none; padding-top: 0.4em; padding-bottom: 0.4em; line-height: 1.3; vertical-align: top;">
