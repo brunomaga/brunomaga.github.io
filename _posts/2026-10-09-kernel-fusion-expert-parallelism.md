@@ -96,7 +96,7 @@ Data movement for one microbatch. Each row is a stage (left box) and the tensor 
 A single microbatch uses one class of unit at a time. The kernel therefore runs several microbatches at once, each one stage behind the previous. While the matrix units multiply microbatch $$m$$, the vector units regroup microbatch $$m+1$$, and the switch dispatches or combines other microbatches. Matrix units, vector units and the switch are busy at the same time, on different microbatches. Each stage waits only on the previous stage of the same microbatch, so there is no global barrier. Also, only the buffers of the microbatches in flight are alive at any time, so memory grows with the depth of the pipeline, not with the size of the batch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_pipeline.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_pipeline.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Pipelined execution of four microbatches (mb 0 to 3) during prefill, to scale. No two matrix (purple) and no two vector (green) boxes overlap. The dispatch and combine run on different INC elements, so they may overlap.

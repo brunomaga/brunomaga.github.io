@@ -20608,6 +20608,477 @@
         <mxCell id="moe_fusion_results-77" value="MegaKernel+INC" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=15;" vertex="1" parent="moe_fusion_results-figure">
           <mxGeometry x="160.74" y="107.85" width="144" height="20" as="geometry" />
         </mxCell>
+        <mxCell id="ep_pipeline-label" value="ep_pipeline.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="6558.9" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="6598.9" width="1461" height="431.83" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-1" value="" style="rounded=0;html=1;fillColor=#f5f5f5;strokeColor=none;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="0" y="0" width="1461.0043" height="88.3025" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-2" value="" style="rounded=0;html=1;fillColor=#f5f5f5;strokeColor=none;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="0" y="181.9566" width="1461.0043" height="88.3025" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=8;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="245.2846" y="1.7839" width="391.5634" height="58.8683" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=8;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="371.9407" y="92.7622" width="396.9151" height="58.8683" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=8;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="759.9363" y="183.7405" width="394.2393" height="58.8683" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=8;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="889.2682" y="274.7188" width="396.9151" height="58.8683" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-7" value="Experts" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;labelBackgroundColor=#dae8fc;spacing=0;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="585.9245" y="52.6522" width="44.68" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-8" value="Experts" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;labelBackgroundColor=#dae8fc;spacing=0;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="717.9322" y="143.6305" width="44.68" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-9" value="Experts" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;labelBackgroundColor=#dae8fc;spacing=0;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1103.252" y="234.6088" width="44.68" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-10" value="Experts" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;labelBackgroundColor=#dae8fc;spacing=0;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1235.2597" y="325.5871" width="44.68" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-11" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="105.3386" y="56.1925" as="sourcePoint" />
+            <mxPoint x="116.8447" y="70.0176" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="105.3386" y="70.0176" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-12" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="192.6599" y="70.0176" as="sourcePoint" />
+            <mxPoint x="209.6069" y="56.1925" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="209.6069" y="70.0176" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-13" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="231.0135" y="32.11" as="sourcePoint" />
+            <mxPoint x="247.0685" y="18.2849" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="231.0135" y="18.2849" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-14" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="376.4004" y="18.2849" as="sourcePoint" />
+            <mxPoint x="414.9324" y="32.11" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="414.9324" y="18.2849" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-15" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="437.7662" y="32.11" as="sourcePoint" />
+            <mxPoint x="505.7323" y="18.2849" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="437.7662" y="18.2849" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-16" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="635.0642" y="18.2849" as="sourcePoint" />
+            <mxPoint x="649.7813" y="32.11" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="649.7813" y="18.2849" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-17" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="669.404" y="56.1925" as="sourcePoint" />
+            <mxPoint x="684.1211" y="70.0176" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="669.404" y="70.0176" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-18" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="143.6922" y="147.1708" as="sourcePoint" />
+            <mxPoint x="192.6599" y="160.9959" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="143.6922" y="160.9959" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-19" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="268.4752" y="160.9959" as="sourcePoint" />
+            <mxPoint x="301.4771" y="147.1708" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="301.4771" y="160.9959" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-20" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="322.8838" y="123.0883" as="sourcePoint" />
+            <mxPoint x="376.4004" y="109.2631" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="322.8838" y="109.2631" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-21" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="505.7323" y="109.2631" as="sourcePoint" />
+            <mxPoint x="525.5335" y="123.0883" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="525.5335" y="109.2631" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-22" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="548.3672" y="123.0883" as="sourcePoint" />
+            <mxPoint x="635.0642" y="109.2631" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="548.3672" y="109.2631" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-23" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="764.3961" y="109.2631" as="sourcePoint" />
+            <mxPoint x="831.7378" y="123.0883" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="831.7378" y="109.2631" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-24" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="851.3606" y="147.1708" as="sourcePoint" />
+            <mxPoint x="866.0777" y="160.9959" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="851.3606" y="160.9959" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-25" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="182.0458" y="238.1491" as="sourcePoint" />
+            <mxPoint x="268.4752" y="251.9742" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="182.0458" y="251.9742" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-26" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="344.2904" y="251.9742" as="sourcePoint" />
+            <mxPoint x="360.3454" y="238.1491" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="360.3454" y="251.9742" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-27" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381.7521" y="214.0666" as="sourcePoint" />
+            <mxPoint x="764.3961" y="200.2414" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="381.7521" y="200.2414" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-28" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="893.728" y="200.2414" as="sourcePoint" />
+            <mxPoint x="910.8533" y="214.0666" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="910.8533" y="200.2414" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-29" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="933.687" y="214.0666" as="sourcePoint" />
+            <mxPoint x="1023.0598" y="200.2414" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="933.687" y="200.2414" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-30" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1152.3917" y="200.2414" as="sourcePoint" />
+            <mxPoint x="1167.1088" y="214.0666" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1167.1088" y="200.2414" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-31" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1186.7316" y="238.1491" as="sourcePoint" />
+            <mxPoint x="1201.4486" y="251.9742" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1186.7316" y="251.9742" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-32" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="273.916" y="329.1274" as="sourcePoint" />
+            <mxPoint x="344.2904" y="342.9525" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="273.916" y="342.9525" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-33" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="420.1057" y="342.9525" as="sourcePoint" />
+            <mxPoint x="470.9465" y="329.1274" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="470.9465" y="342.9525" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-34" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="492.3531" y="305.0449" as="sourcePoint" />
+            <mxPoint x="893.728" y="291.2197" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="492.3531" y="291.2197" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-35" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1023.0598" y="291.2197" as="sourcePoint" />
+            <mxPoint x="1040.1852" y="305.0449" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1040.1852" y="291.2197" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-36" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1063.0189" y="305.0449" as="sourcePoint" />
+            <mxPoint x="1152.3917" y="291.2197" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1063.0189" y="291.2197" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-37" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1281.7236" y="291.2197" as="sourcePoint" />
+            <mxPoint x="1349.0654" y="305.0449" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1349.0654" y="291.2197" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-38" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1368.6882" y="329.1274" as="sourcePoint" />
+            <mxPoint x="1383.4052" y="342.9525" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="1368.6882" y="342.9525" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-39" value="MatMul&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="247.0685" y="6.2436" width="129.3319" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-40" value="MatMul&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="505.7323" y="6.2436" width="129.3319" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-41" value="MatMul&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="376.4004" y="97.2219" width="129.3319" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-42" value="MatMul&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="635.0642" y="97.2219" width="129.3319" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-43" value="MatMul&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="764.3961" y="188.2002" width="129.3319" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-44" value="MatMul&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1023.0598" y="188.2002" width="129.3319" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-45" value="MatMul&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="893.728" y="279.1785" width="129.3319" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-46" value="MatMul&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1152.3917" y="279.1785" width="129.3319" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-47" value="route&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="78.4911" y="32.11" width="38.3536" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-48" value="regroup&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="193.5519" y="32.11" width="53.5166" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-49" value="SwiGLU&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="397.8071" y="32.11" width="57.0844" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-50" value="reduce&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="635.0642" y="32.11" width="49.0569" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-51" value="route&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="116.8447" y="123.0883" width="38.3536" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-52" value="regroup&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="285.4221" y="123.0883" width="53.5166" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-53" value="SwiGLU&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="508.4081" y="123.0883" width="57.0844" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-54" value="reduce&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="817.0208" y="123.0883" width="49.0569" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-55" value="route&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="155.1983" y="214.0666" width="38.3536" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-56" value="regroup&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="344.2904" y="214.0666" width="53.5166" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-57" value="SwiGLU&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="893.728" y="214.0666" width="57.0844" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-58" value="reduce&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1152.3917" y="214.0666" width="49.0569" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-59" value="route&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="247.0685" y="305.0449" width="38.3536" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-60" value="regroup&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="454.8915" y="305.0449" width="53.5166" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-61" value="SwiGLU&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1023.0598" y="305.0449" width="57.0844" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-62" value="reduce&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1334.3483" y="305.0449" width="49.0569" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-63" value="dispatch&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="116.8447" y="57.9764" width="75.8152" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-64" value="dispatch&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="192.6599" y="148.9547" width="75.8152" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-65" value="dispatch&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="268.4752" y="239.9329" width="75.8152" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-66" value="dispatch&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="344.2904" y="330.9112" width="75.8152" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-67" value="combine&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="684.1211" y="57.9764" width="75.8152" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-68" value="combine&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="866.0777" y="148.9547" width="75.8152" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-69" value="combine&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1201.4486" y="239.9329" width="75.8152" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-70" value="combine&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;rounded=1;absoluteArcSize=1;arcSize=3;spacing=0;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1383.4052" y="330.9112" width="75.8152" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-71" value="mb 0" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="6.0039" y="32.1512" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-72" value="mb 1" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="6.0039" y="123.1295" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-73" value="mb 2" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="6.0039" y="214.1078" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-74" value="mb 3" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="6.0039" y="305.0861" width="60" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-75" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#c8c8c5;strokeWidth=1;fontSize=12;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="78.4911" y="371.9407" as="sourcePoint" />
+            <mxPoint x="1459.2205" y="371.9407" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-76" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#c8c8c5;strokeWidth=1;fontSize=12;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="78.4911" y="371.9407" as="sourcePoint" />
+            <mxPoint x="78.4911" y="377.9407" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-77" value="0" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="58.4911" y="379.9407" width="40" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-78" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#c8c8c5;strokeWidth=1;fontSize=12;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="378.0059" y="371.9407" as="sourcePoint" />
+            <mxPoint x="378.0059" y="377.9407" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-79" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="358.0059" y="379.9407" width="40" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-80" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#c8c8c5;strokeWidth=1;fontSize=12;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="677.6099" y="371.9407" as="sourcePoint" />
+            <mxPoint x="677.6099" y="377.9407" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-81" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="657.6099" y="379.9407" width="40" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-82" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#c8c8c5;strokeWidth=1;fontSize=12;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="977.1247" y="371.9407" as="sourcePoint" />
+            <mxPoint x="977.1247" y="377.9407" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-83" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="957.1247" y="379.9407" width="40" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-84" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#c8c8c5;strokeWidth=1;fontSize=12;" edge="1" parent="ep_pipeline-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1276.6395" y="371.9407" as="sourcePoint" />
+            <mxPoint x="1276.6395" y="377.9407" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="ep_pipeline-85" value="8" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1256.6395" y="379.9407" width="40" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-86" value="time (ms)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="688.8558" y="407.8345" width="160" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-87" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=6;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1239.8022" y="1.7839" width="219.4182" height="84.7347" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-88" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=3;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1247.8297" y="6.2436" width="30.3261" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-89" value="Matrix Units" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1286.1833" y="6.2849" width="173.0371" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-90" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=3;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1247.8297" y="32.11" width="30.3261" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-91" value="Vector Units" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1286.1833" y="32.1512" width="173.0371" height="24" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-92" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=3;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1247.8297" y="57.9764" width="30.3261" height="24.0825" as="geometry" />
+        </mxCell>
+        <mxCell id="ep_pipeline-93" value="In-Network Compute" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="ep_pipeline-figure">
+          <mxGeometry x="1286.1833" y="58.0176" width="173.0371" height="24" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
