@@ -53,7 +53,7 @@ An important result, the **Bernstein-von Mises Theorem**, states that:
 - for a sufficiently large sample size, the posterior distribution becomes independent of the prior (as long as the prior is neither 0 nor 1)
   - i.e. for a sufficiently large dataset, the prior has little influence, as the data alone carries enough information;
   - as the number of datapoints goes to infinity, the posterior distribution converges to a normal distribution whose mean is the maximum likelihood estimator;
-    - this is a restatement of the central limit theorem, where the posterior distribution becomes the likelihood function;
+    - this is the Bayesian counterpart of the asymptotic normality of the maximum likelihood estimator: the posterior concentrates around the maximum likelihood estimate, and its variance shrinks as $$1/N$$;
   - i.e. the effect of the prior decreases as the data increases;
 - since the goal is typically to maximize the posterior, the evidence term can be dropped (as it is independent of $$\theta$$), and only the maximum of the term $$p(X \mid \theta) p(\theta)$$ is computed.
 
@@ -298,7 +298,7 @@ and
 
 $$
  \begin{align*}
-                   & -2 m_N^T S_N^{-1}w = -2 (\sigma^{-2}X^Ty + S_0^{-1} m_0)^T w \\
+                   & m_N^T S_N^{-1}w = (\sigma^{-2}X^Ty + S_0^{-1} m_0)^T w \\
   \Leftrightarrow  & m_N^T S_N^{-1} = (\sigma^{-2}X^Ty + S_0^{-1} m_0)^T \\
   \Leftrightarrow  & m_N = S_N (\sigma^{-2}X^Ty + S_0^{-1} m_0) \\
  \end{align*}
@@ -412,8 +412,7 @@ The algebraic rules used in this document are listed below. A more detailed list
 	3. $$(B+C)A=BA+CA$$;
 	4. $$r(AB)=(rA)B=A(rB)$$ for a scalar $$r$$;
 	5. $$I_mA=A=AI_n$$;
-	6. $$(A+B)^2 = (A+B)(A+B)^T$$;
-	7. $$(y - Xw)^2 = (y-Xw)^T(y-Xw)$$.
+	6. $$(y - Xw)^2 = (y-Xw)^T(y-Xw)$$.
 
 2. **Transpose:**
 	1. $$(A^T)^T = A$$;
@@ -422,8 +421,8 @@ The algebraic rules used in this document are listed below. A more detailed list
 	4. $$(AB)^T=B^TA^T$$;
 
 3. **Division:**
-	1. if $$rA=B$$, then $$r=BA^{-1}$$, for a scalar $$r$$;
-	2. if $$Ar=B$$, then $$r=A^{-1}B$$, for a scalar $$r$$;
+	1. if $$rA=B$$ and $$A$$ is invertible, then $$r=BA^{-1}$$;
+	2. if $$Ar=B$$ and $$A$$ is invertible, then $$r=A^{-1}B$$;
 	3. $$Ax=b$$ is the system of linear equations $$a_{1,1}x_1 + a_{1,2}x_2 + ... + a_{1,n}x_n = b_1$$ for row $$1$$, repeated for every row;
 		- therefore, $$x = A^{-1}b$$, if matrix $$A$$ has an inverse;
 
@@ -439,6 +438,7 @@ The algebraic rules used in this document are listed below. A more detailed list
 	2. $$\frac{d X^TwY}{dw} = XY^T$$;
 	3. $$\frac{d X^Tw^TY}{dw} = YX^T$$; 
 	4. $$\frac{d X^TwX}{dw} = \frac{d X^Tw^TX}{dw} = XX^T$$; 
+	5. $$\frac{d \, w^TAw}{dw} = w^T(A+A^T)$$;
 
 6. **Variance and Covariance:**
 	1. $$\mathbb{Var}(X) = \mathbb{Cov}(X,X)$$;
