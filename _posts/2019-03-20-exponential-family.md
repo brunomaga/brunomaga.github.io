@@ -71,7 +71,7 @@ $$
 \frac{dA}{d\eta^T} & = \frac{d}{d\eta^T} \left(  \log \int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x  \right) \\
                    & = \frac{ \int_x T(x) h(x) \exp (\eta^T T(x)) \, \mathrm{d}x}{\int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x} \\
                      & \qquad \text{(log derivative rule: } \frac{d}{dx} log(x) = \frac{x'}{x} \text{)} \\
-                   & = \int_x T(x) h(x) exp(\eta^TT(x) - A(\eta))  \, \mathrm{d}x \\
+                   & = \int_x T(x) h(x) \exp(\eta^TT(x) - A(\eta))  \, \mathrm{d}x \\
                      & \qquad \text{(definition of } p(x \mid \eta) \text{, and } \frac{e^a}{e^b} = e^{a-b} \text{)} \\
                    & = \mathbf{E}[T(X)] \\
                      & \qquad \text{(def. expected value: } \mathbf{E}[X] = \int_x x \, f(x) dx \text{, for density func. } f(x) \text{)} \\
@@ -82,8 +82,8 @@ for the complete dataset $$X=(x_1, x_2, ..., x_m)$$, i.e. the first derivative o
 
 $$
 \begin{align*}
-\frac{d^2A}{d\eta\,d\eta^T} & = \int_x h(x) T(x) \left( T(x) -\frac{d}{d\eta^T}A(\eta)\right)^T \, exp\left(\eta^TT(x) - A(\eta)\right)  \, dx \\
-                            & = \int_x h(x) T(x) \left( T(x) - \mathbf{E}[T(X)] \right)^T \, exp\left(\eta^TT(x) - A(\eta)\right)  \, dx  & (\frac{dA}{d\eta^T} =  \mathbf{E}[T(X)])\\
+\frac{d^2A}{d\eta\,d\eta^T} & = \int_x h(x) T(x) \left( T(x) -\frac{d}{d\eta^T}A(\eta)\right)^T \, \exp\left(\eta^TT(x) - A(\eta)\right)  \, dx \\
+                            & = \int_x h(x) T(x) \left( T(x) - \mathbf{E}[T(X)] \right)^T \, \exp\left(\eta^TT(x) - A(\eta)\right)  \, dx  & (\frac{dA}{d\eta^T} =  \mathbf{E}[T(X)])\\
                             & = \mathbf{E}[T(X)T(X)^T] -\mathbf{E}[T(X)] \, \mathbf{E}[T(X)]^T  & (\mathbf{E}[X] = \int_x x \, f(x) dx)\\
                             & = \mathbf{Var}[T(X)] & (Var(X)=E[X^2]-E[X]^2)\\
 \end{align*}
@@ -115,7 +115,7 @@ Finally, *exponential family distributions have conjugate priors* (i.e. prior an
 The univariate Gaussian distribution is defined for an input $$x$$ as:
 
 $$
-p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
+p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
 $$
 
 for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$. By moving the terms around, we get:
@@ -123,10 +123,10 @@ for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$. By movin
 $$
 \begin{align*}
 %% source: http://www.cs.columbia.edu/~jebara/4771/tutorials/lecture12.pdf
-p(x \mid \mu, \sigma ) & = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right) \\
-                       & = \frac{1}{ \sqrt{2 \pi } } \,\, exp \left( - \log \sigma - \frac{x^2}{2 \sigma^2} + \frac{\mu x}{\sigma^2} - \frac{\mu^2}{2 \sigma^2} \right) \\
-                       & = \frac{1}{ \sqrt{2 \pi } } \,\, exp \left( \eta(\theta)^TT(x) - \log \sigma - \frac{\mu^2}{2\sigma^2} \right) \\
-                       & = h(x) \,\, exp \left( \eta(\theta)^TT(x) - A(\theta) \right) \\
+p(x \mid \mu, \sigma ) & = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right) \\
+                       & = \frac{1}{ \sqrt{2 \pi } } \,\, \exp \left( - \log \sigma - \frac{x^2}{2 \sigma^2} + \frac{\mu x}{\sigma^2} - \frac{\mu^2}{2 \sigma^2} \right) \\
+                       & = \frac{1}{ \sqrt{2 \pi } } \,\, \exp \left( \eta(\theta)^TT(x) - \log \sigma - \frac{\mu^2}{2\sigma^2} \right) \\
+                       & = h(x) \,\, \exp \left( \eta(\theta)^TT(x) - A(\theta) \right) \\
 \end{align*}
 $$
 
