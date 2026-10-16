@@ -820,7 +820,7 @@
         <mxCell id="benchmark_gptlite-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="824" y="244" width="16" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-48" value="PyTorch 1.3.1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-48" value="PyTorch 1.13.1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="848" y="242" width="210" height="20" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_wide-label" value="benchmark_wide.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
@@ -1027,7 +1027,7 @@
         <mxCell id="benchmark_wide-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="benchmark_wide-figure">
           <mxGeometry x="824" y="244" width="16" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_wide-56" value="PyTorch 1.3.1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="benchmark_wide-figure">
+        <mxCell id="benchmark_wide-56" value="PyTorch 1.13.1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="benchmark_wide-figure">
           <mxGeometry x="848" y="242" width="210" height="20" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_deep-label" value="benchmark_deep.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
@@ -1216,7 +1216,7 @@
         <mxCell id="benchmark_deep-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="benchmark_deep-figure">
           <mxGeometry x="824" y="244" width="16" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_deep-52" value="PyTorch 1.3.1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="benchmark_deep-figure">
+        <mxCell id="benchmark_deep-52" value="PyTorch 1.13.1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;" vertex="1" parent="benchmark_deep-figure">
           <mxGeometry x="848" y="242" width="210" height="20" as="geometry" />
         </mxCell>
       </root>
