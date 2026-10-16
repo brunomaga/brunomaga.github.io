@@ -43,7 +43,7 @@ The first one is the **Odd-Even sort**, a distributed swap-based sorting algorit
 The algorithm is illustrated with a sample dataset in the following workflow: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/distributed-sort/odd_even_sort.png">
+<img width="70%" height="70%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
 
 The algorithm has the advantage of being very *memory-stable*, i.e. one can predict the worst-case memory consumption in advance. Moreover, each compute node ends up with the same number of elements it started with, so load balancing across nodes is guaranteed. However, it is inefficient for a very large network of nodes, as it requires a high number of iterations.
 
@@ -59,7 +59,7 @@ A faster alternative is based on a distributed implementation of the **sample so
 Here is an illustrative workflow:
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/distributed-sort/sample_sort.png">
+<img width="70%" height="70%" src="{{ site.assets }}/distributed-sort/sample_sort.svg">
 
 This method is computationally very efficient, as the number of communication operations is constant, regardless of the input size or network size. However, it may lead to a highly heterogeneous number of elements across nodes, which leads to a computational and memory imbalance. If necessary, a network balancing operation may follow the sorting to balance the dataset across the network. This balancing operation and the sorting of spatial datasets are covered [in a different post]({{ site.baseurl }}{% post_url 2015-12-01-slicing %}).
 

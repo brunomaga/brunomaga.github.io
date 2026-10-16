@@ -9,7 +9,7 @@ tags: ["data parallelism", "ZeRO", "FSDP", "CPU offloading", "activation checkpo
 Distributed data parallelism (DDP) refers to the parallel execution of different input samples across processors. If you consider any data input to be of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size), then data parallelism refers to the use case where we split the data across $$P$$ processes, leading to a local input of shape $$B/P \times S \times E$$:
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.png"/>
+<img width="35%" height="35%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.
@@ -21,7 +21,7 @@ There are two main data parallelism approaches:
 **Distributed Data Parallelism** keeps a full copy of the model (weights, optimizer states and gradients) on each processor. All models are initialized equally. Each processor takes a different mini-batch as input and performs a forward pass to compute the loss of that batch. On the backward pass, at every layer of the model, all processes compute the gradients of their batch and perform an all-reduce to get the mean gradients across all processors. These are then used to update the optimizer states. Because parameters are initialized equally, gradients are mean-reduced and all processes perform the same updates, the models across all processors are kept in an identical state throughout the execution. 
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Workflow for distributed data parallelism (DDP) across 4 color-coded processes. Each process holds a copy of a 4-layer feed-forward model, initialized identically. Each process performs a forward pass on its own data (arrow pointing up on the left of the model). On the backward pass, all processes compute the local gradients and mean-reduce them across the network (arrow pointing down on the right of the model). The mean of the gradients is then used by the optimizer to update the parameter states. 
@@ -37,7 +37,7 @@ Looking at the diagram above, we can see that each processor holds a copy of the
 An important remark is that activations are not sharded, i.e. they are kept in *full shape* on each processor. And in modern models, **a huge chunk of memory is allocated to residual memory (activations, normalization layers, etc.), which is not sharded by FSDP**. With that in mind, the following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Workflow for stage 3 sharding. Each processor contains a non-overlapping subset of parameters, gradients and optimizer data, split by assigning different layers to different processes. Each processor loads a different data batch. During the forward and backward passes (represented by arrows on the left and right of the model, respectively), when a given layer needs to be computed, the process responsible for that layer broadcasts and gathers those values to/from the remaining processes. Example for processor 1 (yellow): **Data loading:** the yellow process loads data sample 1. **Forward pass:** the yellow process receives the parameters from rank 0 (blue) and computes the activations for layer 1. Afterwards, the yellow process broadcasts its parameters to ranks 0, 2 and 3, so that they compute their activations for layer 2. Activations for layers 3 and 4 are computed similarly to layer 1, led by the red and green processes, respectively. **Backward pass:** the green process (3) broadcasts its parameters to all other processes. Each process can use its activations and the received parameters to compute the gradients for the top layer. All processes gather their local gradients in process 3, which uses them to update the parameters of the last layer. The same happens for the remaining layers, with the red, yellow and blue processes (iteratively) broadcasting the parameters and gathering the gradients.
@@ -453,7 +453,7 @@ All implementations use the same mixed-precision representation, communication b
 We tested our GPTlite model with a micro-batch size of 1 sample per GPU, and the results are:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/benchmark_gptlite.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/benchmark_gptlite.svg"/>
 
 
 **Memory overhead from communication buffers.** Looking at the max vs average memory, note that, in theory, the max memory should be much higher at high ZeRO stages than at low ZeRO stages and DDP. This is because more parameters are communicated, which requires more communication buffers. However, setting the communication bucket sizes to a low value in the config file overcomes this effect. In fact, we also benchmarked several runs with the default communication bucket sizes (`5e9`), which led to higher memory usage, as expected (approximately double in stages 2 and 3), and became prohibitive for some runs.

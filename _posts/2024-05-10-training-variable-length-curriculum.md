@@ -18,7 +18,7 @@ Curriculum learning can also improve efficiency for variable-length data. Mixing
 At a high level, curriculum learning is simple: (1) define a difficulty metric per sample, (2) sort samples by increasing difficulty, and (3) iterate through the sorted dataset. In distributed runs with large datasets, however, this becomes non-trivial. Samples are typically assigned to ranks in an interleaved fashion (e.g., via PyTorch’s `DistributedSampler`; see (a) and (b) below), which can lead to load imbalance if each rank sorts only its local shard.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the curriculum dataset setup problem on a network of 4 ranks and a dataset of 16 samples.
@@ -35,7 +35,7 @@ In the next sections, we detail the latter option.
 The tricky part is the distributed sort that transforms (b) into (d). There are [other distributed sorting algorithms]({{ site.baseurl }}{% post_url 2014-06-21-distributed-sort %}) one could use, but here we implement the **Distributed Sample Sort** algorithm because it scales well to many processes. The workflow is:
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/distributed-sort/sample_sort.png"> 
+<img width="70%" height="70%" src="{{ site.assets }}/distributed-sort/sample_sort.svg"> 
 
 A Python implementation is provided below.
 
@@ -109,7 +109,7 @@ In practice, the hyperparameters are: (1) a target token count per batch, (2) a 
 Assume a limit of $$30$$ tokens per batch, a reference LR of $$10^{-3}$$, and a reference batch size of $$2$$. Early in curriculum learning (short sequences), batches will contain more samples than later (long sequences), as shown below:
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
 
 Here, samples are collected until the batch reaches (at most) 30 tokens. The batch sizes (number of samples) become $$10$$ and $$4$$ in the left and right examples, respectively. Using linear scaling, the corresponding LRs are $$5 \times 10^{-3}$$ and $$2 \times 10^{-3}$$.
 
@@ -119,7 +119,7 @@ Here, samples are collected until the batch reaches (at most) 30 tokens. The bat
 requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x S x E` across micro-batches can lead to smaller micro-batches and additional padding. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 processes and 2 gradient accumulation steps (4 micro-batches total):
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
 
 In the pipeline case (right), all micro-batches in the batch have the same `B x S x E` shape. To satisfy this constraint, fewer samples are packed per micro-batch compared to the non-pipeline case (left), and padding is used when needed.
 
@@ -128,7 +128,7 @@ In the pipeline case (right), all micro-batches in the batch have the same `B x 
 Attention is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x S x E` often uses a 2D attention mask of shape `S x S`, broadcast over the batch dimension. With variable lengths, we need a *per-sample* mask, which is naturally represented as a `B x S x S` tensor. For example, for the non-pipeline micro-batch 1 above (top-left; 4 sentences), the mask can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
 
 A useful way to think about the cost is that attention scales linearly with `B` and quadratically with the maximum `S` in the batch. Allowing `S` to vary (and adapting `B` accordingly) can therefore improve utilization by avoiding padding to an unnecessarily large `S`.
 
@@ -281,7 +281,7 @@ PyTorch provides limited support for compiling variable-shaped tensors via `torc
 Static compilation is ideal, but how can we make it work with variable shapes? A practical approach is to ensure that each rank executes at least one forward+backward pass for every *shape* it will see later, near the beginning of training—so the compiler can generate (and cache) a binary per shape. The idea is illustrated below:
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/distributed-training/imgs/torch_compile_dataset.png"/>
+<img width="70%" height="70%" src="{{ site.assets }}/distributed-training/imgs/torch_compile_dataset.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Setting up the dataset to allow static compilation for variable-length training on 3 processes. **Top (a):** default interleaved assignment (color-coded). The green and yellow ranks encounter a new shape later (red cross), triggering recompilation and potentially a runtime failure depending on settings. **Bottom (b):** reshuffling so that each rank sees one sample of each shape early on allows compiling one binary per shape and then running without surprises.

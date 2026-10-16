@@ -47,7 +47,7 @@ We will look at two different testbenches, so feel free to pick one based on you
 {: style="text-align:center; font-size: small;"}
 <img width="20%" height="20%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.png"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="22%" height="22%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.png"/>
+<img width="22%" height="22%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 In this post, we will detail the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark their C++, PyTorch, TorchScript and `torch.compile` implementations.
