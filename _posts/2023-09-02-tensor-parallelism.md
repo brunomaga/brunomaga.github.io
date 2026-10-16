@@ -232,8 +232,6 @@ As an important remark, finding the best parallelism strategy is hard, due to th
 
 We just scratched the surface of DeepSpeed's capabilities. There are plenty of resources that should also be explored. To name a few: [**autotuning**](https://www.deepspeed.ai/tutorials/autotuning/) ([README.md](https://github.com/microsoft/DeepSpeed/tree/master/deepspeed/autotuning)) for parallelism hyper-parameter discovery; [**flops profiler**](https://deepspeed.readthedocs.io/en/latest/flops-profiler.html) to measure the time, flops and parameters of individual layers; [**sparse attention kernels**](https://www.deepspeed.ai/2020/09/08/sparse-attention.html) ([API](https://www.deepspeed.ai/docs/config-json/#sparse-attention)) to support long sequences of model inputs, such as text, image, or sound; [**communication optimizers**](https://www.deepspeed.ai/training/#1-bit-adam-01-adam-and-1-bit-lamb-optimizers-with-up-to-26x-less-communication) that offer the same convergence as Adam/LAMB but incur 26x less communication and 6.6x higher throughput on large BERT pretraining; [**monitor**](https://www.deepspeed.ai/training/#monitor) to log live training metrics to TensorBoard, csv file or other backend; [**model compression**](https://www.deepspeed.ai/compression/) ([API](https://www.deepspeed.ai/docs/config-json/#compression)) via layer reduction, weight quantization, activation quantization, sparse pruning, row pruning, head pruning and channel pruning, to deliver faster speed and smaller model size.
 
-Finally, the Megatron-LM tensor parallelism code has been added to the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training), if you want to try it.
-
 
 
 
