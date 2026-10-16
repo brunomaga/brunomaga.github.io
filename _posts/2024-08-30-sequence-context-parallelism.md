@@ -162,7 +162,7 @@ class MultiHeadAttention(nn.Module):
         return out
 ```
 
-And that is it. It's conceptually simple, and the full implementation can be found in [ulysses_sequence_parallelism.py]({{ site.assets }}/distributed-training/ulysses_sequence_parallelism.py).
+And that is it. It's conceptually simple.
 
 As an important note, there are other similar approaches to this problem, such as [ColAI-SP](https://arxiv.org/abs/2105.13120) and [Megatron-SP](https://arxiv.org/abs/2205.05198). The big advantage of [DeepSpeed Ulysses parallelism](https://arxiv.org/abs/2309.14509) is that it requires less communication than the alternatives. Its main downsides are that the maximum parallelism is dictated by the number of attention heads (typically 8), and that the all-to-all is a blocking collective communication that may incur heavy overhead on slow interconnects. That's where Ring Attention comes into play.
 
@@ -230,11 +230,39 @@ An important point is that, while Ulysses communicates synchronously (all-to-all
 
 ### Implementation
 
-The forward pass performs $$P$$ ring communication steps. On each step, it computes the attention output and the per-row LogSumExp of the current block (variables `block_out` and `block_lse`), and accumulates them:
+We start with two helper functions: `isend_k_and_v(k, v, recv_k, recv_v, group)` asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`; and `accumulate_out_and_lse(out, lse, block_out, block_lse)` merges the attention output and LogSumExp of a block into the accumulated ones, rescaling both so that the softmax is normalized over all the blocks seen so far:
 
 ```python
 import flash_attn.flash_attn_interface as fa  # flash attention
 
+
+def isend_k_and_v(k, v, recv_k, recv_v, group):
+    P, rank = group.size(), group.rank()
+    dst = (rank + 1) % P  # the rank of the next process
+    src = (rank - 1) % P  # the rank of the previous process
+    req_k_send = dist.P2POp(dist.isend, k, dst, group)
+    req_v_send = dist.P2POp(dist.isend, v, dst, group)
+    req_k_recv = dist.P2POp(dist.irecv, recv_k, src, group)
+    req_v_recv = dist.P2POp(dist.irecv, recv_v, src, group)
+    return dist.batch_isend_irecv([req_k_send, req_v_send, req_k_recv, req_v_recv])
+
+
+def accumulate_out_and_lse(out, lse, block_out, block_lse):
+    # source: https://github.com/zhuzilin/ring-flash-attention/pull/34#issuecomment-2076126795
+    block_lse = block_lse.transpose(-2, -1).unsqueeze(dim=-1)  # (B, H, S/P) -> (B, S/P, H, 1)
+    if out is None:  # first block
+        return block_out, block_lse
+
+    # out = (1-w) * out + w * block_out, with w = exp(block_lse) / (exp(lse) + exp(block_lse)) = sigmoid(block_lse - lse)
+    out = out - F.sigmoid(block_lse - lse) * (out - block_out)
+    # lse = log(exp(lse) + exp(block_lse))
+    lse = lse - F.logsigmoid(lse - block_lse)
+    return out, lse
+```
+
+The forward pass performs $$P$$ ring communication steps. On each step, it computes the attention output and the per-row LogSumExp of the current block (variables `block_out` and `block_lse`), and accumulates them. The keys and values of the next step are received into new buffers, as the current ones are still being sent and used:
+
+```python
 class RingAttention(torch.autograd.Function):
 
     @staticmethod
@@ -244,11 +272,11 @@ class RingAttention(torch.autograd.Function):
         q, k, v = q.contiguous(), k.contiguous(), v.contiguous()  # (B, S/P, H, E)
 
         out = lse = None  # accumulators
-        recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)  # recv buffers
 
         for step in range(P):  # do P ring steps
 
-            # send K and V for next step, asynchronously
+            # send K and V for next step, asynchronously, into new buffers: the current ones are still in use
+            recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)
             reqs_k_v = isend_k_and_v(k, v, recv_k, recv_v, group)
 
             # compute attention output and softmax lse for current block
@@ -269,8 +297,6 @@ class RingAttention(torch.autograd.Function):
         return out
 ```
 
-where `isend_k_and_v(k, v, recv_k, recv_v, group)` is the function that asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`.
-
 The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html#background) takes as input the gradient of the loss with respect to the output ($$\nabla_{out} Loss$$ or `dout` in the code below), and returns the gradients with respect to the inputs (gradients $$\nabla_{q} Loss$$, $$\nabla_{k} Loss$$, $$\nabla_{v} Loss$$, or `dq`, `dk`, `dv`):
 
 ```python
@@ -289,12 +315,10 @@ The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutori
         dk = torch.zeros_like(k)
         dv = torch.zeros_like(v)
 
-        recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)
-        recv_dk, recv_dv = torch.empty_like(dk), torch.empty_like(dv)
-
         for step in range(P):
 
-            # send K and V for next step, asynchronously
+            # send K and V for next step, asynchronously, into new buffers (as in the forward pass)
+            recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)
             reqs_k_v = isend_k_and_v(k, v, recv_k, recv_v, ctx.group)
 
             # compute gradients for the current block K/V and local Q
@@ -316,7 +340,8 @@ The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutori
             dk += block_dk
             dv += block_dv
 
-            # rotate dK and dV alongside K and V
+            # rotate dK and dV alongside K and V, into new buffers
+            recv_dk, recv_dv = torch.empty_like(dk), torch.empty_like(dv)
             reqs_dk_dv = isend_k_and_v(dk, dv, recv_dk, recv_dv, ctx.group)
 
             # wait for new K and V before the next iteration
@@ -363,7 +388,7 @@ class MultiHeadAttention(nn.Module):
 
 And we are done. As we can see, a key disadvantage of ring attention is that the number of communication steps equals the number of processes. This may be a limiting factor on large networks, where very fine-grained sequence splits lead to small per-process workloads, making it harder to fully hide communication behind computation.
 
-This code has been added to the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training). Keep in mind that deterministic behaviour of sequence parallelism across networks with different node counts is difficult to achieve, because random number generators produce different values during model initialization and dropout.
+Keep in mind that deterministic behaviour of sequence parallelism across networks with different node counts is difficult to achieve, because random number generators produce different values during model initialization and dropout.
 
 ## When to use Ulysses and Ring attention
 

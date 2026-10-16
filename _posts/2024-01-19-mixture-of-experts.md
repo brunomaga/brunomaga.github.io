@@ -21,9 +21,25 @@ In 1991, the papers [Adaptive Mixture of Local Experts](https://www.cs.toronto.e
 
 The MoE was defined as a set of independent **experts** (feed-forward networks, $$f_i(x)$$ in the picture) alongside a **gating network** (also a feed-forward network, $$g(x)$$). All the experts and the gating network receive the same input $$x$$. The gating network outputs a distribution of each expert's relevance/importance for the given input and can be defined in its simplest form as $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, where $$W_g$$ is an (optional) learnable transformation. Finally, the output of the system ($$z$$) is the sum of the outputs of all experts weighted by the output of the gating network.
 
-The implementation of an MoE module is straightforward, and you can find the full code with running examples in the [`moe.py` file in the supporting repository]({{ site.assets }}/distributed-training/moe.py):
+The implementation of an MoE module is straightforward. The router is a small feed-forward network that outputs, for every token, a probability per expert, and each expert is a regular feed-forward network:
 
 ```python
+class Router(nn.Module):
+  """ a DNN to route tokens to experts """
+
+  def __init__(self, n_embd, num_experts, dropout=0.1):
+    super().__init__()
+    self.net = nn.Sequential(
+      nn.Dropout(dropout),
+      nn.Linear(n_embd, n_embd*4), nn.ReLU(),
+      nn.Linear(n_embd*4, n_embd*4), nn.ReLU(),
+      nn.Linear(n_embd*4, num_experts), nn.Softmax(dim=-1)
+    )
+
+  def forward(self, x):
+    return self.net(x)
+
+
 class MoE(nn.Module):
 
   def __init__(self, input_size, output_size, num_experts, dropout=0.1):
@@ -64,7 +80,7 @@ The authors made an important observation about the behavior of MoEs:
 
 With the rise of deep neural networks, [Learning Factored Representations in a Deep Mixture of Experts (2014)](https://arxiv.org/abs/1312.4314) extended the “Mixture of Experts” to a stacked model (“Deep Mixture of Experts”) with multiple sets of gating networks and experts.
 
-This deep MoE model can be coded simply by stacking several MoE layers (also available in [`moe.py`]({{ site.assets }}/distributed-training/moe.py)):
+This deep MoE model can be coded simply by stacking several MoE layers:
 
 ```python
 class MoE_deep(nn.Module):
@@ -273,7 +289,28 @@ The MoE workflow is a four-step algorithm, best illustrated in the [MegaBlocks p
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/moe_megablocks.png"/>
 
-We start by defining our distributed mixture-of-experts block as `MoE_dist`, with a replicated (data-parallel) router and a local expert. For the sake of simplicity, we will have a single expert per GPU, and will drop the tokens that exceed each expert's capacity:
+The tokens travel to the experts and back with all-to-all collectives, and their gradients must make the same trip in reverse during the backward pass. `dist.all_to_all_single` has no backward pass, so we wrap it in an autograd function whose backward pass runs the opposite all-to-all:
+
+```python
+class AllToAll(torch.autograd.Function):
+  """ all_to_all_single along the first dimension, whose backward pass sends the gradients back """
+
+  @staticmethod
+  def forward(ctx, x, output_split_sizes, input_split_sizes):
+    ctx.split_sizes = output_split_sizes, input_split_sizes
+    out = x.new_empty(sum(output_split_sizes), *x.shape[1:])
+    dist.all_to_all_single(out, x.contiguous(), output_split_sizes, input_split_sizes)
+    return out
+
+  @staticmethod
+  def backward(ctx, grad_out):
+    output_split_sizes, input_split_sizes = ctx.split_sizes
+    grad_x = grad_out.new_empty(sum(input_split_sizes), *grad_out.shape[1:])
+    dist.all_to_all_single(grad_x, grad_out.contiguous(), input_split_sizes, output_split_sizes)
+    return grad_x, None, None
+```
+
+We then define our distributed mixture-of-experts block as `MoE_dist`, with a replicated (data-parallel) router and a local expert. For the sake of simplicity, we will have a single expert per GPU, and will drop the tokens that exceed each expert's capacity:
 
 ```python
 class MoE_dist(nn.Module):
@@ -307,7 +344,7 @@ The **routing step** computes the top-`k` expert assignments of each token, i.e.
     probs_per_expert = [ topk_probs[topk_experts==expert] for expert in range(self.num_experts) ]
 ```
 
-The following **permutation step** selectively sends the tokens to each expert's processor. We will use collective communication, and perform this in two steps: an `all_to_all` operation to exchange the number of items to send/receive, followed by `all_to_all_single` calls to exchange the metadata of the tokens and the tokens themselves (based on those counts): 
+The following **permutation step** selectively sends the tokens to each expert's processor. We will use collective communication, and perform this in two steps: an `all_to_all` operation to exchange the number of items to send/receive, followed by an `all_to_all_single` call to exchange the metadata of the tokens and an `AllToAll` call to exchange the tokens themselves (based on those counts): 
 
 ```python
     device = x.device
@@ -328,9 +365,7 @@ The following **permutation step** selectively sends the tokens to each expert's
 
     # send/receive input tokens to/from the appropriate processors
     send_toks = torch.cat([ x[ids[:,0], ids[:,1]] for ids in ids_per_expert], dim=0).to(device)
-    recv_toks = torch.zeros(sum(recv_count)*E, dtype=x.dtype, device=device)
-    dist.all_to_all_single(recv_toks, send_toks.flatten(), fn_count(recv_count,E), fn_count(send_count,E))
-    recv_toks = recv_toks.view(-1, E) # reshape to E columns 
+    recv_toks = AllToAll.apply(send_toks, fn_count(recv_count), fn_count(send_count)) # sum(recv_count) rows, E columns
 ```
 
 {: style="text-align:center; font-size: small;"}
@@ -350,17 +385,19 @@ The **computation step** reshuffles the received data into a 3D batch of size `R
     # crop or pad received items PER SENTENCE to max capacity. Batch shape: Rows * Capacity * E
     capacity = int(S / self.num_experts * self.capacity_factor)
     pad_fn = lambda toks, value = self.padding_val: F.pad(toks, (0,0,0,capacity-toks.shape[0]), value=value) # pad or crop
-    batch_toks = torch.stack([ pad_fn(recv_toks[recv_row_slice(i)][:capacity]) for i in range(len(uniq_rows))], dim=0).to(device)
-
     batch_row_len = torch.tensor([ min(recv_row_lens[r], capacity) for r in range(len(uniq_rows))], device=device)
-    batch_toks = self.expert(batch_toks) # Rows * Capacity * E
+
+    if len(uniq_rows) > 0: # the expert may receive no tokens
+      batch_toks = torch.stack([ pad_fn(recv_toks[recv_row_slice(i)][:capacity]) for i in range(len(uniq_rows))], dim=0).to(device)
+      batch_toks = self.expert(batch_toks) # Rows * Capacity * E
 ``` 
 
-The output of the expert is stored in `batch_toks`. The following **un-permutation step** performs an `all_to_all_single` with the opposite communication of the permutation step. This populates the all-to-all output buffer with the partial results of all experts.
+The output of the expert is stored in `batch_toks`. The following **un-permutation step** performs an `AllToAll` with the opposite communication of the permutation step. This populates the all-to-all output buffer with the partial results of all experts.
 
 ```python
-    # scatter computed outputs back into recv_toks (only for the non-padding part)
-    out_flat = torch.full_like(recv_toks, fill_value=self.padding_val)
+    # scatter computed outputs back into recv_toks (only for the non-padding part). out_flat is computed from recv_toks
+    # so that every process runs both all-to-alls of the backward pass, even if its expert received no tokens
+    out_flat = recv_toks * 0 + self.padding_val
     cursor = 0
     for r in range(len(uniq_rows)):
       n = int(batch_row_len[r].item())
@@ -368,21 +405,18 @@ The output of the expert is stored in `batch_toks`. The following **un-permutati
       cursor += int(recv_row_lens[r].item())
 
     # send back
-    send_toks = torch.empty(sum(send_count)*E, dtype=x.dtype, device=device)
-    dist.all_to_all_single(send_toks, out_flat.flatten(), fn_count(send_count,E), fn_count(recv_count,E))
-    x = send_toks.view(-1, E)
+    x = AllToAll.apply(out_flat, fn_count(send_count), fn_count(recv_count)) # sum(send_count) rows, E columns
 ```
 
-Finally, the **scale step** computes, for each token, the sum of the outputs of its top-k experts, weighted by the router probabilities:
+Finally, the **scale step** computes, for each token, the sum of the outputs of its top-k experts, weighted by the router probabilities. The outputs arrive grouped by expert, so each one is added at the position of its token, given by the metadata `(b, s)` sent in the permutation step:
 
 ```python
-    x *= torch.cat(probs_per_expert).view(-1,1) # multiply by router probabilities
-    if self.k>1: # sum over k probabilities for each input
-      x = torch.stack([ x[send_ids[:,-1]==kk] for kk in range(self.k)]).sum(dim=0)
-    return x.view(B,S,E)
+    x = x * torch.cat(probs_per_expert).view(-1,1) # multiply by router probabilities
+    rows = (send_ids[:,0] - global_rank*B) * S + send_ids[:,1] # position b*S+s of each output, without the batch offset
+    out = torch.zeros(B*S, E, dtype=x.dtype, device=device).index_add(0, rows, x) # sum the top-k outputs of each token
+    return out.view(B,S,E)
 ```
 
-You can find the complete implementation in the [Mixture-of-Experts repo]({{ site.assets }}/distributed-training/moe_dist.py).
 
 ### Applying the MoE to an existing LLM
 

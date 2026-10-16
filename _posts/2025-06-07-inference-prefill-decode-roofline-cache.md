@@ -187,9 +187,6 @@ To draw the roofline, we use a **logarithmic scale** on both axes:
 
 The following code plots the roofline of a given GPU, and the point of a given operation:
 
-<details markdown="1">
-<summary>Show code</summary>
-
 ```python
 import matplotlib.pyplot as plt
 import numpy as np
@@ -227,8 +224,6 @@ plt.savefig("simple_roofline.png") # Save the plot
 plt.show()
 ```
 
-</details>
-
 
 ## Caching
 
@@ -264,9 +259,6 @@ The following code implements a KV cache in a small GPT-like model, and generate
 - It keeps the last `seqlen` keys and values and, once the window is full, gives every new token the last position, `seqlen-1`: generation can continue past the context window, but its output no longer matches that of the model without a cache. Models with relative positional encodings, such as RoPE, handle a sliding window more gracefully, but keeping only the most recent tokens still changes the output.
 - It also accepts several new tokens on top of a cache, as needed by prefix caching and chunked prefill (both covered below) and by speculative decoding: the causal mask is shifted, so that each new token attends to all the cached tokens and to the new ones up to itself.
 
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 def causal_mask(Sq, Sk, device=None):
@@ -381,15 +373,10 @@ def generate_kvcache(model, prompt, n_tokens, seqlen, kv_cache=None):
     return tokens
 ```
 
-</details>
-
 {: style="text-align:center; font-size: small;"}
 <img width="65%" height="65%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
 
 The code above uses a dynamic cache. The following code implements a static cache of one layer, where the keys and values of the new tokens are written in place:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 class StaticKVCache:
@@ -410,8 +397,6 @@ class StaticKVCache:
         return self.k[:, :, :self.length], self.v[:, :, :self.length]
 ```
 
-</details>
-
 
 #### PagedAttention: memory management for the KV cache
 
@@ -421,9 +406,6 @@ Serving many requests at once makes memory management hard, because the final le
 <img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 The following code implements a paged KV cache, and the attention of one decode step over it:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 class PagedKVCache:
@@ -476,8 +458,6 @@ def paged_decode_attention(q, cache, seq_ids):
     return (F.softmax(scores, dim=-1)[:, :, None] @ v)[:, :, 0]          # [B, H, 1, L] @ [B, H, L, h] -> [B, H, h]
 ```
 
-</details>
-
 
 ### Prefix caching, prompt caching or context caching
 
@@ -502,9 +482,6 @@ Automatic Prefix Caching does not require extra memory. It works almost entirely
 **What is kept.** The KV cache holds the keys and values of every token processed so far, in every layer: the prompt and all the generated tokens, not only the last decode step, since every new token attends to all of them. When a request finishes, its blocks are not freed right away: they stay in memory, marked as reusable, until the memory is needed for something else. Generated tokens are cached too, which is what makes multi-turn chat fast: the prompt of the next turn is the previous prompt, plus the previous answer, plus the new message. Thus, we put the static content first in the prompt (system prompt, tools, documents), and the variable content last (the user's question, timestamps): anything that changes early in the prompt invalidates the cache for everything after it.
 
 The following code implements the lookup of the cached blocks, and prefix caching on top of the KV cache. The keys and values of a prefix shared by all the requests are computed once and reused by every request, with the same outputs as without prefix caching:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 def block_hashes(tokens, block_size=16):
@@ -536,8 +513,6 @@ def generate_with_prefix_cache(model, prefix, requests, n_tokens, seqlen):
     return [generate_kvcache(model, request, n_tokens, seqlen, kv_cache=prefix_cache) for request in requests]
 ```
 
-</details>
-
 ### Semantic caching
 
 A semantic cache sits in front of the model, in the application. For every incoming query, it:
@@ -557,9 +532,6 @@ A semantic cache sits in front of the model, in the application. For every incom
 **Risks.** A semantic cache is approximate, so it can return a wrong answer: "how do I delete a file in Python?" and "how do I delete a folder in Python?" are very similar sentences with different answers. Answers also go stale, and queries that depend on the conversation history or on the user should not share answers. In practice, we tune the threshold on real traffic, scope the cache per user or tenant, add an expiration time, and optionally confirm hits with a more precise re-ranking model. The strict version of a semantic cache is the **exact-match cache**, which maps a hash of the full request (prompt, model and sampling parameters) to the response. It never returns a wrong answer, but only hits identical requests.
 
 The following code implements a minimal semantic cache with FAISS and a pre-trained sentence encoder, in front of a function `generate_fn(query)` that calls the LLM. It also returns the similarity of each query to the closest cached one, which helps to choose the threshold:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 import faiss
@@ -603,8 +575,6 @@ def sentence_transformer_embedder(model_name="all-MiniLM-L6-v2"):
 # answer, similarity, hit = cache(query, generate_fn)
 ```
 
-</details>
-
 ## Batching improvements
 
 Batching is the most effective way to increase throughput. Because decode is memory-bound, a decode step for a batch of 32 sequences takes almost the same time as for a single sequence: the weights are read once and used 32 times. Throughput grows almost linearly with the batch size, until the GPU becomes compute-bound or runs out of memory for the KV caches. The difficulty is that requests arrive at different times and generate different numbers of tokens.
@@ -616,9 +586,6 @@ The simplest approach groups $$B$$ requests and runs them together until all of 
 **Continuous batching**, introduced by [Orca](https://www.usenix.org/conference/osdi22/presentation/yu) as *iteration-level scheduling*, makes the scheduling decision at every decode step instead of once per batch: as soon as a sequence finishes, it leaves the batch, and a waiting request takes its slot. The GPU stays busy, and new requests do not wait for the longest sequence of the previous batch. The implementation must track each sequence separately, by keeping the tokens of every running request apart, and rebuild the right-padded batch at every step, so a new request never sees the tokens of the previous occupant of its slot.
 
 The following code implements static and continuous batching. Both produce the same outputs, but continuous batching needs fewer steps, since its slots spend more time generating useful tokens. To keep the code short, every step processes the whole sequences, without a KV cache:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 def next_tokens(model, sequences, seqlen):
@@ -671,8 +638,6 @@ def continuous_batching(model, requests, batch_size, seqlen):
     return outputs, n_steps
 ```
 
-</details>
-
 ### Chunked prefill
 
 With continuous batching, a waiting request takes a free slot as soon as one is available, so its prefill runs in the same step as the decode of the other requests. The prefill of a short prompt costs about as much as a decode step, but the prefill of a long prompt can take many times longer, and all the other requests of the batch wait for it: their text pauses, and their time per output token spikes. **Chunked prefill** solves this by processing a long prompt in several smaller pieces (chunks), one per step, instead of in one forward pass. Every step then takes about the same time, and the other requests keep generating one token per step.
@@ -694,9 +659,6 @@ Each chunk, say of 512 tokens, attends to the KV cache of the earlier chunks. Su
 
 The following code implements chunked prefill:
 
-<details markdown="1">
-<summary>Show code</summary>
-
 ```python
 def chunked_prefill(model, prompt, chunk_size, kv_cache=None):
     """ Prefill of a long prompt: [1, S], in chunks of chunk_size tokens. Each chunk attends to the KV cache of the
@@ -706,8 +668,6 @@ def chunked_prefill(model, prompt, chunk_size, kv_cache=None):
         logits, kv_cache = model(prompt[:, start:start + chunk_size], kv_cache)
     return logits[:, -1], kv_cache
 ```
-
-</details>
 
 ### Ragged/packed batching
 
@@ -720,9 +680,6 @@ With continuous batching and chunked prefill, a step runs the prefill chunks of 
 <img width="91%" height="91%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
 
 The following code packs sequences of different lengths into one flat sequence, with the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 def pack(sequences):
@@ -746,8 +703,6 @@ def pack(sequences):
 # next_tokens = logits[0, last].argmax(dim=-1)            # [B]: the next token of every sequence
 ```
 
-</details>
-
 ### Scheduling
 
 **Mixing prefill and decode** improves performance. This is the roofline picture again. Decode tokens alone are memory-bound and leave most of the GPU's compute idle. But adding prefill chunks to the same step means many more tokens share each weight read, which pushes the step toward the ridge point: this is what [Sarathi-Serve](https://arxiv.org/abs/2403.02310) calls "stall-free batching". To further improve GPU utilization:
@@ -756,9 +711,6 @@ def pack(sequences):
   - **Reducing CPU overhead** is done with CUDA graphs for the decode-only steps, and by scheduling the next step on the CPU while the GPU runs the current one (as SGLang does).
 
 The following code selects the tokens of a step within a token budget:
-
-<details markdown="1">
-<summary>Show code</summary>
 
 ```python
 def schedule(decoding, prefilling, budget):
@@ -775,8 +727,6 @@ def schedule(decoding, prefilling, budget):
         budget -= min(left, budget)
     return step
 ```
-
-</details>
 
 
 ## Prefill-decode disaggregation

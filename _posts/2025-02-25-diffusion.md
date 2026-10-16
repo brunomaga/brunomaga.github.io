@@ -336,7 +336,7 @@ class DiT(nn.Module):
         # class embeddings, only for a class-conditional model
         self.class_embedding = nn.Embedding(num_labels, n_embd) if num_labels else None
 
-        # DiT blocks
+        # DiT blocks: a regular transformer Block, as in GPT-lite (see dit.py)
         self.blocks = nn.Sequential(*[Block(n_embd=n_embd) for _ in range(n_blocks)])
 
         # decoder: "standard linear decoder to do this; we apply the layer norm and linearly decode each token into a p×p×2C tensor"

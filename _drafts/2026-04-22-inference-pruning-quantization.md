@@ -41,10 +41,7 @@ Deriving 8B and 4B models from a 15B one this way required up to 40 times fewer 
 
 We apply this recipe to GPTlite, removing half of the attention heads and MLP neurons of every block in two ways: in one shot, followed by distillation; and iteratively, removing 10% at a time and distilling after each step, with the same total number of distillation steps. As a baseline, we distill into the same small architecture from a random initialization.
 
-The following code computes the importance of heads and neurons, and implements the structured pruning and the experiment. The full code is in [`pruning.py`]({{ site.assets }}/inference/pruning.py):
-
-<details markdown="1">
-<summary>Show code</summary>
+The following code computes the importance of heads and neurons, and implements the structured pruning and the experiment:
 
 ```python
 def compute_importance(model, data, n_batches, batch_size, seqlen):
@@ -96,8 +93,6 @@ for ratio in keep_ratios:
   prune(model, *importance(model), *target_size(ratio))
   distill(model, teacher, train_data, distill_iters // len(keep_ratios), lr, batch_size, seqlen)
 ```
-
-</details>
 
 ## Quantization
 
@@ -154,10 +149,7 @@ Other common formats are NF4, from [QLoRA](https://arxiv.org/abs/2305.14314), wh
 
 To see how it works, we write our own quantizer: symmetric INT8 quantization with one scale per output channel, and INT4 quantization with one scale per group of 64 weights, packing two 4-bit weights per byte. It quantizes the linear layers of the transformer blocks of GPTlite, and we compare the memory, the time per token and the validation loss against the FP32 and BF16 models. With one scale per output channel, the INT8 layer can apply the scale after the matrix multiplication, while the INT4 layer must dequantize the weights first. In plain PyTorch, both convert the weights back to floating point in memory before each multiplication, which saves memory but not time: actual speedups require kernels that dequantize in registers, such as those of torchao or Marlin, or a compiler that fuses the conversion into the multiplication.
 
-The following code implements our own weight-only INT8 and INT4 quantization of GPTlite. The full code is in [`quantization.py`]({{ site.assets }}/inference/quantization.py):
-
-<details markdown="1">
-<summary>Show code</summary>
+The following code implements our own weight-only INT8 and INT4 quantization of GPTlite:
 
 ```python
 class QuantizedLinear(nn.Module):
@@ -210,8 +202,6 @@ def quantize(model, bits, group_size=64):
     setattr(parent, name, QuantizedLinear(child, bits, group_size))
   return model
 ```
-
-</details>
 
 ### Weight and activation quantization
 
