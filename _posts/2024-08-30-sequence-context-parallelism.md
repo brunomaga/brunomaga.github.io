@@ -230,48 +230,12 @@ An important point is that, while Ulysses communicates synchronously (all-to-all
 
 ### Implementation
 
-The forward pass performs $$P$$ ring communication steps. On each step, it computes the attention output and the per-row LogSumExp of the current block (variables `block_out` and `block_lse`), and accumulates them:
+We start with two helper functions: `isend_k_and_v(k, v, recv_k, recv_v, group)` asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`; and `accumulate_out_and_lse(out, lse, block_out, block_lse)` merges the attention output and LogSumExp of a block into the accumulated ones, rescaling both so that the softmax is normalized over all the blocks seen so far:
 
 ```python
 import flash_attn.flash_attn_interface as fa  # flash attention
 
-class RingAttention(torch.autograd.Function):
 
-    @staticmethod
-    def forward(ctx, q, k, v, group):
-
-        P = group.size()
-        q, k, v = q.contiguous(), k.contiguous(), v.contiguous()  # (B, S/P, H, E)
-
-        out = lse = None  # accumulators
-        recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)  # recv buffers
-
-        for step in range(P):  # do P ring steps
-
-            # send K and V for next step, asynchronously
-            reqs_k_v = isend_k_and_v(k, v, recv_k, recv_v, group)
-
-            # compute attention output and softmax lse for current block
-            dropout_p, softmax_scale = 0.0, q.shape[-1] ** (-0.5)
-            kwargs = dict(causal=False, window_size=(-1, -1), softcap=0.0, alibi_slopes=None, return_softmax=False)
-            block_out, _, _, _, _, block_lse, _, _ = fa._flash_attn_forward(q, k, v, dropout_p, softmax_scale, **kwargs)
-
-            # update out and lse
-            out, lse = accumulate_out_and_lse(out, lse, block_out, block_lse)
-
-            # wait for new K and V before starting the next iteration
-            [req.wait() for req in reqs_k_v]
-            k, v = recv_k, recv_v
-
-        ctx.group = group  # save for backward
-        out = out.to(dtype=q.dtype)
-        ctx.save_for_backward(q, k, v, out, lse)
-        return out
-```
-
-where `isend_k_and_v(k, v, recv_k, recv_v, group)` asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`; and `accumulate_out_and_lse(out, lse, block_out, block_lse)` merges the output and LogSumExp of the current block into the accumulated ones, rescaling both so that the softmax is normalized over all the blocks seen so far:
-
-```python
 def isend_k_and_v(k, v, recv_k, recv_v, group):
     P, rank = group.size(), group.rank()
     dst = (rank + 1) % P  # the rank of the next process
@@ -296,6 +260,43 @@ def accumulate_out_and_lse(out, lse, block_out, block_lse):
     return out, lse
 ```
 
+The forward pass performs $$P$$ ring communication steps. On each step, it computes the attention output and the per-row LogSumExp of the current block (variables `block_out` and `block_lse`), and accumulates them. The keys and values of the next step are received into new buffers, as the current ones are still being sent and used:
+
+```python
+class RingAttention(torch.autograd.Function):
+
+    @staticmethod
+    def forward(ctx, q, k, v, group):
+
+        P = group.size()
+        q, k, v = q.contiguous(), k.contiguous(), v.contiguous()  # (B, S/P, H, E)
+
+        out = lse = None  # accumulators
+
+        for step in range(P):  # do P ring steps
+
+            # send K and V for next step, asynchronously, into new buffers: the current ones are still in use
+            recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)
+            reqs_k_v = isend_k_and_v(k, v, recv_k, recv_v, group)
+
+            # compute attention output and softmax lse for current block
+            dropout_p, softmax_scale = 0.0, q.shape[-1] ** (-0.5)
+            kwargs = dict(causal=False, window_size=(-1, -1), softcap=0.0, alibi_slopes=None, return_softmax=False)
+            block_out, _, _, _, _, block_lse, _, _ = fa._flash_attn_forward(q, k, v, dropout_p, softmax_scale, **kwargs)
+
+            # update out and lse
+            out, lse = accumulate_out_and_lse(out, lse, block_out, block_lse)
+
+            # wait for new K and V before starting the next iteration
+            [req.wait() for req in reqs_k_v]
+            k, v = recv_k, recv_v
+
+        ctx.group = group  # save for backward
+        out = out.to(dtype=q.dtype)
+        ctx.save_for_backward(q, k, v, out, lse)
+        return out
+```
+
 The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutorial.html#background) takes as input the gradient of the loss with respect to the output ($$\nabla_{out} Loss$$ or `dout` in the code below), and returns the gradients with respect to the inputs (gradients $$\nabla_{q} Loss$$, $$\nabla_{k} Loss$$, $$\nabla_{v} Loss$$, or `dq`, `dk`, `dv`):
 
 ```python
@@ -314,12 +315,10 @@ The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutori
         dk = torch.zeros_like(k)
         dv = torch.zeros_like(v)
 
-        recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)
-        recv_dk, recv_dv = torch.empty_like(dk), torch.empty_like(dv)
-
         for step in range(P):
 
-            # send K and V for next step, asynchronously
+            # send K and V for next step, asynchronously, into new buffers (as in the forward pass)
+            recv_k, recv_v = torch.empty_like(k), torch.empty_like(v)
             reqs_k_v = isend_k_and_v(k, v, recv_k, recv_v, ctx.group)
 
             # compute gradients for the current block K/V and local Q
@@ -341,7 +340,8 @@ The [backward pass](https://pytorch.org/tutorials/beginner/blitz/autograd_tutori
             dk += block_dk
             dv += block_dv
 
-            # rotate dK and dV alongside K and V
+            # rotate dK and dV alongside K and V, into new buffers
+            recv_dk, recv_dv = torch.empty_like(dk), torch.empty_like(dv)
             reqs_dk_dv = isend_k_and_v(dk, dv, recv_dk, recv_dv, ctx.group)
 
             # wait for new K and V before the next iteration
