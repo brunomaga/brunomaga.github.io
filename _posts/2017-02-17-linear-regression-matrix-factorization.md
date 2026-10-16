@@ -209,7 +209,7 @@ where $$m$$ is a hyper-parameter. For the original paper, refer to [Dimensionali
 
 ### Connectionist Temporal Classification loss
 
-**[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)** is a classifier and loss function for noisy, unsegmented sequential input data, used to train recurrent neural networks (RNNs) such as LSTM networks to tackle sequence problems where the timing is variable. Published in [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf). Already summarized in the <a href="{{ site.publications_permalink }}">publications bookmark</a> section.
+**[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)** is a classifier and loss function for noisy, unsegmented sequential input data, used to train recurrent neural networks (RNNs) such as LSTM networks to tackle sequence problems where the timing is variable. Published in [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf).
 
 ### Focal Loss
 

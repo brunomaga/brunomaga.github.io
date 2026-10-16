@@ -1254,87 +1254,6 @@ when using smaller models than the previous SoTA". Their best model family, Guan
 <td></td>
 <td markdown="block">
 <details>
-<summary markdown="span"><span class="pub-title">Better speech synthesis through scaling (TorToise)</span><span class="pub-meta">, James Betker</span><a class="pub-link" href="https://arxiv.org/abs/2305.07243" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-The paper describes a way to apply the techniques used for image generation to speech
-synthesis. This result is TorToise, an expressive, multi-voice text-to-speech system. So far, TTS models were hard to train efficiently due to high sampling rate, unavailability of large datasets, or encoder-decoder challenges.
-
-Background: most modern text-to-speech systems operate on speech data that is encoded as a MEL spectrogram. Because of this, most efforts focus on the high-quality decoding of MEL spectrograms back into audio waveforms, a.k.a. a vocoder or a MEL inverter. The author reviews the state-of-the-art autoregressive transformers and DDPMs:
-- **DALL-E**, a transformer model with a (quadratic complexity) full-sequence self-attention, that showed how an autoregressive decoder can be applied to text-to-image generation. The author believes that the "VQVAE decoder used by DALL-E is principally responsible for the blurry incoherence exhibited by most of it’s samples".
-  - DALL-E also introduced the process of **re-ranking**, that samples from the autoregressive model and picks the best output for downstream use. Re-ranking requires a strong discriminator to tell good from bad text/image pairings. CLIP was used for this purpose.
-- Denoising diffusion probabilistic models (**DDPMs**) generate crisp high quality images, and are effective on using low-quality signals to reconstruct the high-dimensional space where those signals derived from. However, DDPMs rely on fixed output shapes, known beforehand. Thus, they "cannot learn to convert text into audio signals because they cannot solve the implicit alignment problem between text and audio". Also, DDPMs must be sampled from over multiple iterations, leading to high compute cost and latency. 
-
-With that in mind: **TorToise works by joining autoregressive decoders and DDPMs**: "the autoregressive model will be used to convert a sequence of text tokens to a sequence of tokens representing the output space (in our case, speech tokens). The DDPM will then be used to decode these tokens into a high quality representation of speech." In practice, for Text-To-Speech, we train the following neural networks:
-- An auto-regressive model on text tokens that yields the probability of each audio token;
-- A contrastive model that ranks outputs of the autoregressive decoder. DALL-E uses CLIP (for images), but TorToise uses Contrastive Language-Voice Pretrained Transformer (CLVP, for TTS). 
-- A DDPM to convert speech tokens back into speech spectrograms;
-- A vocoder (UnivNet) to convert the MEL spectrograms into waveforms.
-
-The inputs of the auto-regressive and DDPM models include (or are conditioned to) an additional speech conditioning input, which is one or more audio clips (MEL spectrograms) of the same speaker as the target. This allows the model to "infer vocal characteristics like tone and prosody" desired in the target output audio. Finally, they apply the **TorToise trick**: the DDPM is first trained on converting discrete speech codes into MEL spectrograms,  and then **fine-tuned** on the latent space of the AR model outputs instead of the speech codes. "The logic here is that the AR latent space is far more semantically rich than discrete tokens. By fine-tuning on this latent space, we improve the efficiency of the downstream diffusion model"
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="70%" height="70%" src="{{ site.assets }}/publications/tortoise-v2.png"/>
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Neural Codec Language Models are Zero-Shot Text to Speech Synthesizers (VALL-E)</span><span class="pub-meta">, Microsoft</span><a class="pub-link" href="https://arxiv.org/abs/2301.02111" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-The paper introduces a pipeline for text-to-speech synthesis (TTS), based on a neural codec language model (VALL-E) using discrete codes (encode/decode embeddings) derived from an off-the-shelf neural audio codec model (EnCodec, Défossez et al., 2022).
-This model treats TTS as a conditional language modeling task rather than continuous signal regression as in previous work.
-In practice, contrarily to e.g. AudioLM, a generative audio-to-audio / speech-to-speech model that predicts future audio from input audio, VALL-E is a TTS model that takes as input the phoneme sequence of the text and a 3-second enrolled recording of an unseen target speaker (the acoustic prompt), and generates the speech for that text in the prompt speaker's voice (a continuation mode, where the prompt is the first 3 seconds of the utterance itself, is also evaluated).
-VALL-E uses an audio codec code as intermediate representation and language model as objective, contrary to previous models using mel spectrogram as intermediate representation and continuous signal regression as objective.
-VALL-E is trained with the LibriLight dataset, consisting of 60K hours of English speech with over 7000 unique speakers. This dataset is audio-only, so the authors employ a speech recognition model to generate the (text) transcriptions. VALL-E significantly outperforms the state-of-the-art zero-shot TTS system (YourTTS) in speech naturalness and speaker similarity, and can preserve the speaker's emotion and the acoustic environment of the prompt.
-
-**Background, quantization, tokenizer and encoding**: audio is typically stored as a sequence of 16-bit integer values, therefore a generative model is required to output $$2^{16}$$ = 65536 probabilities per timestep to synthesize the raw audio. Added to the high output size, its long sequence length makes it more intractable for audio synthesis. Therefore, speech **quantization** is required to compress integer values and sequence length. Common methods are $$\mu$$-law, vector quantization (HuBERT, vq-wav2vec), k-means/self-supervised method, etc.  As **audio tokenizer**, VALL-E uses a pre-trained neural audio codec model, EnCodec, a convolutional encoder-decoder model, whose input and output are both 24 kHz audio across variable bitrates. The encoder produces embeddings at 75 Hz for input waveforms at 24 kHz, which is a 320-fold reduction in the sampling rate.  Each embedding is modeled by residual vector quantization (RVQ), with eight hierarchy quantizers with 1024 entries each as shown in Figure 2.
-
-**Model architecture:** formally speaking, $$Encodec(y) = C^{T \times 8}$$, where $$C$$ represents the two-dimensional acoustic code matrix (the 8-channel audio embeddings), and $$T$$ is the downsampled utterance length. Each row in $$C$$ represents the eight codes for a given time frame. After quantization, the neural codec decoder is able to reconstruct the waveform, i.e. $$Decodec(C) ≈ \hat{y}$$. Given an acoustic prompt matrix $$\hat{C}^{T \times 8}$$, the optimization objective of the TTS model is $$max\, p(C \mid x, \hat{C})$$, where $$x$$ is the corresponding phoneme transcription. I.e. the model learns to extract the content and speaker information from the phoneme sequence and the acoustic prompt, respectively.
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="70%" height="70%" src="{{ site.assets }}/publications/valle.png"/>
-
-There are two models, that refer to the two inference steps:
-1. an auto-regressive (AR) model, a transformer decoder-only architecture, conditioned on the phoneme (text) and acoustic prompt (3-second audio), that gives the discrete tokens of the audio from the first quantizer (Formula 1).
-2. a non auto-regressive (NAR) model, a transformer decoder with full (non-causal) attention, that predicts the remaining 7 quantizers one level at a time, each conditioned on the text, the prompt and the previously predicted levels, for all time steps in parallel (Formula 2).
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="70%" height="70%" src="{{ site.assets }}/publications/valle2.png"/>
-
-Note to self: for the use case of synthesizing audio in a different language, i.e. that differs from the 3-sec input language and text, see [VALL-E X](https://www.microsoft.com/en-us/research/project/vall-e-x/vall-e-x/).
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">High-Fidelity Audio Compression with Improved RVQGAN (DAC)</span><span class="pub-meta">, Descript Inc.</span><a class="pub-link" href="https://arxiv.org/abs/2306.06546" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-An audio encoder-decoder (the Descript Audio Codec, DAC) that compresses 44.1 kHz audio from all domains (speech, environment, music) with a single universal model into discrete tokens at just 8 kbps (~90× compression), outperforming competing codecs such as Meta's EnCodec. Achieved by combining advances in high-fidelity audio generation with better vector quantization techniques from the image domain, along with improved adversarial and reconstruction losses. Methods:
-- to account for periodicity in audio inputs, they adopted the snake activation function for frequency $$\alpha$$ as $$snake(x) = x + \frac{1}{α} sin^2 (αx)$$.
-- vanilla VQ-VAEs struggle from low codebook usage due to poor initialization, leading to a significant portion of the codebook being unused. This leads to poor reconstruction quality. To address this issue, they use two techniques: (1) factorized codes that decouple code lookup and code embedding, by performing code lookup in a low-dimensional space (section 3.2) and (2) L2-normalization of the encoded and codebook vectors converts Euclidean distance to cosine similarity, which is helpful for stability and quality.
-- state-of-the-art applying quantizer dropout degrades the audio reconstruction quality at full bandwidth. To overcome it, they instead apply quantizer dropout to each input example with some probability $$p=0.5$$.
-- an improved STFT discriminator  at multiple time-scales, that works better in practice and leads to improved phase modeling, compared to Encodec and Soundstream.
--  for **frequency domain reconstruction loss**, they use a mel-reconstruction loss to improve stability, fidelity and convergence speed; and multi-scale spectral losses to encourage modeling of frequencies in multiple time-scales. For **adversarial loss**, they use HingeGAN.  For **codebook learning**, they use commitment losses with stop-gradients from the original VQ-VAE formulation. All these losses are weighted to sum up to the final loss.
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
 <summary markdown="span"><span class="pub-title">Llama 2: Open Foundation and Fine-Tuned Chat Models</span><span class="pub-meta">, Meta</span><a class="pub-link" href="https://arxiv.org/abs/2307.09288" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
@@ -1373,26 +1292,6 @@ the causal nature of the language modeling task.
 - **Overlap of the computation of activations and the communication between GPUs** over the network, to reduce latency.   
 
 With these, the 65B model processes ~380 tokens/sec/GPU on 2048 A100-80GB GPUs, i.e. about 21 days of training for the 1.4T-token dataset.
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Sparks of Artificial General Intelligence: Experiments with an early version of GPT-4</span><span class="pub-meta">, Microsoft</span><a class="pub-link" href="https://arxiv.org/abs/2303.12712" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-A summary paper reporting early results of the experiments with GPT-4 when it was still in active development by OpenAI. The authors "demonstrate that, beyond its mastery of language, GPT-4 can solve novel and difficult tasks that span mathematics, coding, vision, medicine, law, psychology and more, without needing any special prompting. Moreover, in all of these tasks, GPT-4’s performance is strikingly close to human-level performance". The bulk of the paper contains dozens of examples that compare GPT-4 and ChatGPT and demonstrate that GPT-4 surpasses ChatGPT in performance, in code generation, music generation (output as ABC notation), drawings (SVG, TIKZ), and mathematical resolutions (LaTeX). As weaknesses, besides the regular hallucinations it was also observed:
-- Incapacity of planning correctly, when planning is not a linear path.
-- Occasional arithmetic mistakes on long expressions (without tool use), highlighting limits in exact computation.
-- Trained on past information only, without real-time/temporal awareness.
-- lack of rigorous algorithms e.g. `What is the 11th letter of "abacadab"?  …  the 11th letter is "b."`
-- Analogical reasoning can reproduce social stereotypes present in training data.
-
-Some of these can be mitigated by letting the model call external tools (e.g., a search engine, a calculator or other APIs) from within the prompt.
 
 </div>
 </details>
@@ -1697,39 +1596,6 @@ How it differs from “FFN fusion + in-kernel communication” work:
 <td></td>
 <td markdown="block">
 <details>
-<summary markdown="span"><span class="pub-title">High Fidelity Neural Audio Compression (Encodec)</span><span class="pub-meta">, Meta AI</span><a class="pub-link" href="https://arxiv.org/abs/2210.13438" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-EnCodec is a neural network model for a real-time, high-fidelity, audio codec. It consists of a streaming encoder-decoder architecture with quantized latent space trained in an end-to-end fashion. For faster and simpler training, they use a single multiscale spectrogram adversary that efficiently reduces artifacts and produces high-quality samples.
-Two main problems arise in lossy neural compression of audio. The first one is overfitting to a subset of audio samples, and it was overcome by using (1) a large and diverse dataset and (2) discriminator networks that serve as perceptual loss. The second problem is compressing efficiently, both in compute time and in size, solved by using residual vector quantization of the neural encoder floating-point output. The authors claim that "designing end-to-end neural compression models is a set of intertwined choices, among which at least the encoder-decoder architecture, the quantization method, and the perceptual loss play key parts". To that extent, audio quality evaluations (MUSHRA) consist of having humans listen to, compare, and rate excerpts of speech or music compressed with competitive codecs; there, EnCodec outperforms the baselines (e.g., Opus, EVS, Lyra-v2) across all evaluated bandwidths and audio domains, for both 24 kHz mono and 48 kHz stereo audio.
-
-**Background and model:** An audio signal of duration d can be represented by a sequence $$x ∈ [−1, 1]^{C_a × T}$$ with $$C_a$$ the number of audio channels, $$T = d · f_{sr}$$ the number of audio samples at a given sample rate $$f_{sr}$$. The EnCodec model is composed of three main components:
-1. an encoder network $$E$$ that inputs an audio extract and outputs a latent representation $$z$$. It's a 1D convolution followed by convolution blocks (each a residual unit plus a strided convolution for downsampling), followed by a two-layer LSTM for sequence modelling, and a final 1D convolution with $$D$$ output channels. 
-2. a quantization layer $$Q$$ produces a compressed representation $$z_q$$, using vector quantization. They use Residual Vector Quantization (RVQ, Zeghidour et al. 2021) to quantize the output of the encoder. As background, general Vector Quantization consists in projecting an input vector onto the closest entry in a codebook of a given size. In this case, RVQ refines this process by computing the residual after quantization, and further quantizing it using a second codebook, and so forth.
-3. a decoder network $$G$$ that reconstructs the time-domain signal, $$\hat{x}$$, from the compressed latent representation $$z_q$$. The decoder's architecture is the inverse of the encoder, using transposed convolutions instead of strided convolutions.
-
-There are two variants of the model, targeted for the low-latency streamable setup, or a high fidelity non-streamable usage.
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/encodec.png"/>
-
-The training objective minimizes a linear combination of the following losses:
-- **reconstruction loss**, comprised of a time and a frequency domain loss term, to minimize the L1 distance between the target and compressed audio over the time domain, i.e. $$l_t(x, \hat{x}) = \| x − \hat{x} \|_1$$. For the frequency domain loss $$l_f$$ (Note: typo here, this is $$l_s$$ in the picture above, as in *spectrogram loss*), they use an averaged sum of the L1 and L2 losses between the elements of the input and output mel-spectrograms. 
-- **discriminative loss**,  a perceptual loss term based on a multi-scale STFT-based (MS-STFT) discriminator, as in Figure 2.
-In practice, the decoder acts as a generator in an adversarial network and Encodec includes a discriminator module (in orange), with an adversarial loss for the generator as  $$l_g(\hat{x}) = \frac{1}{K} \sum_k max (0, 1 − D_k(\hat{x}))$$, where $$K$$ is the number of discriminators. They additionally include a relative feature-matching loss for the generator, $$l_{feat} (x, \hat{x})$$, in Formula 2 (PS: where is this in Figure 1?).
-The discriminators are trained with the adversarial loss $$l_d(x, \hat{x}) = \frac{1}{K} \sum_{k=1}^K max (0, 1 − D_k(x)) + max(0, 1 + D_k(\hat{x}))$$, where $$K$$ is the number of discriminators.
-- **VQ commitment loss**.  To support Multi-bandwidth learning, at 24 kHz, the model is trained to support the bandwidths 1.5, 3, 6, 12, and 24 kbps by selecting the appropriate number of codebooks to keep in the RVQ step (section 3.2). At 48 kHz, it's trained to support 3, 6, 12 and 24 kbps. They add a commitment loss $$l_w$$ between the output of the encoder, and its quantized value, with no gradient being computed for the quantized value. For each residual step $$c$$, where $$C$$ is the number of residual steps (set by the target bandwidth): $$l_w = \sum_{c=1}^C \| z_c - q_c (z_c) \|_2^2$$, where $$q_c(z_c)$$ is the nearest entry in the corresponding codebook.
-
-The authors also claim that "We introduce a loss balancer in order to stabilize training, in particular the varying scale of the gradients coming from the discriminators" and "We additionally train a small Transformer based language model (Vaswani et al., 2017) with the objective of keeping faster than real time end-to-end compression/decompression on a single CPU core." (Section 3.3) that I have skipped.
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
 <summary markdown="span"><span class="pub-title">DeepNet: Scaling Transformers to 1,000 Layers</span><span class="pub-meta">, Microsoft Research</span><a class="pub-link" href="https://arxiv.org/abs/2203.00555" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
@@ -1755,47 +1621,6 @@ From the abstract: "the traditional training method only supervises the neural n
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="70%" height="70%" src="{{ site.assets }}/publications/contrastive_deep_supervision.png"/>
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Robust Speech Recognition via Large-Scale Weak Supervision (Whisper)</span><span class="pub-meta">, OpenAI</span><a class="pub-link" href="https://arxiv.org/abs/2212.04356" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-Whisper is an automatic speech recognition (ASR) system, that performs several tasks on a Speech-to-text setup. It is trained on 680K hours of multilingual and multitask supervised data collected from the web. I.e. it's a weakly supervised dataset. The authors "show that the use of such a large and diverse dataset leads to improved robustness to accents, background noise and technical language.
-
-The Whisper architecture (section 2.2) is an encoder-decoder Transformer. Input audio is split into 30-second chunks, converted into a log-Mel spectrogram, and then passed into an encoder. A decoder is trained to predict the corresponding text caption, intermixed with special tokens that direct the single model to perform tasks such as language identification, phrase-level timestamps, multilingual speech transcription, and to-English speech translation."
-Audio is re-sampled to 16,000 Hz, and an 80-channel log-magnitude Mel spectrogram representation is computed on 25-millisecond windows with a stride of 10 milliseconds. Whisper uses the same Byte-Pair Encoding text tokenizer as in GPT2 for English-only models, and a refit vocabulary for the multilingual models. 
-
-Evaluated zero-shot, without any fine-tuning, the models generalize well to standard benchmarks, are often competitive with prior fully supervised results, and approach human accuracy and robustness; across many diverse datasets they make far fewer errors (roughly 50% fewer, per OpenAI) than supervised models that match them on LibriSpeech.
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Emergent Abilities of Large Language Models</span><span class="pub-meta">, Google Research & Stanford (TMLR 2022)</span><a class="pub-link" href="https://openreview.net/forum?id=yzkSU5zdwD" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-The paper discusses the phenomenon of **emergent abilities** of large language models. An ability is emergent if it is not present in smaller models but is present in larger models, and not extrapolated from scaling laws. *Phase transition* is the scale at which such abilities are exposed. Scale in this context may represent different compute budgets, data quality or other factors - the paper focuses not on ideal training but on the discussion of such phenomena. As a disclaimer, "model scale is not the singular factor for unlocking an emergent ability" and "as the science of training large language models progresses, certain abilities may be unlocked for smaller models with new architectures, higher-quality data, or improved training procedures".
-
-The first analysis of emergent abilities focuses on the few-shot prompting paradigm, where outcome is emergent when a model has random performance until a certain scale, after which performance increases to well-above random. This was analysed on eight tasks across five model families (LaMDA, GPT-3, Gopher, Chinchilla, PaLM):
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/emergent_abilities_1.png"/>
-
-A similar analysis with augmented prompting exposes the emergent property as related to when the model output starts having a positive effect (e.g. being able to do arithmetic only after a certain scale). A multi-step reasoning by providing a chain-of-thoughts as a sequence of intermediate steps was also analysed, and claimed to be exposed only after $$10^{23}$$ training FLOPs or approx. 100B parameters. Such scale is also required for instruction following tasks (ie new tasks without prior few-shots exemplars, and only by reading a set of instructions). Program execution tasks (a scratchpad for 8-digit addition) require $$9 \times 10^{19}$$ FLOPs or 40M parameters or larger. For model calibration (the ability of a model responding as True or False (or the correctness probability) to which questions they'll be able to predict correctly) requires $$3 \times 10^{23}$$ FLOPs or 52B parameters. It is summarized as:
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/emergent_abilities_2.png"/>
 
 </div>
 </details>
@@ -2015,36 +1840,6 @@ all types of sharding, across the dimension(s) of batch, features, channels and/
 
 {: style="text-align:center; font-size: small;"}
 **Left:** A simplified feedforward layer of a Transformer model. Blue rectangles represent tensors with dashed red & blue lines overlaid representing the desired partitioning across a 2x2 mesh of devices. **Right:** A single partition, after GSPMD has been applied. **Source**: <a href="https://blog.research.google/2021/12/general-and-scalable-parallelization.html">google research post</a>.
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Skilful precipitation nowcasting using deep generative models of radar</span><span class="pub-meta">, DeepMind (Nature 2021)</span><a class="pub-link" href="https://www.nature.com/articles/s41586-021-03854-z" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-Operational precipitation nowcasting (high-resolution forecasts up to ~2 hours ahead) typically advects radar precipitation fields using radar-based wind estimates, while numerical weather prediction, which solves the physical equations of the atmosphere, is too coarse and slow for such short lead times. These methods struggle to capture non-linear events such as convective initiation, and earlier deep-learning nowcasts become blurry at longer lead times and perform poorly on rarer medium-to-heavy rain events.
-This paper demonstrates improvements in the skill of probabilistic precipitation nowcasting with DGMR, a conditional deep generative model (GAN) of radar that produces realistic, spatio-temporally consistent predictions 5–90 minutes ahead. In a systematic evaluation by more than fifty expert meteorologists, it ranked first for accuracy and usefulness in 89% of cases against two competitive methods.
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research</span><span class="pub-meta">, Google and Univ. California (NeurIPS 2021)</span><a class="pub-link" href="https://arxiv.org/abs/2112.01716" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-Winner of the "Datasets and Benchmarks Best Paper Award" at NeurIPS 2021. Abstract: "We study how dataset usage patterns differ across machine learning subcommunities and across time from 2015-2020. We find increasing concentration on fewer and fewer datasets within task communities, significant adoption of datasets from other tasks, and concentration across the field on datasets that have been introduced by researchers situated within a small number of elite institutions." 
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/reduced_recycled_datasets.png"/>
 
 </div>
 </details>
@@ -2307,28 +2102,6 @@ ALBERT ("A Lite BERT") lowers memory consumption and increases the training spee
 <td><span class="post-label">2018</span></td>
 <td markdown="block">
 <details>
-<summary markdown="span"><span class="pub-title">Averaging Weights Leads to Wider Optima and Better Generalization (Stochastic Weight Averaging)</span><span class="pub-meta">, Cornell & Samsung AI (UAI 2018)</span><a class="pub-link" href="https://arxiv.org/abs/1803.05407" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-The authors present SWA, a "simple averaging of multiple points along the trajectory of SGD, with a cyclical or constant learning rate, that leads to better generalization than conventional training" and provides "much flatter solutions than SGD". The rationale is: (1) SGD with constant or cyclical LR traverses regions of weight space that correspond to high-performing networks, never reaching their central points. (2) Fast Geometric Ensembling (FGE) of $$k$$ models requires $$k$$ times more computation at test time. SWA is an approximation of FGE with the efficiency of a single model, with a better solution than SGD. The algorithm is the following: Starting from $$\hat{w}$$ we continue training, using a cyclical or constant learning rate schedule: 
-
-- When using a cyclical learning rate we capture the models $$w_i$$ that correspond to the minimum values of the learning rate, i.e. the values at the end of each cycle (at the lowest learning rate value); 
-
-- For *high constant* learning rates we capture models at each epoch. 
-
-Next, we average the weights of all the captured networks $$w_i$$ to get our final model $$w_{SWA}$$. For cyclical learning rate schedule, the SWA algorithm is related to FGE, except that instead of averaging the predictions of the models, we average their weights, and we use a different type of learning rate cycle. SWA improves test accuracy over conventional SGD training on CIFAR-10, CIFAR-100 and ImageNet, with almost no computational overhead.
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="90%" height="90%" src="{{ site.assets }}/publications/swa.png"/>
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td></td>
-<td markdown="block">
-<details>
 <summary markdown="span"><span class="pub-title">Group Normalization</span><span class="pub-meta">, Facebook AI Research (ECCV 2018)</span><a class="pub-link" href="https://arxiv.org/abs/1803.08494" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
@@ -2399,24 +2172,6 @@ Introduces the Graph Convolutional Network (GCN), a simple layer-wise propagatio
 </td>
 </tr>
 <tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Neural Architecture Search with Reinforcement Learning</span><span class="pub-meta">, Google (ICLR 2017)</span><a class="pub-link" href="https://arxiv.org/abs/1611.01578" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-Neural Architecture Search (NAS) is a subfield of machine learning that focuses on automating the design of neural network architectures. Instead of manually designing the structure of a neural network (e.g., number of layers, number of neurons per layer, type of activation functions), NAS uses algorithms to search for optimal architectures within a defined search space.
-
-The authors propose "a recurrent network to generate the model descriptions of neural networks and train this RNN with reinforcement learning to maximize the expected accuracy of the generated architectures on a validation set." Basically, a DNN that defines the structure of another DNN using RL. The structure and connectivity of the model being designed (the **child network**) is represented as a variable-length string. This string is generated by the **controller** network - a recurrent neural network - that uses the child network's accuracy on the validation set as a reward signal. On CIFAR-10, the discovered architecture reaches 3.65% test error (0.09% better and 1.05× faster than the previous state of the art), and on Penn Treebank a newly discovered recurrent cell reaches 62.4 test perplexity (3.6 better than the previous state of the art).
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/nas.png"/>
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
 <td><span class="post-label">2015</span></td>
 <td markdown="block">
 <details>
@@ -2478,19 +2233,6 @@ A differentiable module that can be inserted anywhere in a CNN to spatially tran
 </td>
 </tr>
 <tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Cyclical Learning Rates for Training Neural Networks</span><span class="pub-meta">, US Naval Research Lab (WACV 2017)</span><a class="pub-link" href="https://arxiv.org/abs/1506.01186" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-The author claims that cyclic learning rates improve time to convergence and increase the accuracy of most models (e.g., on CIFAR-10 the same 81.4% accuracy is reached in 25,000 instead of 70,000 iterations). It suggests the triangular scheduler as an efficient method with similar results to other non-triangular cyclic schedulers. The paper also provides a method to find good learning-rate bounds (the "LR range test"): run the model for a few epochs while increasing the learning rate linearly between low and high values, and pick as min and max bounds the values where accuracy starts to increase and where it plateaus or drops. Finally, it provides "rule of thumb" parameters for the triangular scheduler, e.g. a step size of 2–10× the number of iterations per epoch.
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
 <td><span class="post-label">2014</span></td>
 <td markdown="block">
 <details>
@@ -2542,26 +2284,6 @@ L = \frac{1}{2} ⋅y⋅D^2 + \frac{1}{2} ⋅(1−y)⋅max(0,m−D)^2
 $$
 
 where $$m$$ is a margin hyperparameter that sets the minimum distance for dissimilar pairs. The architecture is a **siamese architecture**, two copies of the same network which share the same set of parameters, and a cost module.  The total gradient is the sum of the contributions from the two instances.
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
-<td><span class="post-label">1999</span></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">Popular Ensemble Methods: An Empirical Study</span><span class="pub-meta">, Opitz & Maclin (JAIR 1999)</span><a class="pub-link" href="https://arxiv.org/abs/1106.0257" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-A summary of results and conclusions on ensemble methods (bagging, boosting) on neural networks and decision trees. Bagging ensemble generally produces a classifier that is more accurate than a standard classifier. About Boosting: for a few data sets Boosting produced dramatic reductions in error (even compared to Bagging), but for other data sets it actually increases the error over a single classifier (particularly with neural networks). Alternatively, an **ensemble of similar neural networks initialized with different random seeds is surprisingly effective**, often producing results as good as Bagging. An ideal ensemble consists of highly correct classifiers that disagree as much as possible.
-
-**Bagging trains several different models with different datapoints** randomly sampled (**with replacement**, ie same samples can be redrawn) from the same dataset.  Bagging is effective on “unstable” learning algorithms (such as neural networks) where small changes in the training set result in large changes in predictions.  
-
-**Boosting produces a series of classifiers**. The training set used for each member of the series is **chosen based on the performance of the earlier classifier(s) in the series**. Examples that are incorrectly predicted by previous classifiers in the series are chosen more often than those correctly predicted. Thus Boosting attempts to produce new classifiers that are better able to predict examples for which the current ensemble’s performance is poor. Ada-Boosting can use the approach of (1) selecting a set of examples based on the probabilities of the examples, or (2) simply using all of the examples and weight the error of each example by the probability for that example (i.e., examples with higher probabilities have more effect on the error) -- easier as these probabilities are incorporated in the dataset. 
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="45%" height="45%" src="{{ site.assets }}/publications/ensemble_methods.png"/>
 
 </div>
 </details>
