@@ -388,7 +388,7 @@ class MultiHeadAttention(nn.Module):
 
 And we are done. As we can see, a key disadvantage of ring attention is that the number of communication steps equals the number of processes. This may be a limiting factor on large networks, where very fine-grained sequence splits lead to small per-process workloads, making it harder to fully hide communication behind computation.
 
-This code has been added to the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training). Keep in mind that deterministic behaviour of sequence parallelism across networks with different node counts is difficult to achieve, because random number generators produce different values during model initialization and dropout.
+Keep in mind that deterministic behaviour of sequence parallelism across networks with different node counts is difficult to achieve, because random number generators produce different values during model initialization and dropout.
 
 ## When to use Ulysses and Ring attention
 
