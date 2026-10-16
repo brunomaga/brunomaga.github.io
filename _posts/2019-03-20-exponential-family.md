@@ -23,12 +23,12 @@ The 15 most common probability distributions and their relationships.
 
 A brief summary of their relationships follows. More details are available in the original [post](https://medium.com/@srowen/common-probability-distributions-347e6b945ce4) by Sean Owen:
 - *Bernoulli and Uniform*: the uniform distribution assigns equal probability to each discrete outcome, e.g. a coin toss or a dice roll. The Bernoulli distribution assigns unequal probabilities $$p$$ and $$1-p$$ to two discrete outcomes, e.g. an unfair coin toss;
-- *Binomial and Hypergeometric*: the binomial is the distribution of the sum of outcomes of a Bernoulli-distributed variable. For example, when rolling a dice 30 times, the number of sixes follows a binomial distribution with parameters $$n$$, the number of trials, and $$p$$, the probability of success (as in the Bernoulli);
+- *Binomial and Hypergeometric*: the binomial is the distribution of the sum of outcomes of a Bernoulli-distributed variable. For example, when rolling a dice 30 times, the number of sixes follows a binomial distribution with parameters $$n$$, the number of trials, and $$p$$, the probability of success (as in the Bernoulli). The binomial assumes independent trials, i.e. draws with replacement. The hypergeometric distribution counts the successes in $$n$$ draws *without* replacement from a finite population that contains a fixed number of successes;
 - *Poisson and Binomial*: like the binomial, the Poisson distribution is a distribution of a count: the number of times an event happens over a fixed time interval, given the rate at which the event occurs. It is parametrized by $$\lambda = np$$ (the $$n$$ and $$p$$ parameters of the binomial);
 - *Geometric and Negative Binomial*: the binomial counts the number of times an event *succeeds* over a number of trials. The geometric distribution instead counts the failed trials until the event succeeds. The negative binomial distribution generalizes the geometric: it counts the failures until $$r$$ successes occur, not just 1;
 - *Exponential and Weibull*: the exponential distribution is the geometric on a continuous interval, parametrized by $$\lambda$$, like the Poisson. It describes "time until event or failure" at a constant rate. In contrast, the Weibull distribution models a failure rate that increases or decreases over time (i.e. it models *time-to-failure*);
-- *Normal, Log-Normal, Student’s t, and Chi-squared*: the sum of a set of values that follow the same (any) distribution approximately follows the normal distribution. This holds regardless of the underlying distribution, and is known as the [**Central Limit Theorem**](https://en.wikipedia.org/wiki/Central_limit_theorem). The log-normal distribution describes variables whose logarithm is normally distributed, i.e. the exponential of a normally distributed variable is log-normally distributed. Student's t-distributions are normal-like distributions with *fatter* tails, and approach the normal distribution as their parameter increases. The chi-squared distribution is the distribution of the sum of squares of normally distributed values;
-- *Gamma and Beta*: the gamma distribution generalizes the exponential and the chi-squared distributions. Like the exponential, it models waiting times, e.g. the time until the next $$n$$ events occur. In machine learning, it appears as the conjugate prior of some distributions. The beta distribution is the conjugate prior of most of the other distributions mentioned here.
+- *Normal, Log-Normal, Student’s t, and Chi-squared*: the sum of a large set of independent values that follow the same (any) distribution with finite variance approximately follows the normal distribution. This holds regardless of the underlying distribution, provided its variance is finite, and is known as the [**Central Limit Theorem**](https://en.wikipedia.org/wiki/Central_limit_theorem). The log-normal distribution describes variables whose logarithm is normally distributed, i.e. the exponential of a normally distributed variable is log-normally distributed. Student's t-distributions are normal-like distributions with *fatter* tails, and approach the normal distribution as their parameter increases. The chi-squared distribution is the distribution of the sum of squares of normally distributed values;
+- *Gamma and Beta*: the gamma distribution generalizes the exponential and the chi-squared distributions. Like the exponential, it models waiting times, e.g. the time until the next $$n$$ events occur. In machine learning, it appears as the conjugate prior of some distributions. The beta distribution is the conjugate prior of the Bernoulli, binomial, negative binomial and geometric distributions.
 
 ## Exponential Family of distributions
 
@@ -78,7 +78,7 @@ $$
 \end{align*}
 $$ 
 
-for the complete dataset $$X=(x_1, x_2, ..., x_m)$$, i.e. the first derivative of $$A(\eta)$$ equals the mean of the sufficient statistic. The second derivative is:
+i.e. the first derivative of $$A(\eta)$$ equals the mean of the sufficient statistic. The second derivative is:
 
 $$
 \begin{align*}
@@ -91,7 +91,7 @@ $$
 
 and, as expected, the second derivative equals the variance of $$T(X)$$.
 
-A requirement of exponential family distributions is that the parameters *must* factorize (i.e. be separable into products, each involving only one type of variable), as either the power or the base of an exponentiation. That is, the factors must be one of the following:
+A requirement of exponential family distributions is that the density *must* factorize (i.e. be separable into products, each involving only one type of variable, $$x$$ or $$\theta$$), as either the power or the base of an exponentiation. That is, the factors must be one of the following:
 
 $$
 f(x), g(\theta), c^{f(x)}, c^{g(\theta)}, {[f(x)]}^c, {[g(\theta)]}^c, {[f(x)]}^{g(\theta)}, {[g(\theta)]}^{f(x)}, {[f(x)]}^{h(x)g(\theta)}, \text{ or } {[g(\theta)]}^{h(x)j(\theta)}
@@ -108,7 +108,7 @@ $$
 $$
 
 
-Finally, *exponential family distributions have conjugate priors* (i.e. prior and posterior distributions have distributions from the exponential family), and the *posterior predictive distribution always has a closed-form solution* (provided that the normalizing factor also has a closed form). Both properties are important in Bayesian statistics.
+Finally, *exponential family distributions have conjugate priors* (i.e. priors for which the posterior is in the same family of distributions as the prior), and the *posterior predictive distribution always has a closed-form solution* (provided that the normalizing factor also has a closed form). Both properties are important in Bayesian statistics.
 
 ## Example: Univariate Gaussian distribution
 
@@ -273,7 +273,7 @@ with known number of failures <em>r</em></td>
 <tr>
 <td><a href="https://en.wikipedia.org/wiki/Pareto_distribution" title="wikilink">Pareto distribution</a><br />
 with known minimum value <span class="math inline">\( x_m \) </span></td>
-<td><span class="math inline">\( \overline{f}(x;\alpha) = \Pr(X>x) = \\ \begin{cases} \left(\frac{x_\mathrm{m}}{x}\right)^\alpha & x\ge x_\mathrm{m}, \\ 1 & x < x_\mathrm{m}, \end{cases} \)</span></td>
+<td><span class="math inline">\( f(x;\alpha) = \begin{cases} \frac{\alpha x_\mathrm{m}^\alpha}{x^{\alpha+1}} & x\ge x_\mathrm{m}, \\ 0 & x < x_\mathrm{m}. \end{cases} \)</span></td>
 <td><span class="math inline">\(-\alpha-1\)</span></td>
 <td><span class="math inline">\(-1-\eta\)</span></td>
 <td><span class="math inline">\(1\)</span></td>
