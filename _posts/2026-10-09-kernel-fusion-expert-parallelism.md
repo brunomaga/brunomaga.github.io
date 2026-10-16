@@ -46,9 +46,7 @@ This cuts the packets crossing the switch from $$2W^2$$ to $$2W$$ per collective
 A dispatch and combine seen from rank $$P_2$$. On the dispatch, $$P_2$$ puts its token C into the switch, which sends A and C to $$P_0$$, and B and C to $$P_1$$. On the combine, the switch pulls the outputs of each rank with a `get` when its flag rises, sums them, and sends $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls.
 
 {: style="text-align:center; font-size: small;"}
-<img width="27%" height="27%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_reduce.svg"/>
-&nbsp; &nbsp;
-<img width="27%" height="27%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_unique.svg"/>
+<img width="27%" height="27%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_reduce.svg"/><span style="display:inline-block; width:5.5%"></span><img width="27%" height="27%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_unique.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The two INC collectives on $$W=4$$ ranks, from top to bottom. **Left:** All-to-All-Reduce. **Right:** All-to-All-Unique. $$T_x$$ are the tokens of rank $$P_x$$, $$E_x$$ their expert ids and weights, and $$f_x$$ its ready flag on the switch.
@@ -68,7 +66,7 @@ The dispatch *pushes* its data into the switch, because only the sender knows ho
 The switch can fold the partials into $$B \le W$$ buffers. With $$B=1$$ (*get-reduce*) it uses the least memory, and with $$B=W$$ (*put-reduce*) it runs the most transfers in parallel. For a payload of $$S$$ bytes, the switch needs at most $$S(B+1)+4W$$ bytes, independently of the model.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/ep_reduction_models.svg"/>
+<img width="63%" height="63%" src="{{ site.assets }}/inference/imgs/ep_reduction_models.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The three reduction models in the switch, for $$W=4$$ ranks: put-reduce, get-reduce and hybrid-reduce with $$B$$ buffers.
@@ -96,7 +94,7 @@ Data movement for one microbatch. Each row is a stage (left box) and the tensor 
 A single microbatch uses one class of unit at a time. The kernel therefore runs several microbatches at once, each one stage behind the previous. While the matrix units multiply microbatch $$m$$, the vector units regroup microbatch $$m+1$$, and the switch dispatches or combines other microbatches. Matrix units, vector units and the switch are busy at the same time, on different microbatches. Each stage waits only on the previous stage of the same microbatch, so there is no global barrier. Also, only the buffers of the microbatches in flight are alive at any time, so memory grows with the depth of the pipeline, not with the size of the batch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_pipeline.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_pipeline.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Pipelined execution of four microbatches (mb 0 to 3) during prefill, to scale. No two matrix (purple) and no two vector (green) boxes overlap. The dispatch and combine run on different INC elements, so they may overlap.
