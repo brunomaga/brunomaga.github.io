@@ -235,7 +235,7 @@ Compilation via [`torch.compile`](https://pytorch.org/docs/stable/generated/torc
 Consider a feed-forward network with 3 linear layers and 3 activations on a single GPU. The data loading, forward pass, backward pass, and optimizer step can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial.png"/> 
+<img width="52%" height="52%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial.svg"/> 
 
 {: style="text-align:center; font-size: small;"}
 A single-GPU training iteration workflow (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -243,7 +243,7 @@ A single-GPU training iteration workflow (adapted from the original [PyTorch dev
 In this example, the GPU executes many separate kernels in the forward and backward passes. If captured as a CUDA graph, those kernels can be replayed with fewer launches, which often improves throughput:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.png"/>
+<img width="52%" height="52%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 A single-GPU training iteration workflow of a compiled model (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
@@ -251,26 +251,26 @@ A single-GPU training iteration workflow of a compiled model (adapted from the o
 Now consider a 2-GPU Distributed Data Parallel (DDP) run. During backprop, DDP performs `all_reduce` operations to synchronize gradients across ranks. These collectives can overlap with gradient computation because `loss.backward()` accumulates into `w.grad` and `optimizer.step()` applies updates later; thus, the gradients of the last layers, which are computed first, can be reduced while the gradients of the earlier layers are still being computed:
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.png"/>
+<img width="62%" height="62%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The DDP execution workflow on 2 GPUs. The optimizer needs to wait for all asynchronous `all_reduce`s of gradients to finish (source: [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+The DDP execution workflow on 2 GPUs. The optimizer needs to wait for all asynchronous `all_reduce`s of gradients to finish (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
 In a compiled setting, intermediate communication steps can introduce **graph breaks**. One naïve option is to compile a large graph and run the `all_reduce`s only at the end, but that reduces overlap and increases the time the optimizer waits:
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.png"/>
+<img width="56%" height="56%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, increasing optimizer wait time (source: [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+The DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, increasing optimizer wait time (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
 PyTorch’s `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) addresses this by compiling around graph breaks into subgraphs and triggering asynchronous synchronization at subgraph boundaries:
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.png"/>
+<img width="62%" height="62%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization happens asynchronously between subgraphs (source: [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+The DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization happens asynchronously between subgraphs (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
 Note that subgraph boundaries may change with input shapes. As a personal note, I have not been able to achieve the same distributed speedups with DeepSpeed ZeRO-0 that I got with PyTorch DDP, possibly due to the lack of an equivalent optimization to `DDPOptimizer` in DeepSpeed.
 
