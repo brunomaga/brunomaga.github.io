@@ -52,18 +52,18 @@ min_w L(w) + \Omega (w)
 $$
 
 Two common regularization approaches are:
-- L1 regularization: $$ \Omega(w) = \lambda \mid w \mid $$, where $$\mid w \mid = \sum_{i=0}^D \mid w_i \mid $$ 
+- L1 regularization: $$ \Omega(w) = \lambda \mid w \mid $$, where $$\mid w \mid = \sum_{i=1}^D \mid w_i \mid $$ (the bias $$w_0$$ is not penalized) 
   - this is called **LASSO Regression**, for **L**east **A**bsolute **S**hrinkage and **S**election **O**perator;
   - the parameter $$ \lambda \gt 0 $$ is tuned to reduce overfitting. This is the **model selection** problem;
-  - it encourages simple, sparse models (i.e. models with fewer parameters). This type of regression is well suited for models with high multicollinearity, or for automating parts of model selection, such as variable selection/parameter elimination.
-- L2 regularization (standard Euclidean norm): $$ \Omega(w) = \lambda \| w \|^2 $$, where $$ \| w \|^2 = \sum_{i=0}^D w_i^2 $$
+  - it encourages simple, sparse models (i.e. models with fewer parameters). This type of regression is well suited for automating parts of model selection, such as variable selection/parameter elimination. With highly correlated features (multicollinearity), LASSO tends to keep one of them arbitrarily; Ridge Regression or the elastic net (L1 plus L2) are preferred in that case.
+- L2 regularization (standard Euclidean norm): $$ \Omega(w) = \lambda \| w \|^2 $$, where $$ \| w \|^2 = \sum_{i=1}^D w_i^2 $$
   - large weights are penalized, as they are *considered unlikely*;
   - if $$L$$ is the MSE, this is called **Ridge Regression**;
   - as in the Least Squares problem, the MSE loss with Ridge Regression has an analytical solution:
     - minimize $$(y - Xw)^T(y-Xw) + \lambda w^Tw$$, and
-    - differentiate with respect to $$w$$ to obtain the normal equation $$w = (X^TX + \lambda I)^{-1} X^Ty$$.
+    - differentiate with respect to $$w$$ to obtain the normal equation $$w = (X^TX + \lambda I)^{-1} X^Ty$$. This form also penalizes $$w_0$$; excluding the bias sets the first diagonal entry of $$I$$ to 0.
 
-Note: in statistics, **shrinkage** is the reduction of the effects of sampling variation, e.g. a model that overfits the training data and performs poorly on unseen data. Regularization reduces this effect by "shrinking" model parameters towards 0 in LASSO, or by making them smaller in Ridge Regression.
+Note: in statistics, **shrinkage** is the reduction of the effects of sampling variation on the estimated parameters. Without it, a model can overfit the training data and perform poorly on unseen data. Regularization reduces this effect by "shrinking" model parameters towards 0 in LASSO, or by making them smaller in Ridge Regression.
 
 Other techniques improve model accuracy without adding a regularization term to the loss function:
 - [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method that *drops out* (ignores) neurons of a (deep) neural network at every batch during training, and uses all neurons at validation. It improves generalization by forcing the model to train without relying on specific weights (see the [separate post]({{ site.baseurl }}{% post_url 2018-03-27-deep-neural-networks %}) for more details).
@@ -120,7 +120,7 @@ $$
 
 Recall that $$z_{n,k}$$ are user features and $$w_{d,k}$$ are movie features. The gradient has $$(D+N)K$$ entries.
 
-**Alternating Least Squares (ALS)** is another option. ALS factorizes a given matrix $$R$$ into two factors $$U$$ and $$V$$ such that $$ R \approx U^TV $$.
+**Alternating Least Squares (ALS)** is another option. ALS is the alternating minimization of the same loss: it fixes $$Z$$ and solves for $$W$$, then fixes $$W$$ and solves for $$Z$$, and repeats. Each step is a regularized least-squares problem with a closed-form solution.
 
 - If the matrix has **no** missing ratings, i.e. $$ \Omega = [D] \times [N] $$, then:
 
@@ -131,12 +131,14 @@ Recall that $$z_{n,k}$$ are user features and $$w_{d,k}$$ are movie features. Th
   \end{align*}
   $$
 
-  - coordinate descent (minimize over $$W$$ for a fixed $$Z$$, and vice versa) minimizes the cost plus the regularizer;
+  - setting the gradient to zero gives the updates $$W = XZ (Z^TZ + \lambda_w I_K)^{-1}$$ for a fixed $$Z$$, and $$Z = X^TW (W^TW + \lambda_z I_K)^{-1}$$ for a fixed $$W$$;
 - If there are missing entries, the problem is harder, because only the ratings $$ (d,n) \in \Omega $$ contribute to the cost, i.e.:
 
   $$
   min_{W,Z} L(W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [x_{dn} - (WZ^T)_{dn}]^2 + ...
   $$
+
+  - each row $$w_d$$ of $$W$$ is then solved separately, using only its observed entries: $$w_d = (\sum_{n:(d,n) \in \Omega} z_n z_n^T + \lambda_w I_K)^{-1} \sum_{n:(d,n) \in \Omega} x_{dn} z_n$$, and each row $$z_n$$ of $$Z$$ in the same way;
 
 
 ### Coordinate Descent 
@@ -162,7 +164,7 @@ $$
 r(f) = \mathbb{E}[l(\hat{y}_n, y_n)]
 $$
 
-where the predictor $$\hat{y}_n = f(x_n, \theta∗)$$ is the output of the model $$f$$ for input data $$x_n$$ and parameters $$\theta*$$.
+where the predictor $$\hat{y}_n = f(x_n, \theta^*)$$ is the output of the model $$f$$ for input data $$x_n$$ and parameters $$\theta^*$$.
 
 For a statistical model, maximum likelihood estimation finds the parameters for which the model fits the data well, by minimizing the negative log-likelihood:
 
@@ -184,7 +186,7 @@ or the Mean Absolute Error, which is similar to the MSE but uses the absolute di
 
 ### Cross-Entropy
 
-The cross-entropy is equivalent to the negative log-likelihood (of the softmax, when the output of the model is not a distribution). However, classification tasks use the cross-entropy formulation to avoid numerical instabilities and overflows. Most classification tasks use the binary or multi-class cross-entropy loss functions:
+The cross-entropy with one-hot labels equals the negative log-likelihood (of the softmax, when the output of the model is not a distribution). Implementations compute it directly from the logits, fusing the log and the softmax (log-sum-exp). This avoids the overflows and underflows of computing the softmax first and its log afterwards. Most classification tasks use the binary or multi-class cross-entropy loss functions:
 - binary: $$H(p) = -(y \log p(x) + (1-y) \log (1-p(x)))$$. It simplifies to $$-\log p(x)$$ for true label $$y=1$$, and to $$-\log (1-p(x))$$ for true label $$y=0$$.
 - multi-class: $$H(p,q) = -\sum_x p(x) \log(q(x))$$, where $$p$$ is the true distribution and $$q$$ the predicted distribution.
 

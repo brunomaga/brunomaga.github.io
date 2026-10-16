@@ -39,9 +39,9 @@ The flag `fullgraph` specifies whether the compilation outputs a single graph fo
 
 ## About this post
 
-This post benchmarks and analyses several implementations of ML training and inference on different backends: PyTorch 1.3.1 (Python), PyTorch 2.1 (Python), LibTorch 2.1 (C++), TorchScript 2.1 (Python and C++), and PyTorch 2.1 with `torch.compile` (Python).  
+This post benchmarks and analyses several implementations of ML training and inference on different backends: PyTorch 1.13.1 (Python), PyTorch 2.1 (Python), LibTorch 2.1 (C++), TorchScript 2.1 (Python and C++), and PyTorch 2.1 with `torch.compile` (Python).  
 Two testbenches are covered, and readers may pick one based on their expertise and interest:
-1. the small variant of the GPT2 model, introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example, specific to large language models; 
+1. the GPT-3 Small model, introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example, specific to large language models; 
 2. a Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch C++](#benchmark-model). This is a very simple example, used to benchmark models of varying depths and widths. It is mostly suitable for readers interested in performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
 
 {: style="text-align:center; font-size: small;"}
@@ -50,7 +50,7 @@ Two testbenches are covered, and readers may pick one based on their expertise a
 <img width="22%" height="22%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-This post details the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). The left diagram is adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762). The C++, PyTorch, TorchScript and `torch.compile` implementations of both models are then benchmarked.
+This post details the C++ implementation of the [GPT-3 Small model]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). The left diagram is adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762). The C++, PyTorch, TorchScript and `torch.compile` implementations of both models are then benchmarked.
 
 ## GPTlite on LibTorch C++ {#gptlite-model}
 
@@ -83,7 +83,11 @@ const float dropout_p = 0.1;
 
 // namespace and data type aliases
 namespace nn = torch::nn;
+namespace F = torch::nn::functional;
 using Tensor = torch::Tensor;
+
+// infinity, used to mask attention scores
+const float inf = std::numeric_limits<float>::infinity();
 ```
 
 ### Multi-Head Masked Attention
@@ -103,25 +107,24 @@ $$
 $$
 
 
-Together with the upper-triangular mask, this is the underlying structure of each of the N attention blocks in the model:
+Together with the lower-triangular mask (`tril`), this is the underlying structure of each of the N attention blocks in the model:
 
 {: style="text-align:center; font-size: small;"}
 <img width="24%" height="24%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The multi-head (Nx) attention module in the GPTlite model, emphasized in red. Adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762).
+The multi-head attention module in the GPTlite model, emphasized in red. Adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762).
 
 The C++ code is analogous to the Python implementation. The first module is a single attention head:
 
 ```cpp
 struct Head : nn::Module {
-  Head(int head_size) {
-    int head_size = head_size;
-    nn::Linear key   = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
-    nn::Linear query = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
-    nn::Linear value = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
-    Tensor tril = torch::tril(torch::ones( {block_size, block_size} ));
-    nn::Dropout dropout = nn::Dropout(dropout_p);
+  Head(int head_size) : head_size(head_size) {
+    key   = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
+    query = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
+    value = nn::Linear( nn::LinearOptions(n_embd, head_size).bias(false) );
+    tril = torch::tril(torch::ones( {block_size, block_size} ));
+    dropout = nn::Dropout(dropout_p);
 
     register_module("key", key);
     register_module("query", query);
@@ -149,7 +152,11 @@ struct Head : nn::Module {
     return out;
   }
 
-}
+  nn::Linear key{nullptr}, query{nullptr}, value{nullptr};
+  nn::Dropout dropout;
+  Tensor tril;
+  int head_size;
+};
 ```
 
 To keep the code small and clean, `Head` and all following modules are defined as a `struct` and not as a `class`, so that all members are public by default instead of private.
@@ -168,11 +175,11 @@ struct MultiHeadAttention : nn::Module {
 
   MultiHeadAttention(int num_heads, int head_size) {
 
-    nn::ModuleList heads = torch::nn::ModuleList();
+    heads = torch::nn::ModuleList();
     for (int i=0; i<num_heads; i++)
       heads->push_back( Head(head_size) );
-    nn::Linear proj = nn::Linear(num_heads*head_size, n_embd);
-    nn::Dropout dropout = nn::Dropout(dropout_p);
+    proj = nn::Linear(num_heads*head_size, n_embd);
+    dropout = nn::Dropout(dropout_p);
     
     register_module("heads", heads);
     register_module("proj", proj);
@@ -194,7 +201,11 @@ struct MultiHeadAttention : nn::Module {
     out = this->dropout(out);
     return out;
   }
-}
+
+  nn::ModuleList heads;
+  nn::Linear proj{nullptr};
+  nn::Dropout dropout;
+};
 ```
 
 Again, `nn::ModuleList` is used as a container, instead of a standard-library container. Containers in C++ are declared for a fixed element type. The tricky detail is that `nn::ModuleList` stores elements of type `nn::Module`. These must be cast dynamically to their derived type `Head` with `module->as<Head>()` before calling the internal members of the instantiated `Head`.
@@ -213,18 +224,21 @@ The feed forward network in the GPTlite model, emphasized in red. Adapted from [
 struct FeedForward : nn::Module {
 
   FeedForward(int n_embd) {
-    nn::Sequential net = nn::Sequential(
+    net = nn::Sequential(
       nn::Linear(n_embd, n_embd*4),
       nn::ReLU(),
       nn::Linear(n_embd*4, n_embd),
       nn::Dropout(dropout_p)
       );
     register_module("net", net);
+  }
 
   Tensor forward(Tensor x) {
     return net->forward(x);
   }
-}
+
+  nn::Sequential net;
+};
 ```
 
 ### The GPT Block
@@ -242,12 +256,10 @@ struct Block : nn::Module {
 
   Block(int n_embd, int n_head) {
     int head_size = (int) (n_embd / n_head);
-    std::shared_ptr<MultiHeadAttention> sa = 
-      std::shared_ptr<MultiHeadAttention>( new MultiHeadAttention(n_head, head_size) );
-    std::shared_ptr<FeedForward> ffwd =
-      std::shared_ptr<FeedForward>( new FeedForward(n_embd) );
-    nn::LayerNorm ln1 = nn::LayerNorm(  std::vector<int64_t> {n_embd} );
-    nn::LayerNorm ln2 = nn::LayerNorm(  std::vector<int64_t> {n_embd} );
+    sa = std::shared_ptr<MultiHeadAttention>( new MultiHeadAttention(n_head, head_size) );
+    ffwd = std::shared_ptr<FeedForward>( new FeedForward(n_embd) );
+    ln1 = nn::LayerNorm(  std::vector<int64_t> {n_embd} );
+    ln2 = nn::LayerNorm(  std::vector<int64_t> {n_embd} );
 
     register_module("sa", sa);
     register_module("ffwd", ffwd);
@@ -260,7 +272,11 @@ struct Block : nn::Module {
     x = x + ffwd->forward(ln2(x));
     return x;
   }
-}
+
+  std::shared_ptr<MultiHeadAttention> sa;
+  std::shared_ptr<FeedForward> ffwd;
+  nn::LayerNorm ln1{nullptr}, ln2{nullptr};
+};
 ```
 
 Note the use of `shared_ptr` to wrap the classes. This is intentional: all LibTorch modules are shared pointers to the implementation of a given class. Thus, all `torch::nn` modules can be passed by value directly. E.g. the linear layer `nn::Linear` is an alias for `std::shared_ptr<nn::LinearImpl>`, where `nn::LinearImpl` is the implementation. For this reason, the documentation suggests initializing modules with `nullptr` as the default value of the pointer, and initializing the implementation dynamically later when needed. Leaving the pointer uninitialized would instead call the default constructor, e.g. `Linear()`, which is not defined, and lead to a compilation error.
@@ -275,14 +291,14 @@ Putting it all together:
 struct GPTlite : nn::Module {
 
   GPTlite(int vocab_size){
-    nn::Embedding token_embedding_table = nn::Embedding(vocab_size, n_embd);
-    nn::Embedding position_embedding_table = nn::Embedding(block_size, n_embd);
-    nn::Sequential blocks = nn::Sequential();
+    token_embedding_table = nn::Embedding(vocab_size, n_embd);
+    position_embedding_table = nn::Embedding(block_size, n_embd);
+    blocks = nn::Sequential();
     for (int i=0; i<n_layer; i++)
       blocks->push_back( Block(n_embd, n_head) );
 		
-    nn::LayerNorm ln = nn::LayerNorm(  std::vector<int64_t> {n_embd} );
-    nn::Linear lm_head = nn::Linear( nn::LinearOptions(n_embd, vocab_size).bias(false)  );
+    ln = nn::LayerNorm(  std::vector<int64_t> {n_embd} );
+    lm_head = nn::Linear( nn::LinearOptions(n_embd, vocab_size).bias(false)  );
 
     register_module("token_embedding_table", token_embedding_table);
     register_module("position_embedding_table", position_embedding_table);
@@ -302,7 +318,12 @@ struct GPTlite : nn::Module {
     Tensor logits = lm_head(x); //shape (B,S,C)
     return logits.permute({0,2,1}); //shape (B,C,S)
   }
-}
+
+  nn::Embedding token_embedding_table{nullptr}, position_embedding_table{nullptr};
+  nn::Sequential blocks;
+  nn::LayerNorm ln{nullptr};
+  nn::Linear lm_head{nullptr};
+};
 ```
 
 
@@ -317,8 +338,8 @@ The benchmark model is a simple DNN with `L` layers of width `W` and a ReLU acti
 struct BenchmarkModel : torch::nn::Module {
   /// DNN with L layers and W neurons per layer
 
-  BenchmarkModel(int64_t W, int64_t L, int64_t in_size, int64_t out_size){
-    torch::nn::Sequential layers = torch::nn::Sequential();
+  BenchmarkModel(int64_t W, int64_t L, int64_t in_size, int64_t out_size, torch::Device device){
+    layers = torch::nn::Sequential();
     layers->push_back(torch::nn::Linear(in_size, W));
     layers->push_back(torch::nn::ReLU());
     for (int64_t l = 0; l<L-2; ++l) {
@@ -334,7 +355,9 @@ struct BenchmarkModel : torch::nn::Module {
   torch::Tensor forward(torch::Tensor input) {
     return layers->forward(input);
   }
-}
+
+  torch::nn::Sequential layers;
+};
 ```
 
 ## Main loop
@@ -436,7 +459,7 @@ model_jit.save('model_jit.pt')
 
 The main difference between `script` and `trace` is that scripting computes the execution graph from the model definition (`nn.Module`), while tracing runs a forward pass and freezes the resulting execution graph. Thus, tracing enforces a deterministic execution (no control flow allowed) and is limited to PyTorch tensors and PyTorch operations in the `forward` pass. In case of doubt, favor scripting for portability, and tracing for performance.
 
-**Important**: `torch.jit.save` cannot be used on a model optimized with `torch.compile`, as it fails with the error `Compiled functions can't take variable number of arguments or use keyword-only arguments with defaults`. Use `torch.jit.trace(model, (x))` instead.
+**Important**: `torch.jit.script` cannot be used on a model optimized with `torch.compile`, as it fails with the error `Compiled functions can't take variable number of arguments or use keyword-only arguments with defaults`. Use `torch.jit.trace(model, (x))` instead.
 
 On the inference side, in C++, the model is loaded and run with the following code, as described in the [LibTorch documentation](https://pytorch.org/tutorials/advanced/cpp_export.html):
 
@@ -488,7 +511,7 @@ The benchmark compares the throughput (samples/sec) and GPU memory usage (GBs) o
 3. a wide benchmark model of 3 layers with 8192 activations each, with input and output of size 2048.
 
 In practice, this covers a very deep DNN, a very shallow DNN and a large language model. Each model was tested with:
-- the Python PyTorch implementation of training and inference, on versions 1.3.1 and 2.1;
+- the Python PyTorch implementation of training and inference, on versions 1.13.1 and 2.1;
 - the C++ LibTorch 2.1 implementation of train and inference;
 - the TorchScript combo, using PyTorch 2.1 to train and output the model, and C++ LibTorch 2.1 to load it and perform inference; and
 - the train and inference using `torch.compile` on PyTorch 2.1. 
@@ -501,7 +524,7 @@ The results for the GPTlite model are:
 
 The results for the benchmark models are in <a href="{{ site.assets }}/gptlite-cpp/benchmark_wide.png">benchmark_wide.png</a> and <a href="{{ site.assets }}/gptlite-cpp/benchmark_deep.png">benchmark_deep.png</a>. Inference-only runs (purple bars) require much less GPU memory than runs that perform training and inference (blue, orange, and green bars). This is expected, due to the extra parameters and optimizer values required for training. Training increases memory usage by a factor of 4x to 10x.  
 
-In terms of overall performance, moving from PyTorch 1.3.1 to 2.1 (blue to orange bars) increases throughput by up to 19%. Moving from PyTorch 2.1 to its C++ LibTorch equivalent (orange to green bars) gives a small throughput increase of up to 10%, explained by the Python overhead (runtime, dynamic typing, etc.). Finally, the difference in inference performance between the pure C++ implementation and the TorchScript implementation (train in Python, inference in C++) is negligible. This shows that TorchScript (de)serializes the model efficiently.
+In terms of overall performance, moving from PyTorch 1.13.1 to 2.1 (blue to orange bars) increases throughput by up to 19%. Moving from PyTorch 2.1 to its C++ LibTorch equivalent (orange to green bars) gives a small throughput increase of up to 10%, explained by the Python overhead (runtime, dynamic typing, etc.). Finally, the difference in inference performance between the pure C++ implementation and the TorchScript implementation (train in Python, inference in C++) is negligible. This shows that TorchScript (de)serializes the model efficiently.
 
 The speed-up of `torch.compile` was also measured on the GPTlite model. Without `torch.compile`, PyTorch-based training runs at a throughput of 1.41 samples/sec and inference at 4.28 samples/sec. The following table shows the throughput of the same model compiled in different modes, with and without a full graph:
 

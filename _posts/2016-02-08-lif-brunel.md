@@ -24,7 +24,7 @@ The electrical activity of the model is described by the **current equation**, w
 - The current in the capacitor $$C$$ is $$I_C = \frac{dQ}{dt} = \frac{d CV}{dt} = C \frac{dV}{dt}$$, for charge $$Q$$ and capacitance $$C$$;
 - The current through the resistance $$R$$ follows Ohm's law, $$I_R = V/R$$, for voltage $$V$$ and resistance $$R$$. 
 
-The law of conservation of electric charge states that the total charge of an isolated system remains constant. Thus, the sum of the capacitor current $$I_C$$, the resistance current $$I_R$$ and all remaining currents $$I$$ must be zero. Equivalently:
+Kirchhoff's current law, a consequence of the conservation of electric charge, states that the currents entering a node sum to the currents leaving it. Thus, the input current $$I$$ splits into the capacitor current $$I_C$$ and the resistance current $$I_R$$, i.e. $$I = I_C + I_R$$. Equivalently:
 
 $$
 C \frac{dV}{dt}(t) = -\frac{V(t)}{R} + I(t) 

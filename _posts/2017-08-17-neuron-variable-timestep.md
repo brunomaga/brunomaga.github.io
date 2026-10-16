@@ -22,7 +22,7 @@ where $$h$$ is the timestep, $$y$$ is the array of states and $$f$$ is the right
 [cvode]: https://aip.scitation.org/doi/pdf/10.1063/1.4822377
 [sundials]: https://computation.llnl.gov/projects/sundials
 
-The main argument for adaptive time stepping is its efficiency: it takes large steps during long periods of slowly varying states, e.g. interspike intervals. NEURON's adaptive algorithm, [CVODE][cvode], uses separate variable-step integrators for individual neurons in the network. NEURON uses CVODE as an interface to a collection of methods built on top of the existing CVODE and IDA (Integrator for Differential-Algebraic problems) integrators of the [SUNDIALS package][sundials], a SUite of Nonlinear and DIfferential/ALgebraic Equation Solvers. NEURON employs the Backward Differentiation Formula (BDF), a family of implicit multi-step methods for the numerical integration of (stiff) ordinary differential equations. For a given function and time, BDF approximates the derivative using information from previously computed times, which increases the accuracy of the approximation. BDF methods are implicit, so they require solving nonlinear equations at every step. The BDF multistep method is suitable for stiff problems, such as those that describe neuronal activity. A stiff equation includes terms that may lead to rapid variation of the solution. This makes certain numerical methods unstable unless the step size is *extremely* small. CVODES is a solver for the Initial Value Problem (IVP) --- an ODE together with an initial condition of the unknown function at a given point in the domain of the solution --- that can be written abstractly as:
+The main argument for adaptive time stepping is its efficiency: it takes large steps during long periods of slowly varying states, e.g. interspike intervals. NEURON's adaptive algorithm, [CVODE][cvode], uses separate variable-step integrators for individual neurons in the network. NEURON uses CVODE as an interface to a collection of methods built on top of the existing CVODE and IDA (Integrator for Differential-Algebraic problems) integrators of the [SUNDIALS package][sundials], a SUite of Nonlinear and DIfferential/ALgebraic Equation Solvers. NEURON employs the Backward Differentiation Formula (BDF), a family of implicit multi-step methods for the numerical integration of (stiff) ordinary differential equations. For a given function and time, BDF approximates the derivative using information from previously computed times, which increases the accuracy of the approximation. BDF methods are implicit, so they require solving nonlinear equations at every step. The BDF multistep method is suitable for stiff problems, such as those that describe neuronal activity. A stiff equation includes terms that may lead to rapid variation of the solution. This makes certain numerical methods unstable unless the step size is *extremely* small. CVODE is a solver for the Initial Value Problem (IVP) --- an ODE together with an initial condition of the unknown function at a given point in the domain of the solution --- that can be written abstractly as:
 
 $$
 \dot{y} = f(t,y) \text{, } y(t_0) = y_0 \text{ where } y \in \mathbb{R}^N
@@ -55,7 +55,7 @@ $$
 As with any implicit method, every step must (approximately) solve the nonlinear system:
 
 $$
-G(y_n) \equiv y_n - h_n \beta_{n,0} f(t_n, y_n) - a_n = 0 \text{ , where } a_n \equiv \sum_{i>0} ( \alpha_{n,i} y_{n-i} + h_n \beta_{n,i} \dot{y}_{n-i} )  
+G(y_n) \equiv y_n - h_n \beta_{n,0} f(t_n, y_n) - a_n = 0 \text{ , where } a_n \equiv \sum_{i=1}^{q} \alpha_{n,i} y_{n-i}  
 \label{eq_variable_time_step_bdf}
 $$
 
@@ -71,14 +71,14 @@ $$
 M \approx I - \gamma J \text{ , } J = \partial f / \partial y \text{ , and } \gamma = h_n \beta_{n,0}
 $$
 
-For the Newton corrections, CVODE provides the following options: (a) a direct dense solver, (b) a direct banded solver, (c) a diagonal approximate Jacobian solver, or the SPGMR (Scaled Preconditioned GMRES) method. A preconditioner matrix is a transformation that conditions a problem into a form more suitable for numerical solvers. NEURON applies the SPGMR method, which uses a matrix $$M$$ (or a preconditioner matrix $$P$$, in the SPGMR case) and performs an Inexact Newton iteration. In this iteration, $$M$$ is applied in a matrix-free manner, and the matrix-vector products $$Jv$$ are obtained either by difference quotients or by a user-supplied routine. In NEURON, $$J y$$ is provided by the *SOLVE* block in the mechanisms. In practice, SPGMR transforms the nonlinear problem into a linear one by introducing a multiplication by the Jacobian (in vector calculus, the Jacobian matrix is the matrix of all first-order partial derivatives of a vector-valued function). It computes the solution of the equation:
+For the Newton corrections, CVODE provides the following options: (a) a direct dense solver, (b) a direct banded solver, (c) a diagonal approximate Jacobian solver, or the SPGMR (Scaled Preconditioned GMRES) method. A preconditioner matrix is a transformation that conditions a problem into a form more suitable for numerical solvers. NEURON applies the SPGMR method, which uses a matrix $$M$$ (or a preconditioner matrix $$P$$, in the SPGMR case) and performs an Inexact Newton iteration. In this iteration, $$M$$ is applied in a matrix-free manner, and the matrix-vector products $$Jv$$ are obtained either by difference quotients or by a user-supplied routine. In NEURON, $$Jv$$ is provided by the *SOLVE* block in the mechanisms. In practice, SPGMR transforms the nonlinear problem into a linear one by introducing a multiplication by the Jacobian (in vector calculus, the Jacobian matrix is the matrix of all first-order partial derivatives of a vector-valued function). It computes the solution of the equation:
 
 $$
 \begin{align*}
 y_{n(m+1)} = & y_{n(m)} -  M^{-1} G(y_{n(m)}) \\
 \equiv & y_{n(m+1)} - y_{n(m)} = - M^{-1} G(y_{n(m)}) \\
-\equiv & P [y_{n(m+1)} - y_{n(m)}] = - P M^{-1} G(y_{n(m)}) \\
-\equiv & P [y_{n(m+1)} - y_{n(m)}] = - G(y_{n(m)}) \\
+\equiv & M [y_{n(m+1)} - y_{n(m)}] = - G(y_{n(m)}) \\
+\equiv & P^{-1} M [y_{n(m+1)} - y_{n(m)}] = - P^{-1} G(y_{n(m)}) \\
 \end{align*}
 $$
 
@@ -104,7 +104,7 @@ $$
 W_i =  rtol \cdot | y^i | + atol_i
 $$
 
-If $$y_n$$ is the exact solution of equation \ref{eq_newton_method_derivation}, the iteration error $$y_n - y_{n(m)}$$ must be small enough, such that $$\| y_n - y_{n(m)} \| < 0.1 \epsilon$$ (where $$0.1$$ is user-changeable). For this, the solver also estimates the linear convergence rate constant $$R$$, initialized at $$1$$ and reset to $$1$$ when $$M$$ or $$P$$ is updated. After computing a correction $$\delta_m = y_{n(m)} - y_{n(m-1)}$$, $$R$$ is updated (if $$m > 1$$) as:
+If $$y_n$$ is the exact solution of equation \ref{eq_variable_time_step_bdf}, the iteration error $$y_n - y_{n(m)}$$ must be small enough, such that $$\| y_n - y_{n(m)} \| < 0.1 \epsilon$$, where $$\epsilon$$ is the tolerance of the local error test in the weighted norm above (and $$0.1$$ is user-changeable). For this, the solver also estimates the linear convergence rate constant $$R$$, initialized at $$1$$ and reset to $$1$$ when $$M$$ or $$P$$ is updated. After computing a correction $$\delta_m = y_{n(m)} - y_{n(m-1)}$$, $$R$$ is updated (if $$m > 1$$) as:
 
 $$
 R \leftarrow \text{max} \left\{ 0.3 R, \frac{|| \delta_m ||}{||\delta_{m-1} ||} \right\}
@@ -131,7 +131,7 @@ NEURON's default error setting for CVODE is $$10 \mu V$$ for membrane potential 
 
 Large networks of cells cannot be integrated with global adaptive time stepping. A high frequency of events such as gating channels or synapses causes discontinuities in parameters or state variables. Each discontinuity requires a reinitialization of the computation and forces the integrator to restart with a new initial value problem. NEURON's workaround is a local variable time stepping scheme called *lvardt* ([Lytton and Hines, Independent Variable Time-Step Integration of Individual Neurons for Network Simulations, MIT Press][lytton2005independent]). It creates one CVODE integrator per cell, and aims at short time step integration for active neurons and long time step integration for inactive neurons, while keeping the integration accuracy consistent. All cells are kept in an ordered queue, where their position is given by their event delivery time or their current simulation time. Since the system advances in time with multiple, independent integrators, the overall computation is reduced compared to the global counterpart. The main issue is the coordination of the time advancement of each cell: all the state variables of a given cell must be correctly available to any incoming event. To solve this, every cell holds the information of all states between its current time instant and the previous time steps. This allows backward interpolation when required. The integration coordinator also ensures that the interpolation intervals of connected cells overlap, so that no event between two cells is missed. The critical point of this approach is that the time step is tentative: an event received by the cell in the interim may reinitialize the cell to a time prior to the tentatively calculated threshold time.
 
-The following picture illustrates a timeline (from A to D) of six cells running the *lvardt* algorithm. The intervals of possible interpolation are displayed as black rectangles. The vertical line traversing all neurons marks the system's earliest event time. Triggers of discrete events on a neuron are displayed as short thick vertical bars. (A) The cell with the smallest $$t_b$$ advances by the length of the hashed rectangle; (B) Cell 5 has the smallest $$t_b$$ and integrates forward; (C) The next earliest event in the system is at neuron 3. This event trigger creates three new events to be delivered to cells 3, 4 and 5; (D) The new earliest event forces cell 3 to back-interpolate, the event is handled, and cell 3 reinitializes. Cell 3 will be the next cell to integrate forward:
+The following picture illustrates a timeline (from A to D) of six cells running the *lvardt* algorithm. The intervals of possible interpolation are displayed as black rectangles. The right end of a cell's rectangle, $$t_b$$, is the time up to which that cell has integrated. The vertical line traversing all neurons marks the system's earliest event time. Triggers of discrete events on a neuron are displayed as short thick vertical bars. (A) The cell with the smallest $$t_b$$ advances by the length of the hashed rectangle; (B) Cell 5 has the smallest $$t_b$$ and integrates forward; (C) The next earliest event in the system is at neuron 3. This event trigger creates three new events to be delivered to cells 3, 4 and 5; (D) The new earliest event forces cell 3 to back-interpolate, the event is handled, and cell 3 reinitializes. Cell 3 will be the next cell to integrate forward:
 
 {: style="text-align:center; font-size: small;"}
 <img width="30%" height="30%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.png">
@@ -216,7 +216,7 @@ received fewer than 100 events.
 
 The total number of events received across all neurons in the network was approximately 155 million, i.e. a mean of 707 incoming spikes per neuron. In practice, this means that most brain regions (or activity patterns) fall within the interval of acceleration described in the previous section.
 
-Is the theoretical speed-up guaranteed to hold in practice? As Einstein once said *"In theory, there's no difference between theory and practice, but in practice, there is"*. This is the case here, where two main issues arise.
+Is the theoretical speed-up guaranteed to hold in practice? A saying often attributed to Einstein states: *"In theory, there's no difference between theory and practice, but in practice, there is"*. This is the case here, where two main issues arise.
 
 ### 1. Distributed CVODE executions
 

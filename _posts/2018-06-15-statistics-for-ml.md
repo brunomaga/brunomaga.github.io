@@ -6,11 +6,11 @@ categories: ["Machine Learning"]
 tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "KL divergence"]
 ---
 
-A brief summary of statistics and probability topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. A similar post covers algebra: [Algebra for ML Engineers]({{ site.baseurl }}{% post_url 2018-04-20-algebra-for-ml %}). 
+A brief summary of statistics and probability topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. A similar post covers algebra: [Mathematics for ML]({{ site.baseurl }}{% post_url 2018-04-20-algebra-for-ml %}). 
 
 ### Basic definitions
 
-The **sample space $$Ω$$** is the set of all *possible* outcomes of an experiment, and the **event space $$\mathcal{A}$$** is the space of *potential* results of the experiment. The **probability of A**, or $$P(A)$$, is the degree of belief that the event $$A$$ occurs, as a value in the interval $$[0,1]$$.
+The **sample space $$Ω$$** is the set of all *possible* outcomes of an experiment, and the **event space $$\mathcal{A}$$** is a σ-algebra of subsets of $$Ω$$, i.e. the set of events to which probabilities are assigned. The **probability of A**, or $$P(A)$$, is the degree of belief that the event $$A$$ occurs, as a value in the interval $$[0,1]$$.
 
 A **random variable** is a function $$X : Ω → T$$ that maps an outcome in $$Ω$$ to a quantity of interest $$x$$ in the target space $$T$$. The name "random variable" is misleading, as it is neither random nor a variable: it is a function. For example, when tossing two coins and counting the number of heads, a random variable $$X$$ maps to three possible outcomes: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
 
@@ -138,7 +138,7 @@ $$
 corr[x,y] = \frac{\mathbb{Cov}[x,y]}{\sqrt{\mathbb{Var}[x] \mathbb{Var}[y]}}  \in [-1, 1]
 $$
 
-Positive correlation means that $$y$$ increases as $$x$$ increases (1 = perfect correlation). Negative correlation means that $$y$$ decreases as $$x$$ increases. Zero means no correlation.
+Positive correlation means that $$y$$ increases as $$x$$ increases (1 = perfect correlation). Negative correlation means that $$y$$ decreases as $$x$$ increases. Zero means no linear correlation.
 
 
 ### Rules of transformations of Random Variables
@@ -251,7 +251,7 @@ where:
 - $$ϕ(x)$$ is a **sufficient statistic** of the distribution;
 - $$\eta$$ is the **natural parameter**.
 
-The sufficient statistic $$ϕ(x)$$ captures the information about the data (population). Sufficient statistics carry *all* the information needed to make inference about the population, i.e. they are sufficient to represent the distribution. The **Fisher-Neyman theorem** states: Let $$X$$ have probability density function $$p(x \mid θ)$$. Then the statistics $$ϕ(x)$$ are sufficient for $$θ$$ if and only if $$p(x \mid θ)$$ can be written in the form $$p(x \mid \theta) = h(x) g_{\theta}(ϕ(x))$$, where $$h(x)$$ is a distribution independent of $$θ$$ and $$g_θ$$ captures all the dependence on $$θ$$ via sufficient statistics $$ϕ(x)$$. The form of the exponential family is a particular expression of $$g_θ(ϕ(x))$$ in the Fisher-Neyman theorem.
+The sufficient statistic $$ϕ(x)$$ captures the information about the data (population). Sufficient statistics carry *all* the information needed to make inference about the population, i.e. they are sufficient to represent the distribution. The **Fisher-Neyman theorem** states: Let $$X$$ have probability density function $$p(x \mid θ)$$. Then the statistics $$ϕ(x)$$ are sufficient for $$θ$$ if and only if $$p(x \mid θ)$$ can be written in the form $$p(x \mid \theta) = h(x) g_{\theta}(ϕ(x))$$, where $$h(x)$$ is a non-negative function independent of $$θ$$ and $$g_θ$$ captures all the dependence on $$θ$$ via sufficient statistics $$ϕ(x)$$. The form of the exponential family is a particular expression of $$g_θ(ϕ(x))$$ in the Fisher-Neyman theorem.
 
 For optimization purposes, the form $$ p (x \mid \theta) \propto \exp (\theta^{\intercal} ϕ(x))$$ is used. An alternative notation, the **natural form**, is $$p(x \mid \eta) = h(x) \exp \left(\eta^T T(x) -A(\eta)\right)$$.
 
@@ -259,7 +259,7 @@ Advantages of the exponential family:
 - its members have finite-dimensional sufficient statistics;
 - conjugate distributions are easy to write down, and they also belong to the exponential family;
 - Maximum Likelihood Estimation behaves well, because empirical estimates of sufficient statistics are optimal estimates of the population values of sufficient statistics (e.g. the mean and covariance of a Gaussian);
-- from an optimization perspective, the log-likelihood function is concave, which allows efficient optimization methods to be applied.
+- from an optimization perspective, the log-likelihood function is concave in the natural parameters, which allows efficient optimization methods to be applied.
 
 
 ### Moment Generating Function
@@ -270,7 +270,7 @@ $$
 M(t) = \mathbb{E} \left[ e^{tX} \right]
 $$
 
-i.e. $$\sum_{x \in S} e^{tx}\, f(x)$$ for a pmf, or $$\int e^{tx}\, f(x) \, dx$$ for a pdf. For independent random variables, $$M_{X+Y}(t) = M_X(t) * M_Y(t)$$. This property can be used, e.g., to show that the sum of Gaussians is a Gaussian.
+i.e. $$\sum_{x \in S} e^{tx}\, f(x)$$ for a pmf, or $$\int e^{tx}\, f(x) \, dx$$ for a pdf. For independent random variables, $$M_{X+Y}(t) = M_X(t) * M_Y(t)$$. This property can be used, e.g., to show that the sum of independent Gaussians is a Gaussian.
 
 ---
 
@@ -315,7 +315,7 @@ $$
 \mathbb{Var}[A] \, \mathbb{Var}[B] \ge \mathbb{Cov}^2[A,B]
 $$
 
-**ELBO inequality**: the left-hand side is the evidence for $$x$$, and the right-hand side is the evidence lower bound (ELBO) for $$x$$:
+**ELBO inequality**: the left-hand side is the log evidence $$\ln p_{\theta}(x)$$, and the right-hand side is the evidence lower bound (ELBO) for $$x$$:
 
 $$
 \ln p_{\theta }(x)\geq \mathbb {\mathbb {E} } _{z\sim q_{\phi }}\left[\ln {\frac {p_{\theta }(x,z)}{q_{\phi }(z)}}\right]
@@ -431,7 +431,7 @@ $$
 
 ### Causal Inference
 
-A **Directed Acyclic Graph** is a probabilistic model in which a graph expresses the conditional dependence structure between random variables. The model represents a factorization of the joint probability of all random variables:
+A **Bayesian network** is a probabilistic model in which a directed acyclic graph (DAG) expresses the conditional dependence structure between random variables. The model represents a factorization of the joint probability of all random variables:
 
 $$
 P(X_1,\ldots ,X_n) =\prod_{i=1}^{n} p \left( X_i \mid \text{pa}(X_i) \right)

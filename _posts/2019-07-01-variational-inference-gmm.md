@@ -58,11 +58,11 @@ $$
 = \frac{ P(x \mid z) \, P(z) }{ P(x \mid z_0) \, P(z_0)}
 $$
 
-and take a step towards the state with the highest ratio. 
+and accept the proposed state $$z$$ with probability $$\min(1, \text{ratio})$$, otherwise keep the current state $$z_0$$ (Metropolis algorithm, with a symmetric proposal distribution). 
 
 The main advantage of MCMC is that it approximates the *true* posterior. However, an exact posterior that does not follow a parametric distribution has many disadvantages, such as being hard to interpret in high dimensions. MCMC also requires massive computational power for problems with large latent spaces. Variational Inference addresses these issues: it is faster and works well if the parametric distribution of the posterior is known, but it is sometimes *over-confident* when the posterior does not exactly match the approximation.
 
-As a rule of thumb, approximate methods are the default choice, but in case of doubt the results should be checked against the true MCMC-based posterior.
+As a rule of thumb, variational methods are the default choice, but in case of doubt the results should be checked against an MCMC estimate of the posterior. MCMC is also approximate, but it converges to the true posterior as the number of samples grows.
 
 The theory behind MCMC is covered in the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/variational-inference-gmm/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf), and a practical explanation with code is available in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
 
@@ -83,7 +83,7 @@ $$
 
 Note that the **KL divergence is a dissimilarity function and not a metric**, as it is not symmetric. Other divergences besides the KL divergence also exist, as part of the [f-divergence family](https://en.wikipedia.org/wiki/F-divergence).
 
-Equation \ref{eq_KLdiv} includes the true posterior $$p(z \mid x)$$, which is exactly the unknown value. Therefore, it cannot be minimized directly. Instead, the optimization targets a function that is *equal to it (up to a constant)*, known as the Evidence Lower Bound.
+Equation \ref{eq_KLdiv} includes the true posterior $$p(z \mid x)$$, which is exactly the unknown value. Therefore, it cannot be minimized directly. Instead, the optimization targets a function that is *equal to its negative (up to a constant)*, known as the Evidence Lower Bound.
 
 ## Evidence Lower Bound (ELBO)
 
@@ -105,7 +105,7 @@ KL (q(z) || p(z \mid x))
 \end{align*}
 $$
 
-This replaces the original $$KL$$-divergence formulation, which cannot be minimized, by an expression that can be minimized. On the right-hand side of the expression:
+This replaces the original $$KL$$-divergence formulation, which cannot be minimized, by an expression that can be optimized: minimizing the KL divergence is equivalent to maximizing the ELBO. On the right-hand side of the expression:
 - The KL divergence is minimized over $$q$$, so the term $$\log p(x)$$ can be ignored as it does not depend on $$q$$;
 - All terms inside $$ELBO(q,p)$$ are known, as $$p(z,x)$$ is the prior times the likelihood $$p(z,x) = p(z) \, p(x \mid z)$$, which are the inputs of the problem;
 - The KL divergence cannot be negative. Thus $$\log p(x) \ge ELBO$$, i.e. the ELBO is never larger than the log evidence $$\log p(x)$$. This explains the name **Evidence Lower Bound**.
@@ -189,7 +189,7 @@ ELBO(q) & = \mathbb{E}_q [\log p(x_{1:n},z_{1:m})] - \mathbb{E}_q[\log q(z_{1:m}
 \end{align*}
 $$
 
-Coordinate ascent variational inference (CAVI) computes the derivative with respect to each variational factor and alternately updates the weights towards the lowest loss according to the factor being iterated. The derivative uses the notation:
+Coordinate ascent variational inference (CAVI) computes the derivative with respect to each variational factor and updates one factor at a time to the value that maximizes the ELBO, with the other factors fixed. The derivative uses the notation:
 
 $$
 p (z_j \mid z_{\neq j}, x) = p (z_j \mid z_1, ..., z_{j-1}, z_{j+1}, ..., z_m, x)
@@ -220,13 +220,13 @@ $$
 \begin{align}
 q^{\star}(z_j) & \propto \exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j \mid z_{\neq j}, x)] \} \\
                & \propto \exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j, z_{\neq j}, x)] \} \label{eq_CAVI} \\
-                 & \qquad \text{(mean-field assumption: latent vars are independent)} \\
+                 & \qquad \text{(} p(z_{\neq j}, x) \text{ does not depend on } z_j \text{)} \\
 \end{align}
 $$
 
 However, this gives the factorization, or the template of the computation, but not the final form of the optimal $$q_j$$ (i.e. its application to a specific distribution family). The chosen form determines the complexity of the coordinate update $$q^{\star}(z_j)$$.
 
-## Multivariate Gaussian Mixture Models
+## Gaussian Mixture Models
 
 Credit: this section is a more detailed explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).
 
@@ -394,7 +394,7 @@ The algorithm is iterative and converges on a certain loss threshold (ELBO), bas
 <img width="60%" height="60%" src="{{ site.assets }}/variational-inference-gmm/gmm_iterations.jpg"/>
 
 {: style="text-align:center; font-size: small;"}
-Application of the CAVI algorithm to Gaussian Mixture Models, on a dataset of 2D points assigned to five color-coded clusters.
+Application of the CAVI algorithm to Gaussian Mixture Models, on a dataset of 2D points assigned to five color-coded clusters. The figure uses the multivariate (2D) version of the model; the derivation above uses univariate Gaussians.
 (source: <a href="https://arxiv.org/pdf/1601.00670.pdf">Variational Inference: A Review for Statisticians</a>)
 
 

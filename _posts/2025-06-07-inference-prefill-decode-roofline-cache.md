@@ -44,7 +44,7 @@ The [roofline model](https://en.wikipedia.org/wiki/Roofline_model) represents th
 A roofline plot. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound and runs below the peak performance. Adapted from [Wikipedia's Roofline Model](https://en.wikipedia.org/wiki/Roofline_model).
 
 On a **log-log plot**, the two terms of the minimum form a "roof": a slanted line for the bandwidth bound and a flat line for the peak compute. The two lines meet at the **ridge point**:
-- Computation to the left of the ridge point is **memory-bound**: the processor waits for data, and it only gets faster by moving fewer bytes or by doing more work per byte. The **decode** step typically falls in this region.
+- Computation to the left of the ridge point is **memory-bound**: the processor waits for data. It gets faster by moving fewer bytes, by doing more work per byte, or by achieving a memory bandwidth closer to the peak. The **decode** step typically falls in this region.
 - Computation to the right is **compute-bound**: only faster math, or less math, helps. The gap between a point and the roof shows the performance lost to other overheads, such as kernel launches, memory latencies or poor memory access patterns. The **prefill** step typically falls in this region, close to the roof.
 
 **Double buffering** helps a program approach the ideal of the roofline model, in which data movement and computation overlap. With one buffer, memory loads and computation alternate in a loop, so transfer and compute times add up. With two buffers, the program computes on one tile while it loads the next tile into the other buffer. The roofline bound assumes this overlap: it is set by the *slower* of compute and memory movement.
@@ -471,7 +471,7 @@ Many requests start with the same tokens: a system prompt, tool definitions, a l
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
 
-Automatic Prefix Caching does not require extra memory. It reuses existing memory, almost entirely through pointers. Since vLLM is built on PagedAttention, its memory is already divided into discrete, fixed-size physical pages (blocks of usually 16 tokens), and prefix caching builds on this virtual memory architecture.
+Automatic Prefix Caching requires little extra memory. It shares existing KV blocks through pointers instead of copying them. The memory cost is a hash table that maps block hashes to physical blocks, and cached blocks that stay resident after their request finishes. These blocks are evicted, least recently used first, when new requests need memory. Since vLLM is built on PagedAttention, its memory is already divided into discrete, fixed-size physical pages (blocks of usually 16 tokens), and prefix caching builds on this virtual memory architecture.
 
 [SGLang](https://arxiv.org/abs/2312.07104)'s RadixAttention stores all cached sequences in a radix tree (a compressed prefix tree). It finds the longest prefix shared with each new request, and evicts the least recently used leaves when memory runs out.
 
@@ -733,11 +733,11 @@ def schedule(decoding, prefilling, budget):
 
 Prefill is compute-bound and decode is memory-bound, so they interfere when they share GPUs, and each prefers a different batch size and parallelism. Disaggregated serving runs them on separate pools of GPUs: prefill workers compute the KV cache of each prompt and send it over a fast interconnect to decode workers, which generate the answer. Each pool is sized and tuned for its own latency target: TTFT for prefill, TPOT for decode. This is the design of [DistServe](https://arxiv.org/abs/2401.09670), [Splitwise](https://arxiv.org/abs/2311.18677) and [Mooncake](https://arxiv.org/abs/2407.00079), the serving platform of Moonshot AI's Kimi. Open-source stacks such as NVIDIA Dynamo and llm-d also support it.
 
-**The core issue: the KV cache handoff bottleneck.** A decode step on a separate NPU without the KV cache cannot generate the next token, because the NPU needs the keys and values of the entire history up to that point. The system has two options:
-- Recomputation (the compute burden): the decode NPU recomputes the prompt to rebuild the KV cache. This defeats the purpose of disaggregation, as it consumes large compute resources and increases latency sharply.
-- Network serialization (the bandwidth burden): the prefill NPU serializes the multi-gigabyte KV cache tensor and sends it over the network to the decode NPU.
+**The core issue: the KV cache handoff bottleneck.** A decode step on a separate GPU without the KV cache cannot generate the next token, because the GPU needs the keys and values of the entire history up to that point. The system has two options:
+- Recomputation (the compute burden): the decode GPU recomputes the prompt to rebuild the KV cache. This defeats the purpose of disaggregation, as it consumes large compute resources and increases latency sharply.
+- Network serialization (the bandwidth burden): the prefill GPU serializes the multi-gigabyte KV cache tensor and sends it over the network to the decode GPU.
 
-Prefill-decode disaggregation therefore requires transmitting the KV cache from prefill to decode nodes. To avoid sending large KV cache chunks and waiting for them, modern engines use **Layer-Wise Streaming (a pipeline overlap of computation and communication)**: as soon as Layer 1 finishes its prefill, it starts transmitting its KV cache chunks over the network, while Layer 2 is still computing. The destination can be the High-Bandwidth Memory (HBM) of an NPU or, in more advanced setups, a shared cluster acting as a **KV Cache Store**, e.g., [Mooncake](https://www.zhongzhuzhou.org/blog/2026-05-28-mooncake-technical-review-en/) or [LMCache](https://docs.lmcache.ai/mp/disaggregated_prefill.html).
+Prefill-decode disaggregation therefore requires transmitting the KV cache from prefill to decode GPUs. To avoid sending large KV cache chunks and waiting for them, modern engines use **Layer-Wise Streaming (a pipeline overlap of computation and communication)**: as soon as Layer 1 finishes its prefill, it starts transmitting its KV cache chunks over the network, while Layer 2 is still computing. The destination can be the High-Bandwidth Memory (HBM) of a decode GPU or, in more advanced setups, a shared cluster acting as a **KV Cache Store**, e.g., [Mooncake](https://www.zhongzhuzhou.org/blog/2026-05-28-mooncake-technical-review-en/) or [LMCache](https://docs.lmcache.ai/mp/disaggregated_prefill.html).
 
 {: style="text-align:center; font-size: small;"}
 <img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
