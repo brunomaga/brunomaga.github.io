@@ -1,6 +1,7 @@
-<!-- date, category and tags of a post as boxed labels; nothing for undated pages. Params: post, date_format -->
+<!-- back link, date, category and tags of a post as boxed labels; nothing for undated pages. Params: post, date_format -->
 {%- if include.post.date %}
 <div class="post-labels">
+  <a class="post-label post-label--back" href="{{ site.url }}"><i class="fas fa-arrow-left" aria-hidden="true"></i> back</a>
   <time class="post-label post-label--date dt-published" itemprop="datePublished" datetime="{{ include.post.date | date_to_xmlschema }}">{{ include.post.date | date: include.date_format }}</time>
   {%- for category in include.post.categories %}
   <span class="post-label post-label--category">{{ category }}</span>

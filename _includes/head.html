@@ -62,7 +62,7 @@
     .info-warning h2,
     .info-danger h2 { margin-top: 0; }
 
-    /* ===== Labels (post date, category and tags; resource types on the home page) ===== */
+    /* ===== Labels (back link, post date, category and tags; years and resource types on the home page) ===== */
 
     .post-labels {
       display: flex;
@@ -93,24 +93,48 @@
       }
     }
 
-    /* strongest first: date in the link colour, category in mid grey, tags in light grey (default above) */
-    .post-label--date     { border-color: #2a7ae2; color: #2a7ae2; }
+    /* left to right: back link in the link colour (below), date in charcoal, category in mid grey,
+       tags in light grey (default above) */
+    .post-label--date     { border-color: #333;    color: #333; }
     .post-label--category { border-color: #999;    color: #444; }
 
-    /* resource types on the home page: equal-width labels in a first column as wide as the widest one,
-       a small gap before the titles, and less vertical padding than on post pages so the rows keep
-       their height */
-    #resources-table td:first-child {
-      width: 1%;  /* shrinks the column to its widest label */
-      padding-right: 0;
+    /* back link, before the post date and in the footer: a label in the link colour that fills on hover */
+    a.post-label--back,
+    a.post-label--back:visited {
+      display: inline-block;
+      border-color: #2a7ae2;
+      color: #2a7ae2;
+      text-decoration: none;
+      transition: background-color 0.15s, color 0.15s;
     }
 
-    #resources-table td + td { padding-left: 0.5em; }
+    a.post-label--back:hover,
+    a.post-label--back:focus-visible {
+      background-color: #2a7ae2;
+      color: #fff;
+      text-decoration: none;
+    }
 
-    #resources-table .post-label {
+    a.post-label--back .fa-arrow-left { font-size: 0.9em; }  /* as tall as the capitals */
+
+    /* years and resource types in the home-page tables: labels of one width in both tables, so their
+       first columns match, with the same space on both sides of them, and less vertical padding than
+       on post pages so the rows keep their height */
+    .label-table td:first-child {
+      width: 1%;  /* shrinks the column to its widest label */
+      padding-left: 0.75em;
+      padding-right: 0.75em;
+    }
+
+    .label-table td + td { padding-left: 0; }
+
+    .label-table .post-label {
       display: inline-block;
       box-sizing: border-box;
       width: 100%;
+      min-width: calc(7 * (1ch + 0.05em) + 21px);  /* the widest resource type, seven letters (ARTICLE,
+                                                     LECTURE), plus padding, border and 1px to spare, so the
+                                                     years get the same width */
       padding-top: 3px;
       padding-bottom: 1px;
       text-align: center;
@@ -118,7 +142,7 @@
     }
 
     @supports (text-box: trim-both cap alphabetic) {
-      #resources-table .post-label {
+      .label-table .post-label {
         padding-top: 4px;
         padding-bottom: 4px;
       }
