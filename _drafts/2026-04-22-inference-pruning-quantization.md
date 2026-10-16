@@ -11,16 +11,61 @@ The most effective way to make a model faster is to make it smaller. Pruning rem
 
 Pruning removes parts of a trained model. It is a hard problem, for three reasons: we must decide *what* to remove without trying every option; the parts of a network are coupled, so removing one forces changes elsewhere; and removing anything hurts accuracy, which must then be recovered. A fourth difficulty is turning the removal into actual speed.
 
-**What can be removed.** Unstructured pruning removes individual weights by setting them to zero. Structured pruning removes whole structures, which shrinks the weight matrices. In GPTlite, a linear layer `nn.Linear(d_in, d_out)` stores a weight matrix of shape `d_out × d_in`, so:
+### What can be removed
 
-- removing **MLP neuron** $$j$$ removes row $$j$$ (and bias $$j$$) of the first MLP layer, and column $$j$$ of the second;
+Unstructured pruning removes individual weights by setting them to zero. Structured pruning removes whole structures, which shrinks the weight matrices. In GPTlite, a linear layer `nn.Linear(d_in, d_out)` stores a weight matrix of shape `d_out × d_in`, so:
+
 - removing **attention head** $$h$$ removes its $$d_\text{head}$$ rows from the query, key and value projections, and the corresponding $$d_\text{head}$$ columns of the output projection;
+- removing **MLP neuron** $$j$$ removes row $$j$$ (and bias $$j$$) of the first MLP layer, and column $$j$$ of the second;
 - removing **embedding channel** $$c$$ removes column $$c$$ of the token and position embeddings, entry $$c$$ of every LayerNorm, column $$c$$ of every matrix that reads from the residual stream (query, key and value projections, first MLP layer and final output layer), and row $$c$$ (and bias $$c$$) of every matrix that writes to it (attention output projection and second MLP layer). Every layer changes, which makes this the hardest and most impactful dimension;
 - removing a **transformer block** deletes it entirely; thanks to the residual connections, the shapes of the other blocks stay valid.
 
-**Unstructured sparsity needs special hardware.** A weight matrix with 50% zeros scattered at random is still multiplied as a dense matrix by GPUs, so it saves no time, and saves memory only with a sparse storage format. The exception is NVIDIA's *2:4 semi-structured sparsity* ([Mishra et al.](https://arxiv.org/abs/2104.08378)): in every group of 4 consecutive weights, 2 are zero, and the sparse tensor cores of Ampere and newer GPUs skip them, doubling the peak throughput of those matrix multiplications. The end-to-end speedups are smaller, since attention, memory traffic and the other operations are not accelerated.
+The picture below shows the rows and columns that each structure removes:
 
-**How to decide what to remove.** Pruning methods estimate the *importance* of each weight or structure, usually on a small calibration dataset:
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/pruning_structures.svg"/>
+
+All the structured methods below build a smaller linear layer from the rows and columns they keep:
+
+```python
+def prune_linear(linear, rows=None, columns=None):
+  """ New linear layer with only the given rows (outputs) and columns (inputs) of the weight matrix """
+  weight, bias = linear.weight.data, linear.bias.data
+  if rows is not None:
+    weight, bias = weight[rows], bias[rows]
+  if columns is not None:
+    weight = weight[:, columns]
+  pruned = nn.Linear(weight.size(1), weight.size(0), device=weight.device)
+  pruned.weight.data, pruned.bias.data = weight.clone(), bias.clone()
+  return pruned
+```
+
+### Unstructured and 2:4 sparsity
+
+A weight matrix with 50% zeros scattered at random is still multiplied as a dense matrix by GPUs, so it saves no time, and saves memory only with a sparse storage format. The exception is NVIDIA's *2:4 semi-structured sparsity* ([Mishra et al.](https://arxiv.org/abs/2104.08378)): in every group of 4 consecutive weights, 2 are zero. The matrix is stored as its non-zero values plus a 2-bit index per value, the position of that value in its group. The sparse tensor cores of Ampere and newer GPUs read this format and skip the zeros, doubling the peak throughput of those matrix multiplications. The end-to-end speedups are smaller, since attention, memory traffic and the other operations are not accelerated.
+
+{: style="text-align:center; font-size: small;"}
+<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/sparsity_2_4.svg"/>
+
+The following functions build the two masks from a score per weight, such as its magnitude: the unstructured mask keeps the highest scores of every row, and the 2:4 mask keeps the 2 highest scores of every group of 4. In PyTorch, `torch.sparse.to_sparse_semi_structured` converts a 2:4 weight matrix in FP16 or BF16 on a CUDA GPU to the compressed format, so that the multiplications use the sparse tensor cores.
+
+```python
+def mask_rows(score, sparsity):
+  """ Mask that keeps the (1 - sparsity) highest scores of every row """
+  prune = score.topk(int(score.size(1) * sparsity), dim=1, largest=False).indices
+  return torch.ones_like(score, dtype=torch.bool).scatter_(1, prune, False)
+
+
+def mask_2_4(score):
+  """ Mask that keeps the 2 highest scores in every group of 4 consecutive weights of a row (2:4 sparsity) """
+  groups = score.reshape(score.size(0), -1, 4)  # [out_features, in_features/4, 4]
+  keep = groups.topk(2, dim=-1).indices
+  return torch.zeros_like(groups, dtype=torch.bool).scatter_(-1, keep, True).view_as(score)
+```
+
+### How to decide what to remove
+
+Pruning methods estimate the *importance* of each weight or structure, usually on a small calibration dataset:
 
 - *magnitude*: small weights matter less (simple, but crude);
 - *activations*: a neuron, head or channel whose activations are small on average contributes little (used by Minitron, below);
@@ -30,20 +75,125 @@ Pruning removes parts of a trained model. It is a hard problem, for three reason
 - *layer redundancy*: [ShortGPT](https://arxiv.org/abs/2403.03853) removes the blocks whose output is most similar to their input (by cosine similarity), since they change the hidden state the least;
 - *learned masks*: [Sheared-LLaMA](https://arxiv.org/abs/2310.06694) learns which heads, neurons, channels and layers to keep to reach a target architecture.
 
-**The Minitron recipe.** NVIDIA's [Minitron](https://arxiv.org/abs/2407.14679) combines structured pruning with distillation:
+The next sections implement Wanda, the Taylor importance and ShortGPT on GPTlite.
+
+### Weights times activations: Wanda
+
+Magnitude pruning ignores the inputs. A small weight that multiplies a large input feature can contribute more to the output than a large weight that multiplies a small one. Wanda therefore multiplies the magnitude of each weight by the norm of its input feature over the calibration tokens, and compares the weights of the same output row. In the picture below, magnitude pruning removes the weights $$-0.2$$ and $$0.1$$, which multiply the largest inputs. Wanda keeps them, and removes $$0.5$$ and $$-0.6$$ instead:
+
+{: style="text-align:center; font-size: small;"}
+<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/wanda.svg"/>
+
+The following code prunes the linear layers of every block of GPTlite with Wanda, to unstructured or 2:4 sparsity. A forward pre-hook collects the sum of squares of each input feature. Like the original implementation, it prunes one block at a time, so the inputs of a block come from the blocks already pruned before it:
+
+```python
+@torch.inference_mode()
+def wanda(model, data, n_batches, batch_size, seqlen, sparsity=0.5, semi_structured=False):
+  """ Wanda: zeros the weights with the lowest |W_ij| * ||X_j||_2 of every row (unstructured), or of every group
+      of 4 weights (2:4), in the linear layers of the transformer blocks. The blocks are pruned in order, so that
+      the inputs of a block come from the blocks already pruned before it """
+  for block in model.blocks:
+    linears = [module for module in block.modules() if isinstance(module, nn.Linear)]
+    sq_norms = {linear: torch.zeros(linear.in_features, device=device) for linear in linears}
+    def hook(module, inputs):  # sum of squares of every input feature j over all calibration tokens
+      sq_norms[module] += inputs[0].reshape(-1, module.in_features).pow(2).sum(dim=0)
+    hooks = [linear.register_forward_pre_hook(hook) for linear in linears]
+    with torch.random.fork_rng():  # the same calibration batches for every block
+      torch.manual_seed(0)
+      for _ in range(n_batches):
+        x, _ = get_batch(data, batch_size=batch_size, seqlen=seqlen)
+        model(x.to(device))
+    for hook in hooks:
+      hook.remove()
+    for linear in linears:
+      score = linear.weight.abs() * sq_norms[linear].sqrt()  # [out_features, in_features] * [in_features]
+      linear.weight.mul_(mask_2_4(score) if semi_structured else mask_rows(score, sparsity))
+  return model
+```
+
+### Gradients: LLM-Pruner
+
+The Taylor expansion of the loss around the trained weights estimates the change in the loss when a weight is set to zero. The magnitude of its first-order term is $$\lvert w \cdot \partial L / \partial w \rvert$$. LLM-Pruner adds up this term over all the coupled weights of a structure: the rows of the query, key and value projections and the columns of the output projection for a head, and the row of the first MLP layer and the column of the second for a neuron. The following code computes these importances with one backward pass per calibration batch. It returns them in the format of `compute_importance` below, so that `prune` can use either:
+
+```python
+def taylor_importance(model, data, n_batches, batch_size, seqlen):
+  """ First-order Taylor importance of every attention head and MLP neuron (LLM-Pruner): the sum of
+      |w * dL/dw| over the weights of the structure, with the gradient of the loss on a calibration set """
+  model.zero_grad(set_to_none=True)
+  for _ in range(n_batches):  # the gradients add up over the batches
+    x, y = get_batch(data, batch_size=batch_size, seqlen=seqlen)
+    logits = model(x.to(device))
+    F.cross_entropy(logits.reshape(-1, logits.size(-1)), y.to(device).reshape(-1)).backward()
+  heads, neurons = [], []
+  with torch.no_grad():
+    for block in model.blocks:
+      mha, ffwd, H, D = block.mha, block.ffwd.net, block.mha.n_heads, block.mha.d_head
+      taylor = lambda param: (param * param.grad).abs()
+      # the rows (and biases) of the query, key and value projections, and the columns of the output projection
+      qkv = sum(taylor(l.weight).view(H, D, -1).sum(dim=(1, 2)) + taylor(l.bias).view(H, D).sum(dim=1)
+                for l in (mha.query_proj, mha.key_proj, mha.value_proj))
+      heads.append(qkv + taylor(mha.out_proj.weight).view(-1, H, D).sum(dim=(0, 2)))
+      # the row (and bias) of the first MLP layer, and the column of the second
+      neurons.append(taylor(ffwd[0].weight).sum(dim=1) + taylor(ffwd[0].bias) + taylor(ffwd[2].weight).sum(dim=0))
+  model.zero_grad(set_to_none=True)
+  return heads, neurons
+```
+
+### Layer redundancy: ShortGPT
+
+ShortGPT measures how much each block changes its input. The *Block Influence* of a block is one minus the cosine similarity between its input and its output hidden states, averaged over the tokens of a calibration set. The blocks with the lowest influence are removed first. In deep models, these are often the later blocks, but not the last one:
+
+{: style="text-align:center; font-size: small;"}
+<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/shortgpt.svg"/>
+
+The following code computes the Block Influence of every block of GPTlite with a forward hook, and removes the least influential ones:
+
+```python
+@torch.inference_mode()
+def block_importance(model, data, n_batches, batch_size, seqlen):
+  """ Block Influence of ShortGPT: 1 - cosine similarity between the input and the output of every block,
+      averaged over the tokens of a calibration set """
+  scores = torch.zeros(len(model.blocks), device=device)
+  def block_hook(i):
+    def hook(module, inputs, output):
+      scores[i] += 1 - F.cosine_similarity(inputs[0], output, dim=-1).mean()
+    return hook
+  hooks = [block.register_forward_hook(block_hook(i)) for i, block in enumerate(model.blocks)]
+  for _ in range(n_batches):
+    x, _ = get_batch(data, batch_size=batch_size, seqlen=seqlen)
+    model(x.to(device))
+  for hook in hooks:
+    hook.remove()
+  return scores / n_batches
+
+
+def remove_blocks(model, scores, n_blocks):
+  """ Removes the n_blocks blocks with the lowest scores """
+  keep = scores.topk(len(model.blocks) - n_blocks).indices.sort().values
+  model.blocks = nn.Sequential(*[model.blocks[i] for i in keep])
+  return model
+```
+
+### Pruning and distillation: Minitron
+
+NVIDIA's [Minitron](https://arxiv.org/abs/2407.14679) combines structured pruning with distillation:
 
 1. compute the importance of heads, MLP neurons and embedding channels from their activations, and the importance of each layer from how much removing it hurts, on a small calibration set of about a thousand samples;
 2. prune the model to the target architecture;
 3. retrain the pruned model by distilling from the original one (the KL divergence on the logits), using a few percent of the original training tokens;
 4. repeat for smaller sizes.
 
+{: style="text-align:center; font-size: small;"}
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/minitron.svg"/>
+
 Deriving 8B and 4B models from a 15B one this way required up to 40 times fewer training tokens than training them from scratch, and gave better accuracy. A [follow-up](https://arxiv.org/abs/2408.11796) on Llama 3.1 8B found that width pruning (heads, neurons and channels) preserves more accuracy, while depth pruning (whole blocks) gives larger speedups. The key insight is that a pruned teacher is a much better starting point for the student than a random initialization.
 
 We apply this recipe to GPTlite, removing half of the attention heads and MLP neurons of every block in two ways: in one shot, followed by distillation; and iteratively, removing 10% at a time and distilling after each step, with the same total number of distillation steps. As a baseline, we distill into the same small architecture from a random initialization.
 
-The following code computes the importance of heads and neurons, and implements the structured pruning and the experiment:
+The following code computes the importance of heads and neurons, and implements the structured pruning and the experiment. The `distill` function, in the repository, trains the pruned model with the `distillation_loss` of the [post on distillation]({{ site.baseurl }}{% post_url 2026-07-21-inference-distillation-speculative-decoding %}#knowledge-distillation):
 
 ```python
+@torch.inference_mode()
 def compute_importance(model, data, n_batches, batch_size, seqlen):
   """ Importance of every attention head (norm of its output) and every MLP neuron (absolute value of its
       ReLU output), summed over a calibration set """
@@ -68,6 +218,7 @@ def compute_importance(model, data, n_batches, batch_size, seqlen):
     hook.remove()
   return heads, neurons
 
+
 def prune(model, heads, neurons, n_heads, n_neurons):
   """ Keeps the n_heads most important heads and the n_neurons most important MLP neurons of every block """
   for block, head_importance, neuron_importance in zip(model.blocks, heads, neurons):
@@ -84,7 +235,12 @@ def prune(model, heads, neurons, n_heads, n_neurons):
     block.ffwd.net[2] = prune_linear(block.ffwd.net[2], columns=keep_neurons)  # second MLP layer: one column per neuron
   return model
 
+
 # the experiment: one-shot and iterative pruning, followed by distillation from the original model (teacher)
+keep_ratios = [0.9, 0.8, 0.7, 0.6, 0.5]  # iterative pruning, down to half of the heads and neurons
+target_size = lambda ratio: (max(1, round(ratio * n_heads)), max(1, round(ratio * n_neurons)))
+importance = lambda model: compute_importance(model, train_data, calibration_batches, batch_size, seqlen)
+
 model = prune(copy.deepcopy(teacher), *importance(teacher), *target_size(keep_ratios[-1]))
 distill(model, teacher, train_data, distill_iters, lr, batch_size, seqlen)
 
