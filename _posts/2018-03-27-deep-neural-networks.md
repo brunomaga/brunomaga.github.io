@@ -10,7 +10,7 @@ Deep Neural Networks -- also known as Multi-Layer Perceptrons -- are **[universa
 The structure of a basic NN is the following: one input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and one output layer. It is a **feedforward network**: the computation performed by the network starts with the input from the left and flows to the right. There is no feedback loop. It can be used for regression (when input and output are provided) and for classification (when the input is provided and the output is the class).
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
+<img width="33%" height="33%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
 
 {: style="text-align:center; font-size: small;"}
 source: Machine Learning lecture notes, M. Jaggi, EPFL

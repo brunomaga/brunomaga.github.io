@@ -10,7 +10,7 @@ In this post, we will discuss and implement pipeline parallelism. Pipeline paral
 Imagine we have a model that is too large to fit in the local memory of a single process. A simple way to overcome this is to split the model across the layer dimension and delegate a subset of layers to each process. Then we can do the forward and backward passes by communicating activations and gradients between *connecting* processes. Each process is responsible for a subset of layers and is called a **stage**. This type of parallelism is called **pipeline parallelism**. The following picture gives a simple illustration of the process:
 
 {: style="text-align:center; font-size: small;"}
-<img width="50%" height="50%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.svg"/>
+<img width="53%" height="53%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Left-to-right timeline of a serial execution of the training of a model divided across 4 compute units (GPUs) and 4 stages. Blue cells represent forward passes. Green cells represent backward passes, which take twice as long as forward passes. The number on each cell is the data sample index. Gray cells represent moments of idleness, i.e. of a worker not performing any computation. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
@@ -40,7 +40,7 @@ An illustration of different combinations of pipeline and data parallelism. Left
 You will notice that, no matter which pipeline configuration we use, there are periods of idleness that we cannot remove. With this in mind, there is plenty of ongoing work to improve this. As an example, [PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/) is a pipeline method that overlaps the forward and backward passes of different mini-batches by keeping track of the version (micro-batch id) and storing several versions of the activations and parameters whose backward pass hasn't completed:
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel_microsoft.svg"/>
+<img width="64%" height="64%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline_parallel_microsoft.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The PipeDream scheduling algorithm. Several forward passes can be in flight, even if they belong to different micro-batches. Backward passes are prioritized over forward passes on each worker. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>

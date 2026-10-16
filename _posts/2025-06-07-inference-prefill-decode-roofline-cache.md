@@ -15,7 +15,7 @@ A GPT-like model generates text *autoregressively*: it reads the prompt, predict
 - Thus, the total runtime, or **time to last token (TTLT)**, is $$\text{TTLT} = \text{TTFT} + \text{TPOT} \times ( n - 1)$$, where $$n$$ is the number of output tokens.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
 
 This observation motivates most of this post. Almost every decode optimization does one of three things:
 - it **reads fewer bytes** per token (quantization, smaller KV caches, smaller models), or
@@ -38,7 +38,7 @@ The [roofline model](https://en.wikipedia.org/wiki/Roofline_model) turns this an
 * **Y-Axis (Attainable Performance):** How fast your code actually runs (GFLOPs/s).
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 A roofline plot. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound, running below the peak performance. Adapted from [Wikipedia's Roofline Model](https://en.wikipedia.org/wiki/Roofline_model).
@@ -384,7 +384,7 @@ def generate_kvcache(model, prompt, n_tokens, seqlen, kv_cache=None):
 </details>
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
+<img width="65%" height="65%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
 
 The code above uses a dynamic cache. The following code implements a static cache of one layer, where the keys and values of the new tokens are written in place:
 
@@ -418,7 +418,7 @@ class StaticKVCache:
 Serving many requests at once makes memory management hard, because the final length of each sequence is unknown. A naive engine reserves a contiguous KV buffer of the maximum length for every request, and most of that memory stays empty: the authors of [vLLM](https://arxiv.org/abs/2309.06180) measured that only 20% to 40% of the KV memory reserved by existing systems held actual tokens. PagedAttention borrows the idea of virtual memory from operating systems. The KV cache is split into fixed-size *blocks* (pages) that are allocated on demand, and a *block table* maps the logical blocks of each sequence to physical blocks anywhere in GPU memory. The attention kernel reads the blocks through this table. Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. A block can also be shared by several sequences, and copied only when one of them writes to it (copy-on-write), which is how prefix caching, parallel sampling and beam search share their common prefix.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 The following code implements a paged KV cache, and the attention of one decode step over it:
 
@@ -489,7 +489,7 @@ Many requests start with the same tokens: a system prompt, tool definitions, a l
 - Next request: the engine hashes the new prompt block by block from the start, reuses blocks until the first mismatch, and only prefills the rest.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
 
 Automatic Prefix Caching does not require extra memory. It works almost entirely by reusing existing memory through pointers. Because vLLM is built natively on PagedAttention, its memory is already divided into discrete, fixed-size physical pages (blocks of usually 16 tokens). Prefix caching simply piggybacks on this virtual memory architecture.
 
@@ -678,7 +678,7 @@ def continuous_batching(model, requests, batch_size, seqlen):
 With continuous batching, a waiting request takes a free slot as soon as one is available, so its prefill runs in the same step as the decode of the other requests. The prefill of a short prompt costs about as much as a decode step, but the prefill of a long prompt can take many times longer, and all the other requests of the batch wait for it: their text pauses, and their time per output token spikes. **Chunked prefill** solves this by processing a long prompt in several smaller pieces (chunks), one per step, instead of in one forward pass. Every step then takes about the same time, and the other requests keep generating one token per step.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
+<img width="95%" height="95%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The same 6 requests (R1 to R6) on 3 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R4 takes three. Static batching runs the requests in groups of 3, until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R4 stalls R1 and R3. With chunked prefill, R4 processes its prompt in 3 chunks of one time unit each, while R1 and R3 keep decoding.
@@ -690,7 +690,7 @@ Each chunk, say of 512 tokens, attends to the KV cache of the earlier chunks. Su
 - With a causal mask, tokens only attend to previous tokens, so **attention is final after each chunk**. If the mask is not causal, the attention of the previous chunks needs an extra, final computation. This recomputation requires reloading the previous chunks into GPU SRAM, which increases the memory bandwidth overhead. For that reason, **chunked prefill is rarely used for non-causal models**.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
 
 The following code implements chunked prefill:
 
@@ -717,7 +717,7 @@ With continuous batching and chunked prefill, a step runs the prefill chunks of 
 - When the forward pass reaches the output layer, it doesn't compute predictions for every position. It looks up the metadata, isolates the indices of the last token of each sequence, and performs the argmax/sampling only on those tokens, to get the next token of every running sequence.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
+<img width="91%" height="91%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
 
 The following code packs sequences of different lengths into one flat sequence, with the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
 
@@ -790,4 +790,4 @@ Prefill is compute-bound and decode is memory-bound, so they interfere when they
 Prefill-decode disaggregation requires the KV cache to be transmitted between prefill and decode nodes. To avoid sending large KV cache chunks and waiting for them, modern engines use **Layer-Wise Streaming (a pipeline overlap of computation and communication)**: as soon as Layer 1 finishes its prefill, it starts transmitting its KV cache chunks over the network, while Layer 2 is still computing. The destination can be the High-Bandwidth Memory (HBM) of an NPU or, in more advanced cases, a shared cluster acting as a **KV Cache Store**, e.g., [Mooncake](https://www.zhongzhuzhou.org/blog/2026-05-28-mooncake-technical-review-en/) or [LMCache](https://docs.lmcache.ai/mp/disaggregated_prefill.html).
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
+<img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>

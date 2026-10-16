@@ -45,7 +45,7 @@ If we pass a tensor of this shape to a feed-forward network, we achieve parallel
 [(DeepSpeed) Ulysses parallelism](https://arxiv.org/abs/2309.14509) solves this by swapping the distributed view from sequence-split to head-split before the MHA module, and back after it, as in the following illustration:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
+<img width="79%" height="79%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Overview of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 (color-coded) GPUs, split along the sequence (`S`) dimension. **Center:** the *first all-to-all* changes the distributed tensor view from sequence- to head-split. Each process now holds complete sequences (i.e., not sequence-split) for a subset of heads and can compute attention locally. **Right:** the *second all-to-all* reverts the view from head- to sequence-split.
@@ -381,7 +381,7 @@ PyTorch does not have a notion of *partial sequences* in the same way that data 
 Moreover, when we perform multi-dimensional parallelism (e.g., data + sequence), we need to define process groups for the data-parallel processes (the ones that load different samples) and for the sequence-parallel processes (the ones that load different chunks of the same sample). We can do this with PyTorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) or by creating our own process groups manually. For the sake of illustration, if we implemented $$2 \times 2$$ data and Ulysses sequence parallelism on 4 GPUs, this would be the memory layout before and during multi-head attention:
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
+<img width="66%" height="66%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Allocation of activations on a 4-GPU execution with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: blue and green processes belong to the same sequence-parallel group and share one sample; red and yellow processes form the other sequence-parallel group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes can then compute attention over full sequences.

@@ -9,7 +9,7 @@ tags: ["data parallelism", "ZeRO", "FSDP", "CPU offloading", "activation checkpo
 Distributed data parallelism (DDP) refers to the parallel execution of different input samples across processors. If you consider any data input to be of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size), then data parallelism refers to the use case where we split the data across $$P$$ processes, leading to a local input of shape $$B/P \times S \times E$$:
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
+<img width="26%" height="26%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.
@@ -21,7 +21,7 @@ There are two main data parallelism approaches:
 **Distributed Data Parallelism** keeps a full copy of the model (weights, optimizer states and gradients) on each processor. All models are initialized equally. Each processor takes a different mini-batch as input and performs a forward pass to compute the loss of that batch. On the backward pass, at every layer of the model, all processes compute the gradients of their batch and perform an all-reduce to get the mean gradients across all processors. These are then used to update the optimizer states. Because parameters are initialized equally, gradients are mean-reduced and all processes perform the same updates, the models across all processors are kept in an identical state throughout the execution. 
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Workflow for distributed data parallelism (DDP) across 4 color-coded processes. Each process holds a copy of a 4-layer feed-forward model, initialized identically. Each process performs a forward pass on its own data (arrow pointing up on the left of the model). On the backward pass, all processes compute the local gradients and mean-reduce them across the network (arrow pointing down on the right of the model). The mean of the gradients is then used by the optimizer to update the parameter states. 

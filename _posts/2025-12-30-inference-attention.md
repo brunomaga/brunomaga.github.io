@@ -14,7 +14,7 @@ $$
 During prefill, $$QK^T$$ compares every token with every previous token, so the compute grows quadratically with the prompt length $$n$$, and a naive implementation stores an $$n \times n$$ matrix of scores per head.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
+<img width="83%" height="83%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
 
 The following code implements this attention, with an optional mask, and the causal mask of a decoder; most modules of this post reuse both functions:
 
