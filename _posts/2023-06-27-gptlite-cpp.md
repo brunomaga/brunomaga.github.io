@@ -19,7 +19,11 @@ In brief, to favour contributors who prefer Python over C++, the C++ code is lim
 
 ### Kernel optimization via torch.compile
 
-The other major announcement was `torch.compile`, which "makes PyTorch code run faster by JIT-compiling PyTorch code into optimized kernels, all while requiring minimal code changes". The compilation runs in three steps:
+Every PyTorch operation launches one or more GPU kernels. Each launch costs a few microseconds of CPU and driver time, and each kernel reads its inputs from GPU memory and writes its outputs back. For large models and batches, these costs hide behind the math. For small models and batches, they dominate: a forward pass launches hundreds of small kernels, and the GPU spends much of its time idle, waiting for the CPU to launch the next kernel, or for the memory round-trips between kernels.
+
+*Kernel fusion* merges consecutive operations into a single kernel, so that intermediate results stay in registers or on-chip memory instead of going through GPU memory. Typical candidates are the chains of element-wise operations after a matrix multiplication (bias, activation function, dropout, residual addition) and the normalization layers. FlashAttention is an extreme example of fusion.
+
+The other major announcement of PyTorch 2.x was `torch.compile`, which "makes PyTorch code run faster by JIT-compiling PyTorch code into optimized kernels, all while requiring minimal code changes". TorchDynamo captures the graph of the model from the Python bytecode, and TorchInductor generates fused kernels, written in Triton for GPUs. It is a one-line change: `model = torch.compile(model)`. A change in the shapes of the inputs triggers a recompilation. The compilation runs in three steps:
 1. **graph acquisition** builds the execution graph of all PyTorch operations. Nodes that can be combined and optimized together are merged, and the graph is rewritten as a graph of subgraphs. This exposes parallel (graph leaves) and sequential modules.
 2. **graph lowering** decomposes the previous operations into kernels that are native to the specific backend.
 3. **graph compilation** converts the kernels into low-level operations that are specific to the device.
@@ -36,6 +40,8 @@ Kernel fusion is complex, and two settings are worth mentioning. The option `mod
 - `max-autotune` uses Triton-based matrix multiplications and convolutions and enables CUDA graphs by default. It produces the fastest model, but compilation takes a very long time. `max-autotune-no-cudagraphs` is analogous, but without CUDA graphs.
 
 The flag `fullgraph` specifies whether the compilation outputs a single graph for the whole run, or whether the graph can be broken into several partial graphs (that can be reused across the main graph). It is only relevant for users who need the very best performance. In practice, this is *similar* to the `inline` logic in the C programming language. With their default values, these two settings are specified as `torch.compile(model, mode='default', fullgraph=False)`.
+
+Even after fusion, a forward pass launches many kernels from Python, one after the other. A *CUDA graph* records the whole sequence of kernel launches once, and replays it with a single launch, removing almost all the CPU overhead. The recording fixes the shapes and memory addresses of all tensors, so the inputs must have static shapes. For text generation, this requires a preallocated KV cache of maximum length, with attention over the full buffer and a mask for the positions not filled yet, as detailed in the [post about the KV cache]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}#static-shapes-for-cuda-graphs). Combining these techniques with quantization and speculative decoding, the PyTorch team's [gpt-fast](https://pytorch.org/blog/accelerating-generative-ai-2/) made the decoding of Llama-7B almost 10 times faster, in plain PyTorch. Going one step further, recent work fuses a whole forward pass into a single persistent *megakernel*, removing the gaps between kernels altogether for low-latency decoding.
 
 ## About this post
 

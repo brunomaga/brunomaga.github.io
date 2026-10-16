@@ -397,6 +397,63 @@ class StaticKVCache:
         return self.k[:, :, :self.length], self.v[:, :, :self.length]
 ```
 
+#### Static shapes for CUDA graphs
+
+The cache above avoids the copies, but the keys and values it returns still grow by one token at every step. A [CUDA graph]({{ site.baseurl }}{% post_url 2023-06-27-gptlite-cpp %}#kernel-optimization-via-torchcompile) records a decode step once and replays it, and requires the shapes and memory addresses of all tensors to be the same at every step. The decode step must then attend over the *whole* preallocated buffer, and mask the positions that are not filled yet. The position of the new token is passed as a tensor, so that it is an input of the graph and not a constant.
+
+The following code wraps the GPT model above with a static cache for all layers, and compiles its decode step with `torch.compile(mode="reduce-overhead")`, which records and replays it as a CUDA graph on a GPU. Because of the learned positional embeddings, `max_len` must not exceed the context window `seqlen`:
+
+```python
+class StaticCacheGPT(nn.Module):
+    """ The GPT model above with a static KV cache for all layers, preallocated for max_len tokens. Attention runs over
+        the whole buffer, with a mask for the positions not filled yet, so all tensors have the same shape at every
+        decode step, as required by CUDA graphs """
+
+    def __init__(self, model, batch_size, max_len):
+        super().__init__()
+        self.model = model
+        attn, w = model.blocks[0].attn, model.head.weight
+        shape = (len(model.blocks), batch_size, attn.num_heads, max_len, attn.head_dim)  # [L, B, H, max_len, h]
+        self.register_buffer('k', torch.zeros(shape, dtype=w.dtype, device=w.device))
+        self.register_buffer('v', torch.zeros_like(self.k))
+        self.register_buffer('positions', torch.arange(max_len, device=w.device))
+
+    def forward(self, tokens, input_pos):
+        """ tokens: [B, S], the new tokens, at positions input_pos: [S] -> logits: [B, S, V] """
+        m, (B, S) = self.model, tokens.shape
+        x = m.token_embedding(tokens) + m.position_embedding(input_pos)  # [B, S, E]
+        mask = input_pos[:, None] >= self.positions[None, :]            # [S, max_len], True where a query can attend
+        for i, block in enumerate(m.blocks):
+            a, H, h = block.attn, block.attn.num_heads, block.attn.head_dim
+            y = block.ln1(x)
+            q, k, v = (proj(y).view(B, S, H, h).transpose(1, 2) for proj in (a.wq, a.wk, a.wv))  # [B, H, S, h]
+            self.k[i, :, :, input_pos] = k  # write the new keys and values in place
+            self.v[i, :, :, input_pos] = v
+            attn = F.scaled_dot_product_attention(q, self.k[i], self.v[i], attn_mask=mask)  # [B, H, S, h]
+            x = x + a.out(attn.transpose(1, 2).reshape(B, S, H * h))
+            x = x + block.mlp(block.ln2(x))
+        return m.head(m.norm(x))
+
+
+@torch.no_grad()
+def generate_static(model, prompt, n_tokens, decode_step):
+    """ greedy generation: prefill with the model, then one call to decode_step per new token """
+    P = prompt.size(1)
+    logits = model(prompt, torch.arange(P, device=prompt.device))  # prefill
+    tokens = [logits[:, -1:].argmax(dim=-1)]
+    for pos in range(P, P + n_tokens - 1):
+        logits = decode_step(tokens[-1], torch.tensor([pos], device=prompt.device))  # decode
+        tokens.append(logits[:, -1:].argmax(dim=-1))
+    return torch.cat([prompt] + tokens, dim=1)
+
+
+model_static = StaticCacheGPT(model, batch_size, max_len)
+decode_step = torch.compile(model_static, mode="reduce-overhead", fullgraph=True)
+tokens = generate_static(model_static, prompt, n_tokens, decode_step)
+```
+
+The prefill runs once per request and has a different shape, so it is not compiled here. Note that the attention of every decode step now costs the same as that of the last step, since it covers all `max_len` positions. This extra work is small next to the CPU overhead it removes in small models and batches.
+
 
 #### PagedAttention: memory management for the KV cache
 
