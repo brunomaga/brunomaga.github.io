@@ -14574,10 +14574,10 @@
         <mxCell id="tp_fusion_matmuls-11" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="184" y="104" width="24.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-12" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-12" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="136" y="56" width="72.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-13" value="tile" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-13" value="tile" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="160" y="56" width="24.00" height="24.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-14" value="=" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=18;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -14613,10 +14613,10 @@
         <mxCell id="tp_fusion_matmuls-24" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="278" y="104" width="24.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-25" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-25" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="230" y="56" width="72.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-26" value="row" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-26" value="row" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="230" y="56" width="72.00" height="24.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-27" value="&lt;i&gt;W&lt;/i&gt;&lt;sub&gt;1&amp;thinsp;col&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=16;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -14649,10 +14649,10 @@
         <mxCell id="tp_fusion_matmuls-36" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="356" y="104" width="24.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-37" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-37" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="308" y="56" width="72.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-38" value="col" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-38" value="col" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="332" y="56" width="24.00" height="72.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-39" value="&lt;i&gt;Y&lt;/i&gt;&lt;sub&gt;tile&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=16;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -14685,10 +14685,10 @@
         <mxCell id="tp_fusion_matmuls-48" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="176" y="248" width="32.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-49" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-49" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="112" y="200" width="96.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-50" value="tile" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-50" value="tile" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="144" y="200" width="32.00" height="24.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-51" value="=" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=18;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -14724,10 +14724,10 @@
         <mxCell id="tp_fusion_matmuls-61" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="278" y="248" width="24.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-62" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-62" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="230" y="200" width="72.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-63" value="row" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-63" value="row" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="230" y="200" width="72.00" height="24.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-64" value="&lt;i&gt;W&lt;/i&gt;&lt;sub&gt;2&amp;thinsp;col&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=16;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -14760,10 +14760,10 @@
         <mxCell id="tp_fusion_matmuls-73" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="372" y="248" width="32.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-74" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-74" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="308" y="200" width="96.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-75" value="col" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-75" value="col" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="340" y="200" width="32.00" height="72.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-76" value="compute all result tiles for first linear layer" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=13;fontColor=#666666;align=left;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -14820,10 +14820,10 @@
         <mxCell id="tp_fusion_matmuls-91" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="484" y="190" width="24.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-92" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-92" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="436" y="142" width="72.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-93" value="tile" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-93" value="tile" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="460" y="142" width="24.00" height="24.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-94" value="=" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=18;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -14859,10 +14859,10 @@
         <mxCell id="tp_fusion_matmuls-104" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="578" y="190" width="24.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-105" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-105" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="530" y="142" width="72.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-106" value="row" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-106" value="row" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="530" y="142" width="72.00" height="24.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-107" value="&lt;i&gt;W&lt;/i&gt;&lt;sub&gt;1&amp;thinsp;col&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=16;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -14895,10 +14895,10 @@
         <mxCell id="tp_fusion_matmuls-116" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="656" y="190" width="24.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-117" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-117" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="608" y="142" width="72.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-118" value="col" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-118" value="col" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="632" y="142" width="24.00" height="72.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-119" style="html=1;rounded=0;edgeStyle=none;endArrow=none;startArrow=none;endFill=1;startFill=1;endSize=6;startSize=6;strokeColor=#000000;strokeWidth=1;lineCap=flat;" edge="1" parent="tp_fusion_matmuls-figure">
@@ -14950,16 +14950,16 @@
         <mxCell id="tp_fusion_matmuls-131" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="788" y="190" width="32.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-132" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-132" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="724" y="142" width="96.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-133" value="acc1" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-133" value="acc1" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="724" y="142" width="32.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-134" value="acc2" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-134" value="acc2" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="756" y="142" width="32.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-135" value="acc3" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-135" value="acc3" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="788" y="142" width="32.00" height="24.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-136" value="+=" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=18;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -14995,10 +14995,10 @@
         <mxCell id="tp_fusion_matmuls-146" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="902" y="190" width="24.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-147" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-147" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="854" y="142" width="72.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-148" value="tile" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-148" value="tile" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="878" y="142" width="24.00" height="24.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-149" value="&lt;i&gt;W&lt;/i&gt;&lt;sub&gt;2 tiles&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=16;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
@@ -15031,16 +15031,16 @@
         <mxCell id="tp_fusion_matmuls-158" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=#ffffff;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="996" y="190" width="32.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-159" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=14;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-159" value="" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=14;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="932" y="142" width="96.00" height="72.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-160" value="pcol1" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-160" value="pcol1" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="932" y="166" width="32.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-161" value="pcol2" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-161" value="pcol2" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="964" y="166" width="32.00" height="24.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-162" value="pcol3" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;strokeColor=#000000;strokeWidth=1;fontSize=12;align=center;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
+        <mxCell id="tp_fusion_matmuls-162" value="pcol3" style="html=1;whiteSpace=wrap;rounded=0;fillColor=none;fontSize=12;align=center;verticalAlign=middle;spacing=0;strokeColor=#000000;strokeWidth=0.97;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="996" y="166" width="32.00" height="24.00" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-163" style="html=1;rounded=0;edgeStyle=none;endArrow=none;startArrow=none;endFill=1;startFill=1;endSize=6;startSize=6;strokeColor=#000000;strokeWidth=1;lineCap=flat;" edge="1" parent="tp_fusion_matmuls-figure">
@@ -15708,7 +15708,7 @@
         <mxCell id="tp_fusion_results-106" value="29.0%" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;" vertex="1" parent="tp_fusion_results-figure">
           <mxGeometry x="481.5278" y="163.6364" width="60" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_results-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontSize=14;" vertex="1" parent="tp_fusion_results-figure">
+        <mxCell id="tp_fusion_results-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="tp_fusion_results-figure">
           <mxGeometry x="58" y="14.8182" width="500" height="180" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_results-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="tp_fusion_results-figure">
@@ -20434,7 +20434,7 @@
         <mxCell id="moe_fusion_results-30" value="4" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=18;" vertex="1" parent="moe_fusion_results-figure">
           <mxGeometry x="34.56" y="47.61" width="56" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_results-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;fontSize=14;" vertex="1" parent="moe_fusion_results-figure">
+        <mxCell id="moe_fusion_results-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;strokeColor=#000000;strokeWidth=0.98;" vertex="1" parent="moe_fusion_results-figure">
           <mxGeometry x="97.56" y="47.19" width="479.55" height="282.9" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_results-32" value="prefill" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;" vertex="1" parent="moe_fusion_results-figure">
