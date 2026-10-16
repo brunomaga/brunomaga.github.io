@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Kernel Fusion for Mixture-of-Experts Expert Parallelism"
+title:  "Kernel Fusion for MoE Expert Parallelism"
 categories: ["Efficient Inference"]
 tags: ["LLM", "kernel fusion", "MoE", "expert parallelism", "in-network computing", "collectives"]
 ---
