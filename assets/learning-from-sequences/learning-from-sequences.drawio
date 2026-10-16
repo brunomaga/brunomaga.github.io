@@ -31,16 +31,16 @@
             <mxPoint x="84" y="44" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention-7" value="0.71" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97afd2;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-7" value="0.71" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#97afd2;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="92" y="28" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-8" value="0.04" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9fafc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-8" value="0.04" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f9fafc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="148" y="28" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-9" value="0.07" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f7fb;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-9" value="0.07" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f7fb;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="204" y="28" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-10" value="0.18" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e5ebf3;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-10" value="0.18" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e5ebf3;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="260" y="28" width="56" height="32" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention-11" value="big" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="transformer_attention-figure">
@@ -52,16 +52,16 @@
             <mxPoint x="84" y="76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention-13" value="0.01" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fefefe;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-13" value="0.01" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fefefe;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="92" y="60" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-14" value="0.84" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#84a0c9;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-14" value="0.84" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#84a0c9;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="148" y="60" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-15" value="0.02" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fcfdfe;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-15" value="0.02" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fcfdfe;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="204" y="60" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-16" value="0.13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ecf0f7;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-16" value="0.13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ecf0f7;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="260" y="60" width="56" height="32" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention-17" value="red" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="transformer_attention-figure">
@@ -73,16 +73,16 @@
             <mxPoint x="84" y="108" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention-19" value="0.09" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f5f9;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-19" value="0.09" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f2f5f9;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="92" y="92" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-20" value="0.05" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-20" value="0.05" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8f9fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="148" y="92" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-21" value="0.62" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#a4b9d7;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-21" value="0.62" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#a4b9d7;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="204" y="92" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-22" value="0.24" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dce4f0;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-22" value="0.24" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dce4f0;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="260" y="92" width="56" height="32" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention-23" value="dog" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="transformer_attention-figure">
@@ -94,16 +94,16 @@
             <mxPoint x="84" y="140" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="transformer_attention-25" value="0.03" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fbfcfd;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-25" value="0.03" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fbfcfd;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="92" y="124" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-26" value="0.03" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fbfcfd;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-26" value="0.03" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fbfcfd;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="148" y="124" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-27" value="0.03" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fbfcfd;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-27" value="0.03" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fbfcfd;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="204" y="124" width="56" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="transformer_attention-28" value="0.91" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#7998c5;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="transformer_attention-figure">
+        <mxCell id="transformer_attention-28" value="0.91" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#7998c5;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="260" y="124" width="56" height="32" as="geometry" />
         </mxCell>
         <mxCell id="transformer_attention-29" value="each row sums to 1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#333333;" vertex="1" parent="transformer_attention-figure">
