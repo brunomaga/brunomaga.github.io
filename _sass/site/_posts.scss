@@ -1,0 +1,88 @@
+// The content of posts: on narrow screens, tables, inline code and equations stay within the page
+
+// post tables, wrapped by _layouts/post.html, scroll sideways when wider than the page
+.table-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+// long inline code, such as a dotted module path, wraps instead of running off the page
+:not(pre) > code { overflow-wrap: anywhere; }
+
+// a display equation that MathJax cannot break over lines (displayOverflow in the MathJax script of
+// _includes/head.html) scrolls sideways
+mjx-container[overflow="linebreak"][display] {
+  overflow-x: auto;
+  overflow-y: hidden;
+  min-width: initial !important;  // MathJax gives numbered equations a min-width as wide as the equation
+}
+
+// inline math wider than its line, marked .math-scroll by the MathJax script, scrolls sideways
+mjx-container.math-scroll {
+  display: inline-block;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  vertical-align: middle;
+}
+
+// callout panels
+.info-panel,
+.info-warning,
+.info-danger {
+  max-width: 720px;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.info-panel   { background-color: #e9f0f6; }
+.info-warning { background-color: #fff3cd; }
+.info-danger  { background-color: #f8d7da; }
+
+.info-panel h2, .info-panel p,
+.info-warning h2, .info-warning p,
+.info-danger h2, .info-danger p { margin-bottom: 0; }
+
+.info-panel h2,
+.info-warning h2,
+.info-danger h2 { margin-top: 0; }
+
+// responsive table, https://css-tricks.com/accessible-simple-responsive-tables/
+.Rtable {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0.7em 0 0;
+  padding: 0;
+}
+
+.Rtable-cell {
+  box-sizing: border-box;
+  flex-grow: 1;
+  width: 100%;
+  padding: 0.4em 1.2em;
+  overflow: hidden;
+  list-style: none;
+}
+
+.Rtable-cell > h1,
+.Rtable-cell > h2,
+.Rtable-cell > h3,
+.Rtable-cell > h4,
+.Rtable-cell > h5,
+.Rtable-cell > h6 { margin: 0; }
+
+.Rtable--2cols > .Rtable-cell { width: 50%; }
+.Rtable--3cols > .Rtable-cell { width: 33.33%; }
+.Rtable--4cols > .Rtable-cell { width: 25%; }
+.Rtable--5cols > .Rtable-cell { width: 20%; }
+.Rtable--6cols > .Rtable-cell { width: 16.66%; }
+
+@media all and (max-width: 500px) {
+  .Rtable--collapse { display: block; }
+  .Rtable--collapse > .Rtable-cell { width: 100% !important; }
+  .Rtable--collapse > .Rtable-cell--foot { margin-bottom: 1em; }
+}

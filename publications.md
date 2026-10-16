@@ -4,52 +4,6 @@ title: Publications bookmark
 permalink: /publications/
 ---
 
-<style>
-/* the home-page label table: the year on the first paper of each year, then the title in the link colour
-   with who and venue in grey and a link to the paper, and a chevron on the right that opens the notes */
-.pub-table { margin-top: 1.4em; }
-
-.pub-table summary { position: relative; padding-right: 2em; list-style: none; cursor: pointer; }
-.pub-table summary::-webkit-details-marker { display: none; }
-.pub-table summary::after {  /* chevron: down when closed, up when open */
-  content: "";
-  position: absolute;
-  top: 0.3em;
-  right: 0.5em;
-  width: 0.45em;
-  height: 0.45em;
-  border-right: 1.5px solid #999;
-  border-bottom: 1.5px solid #999;
-  transform: rotate(45deg);
-  transition: transform 0.15s;
-}
-.pub-table details[open] > summary::after { top: 0.55em; transform: rotate(-135deg); }
-.pub-table summary:focus-visible { outline: 2px solid #2a7ae2; outline-offset: 3px; border-radius: 2px; }
-
-.pub-title { color: #2a7ae2; }
-.pub-table summary:hover .pub-title { text-decoration: underline; }
-.pub-meta { color: #828282; font-size: 0.875em; }
-
-.pub-link, .pub-link:visited { margin-left: 0.4em; color: #aaa; }
-.pub-link:hover, .pub-link:focus-visible { color: #2a7ae2; text-decoration: none; }
-.pub-link .fa-solid { font-size: 0.8em; }
-
-/* the notes, in a card under the title */
-.pub-notes {
-  margin: 0.6em 0 0.2em;
-  padding: 0.8em 1em;
-  border: 1px solid #e4e4e4;
-  border-radius: 3px;
-  background-color: #fff;
-  line-height: 1.5;
-}
-.pub-notes > :last-child { margin-bottom: 0; }
-/* the intro as the table's first row: the back link in the year column, the text in the title column */
-.pub-intro td { padding-bottom: 1.2em; }
-.pub-table a.post-label--back, .pub-table a.post-label--back:visited { border-color: #2a7ae2; color: #2a7ae2; }
-.pub-table a.post-label--back:hover, .pub-table a.post-label--back:focus-visible { color: #fff; }
-</style>
-
 {::options parse_block_html="true" /}
 
 <table class="label-table pub-table">
