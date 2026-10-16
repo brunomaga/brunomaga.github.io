@@ -20,8 +20,31 @@
   <!-- academicons to add missing icons to font awesome (e.g. google scholar) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
-  <!-- MathJax. tags:'all' numbers equations so \ref{...} resolves -->
-  <script>window.MathJax = { tex: { tags: 'all' } };</script>
+  <!-- MathJax. tags:'all' numbers equations so \ref{...} resolves; displayOverflow:'linebreak' breaks a
+       display equation wider than the page over several lines; after typesetting, inline math wider than
+       its line is marked .math-scroll so it scrolls sideways (see the styles below) -->
+  <script>
+    window.MathJax = {
+      tex: { tags: 'all' },
+      output: { displayOverflow: 'linebreak' },
+      startup: {
+        pageReady() {
+          return MathJax.startup.defaultPageReady().then(() => {
+            const range = document.createRange();
+            const mark = () => document.querySelectorAll('mjx-container:not([display])').forEach((m) => {
+              m.classList.remove('math-scroll');
+              range.selectNodeContents(m);  /* covers every part of the formula, also when it breaks over lines */
+              if (range.getBoundingClientRect().right > m.parentElement.getBoundingClientRect().right + 1) {
+                m.classList.add('math-scroll');
+              }
+            });
+            mark();
+            window.addEventListener('resize', mark);
+          });
+        }
+      }
+    };
+  </script>
   <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 
   <style>
@@ -149,6 +172,33 @@
         padding-bottom: 4px;
       }
     }
+
+    /* ===== Narrow screens: equations, tables and inline code stay within the page ===== */
+
+    /* a display equation that MathJax cannot break over lines (see displayOverflow above) scrolls sideways */
+    mjx-container[overflow="linebreak"][display] {
+      overflow-x: auto;
+      overflow-y: hidden;
+      min-width: initial !important;  /* MathJax gives numbered equations a min-width as wide as the equation */
+    }
+
+    /* inline math wider than its line (marked by the MathJax script above) scrolls sideways */
+    mjx-container.math-scroll {
+      display: inline-block;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      vertical-align: middle;
+    }
+
+    /* post tables, wrapped by _layouts/post.html, scroll sideways when wider than the page */
+    .table-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    /* long inline code, such as a dotted module path, wraps instead of running off the page */
+    :not(pre) > code { overflow-wrap: anywhere; }
 
     /* ===== Responsive table =====
        https://css-tricks.com/accessible-simple-responsive-tables/ */
