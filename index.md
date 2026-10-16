@@ -5,14 +5,13 @@ layout: default
 <!-- name, field and links, with the photo on the right -->
 <div class="home-header">
   <div class="home-header-text">
-    <h1 class="post-title p-name" itemprop="name headline">{{ site.author.name }}</h1>
+    <h1 class="post-title">{{ site.author.name }}</h1>
     <h2>Machine Learning and High-Performance Computing</h2>
 
     <div class="home-links">
       <a href="https://linkedin.com/in/brunomaga"><i class="fab fa-linkedin"></i> linkedin</a>
       <a href="https://github.com/brunomaga"><i class="fab fa-fw fa-github"></i> github</a>
       <a href="{{ site.google_scholar }}"><i class="ai ai-google-scholar ai-1x" title="Google Scholar"></i> scholar</a>
-      <!-- <a href="{{ '/resume.pdf' | relative_url }}" style="text-decoration: none; white-space: nowrap;"><i class="far fa-file-alt" title="Resume"></i> resume</a> -->
       <a href="mailto:{{ site.author.email }}?subject=Hello"><i class="far fa-envelope" title="Email"></i> email</a>
       <a href="{{ '/feed.xml' | relative_url }}"><i class="fas fa-fw fa-rss"></i> RSS</a>
     </div>

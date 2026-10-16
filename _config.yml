@@ -13,9 +13,6 @@ url: "https://brunomaga.github.io" # the base hostname & protocol for your site,
 # for the links Statistics for Data Science at EPFL in the resources page
 epfl_statistics: https://github.com/brunomaga/Statistics_EPFL/blob/main/
 
-# Google analytics
-google_analytics: UA-129707365-1
-
 # Build settings
 theme: minima
 plugins:
@@ -23,17 +20,3 @@ plugins:
   - jekyll-redirect-from
 
 permalink: /:title  #replaces folder structure /YY/mm/dd/categories/title by only /title
-
-
-# Exclude from processing.
-# The following items will not be processed, by default. Create a custom list
-# to override the default setting.
-# exclude:
-#   - Gemfile
-#   - Gemfile.lock
-#   - node_modules
-#   - vendor/bundle/
-#   - vendor/cache/
-#   - vendor/gems/
-#   - vendor/ruby/
-
