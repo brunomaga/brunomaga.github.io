@@ -94,10 +94,11 @@
     }
 
     /* left to right: back link in the link colour (below), date in charcoal, category in mid grey,
-       tags in light grey (default above) */
+       tags in light grey (default above); the category's border and text are halfway in lightness
+       between those of the date and the tags */
     .post-label--date     { border-color: #333;    color: #333; }
     .post-label--category,
-    .label-table .post-label { border-color: #999; color: #444; }  /* home-page years and resource types too */
+    .label-table .post-label { border-color: #868686; color: #555; }  /* home-page years and resource types too */
 
     /* back link, before the post date and in the footer: a label in the link colour that fills on hover */
     a.post-label--back,
@@ -123,8 +124,8 @@
        on post pages so the rows keep their height */
     .label-table td:first-child {
       width: 1%;  /* shrinks the column to its widest label */
-      padding-left: 0.75em;
-      padding-right: 0.75em;
+      padding-left: 0.5em;
+      padding-right: 0.5em;
     }
 
     .label-table td + td { padding-left: 0; }
@@ -133,9 +134,9 @@
       display: inline-block;
       box-sizing: border-box;
       width: 100%;
-      min-width: calc(7 * (1ch + 0.05em) + 21px);  /* the widest resource type, seven letters (ARTICLE,
-                                                     LECTURE), plus padding, border and 1px to spare, so the
-                                                     years get the same width */
+      min-width: calc(6 * (1ch + 0.05em) + 21px);  /* the widest resource type, six letters (COURSE), plus
+                                                     padding, border and 1px to spare, so the years get the
+                                                     same width */
       padding-top: 3px;
       padding-bottom: 1px;
       text-align: center;

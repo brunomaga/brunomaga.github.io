@@ -125,6 +125,19 @@ At small scale (0.2B active, up to 4.2B total parameters, 10B FineWebEdu tokens)
 <td></td>
 <td markdown="block">
 <details>
+<summary markdown="span"><span class="pub-title">In-Network Collective Operations: Game Changer or Challenge for AI Workloads?</span><span class="pub-meta">, Torsten Hoefler et al. (ETH Zürich, Microsoft, AMD, Broadcom, HPE) (IEEE Computer 2026)</span><a class="pub-link" href="https://arxiv.org/abs/2601.19132" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
+<div class="pub-notes" markdown="block">
+
+Offloading collectives to the NICs (edge-INC) or switches (core-INC, as in NVIDIA SHARP) can halve Allreduce traffic. Low-precision types, sparse reductions, reproducibility and encryption stand in the way. And Amdahl's law limits the speedup, so the authors expect slow adoption.
+
+</div>
+</details>
+</td>
+</tr>
+<tr>
+<td></td>
+<td markdown="block">
+<details>
 <summary markdown="span"><span class="pub-title">LatentMoE: Toward Optimal Accuracy per FLOP and Parameter in Mixture of Experts</span><span class="pub-meta">, NVIDIA</span><a class="pub-link" href="https://arxiv.org/abs/2601.18089" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
