@@ -119,7 +119,7 @@ Here, samples are collected until the batch reaches (at most) 30 tokens. The bat
 requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x S x E` across micro-batches can lead to smaller micro-batches and additional padding. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 processes and 2 gradient accumulation steps (4 micro-batches total):
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
 
 In the pipeline case (right), all micro-batches in the batch have the same `B x S x E` shape. To satisfy this constraint, fewer samples are packed per micro-batch compared to the non-pipeline case (left), and padding is used when needed.
 
@@ -128,7 +128,7 @@ In the pipeline case (right), all micro-batches in the batch have the same `B x 
 Attention is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x S x E` often uses a 2D attention mask of shape `S x S`, broadcast over the batch dimension. With variable lengths, we need a *per-sample* mask, which is naturally represented as a `B x S x S` tensor. For example, for the non-pipeline micro-batch 1 above (top-left; 4 sentences), the mask can be illustrated as:
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
 
 A useful way to think about the cost is that attention scales linearly with `B` and quadratically with the maximum `S` in the batch. Allowing `S` to vary (and adapting `B` accordingly) can therefore improve utilization by avoiding padding to an unnecessarily large `S`.
 

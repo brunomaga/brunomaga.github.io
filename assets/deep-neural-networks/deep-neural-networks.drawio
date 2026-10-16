@@ -1,0 +1,200 @@
+<mxfile host="drawio" version="21.1.6">
+  <diagram name="deep-neural-networks" id="deep-neural-networks">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="dnn-label" value="dnn.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="40" width="387" height="290" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-1" value="Input&lt;br&gt;layer" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=16;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="40" y="0" width="80" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-2" value="Hidden&lt;br&gt;layer" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=16;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="165" y="0" width="80" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-3" value="Output&lt;br&gt;layer" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontSize=16;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="290" y="0" width="80" height="46" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-4" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#a1fb8e;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="65" y="85" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-5" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#a1fb8e;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="65" y="135" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-6" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#a1fb8e;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="65" y="185" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-7" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#a1fb8e;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="65" y="235" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-8" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#7e83f7;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="190" y="60" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-9" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#7e83f7;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="190" y="110" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-10" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#7e83f7;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="190" y="160" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-11" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#7e83f7;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="190" y="210" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-12" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#7e83f7;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="190" y="260" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-13" value="" style="ellipse;whiteSpace=wrap;html=1;strokeColor=none;fillColor=#ef8683;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="315" y="160" width="30" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-14" value="&lt;i&gt;x&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:middle;font-size:12px;line-height:1.1;text-align:left;&quot;&gt;(0)&lt;br&gt;&lt;span style=&quot;margin-left:-1px;&quot;&gt;1&lt;/span&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Times New Roman;fontSize=18;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="0" y="85" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-15" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="42" y="100" as="sourcePoint" />
+            <mxPoint x="64" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-16" value="&lt;i&gt;x&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:middle;font-size:12px;line-height:1.1;text-align:left;&quot;&gt;(0)&lt;br&gt;&lt;span style=&quot;margin-left:-1px;&quot;&gt;2&lt;/span&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Times New Roman;fontSize=18;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="0" y="135" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-17" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="42" y="150" as="sourcePoint" />
+            <mxPoint x="64" y="150" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-18" value="&lt;i&gt;x&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:middle;font-size:12px;line-height:1.1;text-align:left;&quot;&gt;(0)&lt;br&gt;&lt;span style=&quot;margin-left:-1px;&quot;&gt;3&lt;/span&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Times New Roman;fontSize=18;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="0" y="185" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-19" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="42" y="200" as="sourcePoint" />
+            <mxPoint x="64" y="200" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-20" value="&lt;i&gt;x&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:middle;font-size:12px;line-height:1.1;text-align:left;&quot;&gt;(0)&lt;br&gt;&lt;span style=&quot;margin-left:-1px;&quot;&gt;4&lt;/span&gt;&lt;/span&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Times New Roman;fontSize=18;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="0" y="235" width="40" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="dnn-21" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="42" y="250" as="sourcePoint" />
+            <mxPoint x="64" y="250" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-22" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-4" target="dnn-8">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-23" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-4" target="dnn-9">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-24" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-4" target="dnn-10">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-25" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-4" target="dnn-11">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-26" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-4" target="dnn-12">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-27" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-5" target="dnn-8">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-28" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-5" target="dnn-9">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-29" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-5" target="dnn-10">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-30" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-5" target="dnn-11">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-31" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-5" target="dnn-12">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-32" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-6" target="dnn-8">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-33" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-6" target="dnn-9">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-34" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-6" target="dnn-10">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-35" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-6" target="dnn-11">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-36" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-6" target="dnn-12">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-37" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-7" target="dnn-8">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-38" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-7" target="dnn-9">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-39" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-7" target="dnn-10">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-40" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-7" target="dnn-11">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-41" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-7" target="dnn-12">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-42" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-8" target="dnn-13">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-43" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-9" target="dnn-13">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-44" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-10" target="dnn-13">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-45" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-11" target="dnn-13">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-46" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure" source="dnn-12" target="dnn-13">
+          <mxGeometry relative="1" as="geometry">
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-47" value="" style="endArrow=open;endSize=5;html=1;strokeColor=#999999;strokeWidth=0.75;" edge="1" parent="dnn-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="346" y="175" as="sourcePoint" />
+            <mxPoint x="366" y="175" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="dnn-48" value="&lt;i&gt;ŷ&lt;/i&gt;" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Times New Roman;fontSize=18;" vertex="1" parent="dnn-figure">
+          <mxGeometry x="367" y="160" width="20" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

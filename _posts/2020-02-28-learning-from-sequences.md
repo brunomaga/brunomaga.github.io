@@ -22,7 +22,7 @@ The structure of its Recurrent Neural Network (RNN) is as follows:
 This structure is easily represented by the following picture:
 
 {: style="text-align:center;"}
-<img width="45%" height="45%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.png"/>
+<img width="45%" height="45%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The recurrent neural network trained at each step of the encoder-decoder architecture. The blue area represents input neurons. The green area represents a single hidden layer formed by the states of the GRU/LSTM neurons of the RNN. The red area represents the model output. The concatenation of the hidden layer of the previous iteration and the current iteration's input is used as model input. 
@@ -34,7 +34,7 @@ The training consists of an encoding and a decoding phase:
 This algorithm can be illustrated as:
 
 {: style="text-align:center;"}
-<img width="90%" height="90%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The training workflow of an encoder-decoder architecture, learning the translation of the English sentence "Hello World." into the French sentence "Bonjour le monde.".

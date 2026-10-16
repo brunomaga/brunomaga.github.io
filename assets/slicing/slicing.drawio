@@ -2758,7 +2758,7 @@
         <mxCell id="sbs-88" value="CPU 7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;" vertex="1" parent="sbs-figure">
           <mxGeometry x="530.5781" y="144.3" width="39.3438" height="17" as="geometry" />
         </mxCell>
-        <mxCell id="sbs-89" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;fontSize=14;strokeColor=#b85450;strokeWidth=2;fillColor=none;" vertex="1" parent="sbs-figure">
+        <mxCell id="sbs-89" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;fontSize=14;" vertex="1" parent="sbs-figure">
           <mxGeometry x="25.75" y="164.7" width="553" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sbs-90" value="&lt;b&gt;Step 1.2:&lt;/b&gt; Load balancing" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=18;" vertex="1" parent="sbs-figure">
@@ -3451,10 +3451,10 @@
         <mxCell id="sbs-222" value="CPU 7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;" vertex="1" parent="sbs-figure">
           <mxGeometry x="499.5781" y="507.3" width="39.3438" height="17" as="geometry" />
         </mxCell>
-        <mxCell id="sbs-223" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;fontSize=14;strokeColor=#b85450;strokeWidth=2;fillColor=none;" vertex="1" parent="sbs-figure">
+        <mxCell id="sbs-223" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;fontSize=14;" vertex="1" parent="sbs-figure">
           <mxGeometry x="25.75" y="543.3" width="243" height="17" as="geometry" />
         </mxCell>
-        <mxCell id="sbs-224" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;fontSize=14;strokeColor=#b85450;strokeWidth=2;fillColor=none;" vertex="1" parent="sbs-figure">
+        <mxCell id="sbs-224" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;fontSize=14;" vertex="1" parent="sbs-figure">
           <mxGeometry x="273.75" y="543.3" width="305" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sbs-225" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=2;fontSize=12;startArrow=oval;startFill=1;endArrow=oval;endFill=1;startSize=5;endSize=5;" edge="1" parent="sbs-figure">
@@ -4171,16 +4171,16 @@
         <mxCell id="sbs-361" value="CPU 7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;" vertex="1" parent="sbs-figure">
           <mxGeometry x="530.5781" y="870.3" width="39.3438" height="17" as="geometry" />
         </mxCell>
-        <mxCell id="sbs-362" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;fontSize=14;strokeColor=#b85450;strokeWidth=2;fillColor=none;" vertex="1" parent="sbs-figure">
+        <mxCell id="sbs-362" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;fontSize=14;" vertex="1" parent="sbs-figure">
           <mxGeometry x="25.75" y="921.9" width="119" height="17" as="geometry" />
         </mxCell>
-        <mxCell id="sbs-363" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;fontSize=14;strokeColor=#b85450;strokeWidth=2;fillColor=none;" vertex="1" parent="sbs-figure">
+        <mxCell id="sbs-363" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;fontSize=14;" vertex="1" parent="sbs-figure">
           <mxGeometry x="149.75" y="921.9" width="119" height="17" as="geometry" />
         </mxCell>
-        <mxCell id="sbs-364" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;fontSize=14;strokeColor=#b85450;strokeWidth=2;fillColor=none;" vertex="1" parent="sbs-figure">
+        <mxCell id="sbs-364" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;fontSize=14;" vertex="1" parent="sbs-figure">
           <mxGeometry x="273.75" y="921.9" width="119" height="17" as="geometry" />
         </mxCell>
-        <mxCell id="sbs-365" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;fontSize=14;strokeColor=#b85450;strokeWidth=2;fillColor=none;" vertex="1" parent="sbs-figure">
+        <mxCell id="sbs-365" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;fontSize=14;" vertex="1" parent="sbs-figure">
           <mxGeometry x="397.75" y="921.9" width="181" height="17" as="geometry" />
         </mxCell>
         <mxCell id="sbs-366" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=2;fontSize=12;startArrow=oval;startFill=1;endArrow=oval;endFill=1;startSize=5;endSize=5;" edge="1" parent="sbs-figure">

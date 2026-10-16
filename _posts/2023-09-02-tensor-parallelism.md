@@ -34,14 +34,14 @@ The rationale is the following: the MLP is a sequence of (1) a MatMul $$XA$$, (2
 1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point (*sum-reduce*) before the GeLU function". We can follow this approach - pictured below - for each of the 2 MatMuls, yielding a total of two communication steps.
 
   {: style="text-align:center; font-size: small;"}
-  <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.png">
+  <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.svg">
 
 
 2. Another option is to not split $$X$$ and to split $$A$$ along its columns, which "allows the GeLU nonlinearity to be independently applied to the output of each partitioned GEMM". The output of the GeLU $$Y$$ is then $$[Y_1, Y_2] = [GeLU (X A_1), GeLU(X A_2)]$$, and this removes a synchronization point.
 After the MatMul and GeLU are done, we must follow with another MatMul and a dropout. Note that if we follow this approach (pictured below), the output $$Y$$ of the first MatMul (which is the input for the second MatMul) is split column-wise. Therefore, Megatron uses the previous approach for the second MatMul, which requires 1 collective communication step. In total, we perform 1 communication step for 2 MatMuls.
 
   {: style="text-align:center; font-size: small;"}
-  <img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_2.png">
+  <img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_2.svg">
 
 
 The algorithm of the attention mechanism is analogous, except that instead of a single MatMul $$XA$$ at the beginning of the workflow, we perform three MatMuls $$XV$$, $$XQ$$ and $$XK$$ for the value, query and key matrices of the attention mechanism. Therefore, this algorithm requires one (not two) communication step per MLP and per attention block.
