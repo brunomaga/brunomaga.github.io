@@ -46,9 +46,12 @@ permalink: /publications/
   line-height: 1.5;
 }
 .pub-notes > :last-child { margin-bottom: 0; }
+/* the intro, with the back link on its right */
+.pub-intro { display: flex; align-items: center; justify-content: space-between; gap: 1em; margin-bottom: 15px; }
+.pub-intro p { margin: 0; }
 </style>
 
-A summary of some interesting publications I came across. Continuously updated.
+<div class="pub-intro"><p>A summary of some interesting publications I came across. Continuously updated.</p><a class="post-label post-label--back" href="{{ site.url }}"><i class="fas fa-arrow-left" aria-hidden="true"></i> back</a></div>
 
 {::options parse_block_html="true" /}
 
