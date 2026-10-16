@@ -134,10 +134,10 @@ Large networks of cells cannot be integrated with global adaptive time stepping.
 The following picture illustrates a timeline (from A to D) of six cells running the *lvardt* algorithm. The intervals of possible interpolation are displayed as black rectangles. The right end of a cell's rectangle, $$t_b$$, is the time up to which that cell has integrated. The vertical line traversing all neurons marks the system's earliest event time. Triggers of discrete events on a neuron are displayed as short thick vertical bars. (A) The cell with the smallest $$t_b$$ advances by the length of the hashed rectangle; (B) Cell 5 has the smallest $$t_b$$ and integrates forward; (C) The next earliest event in the system is at neuron 3. This event trigger creates three new events to be delivered to cells 3, 4 and 5; (D) The new earliest event forces cell 3 to back-interpolate, the event is handled, and cell 3 reinitializes. Cell 3 will be the next cell to integrate forward:
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.png">
+<img width="30%" height="30%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.svg">
 
 {: style="text-align:center; font-size: small;"}
-source: [The NEURON book][neuron-book]
+Adapted from: [The NEURON book][neuron-book]
 
 ## Single Neuron Performance
 
@@ -197,20 +197,20 @@ To measure the efficiency across the different spiking dynamics of neurons, the 
 Two sample neurons are taken from the top 1% *busiest* neurons (in terms of incoming spikes, i.e. discontinuities). The plots show the number of spikes arriving per time interval (left, each time bin accounts for 0.1ms) and the distribution of time intervals between spike arrivals (right):
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_203076.png">
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_138083.png">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_203076.svg">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_138083.svg">
 
 The neurons in that top 1% received between 3040 and 6146 events. The same analysis for two sample neurons from the median 1% of neurons in terms of spike arrivals:
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_208223.png">
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_87784.png">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_208223.svg">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_87784.svg">
 
 These received 541 to 558 spiking events. Finally, the neurons in the bottom 1%
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_132412.png">
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_2101.png">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_132412.svg">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_2101.svg">
 
 received fewer than 100 events.
 
@@ -252,7 +252,7 @@ Even though these results are promising, different mammals, brain regions and me
 The comparison included several fixed- and variable-step interpolation methods, detailed <a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">in the original publication preprint</a>. The benchmark results are:
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.png">
+<img width="90%" height="90%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.svg">
 
 Quoting the previous paper: "Fixed step methods do not yield significantly-different execution times across different spiking regimes. This is due to the homogeneous computation of neuron  state updates throughout time, and the light computation attached to synaptic events and collective communication not yielding a substantial increase of runtime. The difference in execution times measured across the five regimes was of about $$2\%$$, which we consider negligible. On the other hand, as expected, variable step executions are penalized on regimes with high discontinuity rates. It is noticeable that the runtimes of fixed- and variable-step solvers approximate as we increase the spiking rate, i.e. the increase of runtimes with the input size is steeper for variable timestep (2b$$\hspace{0.3mm}{\color{red!80}\bullet}$$ and  2c$$\hspace{0.3mm}{\color{black}\bullet}{\color{gray}\bullet}{\color{lightgray}\bullet}$$) compared to fixed timestep methods (2a$$\hspace{0.3mm}{\color{blue!80}\bullet}$$). This is due to discontinuities in variable-step being delivered throughout a continuous time line, compared to the discrete delivery instants of the fixed-step methods --- therefore increase the number of interpolation steps; and the iterative model of the variable timestep reinitializing the state computation with small step sizes on each IVP reset, compared to the constant-sized step of fixed step methods.  A remarkable performance is visible on the quiet dynamics use case, where our fully-implicit ODE solver of complex models (with Newton iterations), still runs faster than the simple solver resolving only a system of linear equations. The underlying rationale is that --- despite the inherent computation cost of Newton iterations in the variable step methods --- the low level of discontinuities allow for very long steps, that surpass the simulation throughput of simple solvers running on fixed step methods." 
 

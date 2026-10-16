@@ -29,10 +29,10 @@ A neuron's membrane is formed by a phospholipid bilayer, a dielectric material t
 Synapses are another important mechanism. They represent the interneural connections of the circuit. Synapses drive the post-synaptic membrane potential upwards or downwards, depending on the excitatory or inhibitory properties of the pre-synaptic cell. A spike is initiated when the membrane potential reaches a given Action Potential (AP) threshold, and is characterized by a stiff change of membrane potential. The lowest AP threshold of a neuron is typically at the beginning of the axon (the Axon Initial Segment), where spikes are first initiated. Other APs may occur throughout the axonal arborization as a current propagation mechanism. Spikes are driven by a fast influx of Sodium ($$Na^+$$) ions and by a slow outflux of Potassium ($$K^+$$) ions. The chloride ($$Cl^-$$) conductance helps to bring the membrane potential back to the rest state after an activation. Several other mechanisms also exist, such as gap junctions (active electrical synapses), extracellular space mechanisms, or second messengers. In the cable approximation model, the complexity of these mechanisms is reduced to their ionic conductance. A constant conductance is called a leak (passive) conductance. A compartment in ionic equilibrium, i.e. where the influx and outflux of ions cause no variation of its potential, is said to be at its reversal potential.
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="{{ site.assets }}/neuron-electrical-activity/action_potential.jpg">
+<img width="40%" height="40%" src="{{ site.assets }}/neuron-electrical-activity/action_potential.svg">
 
 {: style="text-align:center; font-size: small;"}
-The voltage trajectory during an Action Potential (spike). Source: unknown
+The voltage trajectory during an Action Potential (spike). Adapted from: unknown
 
 ### Mathematical Basis
 
@@ -52,7 +52,7 @@ $$
 where $$i_a$$ is the axial current [mA] flowing through the compartment's region, and $$\int_A i_m dA$$ is the integral of the transmembrane current density $$i_m$$ [mA/cm$$^2$$] over the membrane area $$A$$ [cm$$^2$$]. The following picture illustrates this concept:
 
 {: style="text-align:center; font-size: small;"}
-<img width="20%" height="20%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.png">
+<img width="20%" height="20%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
 
 A common assumption is that the neuron is divided into compartments small enough that the spatially varying $$i_m$$ in any compartment $$j$$ is well approximated by its value at the center. Therefore:
 
@@ -167,7 +167,7 @@ Most equations that govern brain mechanisms do not have an analytic solution. Th
 Given the tree-shaped morphology of a discretized neuron in the cable model, NEURON implements an optimized linear solver for branched trees, called the Hines Algorithm ([Efficient computation of branched nerve equations, Hines, Elsevier][hines1984efficient]). Data is represented as a sparse tridiagonal matrix, and an extra vector $$p$$ holds the indices of the parent nodes (the ones immediately above in the tree structure). The main diagonal holds the membrane potential of each compartment. The contributions from a parent to its children compartments (and vice versa) are stored in the cells on the same row (column) of the upper (lower) diagonal of the matrix. Since each compartment has only one parent, there is only one cell per row on the lower diagonal, and one cell per column on the upper diagonal. The following pictures show a neuron's dendritic arborization spatially discretized based on the cable model (left) and its sparse matrix representation in the Hines algorithm (right).
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.png"> <img width="25%" height="25%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.png">
+<img width="35%" height="35%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="25%" height="25%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
 
 
 The main rationale of the Hines algorithm is that, if the compartments are numbered so that each one has an index greater than its parent's, the computational complexity of the solver drops from the $$O(n^3)$$ of a typical Gaussian elimination to $$O(n)$$. Consider a tridiagonal matrix with vectors $$d$$ (main diagonal), $$b$$ (lower diagonal) and $$a$$ (upper diagonal), representing a single cable without branching. The following steps show that the Hines algorithm is an inverted Gaussian elimination adapted for branched structures:

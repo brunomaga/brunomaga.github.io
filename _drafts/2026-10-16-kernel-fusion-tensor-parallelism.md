@@ -83,7 +83,7 @@ The all-reduce of a band is a reduce-scatter followed by an all-gather. Each GPU
 The fused kernel was compared to a tuned, non-fused implementation with the all-reduce of the communication library, on FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs in one node, in `bfloat16`. It is 22% to 62% faster, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/tp_fusion_results.png"/>
+<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/tp_fusion_results.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Latency of the regular (baseline) and fused (ours) FFNs, sorted by improvement.

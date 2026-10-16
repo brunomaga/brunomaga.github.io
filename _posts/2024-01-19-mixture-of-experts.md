@@ -14,10 +14,10 @@ This post covers the development of MoEs since the early days, and provides impl
 In 1991, the papers [Adaptive Mixture of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf) and [Task Decomposition Through Competition in a Modular Connectionist Architecture](https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog1502_2) introduced some of the earliest architectures similar to what is now called an MoE.
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="65%" src="{{ site.assets }}/distributed-training/imgs/moe_2014_ilya.png" alt="MoE paper 2014"/>
+<img width="65%" height="65%" src="{{ site.assets }}/distributed-training/imgs/moe_2014_ilya.svg" alt="MoE paper 2014"/>
 
 {: style="text-align:center; font-size: small;"}
-**Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). <br/>Source: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
+**Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). <br/>Adapted from: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
 
 The MoE was defined as a set of independent **experts** (feed-forward networks, $$f_i(x)$$ in the picture) and a **gating network** (also a feed-forward network, $$g(x)$$). All experts and the gating network receive the same input $$x$$. The gating network outputs a distribution of the relevance (importance) of each expert for the given input. In its simplest form, it is defined as $$g(x) = \mathrm{Softmax}(x \cdot W_g)$$, where $$W_g$$ is an (optional) learnable transformation. The output of the system ($$z$$) is the sum of the outputs of all experts, weighted by the output of the gating network.
 
@@ -118,7 +118,10 @@ As a result, the MoE may select a different combination of experts for each toke
 Towards better scaling, the 2017 paper [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538) presented a recurrent (LSTM-based) language model where the feed-forward subnetwork is replaced by an MoE structure. The goal was text processing (and translation) with thousands of experts, totalling 137B parameters:
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/moe_2017_dean.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/moe_2017_dean.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Adapted from: [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
 
 ### Processing and batching
 
@@ -190,8 +193,22 @@ The experiments fixed a compute budget and compared a baseline model with severa
 
 Finally, the input-to-expert assignments show that **different experts specialize in different tasks based on syntax and semantics** (Appendix E, Table 9):
 
+| Expert 381 | Expert 752 | Expert 2004 |
+|:-:|:-:|:-:|
+| ... with **researchers** , ... | ... plays **a** core ... | ... with **rapidly** growing ... |
+| ... to **innovation** . | ... plays **a** critical ... | ... under **static** conditions ... |
+| ... tics **researchers** . | ... provides **a** legislative ... | ... to **swift** ly ... |
+| ... the **generation** of ... | ... play **a** leading ... | ... to **dras** tically ... |
+| ... technology **innovations** is ... | ... assume **a** leadership ... | ... the **rapid** and ... |
+| ... technological **innovations** , ... | ... plays **a** central ... | ... the **fast** est ... |
+| ... support **innovation** throughout ... | ... taken **a** leading ... | ... the **Quick** Method ... |
+| ... role **innovation** will ... | ... established **a** reconciliation ... | ... rec **urrent** ) ... |
+| ... research **scienti** st ... | ... played **a** vital ... | ... provides **quick** access ... |
+| ... promoting **innovation** where ... | ... have **a** central ... | ... of **volatile** organic ... |
+| ... | ... | ... |
+
 {: style="text-align:center; font-size: small;"}
-<img width="75%" height="75%" src="{{ site.assets }}/distributed-training/imgs/moe_2017_appendix_e_table_9.png"/>
+Contexts corresponding to a few of the 2048 experts in the MoE layer in the encoder portion of the WMT’14 En→Fr translation model. For each expert $$i$$, we sort the inputs in a training batch in decreasing order of $$G(x)_i$$, and show the words surrounding the corresponding positions in the input sentences. Source: [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
 
 A simple Python implementation of this model is available in [this repo](https://github.com/lucidrains/mixture-of-experts).
 
@@ -216,7 +233,10 @@ should be distributed across devices".
 The model tested was a Transformer-based stack of encoder and decoder layers. The Transformer blocks (self-attention, feed-forward and, in the decoder, cross-attention) were converted into conditional computation modules by **replacing the feed-forward layer in every second block with an MoE layer (with top-2 gating)**, in both the encoder and the decoder.
 
 {: style="text-align:center; font-size: small;"}
-<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/moe_gshard.png"/>
+<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/moe_gshard.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Adapted from: [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668)
 
 ### Random routing and expert capacity
 
@@ -246,14 +266,20 @@ keeping the floating point operations (FLOPs) per example constant.
 To scale, the sparsely activated layers split *unique weights* across devices. As in GShard, the feed-forward network is replaced by an MoE. Switch Transformers use **Switch routing**: **each token is routed to only a single expert** (top-1). The authors claim that this simplification preserves model quality, while reducing routing computation and improving stability.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/moe_switch_transformers.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/moe_switch_transformers.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Adapted from: [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
 
 ### Expert Capacity
 
 The paper introduces the **expert capacity factor**. The number of tokens each expert computes (its expert capacity) is the average number of tokens per expert multiplied by this capacity factor. If the capacity is exceeded (i.e. the router sends too many inputs to a given expert), the extra tokens skip the computation and are passed to the next layer via a residual connection.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/moe_switch_transformers_2.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/moe_switch_transformers_2.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Adapted from: [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
 
 On the choice of the capacity factor, the paper notes:
 
@@ -287,7 +313,10 @@ The paper includes further details on training techniques and experiments, omitt
 The MoE workflow is a four-step algorithm, illustrated in the [MegaBlocks paper](https://arxiv.org/abs/2211.15841) (detailed later): 
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/moe_megablocks.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/moe_megablocks.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Adapted from: [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
 
 The tokens travel to the experts and back via all-to-all collectives, and their gradients follow the same path in reverse during the backward pass. Since `dist.all_to_all_single` has no backward pass, it is wrapped in an autograd function whose backward pass runs the opposite all-to-all:
 
@@ -524,8 +553,19 @@ decoder.
 According to the authors, existing sparsely-gated mixture-of-experts (MoE) systems "suffer inefficient computation due to their
 static execution, namely static parallelism and pipelining, which does not adapt to the dynamic workload". To address this, the authors present Tutel, a system with two main novelties: adaptive parallelism for optimal expert execution, and adaptive pipelining for the inefficient and non-scalable dispatch/combine operations in MoE layers.
 
+| Parallelism Method | Communication Complexity | Limitation | Comment |
+|:--|:--|:-:|:--|
+| ① DP | $$\mathcal{O}(P)$$ | - | Possibly optimal |
+| ② MP | $$\mathcal{O}(C_g \cdot W)$$ | - | No better than ⑥ |
+| ③ EP | $$\mathcal{O}(C_g)$$ | $$E/W \geq 1$$ | No better than ⑥ |
+| ④ DP+MP | $$\mathcal{O}(C_g \cdot r + P/r)$$ | $$1 \leq r \leq W$$ | No better than ⑦ for any $$r$$ |
+| ⑤ EP+DP | $$\mathcal{O}(C_g + P/E)$$ | - | A special case of $$r = 1$$ in ⑦ |
+| ⑥ EP+MP | $$\mathcal{O}(C_g \cdot max\{1, W/E\})$$ | - | A special case of $$r = W/E$$ in ⑦ |
+| ⑦ EP+DP+MP | $$\mathcal{O}(C_g \cdot W/E)$$ – if $$r \geq W/E$$ <br/> $$\mathcal{O}(C_g \cdot r + P/E/r)$$ – if $$1 \leq r < W/E$$ | - | Possibly optimal |
+
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/tutel_moe_parallelism.png"/>
+Analysis on communication complexity of MoE parallelism. Source: [Tutel: Adaptive Mixture-of-Experts at Scale](https://arxiv.org/abs/2206.03382)
+
 </details>
 {::options parse_block_html="false" /}
 
@@ -550,7 +590,10 @@ averages of all tokens (with weights that depend on both tokens and experts), an
 It addresses the main challenges of current sparse MoEs: training instability, token dropping, inability to scale the number of experts, and ineffective finetuning.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/soft_moes.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/soft_moes.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Adapted from: [From Sparse to Soft Mixtures of Experts](https://arxiv.org/abs/2308.00951)
 
 In the benchmark, Soft MoEs outperform dense Transformers (ViTs) and popular MoEs (Token Choice and Experts Choice) by a large margin on a vision task, with shorter training time and faster inference. 
 
@@ -577,13 +620,19 @@ MoEs subdivide the problem domain into smaller problems, each solved by a differ
 For every token, the model decides to either apply computation (as in the standard transformer) or skip it and pass the token through a residual connection (leaving it unchanged and saving compute). Unlike in MoEs, the **routing is applied to both the feedforward network and the multi-head attention**. In multi-head attention routing, the router decides not only which tokens to update, but also which tokens are available to attend to. "We refer to this strategy as Mixture-of-Depths (MoD) to emphasize how individual tokens pass through different numbers of layers, or blocks, through the depth of the transformer". During training, for every input, the router produces a scalar weight (importance) per token. The gating picks the top-$$k$$ tokens per sentence per block to participate in the transformer block computation. $$k$$ is a hyper-parameter that defines the maximum number of tokens passed to a block, so the computation graph and tensor sizes remain static throughout the execution. The value of $$k$$ sets the trade-off between performance and speed for a given compute budget.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/mixture_of_depths.png"/>
+<img width="68%" height="68%" src="{{ site.assets }}/distributed-training/imgs/mixture_of_depths.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Adapted from: [Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](https://arxiv.org/abs/2404.02258)
 
 The main challenge is the routing scheme. The authors considered (1) token-choice routing, where a router produces per-token probability distributions across computational paths (experts), and the orthogonal approach, (2) expert-choice routing, where each expert picks the top-$$k$$ tokens based on the tokens’ preferences, instead of tokens choosing their preferred expert. They adopted expert-choice routing because it does not require load balancing, and "routers can try to ensure that the most critical tokens are among the
 top-$$k$$ by setting their weight appropriately".
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/mixture_of_depths_2.png"/>
+<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/mixture_of_depths_2.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Adapted from: [Mixture-of-Depths: Dynamically allocating compute in transformer-based language models](https://arxiv.org/abs/2404.02258)
 
 At the time of writing, this work is very recent, and it is not yet clear whether MoDs will be useful for the general use case.
 

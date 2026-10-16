@@ -181,10 +181,10 @@ and $$A^k = (PDP^{−1})^k = PD^kP^{−1}$$. A symmetric matrix can always be di
 The Singular Value Decomposition (SVD) decomposes a matrix as $$A = U \Sigma V^{\intercal}$$:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/mml_svd.png"/>
+<img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/mml_svd.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
+Adapted from: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
 
 The SVD exists for every matrix, not only for square ones:
 - $$\Sigma$$ is the **singular value matrix**, a (possibly non-square) matrix with non-negative diagonal entries $$\Sigma_{ii} = \sigma_{i} \ge 0$$ and zeros elsewhere. The values $$\sigma_{i}$$ are the **singular values**. $$\Sigma$$ is unique. By convention, the $$\sigma_{i}$$ are sorted by value, with the largest at $$i=1$$;
@@ -200,10 +200,10 @@ $$
 $$
 
 {: style="text-align:center; font-size: small;"}
-<img width="43%" height="43%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.png"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="{{ site.assets }}/algebra-for-ml/svd_example.png"/>
+<img width="43%" height="43%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="{{ site.assets }}/algebra-for-ml/svd_example.png"/>
 
 {: style="text-align:center; font-size: small;"}
-**Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequence of transformations. The SVD decomposes the corresponding linear mapping into three operations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$, and the third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: an example application of the SVD. Image sources: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a> and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a>
+**Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequence of transformations. The SVD decomposes the corresponding linear mapping into three operations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$, and the third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: an example application of the SVD. Image sources: adapted from <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>, and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a>
 
 ### Eigenvalue Decomposition vs. Singular Value Decomposition
 
@@ -296,9 +296,9 @@ Backpropagation is a special case of **automatic differentiation**, a technique 
 
 Automatic differentiation instead performs an efficient *forward* pass by reusing intermediate results, and breaks the *back propagation* algorithm into partial derivatives that propagate backwards through the graph:
 
-<img width="57%" height="57%" src="{{ site.assets }}/algebra-for-ml/autodiff.png"/>
+<img width="57%" height="57%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
 
-(Source: adapted from example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
+(Adapted from: example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 
 
 ## Continuous Optimization

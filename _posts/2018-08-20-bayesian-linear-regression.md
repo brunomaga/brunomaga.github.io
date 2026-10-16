@@ -311,16 +311,16 @@ in line with equations 3.50 and 3.51 of [Chris Bishop's PRML book]({{ site.resou
 Online learning updates the posterior continuously as new data is observed. Following the $$posterior \propto likelihood * prior$$ principle, the posterior of each iteration becomes the prior of the next one, i.e. the new initial knowledge is what was learnt previously. The main advantage is that training does not require all the data at once, so the model can learn from datasets that are not fully available at a given time. The principle is illustrated below:
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_1.png"/>
+<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_1.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_3.png"/>
+<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_3.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_4.png"/>
+<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_4.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_5.png"/>
+<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_5.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Illustration of four steps of online learning for the linear model $$y = w_0 + w_1x$$.
@@ -361,16 +361,16 @@ As in the previous visualization, introducing new datapoints improves the accura
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_0.png"/>
+<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_0.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_1.png"/>
+<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_1.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_2.png"/>
+<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_2.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.png"/>
+<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Illustration of four steps modelling synthetic sinusoidal data. Each plot shows the ground truth in blue, the model mean approximation in orange, and the model mean plus and minus one predictive standard deviation as a light-orange area. (inspired by fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)

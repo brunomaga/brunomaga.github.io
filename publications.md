@@ -2242,7 +2242,7 @@ in faster convergence, especially in presence of small training data". It gave s
 A method that **randomly drops neurons (in different layers) during train time, retaining each one with probability $$p$$**. For each training minibatch, a new "thinned" network is sampled. Dropout can be improved by adding max-norm regularization, decaying learning rate and high momentum. **At test time, all neurons are used, with outgoing weights multiplied by $$p$$**, which approximates averaging the exponentially many thinned networks. Dropout helps **reducing overfitting**, as the network learns to never rely on any given activations, so it learns "redundant" ways of solving the task with multiple neurons; as a side effect, hidden activations also become sparser. Dropping 20% of input units and 50% of hidden units (i.e. $$p = 0.8$$ and $$p = 0.5$$) was often found to be optimal in the original publication. It's computationally less expensive than regular model averaging of multiple trained DNNs. However, it takes 2-3 times longer to train than single fully-connected DNNs because it requires way more epochs, as parameter updates are very noisy. Because a fully connected layer occupies most of the parameters, it is prone to overfitting. Therefore, dropout **increases model generalization**. 
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="50%" height="50%" src="{{ site.assets }}/publications/dropout.png"/>
+<img loading="lazy" width="50%" height="50%" src="{{ site.assets }}/deep-neural-networks/dropout.svg"/>
 
 </div>
 </details>

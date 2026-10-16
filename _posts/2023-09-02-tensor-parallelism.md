@@ -25,10 +25,10 @@ Several methods distribute multi-dimensional tensors across compute nodes with t
 This section replicates the partitioning proposed in the paper [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053). The main idea of Megatron-LM is that Transformer-based models have two main components, a feed-forward (MLP) block and an attention block, and that the forward and backward passes of each block can be performed with a single collective communication step.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/megatron-lm.png"/>
+<img width="65%" height="65%" src="{{ site.assets }}/distributed-training/imgs/megatron-lm.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The MLP and self-attention blocks in the Megatron-LM implementation. $$f$$ and $$g$$ are conjugate identity and all-reduce operations: $$f$$ is an identity operator in the forward pass and all-reduce in the backward pass, while $$g$$ is an all-reduce in the forward pass and identity in the backward pass. Source: [Megatron-LM paper](https://arxiv.org/abs/1909.08053)
+The MLP and self-attention blocks in the Megatron-LM implementation. $$f$$ and $$g$$ are conjugate identity and all-reduce operations: $$f$$ is an identity operator in the forward pass and all-reduce in the backward pass, while $$g$$ is an all-reduce in the forward pass and identity in the backward pass. Adapted from: [Megatron-LM paper](https://arxiv.org/abs/1909.08053)
 
 The MLP is a sequence of (1) a MatMul $$XA$$, (2) a GeLU $$Y$$, (3) a MatMul $$YB$$ and (4) a dropout layer. For the first two operations, there are two options:
 1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point (*sum-reduce*) before the GeLU function". Applying this approach (pictured below) to both MatMuls requires two communication steps in total.
@@ -219,10 +219,10 @@ The goal of Megatron-LM is to reduce the number of communication steps, because 
 2. For a given convolutional layer, each processor computes the convolution independently, except for the activations at the split boundaries. These activations (the *halo region* in purple in the picture below) are communicated at every forward/backward step.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/argonne_parallel_2.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/argonne_parallel_2.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Tensor parallelism applied to a Convolutional Neural Network. **LEFT:** split of the activations of a 2D input across four processors $$p0-p3$$. <b><span style="color: red;">red box</span></b>: center of the 3x3 convolution filter; <b><span style="color: red;">red arrow</span></b>: data movement required for updating the neuron in the center of the filter; <b><span style="color: violet;">violet region:</span></b> <i>halo region</i> formed by the elements communicated at every step. <b>RIGHT:</b> communication between processors $$p0$$ and $$p1$$. <b><span style="color: red;">Red arrow</span></b>: forward pass dependencies; <b><span style="color: blue;">blue arrow</span></b>: backward pass dependencies;
+Tensor parallelism applied to a Convolutional Neural Network. **LEFT:** split of the activations of a 2D input across four processors $$p0-p3$$. <b><span style="color: #b85450;">red box</span></b>: center of the 3x3 convolution filter; <b><span style="color: #b85450;">red arrow</span></b>: data movement required for updating the neuron in the center of the filter; <b><span style="color: #9673a6;">violet region:</span></b> <i>halo region</i> formed by the elements communicated at every step. <b>RIGHT:</b> communication between processors $$p0$$ and $$p1$$. <b><span style="color: #b85450;">Red arrow</span></b>: forward pass dependencies; <b><span style="color: #6c8ebf;">blue arrow</span></b>: backward pass dependencies. Adapted from: [Dryden et al.](https://arxiv.org/pdf/1903.06681.pdf)
 
 ## Final remarks and code
 
