@@ -1,23 +1,20 @@
-// Labels: the back link, date, category and tags of a post (_includes/post-labels.html), the back link in
-// the footer, and the years and resource types of the label tables
+// Labels: the back link, date, category and tags of a post (_layouts/post.html), the back link at its end and on
+// the 404 page, and the years and resource types of the label tables
 
 .post-labels {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-top: 0.6em;
 }
 
 // the space above and below a label's capitals, --label-padding, sets its height. Where text-box trims the line
 // box to the capitals (below), it is the padding; elsewhere the line box is about 4px taller than the capitals,
 // mostly below them (uppercase has no descenders), so the padding is 1px less above and 3px less below
 .post-label {
+  @extend %box;
   --label-padding: 6.5px;  // 22px tall
   display: inline-block;
   padding: calc(var(--label-padding) - 1px) 9px calc(var(--label-padding) - 3px);
-  border: 1px solid $label-border-color;
-  border-radius: 3px;
-  background-color: #fff;
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
   font-size: 0.7rem;
   line-height: 1;

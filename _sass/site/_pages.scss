@@ -13,7 +13,6 @@
 .home-header-text { flex: 1; }
 
 .home-header h1 {
-  margin-top: 0;
   margin-bottom: 0.2em;
   line-height: 1.1;
 }
@@ -21,7 +20,6 @@
 .home-header h2 {
   margin-top: 0;
   margin-bottom: 0.3em;
-  font-size: 1.5em;
   color: #555;
 }
 
@@ -31,10 +29,7 @@
   gap: 12px 24px;
 }
 
-.home-links a {
-  white-space: nowrap;
-  text-decoration: none;  // not underlined on hover either
-}
+.home-links a { text-decoration: none; }  // not underlined on hover either
 
 .home-photo {
   flex-shrink: 0;
@@ -114,13 +109,11 @@
 
 .pub-link .fa-solid { font-size: 0.8em; }
 
-// the notes, in a card under the title
+// the notes, in a box under the title
 .pub-notes {
+  @extend %box;
   margin: 0.6em 0 0.2em;
   padding: 0.8em 1em;
-  border: 1px solid $label-border-color;
-  border-radius: 3px;
-  background-color: #fff;
   line-height: 1.5;
 }
 
@@ -138,5 +131,4 @@
   margin: 30px 0;
   font-size: 200px;
   line-height: 1;
-  letter-spacing: -1px;
 }
