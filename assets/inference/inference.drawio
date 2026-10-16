@@ -16797,10 +16797,10 @@
           <mxGeometry x="0" y="1759" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="1799" width="390" height="694" as="geometry" />
+          <mxGeometry x="0" y="1799" width="390" height="678" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;arcSize=7;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_reduce-figure">
-          <mxGeometry x="222" y="0" width="168" height="694" as="geometry" />
+          <mxGeometry x="222" y="0" width="168" height="630" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-2" value="INC" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="moe_fusion_all_to_all_reduce-figure">
           <mxGeometry x="246" y="9" width="120" height="26" as="geometry" />
@@ -17036,7 +17036,7 @@
         <mxCell id="moe_fusion_all_to_all_reduce-46" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;startArrow=oval;startFill=1;startSize=6;" edge="1" parent="moe_fusion_all_to_all_reduce-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="342" y="568" as="sourcePoint" />
-            <mxPoint x="23" y="638" as="targetPoint" />
+            <mxPoint x="23" y="646" as="targetPoint" />
             <Array as="points">
               <mxPoint x="342" y="620" />
               <mxPoint x="23" y="620" />
@@ -17046,41 +17046,41 @@
         <mxCell id="moe_fusion_all_to_all_reduce-47" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_all_to_all_reduce-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="63" y="620" as="sourcePoint" />
-            <mxPoint x="63" y="638" as="targetPoint" />
+            <mxPoint x="63" y="646" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-48" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_all_to_all_reduce-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="103" y="620" as="sourcePoint" />
-            <mxPoint x="103" y="638" as="targetPoint" />
+            <mxPoint x="103" y="646" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-49" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_all_to_all_reduce-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="143" y="620" as="sourcePoint" />
-            <mxPoint x="143" y="638" as="targetPoint" />
+            <mxPoint x="143" y="646" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-50" value="P&lt;sub&gt;0&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_reduce-figure">
-          <mxGeometry x="6" y="638" width="34" height="32" as="geometry" />
+          <mxGeometry x="6" y="646" width="34" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-51" value="P&lt;sub&gt;1&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_reduce-figure">
-          <mxGeometry x="46" y="638" width="34" height="32" as="geometry" />
+          <mxGeometry x="46" y="646" width="34" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-52" value="P&lt;sub&gt;2&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_reduce-figure">
-          <mxGeometry x="86" y="638" width="34" height="32" as="geometry" />
+          <mxGeometry x="86" y="646" width="34" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-53" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_reduce-figure">
-          <mxGeometry x="126" y="638" width="34" height="32" as="geometry" />
+          <mxGeometry x="126" y="646" width="34" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_unique-label" value="ep_all_to_all_unique.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="2573" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_unique-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="2613" width="390" height="694" as="geometry" />
+          <mxGeometry x="0" y="2613" width="390" height="678" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_unique-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;arcSize=7;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_unique-figure">
-          <mxGeometry x="222" y="0" width="168" height="694" as="geometry" />
+          <mxGeometry x="222" y="0" width="168" height="630" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_unique-2" value="INC" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=20;fontStyle=1;" vertex="1" parent="moe_fusion_all_to_all_unique-figure">
           <mxGeometry x="246" y="9" width="120" height="26" as="geometry" />
@@ -17236,7 +17236,7 @@
         <mxCell id="moe_fusion_all_to_all_unique-39" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;startArrow=oval;startFill=1;startSize=6;" edge="1" parent="moe_fusion_all_to_all_unique-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="252" y="540" as="sourcePoint" />
-            <mxPoint x="23" y="630" as="targetPoint" />
+            <mxPoint x="23" y="646" as="targetPoint" />
             <Array as="points">
               <mxPoint x="252" y="558" />
               <mxPoint x="23" y="558" />
@@ -17246,7 +17246,7 @@
         <mxCell id="moe_fusion_all_to_all_unique-40" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;startArrow=oval;startFill=1;startSize=6;" edge="1" parent="moe_fusion_all_to_all_unique-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="288" y="540" as="sourcePoint" />
-            <mxPoint x="63" y="630" as="targetPoint" />
+            <mxPoint x="63" y="646" as="targetPoint" />
             <Array as="points">
               <mxPoint x="288" y="572" />
               <mxPoint x="63" y="572" />
@@ -17256,7 +17256,7 @@
         <mxCell id="moe_fusion_all_to_all_unique-41" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;startArrow=oval;startFill=1;startSize=6;" edge="1" parent="moe_fusion_all_to_all_unique-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="324" y="540" as="sourcePoint" />
-            <mxPoint x="103" y="630" as="targetPoint" />
+            <mxPoint x="103" y="646" as="targetPoint" />
             <Array as="points">
               <mxPoint x="324" y="586" />
               <mxPoint x="103" y="586" />
@@ -17266,7 +17266,7 @@
         <mxCell id="moe_fusion_all_to_all_unique-42" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;startArrow=oval;startFill=1;startSize=6;" edge="1" parent="moe_fusion_all_to_all_unique-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="360" y="540" as="sourcePoint" />
-            <mxPoint x="143" y="630" as="targetPoint" />
+            <mxPoint x="143" y="646" as="targetPoint" />
             <Array as="points">
               <mxPoint x="360" y="600" />
               <mxPoint x="143" y="600" />
@@ -17274,16 +17274,16 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_unique-43" value="P&lt;sub&gt;0&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_unique-figure">
-          <mxGeometry x="6" y="630" width="34" height="32" as="geometry" />
+          <mxGeometry x="6" y="646" width="34" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_unique-44" value="P&lt;sub&gt;1&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_unique-figure">
-          <mxGeometry x="46" y="630" width="34" height="32" as="geometry" />
+          <mxGeometry x="46" y="646" width="34" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_unique-45" value="P&lt;sub&gt;2&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_unique-figure">
-          <mxGeometry x="86" y="630" width="34" height="32" as="geometry" />
+          <mxGeometry x="86" y="646" width="34" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_unique-46" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="moe_fusion_all_to_all_unique-figure">
-          <mxGeometry x="126" y="630" width="34" height="32" as="geometry" />
+          <mxGeometry x="126" y="646" width="34" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_communication_models-label" value="ep_communication_models.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="3387" width="600" height="30" as="geometry" />
@@ -18903,7 +18903,7 @@
           <mxGeometry x="0" y="4260" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="4300" width="933" height="787" as="geometry" />
+          <mxGeometry x="0" y="4300" width="977" height="779" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-1" value="nonblocking put-reduce" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry x="4" y="0" width="280" height="24" as="geometry" />
@@ -18912,7 +18912,7 @@
           <mxGeometry x="4" y="28" width="280" height="20" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;arcSize=7;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="121" y="65" width="166" height="722" as="geometry" />
+          <mxGeometry x="121" y="65" width="166" height="668" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-4" value="INC" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry x="144" y="74" width="120" height="26" as="geometry" />
@@ -19041,7 +19041,7 @@
         <mxCell id="moe_fusion_reduction_models-31" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;startArrow=oval;startFill=1;startSize=6;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="217.75" y="623" as="sourcePoint" />
-            <mxPoint x="13" y="741" as="targetPoint" />
+            <mxPoint x="13" y="749" as="targetPoint" />
             <Array as="points">
               <mxPoint x="217.75" y="723" />
               <mxPoint x="13" y="723" />
@@ -19051,613 +19051,613 @@
         <mxCell id="moe_fusion_reduction_models-32" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="43" y="723" as="sourcePoint" />
-            <mxPoint x="43" y="741" as="targetPoint" />
+            <mxPoint x="43" y="749" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-33" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="73" y="723" as="sourcePoint" />
-            <mxPoint x="73" y="741" as="targetPoint" />
+            <mxPoint x="73" y="749" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-34" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="103" y="723" as="sourcePoint" />
-            <mxPoint x="103" y="741" as="targetPoint" />
+            <mxPoint x="103" y="749" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-35" value="P&lt;sub&gt;0&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="0" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="0" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-36" value="P&lt;sub&gt;1&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="30" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="30" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-37" value="P&lt;sub&gt;2&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="60" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="60" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-38" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="90" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="90" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-39" value="nonblocking get-reduce" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="327" y="0" width="280" height="24" as="geometry" />
+          <mxGeometry x="349" y="0" width="280" height="24" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-40" value="&lt;b&gt;INC memory:&lt;/b&gt; SH float32 + &lt;i&gt;W&lt;/i&gt; int32" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="327" y="28" width="280" height="20" as="geometry" />
+          <mxGeometry x="349" y="28" width="280" height="20" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-41" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;arcSize=7;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="444" y="65" width="166" height="722" as="geometry" />
+          <mxGeometry x="466" y="65" width="166" height="668" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-42" value="INC" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="467" y="74" width="120" height="26" as="geometry" />
+          <mxGeometry x="489" y="74" width="120" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-43" value="Switch" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="467" y="98" width="120" height="22" as="geometry" />
+          <mxGeometry x="489" y="98" width="120" height="22" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-44" value="Ranks" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="331" y="74" width="100" height="26" as="geometry" />
+          <mxGeometry x="353" y="74" width="100" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-45" value="P&lt;sub&gt;0&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="323" y="113" width="26" height="30" as="geometry" />
+          <mxGeometry x="345" y="113" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-46" value="P&lt;sub&gt;1&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="353" y="113" width="26" height="30" as="geometry" />
+          <mxGeometry x="375" y="113" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-47" value="P&lt;sub&gt;2&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="383" y="113" width="26" height="30" as="geometry" />
+          <mxGeometry x="405" y="113" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-48" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="413" y="113" width="26" height="30" as="geometry" />
+          <mxGeometry x="435" y="113" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-49" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="336" y="143" as="sourcePoint" />
-            <mxPoint x="469.75" y="243" as="targetPoint" />
+            <mxPoint x="358" y="143" as="sourcePoint" />
+            <mxPoint x="491.75" y="243" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="336" y="203" />
-              <mxPoint x="469.75" y="203" />
+              <mxPoint x="358" y="203" />
+              <mxPoint x="491.75" y="203" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-50" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="366" y="143" as="sourcePoint" />
-            <mxPoint x="507.25" y="243" as="targetPoint" />
+            <mxPoint x="388" y="143" as="sourcePoint" />
+            <mxPoint x="529.25" y="243" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="366" y="189" />
-              <mxPoint x="507.25" y="189" />
+              <mxPoint x="388" y="189" />
+              <mxPoint x="529.25" y="189" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-51" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="396" y="143" as="sourcePoint" />
-            <mxPoint x="544.75" y="243" as="targetPoint" />
+            <mxPoint x="418" y="143" as="sourcePoint" />
+            <mxPoint x="566.75" y="243" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="396" y="175" />
-              <mxPoint x="544.75" y="175" />
+              <mxPoint x="418" y="175" />
+              <mxPoint x="566.75" y="175" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-52" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="426" y="143" as="sourcePoint" />
-            <mxPoint x="582.25" y="243" as="targetPoint" />
+            <mxPoint x="448" y="143" as="sourcePoint" />
+            <mxPoint x="604.25" y="243" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="426" y="161" />
-              <mxPoint x="582.25" y="161" />
+              <mxPoint x="448" y="161" />
+              <mxPoint x="604.25" y="161" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-53" value="P&lt;sub&gt;x&lt;/sub&gt; sets ready f&lt;sub&gt;x&lt;/sub&gt;&lt;br&gt;with signal" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="323" y="207" width="119" height="32" as="geometry" />
+          <mxGeometry x="345" y="207" width="119" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-54" value="f&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="451" y="243" width="37.5" height="28" as="geometry" />
+          <mxGeometry x="473" y="243" width="37.5" height="28" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-55" value="f&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="488.5" y="243" width="37.5" height="28" as="geometry" />
+          <mxGeometry x="510.5" y="243" width="37.5" height="28" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-56" value="f&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="526" y="243" width="37.5" height="28" as="geometry" />
+          <mxGeometry x="548" y="243" width="37.5" height="28" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-57" value="f&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="563.5" y="243" width="37.5" height="28" as="geometry" />
+          <mxGeometry x="585.5" y="243" width="37.5" height="28" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-58" value="wait_until_some f&lt;sub&gt;x&lt;/sub&gt;,&lt;br&gt;get from P&lt;sub&gt;x&lt;/sub&gt;&lt;br&gt;&lt;span style=&quot;color:#666666;&quot;&gt;(of local results Σ&lt;sub&gt;x&lt;/sub&gt;)&lt;/span&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="323" y="249.5" width="119" height="47" as="geometry" />
+          <mxGeometry x="345" y="249.5" width="119" height="47" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-59" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="469.75" y="271" as="sourcePoint" />
-            <mxPoint x="336" y="355" as="targetPoint" />
+            <mxPoint x="491.75" y="271" as="sourcePoint" />
+            <mxPoint x="358" y="355" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="469.75" y="301" />
-              <mxPoint x="336" y="301" />
+              <mxPoint x="491.75" y="301" />
+              <mxPoint x="358" y="301" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-60" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="507.25" y="271" as="sourcePoint" />
-            <mxPoint x="366" y="355" as="targetPoint" />
+            <mxPoint x="529.25" y="271" as="sourcePoint" />
+            <mxPoint x="388" y="355" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="507.25" y="315" />
-              <mxPoint x="366" y="315" />
+              <mxPoint x="529.25" y="315" />
+              <mxPoint x="388" y="315" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-61" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="544.75" y="271" as="sourcePoint" />
-            <mxPoint x="396" y="355" as="targetPoint" />
+            <mxPoint x="566.75" y="271" as="sourcePoint" />
+            <mxPoint x="418" y="355" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="544.75" y="329" />
-              <mxPoint x="396" y="329" />
+              <mxPoint x="566.75" y="329" />
+              <mxPoint x="418" y="329" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-62" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="582.25" y="271" as="sourcePoint" />
-            <mxPoint x="426" y="355" as="targetPoint" />
+            <mxPoint x="604.25" y="271" as="sourcePoint" />
+            <mxPoint x="448" y="355" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="582.25" y="343" />
-              <mxPoint x="426" y="343" />
+              <mxPoint x="604.25" y="343" />
+              <mxPoint x="448" y="343" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-63" value="P&lt;sub&gt;0&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="323" y="355" width="26" height="30" as="geometry" />
+          <mxGeometry x="345" y="355" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-64" value="P&lt;sub&gt;1&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="353" y="355" width="26" height="30" as="geometry" />
+          <mxGeometry x="375" y="355" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-65" value="P&lt;sub&gt;2&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="383" y="355" width="26" height="30" as="geometry" />
+          <mxGeometry x="405" y="355" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-66" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="413" y="355" width="26" height="30" as="geometry" />
+          <mxGeometry x="435" y="355" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-67" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="336" y="385" as="sourcePoint" />
-            <mxPoint x="469.75" y="485" as="targetPoint" />
+            <mxPoint x="358" y="385" as="sourcePoint" />
+            <mxPoint x="491.75" y="485" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="336" y="445" />
-              <mxPoint x="469.75" y="445" />
+              <mxPoint x="358" y="445" />
+              <mxPoint x="491.75" y="445" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-68" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="366" y="385" as="sourcePoint" />
-            <mxPoint x="507.25" y="485" as="targetPoint" />
+            <mxPoint x="388" y="385" as="sourcePoint" />
+            <mxPoint x="529.25" y="485" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="366" y="431" />
-              <mxPoint x="507.25" y="431" />
+              <mxPoint x="388" y="431" />
+              <mxPoint x="529.25" y="431" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-69" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="396" y="385" as="sourcePoint" />
-            <mxPoint x="544.75" y="485" as="targetPoint" />
+            <mxPoint x="418" y="385" as="sourcePoint" />
+            <mxPoint x="566.75" y="485" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="396" y="417" />
-              <mxPoint x="544.75" y="417" />
+              <mxPoint x="418" y="417" />
+              <mxPoint x="566.75" y="417" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-70" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="426" y="385" as="sourcePoint" />
-            <mxPoint x="582.25" y="485" as="targetPoint" />
+            <mxPoint x="448" y="385" as="sourcePoint" />
+            <mxPoint x="604.25" y="485" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="426" y="403" />
-              <mxPoint x="582.25" y="403" />
+              <mxPoint x="448" y="403" />
+              <mxPoint x="604.25" y="403" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-71" value="reduce P&lt;sub&gt;x&lt;/sub&gt; data Σ&lt;sub&gt;x&lt;/sub&gt;&lt;br&gt;onto buffer Σ" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="323" y="449" width="119" height="32" as="geometry" />
+          <mxGeometry x="345" y="449" width="119" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-72" value="Σ&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="454" y="485" width="31.5" height="26" as="geometry" />
+          <mxGeometry x="476" y="485" width="31.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-73" value="Σ&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="491.5" y="485" width="31.5" height="26" as="geometry" />
+          <mxGeometry x="513.5" y="485" width="31.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-74" value="Σ&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="529" y="485" width="31.5" height="26" as="geometry" />
+          <mxGeometry x="551" y="485" width="31.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-75" value="Σ&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="566.5" y="485" width="31.5" height="26" as="geometry" />
+          <mxGeometry x="588.5" y="485" width="31.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-76" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="469.75" y="511" as="sourcePoint" />
-            <mxPoint x="469.75" y="533" as="targetPoint" />
+            <mxPoint x="491.75" y="511" as="sourcePoint" />
+            <mxPoint x="491.75" y="533" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-77" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="507.25" y="511" as="sourcePoint" />
-            <mxPoint x="507.25" y="533" as="targetPoint" />
+            <mxPoint x="529.25" y="511" as="sourcePoint" />
+            <mxPoint x="529.25" y="533" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-78" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="544.75" y="511" as="sourcePoint" />
-            <mxPoint x="544.75" y="533" as="targetPoint" />
+            <mxPoint x="566.75" y="511" as="sourcePoint" />
+            <mxPoint x="566.75" y="533" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-79" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="582.25" y="511" as="sourcePoint" />
-            <mxPoint x="582.25" y="533" as="targetPoint" />
+            <mxPoint x="604.25" y="511" as="sourcePoint" />
+            <mxPoint x="604.25" y="533" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-80" value="&lt;i&gt;W&lt;/i&gt; sequential&lt;br&gt;get-reduce of each Σ&lt;sub&gt;x&lt;/sub&gt;&lt;br&gt;onto INC buffer Σ" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#b85450;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="323" y="524.5" width="119" height="47" as="geometry" />
+          <mxGeometry x="345" y="524.5" width="119" height="47" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-81" value="Σ ← Σ + Σ&lt;sub&gt;x&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="451" y="533" width="150" height="30" as="geometry" />
+          <mxGeometry x="473" y="533" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-82" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="526" y="563" as="sourcePoint" />
-            <mxPoint x="526" y="607" as="targetPoint" />
+            <mxPoint x="548" y="563" as="sourcePoint" />
+            <mxPoint x="548" y="607" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-83" value="wait for all Σ&lt;sub&gt;x&lt;/sub&gt;&lt;br&gt;reductions" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="323" y="604" width="119" height="32" as="geometry" />
+          <mxGeometry x="345" y="604" width="119" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-84" value="all &lt;i&gt;W&lt;/i&gt; arrived" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="451" y="607" width="150" height="26" as="geometry" />
+          <mxGeometry x="473" y="607" width="150" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-85" value="put_signal* reduced Σ&lt;br&gt;on all P&lt;sub&gt;x&lt;/sub&gt; (wait_until)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="323" y="662" width="119" height="32" as="geometry" />
+          <mxGeometry x="345" y="662" width="119" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-86" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;startArrow=oval;startFill=1;startSize=6;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="558.75" y="633" as="sourcePoint" />
-            <mxPoint x="336" y="741" as="targetPoint" />
+            <mxPoint x="580.75" y="633" as="sourcePoint" />
+            <mxPoint x="358" y="749" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="558.75" y="723" />
-              <mxPoint x="336" y="723" />
+              <mxPoint x="580.75" y="723" />
+              <mxPoint x="358" y="723" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-87" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="366" y="723" as="sourcePoint" />
-            <mxPoint x="366" y="741" as="targetPoint" />
+            <mxPoint x="388" y="723" as="sourcePoint" />
+            <mxPoint x="388" y="749" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-88" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="396" y="723" as="sourcePoint" />
-            <mxPoint x="396" y="741" as="targetPoint" />
+            <mxPoint x="418" y="723" as="sourcePoint" />
+            <mxPoint x="418" y="749" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-89" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="426" y="723" as="sourcePoint" />
-            <mxPoint x="426" y="741" as="targetPoint" />
+            <mxPoint x="448" y="723" as="sourcePoint" />
+            <mxPoint x="448" y="749" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-90" value="P&lt;sub&gt;0&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="323" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="345" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-91" value="P&lt;sub&gt;1&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="353" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="375" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-92" value="P&lt;sub&gt;2&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="383" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="405" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-93" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="413" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="435" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-94" value="nonblocking hybrid-reduce" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="650" y="0" width="280" height="24" as="geometry" />
+          <mxGeometry x="694" y="0" width="280" height="24" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-95" value="&lt;b&gt;INC memory:&lt;/b&gt; SH(&lt;i&gt;B&lt;/i&gt;+1) float32 + &lt;i&gt;W&lt;/i&gt; int32" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="650" y="28" width="280" height="20" as="geometry" />
+          <mxGeometry x="694" y="28" width="280" height="20" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-96" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;arcSize=7;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="767" y="65" width="166" height="722" as="geometry" />
+          <mxGeometry x="811" y="65" width="166" height="668" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-97" value="INC" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="790" y="74" width="120" height="26" as="geometry" />
+          <mxGeometry x="834" y="74" width="120" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-98" value="Switch" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=15;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="790" y="98" width="120" height="22" as="geometry" />
+          <mxGeometry x="834" y="98" width="120" height="22" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-99" value="Ranks" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="654" y="74" width="100" height="26" as="geometry" />
+          <mxGeometry x="698" y="74" width="100" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-100" value="P&lt;sub&gt;0&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="113" width="26" height="30" as="geometry" />
+          <mxGeometry x="690" y="113" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-101" value="P&lt;sub&gt;1&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="676" y="113" width="26" height="30" as="geometry" />
+          <mxGeometry x="720" y="113" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-102" value="P&lt;sub&gt;2&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="706" y="113" width="26" height="30" as="geometry" />
+          <mxGeometry x="750" y="113" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-103" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="736" y="113" width="26" height="30" as="geometry" />
+          <mxGeometry x="780" y="113" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-104" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="659" y="143" as="sourcePoint" />
-            <mxPoint x="792.75" y="243" as="targetPoint" />
+            <mxPoint x="703" y="143" as="sourcePoint" />
+            <mxPoint x="836.75" y="243" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="659" y="203" />
-              <mxPoint x="792.75" y="203" />
+              <mxPoint x="703" y="203" />
+              <mxPoint x="836.75" y="203" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-105" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="689" y="143" as="sourcePoint" />
-            <mxPoint x="830.25" y="243" as="targetPoint" />
+            <mxPoint x="733" y="143" as="sourcePoint" />
+            <mxPoint x="874.25" y="243" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="689" y="189" />
-              <mxPoint x="830.25" y="189" />
+              <mxPoint x="733" y="189" />
+              <mxPoint x="874.25" y="189" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-106" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="719" y="143" as="sourcePoint" />
-            <mxPoint x="867.75" y="243" as="targetPoint" />
+            <mxPoint x="763" y="143" as="sourcePoint" />
+            <mxPoint x="911.75" y="243" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="719" y="175" />
-              <mxPoint x="867.75" y="175" />
+              <mxPoint x="763" y="175" />
+              <mxPoint x="911.75" y="175" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-107" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="749" y="143" as="sourcePoint" />
-            <mxPoint x="905.25" y="243" as="targetPoint" />
+            <mxPoint x="793" y="143" as="sourcePoint" />
+            <mxPoint x="949.25" y="243" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="749" y="161" />
-              <mxPoint x="905.25" y="161" />
+              <mxPoint x="793" y="161" />
+              <mxPoint x="949.25" y="161" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-108" value="P&lt;sub&gt;x&lt;/sub&gt; sets ready f&lt;sub&gt;x&lt;/sub&gt;&lt;br&gt;with signal" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="207" width="119" height="32" as="geometry" />
+          <mxGeometry x="690" y="207" width="119" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-109" value="f&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="774" y="243" width="37.5" height="28" as="geometry" />
+          <mxGeometry x="818" y="243" width="37.5" height="28" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-110" value="f&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="811.5" y="243" width="37.5" height="28" as="geometry" />
+          <mxGeometry x="855.5" y="243" width="37.5" height="28" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-111" value="f&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="849" y="243" width="37.5" height="28" as="geometry" />
+          <mxGeometry x="893" y="243" width="37.5" height="28" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-112" value="f&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="886.5" y="243" width="37.5" height="28" as="geometry" />
+          <mxGeometry x="930.5" y="243" width="37.5" height="28" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-113" value="wait_until_some f&lt;sub&gt;x&lt;/sub&gt;,&lt;br&gt;get from P&lt;sub&gt;x&lt;/sub&gt;&lt;br&gt;&lt;span style=&quot;color:#666666;&quot;&gt;(of local results Σ&lt;sub&gt;x&lt;/sub&gt;)&lt;/span&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="249.5" width="119" height="47" as="geometry" />
+          <mxGeometry x="690" y="249.5" width="119" height="47" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-114" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="792.75" y="271" as="sourcePoint" />
-            <mxPoint x="659" y="355" as="targetPoint" />
+            <mxPoint x="836.75" y="271" as="sourcePoint" />
+            <mxPoint x="703" y="355" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="792.75" y="301" />
-              <mxPoint x="659" y="301" />
+              <mxPoint x="836.75" y="301" />
+              <mxPoint x="703" y="301" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-115" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="830.25" y="271" as="sourcePoint" />
-            <mxPoint x="689" y="355" as="targetPoint" />
+            <mxPoint x="874.25" y="271" as="sourcePoint" />
+            <mxPoint x="733" y="355" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="830.25" y="315" />
-              <mxPoint x="689" y="315" />
+              <mxPoint x="874.25" y="315" />
+              <mxPoint x="733" y="315" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-116" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="867.75" y="271" as="sourcePoint" />
-            <mxPoint x="719" y="355" as="targetPoint" />
+            <mxPoint x="911.75" y="271" as="sourcePoint" />
+            <mxPoint x="763" y="355" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="867.75" y="329" />
-              <mxPoint x="719" y="329" />
+              <mxPoint x="911.75" y="329" />
+              <mxPoint x="763" y="329" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-117" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="905.25" y="271" as="sourcePoint" />
-            <mxPoint x="749" y="355" as="targetPoint" />
+            <mxPoint x="949.25" y="271" as="sourcePoint" />
+            <mxPoint x="793" y="355" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="905.25" y="343" />
-              <mxPoint x="749" y="343" />
+              <mxPoint x="949.25" y="343" />
+              <mxPoint x="793" y="343" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-118" value="P&lt;sub&gt;0&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="355" width="26" height="30" as="geometry" />
+          <mxGeometry x="690" y="355" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-119" value="P&lt;sub&gt;1&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="676" y="355" width="26" height="30" as="geometry" />
+          <mxGeometry x="720" y="355" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-120" value="P&lt;sub&gt;2&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="706" y="355" width="26" height="30" as="geometry" />
+          <mxGeometry x="750" y="355" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-121" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="736" y="355" width="26" height="30" as="geometry" />
+          <mxGeometry x="780" y="355" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-122" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="659" y="385" as="sourcePoint" />
-            <mxPoint x="792.75" y="485" as="targetPoint" />
+            <mxPoint x="703" y="385" as="sourcePoint" />
+            <mxPoint x="836.75" y="485" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="659" y="445" />
-              <mxPoint x="792.75" y="445" />
+              <mxPoint x="703" y="445" />
+              <mxPoint x="836.75" y="445" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-123" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="689" y="385" as="sourcePoint" />
-            <mxPoint x="830.25" y="485" as="targetPoint" />
+            <mxPoint x="733" y="385" as="sourcePoint" />
+            <mxPoint x="874.25" y="485" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="689" y="431" />
-              <mxPoint x="830.25" y="431" />
+              <mxPoint x="733" y="431" />
+              <mxPoint x="874.25" y="431" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-124" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="719" y="385" as="sourcePoint" />
-            <mxPoint x="867.75" y="485" as="targetPoint" />
+            <mxPoint x="763" y="385" as="sourcePoint" />
+            <mxPoint x="911.75" y="485" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="719" y="417" />
-              <mxPoint x="867.75" y="417" />
+              <mxPoint x="763" y="417" />
+              <mxPoint x="911.75" y="417" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-125" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="749" y="385" as="sourcePoint" />
-            <mxPoint x="905.25" y="485" as="targetPoint" />
+            <mxPoint x="793" y="385" as="sourcePoint" />
+            <mxPoint x="949.25" y="485" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="749" y="403" />
-              <mxPoint x="905.25" y="403" />
+              <mxPoint x="793" y="403" />
+              <mxPoint x="949.25" y="403" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-126" value="reduce P&lt;sub&gt;x&lt;/sub&gt; data Σ&lt;sub&gt;x&lt;/sub&gt;&lt;br&gt;onto buffer Σ&lt;sub&gt;[⌊x&lt;i&gt;B&lt;/i&gt;/&lt;i&gt;W&lt;/i&gt;⌋]&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="449" width="119" height="32" as="geometry" />
+          <mxGeometry x="690" y="449" width="119" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-127" value="Σ&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="777" y="485" width="31.5" height="26" as="geometry" />
+          <mxGeometry x="821" y="485" width="31.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-128" value="Σ&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="814.5" y="485" width="31.5" height="26" as="geometry" />
+          <mxGeometry x="858.5" y="485" width="31.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-129" value="Σ&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="852" y="485" width="31.5" height="26" as="geometry" />
+          <mxGeometry x="896" y="485" width="31.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-130" value="Σ&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="889.5" y="485" width="31.5" height="26" as="geometry" />
+          <mxGeometry x="933.5" y="485" width="31.5" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-131" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="792.75" y="511" as="sourcePoint" />
-            <mxPoint x="792.75" y="531" as="targetPoint" />
+            <mxPoint x="836.75" y="511" as="sourcePoint" />
+            <mxPoint x="836.75" y="531" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-132" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="830.25" y="511" as="sourcePoint" />
-            <mxPoint x="830.25" y="531" as="targetPoint" />
+            <mxPoint x="874.25" y="511" as="sourcePoint" />
+            <mxPoint x="874.25" y="531" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-133" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="867.75" y="511" as="sourcePoint" />
-            <mxPoint x="867.75" y="531" as="targetPoint" />
+            <mxPoint x="911.75" y="511" as="sourcePoint" />
+            <mxPoint x="911.75" y="531" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-134" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="905.25" y="511" as="sourcePoint" />
-            <mxPoint x="905.25" y="531" as="targetPoint" />
+            <mxPoint x="949.25" y="511" as="sourcePoint" />
+            <mxPoint x="949.25" y="531" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-135" value="&lt;i&gt;W&lt;/i&gt;/&lt;i&gt;B&lt;/i&gt; sequential&lt;br&gt;get-reduce of Σ&lt;sub&gt;x&lt;/sub&gt; onto&lt;br&gt;INC parallel&lt;br&gt;buffers Σ&lt;sub&gt;[b]&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#b85450;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="519" width="119" height="62" as="geometry" />
+          <mxGeometry x="690" y="519" width="119" height="62" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-136" value="Σ&lt;sub&gt;[0]&lt;/sub&gt;←Σ&lt;sub&gt;[0]&lt;/sub&gt;+Σ&lt;sub&gt;0&lt;/sub&gt;&lt;br&gt;Σ&lt;sub&gt;[0]&lt;/sub&gt;←Σ&lt;sub&gt;[0]&lt;/sub&gt;+Σ&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="774" y="531" width="73" height="38" as="geometry" />
+          <mxGeometry x="818" y="531" width="73" height="38" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-137" value="Σ&lt;sub&gt;[1]&lt;/sub&gt;←Σ&lt;sub&gt;[1]&lt;/sub&gt;+Σ&lt;sub&gt;2&lt;/sub&gt;&lt;br&gt;Σ&lt;sub&gt;[1]&lt;/sub&gt;←Σ&lt;sub&gt;[1]&lt;/sub&gt;+Σ&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="851" y="531" width="73" height="38" as="geometry" />
+          <mxGeometry x="895" y="531" width="73" height="38" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-138" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="811.5" y="569" as="sourcePoint" />
-            <mxPoint x="811.5" y="591" as="targetPoint" />
+            <mxPoint x="855.5" y="569" as="sourcePoint" />
+            <mxPoint x="855.5" y="591" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-139" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="886.5" y="569" as="sourcePoint" />
-            <mxPoint x="886.5" y="591" as="targetPoint" />
+            <mxPoint x="930.5" y="569" as="sourcePoint" />
+            <mxPoint x="930.5" y="591" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-140" value="wait for all Σ&lt;sub&gt;x&lt;/sub&gt;&lt;br&gt;reductions" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="588" width="119" height="32" as="geometry" />
+          <mxGeometry x="690" y="588" width="119" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-141" value="all &lt;i&gt;W&lt;/i&gt; arrived" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="774" y="591" width="150" height="26" as="geometry" />
+          <mxGeometry x="818" y="591" width="150" height="26" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-142" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="849" y="617" as="sourcePoint" />
-            <mxPoint x="849" y="639" as="targetPoint" />
+            <mxPoint x="893" y="617" as="sourcePoint" />
+            <mxPoint x="893" y="639" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-143" value="reduce INC buffers&lt;br&gt;Σ&lt;sub&gt;[b]&lt;/sub&gt; onto Σ" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="638" width="119" height="32" as="geometry" />
+          <mxGeometry x="690" y="638" width="119" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-144" value="Σ ← Σ&lt;sub&gt;[0]&lt;/sub&gt; + Σ&lt;sub&gt;[1]&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="774" y="639" width="150" height="30" as="geometry" />
+          <mxGeometry x="818" y="639" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-145" value="put_signal* reduced Σ&lt;br&gt;on all P&lt;sub&gt;x&lt;/sub&gt; (wait_until)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="680" width="119" height="32" as="geometry" />
+          <mxGeometry x="690" y="680" width="119" height="32" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-146" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;startArrow=oval;startFill=1;startSize=6;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="849" y="669" as="sourcePoint" />
-            <mxPoint x="659" y="741" as="targetPoint" />
+            <mxPoint x="893" y="669" as="sourcePoint" />
+            <mxPoint x="703" y="749" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="849" y="723" />
-              <mxPoint x="659" y="723" />
+              <mxPoint x="893" y="723" />
+              <mxPoint x="703" y="723" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-147" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="689" y="723" as="sourcePoint" />
-            <mxPoint x="689" y="741" as="targetPoint" />
+            <mxPoint x="733" y="723" as="sourcePoint" />
+            <mxPoint x="733" y="749" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-148" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="719" y="723" as="sourcePoint" />
-            <mxPoint x="719" y="741" as="targetPoint" />
+            <mxPoint x="763" y="723" as="sourcePoint" />
+            <mxPoint x="763" y="749" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-149" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;" edge="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="749" y="723" as="sourcePoint" />
-            <mxPoint x="749" y="741" as="targetPoint" />
+            <mxPoint x="793" y="723" as="sourcePoint" />
+            <mxPoint x="793" y="749" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-150" value="P&lt;sub&gt;0&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="646" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="690" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-151" value="P&lt;sub&gt;1&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="676" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="720" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-152" value="P&lt;sub&gt;2&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="706" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="750" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-153" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=1.42;" vertex="1" parent="moe_fusion_reduction_models-figure">
-          <mxGeometry x="736" y="741" width="26" height="30" as="geometry" />
+          <mxGeometry x="780" y="749" width="26" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_stages-label" value="ep_stages.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="5167" width="600" height="30" as="geometry" />
@@ -19807,7 +19807,7 @@
         <mxCell id="moe_fusion_data_movement-8" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-6" target="moe_fusion_data_movement-7">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#666666;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#737373;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.05" y="126.62" as="sourcePoint" />
             <mxPoint x="297.05" y="126.62" as="targetPoint" />
@@ -19825,7 +19825,7 @@
         <mxCell id="moe_fusion_data_movement-13" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-10" target="moe_fusion_data_movement-12">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#666666;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#737373;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.05" y="171.86" as="sourcePoint" />
             <mxPoint x="297.05" y="171.86" as="targetPoint" />
@@ -19852,7 +19852,7 @@
         <mxCell id="moe_fusion_data_movement-20" value="comm. library&lt;br&gt;via LM, issued&lt;br&gt;by VUs&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="319.15" y="161.28" width="150" height="66.4" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-21" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#666666;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-21" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#737373;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.05" y="217.1" as="sourcePoint" />
             <mxPoint x="297.05" y="217.1" as="targetPoint" />
@@ -19870,7 +19870,7 @@
         <mxCell id="moe_fusion_data_movement-25" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-22" target="moe_fusion_data_movement-24">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-26" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#666666;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-26" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#737373;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.05" y="262.34" as="sourcePoint" />
             <mxPoint x="297.05" y="262.34" as="targetPoint" />
@@ -19888,7 +19888,7 @@
         <mxCell id="moe_fusion_data_movement-30" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-27" target="moe_fusion_data_movement-29">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-31" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#666666;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-31" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#737373;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.05" y="307.58" as="sourcePoint" />
             <mxPoint x="297.05" y="307.58" as="targetPoint" />
@@ -19906,7 +19906,7 @@
         <mxCell id="moe_fusion_data_movement-35" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-32" target="moe_fusion_data_movement-34">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-36" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#666666;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-36" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#737373;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.05" y="352.82" as="sourcePoint" />
             <mxPoint x="297.05" y="352.82" as="targetPoint" />
@@ -19924,7 +19924,7 @@
         <mxCell id="moe_fusion_data_movement-40" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-37" target="moe_fusion_data_movement-39">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-41" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#666666;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-41" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#737373;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.05" y="398.06" as="sourcePoint" />
             <mxPoint x="297.05" y="398.06" as="targetPoint" />
@@ -19942,7 +19942,7 @@
         <mxCell id="moe_fusion_data_movement-45" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-42" target="moe_fusion_data_movement-44">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-46" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#666666;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-46" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#737373;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.05" y="443.3" as="sourcePoint" />
             <mxPoint x="297.05" y="443.3" as="targetPoint" />
@@ -19969,7 +19969,7 @@
         <mxCell id="moe_fusion_data_movement-52" value="comm. library&lt;br&gt;via LM, issued&lt;br&gt;by VUs&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="319.15" y="432.72" width="150" height="66.4" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-53" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#666666;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-53" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;strokeColor=#737373;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.05" y="488.54" as="sourcePoint" />
             <mxPoint x="297.05" y="488.54" as="targetPoint" />
@@ -19987,7 +19987,7 @@
         <mxCell id="moe_fusion_data_movement-57" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-54" target="moe_fusion_data_movement-56">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-58" value="kernel&lt;br&gt;boundary" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#666666;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-58" value="kernel&lt;br&gt;boundary" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#737373;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="317.85" y="116.35" width="100" height="34" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_data_movement-59" value="(b) MegaKernel: ranks transfer" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_data_movement-figure">
@@ -20140,10 +20140,10 @@
         <mxCell id="moe_fusion_data_movement-106" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-103" target="moe_fusion_data_movement-105">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-107" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;rounded=1;size=0.5;strokeColor=#666666;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-107" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;rounded=1;size=0.5;strokeColor=#737373;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="471.7" y="88.4" width="10" height="435.76" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-108" value="one kernel launch, all ten stages" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;horizontal=0;fontColor=#666666;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-108" value="one kernel launch, all ten stages" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;horizontal=0;fontColor=#737373;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="454.7" y="88.4" width="16" height="435.76" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_data_movement-109" value="(c) MegaKernel+INC: INC transfers" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="moe_fusion_data_movement-figure">
@@ -20272,10 +20272,10 @@
         <mxCell id="moe_fusion_data_movement-148" value="pull-reduce:&lt;br&gt;1 &lt;b&gt;signal&lt;/b&gt;&lt;br&gt;INC pulls, sums&lt;br&gt;(2&lt;i&gt;W&lt;/i&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="1252.15" y="387.48" width="150" height="66.4" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-149" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;rounded=1;size=0.5;strokeColor=#666666;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-149" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;fillColor=none;fontSize=14;rounded=1;size=0.5;strokeColor=#737373;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="938.2" y="88.4" width="10" height="345.28" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-150" value="one kernel launch, all eight stages" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;horizontal=0;fontColor=#666666;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-150" value="one kernel launch, all eight stages" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;horizontal=0;fontColor=#737373;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="921.2" y="88.4" width="16" height="345.28" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_results-label" value="ep_results.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
