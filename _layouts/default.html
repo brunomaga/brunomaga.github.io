@@ -1,0 +1,15 @@
+{%- comment -%}
+  adapted from https://github.com/jekyll/minima/blob/2.5-stable/_layouts/default.html, without the header and the
+  footer
+{%- endcomment -%}
+<!DOCTYPE html>
+<html lang="en">
+  {%- include head.html -%}
+  <body>
+    <main class="page-content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
+    </main>
+  </body>
+</html>

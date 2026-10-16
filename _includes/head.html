@@ -1,4 +1,4 @@
-<!-- adapted from https://github.com/jekyll/minima/blob/2.5-stable/_includes/head.html -->
+{%- comment -%} adapted from https://github.com/jekyll/minima/blob/2.5-stable/_includes/head.html {%- endcomment -%}
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,16 +9,16 @@
 
   <link href="{{ "/favicon.svg" | relative_url }}" rel="icon" type="image/svg+xml">
 
-  <!-- font awesome icons -->
+  {%- comment -%} icons: Font Awesome, and academicons for those it lacks (Google Scholar) {%- endcomment %}
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.7.2/css/all.css">
-
-  <!-- academicons to add missing icons to font awesome (e.g. google scholar) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
-  <!-- MathJax. Display equations wider than the page break over several lines (displayOverflow), except
-       aligned equations whose left-hand side would itself break, which scroll sideways instead; inline math
-       wider than its line is marked .math-scroll so it scrolls sideways (see _sass/site/_posts.scss). Only
-       equations referenced with \ref or \eqref are numbered. -->
+  {%- comment -%}
+    MathJax. Display equations wider than the page break over several lines (displayOverflow), except aligned
+    equations whose left-hand side would itself break, which scroll sideways instead; inline math wider than its
+    line is marked .math-scroll so it scrolls sideways (see _sass/site/_posts.scss). Only equations referenced
+    with \ref or \eqref are numbered.
+  {%- endcomment %}
   <script>
     window.MathJax = {
       tex: { tags: 'all' },
