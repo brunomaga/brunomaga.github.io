@@ -69,9 +69,12 @@ Another important point is that the mean and variance of $$T(x)$$ can be derived
 $$
 \begin{align*}
 \frac{dA}{d\eta^T} & = \frac{d}{d\eta^T} \left(  \log \int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x  \right) \\
-                   & = \frac{ \int_x T(x) h(x) \exp (\eta^T T(x)) \, \mathrm{d}x}{\int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x} &\text{log derivative rule:} \left(\frac{d}{dx} log(x) = \frac{x'}{x}\right) \\
-                   & = \int_x T(x) h(x) exp(\eta^TT(x) - A(\eta))  \, \mathrm{d}x & \text{(definition of } p(x \mid \eta) \text{, and } \frac{e^a}{e^b} = e^{a-b} \text{)}\\
-                   & = \mathbf{E}[T(X)] & (\text{def. expected value: } \mathbf{E}[X] = \int_x x \, f(x) dx \text{, for density func. } f(x))\\
+                   & = \frac{ \int_x T(x) h(x) \exp (\eta^T T(x)) \, \mathrm{d}x}{\int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x} \\
+                     & \qquad \text{(log derivative rule: } \frac{d}{dx} log(x) = \frac{x'}{x} \text{)} \\
+                   & = \int_x T(x) h(x) exp(\eta^TT(x) - A(\eta))  \, \mathrm{d}x \\
+                     & \qquad \text{(definition of } p(x \mid \eta) \text{, and } \frac{e^a}{e^b} = e^{a-b} \text{)} \\
+                   & = \mathbf{E}[T(X)] \\
+                     & \qquad \text{(def. expected value: } \mathbf{E}[X] = \int_x x \, f(x) dx \text{, for density func. } f(x) \text{)} \\
 \end{align*}
 $$ 
 
@@ -417,7 +420,8 @@ $$
 & \frac{d}{d \eta} lik(\eta \mid X) = 0 \\
 \Leftrightarrow & \sum_{i=1}^N T(x_i) - N \nabla_\eta A (\eta) =0 \\ 
 \Leftrightarrow & \nabla_\eta A (\eta) = \frac{1}{N} \sum_{i=1}^N T(x_i)\\
-\Leftrightarrow & \mu_{MLE} = \frac{1}{N} \sum_{i=1}^N T(x_i) & \text{(from above:  } \frac{dA(\eta)}{d \eta} = E[T(X)] \text{ and } E[T(X)] = \mu \text{)}\\
+\Leftrightarrow & \mu_{MLE} = \frac{1}{N} \sum_{i=1}^N T(x_i) \\
+  & \qquad \text{(from above:  } \frac{dA(\eta)}{d \eta} = E[T(X)] \text{ and } E[T(X)] = \mu \text{)} \\
 \end{align*}
 $$
 
