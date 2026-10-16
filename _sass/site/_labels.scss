@@ -1,5 +1,5 @@
 // Labels: the back link, date, category and tags of a post (_includes/post-labels.html), the back link in
-// the footer, and in the label tables the years, the resource types and the back link of the publications
+// the footer, and the years and resource types of the label tables
 
 .post-labels {
   display: flex;
@@ -8,9 +8,13 @@
   margin-top: 0.6em;
 }
 
+// the space above and below a label's capitals, --label-padding, sets its height. Where text-box trims the line
+// box to the capitals (below), it is the padding; elsewhere the line box is about 4px taller than the capitals,
+// mostly below them (uppercase has no descenders), so the padding is 1px less above and 3px less below
 .post-label {
+  --label-padding: 6.5px;  // 22px tall
   display: inline-block;
-  padding: 5.5px 9px 3.5px;  // uppercase text has no descenders: more top padding centres it
+  padding: calc(var(--label-padding) - 1px) 9px calc(var(--label-padding) - 3px);
   border: 1px solid $label-border-color;
   border-radius: 3px;
   background-color: #fff;
@@ -26,7 +30,7 @@
 // where supported, trim the line box to the capitals and centre them exactly
 @supports (text-box: trim-both cap alphabetic) {
   .post-label {
-    padding: 6.5px 9px;
+    padding: var(--label-padding) 9px;
     text-box: trim-both cap alphabetic;
   }
 }
@@ -36,7 +40,7 @@
 .post-label--date { border-color: $label-date-color; color: $label-date-color; }
 
 .post-label--category,
-.label-table span.post-label {  // the years and resource types too, but not the back link of the publications
+.label-table .post-label {  // the years and resource types too
   border-color: $label-category-border-color;
   color: $label-category-color;
 }
@@ -72,10 +76,10 @@ a.post-label--back .fa-arrow-left {
   vertical-align: top;
 }
 
-// their labels have one width in all tables, so their first columns match, with the same space on both
-// sides of them
+// the first column is as wide as its labels, with the same space on both sides of them; every label has four
+// characters (a year, or BOOK, BLOG, UNIV or MISC), so the first columns of all tables match
 .label-table td:first-child {
-  width: 1%;  // shrinks the column to its widest label
+  width: 1%;  // shrinks the column to its labels
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
@@ -83,13 +87,7 @@ a.post-label--back .fa-arrow-left {
 .label-table td + td { padding-left: 0; }
 
 .label-table .post-label {
-  box-sizing: border-box;
-  width: 100%;
-  min-width: calc(6 * (1ch + 0.05em) + 21px);  // the widest resource type, six letters (COURSE), plus padding,
-                                               // border and 1px to spare, so the years get the same width
-  margin: -2.5px 0;  // so that a row with a label is no taller than one without: the margins bring the
-                     // label's box down to 17px, which fits in the line of text
-  text-align: center;
+  --label-padding: 4px;  // 17px tall, so that a row with a label is no taller than one without
   vertical-align: middle;
 }
 
@@ -97,7 +95,6 @@ a.post-label--back .fa-arrow-left {
 // row of its group, and the empty first cells of the other rows are hidden
 @include media-query($on-palm) {
   .label-table,
-  .label-table thead,
   .label-table tbody,
   .label-table tr,
   .label-table td { display: block; }
@@ -110,6 +107,4 @@ a.post-label--back .fa-arrow-left {
   .label-table td:first-child:empty { display: none; }
 
   .label-table td + td { padding-left: 0.5em; }
-
-  .label-table .post-label { width: auto; }
 }

@@ -6,13 +6,9 @@ permalink: /publications/
 
 {::options parse_block_html="true" /}
 
+A summary of some interesting publications I came across. Continuously updated.
+
 <table class="label-table pub-table">
-<thead>
-<tr class="pub-intro">
-<td><a class="post-label post-label--back" href="{{ site.url }}"><i class="fas fa-arrow-left" aria-hidden="true"></i> back</a></td>
-<td>A summary of some interesting publications I came across. Continuously updated.</td>
-</tr>
-</thead>
 <tr>
 <td><span class="post-label">2026</span></td>
 <td markdown="block">

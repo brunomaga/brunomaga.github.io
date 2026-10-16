@@ -117,7 +117,7 @@ I also keep a curated list of related books and other resources available online
 </td>
 </tr>
 <tr>
-<td><span class="post-label">course</span></td>
+<td><span class="post-label">univ</span></td>
 <td>
   <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation - Automatic Differentiation (Princeton course COS-324)</a> (<a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">pdf</a>)
 </td>
