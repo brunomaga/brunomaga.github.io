@@ -20,8 +20,71 @@
   <!-- academicons to add missing icons to font awesome (e.g. google scholar) -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
 
-  <!-- MathJax. tags:'all' numbers equations so \ref{...} resolves -->
-  <script>window.MathJax = { tex: { tags: 'all' } };</script>
+  <!-- MathJax. Display equations wider than the page break over several lines (displayOverflow), except
+       aligned equations whose left-hand side would itself break, which scroll sideways instead; inline math
+       wider than its line is marked .math-scroll so it scrolls sideways (see the styles below). Only
+       equations referenced with \ref or \eqref are numbered. -->
+  <script>
+    window.MathJax = {
+      tex: { tags: 'all' },
+      output: { displayOverflow: 'linebreak' },
+      startup: {
+        ready() {
+          MathJax.startup.defaultReady();
+
+          /* the labels that the page references, read from its TeX source before typesetting */
+          const referenced = new Set(Array.from(document.body.textContent.matchAll(/\\(?:eq)?ref\{([^}]*)\}/g), (m) => m[1]));
+          const tags = MathJax.startup.input[0].parseOptions.tags;
+          const getTag = tags.getTag.bind(tags);
+          tags.getTag = (force) => {
+            if (tags.currentTag.tag == null && !referenced.has(tags.label)) {
+              tags.label = '';
+              return null;
+            }
+            return getTag(force);
+          };
+          const enTag = tags.enTag.bind(tags);
+          tags.enTag = (node, tag) => (tag ? enTag(node, tag) : node);
+
+          /* an aligned display equation whose first column was broken over lines is rendered again with
+             overflow 'scroll'; the output keeps the last line-break width, so it is reset to keep the columns
+             whole. This also covers equations rendered again later, e.g. once a font part has loaded */
+          const output = MathJax.startup.output;
+          const STATE = MathJax._.core.MathItem.STATE;
+          const scrolls = (math) => math.root.attributes.getExplicit('overflow') === 'scroll';
+          const splitLeft = (node) => Array.from(node.querySelectorAll('mjx-mtr, mjx-mlabeledtr')).some((row) => {
+            const cells = Array.from(row.children).filter((cell) => cell.tagName === 'MJX-MTD');
+            return cells.length > 1 && cells[0].querySelectorAll('mjx-linebox').length > 1;
+          });
+          output.preFilters.add(({ math }) => {
+            if (scrolls(math)) output.containerWidth = 1e6;
+          });
+          /* inline math wider than its line is marked .math-scroll, again after any inline formula is rendered
+             again (the new rendering does not keep the class) and whenever the window is resized */
+          const range = document.createRange();
+          const mark = () => document.querySelectorAll('mjx-container:not([display])').forEach((m) => {
+            m.classList.remove('math-scroll');
+            range.selectNodeContents(m);  /* covers every part of the formula, also when it breaks over lines */
+            if (range.getBoundingClientRect().right > m.parentElement.getBoundingClientRect().right + 1) {
+              m.classList.add('math-scroll');
+            }
+          });
+          let marking;
+          output.postFilters.add(({ math, document: doc, data }) => {
+            if (math.display && !scrolls(math) && splitLeft(data)) {
+              math.root.attributes.set('overflow', 'scroll');
+              setTimeout(() => math.rerender(doc, STATE.CONVERT));
+            }
+            if (!math.display) {
+              clearTimeout(marking);
+              marking = setTimeout(mark, 50);
+            }
+          });
+          window.addEventListener('resize', mark);
+        },
+      }
+    };
+  </script>
   <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
 
   <style>
@@ -149,6 +212,33 @@
         padding-bottom: 4px;
       }
     }
+
+    /* ===== Narrow screens: equations, tables and inline code stay within the page ===== */
+
+    /* a display equation that MathJax cannot break over lines (see displayOverflow above) scrolls sideways */
+    mjx-container[overflow="linebreak"][display] {
+      overflow-x: auto;
+      overflow-y: hidden;
+      min-width: initial !important;  /* MathJax gives numbered equations a min-width as wide as the equation */
+    }
+
+    /* inline math wider than its line (marked by the MathJax script above) scrolls sideways */
+    mjx-container.math-scroll {
+      display: inline-block;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      vertical-align: middle;
+    }
+
+    /* post tables, wrapped by _layouts/post.html, scroll sideways when wider than the page */
+    .table-scroll {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
+
+    /* long inline code, such as a dotted module path, wraps instead of running off the page */
+    :not(pre) > code { overflow-wrap: anywhere; }
 
     /* ===== Responsive table =====
        https://css-tricks.com/accessible-simple-responsive-tables/ */

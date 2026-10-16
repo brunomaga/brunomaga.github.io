@@ -14,8 +14,18 @@ Apart from uncertainty quantification, another benefit of Bayesian methods is th
 ### Refresher: Normal distribution
 
 A [probability distribution](https://en.wikipedia.org/wiki/Probability_distribution) is a mathematical function that provides the probabilities of occurrence of different possible outcomes in an experiment. In this post, our methods will be based solely on the [Normal distribution](https://en.wikipedia.org/wiki/Normal_distribution), defined for an input $$x$$ by:
-  - $$p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)$$ for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$ in univariate notation, or
-  - $$p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{D/2} \,\, det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)$$ with mean vector $$\mu$$ and covariance matrix $$\Sigma$$ in its multivariate (*matrix*) notation
+
+$$
+p(x \mid \mu, \sigma ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
+$$
+
+for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$ in univariate notation, or
+
+$$
+p(x \mid \mu, \Sigma ) = \left(\frac{1}{2 \pi}\right)^{D/2} \,\, det(\Sigma)^{-1/2} exp \left( - \frac{1}{2}(x - \mu)^T \Sigma^{-1} (x-\mu) \right)
+$$
+
+with mean vector $$\mu$$ and covariance matrix $$\Sigma$$ in its multivariate (*matrix*) notation.
 
 ## Bayes Theorem
 
@@ -76,10 +86,10 @@ $$
 I.e. we turn a log of products into a sum of logs. In the linear regression model, the likelihood is Gaussian, due to the Gaussian noise term $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2_{\varepsilon})$$. Therefore:
 
 $$
-\begin{align*}
+\begin{aligned}
 log \,\,  p(y_n \mid w, x_n, \sigma^2) & = \log \left( \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, exp \left( - \frac{(y_n - x_n^Tw)^2}{2 \sigma^2} \right) \right)\\
 & =  - \frac{1}{2 \sigma^2} (y_n - x^T_n w)^2 + const \\
-\end{align*}
+\end{aligned}
 \label{eq_lr_likelihood}
 $$ 
 
@@ -175,8 +185,10 @@ $$
   \begin{align*}
    & - \frac{d \,\,  log \,\, p( w \mid X,y)}{dw} \\
  = & - \frac{d \,\,  log \,\, p( y \mid X,w)}{dw} - \frac{d \,\,  log \,\, p(w)}{dw} \\ 
- = & \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right)  & \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and prior } \mathcal{N}(0, b^2 I) \text{)}\\
- = & \frac{1}{\sigma^2}(w^TX^TX-y^TX) + \frac{1}{b^2}w^T & \text{(First-order derivative, rule 3)}\\
+ = & \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right) \\
+   & \qquad \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and prior } \mathcal{N}(0, b^2 I) \text{)} \\
+ = & \frac{1}{\sigma^2}(w^TX^TX-y^TX) + \frac{1}{b^2}w^T \\
+   & \qquad \text{(First-order derivative, rule 3)} \\
   \end{align*}
 \label{eq_prior_w}
 $$
@@ -220,8 +232,10 @@ Going back to Equation \ref{posterior_w} and replacing the terms, we have:
 $$
 \begin{align*}
 p(w \mid X, y) & = \frac{p(y\mid X, w) p(w)}{p(y \mid X )} \\
-                & \propto p(y\mid X, w) p(w) & \text{(dropped constant term in division)}\\
-                & \propto exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{1}{2}(w-m_0)^TS_0^{-1}(w-m_0) \right) & \text{(dropped constant in multiplication)}\\
+                & \propto p(y\mid X, w) p(w) \\
+                  & \qquad \text{(dropped constant term in division)} \\
+                & \propto exp \left(  -\frac{1}{2 \sigma^2} (y-Xw)^T(y-Xw) - \frac{1}{2}(w-m_0)^TS_0^{-1}(w-m_0) \right) \\
+                  & \qquad \text{(dropped constant in multiplication)} \\
                 & = exp \left( -\frac{1}{2} \left( \sigma^{-2} (y-Xw)^T(y-Xw) + (w-m_0)^TS_0^{-1}(w-m_0) \right) \right)\\
 \end{align*}
 $$
@@ -231,7 +245,8 @@ We now apply the log-trick and factorize the expression, so that we can isolate 
 $$
   \begin{align}
    & log \,\, p(w \mid X, y)  \\
- = & -\frac{1}{2} (\sigma^{-2}(y-Xw)^T(y-Xw) + (w-m_0)^TS_0^{-1}(w-m_0)) + const & \text{(ignore const due to zero-derivative)}\\
+ = & -\frac{1}{2} (\sigma^{-2}(y-Xw)^T(y-Xw) + (w-m_0)^TS_0^{-1}(w-m_0)) + const \\
+   & \qquad \text{(ignore const due to zero-derivative)} \\
  = & - \frac{1}{2} \left( \sigma^{-2} y^T y - 2\sigma^{-2} y^T Xw + \sigma^{-2} w^T X^T Xw + w^TS_0^{-1}w - 2 m_0^T S_0^{-1} w + m_0^T S_0^{-1} m_0 \right) \\
    \label{eq1_sq}
  = & - \frac{1}{2} \left( w^T ( \sigma^{-2} X^TX + S_0^{-1}) w \right)   & \hspace{2cm}\text{(terms quadratic in } w \text{)} \\
@@ -246,8 +261,10 @@ As a side note: looking at the last equation, we can see that this function is q
 $$
   \begin{align*}
  p(w\mid X, y) = & exp ( log \,\, p(w\mid y, X) ) \\
-\propto & exp ( log \,\, p(y\mid X, w) + log \,\, p(w) )  & \text{(Bayes equation)}\\
-\propto & exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0 \right)^T w \right) & \text{(quadratic and linear terms of } log \,\, p(w \mid X, y) \text{)}\\
+\propto & exp ( log \,\, p(y\mid X, w) + log \,\, p(w) ) \\
+  & \qquad \text{(Bayes equation)} \\
+\propto & exp \left( -\frac{1}{2} w^T ( \sigma^{-2} X^TX + S_0^{-1}) w + \left( \sigma^{-2} X^Ty + S_0^{-1} m_0 \right)^T w \right) \\
+  & \qquad \text{(quadratic and linear terms of } log \,\, p(w \mid X, y) \text{)} \\
   \end{align*}
 $$
 
@@ -332,8 +349,10 @@ $$
   \begin{align*}
   \mathbf{Var} \left[ y \right] & = \mathbf{Var} \left[ X^Tw + \varepsilon \right] \\
                                 & = \mathbf{Var} \left[ X^Tw  \right] + \mathbf{Var} \left[ \varepsilon \right] + 2\mathbf{Cov} \left[ X^Tw, \varepsilon \right] \\
-                                & = \mathbf{Var} \left[ X^Tw  \right] + \mathbf{Var} \left[ \varepsilon \right] & \text{(independent variables)}\\
-                                & = X^T \mathbf{Var} \left[ w  \right] X + \mathbf{Var} \left[ \varepsilon \right] & \text{(Var linear transformation, rule 6)}\\
+                                & = \mathbf{Var} \left[ X^Tw  \right] + \mathbf{Var} \left[ \varepsilon \right] \\
+                                  & \qquad \text{(independent variables)} \\
+                                & = X^T \mathbf{Var} \left[ w  \right] X + \mathbf{Var} \left[ \varepsilon \right] \\
+                                  & \qquad \text{(Var linear transformation, rule 6)} \\
                                 & = X^T S_N X + \sigma^2 & ( \varepsilon \thicksim \mathcal{N}(0, \sigma^2 ) \text{ and noise variance } \sigma^2 \text{)}\\
  \end{align*}
 $$

@@ -11,7 +11,8 @@ layout: default
   </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    {{ content }}
+    {%- comment -%} each table in a box that scrolls sideways when the table is wider than the page {%- endcomment -%}
+    {{ content | replace: '<table', '<div class="table-scroll"><table' | replace: '</table>', '</table></div>' }}
   </div>
 
   {%- if site.disqus.shortname -%}

@@ -41,8 +41,10 @@ Therefore, MCMC methods are used to approximate the distribution (state) of para
 
 $$
 \begin{align*}
-p (z \mid x) & = \frac{p(z) \, p(x \mid z)}{p(x)} & \text{(Bayes equation)} \\
-             & = \frac{p(z) \, p(x \mid z)}{\int p(z) p(x \mid z) \,dz} & \text{(marginalizing } z \text{)} \\
+p (z \mid x) & = \frac{p(z) \, p(x \mid z)}{p(x)} \\
+  & \qquad \text{(Bayes equation)} \\
+             & = \frac{p(z) \, p(x \mid z)}{\int p(z) p(x \mid z) \,dz} \\
+               & \qquad \text{(marginalizing } z \text{)} \\
 \end{align*}
 $$
 
@@ -89,10 +91,14 @@ $$
 \begin{align*}
 KL (q(z) || p(z \mid x)) 
   & = \int q(z) \log \frac{q(z)}{p(z \mid x)} dz \\
-  & = \int q(z) \log \frac{q(z)p(x)}{p(z, x)} dz  & \text{(definition of conditional prob.)}\\
-  & = \int q(z) \left( \log p(x) + \log \frac{q(z)}{p(z, x)} \right) dz  & \text{(expanding } \log \text{)}\\
-  & = \log p(x) \int q(z) dz + \int q(z) \log \frac{q(z)}{p(z, x)} dz  & \text{(splitting the integral)}\\
-  & = \log p(x) - \int q(z) \log \frac{p(z, x)}{q(z)} dz  & \text{(negate log; } q(z) \text{ is a dist. thus } \int q(z) dz =1 \text{)}\\
+  & = \int q(z) \log \frac{q(z)p(x)}{p(z, x)} dz \\
+    & \qquad \text{(definition of conditional prob.)} \\
+  & = \int q(z) \left( \log p(x) + \log \frac{q(z)}{p(z, x)} \right) dz \\
+    & \qquad \text{(expanding } \log \text{)} \\
+  & = \log p(x) \int q(z) dz + \int q(z) \log \frac{q(z)}{p(z, x)} dz \\
+    & \qquad \text{(splitting the integral)} \\
+  & = \log p(x) - \int q(z) \log \frac{p(z, x)}{q(z)} dz \\
+    & \qquad \text{(negate log; } q(z) \text{ is a dist. thus } \int q(z) dz =1 \text{)} \\
   &= \log p(x) - ELBO(q,p)\\
 \end{align*}
 $$
@@ -193,8 +199,10 @@ $$
 \begin{align*}
   & arg\,max_{q_j} \, ELBO (q)\\
 = & arg\,max_{q_j} \, \left( \log p(x_{1:n}) + \sum_j^m \mathbb{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \right)\\  
-= & arg\,max_{q_j} \, \left( \mathbb{E}_q \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \mathbb{E}_{q_j}[\log q(z_j)] \right) & \text{(removing vars that don't depend on } q(z_j) \text{)} \\
-= & arg\,max_{q_j} \, \left( \int q(z_j) \, \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] dz_j - \int q(z_j) \log q(z_j) dz_j \right) & \text{(def. Expected Value)} \\
+= & arg\,max_{q_j} \, \left( \mathbb{E}_q \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \mathbb{E}_{q_j}[\log q(z_j)] \right) \\
+  & \qquad \text{(removing vars that don't depend on } q(z_j) \text{)} \\
+= & arg\,max_{q_j} \, \left( \int q(z_j) \, \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] dz_j - \int q(z_j) \log q(z_j) dz_j \right) \\
+  & \qquad \text{(def. Expected Value)} \\
 \end{align*}
 $$
 
@@ -209,7 +217,8 @@ This leads to the final coordinate ascent update:
 $$
 \begin{align}
 q^{\star}(z_j) & \propto \exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j \mid z_{\neq j}, x)] \} \\
-               & \propto \exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j, z_{\neq j}, x)] \} & \text{(mean-field assumption: latent vars are independent)} \label{eq_CAVI}\\
+               & \propto \exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j, z_{\neq j}, x)] \} \label{eq_CAVI} \\
+                 & \qquad \text{(mean-field assumption: latent vars are independent)} \\
 \end{align}
 $$
 
@@ -293,12 +302,18 @@ i.e. because $$c_{ik} \in \{0,1\}$$, this is a product of terms that are equal t
 $$
 \begin{align*}
   & \mathbb{E} [ \log p(x_i \mid c_i, \mu); m, s^2] \\
-= & \sum_k c_{ik} \mathbb{E} [ \log p(x_i \mid \mu_k); m_k, s_k^2] & \text{(sum of matching assignments } ik \text{)} \\
-= & \sum_k c_{ik} \mathbb{E} \left[ \log \mathcal{N}(x_i \mid \mu_k, 1) \right] & \text{(likelihood eq. \ref{eq_gmm_likelihood})} \\
-= & \sum_k c_{ik} \mathbb{E} \left[ \log \left( \frac{1}{1 \sqrt{2\pi}} \right) - \frac{1}{2} \left( \frac{x_i - \mu_k}{1} \right)^2 ; m_k, s_k^2 \right] & \text{(log of normal distribution)} \\
-= & \sum_k c_{ik} \mathbb{E} \left[ -\frac{1}{2}(x_i - \mu_k)^2; m_k, s_k^2 \right] + const & \text{(removed terms that are constant with respect to } c_i \text{)} \\
-= & \sum_k c_{ik} \mathbb{E} \left[ -\frac{1}{2} x_i^2 + \mu_k x_i -\frac{1}{2} \mu_k^2; m_k, s_k^2 \right] + const & \text{(decomposed square of sum)} \\
-= & \sum_k c_{ik} \left( x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k] \right) + const  & \text{(removed terms that are constant with respect to } c_i \text{)}  \\
+= & \sum_k c_{ik} \mathbb{E} [ \log p(x_i \mid \mu_k); m_k, s_k^2] \\
+  & \qquad \text{(sum of matching assignments } ik \text{)} \\
+= & \sum_k c_{ik} \mathbb{E} \left[ \log \mathcal{N}(x_i \mid \mu_k, 1) \right] \\
+  & \qquad \text{(likelihood eq. \ref{eq_gmm_likelihood})} \\
+= & \sum_k c_{ik} \mathbb{E} \left[ \log \left( \frac{1}{1 \sqrt{2\pi}} \right) - \frac{1}{2} \left( \frac{x_i - \mu_k}{1} \right)^2 ; m_k, s_k^2 \right] \\
+  & \qquad \text{(log of normal distribution)} \\
+= & \sum_k c_{ik} \mathbb{E} \left[ -\frac{1}{2}(x_i - \mu_k)^2; m_k, s_k^2 \right] + const \\
+  & \qquad \text{(removed terms that are constant with respect to } c_i \text{)} \\
+= & \sum_k c_{ik} \mathbb{E} \left[ -\frac{1}{2} x_i^2 + \mu_k x_i -\frac{1}{2} \mu_k^2; m_k, s_k^2 \right] + const \\
+  & \qquad \text{(decomposed square of sum)} \\
+= & \sum_k c_{ik} \left( x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k] \right) + const \\
+  & \qquad \text{(removed terms that are constant with respect to } c_i \text{)} \\
 \end{align*}
 $$
 
