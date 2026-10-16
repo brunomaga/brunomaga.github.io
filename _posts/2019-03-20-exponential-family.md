@@ -332,7 +332,7 @@ known variance</td>
 <td><span class="math inline">\(\frac{\mu^2}{2\sigma^2} + \log \sigma\)</span></td>
 </tr>
 <tr>
-<td><a href="https://en.wikipedia.org/wiki/gamma_distribution" title="wikilink">gamma distribution</a><br>shape $$\alpha$$, rate $$\beta$$</td>
+<td><a href="https://en.wikipedia.org/wiki/gamma_distribution" title="wikilink">gamma distribution</a><br>shape \(\alpha\), rate \(\beta\)</td>
 <td><span class="math inline">\( f(x;\alpha,\beta) = \frac{ \beta^\alpha x^{\alpha-1} e^{-\beta x}}{\Gamma(\alpha)} \\ (\text{ for } x > 0 \quad \alpha, \beta > 0) \)</span></td>
 <td><span class="math inline">\(\begin{bmatrix} \alpha-1 \\ -\beta \end{bmatrix}\)</span></td>
 <td><span class="math inline">\(\begin{bmatrix} \eta_1+1 \\ -\eta_2 \end{bmatrix}\)</span></td>
@@ -342,7 +342,7 @@ known variance</td>
 <td><span class="math inline">\(\log \Gamma(\alpha)-\alpha\log\beta\)</span></td>
 </tr>
 <tr>
-<td><a href="https://en.wikipedia.org/wiki/gamma_distribution" title="wikilink">gamma distribution</a><br>shape $$k$$, scale $$\theta$$</td>
+<td><a href="https://en.wikipedia.org/wiki/gamma_distribution" title="wikilink">gamma distribution</a><br>shape \(k\), scale \(\theta\)</td>
 <td><span class="math inline">\( f(x;k,\theta) =  \frac{x^{k-1}e^{-\frac{x}{\theta}}}{\theta^k\Gamma(k)} \\ (\text{ for } x > 0 \text{ and } k, \theta > 0) \)</span></td>
 <td><span class="math inline">\(\begin{bmatrix} k-1 \\[5pt] -\dfrac{1}{\theta} \end{bmatrix}\)</span></td>
 <td><span class="math inline">\(\begin{bmatrix} \eta_1+1 \\[5pt] -\dfrac{1}{\eta_2} \end{bmatrix}\)</span></td>

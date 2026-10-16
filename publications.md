@@ -663,7 +663,7 @@ LoongServe introduces **Elastic Sequence Parallelism (ESP)**: instead of a fixed
 
 Mamba is the state-space model (SSM) that made a non-attention sequence model competitive with Transformers on language. SSMs keep a fixed-size recurrent state and scale **linearly** in sequence length, but earlier SSMs (S4) underperformed because their dynamics were fixed regardless of input. The fix is the **selection mechanism**: making the SSM parameters functions of the input lets the model selectively propagate or forget information depending on the current token—giving  content-based reasoning. Input-dependence breaks the convolution trick, so Mamba adds a **hardware-aware parallel scan** (kept in SRAM, FlashAttention-style) to stay fast. Payoff: 5× higher inference throughput than Transformers, linear scaling, and Mamba-3B matching Transformers twice its size.  Its constant-size state is what eliminates the growing KV cache—the property hybrids (Jamba, Nemotron-3) exploit.
 
-**Formula.** An SSM maps input $x_t$ → output $y_t$ through a hidden state $h_t \in \mathbb{R}^N$. Continuous params $(\Delta, A, B, C)$ are first **discretized**:
+**Formula.** An SSM maps input $$x_t$$ → output $$y_t$$ through a hidden state $$h_t \in \mathbb{R}^N$$. Continuous params $$(\Delta, A, B, C)$$ are first **discretized**:
 
 $$\bar A = \exp(\Delta A), \qquad \bar B = (\Delta A)^{-1}(\exp(\Delta A) - I)\cdot \Delta B$$
 
@@ -671,7 +671,7 @@ Then it runs as a **linear recurrence** (inference) or a **global convolution** 
 
 $$h_t = \bar A\,h_{t-1} + \bar B\,x_t, \qquad y_t = C\,h_t$$
 
-In S4 these params are **fixed across time** (LTI). Mamba's change: $B$, $C$, and $\Delta$ become **functions of $x_t$** (the S6 selective SSM), so $(\bar A, \bar B)$ vary per token — that's the selectivity, and what forces the scan-based instead of convolution-based compute.
+In S4 these params are **fixed across time** (LTI). Mamba's change: $$B$$, $$C$$, and $$\Delta$$ become **functions of $$x_t$$** (the S6 selective SSM), so $$(\bar A, \bar B)$$ vary per token — that's the selectivity, and what forces the scan-based instead of convolution-based compute.
 
 <img loading="lazy" width="623" height="308" alt="image" src="https://github.com/user-attachments/assets/073ff296-7eea-431d-b7de-88facaa8fad8" />
 
@@ -707,7 +707,7 @@ This is the paper that establishes Multi-Token Prediction (MTP) as a general tra
 
 The model is trained with multiple "heads."
 The model predicts the following n tokens using n independent output heads sitting on top of a shared model trunk,  treating multi-token prediction as an **auxiliary task** layered on the usual objective. 
-While the main head predicts the next token $x_{n+1}$, auxiliary heads predict $x_{n+2}, x_{n+3}$, and so on.
+While the main head predicts the next token $$x_{n+1}$$, auxiliary heads predict $$x_{n+2}, x_{n+3}$$, and so on.
 - Inference Trick: During generation, the model uses these auxiliary heads to produce a "draft" of the next few tokens simultaneously with the main token.
 - Parallel Verification: in the next step, the model takes those guesses and runs them through its main, high-fidelity blocks in one single forward pass.
 
@@ -733,22 +733,22 @@ MTP is used on DeepSeek-V3 and Nemotron 3: DeepSeek-V3 refined MTP into *sequent
 DeepSeek-V2 introduces Multi-head Latent Attention (MLA) and DeepSeekMoE—the two architectural pillars later carried into V3 and R1. It's a 236B-total-parameter MoE model with only 21B activated per token and a 128K context. These innovations target the two big performance bottlenecks: the KV cache of vanilla Multi-Head Attention on decoding, and dense FFNs on training.
 
 **DeepSeekMoE** provides the FFN: fine-grained experts plus shared experts, so strong capacity comes from sparse activation at low compute. Two main ideas:
-1. **Shared experts**: a small number ($K_s$) that every token always uses, no routing. Used for common knowledge. These aren't clones of each other; they're a fixed always-on set that absorbs common/general knowledge.
-2. **Fine-grained expert segmentation.** A regular MoE has $N$ experts, each a full-size FFN, and activates top-$K$. DeepSeekMoE slices each expert into $m$ smaller ones → $mN$ total experts, and activates $mK$ of them. Same total parameters, same FLOPs — but far more *combinations* of experts per token. Finely segmenting the experts into $mN$ ones and activating $mK$ from them allows for a more flexible combination of activated experts.
+1. **Shared experts**: a small number ($$K_s$$) that every token always uses, no routing. Used for common knowledge. These aren't clones of each other; they're a fixed always-on set that absorbs common/general knowledge.
+2. **Fine-grained expert segmentation.** A regular MoE has $$N$$ experts, each a full-size FFN, and activates top-$$K$$. DeepSeekMoE slices each expert into $$m$$ smaller ones → $$mN$$ total experts, and activates $$mK$$ of them. Same total parameters, same FLOPs — but far more *combinations* of experts per token. Finely segmenting the experts into $$mN$$ ones and activating $$mK$$ from them allows for a more flexible combination of activated experts.
 
-**MLA** uses low-rank joint compression of keys and values: rather than caching full per-head K/V (or sharing heads as in GQA/MQA), it down-projects them into a single small latent vector `cKV` that is cached instead of the full K/V, then up-projects back to distinct per-head K/V at compute time—keeping full-MHA expressiveness while shrinking the cache. Because RoPE can't be absorbed through that up-projection, V2 adds the **decoupled-RoPE** trick: a separate set of small query dims plus one shared key (also cached, a small extra $d_h^R$ per token) carry the positional rotation, kept apart from the compressed "content" path.
+**MLA** uses low-rank joint compression of keys and values: rather than caching full per-head K/V (or sharing heads as in GQA/MQA), it down-projects them into a single small latent vector `cKV` that is cached instead of the full K/V, then up-projects back to distinct per-head K/V at compute time—keeping full-MHA expressiveness while shrinking the cache. Because RoPE can't be absorbed through that up-projection, V2 adds the **decoupled-RoPE** trick: a separate set of small query dims plus one shared key (also cached, a small extra $$d_h^R$$ per token) carry the positional rotation, kept apart from the compressed "content" path.
 
-**Symbols:** $h_t$ = token's input hidden vector, where $t$ is the token's position index, $n_h$ = #heads, $d_h$ = per-head dim · $d_c$ = latent (cache) dim, $d_c \ll n_h d_h$ · $d_h^R$ = small RoPE dim · $W^{D\ast}$ = down-projections (compress), $W^{U\ast}$ = up-projections (reconstruct) · superscript $C$ = content part, $R$ = RoPE part · $j \le t$ = past tokens.
-Compress $h_t$ into the cached latent, then reconstruct distinct per-head K/V from it at compute time:
+**Symbols:** $$h_t$$ = token's input hidden vector, where $$t$$ is the token's position index, $$n_h$$ = #heads, $$d_h$$ = per-head dim · $$d_c$$ = latent (cache) dim, $$d_c \ll n_h d_h$$ · $$d_h^R$$ = small RoPE dim · $$W^{D\ast}$$ = down-projections (compress), $$W^{U\ast}$$ = up-projections (reconstruct) · superscript $$C$$ = content part, $$R$$ = RoPE part · $$j \le t$$ = past tokens.
+Compress $$h_t$$ into the cached latent, then reconstruct distinct per-head K/V from it at compute time:
 
 $$c_t^{KV} = W^{DKV}\, h_t \quad (\in \mathbb{R}^{d_c},\ \text{cached, together with the RoPE key } k_t^{R}); \qquad k_t^{C} = W^{UK} c_t^{KV},\quad v_t^{C} = W^{UV} c_t^{KV}$$
 
-where $W^{DKV}$, $W^{UK}$ and $W^{UV}$ are learnt parameters that give lower-rank transformations. Queries are also low-rank (saves activation memory, not cached):
+where $$W^{DKV}$$, $$W^{UK}$$ and $$W^{UV}$$ are learnt parameters that give lower-rank transformations. Queries are also low-rank (saves activation memory, not cached):
 
 $$c_t^{Q} = W^{DQ}\, h_t, \qquad q_t^{C} = W^{UQ}\, c_t^{Q}$$
 
-- As a side note, when comparing with the regular attention, where the $W$ projections also give a lower-rank matrix: regular attention factors $W^K$ *by head* (and stays full-rank overall); MLA factors $W^K$ *through a shared low-dim latent* (and goes deliberately rank-deficient) — and that latent is the thing the KV cache stores.
-- Note on notation: $W^{DKV}$: **D**own projection on KV.  $W^{UK}$ and $W^{UV}$: **U**p projection on K and V.
+- As a side note, when comparing with the regular attention, where the $$W$$ projections also give a lower-rank matrix: regular attention factors $$W^K$$ *by head* (and stays full-rank overall); MLA factors $$W^K$$ *through a shared low-dim latent* (and goes deliberately rank-deficient) — and that latent is the thing the KV cache stores.
+- Note on notation: $$W^{DKV}$$: **D**own projection on KV.  $$W^{UK}$$ and $$W^{UV}$$: **U**p projection on K and V.
 
 Decoupled RoPE — position rides a separate path: per-head rotary queries and one **shared** rotary key:
 
@@ -766,9 +766,9 @@ $$o_{t,i} = \sum_{j \le t} \mathrm{softmax}_j\!\left(\frac{q_{t,i}^\top k_{j,i}}
 
 | MHA | GQA | MQA | **MLA** |
 |---|---|---|---|
-| $2\,n_h\,d_h$ | $2\,g\,d_h$ | $2\,d_h$ | $d_c + d_h^R$ |
+| $$2\,n_h\,d_h$$ | $$2\,g\,d_h$$ | $$2\,d_h$$ | $$d_c + d_h^R$$ |
 
-The "absorb" trick folds $W^{UK}$ into $W^{UQ}$ and $W^{UV}$ into $W^{O}$ at decode time, so attention runs directly against `cKV` and the full per-head K/V are never materialized. DeepSeek-V2 settings: $d_c = 512$, $d_h^R = 64$ ($d_h = 128$) → cache $= 576$ elements per token per layer, comparable to GQA with ~2.25 groups but with full-MHA expressiveness.
+The "absorb" trick folds $$W^{UK}$$ into $$W^{UQ}$$ and $$W^{UV}$$ into $$W^{O}$$ at decode time, so attention runs directly against `cKV` and the full per-head K/V are never materialized. DeepSeek-V2 settings: $$d_c = 512$$, $$d_h^R = 64$$ ($$d_h = 128$$) → cache $$= 576$$ elements per token per layer, comparable to GQA with ~2.25 groups but with full-MHA expressiveness.
 
 Improvements over the earlier dense DeepSeek 67B are concrete: 42.5% lower training cost, a **93.3% smaller KV cache**, and up to **5.76× higher maximum generation throughput**, while improving quality.
 
