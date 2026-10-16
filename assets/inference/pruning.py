@@ -2,7 +2,7 @@ import copy
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from inference_utils import device, load_model, validation_loss, model_size_mb  # also adds GPTlite to the path
+from inference_utils import device, load_model, validation_loss, model_size_mb, Timer  # also adds GPTlite to the path
 from gptlite import GPTlite
 from utils import get_batch, get_tiny_shakespeare_data, get_gptlite_model_parameters
 from distillation import distillation_loss
@@ -74,6 +74,17 @@ def mask_2_4(score):
   groups = score.reshape(score.size(0), -1, 4)  # [out_features, in_features/4, 4]
   keep = groups.topk(2, dim=-1).indices
   return torch.zeros_like(groups, dtype=torch.bool).scatter_(-1, keep, True).view_as(score)
+
+
+def to_semi_structured(model):
+  """ Stores the 2:4 sparse weights of the linear layers of the transformer blocks in the compressed format of the
+      sparse tensor cores. Needs an NVIDIA GPU of the Ampere generation or newer, and an FP16 or BF16 model """
+  from torch.sparse import to_sparse_semi_structured
+  for block in model.blocks:
+    for module in block.modules():
+      if isinstance(module, nn.Linear):
+        module.weight = nn.Parameter(to_sparse_semi_structured(module.weight), requires_grad=False)
+  return model
 
 
 @torch.inference_mode()
@@ -212,3 +223,16 @@ if __name__=='__main__':
     n_zeros = sum((p == 0).sum().item() for p in model.parameters() if p.dim() > 1) / 1e6  # zero weights
     print(f"{name}: {n_params:.2f}M parameters ({n_zeros:.2f}M zeros, {model_size_mb(model):.1f} MB), "
           f"validation loss {validation_loss(model, valid_data):.3f}")
+
+  # speedup of the 2:4 sparse tensor cores: forward pass of a batch, dense vs compressed 2:4 weights, in FP16
+  if torch.cuda.is_available():
+    x = torch.randint(vocab_size, (batch_size, seqlen), device=device)
+    dense = models["Wanda 2:4"].half()
+    sparse = to_semi_structured(copy.deepcopy(dense))
+    for name, model in (("dense", dense), ("2:4 sparse", sparse)):
+      with torch.inference_mode():
+        model(x)  # warm-up
+        with Timer() as timer:
+          for _ in range(10):
+            model(x)
+      print(f"Wanda 2:4, {name} weights in FP16: {timer.elapsed / 10 * 1000:.2f} ms per forward pass")
