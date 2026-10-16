@@ -66,7 +66,7 @@ Two common regularization approaches are:
 Note: in statistics, **shrinkage** is the reduction of the effects of sampling variation on the estimated parameters. Without it, a model can overfit the training data and perform poorly on unseen data. Regularization reduces this effect by "shrinking" model parameters towards 0 in LASSO, or by making them smaller in Ridge Regression.
 
 Other techniques improve model accuracy without adding a regularization term to the loss function:
-- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method that *drops out* (ignores) neurons of a (deep) neural network at every batch during training, and uses all neurons at validation. It improves generalization by forcing the model to train without relying on specific weights (see the [separate post]({{ site.baseurl }}{% post_url 2018-03-27-deep-neural-networks %}) for more details).
+- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method that *drops out* (ignores) neurons of a (deep) neural network at every batch during training, and uses all neurons at validation. It improves generalization by forcing the model to train without relying on specific weights.
 - [layer, instance, batch, and group normalization](https://arxiv.org/abs/1803.08494): methods that reduce internal covariate shift by fitting the output of activation layers to a standard normal distribution. They can also learn scale and shift parameters, which scale the standard deviation and shift the mean, for better performance than the standard normal distribution.
 
 ## Matrix Factorization
@@ -172,7 +172,6 @@ $$
 L_x(θ) = −log p(x | θ) .
 $$
 
-Likelihood estimators are covered in a [different post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}).
 
 ### Mean Squared Error
 

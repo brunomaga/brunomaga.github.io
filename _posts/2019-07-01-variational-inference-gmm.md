@@ -5,7 +5,7 @@ categories: ["Machine Learning"]
 tags: ["variational inference", "ELBO", "GMM", "MCMC"]
 ---
 
-A [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}) about Bayesian inference explained that its goal is to compute the likelihood of the observed data and the mode of the density of the likelihood, marginal distribution and conditional distributions. Recall the formulation of the **posterior** of the latent variable $$z$$ given the observations $$x$$, derived from the Bayes rule, with and without the normalization term:
+The goal of Bayesian inference is to compute the likelihood of the observed data and the mode of the density of the likelihood, marginal distribution and conditional distributions. Recall the formulation of the **posterior** of the latent variable $$z$$ given the observations $$x$$, derived from the Bayes rule, with and without the normalization term:
 
 $$
 p (z \mid x) = \frac{p(z) \, p(x \mid z)}{p(x)} \propto p(z) \, p(x \mid z)
@@ -347,7 +347,7 @@ $$
 \log q(\mu_k) = (\sum_i \varphi_{ik} x_i) \mu_k - (\frac{1}{2 \sigma^2} + \frac{1}{2} \sum_i \varphi_{ik} ) \mu_k^2 + const.\\
 $$
 
-Therefore, the CAVI optimal variational density of $$\mu_k$$ is a member of the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}) with sufficient statistics $$\{\mu_k, \mu_k^2\}$$ and natural parameters $$\left\{\sum_{i=1}^n \varphi_{ik} x_i, -\frac{1}{2 \sigma^2} - \frac{1}{2}\sum_{i=1}^n \varphi_{ik} \right\}$$. 
+Therefore, the CAVI optimal variational density of $$\mu_k$$ is a member of the Exponential Family of Distributions with sufficient statistics $$\{\mu_k, \mu_k^2\}$$ and natural parameters $$\left\{\sum_{i=1}^n \varphi_{ik} x_i, -\frac{1}{2 \sigma^2} - \frac{1}{2}\sum_{i=1}^n \varphi_{ik} \right\}$$. 
  For a detailed discussion of the exponential family, sufficient statistics and natural parameters, see the previous [post]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}). The updates for the mean and the variance are then:
 
 $$
