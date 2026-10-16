@@ -7,7 +7,7 @@ tags: ["Hodgkin-Huxley", "cable theory", "NEURON", "numerical methods", "simulat
 
 [number-of-neurons]: https://en.wikipedia.org/wiki/List_of_animals_by_number_of_neurons
 
-Neurons are complex structures of the human body that govern behaviour, pain, feelings, motion, and most other aspects of human life. The human body has approximately $$8.6 \times 10^{10}$$ neurons, connected by $$1.5 \times 10^{14}$$ synapses. For comparison, the larva of the sea squirt *Ciona intestinalis* has 231 neurons, mice have approximately $$71$$ million neurons, and the African elephant has almost three times as many neurons as humans, with $$25.7 \times 10^{10}$$ neurons --- see the Wikipedia entry [List of animals by number of neurons][number-of-neurons] for a longer list of neuron counts per animal.
+Neurons are complex structures of the human body that govern behaviour, pain, feelings, motion, and most other aspects of human life. The human brain has approximately $$8.6 \times 10^{10}$$ neurons, connected by $$1.5 \times 10^{14}$$ synapses. For comparison, the larva of the sea squirt *Ciona intestinalis* has 231 neurons, mice have approximately $$71$$ million neurons, and the African elephant has almost three times as many neurons as humans, with $$25.7 \times 10^{10}$$ neurons --- see the Wikipedia entry [List of animals by number of neurons][number-of-neurons] for a longer list of neuron counts per animal.
 
 Because of the complex anatomical structure and behaviour of neurons, numerical methods are used to approximate neuron models and simulate the electrical activity of neural networks.
 
@@ -137,11 +137,11 @@ $$
 
 where $$\text{[ion]}_{out}$$ and $$\text{[ion]}_{in}$$ are the ionic concentrations outside and inside the cell, $$T$$ is the temperature in Kelvin (assumed to be $$307.15 K$$, or $$34 ^{\circ}\mathrm{C}$$), $$z$$ is the charge of the ion, and $$R$$ and $$F$$ are the gas ($$8.3144621 J$$ $$K^{-1}$$ $$mol^{-1}$$) and Faraday ($$96485.33289(59)$$ $$C$$ $$mol^{-1}$$) constants, respectively. The typical reversal potentials of the most common ions are approximately:
 - $$E_{Cl^-}=-84 mV$$ with $$[Cl^-]_{in}=5 mM$$ and $$[Cl^-]_{out}=120 mM$$;
-- $$E_{K^+}=-90 mV$$ with $$[K^+]_{in}=150 mM$$ and $$[K^+]_{out}=4 mM$$; 
-- $$E_{Na^+}=60 mV$$ with $$[Na^+]_{in}=12 mM$$ and $$[Na^+]_{out}=145 mM$$; and
-- $$E_{Ca^{2+}}=130 mV$$ with $$[Ca^{2+}]_{in}=0.1 \mu M$$ and $$[Ca^{2+}]_{out}=1 mM$$.
+- $$E_{K^+}=-96 mV$$ with $$[K^+]_{in}=150 mM$$ and $$[K^+]_{out}=4 mM$$; 
+- $$E_{Na^+}=66 mV$$ with $$[Na^+]_{in}=12 mM$$ and $$[Na^+]_{out}=145 mM$$; and
+- $$E_{Ca^{2+}}=122 mV$$ with $$[Ca^{2+}]_{in}=0.1 \mu M$$ and $$[Ca^{2+}]_{out}=1 mM$$.
 
-The Goldman–Hodgkin–Katz voltage equation gives the reversal potential of a typical HH compartment with $$Na^+$$, $$K^+$$ and $$Cl^-$$ ion channels:
+The Goldman–Hodgkin–Katz voltage equation gives the resting membrane potential of a typical HH compartment with $$Na^+$$, $$K^+$$ and $$Cl^-$$ ion channels:
 
 $$
 V = \frac{RT}{F} \ln \frac{P_{Na} [Na^+]_{out} + P_{K} [K^+]_{out} + P_{Cl} [Cl^-]_{in}} {P_{Na} [Na^+]_{in} + P_{K} [K^+]_{in} + P_{Cl} [Cl^-]_{out}} \approx -60 mV
@@ -178,7 +178,7 @@ The main rationale of the Hines algorithm is that, if the compartments are numbe
   - $$cell_{i+1} \leftarrow cell_{i+1} - \frac{b_{i+1}}{d_i} row_i$$;
 - Replace forward by backward triangulation:
   - $$cell_{i-1} \leftarrow cell_{i-1} - \frac{a_{i-1}}{d_i} row_i$$;
-- Parent contributions for the top node ($$a_0$$ and $$b_0$$) do not exist:
+- Index each off-diagonal element by its child node, so that $$a_i$$ is the element on row $$i-1$$ and column $$i$$ (the top node has no parent, so $$a_0$$ and $$b_0$$ are not used):
   - $$cell_{i-1} \leftarrow cell_{i-1} - \frac{a_i}{d_i} cell_i$$;
 - Change the parents' indices from a single cable ($$i-1$$) to a branched tree structure ($$p_i$$):
   - $$cell_{p_i} \leftarrow cell_{p_i} - \frac{a_i}{d_i} cell_i$$;
@@ -220,7 +220,13 @@ $$
 V_{nm} = V_{0_{nm}} e^{-k_{nm}t}
 $$
 
-and the rate constant $$k_{nm}$$ is the inverse of the membrane time constant $$\tau _m = c/g$$ for the point $$n$$ of $$m$$ points per compartment. Temporal discretization with a fixed time step follows the basic approximation for stepping between two time instants:
+where $$V_{nm}$$ is the amplitude of the spatial frequency $$n$$ (the number of half waves) for $$m$$ points per compartment. Discretizing equation \ref{equation349_neuronbook} at the $$m$$ points gives the rate constant
+
+$$
+k_{nm} = \frac{1}{\tau_m} \left( 1 + \left( \frac{2 m \lambda}{L} \right)^2 \sin^2 \frac{n \pi}{2m} \right)
+$$
+
+where $$\tau _m = c/g$$ is the membrane time constant and $$L$$ is the length of the cable. For $$n=0$$ (uniform potential), $$k_{nm} = 1/\tau_m$$. Temporal discretization with a fixed time step follows the basic approximation for stepping between two time instants:
 
 $$
 \frac{d V}{d t} \approx \frac{V(t + \Delta t) - V(t)}{ \Delta t}
@@ -229,7 +235,7 @@ $$
 [euler]: https://en.wikipedia.org/wiki/Euler_method
 [cn]: https://en.wikipedia.org/wiki/Crank%E2%80%93Nicolson_method
 
-Fixed time step interpolation is typically performed with either the [Euler][euler] or the [Crank-Nicolson][cn] method. The explicit Forward Euler method is first-order accurate, and its time step must never be more than twice the smallest time constant in the system. As a reminder, a numerical solution to a differential equation is of n$$^{th}$$-order if the error $$E$$ is proportional to the $$n^{th}$$ power of the step size $$h$$: $$E(h)=Ch^n$$. The gap between the analytic and the numerical solutions is particularly large when the system's voltage changes rapidly, which makes the method unstable. [The NEURON book][neuron-book] describes this in detail. With an extremely small time step of $$\Delta t=0.0001 ms$$, the system almost reaches equilibrium, at the cost of a very high computational load. For this reason, NEURON does not use Forward Euler. The Backward Euler method computes the solution of a set of nonlinear simultaneous equations at each step, so the step size should be as large as possible to compensate for the extra work. For *reasonable* values of $$\Delta t$$, it produces fast simulations that are generally correct, because tightly coupled compartments do not generate large error oscillations and quickly approach the system's equilibrium. As its numerical error is proportional to $$\Delta t$$, Backward Euler does not deal with non-linearities. A function or map $$f(x)$$ is linear if it satisfies the properties of superposition ($$f(x+y) = f(x) + f(y)$$) and homogeneity ($$ f (\alpha x) = \alpha f (x)$$). The equation(s) of a non-linear system cannot be written as a linear combination of its unknown variables or functions.
+Fixed time step interpolation is typically performed with either the [Euler][euler] or the [Crank-Nicolson][cn] method. The explicit Forward Euler method is first-order accurate, and its time step must never be more than twice the smallest time constant in the system. As a reminder, a numerical solution to a differential equation is of n$$^{th}$$-order if the error $$E$$ is proportional to the $$n^{th}$$ power of the step size $$h$$: $$E(h)=Ch^n$$. The gap between the analytic and the numerical solutions is particularly large when the system's voltage changes rapidly, which makes the method unstable. [The NEURON book][neuron-book] describes this in detail. With an extremely small time step of $$\Delta t=0.0001 ms$$, the system almost reaches equilibrium, at the cost of a very high computational load. For this reason, NEURON does not use Forward Euler. The Backward Euler method computes the solution of a set of nonlinear simultaneous equations at each step, so the step size should be as large as possible to compensate for the extra work. For *reasonable* values of $$\Delta t$$, it produces fast simulations that are generally correct, because tightly coupled compartments do not generate large error oscillations and quickly approach the system's equilibrium. Backward Euler is first-order accurate, i.e. its numerical error is proportional to $$\Delta t$$. For a non-linear system, the implicit equations of each step must be solved iteratively, e.g. with Newton's method. A function or map $$f(x)$$ is linear if it satisfies the properties of superposition ($$f(x+y) = f(x) + f(y)$$) and homogeneity ($$ f (\alpha x) = \alpha f (x)$$). The equation(s) of a non-linear system cannot be written as a linear combination of its unknown variables or functions.
 
 The [Crank-Nicolson][cn] method improves the accuracy of Backward Euler, with a local error proportional to the square of the step size. As $$\Delta t$$ becomes large, the solution oscillates with decreasing amplitude, so the method remains numerically stable --- see Hines and Carnevale (1997) for a numerical resolution of passive compartments and action potentials. Computationally, Crank-Nicolson is stable and more accurate than Backward Euler, and requires the same number of computation steps. To show this, define implicit (Backward) Euler as
 
@@ -249,10 +255,10 @@ $$
 y^{n+1} = y^n + \frac{1}{2}\Delta t \space{ } A y^{n+1} + \frac{1}{2}\Delta t \space{ } A y^{n} = \left( I - \frac{1}{2} \Delta t \,\, A \right)^{-1} \left(I + \frac{1}{2} \Delta t \,\, A \right) y^n
 $$
 
-This is one step of implicit Euler with half the step size, followed by a linear extrapolation. The added accuracy therefore requires no extra computation:
+This is one step of implicit Euler with half the step size, $$y^{n+1/2} = (I - \frac{1}{2} \Delta t \,\, A)^{-1} y^n$$, followed by a linear extrapolation. The added accuracy therefore requires no extra computation:
 
 $$
-2 y^{n+1} - y^n = (2(I - \Delta t \,\, A)^{-1} - I) y^n = (I - \Delta t \space{ } A)^{-1} (I + \Delta t \space{ } A) y^n
+y^{n+1} = 2 y^{n+1/2} - y^n = \left(2 \left(I - \frac{1}{2} \Delta t \,\, A \right)^{-1} - I \right) y^n = \left(I - \frac{1}{2} \Delta t \,\, A \right)^{-1} \left(I + \frac{1}{2} \Delta t \,\, A \right) y^n
 \label{eq_crank_nicholson_steps}
 $$
 

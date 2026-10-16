@@ -27,7 +27,7 @@ $$
 q(\mathbf{x}_t \vert \mathbf{x}_{t-1}) = \mathcal{N}(\mathbf{x}_t; \sqrt{1 - \beta_t} \mathbf{x}_{t-1}, \beta_t\mathbf{I}) \quad
 $$
 
-i.e. each new sample $$\mathbf{x}_t$$ is drawn from a Gaussian distribution with mean $$\sqrt{1-\beta_t} \mathbf{x}_{t-1}$$ and variance $$\beta_t$$.
+i.e. each new sample $$\mathbf{x}_t$$ is drawn from a Gaussian distribution with mean $$\sqrt{1-\beta_t} \mathbf{x}_{t-1}$$ and covariance $$\beta_t\mathbf{I}$$, i.e. each dimension gets independent noise of variance $$\beta_t$$.
 **When $$T \rightarrow \infty$$, the distribution at $$t=T$$ becomes an isotropic Gaussian**. An [isotropic Gaussian](https://math.stackexchange.com/questions/1991961/gaussian-distribution-is-isotropic) has a covariance matrix $$\Sigma=\sigma^2\mathbf{I}$$, where $$\sigma^2 \in \mathbb{R}$$ is a constant variance and $$\mathbf{I}$$ is the identity matrix.
 
 Sampling from $$q(\mathbf{x}_t \vert \mathbf{x}_{t-1})$$ is equivalent to sampling $$\epsilon \sim \mathcal{N}(0, \mathbf{I})$$ and setting $$\mathbf{x}_t = \sqrt{1-\beta_t} \mathbf{x}_{t-1} + \sqrt{\beta_t}\epsilon$$.

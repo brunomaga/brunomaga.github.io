@@ -32,7 +32,7 @@ where $$f$$ is the regression function of the neurons, as before. Popular choice
 - [*tanh*](https://www.wolframalpha.com/input/?i=%5Cfrac%7Be%5Ex+-+e%5E%7B-x%7D%7D%7Be%5Ex%2Be%5E%7B-x%7D%7D): $$ \phi(x) = \frac{e^x - e^{-x}}{e^x+e^{-x}} $$, balanced (positive and negative) and bounded;
 - [Rectified Linear Unit – ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)): $$\phi(x) = [x]_+ = max\{0,x\}$$, always non-negative and unbounded. It is often used because it is computationally *cheap* and mitigates the *vanishing gradients* problem in DNNs, since the positive output region does not have a small derivative; 
 - Leaky ReLU: $$\phi(x) = max \{\alpha x,x\}$$. It fixes the *dying ReLU* problem of non-leaky rectified linear units;
-  - If the dot product of the input to a ReLU with its weights is negative, the output is 0. The gradient of $$ max\{ 0,x \} $$ is $$0$$ when the output is $$0$$. If the output is consistently $$0$$ (e.g. if the ReLU has a large negative bias), then the gradient is consistently 0. The error signal backpropagated from later layers is multiplied by this 0, so no error signal reaches earlier layers: the ReLU has *died*. With leaky ReLUs, the gradient is never 0, which avoids this problem.  
+  - If the dot product of the input to a ReLU with its weights is negative, the output is 0. The gradient of $$ max\{ 0,x \} $$ is $$0$$ when the output is $$0$$. If the output is consistently $$0$$ (e.g. if the ReLU has a large negative bias), then the gradient is consistently 0. The error signal backpropagated from later layers is multiplied by this 0, so no error signal reaches earlier layers: the ReLU has *died*. With leaky ReLUs and $$\alpha > 0$$, the gradient is never 0, which avoids this problem.  
 
 ## Back-propagation
 
@@ -120,7 +120,7 @@ class MyDropout(nn.Module):
             return X * binomial.sample(X.size()) * (1.0/(1-self.p))
         return X
 ```
-Dropout reduces overfitting: the network learns not to rely on any single activation, so it learns *redundant* ways of solving the task with multiple neurons. It also leads to sparse activations, similar to a regularization (L2).
+Dropout reduces overfitting: the network learns not to rely on any single activation, so it learns *redundant* ways of solving the task with multiple neurons. It also leads to sparse activations, similar to a regularization (L1).
 Dropout can be improved by adding max-norm regularization, a decaying learning rate and high momentum.
 The original publication found that dropping 20% of input units and 50% of hidden units was often optimal. Dropout is computationally cheaper than regular model averaging of multiple trained DNNs. However, it takes 2-3 times longer to train than a single fully-connected DNN, because it requires more epochs, as parameter updates are very noisy.
 Since a fully connected layer holds most of the parameters, it is prone to overfitting. Therefore, dropout improves model generalization.
@@ -130,7 +130,7 @@ Since a fully connected layer holds most of the parameters, it is prone to overf
 
 ## Convolutional Neural Networks
  
-Large neural networks have a very high number of parameters, so they may require a large amount of data to be trained. In some scenarios, local training should suffice. E.g. in an audio stream, it is natural to process an input stream $$ x^{(0)}[n] $$ with a linear time-invariant filter, whose output $$ x^{(1)}[n] $$ is the convolution of the input $$ x^{(0)}[n] $$ and the filter $$ f [n] $$:
+Large neural networks have a very high number of parameters, so they may require a large amount of data to be trained. In some scenarios, local connectivity should suffice. E.g. in an audio stream, it is natural to process an input stream $$ x^{(0)}[n] $$ with a linear time-invariant filter, whose output $$ x^{(1)}[n] $$ is the convolution of the input $$ x^{(0)}[n] $$ and the filter $$ f [n] $$:
 
 $$
 x^{(1)}[n] = \sum_k f[k]x^{(0)} [n-k]
@@ -198,7 +198,7 @@ The most common data types and their embeddings are:
   - spectrograms: the waveform is converted into a log-Mel spectrogram, a 2D time-frequency image, and fed to a CNN or Transformer encoder whose activations are the embeddings. E.g. [Whisper](https://arxiv.org/abs/2212.04356) resamples audio to 16 kHz and computes 80 Mel channels on 25 ms windows with a 10 ms stride. A vocoder turns a spectrogram back into a waveform, as in the text-to-speech model [TorToise](https://arxiv.org/abs/2305.07243);
   - neural audio codecs: a convolutional encoder downsamples the waveform into embeddings, and a decoder with transposed convolutions reconstructs it. In between, residual vector quantization (RVQ) turns each embedding into discrete tokens: the embedding is replaced by its nearest entry in a codebook, the residual is quantized with a second codebook, and so on. E.g. [EnCodec](https://arxiv.org/abs/2210.13438) turns 24 kHz audio into 75 embeddings per second, a 320-fold reduction, and the number of codebooks sets the bitrate (8 codebooks of 1024 entries give 6 kbps), while [DAC](https://arxiv.org/abs/2306.06546) compresses 44.1 kHz audio into 8 kbps of tokens. These tokens can be modelled like text, e.g. [VALL-E](https://arxiv.org/abs/2301.02111) does text-to-speech by predicting EnCodec tokens with a language model;
 - videos: the input is 5D (batch size, time, channels, height, width), i.e. a sequence of video frames stacked along the time dimension. Embeddings are collected as in a regular CNN (adapted to use 3D instead of 2D convolutions, etc.);
-- graphs: the embedding of a graph is given by the embedding of a node after several steps of the [message passing algorithm](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html):
+- graphs: the embedding of a node is its state after several steps of the [message passing algorithm](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html), and the embedding of the graph is a readout (e.g. sum, mean or max) over all node embeddings. A message passing step is:
 
   $$x_i^{(k)} = \gamma^{(k)} \left( x_i^{(k-1)}, \Box_{j \in \mathcal{N}(i)} \, \phi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$
 

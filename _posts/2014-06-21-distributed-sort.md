@@ -6,7 +6,7 @@ tags: ["MPI", "sorting", "sample sort", "odd-even sort"]
 ---
 
 Sorting is probably the most common algorithm in computer science. Every computer science student studies the computational complexity of sorting algorithms, measured with the [Big-O notation][bigo]. Serial sorting on a single compute node is a solved problem, with dozens of algorithms available. Some examples are:
-- [quicksort][quick]: probably the best known. It recursively compares the remaining elements of the list to a pivot element. Complexity ranges from $$O(n^2)$$ in the worst case (already sorted input) to $$O(n \log n)$$;
+- [quicksort][quick]: probably the best known. It recursively compares the remaining elements of the list to a pivot element. Complexity ranges from $$O(n^2)$$ in the worst case (e.g. an already sorted input when the first or last element is the pivot) to $$O(n \log n)$$;
 - [insertion sort][insertion]: takes one element at a time from a list and inserts it into a final list of sorted elements. Efficient for small datasets. Complexity ranges from $$O (n^2) $$ to $$O (n) $$, the latter when the insertion position of each element is found immediately in the final list;
 - [selection sort][selection]: a swapping algorithm that repeatedly finds the smallest element in the unsorted list and swaps it with the leftmost unsorted element, reducing the unsorted list size by 1. It is computationally inefficient, requiring $$ O(n^2)$$ comparisons, but memory efficient, with $$O(n)$$ memory swaps;
 - [merge sort][merge]: probably the most general-purpose sorting algorithm. Invented by John von Neumann, it follows a divide-and-conquer approach: the list is divided into $$ n $$ sublists, which are recursively merged into larger lists until the whole set is sorted. Both the best and the worst case have complexity $$ O (n \log n) $$;
@@ -14,7 +14,7 @@ Sorting is probably the most common algorithm in computer science. Every compute
 - [bubble sort][bubble]: performs sequential swaps of neighboring elements until the list is sorted. It requires *half* the number of operations of an all-to-all comparison, leading to a complexity of $$O(n^2)$$. The best-case complexity is $$O(n)$$, reached only when the elements are already sorted;
 - [counting sort][counting]: highly efficient for integer values in a small range. It traverses the unsorted list once and increments the value counts in an array of counts (initialized to zero, with the same size as the value range). Complexity is $$O(n+k)$$, for traversing the initial list of size $$n$$ and the count array of range $$k$$;  
 - [radix sort][radix]: an extension of counting sort to larger ranges. It orders integer values by their key, given by the digit at a given position of the number. Iterations go from the least to the most significant digit, and each iteration performs a counting sort with the i-th digit as key. Complexity: $$O(d(n+k))$$, where $$d$$ is the number of iterations, given by the number of digits (e.g. $$d=3$$ for value $$991$$);    
-- [bucket sort][bucket]: efficient on multicore architectures. It distributes a set of $$n$$ values into $$b$$ buckets and sorts each bucket independently. It then keeps a pointer to every bucket and repeatedly picks the smallest element across all buckets, which yields the sorted list. Complexity is $$O(n)$$ for iterating through the initial dataset in the scatter phase, plus the complexity of sorting $$n/b$$ elements in each bucket, plus a final iteration that merges the sorted buckets in the gather phase ($$O(n)$$);
+- [bucket sort][bucket]: efficient on multicore architectures. It distributes a set of $$n$$ values into $$b$$ buckets and sorts each bucket independently. The buckets cover disjoint, consecutive value ranges, so concatenating the sorted buckets in order yields the sorted list. Complexity is $$O(n)$$ for iterating through the initial dataset in the scatter phase, plus the complexity of sorting $$n/b$$ elements in each bucket, plus a final iteration that concatenates the sorted buckets in the gather phase ($$O(n)$$);
 - and [others][sorting_algs].
     
 [bigo]: https://en.wikipedia.org/wiki/Big_O_notation
@@ -51,8 +51,8 @@ The algorithm is very *memory-stable*, i.e. its worst-case memory consumption is
 
 A faster alternative is a distributed implementation of the **sample sort**, with the following steps:
 1. Each compute node sorts its local dataset and picks a few equidistant samples from it;
-2. All nodes send their samples to the master rank, which sorts them and picks $$c$$ equidistant samples (for $$c$$ compute nodes) from the received set;
-3. The master rank broadcasts these samples to the network. Each pair of consecutive samples delimits the range of values to be sent to one node; 
+2. All nodes send their samples to the master rank, which sorts them and picks $$c-1$$ equidistant samples (splitters, for $$c$$ compute nodes) from the received set;
+3. The master rank broadcasts these samples to the network. The $$c-1$$ splitters divide the value range into $$c$$ intervals, one per node; 
 4. Based on these ranges, the compute nodes perform a collective scatter-gather (or a selective all-to-all) that sends each element to its target rank;
 5. A final local sort on each node yields a globally sorted dataset, distributed across the network.
 

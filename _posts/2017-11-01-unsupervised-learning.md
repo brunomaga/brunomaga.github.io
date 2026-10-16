@@ -89,7 +89,7 @@ source: wikipedia
 
 The least significant dimensions of the transformed data can now be discarded, which reduces the number of features of the model. The number of eigenvectors kept in $$F$$ sets the amount of compression. The first $$k$$ components explain a fraction $$\sum_{i=1}^k \lambda_i / \sum_{i} \lambda_i$$ of the variance of the data, a common criterion to choose $$k$$.
 
-Inverting the transformation recovers the original data, or an approximation of it if $$F$$ does not include all eigenvectors. The inversion multiplies the transformed data by the inverse of $$F^T$$. The eigenvectors of the symmetric matrix $$C$$ are orthonormal, so $$F^{-T} = F$$ and:
+Inverting the transformation recovers the original data, or an approximation of it if $$F$$ does not include all eigenvectors. The inversion multiplies the transformed data by the inverse of $$F^T$$. The eigenvectors of the symmetric matrix $$C$$ are orthonormal, so $$F^TF = I$$. When $$F$$ keeps all eigenvectors, it is square and orthogonal, so $$F^{-T} = F$$ and:
 
 $$
 D_c = F^{-T} D_n = F D_n
@@ -165,13 +165,13 @@ $$
 k(y) = E[y^4]-3.
 $$
 
-The ICA problem is then solved with
+Each row $$b^T$$ of $$B$$ recovers one source, $$s_i = b^T x$$. The ICA problem is then solved with
 
 $$
 \hat{b} = \arg\max_b | k(b^T x(t)) |
 $$
 
-i.e., on the whitened data, ICA maximizes the absolute value of the *kurtosis* $$\mid k(w^Tz) \mid$$, subject to $$w^T w=1$$. The gradient is:
+where $$b^T x(t)$$ is constrained to unit variance. On the whitened data, $$b^T x(t) = w^T z(t)$$, where $$w^T = b^T V^{-1}$$ is a row of $$U$$, and the unit-variance constraint becomes $$w^T w=1$$. ICA therefore maximizes the absolute value of the *kurtosis* $$\mid k(w^Tz) \mid$$, subject to $$w^T w=1$$. The gradient is:
 
 {: style="text-align:center; font-size: small;"}
 <img width="50%" height="50%" src="{{ site.assets }}/unsupervised-learning/ica_kurtosis.png">

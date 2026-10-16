@@ -17,7 +17,7 @@ Its Recurrent Neural Network (RNN) has the following structure:
 - The network has three fully connected layers:
 	- an output layer of size $$d$$, whose output is the embedding of the predicted/ground-truth word;
 	- a single hidden layer of size $$h$$, referring to the hidden space of the current iteration;
-	- an input layer of length $$h+d$$ (when using GRU neurons) or $$2h+d$$ (LSTM), holding the concatenation of the previous iteration's hidden space (described next) and the embedding of the current input word. On the first iteration, the previous hidden space is initialized randomly or with a zero vector;
+	- an input layer of length $$h+d$$ (for both GRU and LSTM neurons; the LSTM cell state is not part of the input), holding the concatenation of the previous iteration's hidden space (described next) and the embedding of the current input word. On the first iteration, the previous hidden space is initialized randomly or with a zero vector;
 
 This structure is represented in the following picture:
 
@@ -128,13 +128,13 @@ $$
 It is a concatenation of all attention heads. The learnt parameters are the weights of the key ($$W^K_i$$), value ($$W^V_i$$) and query ($$W^Q_i$$) spaces of each head $$i$$, and a final transformation $$W^{MHA}$$ of the multi-head concatenation. In terms of computational complexity, the attention mechanism of the encoder is trained on the complete input sequence at once (as in the "The big red dog" example), instead of looping through all words of the input sequence. Therefore, **the attention mechanism replaces the recurrent (RNN) iterations of an encoder with a set of matrix-vector multiplications**.
 
 
-The **Masked Multi-head Attention** component of the decoder is similar to the regular MHA, but replaces the upper triangle of the attention matrix with zeros, to hide the next words from the model. Decoding is performed one word of the output sequence at a time: previously seen words are added to the attention array, and the following words are set to zero. For the previous example, the four iterations are: 
+The **Masked Multi-head Attention** component of the decoder is similar to the regular MHA, but sets the upper triangle of the attention score matrix to $$-\infty$$ before the softmax, to hide the next words from the model. After the softmax, these positions have an attention weight of zero. Decoding is performed one word of the output sequence at a time: previously seen words are added to the attention array, and the following words receive zero attention weight. For the previous example, the four iterations are: 
 
 {: style="text-align:center; font-size: small;"}
 <img width="27%" height="27%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_masked.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Input of the masked attention mechanism of the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every iterated word. Masking replaces the positions of unseen words in the attention matrix with zeros. Source: unknown.
+Input of the masked attention mechanism of the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every iterated word. Masking sets the attention scores of unseen words to $$-\infty$$ before the softmax, which gives them an attention weight of zero. Source: unknown.
 
 
 ### Other components
@@ -158,7 +158,7 @@ Computational complexity of four different learning models. Key: $$n$$: sequence
 
 For the RNN of the Sequence-to-Sequence model above, the number of operations is in the order of $$d^2$$ multiplications (multiplication of weights in a fully-connected layer of a DNN) for each of the $$n$$ words in the sentence, therefore $$O(n d^2)$$. The self-attention mechanism of the Transformer performs several operations on the attention matrix ($$n^2$$) and on the key and query vectors of embedding size $$d$$, leading to a complexity of $$O(n^2 d)$$. 
 
-The claim is that $$O(n^2 d)$$ is better than $$O(n d^2)$$. This seems counter-intuitive, since in most Machine Learning problems the input size is much larger than the dimensionality of the embedding. However, here $$n$$ is the number of words in a sentence (in the order of $$n \approx 70$$) and $$d$$ is the size of the embedding ($$d \approx 2000$$).
+The claim is that $$O(n^2 d)$$ is better than $$O(n d^2)$$. This seems counter-intuitive, since in most Machine Learning problems the input size is much larger than the dimensionality of the embedding. However, here $$n$$ is the number of words in a sentence (in the order of $$n \approx 70$$) and $$d$$ is the size of the embedding ($$d=512$$ in the original Transformer, and $$d=1024$$ in its big variant).
 
 In summary, the encoder-decoder architecture of the transformer allows faster non-recurrent training on input sequences and faster training on output sentences, which makes it much more efficient than the sequence-to-sequence approaches described initially.
 
@@ -201,7 +201,7 @@ The Yes/No flag of the second task is passed as the first embedded word of the o
 {: style="text-align:center; font-size: small;"}
 Input of the BERT model. Position embeddings are similar to those of the transformer described above. Segment embeddings flag each word as part of the first or second sentence. Token embeddings are the text embeddings of the input data. The input to the model is the sum of these three embeddings. Source: <a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018, Google, arXiv)</a>
 
-The authors trained this model on BooksCorpus (800M words) and English Wikipedia (2,500M words), with 24 BERT layers and batches of 256 sequences of 512 tokens each.
+The authors trained this model on BooksCorpus (800M words) and English Wikipedia (2,500M words), with 12 (BERT-base) or 24 (BERT-large) layers and batches of 256 sequences. Sequences have 128 tokens for 90% of the training steps and 512 tokens for the remaining 10%.
 
 ### Fine-tuning
 
@@ -211,8 +211,8 @@ In the original paper, the authors successfully applied this model to four famil
 1. Sentence Pair Classification Tasks: classification of context from pairs of sentences, e.g. whether the sentences agree or disagree, whether the second sentence follows the first, or whether they describe a similar context. As in the pre-training phase, the label is passed as the first embedded symbol of the output; 
 2. Single Sentence Classification Tasks: similar to the previous, but applied to a single sentence, e.g. to detect hate speech;
 3. Question Answering Tasks: the input is the concatenation of a question and a paragraph that contains the answer. The output is the input with the embeddings of the start and end words of the answer replaced by a marker. As an example:
-	- input:  "[CLS] His name is John. John is a Swiss carpenter and he is 23 years old [SEP] How old is John";
-	- output: "[CLS] His name is John. John is a Swiss carpenter and ###he is 23 years old### [SEP] How old is John";
+	- input:  "[CLS] How old is John [SEP] His name is John. John is a Swiss carpenter and he is 23 years old";
+	- output: "[CLS] How old is John [SEP] His name is John. John is a Swiss carpenter and ###he is 23 years old###";
 4. Single Sentence Tagging Tasks: retrieve the classes of individual words, e.g. Name, Location, Job, etc., by replacing each relevant word with its class id. As an example:
 	- input: "[CLS] His name is John. John is a Swiss carpenter and he is 23 years old";
 	- output: "[CLS] His name is [NAME]. [NAME] is a [NATIONALITY] [OCCUPATION] and he is [AGE] years old".

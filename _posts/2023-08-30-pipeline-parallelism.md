@@ -160,7 +160,7 @@ Pipeline parallelism is added to the `GPTlite` model implemented in the previous
 
 def get_cmd_line_args(description='GPT lite on DeepSpeed'):
   # ...
-  parser.add_argument('--pipeline-parallel-size', type=int, default=0,
+  parser.add_argument('--pipeline_num_stages', type=int, default=0,
                       help='enable pipeline parallelism with N stages (0 means disabled)')
   # ...
 ```

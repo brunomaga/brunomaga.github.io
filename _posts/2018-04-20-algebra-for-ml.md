@@ -32,7 +32,7 @@ $$
 x = (A^{\intercal}A)^{−1}A^{\intercal}b
 $$
 
-which is also the solution to the **Least Squares** problem. The matrix $$(A^{\intercal}A)^{−1}A^{\intercal}$$ is called the **pseudo-inverse** of $$A$$, and it can be computed for non-square matrices $$A$$. It only requires $$A^{\intercal}A$$ to be positive definite, which holds if $$A$$ has full rank. Let $$\hat{x}$$ be the solution above and $$x$$ the true value. Then:
+which is also the solution to the **Least Squares** problem. The matrix $$(A^{\intercal}A)^{−1}A^{\intercal}$$ is called the **pseudo-inverse** of $$A$$, and it can be computed for non-square matrices $$A$$. It only requires $$A^{\intercal}A$$ to be positive definite, which holds iff $$A$$ has full column rank. Let $$\hat{x}$$ be the solution above and $$x$$ the true value. Then:
 
 $$
 \mathbb{E}[\hat{x}] = (A^{\intercal}A)^{−1}A^{\intercal} \, \mathbb{E}[b] = (A^{\intercal}A)^{−1}A^{\intercal}(Ax) = x
@@ -44,11 +44,11 @@ $$
 \mathbb{Var}[\hat{x}] = \mathbb{Var}[Pb] = P\, \mathbb{Var}[b] P^{\intercal} = \sigma^2 P P^{\intercal} = \sigma^2 \, (A^{\intercal}A)^{−1}A^{\intercal} \, A (A^{\intercal}A)^{-1} = \sigma^2 \, (A^{\intercal}A)^{−1}
 $$
 
-This derivation uses $$\mathbb{Var}[Pb] = P \, \mathbb{Var}[b] P^{\intercal}$$ (formula 375 in the Matrix Cookbook) and $$A^{\intercal} \, A (A^{\intercal}A)^{-1}=I$$.
+This derivation assumes uncorrelated noise with equal variance, i.e. $$\mathbb{Var}[b] = \sigma^2 I$$. It uses $$\mathbb{Var}[Pb] = P \, \mathbb{Var}[b] P^{\intercal}$$ (formula 375 in the Matrix Cookbook) and $$A^{\intercal} \, A (A^{\intercal}A)^{-1}=I$$.
 
 In Gaussian Elimination on $$[A \mid b]$$, the forward pass brings the matrix to **Row-Echelon** form, a staircase structure. A row-echelon matrix is in **reduced row-echelon** form if the leading entry of each row (the **pivot**) is 1 and the pivot is the only nonzero entry in its *column*.
 
-The **inverse** of $$A$$ is the matrix $$X$$ that satisfies $$AX=I$$, so that $$X=A^{-1}$$. Gaussian Elimination on the SLE $$[A \mid I]$$ turns it into $$[I \mid A^{-1}]$$. Gaussian Elimination is not feasible for large matrices, due to its cubic computational complexity. In practice, large systems are solved iteratively, e.g. with the Jacobi method, Newton's method, MCMC, etc. The main idea is to solve $$Ax=b$$ with an iteration of the form $$x^{(k+1)} = Cx^{(k)} + d$$, with suitable $$C$$ and $$d$$, that reduces the residual error $$\mid x^{(k+1)}-x_* \mid$$ in every iteration and converges to the solution $$x_*$$.
+The **inverse** of $$A$$ is the matrix $$X$$ that satisfies $$AX=I$$, so that $$X=A^{-1}$$. Gaussian Elimination on the SLE $$[A \mid I]$$ turns it into $$[I \mid A^{-1}]$$. Gaussian Elimination is not feasible for large matrices, due to its cubic computational complexity. In practice, large systems are solved iteratively, e.g. with the Jacobi or Gauss-Seidel methods. The main idea is to solve $$Ax=b$$ with an iteration of the form $$x^{(k+1)} = Cx^{(k)} + d$$, with suitable $$C$$ and $$d$$, that reduces the error $$\mid x^{(k+1)}-x_* \mid$$ in every iteration and converges to the solution $$x_*$$.
 
 
 ## Vector Spaces
@@ -59,7 +59,7 @@ The term *vector multiplication* is ambiguous. It can refer to:
 - an element-wise **multiplication** $$c_j = a_j b_j$$,
 - the **outer product** $$ab^{\intercal}$$, or 
 - the **inner product**, **scalar product** or **dot product** $$<a, b> = a \cdot b = a^{\intercal}b$$, with the geometric interpretation $$a \cdot b = \vert a \vert \, \vert b \vert \, \cos \, \theta$$, where $$\vert a \vert$$ is the magnitude (norm) of $$a$$ and $$\theta$$ is the angle between $$a$$ and $$b$$. The dot product is defined specifically for Euclidean spaces, while the inner product is defined for a generic vector space. It is commutative: $$a \cdot b = b \cdot a$$.
-- the **cross product**, with the geometric interpretation $$a \times b = \vert a \vert \, \vert b \vert \, \sin \, \theta \, n$$. Unlike the dot product, it returns a vector instead of a scalar. It is not commutative: $$a \times b \neq b \times a$$.
+- the **cross product**, with the geometric interpretation $$a \times b = \vert a \vert \, \vert b \vert \, \sin \, \theta \, n$$, where $$n$$ is the unit vector perpendicular to $$a$$ and $$b$$, given by the right-hand rule. Unlike the dot product, it returns a vector instead of a scalar. It is not commutative: $$a \times b \neq b \times a$$.
 
 A **linear combination** $$v$$ of vectors $$x_1, ..., x_k$$ is a sum of the scaled vectors, i.e. $$v = \sum_{i=1}^k \lambda_i x_i \in V$$, for constants $$\lambda_i$$. The vectors $$x_1, ..., x_k$$ are **linearly dependent** if there is a linear combination $$\sum_{i=1}^k \lambda_i x_i=0$$ with at least one $$\lambda_i \neq 0$$. If only the trivial solution exists, with all $$\lambda_i=0$$, they are **linearly independent**.
 
@@ -75,7 +75,7 @@ The **rank** of a matrix is the number of *linearly independent* columns/rows. T
 A **Linear Mapping** (also called linear transformation or map) is a function $$\phi: V \rightarrow W$$ between vector spaces $$V$$ and $$W$$, such that $$\phi (\lambda x + \psi y) = \lambda \phi(x) + \psi \phi(y)$$, for constants $$\lambda, \psi$$ and $$x, y \in V$$. A linear mapping can be represented as a function or as a matrix.
 
 $$\phi$$ is called **injective** if $$\phi(x)=\phi(y) \rightarrow x = y$$; $$\,\,$$ **surjective** if $$\phi(V)=W$$; $$\,\,$$ **bijective** if both. Surjective means that every element in $$W$$ can be reached from $$V$$. Bijective means that the mapping can be undone, i.e. there is a mapping $$\Psi : W \rightarrow V$$ such that $$\Psi \circ \phi(x) = x$$. Special cases:
-- **Isomorphism** $$\phi: V \rightarrow W$$ if linear and bijective. Vector spaces $$V$$ and $$W$$ are isomorphic if $$dim(V) = dim(W)$$, i.e. there is a linear, bijective mapping between any two vector spaces of the same dimension;
+- **Isomorphism** $$\phi: V \rightarrow W$$ if linear and bijective. Finite-dimensional vector spaces $$V$$ and $$W$$ are isomorphic iff $$dim(V) = dim(W)$$, i.e. there is a linear, bijective mapping between any two vector spaces of the same dimension;
 - **Endomorphism** $$\phi : V \rightarrow V$$ if linear;
 - **Automorphism** $$\phi : V \rightarrow V$$ if linear and bijective.
 
@@ -152,7 +152,7 @@ Two vectors are **codirected** if they point in the same direction, and **collin
 - symmetric, positive definite matrices, such as a non-singular covariance matrix, always have positive, real eigenvalues. Since the determinant is the product of the eigenvalues, it is not zero, and the matrix is invertible;
 - any matrix $$A \in \mathbb{R}^{m \times n}$$ yields a symmetric positive semidefinite matrix $$S=A^{\intercal}A$$. If $$rk(A)=n$$, then $$A^{\intercal}A$$ is symmetric positive definite. By the spectral theorem, $$S$$ has eigenvectors with real eigenvalues, so $$S$$ is positive definite iff all its eigenvalues are positive.
 
-Graphical intuition: the directions of the two eigenvectors correspond to the canonical basis vectors, i.e. to the cardinal axes. Each axis is scaled by its eigenvalue:
+Graphical intuition: a linear mapping scales space along the directions of its eigenvectors, each by its eigenvalue. For a diagonal matrix, the eigenvectors are the canonical basis vectors, i.e. the cardinal axes:
 
 {: style="text-align:center; font-size: small;"}
 <img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/mml_eigenvalues_and_eigenvectors.png"/>
@@ -209,7 +209,7 @@ $$
 
 - the SVD exists for any matrix. The ED is defined only for square matrices, and exists only if there is a basis of eigenvectors in $$\mathbb{R}^n$$;
 - in the SVD, the domain and codomain can be vector spaces of different dimensions;
-- the vectors of $$P$$ in the ED are not necessarily orthogonal. The vectors in the matrices $$U$$ and $$V$$ of the SVD are orthonormal, so they represent rotations.
+- the vectors of $$P$$ in the ED are not necessarily orthogonal. The vectors in the matrices $$U$$ and $$V$$ of the SVD are orthonormal, so they represent rotations, possibly combined with a reflection.
 
 
 ## Vector Calculus
@@ -248,7 +248,7 @@ $$
 x_{n+1}=x_{n}-{\frac {f(x_{n})}{f'(x_{n})}}
 $$
 
-The initial value $$x_0$$ should be as close as possible to the zero. The line tangent to $$y=f(x)$$ at $$x=x_0$$ crosses the $$x$$ axis at a new, improved guess $$x_1$$. The minimum of a function can be found by computing the root of its derivative, i.e. $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$. For multivariate functions, division is not defined, so it is replaced by multiplication by the inverse, i.e. $$x_{n+1}=x_{n}- f'(x_{n}) \, f''(x_{n})^{-1}$$.
+The initial value $$x_0$$ should be as close as possible to the zero. The line tangent to $$y=f(x)$$ at $$x=x_0$$ crosses the $$x$$ axis at a new, improved guess $$x_1$$. A stationary point of a function (a minimum, maximum or saddle point) can be found by computing the root of its derivative, i.e. $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$. For multivariate functions, division is not defined, so it is replaced by multiplication by the inverse of the Hessian, i.e. $$x_{n+1}=x_{n}- \left(\triangledown^2 f(x_{n})\right)^{-1} \triangledown f(x_{n})$$.
 
 <img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/newton_method.gif"/>
 
@@ -267,7 +267,7 @@ $$
 \end{align*}
 $$
 
-The **Hessian** $$\triangledown^2_{x,y} f(x,y)$$ of a function is the *symmetric* matrix of all second-order partial derivatives of all variables with respect to all other variables:
+The **Hessian** $$\triangledown^2_{x,y} f(x,y)$$ of a function is the matrix of all second-order partial derivatives of all variables with respect to all other variables. It is *symmetric* if the second-order partial derivatives are continuous:
 
 <img width="33%" height="33%" src="{{ site.assets }}/algebra-for-ml/hessian.png"/>
 
@@ -341,15 +341,15 @@ $$
 
 ### Adam Optimizer
 
-Adam (ADAptive Moment estimation) uses estimates of the first and second moments of the gradient (the *curvature*, exponential moving average ? ) to adapt the learning rate of each weight of the neural network:
-- the curvature here is not the second derivative, which would be too expensive to compute;
+Adam (ADAptive Moment estimation) uses estimates of the first and second moments of the gradient (the second moment is the exponential moving average of the squared gradients, a per-parameter estimate of the gradient scale) to adapt the learning rate of each weight of the neural network:
+- the second moment is not the second derivative (the curvature), which would be too expensive to compute;
 - "The method computes individual adaptive learning rates for different parameters from estimates of first and second moments of the gradients."
 - in some cases, Adam does not converge to the optimal solution, while SGD does. According to Keskar and Socher (2017), switching to SGD in some cases yields better generalization performance than Adam alone;
 - it computes the exponential moving averages of the gradients and of the squared gradients. Parameters $$\beta_1$$ and $$\beta_2$$ control the decay rates of these moving averages. Adam combines two gradient descent methods: Momentum and RMSP.
 
 ### Convex sets and functions
 
-**Convex sets** are sets in which the straight line connecting any two elements lies inside the set. Similarly, a **[convex function](https://en.wikipedia.org/wiki/Convex_function)** is a function where the line segment between any two distinct points on its graph lies above the graph between those points. A convex function is concave up, so its second derivative is non-negative on its entire domain. A strictly convex function has at most one global minimum.
+**Convex sets** are sets in which the straight line connecting any two elements lies inside the set. Similarly, a **[convex function](https://en.wikipedia.org/wiki/Convex_function)** is a function where the line segment between any two distinct points on its graph lies on or above the graph between those points. A convex function is concave up. If it is twice differentiable, its second derivative is non-negative on its entire domain. A strictly convex function has at most one global minimum.
 
 ### Linear programming
 
