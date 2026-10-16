@@ -72,7 +72,7 @@ $$ w_{MLE} = argmax_w \,\, p(y \mid w, X)  $$
 
 Consider what the probability density $$p(x \mid θ)$$ models for a fixed value of θ. It is a distribution that models the uncertainty of the data for a given parameter setting. In a complementary view, the data is fixed (because it has been observed) and the parameters θ vary. In this view, the MLE measures how likely a particular setting of θ is for the observations x. The maximum likelihood estimator is therefore the most likely parameter θ for the set of data (MML book, section 8.3.1).
 
-When the prior and posterior distributions are computationally tractable, their parameters can be optimized with the [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent) method, an iterative method covered [in another post]({% post_url 2017-02-17-linear-regression-matrix-factorization %}). In practice, each iteration computes the partial derivatives of the prior/posterior with respect to the model parameters (e.g. mean $$\mu$$ and standard deviation $$\sigma$$ in a Gaussian setting) and moves the weight estimate in the direction of lowest loss.
+When the prior and posterior distributions are computationally tractable, their parameters can be optimized with [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent), a variant of gradient-based optimization covered [in another post]({% post_url 2017-02-17-linear-regression-matrix-factorization %}). Instead of updating all parameters at once, each iteration updates one parameter (or block of parameters) at a time, e.g. the mean $$\mu$$ and then the standard deviation $$\sigma$$ in a Gaussian setting. Each update follows the partial derivative of the objective with respect to that parameter, while the other parameters stay fixed.
 
 To simplify the computation, the *log-trick* places the term to optimize inside a log function. This is valid because $$log$$ is a monotonically increasing function, so applying it does not change the input values at which the minimum or maximum is attained (i.e. where the gradient is zero). Moreover, since the Gaussian distribution is a product of exponentials, the $$log$$ function *brings the power term out* of the exponential, which makes the computation simpler and faster. Applying the log-trick to the function to minimize gives:
 
@@ -188,7 +188,7 @@ $$
  = & \frac{d}{dw} \left( \frac{1}{2 \sigma^2}(y-Xw)^T(y-Xw) \right) + \frac{d}{dw} \left( \frac{1}{2b^2}w^Tw \right) \\
    & \qquad \text{(Linear Reg. likelihood (eq \ref{eq_lr_likelihood}), and prior } \mathcal{N}(0, b^2 I) \text{)} \\
  = & \frac{1}{\sigma^2}(w^TX^TX-y^TX) + \frac{1}{b^2}w^T \\
-   & \qquad \text{(First-order derivative, rule 3)} \\
+   & \qquad \text{(First-order derivatives, rule 5)} \\
   \end{align*}
 \label{eq_prior_w}
 $$
@@ -213,7 +213,7 @@ Instead of computing a point estimate via MLE or MAP, a special case of Bayesian
 
 Bayesian linear regression is a type of conditional modeling in which the mean of one variable is described by a linear combination of other variables. The goal is to obtain the posterior probability of the regression coefficients (as well as other parameters describing the distribution of the regressand), and ultimately to allow the out-of-sample prediction of the regressand (often labelled $$y$$) conditional on observed values of the regressors (source: [Wikipedia page for Bayesian Linear Regression](https://en.wikipedia.org/wiki/Bayesian_linear_regression)). In other words, Bayesian linear regression takes the idea of the parameter prior one step further. It does not compute a point estimate of the parameters. Instead, the full posterior distribution over the parameters is used when making predictions. No parameters are fitted: predictions are a mean over all plausible parameter settings (according to the posterior).
 
-All weights are assumed to be drawn from a Gaussian distribution. They are independent if the covariance matrix is diagonal, and dependent otherwise. The starting point is the prior $$p(w) \thicksim \mathcal{N}(m_0, S_0)$$, with mean vector $$m_0$$ and (positive semi-definite) covariance matrix $$S_0$$ (following the variable notation of [Chris Bishop's PRML book]({{ site.resources_permalink }})).
+All weights are assumed to be drawn from a Gaussian distribution. They are independent if the covariance matrix is diagonal, and dependent otherwise. The starting point is the prior $$p(w) \thicksim \mathcal{N}(m_0, S_0)$$, with mean vector $$m_0$$ and (positive definite) covariance matrix $$S_0$$ (following the variable notation of [Chris Bishop's PRML book]({{ site.resources_permalink }})).
 
 The prior in multivariate notation is:
 
@@ -327,11 +327,11 @@ Illustration of four steps of online learning for the linear model $$y = w_0 + w
 (inspired by fig 3.7, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
 
 
-The initial prior assumes that both weights ($$w_0$$ and $$w_1$$) are zero-centered, i.e. with mean 0 and a standard deviation of 1. When a new datapoint is introduced (blue circle on the top-right plot), the new posterior (top-left) is computed from the likelihood and the initial prior. Models drawn from the current priors give an inaccurate regression (orange lines on the top-right plot). Another point is then introduced (2nd row, right), leading to a new posterior (second row, left), computed from the likelihood and the prior (i.e. the posterior of the previous iteration). The model is now more accurate, and the search space (covariance of the weights) is smaller (second row, left). After two more iterations, the model is already very accurate, with a reduced variance on the weights (bottom left) and better-tuned linear regression models (bottom right).
+The initial prior assumes that both weights ($$w_0$$ and $$w_1$$) are zero-centered, i.e. with mean 0 and a standard deviation of 1. When a new datapoint is introduced (blue circle on the top-right plot), the new posterior (top-left) is computed from the likelihood and the initial prior. Models drawn from the current posterior give an inaccurate regression (orange lines on the top-right plot). Another point is then introduced (2nd row, right), leading to a new posterior (second row, left), computed from the likelihood and the prior (i.e. the posterior of the previous iteration). The model is now more accurate, and the search space (covariance of the weights) is smaller (second row, left). After two more iterations, the model is already very accurate, with a reduced variance on the weights (bottom left) and better-tuned linear regression models (bottom right).
 
 ## Predictive Variance
 
-Recall that the goal is to model a noisy output defined by $$y = X^Tw + \varepsilon$$, with model parameters $$w \thicksim \mathcal{N}(\mu, \Sigma)$$ and noise parameter $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$$. An earlier section gave the closed-form solution for the distribution of $$w$$. This section computes the distribution of $$y$$. Drawing samples from the posterior $$p(y \mid X, w, \sigma^2)$$ is equivalent to drawing samples from $$y = X^Tw + \varepsilon$$.
+Recall that the goal is to model a noisy output defined by $$y = X^Tw + \varepsilon$$, where $$X$$ is a single input (column) vector, with model parameters $$w \thicksim \mathcal{N}(\mu, \Sigma)$$ and noise parameter $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$$. An earlier section gave the closed-form solution for the distribution of $$w$$. This section computes the distribution of $$y$$. For a fixed $$w$$, the likelihood $$p(y \mid X, w, \sigma^2)$$ is the distribution of $$y = X^Tw + \varepsilon$$. With $$w$$ drawn from its posterior $$\mathcal{N}(m_N, S_N)$$, $$y$$ follows the predictive distribution, whose mean and variance are computed below.
 
 The [expectation](https://en.wikipedia.org/wiki/Expected_value) of $$y$$ is:
 
