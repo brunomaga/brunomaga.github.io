@@ -58,8 +58,6 @@
 // then the title in the link colour with who and venue in grey and a link to the paper, and a chevron on
 // the right that opens the notes
 
-.pub-table { margin-top: 1.4em; }
-
 .pub-table summary {
   position: relative;
   padding-right: 2em;
@@ -127,9 +125,6 @@
 }
 
 .pub-notes > :last-child { margin-bottom: 0; }
-
-// the intro as the table's first row: the back link in the year column, the text in the title column
-.pub-intro td { padding-bottom: 1.2em; }
 
 // The 404 page (404.html)
 

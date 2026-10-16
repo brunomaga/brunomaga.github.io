@@ -2,7 +2,7 @@
 <footer class="page-footer">
   {%- if page.url != "/" %}
   <div class="wrapper page-footer-back">
-    <a class="post-label post-label--back" href="{{ site.url }}"><i class="fas fa-arrow-left" aria-hidden="true"></i> back</a>
+    {% include back-link.html %}
   </div>
   {%- endif %}
 </footer>
