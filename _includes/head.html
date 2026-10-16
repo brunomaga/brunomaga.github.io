@@ -62,7 +62,7 @@
     .info-warning h2,
     .info-danger h2 { margin-top: 0; }
 
-    /* ===== Labels (back link, post date, category and tags; resource types on the home page) ===== */
+    /* ===== Labels (back link, post date, category and tags; years and resource types on the home page) ===== */
 
     .post-labels {
       display: flex;
@@ -117,17 +117,17 @@
 
     a.post-label--back .fa-arrow-left { font-size: 0.9em; }  /* as tall as the capitals */
 
-    /* resource types on the home page: equal-width labels in a first column as wide as the widest one,
-       a small gap before the titles, and less vertical padding than on post pages so the rows keep
-       their height */
-    #resources-table td:first-child {
+    /* years and resource types in the home-page tables: equal-width labels in a first column as wide
+       as the widest one, a small gap before the titles, and less vertical padding than on post pages
+       so the rows keep their height */
+    .label-table td:first-child {
       width: 1%;  /* shrinks the column to its widest label */
       padding-right: 0;
     }
 
-    #resources-table td + td { padding-left: 0.5em; }
+    .label-table td + td { padding-left: 0.5em; }
 
-    #resources-table .post-label {
+    .label-table .post-label {
       display: inline-block;
       box-sizing: border-box;
       width: 100%;
@@ -138,7 +138,7 @@
     }
 
     @supports (text-box: trim-both cap alphabetic) {
-      #resources-table .post-label {
+      .label-table .post-label {
         padding-top: 4px;
         padding-bottom: 4px;
       }
