@@ -131,7 +131,7 @@ I.e. it's a concatenation of all attention heads, and the parameters learnt are 
 The **Masked Multi-head Attention** component on the decoder is similar to the regular MHA, but replaces the upper triangle of the attention matrix with zeros, to hide the next words from the model. Decoding is performed one word of the output sequence at a time, with previously seen words added to the attention array and the following words set to zero. Applied to the previous example, the four iterations are: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_masked.png"/>
+<img width="27%" height="27%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_masked.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Input of the masked attention mechanism on the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every word iterated. The mask component of the attention mechanism refers to replacing the positions of unseen words in the attention matrix with zeros. Source: unknown.

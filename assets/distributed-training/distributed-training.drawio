@@ -898,31 +898,31 @@
         <mxCell id="benchmark_gptlite-11" value="Max Mem Allocated (GB)" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="0" y="62" width="168" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#82b366;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="43.25" width="524.9333" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-13" value="10.16" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="712.9333" y="41" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="54.75" width="496.5167" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-15" value="9.61" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="684.5167" y="52.5" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="66.25" width="482.05" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-17" value="9.33" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="670.05" y="64" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="77.75" width="484.1167" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-19" value="9.37" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="672.1167" y="75.5" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="89.25" width="473.2667" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-21" value="9.16" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
@@ -931,31 +931,31 @@
         <mxCell id="benchmark_gptlite-22" value="Avg Mem Allocated (GB)" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="0" y="140" width="168" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#82b366;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="121.25" width="167.4" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-24" value="3.24" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="355.4" y="119" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="132.75" width="140.0167" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-26" value="2.71" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="328.0167" y="130.5" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="144.25" width="140.0167" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-28" value="2.71" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="328.0167" y="142" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="155.75" width="131.75" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-30" value="2.55" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="319.75" y="153.5" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="167.25" width="121.4167" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-32" value="2.35" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
@@ -964,31 +964,31 @@
         <mxCell id="benchmark_gptlite-33" value="Throughput (samples/sec)" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="0" y="218" width="168" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#82b366;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="199.25" width="591.5833" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-35" value="11.45" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="779.5833" y="197" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="210.75" width="571.95" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-37" value="11.07" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="759.95" y="208.5" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="222.25" width="539.4" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-39" value="10.44" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="727.4" y="220" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="233.75" width="366.8333" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-41" value="7.1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="554.8333" y="231.5" width="40" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="184" y="245.25" width="320.3333" height="11.5" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-43" value="6.2" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="benchmark_gptlite-figure">
@@ -997,31 +997,31 @@
         <mxCell id="benchmark_gptlite-44" value="GPT lite (GPT-3 small)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=1;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="364" y="0" width="260" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#82b366;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="838" y="67.5" width="12" height="12" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-46" value="Distributed Data Parallel" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="858" y="64.5" width="196" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="838" y="84.5" width="12" height="12" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-48" value="DeepSpeed ZeRO-1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="858" y="81.5" width="196" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="838" y="101.5" width="12" height="12" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-50" value="DeepSpeed ZeRO-2" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="858" y="98.5" width="196" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="838" y="118.5" width="12" height="12" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-52" value="DeepSpeed ZeRO-3" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="858" y="115.5" width="196" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_gptlite-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
+        <mxCell id="benchmark_gptlite-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
           <mxGeometry x="838" y="135.5" width="12" height="12" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_gptlite-54" value="DeepSpeed ZeRO-3 offloading" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="benchmark_gptlite-figure">
@@ -11583,220 +11583,220 @@
         <mxCell id="alltoall-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="610" height="175" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-1" value="A&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-1" value="A&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="84" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-2" value="A&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-2" value="A&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="430" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-3" value="A&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-3" value="A&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="114" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-4" value="B&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-4" value="B&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="460" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-5" value="A&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-5" value="A&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="144" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-6" value="C&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-6" value="C&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="490" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-7" value="A&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-7" value="A&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="174" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-8" value="D&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-8" value="D&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="520" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-9" value="A&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-9" value="A&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="204" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-10" value="E&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-10" value="E&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="550" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-11" value="A&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-11" value="A&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="234" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-12" value="F&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-12" value="F&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="580" y="28" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-13" value="B&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-13" value="B&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="84" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-14" value="A&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-14" value="A&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="430" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-15" value="B&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-15" value="B&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="114" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-16" value="B&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-16" value="B&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="460" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-17" value="B&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-17" value="B&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="144" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-18" value="C&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-18" value="C&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="490" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-19" value="B&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-19" value="B&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="174" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-20" value="D&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-20" value="D&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="520" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-21" value="B&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-21" value="B&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="204" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-22" value="E&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-22" value="E&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="550" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-23" value="B&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-23" value="B&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="234" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-24" value="F&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-24" value="F&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="580" y="52" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-25" value="C&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-25" value="C&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="84" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-26" value="A&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-26" value="A&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="430" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-27" value="C&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-27" value="C&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="114" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-28" value="B&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-28" value="B&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="460" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-29" value="C&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-29" value="C&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="144" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-30" value="C&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-30" value="C&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="490" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-31" value="C&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-31" value="C&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="174" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-32" value="D&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-32" value="D&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="520" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-33" value="C&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-33" value="C&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="204" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-34" value="E&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-34" value="E&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="550" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-35" value="C&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-35" value="C&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="234" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-36" value="F&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-36" value="F&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="580" y="76" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-37" value="D&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-37" value="D&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="84" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-38" value="A&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-38" value="A&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="430" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-39" value="D&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-39" value="D&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="114" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-40" value="B&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-40" value="B&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="460" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-41" value="D&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-41" value="D&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="144" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-42" value="C&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-42" value="C&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="490" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-43" value="D&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-43" value="D&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="174" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-44" value="D&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-44" value="D&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="520" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-45" value="D&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-45" value="D&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="204" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-46" value="E&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-46" value="E&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="550" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-47" value="D&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-47" value="D&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="234" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-48" value="F&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-48" value="F&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="580" y="100" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-49" value="E&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-49" value="E&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="84" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-50" value="A&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-50" value="A&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="430" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-51" value="E&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-51" value="E&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="114" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-52" value="B&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-52" value="B&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="460" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-53" value="E&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-53" value="E&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="144" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-54" value="C&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-54" value="C&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="490" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-55" value="E&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-55" value="E&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="174" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-56" value="D&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-56" value="D&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="520" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-57" value="E&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-57" value="E&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="204" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-58" value="E&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-58" value="E&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="550" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-59" value="E&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-59" value="E&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="234" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-60" value="F&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-60" value="F&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="580" y="124" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-61" value="F&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-61" value="F&lt;sub&gt;0&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="84" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-62" value="A&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-62" value="A&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="430" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-63" value="F&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-63" value="F&lt;sub&gt;1&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="114" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-64" value="B&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-64" value="B&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="460" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-65" value="F&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-65" value="F&lt;sub&gt;2&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="144" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-66" value="C&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-66" value="C&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="490" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-67" value="F&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-67" value="F&lt;sub&gt;3&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="174" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-68" value="D&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-68" value="D&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="520" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-69" value="F&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-69" value="F&lt;sub&gt;4&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="204" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-70" value="E&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-70" value="E&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="550" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-71" value="F&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-71" value="F&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="234" y="148" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-72" value="F&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-72" value="F&lt;sub&gt;5&lt;/sub&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="580" y="148" width="30" height="24" as="geometry" />
         </mxCell>
         <mxCell id="alltoall-73" value="data" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="alltoall-figure">
@@ -11814,7 +11814,7 @@
         <mxCell id="alltoall-77" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeWidth=2;strokeColor=#b85450;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="427" y="25" width="36" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="alltoall-78" value="alltoall" style="shape=mxgraph.arrows2.arrow;whiteSpace=wrap;html=1;dy=0.32;dx=19;notch=0;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#666666;fontColor=#333333;" vertex="1" parent="alltoall-figure">
+        <mxCell id="alltoall-78" value="alltoall" style="shape=mxgraph.arrows2.arrow;whiteSpace=wrap;html=1;dy=0.32;dx=19;notch=0;fontFamily=Helvetica;fontSize=12;fillColor=#ffffff;strokeColor=#000000;" vertex="1" parent="alltoall-figure">
           <mxGeometry x="290" y="80" width="110" height="40" as="geometry" />
         </mxCell>
       </root>
