@@ -5,7 +5,7 @@ categories: ["Efficient Inference"]
 tags: ["LLM", "kernel fusion", "MoE", "expert parallelism", "in-network computing", "collectives"]
 ---
 
-This post covers a kernel that fuses a whole [Mixture-of-Experts (MoE)]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-experts %}) layer, distributed with expert parallelism, into a single kernel, and moves its communication into the network. It follows the [post on kernel fusion for Megatron-LM tensor parallelism]({{ site.baseurl }}/kernel-fusion-tensor-parallelism), and summarizes the paper *MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and In-Network Compute*.
+This post covers a kernel that fuses a whole [Mixture-of-Experts (MoE)]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-experts %}) layer, distributed with expert parallelism, into a single kernel, and moves its communication into the network. It follows the [post on kernel fusion for Megatron-LM tensor parallelism]({{ site.baseurl }}{% post_url 2026-08-18-kernel-fusion-tensor-parallelism %}), and summarizes the paper *MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and In-Network Compute*.
 
 ## The problem: communication runs on the compute units
 
@@ -14,7 +14,7 @@ With expert parallelism, each of the $$W$$ ranks (accelerators) holds a slice of
 - the **dispatch** sends each token to the ranks that hold its top-$$k$$ experts;
 - the **combine** returns the weighted outputs of the experts to the rank that owns the token, where they are summed.
 
-These two collectives take on average 47% of the runtime of popular MoE models. Current systems hide them by overlapping them with computation, or fuse them into the kernels of the experts. In both cases, the transfers are still issued by the accelerator's own compute units. For example, DeepSeek-V3 dedicates 20 of 132 streaming multiprocessors to communication. Compute units given to communication are taken from the experts.
+These two collectives take on average 47% of the runtime of popular MoE models. Current systems hide them by overlapping them with computation, or fuse them into the kernels of the experts. In both cases, the transfers are still issued by the accelerator's own compute units. For example, [DeepSeek-V3](https://arxiv.org/abs/2412.19437) dedicates about 15% of the compute units of each accelerator to communication. Compute units given to communication are taken from the experts.
 
 The method in this post adds ranks whose only job is to run the collectives: *In-Network Computing* (INC) elements, which play the role of a programmable network switch. In the prototype, two extra accelerators act as the switch, one for the dispatch and one for the combine. All transfers use one-sided shmem operations on a memory heap shared by all ranks: a `put_signal` writes data to a remote rank and raises a flag there, a `signal` raises a flag only, a `get` reads remote data, and `wait_until` waits for a flag.
 
@@ -23,11 +23,11 @@ The method in this post adds ranks whose only job is to run the collectives: *In
 The router produces a routing table that maps each token to its experts and to the ranks that hold them. In a regular all-to-all, a token selected by experts on $$d$$ ranks is sent $$d$$ times by its owner. The combine is the reverse all-to-all, and the owner then sums the $$W$$ partial results of each token. This puts $$W^2$$ transfers on the network per collective.
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/moe_fusion_routing_table.svg"/>
+<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/ep_routing_table.svg"/>
 <br/>
-<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/moe_fusion_all_to_all.svg"/>
+<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/ep_all_to_all.svg"/>
 <br/>
-<img width="52%" height="52%" src="{{ site.assets }}/inference/imgs/moe_fusion_all_to_all_inc.svg"/>
+<img width="52%" height="52%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 **Top:** the routing table of tokens A to C (owned by ranks $$P_0$$ to $$P_2$$) to experts $$E_0$$ to $$E_5$$, with top-$$k=4$$. **Middle:** the regular all-to-all dispatch and combine, through a switch that only relays packets. **Bottom:** the same exchange through the INC switch, with $$W$$ transfers in and $$W$$ out. $$A_0$$ is the sum of the expert outputs of rank 0 for token A, $$\Sigma_A$$ the sum across ranks, and $$\emptyset$$ a header-only packet.
@@ -40,15 +40,15 @@ The INC switch replaces the two collectives with two new ones:
 This cuts the packets crossing the switch from $$2W^2$$ to $$2W$$ per collective, and the data sent or received by each rank by up to a factor of $$W$$. Each rank issues a single `put_signal` for the dispatch and a single `signal` for the combine. All other transfers are issued by the switch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/moe_fusion_timeline.svg"/>
+<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 A dispatch and combine seen from rank $$P_2$$. On the dispatch, $$P_2$$ puts its token C into the switch, which sends A and C to $$P_0$$, and B and C to $$P_1$$. On the combine, the switch pulls the outputs of each rank with a `get` when its flag rises, sums them, and sends $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls.
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/moe_fusion_all_to_all_reduce.svg"/>
+<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_reduce.svg"/>
 &nbsp; &nbsp;
-<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/moe_fusion_all_to_all_unique.svg"/>
+<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_unique.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The two INC collectives on $$W=4$$ ranks, from top to bottom. **Left:** All-to-All-Reduce. **Right:** All-to-All-Unique. $$T_x$$ are the tokens of rank $$P_x$$, $$E_x$$ their expert ids and weights, and $$f_x$$ its ready flag on the switch.
@@ -56,7 +56,7 @@ The two INC collectives on $$W=4$$ ranks, from top to bottom. **Left:** All-to-A
 The same two ideas apply to the AllGather-ReduceScatter backend, which sends every token to every rank instead of only to the ranks that need it. The four combinations are shown below.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/moe_fusion_communication_models.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_communication_models.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The four communication models for $$W=3$$ ranks holding one token each. **Left:** a regular switch that relays packets. **Right:** an INC switch. **Top:** AllGather-ReduceScatter. **Bottom:** all-to-all.
@@ -68,7 +68,7 @@ The dispatch *pushes* its data into the switch, because only the sender knows ho
 The switch can fold the partials into $$B \le W$$ buffers. With $$B=1$$ (*get-reduce*) it uses the least memory, and with $$B=W$$ (*put-reduce*) it runs the most transfers in parallel. For a payload of $$S$$ bytes, the switch needs at most $$S(B+1)+4W$$ bytes, independently of the model.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/moe_fusion_reduction_models.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_reduction_models.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The three reduction models in the switch, for $$W=4$$ ranks: put-reduce, get-reduce and hybrid-reduce with $$B$$ buffers.
@@ -78,7 +78,7 @@ The three reduction models in the switch, for $$W=4$$ ranks: put-reduce, get-red
 The MoE layer is split into eight stages, each running on one class of unit: *matrix units* for matrix multiplications, *vector units* for all other computation, and the INC switch for the two collectives. The stages are `route`, `dispatch`, `regroup` (sort tokens by expert), the two matrix multiplications of the experts with a `SwiGLU` in between, `reduce` (weight and sum the expert outputs locally) and `combine`.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/moe_fusion_stages.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_stages.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The eight stages of the fused MoE layer, colored by the class of unit that runs them. The blue frame holds the experts.
@@ -86,7 +86,7 @@ The eight stages of the fused MoE layer, colored by the class of unit that runs 
 A regular implementation launches one kernel per stage, and every stage stores its output to global memory (GM) and the next one loads it back. It also needs two extra stages: a `pack` that copies each token once per destination before the dispatch, and a `global reduce` that sums the $$W$$ partials after the combine. Fusion alone keeps the intermediate results of the experts in local (on-chip) memory, but still needs both extra stages. With fusion and INC, both extra stages disappear: the layer goes from ten kernel launches and ten round trips to global memory, to one launch and five.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/moe_fusion_data_movement.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_data_movement.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Data movement for one microbatch. Each row is a stage (left box) and the tensor it stores in global memory (right box). $$\star$$ marks memory of the shared heap. **(a)** One kernel per stage. **(b)** One fused kernel, where the ranks issue the transfers. **(c)** One fused kernel, where the INC switch issues the transfers.
@@ -96,7 +96,7 @@ Data movement for one microbatch. Each row is a stage (left box) and the tensor 
 A single microbatch uses one class of unit at a time. The kernel therefore runs several microbatches at once, each one stage behind the previous. While the matrix units multiply microbatch $$m$$, the vector units regroup microbatch $$m+1$$, and the switch dispatches or combines other microbatches. Matrix units, vector units and the switch are busy at the same time, on different microbatches. Each stage waits only on the previous stage of the same microbatch, so there is no global barrier. Also, only the buffers of the microbatches in flight are alive at any time, so memory grows with the depth of the pipeline, not with the size of the batch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/moe_fusion_pipeline.png"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_pipeline.png"/>
 
 {: style="text-align:center; font-size: small;"}
 Pipelined execution of four microbatches (mb 0 to 3) during prefill, to scale. No two matrix (purple) and no two vector (green) boxes overlap. The dispatch and combine run on different INC elements, so they may overlap.
@@ -110,7 +110,7 @@ The kernel was evaluated on OLMoE-1B-7B (64 experts, top-$$k=8$$) under vLLM, on
 - **MegaKernel+INC**: one fused kernel, with All-to-All-Unique and All-to-All-Reduce in the switch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/moe_fusion_results.svg"/>
+<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/ep_results.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Prefill time per iteration against batch size, both axes in $$\log_2$$ scale.

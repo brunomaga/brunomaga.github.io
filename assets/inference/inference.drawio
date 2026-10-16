@@ -14004,12 +14004,12 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram name="kernel-fusion-tensor-parallelism" id="kernel-fusion-tensor-parallelism">
+  <diagram name="kernel_fusion_tensor_parallelism" id="kernel-fusion-tensor-parallelism">
     <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="tp_fusion_megatron_lm-label" value="tp_fusion_megatron_lm.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="tp_fusion_megatron_lm-label" value="tp_megatron_lm.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_megatron_lm-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -14158,7 +14158,7 @@
         <mxCell id="tp_fusion_megatron_lm-42" value="GPU B" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=14;align=left;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_megatron_lm-figure">
           <mxGeometry x="138" y="256" width="60.00" height="18.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_timeline-label" value="tp_fusion_timeline.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="tp_fusion_timeline-label" value="tp_timeline.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="394" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_timeline-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -14535,7 +14535,7 @@
         <mxCell id="tp_fusion_timeline-100" value="In-Network Compute" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=15;align=left;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_timeline-figure">
           <mxGeometry x="741" y="315" width="140" height="18.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_matmuls-label" value="tp_fusion_matmuls.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="tp_fusion_matmuls-label" value="tp_matmuls.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="847" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_matmuls-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -15056,7 +15056,7 @@
         <mxCell id="tp_fusion_matmuls-164" value="for each tile computed for first layer: compute and accumulate partial results for second layer" style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=14;fontColor=#666666;align=center;verticalAlign=bottom;spacing=0;" vertex="1" parent="tp_fusion_matmuls-figure">
           <mxGeometry x="704" y="67" width="344.00" height="36.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_block_specialization-label" value="tp_fusion_block_specialization.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="tp_fusion_block_specialization-label" value="tp_block_specialization.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="1239" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_block_specialization-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -15194,7 +15194,7 @@
         <mxCell id="tp_fusion_block_specialization-38" value="all-reduce, bias, act." style="text;html=1;whiteSpace=wrap;fillColor=none;strokeColor=none;fontSize=14;align=left;verticalAlign=middle;spacing=0;" vertex="1" parent="tp_fusion_block_specialization-figure">
           <mxGeometry x="356" y="151" width="146.00" height="18.00" as="geometry" />
         </mxCell>
-        <mxCell id="tp_fusion_results-label" value="tp_fusion_results.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="tp_fusion_results-label" value="tp_results.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="1528" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="tp_fusion_results-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -15738,12 +15738,12 @@
       </root>
     </mxGraphModel>
   </diagram>
-  <diagram name="kernel-fusion-expert-parallelism" id="kernel-fusion-expert-parallelism">
+  <diagram name="kernel_fusion_expert_parallelism" id="kernel-fusion-expert-parallelism">
     <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="moe_fusion_routing_table-label" value="moe_fusion_routing_table.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_routing_table-label" value="ep_routing_table.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_routing_table-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -15878,7 +15878,7 @@
         <mxCell id="moe_fusion_routing_table-43" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="moe_fusion_routing_table-figure">
           <mxGeometry x="350" y="168" width="40" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_all_to_all-label" value="moe_fusion_all_to_all.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_all_to_all-label" value="ep_all_to_all.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="316" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -16358,7 +16358,7 @@
         <mxCell id="moe_fusion_all_to_all-110" value="Σ&lt;sub&gt;C&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;arcSize=20;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="moe_fusion_all_to_all-figure">
           <mxGeometry x="446" y="194" width="32" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_all_to_all_inc-label" value="moe_fusion_all_to_all_inc.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_all_to_all_inc-label" value="ep_all_to_all_inc.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="668" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_inc-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -16604,7 +16604,7 @@
         <mxCell id="moe_fusion_all_to_all_inc-59" value="Σ&lt;sub&gt;C&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=bottom;fontSize=12;" vertex="1" parent="moe_fusion_all_to_all_inc-figure">
           <mxGeometry x="389.9062" y="148.5357" width="18.0938" height="15" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_timeline-label" value="moe_fusion_timeline.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_timeline-label" value="ep_timeline.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="987" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_timeline-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -16793,7 +16793,7 @@
         <mxCell id="moe_fusion_timeline-49" value="data_out" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontColor=#82b366;" vertex="1" parent="moe_fusion_timeline-figure">
           <mxGeometry x="28" y="615.5" width="60" height="17" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_all_to_all_reduce-label" value="moe_fusion_all_to_all_reduce.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_all_to_all_reduce-label" value="ep_all_to_all_reduce.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="1759" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_reduce-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -17073,7 +17073,7 @@
         <mxCell id="moe_fusion_all_to_all_reduce-53" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="moe_fusion_all_to_all_reduce-figure">
           <mxGeometry x="126" y="638" width="34" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_all_to_all_unique-label" value="moe_fusion_all_to_all_unique.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_all_to_all_unique-label" value="ep_all_to_all_unique.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="2573" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_all_to_all_unique-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -17285,7 +17285,7 @@
         <mxCell id="moe_fusion_all_to_all_unique-46" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;arcSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="moe_fusion_all_to_all_unique-figure">
           <mxGeometry x="126" y="630" width="34" height="32" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_communication_models-label" value="moe_fusion_communication_models.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_communication_models-label" value="ep_communication_models.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="3387" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_communication_models-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -18899,7 +18899,7 @@
         <mxCell id="moe_fusion_communication_models-398" value="selective&lt;br&gt;send/recv&lt;br&gt;(less data)" style="shape=singleArrow;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;direction=south;arrowWidth=0.6;arrowSize=0.3;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="moe_fusion_communication_models-figure">
           <mxGeometry x="609" y="335" width="130" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_reduction_models-label" value="moe_fusion_reduction_models.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_reduction_models-label" value="ep_reduction_models.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="4260" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_reduction_models-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -19659,7 +19659,7 @@
         <mxCell id="moe_fusion_reduction_models-153" value="P&lt;sub&gt;3&lt;/sub&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="moe_fusion_reduction_models-figure">
           <mxGeometry x="676" y="741" width="26" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_stages-label" value="moe_fusion_stages.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_stages-label" value="ep_stages.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="5167" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_stages-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -19777,7 +19777,7 @@
         <mxCell id="moe_fusion_stages-28" value="In-Network Compute" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;" vertex="1" parent="moe_fusion_stages-figure">
           <mxGeometry x="956" y="66.5" width="136" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-label" value="moe_fusion_data_movement.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_data_movement-label" value="ep_data_movement.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="5387" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_data_movement-figure" value="" style="group" vertex="1" connectable="0" parent="1">
@@ -19843,13 +19843,13 @@
         <mxCell id="moe_fusion_data_movement-18" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-15" target="moe_fusion_data_movement-17">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-19" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-19" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="298.35" y="194.48" as="sourcePoint" />
             <mxPoint x="306.8" y="194.48" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-20" value="comm. library&lt;br&gt;via LM, issued&lt;br&gt;by VUs&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#d79b00;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-20" value="comm. library&lt;br&gt;via LM, issued&lt;br&gt;by VUs&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="319.15" y="161.28" width="150" height="66.4" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_data_movement-21" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#999999;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;" edge="1" parent="moe_fusion_data_movement-figure">
@@ -19960,13 +19960,13 @@
         <mxCell id="moe_fusion_data_movement-50" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-47" target="moe_fusion_data_movement-49">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-51" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-51" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="298.35" y="465.92" as="sourcePoint" />
             <mxPoint x="306.8" y="465.92" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-52" value="comm. library&lt;br&gt;via LM, issued&lt;br&gt;by VUs&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#d79b00;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-52" value="comm. library&lt;br&gt;via LM, issued&lt;br&gt;by VUs&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="319.15" y="432.72" width="150" height="66.4" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_data_movement-53" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#999999;strokeWidth=1;fontSize=12;dashed=1;dashPattern=6 4;" edge="1" parent="moe_fusion_data_movement-figure">
@@ -20038,13 +20038,13 @@
         <mxCell id="moe_fusion_data_movement-74" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-71" target="moe_fusion_data_movement-73">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-75" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-75" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="746.85" y="194.48" as="sourcePoint" />
             <mxPoint x="755.3" y="194.48" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-76" value="push:&lt;br&gt;&lt;i&gt;W&lt;/i&gt; &lt;b&gt;put_signal&lt;/b&gt;*&lt;br&gt;switch relays&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#d79b00;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-76" value="push:&lt;br&gt;&lt;i&gt;W&lt;/i&gt; &lt;b&gt;put_signal&lt;/b&gt;*&lt;br&gt;switch relays&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="767.65" y="161.28" width="150" height="66.4" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_data_movement-77" value="regroup" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="moe_fusion_data_movement-figure">
@@ -20119,13 +20119,13 @@
         <mxCell id="moe_fusion_data_movement-100" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-97" target="moe_fusion_data_movement-99">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-101" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-101" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="746.85" y="465.92" as="sourcePoint" />
             <mxPoint x="755.3" y="465.92" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-102" value="pull:&lt;br&gt;&lt;i&gt;W&lt;/i&gt; &lt;b&gt;signal&lt;/b&gt;&lt;br&gt;switch relays&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#d79b00;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-102" value="pull:&lt;br&gt;&lt;i&gt;W&lt;/i&gt; &lt;b&gt;signal&lt;/b&gt;&lt;br&gt;switch relays&lt;br&gt;(&lt;i&gt;W&lt;/i&gt;&lt;sup&gt;2&lt;/sup&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="767.65" y="432.72" width="150" height="66.4" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_data_movement-103" value="global reduce" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="moe_fusion_data_movement-figure">
@@ -20182,13 +20182,13 @@
         <mxCell id="moe_fusion_data_movement-120" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-117" target="moe_fusion_data_movement-119">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-121" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-121" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1195.35" y="149.24" as="sourcePoint" />
             <mxPoint x="1203.8" y="149.24" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-122" value="push-multicast:&lt;br&gt;1 &lt;b&gt;put_signal&lt;/b&gt;*&lt;br&gt;INC multicasts&lt;br&gt;(2&lt;i&gt;W&lt;/i&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#d79b00;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-122" value="push-multicast:&lt;br&gt;1 &lt;b&gt;put_signal&lt;/b&gt;*&lt;br&gt;INC multicasts&lt;br&gt;(2&lt;i&gt;W&lt;/i&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="1216.15" y="116.04" width="150" height="66.4" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_data_movement-123" value="regroup" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="moe_fusion_data_movement-figure">
@@ -20263,13 +20263,13 @@
         <mxCell id="moe_fusion_data_movement-146" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="moe_fusion_data_movement-figure" source="moe_fusion_data_movement-143" target="moe_fusion_data_movement-145">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-147" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-147" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2;fontSize=12;" edge="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="1195.35" y="420.68" as="sourcePoint" />
             <mxPoint x="1203.8" y="420.68" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="moe_fusion_data_movement-148" value="pull-reduce:&lt;br&gt;1 &lt;b&gt;signal&lt;/b&gt;&lt;br&gt;INC pulls, sums&lt;br&gt;(2&lt;i&gt;W&lt;/i&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#d79b00;" vertex="1" parent="moe_fusion_data_movement-figure">
+        <mxCell id="moe_fusion_data_movement-148" value="pull-reduce:&lt;br&gt;1 &lt;b&gt;signal&lt;/b&gt;&lt;br&gt;INC pulls, sums&lt;br&gt;(2&lt;i&gt;W&lt;/i&gt; flows)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=13;fontColor=#000000;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="1216.15" y="387.48" width="150" height="66.4" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_data_movement-149" value="" style="shape=curlyBracket;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;fontSize=14;rounded=1;size=0.5;strokeColor=#999999;" vertex="1" parent="moe_fusion_data_movement-figure">
@@ -20278,7 +20278,7 @@
         <mxCell id="moe_fusion_data_movement-150" value="one kernel launch, all eight stages" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontColor=#999999;horizontal=0;" vertex="1" parent="moe_fusion_data_movement-figure">
           <mxGeometry x="904.6" y="88.4" width="16" height="345.28" as="geometry" />
         </mxCell>
-        <mxCell id="moe_fusion_results-label" value="moe_fusion_results.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="moe_fusion_results-label" value="ep_results.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="6044.81" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_fusion_results-figure" value="" style="group" vertex="1" connectable="0" parent="1">

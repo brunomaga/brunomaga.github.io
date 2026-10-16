@@ -24,7 +24,7 @@ $$
 where $$W_1 \in \mathbb{R}^{N \times O}$$ and $$W_2 \in \mathbb{R}^{O \times P}$$. On $$G$$ GPUs, Megatron-LM splits $$W_1$$ column-wise and $$W_2$$ row-wise. Each GPU $$g$$ computes a slice $$H^{(g)}$$ of the hidden activations and a partial output $$H^{(g)} W_2^{(g)}$$. An all-reduce then sums the partial outputs of all GPUs, $$H W_2 = \sum_{g=1}^{G} H^{(g)} W_2^{(g)}$$. This is the only communication step per pair of layers.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_fusion_megatron_lm.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Megatron-LM tensor parallelism of an FFN on 2 GPUs (A in green, B in blue). The bias and activation are omitted.
@@ -32,7 +32,7 @@ Megatron-LM tensor parallelism of an FFN on 2 GPUs (A in green, B in blue). The 
 A regular implementation launches 7 kernels for this FFN: a matrix multiplication, a bias addition and an activation per layer, plus the all-reduce. Each kernel goes through global memory (top of the figure below). The method in this post runs the whole FFN as one kernel, with a single load and a single store to global memory (bottom). It has three parts, presented next.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_fusion_timeline.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_timeline.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Execution timeline of an FFN with Megatron-LM tensor parallelism. **Top:** the regular execution, with 7 kernels that load from (arrow up) and store to (arrow down) global memory. **Bottom:** the fused kernel, with several small, overlapping all-reduce steps performed in the network switch.
@@ -44,7 +44,7 @@ Two linear layers without a nonlinearity in between collapse into a single one. 
 A matrix multiplication on a GPU is computed in *tiles*: each thread block (one SM) computes one small submatrix of the output. The fused kernel keeps this tiling for the first layer. However, as soon as a tile $$H_{i,j}$$ is computed (with its bias and activation), it is multiplied by every tile in row $$j$$ of $$W_2$$. The partial products are added to the tiles in row $$i$$ of the output $$Y$$. When all tiles of $$H$$ are processed, $$Y$$ holds the full product $$H W_2$$, and $$H$$ was never stored in global memory.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_fusion_matmuls.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 **Left:** the regular execution computes all tiles of $$H$$, stores $$H$$ in global memory, and a second kernel computes $$Y$$. **Right:** the fused kernel multiplies each tile of $$H$$ by a row of tiles of $$W_2$$ and accumulates the results in a row of tiles of $$Y$$.
@@ -62,8 +62,10 @@ If every block computes and communicates, the faster blocks must spin-wait until
 
 Compute blocks never wait for communication, and communication blocks never compute matrix multiplications. The matrix multiplications run on fewer SMs, which is only marginally slower on a GPU with many SMs, while the communication is hidden behind the computation.
 
+The same idea appears at other levels. Inside a block, [FlashAttention-3](https://arxiv.org/abs/2407.08608) uses *warp specialization*: some warps load data from global memory while the others compute. Across the GPU, [DeepSeek-V3](https://arxiv.org/abs/2412.19437) dedicates a fixed part of the SMs to the communication of its Mixture-of-Experts layers. Here, the specialized blocks run the all-reduce of the tensor-parallel FFN, one band at a time.
+
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/tp_fusion_block_specialization.svg"/>
+<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/tp_block_specialization.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 An example on a GPU with 6 SMs. **(a)** Without block specialization, all SMs compute and then spin-wait before each band is all-reduced. **(b)** With block specialization, SM1 and SM2 all-reduce each band as soon as SM3 to SM6 have computed it.
@@ -83,7 +85,7 @@ The all-reduce of a band is a reduce-scatter followed by an all-gather. Each GPU
 The fused kernel was compared to a tuned, non-fused implementation with the all-reduce of the communication library, on FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs in one node, in `bfloat16`. It is 22% to 62% faster, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/tp_fusion_results.svg"/>
+<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Latency of the regular (baseline) and fused (ours) FFNs, sorted by improvement.
@@ -95,6 +97,18 @@ The gains follow the size of the FFN:
 
 An ablation study shows that all three steps are needed. Without fusion, the in-network all-reduce runs on full tensors and is slower than the baseline. Without block specialization, the communication is not hidden, and the kernel is slower than the baseline in most cases. Without in-network computing, using a GPU-side shmem library instead, the kernel is faster than the baseline but slower than the full method.
 
+## Related work
+
+Other systems also overlap the computation and the communication of tensor parallelism inside kernels, without block specialization:
+
+- [CoCoNet](https://arxiv.org/abs/2105.05720) is a compiler that fuses and overlaps a matrix multiplication with the collective that follows it;
+- [Flux](https://arxiv.org/abs/2406.06858) splits the Megatron-LM matrix multiplications and their collectives into tiles, and fuses them into one kernel per layer, where each tile is sent as soon as it is computed;
+- [Triton-distributed](https://arxiv.org/abs/2504.19442) and [TileLink](https://arxiv.org/abs/2503.20313) add shmem-like communication primitives to Triton, so that the overlap of computation and communication can be programmed tile by tile.
+
+These methods fuse one matrix multiplication at a time, and keep the intermediate activations $$H$$ in global memory. Megakernels, such as the [low-latency megakernel for Llama-1B](https://hazyresearch.stanford.edu/blog/2025-05-27-no-bubbles) and the ones generated by [Mirage](https://arxiv.org/abs/2405.05751), fuse a whole forward pass, but on a single GPU. Finally, in-network all-reduces are available in the communication library, but only as separate collectives on full tensors. The method in this post combines the three: fusion of both layers, per-tile communication inside the kernel, and in-network reduction.
+
 ## Final remarks
 
-The main lesson is that computation, communication and the network switch should be optimized together. Fusing the FFN into one kernel makes per-tile communication possible, and per-tile communication can be overlapped and executed in the switch. This also suggests a different design for network hardware: support for many small, asynchronous messages sent from inside GPU kernels, instead of large, synchronous collectives. The same ideas apply to attention, which also chains two matrix multiplications, and to expert parallelism in Mixture-of-Experts, covered in the next post.
+The main lesson is that computation, communication and the network switch should be optimized together. Fusing the FFN into one kernel makes per-tile communication possible, and per-tile communication can be overlapped and executed in the switch. This also suggests a different design for network hardware: support for many small, asynchronous messages sent from inside GPU kernels, instead of large, synchronous collectives. The same ideas apply to attention, which also chains two matrix multiplications, and to [expert parallelism in Mixture-of-Experts]({{ site.baseurl }}{% post_url 2026-10-09-kernel-fusion-expert-parallelism %}).
+
+The method also applies to [expert sharding](https://arxiv.org/abs/2503.08467). With expert parallelism, each GPU holds whole experts, and a GPU whose experts receive more tokens than the others delays the whole layer. Expert sharding instead splits every expert across all GPUs, as Megatron-LM splits the FFN: $$W_1$$ column-wise and $$W_2$$ row-wise. Every GPU then processes all the tokens of every expert, so the load is balanced by construction, whatever the routing. The price is an all-reduce per expert layer, which is the communication overhead that the fused kernel in this post hides and reduces.
