@@ -62,7 +62,7 @@
     .info-warning h2,
     .info-danger h2 { margin-top: 0; }
 
-    /* ===== Labels (post date, category and tags; resource types on the home page) ===== */
+    /* ===== Labels (back link, post date, category and tags; resource types on the home page) ===== */
 
     .post-labels {
       display: flex;
@@ -93,9 +93,29 @@
       }
     }
 
-    /* strongest first: date in the link colour, category in mid grey, tags in light grey (default above) */
+    /* strongest first: back link in charcoal (below), date in the link colour, category in mid grey,
+       tags in light grey (default above) */
     .post-label--date     { border-color: #2a7ae2; color: #2a7ae2; }
     .post-label--category { border-color: #999;    color: #444; }
+
+    /* back link, before the post date and in the footer: a charcoal label that fills on hover */
+    a.post-label--back,
+    a.post-label--back:visited {
+      display: inline-block;
+      border-color: #333;
+      color: #333;
+      text-decoration: none;
+      transition: background-color 0.15s, color 0.15s;
+    }
+
+    a.post-label--back:hover,
+    a.post-label--back:focus-visible {
+      background-color: #333;
+      color: #fff;
+      text-decoration: none;
+    }
+
+    a.post-label--back .fa-arrow-left { font-size: 0.9em; }  /* as tall as the capitals */
 
     /* resource types on the home page: equal-width labels in a first column as wide as the widest one,
        a small gap before the titles, and less vertical padding than on post pages so the rows keep
