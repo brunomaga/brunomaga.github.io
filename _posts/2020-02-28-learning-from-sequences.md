@@ -75,6 +75,7 @@ The positional encoding is thus given by $$sine$$ and $$cosine$$ waves with a di
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/transformer-embedding.svg"/>
 
+{: style="text-align:center; font-size: small;"}
 Output of the positional encoding of the transformer for dimensions 4 to 7 of the embedding array, for a word whose position in the sentence is given by the x axis. Adapted from: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
 
 ### Attention Mechanism

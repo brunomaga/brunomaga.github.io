@@ -29,3 +29,7 @@ mjx-container.math-scroll {
   overflow-y: hidden;
   vertical-align: middle;
 }
+
+// figure captions (paragraphs marked font-size: small in posts) are black, like the
+// rest of the caption's line, whatever color the surrounding block would give them
+.post-content p[style*="font-size: small"] { color: #000; }
