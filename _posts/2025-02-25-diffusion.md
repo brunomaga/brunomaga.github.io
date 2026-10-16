@@ -311,7 +311,7 @@ where each training iteration (steps 2 to 5) is implemented by the inner loop be
 As Transformers became a key building block of sequence-based ML, [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) introduced diffusion transformers (DiT) as a replacement for U-Net-based diffusion. DiT outperforms U-Nets in scaling and in sample quality, measured by the [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance) (FID). As the paper focuses on image diffusion, DiT is based on [Vision Transformers (ViTs)](https://arxiv.org/abs/2010.11929), which operate on image patches (Figure 4 in the paper). In practice, DiT operates on patches of the latent representation of the image produced by a pre-trained VAE, as in the latent diffusion models discussed below. ViTs also have better scaling properties and accuracy than convolutional neural networks when trained on large datasets. Regarding DiT scaling, the paper shows that (1) DiT Gflops are strongly correlated with FID (more Gflops, lower FID), (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/dit.png"/> 
+<img width="100%" height="100%" src="{{ site.assets }}/diffusion/dit.svg"/> 
 
 In the adaLN-Zero architecture shown in the diagram, adaptive layer normalization conditions the model dynamically. The scale $$\gamma$$ and shift $$\beta$$ parameters of each layer norm are not learned directly. Instead, an MLP regresses them from the sum of the embeddings of the timestep $$t$$ and the class label $$y$$ (the conditioning inputs). adaLN-Zero also regresses dimension-wise scaling parameters $$\alpha$$, applied right before each residual connection, and initializes them to zero, so that each DiT block starts as the identity function. These $$\alpha$$ and $$\beta$$ are unrelated to the $$\alpha_t$$ and $$\beta_t$$ of the noise schedule.
 
@@ -490,10 +490,10 @@ To train on videos, the authors use the method from [Align your Latents: High-Re
 > first pre-train the diffusion model on images only; then, turn the image generator into a video generator by introducing a temporal dimension to the latent space diffusion model and fine-tuning on encoded image sequences, i.e., videos.
 
 {: style="text-align:center; font-size: small;"}
-<img width="68%" height="68%" src="{{ site.assets }}/diffusion/align_your_latents.png"/> 
+<img width="68%" height="68%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
 
 {: style="text-align:center; font-size: small;"}
-**Left:** We turn a pre-trained LDM into a video generator by inserting temporal layers that learn to align frames into temporally consistent sequences. During optimization, the image backbone $$\theta$$ remains fixed and only the parameters $$\phi$$ of the temporal layers $$l^i_\phi$$ are trained, cf. Eq. (2). **Right:** During training, the base model $$\theta$$ interprets the input sequence of length $$T$$ as a batch of images. For the temporal layers $$l^i_\phi$$, these batches are reshaped into video format. Their output $$z'$$ is combined with the spatial output $$z$$, using a learned merge parameter $$\alpha$$. During inference, skipping the temporal layers ($$\alpha^i_\phi=1$$) yields the original image model. For illustration purposes, only a single U-Net Block is shown. $$c_S$$ is optional context frame conditioning, when training prediction models (Sec. 3.2). Source and caption: [Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2304.08818).
+**Left:** We turn a pre-trained LDM into a video generator by inserting temporal layers that learn to align frames into temporally consistent sequences. During optimization, the image backbone $$\theta$$ remains fixed and only the parameters $$\phi$$ of the temporal layers $$l^i_\phi$$ are trained, cf. Eq. (2). **Right:** During training, the base model $$\theta$$ interprets the input sequence of length $$T$$ as a batch of images. For the temporal layers $$l^i_\phi$$, these batches are reshaped into video format. Their output $$z'$$ is combined with the spatial output $$z$$, using a learned merge parameter $$\alpha$$. During inference, skipping the temporal layers ($$\alpha^i_\phi=1$$) yields the original image model. For illustration purposes, only a single U-Net Block is shown. $$c_S$$ is optional context frame conditioning, when training prediction models (Sec. 3.2). Caption and figure adapted from: [Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2304.08818).
 </details>
 {::options parse_block_html="false" /}
 
@@ -540,7 +540,7 @@ OmniGen is a diffusion model made only of a VAE and a transformer (initialized f
 A text-to-image diffusion model that replaces the commonly used T5 and CLIP text encoders with the latents of a decoder-only LLM (Llama3-8B).
 
 {: style="text-align:center; font-size: small;"}
-<img width="68%" height="68%" src="{{ site.assets }}/diffusion/playground_v3.png"/> 
+<img width="68%" height="68%" src="{{ site.assets }}/diffusion/playground_v3.svg"/> 
 </details>
 {::options parse_block_html="false" /}
  
@@ -616,7 +616,7 @@ The following works address multi-dimensional parallelism for large-scale models
 Presents DiT-MoE, a sparse Mixture of Experts (MoE) version of DiT, with good scaling properties, performance comparable to dense DiTs, and highly optimized inference.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/diffusion/dit_moe.png"/> 
+<img width="70%" height="70%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
 </details>
 {::options parse_block_html="false" /}
 
