@@ -250,8 +250,10 @@ $$
 
 The initial value $$x_0$$ should be as close as possible to the zero. The line tangent to $$y=f(x)$$ at $$x=x_0$$ crosses the $$x$$ axis at a new, improved guess $$x_1$$. A stationary point of a function (a minimum, maximum or saddle point) can be found by computing the root of its derivative, i.e. $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$. For multivariate functions, division is not defined, so it is replaced by multiplication by the inverse of the Hessian, i.e. $$x_{n+1}=x_{n}- \left(\triangledown^2 f(x_{n})\right)^{-1} \triangledown f(x_{n})$$.
 
+{: style="text-align:center; font-size: small;"}
 <img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/newton_method.gif"/>
 
+{: style="text-align:center; font-size: small;"}
 (Source: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)
 
 ### Gradient and Hessian
@@ -324,8 +326,10 @@ $$
 
 Automatic differentiation instead performs an efficient *forward* pass by reusing intermediate results, and breaks the *back propagation* algorithm into partial derivatives that propagate backwards through the graph:
 
+{: style="text-align:center; font-size: small;"}
 <img width="57%" height="57%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
 
+{: style="text-align:center; font-size: small;"}
 (Adapted from: example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 
 
