@@ -47,7 +47,7 @@ Even after fusion, a forward pass launches many kernels from Python, one after t
 
 This post benchmarks and analyses several implementations of ML training and inference on different backends: PyTorch 1.13.1 (Python), PyTorch 2.1 (Python), LibTorch 2.1 (C++), TorchScript 2.1 (Python and C++), and PyTorch 2.1 with `torch.compile` (Python).  
 Two testbenches are covered, and readers may pick one based on their expertise and interest:
-1. the GPT-3 Small model, introduced in [Building a GPT model from scratch]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example, specific to large language models; 
+1. the GPT-3 Small model, detailed in section [GPTlite on LibTorch C++](#gptlite-model). This is a complex example, specific to large language models; 
 2. a Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch C++](#benchmark-model). This is a very simple example, used to benchmark models of varying depths and widths. It is mostly suitable for readers interested in performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
 
 {: style="text-align:center; font-size: small;"}
@@ -60,7 +60,7 @@ This post details the C++ implementation of the GPT-3 Small model with N decoder
 
 ## GPTlite on LibTorch C++ {#gptlite-model}
 
-The GPT implementation in C++ comes first. The subsections that follow match the structure of the GPTlite implementation in Python.
+The GPT implementation in C++ comes first.
 
 ### Hyperparameters
 

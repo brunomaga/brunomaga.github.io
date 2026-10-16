@@ -353,7 +353,7 @@ def medusa_step(model, heads, tokens, kv_cache, next_token, head_logits, top_k=2
     return tokens, kv_cache, next_token, head_logits
 
 
-# usage: prefill the prompt: [1, S], with the causal_mask of the post on attention, then run medusa_step:
+# usage: prefill the prompt: [1, S], with a causal mask, then run medusa_step:
 # logits, hidden, kv_cache = model(prompt, None, causal_mask(S, S), torch.arange(S))
 # tokens, next_token, head_logits = prompt, logits[0, -1].argmax().item(), heads(hidden[:, -1:])[0, 0]
 # while tokens.size(1) < S + n_tokens:

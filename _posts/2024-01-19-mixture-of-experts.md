@@ -449,7 +449,7 @@ Finally, the **scale step** computes, for each token, the sum of the outputs of 
 
 ### Applying the MoE to an existing LLM
 
-The MoE module can replace the feed-forward module in existing architectures. This section applies it to the [GPT2-based `GPTlite` model introduced in a previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}). All modules are distributed with Distributed Data Parallel, except the feed-forward module of the transformer block, which is replaced by the model-parallel mixture of experts:
+The MoE module can replace the feed-forward module in existing architectures. This section applies it to the GPT2-based `GPTlite` model. All modules are distributed with Distributed Data Parallel, except the feed-forward module of the transformer block, which is replaced by the model-parallel mixture of experts:
 
 ```python
   # ddp function takes a torch module and distributes it in a data parallel fashion

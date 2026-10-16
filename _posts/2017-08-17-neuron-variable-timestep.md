@@ -5,9 +5,8 @@ categories: ["Computational Neuroscience"]
 tags: ["CVODE", "variable timestep", "numerical methods", "simulation", "HPC"]
 ---
 
-[neuron-methods-post]: {{ site.baseurl }}{% post_url 2016-08-15-neuron-electrical-activity %}
 
-The [previous post][neuron-methods-post] covered the mathematical background of neuron activity and the simulation of the electrical activity of simple neuron models. It showed that an interleaved voltage-current resolution of linear, unrelated state ODEs allows the problem to be solved as a system of linear equations. However, such a resolution is only possible for *simple* models. Neuron models with non-linear state variable ODEs and correlation between states require a fully-implicit resolution, which is possible with Backward Euler with Newton iterations. This is a common use case. It underlies the resolution of extra-cellular mechanisms, capacitors between nodes, and other mechanisms that couple the evolution of neurons over time.
+An interleaved voltage-current resolution of linear, unrelated state ODEs allows the problem to be solved as a system of linear equations. However, such a resolution is only possible for *simple* models. Neuron models with non-linear state variable ODEs and correlation between states require a fully-implicit resolution, which is possible with Backward Euler with Newton iterations. This is a common use case. It underlies the resolution of extra-cellular mechanisms, capacitors between nodes, and other mechanisms that couple the evolution of neurons over time.
 
 A fully-implicit method commonly used for this problem is the Backward (Implicit) Euler method:
 
@@ -240,12 +239,11 @@ This approach increases computational efficiency: neurons can step beyond the sy
 
 ### 2. Testing conditions alter spike rates
 
-[LIF-model-post]: {{ site.baseurl }}{% post_url 2016-02-08-lif-brunel %}
 
 Even though these results are promising, different mammals, brain regions and mental states can change the simulation conditions and lead to very different spiking rates. The final test therefore measures how these factors alter the simulation efficiency. To that end, the fully-asynchronous execution model was applied to five different brain dynamics:
 - a model of *quiet dynamics* with a mean spiking rate of 0.25 Hz per neuron, representing neurons almost at rest and/or with little activity. This model gives an upper bound of the runtime of about 90% of neurons in the brain during regular activity;
 - a model of *slow dynamics* at 1.5Hz, representing the lower bound of active neurons, described next;
-- a model of *moderate dynamics* with a spiking rate of 6.5 Hz, an approximation of the irregular regime of slow oscillations displayed by the [Brunel network][LIF-model-post]; also an upper limit to the spiking rate of the rat frontal cortex; and a loose approximation of the visual cortex of cats;
+- a model of *moderate dynamics* with a spiking rate of 6.5 Hz, an approximation of the irregular regime of slow oscillations displayed by the Brunel network; also an upper limit to the spiking rate of the rat frontal cortex; and a loose approximation of the visual cortex of cats;
 - a model of *fast dynamics* of 38 Hz, approximating the cortical and thalamic neuronal activity during periods of high vigilance, and the regular regime of the theoretical inhibition-dominated model of the Brunel network; and 
 - a model of *burst dynamics* at 55.8 Hz, typically a by-product of depolarizing current injections, representative of the fast-spiking regime of the inhibition-dominated irregular dynamics of the Brunel network.
 

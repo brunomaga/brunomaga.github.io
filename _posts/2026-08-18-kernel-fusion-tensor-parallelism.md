@@ -5,7 +5,7 @@ categories: ["Efficient Inference"]
 tags: ["LLM", "kernel fusion", "tensor parallelism", "Megatron-LM", "in-network computing", "collectives"]
 ---
 
-This post covers a kernel that fuses the computation and the communication of a feedforward network (FFN) distributed with [Megatron-LM tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}) into a single GPU kernel. It summarizes the paper *Towards Efficient LLM Inference via Full-Stack Fusion of Computation, Communication, and In-Network Computing*.
+This post covers a kernel that fuses the computation and the communication of a feedforward network (FFN) distributed with Megatron-LM tensor parallelism into a single GPU kernel. It summarizes the paper *Towards Efficient LLM Inference via Full-Stack Fusion of Computation, Communication, and In-Network Computing*.
 
 ## The problem: kernels and graph breaks
 

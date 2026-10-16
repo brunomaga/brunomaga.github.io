@@ -52,7 +52,7 @@ def causal_mask(Sq, Sk, device=None):
     return torch.ones(Sq, Sk, dtype=torch.bool, device=device).tril(diagonal=Sk - Sq)
 ```
 
-During decode, every new token reads the keys and values of the whole context from the KV cache, described in the [post on prefill, decode and the KV cache]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}). The cost of each step therefore grows linearly with the context. Attention dominates at long contexts, roughly once the context is longer than six times the model width. The authors of Native Sparse Attention (below) estimated that attention accounts for 70-80% of the latency when decoding with a 64K-token context. Long documents, long conversations, agents and reasoning models with long chains of thought all fall in this regime.
+During decode, every new token reads the keys and values of the whole context from the KV cache. The cost of each step therefore grows linearly with the context. Attention dominates at long contexts, roughly once the context is longer than six times the model width. The authors of Native Sparse Attention (below) estimated that attention accounts for 70-80% of the latency when decoding with a 64K-token context. Long documents, long conversations, agents and reasoning models with long chains of thought all fall in this regime.
 
 The solutions fall into three families, which can be combined:
 

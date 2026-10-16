@@ -55,7 +55,7 @@ To simulate the [Action Potential](https://en.wikipedia.org/wiki/Action_potentia
 {: style="text-align:center; font-size: small;"}
 <img width="40%" height="40%" src="{{ site.assets }}/lif-brunel/action_potential.gif">source: Wikipedia
 
-After a spike, the neuron potential stays constant at the reset value for a given **refractory period**, to simulate the [refraction](https://en.wikipedia.org/wiki/Refractory_period_(physiology)) of biological neurons. This is not a detailed simulation of neuron activity, but it is a good starting point for a simple neuron model, before more complex models in future posts.
+After a spike, the neuron potential stays constant at the reset value for a given **refractory period**, to simulate the [refraction](https://en.wikipedia.org/wiki/Refractory_period_(physiology)) of biological neurons. This is not a detailed simulation of neuron activity, but it is a good starting point for a simple neuron model.
 
 ## Resolution
 

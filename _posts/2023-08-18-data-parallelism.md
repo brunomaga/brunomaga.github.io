@@ -14,7 +14,7 @@ Distributed data parallelism (DDP) refers to the parallel execution of different
 {: style="text-align:center; font-size: small;"}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.
 
-This post applies distributed data parallelism to the training of the [GPTlite model introduced in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), on a network of 8 GPUs, using [PyTorch DDP](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) (Distributed Data Parallel) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
+This post applies distributed data parallelism to the training of the GPTlite model, on a network of 8 GPUs, using [PyTorch DDP](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) (Distributed Data Parallel) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
 
 There are two main data parallelism approaches:
 
@@ -80,7 +80,7 @@ The back propagation phase of the vDNN(+) implementation on convolutional neural
 
 ## Model and dataset setup
 
-The implementation uses the *GPTlite* model from the previous post, with specs matching the *GPT-3 Small* model in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Table 2.1):
+The implementation uses the *GPTlite* model, with specs matching the *GPT-3 Small* model in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Table 2.1):
 
 ```python
 n_layer = 12   # depth of the network as number of decoder blocks.

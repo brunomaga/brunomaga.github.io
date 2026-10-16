@@ -348,7 +348,7 @@ $$
 $$
 
 Therefore, the CAVI optimal variational density of $$\mu_k$$ is a member of the Exponential Family of Distributions with sufficient statistics $$\{\mu_k, \mu_k^2\}$$ and natural parameters $$\left\{\sum_{i=1}^n \varphi_{ik} x_i, -\frac{1}{2 \sigma^2} - \frac{1}{2}\sum_{i=1}^n \varphi_{ik} \right\}$$. 
- For a detailed discussion of the exponential family, sufficient statistics and natural parameters, see the previous [post]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}). The updates for the mean and the variance are then:
+ The updates for the mean and the variance are then:
 
 $$
 \begin{align*}

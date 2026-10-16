@@ -153,7 +153,7 @@ The pipeline parallelism algorithm implemented in DeepSpeed is the [PipeDream-Fl
 {: style="text-align:center; font-size: small;"}
 Regular and 1F1B pipeline algorithms diagram. Source: adapted from [Training and Serving System of Foundation Models: A Comprehensive Survey](https://arxiv.org/pdf/2401.02643.pdf)
 
-Pipeline parallelism is added to the `GPTlite` model implemented in the previous post, and is enabled by passing the number of stages as the `--pipeline_num_stages` argument (default: 0, no pipelining) on the command line:
+Pipeline parallelism is added to the `GPTlite` model, and is enabled by passing the number of stages as the `--pipeline_num_stages` argument (default: 0, no pipelining) on the command line:
 
 ```python
 ## train.py
