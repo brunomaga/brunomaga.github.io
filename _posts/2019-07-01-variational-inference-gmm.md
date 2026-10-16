@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Variational Inference (ELBO, Mean-Field Approximation, CAVI) and Gaussian Mixture Models"
+title:  "Variational Inference (ELBO, CAVI) and Gaussian Mixture Models"
 categories: ["Machine Learning"]
 tags: ["variational inference", "ELBO", "GMM", "MCMC"]
 ---

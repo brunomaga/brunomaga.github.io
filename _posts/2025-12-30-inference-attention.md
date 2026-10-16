@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Faster attention: GQA, FlashAttention, sparse, linear and latent attention"
+title:  "Faster attention (GQA, FlashAttention, sparse, linear and latent attention)"
 categories: ["Efficient Inference"]
 tags: ["LLM", "attention", "FlashAttention", "sparse attention", "linear attention", "MLA", "DeepSeek"]
 ---
