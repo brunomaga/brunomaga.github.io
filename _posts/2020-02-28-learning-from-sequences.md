@@ -22,7 +22,7 @@ The structure of its Recurrent Neural Network (RNN) is as follows:
 This structure is easily represented by the following picture:
 
 {: style="text-align:center;"}
-<img width="45%" height="45%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
+<img width="32%" height="32%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The recurrent neural network trained at each step of the encoder-decoder architecture. The blue area represents input neurons. The green area represents a single hidden layer formed by the states of the GRU/LSTM neurons of the RNN. The red area represents the model output. The concatenation of the hidden layer of the previous iteration and the current iteration's input is used as model input. 
@@ -84,7 +84,7 @@ The main component of the transformer is the attention mechanism, which determin
 Let's look at a single attention head for now. Take a sentence of $$N$$ words: how is each word related to every other word in that sentence? The output of a single attention mechanism is then the $$N \times N$$ matrix storing these inter-word importance metrics. Here's an example:
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
+<img width="32%" height="32%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The attention mechanism output. For the sentence "The big red dog", of length $$N=4$$, each row of the attention matrix holds the normalized relevance metric of that word to every other word in the sentence. Source: unknown. 
@@ -131,7 +131,7 @@ I.e. it's a concatenation of all attention heads, and the parameters learnt are 
 The **Masked Multi-head Attention** component on the decoder is similar to the regular MHA, but replaces the upper triangle of the attention matrix with zeros, to hide the next words from the model. Decoding is performed one word of the output sequence at a time, with previously seen words added to the attention array and the following words set to zero. Applied to the previous example, the four iterations are: 
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_masked.png"/>
+<img width="27%" height="27%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_masked.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Input of the masked attention mechanism on the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every word iterated. The mask component of the attention mechanism refers to replacing the positions of unseen words in the attention matrix with zeros. Source: unknown.

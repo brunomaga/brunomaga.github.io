@@ -109,6 +109,96 @@
         <mxCell id="transformer_attention-29" value="each row sums to 1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#333333;" vertex="1" parent="transformer_attention-figure">
           <mxGeometry x="92" y="160" width="224" height="20" as="geometry" />
         </mxCell>
+        <mxCell id="transformer_attention_masked-label" value="transformer_attention_masked.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="300" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="340" width="228" height="86" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-1" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;right=0;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="0" y="0" width="4" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-2" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;left=0;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="32" y="0" width="4" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-3" value="1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="4" y="0" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-4" value="0" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="4" y="16" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-5" value="0" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="4" y="32" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-6" value="0" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="4" y="48" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-7" value="Le" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="0" y="70" width="36" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-8" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;right=0;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="64" y="0" width="4" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-9" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;left=0;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="96" y="0" width="4" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-10" value="0.1" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="68" y="0" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-11" value="0.9" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="68" y="16" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-12" value="0" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="68" y="32" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-13" value="0" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="68" y="48" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-14" value="gros" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="64" y="70" width="36" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-15" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;right=0;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="128" y="0" width="4" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-16" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;left=0;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="160" y="0" width="4" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-17" value="0.05" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="132" y="0" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-18" value="0.40" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="132" y="16" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-19" value="0.55" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="132" y="32" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-20" value="0" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="132" y="48" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-21" value="chien" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="128" y="70" width="36" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-22" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;right=0;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="192" y="0" width="4" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-23" value="" style="shape=partialRectangle;html=1;fillColor=none;strokeColor=#000000;left=0;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="224" y="0" width="4" height="64" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-24" value="0.16" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="196" y="0" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-25" value="0.09" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="196" y="16" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-26" value="0.15" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="196" y="32" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-27" value="0.66" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="196" y="48" width="28" height="16" as="geometry" />
+        </mxCell>
+        <mxCell id="transformer_attention_masked-28" value="rouge" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="transformer_attention_masked-figure">
+          <mxGeometry x="192" y="70" width="36" height="16" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

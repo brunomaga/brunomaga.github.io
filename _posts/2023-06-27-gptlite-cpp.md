@@ -45,12 +45,12 @@ We will look at two different testbenches, so feel free to pick one based on you
 2. a Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch C++](#benchmark-model). This is a very simple example that will be used to benchmark our metrics on models of varying depths and widths. It is mostly suitable for those who are interested in performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
 
 {: style="text-align:center; font-size: small;"}
-<img width="20%" height="20%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.png"/>
+<img width="24%" height="24%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 <img width="22%" height="22%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-In this post, we will detail the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). Then we will benchmark their C++, PyTorch, TorchScript and `torch.compile` implementations.
+In this post, we will detail the C++ implementation of a [small variant of the GPT2 model]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). The left diagram is adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762). Then we will benchmark their C++, PyTorch, TorchScript and `torch.compile` implementations.
 
 ## GPTlite on LibTorch C++ {#gptlite-model}
 
@@ -106,10 +106,10 @@ $$
 Together with the upper-triangular mask, this is the underlying structure of each of the N attention blocks in the model:
 
 {: style="text-align:center; font-size: small;"}
-<img width="19%" height="19%" src="{{ site.assets }}/gptlite/gptlite_attention.png"/>
+<img width="24%" height="24%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The multi-head (Nx) attention module in the GPTlite model, emphasized in red.
+The multi-head (Nx) attention module in the GPTlite model, emphasized in red. Adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762).
 
 The C++ code is analogous to the Python implementation. We start by defining a single attention head:
 
@@ -204,10 +204,10 @@ Again, we used `nn::ModuleList` as a container, instead of a standard-library co
 The feed-forward network is a two-layer Deep Neural Network and is pretty straightforward to implement:
 
 {: style="text-align:center; font-size: small;"}
-<img width="19%" height="19%" src="{{ site.assets }}/gptlite/gptlite_feedforward.png"/>
+<img width="24%" height="24%" src="{{ site.assets }}/gptlite/gptlite_feedforward.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The feed forward network in the GPTlite model, emphasized in red.
+The feed forward network in the GPTlite model, emphasized in red. Adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762).
 
 ```cpp
 struct FeedForward : nn::Module {
@@ -232,10 +232,10 @@ struct FeedForward : nn::Module {
 We'll call a GPT *block* the sequence of a multi-head attention and a feedforward module. Similarly to the Python implementation, we add skip connections, and normalization before the attention and the feed-forward network.
 
 {: style="text-align:center; font-size: small;"}
-<img width="19%" height="19%" src="{{ site.assets }}/gptlite/gptlite_blocks.png"/>
+<img width="24%" height="24%" src="{{ site.assets }}/gptlite/gptlite_blocks.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The GPT block(s) in the GPTlite model, emphasized in red.
+The GPT block(s) in the GPTlite model, emphasized in red. Adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762).
 
 ```cpp
 struct Block : nn::Module {

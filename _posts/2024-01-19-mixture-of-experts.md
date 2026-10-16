@@ -369,10 +369,10 @@ The following **permutation step** selectively sends the tokens to each expert's
 ```
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/distributed-training/imgs/alltoall.svg"/>
+<img width="70%" height="70%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-An illustration of the MPI all-to-all collective operation. When each process sends one element to each process, it is equivalent to a distributed matrix transpose: note how the red row before the all-to-all (left) becomes a column after the all-to-all (right). We use a single-element all-to-all to exchange the number of items to be sent and received among processors. We then use those counts to perform a new all-to-all with variable-sized elements in the permutation step. Finally, in the un-permutation step, another all-to-all performs the reverse communication, by swapping the send and receive counts and buffers.
+An illustration of the MPI all-to-all collective operation. When each process sends one element to each process, it is equivalent to a distributed matrix transpose: note how the red row before the all-to-all (left) becomes a column after the all-to-all (right). We use a single-element all-to-all to exchange the number of items to be sent and received among processors. We then use those counts to perform a new all-to-all with variable-sized elements in the permutation step. Finally, in the un-permutation step, another all-to-all performs the reverse communication, by swapping the send and receive counts and buffers. Adapted from the MPI Tutorial by Shao-Ching Huang (IDRE High Performance Computing Workshop, 2013).
 
 The **computation step** reshuffles the received data into a 3D batch of size `Rows x Capacity x Embedding`, cropping or padding each sequence to the capacity of the expert:
 

@@ -1,0 +1,175 @@
+<mxfile host="drawio" version="21.1.6">
+  <diagram name="gptlite-cpp" id="gptlite-cpp">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="gptlite_compact-label" value="gptlite_compact.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="40" width="202.2" height="585.6" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="10.8" y="228" width="142.8" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="21.3" y="236.4" width="97.8" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="21.3" y="261.6" width="97.8" height="38.4" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="21.3" y="321.6" width="97.8" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#d79b00;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="21.3" y="345.6" width="97.8" height="55.2" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-6" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="261.6" as="sourcePoint" />
+            <mxPoint x="70.2" y="254.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-7" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="321.6" as="sourcePoint" />
+            <mxPoint x="70.2" y="300" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-8" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="310.8" as="sourcePoint" />
+            <mxPoint x="119.1" y="245.4" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="141.6" y="310.8" />
+              <mxPoint x="141.6" y="245.4" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-9" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="345.6" as="sourcePoint" />
+            <mxPoint x="70.2" y="339.6" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-10" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="464.4" as="sourcePoint" />
+            <mxPoint x="70.2" y="400.8" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-11" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="426" as="sourcePoint" />
+            <mxPoint x="119.1" y="330.6" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="141.6" y="426" />
+              <mxPoint x="141.6" y="330.6" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-12" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="414" as="sourcePoint" />
+            <mxPoint x="34.2" y="400.8" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="34.2" y="414" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-13" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="414" as="sourcePoint" />
+            <mxPoint x="106.2" y="400.8" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="106.2" y="414" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-14" value="N×" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="161.4" y="321" width="30" height="21.6" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="63" y="464.4" width="14.4" height="14.4" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-16" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="77.4" y="471.6" as="sourcePoint" />
+            <mxPoint x="94.2" y="471.6" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="94.2" y="457.2" width="28.8" height="28.8" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-18" value="" style="curved=1;endArrow=none;html=1;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="97.2" y="471.6" as="sourcePoint" />
+            <mxPoint x="120" y="471.6" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="103.2" y="458.4" />
+              <mxPoint x="114" y="484.8" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-19" value="Positional&lt;br&gt;Encoding" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;align=left;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="130.2" y="453.6" width="72" height="36" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="21.3" y="495" width="97.8" height="37.8" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="495" as="sourcePoint" />
+            <mxPoint x="70.2" y="478.8" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-22" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="561" as="sourcePoint" />
+            <mxPoint x="70.2" y="532.8" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-23" value="Inputs" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="34.2" y="564" width="72" height="21.6" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#666666;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="10.8" y="148.8" width="142.8" height="33.6" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-25" value="" style="endArrow=none;html=1;rounded=0;dashed=1;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="228" as="sourcePoint" />
+            <mxPoint x="70.2" y="182.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-26" value="" style="endArrow=classic;html=1;rounded=0;dashed=1;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="148.8" as="sourcePoint" />
+            <mxPoint x="70.2" y="112.2" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="21.3" y="94.2" width="97.8" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="21.3" y="56.4" width="97.8" height="18" as="geometry" />
+        </mxCell>
+        <mxCell id="gptlite_compact-29" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="94.2" as="sourcePoint" />
+            <mxPoint x="70.2" y="74.4" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-30" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_compact-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="70.2" y="56.4" as="sourcePoint" />
+            <mxPoint x="70.2" y="36.6" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="gptlite_compact-31" value="Output&lt;br&gt;Probabilities" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_compact-figure">
+          <mxGeometry x="16.2" y="-1.8" width="108" height="37.2" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
