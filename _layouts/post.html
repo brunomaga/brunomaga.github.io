@@ -1,19 +1,34 @@
 ---
 layout: default
 ---
-<!-- adapted from https://github.com/jekyll/minima/blob/2.5-stable/_layouts/post.html -->
-<article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+{%- comment -%}
+  adapted from https://github.com/jekyll/minima/blob/2.5-stable/_layouts/post.html: the title, the back link, date,
+  category and tags as labels, the content, and the back link again, after the article so that an element the
+  content leaves unclosed cannot contain it. Also the layout of the publications page and of the pages that set
+  none, which have no date, category or tags
+{%- endcomment -%}
+<article class="post">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">{{ page.title | escape }}</h1>
-    {%- assign date_format = site.minima.date_format | default: "%b %Y" -%}
-    {%- include post-labels.html post=page date_format=date_format -%}
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+    <div class="post-labels">
+      {% include back-link.html %}
+      {%- if page.date %}
+      <time class="post-label post-label--date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %Y" }}</time>
+      {%- endif %}
+      {%- for category in page.categories %}
+      <span class="post-label post-label--category">{{ category }}</span>
+      {%- endfor %}
+      {%- for tag in page.tags %}
+      <span class="post-label">{{ tag }}</span>
+      {%- endfor %}
+    </div>
   </header>
 
-  <div class="post-content e-content" itemprop="articleBody">
+  <div class="post-content">
     {%- comment -%} each table in a box that scrolls sideways when the table is wider than the page {%- endcomment -%}
     {{ content | replace: '<table', '<div class="table-scroll"><table' | replace: '</table>', '</table></div>' }}
   </div>
-
-  <a class="u-url" href="{{ page.url | relative_url }}" hidden></a>
 </article>
+
+<div class="post-labels">{% include back-link.html %}</div>

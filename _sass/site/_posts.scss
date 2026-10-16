@@ -1,10 +1,14 @@
 // The content of posts: on narrow screens, tables, inline code and equations stay within the page
 
-// post tables, wrapped by _layouts/post.html, scroll sideways when wider than the page
+// post tables, wrapped by _layouts/post.html, scroll sideways when wider than the page. The space below a table is
+// outside its box, so that at the end of a post it is the same as below a paragraph
 .table-scroll {
+  margin-bottom: $spacing-unit;
   overflow-x: auto;
   overflow-y: hidden;
 }
+
+.table-scroll > table { margin-bottom: 0; }
 
 // long inline code, such as a dotted module path, wraps instead of running off the page
 :not(pre) > code { overflow-wrap: anywhere; }

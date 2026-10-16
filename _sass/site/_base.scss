@@ -1,17 +1,15 @@
-// Images, headings and the footer
+// Images, headings and boxes
 
 img { height: auto; }
 
-// heading rhythm (h1 is the page title)
+// the space above section headings (h1 is the page title); above the smaller ones, the space below the paragraph
+// before them is enough
 h2 { margin-top: 40px; }
 h3 { margin-top: 20px; }
-h4 { margin-top: 10px; }
-h5 { margin-top: 5px; }
 
-// the footer: the back link, on every page but the home page, and space below
-.page-footer { padding-bottom: 30px; }
-
-.page-footer-back {
-  padding-top: 10px;
-  padding-bottom: 10px;
+// a white box with a light grey border: the labels and the notes of the publications
+%box {
+  border: 1px solid $label-border-color;
+  border-radius: 3px;
+  background-color: #fff;
 }

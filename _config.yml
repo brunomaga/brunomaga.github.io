@@ -7,8 +7,8 @@ assets: /assets
 resources_permalink: /#resources-table
 publications_permalink: /publications/
 google_scholar: https://scholar.google.com/citations?user=pirWLLgAAAAJ
-baseurl: "" # the subpath of your site, e.g. /blog
-url: "https://brunomaga.github.io" # the base hostname & protocol for your site, e.g. http://example.com
+baseurl: ""
+url: "https://brunomaga.github.io"
 
 # for the links Statistics for Data Science at EPFL in the resources page
 epfl_statistics: https://github.com/brunomaga/Statistics_EPFL/blob/main/
@@ -19,4 +19,11 @@ plugins:
   - jekyll-feed
   - jekyll-redirect-from
 
-permalink: /:title  #replaces folder structure /YY/mm/dd/categories/title by only /title
+permalink: /:title  # /title instead of /YY/mm/dd/categories/title
+
+# pages that set no layout (the READMEs of the asset folders) are laid out like posts
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: post
