@@ -70,7 +70,7 @@ An example on a GPU with 6 SMs. **(a)** Without block specialization, all SMs co
 
 ## Step 3: all-reduce with in-network computing
 
-A standard collective library is launched from the CPU, as a separate kernel, on full tensors. This is not possible from inside a running kernel, on single tiles. The fused kernel uses its own all-reduce, issued directly by the GPU threads and executed by the network switch that connects the GPUs. This is called *In-Network Computing* (INC): data is summed as it traverses the interconnect, not by the GPUs. The switch offers three operations on memory addresses that are mapped on all GPUs:
+An all-reduce from the communication library is launched from the CPU, as a separate kernel, on full tensors. This is not possible from inside a running kernel, on single tiles. The fused kernel uses its own all-reduce, issued directly by the GPU threads and executed by the network switch that connects the GPUs. This is called *In-Network Computing* (INC): data is summed as it traverses the interconnect, not by the GPUs. The switch offers three operations on memory addresses that are mapped on all GPUs:
 
 - a **load-reduce**, which reads a value from all GPUs and returns their sum (all-to-one);
 - a **multicast store**, which writes one value to all GPUs (one-to-all);
@@ -80,7 +80,7 @@ The all-reduce of a band is a reduce-scatter followed by an all-gather. Each GPU
 
 ## Results
 
-The fused kernel was compared to a tuned, non-fused implementation with a standard all-reduce library, on FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs in one node, in `bfloat16`. It is 22% to 62% faster, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB.
+The fused kernel was compared to a tuned, non-fused implementation with the all-reduce of the communication library, on FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs in one node, in `bfloat16`. It is 22% to 62% faster, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB.
 
 {: style="text-align:center; font-size: small;"}
 <img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/tp_fusion_results.png"/>
@@ -93,7 +93,7 @@ The gains follow the size of the FFN:
 - **Small FFNs** (DeepSeek V3 experts, Llama 3 8B) gain the most, 46% to 62%. Their runtime is short and dominated by fixed costs: the extra kernels, the stores of $$H$$, and the all-reduce. Fusion removes these costs.
 - **Large FFNs** (Llama 3 70B, DeepSeek V3 dense, Llama 4 Scout shared) gain 29% to 38%. Their runtime is dominated by the two large matrix multiplications. The absolute savings are larger, up to 122 ms, but the relative gain is smaller.
 
-An ablation study shows that all three steps are needed. Without fusion, the in-network all-reduce runs on full tensors and is slower than the baseline. Without block specialization, the communication is not hidden, and the kernel is slower than the baseline in most cases. Without in-network computing, using a regular GPU-side communication library instead, the kernel is faster than the baseline but slower than the full method.
+An ablation study shows that all three steps are needed. Without fusion, the in-network all-reduce runs on full tensors and is slower than the baseline. Without block specialization, the communication is not hidden, and the kernel is slower than the baseline in most cases. Without in-network computing, using a GPU-side shmem library instead, the kernel is faster than the baseline but slower than the full method.
 
 ## Final remarks
 
