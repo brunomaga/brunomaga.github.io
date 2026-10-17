@@ -82,10 +82,10 @@ Given $$n$$ data points $$x_1, ..., x_n$$, the algorithm is:
 The figure below shows an example, where PCA rotates the data towards the new axes of the cluster of data points:
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="{{ site.assets }}/unsupervised-learning/gaussianscatterpca.svg.png">
+<img width="30%" height="30%" src="{{ site.assets }}/unsupervised-learning/gaussianscatterpca.svg">
 
 {: style="text-align:center; font-size: small;"}
-source: wikipedia
+adapted from: wikipedia
 
 The least significant dimensions of the transformed data can now be discarded, which reduces the number of features of the model. The number of eigenvectors kept in $$F$$ sets the amount of compression. The first $$k$$ components explain a fraction $$\sum_{i=1}^k \lambda_i / \sum_{i} \lambda_i$$ of the variance of the data, a common criterion to choose $$k$$.
 
@@ -146,12 +146,12 @@ $$
 where $$U$$ is an orthogonal matrix. **Whitening simplifies ICA**, since only $$U$$ remains to be estimated. The figures below show the source, observed and whitened data:
 
 {: style="text-align:center; font-size: small;"}
-<img width="20%" height="20%" src="{{ site.assets }}/unsupervised-learning/ica_source.png">
-<img width="20%" height="20%" src="{{ site.assets }}/unsupervised-learning/ica_observed.png"> 
-<img width="20%" height="20%" src="{{ site.assets }}/unsupervised-learning/ica_whitening.png">
+<img width="20%" height="20%" src="{{ site.assets }}/unsupervised-learning/ica_source.svg">
+<img width="20%" height="20%" src="{{ site.assets }}/unsupervised-learning/ica_observed.svg"> 
+<img width="20%" height="20%" src="{{ site.assets }}/unsupervised-learning/ica_whitening.svg">
 
 {: style="text-align:center; font-size: small;"}
-source: T. Yokota, Lecture notes, Nagoya Institute of Technology
+adapted from: T. Yokota, Lecture notes, Nagoya Institute of Technology
 
 **Non-Gaussianity is a measure of independence**. Kurtosis measures non-Gaussianity and is defined as:
 
@@ -333,11 +333,11 @@ This is a relaxation of the NP-hard problem of finding the *ratio cut* (with $$L
 A self-organizing map (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). Its main purpose is to represent the training data by localized regions (neurons), each representing an agglomerate of inputs. Neighbouring neurons in the grid represent nearby regions of the input space:
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="{{ site.assets }}/unsupervised-learning/kohonen.png">
+<img width="40%" height="40%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg">
 <img width="43%" height="43%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
 
 {: style="text-align:center; font-size: small;"}
-source (left) and adapted from (right): Unsupervised and Reinforcement Learning lecture notes from W. Gerstner at EPFL
+adapted from: Unsupervised and Reinforcement Learning lecture notes from W. Gerstner at EPFL
 
 
 The algorithm is:
@@ -370,11 +370,11 @@ The input dataset and the `python` implementation are available in <a href="{{ s
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="25%" height="25%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.png">
+<img width="25%" height="25%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.svg">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="25%" height="25%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.png">
+<img width="25%" height="25%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="25%" height="25%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.png">
+<img width="25%" height="25%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.svg">
  
  
 More examples are listed in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
