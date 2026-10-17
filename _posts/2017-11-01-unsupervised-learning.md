@@ -5,7 +5,7 @@ categories: ["Machine Learning"]
 tags: ["unsupervised learning", "PCA", "clustering", "dimensionality reduction"]
 ---
 
-Unsupervised learning is the field of machine learning that learns without supervision or reward signals. Unlike [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning]({{ site.baseurl }}{% post_url  2017-02-17-linear-regression-matrix-factorization %}), the method receives only the data. These methods are still very powerful. Common applications are image compression, dimensionality reduction, clustering, visualization, and learning representations of the data that other models then build on.
+Unsupervised learning is the field of machine learning that learns without supervision or reward signals. Unlike [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning]({{ site.baseurl }}{% post_url  2017-08-17-linear-regression-matrix-factorization %}), the method receives only the data. These methods are still very powerful. Common applications are image compression, dimensionality reduction, clustering, visualization, and learning representations of the data that other models then build on.
 
 ## Foreword: Hebbian Learning
 
