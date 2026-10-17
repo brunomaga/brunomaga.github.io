@@ -33,8 +33,10 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 
 ### Technical correctness
 
-- Check every formula, derivation, index, dimension, complexity, unit and number, and fix the errors. One
-  symbol per quantity within a post, defined at its first use.
+- Check every formula, derivation, index, dimension, complexity, unit, number and factual claim, and fix the
+  errors in the text. One symbol per quantity within a post, defined at its first use.
+- Cite at most four papers per post, the most relevant ones, at the start or the end, and only when they help
+  the reader. Verify each reference before citing it.
 - Check that the text, the code and the pictures agree.
 - Link a technical term to its English Wikipedia article at its first use in a post, when a reader may not
   know it. Link only articles that exist, and each term once.
