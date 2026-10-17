@@ -181,7 +181,7 @@ cells, and thalamic reticular neurons). The two thalamic cell types produced bur
 The following picture shows these results for the comparison of fixed and variable time step methods on the mutual-inhibition model. Execution time grows linearly with simulation time for the fixed-step integration (dashed lines). Variable-step methods show a reduction in CPU load at the onset of synchrony. The non-linearity of adaptive time stepping has the following cause: *lvardt* produces time steps that jump around during the initial presynchrony phase of the simulation (fast uprising phase), and then slowly stabilizes to an alternation between large steps in the long intervals separating the population spikes and extremely short time steps during the population spike itself:
 
 {: style="text-align:center; font-size: small;"}
-<img width="30%" height="30%" src="{{ site.assets }}/neuron-variable-timestep/lvardt_exec_time_comparison.png">
+<img width="30%" height="30%" src="{{ site.assets }}/neuron-variable-timestep/lvardt_exec_time_comparison.svg">
 
 {: style="text-align:center; font-size: small;"}
 source: Lytton et al. 2005 

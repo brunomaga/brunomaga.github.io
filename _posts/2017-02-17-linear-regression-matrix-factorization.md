@@ -147,7 +147,7 @@ The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) o
 
 
 {: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg.png">
+<img width="40%" height="40%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
 
 {: style="text-align:center; font-size: small;"}
 source: Wikipedia
