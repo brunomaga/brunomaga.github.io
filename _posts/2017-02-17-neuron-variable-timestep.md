@@ -194,7 +194,7 @@ Networks of similarly behaving neurons give only a rough *estimation* of the spe
 
 To measure the efficiency across the different spiking dynamics of neurons, the digital reconstruction of a [laboratory experiment that the Blue Brain Project published in the journal Cell][markram2015cell] was reproduced. The reproduction is a fixed-step simulation of 7.5 seconds of the spontaneous electrical activity of 219,247 neurons during tonic depolarization. For readers interested in the biology: the network exhibits spontaneous slow oscillatory population bursts, initiated in Layer 5, spreading down to L6, and then up to L4 and L2/3 with secondary bursts spreading back to L6. For further details, refer to the section *Simulating Spontaneous Activity* of that paper.
  
-Two sample neurons are taken from the top 1% *busiest* neurons (in terms of incoming spikes, i.e. discontinuities). The plots show the number of spikes arriving per time interval (left, each time bin accounts for 0.1ms) and the distribution of time intervals between spike arrivals (right):
+Two sample neurons are taken from the top 1% *busiest* neurons (in terms of incoming spikes, i.e. discontinuities). The plots show the number of spikes arriving per time interval (left, each time bin accounts for 10ms) and the distribution of time intervals between spike arrivals (right):
 
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_203076.svg">

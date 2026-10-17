@@ -47,7 +47,7 @@ A weight matrix with 50% zeros scattered at random is still multiplied as a dens
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/sparsity_2_4.svg"/>
 
-The following functions build the two masks from a score per weight, such as its magnitude: the unstructured mask keeps the highest scores of every row, and the 2:4 mask keeps the 2 highest scores of every group of 4. Once the weights follow the 2:4 pattern, PyTorch's `to_sparse_semi_structured` converts them to the compressed format, and the multiplications of those layers then run on the sparse tensor cores:
+The following functions build the two masks from a score per weight, such as its magnitude: the unstructured mask keeps the highest scores of every row (the picture above keeps the highest of the whole matrix instead), and the 2:4 mask keeps the 2 highest scores of every group of 4. Once the weights follow the 2:4 pattern, PyTorch's `to_sparse_semi_structured` converts them to the compressed format, and the multiplications of those layers then run on the sparse tensor cores:
 
 ```python
 def mask_rows(score, sparsity):
