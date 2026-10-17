@@ -1632,10 +1632,10 @@ Heavily related to HPC's performance modelling applied to large language models.
 To be compute optimal (i.e., lowest loss for a given compute budget), Kaplan et al. (2020) claims that models should not be trained to their lowest possible loss, and for a 10× increase in computational budget, the model should increase by 5.5× and the training tokens by 1.8x. In this paper, the authors defend that model size and training tokens should be scaled in equal proportions. 
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.png"/> 
+<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.svg"/> 
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models_2.png"/>
+<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models_2.svg"/>
 
 </div>
 </details>
