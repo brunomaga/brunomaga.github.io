@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="640px" height="330px" viewBox="-1 -1 642 332" font-family="Helvetica, Arial, sans-serif">
+<polyline points="60.00,60.00 580.00,60.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="60.00,290.00 580.00,290.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="250.00,60.00 250.00,25.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="250.00,290.00 250.00,318.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<ellipse cx="250.00" cy="25.00" rx="5.00" ry="5.00" fill="#000000" stroke="#000000" stroke-width="1"/>
+<ellipse cx="250.00" cy="318.00" rx="5.00" ry="5.00" fill="#000000" stroke="#000000" stroke-width="1"/>
+<text x="258.00" y="25.00" font-size="20" text-anchor="start" dominant-baseline="central"><tspan font-style="italic">I</tspan></text>
+<text x="630.00" y="42.00" font-size="16" text-anchor="end" dominant-baseline="central" font-weight="bold"><tspan >intracellular</tspan></text>
+<text x="630.00" y="312.00" font-size="16" text-anchor="end" dominant-baseline="central" font-weight="bold"><tspan >extracellular</tspan></text>
+<polyline points="60.00,60.00 60.00,160.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="60.00,180.00 60.00,290.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="38.00,160.00 82.00,160.00" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/>
+<polyline points="38.00,180.00 82.00,180.00" fill="none" stroke="#000000" stroke-width="4" stroke-linejoin="round"/>
+<text x="20.00" y="170.00" font-size="20" text-anchor="middle" dominant-baseline="central"><tspan font-style="italic">C</tspan></text>
+<text x="30.00" y="97.00" font-size="20" text-anchor="middle" dominant-baseline="central"><tspan font-style="italic">I</tspan><tspan baseline-shift="sub" font-size="15.0">C</tspan></text>
+<polyline points="190.00,60.00 190.00,105.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="190.00,105.00 202.00,112.00 178.00,121.00 202.00,130.00 178.00,139.00 202.00,148.00 178.00,157.00 202.00,166.00 190.00,175.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="190.00,175.00 190.00,210.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="166.00,210.00 214.00,210.00" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="177.00,226.00 203.00,226.00" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="190.00,226.00 190.00,290.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="166.00,170.00 211.39,115.53" fill="none" stroke="#000000" stroke-width="2.2" stroke-linejoin="round"/>
+<polygon points="216.00,110.00 213.57,118.39 208.19,113.91" fill="#000000" stroke="#000000" stroke-width="1"/>
+<text x="166.00" y="140.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">R</tspan><tspan baseline-shift="sub" font-size="15.0">Na</tspan></text>
+<text x="166.00" y="220.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">E</tspan><tspan baseline-shift="sub" font-size="15.0">Na</tspan></text>
+<text x="180.00" y="92.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">I</tspan><tspan baseline-shift="sub" font-size="15.0">Na</tspan></text>
+<polyline points="310.00,60.00 310.00,105.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="310.00,105.00 322.00,112.00 298.00,121.00 322.00,130.00 298.00,139.00 322.00,148.00 298.00,157.00 322.00,166.00 310.00,175.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="310.00,175.00 310.00,210.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="286.00,210.00 334.00,210.00" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="297.00,226.00 323.00,226.00" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="310.00,226.00 310.00,290.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="286.00,170.00 331.39,115.53" fill="none" stroke="#000000" stroke-width="2.2" stroke-linejoin="round"/>
+<polygon points="336.00,110.00 333.57,118.39 328.19,113.91" fill="#000000" stroke="#000000" stroke-width="1"/>
+<text x="286.00" y="140.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">R</tspan><tspan baseline-shift="sub" font-size="15.0">K</tspan></text>
+<text x="286.00" y="220.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">E</tspan><tspan baseline-shift="sub" font-size="15.0">K</tspan></text>
+<text x="300.00" y="92.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">I</tspan><tspan baseline-shift="sub" font-size="15.0">K</tspan></text>
+<polyline points="430.00,60.00 430.00,105.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="430.00,105.00 442.00,112.00 418.00,121.00 442.00,130.00 418.00,139.00 442.00,148.00 418.00,157.00 442.00,166.00 430.00,175.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="430.00,175.00 430.00,210.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="406.00,210.00 454.00,210.00" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="417.00,226.00 443.00,226.00" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="430.00,226.00 430.00,290.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="406.00,170.00 451.39,115.53" fill="none" stroke="#000000" stroke-width="2.2" stroke-linejoin="round"/>
+<polygon points="456.00,110.00 453.57,118.39 448.19,113.91" fill="#000000" stroke="#000000" stroke-width="1"/>
+<text x="406.00" y="140.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">R</tspan><tspan baseline-shift="sub" font-size="15.0">Ca</tspan></text>
+<text x="406.00" y="220.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">E</tspan><tspan baseline-shift="sub" font-size="15.0">Ca</tspan></text>
+<text x="420.00" y="92.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">I</tspan><tspan baseline-shift="sub" font-size="15.0">Ca</tspan></text>
+<polyline points="580.00,60.00 580.00,105.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="580.00,105.00 592.00,112.00 568.00,121.00 592.00,130.00 568.00,139.00 592.00,148.00 568.00,157.00 592.00,166.00 580.00,175.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="580.00,175.00 580.00,210.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<polyline points="556.00,210.00 604.00,210.00" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="567.00,226.00 593.00,226.00" fill="none" stroke="#000000" stroke-width="5" stroke-linejoin="round"/>
+<polyline points="580.00,226.00 580.00,290.00" fill="none" stroke="#000000" stroke-width="2.5" stroke-linejoin="round"/>
+<text x="556.00" y="140.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">R</tspan><tspan baseline-shift="sub" font-size="15.0">L</tspan></text>
+<text x="556.00" y="220.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">E</tspan><tspan baseline-shift="sub" font-size="15.0">L</tspan></text>
+<text x="570.00" y="92.00" font-size="20" text-anchor="end" dominant-baseline="central"><tspan font-style="italic">I</tspan><tspan baseline-shift="sub" font-size="15.0">L</tspan></text>
+<text x="505.00" y="152.00" font-size="24" text-anchor="middle" dominant-baseline="central"><tspan >...</tspan></text>
+</svg>
