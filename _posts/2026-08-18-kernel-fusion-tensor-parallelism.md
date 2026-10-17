@@ -5,7 +5,7 @@ categories: ["Efficient Inference"]
 tags: ["LLM", "kernel fusion", "tensor parallelism", "Megatron-LM", "in-network computing", "collectives"]
 ---
 
-This post covers a kernel that fuses the computation and the communication of a feedforward network (FFN) distributed with [Megatron-LM tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}) into a single GPU kernel. It summarizes the paper *Towards Efficient LLM Inference via Full-Stack Fusion of Computation, Communication, and In-Network Computing*.
+This post covers a kernel that fuses the computation and the communication of a feedforward network (FFN) distributed with [Megatron-LM tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}) into a single GPU kernel.
 
 ## The problem: kernels and graph breaks
 
@@ -112,3 +112,5 @@ These methods fuse one matrix multiplication at a time, and keep the intermediat
 The main lesson is that computation, communication and the network switch should be optimized together. Fusing the FFN into one kernel makes per-tile communication possible, and per-tile communication can be overlapped and executed in the switch. This also suggests a different design for network hardware: support for many small, asynchronous messages sent from inside GPU kernels, instead of large, synchronous collectives. The same ideas apply to attention, which also chains two matrix multiplications, and to [expert parallelism in Mixture-of-Experts]({{ site.baseurl }}{% post_url 2026-10-09-kernel-fusion-expert-parallelism %}).
 
 The method also applies to [expert sharding](https://arxiv.org/abs/2503.08467). With expert parallelism, each GPU holds whole experts, and a GPU whose experts receive more tokens than the others delays the whole layer. Expert sharding instead splits every expert across all GPUs, as Megatron-LM splits the FFN: $$W_1$$ column-wise and $$W_2$$ row-wise. Every GPU then processes all the tokens of every expert, so the load is balanced by construction, whatever the routing. The price is an all-reduce per expert layer, which is the communication overhead that the fused kernel in this post hides and reduces.
+
+This post summarizes the paper *Towards Efficient LLM Inference via Full-Stack Fusion of Computation, Communication, and In-Network Computing*.
