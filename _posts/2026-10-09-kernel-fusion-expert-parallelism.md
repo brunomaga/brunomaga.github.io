@@ -5,7 +5,7 @@ categories: ["Efficient Inference"]
 tags: ["LLM", "kernel fusion", "MoE", "expert parallelism", "in-network computing", "collectives"]
 ---
 
-This post covers a kernel that fuses a whole [Mixture-of-Experts (MoE)]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-experts %}) layer, distributed with expert parallelism, into a single kernel, and moves its communication into the network. It follows the [post on kernel fusion for Megatron-LM tensor parallelism]({{ site.baseurl }}{% post_url 2026-08-18-kernel-fusion-tensor-parallelism %}), and summarizes the paper *MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and In-Network Compute*.
+This post covers a kernel that fuses a whole [Mixture-of-Experts (MoE)]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-experts %}) layer, distributed with expert parallelism, into a single kernel, and moves its communication into the network. It follows the [post on kernel fusion for Megatron-LM tensor parallelism]({{ site.baseurl }}{% post_url 2026-08-18-kernel-fusion-tensor-parallelism %}).
 
 ## The problem: communication runs on the compute units
 
@@ -114,3 +114,5 @@ Profiling shows that the compute ranks spend no time in cross-rank transfers. Th
 ## Final remarks
 
 Moving the collectives from the compute units to the network has two benefits. All compute units stay available to the experts, and a third class of unit (the switch) can work in parallel with the matrix and vector units. The switch also removes redundant work: each token is sent once, and partial results are summed during the transfer. Open directions include the decode step, which is limited by memory and latency rather than computation, sending tokens in lower precision, and evaluation under continuous batching.
+
+This post summarizes the paper *MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and In-Network Compute*.
