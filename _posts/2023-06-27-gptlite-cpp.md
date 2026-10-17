@@ -534,11 +534,17 @@ In terms of overall performance, moving from PyTorch 1.13.1 to 2.1 (blue to oran
 
 The speed-up of `torch.compile` was also measured on the GPTlite model. Without `torch.compile`, PyTorch-based training runs at a throughput of 1.41 samples/sec and inference at 4.28 samples/sec. The following table shows the throughput of the same model compiled in different modes, with and without a full graph:
 
-| throughput (samples/sec)  | `fullgraph=False`, train | `fullgraph=False`, inference | `fullgraph=True`, train | `fullgraph=True`, inference |  
-|---|---|---|---|---|
-| `mode='default'`  | 1.591 | 5.124	| 1.581 |	5.11 |
-| `mode='reduce-overhead'`  | 1.625	| 5.256	| 1.624	| 5.258 |
-| `mode='max-autotune'`  | 1.636 |	5.258	| 1.635 |	5.26 |
+<table>
+  <thead>
+    <tr><th rowspan="2">throughput (samples/sec)</th><th colspan="2"><code>fullgraph=False</code></th><th colspan="2"><code>fullgraph=True</code></th></tr>
+    <tr><th>train</th><th>inference</th><th>train</th><th>inference</th></tr>
+  </thead>
+  <tbody>
+    <tr><td><code>mode='default'</code></td><td>1.591</td><td>5.124</td><td>1.581</td><td>5.11</td></tr>
+    <tr><td><code>mode='reduce-overhead'</code></td><td>1.625</td><td>5.256</td><td>1.624</td><td>5.258</td></tr>
+    <tr><td><code>mode='max-autotune'</code></td><td>1.636</td><td>5.258</td><td>1.635</td><td>5.26</td></tr>
+  </tbody>
+</table>
 
 In summary, **running PyTorch 2.1 does not incur a major loss of performance compared to LibTorch C++**, which justifies the move of the Torch team back to Python to ease development. Also, **it is viable to train on PyTorch and run inference on compiled LibTorch to fit light hardware setups** that do not include the Python runtime. However, **`torch.compile` increases the training throughput by 12% to 16%, and the inference throughput by 19% to 23%**, compared to the Torch/LibTorch implementation, and is the most efficient setup for most users. Regarding compilation settings, a full graph brought no major visible gain, and `reduce-overhead` gave the best balance between compilation time, memory and runtime.
 

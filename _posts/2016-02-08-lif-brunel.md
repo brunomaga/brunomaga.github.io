@@ -114,39 +114,54 @@ Adapted from: Brunel 2000
 
 The hard part is defining the network parameters, such as connectivity, synaptic weights and firing threshold. The original [paper][brunel-paper] describes them in detail, and the table below summarizes them: 
 
-| G &nbsp; Network Parameters |  |
-| Parameter | Value |
-|:--|--:|
-| Number of excitatory neurons $$N_E$$ | 8000 |
-| Number of inhibitory neurons $$N_I$$ | 2000 |
-| Excitatory synapses per neuron $$C_E$$ | 800 |
-| Inhibitory synapses per neuron $$C_E$$ | 200 |
+<table markdown="1">
+  <thead>
+    <tr><th colspan="2" style="text-align: left">Network Parameters</th></tr>
+    <tr><th style="text-align: left">Parameter</th><th style="text-align: right">Value</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="text-align: left" markdown="span">Number of excitatory neurons $$N_E$$</td><td style="text-align: right">8000</td></tr>
+    <tr><td style="text-align: left" markdown="span">Number of inhibitory neurons $$N_I$$</td><td style="text-align: right">2000</td></tr>
+    <tr><td style="text-align: left" markdown="span">Excitatory synapses per neuron $$C_E$$</td><td style="text-align: right">800</td></tr>
+    <tr><td style="text-align: left" markdown="span">Inhibitory synapses per neuron $$C_I$$</td><td style="text-align: right">200</td></tr>
+  </tbody>
+</table>
 
-| H &nbsp; Neuron Parameters |  |
-| Parameter | Value |
-|:--|--:|
-| Membrane time constant $$\tau_m$$ | 20 ms |
-| Refractory period $$\tau_{\text{rp}}$$ | 2 ms |
-| Firing threshold $$V_{\text{th}}$$ | 20 mV |
-| Membrane capatitance $$C_m$$ | 1pF |
-| Resting potential $$V_E$$ | 0 mV |
-| Reset potential $$V_{\text{reset}}$$ | 10 mV |
-| Excitatory PSP amplitude $$J_E$$ | 0.1 mV |
-| Inhibitory PSP amplitude $$J_I$$ | -0.5 mV |
-| Synaptic delay $$D$$ | 1.5 ms |
-| Background rate $$\eta$$ | 2.0 |
+<table markdown="1">
+  <thead>
+    <tr><th colspan="2" style="text-align: left">Neuron Parameters</th></tr>
+    <tr><th style="text-align: left">Parameter</th><th style="text-align: right">Value</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="text-align: left" markdown="span">Membrane time constant $$\tau_m$$</td><td style="text-align: right">20 ms</td></tr>
+    <tr><td style="text-align: left" markdown="span">Refractory period $$\tau_{\text{rp}}$$</td><td style="text-align: right">2 ms</td></tr>
+    <tr><td style="text-align: left" markdown="span">Firing threshold $$V_{\text{th}}$$</td><td style="text-align: right">20 mV</td></tr>
+    <tr><td style="text-align: left" markdown="span">Membrane capacitance $$C_m$$</td><td style="text-align: right">1pF</td></tr>
+    <tr><td style="text-align: left" markdown="span">Resting potential $$V_E$$</td><td style="text-align: right">0 mV</td></tr>
+    <tr><td style="text-align: left" markdown="span">Reset potential $$V_{\text{reset}}$$</td><td style="text-align: right">10 mV</td></tr>
+    <tr><td style="text-align: left" markdown="span">Excitatory PSP amplitude $$J_E$$</td><td style="text-align: right">0.1 mV</td></tr>
+    <tr><td style="text-align: left" markdown="span">Inhibitory PSP amplitude $$J_I$$</td><td style="text-align: right">-0.5 mV</td></tr>
+    <tr><td style="text-align: left" markdown="span">Synaptic delay $$D$$</td><td style="text-align: right">1.5 ms</td></tr>
+    <tr><td style="text-align: left" markdown="span">Background rate $$\eta$$</td><td style="text-align: right">2.0</td></tr>
+  </tbody>
+</table>
 
 {: .caption}
 source: Marc-Oliver Gewaltig, ResearchGate
 
 Network activity is regulated by adjusting the stimuli parameters. Brunel defines models for slow, regular and fast network dynamics, with the following average neuron spiking rates (Hz) and global oscillation frequencies (Hz) of voltage trajectories:
 
-|  | Firing rate |  | Global frequency |  |
-|  | Simulation | Theory | Simulation | Theory |
-|:--|:-:|:-:|:-:|:-:|
-| SI, fast | 60.7 Hz | 55.8 Hz | 180 Hz | 190 Hz |
-| AI | 37.7 Hz | 38.0 Hz | — | — |
-| SI, slow | 5.5 Hz | 6.5 Hz | 22 Hz | 29 Hz |
+<table>
+  <thead>
+    <tr><th rowspan="2"></th><th colspan="2" style="text-align: center">Firing rate</th><th colspan="2" style="text-align: center">Global frequency</th></tr>
+    <tr><th style="text-align: center">Simulation</th><th style="text-align: center">Theory</th><th style="text-align: center">Simulation</th><th style="text-align: center">Theory</th></tr>
+  </thead>
+  <tbody>
+    <tr><td style="text-align: left">SI, fast</td><td style="text-align: center">60.7 Hz</td><td style="text-align: center">55.8 Hz</td><td style="text-align: center">180 Hz</td><td style="text-align: center">190 Hz</td></tr>
+    <tr><td style="text-align: left">AI</td><td style="text-align: center">37.7 Hz</td><td style="text-align: center">38.0 Hz</td><td style="text-align: center">—</td><td style="text-align: center">—</td></tr>
+    <tr><td style="text-align: left">SI, slow</td><td style="text-align: center">5.5 Hz</td><td style="text-align: center">6.5 Hz</td><td style="text-align: center">22 Hz</td><td style="text-align: center">29 Hz</td></tr>
+  </tbody>
+</table>
 
 {: .caption}
 source: Brunel 2000
