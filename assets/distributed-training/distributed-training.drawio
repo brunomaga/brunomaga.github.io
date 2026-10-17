@@ -8643,7 +8643,7 @@
           <mxGeometry x="0" y="646.9" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_2017_dean-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="686.9" width="830" height="501.4" as="geometry" />
+          <mxGeometry x="0" y="686.9" width="830" height="470.2" as="geometry" />
         </mxCell>
         <mxCell id="moe_2017_dean-23" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;absoluteArcSize=1;arcSize=52;strokeColor=#000000;strokeWidth=0.96;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="307.5" y="65.5" width="522.5" height="281.5" as="geometry" />
@@ -8931,14 +8931,14 @@
         <mxCell id="moe_2017_dean-51" value="&lt;i&gt;G&lt;/i&gt;(&lt;i&gt;x&lt;/i&gt;)&lt;sub&gt;&lt;i&gt;n&lt;/i&gt;-1&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_2017_dean-figure">
           <mxGeometry x="365" y="173" width="60" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="moe_2017_dean-56" value="A Mixture of Experts (MoE) layer embedded within a recurrent language model. In this case, the sparse gating function selects two experts to perform computations. Their outputs are modulated by the outputs of the gating network." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=19;fontColor=#666666;" vertex="1" parent="moe_2017_dean-figure">
-          <mxGeometry x="0" y="425" width="830" height="76.4" as="geometry" />
+        <mxCell id="moe_2017_dean-56" value="A Mixture of Experts (MoE) layer embedded within a recurrent language model. In this case, the sparse gating function selects two experts to perform computations. Their outputs are modulated by the outputs of the gating network." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=15.5;fontColor=#000000;" vertex="1" parent="moe_2017_dean-figure">
+          <mxGeometry x="0" y="425" width="830" height="45.2" as="geometry" />
         </mxCell>
         <mxCell id="moe_gshard-label" value="moe_gshard.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="1268.3" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_gshard-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="1308.3" width="1281.93" height="1032.3" as="geometry" />
+          <mxGeometry x="0" y="1308.3" width="1281.93" height="971.7" as="geometry" />
         </mxCell>
         <mxCell id="moe_gshard-1" value="" style="shape=singleArrow;whiteSpace=wrap;html=1;arrowWidth=0.345;arrowSize=0.19;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.3;" vertex="1" parent="moe_gshard-figure">
           <mxGeometry x="252.72" y="8.78" width="71.76" height="22.62" as="geometry" />
@@ -9536,14 +9536,14 @@
         <mxCell id="moe_gshard-123" value="" style="ellipse;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.3;" vertex="1" parent="moe_gshard-figure">
           <mxGeometry x="980.07" y="632.39" width="5.46" height="5.46" as="geometry" />
         </mxCell>
-        <mxCell id="moe_gshard-124" value="Illustration of scaling of Transformer Encoder with MoE Layers. The MoE layer replaces the every other Transformer feed-forward layer. Decoder modification is similar. (a) The encoder of a standard Transformer model is a stack of self-attention and feed forward layers interleaved with residual connections and layer normalization. (b) By replacing every other feed forward layer with a MoE layer, we get the model structure of the MoE Transformer Encoder. (c) When scaling to multiple devices, the MoE layer is sharded across devices, while all other layers are replicated." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=26;fontColor=#666666;" vertex="1" parent="moe_gshard-figure">
-          <mxGeometry x="0" y="837.1" width="1281.93" height="195.2" as="geometry" />
+        <mxCell id="moe_gshard-124" value="Illustration of scaling of Transformer Encoder with MoE Layers. The MoE layer replaces the every other Transformer feed-forward layer. Decoder modification is similar. (a) The encoder of a standard Transformer model is a stack of self-attention and feed forward layers interleaved with residual connections and layer normalization. (b) By replacing every other feed forward layer with a MoE layer, we get the model structure of the MoE Transformer Encoder. (c) When scaling to multiple devices, the MoE layer is sharded across devices, while all other layers are replicated." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=21.1;fontColor=#000000;" vertex="1" parent="moe_gshard-figure">
+          <mxGeometry x="0" y="837.1" width="1281.93" height="134.6" as="geometry" />
         </mxCell>
         <mxCell id="moe_switch_transformers-label" value="moe_switch_transformers.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="2420.6" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_switch_transformers-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="2460.6" width="1122.66" height="763.49" as="geometry" />
+          <mxGeometry x="0" y="2460.6" width="1122.66" height="702.29" as="geometry" />
         </mxCell>
         <mxCell id="moe_switch_transformers-1" value="Add + Normalize" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;strokeColor=#000000;strokeWidth=1.29;" vertex="1" parent="moe_switch_transformers-figure">
           <mxGeometry x="0" y="154.85" width="220.32" height="32.4" as="geometry" />
@@ -9959,14 +9959,14 @@
         <mxCell id="moe_switch_transformers-95" value="Parameters" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;" vertex="1" parent="moe_switch_transformers-figure">
           <mxGeometry x="872.81" y="528.69" width="99.03" height="25.6" as="geometry" />
         </mxCell>
-        <mxCell id="moe_switch_transformers-96" value="Illustration of a Switch Transformer encoder block. We replace the dense feed forward network (FFN) layer present in the Transformer with a sparse Switch FFN layer (light blue). The layer operates independently on the tokens in the sequence. We diagram two tokens (&lt;i&gt;x&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;1&lt;/sub&gt; = “More” and &lt;i&gt;x&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;2&lt;/sub&gt; = “Parameters” below) being routed (solid lines) across four FFN experts, where the router independently routes each token. The switch FFN layer returns the output of the selected FFN multiplied by the router gate value (dotted-line)." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=26;fontColor=#666666;" vertex="1" parent="moe_switch_transformers-figure">
-          <mxGeometry x="0" y="568.29" width="1122.66" height="195.2" as="geometry" />
+        <mxCell id="moe_switch_transformers-96" value="Illustration of a Switch Transformer encoder block. We replace the dense feed forward network (FFN) layer present in the Transformer with a sparse Switch FFN layer (light blue). The layer operates independently on the tokens in the sequence. We diagram two tokens (&lt;i&gt;x&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;1&lt;/sub&gt; = “More” and &lt;i&gt;x&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;2&lt;/sub&gt; = “Parameters” below) being routed (solid lines) across four FFN experts, where the router independently routes each token. The switch FFN layer returns the output of the selected FFN multiplied by the router gate value (dotted-line)." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=21;fontColor=#000000;" vertex="1" parent="moe_switch_transformers-figure">
+          <mxGeometry x="0" y="568.29" width="1122.66" height="134" as="geometry" />
         </mxCell>
         <mxCell id="moe_switch_transformers_2-label" value="moe_switch_transformers_2.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="3304.09" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_switch_transformers_2-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="3344.09" width="956.38" height="571.32" as="geometry" />
+          <mxGeometry x="0" y="3344.09" width="956.38" height="514.72" as="geometry" />
         </mxCell>
         <mxCell id="moe_switch_transformers_2-1" value="Terminology" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=18;fontStyle=3;" vertex="1" parent="moe_switch_transformers_2-figure">
           <mxGeometry x="52.28" y="0" width="113.34" height="25.6" as="geometry" />
@@ -10241,14 +10241,14 @@
         <mxCell id="moe_switch_transformers_2-77" value="Across Device&lt;br&gt;Communication" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;" vertex="1" parent="moe_switch_transformers_2-figure">
           <mxGeometry x="853.12" y="181.91" width="103.26" height="37.6" as="geometry" />
         </mxCell>
-        <mxCell id="moe_switch_transformers_2-78" value="Illustration of token routing dynamics. Each expert processes a fixed batch-size of tokens modulated by the &lt;i&gt;capacity factor&lt;/i&gt;. Each token is routed to the expert with the highest router probability, but each expert has a fixed batch size of (total_tokens / num_experts) × capacity_factor. If the tokens are unevenly dispatched then certain experts will overflow (denoted by dotted red lines), resulting in these tokens not being processed by this layer. A larger capacity factor alleviates this overflow issue, but also increases computation and communication costs (depicted by padded white/empty slots)." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=22;fontColor=#666666;" vertex="1" parent="moe_switch_transformers_2-figure">
-          <mxGeometry x="0" y="378.52" width="956.38" height="192.8" as="geometry" />
+        <mxCell id="moe_switch_transformers_2-78" value="Illustration of token routing dynamics. Each expert processes a fixed batch-size of tokens modulated by the &lt;i&gt;capacity factor&lt;/i&gt;. Each token is routed to the expert with the highest router probability, but each expert has a fixed batch size of (total_tokens / num_experts) × capacity_factor. If the tokens are unevenly dispatched then certain experts will overflow (denoted by dotted red lines), resulting in these tokens not being processed by this layer. A larger capacity factor alleviates this overflow issue, but also increases computation and communication costs (depicted by padded white/empty slots)." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=17.8;fontColor=#000000;" vertex="1" parent="moe_switch_transformers_2-figure">
+          <mxGeometry x="0" y="378.52" width="956.38" height="136.2" as="geometry" />
         </mxCell>
         <mxCell id="moe_megablocks-label" value="moe_megablocks.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="3995.41" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="moe_megablocks-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="4035.41" width="1228.72" height="575.05" as="geometry" />
+          <mxGeometry x="0" y="4035.41" width="1228.72" height="521.25" as="geometry" />
         </mxCell>
         <mxCell id="moe_megablocks-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;dashPattern=3 2;strokeColor=#000000;strokeWidth=1.12;" vertex="1" parent="moe_megablocks-figure">
           <mxGeometry x="473.95" y="91.8" width="114.95" height="30.4" as="geometry" />
@@ -10690,14 +10690,14 @@
         <mxCell id="moe_megablocks-69" value="&lt;i&gt;(dropped)&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;" vertex="1" parent="moe_megablocks-figure">
           <mxGeometry x="371.5" y="273.275" width="70" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="moe_megablocks-106" value="&lt;b&gt;A Mixture-of-Experts Layer.&lt;/b&gt; Shown for &lt;i&gt;num_experts=3&lt;/i&gt;, &lt;i&gt;top_k=1&lt;/i&gt; and &lt;i&gt;capacity_factor=1&lt;/i&gt; with the prevalent, token dropping formulation. &lt;b&gt;First (1)&lt;/b&gt;, tokens are mapped to experts by the router. Along with expert assignments, the router produces probabilities that reflect the confidence of the assignments. &lt;b&gt;Second (2)&lt;/b&gt;, the feature vectors are permuted to group tokens by expert assignment. If the number of tokens assigned to an expert exceeds its capacity, extra tokens are dropped. &lt;b&gt;Third (3)&lt;/b&gt;, the expert layers are computed for the set of tokens they were assigned as well as any padding needed for unused capacity. &lt;b&gt;Lastly (4)&lt;/b&gt;, the results of the expert computation are un-permuted and weighted by the router probabilities. The outputs for dropped tokens are shown here set to zero." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=22;fontColor=#666666;" vertex="1" parent="moe_megablocks-figure">
-          <mxGeometry x="0" y="382.25" width="1223.875" height="192.8" as="geometry" />
+        <mxCell id="moe_megablocks-106" value="&lt;b&gt;A Mixture-of-Experts Layer.&lt;/b&gt; Shown for &lt;i&gt;num_experts=3&lt;/i&gt;, &lt;i&gt;top_k=1&lt;/i&gt; and &lt;i&gt;capacity_factor=1&lt;/i&gt; with the prevalent, token dropping formulation. &lt;b&gt;First (1)&lt;/b&gt;, tokens are mapped to experts by the router. Along with expert assignments, the router produces probabilities that reflect the confidence of the assignments. &lt;b&gt;Second (2)&lt;/b&gt;, the feature vectors are permuted to group tokens by expert assignment. If the number of tokens assigned to an expert exceeds its capacity, extra tokens are dropped. &lt;b&gt;Third (3)&lt;/b&gt;, the expert layers are computed for the set of tokens they were assigned as well as any padding needed for unused capacity. &lt;b&gt;Lastly (4)&lt;/b&gt;, the results of the expert computation are un-permuted and weighted by the router probabilities. The outputs for dropped tokens are shown here set to zero." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=18.2;fontColor=#000000;" vertex="1" parent="moe_megablocks-figure">
+          <mxGeometry x="0" y="382.25" width="1223.875" height="139" as="geometry" />
         </mxCell>
         <mxCell id="soft_moes-label" value="soft_moes.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="4690.46" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="soft_moes-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="4730.46" width="1069.97" height="411.54" as="geometry" />
+          <mxGeometry x="0" y="4730.46" width="1069.97" height="391.84" as="geometry" />
         </mxCell>
         <mxCell id="soft_moes-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=10;fillOpacity=40;strokeColor=#000000;strokeWidth=1.22;" vertex="1" parent="soft_moes-figure">
           <mxGeometry x="0" y="0" width="526.765" height="274.3425" as="geometry" />
@@ -11332,14 +11332,14 @@
         <mxCell id="soft_moes-203" value="Weighted average" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;" vertex="1" parent="soft_moes-figure">
           <mxGeometry x="570.6875" y="30.7575" width="140" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="soft_moes-204" value="&lt;b&gt;Sparse and Soft MoE layers.&lt;/b&gt; While the router in Sparse MoE layers (left) learns to &lt;i&gt;assign&lt;/i&gt; individual input tokens to each of the available slots, in Soft MoE layers (right) each slot is the result of a (different) &lt;i&gt;weighted average&lt;/i&gt; of all the input tokens. Learning to make discrete assignments introduces several optimization and implementation issues that Soft MoE sidesteps." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=24;fontColor=#666666;" vertex="1" parent="soft_moes-figure">
-          <mxGeometry x="0" y="288.3425" width="1069.97" height="123.2" as="geometry" />
+        <mxCell id="soft_moes-204" value="&lt;b&gt;Sparse and Soft MoE layers.&lt;/b&gt; While the router in Sparse MoE layers (left) learns to &lt;i&gt;assign&lt;/i&gt; individual input tokens to each of the available slots, in Soft MoE layers (right) each slot is the result of a (different) &lt;i&gt;weighted average&lt;/i&gt; of all the input tokens. Learning to make discrete assignments introduces several optimization and implementation issues that Soft MoE sidesteps." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=19.9;fontColor=#000000;" vertex="1" parent="soft_moes-figure">
+          <mxGeometry x="0" y="288.3425" width="1069.97" height="103.5" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths-label" value="mixture_of_depths.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="5222.0025" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="5262.0025" width="600" height="610.77" as="geometry" />
+          <mxGeometry x="0" y="5262" width="600" height="574.17" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths-2" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;endSize=7;startSize=7;" edge="1" parent="mixture_of_depths-figure">
           <mxGeometry relative="1" as="geometry">
@@ -11622,14 +11622,14 @@
         <mxCell id="mixture_of_depths-58" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="mixture_of_depths-figure">
           <mxGeometry x="277.9" y="60.825" width="2.6" height="2.6" as="geometry" />
         </mxCell>
-        <mxCell id="mixture_of_depths-59" value="&lt;b&gt;Mixture-of-Depths Transformer.&lt;/b&gt; As in mixture-of-experts (MoE) transformers we use a router to choose among potential computational paths. But unlike in MoE transformers the possible choices are a standard block’s computation (i.e., self-attention and MLP) or a residual connection. Since some tokens take this second route, Mixture-of-Depths (MoD) transformers have a smaller total FLOP footprint compared to vanilla or MoE transformers." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=16;fontColor=#666666;" vertex="1" parent="mixture_of_depths-figure">
-          <mxGeometry x="0" y="487.57" width="600" height="123.2" as="geometry" />
+        <mxCell id="mixture_of_depths-59" value="&lt;b&gt;Mixture-of-Depths Transformer.&lt;/b&gt; As in mixture-of-experts (MoE) transformers we use a router to choose among potential computational paths. But unlike in MoE transformers the possible choices are a standard block’s computation (i.e., self-attention and MLP) or a residual connection. Since some tokens take this second route, Mixture-of-Depths (MoD) transformers have a smaller total FLOP footprint compared to vanilla or MoE transformers." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=13.1;fontColor=#000000;" vertex="1" parent="mixture_of_depths-figure">
+          <mxGeometry x="0" y="487.57" width="600" height="86.6" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths_2-label" value="mixture_of_depths_2.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="5952.7725" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths_2-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="5992.7725" width="912.6" height="827.7" as="geometry" />
+          <mxGeometry x="0" y="5992.77" width="912.6" height="704.1" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths_2-23" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
@@ -11949,8 +11949,8 @@
         <mxCell id="mixture_of_depths_2-87" value="Dropped token" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;" vertex="1" parent="mixture_of_depths_2-figure">
           <mxGeometry x="561.33" y="445.97" width="120" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="mixture_of_depths_2-88" value="&lt;b&gt;Routing schemes.&lt;/b&gt; Tokens are funnelled to the computational path of their choice when using token-choice routing (left). If a given path exceeds its capacity (e.g., more than two tokens in this example) then surplus tokens must be dropped (purple token). The exact token that is ultimately dropped depends on the precise implementation in the underlying code. For example, priority is often given to those tokens that come earlier in the sequence or batch order. With expert-choice routing (middle), precisely &lt;i&gt;k&lt;/i&gt; (in this case, two) tokens are chosen per path using a top-&lt;i&gt;k&lt;/i&gt; mechanism across the tokens’ router weights. Here, tokens are dropped if they are not among the top-&lt;i&gt;k&lt;/i&gt; with respect to any given path (orange token), and some tokens may even be funnelled to multiple paths (yellow token). In this work we deploy expert-choice routing (right). However, because we use just a single path, we &lt;i&gt;leverage&lt;/i&gt; the implicit knowledge that tokens will be dropped if &lt;i&gt;k&lt;/i&gt; is less than the sequence length so that we can route tokens away from the self-attention and MLP computations, thus expending fewer FLOPs in a given forward pass of the model." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=21;fontColor=#666666;" vertex="1" parent="mixture_of_depths_2-figure">
-          <mxGeometry x="0" y="492.1" width="912.6" height="335.6" as="geometry" />
+        <mxCell id="mixture_of_depths_2-88" value="&lt;b&gt;Routing schemes.&lt;/b&gt; Tokens are funnelled to the computational path of their choice when using token-choice routing (left). If a given path exceeds its capacity (e.g., more than two tokens in this example) then surplus tokens must be dropped (purple token). The exact token that is ultimately dropped depends on the precise implementation in the underlying code. For example, priority is often given to those tokens that come earlier in the sequence or batch order. With expert-choice routing (middle), precisely &lt;i&gt;k&lt;/i&gt; (in this case, two) tokens are chosen per path using a top-&lt;i&gt;k&lt;/i&gt; mechanism across the tokens’ router weights. Here, tokens are dropped if they are not among the top-&lt;i&gt;k&lt;/i&gt; with respect to any given path (orange token), and some tokens may even be funnelled to multiple paths (yellow token). In this work we deploy expert-choice routing (right). However, because we use just a single path, we &lt;i&gt;leverage&lt;/i&gt; the implicit knowledge that tokens will be dropped if &lt;i&gt;k&lt;/i&gt; is less than the sequence length so that we can route tokens away from the self-attention and MLP computations, thus expending fewer FLOPs in a given forward pass of the model." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=17;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
+          <mxGeometry x="0" y="492.1" width="912.6" height="212" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

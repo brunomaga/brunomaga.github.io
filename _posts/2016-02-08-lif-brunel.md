@@ -177,4 +177,4 @@ A `C++` implementation of the Brunel network model of LIF neurons, with the appr
 
 - A thorough explanation of the Leaky Integrate-and-Fire model is available in the relevant section of the online copy of the [Neuronal Dynamics book from Wulfram Gerstner at EPFL][lif-gerstner].
 - A `Python` implementation of a Brunel network using the [NEST][nest] simulator is described in [NEST by Example: An Introduction to the Neural Simulation Tool NEST, Marc-Oliver Gewaltig et al., Springer Link][nest-brunel].
-- The `C++` code of this exercise is available in <a href="{{ site.assets }}/lif-brunel/lif-brunel.tar.gz">lif-brunel.tar.gz</a>. The class diagram in <a href="{{ site.assets }}/lif-brunel/diagram_class.png">diagram_class.png</a> helps to understand the code.
+- The `C++` code of this exercise is available in <a href="{{ site.assets }}/lif-brunel/lif-brunel.tar.gz">lif-brunel.tar.gz</a>. The class diagram in <a href="{{ site.assets }}/lif-brunel/diagram_class.svg">diagram_class.svg</a> helps to understand the code.
