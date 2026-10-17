@@ -8,7 +8,7 @@
           <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vae2-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="40" width="618.8" height="521.6" as="geometry" />
+          <mxGeometry x="0" y="40" width="618.8" height="392" as="geometry" />
         </mxCell>
         <mxCell id="vae2-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="vae2-figure">
           <mxGeometry x="0" y="0" width="295.4" height="259" as="geometry" />
@@ -132,9 +132,6 @@
             <mxPoint x="317.1" y="359.8" as="sourcePoint" />
             <mxPoint x="359.8" y="359.8" as="targetPoint" />
           </mxGeometry>
-        </mxCell>
-        <mxCell id="vae2-1042" value="Illustration of the reparameterization trick. The variational parameters &lt;b&gt;&lt;i&gt;ϕ&lt;/i&gt;&lt;/b&gt; affect the objective &lt;i&gt;f&lt;/i&gt; through the random variable &lt;b&gt;z&lt;/b&gt; ~ &lt;i&gt;q&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;&lt;b&gt;&lt;i&gt;ϕ&lt;/i&gt;&lt;/b&gt;&lt;/sub&gt;(&lt;b&gt;z&lt;/b&gt;|&lt;b&gt;x&lt;/b&gt;). We wish to compute gradients ∇&lt;sub style=&quot;line-height:0;&quot;&gt;&lt;b&gt;&lt;i&gt;ϕ&lt;/i&gt;&lt;/b&gt;&lt;/sub&gt;&lt;i&gt;f&lt;/i&gt; to optimize the objective with SGD. In the original form (left), we cannot differentiate &lt;i&gt;f&lt;/i&gt; w.r.t. &lt;b&gt;&lt;i&gt;ϕ&lt;/i&gt;&lt;/b&gt;, because we cannot directly backpropagate gradients through the random variable &lt;b&gt;z&lt;/b&gt;. We can 'externalize' the randomness in &lt;b&gt;z&lt;/b&gt; by re-parameterizing the variable as a deterministic and differentiable function of &lt;b&gt;&lt;i&gt;ϕ&lt;/i&gt;&lt;/b&gt;, &lt;b&gt;x&lt;/b&gt;, and a newly introduced random variable &lt;b&gt;&lt;i&gt;ε&lt;/i&gt;&lt;/b&gt;. This allows us to 'backprop through &lt;b&gt;z&lt;/b&gt;', and compute gradients ∇&lt;sub style=&quot;line-height:0;&quot;&gt;&lt;b&gt;&lt;i&gt;ϕ&lt;/i&gt;&lt;/b&gt;&lt;/sub&gt;&lt;i&gt;f&lt;/i&gt;." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=13;fontColor=#000000;" vertex="1" parent="vae2-figure">
-          <mxGeometry x="0" y="420" width="618.8" height="101.6" as="geometry" />
         </mxCell>
         <mxCell id="gan-label" value="gan.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="680.3" width="600" height="30" as="geometry" />

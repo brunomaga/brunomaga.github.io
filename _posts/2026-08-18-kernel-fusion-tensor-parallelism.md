@@ -65,7 +65,7 @@ Compute blocks never wait for communication, and communication blocks never comp
 The same idea appears at other levels. Inside a block, [FlashAttention-3](https://arxiv.org/abs/2407.08608) uses *warp specialization*: some warps load data from global memory while the others compute. Across the GPU, [DeepSeek-V3](https://arxiv.org/abs/2412.19437) dedicates a fixed part of the SMs to the communication of its Mixture-of-Experts layers. Here, the specialized blocks run the all-reduce of the tensor-parallel FFN, one band at a time.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/tp_block_specialization.svg"/>
+<img width="50%" height="50%" src="{{ site.assets }}/inference/imgs/tp_block_specialization.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 An example on a GPU with 6 SMs. **(a)** Without block specialization, all SMs compute and then spin-wait before each band is all-reduced. **(b)** With block specialization, SM1 and SM2 all-reduce each band as soon as SM3 to SM6 have computed it.
@@ -85,7 +85,7 @@ The all-reduce of a band is a reduce-scatter followed by an all-gather. Each GPU
 The fused kernel was compared to a tuned, non-fused implementation with the all-reduce of the communication library, on FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs in one node, in `bfloat16`. It is 22% to 62% faster, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB.
 
 {: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
+<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Latency of the regular (baseline) and fused (ours) FFNs, sorted by improvement.

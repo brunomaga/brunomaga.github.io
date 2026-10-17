@@ -992,7 +992,10 @@ The authors also experiment adding image, video, and speech capabilities, by add
 The image encoder is a standard vision transformer trained to align images and text, the ViT-H/14 variant. They introduce cross-attention layers (using grouped-query attention) between the visual token representations produced by the image encoder and the token representations produced by the language model, after every 4th self-attention layer.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/llama_3_multi_modal.svg"/>
+<img loading="lazy" width="96%" height="96%" src="{{ site.assets }}/publications/llama_3_multi_modal.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+<b>Illustration of the compositional approach to adding multimodal capabilities to Llama 3 that we study in this paper.</b> This approach leads to a multimodal model that is trained in five stages: <b>(1)</b> language model pre-training, <b>(2)</b> multi-modal encoder pre-training, <b>(3)</b> vision adapter training, <b>(4)</b> model finetuning, and <b>(5)</b> speech adapter training.
 
 Results (section 5) investigate the "performance of: (1) the pre-trained language model, (2) the post-trained language model, and (3) the safety characteristics of Llama 3".
 
@@ -1029,7 +1032,10 @@ Domino "provides a generic scheme to hide communication behind computation" when
 communication overhead is more pronounced". The paper proposes "Domino, a generic approach that breaks data dependency of transformer model training into pieces, and then pipelines these pieces training to overlap communication with computation ….  Domino provides a much wider scope of computation and communication overlapping (e.g., AllReduce not only overlaps with a single GeMM, but also LayerNorm, DropOut, etc). … To hide TP communication behind computation, Domino provides extra and generic tensor partition in two dimensions on every GPU: row-wise split on inputs X and column-wise split on weights B on top of original TP model partitions. At high level, Domino generically breaks TP’s $$X \cdot A \cdot B$$ into smaller compute units without data dependency. Then it pipelines these independent compute units with collective communication to achieve fine-grained computation and communication overlapping … we keep $$A$$ untouched and do not conduct any tensor partitioning on $$A$$. Therefore, we only conduct tensor slicing on input tensor $$X$$ (section 3.2) and the second group of linear weights as $$B$$ (section 3.3). We also provide a hybrid tensor partition strategy of both $$X$$ and $$B$$ (section 3.4). After these tensor slicing, Domino breaks $$X \cdot A \cdot B$$ into pieces and removes data dependency. Then we enable computation-communication overlapping on these independent pieces to reduce communication overhead in TP."
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/domino.svg"/>
+<img loading="lazy" width="99%" height="99%" src="{{ site.assets }}/publications/domino.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+**Left:** Domino row-wise (batch-dim) split on input <i>X</i>. **Right:** Domino col-wise (last-dim) split on weights <i>B</i>.
 
 </div>
 </details>
@@ -1097,7 +1103,10 @@ the returned sequence $$x$$ and the gradient-evaluation locations $$y$$, which i
 A simpler transformer block, motivated by signal propagation theory, that removes skip connections, value and projection parameters, sequential sub-blocks (attention and MLP run in parallel) and normalisation layers. It claims to match the per-update training speed and performance of standard autoregressive decoder-only and BERT encoder-only models, with 16% faster training throughput (15% in the arXiv version) while using 15% fewer parameters. The experiments are at the 100–300M-parameter scale.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="70%" height="70%" src="{{ site.assets }}/publications/simplifying_transformer_blocks.svg"/>
+<img loading="lazy" width="39%" height="39%" src="{{ site.assets }}/publications/simplifying_transformer_blocks.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Comparison between different Transformer blocks. (Left) The standard Pre-LN block. (Top Right) Our most simplified block. (Bottom Right) The parallel block (Zhao et al., 2019; Wang & Komatsuzaki, 2021). Like the parallel block, our block eschews the need for sequential sub-blocks, but we additionally remove all skip connections and normalisation layers, as well as value and projection parameters. Here, ⊗ denotes a matrix multiplication, and ⊕ denotes a (potentially weighted) sum.
 
 </div>
 </details>
@@ -1300,6 +1309,9 @@ Finally, the model uses $$h = d_{model}/d$$ retention heads in each layer, where
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="60%" height="60%" src="{{ site.assets }}/publications/retnet.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Dual form of RetNet. “GN” is short for GroupNorm.
 
 </div>
 </details>
@@ -1508,7 +1520,10 @@ LoRA blocks "suffer from two major problems: first, the size of these blocks is 
 They report training such dynamic, search-free models 4–7× faster than LoRA (depending on the task) without significantly compromising performance.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/dylora.svg"/>
+<img loading="lazy" width="96%" height="96%" src="{{ site.assets }}/publications/dylora.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+DyLoRA: The overall diagram of our proposed method. In each iteration, we sample from a pre-defined random distribution which will help us to truncate the up-projection and down-projection matrices in the LoRA (Hu et al., 2021a) objective.
 
 </div>
 </details>
@@ -1529,7 +1544,10 @@ Related to attention layers (section 3.3), "Multihead attention can be paralleli
 The most similar partitioning layout for multiquery attention (shown in Figure 4(b)) treats the KV cache the same as in multihead attention. Even though the key and value tensors are shared across all heads, they must be replicated on each chip and the memory cost savings of multiquery attention are lost". Instead the paper proposes "a partitioning strategy for the multiquery attention where the Q, K, and V matrices are partitioned over the batch $$B$$ dimension into $$n_{chips}$$ partitions". This reduces the cost of loading the KV cache per chip by a factor of $$n_{chips}$$ but incurs additional communication cost of resharding the input activation tensors. "With the proposed partitioning layout, multiquery attention enables using larger batch sizes and sequence lengths, thereby increasing throughput in addition to the latency reduction from reduced memory time".
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="50%" height="50%" src="{{ site.assets }}/publications/efficiently_scaling_transformer_inference_multiquery.svg"/>
+<img loading="lazy" width="49%" height="49%" src="{{ site.assets }}/publications/efficiently_scaling_transformer_inference_multiquery.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Multiquery attention has lower memory cost to load the KV cache when sharded over batch. (a) Multi-head attention can be sharded across heads without replication. (b) Multi-query attention requires full replication of the single head for K, increasing memory access cost. (c) Instead by sharding over batch, only a slice of K is needed for einsum, reducing memory access cost.
 
 Section 3.4 details the gains of using [GPT-J](https://en.wikipedia.org/wiki/GPT-J#cite_note-Model_Card-2)'s approach to **compute attention heads and feed forward in parallel**, also applied to [PaLM](https://arxiv.org/abs/2204.02311). For comparison, the standard formulation of the transformer block is $$ y = x + MLP(LayerNorm(x + Attention(LayerNorm(x)))) $$, whereas the parallel formulation is:
 $$y = x + MLP(LayerNorm(x)) + Attention(LayerNorm(x))$$. Using the parallel formulation has only one layernorm per layer instead of two,
@@ -1561,7 +1579,10 @@ Related to the learning rate, note that: random-LTD reduces the effective batch 
 The results compare Random-LTD with the baseline, on GPT3 models with 350M and 1.3B parameters, and a dataset of up to 300B tokens. Here, Random-LTD shows similar evaluation losses as the baseline with 1/3 less LayerToken consumption. However, an important claim is that "reiterate that the LayerToken consumption saving ratio cannot directly transfer to GPU wall-clock training time saving ratio due to the implementation/hardware"; still, on GPT-3 1.3B they report 33.3% theoretical compute savings and 25.6% wall-clock savings with similar zero-shot accuracy. On BERT and ViT models, similar results are shown. When compared with TokenBypass (a different technique that skips middle layers tokens), Random-LTD shows better train and validation perplexity. Also, MSLG shows better perplexity than a constant-drop rate (table 6.4).
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="60%" height="60%" src="{{ site.assets }}/publications/random_ltd.svg"/>
+<img loading="lazy" width="59%" height="59%" src="{{ site.assets }}/publications/random_ltd.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+**Left:** Transformer layers for baseline and random-LTD training. The dash-line box is repeated by <i>l</i> − 2 times (see more in Fig. B.1). **Right:** random-LTD only requires a few lines of code. Here hs, k<sub>hs</sub>, and d<sub>hs</sub> means the full input, kept input, and dropped input. “gather”, “Layer”, “combine” means the functions for random selection, transformer layer, and token combination.
 
 </div>
 </details>
@@ -1596,6 +1617,9 @@ Transformers are slow and memory-hungry on long sequences, since the time and me
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/flashattention.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+<b>Left:</b> FlashAttention uses tiling to prevent materialization of the large <i>N</i> × <i>N</i> attention matrix (dotted box) on (relatively) slow GPU HBM. In the outer loop (red arrows), FlashAttention loops through blocks of the <b>K</b> and <b>V</b> matrices and loads them to fast on-chip SRAM. In each block, FlashAttention loops over blocks of <b>Q</b> matrix (blue arrows), loading them to SRAM, and writing the output of the attention computation back to HBM. <b>Right:</b> Speedup over the PyTorch implementation of attention on GPT-2. FlashAttention does not read and write the large <i>N</i> × <i>N</i> attention matrix to HBM, resulting in an 7.6× speedup on the attention computation.
 
 FlashAttention is the canonical example of *algorithmic* fusion in attention: it avoids materializing the full $$QK^\top$$ (and often avoids materializing large intermediate softmax buffers) by using a numerically stable streaming formulation. Instead of computing attention as “GEMM → softmax → GEMM” with large intermediate tensors in HBM, it tiles the computation so that data is reused from SRAM/shared memory.
 
@@ -1638,6 +1662,9 @@ From the abstract: "the traditional training method only supervises the neural n
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="70%" height="70%" src="{{ site.assets }}/publications/contrastive_deep_supervision.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+The overview of the four methods. “→” and “<span style="color:#6c8ebf">→</span>” indicate the path of forward computation and gradients backward computation. “`proj`” and “`fc`” indicate the projection heads and the fully connected classifiers, respectively. The gray dash line indicates whether the feature is task-irrelevant or task-biased. (a) Traditional supervised learning only applies supervision to the last layer and propagates it to the previous layers, leading to gradient vanishing. (c) Deep supervision trains both the last layer and the intermediate layers directly, which addresses gradient vanishing but makes all the layers be biased to the task. (d) Our method introduces contrastive learning to supervise the intermediate layer and thus avoid these problems.
 
 </div>
 </details>
@@ -1760,6 +1787,9 @@ Abstract: the paper presents CoCoNet "with a DSL (Domain Specific Language) to e
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/coconet.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+Overview of CoCoNet’s workflow. First, a user expresses a machine learning algorithm in the DSL that contains both computation (MatMul) and communication (AllReduce). Then, the autotuner applies transformations to optimize the program while keeping the algorithm unchanged, such as fusing AllReduce and Dropout into FusedAllReduce and overlapping this with MatMul. Finally, CoCoNet generates custom communication and computation code, which is available through PyTorch.
+
 </div>
 </details>
 </td>
@@ -1779,6 +1809,9 @@ A small, trainable low-rank matrix $$Δ𝑊$$ is added to the original (frozen) 
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="25%" height="25%" src="{{ site.assets }}/publications/lora.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Our reparametrization. We only train <i>A</i> and <i>B</i>.
 
 </div>
 </details>
@@ -1805,6 +1838,9 @@ For the image encoder, the authors consider 5 ResNets (ResNet-50, ResNet-101 and
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/clip.svg"/> 
+
+{: style="text-align:center; font-size: small;"}
+Summary of our approach. While standard image models jointly train an image feature extractor and a linear classifier to predict some label, CLIP jointly trains an image encoder and a text encoder to predict the correct pairings of a batch of (image, text) training examples. At test time the learned text encoder synthesizes a zero-shot linear classifier by embedding the names or descriptions of the target dataset’s classes.
 
 The pipeline for contrastive pre-training (1) is the following:
 - we pass an image through the image encoder (ViT or ResNet). Each image $$i$$ is pictured as $$I_i$$ above.
@@ -1856,7 +1892,7 @@ all types of sharding, across the dimension(s) of batch, features, channels and/
 <img loading="lazy" width="60%" height="60%" src="{{ site.assets }}/publications/gspmd.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-**Left:** A simplified feedforward layer of a Transformer model. Blue rectangles represent tensors with dashed red & blue lines overlaid representing the desired partitioning across a 2x2 mesh of devices. **Right:** A single partition, after GSPMD has been applied. **Adapted from**: <a href="https://blog.research.google/2021/12/general-and-scalable-parallelization.html">google research post</a>.
+**Left:** Computation where tensors are annotated to be split over 4 devices. A simplified feedforward layer of a Transformer model. Blue rectangles represent tensors with dashed red & blue lines overlaid representing the desired partitioning across a 2x2 mesh of devices. **Right:** Partitioned execution graph generated by GSPMD. A single partition, after GSPMD has been applied. **Adapted from**: <a href="https://blog.research.google/2021/12/general-and-scalable-parallelization.html">google research post</a>.
 
 </div>
 </details>
@@ -1873,6 +1909,9 @@ The paper argues that neither convolutions (CNNs) nor attention (Transformers) a
  
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="70%" height="70%" src="{{ site.assets }}/publications/mlp_mixer.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+MLP-Mixer consists of per-patch linear embeddings, Mixer layers, and a classifier head. Mixer layers contain one token-mixing MLP and one channel-mixing MLP, each consisting of two fully-connected layers and a GELU nonlinearity. Other components include: skip-connections, dropout, and layer norm on the channels.
 
 </div>
 </details>
@@ -1898,6 +1937,9 @@ where $$σ$$ is an activation function, $$U$$ and $$V$$ are linear projections a
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="70%" height="70%" src="{{ site.assets }}/publications/pay_attention_to_mlps.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+Overview of the gMLP architecture with Spatial Gating Unit (SGU). The model consists of a stack of <i>L</i> blocks with identical structure and size. All projection operations are linear and “⊙” refers to element-wise multiplication (linear gating). The input and output protocols follow BERT for NLP and ViT for vision. Unlike Transformers, gMLPs do not require positional encodings, nor is it necessary to mask out the paddings during NLP finetuning.
+
 </div>
 </details>
 </td>
@@ -1913,6 +1955,9 @@ Introduces Vision Transformers (ViTs), an extension of the transformer architect
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="70%" height="70%" src="{{ site.assets }}/publications/visual_transformer.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Model overview. We split an image into fixed-size patches, linearly embed each of them, add position embeddings, and feed the resulting sequence of vectors to a standard Transformer encoder. In order to perform classification, we use the standard approach of adding an extra learnable “classification token” to the sequence. The illustration of the Transformer encoder was inspired by Vaswani et al. (2017).
 
 </div>
 </details>
@@ -1931,6 +1976,9 @@ For each dataset, the authors manually compose ten unique templates that use nat
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="67%" height="67%" src="{{ site.assets }}/publications/finetune_language_models.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Multiple instruction templates describing a natural language inference task.
 
 </div>
 </details>
@@ -2005,6 +2053,9 @@ a natural language instruction describing the task.
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/gpt3_fig11.svg"/> 
 
+{: style="text-align:center; font-size: small;"}
+<b>Language model meta-learning.</b> During unsupervised pre-training, a language model develops a broad set of skills and pattern recognition abilities. It then uses these abilities at inference time to rapidly adapt to or recognize the desired task. We use the term “in-context learning” to describe the inner loop of this process, which occurs within the forward-pass upon each sequence. The sequences in this diagram are not intended to be representative of the data a model would see during pre-training, but are intended to show that there are sometimes repeated sub-tasks embedded within a single sequence.
+
 **Tasks tested and performance**:
 - On NLP tasks it achieves promising results in the zero-shot and one-shot settings, and in the few-shot setting is sometimes competitive with or even occasionally surpasses state-of-the-art.
 - It also displays one-shot and few-shot proficiency at tasks designed to test rapid adaption or on-the-fly reasoning,
@@ -2037,6 +2088,9 @@ for generating useful multi-hop connections".
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/graph_transformer_networks.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Graph Transformer Networks (GTNs) learn to generate a set of new meta-path adjacency matrices 𝔸<sup>(<i>l</i>)</sup> using GT layers and perform graph convolution as in GCNs on the new graph structures. Multiple node representations from the same GCNs on multiple meta-path graphs are integrated by concatenation and improve the performance of node classification. ℚ<sub>1</sub><sup>(<i>l</i>)</sup> and ℚ<sub>2</sub><sup>(<i>l</i>)</sup> ∈ <b>R</b><sup><i>N</i>×<i>N</i>×<i>C</i></sup> are intermediate adjacency tensors to compute meta-paths at the <i>l</i>th layer.
 
 </div>
 </details>
@@ -2094,6 +2148,9 @@ The paper introduces several **sparse factorizations of the attention matrix** t
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/sparse_transformers.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+Two 2d factorized attention schemes we evaluated in comparison to the full attention of a standard Transformer (a). The top row indicates, for an example 6x6 image, which positions two attention heads receive as input when computing a given output. The bottom row shows the connectivity matrix (not to scale) between all such outputs (rows) and inputs (columns). Sparsity in the connectivity matrix can lead to significantly faster computation. In (b) and (c), full connectivity between elements is preserved when the two heads are computed sequentially. We tested whether such factorizations could match in performance the rich connectivity patterns of Figure 2.
+
 </div>
 </details>
 </td>
@@ -2127,6 +2184,9 @@ This paper presents Group Normalization (GN), which divides the channels into gr
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/group_normalization.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+<b>Normalization methods</b>. Each subplot shows a feature map tensor, with <i>N</i> as the batch axis, <i>C</i> as the channel axis, and (<i>H</i>, <i>W</i>) as the spatial axes. The pixels in blue are normalized by the same mean and variance, computed by aggregating the values of these pixels.
+
 </div>
 </details>
 </td>
@@ -2149,6 +2209,9 @@ Equation 3 specifies the overall loss: the reconstruction loss, a codebook loss 
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/rqvae.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Left: A figure describing the VQ-VAE. Right: Visualisation of the embedding space. The output of the encoder <i>z</i>(<i>x</i>) is mapped to the nearest point <i>e</i><sub>2</sub>. The gradient ∇<sub><i>z</i></sub><i>L</i> (in red) will push the encoder to change its output, which could alter the configuration in the next forward pass.
 
 </div>
 </details>
@@ -2184,6 +2247,9 @@ Introduces the Graph Convolutional Network (GCN), a simple layer-wise propagatio
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="65%" height="65%" src="{{ site.assets }}/publications/graphconvnets.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+<i>Left</i>: Schematic depiction of multi-layer Graph Convolutional Network (GCN) for semi-supervised learning with <i>C</i> input channels and <i>F</i> feature maps in the output layer. The graph structure (edges shown as black lines) is shared over layers, labels are denoted by <i>Y<sub>i</sub></i>. <i>Right</i>: t-SNE (Maaten & Hinton, 2008) visualization of hidden layer activations of a two-layer GCN trained on the Cora dataset (Sen et al., 2008) using 5% of labels. Colors denote document class.
+
 </div>
 </details>
 </td>
@@ -2213,6 +2279,9 @@ The paper describes **siamese neural networks** (see below for details) for effi
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="47%" height="47%" src="{{ site.assets }}/publications/siamese_networks.svg"/> $$\, \, \,$$ <img loading="lazy" width="47%" height="47%" src="{{ site.assets }}/publications/siamese_networks_2.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+**Left:** Our general strategy. 1) Train a model to discriminate between a collection of same/different pairs. 2) Generalize to evaluate new categories based on learned feature mappings for verification. **Right:** A simple 2 hidden layer siamese network for binary classification with logistic prediction <i>p</i>. The structure of the network is replicated across the top and bottom sections to form twin networks, with shared weight matrices at each layer.
+
 </div>
 </details>
 </td>
@@ -2227,7 +2296,10 @@ The paper describes **siamese neural networks** (see below for details) for effi
 An improvement over the RNN encoder–decoder for translation (Cho et al., 2014; concurrent with [Sequence to Sequence Learning with Neural Networks (Google, NeurIPS 2014)](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)), which compresses the whole source sentence into a single fixed-length vector. Introduces the concept of attention: at each decoding step, the decoder learns to (soft-)align to and use the latent states of every encoder step (not just the last), which increases the model capabilities. It reaches translation performance comparable to the existing phrase-based system on English-to-French, and degrades much less on long sentences.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="60%" height="60%" src="{{ site.assets }}/publications/attention_mech.svg"/>
+<img loading="lazy" width="26%" height="26%" src="{{ site.assets }}/publications/attention_mech.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+The graphical illustration of the proposed model trying to generate the <i>t</i>-th target word <i>y<sub>t</sub></i> given a source sentence (<i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, . . . , <i>x<sub>T</sub></i>).
 
 </div>
 </details>
@@ -2243,7 +2315,10 @@ An improvement over the RNN encoder–decoder for translation (Cho et al., 2014;
 A differentiable module that can be inserted anywhere in a CNN to spatially transform feature maps, conditioned on the input and learned without extra supervision. A localisation network regresses the transformation parameters (e.g., affine, projective or thin-plate spline), a grid generator produces the sampling grid, and a differentiable (e.g., bilinear) sampler warps the input. This gives the network learned invariance to translation, scale, rotation and more generic warping, yielding state-of-the-art results at the time on distorted MNIST, Street View House Numbers and CUB-200-2011 birds.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="85%" height="85%" src="{{ site.assets }}/publications/stn.svg"/>
+<img loading="lazy" width="37%" height="37%" src="{{ site.assets }}/publications/stn.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+The result of using a spatial transformer as the first layer of a fully-connected network trained for distorted MNIST digit classification. (a) The input to the spatial transformer network is an image of an MNIST digit that is distorted with random translation, scale, rotation, and clutter. (b) The localisation network of the spatial transformer predicts a transformation to apply to the input image. (c) The output of the spatial transformer, after applying the transformation. (d) The classification prediction produced by the subsequent fully-connected network on the output of the spatial transformer. The spatial transformer network (a CNN including a spatial transformer module) is trained end-to-end with only class labels – no knowledge of the groundtruth transformations is given to the system.
 
 </div>
 </details>

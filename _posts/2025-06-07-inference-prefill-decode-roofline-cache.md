@@ -93,7 +93,10 @@ The roofline point ❌ of this example is therefore $$\mathbf{(0.083, 10)}$$.
 Consider the multiplication of two matrices of shapes **$$A \times B$$** and **$$B \times C$$**, with an output matrix of shape **$$A \times C$$** and a data type of **$$dt$$** bytes per element. The FLOPs and the memory traffic are as follows.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
+<img width="56%" height="56%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+**FLOPs:** $$AC$$ outputs $$\times$$ $$B$$ multiply-adds $$\times$$ 2 FLOPs $$= 2ABC$$. **Memory traffic, naive:** matrix 1 read $$C$$ times and matrix 2 read $$A$$ times, $$2ABC\text{ }dt$$. **Memory traffic, with cache:** inputs read once and output written once, $$(AB + BC + AC)\text{ }dt$$. **Arithmetic intensity:** $$2ABC / ((AB + BC + AC)\text{ }dt)$$, about $$2N / (3\text{ }dt)$$ for $$A = B = C = N$$.
 
 **Step 1: Floating Point Operations (FLOPs).** Each of the $$AC$$ elements of the output matrix is a dot product of $$B$$ multiplications and $$B$$ additions. Each multiply-accumulate counts as $$2$$ FLOPs. Therefore:
 
@@ -241,6 +244,9 @@ In the attention layer, the query of the new token attends to the keys and value
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+**Without KV cache:** generating $$n$$ tokens costs $$O(n^2)$$ in the projections and the MLP, and $$O(n^3)$$ in attention. **With KV cache:** generating $$n$$ tokens costs $$O(n)$$ in the projections and the MLP, and $$O(n^2)$$ in attention.
 
 The cost is memory. For every token, every layer stores one key and one value vector per key-value head:
 
@@ -462,6 +468,9 @@ Serving many requests at once makes memory management difficult, because the fin
 {: style="text-align:center; font-size: small;"}
 <img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block.
+
 The following code implements a paged KV cache and the attention of one decode step over it:
 
 ```python
@@ -581,6 +590,9 @@ A semantic cache sits in front of the model, in the application. For every incom
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+In this example, the closest past query, "What is the price of corn in Rome?", has a cosine similarity of 0.91, above a threshold of 0.85: a cache hit.
 
 **How embeddings are created.** Embeddings come from a separate, much smaller *embedding model*, typically a transformer encoder such as the [Sentence-BERT](https://arxiv.org/abs/1908.10084) family (e.g., all-MiniLM-L6-v2), E5, BGE or GTE, or from an embedding API. The encoder is trained with *contrastive learning*: pairs of texts with the same meaning (paraphrases, or a question and its answer) are pulled together, and the other texts of the batch are pushed apart. After training, the cosine similarity between two embeddings measures how close their meanings are. The raw hidden states of a generative LLM make poor embeddings, unless the model is fine-tuned in the same contrastive way. Some of the best recent embedding models are built this way.
 
@@ -798,3 +810,6 @@ Prefill-decode disaggregation therefore requires transmitting the KV cache from 
 
 {: style="text-align:center; font-size: small;"}
 <img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+In the layer-wise streaming of the KV cache, the transfer of each layer overlaps with the compute of the next layers, and only the transfer of the last layer delays the decode.
