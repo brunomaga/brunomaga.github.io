@@ -96,7 +96,7 @@ with $$\frac{dV_{t}}{dt}$$ and $$RI_{(t-\Delta t, t]}$$ computed from equations 
 For comparison, the plot below shows the potential over time of one neuron in a network for each of these methods, on a $$100ms$$ simulation of a (Brunel) network of $$10000$$ neurons with default neuron parameters. Results are shown for the Implicit and Explicit Euler methods with $$\Delta t = 0.1ms$$, and for the analytical solution with fixed ($$\Delta t=0.1ms$$) and variable timestepping:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/neuron_plot_equations.png">
+<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/neuron_plot_equations.svg">
 
 The vertical straight lines are the voltage resets after a spike, and the horizontal straight lines are the refractory periods after firing.
 
@@ -160,17 +160,17 @@ A `C++` implementation of the Brunel network model of LIF neurons, with the appr
 **Slow dynamics**:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g4.5_f0.9.png">
+<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g4.5_f0.9.svg">
 
 **Regular dynamics**:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g5_f2.png">
+<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g5_f2.svg">
 
 **Fast dynamics**:
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g3_f2.png">
+<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g3_f2.svg">
 
 
 ## Other resources
