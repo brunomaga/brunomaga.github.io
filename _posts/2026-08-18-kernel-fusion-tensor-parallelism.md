@@ -5,7 +5,7 @@ categories: ["Efficient Inference"]
 tags: ["LLM", "kernel fusion", "tensor parallelism", "Megatron-LM", "in-network computing", "collectives", "Mixture-of-Experts", "expert sharding"]
 ---
 
-This post covers a kernel that fuses the computation and the communication of a feedforward network (FFN) distributed with [Megatron-LM tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}) into a single GPU kernel.
+This post covers a kernel that fuses the computation and the communication of a feedforward network (FFN) distributed with [Megatron-LM tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}) into a single GPU kernel. It then applies the same kernel to the experts of a Mixture-of-Experts layer, with expert sharding.
 
 ## The problem: kernels and graph breaks
 
@@ -99,17 +99,19 @@ An ablation study shows that all three steps are needed. Without fusion, the in-
 
 ## Expert sharding
 
-The same kernel applies to the experts of a [Mixture-of-Experts (MoE)]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-experts %}) layer. Each expert is an FFN, with an input matrix $$W_i$$ and an output matrix $$W_o$$ (the $$W_1$$ and $$W_2$$ above). With expert parallelism, each GPU holds whole experts and processes only the tokens routed to them. The router rarely spreads tokens evenly, so a GPU whose experts receive more tokens than the others delays the whole layer.
+In a [Mixture-of-Experts (MoE)]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-experts %}) layer, each expert is a small FFN, with an input matrix $$W_i$$ and an output matrix $$W_o$$ (the $$W_1$$ and $$W_2$$ above). With expert parallelism, each GPU holds a few whole experts and processes only the tokens routed to them. The router rarely spreads the tokens evenly, so the GPU with the most tokens finishes last, and the other GPUs wait for it.
 
-[Expert sharding](https://arxiv.org/abs/2503.08467) splits every expert across all GPUs instead, exactly as Megatron-LM splits the FFN: $$W_i$$ column-wise and $$W_o$$ row-wise. Each GPU holds a slice of every expert, computes a partial output for all the tokens of every expert, and the partial outputs are summed across GPUs. This is tensor parallelism applied to each expert, so the fused kernel of this post runs it unchanged.
-
-{: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
+[Expert sharding](https://arxiv.org/abs/2503.08467) splits every expert across all GPUs instead, exactly as Megatron-LM splits the FFN. Each GPU holds a $$1/G$$ share of the columns of $$W_i$$ and the matching rows of $$W_o$$ of every expert. It processes all the tokens with these slices, and the partial outputs of all GPUs are summed. Each expert is then an FFN with Megatron-LM tensor parallelism, so it runs with the fused kernel of this post.
 
 {: style="text-align:center; font-size: small;"}
-Expert sharding of one expert on 2 GPUs (A in green, B in blue). **(a)** The expert, with the slices of $$W_i$$ and $$W_o$$ that each GPU holds. **(b)** Each GPU computes a partial output for all tokens, and a sum-reduce adds them. Inspired by Figure 2 of [Accelerating MoE Model Inference with Expert Sharding](https://arxiv.org/abs/2503.08467).
+<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
 
-Expert sharding adds communication: the tokens are sent to all GPUs, and the partial outputs of every expert must be all-reduced. This is the overhead that the fused kernel was built for: the all-reduce runs one band at a time on dedicated blocks, overlapped with the computation, and executed by the network switch. More importantly, expert sharding fixes the load imbalance of the experts. Every GPU processes the same share of every expert, so all GPUs do the same work whatever the routing, and no GPU waits for another.
+{: style="text-align:center; font-size: small;"}
+One expert, with $$W_i$$ in green and $$W_o$$ in red. The activation is omitted. **(a)** Without parallelism, one GPU holds the whole expert. **(b)** With expert sharding, GPU A holds the first half of the columns of $$W_i$$ and of the rows of $$W_o$$, and GPU B the second half. The dashed slices are on the other GPU. Both GPUs process all the tokens $$x$$, and a sum-reduce adds their partial outputs $$y_A$$ and $$y_B$$. Inspired by Figure 2 of [Accelerating MoE Model Inference with Expert Sharding](https://arxiv.org/abs/2503.08467).
+
+Expert sharding adds communication: every GPU needs all the tokens, and the partial outputs must be all-reduced across GPUs. The fused kernel makes this communication efficient. The all-reduce runs one band at a time on dedicated blocks, overlaps with the computation, and is executed by the network switch. The results above include two experts split across 8 GPUs this way: the fused kernel is 55% faster on an expert of DeepSeek V3, and 45% faster on an expert of Llama 4 Scout.
+
+Most importantly, expert sharding fixes the load imbalance of the experts. Every GPU holds the same share of every expert and processes all the tokens, so all GPUs do the same amount of work, however the tokens are routed. No GPU waits for another, no tokens are dropped, and popular experts do not need to be replicated.
 
 ## Related work
 
