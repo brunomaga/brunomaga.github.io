@@ -8,8 +8,8 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 ### Audience and voice
 
 - The site reads like a college course: a professor teaching undergraduates, who speaks like an engineer. The
-  readers are HPC and ML researchers and engineers. They come for clear information, and nobody likes long posts
-  or boring sentences.
+  readers are HPC and ML researchers, engineers and students. They come for clear information, and nobody likes
+  long posts or boring sentences.
 - Purely technical. No business or marketing language, no anecdotes, no opinions, no hype, no motivation
   speeches, no calls to action. No "in this post we will" opening and no "in conclusion" ending.
 - Third person only. Never "I", "we", "our", "us", "you", "your" or "my". The subject of a sentence is the
@@ -28,6 +28,8 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
   only repeats the post.
 - Short posts. Cut every sentence that adds no information. Keep every formula, algorithm step, number and
   result that does.
+- When a post presents several methods, compare them where they appear: the cost of each in runtime
+  (computation, communication, number of steps) and in memory, and when each one is the better choice.
 
 ### Technical correctness
 
@@ -38,7 +40,8 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
   know it. Link only articles that exist, and each term once.
 - Code, commands, links and picture markup stay unchanged unless they are wrong. A text task does not redraw
   pictures: it lists the pictures that are wrong or disagree with the text, for the user.
-- Math is written in `$$...$$`, inline and on its own lines, as in the existing posts.
+- Math is written in `$$...$$`, inline and on its own lines, as in the existing posts. In inline math, write
+  `\vert` instead of `|`: kramdown reads a paragraph line that holds a `|` as a table row.
 
 ### Process
 
