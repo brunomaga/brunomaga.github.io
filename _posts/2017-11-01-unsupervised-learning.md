@@ -5,7 +5,7 @@ categories: ["Machine Learning"]
 tags: ["unsupervised learning", "PCA", "clustering", "dimensionality reduction"]
 ---
 
-Unsupervised learning is the field of machine learning that learns without supervision or reward signals. Unlike [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning]({{ site.baseurl }}{% post_url  2017-08-17-linear-regression-matrix-factorization %}), the method receives only the data. These methods are still very powerful. Common applications are image compression, dimensionality reduction, clustering, visualization, and learning representations of the data that other models then build on.
+Unsupervised learning is the field of machine learning that learns without supervision or reward signals. Unlike [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and supervised learning, the method receives only the data. These methods are still very powerful. Common applications are image compression, dimensionality reduction, clustering, visualization, and learning representations of the data that other models then build on.
 
 ## Foreword: Hebbian Learning
 
@@ -292,7 +292,7 @@ $$
 \pi_k = \frac{N_k}{N}
 $$
 
-No iteration decreases the log-likelihood, and the algorithm converges to a local maximum. As with k-means, EM is therefore usually run from several initializations, or initialized with the result of k-means. In fact, k-means is a limit case of EM: for a GMM whose components share the covariance $$\sigma^2 I$$, the responsibilities become hard assignments to the closest mean as $$\sigma \rightarrow 0$$. The number of components $$K$$ can be chosen with a model selection criterion, such as the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion). The Bayesian treatment of GMMs with variational inference is covered in [another post]({{ site.baseurl }}{% post_url 2019-07-01-variational-inference-gmm %}).
+No iteration decreases the log-likelihood, and the algorithm converges to a local maximum. As with k-means, EM is therefore usually run from several initializations, or initialized with the result of k-means. In fact, k-means is a limit case of EM: for a GMM whose components share the covariance $$\sigma^2 I$$, the responsibilities become hard assignments to the closest mean as $$\sigma \rightarrow 0$$. The number of components $$K$$ can be chosen with a model selection criterion, such as the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion).
 
 ## Hierarchical Clustering
 
@@ -428,9 +428,9 @@ $$
 The narrow code (the *bottleneck*) forces the network to keep only the most informative features of the data. A linear autoencoder trained with the squared error learns the same subspace as PCA, although not necessarily the principal components themselves. An autoencoder with non-linear activations is therefore a non-linear generalization of PCA. Common variants are:
 - *sparse autoencoders* add a penalty on the code activations (e.g. their L1 norm), so that each input activates only a few features, even when the code is larger than the input;
 - *denoising autoencoders* reconstruct the clean input $$x$$ from a corrupted version $$\tilde{x}$$ (e.g. with added noise or masked entries). This forces them to learn the structure of the data instead of the identity function;
-- [variational autoencoders]({{ site.baseurl }}{% post_url 2019-10-12-vae-gan %}) learn a distribution over the codes, which turns the decoder into a generative model.
+- *variational autoencoders* learn a distribution over the codes, which turns the decoder into a generative model.
 
-Denoising autoencoders are an early example of **self-supervised learning**, where the training targets come from the data itself: part of the input is hidden, and the model predicts it. Most large models are pretrained this way today. Language models predict the next token of a text (see the [GPT post]({{ site.baseurl }}{% post_url 2023-02-28-gptlite %})), BERT predicts masked words (see the [Transformers post]({{ site.baseurl }}{% post_url 2020-02-28-learning-from-sequences %})), and masked autoencoders reconstruct masked image patches. *Contrastive learning* is another self-supervised approach. Methods like [SimCLR](https://arxiv.org/abs/2002.05709) create two augmented views of each image. They train an encoder so that the embeddings $$z_i$$ and $$z_j$$ of two views of the same image are close to each other, and far from the embeddings of the other images in the batch. The loss is:
+Denoising autoencoders are an early example of **self-supervised learning**, where the training targets come from the data itself: part of the input is hidden, and the model predicts it. Most large models are pretrained this way today. Language models predict the next token of a text, BERT predicts masked words, and masked autoencoders reconstruct masked image patches. *Contrastive learning* is another self-supervised approach. Methods like [SimCLR](https://arxiv.org/abs/2002.05709) create two augmented views of each image. They train an encoder so that the embeddings $$z_i$$ and $$z_j$$ of two views of the same image are close to each other, and far from the embeddings of the other images in the batch. The loss is:
 
 $$
 \ell_{i,j} = - \log \frac{\exp \left( \text{sim}(z_i, z_j) / \tau \right)}{\sum_{k \neq i} \exp \left( \text{sim}(z_i, z_k) / \tau \right)}

@@ -246,8 +246,8 @@ Even though these results are promising, different mammals, brain regions and me
 - a model of *quiet dynamics* with a mean spiking rate of 0.25 Hz per neuron, representing neurons almost at rest and/or with little activity. This model gives an upper bound of the runtime of about 90% of neurons in the brain during regular activity;
 - a model of *slow dynamics* at 1.5Hz, representing the lower bound of active neurons, described next;
 - a model of *moderate dynamics* with a spiking rate of 6.5 Hz, an approximation of the irregular regime of slow oscillations displayed by the [Brunel network][LIF-model-post]; also an upper limit to the spiking rate of the rat frontal cortex; and a loose approximation of the visual cortex of cats;
-- a model of *fast dynamics* of 38 Hz, approximating the cortical and thalamic neuronal activity during periods of high vigilance, and the regular regime of the theoretical inhibition-dominated model of the [Brunel network][LIF-model-post]; and 
-- a model of *burst dynamics* at 55.8 Hz, typically a by-product of depolarizing current injections, representative of the fast-spiking regime of the inhibition-dominated irregular dynamics of the [Brunel network][LIF-model-post].
+- a model of *fast dynamics* of 38 Hz, approximating the cortical and thalamic neuronal activity during periods of high vigilance, and the regular regime of the theoretical inhibition-dominated model of the Brunel network; and 
+- a model of *burst dynamics* at 55.8 Hz, typically a by-product of depolarizing current injections, representative of the fast-spiking regime of the inhibition-dominated irregular dynamics of the Brunel network.
 
 The comparison included several fixed- and variable-step interpolation methods, detailed <a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">in the original publication preprint</a>. The benchmark results are:
 

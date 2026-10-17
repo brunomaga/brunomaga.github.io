@@ -32,7 +32,7 @@ The following sections describe the second approach.
 
 ### Distributed Sorting
 
-The difficult step is the distributed sort that transforms (b) into (d). There are [other distributed sorting algorithms]({{ site.baseurl }}{% post_url 2014-06-21-distributed-sort %}), but this implementation uses the **Distributed Sample Sort** algorithm, because it scales well to many processes. The workflow is:
+The difficult step is the distributed sort that transforms (b) into (d). There are other distributed sorting algorithms, but this implementation uses the **Distributed Sample Sort** algorithm, because it scales well to many processes. The workflow is:
 
 {: .picture}
 <img width="74%" height="74%" src="{{ site.assets }}/distributed-sort/sample_sort.svg"> 
@@ -115,7 +115,7 @@ Samples are added to a batch until it reaches at most 30 tokens. The resulting b
 
 ### Pipeline parallelism
 
-[Pipeline parallelism]({{ site.baseurl }}{% post_url 2023-08-30-pipeline-parallelism %})
+Pipeline parallelism
 requires the same batch size and sequence length in all micro-batches of a batch, because activation shapes must remain fixed during gradient accumulation. A fixed `B x S x E` across micro-batches can lead to smaller micro-batches and more padding. The figure below compares standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right), for 2 processes and 2 gradient accumulation steps (4 micro-batches in total):
 
 {: .picture}
@@ -226,7 +226,7 @@ A complete example is available in [DeepSpeed PR 7104](https://github.com/micros
 
 ## Kernels compilation
 
-A [previous post]({{ site.baseurl }}{% post_url 2023-06-27-gptlite-cpp %}) showed that just-in-time compilation of ML kernels with `torch.compile` can give substantial speedups. This section covers two aspects: (1) compilation in distributed runs and CUDA graphs, and (2) static vs dynamic compilation.
+Just-in-time compilation of ML kernels with `torch.compile` can give substantial speedups. This section covers two aspects: (1) compilation in distributed runs and CUDA graphs, and (2) static vs dynamic compilation.
 
 ### CUDA graphs compilation on single- vs multi-process runs
 

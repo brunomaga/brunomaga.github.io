@@ -108,7 +108,7 @@ The **compressed sparse row** (CSR) format uses three arrays:
 {: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
 
-For $$n$$ rows and $$nnz$$ nonzeros, CSR stores $$2 \, nnz + n + 1$$ numbers. Rows are easy to read. Columns need a search through all rows, which makes the distributed transpose hard, as shown [in a different post]({{ site.baseurl }}{% post_url 2015-04-21-matrix-transpose %}). The product $$y = Ax$$ takes $$O(nnz)$$ operations:
+For $$n$$ rows and $$nnz$$ nonzeros, CSR stores $$2 \, nnz + n + 1$$ numbers. Rows are easy to read. Columns need a search through all rows, which makes the distributed transpose hard. The product $$y = Ax$$ takes $$O(nnz)$$ operations:
 
 ```cpp
 for (int i = 0; i < n; i++) {
@@ -205,7 +205,7 @@ For a long list of keys, a [Bloom filter][bloom] is a smaller substitute. It let
 
 **Problem.** Each server holds some rows of each table. This is called **horizontal partitioning**, or **sharding**. Matching rows may sit on different servers. Below, John is on server 2, but his message "Bye" is on server 1. A local join misses this pair, and a local left outer join wrongly returns John with `NULL`.
 
-**Inner join.** We place each row by its key, with the same rule for both tables, such as a hash of the key. Below, even keys go to server 1, and odd keys to server 2. Matching rows then share a server, and every server joins locally. If the tables are not placed this way, a **shuffle** first sends each row to its server with an all-to-all exchange (`MPI_Alltoallv`), as in the distributed sample sort of [a different post]({{ site.baseurl }}{% post_url 2014-06-21-distributed-sort %}).
+**Inner join.** We place each row by its key, with the same rule for both tables, such as a hash of the key. Below, even keys go to server 1, and odd keys to server 2. Matching rows then share a server, and every server joins locally. If the tables are not placed this way, a **shuffle** first sends each row to its server with an all-to-all exchange (`MPI_Alltoallv`).
 
 {: .picture}
 <img width="82%" height="82%" src="{{ site.assets }}/distributed-matmul-dbs/layout_rows.svg">
