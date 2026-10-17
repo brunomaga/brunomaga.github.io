@@ -19,6 +19,26 @@ The scales of the brain: (a) brain regions, (b) neuron, (c) synapse, and (d) ion
 
 Because of the complex anatomical structure and behaviour of neurons, numerical methods are used to approximate neuron models and simulate the electrical activity of neural networks.
 
+### Levels of Detail in Brain Simulation
+
+[lif-post]: {{ site.baseurl }}{% post_url 2016-02-08-lif-brunel %}
+
+Brain simulators also work at different levels of detail, as shown in the picture below. Each model zooms into a part of the model on its left:
+
+{: .picture}
+<img width="100%" height="100%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
+
+{: .caption}
+Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
+
+- **Population models** describe the average activity of large groups of neurons. A simple example is one excitatory population ($$E$$) and one inhibitory population ($$I$$) that drive each other.
+- **Point neuron networks** model each neuron as a single point, with no shape. The simplest example is the [Leaky Integrate-and-Fire model][lif-post] (1907). It has no ion channels. It treats the membrane as an RC circuit, and the neuron spikes when its voltage reaches a threshold.
+- **Compartmental neuron models** keep the branched shape of the neuron. They split the dendrites and the axon into small compartments. Each compartment has its own voltage and its own ion channels. This is the model used in the rest of this post.
+- **Compartmental membrane models** describe small parts of the membrane in more detail, such as the dendritic spines that receive synapses.
+- **Reaction-diffusion models** describe the chemical reactions inside the cell, and how molecules such as calcium spread through it.
+
+Most simulators support only point neurons, with LIF or simple HH dynamics. These models run the same few equations on every neuron, so they suit vector (SIMD) architectures. Compartmental models are harder to simulate. Each neuron is a tree of compartments with many types of ion channels, and each compartment depends on its neighbours.
+
 ### Hodgkin-Huxley Model and Cable Theory
 
 [hodgkin1952quantitative]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1392413/
@@ -56,7 +76,7 @@ where $$i_a$$ is the axial current [mA] flowing through the compartment's region
 {: .picture}
 <img width="20%" height="20%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
 
-A common assumption is that the neuron is divided into compartments small enough that the spatially varying $$i_m$$ in any compartment $$j$$ is well approximated by its value at the center. Therefore:
+A common assumption is that the neuron is divided into compartments small enough (about $$40 \, \mu m$$ long in the models of this post) that the spatially varying $$i_m$$ in any compartment $$j$$ is well approximated by its value at the center. Therefore:
 
 $$
 \int_A i_{m_j} dA_j = i_{m_j} A_j = \sum_k i_{a_{kj}}
@@ -129,6 +149,22 @@ $$
 
 where $$u$$ is the membrane potential, $$E$$ are the reversal potentials and $$m$$, $$n$$ and $$h$$ are the gating variables --- see the original HH paper for the individual ODEs and reported values. The leak, represented by $$L$$, generalizes any other voltage-independent conductance.
 
+[channelpedia]: https://channelpedia.epfl.ch/
+
+The HH model has only sodium, potassium and leak channels. It needs four equations: one for the voltage, and one for each gating variable $$m$$, $$n$$ and $$h$$. Since 1952, the *zoo* of known ion channels has grown a lot --- see [Channelpedia][channelpedia] for a list of ion channel models. In general, the current through the membrane of a compartment $$n$$ with voltage $$V_n$$ is
+
+$$
+I = C \frac{dV_n}{dt} + \sum_i g_i x_i (V_n - E_i)
+$$
+
+where each channel $$i$$ has a maximum conductance $$g_i$$, a gating term $$x_i$$ (such as $$m^3 h$$ for sodium) and a reversal potential $$E_i$$. This equation describes the electrical circuit in the picture below. The membrane is a capacitor. Each ion channel is a resistor in series with a battery, whose voltage is the reversal potential of that ion.
+
+{: .picture}
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-electrical-activity/compartment_rc_circuit.svg">
+
+{: .caption}
+The electrical circuit of one compartment. The membrane is the capacitor $$C$$. Each ion channel is a resistor $$R$$ in series with a battery $$E$$, its reversal potential. Arrows mark gated channels, whose resistance changes over time. The leak $$L$$ has a constant resistance. $$I$$ is the total current through the membrane
+
 ### Reversal Potential
 
 The reversal potential of a given ion flux in a compartment is given by the Nernst equation
@@ -156,6 +192,14 @@ A neurite with a *free* end follows a Neumann boundary condition (which specifie
 ### Branching Points
 
 Branching points are modeled as *idealized* portions of the neurite that have axial current but no membrane properties. Spatial discretization reduces the spatially distributed neuron to a set of connected compartments, and results in a set of ordinary differential equations that respect Kirchhoff's current law. Kirchhoff's current law, based on the principle of conservation of electric charge, states that the sum of currents entering any junction equals the sum of currents leaving that junction.
+
+In a branched tree, every compartment $$n$$ has one parent $$p(n)$$ and zero or more children $$c$$. The sum over the neighbours $$k$$ in equation \ref{equation345_neuronbook} then splits into one term for the parent and one term per child:
+
+$$
+c_n \frac{dv_n}{dt}+i_{ion_n} (v_n, t) = \frac{v_{p(n)} - v_n}{r_n} + \sum_{c \, : \, p(c)=n} \frac{v_c - v_n}{r_c}
+$$
+
+where $$r_n$$ is the axial resistance between compartment $$n$$ and its parent. The Hines solver below relies on this parent-child structure.
 
 ## Numerical Resolution Methods in NEURON
 
