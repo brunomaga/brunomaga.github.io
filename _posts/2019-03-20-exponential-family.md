@@ -5,7 +5,7 @@ categories: ["Machine Learning"]
 tags: ["probability distributions", "exponential family", "MLE"]
 ---
 
-The Maximum Likelihood estimator and the Maximum-a-Posteriori on a normally distributed set of parameters become much easier to compute after applying the log-trick. Since $$\log$$ is a monotonically increasing function, the maximum and minimum of the function to be optimized are attained at the same points as those of the original function inside the $$\log$$ operator. Applying the $$\log$$ function converts a product of exponentials into a sum, which makes the normal distribution simpler and faster to compute.
+The [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}) showed that the Maximum Likelihood estimator and the Maximum-a-Posteriori on a normally distributed set of parameters become much easier to compute after applying the log-trick. Since $$\log$$ is a monotonically increasing function, the maximum and minimum of the function to be optimized are attained at the same points as those of the original function inside the $$\log$$ operator. Applying the $$\log$$ function converts a product of exponentials into a sum, which makes the normal distribution simpler and faster to compute.
 
 However, this property is not exclusive to the Gaussian distribution. Most common distributions, including the exponential, log-normal, gamma, chi-squared, beta, Dirichlet, Bernoulli, categorical, Poisson, geometric, inverse Gaussian, von Mises and von Mises-Fisher distributions, can be written in a similar form, which makes them equally simple to compute. This set of distributions is called the **Exponential Family of Distributions**, and is the topic of this post.
 
@@ -13,10 +13,10 @@ However, this property is not exclusive to the Gaussian distribution. Most commo
 
 Probability distributions describe the probability of each outcome, and the probabilities of all outcomes add up to 1. Distributions fall into two groups: those described by a probability **mass function**, defined over discrete values, and those described by a probability **density function**, defined over a continuous interval. There are dozens (possibly hundreds) of distributions, but only 15 of them are commonly used. These are related to each other as follows:
 
-{: style="text-align:center; font-size: small;"}
-<img width="70%" height="70%" src="{{ site.assets }}/exponential-family/common_distributions.png"/>
+{: .picture}
+<img width="70%" height="70%" src="{{ site.assets }}/exponential-family/common_distributions.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 The 15 most common probability distributions and their relationships.
 (source: post <a href="https://medium.com/@srowen/common-probability-distributions-347e6b945ce4">Common probability distributions</a> by Sean Owen)
 
@@ -395,7 +395,7 @@ where <span class="math inline">\(\textstyle\sum_{i=1}^k e^{\eta_i}=1\)</span></
 
 ## Maximum Likelihood
 
-As shown in this post, the Gaussian, along with many other distributions, belongs to the Exponential Family of Distributions. The Maximum Likelihood Estimator (MLE) of the Gaussian can therefore be generalized to all distributions in the Exponential Family.
+The [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}) computed the Maximum Likelihood Estimator (MLE) for a Gaussian distribution. As shown in this post, the Gaussian, along with many other distributions, belongs to the Exponential Family of Distributions. The MLE can therefore be generalized to all distributions in the Exponential Family.
 
 As in the Gaussian case, the first step is to apply the log-trick to the general expression of the exponential family, which gives the following log-likelihood:
 

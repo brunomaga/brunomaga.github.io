@@ -29,3 +29,13 @@ mjx-container.math-scroll {
   overflow-y: hidden;
   vertical-align: middle;
 }
+
+// pictures ({: .picture} in Markdown: a paragraph of one or more pictures) and their captions ({: .caption}: the
+// paragraph below the pictures) are centred, in small text that is black whatever color the surrounding block would
+// give it; the small text also sets the spacing between the pictures of a row
+.post-content .picture,
+.post-content .caption {
+  text-align: center;
+  font-size: small;
+  color: #000;
+}

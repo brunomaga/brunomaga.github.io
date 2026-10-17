@@ -72,7 +72,7 @@ $$ w_{MLE} = argmax_w \,\, p(y \mid w, X)  $$
 
 Consider what the probability density $$p(x \mid θ)$$ models for a fixed value of θ. It is a distribution that models the uncertainty of the data for a given parameter setting. In a complementary view, the data is fixed (because it has been observed) and the parameters θ vary. In this view, the MLE measures how likely a particular setting of θ is for the observations x. The maximum likelihood estimator is therefore the most likely parameter θ for the set of data (MML book, section 8.3.1).
 
-When the prior and posterior distributions are computationally tractable, their parameters can be optimized with [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent), a variant of gradient-based optimization. Instead of updating all parameters at once, each iteration updates one parameter (or block of parameters) at a time, e.g. the mean $$\mu$$ and then the standard deviation $$\sigma$$ in a Gaussian setting. Each update follows the partial derivative of the objective with respect to that parameter, while the other parameters stay fixed.
+When the prior and posterior distributions are computationally tractable, their parameters can be optimized with [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent), a variant of gradient-based optimization covered [in another post]({% post_url 2017-08-17-linear-regression-matrix-factorization %}). Instead of updating all parameters at once, each iteration updates one parameter (or block of parameters) at a time, e.g. the mean $$\mu$$ and then the standard deviation $$\sigma$$ in a Gaussian setting. Each update follows the partial derivative of the objective with respect to that parameter, while the other parameters stay fixed.
 
 To simplify the computation, the *log-trick* places the term to optimize inside a log function. This is valid because $$log$$ is a monotonically increasing function, so applying it does not change the input values at which the minimum or maximum is attained (i.e. where the gradient is zero). Moreover, since the Gaussian distribution is a product of exponentials, the $$log$$ function *brings the power term out* of the exponential, which makes the computation simpler and faster. Applying the log-trick to the function to minimize gives:
 
@@ -117,7 +117,7 @@ $$
   \end{align*}
 $$
 
-This solution is independent of the noise variance $$\sigma^2$$. It also matches the closed-form solution $$ w = (X^TX)^{-1} X^Ty$$ of the Least Squares problem. In practice, minimizing the Least Squares problem is equivalent to finding the most likely $$w$$ under the assumption that $$y$$ contains Gaussian noise, i.e. $$y = wx + b + \varepsilon$$, with $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$$.
+This solution is independent of the noise variance $$\sigma^2$$. It also matches the closed-form solution $$ w = (X^TX)^{-1} X^Ty$$ of the Least Squares problem, derived in a [previous post]({{ site.baseurl }}{% post_url 2017-08-17-linear-regression-matrix-factorization %}). In practice, minimizing the Least Squares problem is equivalent to finding the most likely $$w$$ under the assumption that $$y$$ contains Gaussian noise, i.e. $$y = wx + b + \varepsilon$$, with $$\varepsilon \thicksim \mathcal{N}(0, \sigma^2)$$.
 
 
 ### Adding regularization
@@ -310,19 +310,19 @@ in line with equations 3.50 and 3.51 of [Chris Bishop's PRML book]({{ site.resou
 
 Online learning updates the posterior continuously as new data is observed. Following the $$posterior \propto likelihood * prior$$ principle, the posterior of each iteration becomes the prior of the next one, i.e. the new initial knowledge is what was learnt previously. The main advantage is that training does not require all the data at once, so the model can learn from datasets that are not fully available at a given time. The principle is illustrated below:
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_1.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_3.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_4.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_5.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Illustration of four steps of online learning for the linear model $$y = w_0 + w_1x$$.
 (inspired by fig 3.7, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
 
@@ -360,19 +360,19 @@ $$
 As in the previous visualization, introducing new datapoints improves the accuracy of the model:
 
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_0.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_1.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_2.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Illustration of four steps modelling synthetic sinusoidal data. Each plot shows the ground truth in blue, the model mean approximation in orange, and the model mean plus and minus one predictive standard deviation as a light-orange area. (inspired by fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
 
 

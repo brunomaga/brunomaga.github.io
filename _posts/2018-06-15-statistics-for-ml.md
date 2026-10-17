@@ -6,7 +6,7 @@ categories: ["Machine Learning"]
 tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "KL divergence"]
 ---
 
-A brief summary of statistics and probability topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.
+A brief summary of statistics and probability topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. A similar post covers algebra: [Mathematics for ML]({{ site.baseurl }}{% post_url 2018-04-20-algebra-for-ml %}). 
 
 ### Basic definitions
 
@@ -23,7 +23,7 @@ $$
 
 ### Statistical distributions
 
-Statistical distributions are either <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf"> continuous </a> or <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf"> discrete </a>. Most parametric continuous distributions belong to the exponential family of distributions.
+Statistical distributions are either <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf"> continuous </a> or <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf"> discrete </a>. Most parametric continuous distributions belong to the [exponential family of distributions]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}).
 
 $$p(x)$$ is called a **probability mass function (pmf)** for a discrete variable $$x$$, or a **probability density function (pdf)** for a continuous one. Any function over a discrete (continuous) domain can be a probability distribution, as long as its values are non-negative and sum (integrate) to 1. The **cumulative distribution function (cdf)** is
 
@@ -188,7 +188,7 @@ Random variables $$X$$ and $$Y$$ are conditionally independent given $$Z$$, writ
 
 ### Gaussian Distribution
 
-The univariate Gaussian with mean $$\mu$$ and variance $$\sigma^2$$ is:
+The post about the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}) covers more distributions. The univariate Gaussian with mean $$\mu$$ and variance $$\sigma^2$$ is:
 
 $$
 p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
@@ -208,11 +208,11 @@ $$
 
 Both the conditional, $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$, and the marginal, $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$, are Gaussian.
 
-{: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.png"/>
+{: .picture}
+<img width="45%" height="45%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.svg"/>
 
-{: style="text-align:center; font-size: small;"}
-A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional distribution is a slice along the X or Y dimension, and it is also Gaussian. <b>Source:</b> Wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a>
+{: .caption}
+A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional distribution is a slice along the X or Y dimension, and it is also Gaussian. <b>Adapted from:</b> Wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a>
 
 The product of two Gaussian pdfs, $$\mathcal{N} (x \mid a, A) \, \mathcal{N}(x \mid b, B)$$, is a Gaussian scaled by a constant $$c \in \mathbb{R}$$.
 
@@ -343,7 +343,7 @@ The KL divergence is not a metric, because it is not symmetric: $$  KL ( q \| p 
 
 The **quantile** is the inverse of the CDF. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$\alpha \in [0,1]$$. The **p-value** (or observed significance level) is the smallest value of $$α$$ for which the null hypothesis would be rejected at level $$α$$. The **confidence interval** refers to the probability that a population parameter falls between a set of values for a certain proportion of times. As an example, for a $$95\%$$ **confidence level**:
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="30%" height="30%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
 
 ---
@@ -443,10 +443,10 @@ $$
 p(A,B,C,D) = p(A)\cdot p(B \mid A) \cdot p( C \mid A) \cdot p ( D \mid A,C )
 $$
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="20%" height="20%" src="{{ site.assets }}/statistics-for-ml/directed_graph.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Adapted from: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Graphical_model">Graphical model</a>
 
 ---
@@ -468,10 +468,10 @@ $$
 
 where $$K$$ is the kernel, a non-negative function, and $$h \gt 0$$ is the smoothing parameter (*bandwidth*). $$h$$ controls the bias-variance trade-off: a large $$h$$ yields a flat estimator, and a small $$h$$ a wiggly one. An example of $$K$$ is the standard normal pdf.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Adapted from: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel density estimation</a>
 
 The following table summarizes the method for each use case:

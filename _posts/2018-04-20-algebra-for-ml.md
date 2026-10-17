@@ -6,7 +6,7 @@ categories: ["Machine Learning"]
 tags: ["linear algebra", "matrix decompositions", "vector calculus", "optimization"]
 ---
 
-A brief summary of algebra topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.
+A brief summary of algebra topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. Statistics and probability are covered in the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-statistics-for-ml %}).
 
 
 ## Properties of Matrices
@@ -154,11 +154,11 @@ Two vectors are **codirected** if they point in the same direction, and **collin
 
 Graphical intuition: a linear mapping scales space along the directions of its eigenvectors, each by its eigenvalue. For a diagonal matrix, the eigenvectors are the canonical basis vectors, i.e. the cardinal axes:
 
-{: style="text-align:center; font-size: small;"}
-<img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/mml_eigenvalues_and_eigenvectors.png"/>
+{: .picture}
+<img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg"/>
 
-{: style="text-align:center; font-size: small;"}
-Image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
+{: .caption}
+Adapted from: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
 
 ### Cholesky Decomposition
 
@@ -180,10 +180,10 @@ and $$A^k = (PDP^{−1})^k = PD^kP^{−1}$$. A symmetric matrix can always be di
 
 The Singular Value Decomposition (SVD) decomposes a matrix as $$A = U \Sigma V^{\intercal}$$:
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/mml_svd.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Adapted from: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
 
 The SVD exists for every matrix, not only for square ones:
@@ -199,10 +199,10 @@ $$
 \hat{A}(k) = \sum_{i=1}^{k} \sigma_i u_i v_i^{\intercal} = \sum_{i=1}^k \sigma_i A_i
 $$
 
-{: style="text-align:center; font-size: small;"}
-<img width="43%" height="43%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="{{ site.assets }}/algebra-for-ml/svd_example.png"/>
+{: .picture}
+<img width="43%" height="43%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="{{ site.assets }}/algebra-for-ml/svd_example.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 **Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequence of transformations. The SVD decomposes the corresponding linear mapping into three operations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$, and the third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: an example application of the SVD. Image sources: adapted from <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>, and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a>
 
 ### Eigenvalue Decomposition vs. Singular Value Decomposition
@@ -250,8 +250,10 @@ $$
 
 The initial value $$x_0$$ should be as close as possible to the zero. The line tangent to $$y=f(x)$$ at $$x=x_0$$ crosses the $$x$$ axis at a new, improved guess $$x_1$$. A stationary point of a function (a minimum, maximum or saddle point) can be found by computing the root of its derivative, i.e. $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$. For multivariate functions, division is not defined, so it is replaced by multiplication by the inverse of the Hessian, i.e. $$x_{n+1}=x_{n}- \left(\triangledown^2 f(x_{n})\right)^{-1} \triangledown f(x_{n})$$.
 
+{: .picture}
 <img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/newton_method.gif"/>
 
+{: .caption}
 (Source: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)
 
 ### Gradient and Hessian
@@ -324,8 +326,31 @@ $$
 
 Automatic differentiation instead performs an efficient *forward* pass by reusing intermediate results, and breaks the *back propagation* algorithm into partial derivatives that propagate backwards through the graph:
 
+Consider the function
+
+$$
+f(x) = \sqrt{x^2 + \exp(x^2)} + \cos\left(x^2 + \exp(x^2)\right)
+$$
+
+If we were to implement a function $$f$$ on a computer, we would be able to save some computation by using *intermediate variables*:
+
+$$
+\begin{align*}
+a & = x^2 \, , \\
+b & = \exp(a) \, , \\
+c & = a + b \, , \\
+d & = \sqrt{c} \, , \\
+e & = \cos(c) \, , \\
+f & = d + e \, .
+\end{align*}
+$$
+
+{: .picture}
 <img width="57%" height="57%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
 
+This is the same kind of thinking process that occurs when applying the chain rule. Note that the preceding set of equations requires fewer operations than a direct implementation of the function $$f(x)$$.
+
+{: .caption}
 (Adapted from: example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Faster attention"
+title:  "Faster attention (GQA, FlashAttention, sparse, linear and latent attention)"
 categories: ["Efficient Inference"]
 tags: ["LLM", "attention", "FlashAttention", "sparse attention", "linear attention", "MLA", "DeepSeek"]
 ---
@@ -13,7 +13,7 @@ $$
 
 During prefill, $$QK^T$$ compares every token with every previous token. The compute therefore grows quadratically with the prompt length $$n$$, and a naive implementation stores an $$n \times n$$ matrix of scores per head.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="83%" height="83%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
 
 The following code implements this attention, with an optional mask, and the causal mask of a decoder. Most modules in this post reuse both functions:
@@ -52,7 +52,7 @@ def causal_mask(Sq, Sk, device=None):
     return torch.ones(Sq, Sk, dtype=torch.bool, device=device).tril(diagonal=Sk - Sq)
 ```
 
-During decode, every new token reads the keys and values of the whole context from the KV cache. The cost of each step therefore grows linearly with the context. Attention dominates at long contexts, roughly once the context is longer than six times the model width. The authors of Native Sparse Attention (below) estimated that attention accounts for 70-80% of the latency when decoding with a 64K-token context. Long documents, long conversations, agents and reasoning models with long chains of thought all fall in this regime.
+During decode, every new token reads the keys and values of the whole context from the KV cache, described in the [post on prefill, decode and the KV cache]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}). The cost of each step therefore grows linearly with the context. Attention dominates at long contexts, roughly once the context is longer than six times the model width. The authors of Native Sparse Attention (below) estimated that attention accounts for 70-80% of the latency when decoding with a 64K-token context. Long documents, long conversations, agents and reasoning models with long chains of thought all fall in this regime.
 
 The solutions fall into three families, which can be combined:
 
@@ -68,17 +68,17 @@ Decode reads the whole KV cache at every step. A smaller KV cache therefore mean
 
 **Multi-Head Attention** keeps one query, one key and one value per head.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
 
 **Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)) keeps one query per head, but all heads share a single key head and a single value head. This shrinks the KV cache by a factor equal to the number of heads, at some cost in quality.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
 
 **Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)) is the middle ground, and most current models use it. The heads are split into $$G$$ groups, and the heads of a group share one key head and one value head. The cache shrinks by a factor $$n_\text{heads} / G$$. GQA is multi-head attention when $$G = n_\text{heads}$$, and MQA when $$G = 1$$. A trained multi-head model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
 
 GQA and MQA mainly accelerate the decode phase. The memory they free also increases the overall system throughput. These savings *only appear when there is a KV cache to read during decode*. Without a cache, GQA saves only a little compute in the key and value projections.
@@ -217,7 +217,7 @@ All three types run in a single fused GPU kernel, for both the forward and backw
 
 MLA mainly accelerates decode, which is bound by memory bandwidth. Like MQA and GQA, it shrinks the KV cache that every decoding step reads. With absorption, attention also runs directly over the cached latent vectors, without up-projecting them into the keys and values of every head. Prefill, in contrast, is compute-bound, and absorbed attention costs more FLOPs per score, as it works in the latent dimension (512 in DeepSeek-V2) instead of the head dimension (128). Implementations therefore usually up-project the latent vectors into keys and values during prefill, and use absorption during decode.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/mla.svg"/>
 
 The following code implements MLA. With absorption (`absorb = True`), attention runs directly over the latent vectors. The output is the same as when the keys and values of every head are recomputed (`absorb = False`):
@@ -290,7 +290,7 @@ DSA was added to an already trained model, in two stages. The first stage is a s
 
 With a KV cache, the indexer key of every token is also cached. Index scores are often tied, since the ReLU outputs many zeros. The selection below therefore uses a stable sort, which breaks ties in the same way whether the tokens are processed together or one at a time. As a result, decoding with a KV cache gives the same result as processing the whole sequence.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
 
 The following code adds DeepSeek Sparse Attention to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained multi-head attention module, and adds an indexer. During the dense warm-up (`dense = True`), the queries attend to all past tokens, and the module computes `indexer_loss`. This loss is backpropagated alone to train the indexer. After the warm-up, each query attends only to the `top_k` past tokens with the highest index scores:
@@ -404,10 +404,10 @@ Both types use multi-query attention with a single key-value vector per entry. T
 | DeepSeek-V4, CSA layers | compression by 4, then top-k | an entry and an indexer key every 4 tokens, plus the last 128 tokens | the top-k entries and the last 128 tokens |
 | DeepSeek-V4, HCA layers | compression by 128 | an entry every 128 tokens, plus the last 128 tokens | all the entries and the last 128 tokens |
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/csa.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/hca.svg"/>
 
 The following code implements both attention types in a single module: CSA when `top_k` is given, and HCA otherwise. It includes the overlapping compression, the lightning indexer, the shared key-value multi-query attention, the sliding window, the low-rank queries, RMSNorm, the attention sink and the grouped output projection. A model alternates CSA and HCA across its blocks. The module expects positional information in its input, such as learned positional embeddings, and therefore omits rotary embeddings. As in DSA, the indexer receives an input detached from the rest of the model. It learns to imitate the attention over the compressed entries through the KL-divergence loss `indexer_loss`, which is added to the training loss. These attention types change the architecture, so a model that uses them is trained from scratch. Unlike the other modules, this module has no KV cache (whose four parts are listed above), and processes whole sequences, as in training and prefill:

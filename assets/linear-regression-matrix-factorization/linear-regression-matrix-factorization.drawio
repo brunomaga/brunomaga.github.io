@@ -8,247 +8,247 @@
           <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="40" width="753.98" height="216.11" as="geometry" />
+          <mxGeometry x="0" y="40" width="753.98" height="213.74" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="0" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="0" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="25.51" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="25.51" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="51.02" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="51.02" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="76.53" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="76.53" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="102.04" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="102.04" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="127.55" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="127.55" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="153.06" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="153.06" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-8" value="Movie features" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="17.98" y="6" width="120" height="26" as="geometry" />
+          <mxGeometry x="19.03" y="5.17" width="120" height="26" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-9" value="&lt;i&gt;W&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="157.98" y="4" width="30" height="28" as="geometry" />
+          <mxGeometry x="159.08" y="3.5" width="30" height="28" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-10" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="matrix-factorization-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="86.88" y="103.1" as="sourcePoint" />
-            <mxPoint x="87.78" y="66.1" as="targetPoint" />
+            <mxPoint x="86.88" y="100.73" as="sourcePoint" />
+            <mxPoint x="87.78" y="63.73" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-factorization-11" value="&lt;i&gt;d&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="73.98" y="104" width="26" height="26" as="geometry" />
+          <mxGeometry x="73.54" y="102.72" width="26" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="226.18" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="226.18" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="226.18" y="63.05" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="226.18" y="60.68" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="226.18" y="88.56" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="226.18" y="86.19" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="226.18" y="114.07" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="226.18" y="111.7" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="226.18" y="139.58" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="226.18" y="137.21" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-17" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="226.18" y="165.09" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-17" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="226.18" y="162.72" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="226.18" y="190.6" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="226.18" y="188.23" width="25.51" height="25.51" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-19" value="&lt;i&gt;Z&lt;/i&gt;&lt;sup&gt;T&lt;/sup&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="219.98" y="0" width="40" height="30" as="geometry" />
+          <mxGeometry x="220.62" y="0" width="40" height="30" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-20" value="User features" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;rotation=-90;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="142.98" y="107.5" width="130" height="26" as="geometry" />
+          <mxGeometry x="142.76" y="105.39" width="130" height="26" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-21" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="matrix-factorization-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="286.28" y="111.5" as="sourcePoint" />
-            <mxPoint x="255.78" y="127.9" as="targetPoint" />
+            <mxPoint x="286.28" y="109.13" as="sourcePoint" />
+            <mxPoint x="255.78" y="125.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-factorization-22" value="&lt;i&gt;n&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="282.98" y="92" width="26" height="26" as="geometry" />
+          <mxGeometry x="282.8" y="91.03" width="26" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="394.02" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="394.02" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="419.53" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="419.53" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="445.04" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="445.04" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-26" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="470.55" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-26" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="470.55" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="496.06" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="496.06" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="521.57" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="521.57" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-29" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="547.08" y="37.54" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-29" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="547.08" y="35.17" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="394.02" y="63.05" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="394.02" y="60.68" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-31" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="419.53" y="63.05" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-31" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="419.53" y="60.68" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="445.04" y="63.05" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="445.04" y="60.68" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="470.55" y="63.05" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="470.55" y="60.68" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="496.06" y="63.05" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="496.06" y="60.68" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-35" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="521.57" y="63.05" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-35" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="521.57" y="60.68" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="547.08" y="63.05" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="547.08" y="60.68" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="394.02" y="88.56" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="394.02" y="86.19" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-38" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="419.53" y="88.56" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-38" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="419.53" y="86.19" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="445.04" y="88.56" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="445.04" y="86.19" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-40" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="470.55" y="88.56" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-40" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="470.55" y="86.19" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="496.06" y="88.56" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="496.06" y="86.19" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="521.57" y="88.56" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="521.57" y="86.19" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-43" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="547.08" y="88.56" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-43" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="547.08" y="86.19" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-44" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="394.02" y="114.07" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-44" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="394.02" y="111.7" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="419.53" y="114.07" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="419.53" y="111.7" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="445.04" y="114.07" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="445.04" y="111.7" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="470.55" y="114.07" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="470.55" y="111.7" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-48" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="496.06" y="114.07" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-48" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="496.06" y="111.7" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="521.57" y="114.07" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="521.57" y="111.7" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="547.08" y="114.07" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="547.08" y="111.7" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="394.02" y="139.58" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="394.02" y="137.21" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="419.53" y="139.58" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="419.53" y="137.21" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-53" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="445.04" y="139.58" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-53" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="445.04" y="137.21" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="470.55" y="139.58" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="470.55" y="137.21" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="496.06" y="139.58" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="496.06" y="137.21" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="521.57" y="139.58" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="521.57" y="137.21" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-57" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="547.08" y="139.58" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-57" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="547.08" y="137.21" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="394.02" y="165.09" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="394.02" y="162.72" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="419.53" y="165.09" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="419.53" y="162.72" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="445.04" y="165.09" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="445.04" y="162.72" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-61" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="470.55" y="165.09" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-61" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="470.55" y="162.72" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="496.06" y="165.09" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="496.06" y="162.72" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-63" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="521.57" y="165.09" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-63" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="521.57" y="162.72" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-64" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="547.08" y="165.09" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-64" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="547.08" y="162.72" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-65" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="394.02" y="190.6" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-65" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="394.02" y="188.23" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-66" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="419.53" y="190.6" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-66" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="419.53" y="188.23" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-67" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="445.04" y="190.6" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-67" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="445.04" y="188.23" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="470.55" y="190.6" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="470.55" y="188.23" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="496.06" y="190.6" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="496.06" y="188.23" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-70" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="521.57" y="190.6" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-70" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="521.57" y="188.23" width="25.51" height="25.51" as="geometry" />
         </mxCell>
-        <mxCell id="matrix-factorization-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=17;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="547.08" y="190.6" width="25.51" height="25.51" as="geometry" />
+        <mxCell id="matrix-factorization-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=17;strokeColor=#000000;strokeWidth=1.15;" vertex="1" parent="matrix-factorization-figure">
+          <mxGeometry x="547.08" y="188.23" width="25.51" height="25.51" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-72" value="Users" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="445.04" y="6" width="76.53" height="26" as="geometry" />
+          <mxGeometry x="412.505" y="5.17" width="76.53" height="26" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-73" value="&lt;i&gt;n&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="521.57" y="8" width="25.51" height="26" as="geometry" />
+          <mxGeometry x="524.005" y="7.5" width="25.51" height="26" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-74" value="Movies" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;rotation=-90;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="341.88" y="88.315" width="70" height="26" as="geometry" />
+          <mxGeometry x="342.07" y="85.95" width="70" height="26" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-75" value="&lt;i&gt;d&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=17;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="363.98" y="165.09" width="26" height="25.51" as="geometry" />
+          <mxGeometry x="366.07" y="162.485" width="26" height="25.51" as="geometry" />
         </mxCell>
         <mxCell id="matrix-factorization-76" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=5;endFill=1;" edge="1" parent="matrix-factorization-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="620.78" y="167.9" as="sourcePoint" />
-            <mxPoint x="550.48" y="175.6" as="targetPoint" />
+            <mxPoint x="620.78" y="165.53" as="sourcePoint" />
+            <mxPoint x="550.48" y="173.23" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="matrix-factorization-77" value="&lt;i&gt;X&lt;/i&gt;&lt;sub&gt;&lt;i&gt;dn&lt;/i&gt;&lt;/sub&gt; ≈ (&lt;i&gt;WZ&lt;/i&gt;&lt;sup&gt;T&lt;/sup&gt;)&lt;sub&gt;&lt;i&gt;dn&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=17;" vertex="1" parent="matrix-factorization-figure">
-          <mxGeometry x="623.98" y="148" width="130" height="36" as="geometry" />
+          <mxGeometry x="623.98" y="145.63" width="130" height="36" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

@@ -14,7 +14,7 @@ A GPT-like model generates text *autoregressively*: it reads the prompt, predict
 - **Decode** generates the remaining tokens, one forward pass per token. Due to the Key-Value (KV) cache, detailed later, each pass processes a single new token per sequence. The GPU therefore performs matrix-vector multiplications: it reads every weight of the model from memory to do very little arithmetic with it. Decode is **memory-bandwidth-bound**, and the duration of each step is the **time per output token (TPOT)**, also called **inter-token latency (ITL)**.
 - The total runtime, or **time to last token (TTLT)**, is $$\text{TTLT} = \text{TTFT} + \text{TPOT} \times ( n - 1)$$, where $$n$$ is the number of output tokens.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
 
 This difference motivates most of this post. Almost every decode optimization does one of three things:
@@ -37,10 +37,10 @@ The [roofline model](https://en.wikipedia.org/wiki/Roofline_model) represents th
 * **X-Axis (Arithmetic Intensity):** the number of math operations performed per byte of data moved (FLOPs/byte).
 * **Y-Axis (Attainable Performance):** the speed the code actually achieves (GFLOPs/s).
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 A roofline plot. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound and runs below the peak performance. Adapted from [Wikipedia's Roofline Model](https://en.wikipedia.org/wiki/Roofline_model).
 
 On a **log-log plot**, the two terms of the minimum form a "roof": a slanted line for the bandwidth bound and a flat line for the peak compute. The two lines meet at the **ridge point**:
@@ -92,8 +92,11 @@ The roofline point ❌ of this example is therefore $$\mathbf{(0.083, 10)}$$.
 
 Consider the multiplication of two matrices of shapes **$$A \times B$$** and **$$B \times C$$**, with an output matrix of shape **$$A \times C$$** and a data type of **$$dt$$** bytes per element. The FLOPs and the memory traffic are as follows.
 
-{: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
+{: .picture}
+<img width="56%" height="56%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
+
+{: .caption}
+**FLOPs:** $$AC$$ outputs $$\times$$ $$B$$ multiply-adds $$\times$$ 2 FLOPs $$= 2ABC$$. **Memory traffic, naive:** matrix 1 read $$C$$ times and matrix 2 read $$A$$ times, $$2ABC\text{ }dt$$. **Memory traffic, with cache:** inputs read once and output written once, $$(AB + BC + AC)\text{ }dt$$. **Arithmetic intensity:** $$2ABC / ((AB + BC + AC)\text{ }dt)$$, about $$2N / (3\text{ }dt)$$ for $$A = B = C = N$$.
 
 **Step 1: Floating Point Operations (FLOPs).** Each of the $$AC$$ elements of the output matrix is a dot product of $$B$$ multiplications and $$B$$ additions. Each multiply-accumulate counts as $$2$$ FLOPs. Therefore:
 
@@ -239,8 +242,11 @@ These layers are complementary, not alternatives. KV caching is always on, prefi
 
 In the attention layer, the query of the new token attends to the keys and values of all previous tokens. In a causal model, the keys and values of past tokens never change, since token $$i$$ only depends on itself and the tokens before it. Without a cache, each decode step recomputes the keys and values of the whole sequence. Generating $$n$$ tokens then costs $$O(n^2)$$ work in the projections and MLPs and $$O(n^3)$$ in attention. With a cache, each step only computes the query, key and value of the new token, appends the new key and value to the cache, and attends over all cached entries, for a total of $$O(n)$$ and $$O(n^2)$$. Queries are not cached, because the query of a past token was only needed to compute the output at that position.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
+
+{: .caption}
+**Without KV cache:** generating $$n$$ tokens costs $$O(n^2)$$ in the projections and the MLP, and $$O(n^3)$$ in attention. **With KV cache:** generating $$n$$ tokens costs $$O(n)$$ in the projections and the MLP, and $$O(n^2)$$ in attention.
 
 The cost is memory. For every token, every layer stores one key and one value vector per key-value head:
 
@@ -373,7 +379,7 @@ def generate_kvcache(model, prompt, n_tokens, seqlen, kv_cache=None):
     return tokens
 ```
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="65%" height="65%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
 
 The code above uses a dynamic cache. The following code implements a static cache for one layer, where the keys and values of the new tokens are written in place:
@@ -399,7 +405,7 @@ class StaticKVCache:
 
 #### Static shapes for CUDA graphs
 
-The cache above avoids the copies, but the keys and values it returns still grow by one token at every step. A CUDA graph records a decode step once and replays it, and requires the shapes and memory addresses of all tensors to be the same at every step. The decode step must then attend over the *whole* preallocated buffer, and mask the positions that are not filled yet. The position of the new token is passed as a tensor, so that it is an input of the graph and not a constant.
+The cache above avoids the copies, but the keys and values it returns still grow by one token at every step. A [CUDA graph]({{ site.baseurl }}{% post_url 2023-06-27-gptlite-cpp %}#kernel-optimization-via-torchcompile) records a decode step once and replays it, and requires the shapes and memory addresses of all tensors to be the same at every step. The decode step must then attend over the *whole* preallocated buffer, and mask the positions that are not filled yet. The position of the new token is passed as a tensor, so that it is an input of the graph and not a constant.
 
 The following code wraps the GPT model above with a static cache for all layers, and compiles its decode step with `torch.compile(mode="reduce-overhead")`, which records and replays it as a CUDA graph on a GPU. Because of the learned positional embeddings, `max_len` must not exceed the context window `seqlen`:
 
@@ -459,8 +465,11 @@ The prefill runs once per request and has a different shape, so it is not compil
 
 Serving many requests at once makes memory management difficult, because the final length of each sequence is unknown. A naive engine reserves a contiguous KV buffer of the maximum length for every request, and most of that memory stays empty: the authors of [vLLM](https://arxiv.org/abs/2309.06180) measured that only 20% to 40% of the KV memory reserved by existing systems held actual tokens. PagedAttention adopts the idea of virtual memory from operating systems. The KV cache is split into fixed-size *blocks* (pages), allocated on demand, and a *block table* maps the logical blocks of each sequence to physical blocks anywhere in GPU memory. The attention kernel reads the blocks through this table. Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. Several sequences can also share a block, which is copied only when one of them writes to it (copy-on-write). Prefix caching, parallel sampling and beam search use this mechanism to share their common prefix.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+
+{: .caption}
+The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block.
 
 The following code implements a paged KV cache and the attention of one decode step over it:
 
@@ -525,7 +534,7 @@ Many requests start with the same tokens: a system prompt, tool definitions, a l
 - Labeling: each full block gets a hash of its 16 token IDs combined with the hash of the previous block. A block's hash therefore identifies the whole prefix up to the end of that block.
 - Next request: the engine hashes the new prompt block by block from the start, reuses blocks until the first mismatch, and prefills only the rest.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
 
 Automatic Prefix Caching requires little extra memory. It shares existing KV blocks through pointers instead of copying them. The memory cost is a hash table that maps block hashes to physical blocks, and cached blocks that stay resident after their request finishes. These blocks are evicted, least recently used first, when new requests need memory. Since vLLM is built on PagedAttention, its memory is already divided into discrete, fixed-size physical pages (blocks of usually 16 tokens), and prefix caching builds on this virtual memory architecture.
@@ -579,8 +588,11 @@ A semantic cache sits in front of the model, in the application. For every incom
 3. if the similarity is above a threshold, returns the stored answer without calling the model;
 4. otherwise, calls the model and stores the new (embedding, answer) pair.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
+
+{: .caption}
+In this example, the closest past query, "What is the price of corn in Rome?", has a cosine similarity of 0.91, above a threshold of 0.85: a cache hit.
 
 **How embeddings are created.** Embeddings come from a separate, much smaller *embedding model*, typically a transformer encoder such as the [Sentence-BERT](https://arxiv.org/abs/1908.10084) family (e.g., all-MiniLM-L6-v2), E5, BGE or GTE, or from an embedding API. The encoder is trained with *contrastive learning*: pairs of texts with the same meaning (paraphrases, or a question and its answer) are pulled together, and the other texts of the batch are pushed apart. After training, the cosine similarity between two embeddings measures how close their meanings are. The raw hidden states of a generative LLM make poor embeddings, unless the model is fine-tuned in the same contrastive way. Some of the best recent embedding models are built this way.
 
@@ -699,10 +711,10 @@ def continuous_batching(model, requests, batch_size, seqlen):
 
 With continuous batching, a waiting request takes a free slot as soon as one is available, so its prefill runs in the same step as the decode of the other requests. The prefill of a short prompt costs about as much as a decode step, but the prefill of a long prompt can take many times longer, and all other requests of the batch wait for it: their text output pauses, and their time per output token spikes. **Chunked prefill** solves this by processing a long prompt in several smaller pieces (chunks), one per step, instead of in one forward pass. Every step then takes about the same time, and the other requests keep generating one token per step.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="95%" height="95%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 The same 6 requests (R1 to R6) on 3 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R4 takes three. Static batching runs the requests in groups of 3 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R4 stalls R1 and R3. With chunked prefill, R4 processes its prompt in 3 chunks of one time unit each, while R1 and R3 continue decoding.
 
 Each chunk, e.g., of 512 tokens, attends to the KV cache of the earlier chunks. Consider an 8,000-token prompt that arrives while 50 other sequences are decoding:
@@ -711,7 +723,7 @@ Each chunk, e.g., of 512 tokens, attends to the KV cache of the earlier chunks. 
 - Because attention is causal, the **result is identical to processing the whole prompt at once**. In practice, the KV cache is accumulated chunk by chunk, and FlashAttention-style kernels compute the partial attention correctly.
 - With a causal mask, tokens only attend to previous tokens, so **attention is final after each chunk**. Without a causal mask, the attention of the previous chunks needs an extra, final computation. This recomputation requires reloading the previous chunks into GPU SRAM, which increases the memory bandwidth overhead. For this reason, **chunked prefill is rarely used for non-causal models**.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
 
 The following code implements chunked prefill:
@@ -733,7 +745,7 @@ With continuous batching and chunked prefill, a step runs the prefill chunks of 
 - Attention: this is the only per-sequence operation. Variable-length kernels (FlashAttention's varlen mode, FlashInfer, PagedAttention) use per-token metadata (sequence id, position, KV block table) so that each token attends only to its own sequence. The attention uses a block-diagonal causal mask to separate the sequences, and the kernels skip the blocks outside its diagonal, instead of computing the full square matrix.
 - At the output layer, the forward pass does not compute predictions for every position. It uses the metadata to find the index of the last token of each sequence, and performs the argmax/sampling only on those tokens, to obtain the next token of every running sequence.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="91%" height="91%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
 
 The following code packs sequences of different lengths into one flat sequence, and returns the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
@@ -796,5 +808,8 @@ Prefill is compute-bound and decode is memory-bound, so they interfere when they
 
 Prefill-decode disaggregation therefore requires transmitting the KV cache from prefill to decode GPUs. To avoid sending large KV cache chunks and waiting for them, modern engines use **Layer-Wise Streaming (a pipeline overlap of computation and communication)**: as soon as Layer 1 finishes its prefill, it starts transmitting its KV cache chunks over the network, while Layer 2 is still computing. The destination can be the High-Bandwidth Memory (HBM) of a decode GPU or, in more advanced setups, a shared cluster acting as a **KV Cache Store**, e.g., [Mooncake](https://www.zhongzhuzhou.org/blog/2026-05-28-mooncake-technical-review-en/) or [LMCache](https://docs.lmcache.ai/mp/disaggregated_prefill.html).
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
+
+{: .caption}
+In the layer-wise streaming of the KV cache, the transfer of each layer overlaps with the compute of the next layers, and only the transfer of the last layer delays the decode.

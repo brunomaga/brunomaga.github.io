@@ -42,7 +42,7 @@ The first is the **Odd-Even sort**, a distributed swap-based sorting algorithm. 
 
 The following workflow illustrates the algorithm on a sample dataset: 
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="75%" height="75%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
 
 The algorithm is very *memory-stable*, i.e. its worst-case memory consumption is known in advance. Moreover, each compute node ends up with the same number of elements it started with, so the load is balanced across nodes. However, it is inefficient on very large networks, as it requires a high number of iterations.
@@ -58,9 +58,9 @@ A faster alternative is a distributed implementation of the **sample sort**, wit
 
 The following workflow illustrates the method:
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="74%" height="74%" src="{{ site.assets }}/distributed-sort/sample_sort.svg">
 
-This method is computationally very efficient, as the number of communication steps is constant, regardless of the input size or network size. However, it may lead to very different numbers of elements across nodes, causing computational and memory imbalance. If needed, a balancing step can follow the sort to redistribute the dataset evenly across the network.
+This method is computationally very efficient, as the number of communication steps is constant, regardless of the input size or network size. However, it may lead to very different numbers of elements across nodes, causing computational and memory imbalance. If needed, a balancing step can follow the sort to redistribute the dataset evenly across the network. This balancing step and the sorting of spatial datasets are covered [in a different post]({{ site.baseurl }}{% post_url 2015-12-01-slicing %}).
 
 The `C++` implementation of both algorithms is available in <a href="https://github.com/{{ site.repository }}/blob/master/assets/distributed-sort/distributedmemorysorter.cxx">DistributedMemorySorter.cxx</a> and <a href="https://github.com/{{ site.repository }}/blob/master/assets/distributed-sort/distributedmemorysorter.h">DistributedMemorySorter.h</a>. 

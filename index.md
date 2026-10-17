@@ -89,7 +89,7 @@ I also keep a curated list of related books and other resources available online
 <tr>
 <td></td>
 <td>
-  <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz and Shai Ben-David</a> (<a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf">pdf</a>)
+  <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz, Shai Ben-David</a> (<a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf">pdf</a>)
 </td>
 </tr>
 <tr>
@@ -126,6 +126,12 @@ I also keep a curated list of related books and other resources available online
 <td></td>
 <td>
   <a href="{{ site.epfl_statistics }}/README.md">Statistics for Data Science (EPFL course MATH-413)</a>
+</td>
+</tr>
+<tr>
+<td></td>
+<td>
+  <a href="{{ site.epfl_machine_learning }}/README.md">Machine Learning (EPFL course CS-433)</a>
 </td>
 </tr>
 <tr>

@@ -1,7 +1,7 @@
 title: "Bruno Magalhaes"
 author:
   name: Bruno Magalhaes
-  email: "quimera@gmail.com"
+  email: "brunomaga+blog@gmail.com"
 repository: brunomaga/brunomaga.github.io
 assets: /assets
 resources_permalink: /#resources-table
@@ -10,8 +10,9 @@ google_scholar: https://scholar.google.com/citations?user=pirWLLgAAAAJ
 baseurl: ""
 url: "https://brunomaga.github.io"
 
-# for the links Statistics for Data Science at EPFL in the resources page
+# for the links to the EPFL courses in the resources page
 epfl_statistics: https://github.com/brunomaga/Statistics_EPFL/blob/main/
+epfl_machine_learning: https://github.com/brunomaga/MachineLearning_EPFL/blob/master/
 
 # Build settings
 theme: minima

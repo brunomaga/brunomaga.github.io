@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000px" height="250px" viewBox="-1 -1 1002 252" font-family="Helvetica, Arial, sans-serif">
+<polyline points="92.40,42.60 175.00,5.00" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-linejoin="round"/>
+<polyline points="92.40,87.40 175.00,205.00" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-linejoin="round"/>
+<polyline points="271.80,98.20 385.00,5.00" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-linejoin="round"/>
+<polyline points="271.80,117.80 385.00,205.00" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-linejoin="round"/>
+<polyline points="488.80,54.20 605.00,5.00" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-linejoin="round"/>
+<polyline points="488.80,73.80 605.00,205.00" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-linejoin="round"/>
+<polyline points="732.10,35.90 800.00,5.00" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-linejoin="round"/>
+<polyline points="732.10,54.10 800.00,205.00" fill="none" stroke="#b3b3b3" stroke-width="1" stroke-linejoin="round"/>
+<rect x="45.00" y="40.00" width="50.00" height="50.00" fill="#d5e8d4" stroke="#000000" stroke-width="1.8"/>
+<text x="70.00" y="65.00" font-size="22" text-anchor="middle" dominant-baseline="central"><tspan font-style="italic">E</tspan></text>
+<rect x="45.00" y="140.00" width="50.00" height="50.00" fill="#d5e8d4" stroke="#000000" stroke-width="1.8"/>
+<text x="70.00" y="165.00" font-size="22" text-anchor="middle" dominant-baseline="central"><tspan font-style="italic">I</tspan></text>
+<polyline points="45.00,65.00 20.00,65.00 20.00,165.00 37.80,165.00" fill="none" stroke="#000000" stroke-width="1.8" stroke-linejoin="round"/>
+<polygon points="45.00,165.00 37.00,168.50 37.00,161.50" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="95.00,165.00 120.00,165.00 120.00,65.00 102.20,65.00" fill="none" stroke="#000000" stroke-width="1.8" stroke-linejoin="round"/>
+<polygon points="95.00,65.00 103.00,61.50 103.00,68.50" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="223.80,38.13 245.18,33.58" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="252.22,32.08 245.12,37.17 243.67,30.32" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="270.57,32.75 301.63,42.74" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="308.48,44.94 299.79,45.82 301.93,39.16" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="212.63,48.68 204.53,78.41" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="202.63,85.35 201.36,76.71 208.11,78.56" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="208.81,96.85 245.17,104.47" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="252.21,105.95 243.66,107.73 245.10,100.88" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="270.94,106.95 312.92,102.01" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="320.07,101.17 312.53,105.58 311.71,98.63" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="267.81,36.88 288.90,61.86" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="293.55,67.36 285.71,63.51 291.06,58.99" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="293.20,80.90 274.99,96.72" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="269.55,101.44 273.30,93.56 277.89,98.84" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="320.02,56.77 326.13,83.24" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="327.75,90.26 322.54,83.25 329.36,81.67" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="257.28,115.66 239.01,145.35" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="235.24,151.48 236.45,142.84 242.41,146.50" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="238.97,160.75 272.86,163.57" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="280.03,164.17 271.77,166.99 272.35,160.02" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="298.62,167.59 323.53,175.06" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="330.42,177.13 321.75,178.18 323.76,171.48" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="331.12,108.93 337.87,162.93" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="338.76,170.08 334.29,162.57 341.24,161.70" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="224.07,166.77 206.33,187.06" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="201.59,192.47 204.22,184.15 209.49,188.76" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="199.57,103.99 195.82,182.82" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="195.48,190.01 192.36,181.85 199.35,182.19" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="304.99,67.51 308.46,62.31" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="312.45,56.32 310.93,64.92 305.10,61.04" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="286.03,156.92 269.58,123.44" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="266.41,116.98 273.08,122.61 266.79,125.70" fill="#000000" stroke="#000000" stroke-width="1"/>
+<ellipse cx="215.00" cy="40.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="262.00" cy="30.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="318.00" cy="48.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="200.00" cy="95.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="262.00" cy="108.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="330.00" cy="100.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="230.00" cy="160.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="290.00" cy="165.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="340.00" cy="180.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="195.00" cy="200.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<ellipse cx="300.00" cy="75.00" rx="9.00" ry="9.00" fill="#f8cecc" stroke="#000000" stroke-width="1.8"/>
+<rect x="487.50" y="156.00" width="15.00" height="9.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-90.00 495.00 160.50)"/>
+<rect x="487.50" y="139.00" width="15.00" height="9.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-90.00 495.00 143.50)"/>
+<rect x="487.50" y="122.00" width="15.00" height="9.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-90.00 495.00 126.50)"/>
+<rect x="487.50" y="105.00" width="15.00" height="9.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-90.00 495.00 109.50)"/>
+<rect x="487.50" y="88.00" width="15.00" height="9.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-90.00 495.00 92.50)"/>
+<rect x="481.39" y="74.22" width="15.00" height="7.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-130.00 488.89 77.72)"/>
+<rect x="470.47" y="61.20" width="15.00" height="7.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-130.00 477.97 64.70)"/>
+<rect x="459.54" y="48.18" width="15.00" height="7.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-130.00 467.04 51.68)"/>
+<rect x="446.33" y="38.72" width="15.00" height="5.50" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-152.00 453.83 41.47)"/>
+<rect x="431.32" y="30.74" width="15.00" height="5.50" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-152.00 438.82 33.49)"/>
+<rect x="451.78" y="34.15" width="15.00" height="5.50" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-108.00 459.28 36.90)"/>
+<rect x="446.53" y="17.98" width="15.00" height="5.50" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-108.00 454.03 20.73)"/>
+<rect x="493.61" y="74.22" width="15.00" height="7.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-50.00 501.11 77.72)"/>
+<rect x="504.53" y="61.20" width="15.00" height="7.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-50.00 512.03 64.70)"/>
+<rect x="515.46" y="48.18" width="15.00" height="7.00" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-50.00 522.96 51.68)"/>
+<rect x="523.22" y="34.15" width="15.00" height="5.50" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-72.00 530.72 36.90)"/>
+<rect x="528.47" y="17.98" width="15.00" height="5.50" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-72.00 535.97 20.73)"/>
+<rect x="528.67" y="38.72" width="15.00" height="5.50" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-28.00 536.17 41.47)"/>
+<rect x="543.68" y="30.74" width="15.00" height="5.50" fill="#dae8fc" stroke="#000000" stroke-width="1.2" transform="rotate(-28.00 551.18 33.49)"/>
+<ellipse cx="495.00" cy="190.00" rx="20.00" ry="20.00" fill="#dae8fc" stroke="#000000" stroke-width="1.8"/>
+<rect x="675.00" y="15.00" width="22.00" height="34.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.5"/>
+<rect x="675.00" y="53.00" width="22.00" height="34.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.5"/>
+<rect x="675.00" y="91.00" width="22.00" height="34.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.5"/>
+<rect x="675.00" y="129.00" width="22.00" height="34.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.5"/>
+<rect x="675.00" y="167.00" width="22.00" height="34.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.5"/>
+<rect x="697.00" y="42.00" width="20.00" height="6.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.2"/>
+<ellipse cx="723.50" cy="45.00" rx="6.50" ry="7.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.5"/>
+<rect x="655.00" y="82.00" width="20.00" height="6.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.2"/>
+<ellipse cx="648.50" cy="85.00" rx="6.50" ry="7.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.5"/>
+<rect x="697.00" y="122.00" width="20.00" height="6.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.2"/>
+<ellipse cx="723.50" cy="125.00" rx="6.50" ry="7.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.5"/>
+<rect x="655.00" y="162.00" width="20.00" height="6.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.2"/>
+<ellipse cx="648.50" cy="165.00" rx="6.50" ry="7.00" fill="#e1d5e7" stroke="#000000" stroke-width="1.5"/>
+<rect x="802.00" y="17.00" width="56.00" height="26.00" rx="3.90" fill="#ffe6cc" stroke="#000000" stroke-width="1.5"/>
+<text x="830.00" y="30.00" font-size="12" text-anchor="middle" dominant-baseline="central"><tspan >Ca</tspan><tspan baseline-shift="super" font-size="9.0">2+</tspan></text>
+<rect x="892.00" y="17.00" width="56.00" height="26.00" rx="3.90" fill="#fff2cc" stroke="#000000" stroke-width="1.5"/>
+<text x="920.00" y="30.00" font-size="12" text-anchor="middle" dominant-baseline="central"><tspan >CaM</tspan></text>
+<rect x="802.00" y="82.00" width="56.00" height="26.00" rx="3.90" fill="#fff2cc" stroke="#000000" stroke-width="1.5"/>
+<text x="830.00" y="95.00" font-size="12" text-anchor="middle" dominant-baseline="central"><tspan >AC</tspan></text>
+<rect x="892.00" y="82.00" width="56.00" height="26.00" rx="3.90" fill="#fff2cc" stroke="#000000" stroke-width="1.5"/>
+<text x="920.00" y="95.00" font-size="12" text-anchor="middle" dominant-baseline="central"><tspan >CaMKII</tspan></text>
+<rect x="802.00" y="147.00" width="56.00" height="26.00" rx="3.90" fill="#ffe6cc" stroke="#000000" stroke-width="1.5"/>
+<text x="830.00" y="160.00" font-size="12" text-anchor="middle" dominant-baseline="central"><tspan >cAMP</tspan></text>
+<rect x="892.00" y="147.00" width="56.00" height="26.00" rx="3.90" fill="#fff2cc" stroke="#000000" stroke-width="1.5"/>
+<text x="920.00" y="160.00" font-size="12" text-anchor="middle" dominant-baseline="central"><tspan >PKA</tspan></text>
+<rect x="847.00" y="192.00" width="56.00" height="26.00" rx="3.90" fill="#fff2cc" stroke="#000000" stroke-width="1.5"/>
+<text x="875.00" y="205.00" font-size="12" text-anchor="middle" dominant-baseline="central"><tspan >PDE</tspan></text>
+<polyline points="859.00,30.00 882.80,30.00" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="890.00,30.00 882.00,33.50 882.00,26.50" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="920.00,44.00 920.00,72.80" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="920.00,80.00 916.50,72.00 923.50,72.00" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="900.62,44.00 856.03,76.20" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="850.20,80.41 854.63,72.89 858.73,78.57" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="830.00,109.00 830.00,137.80" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="830.00,145.00 826.50,137.00 833.50,137.00" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="859.00,160.00 882.80,160.00" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="890.00,160.00 882.00,163.50 882.00,156.50" fill="#000000" stroke="#000000" stroke-width="1"/>
+<polyline points="861.00,191.00 849.80,179.80" fill="none" stroke="#000000" stroke-width="1.2" stroke-linejoin="round"/>
+<polygon points="844.71,174.71 852.84,177.89 847.89,182.84" fill="#000000" stroke="#000000" stroke-width="1"/>
+<ellipse cx="70.00" cy="65.00" rx="32.00" ry="32.00" fill="none" stroke="#808080" stroke-width="1.2" stroke-dasharray="3 3"/>
+<ellipse cx="262.00" cy="108.00" rx="14.00" ry="14.00" fill="none" stroke="#808080" stroke-width="1.2" stroke-dasharray="3 3"/>
+<ellipse cx="479.00" cy="64.00" rx="14.00" ry="14.00" fill="none" stroke="#808080" stroke-width="1.2" stroke-dasharray="3 3"/>
+<ellipse cx="723.00" cy="45.00" rx="13.00" ry="13.00" fill="none" stroke="#808080" stroke-width="1.2" stroke-dasharray="3 3"/>
+<text x="70.00" y="234.00" font-size="15" text-anchor="middle" dominant-baseline="central"><tspan >Population model</tspan></text>
+<text x="270.00" y="234.00" font-size="15" text-anchor="middle" dominant-baseline="central"><tspan >Point neuron network</tspan></text>
+<text x="495.00" y="234.00" font-size="15" text-anchor="middle" dominant-baseline="central" font-weight="bold"><tspan >Compartmental neuron</tspan></text>
+<text x="695.00" y="234.00" font-size="15" text-anchor="middle" dominant-baseline="central"><tspan >Compartmental membrane</tspan></text>
+<text x="900.00" y="234.00" font-size="15" text-anchor="middle" dominant-baseline="central"><tspan >Reaction-diffusion</tspan></text>
+</svg>

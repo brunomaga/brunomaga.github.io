@@ -21,10 +21,10 @@ Its Recurrent Neural Network (RNN) has the following structure:
 
 This structure is represented in the following picture:
 
-{: style="text-align:center;"}
+{: .picture}
 <img width="32%" height="32%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 The recurrent neural network trained at each step of the encoder-decoder architecture. The blue area represents input neurons. The green area represents a single hidden layer formed by the states of the GRU/LSTM neurons of the RNN. The red area represents the model output. The model input is the concatenation of the hidden layer of the previous iteration and the input of the current iteration. 
 
 Training has an encoding and a decoding phase:
@@ -33,10 +33,10 @@ Training has an encoding and a decoding phase:
 
 This algorithm is illustrated below:
 
-{: style="text-align:center;"}
+{: .picture}
 <img width="90%" height="90%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Training workflow of an encoder-decoder architecture that learns the translation of the English sentence "Hello World." into the French sentence "Bonjour le monde.".
 
 Two remarks about the Encoder-Decoder architecture:
@@ -51,10 +51,10 @@ Accurate results for long sentences are hard to obtain, because recurrent neural
 
 In 2017, researchers at Google introduced the Transformer (original paper [Attention is all you need (2017, Google, arXiv)](https://arxiv.org/abs/1706.03762)), which overcomes many of these issues and achieves better results. The transformer architecture is:
 
-{: style="text-align:center;"}
+{: .picture}
 <img width="35%" height="35%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 The transformer architecture. Grey regions represent the Encoder (left) and Decoder (right) architectures.
 Adapted from: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
 
@@ -72,9 +72,10 @@ The first relevant unit of the transformer is the embedding unit combined with t
 The positional encoding is thus given by $$sine$$ and $$cosine$$ waves with a different frequency and offset for each dimension. As an example, for a word at position $$pos$$ (x axis), the values at dimensions $$4$$, $$5$$, $$6$$ and $$7$$ are:
 
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/transformer-embedding.svg"/>
 
+{: .caption}
 Output of the positional encoding of the transformer for dimensions 4 to 7 of the embedding array, for a word whose position in the sentence is given by the x axis. Adapted from: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
 
 ### Attention Mechanism
@@ -83,10 +84,10 @@ The main component of the transformer is the attention mechanism, which determin
 
 Consider a single attention head first. For a sentence of $$N$$ words, how is each word related to every other word in that sentence? The output of a single attention mechanism is the $$N \times N$$ matrix that stores these inter-word importance metrics. An example is shown below:
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="32%" height="32%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Output of the attention mechanism. For the sentence "The big red dog", of length $$N=4$$, each row of the attention matrix holds the normalized relevance of that word to every other word in the sentence. Source: unknown. 
 
 According to the paper, each attention head is formulated as:
@@ -109,10 +110,10 @@ $$
 
 The term $$ \frac{1}{\sqrt{D^{QK}}} $$ keeps the range of values roughly unchanged, even for large $$D^{QK}$$. For each query, the final value is the sum of the input values weighted by the attention scores: $$Y_q = \sum_k A_{q,k} \, V_k $$. 
 
-{: style="text-align:center;"}
+{: .picture}
 <img width="50%" height="50%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_lbdl.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 The attention operator matches every query $$Q_q$$ with all keys $$K_1, ..., K_{N^{KV}}$$ to obtain normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averages the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute $$Y_q$$ (right). Adapted from: [The Little Book of Deep Learning]({{ site.resources_permalink }}). 
 
 
@@ -130,10 +131,10 @@ It is a concatenation of all attention heads. The learnt parameters are the weig
 
 The **Masked Multi-head Attention** component of the decoder is similar to the regular MHA, but sets the upper triangle of the attention score matrix to $$-\infty$$ before the softmax, to hide the next words from the model. After the softmax, these positions have an attention weight of zero. Decoding is performed one word of the output sequence at a time: previously seen words are added to the attention array, and the following words receive zero attention weight. For the previous example, the four iterations are: 
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="27%" height="27%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_masked.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Input of the masked attention mechanism of the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every iterated word. Masking sets the attention scores of unseen words to $$-\infty$$ before the softmax, which gives them an attention weight of zero. Source: unknown.
 
 
@@ -156,7 +157,7 @@ Besides the large reduction in the number of iterations on the encoder side, the
 | Convolutional | $$O(k \cdot n \cdot d^2)$$ | $$O(1)$$ | $$O(log_k(n))$$ |
 | **Self-Attention** (restricted) | $$O(r \cdot n \cdot d)$$ | $$O(1)$$ | $$O(n/r)$$ |
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Computational complexity of four different learning models. Key: $$n$$: sequence length, $$d$$: representation dim., $$k$$: kernel size, $$r$$: size of neighbourhood. Source: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
 
 
@@ -174,10 +175,10 @@ The main rationale of the Transformer's Encoder-Decoder is that:
 
 The encoder is trained efficiently and learns a *context*. This raises the question: can the Encoder's context alone be used to learn complex tasks? This led to the BERT model (original paper [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google AI](https://arxiv.org/abs/1810.04805)). BERT is a stack of Transformer encoders that learns language contexts and performs interpretation tasks.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="80%" height="80%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 The BERT model, as a stack of Transformer encoders.
 
 Training has two phases: a pre-training phase learns the contexts of the language, and a fine-tuning phase adapts the trained model to the task being solved.
@@ -199,10 +200,10 @@ Output = [NotNext] the man went to the store [SEP] penguins like to jump [SEP]
 
 The Yes/No flag of the second task is passed as the first embedded word of the output. The layout of the input data is:
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/bert_input.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Input of the BERT model. Position embeddings are similar to those of the transformer described above. Segment embeddings flag each word as part of the first or second sentence. Token embeddings are the text embeddings of the input data. The input to the model is the sum of these three embeddings. Adapted from: <a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018, Google, arXiv)</a>
 
 The authors trained this model on BooksCorpus (800M words) and English Wikipedia (2,500M words), with 12 (BERT-base) or 24 (BERT-large) layers and batches of 256 sequences. Sequences have 128 tokens for 90% of the training steps and 512 tokens for the remaining 10%.
@@ -223,10 +224,10 @@ In the original paper, the authors successfully applied this model to four famil
 
 The inputs and outputs of the fine-tuning for these tasks are illustrated below: 
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Input and output of the fine-tuning phase of a BERT network, applied to four different interpretation tasks.
 Adapted from: <a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018, Google, arXiv)</a>
 
