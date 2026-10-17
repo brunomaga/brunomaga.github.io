@@ -9,6 +9,14 @@ tags: ["Hodgkin-Huxley", "cable theory", "NEURON", "numerical methods", "simulat
 
 Neurons are complex structures of the human body that govern behaviour, pain, feelings, motion, and most other aspects of human life. The human brain has approximately $$8.6 \times 10^{10}$$ neurons, connected by $$1.5 \times 10^{14}$$ synapses. For comparison, the larva of the sea squirt *Ciona intestinalis* has 231 neurons, mice have approximately $$71$$ million neurons, and the African elephant has almost three times as many neurons as humans, with $$25.7 \times 10^{10}$$ neurons --- see the Wikipedia entry [List of animals by number of neurons][number-of-neurons] for a longer list of neuron counts per animal.
 
+The brain can be studied at many scales, as shown in the picture below. At the largest scale, the brain is divided into regions, each with a different role (a). Each region is made of many neurons. A neuron is a cell with a body, many branched dendrites that receive signals, and a long axon that sends signals to other neurons (b). Neurons pass signals to each other through synapses, where chemical messengers cross a small gap between two cells (c). At the smallest scale, ion channels in the neuron's membrane let sodium and potassium ions flow in and out of the cell. This flow of ions changes the voltage across the membrane, and creates the neuron's electrical signal (d). This post focuses on the electrical activity at the level of the neuron: how the flow of ions changes the membrane voltage, and how we simulate it.
+
+{: style="text-align:center; font-size: small;"}
+<img width="50%" height="50%" src="{{ site.assets }}/neuron-electrical-activity/brain_scales.svg">
+
+{: style="text-align:center; font-size: small;"}
+The scales of the brain: (a) brain regions, (b) neuron, (c) synapse, and (d) ion channels in the neuron membrane. Adapted from: Mariana Villarreal (LadyofHats), Wikimedia Commons; and Blausen.com staff, Blausen Medical 2014, WikiJournal of Medicine
+
 Because of the complex anatomical structure and behaviour of neurons, numerical methods are used to approximate neuron models and simulate the electrical activity of neural networks.
 
 {: style="text-align:center; font-size: small;"}
