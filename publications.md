@@ -2013,6 +2013,9 @@ a natural language instruction describing the task.
 {: .picture}
 <img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/gpt3_fig21.svg"/> 
 
+{: .caption}
+<b>Zero-shot, one-shot and few-shot, contrasted with traditional fine-tuning</b>. The panels above show four methods for performing a task with a language model – fine-tuning is the traditional method, whereas zero-, one-, and few-shot, which we study in this work, require the model to perform the task with only forward passes at test time. We typically present the model with a few dozen examples in the few shot setting. Exact phrasings for all task descriptions, examples and prompts can be found in Appendix G.
+
 {: .picture}
 <img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/gpt3_fig11.svg"/> 
 
