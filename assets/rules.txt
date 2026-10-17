@@ -56,9 +56,10 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
 3. FONT
 -------
 
-- One font family in every picture: Helvetica (draw.io's default; fontFamily=Helvetica). It matches the
-  site's sans-serif text. Code identifiers may use Courier New. Formulas use draw.io's math or Unicode
-  sub/superscripts in the same font.
+- One font family in every picture: Times New Roman (fontFamily=Times New Roman), as in the kernel paper
+  figures. Its metric twin Liberation Serif stands in where Times New Roman is not installed. Code
+  identifiers may use Courier New. Formulas use draw.io's math or Unicode sub/superscripts in the same
+  font.
 - Text sizes, in page px (draw.io fontSize at page scale):
       title          16  bold     the picture's title, if it has one
       subtitle       14  bold     panel titles, headers, group names
