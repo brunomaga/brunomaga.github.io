@@ -40,21 +40,21 @@ The INC switch replaces the two collectives with two new ones:
 This cuts the packets crossing the switch from $$2W^2$$ to $$2W$$ per collective, and the data sent or received by each rank by up to a factor of $$W$$. Each rank issues a single `put_signal` for the dispatch and a single `signal` for the combine. All other transfers are issued by the switch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="28%" height="28%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
+<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-A dispatch and combine seen from rank $$P_2$$. On the dispatch, $$P_2$$ puts its token C into the switch, which sends A and C to $$P_0$$, and B and C to $$P_1$$. On the combine, the switch pulls the outputs of each rank with a `get` when its flag rises, sums them, and sends $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls.
+The dispatch and combine of the token $$T_C$$ of rank $$P_2$$. On the dispatch, $$P_2$$ puts $$T_C$$ and its expert ids $$E_{0123}$$ into the switch, which sends $$T_C$$ with $$E_{01}$$ to $$P_0$$ and with $$E_{23}$$ to $$P_1$$. On the combine, the switch pulls the local sum $$\sigma_C$$ of the expert outputs of each rank with a `get` when its flag rises, accumulates it, and sends the sum $$\Sigma_C$$ to $$P_2$$. Subscripts name the destination of each call, or the sender of a `signal`. Dotted arrows are flags raised with `signal`, and the asterisk marks nonblocking calls.
 
 {: style="text-align:center; font-size: small;"}
-<img width="27%" height="27%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_reduce.svg"/><span style="display:inline-block; width:5.5%"></span><img width="27%" height="27%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_unique.svg"/>
+<img width="40%" height="40%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_reduce.svg"/><span style="display:inline-block; width:5.5%"></span><img width="40%" height="40%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_unique.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-The two INC collectives on $$W=4$$ ranks, from top to bottom. **Left:** All-to-All-Reduce. **Right:** All-to-All-Unique. $$T_x$$ are the tokens of rank $$P_x$$, $$E_x$$ their expert ids and weights, and $$f_x$$ its ready flag on the switch.
+The two INC collectives on $$W=4$$ ranks, from top to bottom. **Left:** All-to-All-Reduce. **Right:** All-to-All-Unique. $$T_x$$ are the tokens of rank $$P_x$$, $$E_x$$ their expert ids and weights, and $$f_x$$ its ready flag on the switch. In the All-to-All-Reduce, shown with $$B=2$$ buffers, the switch adds the local sum $$\sigma_x$$ of the expert outputs of each rank to a buffer $$\Sigma_b$$ as it arrives, then sums the buffers into $$\Sigma$$.
 
 The same two ideas apply to the AllGather-ReduceScatter backend, which sends every token to every rank instead of only to the ranks that need it. The four combinations are shown below.
 
 {: style="text-align:center; font-size: small;"}
-<img width="63%" height="63%" src="{{ site.assets }}/inference/imgs/ep_communication_models.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_communication_models.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 The four communication models for $$W=3$$ ranks holding one token each. **Left:** a regular switch that relays packets. **Right:** an INC switch. **Top:** AllGather-ReduceScatter. **Bottom:** all-to-all.
@@ -64,12 +64,6 @@ The four communication models for $$W=3$$ ranks holding one token each. **Left:*
 The dispatch *pushes* its data into the switch, because only the sender knows how many tokens it sends. The combine *pulls* instead. Pulling lets the switch add each partial result to its accumulator as soon as it arrives, so it never holds all $$W$$ partials at once. This matters because the switch has much less memory than an accelerator. Pulling also lets the switch serve the ranks in the order they finish, and read a rank only when it has a free buffer.
 
 The switch can fold the partials into $$B \le W$$ buffers. With $$B=1$$ (*get-reduce*) it uses the least memory, and with $$B=W$$ (*put-reduce*) it runs the most transfers in parallel. For a payload of $$S$$ bytes, the switch needs at most $$S(B+1)+4W$$ bytes, independently of the model.
-
-{: style="text-align:center; font-size: small;"}
-<img width="63%" height="63%" src="{{ site.assets }}/inference/imgs/ep_reduction_models.svg"/>
-
-{: style="text-align:center; font-size: small;"}
-The three reduction models in the switch, for $$W=4$$ ranks: put-reduce, get-reduce and hybrid-reduce with $$B$$ buffers.
 
 ## Fusing the layer into one kernel
 
@@ -108,10 +102,10 @@ The kernel was evaluated on OLMoE-1B-7B (64 experts, top-$$k=8$$) under vLLM, on
 - **MegaKernel+INC**: one fused kernel, with All-to-All-Unique and All-to-All-Reduce in the switch.
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/ep_results.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_results.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Prefill time per iteration against batch size, both axes in $$\log_2$$ scale.
+**Left:** prefill time per iteration against batch size. **Right:** decode time per output token against the number of concurrent sequences, with placeholder values that are not measured yet. Both axes are in $$\log_2$$ scale.
 
 Fusion alone is 4.9% to 18.6% faster than the baseline, and INC adds a further 0.8% to 7.8%. The gain of INC grows with the batch size beyond 8192 tokens. At the largest batch, the throughput goes from 20,353 to 25,042 tokens per second. With the AllGather-ReduceScatter backend, MegaKernel+INC is 8.9% to 18.5% faster than the baseline.
 
