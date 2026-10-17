@@ -8,58 +8,46 @@
           <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="mml_svd-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="40" width="601.74" height="176.93" as="geometry" />
+          <mxGeometry x="0" y="40" width="598" height="176" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.25;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="27.0732" y="30.927" width="73" height="146" as="geometry" />
+        <mxCell id="mml_svd-1" value="&lt;i&gt;A&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=1.22;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="29" y="26" width="65" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.25;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="210.0732" y="30.927" width="147" height="146" as="geometry" />
+        <mxCell id="mml_svd-2" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="29" y="0" width="65" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.25;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="394.0732" y="30.927" width="74" height="146" as="geometry" />
+        <mxCell id="mml_svd-3" value="m" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;rotation=-90;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="0" y="89" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.25;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="504.0732" y="66.927" width="74" height="73" as="geometry" />
+        <mxCell id="mml_svd-4" value="&lt;i&gt;U&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=1.22;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="212" y="26" width="145" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-5" value="&lt;b&gt;&lt;i&gt;A&lt;/i&gt;&lt;/b&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=39;spacing=0;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="48.4905" y="80.9755" width="30.1653" height="50.8" as="geometry" />
+        <mxCell id="mml_svd-5" value="m" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="212" y="0" width="145" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-6" value="&lt;b&gt;&lt;i&gt;U&lt;/i&gt;&lt;/b&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=39;spacing=0;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="269.4905" y="81.9755" width="30.1653" height="50.8" as="geometry" />
+        <mxCell id="mml_svd-6" value="m" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;rotation=-90;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="183" y="89" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-7" value="&lt;b&gt;Σ&lt;/b&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=39;spacing=0;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="418.8702" y="81.4755" width="25.4061" height="50.8" as="geometry" />
+        <mxCell id="mml_svd-7" value="Σ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=1.22;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="396" y="26" width="66" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-8" value="&lt;b&gt;&lt;i&gt;V&lt;/i&gt;&lt;/b&gt;&lt;span style=&quot;font-size:26px;vertical-align:14px;&quot;&gt;⊤&lt;/span&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=39;spacing=0;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="513.0732" y="85.9755" width="57.2642" height="50.8" as="geometry" />
+        <mxCell id="mml_svd-8" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="396" y="0" width="66" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-9" value="=" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=39;spacing=0;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="137.184" y="79.4755" width="24.7784" height="50.8" as="geometry" />
+        <mxCell id="mml_svd-9" value="m" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;rotation=-90;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="367" y="89" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-10" value="&lt;i&gt;n&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=21;spacing=0;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="56.7342" y="0" width="13.678" height="29.2" as="geometry" />
+        <mxCell id="mml_svd-10" value="&lt;i&gt;V&lt;/i&gt;&lt;sup&gt;⊤&lt;/sup&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=1.22;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="504" y="66" width="65" height="67" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-11" value="&lt;i&gt;m&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=21;spacing=0;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="273.827" y="0" width="19.4923" height="29.2" as="geometry" />
+        <mxCell id="mml_svd-11" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="504" y="40" width="65" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-12" value="&lt;i&gt;n&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=21;spacing=0;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="424.2342" y="0" width="13.678" height="29.2" as="geometry" />
+        <mxCell id="mml_svd-12" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;rotation=90;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="568" y="87.5" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-13" value="&lt;i&gt;n&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=21;spacing=0;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="534.2342" y="36" width="13.678" height="29.2" as="geometry" />
-        </mxCell>
-        <mxCell id="mml_svd-14" value="&lt;i&gt;m&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=21;spacing=0;rotation=-90;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="0" y="90.327" width="19.4923" height="29.2" as="geometry" />
-        </mxCell>
-        <mxCell id="mml_svd-15" value="&lt;i&gt;m&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=21;spacing=0;rotation=-90;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="184" y="90.327" width="19.4923" height="29.2" as="geometry" />
-        </mxCell>
-        <mxCell id="mml_svd-16" value="&lt;i&gt;m&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=21;spacing=0;rotation=-90;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="368" y="90.327" width="19.4923" height="29.2" as="geometry" />
-        </mxCell>
-        <mxCell id="mml_svd-17" value="&lt;i&gt;n&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=21;spacing=0;rotation=90;" vertex="1" parent="mml_svd-figure">
-          <mxGeometry x="588.0612" y="88.827" width="13.678" height="29.2" as="geometry" />
+        <mxCell id="mml_svd-13" value="=" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=32;" vertex="1" parent="mml_svd-figure">
+          <mxGeometry x="132" y="81" width="40" height="40" as="geometry" />
         </mxCell>
         <mxCell id="svd_example_2-label" value="svd_example_2.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="296.93" width="600" height="30" as="geometry" />

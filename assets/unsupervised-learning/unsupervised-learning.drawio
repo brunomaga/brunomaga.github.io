@@ -452,355 +452,254 @@
           <mxGeometry x="0" y="914.92" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="kohonen2-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="965.05" width="341.43" height="312.96" as="geometry" />
+          <mxGeometry x="0" y="965.05" width="638.4" height="515.62" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-1" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.7600000000000002;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-1" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="147.611" y="3.2921" as="sourcePoint" />
-            <mxPoint x="147.4302" y="162.8648" as="targetPoint" />
+            <mxPoint x="302.96" y="4.5" as="sourcePoint" />
+            <mxPoint x="302.96" y="163.1" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-2" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.7600000000000002;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-2" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="147.611" y="3.2921" as="sourcePoint" />
-            <mxPoint x="308.2284" y="27.9854" as="targetPoint" />
+            <mxPoint x="302.96" y="4.5" as="sourcePoint" />
+            <mxPoint x="461.56" y="29.3" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.7600000000000002;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="181.1145" y="8.4429" as="sourcePoint" />
-            <mxPoint x="181.07" y="168.0867" as="targetPoint" />
+            <mxPoint x="334.68" y="9.46" as="sourcePoint" />
+            <mxPoint x="334.68" y="168.06" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.0;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="147.5733" y="36.5449" as="sourcePoint" />
-            <mxPoint x="308.1464" y="61.7691" as="targetPoint" />
+            <mxPoint x="302.96" y="36.22" as="sourcePoint" />
+            <mxPoint x="461.56" y="61.02" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.7600000000000002;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-5" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="212.5318" y="13.273" as="sourcePoint" />
-            <mxPoint x="212.3881" y="172.9482" as="targetPoint" />
+            <mxPoint x="366.4" y="14.42" as="sourcePoint" />
+            <mxPoint x="366.4" y="173.02" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.0;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-6" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="147.5388" y="66.9974" as="sourcePoint" />
-            <mxPoint x="308.0736" y="91.7437" as="targetPoint" />
+            <mxPoint x="302.96" y="67.94" as="sourcePoint" />
+            <mxPoint x="461.56" y="92.74" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-7" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.7600000000000002;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-7" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="245.3339" y="18.316" as="sourcePoint" />
-            <mxPoint x="245.0271" y="178.0147" as="targetPoint" />
+            <mxPoint x="398.12" y="19.38" as="sourcePoint" />
+            <mxPoint x="398.12" y="177.98" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-8" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.92;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-8" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="147.502" y="99.5072" as="sourcePoint" />
-            <mxPoint x="307.9963" y="123.5763" as="targetPoint" />
+            <mxPoint x="302.96" y="99.66" as="sourcePoint" />
+            <mxPoint x="461.56" y="124.46" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.7600000000000002;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="276.7742" y="23.1496" as="sourcePoint" />
-            <mxPoint x="276.5902" y="182.9142" as="targetPoint" />
+            <mxPoint x="429.84" y="24.34" as="sourcePoint" />
+            <mxPoint x="429.84" y="182.94" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.0;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="147.4654" y="131.8027" as="sourcePoint" />
-            <mxPoint x="307.917" y="156.233" as="targetPoint" />
+            <mxPoint x="302.96" y="131.38" as="sourcePoint" />
+            <mxPoint x="461.56" y="156.18" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.6;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="308.2284" y="27.9854" as="sourcePoint" />
-            <mxPoint x="307.8405" y="187.7652" as="targetPoint" />
+            <mxPoint x="461.56" y="29.3" as="sourcePoint" />
+            <mxPoint x="461.56" y="187.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.32;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="147.4302" y="162.8648" as="sourcePoint" />
-            <mxPoint x="307.8405" y="187.7652" as="targetPoint" />
+            <mxPoint x="302.96" y="163.1" as="sourcePoint" />
+            <mxPoint x="461.56" y="187.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-13" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="145.5653" y="0" width="8.088" height="8.088" as="geometry" />
+        <mxCell id="kohonen2-13" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="298.46" y="0" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-14" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="177.0573" y="5.044" width="7.872" height="7.872" as="geometry" />
+        <mxCell id="kohonen2-14" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="298.46" y="31.72" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-15" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="208.4413" y="10.216" width="7.904" height="7.904" as="geometry" />
+        <mxCell id="kohonen2-15" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="298.46" y="63.44" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-16" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="241.2053" y="15.34" width="8.072" height="8.072" as="geometry" />
+        <mxCell id="kohonen2-16" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="298.46" y="95.16" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-17" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="271.8813" y="19.156" width="8.592" height="8.592" as="geometry" />
+        <mxCell id="kohonen2-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="298.46" y="126.88" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-18" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="304.2213" y="24.552" width="8.36" height="8.36" as="geometry" />
+        <mxCell id="kohonen2-18" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="298.46" y="158.6" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-19" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="144.1853" y="31.572" width="8.032" height="8.032" as="geometry" />
+        <mxCell id="kohonen2-19" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="330.18" y="4.96" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-20" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="175.7493" y="36.468" width="8.2" height="8.2" as="geometry" />
+        <mxCell id="kohonen2-20" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="330.18" y="36.68" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-21" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="207.0413" y="40.596" width="10.624" height="10.624" as="geometry" />
+        <mxCell id="kohonen2-21" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="330.18" y="68.4" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-22" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#666666;fillOpacity=72;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="207.0413" y="40.596" width="10.624" height="10.624" as="geometry" />
+        <mxCell id="kohonen2-22" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="330.18" y="100.12" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-23" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="237.8333" y="44.264" width="12.552" height="12.552" as="geometry" />
+        <mxCell id="kohonen2-23" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="330.18" y="131.84" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-24" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#666666;fillOpacity=53;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="237.8333" y="44.264" width="12.552" height="12.552" as="geometry" />
+        <mxCell id="kohonen2-24" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="330.18" y="163.56" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-25" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="271.8373" y="50.864" width="9.8" height="9.8" as="geometry" />
+        <mxCell id="kohonen2-25" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="361.9" y="9.92" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-26" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#666666;fillOpacity=72;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="271.8373" y="50.864" width="9.8" height="9.8" as="geometry" />
+        <mxCell id="kohonen2-26" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#666666;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="360.65" y="40.39" width="11.5" height="11.5" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-27" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="302.9773" y="56.404" width="8.2" height="8.2" as="geometry" />
+        <mxCell id="kohonen2-27" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="360.15" y="71.61" width="12.5" height="12.5" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-28" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="144.3173" y="63.272" width="7.944" height="7.944" as="geometry" />
+        <mxCell id="kohonen2-28" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#666666;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="360.65" y="103.83" width="11.5" height="11.5" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-29" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="175.7373" y="67.008" width="8.088" height="8.088" as="geometry" />
+        <mxCell id="kohonen2-29" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="361.9" y="136.8" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-30" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="206.2213" y="70.48" width="13.616" height="13.616" as="geometry" />
+        <mxCell id="kohonen2-30" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="361.9" y="168.52" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-31" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#666666;fillOpacity=53;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="206.2213" y="70.48" width="13.616" height="13.616" as="geometry" />
+        <mxCell id="kohonen2-31" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="393.62" y="14.88" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-32" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="233.6333" y="72.216" width="19.48" height="19.48" as="geometry" />
+        <mxCell id="kohonen2-32" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="391.87" y="44.85" width="12.5" height="12.5" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-33" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#666666;fillOpacity=34;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="233.6333" y="72.216" width="19.48" height="19.48" as="geometry" />
+        <mxCell id="kohonen2-33" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="390.12" y="74.82" width="16" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-34" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="269.3333" y="79.676" width="13.704" height="13.704" as="geometry" />
+        <mxCell id="kohonen2-34" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="391.87" y="108.29" width="12.5" height="12.5" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-35" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#666666;fillOpacity=53;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="269.3333" y="79.676" width="13.704" height="13.704" as="geometry" />
+        <mxCell id="kohonen2-35" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="393.62" y="141.76" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-36" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="302.9173" y="87.468" width="8.312" height="8.312" as="geometry" />
+        <mxCell id="kohonen2-36" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="393.62" y="173.48" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-37" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="145.4613" y="95.64" width="7.904" height="7.904" as="geometry" />
+        <mxCell id="kohonen2-37" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="425.34" y="19.84" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-38" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="176.9173" y="99.436" width="7.928" height="7.928" as="geometry" />
+        <mxCell id="kohonen2-38" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#666666;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="424.09" y="50.31" width="11.5" height="11.5" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-39" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="205.8533" y="103.276" width="11.52" height="11.52" as="geometry" />
+        <mxCell id="kohonen2-39" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="423.59" y="81.53" width="12.5" height="12.5" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-40" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#666666;fillOpacity=72;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="205.8533" y="103.276" width="11.52" height="11.52" as="geometry" />
+        <mxCell id="kohonen2-40" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#666666;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="424.09" y="113.75" width="11.5" height="11.5" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-41" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="236.5693" y="106.724" width="13.504" height="13.504" as="geometry" />
+        <mxCell id="kohonen2-41" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="425.34" y="146.72" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-42" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#666666;fillOpacity=53;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="236.5693" y="106.724" width="13.504" height="13.504" as="geometry" />
+        <mxCell id="kohonen2-42" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="425.34" y="178.44" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-43" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="270.9333" y="112.628" width="10.336" height="10.336" as="geometry" />
+        <mxCell id="kohonen2-43" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="457.06" y="24.8" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-44" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#666666;fillOpacity=72;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="270.9333" y="112.628" width="10.336" height="10.336" as="geometry" />
+        <mxCell id="kohonen2-44" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="457.06" y="56.52" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-45" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="304.1573" y="119.564" width="8.224" height="8.224" as="geometry" />
+        <mxCell id="kohonen2-45" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="457.06" y="88.24" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-46" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="144.5333" y="124.636" width="8.64" height="8.64" as="geometry" />
+        <mxCell id="kohonen2-46" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="457.06" y="119.96" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-47" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="176.8733" y="131.804" width="7.856" height="7.856" as="geometry" />
+        <mxCell id="kohonen2-47" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="457.06" y="151.68" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-48" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="208.3013" y="136.856" width="7.96" height="7.96" as="geometry" />
+        <mxCell id="kohonen2-48" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="457.06" y="183.4" width="9" height="9" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-49" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="241.1053" y="142.052" width="8.016" height="8.016" as="geometry" />
+        <mxCell id="kohonen2-49" value="" style="shape=stencil(nVnbdhMxDPyaPHaP5bufofxHKIHmEJKepED793jP7tobjYICT22U9WosjUeSs3EfLs/bl93GmuP2x27jPm6sfTkd3uufavs9GSj7IZvJ9DyZrHGDnU3by8vu6XWy/9qe99vPh930zeX1fPq++73/8jov2x+fd+f96/ite9y4D0+n47Gu3Z+Ol439NNk+b5++fzuffh6/TJ9ftuPq8b8fp18j0rcZlW2g3ieLGcxkmN/09PM8LaB5hR/IzStoWeLTZHmz80Opmd4X0xBnR29u2X73vZgWyw3nFp37BW9zbnN/72yKLc6Lc2fBeVoeuuHcxb5kNuX+3tmTN+A8D8FdO/cenGdl5z6D8zIYFvYgOc9s5yH+s/NohZ1ntvPkBecxXTvP5p+dZynsxV07z5jzAjkvmPOysPKG84LOyQDjyGDgaXUq3GLCvBMprCODma+LeABofZJtO9yJMY8Is09eO/Lrk7rYwmD5obfIgOoOIKzP52LTSEAOKTii4hBc6gJhm2YYRgTygvTEwSvC57uoEUhNg+ATRMGtkC4QAkJwTuNCcBAFF7q8LBDqEY8cQuqUaRAwETUwShQitXA2CbaYiCoZhSXCB+RC7MlpELJGxxia8i0QajSBjuNjLAo1fsCF+phlEIJ6IiruyCFE1IXYI9NKkRUgWIhCjCoEglqYBGmKZnAsEUk4EdEAhKQmIhSIQrYIoT7Go5DjXRCK2o3URTwKxYtRCCwKJYsQQJqMvSMTnI9kJDZQI2nTx3U1cf25CGXC34GiOF4nsshJTgiyMikhFlZnpet7bNot0dJ16jTxlnjpF0HqKNw9CsFZQV5gZn2OqxR5iZoJNGIUcA1FhoJBQSDneGx5LILAzoQysZKOWyiSQ15EgZ0pYkaSwM4klO+ksrM2foAiCezMAQo4VU3hHfR6mupNhMrOjCWcchHGl4LzS+0eeTc7xgxQFK/1MgmnGKqNJrR0Nd8Qi5Jgjhp5hijUjqpyH9oZIxcQ3s9Y05WsdxMYC6trZ5D6ulXf2k5lFlAI1VwYrVZj9s3WzggoXFOe3l5GEQXEQpgu70Bhs4iCnN5nXz3nhLZ9lRGFFxTFjMAZEQaOVb5XQ08WUOhTjxdQGMyINHmV0ipcG/2ieET+Ts6C3BzPaUzq7EklQCAkxSoaJ7IweRWCMCTk5ahrnBFJKOlZu/aIwvyZcfqLwvCXV0do6WuFDiuTMoUHYQqvEs1HryCMwCmBanupgGnTn/cChABnU7j+GeWeC4SL/1FDhRF4LO5cKoXrLwmC9SIE5f7NiFFwoNYChAg3USTQMSVVJbF4JmxnCja5CdsIiQlaW5exwY0J5FHwH7GxLNjoqw3dapgioVns108AIBDoIhlsr73aRhnsoirxuS6SwXHHBQkCdLXOqEFInATWA4IizFtYGwQSqNNW7tFd3dNBZYALCKp1mvvH2UKtTLFnrdcq7h076ar13Dnev2SNgBYImLAoEow0CdmH5FOvPR4MHL+I1HtYvXmJRhDc872rM52BwHsv7B1u35B1qH1OI52HmzebhazzKc7eQznKKuPxxOHOMe3YCBGOseqYYGF6fCDUPAt7Nyg3GHhI+uF02bVP9Z/+61n9wH9a+3o6764+7w+H6Te79Sv4U9U0/WjoHv8A);whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="151.2" y="112.02" width="184.8" height="203.2" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-50" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="272.5973" y="146.996" width="8.112" height="8.112" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-51" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="304.0693" y="151.004" width="8.12" height="8.12" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-52" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="175.6213" y="163.22" width="7.984" height="7.984" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-53" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="208.2293" y="168.252" width="8.12" height="8.12" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-54" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="239.6973" y="173.448" width="8.216" height="8.216" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-55" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="271.6013" y="178.368" width="8.728" height="8.728" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-56" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="302.7253" y="182.46" width="8.224" height="8.224" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-57" value="" style="shape=stencil(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);whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="0" y="111.756" width="181.8452" height="201.2067" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-58" value="" style="shape=stencil(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);whiteSpace=wrap;html=1;fillColor=#666666;fillOpacity=34;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="0" y="111.756" width="181.8452" height="201.2067" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-59" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-50" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;dashed=1;dashPattern=4 4;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="86.6121" y="173.7951" as="sourcePoint" />
-            <mxPoint x="95.1713" y="168.7806" as="targetPoint" />
+            <mxPoint x="236.8" y="176.02" as="sourcePoint" />
+            <mxPoint x="296.8" y="141.62" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-60" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-51" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="105.1802" y="162.9169" as="sourcePoint" />
-            <mxPoint x="115.5687" y="156.8308" as="targetPoint" />
+            <mxPoint x="296.8" y="141.62" as="sourcePoint" />
+            <mxPoint x="398.12" y="82.82" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-61" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-52" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=4;endFill=1;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="124.7837" y="151.4321" as="sourcePoint" />
-            <mxPoint x="135.1722" y="145.346" as="targetPoint" />
+            <mxPoint x="236.8" y="176.02" as="sourcePoint" />
+            <mxPoint x="215.2" y="166.42" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-62" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-53" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="199" y="155.02" width="6" height="6" as="geometry" />
+        </mxCell>
+        <mxCell id="kohonen2-54" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="233.8" y="173.02" width="6" height="6" as="geometry" />
+        </mxCell>
+        <mxCell id="kohonen2-55" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;dashed=1;dashPattern=4 4;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="140.2801" y="142.3535" as="sourcePoint" />
-            <mxPoint x="243.3733" y="81.956" as="targetPoint" />
+            <mxPoint x="202" y="158.02" as="sourcePoint" />
+            <mxPoint x="212" y="125.22" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-63" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-56" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;curved=1;endSize=5;endFill=1;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="48.6933" y="151.556" as="sourcePoint" />
-            <mxPoint x="49.8133" y="148.556" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="kohonen2-64" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="kohonen2-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="51.5733" y="143.956" as="sourcePoint" />
-            <mxPoint x="52.9733" y="140.156" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="kohonen2-65" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="kohonen2-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="54.6533" y="135.956" as="sourcePoint" />
-            <mxPoint x="55.9733" y="132.556" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="kohonen2-66" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;" edge="1" parent="kohonen2-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="58.3733" y="125.756" as="sourcePoint" />
-            <mxPoint x="221.4595" y="62.641" as="targetPoint" />
+            <mxPoint x="212" y="125.22" as="sourcePoint" />
+            <mxPoint x="382.8" y="68.42" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="59.5733" y="123.356" />
-              <mxPoint x="61.9333" y="119.116" />
-              <mxPoint x="64.1733" y="114.876" />
-              <mxPoint x="66.4933" y="110.636" />
-              <mxPoint x="69.2533" y="106.716" />
-              <mxPoint x="72.0933" y="102.836" />
-              <mxPoint x="75.1733" y="99.156" />
-              <mxPoint x="78.2533" y="95.476" />
-              <mxPoint x="81.5333" y="91.916" />
-              <mxPoint x="85.0533" y="88.636" />
-              <mxPoint x="88.6933" y="85.556" />
-              <mxPoint x="92.4533" y="82.516" />
-              <mxPoint x="96.3333" y="79.716" />
-              <mxPoint x="100.2933" y="76.996" />
-              <mxPoint x="104.3733" y="74.476" />
-              <mxPoint x="108.2933" y="71.676" />
-              <mxPoint x="112.4533" y="69.276" />
-              <mxPoint x="116.6133" y="66.876" />
-              <mxPoint x="120.9333" y="64.756" />
-              <mxPoint x="125.2933" y="62.716" />
-              <mxPoint x="129.6533" y="60.796" />
-              <mxPoint x="134.2533" y="59.276" />
-              <mxPoint x="138.8133" y="57.796" />
-              <mxPoint x="143.4533" y="56.516" />
-              <mxPoint x="148.2133" y="55.636" />
-              <mxPoint x="152.9733" y="54.916" />
-              <mxPoint x="157.6933" y="54.076" />
-              <mxPoint x="162.4533" y="53.356" />
-              <mxPoint x="167.2533" y="52.836" />
-              <mxPoint x="172.0133" y="52.236" />
-              <mxPoint x="176.8133" y="52.236" />
-              <mxPoint x="181.6133" y="52.236" />
-              <mxPoint x="186.3733" y="53.036" />
-              <mxPoint x="191.1333" y="53.756" />
-              <mxPoint x="195.8533" y="54.676" />
-              <mxPoint x="200.5733" y="55.516" />
-              <mxPoint x="205.2933" y="56.516" />
-              <mxPoint x="209.8933" y="57.836" />
-              <mxPoint x="214.3733" y="59.676" />
-              <mxPoint x="218.8533" y="61.436" />
+              <mxPoint x="224" y="98.02" />
+              <mxPoint x="248" y="70.82" />
+              <mxPoint x="280" y="56.82" />
+              <mxPoint x="316" y="52.42" />
+              <mxPoint x="352" y="56.42" />
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-67" value="" style="shape=stencil(dZHRDoMgDEW/hleCMBd9dtt/ILJJRDDAdP79IDVOXXyi9/a0tIBY5Vs+SESJ4b1E7IYoHaye4xG9CYyM4JKB04JT4CIHg/tBigDuyJ3itZaQ8cHZTk6qCUuRMq10KqQsuyNWCWtMrFXWeEQf4NVcdC9n36YBPfBUnaLejmnMz99I82GkpZNWZsMTTMgOv+C8OMczfM12OMW0PMcZTqkNvl634EJbL1cVg99eURyXflond1ppDa+5bXGkogV/ye5f);whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="219.8392" y="60.345" width="10.9341" height="8.851" as="geometry" />
+        <mxCell id="kohonen2-57" value="ϕ" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=22;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="258" y="38.02" width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-68" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.0;" edge="1" parent="kohonen2-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="80.1236" y="174.0858" as="sourcePoint" />
-            <mxPoint x="67.3494" y="167.5976" as="targetPoint" />
-          </mxGeometry>
+        <mxCell id="kohonen2-58" value="s" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=22;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="401.6" y="82.82" width="20" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-69" value="" style="shape=stencil(dZHbDoMgDIafhlvCYB7u3fYeqGwSEQg4nW8/SImnxCvar39/aEGs8h23AlGi+SAQeyBKrVFLOAKbAZQ4KwF0AHJ8T4B7K5oR6MSd5LUSUPGjM72YZTumJqk74eQYq+yJWNUYrUOvNNoj+gJW86b/OPPVLeSWx+4YDWaKr/yBF8GEwDXLCSQjJfVOvg2wyoviWl7gGzvIGc7ptTzD+dF9XU+SN8p4sWYh2MYKyXnmt3HikEulYJl7i7MqIPhJ9vwD);whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;mask=1;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="60.5733" y="164.156" width="8.5818" height="6.4758" as="geometry" />
+        <mxCell id="kohonen2-59" value="&lt;b&gt;v&lt;/b&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=22;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="178" y="149.22" width="24" height="28" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-72" value="&lt;b&gt;v&lt;/b&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=19.26782273603083;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="26.8159" y="146.719" width="12.7147" height="27.1214" as="geometry" />
+        <mxCell id="kohonen2-60" value="&lt;b&gt;w&lt;/b&gt;&lt;sub&gt;s&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=22;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="259.2" y="166.02" width="44" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-73" value="&lt;b&gt;w&lt;/b&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=19.26782273603083;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="105.2799" y="159.119" width="16.9868" height="27.1214" as="geometry" />
+        <mxCell id="kohonen2-61" value="Δ&lt;b&gt;w&lt;/b&gt;&lt;sub&gt;s&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=22;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="180" y="184.02" width="56" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-74" value="&lt;b&gt;s&lt;/b&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=15.414258188824661;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="118.8874" y="169.5664" width="10.5718" height="22.4971" as="geometry" />
+        <mxCell id="kohonen2-62" value="A" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="471.2" y="162.82" width="40" height="44" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-75" value="Δ" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=21.6;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="28.9592" y="175.4444" width="16.4281" height="29.92" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-76" value="&lt;b&gt;w&lt;/b&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=20.038535645472063;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="41.9802" y="176.7895" width="17.5862" height="28.0462" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-77" value="&lt;b&gt;s&lt;/b&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=16.184971098265898;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="55.8731" y="184.8369" width="11.0004" height="23.422" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-78" value="&lt;b&gt;s&lt;/b&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=18.497109826589597;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="249.0302" y="82.0485" width="12.2861" height="26.1965" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-79" value="A" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=22.96424581005587;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="324.1144" y="162.0415" width="17.3179" height="31.5571" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-80" value="V" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=29.608938547486037;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="137.2983" y="265.7311" width="21.7501" height="39.5307" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-81" value="&lt;i&gt;ϕ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=26.8;spacing=0;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="107.1216" y="31.1042" width="16.9033" height="36.16" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-70" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="44.5933" y="153.776" width="7" height="7" as="geometry" />
-        </mxCell>
-        <mxCell id="kohonen2-71" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.36;" vertex="1" parent="kohonen2-figure">
-          <mxGeometry x="80.3333" y="172.716" width="6" height="6" as="geometry" />
+        <mxCell id="kohonen2-63" value="V" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=36;" vertex="1" parent="kohonen2-figure">
+          <mxGeometry x="288.8" y="264.02" width="40" height="44" as="geometry" />
         </mxCell>
         <mxCell id="kohonen_1-label" value="kohonen_1.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="1564.81" width="600" height="30" as="geometry" />
