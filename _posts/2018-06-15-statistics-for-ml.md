@@ -6,7 +6,7 @@ categories: ["Machine Learning"]
 tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "KL divergence"]
 ---
 
-A brief summary of statistics and probability topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. A similar post covers algebra: [Mathematics for ML]({{ site.baseurl }}{% post_url 2018-04-20-algebra-for-ml %}). 
+A brief summary of statistics and probability topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.
 
 ### Basic definitions
 
@@ -23,7 +23,7 @@ $$
 
 ### Statistical distributions
 
-Statistical distributions are either <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf"> continuous </a> or <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf"> discrete </a>. Most parametric continuous distributions belong to the [exponential family of distributions]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}).
+Statistical distributions are either <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf"> continuous </a> or <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf"> discrete </a>. Most parametric continuous distributions belong to the exponential family of distributions.
 
 $$p(x)$$ is called a **probability mass function (pmf)** for a discrete variable $$x$$, or a **probability density function (pdf)** for a continuous one. Any function over a discrete (continuous) domain can be a probability distribution, as long as its values are non-negative and sum (integrate) to 1. The **cumulative distribution function (cdf)** is
 
@@ -188,7 +188,7 @@ Random variables $$X$$ and $$Y$$ are conditionally independent given $$Z$$, writ
 
 ### Gaussian Distribution
 
-The post about the [Exponential Family of Distributions]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}) covers more distributions. The univariate Gaussian with mean $$\mu$$ and variance $$\sigma^2$$ is:
+The univariate Gaussian with mean $$\mu$$ and variance $$\sigma^2$$ is:
 
 $$
 p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)

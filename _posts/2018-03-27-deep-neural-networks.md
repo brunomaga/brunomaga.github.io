@@ -188,9 +188,9 @@ The most common data types and their embeddings are:
 - words: one-hot vectors or [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (*skipgram* or *continuous bag of words*)
   - skipgram: slower to train ("3 days"), better at capturing semantic relationships, e.g. for 'cat' it returns 'dog' as a word with a close embedding;
   - CBOW: faster to train ("few hours"), better at capturing syntactic relationships between words, e.g. for 'cat' it returns 'cats';
-- text (word sequences): [BERT]({{ site.baseurl }}{% post_url 2020-02-28-learning-from-sequences %})
-- non-textual sequences: [Encoder-Decoders, e.g. LSTMs, RNNs]({{ site.baseurl }}{% post_url 2020-02-28-learning-from-sequences %})
-- point cluster or array: [Principal Component Analysis]({{ site.baseurl }}{% post_url 2017-11-01-unsupervised-learning %})
+- text (word sequences): BERT
+- non-textual sequences: Encoder-Decoders, e.g. LSTMs, RNNs
+- point cluster or array: Principal Component Analysis
 - images:
   - in a classification task: the activation of the last layer *before* the logit/softmax layer, i.e. the input to the final layer, which is the output of the second-to-last layer;
   - in an image-to-image task, e.g. segmentation with a [U-net](https://arxiv.org/abs/1505.04597): the activation of the last downsampling layer, which is the input of the first upsampling layer, i.e. the [*information bottleneck*](https://en.wikipedia.org/wiki/Information_bottleneck_method);

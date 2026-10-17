@@ -6,7 +6,7 @@ categories: ["Machine Learning"]
 tags: ["linear algebra", "matrix decompositions", "vector calculus", "optimization"]
 ---
 
-A brief summary of algebra topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. Statistics and probability are covered in the post [Statistics for ML Engineers]({{ site.baseurl }}{% post_url 2018-06-15-statistics-for-ml %}).
+A brief summary of algebra topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.
 
 
 ## Properties of Matrices

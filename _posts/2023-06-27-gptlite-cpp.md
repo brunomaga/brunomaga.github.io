@@ -41,7 +41,7 @@ Kernel fusion is complex, and two settings are worth mentioning. The option `mod
 
 The flag `fullgraph` specifies whether the compilation outputs a single graph for the whole run, or whether the graph can be broken into several partial graphs (that can be reused across the main graph). It is only relevant for users who need the very best performance. In practice, this is *similar* to the `inline` logic in the C programming language. With their default values, these two settings are specified as `torch.compile(model, mode='default', fullgraph=False)`.
 
-Even after fusion, a forward pass launches many kernels from Python, one after the other. A *CUDA graph* records the whole sequence of kernel launches once, and replays it with a single launch, removing almost all the CPU overhead. The recording fixes the shapes and memory addresses of all tensors, so the inputs must have static shapes. For text generation, this requires a preallocated KV cache of maximum length, with attention over the full buffer and a mask for the positions not filled yet, as detailed in the [post about the KV cache]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}#static-shapes-for-cuda-graphs). Combining these techniques with quantization and speculative decoding, the PyTorch team's [gpt-fast](https://pytorch.org/blog/accelerating-generative-ai-2/) made the decoding of Llama-7B almost 10 times faster, in plain PyTorch. Going one step further, recent work fuses a whole forward pass into a single persistent *megakernel*, removing the gaps between kernels altogether for low-latency decoding.
+Even after fusion, a forward pass launches many kernels from Python, one after the other. A *CUDA graph* records the whole sequence of kernel launches once, and replays it with a single launch, removing almost all the CPU overhead. The recording fixes the shapes and memory addresses of all tensors, so the inputs must have static shapes. For text generation, this requires a preallocated KV cache of maximum length, with attention over the full buffer and a mask for the positions not filled yet. Combining these techniques with quantization and speculative decoding, the PyTorch team's [gpt-fast](https://pytorch.org/blog/accelerating-generative-ai-2/) made the decoding of Llama-7B almost 10 times faster, in plain PyTorch. Going one step further, recent work fuses a whole forward pass into a single persistent *megakernel*, removing the gaps between kernels altogether for low-latency decoding.
 
 ## About this post
 
@@ -56,11 +56,11 @@ Two testbenches are covered, and readers may pick one based on their expertise a
 <img width="22%" height="22%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 
 {: .caption}
-This post details the C++ implementation of the [GPT-3 Small model]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}) with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). The left diagram is adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762). The C++, PyTorch, TorchScript and `torch.compile` implementations of both models are then benchmarked.
+This post details the C++ implementation of the GPT-3 Small model with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). The left diagram is adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762). The C++, PyTorch, TorchScript and `torch.compile` implementations of both models are then benchmarked.
 
 ## GPTlite on LibTorch C++ {#gptlite-model}
 
-The GPT implementation in C++ comes first. The subsections that follow match the structure of the [post with the GPTlite implementation in Python]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}).
+The GPT implementation in C++ comes first.
 
 ### Hyperparameters
 

@@ -125,6 +125,6 @@ These methods fuse one matrix multiplication at a time, and keep the intermediat
 
 ## Final remarks
 
-The main lesson is that computation, communication and the network switch should be optimized together. Fusing the FFN into one kernel makes per-tile communication possible, and per-tile communication can be overlapped and executed in the switch. This also suggests a different design for network hardware: support for many small, asynchronous messages sent from inside GPU kernels, instead of large, synchronous collectives. The same ideas apply to attention, which also chains two matrix multiplications, and to [expert parallelism in Mixture-of-Experts]({{ site.baseurl }}{% post_url 2026-10-09-kernel-fusion-expert-parallelism %}).
+The main lesson is that computation, communication and the network switch should be optimized together. Fusing the FFN into one kernel makes per-tile communication possible, and per-tile communication can be overlapped and executed in the switch. This also suggests a different design for network hardware: support for many small, asynchronous messages sent from inside GPU kernels, instead of large, synchronous collectives. The same ideas apply to attention, which also chains two matrix multiplications, and to expert parallelism in Mixture-of-Experts.
 
 This post summarizes the paper *Towards Efficient LLM Inference via Full-Stack Fusion of Computation, Communication, and In-Network Computing*.

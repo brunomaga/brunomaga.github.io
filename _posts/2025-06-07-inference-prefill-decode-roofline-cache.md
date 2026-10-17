@@ -405,7 +405,7 @@ class StaticKVCache:
 
 #### Static shapes for CUDA graphs
 
-The cache above avoids the copies, but the keys and values it returns still grow by one token at every step. A [CUDA graph]({{ site.baseurl }}{% post_url 2023-06-27-gptlite-cpp %}#kernel-optimization-via-torchcompile) records a decode step once and replays it, and requires the shapes and memory addresses of all tensors to be the same at every step. The decode step must then attend over the *whole* preallocated buffer, and mask the positions that are not filled yet. The position of the new token is passed as a tensor, so that it is an input of the graph and not a constant.
+The cache above avoids the copies, but the keys and values it returns still grow by one token at every step. A CUDA graph records a decode step once and replays it, and requires the shapes and memory addresses of all tensors to be the same at every step. The decode step must then attend over the *whole* preallocated buffer, and mask the positions that are not filled yet. The position of the new token is passed as a tensor, so that it is an input of the graph and not a constant.
 
 The following code wraps the GPT model above with a static cache for all layers, and compiles its decode step with `torch.compile(mode="reduce-overhead")`, which records and replays it as a CUDA graph on a GPU. Because of the learned positional embeddings, `max_len` must not exceed the context window `seqlen`:
 

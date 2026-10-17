@@ -5,7 +5,7 @@ categories: ["Efficient Inference"]
 tags: ["LLM", "pruning", "quantization", "FP8", "KV cache"]
 ---
 
-The most effective way to make a model faster is to make it smaller. Pruning removes parts of a large model, and is usually combined with [knowledge distillation]({{ site.baseurl }}{% post_url 2026-03-17-inference-distillation-speculative-decoding %}#knowledge-distillation), which trains the smaller model to behave like the original one. Quantization keeps all the parts of the model, but stores its numbers with fewer bits. As before, all the code is in the [repository of this post](https://github.com/{{ site.repository }}/tree/master/assets/inference).
+The most effective way to make a model faster is to make it smaller. Pruning removes parts of a large model, and is usually combined with knowledge distillation, which trains the smaller model to behave like the original one. Quantization keeps all the parts of the model, but stores its numbers with fewer bits. As before, all the code is in the [repository of this post](https://github.com/{{ site.repository }}/tree/master/assets/inference).
 
 ## Pruning
 
@@ -207,7 +207,7 @@ Deriving 8B and 4B models from a 15B one this way required up to 40 times fewer 
 
 We apply this recipe to GPTlite, removing half of the attention heads and MLP neurons of every block in two ways: in one shot, followed by distillation; and iteratively, removing 10% at a time and distilling after each step, with the same total number of distillation steps. As a baseline, we distill into the same small architecture from a random initialization.
 
-The following code computes the importance of heads and neurons, and implements the structured pruning and the experiment. The `distill` function, in the repository, trains the pruned model with the `distillation_loss` of the [post on distillation]({{ site.baseurl }}{% post_url 2026-03-17-inference-distillation-speculative-decoding %}#knowledge-distillation):
+The following code computes the importance of heads and neurons, and implements the structured pruning and the experiment. The `distill` function, in the repository, trains the pruned model with a distillation loss:
 
 ```python
 @torch.inference_mode()
