@@ -10,7 +10,7 @@
         <mxCell id="odd_even_sort-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="708" height="628" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-126" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;arcSize=4;dashed=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-126" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;arcSize=4;dashed=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="12" y="206" width="696" height="350" as="geometry" />
         </mxCell>
         <mxCell id="odd_even_sort-1" value="&lt;b&gt;Initial data:&lt;/b&gt; 20 elements distributed over 5 processors ranked 0 to 4" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="odd_even_sort-figure">
@@ -31,127 +31,127 @@
         <mxCell id="odd_even_sort-6" value="rank 4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="546" y="26" width="150" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-7" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-7" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="40" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-8" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-8" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="70" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-9" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-9" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="100" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-10" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-10" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="144" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-11" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-11" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="174" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-12" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-12" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="204" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-13" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-13" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="234" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-14" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-14" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="264" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-15" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-15" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="308" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-16" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-16" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="338" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-17" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-17" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="368" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-18" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-18" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="412" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-19" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-19" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="442" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-20" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-20" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="472" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-21" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-21" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="502" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-22" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-22" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="546" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-23" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-23" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="576" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-24" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-24" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="606" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-25" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-25" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="636" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-26" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-26" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="666" y="48" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="odd_even_sort-27" value="&lt;b&gt;Step 1:&lt;/b&gt; Local data sort" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="0" y="96" width="150.3438" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-28" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-28" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="40" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-29" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-29" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="70" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-30" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-30" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="100" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-31" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-31" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="144" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-32" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-32" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="174" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-33" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-33" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="204" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-34" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-34" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="234" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-35" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-35" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="264" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-36" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-36" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="308" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-37" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-37" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="338" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-38" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-38" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="368" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-39" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-39" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="412" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-40" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-40" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="442" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-41" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-41" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="472" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-42" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-42" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="502" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-43" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-43" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="546" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-44" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-44" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="576" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-45" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-45" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="606" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-46" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-46" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="636" y="124" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-47" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-47" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="666" y="124" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="odd_even_sort-48" value="&lt;b&gt;Step 2:&lt;/b&gt; Perform the following loop N times (where N = 5 processors, and i = 0 to 4):" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="odd_even_sort-figure">
@@ -163,64 +163,64 @@
         <mxCell id="odd_even_sort-50" value="&lt;b&gt;if i is odd:&lt;/b&gt; each processor with odd rank communicates with the even rank on its &lt;b&gt;right&lt;/b&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="40" y="248" width="544.6719" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-51" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-51" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="40" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-52" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-52" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="70" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-53" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-53" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="100" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-54" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-54" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="144" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-55" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-55" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="174" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-56" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-56" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="204" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-57" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-57" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="234" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-58" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-58" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="264" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-59" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-59" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="308" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-60" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-60" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="338" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-61" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-61" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="368" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-62" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-62" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="412" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-63" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-63" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="442" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-64" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-64" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="472" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-65" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-65" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="502" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-66" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-66" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="546" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-67" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-67" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="576" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-68" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-68" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="606" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-69" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-69" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="636" y="274" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-70" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-70" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="666" y="274" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="odd_even_sort-71" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=6;startSize=6;" edge="1" parent="odd_even_sort-figure">
@@ -246,64 +246,64 @@
         <mxCell id="odd_even_sort-73" value="&lt;b&gt;if i is even:&lt;/b&gt; each processor with odd rank communicates with the even rank on its &lt;b&gt;left&lt;/b&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="40" y="328" width="540.8125" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-74" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-74" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="40" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-75" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-75" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="70" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-76" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-76" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="100" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-77" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-77" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="144" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-78" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-78" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="174" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-79" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-79" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="204" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-80" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-80" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="234" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-81" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-81" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="264" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-82" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-82" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="308" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-83" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-83" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="338" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-84" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-84" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="368" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-85" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-85" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="412" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-86" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-86" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="442" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-87" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-87" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="472" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-88" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-88" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="502" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-89" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-89" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="546" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-90" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-90" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="576" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-91" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-91" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="606" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-92" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-92" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="636" y="354" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-93" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-93" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="666" y="354" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="odd_even_sort-94" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=6;startSize=6;" edge="1" parent="odd_even_sort-figure">
@@ -335,148 +335,148 @@
         <mxCell id="odd_even_sort-98" value="rank 0 holds" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="40" y="490" width="86" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-99" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-99" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="132" y="490" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-100" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-100" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="162" y="490" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-101" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-101" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="192" y="490" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-102" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-102" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="230" y="490" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-103" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-103" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="260" y="490" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-104" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-104" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="290" y="490" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-105" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-105" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="320" y="490" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-106" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-106" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="350" y="490" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="odd_even_sort-107" value="and keeps" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;spacingLeft=0;spacingRight=0;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="390" y="490" width="70" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-108" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-108" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="466" y="490" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-109" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-109" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="496" y="490" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-110" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-110" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="526" y="490" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="odd_even_sort-111" value="rank 1 holds" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="40" y="520" width="86" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-112" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-112" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="132" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-113" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-113" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="162" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-114" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-114" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="192" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-115" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-115" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="230" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-116" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-116" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="260" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-117" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-117" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="290" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-118" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-118" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="320" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-119" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-119" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="350" y="520" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="odd_even_sort-120" value="and keeps" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;spacingLeft=0;spacingRight=0;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="390" y="520" width="70" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-121" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-121" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="466" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-122" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-122" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="496" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-123" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-123" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="526" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-124" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-124" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="556" y="520" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-125" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-125" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="586" y="520" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="odd_even_sort-127" value="&lt;b&gt;Step 3:&lt;/b&gt; After N iterations, final data is sorted:" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="0" y="578" width="287.2656" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-128" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-128" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="40" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-129" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-129" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="70" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-130" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-130" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="100" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-131" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-131" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="144" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-132" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-132" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="174" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-133" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-133" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="204" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-134" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-134" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="234" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-135" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-135" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="264" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-136" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-136" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="308" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-137" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-137" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="338" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-138" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-138" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="368" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-139" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-139" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="412" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-140" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-140" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="442" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-141" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-141" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="472" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-142" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-142" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="502" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-143" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-143" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="546" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-144" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-144" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="576" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-145" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-145" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="606" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-146" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-146" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="636" y="606" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="odd_even_sort-147" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="odd_even_sort-figure">
+        <mxCell id="odd_even_sort-147" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="odd_even_sort-figure">
           <mxGeometry x="666" y="606" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="sample_sort-label" value="sample_sort.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
@@ -488,67 +488,67 @@
         <mxCell id="sample_sort-1" value="&lt;b&gt;Initial data:&lt;/b&gt; 21 elements distributed over 3 CPUs" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="0" y="0" width="313.6719" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-2" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-2" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="10" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-3" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-3" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="40" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-4" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-4" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="70" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-5" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-5" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="100" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-6" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-6" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="130" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-7" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-7" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="160" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-8" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-8" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="190" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-9" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-9" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="220" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-10" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-10" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="274" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-11" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-11" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="304" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-12" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-12" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="334" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-13" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-13" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="364" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-14" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-14" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="394" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-15" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-15" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="424" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-16" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-16" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="454" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-17" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-17" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="508" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-18" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-18" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="538" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-19" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-19" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="568" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-20" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-20" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="598" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-21" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-21" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="628" y="48" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-22" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-22" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="658" y="48" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="sample_sort-23" value="CPU 0" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=1;" vertex="1" parent="sample_sort-figure">
@@ -626,163 +626,163 @@
         <mxCell id="sample_sort-38" value="&lt;b&gt;Step 1:&lt;/b&gt; Local data sort" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="0" y="126" width="150.3438" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-39" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-39" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="10" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-40" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-40" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="40" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-41" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-41" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="70" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-42" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-42" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="100" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-43" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-43" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="130" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-44" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-44" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="160" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-45" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-45" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="190" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-46" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-46" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="220" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-47" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-47" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="274" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-48" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-48" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="304" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-49" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-49" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="334" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-50" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-50" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="364" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-51" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-51" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="394" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-52" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-52" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="424" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-53" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-53" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="454" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-54" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-54" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="508" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-55" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-55" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="538" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-56" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-56" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="568" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-57" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-57" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="598" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-58" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-58" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="628" y="154" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-59" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-59" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="658" y="154" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="sample_sort-60" value="&lt;b&gt;Step 2:&lt;/b&gt; Each CPU collects N equally distant samples of its data (where N is the number of&lt;br&gt;CPUs), and sends them to the root node" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="0" y="204" width="567.2969" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-61" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-61" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="10" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-62" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-62" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="40" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-63" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-63" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="70" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-64" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-64" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="100" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-65" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-65" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="130" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-66" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-66" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="160" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-67" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-67" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="190" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-68" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-68" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="220" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-69" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-69" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="274" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-70" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-70" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="304" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-71" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-71" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="334" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-72" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-72" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="364" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-73" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-73" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="394" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-74" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-74" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="424" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-75" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-75" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="454" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-76" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-76" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="508" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-77" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-77" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="538" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-78" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-78" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="568" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-79" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-79" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="598" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-80" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-80" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="628" y="252" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-81" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-81" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="658" y="252" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="sample_sort-82" value="data sent to root:" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;spacingRight=0;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="64" y="330" width="142" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-83" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-83" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="214" y="330" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-84" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-84" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="244" y="330" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-85" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-85" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="274" y="330" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-86" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-86" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="304" y="330" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-87" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-87" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="334" y="330" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-88" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-88" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="364" y="330" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-89" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-89" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="394" y="330" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-90" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-90" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="424" y="330" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-91" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-91" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="454" y="330" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="sample_sort-92" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=6;" edge="1" parent="sample_sort-figure">
@@ -842,43 +842,43 @@
         <mxCell id="sample_sort-101" value="&lt;b&gt;Step 3:&lt;/b&gt; The root node sorts the received samples, takes N samples from them and broadcasts&lt;br&gt;them to all CPUs. The samples represent &lt;i&gt;which elements should be sent to which CPU&lt;/i&gt;." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="0" y="382" width="593.4531" height="40" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-102" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-102" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="214" y="430" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-103" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-103" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="244" y="430" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-104" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-104" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="274" y="430" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-105" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-105" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="304" y="430" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-106" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-106" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="334" y="430" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-107" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-107" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="364" y="430" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-108" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-108" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="394" y="430" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-109" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-109" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="424" y="430" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-110" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-110" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="454" y="430" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-111" value="CPU 0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-111" value="CPU 0" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="53" y="498" width="64" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-112" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-112" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="117" y="498" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-113" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-113" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="147" y="498" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-114" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-114" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="177" y="498" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="sample_sort-115" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=6;" edge="1" parent="sample_sort-figure">
@@ -887,16 +887,16 @@
             <mxPoint x="162" y="498" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="sample_sort-116" value="CPU 1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-116" value="CPU 1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="302" y="498" width="64" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-117" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-117" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="366" y="498" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-118" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-118" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="396" y="498" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-119" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-119" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="426" y="498" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="sample_sort-120" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=6;" edge="1" parent="sample_sort-figure">
@@ -905,16 +905,16 @@
             <mxPoint x="411" y="498" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="sample_sort-121" value="CPU 2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-121" value="CPU 2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="521" y="498" width="64" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-122" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-122" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="585" y="498" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-123" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-123" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="615" y="498" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-124" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-124" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=13;fontStyle=1;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="645" y="498" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="sample_sort-125" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=12;endSize=6;" edge="1" parent="sample_sort-figure">
@@ -929,67 +929,67 @@
         <mxCell id="sample_sort-127" value="&lt;b&gt;Step 4:&lt;/b&gt; Each CPU sends the portion of its segments to the corresponding CPU, as given by&lt;br&gt;the samples, and sorts the data it receives. As the samples split the range of values in the&lt;br&gt;order of the CPU ranks, the final data is sorted across all CPUs." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;spacingLeft=0;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="0" y="636" width="576.6719" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-128" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-128" value="-9" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="10" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-129" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-129" value="-8" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="40" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-130" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-130" value="-7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="70" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-131" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-131" value="-6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="100" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-132" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-132" value="-3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="130" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-133" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-133" value="-2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="160" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-134" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-134" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="190" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-135" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-135" value="2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="220" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-136" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-136" value="3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="250" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-137" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-137" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="304" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-138" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-138" value="5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="334" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-139" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-139" value="6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="364" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-140" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-140" value="7" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="394" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-141" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-141" value="10" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="448" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-142" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-142" value="12" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="478" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-143" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-143" value="13" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="508" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-144" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-144" value="15" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="538" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-145" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-145" value="17" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="568" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-146" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-146" value="20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="598" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-147" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-147" value="22" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="628" y="710" width="30" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="sample_sort-148" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="sample_sort-figure">
+        <mxCell id="sample_sort-148" value="30" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=13;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="sample_sort-figure">
           <mxGeometry x="658" y="710" width="30" height="22" as="geometry" />
         </mxCell>
         <mxCell id="sample_sort-149" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=12;" edge="1" parent="sample_sort-figure">

@@ -651,19 +651,19 @@
         <mxCell id="gptlite_embedding-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="626" width="202.2" height="585.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_embedding-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="10.8" y="228" width="142.8" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_embedding-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="21.3" y="236.4" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_embedding-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="21.3" y="261.6" width="97.8" height="38.4" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_embedding-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="21.3" y="321.6" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_embedding-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="21.3" y="345.6" width="97.8" height="55.2" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_embedding-6" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_embedding-figure">
@@ -731,7 +731,7 @@
         <mxCell id="gptlite_embedding-14" value="N×" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="161.4" y="321" width="30" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_embedding-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="63" y="464.4" width="14.4" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_embedding-16" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="gptlite_embedding-figure">
@@ -740,7 +740,7 @@
             <mxPoint x="94.2" y="471.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_embedding-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="94.2" y="457.2" width="28.8" height="28.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_embedding-18" value="" style="curved=1;endArrow=none;html=1;" edge="1" parent="gptlite_embedding-figure">
@@ -756,7 +756,7 @@
         <mxCell id="gptlite_embedding-19" value="Positional&lt;br&gt;Encoding" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;align=left;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="130.2" y="453.6" width="72" height="36" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_embedding-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="21.3" y="495" width="97.8" height="37.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_embedding-21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_embedding-figure">
@@ -774,7 +774,7 @@
         <mxCell id="gptlite_embedding-23" value="Inputs" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="34.2" y="564" width="72" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_embedding-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="10.8" y="148.8" width="142.8" height="33.6" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_embedding-25" value="" style="endArrow=none;html=1;rounded=0;dashed=1;" edge="1" parent="gptlite_embedding-figure">
@@ -789,10 +789,10 @@
             <mxPoint x="70.2" y="112.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_embedding-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="21.3" y="94.2" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_embedding-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_embedding-figure">
+        <mxCell id="gptlite_embedding-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_embedding-figure">
           <mxGeometry x="21.3" y="56.4" width="97.8" height="18" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_embedding-29" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_embedding-figure">
@@ -819,19 +819,19 @@
         <mxCell id="gptlite_pos_enc-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="1291.6" width="208.2" height="585.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_pos_enc-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="10.8" y="228" width="142.8" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_pos_enc-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="21.3" y="236.4" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_pos_enc-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="21.3" y="261.6" width="97.8" height="38.4" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_pos_enc-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="21.3" y="321.6" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_pos_enc-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="21.3" y="345.6" width="97.8" height="55.2" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_pos_enc-6" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_pos_enc-figure">
@@ -899,7 +899,7 @@
         <mxCell id="gptlite_pos_enc-14" value="N×" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="161.4" y="321" width="30" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_pos_enc-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="63" y="464.4" width="14.4" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_pos_enc-16" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="gptlite_pos_enc-figure">
@@ -908,7 +908,7 @@
             <mxPoint x="94.2" y="471.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_pos_enc-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="94.2" y="457.2" width="28.8" height="28.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_pos_enc-18" value="" style="curved=1;endArrow=none;html=1;" edge="1" parent="gptlite_pos_enc-figure">
@@ -924,7 +924,7 @@
         <mxCell id="gptlite_pos_enc-19" value="Positional&lt;br&gt;Encoding" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;align=left;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="130.2" y="453.6" width="72" height="36" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_pos_enc-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="21.3" y="495" width="97.8" height="37.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_pos_enc-21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_pos_enc-figure">
@@ -942,7 +942,7 @@
         <mxCell id="gptlite_pos_enc-23" value="Inputs" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="34.2" y="564" width="72" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_pos_enc-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="10.8" y="148.8" width="142.8" height="33.6" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_pos_enc-25" value="" style="endArrow=none;html=1;rounded=0;dashed=1;" edge="1" parent="gptlite_pos_enc-figure">
@@ -957,10 +957,10 @@
             <mxPoint x="70.2" y="112.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_pos_enc-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="21.3" y="94.2" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_pos_enc-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_pos_enc-figure">
+        <mxCell id="gptlite_pos_enc-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.78;" vertex="1" parent="gptlite_pos_enc-figure">
           <mxGeometry x="21.3" y="56.4" width="97.8" height="18" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_pos_enc-29" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_pos_enc-figure">
@@ -987,19 +987,19 @@
         <mxCell id="gptlite_attention-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="1957.2" width="202.2" height="585.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_attention-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="10.8" y="228" width="142.8" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_attention-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="21.3" y="236.4" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_attention-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="21.3" y="261.6" width="97.8" height="38.4" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_attention-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="21.3" y="321.6" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_attention-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="21.3" y="345.6" width="97.8" height="55.2" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_attention-6" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_attention-figure">
@@ -1067,7 +1067,7 @@
         <mxCell id="gptlite_attention-14" value="N×" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="161.4" y="321" width="30" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_attention-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="63" y="464.4" width="14.4" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_attention-16" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="gptlite_attention-figure">
@@ -1076,7 +1076,7 @@
             <mxPoint x="94.2" y="471.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_attention-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="94.2" y="457.2" width="28.8" height="28.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_attention-18" value="" style="curved=1;endArrow=none;html=1;" edge="1" parent="gptlite_attention-figure">
@@ -1092,7 +1092,7 @@
         <mxCell id="gptlite_attention-19" value="Positional&lt;br&gt;Encoding" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;align=left;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="130.2" y="453.6" width="72" height="36" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_attention-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="21.3" y="495" width="97.8" height="37.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_attention-21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_attention-figure">
@@ -1110,7 +1110,7 @@
         <mxCell id="gptlite_attention-23" value="Inputs" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="34.2" y="564" width="72" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_attention-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="10.8" y="148.8" width="142.8" height="33.6" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_attention-25" value="" style="endArrow=none;html=1;rounded=0;dashed=1;" edge="1" parent="gptlite_attention-figure">
@@ -1125,10 +1125,10 @@
             <mxPoint x="70.2" y="112.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_attention-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="21.3" y="94.2" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_attention-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_attention-figure">
+        <mxCell id="gptlite_attention-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_attention-figure">
           <mxGeometry x="21.3" y="56.4" width="97.8" height="18" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_attention-29" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_attention-figure">
@@ -1158,19 +1158,19 @@
         <mxCell id="gptlite_feedforward-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="2622.8" width="202.2" height="585.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_feedforward-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="10.8" y="228" width="142.8" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_feedforward-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="21.3" y="236.4" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_feedforward-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="21.3" y="261.6" width="97.8" height="38.4" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_feedforward-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="21.3" y="321.6" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_feedforward-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="21.3" y="345.6" width="97.8" height="55.2" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_feedforward-6" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_feedforward-figure">
@@ -1238,7 +1238,7 @@
         <mxCell id="gptlite_feedforward-14" value="N×" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="161.4" y="321" width="30" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_feedforward-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="63" y="464.4" width="14.4" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_feedforward-16" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="gptlite_feedforward-figure">
@@ -1247,7 +1247,7 @@
             <mxPoint x="94.2" y="471.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_feedforward-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="94.2" y="457.2" width="28.8" height="28.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_feedforward-18" value="" style="curved=1;endArrow=none;html=1;" edge="1" parent="gptlite_feedforward-figure">
@@ -1263,7 +1263,7 @@
         <mxCell id="gptlite_feedforward-19" value="Positional&lt;br&gt;Encoding" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;align=left;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="130.2" y="453.6" width="72" height="36" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_feedforward-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="21.3" y="495" width="97.8" height="37.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_feedforward-21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_feedforward-figure">
@@ -1281,7 +1281,7 @@
         <mxCell id="gptlite_feedforward-23" value="Inputs" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="34.2" y="564" width="72" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_feedforward-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="10.8" y="148.8" width="142.8" height="33.6" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_feedforward-25" value="" style="endArrow=none;html=1;rounded=0;dashed=1;" edge="1" parent="gptlite_feedforward-figure">
@@ -1296,10 +1296,10 @@
             <mxPoint x="70.2" y="112.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_feedforward-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="21.3" y="94.2" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_feedforward-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_feedforward-figure">
+        <mxCell id="gptlite_feedforward-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_feedforward-figure">
           <mxGeometry x="21.3" y="56.4" width="97.8" height="18" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_feedforward-29" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_feedforward-figure">
@@ -1326,19 +1326,19 @@
         <mxCell id="gptlite_blocks-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="3288.4" width="202.2" height="585.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_blocks-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=24;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="10.8" y="228" width="142.8" height="210" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_blocks-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-2" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="21.3" y="236.4" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_blocks-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-3" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="21.3" y="261.6" width="97.8" height="38.4" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_blocks-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-4" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="21.3" y="321.6" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_blocks-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-5" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="21.3" y="345.6" width="97.8" height="55.2" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_blocks-6" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_blocks-figure">
@@ -1406,7 +1406,7 @@
         <mxCell id="gptlite_blocks-14" value="N×" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="161.4" y="321" width="30" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_blocks-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-15" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="63" y="464.4" width="14.4" height="14.4" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_blocks-16" value="" style="endArrow=none;html=1;rounded=0;" edge="1" parent="gptlite_blocks-figure">
@@ -1415,7 +1415,7 @@
             <mxPoint x="94.2" y="471.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_blocks-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-17" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="94.2" y="457.2" width="28.8" height="28.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_blocks-18" value="" style="curved=1;endArrow=none;html=1;" edge="1" parent="gptlite_blocks-figure">
@@ -1431,7 +1431,7 @@
         <mxCell id="gptlite_blocks-19" value="Positional&lt;br&gt;Encoding" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;align=left;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="130.2" y="453.6" width="72" height="36" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_blocks-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-20" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="21.3" y="495" width="97.8" height="37.8" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_blocks-21" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_blocks-figure">
@@ -1449,7 +1449,7 @@
         <mxCell id="gptlite_blocks-23" value="Inputs" style="text;html=1;align=center;verticalAlign=middle;strokeColor=none;fillColor=none;fontFamily=Helvetica;fontSize=12;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="34.2" y="564" width="72" height="21.6" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_blocks-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-24" value="more blocks" style="rounded=1;arcSize=50;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="10.8" y="148.8" width="142.8" height="33.6" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_blocks-25" value="" style="endArrow=none;html=1;rounded=0;dashed=1;" edge="1" parent="gptlite_blocks-figure">
@@ -1464,10 +1464,10 @@
             <mxPoint x="70.2" y="112.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gptlite_blocks-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-27" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="21.3" y="94.2" width="97.8" height="18" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_blocks-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="gptlite_blocks-figure">
+        <mxCell id="gptlite_blocks-28" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=8;whiteSpace=wrap;html=1;fontFamily=Helvetica;fontSize=12;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.79;" vertex="1" parent="gptlite_blocks-figure">
           <mxGeometry x="21.3" y="56.4" width="97.8" height="18" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_blocks-29" value="" style="endArrow=classic;html=1;rounded=0;" edge="1" parent="gptlite_blocks-figure">

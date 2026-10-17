@@ -10,7 +10,7 @@
         <mxCell id="mml_svd-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="598" height="176" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-1" value="&lt;i&gt;A&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="mml_svd-figure">
+        <mxCell id="mml_svd-1" value="&lt;i&gt;A&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=1.22;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="29" y="26" width="65" height="150" as="geometry" />
         </mxCell>
         <mxCell id="mml_svd-2" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;" vertex="1" parent="mml_svd-figure">
@@ -19,7 +19,7 @@
         <mxCell id="mml_svd-3" value="m" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;rotation=-90;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="0" y="89" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-4" value="&lt;i&gt;U&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="mml_svd-figure">
+        <mxCell id="mml_svd-4" value="&lt;i&gt;U&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=1.22;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="212" y="26" width="145" height="150" as="geometry" />
         </mxCell>
         <mxCell id="mml_svd-5" value="m" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;" vertex="1" parent="mml_svd-figure">
@@ -28,7 +28,7 @@
         <mxCell id="mml_svd-6" value="m" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;rotation=-90;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="183" y="89" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-7" value="Σ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="mml_svd-figure">
+        <mxCell id="mml_svd-7" value="Σ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=1.22;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="396" y="26" width="66" height="150" as="geometry" />
         </mxCell>
         <mxCell id="mml_svd-8" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;" vertex="1" parent="mml_svd-figure">
@@ -37,7 +37,7 @@
         <mxCell id="mml_svd-9" value="m" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;rotation=-90;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="367" y="89" width="30" height="24" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-10" value="&lt;i&gt;V&lt;/i&gt;&lt;sup&gt;⊤&lt;/sup&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="mml_svd-figure">
+        <mxCell id="mml_svd-10" value="&lt;i&gt;V&lt;/i&gt;&lt;sup&gt;⊤&lt;/sup&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=34;fontStyle=1;strokeColor=#000000;strokeWidth=1.22;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="504" y="66" width="65" height="67" as="geometry" />
         </mxCell>
         <mxCell id="mml_svd-11" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=22;fontStyle=2;" vertex="1" parent="mml_svd-figure">
@@ -55,16 +55,16 @@
         <mxCell id="svd_example_2-figure" value="" style="group" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="336" width="729.8" height="618" as="geometry" />
         </mxCell>
-        <mxCell id="svd_example_2-1" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="svd_example_2-figure">
+        <mxCell id="svd_example_2-1" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.55;" vertex="1" parent="svd_example_2-figure">
           <mxGeometry x="0" y="83.4" width="173" height="173" as="geometry" />
         </mxCell>
-        <mxCell id="svd_example_2-2" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="svd_example_2-figure">
+        <mxCell id="svd_example_2-2" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.55;" vertex="1" parent="svd_example_2-figure">
           <mxGeometry x="0" y="441.4" width="173" height="173" as="geometry" />
         </mxCell>
-        <mxCell id="svd_example_2-3" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;rotation=30;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="svd_example_2-figure">
+        <mxCell id="svd_example_2-3" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;rotation=30;strokeColor=#000000;strokeWidth=1.55;" vertex="1" parent="svd_example_2-figure">
           <mxGeometry x="363" y="127" width="258.8" height="85.8" as="geometry" />
         </mxCell>
-        <mxCell id="svd_example_2-4" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="svd_example_2-figure">
+        <mxCell id="svd_example_2-4" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=1.55;" vertex="1" parent="svd_example_2-figure">
           <mxGeometry x="359.9" y="485" width="258.8" height="85.8" as="geometry" />
         </mxCell>
         <mxCell id="svd_example_2-5" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;strokeWidth=2.5;fontSize=12;endSize=5;endFill=1;" edge="1" parent="svd_example_2-figure">
@@ -286,49 +286,49 @@
         <mxCell id="autodiff-15" value="= &lt;i&gt;d&lt;/i&gt; + &lt;i&gt;e&lt;/i&gt; ." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=17;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="260" y="265" width="160" height="26" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-16" value="" style="shape=stencil(xVNdc4MgEPw1PNpBcKZ9T9P/cSEXZUKAARL13xfmHGuwH499ktu9Xfb0ZPIQB/DIBLdwQybfmRDemTk/MjYS0L6KF84JGgjq3lYEokeVCH5A0HAySExMwV1x1Oe0qLQdMOhUWHlk8qCctVmrnY1MfBB2AnXtg7vbM9Ueirqcbu5Rgk7kxdcAcx1pcTLa/tYv6n4IKrNhqmkedgo+NTDp2ASXoMRfriDOQOixyW7NxUD/RMUR0W/gdnHb+c9V6G9HarvuL8G/z7TdnZ9efDXVXrH7tMq4iGuVD19bkot6hS4u4FOtjaHd3FrUXRmif0MePwE=);whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;strokeColor=none;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-16" value="" style="shape=stencil(xVNdc4MgEPw1PNpBcKZ9T9P/cSEXZUKAARL13xfmHGuwH499ktu9Xfb0ZPIQB/DIBLdwQybfmRDemTk/MjYS0L6KF84JGgjq3lYEokeVCH5A0HAySExMwV1x1Oe0qLQdMOhUWHlk8qCctVmrnY1MfBB2AnXtg7vbM9Ueirqcbu5Rgk7kxdcAcx1pcTLa/tYv6n4IKrNhqmkedgo+NTDp2ASXoMRfriDOQOixyW7NxUD/RMUR0W/gdnHb+c9V6G9HarvuL8G/z7TdnZ9efDXVXrH7tMq4iGuVD19bkot6hS4u4FOtjaHd3FrUXRmif0MePwE=);whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="134" y="327" width="172" height="48" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-17" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=14;strokeColor=none;absoluteArcSize=1;arcSize=56;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-17" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;absoluteArcSize=1;arcSize=56;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="363" y="327" width="144" height="93" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-18" value="&lt;i&gt;x&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-18" value="&lt;i&gt;x&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="4.5" y="361.5" width="27" height="27" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-19" value="(·)&lt;sup&gt;2&lt;/sup&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-19" value="(·)&lt;sup&gt;2&lt;/sup&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="56" y="364" width="48" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-20" value="&lt;i&gt;a&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-20" value="&lt;i&gt;a&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="120.5" y="361.5" width="27" height="27" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-21" value="exp(·)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-21" value="exp(·)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="163" y="316" width="60" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-22" value="&lt;i&gt;b&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-22" value="&lt;i&gt;b&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="255.5" y="313.5" width="27" height="27" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-23" value="+" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-23" value="+" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="294" y="364" width="25" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-24" value="&lt;i&gt;c&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-24" value="&lt;i&gt;c&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="349.5" y="361.5" width="27" height="27" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-25" value="√&lt;span style=&quot;border-top: 1px solid #000000; padding-top: 0px;&quot;&gt;·&amp;nbsp;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-25" value="√&lt;span style=&quot;border-top: 1px solid #000000; padding-top: 0px;&quot;&gt;·&amp;nbsp;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="390" y="316" width="29" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-26" value="&lt;i&gt;d&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-26" value="&lt;i&gt;d&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="452.5" y="313.5" width="27" height="27" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-27" value="cos(·)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-27" value="cos(·)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="390" y="409" width="54" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-28" value="&lt;i&gt;e&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-28" value="&lt;i&gt;e&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="471.5" y="406.5" width="27" height="27" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-29" value="+" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-29" value="+" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="495" y="364" width="25" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="autodiff-30" value="&lt;i&gt;f&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.8;" vertex="1" parent="autodiff-figure">
+        <mxCell id="autodiff-30" value="&lt;i&gt;f&lt;/i&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=15;strokeColor=#000000;strokeWidth=0.94;" vertex="1" parent="autodiff-figure">
           <mxGeometry x="555.5" y="361.5" width="27" height="27" as="geometry" />
         </mxCell>
         <mxCell id="autodiff-31" value="" style="endArrow=open;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;fontSize=12;endSize=7;rounded=1;arcSize=40;" edge="1" parent="autodiff-figure" source="autodiff-18" target="autodiff-19">
