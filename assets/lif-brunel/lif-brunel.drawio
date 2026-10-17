@@ -425,6 +425,183 @@
         <mxCell id="network-44" value="&lt;i&gt;C&lt;/i&gt;&lt;sub&gt;I&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=21;" vertex="1" parent="network-figure">
           <mxGeometry x="381" y="319.5" width="39" height="30" as="geometry" />
         </mxCell>
+        <mxCell id="diagram_class-label" value="diagram_class.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1177.5" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="1217.5" width="890" height="623" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-1" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="102.5" y="40" as="sourcePoint" />
+            <mxPoint x="102.5" y="117" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-2" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="146" y="157" as="sourcePoint" />
+            <mxPoint x="339" y="234" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-3" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="103" y="157" as="sourcePoint" />
+            <mxPoint x="103" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-4" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;curved=1;rounded=1;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="90" y="157" as="sourcePoint" />
+            <mxPoint x="312" y="603" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="32" y="251" />
+              <mxPoint x="4" y="346" />
+              <mxPoint x="0" y="426" />
+              <mxPoint x="17" y="488" />
+              <mxPoint x="59" y="540" />
+              <mxPoint x="134" y="579" />
+              <mxPoint x="224" y="598" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-5" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="338" y="273" as="sourcePoint" />
+            <mxPoint x="146" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-6" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="363" y="273" as="sourcePoint" />
+            <mxPoint x="287" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-7" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;curved=1;rounded=1;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="381" y="273" as="sourcePoint" />
+            <mxPoint x="160" y="467" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="377" y="321" />
+              <mxPoint x="361" y="376" />
+              <mxPoint x="332" y="405" />
+              <mxPoint x="244" y="444" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-8" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="403" y="273" as="sourcePoint" />
+            <mxPoint x="492" y="350" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-9" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="457" y="268" as="sourcePoint" />
+            <mxPoint x="799" y="358" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-10" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;curved=1;rounded=1;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="457" y="270" as="sourcePoint" />
+            <mxPoint x="461" y="603" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="536" y="291" />
+              <mxPoint x="630" y="340" />
+              <mxPoint x="704" y="416" />
+              <mxPoint x="720" y="471" />
+              <mxPoint x="699" y="519" />
+              <mxPoint x="656" y="557" />
+              <mxPoint x="574" y="588" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-11" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;curved=1;rounded=1;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="556" y="350" as="sourcePoint" />
+            <mxPoint x="564" y="392" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="614" y="348" />
+              <mxPoint x="619" y="370" />
+              <mxPoint x="604" y="391" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-12" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="444" y="390" as="sourcePoint" />
+            <mxPoint x="160" y="467" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-13" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="472" y="390" as="sourcePoint" />
+            <mxPoint x="301" y="467" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-14" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="495" y="390" as="sourcePoint" />
+            <mxPoint x="423" y="467" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-15" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;curved=1;rounded=1;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="510" y="390" as="sourcePoint" />
+            <mxPoint x="408" y="584" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="491" y="468" />
+              <mxPoint x="462" y="528" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-16" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="531" y="390" as="sourcePoint" />
+            <mxPoint x="607" y="467" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-17" value="" style="html=1;endArrow=block;endFill=1;endSize=16;startArrow=none;strokeColor=#000000;strokeWidth=1.5;rounded=0;" edge="1" parent="diagram_class-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="281" y="507" as="sourcePoint" />
+            <mxPoint x="363" y="584" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="diagram_class-18" value="Simulation.cpp" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="18" y="0" width="169" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-19" value="Simulation.hpp" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="18" y="117" width="169" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-20" value="Network.hpp" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="307" y="233" width="150" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-21" value="gtest/gtest.h" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="28" y="350" width="149" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-22" value="memory" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="215" y="350" width="109" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-23" value="Neuron.hpp" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="441" y="350" width="140" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-24" value="vector" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="798" y="350" width="92" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-25" value="fstream" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="54" y="467" width="106" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-26" value="Event.hpp" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="197" y="467" width="128" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-27" value="queue" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="362" y="467" width="90" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-28" value="iostream" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="569" y="467" width="113" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="diagram_class-29" value="Physics.hpp" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=20;strokeColor=#000000;strokeWidth=0.81;" vertex="1" parent="diagram_class-figure">
+          <mxGeometry x="312" y="584" width="148" height="39" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

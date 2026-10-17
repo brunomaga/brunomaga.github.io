@@ -152,7 +152,7 @@ It is common to compute the outputs of multiple filters instead of a single one.
 With several channels, the output of the next level is not 2D but 3D. Deeper layers have more channels but a smaller “footprint.” Applying local connectivity to a 2D input in a *deep* neural network leads to the following structure:
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="65%" src="{{ site.assets }}/deep-neural-networks/cnn.png">
+<img width="65%" height="65%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
 
 There are three types of operations:
 - convolutional layer: applies a convolution operation to the input and passes the result to the next layer. The convolution emulates the response of an individual neuron to visual stimuli;
