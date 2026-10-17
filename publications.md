@@ -101,7 +101,11 @@ In NVIDIA's LatentMoE, "tokens are projected from the model hidden dimension d i
 
 The payoff is that the freed budget can be spent on *more, finer experts* at the same cost: with a 4× compression, against a standard MoE (128 experts, top-6) scoring 48.30% on MMLU-Pro, a LatentMoE configuration with (N', K') = (512, 22) (as reported in the Nemotron 3 white paper) reaches 52.87% on MMLU-Pro and 55.14% on code (+3.19%) at a similar parameter and FLOP count (8B-active / 73B-total hybrid models trained on 1T tokens), with measured per-GPU throughput within ~6% of the baseline at higher concurrency.  Validated by design-space exploration up to 95B parameters over a 1T-token horizon, LatentMoE consistently beats standard MoE on accuracy per FLOP and per parameter, and has been adopted by the flagship Nemotron-3 Super and Ultra models. 
 
-<img loading="lazy" width="1758" height="1453" alt="image" src="https://github.com/user-attachments/assets/f6470954-b902-46d4-9cd9-dea0a60d040c" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/latentmoe.svg"/>
+
+{: .caption}
+Standard MoE vs. LatentMoE architectures. In LatentMoE, tokens are projected from the model hidden dimension $$d$$ into a smaller latent dimension $$\ell$$ for expert routing and computation, which reduces routed parameter loads and all-to-all traffic by a factor of $$d/\ell$$ (typically about 4×). We use this efficiency to increase both the total number of experts and the top-$$K$$ active experts per token by the same factor $$d/\ell$$, which improves accuracy per byte while keeping overall inference cost approximately constant.
 
 </div>
 </details>
@@ -248,9 +252,17 @@ The report stacks four efficiency techniques:
 
 The design philosophy is a balance of three layer types: MoE for sparse parameter scaling, a few attention layers for high-fidelity all-to-all information routing between tokens, and Mamba-2 for fixed-cost sequence modeling. Nemotron 3 Nano 30B-A3B achieves 3.3× higher throughput than Qwen3-30B-A3B (8K input / 16K output), while staying competitive on reasoning and long-context (RULER @ 1M) benchmarks. 
 
-<img loading="lazy" width="1744" height="547" alt="image" src="https://github.com/user-attachments/assets/229ddc64-b770-4ccf-b82d-003722cae9ca" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/nemotron3.svg"/>
 
-<img loading="lazy" width="2182" height="1350" alt="image" src="https://github.com/user-attachments/assets/8f3fae96-31fa-45c4-bcd6-0759bf265d8e" />
+{: .caption}
+Nemotron 3 models (e.g., Nemotron Nano 3) leverage a hybrid Mamba-Transformer MoE architecture consisting predominantly of interleaved Mamba-2 and MoE layers, with a select few self attention layers.
+
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
+
+{: .caption}
+Relative difference in train loss (left) and validation loss (right) between models trained with NVFP4 and BF16, shown at two model scales: Nemotron 3 Nano (A3B) and the larger MoE model (A8B). Loss gaps decrease as model size increases (A3B → A8B). Recipe ablation on Nemotron 3 Nano started from Nemotron 3 NVFP4 checkpoint at 500B tokens, then quantizes sensitive layers (Mamba Output, QKV, and Attention projections) to NVFP4, highlighting the importance of keeping these layers in high precision.
 
 </div>
 </details>
@@ -269,11 +281,19 @@ Comet works in two parts. (1) Dependency resolving: it maps out which pieces of 
 
 Authors note that the division point of how many computation vs communication SMs to be allocated depends on the model layer, input shape and level of parallelism:
 
-<img loading="lazy" width="1066" height="1024" alt="image" src="https://github.com/user-attachments/assets/98139ecb-ae00-439c-b598-4f431e47760e" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/comet.svg"/>
+
+{: .caption}
+Duration of the MoE layer1 kernel with varying number of thread blocks assigned for communication ($$n_c$$). The total number of thread blocks is identical to the number of SMs on Hopper(132). The figure shows four cases with different parallelisms.
 
 "Comet’s library comprises multiple pre-compiled kernels, each with a distinct division point (of computation vs communication SM split). Prior to deployment, the optimal configuration for each setup is profiled and stored as metadata. During runtime, Comet utilizes this metadata to select the optimal kernel for execution." As an example, if you take the MoE workflow dispatch→MatMul→MatMul→combine, it fuses dispatch→MatMul into one kernel and MatMul→combine into another, and executes communication and computation at a tile level.
 
-<img loading="lazy" width="1872" height="636" alt="image" src="https://github.com/user-attachments/assets/bd3a944f-fd78-421e-952f-c149d556d422" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/comet_2.svg"/>
+
+{: .caption}
+<b>Left:</b> The producer-consumer modeling of layer0 (left) and layer1 (right) of an MoE layer. The global size of the shared tensor is $$(M \times topk, N)$$ for both layer0 and layer1. <b>Right:</b> Decompose and reschedule the shared tensor in MoE layer0. In this illustration, three experts are located on Rank 0, each requiring both local and remote data for computation.
  
 The mechanism on Hopper is thread-block specialization. Comm and compute run in separate thread blocks. One fused kernel launches a fixed set of thread blocks. Each block is specialized — it's either a comm block or a compute block, not both. Because thread blocks occupy SMs, this effectively dedicates some SM capacity to comm and the rest to compute. When you fuse comm and compute into one kernel with specialized thread blocks, the compute blocks call device-side GEMM functions inside the fused megakernel. The GEMM implementation (CUTLASS) is reused unchanged.
 
@@ -312,7 +332,11 @@ To minimize the exposed communication cost, Helix introduces HOP-B (batch-wise o
 
 Compared to conventional parallelism approaches, Helix reduces TTL by up to 1.5x at fixed batch sizes and supports up to 32× larger batches under the same latency budget for DeepSeek-R1 on Blackwell. Unlike attention–FFN disaggregation (e.g., MegaScale-Infer), which splits the two phases *spatially* onto different GPUs, Helix splits them *temporally* on the same GPUs.
 
-<img loading="lazy" width="503" height="596" alt="image" src="https://github.com/user-attachments/assets/2e699dd5-4cb9-4414-a8f4-b074f975b782" />
+{: .picture}
+<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/helix.svg"/>
+
+{: .caption}
+<b>Helix's layout per-GPU workflow in attention and FFN stages.</b> Helix reuses the same pool of $$N$$ GPUs by configuring $$N = KVP \times TPA \quad (TPA \le K) \quad \longrightarrow \quad N = TPF \times EP$$ on a per-layer basis. <b>(Top)</b> During attention, each of the $$KVP$$ GPUs independently projects the full batch $$[B, H]$$ into QKV, runs FlashAttention [9] on its KV shard to produce partial outputs and log-sum-exp scalars, and then participates in a single All-to-All over the query-head axis; each GPU rescales and sums the received fragments into the exact softmax-normalized tensor, followed by a TP All-Reduce to form the final $$[B, H]$$ attention output. <b>(Bottom)</b> For FFNs, Helix follows two modes depending on model type: for <i>Dense</i> FFNs $$EP = 1$$, it retains all $$N$$ GPUs in tensor-parallel $$TPF = N$$ to compute $$[B, H] \rightarrow [B, F/N] \rightarrow [B, H]$$ followed by a TP All-Reduce; for <i>MoE</i> FFNs $$EP > 1$$, it repartitions the $$N$$ GPUs into a $$TPF \times EP$$ grid, routes tokens to the appropriate experts, applies TP to FC layers within each expert group, performs an intra-expert All-Reduce followed by an inter-expert All-Gather, and concludes with a local reduction to yield $$[B, H]$$. Helix switches between these configurations seamlessly, enabling zero-downtime pipelining and better GPU utilization.
 
 </div>
 </details>
@@ -339,7 +363,11 @@ The split is asymmetric — TPLA uses MLA for prefill and TPLA for decode — be
 
 On DeepSeek-V3 and Kimi-K2 at 32K context it delivers **1.79× and 1.93×** speedups while holding quality on commonsense and LongBench benchmarks, and it can be implemented with FlashAttention-3 for real end-to-end gains. The "disaggregated" framing fits the prefill/decode split: sharded latent for memory-bound decode, standard MLA for compute-bound prefill.
 
-<img loading="lazy" width="736" height="335" alt="image" src="https://github.com/user-attachments/assets/6310c491-9f82-4233-9ec5-97ca17fe9662" />
+{: .picture}
+<img loading="lazy" width="85%" height="85%" src="{{ site.assets }}/publications/tpla.svg"/>
+
+{: .caption}
+Comparison of MLA, GLA, and TPLA. In MLA, each device must load the entire KV cache. In GLA, each attention head only accesses the portion of the KV cache stored on its own device. In TPLA, the prefilling phase follows MLA for efficiency and accuracy, while during the decoding phase, attention heads are distributed across devices, each relying on the KV cache stored locally on its assigned device.
 
 </div>
 </details>
@@ -513,7 +541,11 @@ MegaScale-Infer's answer to the memory-bound performance issue of MoE FFNs durin
 - Up to **1.90×** higher per-GPU decoding throughput than state-of-the-art LLM serving systems on homogeneous clusters.
 - Up to **1.86×** higher throughput per cost on heterogeneous clusters, by placing attention and experts on different GPU types.
 
-<img loading="lazy" width="360" height="224" alt="image" src="https://github.com/user-attachments/assets/ba7fd9f2-2827-4ede-8755-356735e699ec" />
+{: .picture}
+<img loading="lazy" width="60%" height="60%" src="{{ site.assets }}/publications/megascale_infer.svg"/>
+
+{: .caption}
+MegaScale-Infer runtime instance architecture.
 
 </div>
 </details>
@@ -669,7 +701,11 @@ $$h_t = \bar A\,h_{t-1} + \bar B\,x_t, \qquad y_t = C\,h_t$$
 
 In S4 these params are **fixed across time** (LTI). Mamba's change: $$B$$, $$C$$, and $$\Delta$$ become **functions of $$x_t$$** (the S6 selective SSM), so $$(\bar A, \bar B)$$ vary per token — that's the selectivity, and what forces the scan-based instead of convolution-based compute.
 
-<img loading="lazy" width="623" height="308" alt="image" src="https://github.com/user-attachments/assets/073ff296-7eea-431d-b7de-88facaa8fad8" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/mamba.svg"/>
+
+{: .caption}
+(<b>Overview</b>.) Structured SSMs independently map each channel (e.g. $$D = 5$$) of an input $$x$$ to output $$y$$ through a higher dimensional latent state $$h$$ (e.g. $$N = 4$$). Prior SSMs avoid materializing this large effective state ($$DN$$, times batch size $$B$$ and sequence length $$L$$) through clever alternate computation paths requiring time-invariance: the $$(\Delta, \boldsymbol{A}, \boldsymbol{B}, \boldsymbol{C})$$ parameters are constant across time. Our selection mechanism adds back input-dependent dynamics, which also requires a careful hardware-aware algorithm to only materialize the expanded states in more efficient levels of the GPU memory hierarchy.
 
 </div>
 </details>
@@ -686,7 +722,11 @@ Jamba (Lieber, Lenz et al., AI21) is the first **production-scale hybrid** inter
 
 **Released config** (tunable knobs): 4 blocks of 8 layers, 1:7 attention-to-Mamba ratio, MoE every other layer, 16 experts with top-2 per token  → 52B total but only 12B active, fits on one 80GB GPU.  The 1:7 ratio is empirical (most of attention's quality, most of Mamba's memory benefit). Headline win is the cache: at 256K context Jamba needs ~4GB of KV cache vs 32GB for Mixtral and 128GB for Llama-2-7B, with strong results up to 256K tokens and up to 3× the throughput of Mixtral at long contexts. Jamba 1.5 later scaled the same design to 94B active / 398B total. It's a template Nemotron-3 follows—with Mamba-2 layers, and adding LatentMoE, MTP and NVFP4.
 
-<img loading="lazy" width="401" height="424" alt="image" src="https://github.com/user-attachments/assets/67898fc1-c338-494c-92b4-3c6ef8a42f9e" />
+{: .picture}
+<img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/jamba.svg"/>
+
+{: .caption}
+<b>(a)</b> A single Jamba block. <b>(b)</b> Different types of layers. The implementation shown here is with $$l = 8$$, $$a : m = 1 : 7$$ ratio of attention-to-Mamba layers, and MoE applied every $$e = 2$$ layers.
 
 </div>
 </details>
@@ -909,7 +949,11 @@ DualPipe is a bidirectional pipeline-parallelism algorithm introduced in the Dee
 
 The result is fewer bubbles and full forward/backward computation-communication overlap, at the cost of holding two copies of model parameters (one per direction) and slightly higher activation memory. The parameter duplication is affordable because DeepSeek-V3 uses a large expert-parallel size, so each rank holds relatively few parameters; separately, careful memory savings (recomputation, CPU-resident EMA, an output head shared with the MTP module) let them train without costly tensor parallelism. Unlike PipeFill, which accepts bubbles and fills them with unrelated jobs, DualPipe attacks the bubbles directly by densifying the main job's own schedule—making the two approaches complementary rather than competing.
 
-<img loading="lazy" width="1391" height="418" alt="image" src="https://github.com/user-attachments/assets/5a580ef6-139f-4ee9-891c-2b4f6832d790" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+
+{: .caption}
+DualPipe on 6 GPUs: micro-batches 1 to 6 (light) enter at GPU 0, and micro-batches 7 to 12 (dark) enter at GPU 5. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
 
 </div>
 </details>
@@ -926,7 +970,11 @@ Zero Bubble is the first scheduling strategy to achieve zero pipeline bubbles un
 
 The two variants trade memory for bubble reduction: ZB-H1 keeps the same peak activation memory as 1F1B but cuts the bubble to about a third of 1F1B's, while ZB-H2 eliminates bubbles entirely at the cost of higher peak memory (roughly 2× activations) and an extra optimizer validation/rollback step (it bypasses optimizer synchronization, then corrects after the step). In experiments, the zero-bubble schedules outperform 1F1B by up to 23% in throughput under a similar memory limit, and by up to 31% when the memory constraint is relaxed. The method is orthogonal to data, tensor, and ZeRO parallelism and can drop in as a replacement for the PP component. Like DualPipe, it attacks bubbles by reshaping the main job's schedule—contrasting with PipeFill, which leaves bubbles in place and fills them with other jobs.
 
-<img loading="lazy" width="899" height="597" alt="image" src="https://github.com/user-attachments/assets/3deb5a12-5d63-4c32-898f-c966f18271a3" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zero_bubble.svg"/>
+
+{: .caption}
+ZB-H1 (top) and ZB-H2 (bottom). Every backward pass is split into a backward for inputs and a backward for weights, and the latter fill the bubbles. Faded cells in ZB-H2 belong to the previous and next iterations, which interlock with the current one when the optimizer step does not synchronize the stages.
 
 </div>
 </details>
