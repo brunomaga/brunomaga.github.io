@@ -13288,268 +13288,268 @@
           <mxGeometry x="0" y="5567" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="5607" width="760" height="270" as="geometry" />
+          <mxGeometry x="-10" y="5607" width="770" height="272.3" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-1" value="x: one outlier channel" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="-10" y="0" width="330" height="24" as="geometry" />
+          <mxGeometry x="0" y="0" width="330" height="24" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-2" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="0" y="133.4" width="22" height="6.6" as="geometry" />
+          <mxGeometry x="10" y="133.4" width="22" height="6.6" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="28" y="140" width="22" height="4.4" as="geometry" />
+          <mxGeometry x="38" y="140" width="22" height="4.4" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="56" y="137.8" width="22" height="2.2" as="geometry" />
+          <mxGeometry x="66" y="137.8" width="22" height="2.2" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="84" y="52.0" width="22" height="88.0" as="geometry" />
+          <mxGeometry x="94" y="52" width="22" height="88.0" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="112" y="140" width="22" height="6.6" as="geometry" />
+          <mxGeometry x="122" y="140" width="22" height="6.6" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="140" y="135.6" width="22" height="4.4" as="geometry" />
+          <mxGeometry x="150" y="135.6" width="22" height="4.4" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="168" y="137.8" width="22" height="2.2" as="geometry" />
+          <mxGeometry x="178" y="137.8" width="22" height="2.2" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="196" y="140" width="22" height="2.2" as="geometry" />
+          <mxGeometry x="206" y="140" width="22" height="2.2" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="-6" y="140" as="sourcePoint" />
-            <mxPoint x="224" y="140" as="targetPoint" />
+            <mxPoint x="4" y="140" as="sourcePoint" />
+            <mxPoint x="234" y="140" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="228.0" as="sourcePoint" />
-            <mxPoint x="242" y="228.0" as="targetPoint" />
+            <mxPoint x="240" y="228" as="sourcePoint" />
+            <mxPoint x="252" y="228" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="215.42857142857144" as="sourcePoint" />
-            <mxPoint x="242" y="215.42857142857144" as="targetPoint" />
+            <mxPoint x="240" y="215.4286" as="sourcePoint" />
+            <mxPoint x="252" y="215.4286" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-13" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="202.85714285714286" as="sourcePoint" />
-            <mxPoint x="242" y="202.85714285714286" as="targetPoint" />
+            <mxPoint x="240" y="202.8571" as="sourcePoint" />
+            <mxPoint x="252" y="202.8571" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="190.28571428571428" as="sourcePoint" />
-            <mxPoint x="242" y="190.28571428571428" as="targetPoint" />
+            <mxPoint x="240" y="190.2857" as="sourcePoint" />
+            <mxPoint x="252" y="190.2857" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-15" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="177.71428571428572" as="sourcePoint" />
-            <mxPoint x="242" y="177.71428571428572" as="targetPoint" />
+            <mxPoint x="240" y="177.7143" as="sourcePoint" />
+            <mxPoint x="252" y="177.7143" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-16" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="165.14285714285714" as="sourcePoint" />
-            <mxPoint x="242" y="165.14285714285714" as="targetPoint" />
+            <mxPoint x="240" y="165.1429" as="sourcePoint" />
+            <mxPoint x="252" y="165.1429" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-17" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="152.57142857142858" as="sourcePoint" />
-            <mxPoint x="242" y="152.57142857142858" as="targetPoint" />
+            <mxPoint x="240" y="152.5714" as="sourcePoint" />
+            <mxPoint x="252" y="152.5714" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-18" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="140.0" as="sourcePoint" />
-            <mxPoint x="242" y="140.0" as="targetPoint" />
+            <mxPoint x="240" y="140" as="sourcePoint" />
+            <mxPoint x="252" y="140" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-19" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="127.42857142857143" as="sourcePoint" />
-            <mxPoint x="242" y="127.42857142857143" as="targetPoint" />
+            <mxPoint x="240" y="127.4286" as="sourcePoint" />
+            <mxPoint x="252" y="127.4286" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-20" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="114.85714285714286" as="sourcePoint" />
-            <mxPoint x="242" y="114.85714285714286" as="targetPoint" />
+            <mxPoint x="240" y="114.8571" as="sourcePoint" />
+            <mxPoint x="252" y="114.8571" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-21" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="102.28571428571428" as="sourcePoint" />
-            <mxPoint x="242" y="102.28571428571428" as="targetPoint" />
+            <mxPoint x="240" y="102.2857" as="sourcePoint" />
+            <mxPoint x="252" y="102.2857" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-22" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="89.71428571428572" as="sourcePoint" />
-            <mxPoint x="242" y="89.71428571428572" as="targetPoint" />
+            <mxPoint x="240" y="89.7143" as="sourcePoint" />
+            <mxPoint x="252" y="89.7143" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-23" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="77.14285714285714" as="sourcePoint" />
-            <mxPoint x="242" y="77.14285714285714" as="targetPoint" />
+            <mxPoint x="240" y="77.1429" as="sourcePoint" />
+            <mxPoint x="252" y="77.1429" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-24" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="64.57142857142857" as="sourcePoint" />
-            <mxPoint x="242" y="64.57142857142857" as="targetPoint" />
+            <mxPoint x="240" y="64.5714" as="sourcePoint" />
+            <mxPoint x="252" y="64.5714" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-25" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="230" y="52.0" as="sourcePoint" />
-            <mxPoint x="242" y="52.0" as="targetPoint" />
+            <mxPoint x="240" y="52" as="sourcePoint" />
+            <mxPoint x="252" y="52" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-26" value="INT4 levels" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="244" y="130" width="90" height="20" as="geometry" />
+          <mxGeometry x="254" y="130" width="90" height="20" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-27" value="R x: the outlier is spread over all channels" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="390" y="0" width="330" height="24" as="geometry" />
+          <mxGeometry x="400" y="0" width="330" height="24" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="400" y="108.10948416848672" width="22" height="31.89051583151329" as="geometry" />
+          <mxGeometry x="410" y="108.1095" width="22" height="31.89051583151329" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="428" y="140" width="22" height="28.779245994292488" as="geometry" />
+          <mxGeometry x="438" y="140" width="22" height="28.779245994292488" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="456" y="140" width="22" height="31.89051583151329" as="geometry" />
+          <mxGeometry x="466" y="140" width="22" height="31.89051583151329" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="484" y="111.2207540057075" width="22" height="28.779245994292488" as="geometry" />
+          <mxGeometry x="494" y="111.2208" width="22" height="28.779245994292488" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="512" y="106.55384924987631" width="22" height="33.44615075012369" as="geometry" />
+          <mxGeometry x="522" y="106.5538" width="22" height="33.44615075012369" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="540" y="140" width="22" height="24.112341238461273" as="geometry" />
+          <mxGeometry x="550" y="140" width="22" height="24.112341238461273" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="568" y="140" width="22" height="30.33488091290289" as="geometry" />
+          <mxGeometry x="578" y="140" width="22" height="30.33488091290289" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="596" y="100.33130957543469" width="22" height="39.66869042456531" as="geometry" />
+          <mxGeometry x="606" y="100.3313" width="22" height="39.66869042456531" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-36" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="394" y="140" as="sourcePoint" />
-            <mxPoint x="624" y="140" as="targetPoint" />
+            <mxPoint x="404" y="140" as="sourcePoint" />
+            <mxPoint x="634" y="140" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-37" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="179.6686904245653" as="sourcePoint" />
-            <mxPoint x="642" y="179.6686904245653" as="targetPoint" />
+            <mxPoint x="640" y="179.6687" as="sourcePoint" />
+            <mxPoint x="652" y="179.6687" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-38" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="174.0017346496274" as="sourcePoint" />
-            <mxPoint x="642" y="174.0017346496274" as="targetPoint" />
+            <mxPoint x="640" y="174.0017" as="sourcePoint" />
+            <mxPoint x="652" y="174.0017" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-39" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="168.3347788746895" as="sourcePoint" />
-            <mxPoint x="642" y="168.3347788746895" as="targetPoint" />
+            <mxPoint x="640" y="168.3348" as="sourcePoint" />
+            <mxPoint x="652" y="168.3348" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-40" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="162.66782309975162" as="sourcePoint" />
-            <mxPoint x="642" y="162.66782309975162" as="targetPoint" />
+            <mxPoint x="640" y="162.6678" as="sourcePoint" />
+            <mxPoint x="652" y="162.6678" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-41" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="157.0008673248137" as="sourcePoint" />
-            <mxPoint x="642" y="157.0008673248137" as="targetPoint" />
+            <mxPoint x="640" y="157.0009" as="sourcePoint" />
+            <mxPoint x="652" y="157.0009" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-42" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="151.3339115498758" as="sourcePoint" />
-            <mxPoint x="642" y="151.3339115498758" as="targetPoint" />
+            <mxPoint x="640" y="151.3339" as="sourcePoint" />
+            <mxPoint x="652" y="151.3339" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-43" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="145.6669557749379" as="sourcePoint" />
-            <mxPoint x="642" y="145.6669557749379" as="targetPoint" />
+            <mxPoint x="640" y="145.667" as="sourcePoint" />
+            <mxPoint x="652" y="145.667" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-44" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="140.0" as="sourcePoint" />
-            <mxPoint x="642" y="140.0" as="targetPoint" />
+            <mxPoint x="640" y="140" as="sourcePoint" />
+            <mxPoint x="652" y="140" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-45" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="134.3330442250621" as="sourcePoint" />
-            <mxPoint x="642" y="134.3330442250621" as="targetPoint" />
+            <mxPoint x="640" y="134.333" as="sourcePoint" />
+            <mxPoint x="652" y="134.333" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-46" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="128.6660884501242" as="sourcePoint" />
-            <mxPoint x="642" y="128.6660884501242" as="targetPoint" />
+            <mxPoint x="640" y="128.6661" as="sourcePoint" />
+            <mxPoint x="652" y="128.6661" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-47" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="122.9991326751863" as="sourcePoint" />
-            <mxPoint x="642" y="122.9991326751863" as="targetPoint" />
+            <mxPoint x="640" y="122.9991" as="sourcePoint" />
+            <mxPoint x="652" y="122.9991" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-48" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="117.33217690024838" as="sourcePoint" />
-            <mxPoint x="642" y="117.33217690024838" as="targetPoint" />
+            <mxPoint x="640" y="117.3322" as="sourcePoint" />
+            <mxPoint x="652" y="117.3322" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-49" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="111.6652211253105" as="sourcePoint" />
-            <mxPoint x="642" y="111.6652211253105" as="targetPoint" />
+            <mxPoint x="640" y="111.6652" as="sourcePoint" />
+            <mxPoint x="652" y="111.6652" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-50" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="105.99826535037259" as="sourcePoint" />
-            <mxPoint x="642" y="105.99826535037259" as="targetPoint" />
+            <mxPoint x="640" y="105.9983" as="sourcePoint" />
+            <mxPoint x="652" y="105.9983" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-51" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="630" y="100.33130957543469" as="sourcePoint" />
-            <mxPoint x="642" y="100.33130957543469" as="targetPoint" />
+            <mxPoint x="640" y="100.3313" as="sourcePoint" />
+            <mxPoint x="652" y="100.3313" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-52" value="INT4 levels" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="644" y="130" width="90" height="20" as="geometry" />
+          <mxGeometry x="654" y="130" width="90" height="20" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-53" value="" style="shape=singleArrow;direction=east;whiteSpace=wrap;html=1;arrowWidth=0.45;arrowSize=0.35;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=0.88;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="300" y="110" width="70" height="30" as="geometry" />
+          <mxGeometry x="310" y="110" width="70" height="30" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-54" value="R x, R R&lt;sup&gt;T&lt;/sup&gt; = I" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="290" y="140" width="100" height="22" as="geometry" />
+          <mxGeometry x="300" y="140" width="100" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="hadamard_rotation-55" value="Rotating the weights the other way, W R&lt;sup&gt;T&lt;/sup&gt;, keeps the output: (W R&lt;sup&gt;T&lt;/sup&gt;)(R x) = W x. After the rotation, the INT4 levels are closer together, and the small values are no longer rounded to 0" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="0" y="230" width="760" height="40" as="geometry" />
+        <mxCell id="hadamard_rotation-55" value="Rotating the weights the other way, W R&lt;sup&gt;T&lt;/sup&gt;, keeps the output: (W R&lt;sup&gt;T&lt;/sup&gt;)(R x) = W x. After the rotation, the INT4 levels are closer together, and the small values are no longer rounded to 0" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14.3;fontStyle=0;fontColor=#000000;" vertex="1" parent="hadamard_rotation-figure">
+          <mxGeometry x="10" y="230" width="760" height="42.3" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-label" value="microscaling.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="5957" width="600" height="30" as="geometry" />
@@ -14116,568 +14116,568 @@
           <mxGeometry x="0" y="6383" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="kivi-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="6423" width="750" height="244" as="geometry" />
+          <mxGeometry x="28" y="6423" width="722" height="245.4" as="geometry" />
         </mxCell>
         <mxCell id="kivi-1" value="Keys: one scale per channel and group of tokens" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="0" width="340" height="24" as="geometry" />
+          <mxGeometry x="2" y="0" width="340" height="24" as="geometry" />
         </mxCell>
         <mxCell id="kivi-2" value="columns: tokens, rows: channels" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="26" width="280" height="20" as="geometry" />
+          <mxGeometry x="2" y="26" width="280" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="2" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-4" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="2" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="2" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-6" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="2" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="2" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-8" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="2" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="50" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="22" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-10" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="50" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-10" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="22" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="50" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="22" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="50" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="22" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="50" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-13" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="22" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="50" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="22" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="70" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="42" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="70" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="42" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-17" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="70" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-17" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="42" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="70" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-18" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="42" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="70" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="42" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="70" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="42" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="90" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="62" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-22" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="90" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-22" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="62" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="90" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="62" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="90" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="62" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="90" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-25" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="62" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-26" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="90" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-26" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="62" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="110" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-27" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="82" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="110" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="82" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="110" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-29" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="82" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="110" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-30" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="82" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="110" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="82" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="110" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="82" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="130" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="102" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="130" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="102" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="130" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="102" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="130" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="102" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="130" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="102" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="130" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="102" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="150" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="122" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="150" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="122" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="150" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="122" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="150" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="122" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-43" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="150" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-43" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="122" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-44" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="150" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-44" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="122" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="170" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="142" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="170" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="142" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="170" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="142" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="170" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="142" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="170" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="142" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="170" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="142" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="190" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="162" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="190" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="162" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="190" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="162" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="190" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="162" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="190" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="162" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="190" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="162" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-57" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="210" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-57" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="182" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="210" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="182" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="210" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="182" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="210" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="182" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="210" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="182" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="210" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="182" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-63" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="230" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-63" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="202" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-64" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="230" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-64" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="202" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-65" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="230" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-65" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="202" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-66" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="230" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-66" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="202" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-67" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="230" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-67" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="202" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="230" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="202" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="250" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="222" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-70" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="250" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-70" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="222" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="250" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="222" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-72" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="250" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-72" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="222" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-73" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="250" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-73" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="222" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-74" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="250" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-74" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="222" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-75" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="270" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-75" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="242" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-76" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="270" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-76" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="242" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-77" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="270" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-77" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="242" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-78" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="270" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-78" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="242" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-79" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="270" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-79" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="242" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-80" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="270" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-80" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="242" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-81" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="290" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-81" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="262" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-82" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="290" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-82" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="262" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-83" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="290" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-83" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="262" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-84" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="290" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-84" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="262" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-85" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="290" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-85" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="262" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="290" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="262" y="150" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="kivi-87" value="" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="28" y="88" width="84" height="24" as="geometry" />
+          <mxGeometry x="0" y="88" width="84" height="24" as="geometry" />
         </mxCell>
         <mxCell id="kivi-88" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#dae8fc;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="kivi-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="190" y="176" as="sourcePoint" />
-            <mxPoint x="310" y="176" as="targetPoint" />
+            <mxPoint x="162" y="176" as="sourcePoint" />
+            <mxPoint x="282" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="kivi-89" value="recent: FP16" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="170" y="178" width="160" height="20" as="geometry" />
+          <mxGeometry x="142" y="178" width="160" height="20" as="geometry" />
         </mxCell>
         <mxCell id="kivi-90" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="kivi-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="30" y="176" as="sourcePoint" />
-            <mxPoint x="190" y="176" as="targetPoint" />
+            <mxPoint x="2" y="176" as="sourcePoint" />
+            <mxPoint x="162" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="kivi-91" value="2-bit" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="178" width="160" height="20" as="geometry" />
+          <mxGeometry x="2" y="178" width="160" height="20" as="geometry" />
         </mxCell>
         <mxCell id="kivi-92" value="Values: one scale per token" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="410" y="0" width="340" height="24" as="geometry" />
+          <mxGeometry x="382" y="0" width="340" height="24" as="geometry" />
         </mxCell>
         <mxCell id="kivi-93" value="columns: tokens, rows: channels" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="410" y="26" width="280" height="20" as="geometry" />
+          <mxGeometry x="382" y="26" width="280" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-94" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="410" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-94" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="382" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-95" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="410" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-95" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="382" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-96" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="410" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-96" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="382" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-97" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="410" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-97" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="382" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-98" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="410" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-98" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="382" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-99" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="410" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-99" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="382" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="430" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="402" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-101" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="430" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-101" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="402" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-102" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="430" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-102" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="402" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-103" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="430" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-103" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="402" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-104" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="430" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-104" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="402" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="430" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="402" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="450" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="422" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="450" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="422" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="450" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="422" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-109" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="450" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-109" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="422" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-110" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="450" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-110" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="422" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-111" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="450" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-111" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="422" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-112" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="470" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-112" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="442" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-113" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="470" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-113" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="442" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-114" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="470" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-114" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="442" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-115" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="470" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-115" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="442" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-116" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="470" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-116" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="442" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-117" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="470" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-117" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="442" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-118" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="490" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-118" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="462" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="490" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="462" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-120" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="490" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-120" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="462" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="490" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="462" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-122" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="490" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-122" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="462" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-123" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="490" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-123" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="462" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-124" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="510" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-124" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="482" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-125" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="510" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-125" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="482" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-126" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="510" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-126" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="482" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-127" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="510" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-127" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="482" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-128" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="510" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-128" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="482" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-129" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="510" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-129" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="482" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-130" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="530" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-130" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="502" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-131" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="530" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-131" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="502" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-132" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="530" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-132" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="502" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-133" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="530" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-133" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="502" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-134" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="530" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-134" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="502" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-135" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="530" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-135" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="502" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-136" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="550" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-136" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="522" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-137" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="550" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-137" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="522" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-138" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="550" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-138" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="522" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-139" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="550" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-139" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="522" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-140" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="550" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-140" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="522" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-141" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="550" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-141" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="522" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-142" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="570" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-142" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="542" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-143" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="570" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-143" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="542" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-144" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="570" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-144" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="542" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-145" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="570" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-145" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="542" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-146" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="570" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-146" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="542" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-147" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="570" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-147" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="542" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-148" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="590" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-148" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="562" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-149" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="590" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-149" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="562" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-150" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="590" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-150" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="562" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-151" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="590" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-151" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="562" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-152" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="590" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-152" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="562" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-153" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="590" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-153" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="562" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-154" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="610" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-154" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="582" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-155" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="610" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-155" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="582" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-156" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="610" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-156" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="582" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-157" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="610" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-157" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="582" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-158" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="610" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-158" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="582" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-159" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="610" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-159" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="582" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-160" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="630" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-160" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="602" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-161" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="630" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-161" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="602" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-162" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="630" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-162" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="602" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-163" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="630" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-163" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="602" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-164" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="630" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-164" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="602" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-165" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="630" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-165" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="602" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-166" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="650" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-166" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="622" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-167" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="650" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-167" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="622" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-168" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="650" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-168" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="622" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-169" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="650" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-169" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="622" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-170" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="650" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-170" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="622" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-171" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="650" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-171" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="622" y="150" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-172" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="670" y="50" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-172" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="642" y="50" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-173" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="670" y="70" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-173" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="642" y="70" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-174" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="670" y="90" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-174" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="642" y="90" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-175" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="670" y="110" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-175" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="642" y="110" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-176" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="670" y="130" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-176" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="642" y="130" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-177" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.86;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="670" y="150" width="20" height="20" as="geometry" />
+        <mxCell id="kivi-177" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.83;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="642" y="150" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="kivi-178" value="" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="428" y="48" width="24" height="124" as="geometry" />
+          <mxGeometry x="400" y="48" width="24" height="124" as="geometry" />
         </mxCell>
         <mxCell id="kivi-179" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#dae8fc;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="kivi-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="570" y="176" as="sourcePoint" />
-            <mxPoint x="690" y="176" as="targetPoint" />
+            <mxPoint x="542" y="176" as="sourcePoint" />
+            <mxPoint x="662" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="kivi-180" value="recent: FP16" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="550" y="178" width="160" height="20" as="geometry" />
+          <mxGeometry x="522" y="178" width="160" height="20" as="geometry" />
         </mxCell>
         <mxCell id="kivi-181" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;strokeWidth=2;fontSize=14;labelBackgroundColor=#ffffff;" edge="1" parent="kivi-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="410" y="176" as="sourcePoint" />
-            <mxPoint x="570" y="176" as="targetPoint" />
+            <mxPoint x="382" y="176" as="sourcePoint" />
+            <mxPoint x="542" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="kivi-182" value="2-bit" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="410" y="178" width="160" height="20" as="geometry" />
+          <mxGeometry x="382" y="178" width="160" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-183" value="The outliers of the keys live in a few fixed channels, so each channel gets its own scale. The outlined cells share one scale and zero-point" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;" vertex="1" parent="kivi-figure">
-          <mxGeometry x="30" y="204" width="700" height="40" as="geometry" />
+        <mxCell id="kivi-183" value="The outliers of the keys live in a few fixed channels, so each channel gets its own scale. The outlined cells share one scale and zero-point" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13.4;fontStyle=0;fontColor=#000000;" vertex="1" parent="kivi-figure">
+          <mxGeometry x="2" y="204" width="700" height="40.2" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
@@ -14691,7 +14691,7 @@
           <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="model_distillation_offline_online-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="40" width="713" height="585" as="geometry" />
+          <mxGeometry x="0" y="40" width="713" height="585.5" as="geometry" />
         </mxCell>
         <mxCell id="model_distillation_offline_online-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=14;dashed=1;" vertex="1" parent="model_distillation_offline_online-figure">
           <mxGeometry x="0" y="19" width="323" height="204" as="geometry" />
@@ -16187,8 +16187,8 @@
         <mxCell id="model_distillation_offline_online-339" value="(b)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;" vertex="1" parent="model_distillation_offline_online-figure">
           <mxGeometry x="336.5" y="511.5" width="40" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="model_distillation_offline_online-340" value="Illustration of knowledge distillation using (a) pre-trained teacher model (offline) and (b) while training the teacher model simultaneously (online)." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontColor=#666666;" vertex="1" parent="model_distillation_offline_online-figure">
-          <mxGeometry x="0" y="541" width="713" height="44" as="geometry" />
+        <mxCell id="model_distillation_offline_online-340" value="Illustration of knowledge distillation using (a) pre-trained teacher model (offline) and (b) while training the teacher model simultaneously (online)." style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=15.2;fontColor=#000000;" vertex="1" parent="model_distillation_offline_online-figure">
+          <mxGeometry x="0" y="541" width="713" height="44.5" as="geometry" />
         </mxCell>
         <mxCell id="kd_methods-label" value="kd_methods.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="705" width="600" height="30" as="geometry" />
