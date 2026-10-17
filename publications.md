@@ -970,7 +970,7 @@ Llama 3 405B is trained on up to 16K H100 GPUs, via 4D parallelism (tensor, pipe
 The authors used scaling laws (Hoffmann et al., 2022) to determine the optimal model size for their flagship model given their pre-training compute budget (section 3.2.1): they first correlate the compute-optimal model's negative log-likelihood on downstream tasks with the training FLOPs, and then establish a sigmoidal relation between that log-likelihood and task accuracy (figure 4):
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/llama3_scaling_laws.png"/>
+<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
 
 The model architecture does not deviate from Llama 2, except that they:
 
@@ -1393,7 +1393,7 @@ during training. Using Tensor Programs, we can recursively calculate such coordi
 With that in mind, here they propose a hyper-parameter tuning paradigm called muTransfer: "parametrize the target model in muP, tune the HP indirectly on a smaller model, and zero-shot transfer them to the full-sized model". By transferring from a 40M-parameter proxy, they outperform the published numbers of the 6.7B GPT-3 with a tuning cost of only 7% of the total pretraining cost; transferring from a 13M-parameter model beats the published BERT-large (350M) numbers.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/mutransfer.png"/>
+<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/mutransfer.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 Figure 1: Training loss against learning rate on Transformers of varying $$d_{model}$$ trained with Adam. Conventionally and in contrast with our technique, different widths do not share the same optimal hyperparameter; wider networks do not always perform better than narrower ones; in fact they underperform the same-width networks in our technique even after tuning learning rate (see dashed line).
