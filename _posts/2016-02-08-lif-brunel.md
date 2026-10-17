@@ -116,7 +116,7 @@ The hard part is defining the network parameters, such as connectivity, synaptic
 
 <table markdown="1">
   <thead>
-    <tr><th colspan="2" style="text-align: left">G &nbsp; Network Parameters</th></tr>
+    <tr><th colspan="2" style="text-align: left">Network Parameters</th></tr>
     <tr><th style="text-align: left">Parameter</th><th style="text-align: right">Value</th></tr>
   </thead>
   <tbody>
@@ -129,7 +129,7 @@ The hard part is defining the network parameters, such as connectivity, synaptic
 
 <table markdown="1">
   <thead>
-    <tr><th colspan="2" style="text-align: left">H &nbsp; Neuron Parameters</th></tr>
+    <tr><th colspan="2" style="text-align: left">Neuron Parameters</th></tr>
     <tr><th style="text-align: left">Parameter</th><th style="text-align: right">Value</th></tr>
   </thead>
   <tbody>
