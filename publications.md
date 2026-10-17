@@ -909,7 +909,11 @@ DualPipe is a bidirectional pipeline-parallelism algorithm introduced in the Dee
 
 The result is fewer bubbles and full forward/backward computation-communication overlap, at the cost of holding two copies of model parameters (one per direction) and slightly higher activation memory. The parameter duplication is affordable because DeepSeek-V3 uses a large expert-parallel size, so each rank holds relatively few parameters; separately, careful memory savings (recomputation, CPU-resident EMA, an output head shared with the MTP module) let them train without costly tensor parallelism. Unlike PipeFill, which accepts bubbles and fills them with unrelated jobs, DualPipe attacks the bubbles directly by densifying the main job's own schedule—making the two approaches complementary rather than competing.
 
-<img loading="lazy" width="1391" height="418" alt="image" src="https://github.com/user-attachments/assets/5a580ef6-139f-4ee9-891c-2b4f6832d790" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+
+{: .caption}
+DualPipe on 4 GPUs: micro-batches 1 to 4 (light) enter at GPU 0, and micro-batches 5 to 8 (dark) enter at GPU 3. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
 
 </div>
 </details>
@@ -926,7 +930,11 @@ Zero Bubble is the first scheduling strategy to achieve zero pipeline bubbles un
 
 The two variants trade memory for bubble reduction: ZB-H1 keeps the same peak activation memory as 1F1B but cuts the bubble to about a third of 1F1B's, while ZB-H2 eliminates bubbles entirely at the cost of higher peak memory (roughly 2× activations) and an extra optimizer validation/rollback step (it bypasses optimizer synchronization, then corrects after the step). In experiments, the zero-bubble schedules outperform 1F1B by up to 23% in throughput under a similar memory limit, and by up to 31% when the memory constraint is relaxed. The method is orthogonal to data, tensor, and ZeRO parallelism and can drop in as a replacement for the PP component. Like DualPipe, it attacks bubbles by reshaping the main job's schedule—contrasting with PipeFill, which leaves bubbles in place and fills them with other jobs.
 
-<img loading="lazy" width="899" height="597" alt="image" src="https://github.com/user-attachments/assets/3deb5a12-5d63-4c32-898f-c966f18271a3" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zero_bubble.svg"/>
+
+{: .caption}
+ZB-H1 (top) and ZB-H2 (bottom). Every backward pass is split into a backward for inputs and a backward for weights, and the latter fill the bubbles. Faded cells in ZB-H2 belong to the previous and next iterations, which interlock with the current one when the optimizer step does not synchronize the stages.
 
 </div>
 </details>
