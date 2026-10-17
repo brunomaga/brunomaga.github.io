@@ -129,6 +129,12 @@ I also keep a curated list of related books and other resources available online
 </td>
 </tr>
 <tr>
+<td></td>
+<td>
+  <a href="{{ site.epfl_machine_learning }}/README.md">Machine Learning (EPFL course CS-433)</a>
+</td>
+</tr>
+<tr>
 <td><span class="post-label">misc</span></td>
 <td>
   <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>
