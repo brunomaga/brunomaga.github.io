@@ -19,12 +19,6 @@ The scales of the brain: (a) brain regions, (b) neuron, (c) synapse, and (d) ion
 
 Because of the complex anatomical structure and behaviour of neurons, numerical methods are used to approximate neuron models and simulate the electrical activity of neural networks.
 
-{: style="text-align:center; font-size: small;"}
-<img width="40%" height="40%" src="{{ site.assets }}/neuron-electrical-activity/neuron.svg">
-
-{: style="text-align:center; font-size: small;"}
-Adapted from: Wikipedia
-
 ### Hodgkin-Huxley Model and Cable Theory
 
 [hodgkin1952quantitative]: https://www.ncbi.nlm.nih.gov/pmc/articles/PMC1392413/
