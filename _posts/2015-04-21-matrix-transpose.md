@@ -16,13 +16,7 @@ This post describes an efficient method to solve this problem and its implementa
 A graph $$G = (V, E)$$ is a data structure made of a set of nodes or **vertices** $$V$$, and a set of connections between nodes, or **edges** $$E$$. An edge $$\{i,j,e\} \subset \{\mathbb{N}, \mathbb{N}, T\}$$ in $$E$$ represents a connection between vertices $$i$$ and $$j$$ in $$V$$ with edge information of type $$T$$. Edges are ordered or unordered, depending on whether the graph is directed or undirected.
 A matrix $$M$$ represents the connectivity $$E$$ in $$G$$ iff, for all $$\{i,j,e\} \in E$$, $$M_{ij}=e$$ if $$G$$ is ordered, and $$M_{ij} = M_{ji} = e$$ if it is unordered. Since $$M$$ holds the possible connectivity between nodes in $$V$$, $$M$$ is a square matrix of size $$|V| \times |V|$$.
 
-When a matrix is stored on a single compute node, the transpose is simple and follows the mathematical definition: the transpose of a matrix $$M$$ is $$M^T_{ij} = M_{ji}$$, i.e. it swaps the row and column positions of the cells of the initial matrix. The graph whose connectivity is described by the matrix $$M^T$$ is then simply $$G^{\star} = (V, E^{\star})$$, where $$E^{\star} = \big\{ \{j,i,e\}$$ for all $$\{i,j,e\} \in E \big\}$$. In practice, elements follow a row-column swap:
-
-{: style="text-align:center; font-size: small;"}
-<img width="15%" height="15%" src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Matrix_transpose.gif">
-
-{: style="text-align:center; font-size: small;"}
-(image source: Wikipedia)
+When a matrix is stored on a single compute node, the transpose is simple and follows the mathematical definition: the transpose of a matrix $$M$$ is $$M^T_{ij} = M_{ji}$$, i.e. it swaps the row and column positions of the cells of the initial matrix. The graph whose connectivity is described by the matrix $$M^T$$ is then simply $$G^{\star} = (V, E^{\star})$$, where $$E^{\star} = \big\{ \{j,i,e\}$$ for all $$\{i,j,e\} \in E \big\}$$.
 
 Given a dense matrix representation of a graph connectivity $$E$$, computing $$G^{\star}_{r} = (V_{r}, E^{\star}_{r})$$ for every rank $$r$$ requires only the computation of the matrix $$M^{T}_{r}$$ for the connectivity $$E^{\star}_{r}$$. Vertex information is local to a compute node and stays in the same memory location after the transpose,
  so $$V$$ is the same for $$G$$ and $$G^{\star}$$. The distributed transpose of a **dense** connectivity matrix is well known and is available via the `MPI_Alltoall` collective call. This call takes as input (output) an array of elements, the size of the array, and the datatype of the elements to be sent (received).

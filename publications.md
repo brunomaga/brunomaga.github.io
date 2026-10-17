@@ -1042,58 +1042,6 @@ communication overhead is more pronounced". The paper proposes "Domino, a generi
 </td>
 </tr>
 <tr>
-<td></td>
-<td markdown="block">
-<details>
-<summary markdown="span"><span class="pub-title">The Road Less Scheduled</span><span class="pub-meta">, Meta (NeurIPS 2024)</span><a class="pub-link" href="https://arxiv.org/abs/2405.15682" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
-<div class="pub-notes" markdown="block">
-
-"Existing learning rate schedules that do not require specification of the optimization stopping step T are greatly out-performed by learning rate schedules that depend on T." The Schedule-Free approach is an optimization method that does not need the specification of T by removing the need of schedulers entirely. It requires no new hyper-parameters.
-
-Background: take the typical SGD optimization with step size $$γ$$ in the form $$z_{t+1} = z_t − γ g_t$$, where $$g_t$$ is the gradient at step $$t$$. "Classical convergence theory suggests that the expected loss of this $$z$$ sequence is suboptimal, and that the Polyak-Ruppert (PR) average $$x$$ of the sequence should be returned instead" as $$x_{t+1} = (1 − c_{t+1}) x_t + c_{t+1} z_{t+1}$$. If we use $$c_{t+1} = 1/(t+1)$$, then $$x_T = \frac{1}{T} \sum_{t=1}^T z_t$$. As an example, after 4 steps we have:
-
-$$
-  \begin{align*}
-x_1 = & z_1\\
-x_2 = & \frac{1}{2} x_1 + \frac{1}{2} z_2, \\
-x_3 = & \frac{2}{3} x_2 + \frac{1}{3} z_3, \\  
-x_4 = & \frac{3}{4} x_3 + \frac{1}{4} z_4, \\
-x_5 = & \frac{4}{5} x_4 + \frac{1}{5} z_5, \\
-  \end{align*}
-$$
-
-However, "despite their theoretical optimality, PR averages give much worse results in practice than using the last-iterate of SGD":
-
-{: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="50%" height="50%" src="{{ site.assets }}/publications/schedule_free.png"/>
-
-Recently, Zamani and Glineur (2023) and Defazio et al. (2023) showed that the exact worst-case optimal rates can be achieved via carefully chosen learning rate schedules alone, without the use of averaging. However, LR schedulers require the definition of the stopping time T in advance. So the question of the paper is:
-
-> Do there exist iterate averaging approaches that match the empirical performance of learning rate schedules, without sacrificing theoretical guarantees?
-
-This paper shows that it exists by introducing "a new approach to averaging that maintains the worst-case convergence rate theory of PR averaging, while matching and often exceeding the performance of schedule-based approaches", demonstrated on 28 problems (Schedule-Free AdamW was also the core of the winning entry of the MLCommons 2024 AlgoPerf Algorithmic Efficiency Challenge, self-tuning track).  Schedule-Free methods show strong performance, matching or out-performing heavily-tuned cosine schedules. The formulation of this **Schedule-Free SGD** is:
-
-$$
-  \begin{align*}
-y_t = \, & (1 − β) z_t + β x_t, \\
-z_{t+1} = \, & z_t − γ∇f(y_t, ζ_t), \\
-x_{t+1} = \, & (1 − c_{t+1}) x_t + c_{t+1} z_{t+1}, \\
-  \end{align*}
-$$
-
-where $$f(y_t, ζ_t)$$ is the loss between model output and random variable $$ζ$$, $$c_{t+1}$$ is defined as before and $$z_1 = x_1 $$. "Note that with this weighting, the $$x$$ sequence is just an online equal-weighted average of the $$z$$ sequence." This method has a momentum parameter $$β$$ that interpolates between Polyak-Ruppert averaging ($$β = 0$$) and Primal averaging ($$β = 1$$). Primal averaging is the same as PR except that gradient is evaluated at the averaged point $$x$$, instead of $$z$$ (see paper for definition), and "maintains the worst-case optimality of PR averaging but is generally considered to
-converge too slowly to be practical (Figure 2)."
-
-The main point is: "The advantage of our interpolation is that we get the
-best of both worlds. We can achieve the fast convergence of Polyak-Ruppert averaging (since the
-$$z$$ sequence moves much quicker than the $$x$$ sequence), while still keeping some coupling between
-the returned sequence $$x$$ and the gradient-evaluation locations $$y$$, which increases stability (Figure 2). Values of β similar to standard momentum values $$β ≈ 0.9$$ appear to work well in practice."
-
-</div>
-</details>
-</td>
-</tr>
-<tr>
 <td><span class="post-label">2023</span></td>
 <td markdown="block">
 <details>
