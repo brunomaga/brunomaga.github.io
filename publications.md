@@ -1949,7 +1949,7 @@ optimal allocation of a fixed compute budget. Larger models are significantly mo
 on a relatively modest amount of data and stopping significantly before convergence.
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/scaling_laws.png"/>
+<img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
 
 **Keypoints:**
 - Model performance depends most strongly on scale, which consists of three factors: the number of model parameters N, the size of the dataset D, and the amount of compute C used for training. Performance has a **power-law** relationship with each of the three scale factors (Fig.1).
@@ -1965,7 +1965,7 @@ and stopping significantly short of convergence (Chinchilla later revised this a
 - The ideal batch size for training these models is roughly a power of the loss only
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/scaling_laws_2.png"/>
+<img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/scaling_laws_2.svg"/>
 
 </div>
 </details>
