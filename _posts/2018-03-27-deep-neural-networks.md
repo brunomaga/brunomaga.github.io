@@ -9,10 +9,10 @@ Deep Neural Networks -- also known as Multi-Layer Perceptrons -- are **[universa
 
 A basic NN has one input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and one output layer. It is a **feedforward network**: the computation starts with the input on the left and flows to the right, with no feedback loop. It can be used for regression (when input and output are provided) and for classification (when the input is provided and the output is the class).
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="33%" height="33%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Source: Machine Learning lecture notes, M. Jaggi, EPFL
 
 The input and output layers work as in the regression methods described previously. The hidden layers are different. The output at node $$j$$ of hidden layer $$l$$ is:
@@ -125,7 +125,7 @@ Dropout can be improved by adding max-norm regularization, a decaying learning r
 The original publication found that dropping 20% of input units and 50% of hidden units was often optimal. Dropout is computationally cheaper than regular model averaging of multiple trained DNNs. However, it takes 2-3 times longer to train than a single fully-connected DNN, because it requires more epochs, as parameter updates are very noisy.
 Since a fully connected layer holds most of the parameters, it is prone to overfitting. Therefore, dropout improves model generalization.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="35%" height="35%" src="{{ site.assets }}/deep-neural-networks/dropout.svg">
 
 ## Convolutional Neural Networks
@@ -145,13 +145,13 @@ $$
 
 The output $$ x^{(1)} $$ at position $$ [n, m] $$ depends only on the values of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. Therefore, a fully connected network is not needed: a network that represents the local structure suffices, with fewer parameters. This structure also implies that the same filter (i.e., the same connection pattern and the same weights) should be used at every position. This is called **weight sharing**, and it reduces the number of parameters even further. The difference between a locally/sparsely connected and a fully connected network is illustrated below:
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="35%" height="35%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
 
 It is common to compute the outputs of multiple filters instead of a single one. These outputs are called channels, and they add parameters to the model.
 With several channels, the output of the next level is not 2D but 3D. Deeper layers have more channels but a smaller “footprint.” Applying local connectivity to a 2D input in a *deep* neural network leads to the following structure:
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="65%" height="65%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
 
 There are three types of operations:
@@ -171,10 +171,10 @@ In very deep networks, the performance of the model drops as the depth increases
 
 A better remedy is to feed layers with the outputs of layers that are not directly connected to them. These connections *skip* some layers and feed the output of one layer as input to later layers, hence the name *skip connections*. In practice, the input of a given layer is a combination (typically an addition or concatenation) of the outputs of several previous layers. 
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="65%" height="65%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 An example of a CNN with skip connections (DenseNet). Adapted from: <a href="https://arxiv.org/abs/1608.06993">Densely Connected Convolutional Networks</a> 
 
 Many CNN implementations exist with different layouts of skip connections, e.g. [ResNet](https://arxiv.org/abs/1512.03385), [DenseNet](https://arxiv.org/abs/1608.06993) and [U-net](https://arxiv.org/abs/1505.04597).

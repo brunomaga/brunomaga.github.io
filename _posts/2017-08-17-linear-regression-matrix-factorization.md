@@ -81,7 +81,7 @@ $$
 
 where $$ W \in R^{D \times K} $$ and $$ Z \in R^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ contains the indices of the observed ratings of the input matrix $$X$$.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="60%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
 
 This cost function is neither convex nor [identifiable](https://en.wikipedia.org/wiki/Identifiability). $$K$$ is the number of latent features (e.g. gender, age group, citizenship, etc.). A large $$K$$ facilitates overfitting. A regularizer can be added to the function:
@@ -146,10 +146,10 @@ Recall that $$z_{n,k}$$ are user features and $$w_{d,k}$$ are movie features. Th
 The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) optimization method minimizes the loss function by iterating over individual coordinates while keeping the others fixed.
 
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="40%" height="40%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 source: Wikipedia
 
 

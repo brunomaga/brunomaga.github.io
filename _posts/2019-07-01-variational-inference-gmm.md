@@ -390,10 +390,10 @@ While the ELBO has not converged:
 
 The algorithm is iterative and converges on a certain loss threshold (ELBO), based on the fit of each Gaussian to the data points. The illustration below shows several iterations of the fitting of Gaussian models to five clusters of points:
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/variational-inference-gmm/gmm_iterations.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Application of the CAVI algorithm to Gaussian Mixture Models, on a dataset of 2D points assigned to five color-coded clusters. The figure uses the multivariate (2D) version of the model; the derivation above uses univariate Gaussians.
 (source: <a href="https://arxiv.org/pdf/1601.00670.pdf">Variational Inference: A Review for Statisticians</a>)
 
