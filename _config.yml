@@ -28,3 +28,13 @@ defaults:
       path: ""
     values:
       layout: post
+
+# files that are not pages of the site: the build files (a list here replaces Jekyll's default one) and the notes
+# for writing the site
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor
+  - CLAUDE.md
+  - assets/rules.txt
