@@ -6151,7 +6151,7 @@
           <mxGeometry x="0" y="10589.52" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="gpt3_fig21-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="10629.52" width="907.8" height="922.74" as="geometry" />
+          <mxGeometry x="0" y="10629.52" width="907.8" height="799.34" as="geometry" />
         </mxCell>
         <mxCell id="gpt3_fig21-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;rounded=1;absoluteArcSize=1;arcSize=9.6;strokeColor=#000000;strokeWidth=1.04;" vertex="1" parent="gpt3_fig21-figure">
           <mxGeometry x="3" y="144.14" width="303.6" height="76.8" as="geometry" />
@@ -6560,9 +6560,6 @@
         </mxCell>
         <mxCell id="gpt3_fig21-96" value="prompt" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontColor=#666666;whiteSpace=nowrap;spacing=0;spacingLeft=3;spacingRight=3;fontStyle=2;" vertex="1" parent="gpt3_fig21-figure">
           <mxGeometry x="813.6" y="560.58" width="45.3444" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="gpt3_fig21-109" value="&lt;b&gt;Zero-shot, one-shot and few-shot, contrasted with traditional fine-tuning&lt;/b&gt;. The panels above show four methods for performing a task with a language model – fine-tuning is the traditional method, whereas zero-, one-, and few-shot, which we study in this work, require the model to perform the task with only forward passes at test time. We typically present the model with a few dozen examples in the few shot setting. Exact phrasings for all task descriptions, examples and prompts can be found in Appendix G." style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=16.9;fontColor=#000000;" vertex="1" parent="gpt3_fig21-figure">
-          <mxGeometry x="0" y="813.34" width="907.8" height="109.4" as="geometry" />
         </mxCell>
         <mxCell id="gpt3_fig11-label" value="gpt3_fig11.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="11632.26" width="600" height="30" as="geometry" />

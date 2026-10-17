@@ -30,6 +30,12 @@ mjx-container.math-scroll {
   vertical-align: middle;
 }
 
-// figure captions (paragraphs marked font-size: small in posts) are black, like the
-// rest of the caption's line, whatever color the surrounding block would give them
-.post-content p[style*="font-size: small"] { color: #000; }
+// pictures ({: .picture} in Markdown: a paragraph of one or more pictures) and their captions ({: .caption}: the
+// paragraph below the pictures) are centred, in small text that is black whatever color the surrounding block would
+// give it; the small text also sets the spacing between the pictures of a row
+.post-content .picture,
+.post-content .caption {
+  text-align: center;
+  font-size: small;
+  color: #000;
+}

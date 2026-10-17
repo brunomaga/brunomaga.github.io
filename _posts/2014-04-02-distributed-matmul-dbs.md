@@ -21,10 +21,10 @@ Each rank holds $$n/p$$ consecutive rows of $$A$$, and the matching entries of $
 1. **all-gather** (`MPI_Allgather`): every rank sends its entries of $$x$$ to all other ranks;
 2. **local product:** every rank multiplies its rows of $$A$$ by $$x$$.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="94%" height="94%" src="{{ site.assets }}/distributed-matmul-dbs/matvec_row1d.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Matrix-vector product on 4 ranks, colored by rank. **Left:** the initial layout. **Right:** rank 1 after the all-gather, ready to compute $$y_2$$ and $$y_3$$.
 
 Each rank does $$n^2/p$$ operations, and $$y$$ ends up split like $$x$$, ready for the next product.
@@ -43,10 +43,10 @@ $$
 
 $$A$$ and $$C$$ stay in place, and $$B$$ moves. At each step, every rank multiplies the tile of $$A$$ that matches its current block of $$B$$, adds the result to $$C_i$$, and passes the block of $$B$$ to the previous rank. After $$p$$ steps, $$C_i$$ is complete.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-matmul-dbs/ring.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 The ring algorithm on 3 ranks. Blocks of $$B$$ shift up, and rank 0 sends to rank 2. At each step, a rank multiplies the tile of $$A$$ that has the color of its block of $$B$$.
 
 The output $$C$$ is split by rows, like $$A$$. In the mirror case, $$B$$ stays and column blocks of $$A$$ move, and $$C$$ is split by columns. Each rank stores $$3n^2/p$$ elements, but it receives $$p-1$$ blocks: almost $$n^2$$ elements, however many ranks we add.
@@ -66,10 +66,10 @@ For example, rank $$(1,2)$$ of a $$3 \times 3$$ grid computes $$C_{1,2} = A_{1,0
 
 Steps 2 and 3 repeat until each rank has done $$q$$ multiplications.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="98%" height="98%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Cannon's algorithm on a $$3 \times 3$$ grid of ranks. Tiles of $$A$$ (top) shift left, and tiles of $$B$$ (bottom) shift up. The thick frame marks rank $$(1,2)$$, and colors show its three pairs: blue for $$k=0$$, green for $$k=1$$ and red for $$k=2$$.
 
 $$A$$ moves along the grid rows, $$B$$ along the grid columns, and $$C$$ stays. Tile $$C_{i,j}$$ ends on rank $$(i,j)$$, in the same layout as the inputs. On a 2D grid, two of the three matrices must move. Each rank still stores $$3n^2/p$$ elements, but receives only $$2q$$ tiles, or $$2n^2/\sqrt{p}$$ elements. This shrinks as we add ranks, and beats the ring from 9 ranks on.
@@ -83,10 +83,10 @@ The tiles of the next step do not depend on the current product. So a rank can r
 2. multiply the current tiles;
 3. wait for both messages (`MPI_Waitall`), and swap the buffers.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="89%" height="89%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Timeline of one rank in Cannon's algorithm on a $$3 \times 3$$ grid. **Top:** shifts and multiplications take turns. **Bottom:** each shift runs during a multiplication.
 
 This **double buffering** costs one extra pair of tiles, and works for the ring algorithm too. It hides a shift whenever the multiplication takes longer. A multiplication costs $$(n/q)^3$$ operations and a shift moves $$2(n/q)^2$$ elements, so large tiles hide the communication easily.
@@ -102,10 +102,10 @@ The **compressed sparse row** (CSR) format uses three arrays:
 - `col_idx`: the column of each nonzero;
 - `row_ptr`: where each row starts. Row $$i$$ is at positions `row_ptr[i]` to `row_ptr[i+1]-1` of the other two arrays.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="66%" height="66%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
 
 For $$n$$ rows and $$nnz$$ nonzeros, CSR stores $$2 \, nnz + n + 1$$ numbers. Rows are easy to read. Columns need a search through all rows, which makes the distributed transpose hard, as shown [in a different post]({{ site.baseurl }}{% post_url 2015-04-21-matrix-transpose %}). The product $$y = Ax$$ takes $$O(nnz)$$ operations:
@@ -125,10 +125,10 @@ We split $$A$$ by rows again. An all-gather of $$x$$ would work, but a rank need
 2. **exchange** (before every product): the owners send these entries (`MPI_Alltoallv`). The received copies are called **ghost** entries;
 3. **local product:** each rank runs the CSR loop over its own and ghost entries.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="78%" height="78%" src="{{ site.assets }}/distributed-matmul-dbs/spmv.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Sparse matrix-vector product on 3 ranks. **Left:** nonzeros colored by rank. A dot marks a nonzero whose entry of $$x$$ is on another rank. **Right:** the entries of $$x$$ on each rank after the exchange. Dashed boxes are ghost entries.
 
 The communication now grows with the number of ghost entries, not with $$n$$. For a matrix from a mesh, these are only the entries at the border of each rank's region.
@@ -167,10 +167,10 @@ There are four kinds of join:
 - **right outer join:** also the unmatched rows of the right table (`Messages`);
 - **full outer join:** also the unmatched rows of both tables.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="85%" height="85%" src="{{ site.assets }}/distributed-matmul-dbs/joins.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 **Top:** the tables `Person` (blue) and `Messages` (green). **Bottom:** three joins on `id`. Gray cells are `NULL`.
 
 On one node, there are three classic join algorithms for tables of $$N$$ and $$M$$ rows:
@@ -191,10 +191,10 @@ For outer joins, each row also records whether it found a match, and the rows wi
 
 **Outer joins.** In step 3, server 1 also returns its unmatched persons, with `NULL`: this is the left outer join. Server 2 knows which of its messages had no match, since their keys were not in the list of step 1. In step 4, it returns them, with `NULL`. The inner join plus step 4 is the right outer join, and steps 3 and 4 together are the full outer join.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="77%" height="77%" src="{{ site.assets }}/distributed-matmul-dbs/layout_tables.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 A semi-join between two servers: the keys (1), the matching rows (2), the left outer join on server 1 (3), and the unmatched messages of server 2 (4). The first three rows of (3) are the inner join.
 
 For a long list of keys, a [Bloom filter][bloom] is a smaller substitute. It lets a few wrong rows through in step 2, and server 1 treats them as unmatched messages.
@@ -207,10 +207,10 @@ For a long list of keys, a [Bloom filter][bloom] is a smaller substitute. It let
 
 **Inner join.** We place each row by its key, with the same rule for both tables, such as a hash of the key. Below, even keys go to server 1, and odd keys to server 2. Matching rows then share a server, and every server joins locally. If the tables are not placed this way, a **shuffle** first sends each row to its server with an all-to-all exchange (`MPI_Alltoallv`), as in the distributed sample sort of [a different post]({{ site.baseurl }}{% post_url 2014-06-21-distributed-sort %}).
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="82%" height="82%" src="{{ site.assets }}/distributed-matmul-dbs/layout_rows.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Two tables split by rows across 2 servers, colored by target server: blue for server 1 (even keys), and orange for server 2 (odd keys). **Left:** before the shuffle. **Right:** after it.
 
 **Outer joins.** After a shuffle, outer joins are local too: a row without a match on its server has no match anywhere. In the figure, server 2 returns Mary and Joe for the left outer join, and "Hey" for the right outer join.
@@ -219,10 +219,10 @@ A shuffle has one weakness: a frequent key sends many rows to the same server, w
 
 **Broadcast join.** If `Person` is small, we can copy it to every server instead, and leave `Messages` in place. Each message then sits with all persons, so the inner and right outer joins are local. The left outer join is not: John matches on server 1 but not on server 2, so no server can tell alone that a person has no match. Each server flags its local matches, and a logical-or all-reduce (`MPI_Allreduce` with `MPI_LOR`) combines the flags. Server 1 then returns the persons with a final flag of 0, with `NULL`.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="65%" height="65%" src="{{ site.assets }}/distributed-matmul-dbs/broadcast.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 A broadcast join, for a left outer join. After the all-reduce of the match flags, only Mary and Joe have no match.
 
 ### Layout 3: tables split by columns
@@ -238,10 +238,10 @@ Only row numbers cross the network, and the result stays split by columns. Build
 
 **Outer joins.** The join index also gets pairs with one side missing, such as Mary (row 1) and Joe (row 3) in the left outer join. Where a row number is missing, the server writes `NULL`.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="95%" height="95%" src="{{ site.assets }}/distributed-matmul-dbs/layout_columns.svg">
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 A left outer join of tables split by columns across 3 servers. Column `#` is the implicit row number. Server 1 builds the join index (1) and sends row numbers (2), and servers 2 and 3 gather their rows (3). The first three rows are the inner join.
 
 [column-db]: https://en.wikipedia.org/wiki/Column-oriented_DBMS

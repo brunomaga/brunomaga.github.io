@@ -16,18 +16,18 @@ As an example, consider a two-label (dog, cat) classification task. An image of 
 
 KD methods fall into several categories. The loss can match the soft labels of the student and the teacher, as in the example above, or intermediate representations such as feature maps. The student can be a scaled-down version of the teacher's architecture, or a different one. In **offline distillation**, the teacher is trained first and then frozen while the student learns from it. In **online distillation**, both are trained simultaneously. The teacher can be a single model or an ensemble of models.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Illustration of knowledge distillation using (A) pre-trained teacher model (offline) and (B) while training the teacher model simultaneously (online). Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/)
 
 The different methods are detailed in [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525).
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kd_methods.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 The categories of knowledge distillation methods, and the branches within each category. This section implements offline distillation using soft labels, underlined in red in the picture. Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/).
 
 ### Implementing offline distillation with soft labels
@@ -123,15 +123,15 @@ The acceptance rule depends on the decoding strategy.
 
 With **greedy decoding**, draft tokens are accepted as long as they match the target's most likely token. At the first mismatch, the draft token is replaced by the target's most likely token, and the remaining drafts are discarded. If all $$K$$ drafts are accepted, the target's prediction after the last draft is appended as a *bonus* token. The output is identical to greedy decoding with the target alone.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/spec_decoding.svg"/>
 
 With **sampling** (*speculative sampling*), the draft model samples each token $$x$$ from its distribution $$p$$, and the target accepts it with probability $$\min\left(1, q(x) / p(x)\right)$$, where $$q$$ is the target's distribution. On rejection, a replacement token is sampled from the normalized residual distribution $$\max(0, q - p)$$, and the remaining drafts are discarded. This modified rejection sampling produces tokens distributed exactly as $$q$$. If all $$K$$ drafts are accepted, a bonus token is sampled from the target's distribution after the last draft. The rule holds for any $$p$$, as long as it is the distribution the drafts were actually sampled from. Greedy drafts are the special case of a one-hot $$p$$: the target accepts the draft $$x$$ with probability $$q(x)$$, and on rejection samples from $$q$$ without $$x$$, which still yields tokens distributed as $$q$$. The guarantee breaks when the drafts are generated greedily but the draft model's softmax probabilities are used as $$p$$.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/spec_sampling.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 The draft b is accepted with probability $$\min(1, q(b) / p(b)) = 0.3 / 0.5 = 0.6$$; otherwise, it is replaced by a or c, sampled from the residual.
 
 In a batch, each sequence accepts a different number of tokens, so sequences progress at different speeds. Engines therefore track their lengths separately, as in continuous batching.
@@ -235,7 +235,7 @@ def accept_sampling(drafts, p, q):
 
 [Prompt lookup decoding](https://github.com/apoorvumang/prompt-lookup-decoding) requires no draft model. It takes the last few generated tokens (an n-gram), searches for the same n-gram earlier in the prompt or in the generated text, and proposes the tokens that followed it as drafts. The verification is the same as above. The method costs almost nothing, and gives large speedups when the output copies from the input, as in summarization, code editing, question answering over documents, or rewriting a previous answer. Related methods draft from other sources: [lookahead decoding](https://arxiv.org/abs/2402.02057) collects n-grams from Jacobi iterations of the model itself, and [REST](https://arxiv.org/abs/2311.08252) retrieves continuations from a datastore of text.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
 
 The following code implements prompt lookup decoding. It reuses the verification loop of speculative decoding with a different source of drafts:
@@ -266,7 +266,7 @@ def prompt_lookup(tokens, n_drafts, max_ngram=3):
 
 [Medusa](https://arxiv.org/abs/2401.10774) adds a few extra *decoding heads* on top of the last hidden state of the target model. The original output head predicts the next token, and head $$i$$ predicts the token $$i+1$$ positions ahead. The top candidates of each head are combined into a tree of possible continuations. All candidates are verified in a single forward pass with *tree attention*, a mask that lets each candidate attend only to its own ancestors in the tree. The longest accepted path is kept. Training only the heads, with the model frozen (Medusa-1), gives speedups above 2.2 times. Training the heads together with the model (Medusa-2) reaches 2.3 to 3.6 times. Medusa needs no separate draft model. However, each head guesses its token independently, without seeing the tokens guessed by the other heads, so the accuracy drops quickly for later positions. For sampling, Medusa also proposes a faster *typical acceptance* rule, which is not exactly lossless.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/medusa.svg"/>
 
 The following code implements the Medusa heads, the tree of candidates and its attention mask, and one step of greedy decoding that keeps only the KV cache of the accepted path:
@@ -367,10 +367,10 @@ def medusa_step(model, heads, tokens, kv_cache, next_token, head_logits, top_k=2
 
 [EAGLE](https://arxiv.org/abs/2401.15077) drafts at the level of *features* instead of tokens. Its draft model is a single lightweight transformer layer. This layer takes the top-layer hidden states (features) of the target, together with the embeddings of the tokens sampled so far, and predicts the next feature. The target's own output layer then converts this feature into a token. Feature sequences are more regular than token sequences, so these drafts are much more accurate than those of Medusa's independent heads. [EAGLE-2](https://arxiv.org/abs/2406.16858) shapes the draft tree dynamically, expanding the branches where the draft model is confident. The authors of [EAGLE-3](https://arxiv.org/abs/2503.01840) (NeurIPS 2025) observed that EAGLE barely improved with more training data, and traced this to its feature prediction objective. EAGLE-3 therefore drops feature prediction and predicts tokens directly. It fuses low-, mid- and high-level features of the target instead of the top layer only, and uses *training-time test*: during training, the draft model is fed its own predictions, to simulate multi-step drafting. EAGLE-3 reaches speedups of up to 6.5 times, about 1.4 times more than EAGLE-2, and 1.38 times higher throughput at a batch size of 64 in SGLang. vLLM, SGLang and TensorRT-LLM support EAGLE-style drafting.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/eagle.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 For the next draft, the predicted feature of $$t_5$$ and the draft $$t_6$$ are appended to the inputs. EAGLE-3 predicts tokens directly, from the fused low-, mid- and high-level features of the target.
 
 The following code implements an EAGLE drafter, and a drafting loop that the MTP modules below also use:
@@ -424,7 +424,7 @@ def draft_with_features(drafter, features, tokens, n_drafts):
 
 A drafter this small predicts poorly on its own: without target features, a 5-layer diffusion drafter only reaches a speedup of about 3 times. DFlash therefore conditions it on the target. The hidden states of 5 target layers, spread from shallow to deep, are concatenated, projected, and injected into the keys and values of every draft layer, instead of only into the drafter's input as in EAGLE-3. As a result, the acceptance length keeps improving as draft layers are added. The drafter reuses the target's frozen embedding and output head. Only its transformer layers are trained, on responses generated by the target. Each training block starts at a randomly sampled anchor token, as at inference. All blocks of a sequence are trained in one pass with a block-sparse attention mask. The loss favors early positions, since one early mistake invalidates the rest of the block. Verification is unchanged, so the output stays lossless. Each round verifies a single drafted block, not a tree. [DDTree](https://arxiv.org/abs/2604.12989) builds a draft tree from the per-position predictions of the DFlash drafter, and verifies it with tree attention.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/dflash.svg"/>
 
 On Qwen3-8B with greedy decoding, the paper reports an average of about 6.5 tokens committed per verification step, and up to 6.1 times faster decoding than the baseline. This is about 2.5 times the speedup of EAGLE-3. The gains are largest on math and code, and smallest on open-ended chat (about 2.8 times). In SGLang on a B200, the speedup drops from about 4-5 times for a single request to about 2.5-3 times at 32 concurrent requests, as the verification of 16-token blocks becomes compute-bound. Drafters trained on 4K-token contexts also lose acceptance on longer inputs, which a short long-context fine-tune recovers. Multi-token prediction (below) only helps models pre-trained with MTP modules. A DFlash drafter, in contrast, is trained after the fact against a frozen target, so it can be added to almost any model. However, at the time of writing its training recipe is not public. In practice, the drafters released by [z-lab](https://github.com/z-lab/dflash) are used, for Qwen3.5/3.6, gpt-oss, Gemma 4 and Kimi K2.5, among others. DFlash runs in vLLM and SGLang, with an MLX version for Apple Silicon.
@@ -433,10 +433,10 @@ On Qwen3-8B with greedy decoding, the paper reports an average of about 6.5 toke
 
 [LayerSkip](https://arxiv.org/abs/2404.16710) uses the early layers of the target model as the draft. The model is trained with *layer dropout*, which skips the later layers more often, and with an *early exit loss*, which trains every layer to make good predictions through the shared output head. At inference, the draft exits after the first $$E$$ layers. The verification runs only the remaining layers, reusing the computation and the cache of the first $$E$$. No second model is stored, and the reported speedups reach up to about 2 times on summarization and coding tasks.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="89%" height="89%" src="{{ site.assets }}/inference/imgs/layerskip.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 Every layer also learns to predict through the shared head (early exit loss).
 
 The following code implements a simplified LayerSkip, with the early exit loss and layer dropout for training, and drafting with the first layers at inference:
@@ -508,10 +508,10 @@ $$
 
 As the vocabulary is large, holding the logits of all heads at once would dominate the memory footprint of training. Instead, after the forward pass of the trunk, the forward and backward passes of the heads run one after the other. Their gradients accumulate at the output of the trunk, so only the logits of one head are in memory at a time. The benefits grow with the model size, and small models can even get worse. The 13B model of the paper solves 12% more problems on HumanEval and 17% more on MBPP than a comparable next-token model. At inference, the extra heads act as drafts for self-speculative decoding, making a model trained to predict 4 tokens up to 3 times faster. However, as in Medusa, each head predicts its token without seeing the tokens predicted by the other heads.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="77%" height="77%" src="{{ site.assets }}/inference/imgs/mtp_parallel.svg"/>
 
-{: style="text-align:center; font-size: small;"}
+{: .caption}
 In training, the heads run their forward and backward passes one at a time.
 
 The following code implements the parallel heads, and the backward pass that keeps only the logits of one head in memory:
@@ -566,7 +566,7 @@ With $$D$$ modules, the main model predicts $$t_{i+1}$$. Module 1 combines its h
 
 The authors report better results on most benchmarks, and suggest that MTP may lead the model to pre-plan its representations for better predictions of future tokens. At inference, the module can be discarded, so that the model runs as a regular next-token model, or used as a draft. In the latter case, the second predicted token is accepted 85-90% of the time, giving 1.8 times more tokens per second. Note that an MTP module is very similar to an EAGLE draft layer: both combine the features of the target with the embedding of the next token, run one transformer layer, and predict with the target's output head. The difference is that the MTP module is trained together with the model, during pre-training.
 
-{: style="text-align:center; font-size: small;"}
+{: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/mtp_sequential.svg"/>
 
 The following code implements the MTP modules of DeepSeek-V3 and their loss:
