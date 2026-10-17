@@ -209,10 +209,10 @@ $$
 Both the conditional, $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$, and the marginal, $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$, are Gaussian.
 
 {: style="text-align:center; font-size: small;"}
-<img width="45%" height="45%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.png"/>
+<img width="45%" height="45%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional distribution is a slice along the X or Y dimension, and it is also Gaussian. <b>Source:</b> Wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a>
+A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional distribution is a slice along the X or Y dimension, and it is also Gaussian. <b>Adapted from:</b> Wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a>
 
 The product of two Gaussian pdfs, $$\mathcal{N} (x \mid a, A) \, \mathcal{N}(x \mid b, B)$$, is a Gaussian scaled by a constant $$c \in \mathbb{R}$$.
 

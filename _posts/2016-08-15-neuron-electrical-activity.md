@@ -15,7 +15,7 @@ Because of the complex anatomical structure and behaviour of neurons, numerical 
 <img width="40%" height="40%" src="{{ site.assets }}/neuron-electrical-activity/neuron.svg">
 
 {: style="text-align:center; font-size: small;"}
-source: Wikipedia
+Adapted from: Wikipedia
 
 ### Hodgkin-Huxley Model and Cable Theory
 

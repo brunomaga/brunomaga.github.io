@@ -155,10 +155,10 @@ Two vectors are **codirected** if they point in the same direction, and **collin
 Graphical intuition: a linear mapping scales space along the directions of its eigenvectors, each by its eigenvalue. For a diagonal matrix, the eigenvectors are the canonical basis vectors, i.e. the cardinal axes:
 
 {: style="text-align:center; font-size: small;"}
-<img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/mml_eigenvalues_and_eigenvectors.png"/>
+<img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Image source: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
+Adapted from: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
 
 ### Cholesky Decomposition
 
@@ -200,7 +200,7 @@ $$
 $$
 
 {: style="text-align:center; font-size: small;"}
-<img width="43%" height="43%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="{{ site.assets }}/algebra-for-ml/svd_example.png"/>
+<img width="43%" height="43%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="{{ site.assets }}/algebra-for-ml/svd_example.svg"/>
 
 {: style="text-align:center; font-size: small;"}
 **Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequence of transformations. The SVD decomposes the corresponding linear mapping into three operations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$, and the third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: an example application of the SVD. Image sources: adapted from <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>, and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a>
@@ -326,8 +326,29 @@ $$
 
 Automatic differentiation instead performs an efficient *forward* pass by reusing intermediate results, and breaks the *back propagation* algorithm into partial derivatives that propagate backwards through the graph:
 
+Consider the function
+
+$$
+f(x) = \sqrt{x^2 + \exp(x^2)} + \cos\left(x^2 + \exp(x^2)\right)
+$$
+
+If we were to implement a function $$f$$ on a computer, we would be able to save some computation by using *intermediate variables*:
+
+$$
+\begin{align*}
+a & = x^2 \, , \\
+b & = \exp(a) \, , \\
+c & = a + b \, , \\
+d & = \sqrt{c} \, , \\
+e & = \cos(c) \, , \\
+f & = d + e \, .
+\end{align*}
+$$
+
 {: style="text-align:center; font-size: small;"}
 <img width="57%" height="57%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
+
+This is the same kind of thinking process that occurs when applying the chain rule. Note that the preceding set of equations requires fewer operations than a direct implementation of the function $$f(x)$$.
 
 {: style="text-align:center; font-size: small;"}
 (Adapted from: example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)

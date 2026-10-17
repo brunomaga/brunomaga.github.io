@@ -1,0 +1,1531 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="880px" height="307px" viewBox="0 0 880 307" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 307 L 880 307 L 880 0 L 0 0 L 0 307 z" style="fill: none"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 36.21 189.98 L 864.32 189.98 L 864.32 8.54 L 36.21 8.54 L 36.21 189.98 z" style="fill: none"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m728f7d72f7" d="M 0 0 L 0 -3.28" style="stroke: #000000; stroke-width: 0.6"/>
+      </defs>
+      <g>
+       <use xlink:href="#m728f7d72f7" x="36.207383" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="m4042668f4a" d="M 0 0 L 0 3.28" style="stroke: #000000; stroke-width: 0.6"/>
+      </defs>
+      <g>
+       <use xlink:href="#m4042668f4a" x="36.207383" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="36.207383" y="197.548256" transform="rotate(-0 36.207383 197.548256)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="52.769706" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m4042668f4a" x="52.769706" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="52.769706" y="197.548256" transform="rotate(-0 52.769706 197.548256)">20</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="69.332028" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m4042668f4a" x="69.332028" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="69.332028" y="197.548256" transform="rotate(-0 69.332028 197.548256)">40</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="85.894351" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m4042668f4a" x="85.894351" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="85.894351" y="197.548256" transform="rotate(-0 85.894351 197.548256)">60</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="102.456674" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m4042668f4a" x="102.456674" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="102.456674" y="197.548256" transform="rotate(-0 102.456674 197.548256)">80</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="119.018996" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m4042668f4a" x="119.018996" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="119.018996" y="197.548256" transform="rotate(-0 119.018996 197.548256)">100</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_13">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="135.581319" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m4042668f4a" x="135.581319" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="135.581319" y="197.548256" transform="rotate(-0 135.581319 197.548256)">120</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_15">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="152.143642" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m4042668f4a" x="152.143642" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="152.143642" y="197.548256" transform="rotate(-0 152.143642 197.548256)">140</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_17">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="168.705964" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#m4042668f4a" x="168.705964" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="168.705964" y="197.548256" transform="rotate(-0 168.705964 197.548256)">160</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_19">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="185.268287" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#m4042668f4a" x="185.268287" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="185.268287" y="197.548256" transform="rotate(-0 185.268287 197.548256)">180</text>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_21">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="201.83061" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#m4042668f4a" x="201.83061" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="201.83061" y="197.548256" transform="rotate(-0 201.83061 197.548256)">200</text>
+     </g>
+    </g>
+    <g id="xtick_12">
+     <g id="line2d_23">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="218.392932" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#m4042668f4a" x="218.392932" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="218.392932" y="197.548256" transform="rotate(-0 218.392932 197.548256)">220</text>
+     </g>
+    </g>
+    <g id="xtick_13">
+     <g id="line2d_25">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="234.955255" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#m4042668f4a" x="234.955255" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="234.955255" y="197.548256" transform="rotate(-0 234.955255 197.548256)">240</text>
+     </g>
+    </g>
+    <g id="xtick_14">
+     <g id="line2d_27">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="251.517578" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#m4042668f4a" x="251.517578" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="251.517578" y="197.548256" transform="rotate(-0 251.517578 197.548256)">260</text>
+     </g>
+    </g>
+    <g id="xtick_15">
+     <g id="line2d_29">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="268.0799" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_30">
+      <g>
+       <use xlink:href="#m4042668f4a" x="268.0799" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="268.0799" y="197.548256" transform="rotate(-0 268.0799 197.548256)">280</text>
+     </g>
+    </g>
+    <g id="xtick_16">
+     <g id="line2d_31">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="284.642223" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_32">
+      <g>
+       <use xlink:href="#m4042668f4a" x="284.642223" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="284.642223" y="197.548256" transform="rotate(-0 284.642223 197.548256)">300</text>
+     </g>
+    </g>
+    <g id="xtick_17">
+     <g id="line2d_33">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="301.204546" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_34">
+      <g>
+       <use xlink:href="#m4042668f4a" x="301.204546" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="301.204546" y="197.548256" transform="rotate(-0 301.204546 197.548256)">320</text>
+     </g>
+    </g>
+    <g id="xtick_18">
+     <g id="line2d_35">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="317.766869" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_36">
+      <g>
+       <use xlink:href="#m4042668f4a" x="317.766869" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_18">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="317.766869" y="197.548256" transform="rotate(-0 317.766869 197.548256)">340</text>
+     </g>
+    </g>
+    <g id="xtick_19">
+     <g id="line2d_37">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="334.329191" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_38">
+      <g>
+       <use xlink:href="#m4042668f4a" x="334.329191" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_19">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="334.329191" y="197.548256" transform="rotate(-0 334.329191 197.548256)">360</text>
+     </g>
+    </g>
+    <g id="xtick_20">
+     <g id="line2d_39">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="350.891514" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_40">
+      <g>
+       <use xlink:href="#m4042668f4a" x="350.891514" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_20">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="350.891514" y="197.548256" transform="rotate(-0 350.891514 197.548256)">380</text>
+     </g>
+    </g>
+    <g id="xtick_21">
+     <g id="line2d_41">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="367.453837" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_42">
+      <g>
+       <use xlink:href="#m4042668f4a" x="367.453837" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_21">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="367.453837" y="197.548256" transform="rotate(-0 367.453837 197.548256)">400</text>
+     </g>
+    </g>
+    <g id="xtick_22">
+     <g id="line2d_43">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="384.016159" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_44">
+      <g>
+       <use xlink:href="#m4042668f4a" x="384.016159" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_22">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="384.016159" y="197.548256" transform="rotate(-0 384.016159 197.548256)">420</text>
+     </g>
+    </g>
+    <g id="xtick_23">
+     <g id="line2d_45">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="400.578482" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_46">
+      <g>
+       <use xlink:href="#m4042668f4a" x="400.578482" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_23">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="400.578482" y="197.548256" transform="rotate(-0 400.578482 197.548256)">440</text>
+     </g>
+    </g>
+    <g id="xtick_24">
+     <g id="line2d_47">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="417.140805" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_48">
+      <g>
+       <use xlink:href="#m4042668f4a" x="417.140805" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_24">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="417.140805" y="197.548256" transform="rotate(-0 417.140805 197.548256)">460</text>
+     </g>
+    </g>
+    <g id="xtick_25">
+     <g id="line2d_49">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="433.703127" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_50">
+      <g>
+       <use xlink:href="#m4042668f4a" x="433.703127" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_25">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="433.703127" y="197.548256" transform="rotate(-0 433.703127 197.548256)">480</text>
+     </g>
+    </g>
+    <g id="xtick_26">
+     <g id="line2d_51">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="450.26545" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_52">
+      <g>
+       <use xlink:href="#m4042668f4a" x="450.26545" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_26">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="450.26545" y="197.548256" transform="rotate(-0 450.26545 197.548256)">500</text>
+     </g>
+    </g>
+    <g id="xtick_27">
+     <g id="line2d_53">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="466.827773" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_54">
+      <g>
+       <use xlink:href="#m4042668f4a" x="466.827773" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_27">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="466.827773" y="197.548256" transform="rotate(-0 466.827773 197.548256)">520</text>
+     </g>
+    </g>
+    <g id="xtick_28">
+     <g id="line2d_55">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="483.390095" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_56">
+      <g>
+       <use xlink:href="#m4042668f4a" x="483.390095" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_28">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="483.390095" y="197.548256" transform="rotate(-0 483.390095 197.548256)">540</text>
+     </g>
+    </g>
+    <g id="xtick_29">
+     <g id="line2d_57">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="499.952418" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_58">
+      <g>
+       <use xlink:href="#m4042668f4a" x="499.952418" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_29">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="499.952418" y="197.548256" transform="rotate(-0 499.952418 197.548256)">560</text>
+     </g>
+    </g>
+    <g id="xtick_30">
+     <g id="line2d_59">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="516.514741" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_60">
+      <g>
+       <use xlink:href="#m4042668f4a" x="516.514741" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_30">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="516.514741" y="197.548256" transform="rotate(-0 516.514741 197.548256)">580</text>
+     </g>
+    </g>
+    <g id="xtick_31">
+     <g id="line2d_61">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="533.077063" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_62">
+      <g>
+       <use xlink:href="#m4042668f4a" x="533.077063" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_31">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="533.077063" y="197.548256" transform="rotate(-0 533.077063 197.548256)">600</text>
+     </g>
+    </g>
+    <g id="xtick_32">
+     <g id="line2d_63">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="549.639386" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_64">
+      <g>
+       <use xlink:href="#m4042668f4a" x="549.639386" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_32">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="549.639386" y="197.548256" transform="rotate(-0 549.639386 197.548256)">620</text>
+     </g>
+    </g>
+    <g id="xtick_33">
+     <g id="line2d_65">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="566.201709" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_66">
+      <g>
+       <use xlink:href="#m4042668f4a" x="566.201709" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_33">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="566.201709" y="197.548256" transform="rotate(-0 566.201709 197.548256)">640</text>
+     </g>
+    </g>
+    <g id="xtick_34">
+     <g id="line2d_67">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="582.764032" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_68">
+      <g>
+       <use xlink:href="#m4042668f4a" x="582.764032" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_34">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="582.764032" y="197.548256" transform="rotate(-0 582.764032 197.548256)">660</text>
+     </g>
+    </g>
+    <g id="xtick_35">
+     <g id="line2d_69">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="599.326354" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_70">
+      <g>
+       <use xlink:href="#m4042668f4a" x="599.326354" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_35">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="599.326354" y="197.548256" transform="rotate(-0 599.326354 197.548256)">680</text>
+     </g>
+    </g>
+    <g id="xtick_36">
+     <g id="line2d_71">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="615.888677" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_72">
+      <g>
+       <use xlink:href="#m4042668f4a" x="615.888677" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_36">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="615.888677" y="197.548256" transform="rotate(-0 615.888677 197.548256)">700</text>
+     </g>
+    </g>
+    <g id="xtick_37">
+     <g id="line2d_73">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="632.451" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_74">
+      <g>
+       <use xlink:href="#m4042668f4a" x="632.451" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_37">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="632.451" y="197.548256" transform="rotate(-0 632.451 197.548256)">720</text>
+     </g>
+    </g>
+    <g id="xtick_38">
+     <g id="line2d_75">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="649.013322" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_76">
+      <g>
+       <use xlink:href="#m4042668f4a" x="649.013322" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_38">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="649.013322" y="197.548256" transform="rotate(-0 649.013322 197.548256)">740</text>
+     </g>
+    </g>
+    <g id="xtick_39">
+     <g id="line2d_77">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="665.575645" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_78">
+      <g>
+       <use xlink:href="#m4042668f4a" x="665.575645" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_39">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="665.575645" y="197.548256" transform="rotate(-0 665.575645 197.548256)">760</text>
+     </g>
+    </g>
+    <g id="xtick_40">
+     <g id="line2d_79">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="682.137968" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_80">
+      <g>
+       <use xlink:href="#m4042668f4a" x="682.137968" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_40">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="682.137968" y="197.548256" transform="rotate(-0 682.137968 197.548256)">780</text>
+     </g>
+    </g>
+    <g id="xtick_41">
+     <g id="line2d_81">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="698.70029" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_82">
+      <g>
+       <use xlink:href="#m4042668f4a" x="698.70029" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_41">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="698.70029" y="197.548256" transform="rotate(-0 698.70029 197.548256)">800</text>
+     </g>
+    </g>
+    <g id="xtick_42">
+     <g id="line2d_83">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="715.262613" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_84">
+      <g>
+       <use xlink:href="#m4042668f4a" x="715.262613" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_42">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="715.262613" y="197.548256" transform="rotate(-0 715.262613 197.548256)">820</text>
+     </g>
+    </g>
+    <g id="xtick_43">
+     <g id="line2d_85">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="731.824936" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_86">
+      <g>
+       <use xlink:href="#m4042668f4a" x="731.824936" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_43">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="731.824936" y="197.548256" transform="rotate(-0 731.824936 197.548256)">840</text>
+     </g>
+    </g>
+    <g id="xtick_44">
+     <g id="line2d_87">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="748.387258" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_88">
+      <g>
+       <use xlink:href="#m4042668f4a" x="748.387258" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_44">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="748.387258" y="197.548256" transform="rotate(-0 748.387258 197.548256)">860</text>
+     </g>
+    </g>
+    <g id="xtick_45">
+     <g id="line2d_89">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="764.949581" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_90">
+      <g>
+       <use xlink:href="#m4042668f4a" x="764.949581" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_45">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="764.949581" y="197.548256" transform="rotate(-0 764.949581 197.548256)">880</text>
+     </g>
+    </g>
+    <g id="xtick_46">
+     <g id="line2d_91">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="781.511904" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_92">
+      <g>
+       <use xlink:href="#m4042668f4a" x="781.511904" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_46">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="781.511904" y="197.548256" transform="rotate(-0 781.511904 197.548256)">900</text>
+     </g>
+    </g>
+    <g id="xtick_47">
+     <g id="line2d_93">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="798.074226" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_94">
+      <g>
+       <use xlink:href="#m4042668f4a" x="798.074226" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_47">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="798.074226" y="197.548256" transform="rotate(-0 798.074226 197.548256)">920</text>
+     </g>
+    </g>
+    <g id="xtick_48">
+     <g id="line2d_95">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="814.636549" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_96">
+      <g>
+       <use xlink:href="#m4042668f4a" x="814.636549" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_48">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="814.636549" y="197.548256" transform="rotate(-0 814.636549 197.548256)">940</text>
+     </g>
+    </g>
+    <g id="xtick_49">
+     <g id="line2d_97">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="831.198872" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_98">
+      <g>
+       <use xlink:href="#m4042668f4a" x="831.198872" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_49">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="831.198872" y="197.548256" transform="rotate(-0 831.198872 197.548256)">960</text>
+     </g>
+    </g>
+    <g id="xtick_50">
+     <g id="line2d_99">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="847.761195" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_100">
+      <g>
+       <use xlink:href="#m4042668f4a" x="847.761195" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_50">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="847.761195" y="197.548256" transform="rotate(-0 847.761195 197.548256)">980</text>
+     </g>
+    </g>
+    <g id="xtick_51">
+     <g id="line2d_101">
+      <g>
+       <use xlink:href="#m728f7d72f7" x="864.323517" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_102">
+      <g>
+       <use xlink:href="#m4042668f4a" x="864.323517" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_51">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="864.323517" y="197.548256" transform="rotate(-0 864.323517 197.548256)">1,000</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_103">
+      <defs>
+       <path id="mf7be9ca8f5" d="M 0 0 L 3.28 0" style="stroke: #000000; stroke-width: 0.6"/>
+      </defs>
+      <g>
+       <use xlink:href="#mf7be9ca8f5" x="36.207383" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_104">
+      <defs>
+       <path id="m2ea65b0d84" d="M 0 0 L -3.28 0" style="stroke: #000000; stroke-width: 0.6"/>
+      </defs>
+      <g>
+       <use xlink:href="#m2ea65b0d84" x="864.323517" y="189.979262" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_52">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="33.307383" y="192.563759" transform="rotate(-0 33.307383 192.563759)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_105">
+      <g>
+       <use xlink:href="#mf7be9ca8f5" x="36.207383" y="153.69085" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_106">
+      <g>
+       <use xlink:href="#m2ea65b0d84" x="864.323517" y="153.69085" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_53">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="33.307383" y="156.275347" transform="rotate(-0 33.307383 156.275347)">0.2</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_107">
+      <g>
+       <use xlink:href="#mf7be9ca8f5" x="36.207383" y="117.402439" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_108">
+      <g>
+       <use xlink:href="#m2ea65b0d84" x="864.323517" y="117.402439" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_54">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="33.307383" y="119.986936" transform="rotate(-0 33.307383 119.986936)">0.4</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_109">
+      <g>
+       <use xlink:href="#mf7be9ca8f5" x="36.207383" y="81.114027" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_110">
+      <g>
+       <use xlink:href="#m2ea65b0d84" x="864.323517" y="81.114027" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_55">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="33.307383" y="83.698524" transform="rotate(-0 33.307383 83.698524)">0.6</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_111">
+      <g>
+       <use xlink:href="#mf7be9ca8f5" x="36.207383" y="44.825616" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_112">
+      <g>
+       <use xlink:href="#m2ea65b0d84" x="864.323517" y="44.825616" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_56">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="33.307383" y="47.410113" transform="rotate(-0 33.307383 47.410113)">0.8</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_113">
+      <g>
+       <use xlink:href="#mf7be9ca8f5" x="36.207383" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="line2d_114">
+      <g>
+       <use xlink:href="#m2ea65b0d84" x="864.323517" y="8.537204" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_57">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="33.307383" y="11.121702" transform="rotate(-0 33.307383 11.121702)">1</text>
+     </g>
+    </g>
+   </g>
+   <g id="spikes">
+    <path d="M83.3 32.2h.01m4.49 146.1h.01m-2.21-62.7h.01m2.19-42.7h.01m-.11-21.7h.01m-2.91-4.6h.01m2.99-9.1h.01m-1.11-2.6h.01m4.39-24.5h.01m-2.21 .8h.01m1.39 1h.01m.79 2.6h.01m-1.41 3.7h.01m.29 2.8h.01m1.09 1.8h.01m.59 2.6h.01m-1.01 14.6h.01m.99 .8h.01m-2.81 2.9h.01m2.19 1.8h.01m-.01 1.8h.01m-.01 5.5h.01m-2.51 10.9h.01m1.39 4.4h.01m1.49 2.7h.01m.29 2.8h.01m-1.81 2.6h.01m1.09 4.7h.01m-1.91 4.4h.01m-.41 1.8h.01m1.19 1.1h.01m1.39 2.6h.01m-1.51 6.2h.01m.49 1.9h.01m-.01 8.3h.01m-1.61 9.9h.01m2.29 1h.01m-2.21 2.6h.01m2.49 1.8h.01m-2.61 1.8h.01m2.59 2.9h.01m-1.41 2.6h.01m-.41 1h.01m.29 2.7h.01m.49 6.2h.01m-.51 9.1h.01m.09 1.8h.01m.79 2.9h.01m.29 2.6h.01m-1.91 11.7h.01m1.09 1.1h.01m1.49 1.8h.01m-.31 2.9l-.4 .8m-1.1 4.4h.01m1.09 1h.01m1.49 9.1h.01m.69-2.9h.01m-1.21-2.6h.01m2.19-2.8h.01m-1.41-4.5h.01m2.29-10.1h.01m-3.11-.8h.01m.69-3.6h.01m1.19-4.5h.01m-1.51-13.7h.01m3.29-4.5h.01m-.61-4.6h.01m-1.91-1.9h.01m-1.21-7h.01m.39-3.7h.01m1.19-2.8h.01m-1.21-2.6h.01m.79-1.9h.01m-1.11-5.4h.01m-.01-5.1h.01m.79-2.2h.01m-.41-5.5h.01m2.59-.8h.01m-.91-2.8h.01m-1.71-2.6h.01m-.11-3.7h.01m2.59-8.3l-.4 .7m-2.1-9.8h.01m1.09-3.6h.01m2.09-8.1h.01m-.61-3.6h.01m-1.91-3.7h.01m1.89-7.3h.01m-2.71-9.1h.01m.69-4.4h.01m2.19-1.8h.01m-2.91-19h.01m5.09 9.1h.01m1.39 43.4h.01m-2.41 11h.01m1.39 2.6h.01m.39 40.8h.01m2.19 49h.01m.99-1.8h.01m.39-8.1h.01m2.49 15.4h.01m2.99 1.8h.01m8.39-127h.01m-.71 130.6h.01m3.99-23.4h.01m-2.61-62.7h.01m1.49-11.8h.01m3.69-44.5h.01m5.29 94.5h.01m-.61-10.1h.01m-1.11-10.9h.01m.99-5.5h.01m-2.11-51.6h.01m.79-17.2h.01m5.79-21h.01m-1.21 6.5h.01m1.09 1.8h.01m-2.61 .8h.01m1.19 1.8h.01m1.49 4.7h.01m-2.61 8.9h.01m2.09 6.4h.01m-.31 5.5h.01m-.71 7.3h.01m-.01 1.8h.01m2.19 3.6h.01m-.81 .8h.01m-1.41 4.8l.1 .8m1.4 1.6v.9m.3 1.9h.01m-1.11 .9v.8m-.7 7.4h.01m.69 1.8h.01m-1.81 2.8h.01m2.59 1.8h.01m-2.61 .8h.01m2.49 1.1h.01m.09 1.8h.01m-2.71 1.8h.01m1.59 3.6h.01m1.39 15.4h.01m-1.71 .8h.01m.29 2.1v.9m-1.6 9h.01m.09 11.7h.01m2.19 10.2l.4 .8m-1.4 .7h.01m1.69 3.7h.01m-1.51 2.1l-.3 .8m0 4.3h.01m-1.11 3.7h.01m2.49 6.2h.01m-1.41 4.7l.3 .9m1.2 14.5h.01m-2.51 1h.01m6.49-31.8h.01m-1.11-22.8h.01m-1.41-30h.01m-.11-7.2h.01m.39-4.5h.01m1.69-1.8h.01m-.61-11.7h.01m1.69-25.6h.01m-.01-.9h.01m-.01-15.4h.01m-.31-24.5h.01m4.69 32.8h.01m-.01 21.6h.01m-1.71 6.5h.01m-1.51 .8h.01m1.49 9.1h.01m-.51 1.8h.01m-1.41 3.7h.01m1.09 9.9h.01m.69 19.2h.01m-.61 2.6h.01m-1.21 3.6h.01m3.29 40.9h.01m-1.41 .8h.01m-.01 3.7h.01m2.49 16.3h.01m2.19-1.8h.01m-.31-3.6h.01m-.51-2.6h.01m1.59-18.2h.01m-3.11-.9h.01m.49-9.8l-.4 .8m0-8.3h.01m-.31-9.2h.01m2.79-1.8h.01m-2.11-5.2h.01m.69-2.9h.01m-.71-3.6h.01m.69-3.6h.01m.79-8.1h.01m-.11-36.4h.01m-1.41-7.1h.01m1.39-1.8h.01m1.39-22.9h.01m-1.41-5.5h.01m-1.41-8h.01m-.01-4.5h.01m1.39-10.9h.01m2.29 4.4h.01m.29 25.5h.01m-.71 25.3h.01m.99 6.5h.01m-.41 18.2h.01m.39 45.3h.01m-1.01 5.4h.01m-.11 31.8h.01m19.39-163.4h.01m.29 20h.01m-1.31 6.3h.01m.59 41.8h.01m-1.11 29h.01m.79 6.4h.01m.39 1.8h.01m-.81 11.8h.01m.69 44.5h.01m4.39 15.3h.01m-3.31-2.6h.01m3.29-7.3h.01m-1.11-1h.01m.29-7.3h.01m-.71-5.4h.01m1.49-4.5h.01m-1.11-1.8h.01m-1.41-.8h.01m1.09-1h.01m.29-1h.01m1.09-2.7h.01m-2.21-.8h.01m2.29-1.8h.01m-.51-2.8h.01m-2.11-6.3h.01m.69-5.5l-.3 .8m-.4-6.2h.01m1.79-2.6h.01m-3.01-3.7h.01m1.49-4.6h.01m.39-1.9h.01m.39-1.8h.01m-.01-8.9h.01m-.01-1h.01m-.41-9.1h.01m-1.81-2.6l.3 .9m2.5-1.9h.01m-.61-2.6v.9m-1.8-2h.01m.29-1.8h.01m-.11-4.4h.01m1.49-16.4h.01m-.31-3.7h.01m-1.41-7.2h.01m-.41-12.8h.01m.59-6.2h.01m.79-1.1h.01m-1.51-.8h.01m2.89-9.9h.01m.49-4.6h.01m-.81-.8h.01m-2.51-5.5h.01m6.19-1.8h.01m.59 9.1h.01m-1.81 46.1h.01m-.01 2.8h.01m-.01 4.5h.01m-.21 23.6h.01m-.51 6.3h.01m2.59 29.1h.01m-2.21 9.1h.01m-.41 1.9h.01m-.31 3.6h.01m.79 15.4h.01m-.81 10.9h.01m-.11 16.4h.01m5.59-22.9h.01m1.79-8.9h.01m-3.31-99.9h.01m5.49 94.5h.01m6.29 28.9h.01m7.89 6.5h.01m-2.61-20.1h.01m2.59-8.1h.01m-.11-26.5h.01m-2.01-35.3h.01m.29-7.1h.01m1.79-31.8h.01m-.01-3.6h.01m-1.41-27.3h.01m-.41-3.7h.01m.29-9.1h.01m5.49 4.7h.01m-.71 6.2h.01m-1.91 26.7l.4 .7m1.1 10.9h.01m.09 3.4h.01m-.81 1.8h.01m1.09 8.3h.01m-1.11 1.9h.01m1.79 4.4h.01m-1.51 1.8h.01m-1.41 1.8h.01m2.99 1.1h.01m-1.61 2.6h.01m.09 1.8h.01m1.39 6.3h.01m-1.81 10l.3 .9m-.7 4.6h.01m-.31 3.7h.01m2.19 16.4l.3 .8m-.3 .8h.01m-.81 12.7h.01m-.71 12.8h.01m1.49 8.1h.01m-2.51 6.4h.01m2.79 2.7h.01m-1.41 7.2h.01m4.69 2.9h.01m-2.21-4.7h.01m1.49-.8h.01m-.81-1h.01m.09-2.6h.01m1.39-1.9h.01m.69-4.6h.01m-2.91-.8h.01m2.19-1.8h.01m-.11-2.9h.01m-1.81-4.4h.01m.49-5.4h.01m.59-.9h.01m.79-1h.01m-2.91-1.8h.01m.69-1.8h.01m1.49-6.3h.01m-.01-4.7h.01m-.71-1.8h.01m1.79-.8h.01m-.81-11.7h.01m-.41-1.8h.01m.79-4.7h.01m-.31-8.1h.01m-2.31-1h.01m2.19-7.3h.01m-.71-.8h.01m-.81-1.8h.01m-.01-6.3h.01m2.29-5.4h.01m-2.31-1h.01m1.99-2.7h.01m-.41-1.8h.01m-.41-2.8h.01m-.81-.8h.01m-1.01-4.7h.01m1.09-1.8h.01m1.39-1.9l.4 .8m-2.3-2.5h.01m2.59-2.7h.01m-3.21-1.8h.01m.69-.8h.01m1.79-2.8h.01m-1.81-2.7h.01m2.49-2.8h.01m-1.01-3.6h.01m.29-2.7h.01m-.71-1h.01m-.71-.8h.01m1.09-1.8h.01m-2.71-1h.01m2.19-.8h.01m.79-1h.01m-2.11-.8h.01m2.89-1.1h.01m-3.01-1.8h.01m1.09-.8h.01m-1.41-3.6h.01m-.11-3.7h.01m1.09-.8h.01m1.19-2.9v.8m-.4-2.5h.01m-1.11-6.3h.01m-.81-3.6h.01m3.29-4.7h.01m-3.31-.8h.01m.79-1h.01m3.99-.8h.01m-1.11 8.1h.01m.79 19h.01m-.81 23.7h.01m-.01 31.7h.01m1.39 14.6h.01m-1.01 28.1h.01m.99 15.3h.01m-.31 14.6h.01m-.81 9.1h.01m5.49-57.2h.01m-1.51-20h.01m4.39 68.9h.01m10.19-77.8h.01m2.59 76h.01m4.39-23.5h.01m2.59 22.7h.01m2.79-121.6h.01m-1.11-25.5h.01m4.49-1.8h.01m1.09 8.3h.01m-.01 3.7h.01m-.81 6.2h.01m-1.11 2.7h.01m1.09 7.2h.01m-.41 9.1h.01m-2.11 1.1h.01m2.89 .8h.01m.39 3.6h.01m-3.71 8.1h.01m3.69 3.6h.01m-.01 3.7h.01m-.51 2.8h.01m-2.11 .8h.01m2.59 2.9h.01m-1.21 4.4h.01m1.19 1h.01m-.71 .8h.01m.29 6.3h.01m.29 1h.01m-2.91 1h.01m1.79 .8h.01m-1.41 1.8h.01m2.59 2.7h.01m-1.21 1h.01m-.31 3.6h.01m-2.21 4.8l.1 .8m3.2 5.3l-.4 .8m.1 1.9h.01m-.41 8.3h.01m-2.91 2.6h.01m2.49 3.6h.01m-.71 .8h.01m2.09 2.9h.01m.09 8.1h.01m-.81 7.2h.01m-.41 2.9h.01m.09 4.4h.01m.39 1.8h.01m-.31 1.9h.01m-1.61 5.4h.01m2.49 2.7h.01m-1.11 6.4h.01m-.01 1.9h.01m-2.51 3.6h.01m2.89 2.6h.01m-.01 4.7h.01m4.39-2.9h.01m-1.81-7.2h.01m-1.51-3.7h.01m1.39-2.6h.01m-1.71-7.3h.01m1.49-8.1h.01m1.39-19.2h.01m-.01-3.6h.01m-1.51-5.5h.01m-.81-2.6h.01m3.09-2.7h.01m-3.71-1h.01m-.01-1h.01m1.09-2.6h.01m.29-6.2l.4 .8m-.4-7.1l.3 .9m1.2-3h.01m-2.21-3.6h.01m-.41-3.6h.01m1.79-7.1h.01m-2.11-1h.01m2.49-.9h.01m-1.51-1h.01m-.61-6.2h.01m1.69-3.7h.01m-1.71-2.8h.01m-.11-3.6h.01m.39-2.7h.01m2.89-1h.01m-3.61-3.4h.01m.59-9.1h.01m-.21-3.7h.01m.29-10.9h.01m2.89-6.5h.01m-1.11-4.4h.01m-1.81-11.7h.01m-.41-1.9h.01m1.89-3.6h.01m-.41-1.8h.01m-1.41-1h.01m6.89 62.7h.01m-2.51 87.1h.01m5.69-16.3h.01m-1.81-1.9h.01m1.19-49.9h.01m5.49-72.6h.01m-2.91 13.7h.01m.89 151.5h.01m3.29-156.1h.01m13.19 99.9h.01m1.09 14.4h.01m1.79-76.3h.01m.39-52.6h.01m6.59 43.7h.01m-1.91 82.5h.01m-1.81 16.4h.01m.29 9.9h.01m6.69 6.3h.01m.69-20.8h.01m-3.71-4.5h.01m-.11-20.8h.01m2.99-8.3h.01m-.31-25.3h.01m1.09-4.7h.01m-.01-9.1h.01m-.31-9.9h.01m-1.21-7.3h.01m-.81-19h.01m-1.41-3.6h.01m5.09-29.9h.01m.39 2.6h.01m.99 6.5h.01m-1.11 5.4h.01m.49 1.8h.01m1.79 8.1h.01m-2.21 1h.01m-1.11 3.5h.01m.69 8.3h.01m-.31 6.2h.01m1.39 2.9h.01m-1.41 2.6h.01m1.69 6.5h.01m-.01 1.6h.01m-2.51 8.2v.9m3.6 1.8h.01m-.41 2.9h.01m-3.21 1.8h.01m1.79 1.8h.01m-.61 .8h.01m1.09 1.8h.01m-.81 2.9h.01m.79 2.6h.01m-.81 1.8h.01m1.89 6.3h.01m-.51 5.4h.01m-.71 1.8h.01m.79 1.1h.01m-1.61 7.3h.01m1.99 13.5h.01m-3.31 4.4h.01m3.19 1.1h.01m-1.41 .8h.01m.29 1.8h.01m-.71 15.6h.01m-.31 2.6h.01m-.51 1.8h.01m-.61 3.7h.01m2.89 6.2h.01m-.81 1.8h.01m.69 1.9h.01m-2.91 1h.01m1.09 4.4h.01m2.19 1h.01m-.11 3.7h.01m.09 1.8h.01m-1.91 .8h.01m.39 4.7h.01m1.09 .8h.01m-1.81 1h.01m6.59-2.9h.01m-1.51-8h.01m-1.41-5.5h.01m1.09-5.5h.01m-.71-9.9h.01m-.41-3.6h.01m-.01-34.6h.01m.29-17.2h.01m-.31-8.1h.01m-.81-3.6h.01m1.59-12.8h.01m-.91-10.9h.01m2.99-1.8h.01m-2.91-6.3h.01m1.09-7.3h.01m-1.11-1.8h.01m2.19-1.8h.01m-1.51-11.9h.01m2.99 126.2h.01m1.79 21.8h.01m8.69-110.8h.01m-2.51 24.5h.01m.69 6.4h.01m6.59 11.8h.01m2.89 43.6h.01m3.99 25.3h.01m-2.61-51.8h.01m2.59-5.2h.01m-.71-61.9h.01m1.79-5.3h.01m-1.91-6.4h.01m1.89-21.7h.01m-.01-4.6h.01m2.59 9.9h.01m1.39 4.6h.01m-2.91 .8h.01m2.59 7.3h.01m-2.71 7.3h.01m.69 14.6h.01m-.21 2.6h.01m1.39 1h.01m-2.21 10.9h.01m2.29 6.3h.01m.99 29.9h.01m-3.31 16.4h.01m.39 4.5h.01m1.39 5.4h.01m1.49 8.3h.01m-2.11 .8h.01m.69 27.3h.01m2.49-9.1h.01m2.99-3.6h.01m-.91-4.7h.01m-.31-1.8h.01m.29-1.8h.01m.89-4.4h.01m-.91-4.5h.01m-2.91-1h.01m2.59-.8h.01m.39-2.8h.01m-.41-5.5h.01m-1.41-2.6h.01m.69-4.7h.01m.69-3.6h.01m-1.51-5.5h.01m2.69-.8h.01m-2.61-2.6h.01m2.09-6.5h.01m-2.11-.8h.01m.59-6.5h.01m-1.71-2.2h.01m1.09-2.2h.01m-.11-1.8h.01m2.69-1.1h.01m-2.21-5.4h.01m1.29-3.4v.9m.1-2.8h.01m-1.11-2.8h.01m-.81-3.7h.01m.79-1.8h.01m-.01-3.6h.01m.69-2.6h.01m.29-1.9h.01m-2.81-10.1h.01m.59-6.3h.01m-.71-6.2h.01m.39-2.9h.01m2.89-18.2h.01m-3.31-7h.01m2.29-10.3v.9m.3-3.4h.01m1.49-1.8h.01m-.01 17.2h.01m-.01 3.6h.01m.39 6.3h.01m-.41 1.8h.01m1.39 10.1h.01m-1.51 1.9h.01m2.29 .8h.01m-.81 10.1h.01m-.81 1.6h.01m-.61 2.8h.01m3.19 2.7h.01m-1.41 3.6h.01m-1.01 13.7l-.4 .9m2.1 1h.01m.39 1.8h.01m-1.11 14.4h.01m-1.81 6.4h.01m.99 .8h.01m-1.01 1h.01m.29 2.7h.01m2.19 14.5h.01m-2.51 9.1h.01m1.39 .8h.01m2.19 8.3h.01m-3.21 2.7h.01m1.79 3.6h.01m-1.11 5.5h.01m1.09 1.8h.01m-1.91 1.8h.01m.79 4.5h.01m-.11 5.4h.01m1.09 5.5h.01m-1.71 2.8h.01m-.41 2.6h.01m1.39 1.9h.01m-1.51 1h.01m4.89-96.3h.01m-.81-45.3h.01m1.19-23.7h.01m5.99 91.6h.01m-2.51 36.5h.01m3.79-111.7h.01m-.11-29.1h.01m15.99 91.6h.01m9.49 80.9h.01m.79-1h.01m.69-.8h.01m-.01-3.7h.01m-.01-1.8h.01m-1.21-1h.01m1.19-2.6l-.4 .9m.4-3.7h.01m-1.01-3.7h.01m-.11-1.8h.01m1.09-18h.01m-1.81-5.5h.01m1.79-1h.01m-1.11-3.6h.01m-2.51-.8h.01m2.49-1h.01m1.09-1.8h.01m-.41-4.5h.01m-1.41-.8h.01m1.79-1.8h.01m-1.41-1h.01m-.01-3.7h.01m-.01-5.5h.01m-.01-11.7h.01m.19-4.6h.01m.09-4.5h.01m-1.51-7.3h.01m2.59-1.5l-.3 .8m.3-6.6h.01m.09-3.6h.01m-.11-1.8h.01m-.01-1.8h.01m-.71-1.9h.01m-1.81-1.8h.01m1.09-2.6h.01m-.81-5.5h.01m-.81-.8h.01m1.19-2.8h.01m1.79-3.3l.1 .8m-.1-5.6h.01m-1.11-4.6h.01m.29-6.3h.01m-1.51-1.8h.01m1.99-1h.01m.29-8.1h.01m-1.41-5.5h.01m-.41-2.6h.01m1.79-2.9h.01m1.79-7.2h.01m-1.41 5.4h.01m1.39 10.2h.01m-1.51 4.4h.01m3.09 2.8h.01m-2.01 .8h.01m-.31 4.5h.01m1.39 12.7h.01m-1.11 2.9h.01m-1.01 9h.01m.69 3.7h.01m-.31 1.6h.01m2.89 6.5h.01m-2.61 5.5h.01m1.39 1.8h.01m-.71 3.6h.01m-.71 3.6h.01m2.59 .9h.01m-2.31 1h.01m-.71 .7l-.3 .8m.8 1.1h.01m-.11 4.4h.01m2.59 4.7h.01m-1.21 4.4h.01m1.19 1.1h.01m-1.11 3.6h.01m-2.31 2.6h.01m.79 1h.01m2.79 17.2h.01m-2.11 1.9h.01m1.19 .8h.01m-1.51 3.6h.01m1.09 1h.01m-2.31 2.6h.01m.79 1.1h.01m1.89 2.6h.01m-.11 1.7l-.3 .8m-2.2 2.9h.01m3.59 1.1h.01m-.01 2.6h.01m-2.91 3.3h.01m1.79 2.1h.01m-1.41 1.9h.01m-1.21 .8h.01m.49 2.8h.01m.29 5.5h.01m1.39 9.9h.01m-1.81 3.6h.01m-.31 2.2l-.4 .7m1.5 .7l-.4 .8m4-35.1h.01m-.01-35.4h.01m-.81-50h.01m.79-4.4h.01m.39-46.3h.01m16.79 42.6h.01m5.19 4.5h.01m2.79 39.8h.01m-1.91-27.1h.01m2.59-23.6h.01m-1.71-43.5h.01m6.79-1.8h.01m-.01 42.6h.01m-3.61 21.7h.01m2.59 21h.01m.99 1.8h.01m-1.11 8.1h.01m-.31 8.1h.01m1.09 29.1h.01m-.81 22.7h.01m.69 2.6h.01m-.71 13.8h.01m1.09 3.6h.01m1.09 5.5h.01m1.79-2.9h.01m1.19-1.8h.01m-.41-1.8h.01m-2.61-7.3h.01m2.89-2.6h.01m-1.41-2.8h.01m-.31-10.8h.01m1.69-6.4h.01m-2.91-.8h.01m1.49-1.4h.01m1.49-1.5h.01m-.01-2.6h.01m-1.11-2.8h.01m-.01-1h.01m-.11-2.7h.01m-2.21-4.4h.01m2.29-1h.01m-2.61-.8h.01m2.19-1.1h.01m1.39-4.4h.01m-2.61-2.6l-.2 .9m-.5-2.8h.01m.39-1.8h.01m-.71-4.6h.01m.39-3.5h.01m-.01-.9h.01m1.49-3.7h.01m1.69-1.8h.01m-1.51-4.7h.01m-1.81-2.6h.01m.79-1h.01m-.31-2.7h.01m.99-3.6h.01m1.39-.8h.01m.39-1.8h.01m-1.41-2.9h.01m-1.81-4.4h.01m2.09-4.7h.01m-.71-2.6h.01m1.89-1h.01m-1.11-.8h.01m-2.71-4.7h.01m1.89-2.6h.01m.69-1h.01m-.01-1.6h.01m-2.61-2.9h.01m.09-2.6h.01m.09-1.8h.01m1.69-4.7h.01m-1.01-4.4h.01m2.79-3.6h.01m-3.61-1.1h.01m.29-1.5l-.3 .7m2.2-1.8h.01m1.49-1.8h.01m-2.51-8.1h.01m.89-1h.01m-1.71-2.6h.01m2.09-2.9h.01m1.09-5.4h.01m-2.91-4.5h.01m1.19-1h.01m-.81-1.9l-.4 .8m.4-2.5h.01m5.39 13.7h.01m.79 2.6h.01m-.01 1.9h.01m-2.21 4.6h.01m-.31 1.6h.01m-.81 1.9h.01m-.01 1.8h.01m-.01 16.4h.01m3.19 6.4h.01m-2.11 8.1h.01m-.31 3.7h.01m.39 7.3h.01m1.69 4.4h.01m-1.81 1.8h.01m-.01 2.9h.01m1.09 2.6h.01m1.39 13.5h.01m-2.61 5.5h.01m-.21 29.1h.01m1.79 16.4l.4 .9m-1.5 .9h.01m-.31 4.5h.01m-.41 6.2h.01m-.01 2.9h.01m2.39 2.6h.01m-3.21 7.3h.01m3.89-22.7h.01m19.79-35.4h.01m-2.11-20.8h.01m9.49 74.4h.01m-3.01-34.5h.01m2.99-35.5h.01m-.41-21.6h.01m-1.91-27.3h.01m6.99-44.5h.01m-.71 10.9h.01m-.01 5.5h.01m.29 4.4h.01m.39 9.1h.01m-1.11 6.5h.01m.59 17.2h.01m-.21 5.5h.01m.69 .7h.01m-1.41 6.6h.01m-1.21 2.6h.01m2.19 5.4h.01m-.01 1.9h.01m-.41 2.8h.01m-1.11 7.1h.01m.69 8.3h.01m-.21 7.3h.01m1.39 .8h.01m-3.31 2.8h.01m2.19 3.6h.01m-.31 3.7h.01m.29 6.2h.01m.99 1.9h.01m-2.21 .8h.01m1.09 1h.01m.39 2.6h.01m-.31 15.6h.01m-2.21 3.6h.01m.69 8.9h.01m1.79 21.9h.01m2.19 1h.01m.49-1.8h.01m-.51-2.9h.01m-1.11-.8h.01m1.09-1h.01m-.71-4.5l-.3 .8m1-3.6h.01m.69-2.6h.01m-.41-3l-.2 .9m1.1-2.6h.01m-1.91-5.4h.01m2.59-.8h.01m-2.21-3.7l.3 .8m.7-2.6h.01m-.71-1.8h.01m.69-1.8h.01m1.49-.8h.01m-2.11-2.9h.01m-1.51-1.8h.01m-.01-6.3h.01m2.89-1h.01m.69-.8h.01m-1.31-1.8h.01m.89-1h.01m-1.81-5.5h.01m-1.11-2.6h.01m1.79-1.5h.01m-1.01-7.6h.01m-.81-1.8h.01m.09-4.5h.01m-.41-3.6h.01m2.09-3.6h.01m-1.71-.9h.01m-.01-1h.01m.99-6.2h.01m1.19-1.1h.01m-.51-1h.01m-.71-1.6h.01m-.71-1h.01m1.09-1.8h.01m-1.11-.8h.01m.79-1.8h.01m-1.11-1.9h.01m.99-1h.01m-.71-2.6h.01m.79-1.8h.01m-1.51-3.7h.01m.99-1h.01m1.89-1.8h.01m-2.91-3.4h.01m.29-2.1h.01m1.99-.8h.01m.19-2.8h.01m-2.21-1.6h.01m1.19-6.5h.01m-.11-3.6h.01m-.71-6.3h.01m-.01-1.8h.01m.69-1h.01m.39-4.5h.01m-1.41-1.8h.01m2.79-1h.01m-2.81-.8h.01m.99-1h.01m1.19-2.7h.01m-1.91-.8h.01m2.49-4.6h.01m-3.21-6.3h.01m1.09-2.8h.01m.29-3.7h.01m2.19-3.6h.01m-2.51-.8h.01m2.89 9.1h.01m2.89 22.6h.01m-1.41 20.9h.01m.29 1.8h.01m-1.11 14.6h.01m2.19 30.7h.01m-.31 36.4h.01m-1.51 9.1h.01m-.01 9.9h.01m-1.11 .8h.01m.39 13.8h.01m3.69-16.4h.01m1.29-12.8h.01m1.59-8h.01m-1.51-8.3h.01m-1.21-8.9h.01m2.59-113.5h.01m1.49 12.7h.01m10.19 42.5h.01m3.59-33.6h.01m7.99 147.1h.01m-1.81-77.1h.01m-.01-25.5h.01m.39-21.6h.01m3.39-26.3h.01m6.19 60.7h.01m2.49-39.9h.01m2.19 114.3h.01m2.49 23.7h.01m1.89-10.2h.01m-.41-38h.01m.69-18.2h.01m-2.21-15.3h.01m1.89-24.5h.01m-.41-21.9h.01m-.01-7.2h.01m4.79-21.7h.01m-.41 12.6h.01m-.01 8.3h.01m-.51 5.4h.01m.09 1.8h.01m-.41 13.6h.01m.79 .8h.01m-1.11 1h.01m-1.51 10.9h.01m1.09 5.5h.01m1.09 1.8h.01m-.71 4.8l-.4 .7m-.1 24.5h.01m.49 8.8h.01m.79 5.5h.01m-.51 1h.01m1.09 3.7h.01m-.01 6.2h.01m-.41 3.6l.1 .8m-.1 4.7h.01m-.01 3.7h.01m-.71 15.3h.01m-.01 4.7h.01m5.19 1.8h.01m-.11-2.8h.01m-3.21-2.6h.01m-.01-1.9h.01m.39-2.8h.01m.69-.8h.01m-1.51-1h.01m2.09-1.6h.01m-.31-1h.01m.39-1.1h.01m-1.61-.8h.01m1.59-1h.01m.99-.8h.01m-1.41-2.8h.01m-1.11-3.5h.01m2.59-1.8h.01m-3.31-1.8h.01m1.49-1h.01m-1.51-2.6h.01m2.59-1h.01m-.81-4.5h.01m-.81-1h.01m-.61-1.8h.01m.39-1.9h.01m1.79-5.4h.01m-.11-1.8h.01m-1.71-2.7h.01m-.41-3.7v.8m1.5-1.5h.01m-1.51-1.1h.01m-.51-1.9l.1 .9m.4-4.5v.8m1.8-1.5h.01m.69-1h.01m-2.51-.8h.01m2.19-2.9h.01m-1.51-1.8h.01m-.81-4.4h.01m1.09-5.6l-.3 .9m-.7-8.2v.9m0-4.4h.01m1.79-2.6h.01m-1.81-1.8l.3 .9m-.4-3.8h.01m2.29-4.4h.01m-1.51-1.9h.01m-.01-6.4h.01m-.71-.8h.01m.99-1.9h.01m-1.41-1h.01m1.09-1.5l-.1 .8m.4-2.7l-.3 .9m1.5-2.7h.01m-1.81-6.5h.01m-.41-8.1h.01m.39-5.4h.01m1.79-1.9h.01m.99-1h.01m-2.51-4.4h.01m-1.11-1h.01m2.19-2.7h.01m.39-4.4h.01m-1.81-1h.01m-.41-1.9h.01m.99-8h.01m-.71-5.5l-.3 .9m1.8-2.7h.01m3.19 27.1h.01m-.41 2.8h.01m1.49 69.8h.01m-2.41 53.6h.01m1.29 7.3h.01m3.29-64.6h.01m18.29 8.3h.01m6.19 68h.01m1.49-2.6h.01m-.01-98.1h.01m1.09-31.8h.01m1.39 52.6h.01m-.71 43.7h.01m2.89 28.9h.01m-3.31 1h.01m4.69 4.5h.01m2.59-15.4h.01m-.31-3.6h.01m.39-36.2h.01m.29-31.8h.01m-2.31-16.4h.01m2.19-2.8h.01m-2.41-31.8h.01m-.41-7.2h.01m6.59-22.7h.01m-2.01 3.6h.01m-1.01 2.9h.01m1.89 3.7v.8m-.1 9h.01m.39 11.8h.01m-1.41 2.8h.01m1.89 4.4h.01m-.21 1.9h.01m-.61 1h.01m-.81 9.1h.01m-1.51 1.6h.01m1.49 5.5h.01m-.41 5.4h.01m2.59 2.8h.01m-1.11 12.8h.01m-1.41 .8h.01m-.01 4.5h.01m.99 6.4h.01m.39 14.6h.01m-2.61 .8h.01m2.69 16.4h.01m-.11 19h.01m-.01 2.9l-.3 .8m-1.2 5.4h.01m-.01 6.3h.01m1.59 1h.01m-1.51 8.1h.01m.29 4.6h.01m1.09 3h.01m-.41 1.4h.01m1.79 1.1h.01m1.99-26.5h.01m-2.01-10.7h.01m.49-2.9h.01m.59-8.1h.01m-1.41-8.3h.01m2.59-19.8h.01m-.11-3.6h.01m-2.41-1.8h.01m2.49-2.9h.01m-.01-5.4h.01m-.01-4.5h.01m.69-6.3h.01m-1.51-1.8h.01m1.09-12.7h.01m-1.41-1h.01m.29-3.7h.01m-1.71-.8h.01m2.39-15.3h.01m-1.01-21.1h.01m-1.21-13.5h.01m2.69-4.5h.01m-2.91-3.6h.01m6.49 .8h.01m-1.41 1h.01m.99 17.2h.01m-2.21 10.9h.01m1.89 37.2h.01m-1.81 11.7h.01m-.11 26.4h.01m-.01 12.7h.01m2.89 27.3h.01m-.31 10.7h.01m3.99 12h.01m-1.51-35.4h.01m2.49-3.7h.01m-3.21-21.8h.01m1.49-53.4v.9m-1.4-20.9h.01m3.19-6.5h.01m-3.61-3.6h.01m1.09-6.3h.01m2.49-18.2h.01m2.59 8.3h.01m.69 36.2h.01m-2.31 3.6h.01m1.59 1h.01m-.41 2.6h.01m1.09 4.8v.8m-.7 .7h.01m-1.51 1h.01m2.49 6.3h.01m-2.81 1h.01m1.39 2.6h.01m-1.01 1.8h.01m.89 5.5h.01m-.31 1.8h.01m1.09 2.9h.01m-.81 2.6h.01m1.89 3.6h.01m-2.81 9.9h.01m.99 3.7h.01m-1.01 15.6h.01m2.09 10.7h.01m-2.21 5.5h.01m1.69 1.8h.01m-1.71 1.8h.01m2.19 8.3h.01m-2.11 2.6h.01m.19 10.9h.01m2.19 5.5h.01m-1.51 7.3h.01m5.59-16.5v.9m-1.8-2.6h.01m1.29-15.4h.01m-1.31-28.1h.01m1.79-10.9h.01m-3.31-26.3h.01m3.69-1.8h.01m-.11-6.5h.01m-2.31-.8h.01m-1.01-36.4h.01m4.39 52.7h.01m7.69-56.2h.01m-.41 50.8h.01m.79 30.7h.01m5.39 52.6h.01m12.69-121.5h.01m.49 2.8h.01m-.41 12.7h.01m3.99 109.7h.01m-1.51-8.1h.01m2.19-2.7h.01m-1.41-1h.01m1.49-10.9h.01m-1.21-9.9h.01m-.21-20h.01m1.29-14.6h.01m.09-17.2h.01m1.69-76.2h.01m-.71 1h.01m2.89 .8h.01m-1.81 3.6h.01m.39 2.9h.01m.69 .8h.01m-.71 2.8h.01m-.01 1.8h.01m-.81 2.7h.01m.79 1.6v.9m-1.1 4.7h.01m1.89 .8h.01m-3.01 2.9h.01m1.49 .8h.01m2.09 3.6h.01m-1.71 1.8h.01m.59 3.7h.01m.39 3.6h.01m.69 1h.01m.09 2.7h.01m-.01 3.6h.01m-1.81 3.6h.01m1.79 2.9h.01m-1.51 1.6h.01m-.01 1.8h.01m1.09 1h.01m-3.31 1.8h.01m3.69 1.1l.3 .9m-1.4 .7h.01m1.09 1h.01m-.81 2.2l.4 .7m-1.9 2.6h.01m1.49 2.6h.01m.69 1h.01m-1.11 4.4h.01m-1.01 1.1h.01m1.09 1.1h.01m.29 1.5l-.4 .8m-.2 1h.01m1.39 1h.01m-3.71 1.8h.01m2.29 3.3l-.1 .8m-.8 2.2h.01m1.59 1.8h.01m-.81 .8h.01m-.81 3.7h.01m2.19 1.8h.01m-1.41 1h.01m.99 1.8h.01m-1.01 .8h.01m-1.11 1l.4 .8m-1.2 3.7h.01m1.89 3.6h.01m.99 2.9h.01m-1.01 .8h.01m-2.11 1h.01m2.89 1.6h.01m-1.61 1h.01m.09 1.8h.01m.69 .8h.01m-.31 1.1h.01m.29 1h.01m1.49 .8h.01m-1.91 2.6h.01m1.79 1.4h.01m-2.21 1.4h.01m.09 1.9h.01m-.01 2.6h.01m2.09 5.5h.01m-1.11 1h.01m-1.41 .8h.01m1.09 1.8h.01m1.09 1h.01m-1.11 .8h.01m.39 7.3h.01m-1.51 1.8h.01m2.09 .8h.01m-1.01 1h.01m.99 .8h.01m-.91 4.7h.01m-2.41 .8h.01m3.29 1h.01m-.61 .8h.01m-.41 1h.01m.29 5.5h.01m-1.41 .8h.01m1.09 3.6h.01m-.71 1.1h.01m1.09 1.8h.01m1.79-5.5h.01m.29-5.5h.01m-.01-7.2h.01m.39-40.1h.01m-.71-23.4h.01m-.11-22.7h.01m1.59-5.4h.01m-1.11-4.7h.01m-.11-34.4h.01m4.29 12.8h.01m8.19 24.4h.01m6.09 69h.01m-1.01-49.1h.01m2.79-35.2h.01m5.09 122.3h.01m.09-98.9h.01m2.99 74.4h.01m5.69 26.3h.01m.49-2.6h.01m-.41-2.8h.01m-.41-8.1h.01m.99-9.1h.01m-.21-16.4h.01m-.11-3.6h.01m-2.21-7.3h.01m1.89-5.5h.01m.69-1.8h.01m-.31-13.6h.01m-.01-1.8h.01m.19-4.4h.01m-.01-12.8h.01m-2.51-6.2h.01m2.29-1.8v.9m.3-19.3v.9m-4-6.2h.01m3.99-4.7l-.4 .7m.1-2.3h.01m-.41-3.9l.3 .7m.3-18.6h.01m-.31-4.5h.01m.29-1h.01m-.91-9.9h.01m-.11-7.3h.01m1.79-5.4h.01m.39 2.9v.8m1.1 .7h.01m-1.51 4v.8m1.8 .7h.01m-1.71 6.4h.01m2.39 2.7h.01m-1.01 1.8h.01m-1.51 1h.01m1.19 2.6h.01m-.51 1.9h.01m.79 .8h.01m-1.51 1.8h.01m-.01 2.7v.9m.7 1.8h.01m.49 1.7v.9m0 2.1h.01m-1.21 1.8h.01m1.39 2.6h.01m-1.01 1.9h.01m-.11 3.6h.01m-.01 1.8h.01m.89 4.7h.01m-.81 1.6h.01m.99 1h.01m-1.71 1.8h.01m.69 .8h.01m-.11 2.9h.01m2.29 .8h.01m-2.61 1.8h.01m1.19 1.8h.01m-.11 1.1l-.4 .8m1.9 1h.01m-2.51 1.8h.01m2.39 4.4h.01m-2.21 1h.01m.79 .8h.01m1.39 2.9h.01m-1.41 1.8h.01m-1.11 .7v.8m.1 1.1h.01m.29 2.7h.01m-.51 1.8h.01m.79 1h.01m.79 1.8h.01m-1.01 1.8h.01m.59 .8h.01m-1.11 1.9h.01m1.79 1h.01m-.71 2.6h.01m-1.11 1h.01m.79 .8h.01m-.81 1h.01m.39 1.8h.01m.69 1.9h.01m-1.81 .8h.01m.79 .8h.01m.19 1h.01m-.91 1.8h.01m.89 1h.01m-.21 2.6l.2 .8m-.6 1.1h.01m1.49 1h.01m-1.21 .8h.01m1.79 4.4h.01m-1.81 1.9h.01m2.49 1h.01m-2.51 2.6h.01m1.19 1.8h.01m-.51 1.1h.01m.79 .8h.01m-1.41 1h.01m-.01 1.8h.01m.99 3.6h.01m-1.11 .8h.01m-.71 1h.01m1.49 .9h.01m-.51 1l-.3 .8m1.1 2.8l.1 .9m-1.2 .9h.01m.09 1.8h.01m.99 .8h.01m-1.11 1.9h.01m-.01 2.6h.01m2.29 1h.01m-2.31 .8h.01m1.09 1h.01m-1.11 1.9h.01m.09 .9h.01m-.51 .9h.01m-.01 1h.01m.69 1.6h.01m-.21 1.8h.01m-.41 2.9h.01m.39 1.8h.01m.59 2.6h.01m-.71 2.8h.01m-.31 2.7h.01m.99 1h.01m2.99-98.1h.01m7.19 62.7h.01m13.09-7.3h.01m11.89-85.4h.01m6.79-51.7h.01m-.01 28.1h.01m-.31 98.9h.01m4.69 47.3h.01m-2.91-24.5h.01m1.79-1.8h.01m-1.11-35.4h.01m1.89-1.8h.01m-.51-11.9h.01m.39-11.8h.01m-.71-.8h.01m1.19-6.4h.01m-.91-8.1h.01m-1.71-12.8h.01m.69-52.6h.01m4.69-7.2h.01m-.01 1.7l-.3 .8m.4 6.6h.01m-2.61 .8h.01m2.49 9.1h.01m.69 5.4h.01m-2.11 .8h.01m.99 1.9h.01m1.09 1h.01m-1.31 8.1h.01m-1.11 2.8h.01m2.79 1.8h.01m-2.21 3.6h.01m-1.41 4.5h.01m1.39 1h.01m.39 7.1h.01m-.01 6.5h.01m.69 .8h.01m-1.81 1.8h.01m.99 4.7h.01m.19 3.6h.01m1.39 3.6h.01m-.01 3.7h.01m-2.21 1.8h.01m2.09 8.9h.01m-.41 2.8h.01m-1.41 .8h.01m1.09 5.5h.01m.29 1.8h.01m.79 1.8h.01m-1.41 1h.01m.19 2.7h.01m.09 3.6h.01m.79 2.8h.01m-1.11 .9h.01m-2.21 1h.01m1.39 .8h.01m.69 1.8h.01m-.61 .8h.01m1.79 3.6h.01m-1.21 1.9h.01m.29 6.4h.01m-1.01 1.9l-.4 .8m-.7 3.6h.01m3.29 3.6h.01m-2.21 .8l.4 .7m1.1 2.2h.01m-.01 8.1h.01m-1.21 1h.01m-1.01 .8h.01m2.09 1h.01m-.01 1.8h.01m-1.41 3.7h.01m1.49 1.8h.01m-2.91 5.5h.01m2.19 .8h.01m-.51 1.8h.01m-1.81 1h.01m2.19 .8h.01m.79 5.3v.9m1.1-58.8h.01m-.01-11.7h.01m-.01-25.5h.01m1.19-4.4h.01m-.81-11h.01m-.01-1.8h.01m2.39-11.7h.01m28.29-19.2h.01m-.81 113.4h.01m4.39-64.3h.01m-.41-55.4h.01m5.49 9.1h.01m-1.11 5.5h.01m-.41 32.5h.01m-2.21 33.6h.01m.39 11.7h.01m2.09 6.5h.01m-.01 1.8h.01m1.09 7.3h.01m4.09 37.2h.01m-.01-5.4h.01m-3.01-5.5h.01m2.99-7.3h.01m-.71-1.8h.01m.69-9.1h.01m-2.61-5.5h.01m1.19-3.6h.01m1.39-4.5h.01m-.41-5.5l-.3 .9m-.4-3.4v.9m.7-12.6l-.4 .8m-.3-12h.01m-2.21-10.9h.01m2.79-1.8h.01m.49-5.3h.01m-.01-10.1h.01m-2.61-1.8h.01m1.89-.8h.01m-2.31-1.9h.01m1.59-7.2h.01m-.41-16.4h.01m-.01-11.8h.01m1.79-1.8h.01m-2.61-4.6h.01m-1.41-11.8h.01m1.39-.8h.01m1.89-4.6h.01m2.59-1.9h.01m1.69 11h.01m-1.41 4.4h.01m.69 1h.01m.39 4.5h.01m.59 13.7h.01m-2.81 3.7h.01m.99 10.7h.01m-1.41 2.8h.01m2.49 3.7h.01m-2.91 1.8h.01m1.89 .8h.01m-1.51 1h.01m2.89 .8h.01m-.01 10.1h.01m-.01 3.7h.01m-1.71 .8h.01m1.69 21.8h.01m-2.81 1.9h.01m1.79 3.6h.01m.99 9.9h.01m-.41 6.3h.01m.39 3.6h.01m-2.61 1.8h.01m-.01 10.9h.01m1.19 1.9h.01m-.41 6.4h.01m1.79 2.7h.01m-.41 1h.01m-2.81 3.6h.01m.29 3.5h.01m2.19 1h.01m-.41 4.4h.01m-1.41 7.3h.01m-.41 3.6h.01m4.09 2.9h.01m-.51-32.8h.01m1.39-51.8h.01m.19-6.2h.01m-1.11-5.5h.01m3.19-4.5h.01m-3.61-24.4h.01m2.79-6.5h.01m-3.21-44.5h.01m2.19-2.6h.01m2.59 143.4h.01m9.79-118.1h.01m-1.11 33.5h.01m1.09 37.3h.01m1.49 19.2h.01m3.59-99.9h.01m7.29 126.2h.01m-1.01-9.1h.01m.59-35.4h.01m-2.51-18.2h.01m3.59-16.4h.01m-1.11-43.5h.01m2.99-11.7h.01m1.39 19.8h.01m.29 37.2h.01m-.31 4.6h.01m-1.11 1.9h.01m.49 6.2h.01m-1.21 13.6h.01m2.19 12.7h.01m-1.21 14.6h.01m.89 48.1h.01m-1.91 3.6l-.3 .9m4.6 3.6h.01m1.99-1.8h.01m-2.71-5.5h.01m2.19-6.2h.01m.39-5.6v.9m-1-2.6h.01m1.29-6.5h.01m-.71-1.9l.4 .8m-3.4-1.5h.01m1.19-4.5h.01m2.19-3.6h.01m-.71-1h.01m-2.51-1.8h.01m3.09-2.7h.01m.39-1.8h.01m-.31-2.9h.01m-.41-1.1h.01m-.01-1.1h.01m-3.01-2.2h.01m1.59-4.4h.01m2.09-1.8h.01m-.71-2.9h.01m-1.51-2.6h.01m1.89-1.8h.01m-1.11-1h.01m-.71-6.3h.01m.69-1.8h.01m1.49-2.9h.01m-.41-1.8h.01m-2.61-5.4h.01m2.99-1.8h.01m-1.51-2.7h.01m1.19-1.8l-.5 .8m-1.4-2.6h.01m-.71-.8h.01m1.69-4.7h.01m-1.01-.8h.01m1.09-7.3h.01m.69-3.6h.01m-.81-1.8h.01m1.19-1h.01m-.81-3.7h.01m-2.51-1.8h.01m2.59-.8h.01m-3.01-.8h.01m2.19-2.8h.01m1.39-3.7h.01m-.71-.8h.01m-1.81-2.8h.01m2.59-.8h.01m-.41-1.1h.01m-.71-4.4h.01m.39-3.6h.01m.69-5.5h.01m-.01-2.8h.01m-.01-1.9h.01m-.01-6.2h.01m-.11-4.5h.01m-.71-1.8h.01m.69-2.8h.01m-2.11-8.1h.01m-1.51-1h.01m5.59 22.8h.01m-.41 4.5h.01m1.29 3.6h.01m-2.51 4.5h.01m.79 10.1h.01m-.81 13.5h.01m-.01 13.6h.01m1.49 1.8h.01m-1.51 2.8h.01m.39 1.8h.01m-.41 3.7h.01m.79 3.6h.01m-.11 6.3h.01m1.79 1.8h.01m-2.41 6.3h.01m.69 4.6h.01m-.31 18h.01m2.49 5.5h.01m-1.61 21h.01m.79 5.3h.01m-1.91 3.6h.01m1.99 1.9h.01m-.71 2.8h.01m.19 5.5h.01m-1.01 3.6h.01m2.09 5.4h.01m.69 1.9h.01m1.49-2.9h.01m-.61-10.9h.01m2.09-86.1h.01m4.39-29h.01m7.99-40.8h.01m-1.41 70.8h.01m-.41 77h.01m5.39-150.7h.01m2.19 10.2h.01m6.89 157.7h.01m-.31-27.1h.01m-1.71-38.2h.01m-1.61-41.7h.01m6.19-62.7h.01m-.01 23v.8m-.4 11.6h.01m.09 12.8h.01m1.39 2.6h.01m-1.51 2.8h.01m1.49 8.1h.01m-1.01 3.6h.01m1.49 5.5h.01m-.51 1.8h.01m-1.91 28.1h.01m1.89 5.5h.01m-.31 4.7h.01m.39 1.8h.01m-.01 5.2h.01m-.91 1.9h.01m-1.01 7.2h.01m1.89 9.1h.01m-1.21 7.3h.01m-.31 1.9h.01m.59 2.6h.01m-.21 2.8h.01m.29 4.5h.01m-1.11 9.1h.01m1.79 7.2h.01m1.79 2.9h.01m-.31-5.5h.01m-.01-2.9l-.3 .8m1.8-10.6h.01m.29-2.9h.01m-2.11-4.4h.01m.29-7.3h.01m-.81-2.6h.01m2.19-1h.01m1.49-.8h.01m-1.51-6.5h.01m-.01-6.3h.01m-1.41-3.6h.01m2.19-7.3h.01m-.81-1.8h.01m-2.11-1.8h.01m3.29-1.9h.01m-1.21-4.4h.01m-1.01-1h.01m-.81-2.6h.01m1.39-1.1h.01m1.79-2.6h.01m-2.81-1h.01m2.79-2.6h.01m-2.51-1.1h.01m.79-.8h.01m-1.11-1h.01m.29-2.6h.01m.39-2.9l-.3 .8m-1.2-3.4h.01m.39-3.6h.01m.39-4.5h.01m-.01-1.8h.01m-.11-5.4h.01m2.59-1.9h.01m-2.51-3.6h.01m2.59-1h.01m-3.01-.8h.01m1.49-1.1h.01m.29-1.5h.01m-1.01-2.1h.01m-.41-1.8h.01m-.11-3.4h.01m.89-6.5h.01m1.39-3.7h.01m-.11-.9h.01m-1.31-3.5h.01m-.81-4.6h.01m-.31-4.5h.01m2.89-4.6h.01m-.41-3.5h.01m-2.21-2.8h.01m2.59-.8h.01m-2.31-4.7h.01m1.49-.8h.01m1.09-4.6h.01m-2.61-5.5h.01m2.19-1.8h.01m-3.31-.8h.01m.79-1h.01m4.79 8.3h.01m-1.41 15.3h.01m.19 28.1h.01m3.29 30h.01m-2.51 48.9h.01m-.81 2.9h.01m-.41 4.4h.01m.69 11.9h.01m1.19 2.7h.01m-1.81 10.9h.01m22.89-39h.01m3.29 12.7h.01m8.89-104.4h.01m-1.21 113.5h.01m5.49-70h.01m-.41-1.8h.01m-.31-6.3h.01m-2.91-17.2h.01m.59-6.4h.01m1.19-37.3h.01m2.99-6.2h.01m.59 3.6h.01m1.89 4.5h.01m-.51 5.4h.01m-1.81 6.5h.01m.39 3.4h.01m.39 11h.01m-1.11 1h.01m.69 4.4h.01m2.09 12.8h.01m-2.41 7.2h.01m1.39 3.7h.01m-1.11 .8h.01m1.39 13.8h.01m-.71 1.8h.01m.79 2.6h.01m.69 5.5h.01m-1.41 5.4h.01m-1.21 3.7h.01m1.79 4.4h.01m-.21 4.7h.01m.99 14.3h.01m-.41 1h.01m-2.11 2.7h.01m.99 1.8h.01m1.49 2.8h.01m-1.41 24.5h.01m-1.11 4.4h.01m1.09 19.3h.01m3.59-1.1h.01m-1.21-1.8h.01m.49-3.6h.01m.99-10.9h.01m.39-3.7h.01m-1.91-.8h.01m-.61-4.4h.01m.69-1.9h.01m1.49-1.8h.01m-1.91-2.8h.01m1.89-4.4l.3 .8m-1.9-7.3h.01m2.69-.8h.01m-2.91-7.3h.01m1.79-2.9h.01m-1.91-3.6h.01m.39-3.4h.01m1.39-7.3h.01m1.09-4.7h.01m-.01-3.6h.01m.09-3.7h.01m-2.21-1.8h.01m1.09-5.4h.01m.69-1.8h.01m-1.11-3.5h.01m-.81-1.8h.01m2.19-10.9h.01m-2.51-1.9h.01m1.09-2.8h.01m-.81-3.6h.01m-.31-1.8h.01m2.89-2.7h.01m-.61-2.8h.01m-2.31-4.5h.01m1.19-3.6h.01m.29-10.9h.01m-1.51-3.7h.01m-.11-5.4h.01m3.09-4.5h.01m-1.91-5.4h.01m-1.81-4.5h.01m.29-10.9h.01m2.99-3.6h.01m2.49 9.1h.01m-1.11 11.7h.01m2.59 2.8h.01m-1.11 3.5h.01m-.81 4.6h.01m1.59 11.7h.01m-2.31 1.1h.01m.79 5.4h.01m.69 5.5h.01m-1.01 2.6h.01m1.79 .8h.01m-.11 10.9h.01m-2.11 7.3h.01m.69 3.7h.01m-.81 25.4h.01m-.31 38.1h.01m2.49 9.9h.01m-2.21 10.1h.01m3.99 16.4h.01m.09-35.4h.01" style="fill: none; stroke: #6c8ebf; stroke-width: 1.423476; stroke-linecap: round"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 36.21 189.98 L 36.21 8.54" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 864.32 189.98 L 864.32 8.54" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 36.21 189.98 L 864.32 189.98" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 36.21 8.54 L 864.32 8.54" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_7">
+    <path d="M 28.63 290.72 L 856.82 290.72 L 856.82 217.17 L 28.63 217.17 L 28.63 290.72 z" style="fill: none; opacity: 0"/>
+   </g>
+   <g id="line2d_115">
+    <path d="M 76.66 290.72 L 76.66 290.24 M 77.49 290.72 L 77.49 290.17 M 78.32 290.72 L 78.32 289.48 M 79.15 290.72 L 79.15 288.44 M 79.97 290.72 L 79.97 286.16 M 80.8 290.72 L 80.8 283.51 M 81.63 290.72 L 81.63 281.37 M 82.46 290.72 L 82.46 274.9 M 83.29 290.72 L 83.29 271.43 M 84.12 290.72 L 84.12 276.21 M 84.94 290.72 L 84.94 278.86 M 85.77 290.72 L 85.77 283.08 M 86.6 290.72 L 86.6 285.84 M 87.43 290.72 L 87.43 284.82 M 88.26 290.72 L 88.26 288.19 M 89.08 290.72 L 89.08 289.09 M 89.91 290.72 L 89.91 289.08 M 90.74 290.72 L 90.74 289.65 M 91.57 290.72 L 91.57 289.89 M 92.4 290.72 L 92.4 290.06 M 93.23 290.72 L 93.23 290.42 M 94.05 290.72 L 94.05 290.43 M 94.88 290.72 L 94.88 290.22 M 95.71 290.72 L 95.71 290.31 M 96.54 290.72 L 96.54 290.11 M 97.37 290.72 L 97.37 290.36 M 98.19 290.72 L 98.19 290.19 M 99.02 290.72 L 99.02 290.26 M 99.85 290.72 L 99.85 290.42 M 101.51 290.72 L 101.51 290.44 M 102.34 290.72 L 102.34 290.43 M 108.13 290.72 L 108.13 290.38 M 108.96 290.72 L 108.96 290.42 M 109.79 290.72 L 109.79 290.38 M 110.62 290.72 L 110.62 290.31 M 112.27 290.72 L 112.27 290.43 M 113.1 290.72 L 113.1 290.31 M 113.93 290.72 L 113.93 290.26 M 114.76 290.72 L 114.76 290.13 M 115.59 290.72 L 115.59 290.17 M 116.42 290.72 L 116.42 289.82 M 117.24 290.72 L 117.24 289.44 M 118.07 290.72 L 118.07 289.38 M 118.9 290.72 L 118.9 288.53 M 119.73 290.72 L 119.73 286.23 M 120.56 290.72 L 120.56 283.67 M 121.38 290.72 L 121.38 273.69 M 122.21 290.72 L 122.21 282.7 M 123.04 290.72 L 123.04 277.82 M 123.87 290.72 L 123.87 285.84 M 124.7 290.72 L 124.7 287.65 M 125.53 290.72 L 125.53 286.16 M 126.35 290.72 L 126.35 286.66 M 127.18 290.72 L 127.18 288.11 M 128.01 290.72 L 128.01 287.41 M 128.84 290.72 L 128.84 287.89 M 129.67 290.72 L 129.67 288.15 M 130.49 290.72 L 130.49 287.83 M 131.32 290.72 L 131.32 288.18 M 132.15 290.72 L 132.15 287.21 M 132.98 290.72 L 132.98 284.7 M 133.81 290.72 L 133.81 284.33 M 134.64 290.72 L 134.64 282.6 M 135.46 290.72 L 135.46 286.16 M 136.29 290.72 L 136.29 288.63 M 137.12 290.72 L 137.12 288.07 M 137.95 290.72 L 137.95 289.84 M 138.78 290.72 L 138.78 290.28 M 139.6 290.72 L 139.6 290.3 M 140.43 290.72 L 140.43 290.47 M 141.26 290.72 L 141.26 290.28 M 142.09 290.72 L 142.09 290.45 M 143.75 290.72 L 143.75 290.36 M 144.57 290.72 L 144.57 290.26 M 145.4 290.72 L 145.4 290.43 M 146.23 290.72 L 146.23 290.4 M 147.89 290.72 L 147.89 290.36 M 148.71 290.72 L 148.71 290.35 M 150.37 290.72 L 150.37 290.17 M 151.2 290.72 L 151.2 290.24 M 152.03 290.72 L 152.03 289.91 M 152.86 290.72 L 152.86 290.19 M 153.68 290.72 L 153.68 289.86 M 154.51 290.72 L 154.51 289.14 M 155.34 290.72 L 155.34 287.42 M 156.17 290.72 L 156.17 282.12 M 157 290.72 L 157 281.9 M 157.83 290.72 L 157.83 276.14 M 158.65 290.72 L 158.65 274.39 M 159.48 290.72 L 159.48 281.74 M 160.31 290.72 L 160.31 284.17 M 161.14 290.72 L 161.14 284.56 M 161.97 290.72 L 161.97 287.35 M 162.79 290.72 L 162.79 288.57 M 163.62 290.72 L 163.62 288.28 M 164.45 290.72 L 164.45 289.67 M 165.28 290.72 L 165.28 289.56 M 166.11 290.72 L 166.11 289.72 M 166.94 290.72 L 166.94 290.25 M 167.76 290.72 L 167.76 290.21 M 168.59 290.72 L 168.59 290.44 M 169.42 290.72 L 169.42 290.4 M 170.25 290.72 L 170.25 290.43 M 171.9 290.72 L 171.9 290.44 M 173.56 290.72 L 173.56 290.47 M 174.39 290.72 L 174.39 290.17 M 175.22 290.72 L 175.22 290.3 M 176.05 290.72 L 176.05 290.1 M 176.87 290.72 L 176.87 290.18 M 177.7 290.72 L 177.7 289.81 M 178.53 290.72 L 178.53 289.6 M 179.36 290.72 L 179.36 289.94 M 180.19 290.72 L 180.19 289.08 M 181.01 290.72 L 181.01 288.29 M 181.84 290.72 L 181.84 288.11 M 182.67 290.72 L 182.67 287.58 M 183.5 290.72 L 183.5 287.06 M 184.33 290.72 L 184.33 287.39 M 185.16 290.72 L 185.16 285.09 M 185.98 290.72 L 185.98 285.19 M 186.81 290.72 L 186.81 280.46 M 187.64 290.72 L 187.64 278.86 M 188.47 290.72 L 188.47 276.01 M 189.3 290.72 L 189.3 275.27 M 190.12 290.72 L 190.12 269 M 190.95 290.72 L 190.95 272.19 M 191.78 290.72 L 191.78 281.12 M 192.61 290.72 L 192.61 283.63 M 193.44 290.72 L 193.44 287.49 M 194.27 290.72 L 194.27 289.81 M 195.09 290.72 L 195.09 290.02 M 195.92 290.72 L 195.92 290.43 M 200.06 290.72 L 200.06 290.41 M 200.89 290.72 L 200.89 290.45 M 206.69 290.72 L 206.69 290.41 M 207.52 290.72 L 207.52 290.47 M 208.35 290.72 L 208.35 290.34 M 214.14 290.72 L 214.14 290.47 M 216.63 290.72 L 216.63 290.33 M 217.46 290.72 L 217.46 290.25 M 218.28 290.72 L 218.28 290.4 M 219.94 290.72 L 219.94 290.21 M 220.77 290.72 L 220.77 290.22 M 221.6 290.72 L 221.6 289.95 M 222.42 290.72 L 222.42 289.72 M 223.25 290.72 L 223.25 289.57 M 224.08 290.72 L 224.08 287.77 M 224.91 290.72 L 224.91 286.3 M 225.74 290.72 L 225.74 281.95 M 226.57 290.72 L 226.57 275.88 M 227.39 290.72 L 227.39 277.43 M 228.22 290.72 L 228.22 269.09 M 229.05 290.72 L 229.05 280.87 M 229.88 290.72 L 229.88 282.07 M 230.71 290.72 L 230.71 285.89 M 231.53 290.72 L 231.53 287.21 M 232.36 290.72 L 232.36 289.36 M 233.19 290.72 L 233.19 289.82 M 234.02 290.72 L 234.02 290.13 M 234.85 290.72 L 234.85 290.19 M 235.68 290.72 L 235.68 290.3 M 236.5 290.72 L 236.5 290.36 M 237.33 290.72 L 237.33 290.36 M 238.16 290.72 L 238.16 290.24 M 238.99 290.72 L 238.99 290.42 M 239.82 290.72 L 239.82 290.37 M 240.64 290.72 L 240.64 290.4 M 241.47 290.72 L 241.47 290.43 M 242.3 290.72 L 242.3 290.4 M 244.79 290.72 L 244.79 290.45 M 249.75 290.72 L 249.75 290.38 M 250.58 290.72 L 250.58 290.33 M 251.41 290.72 L 251.41 290.45 M 253.07 290.72 L 253.07 290.31 M 253.9 290.72 L 253.9 290.36 M 254.72 290.72 L 254.72 290.41 M 255.55 290.72 L 255.55 290.44 M 257.21 290.72 L 257.21 290.4 M 258.04 290.72 L 258.04 290.17 M 258.87 290.72 L 258.87 290.33 M 259.69 290.72 L 259.69 290.38 M 260.52 290.72 L 260.52 290.3 M 261.35 290.72 L 261.35 290.26 M 262.18 290.72 L 262.18 290.12 M 263.01 290.72 L 263.01 289.78 M 263.83 290.72 L 263.83 289.37 M 264.66 290.72 L 264.66 288.38 M 265.49 290.72 L 265.49 287.79 M 266.32 290.72 L 266.32 289.09 M 267.15 290.72 L 267.15 288.62 M 267.98 290.72 L 267.98 289.2 M 268.8 290.72 L 268.8 288.55 M 269.63 290.72 L 269.63 287.13 M 270.46 290.72 L 270.46 286.23 M 271.29 290.72 L 271.29 287.15 M 272.12 290.72 L 272.12 282.36 M 272.94 290.72 L 272.94 277.23 M 273.77 290.72 L 273.77 274.84 M 274.6 290.72 L 274.6 274.31 M 275.43 290.72 L 275.43 281.63 M 276.26 290.72 L 276.26 285.06 M 277.09 290.72 L 277.09 283.26 M 277.91 290.72 L 277.91 284.57 M 278.74 290.72 L 278.74 288.01 M 279.57 290.72 L 279.57 287.87 M 280.4 290.72 L 280.4 289.57 M 281.23 290.72 L 281.23 290.24 M 282.05 290.72 L 282.05 290.43 M 282.88 290.72 L 282.88 290.38 M 292.82 290.72 L 292.82 290.41 M 294.48 290.72 L 294.48 290.47 M 296.96 290.72 L 296.96 290.42 M 297.79 290.72 L 297.79 290.28 M 298.62 290.72 L 298.62 290.19 M 299.45 290.72 L 299.45 289.88 M 300.27 290.72 L 300.27 289.77 M 301.1 290.72 L 301.1 289.57 M 301.93 290.72 L 301.93 289.13 M 302.76 290.72 L 302.76 288.87 M 303.59 290.72 L 303.59 288.58 M 304.42 290.72 L 304.42 287.71 M 305.24 290.72 L 305.24 286.3 M 306.07 290.72 L 306.07 286.35 M 306.9 290.72 L 306.9 285.47 M 307.73 290.72 L 307.73 285.99 M 308.56 290.72 L 308.56 286.05 M 309.39 290.72 L 309.39 281.27 M 310.21 290.72 L 310.21 282.14 M 311.04 290.72 L 311.04 276.3 M 311.87 290.72 L 311.87 279.83 M 312.7 290.72 L 312.7 274.54 M 313.53 290.72 L 313.53 267.56 M 314.35 290.72 L 314.35 276.17 M 315.18 290.72 L 315.18 282.43 M 316.01 290.72 L 316.01 287.13 M 316.84 290.72 L 316.84 289.41 M 317.67 290.72 L 317.67 289.36 M 318.5 290.72 L 318.5 289.88 M 319.32 290.72 L 319.32 290.22 M 320.15 290.72 L 320.15 290.43 M 320.98 290.72 L 320.98 290.42 M 338.37 290.72 L 338.37 290.44 M 340.03 290.72 L 340.03 290.4 M 340.86 290.72 L 340.86 290.33 M 341.68 290.72 L 341.68 290.43 M 342.51 290.72 L 342.51 290.45 M 343.34 290.72 L 343.34 290.3 M 344.17 290.72 L 344.17 290.08 M 345 290.72 L 345 290.19 M 345.83 290.72 L 345.83 289.9 M 346.65 290.72 L 346.65 289.77 M 347.48 290.72 L 347.48 289.6 M 348.31 290.72 L 348.31 289.09 M 349.14 290.72 L 349.14 287.9 M 349.97 290.72 L 349.97 285.91 M 350.79 290.72 L 350.79 273.38 M 351.62 290.72 L 351.62 256.87 M 352.45 290.72 L 352.45 273.81 M 353.28 290.72 L 353.28 261.28 M 354.11 290.72 L 354.11 278.22 M 354.94 290.72 L 354.94 286.64 M 355.76 290.72 L 355.76 284.25 M 356.59 290.72 L 356.59 288.25 M 357.42 290.72 L 357.42 289.08 M 358.25 290.72 L 358.25 289.51 M 359.08 290.72 L 359.08 290.13 M 359.91 290.72 L 359.91 290.17 M 360.73 290.72 L 360.73 290.24 M 361.56 290.72 L 361.56 290.47 M 362.39 290.72 L 362.39 290.26 M 363.22 290.72 L 363.22 290.38 M 364.05 290.72 L 364.05 290.34 M 365.7 290.72 L 365.7 290.47 M 366.53 290.72 L 366.53 290.4 M 367.36 290.72 L 367.36 290.47 M 368.19 290.72 L 368.19 290.38 M 369.84 290.72 L 369.84 290.43 M 370.67 290.72 L 370.67 290.45 M 371.5 290.72 L 371.5 290.43 M 372.33 290.72 L 372.33 290.43 M 373.16 290.72 L 373.16 290.38 M 373.98 290.72 L 373.98 290.33 M 374.81 290.72 L 374.81 290.17 M 375.64 290.72 L 375.64 290.26 M 376.47 290.72 L 376.47 290.17 M 377.3 290.72 L 377.3 290.09 M 378.13 290.72 L 378.13 290.3 M 378.95 290.72 L 378.95 289.86 M 379.78 290.72 L 379.78 290.07 M 380.61 290.72 L 380.61 289.73 M 381.44 290.72 L 381.44 289.81 M 382.27 290.72 L 382.27 289.88 M 383.09 290.72 L 383.09 290.01 M 383.92 290.72 L 383.92 289.49 M 384.75 290.72 L 384.75 289.99 M 385.58 290.72 L 385.58 288.31 M 386.41 290.72 L 386.41 287.33 M 387.24 290.72 L 387.24 285.78 M 388.06 290.72 L 388.06 277.12 M 388.89 290.72 L 388.89 277.03 M 389.72 290.72 L 389.72 278.58 M 390.55 290.72 L 390.55 269.73 M 391.38 290.72 L 391.38 283.28 M 392.2 290.72 L 392.2 271.19 M 393.03 290.72 L 393.03 277.55 M 393.86 290.72 L 393.86 285.71 M 394.69 290.72 L 394.69 285.53 M 395.52 290.72 L 395.52 286.97 M 396.35 290.72 L 396.35 289.04 M 397.17 290.72 L 397.17 289.85 M 415.39 290.72 L 415.39 290.46 M 417.05 290.72 L 417.05 290.4 M 417.88 290.72 L 417.88 290.38 M 418.71 290.72 L 418.71 290.38 M 419.54 290.72 L 419.54 290.05 M 420.36 290.72 L 420.36 289.88 M 421.19 290.72 L 421.19 289.99 M 422.02 290.72 L 422.02 289.58 M 422.85 290.72 L 422.85 289.69 M 423.68 290.72 L 423.68 289.62 M 424.5 290.72 L 424.5 288.02 M 425.33 290.72 L 425.33 286.3 M 426.16 290.72 L 426.16 286.05 M 426.99 290.72 L 426.99 280.39 M 427.82 290.72 L 427.82 274.93 M 428.65 290.72 L 428.65 265.68 M 429.47 290.72 L 429.47 251.39 M 430.3 290.72 L 430.3 276.08 M 431.13 290.72 L 431.13 278.03 M 431.96 290.72 L 431.96 286.24 M 432.79 290.72 L 432.79 288.9 M 433.61 290.72 L 433.61 288.71 M 434.44 290.72 L 434.44 289.44 M 435.27 290.72 L 435.27 289.57 M 436.1 290.72 L 436.1 289.32 M 436.93 290.72 L 436.93 289.73 M 437.76 290.72 L 437.76 289.39 M 438.58 290.72 L 438.58 289.94 M 439.41 290.72 L 439.41 290.19 M 440.24 290.72 L 440.24 290.1 M 441.07 290.72 L 441.07 290.2 M 441.9 290.72 L 441.9 290.36 M 442.72 290.72 L 442.72 290.22 M 443.55 290.72 L 443.55 290.28 M 444.38 290.72 L 444.38 290.36 M 445.21 290.72 L 445.21 290.38 M 446.04 290.72 L 446.04 290.4 M 447.69 290.72 L 447.69 290.43 M 448.52 290.72 L 448.52 290.17 M 449.35 290.72 L 449.35 290.3 M 451.01 290.72 L 451.01 290.4 M 451.83 290.72 L 451.83 290.34 M 452.66 290.72 L 452.66 290.41 M 453.49 290.72 L 453.49 290.29 M 454.32 290.72 L 454.32 290.27 M 455.15 290.72 L 455.15 290.24 M 455.98 290.72 L 455.98 290.24 M 456.8 290.72 L 456.8 290.17 M 457.63 290.72 L 457.63 290.19 M 458.46 290.72 L 458.46 289.98 M 459.29 290.72 L 459.29 289.6 M 460.12 290.72 L 460.12 289.5 M 460.94 290.72 L 460.94 289.94 M 461.77 290.72 L 461.77 289.83 M 462.6 290.72 L 462.6 289.81 M 463.43 290.72 L 463.43 290.36 M 465.91 290.72 L 465.91 290.45 M 466.74 290.72 L 466.74 290.4 M 467.57 290.72 L 467.57 290.24 M 468.4 290.72 L 468.4 290.14 M 469.23 290.72 L 469.23 290.11 M 470.06 290.72 L 470.06 290.33 M 470.88 290.72 L 470.88 290.17 M 471.71 290.72 L 471.71 289.81 M 472.54 290.72 L 472.54 290.18 M 473.37 290.72 L 473.37 290.13 M 474.2 290.72 L 474.2 289.85 M 475.02 290.72 L 475.02 289.81 M 475.85 290.72 L 475.85 289.91 M 476.68 290.72 L 476.68 289.89 M 477.51 290.72 L 477.51 289.58 M 478.34 290.72 L 478.34 289.6 M 479.17 290.72 L 479.17 288.47 M 479.99 290.72 L 479.99 288.52 M 480.82 290.72 L 480.82 288.01 M 481.65 290.72 L 481.65 287.71 M 482.48 290.72 L 482.48 282.47 M 483.31 290.72 L 483.31 281.57 M 484.13 290.72 L 484.13 267.73 M 484.96 290.72 L 484.96 249.2 M 485.79 290.72 L 485.79 266.6 M 486.62 290.72 L 486.62 279.64 M 487.45 290.72 L 487.45 288 M 488.28 290.72 L 488.28 288.99 M 489.1 290.72 L 489.1 290.17 M 489.93 290.72 L 489.93 290.18 M 490.76 290.72 L 490.76 290.3 M 500.7 290.72 L 500.7 290.42 M 511.46 290.72 L 511.46 290.43 M 512.29 290.72 L 512.29 290.17 M 513.12 290.72 L 513.12 290.43 M 513.95 290.72 L 513.95 290.41 M 514.78 290.72 L 514.78 290.38 M 517.26 290.72 L 517.26 290.38 M 518.09 290.72 L 518.09 290.27 M 518.92 290.72 L 518.92 290.14 M 519.75 290.72 L 519.75 290.13 M 520.58 290.72 L 520.58 289.44 M 521.4 290.72 L 521.4 289.92 M 522.23 290.72 L 522.23 290.1 M 523.06 290.72 L 523.06 289.81 M 523.89 290.72 L 523.89 289.78 M 524.72 290.72 L 524.72 289.61 M 525.54 290.72 L 525.54 289.08 M 526.37 290.72 L 526.37 288.87 M 527.2 290.72 L 527.2 288.4 M 528.03 290.72 L 528.03 286.97 M 528.86 290.72 L 528.86 286.03 M 529.69 290.72 L 529.69 275.68 M 530.51 290.72 L 530.51 278.49 M 531.34 290.72 L 531.34 281.24 M 532.17 290.72 L 532.17 274.75 M 533 290.72 L 533 285.88 M 533.83 290.72 L 533.83 285.27 M 534.65 290.72 L 534.65 285.21 M 535.48 290.72 L 535.48 289.04 M 536.31 290.72 L 536.31 286.41 M 537.14 290.72 L 537.14 288.26 M 537.97 290.72 L 537.97 288.79 M 538.8 290.72 L 538.8 288.47 M 539.62 290.72 L 539.62 288.81 M 540.45 290.72 L 540.45 288.84 M 541.28 290.72 L 541.28 288.6 M 542.11 290.72 L 542.11 287.81 M 542.94 290.72 L 542.94 287.41 M 543.76 290.72 L 543.76 286.8 M 544.59 290.72 L 544.59 284.15 M 545.42 290.72 L 545.42 284.33 M 546.25 290.72 L 546.25 281 M 547.08 290.72 L 547.08 281.85 M 547.91 290.72 L 547.91 284.18 M 548.73 290.72 L 548.73 283.81 M 549.56 290.72 L 549.56 287.36 M 550.39 290.72 L 550.39 288.5 M 551.22 290.72 L 551.22 288.6 M 552.05 290.72 L 552.05 289.36 M 552.87 290.72 L 552.87 289.71 M 553.7 290.72 L 553.7 290.13 M 554.53 290.72 L 554.53 290.17 M 556.19 290.72 L 556.19 290.38 M 557.02 290.72 L 557.02 290.44 M 557.84 290.72 L 557.84 290.31 M 566.13 290.72 L 566.13 290.23 M 566.95 290.72 L 566.95 290.43 M 567.78 290.72 L 567.78 290.42 M 568.61 290.72 L 568.61 290.43 M 569.44 290.72 L 569.44 290.31 M 570.27 290.72 L 570.27 290.28 M 571.1 290.72 L 571.1 290.4 M 571.92 290.72 L 571.92 290.34 M 577.72 290.72 L 577.72 290.45 M 578.55 290.72 L 578.55 290.41 M 579.38 290.72 L 579.38 290.24 M 580.21 290.72 L 580.21 290.11 M 581.03 290.72 L 581.03 289.93 M 581.86 290.72 L 581.86 289.85 M 582.69 290.72 L 582.69 288.79 M 583.52 290.72 L 583.52 288.95 M 584.35 290.72 L 584.35 285.06 M 585.17 290.72 L 585.17 282.98 M 586 290.72 L 586 271.3 M 586.83 290.72 L 586.83 249.66 M 587.66 290.72 L 587.66 254.95 M 588.49 290.72 L 588.49 275.44 M 589.32 290.72 L 589.32 283.7 M 590.14 290.72 L 590.14 289.49 M 590.97 290.72 L 590.97 290.17 M 614.16 290.72 L 614.16 290.42 M 614.99 290.72 L 614.99 290.45 M 615.82 290.72 L 615.82 290.26 M 616.65 290.72 L 616.65 290.29 M 617.47 290.72 L 617.47 290.18 M 618.3 290.72 L 618.3 290.22 M 619.13 290.72 L 619.13 290.19 M 619.96 290.72 L 619.96 289.92 M 620.79 290.72 L 620.79 289.44 M 621.62 290.72 L 621.62 289.24 M 622.44 290.72 L 622.44 287.13 M 623.27 290.72 L 623.27 282.61 M 624.1 290.72 L 624.1 266.84 M 624.93 290.72 L 624.93 217.09 M 625.76 290.72 L 625.76 249.97 M 626.58 290.72 L 626.58 280.01 M 627.41 290.72 L 627.41 284.54 M 628.24 290.72 L 628.24 289.83 M 658.88 290.72 L 658.88 290.38 M 662.2 290.72 L 662.2 290.41 M 665.51 290.72 L 665.51 290.36 M 666.34 290.72 L 666.34 290.27 M 667.17 290.72 L 667.17 290.17 M 667.99 290.72 L 667.99 289.86 M 668.82 290.72 L 668.82 289.6 M 669.65 290.72 L 669.65 289.2 M 670.48 290.72 L 670.48 288.35 M 671.31 290.72 L 671.31 286.56 M 672.14 290.72 L 672.14 282.92 M 672.96 290.72 L 672.96 278.89 M 673.79 290.72 L 673.79 272.29 M 674.62 290.72 L 674.62 266.77 M 675.45 290.72 L 675.45 271.66 M 676.28 290.72 L 676.28 285.16 M 677.1 290.72 L 677.1 287.62 M 677.93 290.72 L 677.93 289.61 M 701.95 290.72 L 701.95 290.46 M 703.61 290.72 L 703.61 290.4 M 705.26 290.72 L 705.26 290.38 M 706.09 290.72 L 706.09 290.22 M 706.92 290.72 L 706.92 290.17 M 707.75 290.72 L 707.75 290.17 M 708.58 290.72 L 708.58 290.03 M 709.4 290.72 L 709.4 289.81 M 710.23 290.72 L 710.23 289.7 M 711.06 290.72 L 711.06 289.53 M 711.89 290.72 L 711.89 289.15 M 712.72 290.72 L 712.72 288.99 M 713.54 290.72 L 713.54 288.79 M 714.37 290.72 L 714.37 288.43 M 715.2 290.72 L 715.2 287.68 M 716.03 290.72 L 716.03 286.61 M 716.86 290.72 L 716.86 286.47 M 717.69 290.72 L 717.69 281.54 M 718.51 290.72 L 718.51 280.99 M 719.34 290.72 L 719.34 284.39 M 720.17 290.72 L 720.17 283.3 M 721 290.72 L 721 275.01 M 721.83 290.72 L 721.83 279.22 M 722.66 290.72 L 722.66 279.41 M 723.48 290.72 L 723.48 278.13 M 724.31 290.72 L 724.31 285.86 M 725.14 290.72 L 725.14 287.51 M 725.97 290.72 L 725.97 288.35 M 726.8 290.72 L 726.8 290.26 M 727.62 290.72 L 727.62 289.85 M 728.45 290.72 L 728.45 290.33 M 730.11 290.72 L 730.11 290.44 M 732.59 290.72 L 732.59 290.3 M 733.42 290.72 L 733.42 290.41 M 734.25 290.72 L 734.25 290.45 M 735.91 290.72 L 735.91 290.46 M 736.73 290.72 L 736.73 290.38 M 741.7 290.72 L 741.7 290.4 M 742.53 290.72 L 742.53 290.38 M 743.36 290.72 L 743.36 290.24 M 744.19 290.72 L 744.19 290.17 M 745.02 290.72 L 745.02 290.41 M 745.84 290.72 L 745.84 290.47 M 746.67 290.72 L 746.67 290.27 M 747.5 290.72 L 747.5 290.28 M 748.33 290.72 L 748.33 290.31 M 749.16 290.72 L 749.16 290.29 M 749.99 290.72 L 749.99 290.3 M 750.81 290.72 L 750.81 290.06 M 751.64 290.72 L 751.64 289.8 M 752.47 290.72 L 752.47 289.47 M 753.3 290.72 L 753.3 288.31 M 754.13 290.72 L 754.13 288.21 M 754.95 290.72 L 754.95 287.89 M 755.78 290.72 L 755.78 287.89 M 756.61 290.72 L 756.61 286.16 M 757.44 290.72 L 757.44 282.4 M 758.27 290.72 L 758.27 276.15 M 759.1 290.72 L 759.1 264.48 M 759.92 290.72 L 759.92 258.66 M 760.75 290.72 L 760.75 278.16 M 761.58 290.72 L 761.58 279.95 M 762.41 290.72 L 762.41 284.8 M 763.24 290.72 L 763.24 288.71 M 764.06 290.72 L 764.06 289.57 M 764.89 290.72 L 764.89 290 M 766.55 290.72 L 766.55 290.31 M 767.38 290.72 L 767.38 290.29 M 768.21 290.72 L 768.21 290.47 M 778.97 290.72 L 778.97 290.4 M 780.63 290.72 L 780.63 290.47 M 781.46 290.72 L 781.46 290.47 M 783.94 290.72 L 783.94 290.38 M 784.77 290.72 L 784.77 290.4 M 785.6 290.72 L 785.6 290.36 M 786.43 290.72 L 786.43 290.13 M 787.25 290.72 L 787.25 290.4 M 788.08 290.72 L 788.08 290.17 M 788.91 290.72 L 788.91 290.26 M 789.74 290.72 L 789.74 289.78 M 790.57 290.72 L 790.57 289.94 M 791.4 290.72 L 791.4 289.37 M 792.22 290.72 L 792.22 289.08 M 793.05 290.72 L 793.05 287.71 M 793.88 290.72 L 793.88 284.4 M 794.71 290.72 L 794.71 281.03 M 795.54 290.72 L 795.54 279.57 M 796.36 290.72 L 796.36 280.25 M 797.19 290.72 L 797.19 267.1 M 798.02 290.72 L 798.02 280.32 M 798.85 290.72 L 798.85 281.44 M 799.68 290.72 L 799.68 278.4 M 800.51 290.72 L 800.51 284.82 M 801.33 290.72 L 801.33 286.29 M 802.16 290.72 L 802.16 286.64 M 802.99 290.72 L 802.99 289.25 M 803.82 290.72 L 803.82 290.14 M 804.65 290.72 L 804.65 290.31 M 824.52 290.72 L 824.52 290.45 M 825.35 290.72 L 825.35 290.38 M 826.18 290.72 L 826.18 290.45 M 827.01 290.72 L 827.01 290.3 M 827.84 290.72 L 827.84 290.41 M 828.66 290.72 L 828.66 290.15 M 829.49 290.72 L 829.49 290.17 M 830.32 290.72 L 830.32 290.29 M 831.15 290.72 L 831.15 290.19 M 831.98 290.72 L 831.98 290.26 M 832.81 290.72 L 832.81 290.06 M 833.63 290.72 L 833.63 290.31 M 834.46 290.72 L 834.46 289.57 M 835.29 290.72 L 835.29 289.43 M 836.12 290.72 L 836.12 289.91 M 836.95 290.72 L 836.95 289.67 M 837.77 290.72 L 837.77 289.46 M 838.6 290.72 L 838.6 289.61 M 839.43 290.72 L 839.43 289.21 M 840.26 290.72 L 840.26 287.63 M 841.09 290.72 L 841.09 282.97 M 841.92 290.72 L 841.92 281.58 M 842.74 290.72 L 842.74 280.66 M 843.57 290.72 L 843.57 279.59 M 844.4 290.72 L 844.4 280.18 M 845.23 290.72 L 845.23 281.44 M 846.06 290.72 L 846.06 277.77 M 846.88 290.72 L 846.88 283.49 M 847.71 290.72 L 847.71 278.09 M 848.54 290.72 L 848.54 281.7 M 849.37 290.72 L 849.37 286.29 M 850.2 290.72 L 850.2 284.6 M 851.03 290.72 L 851.03 286.58 M 851.85 290.72 L 851.85 288.77 M 852.68 290.72 L 852.68 289.3 M 853.51 290.72 L 853.51 289.62 M 854.34 290.72 L 854.34 289.35 M 855.17 290.72 L 855.17 290.17" style="fill: none; stroke: #6c8ebf; stroke-width: 0.510991"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_52">
+     <g id="line2d_116">
+      <defs>
+       <path id="mc91e97a772" d="M 0 1.46 L 0 -1.46" style="stroke: #000000; stroke-width: 0.6"/>
+      </defs>
+      <g>
+       <use xlink:href="#mc91e97a772" x="45.190391" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_58">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="45.190391" y="299.746514" transform="rotate(-0 45.190391 299.746514)">20</text>
+     </g>
+    </g>
+    <g id="xtick_53">
+     <g id="line2d_117">
+      <g>
+       <use xlink:href="#mc91e97a772" x="61.754319" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_59">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="61.754319" y="299.746514" transform="rotate(-0 61.754319 299.746514)">40</text>
+     </g>
+    </g>
+    <g id="xtick_54">
+     <g id="line2d_118">
+      <g>
+       <use xlink:href="#mc91e97a772" x="78.318248" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_60">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="78.318248" y="299.746514" transform="rotate(-0 78.318248 299.746514)">60</text>
+     </g>
+    </g>
+    <g id="xtick_55">
+     <g id="line2d_119">
+      <g>
+       <use xlink:href="#mc91e97a772" x="94.882177" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_61">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="94.882177" y="299.746514" transform="rotate(-0 94.882177 299.746514)">80</text>
+     </g>
+    </g>
+    <g id="xtick_56">
+     <g id="line2d_120">
+      <g>
+       <use xlink:href="#mc91e97a772" x="111.446105" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_62">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="111.446105" y="299.746514" transform="rotate(-0 111.446105 299.746514)">100</text>
+     </g>
+    </g>
+    <g id="xtick_57">
+     <g id="line2d_121">
+      <g>
+       <use xlink:href="#mc91e97a772" x="128.010034" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_63">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="128.010034" y="299.746514" transform="rotate(-0 128.010034 299.746514)">120</text>
+     </g>
+    </g>
+    <g id="xtick_58">
+     <g id="line2d_122">
+      <g>
+       <use xlink:href="#mc91e97a772" x="144.573963" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_64">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="144.573963" y="299.746514" transform="rotate(-0 144.573963 299.746514)">140</text>
+     </g>
+    </g>
+    <g id="xtick_59">
+     <g id="line2d_123">
+      <g>
+       <use xlink:href="#mc91e97a772" x="161.137891" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_65">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="161.137891" y="299.746514" transform="rotate(-0 161.137891 299.746514)">160</text>
+     </g>
+    </g>
+    <g id="xtick_60">
+     <g id="line2d_124">
+      <g>
+       <use xlink:href="#mc91e97a772" x="177.70182" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_66">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="177.70182" y="299.746514" transform="rotate(-0 177.70182 299.746514)">180</text>
+     </g>
+    </g>
+    <g id="xtick_61">
+     <g id="line2d_125">
+      <g>
+       <use xlink:href="#mc91e97a772" x="194.265749" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_67">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="194.265749" y="299.746514" transform="rotate(-0 194.265749 299.746514)">200</text>
+     </g>
+    </g>
+    <g id="xtick_62">
+     <g id="line2d_126">
+      <g>
+       <use xlink:href="#mc91e97a772" x="210.829677" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_68">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="210.829677" y="299.746514" transform="rotate(-0 210.829677 299.746514)">220</text>
+     </g>
+    </g>
+    <g id="xtick_63">
+     <g id="line2d_127">
+      <g>
+       <use xlink:href="#mc91e97a772" x="227.393606" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_69">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="227.393606" y="299.746514" transform="rotate(-0 227.393606 299.746514)">240</text>
+     </g>
+    </g>
+    <g id="xtick_64">
+     <g id="line2d_128">
+      <g>
+       <use xlink:href="#mc91e97a772" x="243.957535" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_70">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="243.957535" y="299.746514" transform="rotate(-0 243.957535 299.746514)">260</text>
+     </g>
+    </g>
+    <g id="xtick_65">
+     <g id="line2d_129">
+      <g>
+       <use xlink:href="#mc91e97a772" x="260.521463" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_71">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="260.521463" y="299.746514" transform="rotate(-0 260.521463 299.746514)">280</text>
+     </g>
+    </g>
+    <g id="xtick_66">
+     <g id="line2d_130">
+      <g>
+       <use xlink:href="#mc91e97a772" x="277.085392" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_72">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="277.085392" y="299.746514" transform="rotate(-0 277.085392 299.746514)">300</text>
+     </g>
+    </g>
+    <g id="xtick_67">
+     <g id="line2d_131">
+      <g>
+       <use xlink:href="#mc91e97a772" x="293.649321" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_73">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="293.649321" y="299.746514" transform="rotate(-0 293.649321 299.746514)">320</text>
+     </g>
+    </g>
+    <g id="xtick_68">
+     <g id="line2d_132">
+      <g>
+       <use xlink:href="#mc91e97a772" x="310.213249" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_74">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="310.213249" y="299.746514" transform="rotate(-0 310.213249 299.746514)">340</text>
+     </g>
+    </g>
+    <g id="xtick_69">
+     <g id="line2d_133">
+      <g>
+       <use xlink:href="#mc91e97a772" x="326.777178" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_75">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="326.777178" y="299.746514" transform="rotate(-0 326.777178 299.746514)">360</text>
+     </g>
+    </g>
+    <g id="xtick_70">
+     <g id="line2d_134">
+      <g>
+       <use xlink:href="#mc91e97a772" x="343.341107" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_76">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="343.341107" y="299.746514" transform="rotate(-0 343.341107 299.746514)">380</text>
+     </g>
+    </g>
+    <g id="xtick_71">
+     <g id="line2d_135">
+      <g>
+       <use xlink:href="#mc91e97a772" x="359.905035" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_77">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="359.905035" y="299.746514" transform="rotate(-0 359.905035 299.746514)">400</text>
+     </g>
+    </g>
+    <g id="xtick_72">
+     <g id="line2d_136">
+      <g>
+       <use xlink:href="#mc91e97a772" x="376.468964" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_78">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="376.468964" y="299.746514" transform="rotate(-0 376.468964 299.746514)">420</text>
+     </g>
+    </g>
+    <g id="xtick_73">
+     <g id="line2d_137">
+      <g>
+       <use xlink:href="#mc91e97a772" x="393.032893" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_79">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="393.032893" y="299.746514" transform="rotate(-0 393.032893 299.746514)">440</text>
+     </g>
+    </g>
+    <g id="xtick_74">
+     <g id="line2d_138">
+      <g>
+       <use xlink:href="#mc91e97a772" x="409.596821" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_80">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="409.596821" y="299.746514" transform="rotate(-0 409.596821 299.746514)">460</text>
+     </g>
+    </g>
+    <g id="xtick_75">
+     <g id="line2d_139">
+      <g>
+       <use xlink:href="#mc91e97a772" x="426.16075" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_81">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="426.16075" y="299.746514" transform="rotate(-0 426.16075 299.746514)">480</text>
+     </g>
+    </g>
+    <g id="xtick_76">
+     <g id="line2d_140">
+      <g>
+       <use xlink:href="#mc91e97a772" x="442.724679" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_82">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="442.724679" y="299.746514" transform="rotate(-0 442.724679 299.746514)">500</text>
+     </g>
+    </g>
+    <g id="xtick_77">
+     <g id="line2d_141">
+      <g>
+       <use xlink:href="#mc91e97a772" x="459.288607" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_83">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="459.288607" y="299.746514" transform="rotate(-0 459.288607 299.746514)">520</text>
+     </g>
+    </g>
+    <g id="xtick_78">
+     <g id="line2d_142">
+      <g>
+       <use xlink:href="#mc91e97a772" x="475.852536" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_84">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="475.852536" y="299.746514" transform="rotate(-0 475.852536 299.746514)">540</text>
+     </g>
+    </g>
+    <g id="xtick_79">
+     <g id="line2d_143">
+      <g>
+       <use xlink:href="#mc91e97a772" x="492.416465" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_85">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="492.416465" y="299.746514" transform="rotate(-0 492.416465 299.746514)">560</text>
+     </g>
+    </g>
+    <g id="xtick_80">
+     <g id="line2d_144">
+      <g>
+       <use xlink:href="#mc91e97a772" x="508.980393" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_86">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="508.980393" y="299.746514" transform="rotate(-0 508.980393 299.746514)">580</text>
+     </g>
+    </g>
+    <g id="xtick_81">
+     <g id="line2d_145">
+      <g>
+       <use xlink:href="#mc91e97a772" x="525.544322" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_87">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="525.544322" y="299.746514" transform="rotate(-0 525.544322 299.746514)">600</text>
+     </g>
+    </g>
+    <g id="xtick_82">
+     <g id="line2d_146">
+      <g>
+       <use xlink:href="#mc91e97a772" x="542.108251" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_88">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="542.108251" y="299.746514" transform="rotate(-0 542.108251 299.746514)">620</text>
+     </g>
+    </g>
+    <g id="xtick_83">
+     <g id="line2d_147">
+      <g>
+       <use xlink:href="#mc91e97a772" x="558.672179" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_89">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="558.672179" y="299.746514" transform="rotate(-0 558.672179 299.746514)">640</text>
+     </g>
+    </g>
+    <g id="xtick_84">
+     <g id="line2d_148">
+      <g>
+       <use xlink:href="#mc91e97a772" x="575.236108" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_90">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="575.236108" y="299.746514" transform="rotate(-0 575.236108 299.746514)">660</text>
+     </g>
+    </g>
+    <g id="xtick_85">
+     <g id="line2d_149">
+      <g>
+       <use xlink:href="#mc91e97a772" x="591.800036" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_91">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="591.800036" y="299.746514" transform="rotate(-0 591.800036 299.746514)">680</text>
+     </g>
+    </g>
+    <g id="xtick_86">
+     <g id="line2d_150">
+      <g>
+       <use xlink:href="#mc91e97a772" x="608.363965" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_92">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="608.363965" y="299.746514" transform="rotate(-0 608.363965 299.746514)">700</text>
+     </g>
+    </g>
+    <g id="xtick_87">
+     <g id="line2d_151">
+      <g>
+       <use xlink:href="#mc91e97a772" x="624.927894" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_93">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="624.927894" y="299.746514" transform="rotate(-0 624.927894 299.746514)">720</text>
+     </g>
+    </g>
+    <g id="xtick_88">
+     <g id="line2d_152">
+      <g>
+       <use xlink:href="#mc91e97a772" x="641.491822" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_94">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="641.491822" y="299.746514" transform="rotate(-0 641.491822 299.746514)">740</text>
+     </g>
+    </g>
+    <g id="xtick_89">
+     <g id="line2d_153">
+      <g>
+       <use xlink:href="#mc91e97a772" x="658.055751" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_95">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="658.055751" y="299.746514" transform="rotate(-0 658.055751 299.746514)">760</text>
+     </g>
+    </g>
+    <g id="xtick_90">
+     <g id="line2d_154">
+      <g>
+       <use xlink:href="#mc91e97a772" x="674.61968" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_96">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="674.61968" y="299.746514" transform="rotate(-0 674.61968 299.746514)">780</text>
+     </g>
+    </g>
+    <g id="xtick_91">
+     <g id="line2d_155">
+      <g>
+       <use xlink:href="#mc91e97a772" x="691.183608" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_97">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="691.183608" y="299.746514" transform="rotate(-0 691.183608 299.746514)">800</text>
+     </g>
+    </g>
+    <g id="xtick_92">
+     <g id="line2d_156">
+      <g>
+       <use xlink:href="#mc91e97a772" x="707.747537" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_98">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="707.747537" y="299.746514" transform="rotate(-0 707.747537 299.746514)">820</text>
+     </g>
+    </g>
+    <g id="xtick_93">
+     <g id="line2d_157">
+      <g>
+       <use xlink:href="#mc91e97a772" x="724.311466" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_99">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="724.311466" y="299.746514" transform="rotate(-0 724.311466 299.746514)">840</text>
+     </g>
+    </g>
+    <g id="xtick_94">
+     <g id="line2d_158">
+      <g>
+       <use xlink:href="#mc91e97a772" x="740.875394" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_100">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="740.875394" y="299.746514" transform="rotate(-0 740.875394 299.746514)">860</text>
+     </g>
+    </g>
+    <g id="xtick_95">
+     <g id="line2d_159">
+      <g>
+       <use xlink:href="#mc91e97a772" x="757.439323" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_101">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="757.439323" y="299.746514" transform="rotate(-0 757.439323 299.746514)">880</text>
+     </g>
+    </g>
+    <g id="xtick_96">
+     <g id="line2d_160">
+      <g>
+       <use xlink:href="#mc91e97a772" x="774.003252" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_102">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="774.003252" y="299.746514" transform="rotate(-0 774.003252 299.746514)">900</text>
+     </g>
+    </g>
+    <g id="xtick_97">
+     <g id="line2d_161">
+      <g>
+       <use xlink:href="#mc91e97a772" x="790.56718" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_103">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="790.56718" y="299.746514" transform="rotate(-0 790.56718 299.746514)">920</text>
+     </g>
+    </g>
+    <g id="xtick_98">
+     <g id="line2d_162">
+      <g>
+       <use xlink:href="#mc91e97a772" x="807.131109" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_104">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="807.131109" y="299.746514" transform="rotate(-0 807.131109 299.746514)">940</text>
+     </g>
+    </g>
+    <g id="xtick_99">
+     <g id="line2d_163">
+      <g>
+       <use xlink:href="#mc91e97a772" x="823.695038" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_105">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="823.695038" y="299.746514" transform="rotate(-0 823.695038 299.746514)">960</text>
+     </g>
+    </g>
+    <g id="xtick_100">
+     <g id="line2d_164">
+      <g>
+       <use xlink:href="#mc91e97a772" x="840.258966" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_106">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="840.258966" y="299.746514" transform="rotate(-0 840.258966 299.746514)">980</text>
+     </g>
+    </g>
+    <g id="xtick_101">
+     <g id="line2d_165">
+      <g>
+       <use xlink:href="#mc91e97a772" x="856.822895" y="290.717545" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_107">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: middle" x="856.822895" y="299.746514" transform="rotate(-0 856.822895 299.746514)">1,000</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_7">
+     <g id="line2d_166">
+      <defs>
+       <path id="m33ef24bcd8" d="M 1.46 0 L -1.46 -0" style="stroke: #000000; stroke-width: 0.6"/>
+      </defs>
+      <g>
+       <use xlink:href="#m33ef24bcd8" x="28.626462" y="270.983791" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_108">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="24.566487" y="273.568288" transform="rotate(-0 24.566487 273.568288)">1,000</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_167">
+      <g>
+       <use xlink:href="#m33ef24bcd8" x="28.626462" y="251.250037" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_109">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="24.566487" y="253.834534" transform="rotate(-0 24.566487 253.834534)">2,000</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_168">
+      <g>
+       <use xlink:href="#m33ef24bcd8" x="28.626462" y="231.516284" style="stroke: #000000; stroke-width: 0.6"/>
+      </g>
+     </g>
+     <g id="text_110">
+      <text style="font-size: 7.1px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="24.566487" y="234.100781" transform="rotate(-0 24.566487 234.100781)">3,000</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_8">
+    <path d="M 28.63 290.72 L 28.63 217.17" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 28.63 290.72 L 856.82 290.72" style="fill: none; stroke: #000000; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_169">
+    <path d="M 28.63 217.17" style="fill: none; stroke: #000000; stroke-width: 2; stroke-linecap: square"/>
+    <defs>
+     <path id="ma6ccf3530b" d="M 0 -1.2 L -1.2 1.2 L 1.2 1.2 z" style="stroke: #000000; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#ma6ccf3530b" x="28.626462" y="217.171298" style="stroke: #000000; stroke-linejoin: miter"/>
+    </g>
+   </g>
+   <g id="line2d_170">
+    <path d="M 856.82 290.72" style="fill: none; stroke: #000000; stroke-width: 2; stroke-linecap: square"/>
+    <defs>
+     <path id="m8af61a8534" d="M 1.2 0 L -1.2 -1.2 L -1.2 1.2 z" style="stroke: #000000; stroke-linejoin: miter"/>
+    </defs>
+    <g>
+     <use xlink:href="#m8af61a8534" x="856.822895" y="290.717545" style="stroke: #000000; stroke-linejoin: miter"/>
+    </g>
+   </g>
+  </g>
+  <g id="text_111">
+      <g transform="translate(36.499378 5.8399)">
+    <text>
+     <tspan x="0" y="-0.9625" style="font-size: 7.1px; font-family: 'Liberation Sans'">·</tspan>
+     <tspan x="2.362274" y="-0.9625" style="font-size: 7.1px; font-family: 'Liberation Sans'">1</tspan>
+     <tspan x="6.30748" y="-0.9625" style="font-size: 7.1px; font-family: 'Liberation Sans'">0</tspan>
+     <tspan x="10.318311" y="-3.5875" style="font-size: 4.97px; font-family: 'Liberation Sans'">4</tspan>
+    </text>
+   </g>
+  </g>
+  <g id="text_112">
+      <g transform="translate(434.618825 209.871423)">
+    <text>
+     <tspan x="0" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">t</tspan>
+     <tspan x="2.08374" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">i</tspan>
+     <tspan x="3.75" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">m</tspan>
+     <tspan x="9.997559" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">e</tspan>
+     <tspan x="14.168701" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'"> </tspan>
+     <tspan x="16.252441" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">(</tspan>
+     <tspan x="28.747559" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">)</tspan>
+     <tspan x="18.75" y="-0.5625" style="font-style: italic; font-size: 7.5px; font-family: 'Liberation Sans'">m</tspan>
+     <tspan x="24.997559" y="-0.5625" style="font-style: italic; font-size: 7.5px; font-family: 'Liberation Sans'">s</tspan>
+    </text>
+   </g>
+  </g>
+  <g id="text_113">
+   <text style="font-size: 7.5px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: end" x="13.985713" y="99.278308" transform="rotate(-90 13.985713 99.278308)">neuron id</text>
+  </g>
+  <g id="text_114">
+   <text style="font-size: 7.5px; font-family: 'Helvetica', 'Arial', 'Liberation Sans', sans-serif; text-anchor: start" x="31.389465" y="225.201161" transform="rotate(-0 31.389465 225.201161)">spikes count</text>
+  </g>
+  <g id="text_115">
+      <g transform="translate(795.647957 286.155122)">
+    <text>
+     <tspan x="0" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">t</tspan>
+     <tspan x="2.08374" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">i</tspan>
+     <tspan x="3.75" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">m</tspan>
+     <tspan x="9.997559" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">e</tspan>
+     <tspan x="14.168701" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'"> </tspan>
+     <tspan x="16.252441" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">i</tspan>
+     <tspan x="17.918701" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">n</tspan>
+     <tspan x="22.089844" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">t</tspan>
+     <tspan x="24.173584" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">e</tspan>
+     <tspan x="28.344727" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">r</tspan>
+     <tspan x="30.842285" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">v</tspan>
+     <tspan x="34.592285" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">a</tspan>
+     <tspan x="38.763428" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">l</tspan>
+     <tspan x="40.429688" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'"> </tspan>
+     <tspan x="42.513428" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">(</tspan>
+     <tspan x="55.008545" y="-0.5625" style="font-size: 7.5px; font-family: 'Liberation Sans'">)</tspan>
+     <tspan x="45.010986" y="-0.5625" style="font-style: italic; font-size: 7.5px; font-family: 'Liberation Sans'">m</tspan>
+     <tspan x="51.258545" y="-0.5625" style="font-style: italic; font-size: 7.5px; font-family: 'Liberation Sans'">s</tspan>
+    </text>
+   </g>
+  </g>
+ </g>
+</svg>

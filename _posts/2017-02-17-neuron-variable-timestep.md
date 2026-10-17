@@ -144,32 +144,32 @@ Adapted from: [The NEURON book][neuron-book]
 The following picture shows the difference in performance of the Backward Euler and Variable Timestep interpolators during a stiff trajectory of an Action Potential.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.png">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.svg">
 
 Note the difference in interpolation instants: equidistant in the Backward Euler case, and adapted to the solution gradient in the variable step case. A current injection at the soma forces the neuron to spike at a rate that increases with the injected current. A simple test enforces different levels of stiffness and measures the number of interpolation steps of both methods:
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_pulse_currents_table.png">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_pulse_currents_table.svg">
 
 The slow dynamics of the fixed step method --- which accounts for events at discrete intervals instead of at the event delivery times of its variable step counterpart --- lead to a shift in the voltage trajectory that propagates over time (Euler with $$\Delta t=1 \mu s$$ and CVODE with $$\text{atol}=10^{-4}$$ serve as reference solutions):
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.png">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg">
 
 After one second of simulation, the spike time phase shift is substantial, which demonstrates the benefit of variable step methods for this use case.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.png">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg">
 
 To study whether these advantages hold in practice, the simulation runtime of both methods was measured. The first test measures the impact of stiffness on the number of simulation steps and on the time to solution, on an Intel i5 at 2.6 GHz. The different current values are injected as a proportion of the *action potential threshold* current, i.e. the minimum current that must be continuously injected for the neuron to spike.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_variation_solution.png">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_variation_solution.svg">
 
 The results are promising: even at an extremely high current value, the speed-up is significant. A second test enforces discontinuities and resets of the IVP by artificially injecting current pulses of $$1 \mu s$$ at given frequencies.
 
 {: style="text-align:center; font-size: small;"}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_events_arrival.png">
+<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_events_arrival.svg">
 
 In this scenario, the runtime depends strongly on the number of discontinuities, and only slightly on the discontinuity value (i.e. the amount of current injected). The key question is then how these results apply to networks of neurons.
 
@@ -254,7 +254,7 @@ The comparison included several fixed- and variable-step interpolation methods, 
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.svg">
 
-Quoting the previous paper: "Fixed step methods do not yield significantly-different execution times across different spiking regimes. This is due to the homogeneous computation of neuron  state updates throughout time, and the light computation attached to synaptic events and collective communication not yielding a substantial increase of runtime. The difference in execution times measured across the five regimes was of about $$2\%$$, which we consider negligible. On the other hand, as expected, variable step executions are penalized on regimes with high discontinuity rates. It is noticeable that the runtimes of fixed- and variable-step solvers approximate as we increase the spiking rate, i.e. the increase of runtimes with the input size is steeper for variable timestep (2b$$\hspace{0.3mm}{\color{red!80}\bullet}$$ and  2c$$\hspace{0.3mm}{\color{black}\bullet}{\color{gray}\bullet}{\color{lightgray}\bullet}$$) compared to fixed timestep methods (2a$$\hspace{0.3mm}{\color{blue!80}\bullet}$$). This is due to discontinuities in variable-step being delivered throughout a continuous time line, compared to the discrete delivery instants of the fixed-step methods --- therefore increase the number of interpolation steps; and the iterative model of the variable timestep reinitializing the state computation with small step sizes on each IVP reset, compared to the constant-sized step of fixed step methods.  A remarkable performance is visible on the quiet dynamics use case, where our fully-implicit ODE solver of complex models (with Newton iterations), still runs faster than the simple solver resolving only a system of linear equations. The underlying rationale is that --- despite the inherent computation cost of Newton iterations in the variable step methods --- the low level of discontinuities allow for very long steps, that surpass the simulation throughput of simple solvers running on fixed step methods." 
+Quoting the previous paper: "Fixed step methods do not yield significantly-different execution times across different spiking regimes. This is due to the homogeneous computation of neuron  state updates throughout time, and the light computation attached to synaptic events and collective communication not yielding a substantial increase of runtime. The difference in execution times measured across the five regimes was of about $$2\%$$, which we consider negligible. On the other hand, as expected, variable step executions are penalized on regimes with high discontinuity rates. It is noticeable that the runtimes of fixed- and variable-step solvers approximate as we increase the spiking rate, i.e. the increase of runtimes with the input size is steeper for variable timestep (2b$$\hspace{0.3mm}{\color{#b85450}\bullet}$$ and  2c$$\hspace{0.3mm}{\color{black}\bullet}{\color{#666666}\bullet}{\color{#b3b3b3}\bullet}$$) compared to fixed timestep methods (2a$$\hspace{0.3mm}{\color{#6c8ebf}\bullet}$$). This is due to discontinuities in variable-step being delivered throughout a continuous time line, compared to the discrete delivery instants of the fixed-step methods --- therefore increase the number of interpolation steps; and the iterative model of the variable timestep reinitializing the state computation with small step sizes on each IVP reset, compared to the constant-sized step of fixed step methods.  A remarkable performance is visible on the quiet dynamics use case, where our fully-implicit ODE solver of complex models (with Newton iterations), still runs faster than the simple solver resolving only a system of linear equations. The underlying rationale is that --- despite the inherent computation cost of Newton iterations in the variable step methods --- the low level of discontinuities allow for very long steps, that surpass the simulation throughput of simple solvers running on fixed step methods." 
 
 For further details, including detailed comparisons of the performance of *Variable Step Event Grouping*, *Fully-Asynchronous vs Bulk-Synchronous Execution Models*, *Runtime Dependency on Input Size and Spike Activity*, and the *Overall Runtime Speed-up Estimation* of 228.5-24.6x (based on the distribution of neurons per spiking regime in the brain), refer to the <a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">article preprint</a>.
 
