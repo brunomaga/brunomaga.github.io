@@ -11,8 +11,16 @@ tags: ["spiking neurons", "LIF", "Brunel network", "simulation"]
 [brunel-paper-pdf]:https://web.stanford.edu/group/brainsinsilicon/documents/BrunelSparselyConnectedNets.pdf
 [nest]:http://www.nest-simulator.org/
 [euler]: https://en.wikipedia.org/wiki/Euler_method
+[neuron-model]: https://en.wikipedia.org/wiki/Biological_neuron_model
+[rc]: https://en.wikipedia.org/wiki/RC_circuit
+[kirchhoff]: https://en.wikipedia.org/wiki/Kirchhoff%27s_circuit_laws
+[ohm]: https://en.wikipedia.org/wiki/Ohm%27s_law
+[dirac]: https://en.wikipedia.org/wiki/Dirac_delta_function
+[backward-euler]: https://en.wikipedia.org/wiki/Backward_Euler_method
+[poisson]: https://en.wikipedia.org/wiki/Poisson_point_process
+[mean-field]: https://en.wikipedia.org/wiki/Mean-field_theory
 
-The Leaky Integrate-and-Fire neuron model (LIF, first described in 1907 by [Louis Lapicque](https://en.wikipedia.org/wiki/Louis_Lapicque)) simplifies the neuron to a single leaky compartment (*point neuron model*), with a membrane described by an RC circuit:
+The [leaky integrate-and-fire][neuron-model] (LIF) model, first described in 1907 by [Louis Lapicque](https://en.wikipedia.org/wiki/Louis_Lapicque), reduces a neuron to a single compartment without spatial extent, a *point neuron*. Its membrane is an [RC circuit][rc]:
 
 {: .picture}
 <img width="20%" height="20%" src="{{ site.assets }}/lif-brunel/rc.svg">
@@ -20,91 +28,77 @@ The Leaky Integrate-and-Fire neuron model (LIF, first described in 1907 by [Loui
 {: .caption}
 Adapted from: Neuronal Dynamics, Gerstner et al., Cambridge University Press
 
-The electrical activity of the model is described by the **current equation**, with the following terms:
-- The current in the capacitor $$C$$ is $$I_C = \frac{dQ}{dt} = \frac{d CV}{dt} = C \frac{dV}{dt}$$, for charge $$Q$$ and capacitance $$C$$;
-- The current through the resistance $$R$$ follows Ohm's law, $$I_R = V/R$$, for voltage $$V$$ and resistance $$R$$. 
+The figure writes the membrane potential as $$u$$, and the text uses $$V = u - u_{\text{rest}}$$, the potential relative to the resting potential. By [Kirchhoff's current law][kirchhoff], the input current $$I$$ splits into two currents:
+- the capacitor current $$I_C = \frac{dQ}{dt} = C \frac{dV}{dt}$$, for the charge $$Q = CV$$ of the capacitance $$C$$;
+- the leak current through the resistance $$R$$, $$I_R = V/R$$, by [Ohm's law][ohm].
 
-Kirchhoff's current law, a consequence of the conservation of electric charge, states that the currents entering a node sum to the currents leaving it. Thus, the input current $$I$$ splits into the capacitor current $$I_C$$ and the resistance current $$I_R$$, i.e. $$I = I_C + I_R$$. Equivalently:
-
-$$
-C \frac{dV}{dt}(t) = -\frac{V(t)}{R} + I(t) 
-$$
-
-Multiplying all terms by $$R$$ exposes the time **constant** $$\tau = R C$$. This constant is very important in the analysis of model behaviour, as it determines how *fast* the neuron dynamics are. The formulation becomes:
+With $$I = I_C + I_R$$:
 
 $$
-\tau \frac{dV}{dt}(t) = -V(t) + RI(t) 
-\label{equation_diff}
+C \frac{dV}{dt}(t) = -\frac{V(t)}{R} + I(t)
 $$
 
-External currents (such as synaptic activity) are added to $$I(t)$$. In practice, the network contribution $$RI(t)$$ is the sum of all currents delivered from any neuron $$j$$ to a given neuron $$i$$ over time:
+Multiplying by $$R$$ gives the **membrane time constant** $$\tau = R C$$:
 
 $$
-RI(t)_i = \tau \sum_{j} J_{ij} \sum_{t^\prime} \delta (t-t^\prime _{j} -D)
-\label{equation_current}
+\tau \frac{dV}{dt}(t) = -V(t) + RI(t)
 $$
 
-where $$J_{ij}$$ is the **postsynaptic potential** (PSP) amplitude, 
-$$\delta (t)$$ the Dirac function, $$t^\prime _{j}$$ the spiking times $$t^\prime$$ of the pre-synaptic neuron $$j$$, and 
-$$D$$ the transmission delay. For simplicity, $$V(t)$$ is written as $$V_t$$. 
+$$\tau$$ sets the speed of the dynamics: without input, $$V$$ decays as $$e^{-t/\tau}$$. In a network, the input of neuron $$i$$ is the sum of the spikes of its presynaptic neurons $$j$$:
 
-The model assumes that the neuron's potential rises steeply when there is an input current, i.e. the exponential charging of the capacitor is ignored. The discharge, on the other hand, follows an exponential decay with time constant $$\tau$$.
+$$
+RI_i(t) = \tau \sum_{j} J_{ij} \sum_{k} \delta (t - t_j^k - D)
+$$
 
-To simulate the [Action Potential](https://en.wikipedia.org/wiki/Action_potential) (or *spike*) of biological neurons, each neuron has a *fixed* firing threshold. When the potential reaches this threshold, the neuron *spikes* (or *fires*), and its potential immediately drops to a reset potential. Axonal branches are simulated by a **synaptic delay**, i.e. the time a spike signal takes to reach the connected post-synaptic neurons. The following picture illustrates this propagation of spike and current, which determines the synaptic delay:
+where $$J_{ij}$$ is the **postsynaptic potential** (PSP) amplitude, $$\delta$$ the [Dirac delta function][dirac], $$t_j^k$$ the time of the $$k$$-th spike of neuron $$j$$, and $$D$$ the **synaptic delay**. Each input spike raises $$V$$ at once by $$J_{ij}$$. Between input spikes, $$V$$ decays exponentially to 0.
+
+A spike, or [action potential](https://en.wikipedia.org/wiki/Action_potential), is modeled by a fixed **firing threshold** $$\theta$$. When $$V$$ reaches $$\theta$$, the neuron spikes, and $$V$$ drops to the **reset potential** $$V_r$$. The spike reaches the postsynaptic neurons after the delay $$D$$, which models its propagation along the axon:
 
 {: .picture}
 <img width="40%" height="40%" src="{{ site.assets }}/lif-brunel/action_potential.gif">source: Wikipedia
 
-After a spike, the neuron potential stays constant at the reset value for a given **refractory period**, to simulate the [refraction](https://en.wikipedia.org/wiki/Refractory_period_(physiology)) of biological neurons. This is not a detailed simulation of neuron activity, but it is a good starting point for a simple neuron model, before more complex models in future posts.
+After a spike, $$V$$ stays at $$V_r$$ during the **refractory period** $$\tau_{\text{rp}}$$, as in the [refractory period](https://en.wikipedia.org/wiki/Refractory_period_(physiology)) of biological neurons. The LIF model ignores the shape of the action potential and the morphology of the neuron. Detailed models are in the post on [the electrical activity of detailed neuron models]({{ site.baseurl }}{% post_url 2016-08-15-neuron-electrical-activity %}).
 
-## Resolution
+## Time integration
 
-Two stepping methods are derived from the analytical solution of the first-order ODE. Both are based on the following two-step algorithm:
-- Compute the decay from the previous step: $$V_t \leftarrow V_{t- \Delta t} \exp(\frac{-\Delta t}{\tau})$$  
-- Add the voltage change due to the network current $$RI$$ between $$t-\Delta t$$ and $$t$$: $$V_t \leftarrow  V_t + RI_{(t-\Delta t, t]} / \tau $$
+Between input spikes, the solution of the LIF equation is an exponential decay. With $$V_t = V(t)$$, a step from $$t-\Delta t$$ to $$t$$ takes two operations:
+1. the decay: $$V_t \leftarrow V_{t-\Delta t} \, e^{-\Delta t / \tau}$$;
+2. the input: $$V_t \leftarrow V_t + RI_{(t-\Delta t, t]} / \tau$$.
 
-Neurons are advanced with fixed-step or variable-step interpolation:
-- **Fixed step** interpolation keeps the interpolation interval $$\Delta t$$ constant throughout the execution.
-- **Variable step** methods advance the neuron with the smallest $$t$$ in the network, with a $$\Delta t$$ equal to the minimum of the following two values:
-  - the time difference to the next incoming spike;
-  - $$t^\star + D - t$$, where $$t^\star$$ is the time of the neuron with the second smallest $$t$$ and $$D$$ is the synaptic delay. This is the largest step the neuron at $$t$$ can take without missing a spike from the neuron at time $$t^\star$$ (if it spikes).  
+$$RI_{(t-\Delta t, t]} = \int_{t-\Delta t}^{t} RI(s) \, ds$$ is the input over the step: $$\tau$$ times the sum of the PSP amplitudes of the spikes that arrive in the step. Two step sizes are possible:
+- **fixed step**: $$\Delta t$$ is constant, and the spikes of a step are applied at its end. All spike times are thus rounded up to a multiple of $$\Delta t$$;
+- **variable step**: the neuron with the smallest time $$t$$ advances, up to its next input spike or up to $$t^\star + D$$, whichever comes first, where $$t^\star$$ is the second smallest neuron time. No other neuron can spike before $$t^\star$$, so no new spike reaches the neuron before $$t^\star + D$$. The spike times are exact.
 
-The fixed and variable step interpolations can also be solved numerically, instead of with the analytical solution.
-This is common practice for efficiency, as the exponential and division operations are computationally costly. The numerical solution is not exact, but it approximates the exact solution *well enough* when the timestep $$\Delta t$$ is *small enough*. Two simple examples are the approximate fixed-step [Euler methods][euler]:
-- **Explicit Forward Euler:** 
+The variable step is exact, but costs more in a network. Every input spike ends a step, and every step evaluates an exponential, since $$\Delta t$$ changes. A neuron of the network below receives tens of spikes per ms from its 1000 synapses and its external input, so its steps are much shorter than a fixed step of 0.1 ms.
+
+Numerical methods approximate the solution with arithmetic only. The [Euler methods][euler] replace the derivative with a finite difference over a fixed step. Forward (explicit) Euler evaluates the leak $$-V$$ at the start of the step:
 
 $$
-\begin{align*}
-& \tau \frac{dV_{t - \Delta t}}{dt} = -V_{t - \Delta t} + RI_{(t-\Delta t, t]} / \Delta t \\
-\Leftrightarrow & V_t = V_{t - \Delta t} +  \frac{dV_{t- \Delta t}}{dt} \Delta t \\
-\Leftrightarrow & V_t = V_{t - \Delta t} + \frac{-V_{t - \Delta t} + RI_{(t-\Delta t, t]} / \Delta t}{\tau} \Delta t
-\end{align*}
+\tau \frac{V_t - V_{t-\Delta t}}{\Delta t} = -V_{t-\Delta t} + \frac{RI_{(t-\Delta t, t]}}{\Delta t}
+\;\; \Leftrightarrow \;\;
+V_t = \Big( 1 - \frac{\Delta t}{\tau} \Big) V_{t-\Delta t} + \frac{RI_{(t-\Delta t, t]}}{\tau}
 $$
 
-- **Implicit Backward Euler:**
+[Backward (implicit) Euler][backward-euler] evaluates it at the end of the step:
 
 $$
-\begin{align*}
-& \tau \frac{dV_{t}}{dt} = -V_{t} + RI_{(t-\Delta t, t]} / \Delta t \\
-\Leftrightarrow & \tau \frac{V_{t} - V_{t - \Delta t}}{\Delta t} = -V_{t} + RI_{(t-\Delta t, t]} / \Delta t \\
-\Leftrightarrow & V_t = \frac{RI_{(t-\Delta t, t]} + \tau * V_{t-\Delta t}}{\Delta t + \tau}
-\end{align*}
+\tau \frac{V_t - V_{t-\Delta t}}{\Delta t} = -V_t + \frac{RI_{(t-\Delta t, t]}}{\Delta t}
+\;\; \Leftrightarrow \;\;
+V_t = \frac{\tau V_{t-\Delta t} + RI_{(t-\Delta t, t]}}{\tau + \Delta t}
 $$
 
-with $$\frac{dV_{t}}{dt}$$ and $$RI_{(t-\Delta t, t]}$$ computed from equations \ref{equation_diff} and \ref{equation_current}, respectively. Note that $$RI_{(t-\Delta t, t]}$$ is divided by $$\Delta t$$ to express it in voltage per time unit instead of per timestep.
+$$RI_{(t-\Delta t, t]} / \Delta t$$ is the mean input over the step. All three fixed-step methods compute $$V_t = a V_{t-\Delta t} + b \, RI_{(t-\Delta t, t]}$$ with constants $$a$$ and $$b$$, so they cost the same. The exact method has $$a = e^{-\Delta t / \tau}$$, computed once. Forward Euler replaces it by $$1 - \Delta t / \tau$$, and is stable only for $$\Delta t < 2 \tau$$. Backward Euler replaces it by $$1 / (1 + \Delta t / \tau)$$ and scales the inputs by the same factor, but is stable for any $$\Delta t$$. For $$\Delta t = 0.1$$ ms and $$\tau = 20$$ ms, the three factors agree to four decimals, and backward Euler reduces each PSP by 0.5%. The Euler methods thus bring no speedup to the LIF model. They matter for models without an exact solution, such as the [Hodgkin-Huxley](https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model) model.
 
-For comparison, the plot below shows the potential over time of one neuron in a network for each of these methods, on a $$100ms$$ simulation of a (Brunel) network of $$10000$$ neurons with default neuron parameters. Results are shown for the Implicit and Explicit Euler methods with $$\Delta t = 0.1ms$$, and for the analytical solution with fixed ($$\Delta t=0.1ms$$) and variable timestepping:
+The figure compares the four methods on one neuron of the 10,000-neuron network below, over 100 ms, with $$\Delta t = 0.1$$ ms for the fixed steps:
 
 {: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/neuron_plot_equations.svg">
 
-The vertical straight lines are the voltage resets after a spike, and the horizontal straight lines are the refractory periods after firing.
+The vertical lines are the resets after a spike, and the horizontal lines at 10 mV are the refractory periods. The four solutions agree for the first 14 ms, and diverge after the first spikes of the network: a small change in a spike time changes the input of all postsynaptic neurons.
 
-## Brunel Network
+## Brunel network
 
-The previous section mentioned network activity. Indeed, a neuron without any stimulus (either injected electric current or synaptic currents) always remains at rest.
-
-The most common model of network activity is the Brunel Network Model ([Dynamics of Sparsely Connected Networks of Excitatory and Inhibitory Spiking Neurons, Brunel, Journal of Computational Neuroscience][brunel-paper], [pdf][brunel-paper-pdf]). It is highly relevant, as it provides a good estimation of network dynamics. The model proposes a network of 10000 simulated LIF neurons (80% excitatory, 20% inhibitory). External stimuli come from excitatory neurons outside the network, which connect to both the excitatory and the inhibitory neurons. Excitatory means that the PSP is positive, and inhibitory means that it is negative. The external neurons are not simulated: their spikes are generated by a Poisson random generator (PG). The network is illustrated below:
+Without input, a LIF neuron stays at rest. The [Brunel network][brunel-paper] ([pdf][brunel-paper-pdf]) provides the input with a sparse network of LIF neurons, 80% excitatory and 20% inhibitory. Excitatory neurons have positive PSPs, and inhibitory neurons negative ones. Each neuron also receives excitatory input from $$C_E$$ external neurons, at a rate $$\nu_{\text{ext}}$$ each. The external neurons are not simulated: their spikes come from a [Poisson process][poisson] (PG in the figure).
 
 {: .picture}
 <img width="30%" height="30%" src="{{ site.assets }}/lif-brunel/network.svg">
@@ -112,7 +106,7 @@ The most common model of network activity is the Brunel Network Model ([Dynamics
 {: .caption}
 Adapted from: Brunel 2000
 
-The hard part is defining the network parameters, such as connectivity, synaptic weights and firing threshold. The original [paper][brunel-paper] describes them in detail, and the table below summarizes them: 
+The tables list the parameters of a network of 10,000 neurons:
 
 <table markdown="1">
   <thead>
@@ -133,23 +127,29 @@ The hard part is defining the network parameters, such as connectivity, synaptic
     <tr><th style="text-align: left">Parameter</th><th style="text-align: right">Value</th></tr>
   </thead>
   <tbody>
-    <tr><td style="text-align: left" markdown="span">Membrane time constant $$\tau_m$$</td><td style="text-align: right">20 ms</td></tr>
+    <tr><td style="text-align: left" markdown="span">Membrane time constant $$\tau$$</td><td style="text-align: right">20 ms</td></tr>
     <tr><td style="text-align: left" markdown="span">Refractory period $$\tau_{\text{rp}}$$</td><td style="text-align: right">2 ms</td></tr>
-    <tr><td style="text-align: left" markdown="span">Firing threshold $$V_{\text{th}}$$</td><td style="text-align: right">20 mV</td></tr>
-    <tr><td style="text-align: left" markdown="span">Membrane capacitance $$C_m$$</td><td style="text-align: right">1pF</td></tr>
-    <tr><td style="text-align: left" markdown="span">Resting potential $$V_E$$</td><td style="text-align: right">0 mV</td></tr>
-    <tr><td style="text-align: left" markdown="span">Reset potential $$V_{\text{reset}}$$</td><td style="text-align: right">10 mV</td></tr>
+    <tr><td style="text-align: left" markdown="span">Firing threshold $$\theta$$</td><td style="text-align: right">20 mV</td></tr>
+    <tr><td style="text-align: left" markdown="span">Membrane capacitance $$C$$</td><td style="text-align: right">1 pF</td></tr>
+    <tr><td style="text-align: left" markdown="span">Resting potential $$u_{\text{rest}}$$</td><td style="text-align: right">0 mV</td></tr>
+    <tr><td style="text-align: left" markdown="span">Reset potential $$V_r$$</td><td style="text-align: right">10 mV</td></tr>
     <tr><td style="text-align: left" markdown="span">Excitatory PSP amplitude $$J_E$$</td><td style="text-align: right">0.1 mV</td></tr>
     <tr><td style="text-align: left" markdown="span">Inhibitory PSP amplitude $$J_I$$</td><td style="text-align: right">-0.5 mV</td></tr>
     <tr><td style="text-align: left" markdown="span">Synaptic delay $$D$$</td><td style="text-align: right">1.5 ms</td></tr>
-    <tr><td style="text-align: left" markdown="span">Background rate $$\eta$$</td><td style="text-align: right">2.0</td></tr>
+    <tr><td style="text-align: left" markdown="span">External rate $$\eta = \nu_{\text{ext}} / \nu_{\text{thr}}$$</td><td style="text-align: right">2.0</td></tr>
   </tbody>
 </table>
 
 {: .caption}
 source: Marc-Oliver Gewaltig, ResearchGate
 
-Network activity is regulated by adjusting the stimuli parameters. Brunel defines models for slow, regular and fast network dynamics, with the following average neuron spiking rates (Hz) and global oscillation frequencies (Hz) of voltage trajectories:
+The state of the network depends on two parameters: the relative strength of inhibition $$g = -J_I / J_E$$, here 5, and the external rate $$\eta$$. $$\nu_{\text{thr}} = \theta / (J_E C_E \tau)$$ is the external rate at which the mean external input alone reaches the threshold. Brunel finds four states:
+- **SR**, synchronous regular ($$g = 3$$, $$\eta = 2$$): the neurons fire regularly, almost in synchrony, at high rates;
+- **SI fast**, synchronous irregular ($$g = 6$$, $$\eta = 4$$): the global activity oscillates fast, and the neurons fire irregularly, at a lower rate than the oscillation;
+- **AI**, asynchronous irregular ($$g = 5$$, $$\eta = 2$$): the global activity is stationary, and the neurons fire irregularly;
+- **SI slow**, synchronous irregular ($$g = 4.5$$, $$\eta = 0.9$$): the global activity oscillates slowly, and the neurons fire irregularly, at low rates.
+
+The table compares the firing rates and global oscillation frequencies of his simulations with the predictions of his [mean-field theory][mean-field]:
 
 <table>
   <thead>
@@ -166,30 +166,31 @@ Network activity is regulated by adjusting the stimuli parameters. Brunel define
 {: .caption}
 source: Brunel 2000
 
-The simulated network is very close to the theoretical predictions. For this reason, although it is a simple approximation, the Brunel Network is a powerful tool for studying network dynamics. It is particularly useful for very long simulations of large networks, as it is computationally inexpensive compared to more detailed models such as the [Hodgkin-Huxley](https://en.wikipedia.org/wiki/Hodgkin%E2%80%93Huxley_model) model.
+The simulated rates are within 5 Hz of the predictions, and the frequencies within 10 Hz. The model is also cheap to simulate. A LIF neuron has one state variable, $$V$$, updated with one multiplication and one addition per step. A Hodgkin-Huxley neuron has four state variables per compartment, the potential and three gating variables, with nonlinear rate functions evaluated at every step. LIF networks thus suit long simulations of large networks.
 
-## Output
+## Simulation results
 
-A `C++` implementation of the Brunel network model of LIF neurons, with the appropriate stimuli, reproduces the results of the original paper. The outputs match the theoretical model in terms of spike rate and trajectory oscillation frequency. The results below show a timeline (left to right) of neuron spike times (a.k.a. *spike trace*, top) and the number of neurons that spike at each instant (bottom).
- 
-**Slow dynamics**:
+A `C++` implementation reproduces three of the four states, with the network of the tables. Each figure shows the spike times of the 10,000 neurons (top) and the number of spikes per ms (bottom), over 1 s.
+
+**SI slow**:
 
 {: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g4.5_f0.9.svg">
 
-**Regular dynamics**:
+Its global oscillation has a period of about 50 ms, or 20 Hz, close to the 22 Hz of the paper.
+
+**AI**:
 
 {: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g5_f2.svg">
 
-**Fast dynamics**:
+**SR**:
 
 {: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g3_f2.svg">
 
-
 ## Other resources
 
-- A thorough explanation of the Leaky Integrate-and-Fire model is available in the relevant section of the online copy of the [Neuronal Dynamics book from Wulfram Gerstner at EPFL][lif-gerstner].
-- A `Python` implementation of a Brunel network using the [NEST][nest] simulator is described in [NEST by Example: An Introduction to the Neural Simulation Tool NEST, Marc-Oliver Gewaltig et al., Springer Link][nest-brunel].
-- The `C++` code of this exercise is available in <a href="{{ site.assets }}/lif-brunel/lif-brunel.tar.gz">lif-brunel.tar.gz</a>. The class diagram in <a href="{{ site.assets }}/lif-brunel/diagram_class.svg">diagram_class.svg</a> helps to understand the code.
+- [Neuronal Dynamics][lif-gerstner], by Wulfram Gerstner et al., explains the LIF model in detail.
+- [NEST by Example: An Introduction to the Neural Simulation Tool NEST][nest-brunel], by Marc-Oliver Gewaltig et al., implements the Brunel network in `Python` with the [NEST][nest] simulator.
+- The `C++` code is in <a href="{{ site.assets }}/lif-brunel/lif-brunel.tar.gz">lif-brunel.tar.gz</a>, and its class diagram in <a href="{{ site.assets }}/lif-brunel/diagram_class.svg">diagram_class.svg</a>.
