@@ -953,7 +953,7 @@ The result is fewer bubbles and full forward/backward computation-communication 
 <img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
-DualPipe on 4 GPUs: micro-batches 1 to 4 (light) enter at GPU 0, and micro-batches 5 to 8 (dark) enter at GPU 3. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
+DualPipe on 6 GPUs: micro-batches 1 to 6 (light) enter at GPU 0, and micro-batches 7 to 12 (dark) enter at GPU 5. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
 
 </div>
 </details>

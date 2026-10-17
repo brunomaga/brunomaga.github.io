@@ -355,7 +355,7 @@ The code is available in the [distributed-training repo](https://github.com/{{ s
 
 Even with 1F1B, every stage idles for `(p-1)(F+B)` per iteration, where `p` is the number of stages and `F` and `B` are the times of the forward and backward passes of one micro-batch on one stage. Relative to the compute of `m` micro-batches, this is a bubble fraction of `(p-1)/m`. Therefore, 1F1B can only reduce the bubble with more micro-batches per iteration (i.e. a larger batch or smaller micro-batches) or with fewer stages. Newer schedules reduce the bubble directly. They are not part of DeepSpeed, where they would require a [custom schedule](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule), but they are available in [Megatron-LM](https://github.com/NVIDIA/Megatron-LM), in [PyTorch's `torch.distributed.pipelining`](https://docs.pytorch.org/docs/stable/distributed.pipelining.html) and in [DeepSeek's DualPipe repository](https://github.com/deepseek-ai/DualPipe).
 
-The diagrams in this section, like the GPipe and 1F1B diagrams above, were generated from the reference implementation of each schedule, for 4 GPUs and 8 micro-batches, and share the same time scale. Time is normalized so that every GPU performs the same amount of compute in all diagrams: a forward pass takes 1 unit and a backward pass takes 2 units (1+1 when it is split into the gradients for inputs and for weights, as explained below). Schedules that place two model chunks on each GPU run each chunk in half the time. Communication time is not modeled. The number in each cell is the micro-batch id, hatched cells are idle time, pale cells with gray outlines belong to the next iteration (and, in ZB-H2 and ZB-V, to the previous one), and the dashed line marks the end of the 1F1B schedule.
+The diagrams in this section, like the GPipe and 1F1B diagrams above, were generated from the reference implementation of each schedule, for 4 GPUs and 8 micro-batches (6 GPUs and 12 micro-batches for DualPipe), and the diagrams on 4 GPUs share the same time scale. Time is normalized so that every GPU performs the same amount of compute in all diagrams on 4 GPUs: a forward pass takes 1 unit and a backward pass takes 2 units (1+1 when it is split into the gradients for inputs and for weights, as explained below). Schedules that place two model chunks on each GPU run each chunk in half the time. Communication time is not modeled. The number in each cell is the micro-batch id, hatched cells are idle time, pale cells with gray outlines are the forward passes of the next iteration, and the dashed line marks the end of the 1F1B schedule.
 
 ### Interleaved 1F1B
 
@@ -386,7 +386,7 @@ ZB-H1, with the activation memory of 1F1B. Every backward pass is split into a b
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h2.svg"/>
 
 {: .caption}
-ZB-H2, with about twice the activation memory of 1F1B. The pale previous and next iterations interlock with the current one when the optimizer step does not synchronize the stages.
+ZB-H2, with about twice the activation memory of 1F1B. When the optimizer step does not synchronize the stages, the next iteration starts on the first GPUs while the last GPUs finish the current one, and the previous iteration fills the idle time at the start in the same way.
 
 ### ZB-V
 
@@ -396,7 +396,7 @@ The Zero Bubble paper also introduces **ZB-V**, which places two model chunks on
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_v.svg"/>
 
 {: .caption}
-ZB-V with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (chunks 0 to 3, going down) and dark cells to the second chunk (chunks 4 to 7, going back up).
+ZB-V with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (chunks 0 to 3, going down) and dark cells to the second chunk (chunks 4 to 7, going back up). As in ZB-H2, the previous iteration fills the idle time at the start when the optimizer step does not synchronize the stages.
 
 ### DualPipe
 
@@ -410,7 +410,7 @@ The diagrams in this section model only computation, so DualPipe's bubble looks 
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
-DualPipe on 4 GPUs: micro-batches 1 to 4 (light) enter at GPU 0, and micro-batches 5 to 8 (dark) enter at GPU 3. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
+DualPipe on 6 GPUs: micro-batches 1 to 6 (light) enter at GPU 0, and micro-batches 7 to 12 (dark) enter at GPU 5. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
 
 ### DualPipeV
 
@@ -424,7 +424,7 @@ DualPipeV with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on
 
 ### Summary
 
-The table below compares the schedules in the diagrams above (4 GPUs and 8 micro-batches). Idle time is measured in forward passes. Activation memory is measured in units of the activations of one micro-batch on one 1F1B stage, on the GPU that needs the most, assuming the backward for inputs and the backward for weights each release half of a micro-batch's activations.
+The table below compares the schedules above on 4 GPUs with 8 micro-batches. Idle time is measured in forward passes. Activation memory is measured in units of the activations of one micro-batch on one 1F1B stage, on the GPU that needs the most, assuming the backward for inputs and the backward for weights each release half of a micro-batch's activations.
 
 | Schedule | Idle time per GPU | Peak activation memory | Parameters per GPU | Main cost |
 |:--|:--:|:--:|:--:|:--|
