@@ -18158,6 +18158,276 @@
         <mxCell id="attention_mech-63" value="α&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;,&lt;i&gt;T&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16.5;" vertex="1" parent="attention_mech-figure">
           <mxGeometry x="175.435" y="148.37" width="60" height="26" as="geometry" />
         </mxCell>
+        <mxCell id="llama2_gatt-label" value="llama2_gatt.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="19336.41" width="600" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-figure" value="" style="group" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="0" y="19376.41" width="1741.9" height="906.99" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-1" value="" style="rounded=1;absoluteArcSize=1;arcSize=116.0;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="0" y="92.888" width="915.8" height="734.1" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-2" value="" style="rounded=1;absoluteArcSize=1;arcSize=92.0;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="927.8" y="73.088" width="814.1" height="833.9" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-5" value="" style="ellipse;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="64.55" y="159.438" width="63.1" height="63.1" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-6" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="85.9409" y="172.8783" width="20.3182" height="20.3182" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-7" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="76.8387" y="197.156" width="38.5225" height="20.4128" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-8" value="Who are you?" style="rounded=1;absoluteArcSize=1;arcSize=82.17;whiteSpace=nowrap;html=1;fillColor=#f5f5f5;fontFamily=Helvetica;fontColor=#000000;fontSize=36.6;align=left;verticalAlign=middle;spacing=0;spacingLeft=29.6;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="154.45" y="149.798" width="285.4407" height="82.17" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-9" value="" style="ellipse;html=1;aspect=fixed;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="64.55" y="280.568" width="63.1" height="63.1" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-10" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="92.598" y="291.6263" width="7.0041" height="7.2565" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-11" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="91.9985" y="295.2545" width="8.203" height="4.2435" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-12" value="" style="rounded=1;absoluteArcSize=1;arcSize=19.4979;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="82.7733" y="297.6208" width="26.6534" height="30.0324" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-13" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="82.7733" y="312.118" width="26.6534" height="15.5352" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-14" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="78.4194" y="312.2663" width="35.3612" height="2.3505" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-15" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="88.812" y="307.3161" width="4.8587" height="4.8587" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-16" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="98.5294" y="307.3161" width="4.8587" height="4.8587" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-17" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="89.159" y="316.9136" width="13.882" height="2.5745" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-18" value="🤖 💻" style="rounded=1;absoluteArcSize=1;arcSize=81.72;whiteSpace=nowrap;html=1;fillColor=#dae8fc;fontFamily=Helvetica;fontColor=#000000;fontSize=29.23;align=left;verticalAlign=middle;spacing=0;spacingLeft=29.6;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="154.45" y="271.228" width="140.28" height="81.72" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-19" value="" style="ellipse;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="64.55" y="401.718" width="63.1" height="63.1" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-20" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="85.9409" y="415.1583" width="20.3182" height="20.3182" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-21" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="76.8387" y="439.436" width="38.5225" height="20.4129" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-22" value="How to go from Paris to NY?" style="rounded=1;absoluteArcSize=1;arcSize=82.58;whiteSpace=nowrap;html=1;fillColor=#f5f5f5;fontFamily=Helvetica;fontColor=#000000;fontSize=36.6;align=left;verticalAlign=middle;spacing=0;spacingLeft=29.6;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="154.45" y="391.798" width="521.3506" height="82.58" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-23" value="" style="ellipse;html=1;aspect=fixed;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="64.55" y="520.498" width="63.1" height="63.1" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-24" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="92.598" y="531.5563" width="7.0041" height="7.2565" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-25" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="91.9985" y="535.1845" width="8.203" height="4.2435" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-26" value="" style="rounded=1;absoluteArcSize=1;arcSize=19.4979;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="82.7733" y="537.5508" width="26.6534" height="30.0324" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-27" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="82.7733" y="552.048" width="26.6534" height="15.5352" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-28" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="78.4194" y="552.1963" width="35.3612" height="2.3505" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-29" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="88.812" y="547.2461" width="4.8587" height="4.8587" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-30" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="98.5294" y="547.2461" width="4.8587" height="4.8587" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-31" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="89.159" y="556.8436" width="13.882" height="2.5745" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-32" value="There are several ways to travel from&lt;br&gt;Paris to New York, depending on your&lt;br&gt;budget, time constraints, and personal&lt;br&gt;preferences. Here are some options:&lt;br&gt;..." style="rounded=1;absoluteArcSize=1;arcSize=87.0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;fontFamily=Helvetica;fontColor=#000000;fontSize=36.6;align=left;verticalAlign=middle;spacing=0;spacingLeft=29.6;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="154.45" y="513.278" width="704.31" height="256.66" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-33" value="" style="ellipse;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="979.03" y="126.258" width="50.3" height="50.3" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-34" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="996.0817" y="136.9719" width="16.1966" height="16.1966" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-35" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="988.8259" y="156.3248" width="30.7081" height="16.272" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-36" value="Who are you?" style="rounded=1;absoluteArcSize=1;arcSize=65.46;whiteSpace=nowrap;html=1;fillColor=#f5f5f5;fontFamily=Helvetica;fontColor=#000000;fontSize=29.0;align=left;verticalAlign=middle;spacing=0;spacingLeft=23.5;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1050.7" y="118.508" width="228.2295" height="65.46" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-37" value="" style="ellipse;html=1;aspect=fixed;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="979.03" y="222.938" width="50.3" height="50.3" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-38" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1001.3883" y="231.7531" width="5.5833" height="5.7845" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-39" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1000.9105" y="234.6453" width="6.539" height="3.3827" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-40" value="" style="rounded=1;absoluteArcSize=1;arcSize=15.542699999999998;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="993.5566" y="236.5316" width="21.2467" height="23.9403" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-41" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="993.5566" y="248.088" width="21.2467" height="12.3839" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-42" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="990.0859" y="248.2062" width="28.1881" height="1.8737" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-43" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="998.3703" y="244.2602" width="3.8731" height="3.8731" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-44" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1006.1165" y="244.2602" width="3.8731" height="3.8731" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-45" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="998.647" y="251.9108" width="11.066" height="2.0522" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-46" value="🤔👀💬" style="rounded=1;absoluteArcSize=1;arcSize=65.93;whiteSpace=nowrap;html=1;fillColor=#dae8fc;fontFamily=Helvetica;fontColor=#000000;fontSize=23.05;align=left;verticalAlign=middle;spacing=0;spacingLeft=23.5;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1050.7" y="214.968" width="132.95" height="65.93" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-47" value="" style="ellipse;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="979.03" y="319.788" width="50.3" height="50.3" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-48" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="996.0817" y="330.5019" width="16.1966" height="16.1966" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-49" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="988.8259" y="349.8548" width="30.7081" height="16.2721" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-50" value="How to go from Paris to NY?" style="rounded=1;absoluteArcSize=1;arcSize=65.97;whiteSpace=nowrap;html=1;fillColor=#f5f5f5;fontFamily=Helvetica;fontColor=#000000;fontSize=29.0;align=left;verticalAlign=middle;spacing=0;spacingLeft=23.5;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1050.7" y="311.798" width="415.1527" height="65.97" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-51" value="" style="ellipse;html=1;aspect=fixed;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="979.03" y="416.508" width="50.3" height="50.3" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-52" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1001.3883" y="425.3231" width="5.5833" height="5.7845" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-53" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1000.9105" y="428.2153" width="6.539" height="3.3827" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-54" value="" style="rounded=1;absoluteArcSize=1;arcSize=15.542699999999998;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="993.5566" y="430.1016" width="21.2467" height="23.9403" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-55" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="993.5566" y="441.658" width="21.2467" height="12.3839" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-56" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="990.0859" y="441.7762" width="28.1881" height="1.8737" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-57" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="998.3703" y="437.8302" width="3.8731" height="3.8731" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-58" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1006.1165" y="437.8302" width="3.8731" height="3.8731" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-59" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="998.647" y="445.4808" width="11.066" height="2.0522" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-60" value="🛫🚤🗽🚗💨" style="rounded=1;absoluteArcSize=1;arcSize=65.64;whiteSpace=nowrap;html=1;fillColor=#dae8fc;fontFamily=Helvetica;fontColor=#000000;fontSize=23.05;align=left;verticalAlign=middle;spacing=0;spacingLeft=23.5;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1050.7" y="408.568" width="191.24" height="65.64" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-61" value="" style="ellipse;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="979.03" y="513.288" width="50.3" height="50.3" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-62" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="996.0817" y="524.0019" width="16.1966" height="16.1966" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-63" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="988.8259" y="543.3548" width="30.7081" height="16.2721" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-64" value="What caused the extinction of the dinosaurs?" style="rounded=1;absoluteArcSize=1;arcSize=65.56;whiteSpace=nowrap;html=1;fillColor=#f5f5f5;fontFamily=Helvetica;fontColor=#000000;fontSize=29.0;align=left;verticalAlign=middle;spacing=0;spacingLeft=23.5;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1050.7" y="505.408" width="626.3995" height="65.56" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-65" value="" style="ellipse;html=1;aspect=fixed;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="979.03" y="609.938" width="50.3" height="50.3" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-66" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1001.3883" y="618.7531" width="5.5833" height="5.7845" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-67" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1000.9105" y="621.6453" width="6.539" height="3.3827" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-68" value="" style="rounded=1;absoluteArcSize=1;arcSize=15.542699999999998;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="993.5566" y="623.5316" width="21.2467" height="23.9403" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-69" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="993.5566" y="635.088" width="21.2467" height="12.3839" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-70" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="990.0859" y="635.2062" width="28.1881" height="1.8737" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-71" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="998.3703" y="631.2602" width="3.8731" height="3.8731" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-72" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1006.1165" y="631.2602" width="3.8731" height="3.8731" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-73" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="998.647" y="638.9108" width="11.066" height="2.0522" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-74" value="🦕 🚨🌊🌋🔥" style="rounded=1;absoluteArcSize=1;arcSize=65.68;whiteSpace=nowrap;html=1;fillColor=#dae8fc;fontFamily=Helvetica;fontColor=#000000;fontSize=23.05;align=left;verticalAlign=middle;spacing=0;spacingLeft=23.5;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1050.7" y="602.238" width="198.79" height="65.68" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-75" value="" style="ellipse;html=1;aspect=fixed;fillColor=#000000;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="979.03" y="706.798" width="50.3" height="50.3" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-76" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="996.0817" y="717.5119" width="16.1966" height="16.1966" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-77" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="988.8259" y="736.8648" width="30.7081" height="16.2721" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-78" value="Italy?" style="rounded=1;absoluteArcSize=1;arcSize=66.16;whiteSpace=nowrap;html=1;fillColor=#f5f5f5;fontFamily=Helvetica;fontColor=#000000;fontSize=29.0;align=left;verticalAlign=middle;spacing=0;spacingLeft=23.5;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1050.7" y="698.798" width="117.01" height="66.16" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-79" value="" style="ellipse;html=1;aspect=fixed;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="979.03" y="803.588" width="50.3" height="50.3" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-80" value="" style="ellipse;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1001.3883" y="812.4031" width="5.5833" height="5.7845" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-81" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1000.9105" y="815.2953" width="6.539" height="3.3827" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-82" value="" style="rounded=1;absoluteArcSize=1;arcSize=15.542699999999998;html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="993.5566" y="817.1816" width="21.2467" height="23.9403" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-83" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="993.5566" y="828.738" width="21.2467" height="12.3839" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-84" value="" style="html=1;fillColor=#ffffff;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="990.0859" y="828.8562" width="28.1881" height="1.8737" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-85" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="998.3703" y="824.9102" width="3.8731" height="3.8731" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-86" value="" style="ellipse;html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1006.1165" y="824.9102" width="3.8731" height="3.8731" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-87" value="" style="html=1;fillColor=#6c8ebf;strokeColor=none;mask=1;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="998.647" y="832.5608" width="11.066" height="2.0522" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-88" value="🇮🇹🍝🍕⛪" style="rounded=1;absoluteArcSize=1;arcSize=66.05;whiteSpace=nowrap;html=1;fillColor=#dae8fc;fontFamily=Helvetica;fontColor=#000000;fontSize=23.05;align=left;verticalAlign=middle;spacing=0;spacingLeft=23.5;strokeColor=#000000;strokeWidth=2.45;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1050.7" y="795.618" width="161.95" height="66.05" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-3" value="Always answer with emojis" style="text;html=1;whiteSpace=nowrap;fontFamily=Helvetica;fontColor=#000000;fontSize=40.0;align=left;verticalAlign=middle;spacing=0;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="1.4" y="1.028" width="477.6875" height="48" as="geometry" />
+        </mxCell>
+        <mxCell id="llama2_gatt-4" value="Always answer with emojis" style="text;html=1;whiteSpace=nowrap;fontFamily=Helvetica;fontColor=#000000;fontSize=32.0;align=left;verticalAlign=middle;spacing=0;" vertex="1" parent="llama2_gatt-figure">
+          <mxGeometry x="928.4" y="0" width="382.55" height="38.4" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>

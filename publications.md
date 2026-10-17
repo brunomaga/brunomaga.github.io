@@ -1200,7 +1200,7 @@ The pretraining setting and model architecture are adopted from Llama 1, i.e. by
 The finetuning was performed with supervised fine-tuning (Section 3.1), initial and iterative reward modeling (Section 3.2.2) and RLHF (Section 3.2.3). As drawback of RLHF, "initial RLHF models tended to forget the initial instruction after a few turns of dialogue (Figure 9, below, left). To address these limitations, we propose **Ghost Attention (GAtt)**, a very simple method inspired by Context Distillation (Bai et al., 2022b) that hacks the fine-tuning data to help the attention focus in a multi-stage process". In GAtt, a system instruction (e.g., "act as ...") is synthetically concatenated to all user messages of a multi-turn dialogue and responses are sampled with the latest RLHF model; for fine-tuning, the instruction is then dropped from all but the first turn and the loss is set to zero on the tokens of previous turns, so the model learns to keep following the instruction across turns (Figure 9, below, right).
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="65%" height="65%" src="{{ site.assets }}/publications/llama2_gatt.png"/>
+<img loading="lazy" width="65%" height="65%" src="{{ site.assets }}/publications/llama2_gatt.svg"/>
 
 </div>
 </details>
