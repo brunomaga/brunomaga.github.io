@@ -20,7 +20,7 @@ KD methods fall into several categories. The loss can match the soft labels of t
 <img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/)
+Illustration of knowledge distillation using (A) pre-trained teacher model (offline) and (B) while training the teacher model simultaneously (online). Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/)
 
 The different methods are detailed in [Distilling the Knowledge in a Neural Network, Google](https://arxiv.org/abs/1503.02531), [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/), and [Knowledge Distillation: A Survey](https://arxiv.org/abs/2006.05525).
 
@@ -130,6 +130,9 @@ With **sampling** (*speculative sampling*), the draft model samples each token $
 
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/spec_sampling.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+The draft b is accepted with probability $$\min(1, q(b) / p(b)) = 0.3 / 0.5 = 0.6$$; otherwise, it is replaced by a or c, sampled from the residual.
 
 In a batch, each sequence accepts a different number of tokens, so sequences progress at different speeds. Engines therefore track their lengths separately, as in continuous batching.
 
@@ -367,6 +370,9 @@ def medusa_step(model, heads, tokens, kv_cache, next_token, head_logits, top_k=2
 {: style="text-align:center; font-size: small;"}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/eagle.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+For the next draft, the predicted feature of $$t_5$$ and the draft $$t_6$$ are appended to the inputs. EAGLE-3 predicts tokens directly, from the fused low-, mid- and high-level features of the target.
+
 The following code implements an EAGLE drafter, and a drafting loop that the MTP modules below also use:
 
 ```python
@@ -428,7 +434,10 @@ On Qwen3-8B with greedy decoding, the paper reports an average of about 6.5 toke
 [LayerSkip](https://arxiv.org/abs/2404.16710) uses the early layers of the target model as the draft. The model is trained with *layer dropout*, which skips the later layers more often, and with an *early exit loss*, which trains every layer to make good predictions through the shared output head. At inference, the draft exits after the first $$E$$ layers. The verification runs only the remaining layers, reusing the computation and the cache of the first $$E$$. No second model is stored, and the reported speedups reach up to about 2 times on summarization and coding tasks.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/layerskip.svg"/>
+<img width="89%" height="89%" src="{{ site.assets }}/inference/imgs/layerskip.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Every layer also learns to predict through the shared head (early exit loss).
 
 The following code implements a simplified LayerSkip, with the early exit loss and layer dropout for training, and drafting with the first layers at inference:
 
@@ -500,7 +509,10 @@ $$
 As the vocabulary is large, holding the logits of all heads at once would dominate the memory footprint of training. Instead, after the forward pass of the trunk, the forward and backward passes of the heads run one after the other. Their gradients accumulate at the output of the trunk, so only the logits of one head are in memory at a time. The benefits grow with the model size, and small models can even get worse. The 13B model of the paper solves 12% more problems on HumanEval and 17% more on MBPP than a comparable next-token model. At inference, the extra heads act as drafts for self-speculative decoding, making a model trained to predict 4 tokens up to 3 times faster. However, as in Medusa, each head predicts its token without seeing the tokens predicted by the other heads.
 
 {: style="text-align:center; font-size: small;"}
-<img width="89%" height="89%" src="{{ site.assets }}/inference/imgs/mtp_parallel.svg"/>
+<img width="77%" height="77%" src="{{ site.assets }}/inference/imgs/mtp_parallel.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+In training, the heads run their forward and backward passes one at a time.
 
 The following code implements the parallel heads, and the backward pass that keeps only the logits of one head in memory:
 

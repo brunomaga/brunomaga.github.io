@@ -47,6 +47,9 @@ A weight matrix with 50% zeros scattered at random is still multiplied as a dens
 {: style="text-align:center; font-size: small;"}
 <img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/sparsity_2_4.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+**Unstructured 50%:** zeros anywhere, which a dense matmul does not skip. **2:4 semi-structured:** 2 zeros in every group of 4 consecutive weights. **Values** and **2-bit indices:** half the values, and the position of each one in its group.
+
 The following functions build the two masks from a score per weight, such as its magnitude: the unstructured mask keeps the highest scores of every row (the picture above keeps the highest of the whole matrix instead), and the 2:4 mask keeps the 2 highest scores of every group of 4. Once the weights follow the 2:4 pattern, PyTorch's `to_sparse_semi_structured` converts them to the compressed format, and the multiplications of those layers then run on the sparse tensor cores:
 
 ```python
@@ -155,7 +158,10 @@ def taylor_importance(model, data, n_batches, batch_size, seqlen):
 ShortGPT measures how much each block changes its input. The *Block Influence* of a block is one minus the cosine similarity between its input and its output hidden states, averaged over the tokens of a calibration set. The blocks with the lowest influence are removed first. In deep models, these are often the later blocks, but not the last one:
 
 {: style="text-align:center; font-size: small;"}
-<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/shortgpt.svg"/>
+<img width="52%" height="52%" src="{{ site.assets }}/inference/imgs/shortgpt.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+The blocks whose output is most similar to their input change the hidden state the least, and are removed first.
 
 The following code computes the Block Influence of every block of GPTlite with a forward hook, and removes the least influential ones:
 
@@ -300,6 +306,9 @@ where $$\hat{x}$$ is the dequantized approximation of $$x$$. In **symmetric** (*
 {: style="text-align:center; font-size: small;"}
 <img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/quantization_mapping.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+**Symmetric (absmax):** $$s = \max \lvert x \rvert / 7$$ and $$z = 0$$, so the levels below $$-1$$ are never used. **Asymmetric (min-max):** $$s = (\max x - \min x) / 15$$ and $$z = \text{round}(-\min x / s) = 4$$, so all 16 levels are used.
+
 The following functions implement both. `quantize_tensor` returns the integers, the scales and the zero-points, with one scale for each slice of the tensor along `dim`. `fake_quantize` quantizes and dequantizes, returning the values that the low-precision format can represent. This *fake quantization* is how most of this section simulates formats that our GPUs, or PyTorch, cannot multiply directly:
 
 ```python
@@ -334,7 +343,10 @@ def fake_quantize_groups(W, bits, group_size):
 The **granularity** of the scales matters as much as the number of bits. A single scale per tensor is cheap but fragile. One scale per output channel (a row of the weight matrix), per *group* of, e.g., 128 consecutive weights, or per token for the activations, follows the data much more closely, at the cost of storing more scales. Group-wise scales are the standard for 4-bit weights.
 
 {: style="text-align:center; font-size: small;"}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/quantization_granularity.svg"/>
+<img width="97%" height="97%" src="{{ site.assets }}/inference/imgs/quantization_granularity.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+**One scale per tensor:** 1 scale, and the outlier stretches the scale of 47 other weights. **One scale per output channel (row):** 4 scales, and the outlier stretches the scale of 11 other weights. **One scale per group of 4 weights:** 12 scales, and the outlier stretches the scale of 3 other weights.
 
 The main enemy is **outliers**: a single large value stretches the scale, and all the small values collapse onto a few quantization levels. Weights are well-behaved and easy to quantize. Activations are not: [LLM.int8()](https://arxiv.org/abs/2208.07339) showed that large transformers develop a few *outlier feature dimensions*, with values much larger than the rest, that break naive 8-bit quantization of the activations.
 
@@ -485,6 +497,9 @@ def quantize_gptq(model, data, n_batches, batch_size, seqlen, bits=4, group_size
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+$$s_j = \text{mean}\lvert X_j \rvert^\alpha$$, with $$\alpha$$ searched on calibration data. The weights of the salient channel become larger, so rounding loses less of them. The division by $$s$$ is folded into the operation before.
+
 The following code implements AWQ for GPTlite. For each input of a block, it searches the exponent $$\alpha$$ of the factors $$s_j = \text{mean}\lvert X_j \rvert^\alpha$$ that minimizes the output error of the quantized linear layers that read it. The divisions are folded into the LayerNorms, into the value projection (attention is linear in the values), and into the first MLP layer (since $$\text{ReLU}(z / s) = \text{ReLU}(z) / s$$ for $$s > 0$$):
 
 ```python
@@ -616,7 +631,10 @@ def smoothquant(model, data, n_batches, batch_size, seqlen, alpha=0.5):
 [QuaRot](https://arxiv.org/abs/2404.00456) and [SpinQuant](https://arxiv.org/abs/2405.16406) multiply the weights and activations by orthogonal matrices, such as Hadamard matrices. Since $$R^TR = I$$, the output does not change, but the rotation spreads each outlier across all channels. This makes 4-bit weights, activations and KV cache possible (W4A4KV4). QuaRot uses random Hadamard matrices; SpinQuant learns the rotations.
 
 {: style="text-align:center; font-size: small;"}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
+<img width="77%" height="77%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Rotating the weights the other way, $$W R^T$$, keeps the output: $$(W R^T)(R x) = W x$$. After the rotation, the INT4 levels are closer together, and the small values are no longer rounded to 0.
 
 The following code builds Hadamard matrices, and a linear layer that simulates low-precision weights and activations with fake quantization, with an optional rotation of its inputs. For simplicity, it rotates the input of every layer on the fly. QuaRot instead folds most rotations into the weights of the previous layers, and applies the few remaining ones with fast Hadamard kernels. A Hadamard matrix of size $$n$$ exists when $$n$$ is a power of 2; for other sizes, such as the 384 features of the attention output of GPTlite, the code uses a block-diagonal matrix of smaller Hadamard matrices, which is also orthogonal:
 
@@ -700,6 +718,9 @@ At long contexts and large batches, the KV cache can be larger than the model we
 
 {: style="text-align:center; font-size: small;"}
 <img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/kivi.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+The outliers of the keys live in a few fixed channels, so each channel gets its own scale. The outlined cells share one scale and zero-point.
 
 The following code quantizes the KV cache of GPTlite to FP8, or to 2 bits with KIVI, and generates text with it. To measure the loss of quality, we count the generated tokens that match those generated with the full-precision cache:
 
