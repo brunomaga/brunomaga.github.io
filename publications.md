@@ -972,6 +972,9 @@ The authors used scaling laws (Hoffmann et al., 2022) to determine the optimal m
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
 
+{: style="text-align:center; font-size: small;"}
+<b>Left:</b> <b>Scaling law IsoFLOPs curves</b> between $$6 \times 10^{18}$$ and $$10^{22}$$ FLOPs. The loss is the negative log-likelihood on a held-out validation set. We approximate measurements at each compute scale using a second degree polynomial. <b>Right:</b> <b>Number of training tokens in identified compute-optimal models as a function of pre-training compute budget.</b> We include the fitted scaling-law prediction as well. The compute-optimal models correspond to the parabola minimums in Figure 2.
+
 The model architecture does not deviate from Llama 2, except that they:
 
 1. use grouped query attention with 8 key-value heads to improve inference speed and to reduce the size of key-value caches during decoding, and
@@ -1201,6 +1204,9 @@ The finetuning was performed with supervised fine-tuning (Section 3.1), initial 
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="65%" height="65%" src="{{ site.assets }}/publications/llama2_gatt.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+<b>Issues with multi-turn memory (<i>left</i>) can be improved with GAtt (<i>right</i>).</b>
 
 </div>
 </details>
@@ -1632,10 +1638,16 @@ Heavily related to HPC's performance modelling applied to large language models.
 To be compute optimal (i.e., lowest loss for a given compute budget), Kaplan et al. (2020) claims that models should not be trained to their lowest possible loss, and for a 10× increase in computational budget, the model should increase by 5.5× and the training tokens by 1.8x. In this paper, the authors defend that model size and training tokens should be scaled in equal proportions. 
 
 {: style="text-align:center; font-size: small;"}
-<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.svg"/> 
+<img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+<b>Overlaid predictions.</b> We overlay the predictions from our three different approaches, along with projections from Kaplan et al. (2020). We find that all three methods predict that current large models should be substantially smaller and therefore trained much longer than is currently done. In Figure A3, we show the results with the predicted optimal tokens plotted against the optimal number of parameters for fixed FLOP budgets. <b><i>Chinchilla</i> outperforms <i>Gopher</i> and the other large models (see Section 4.2).</b>
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="80%" height="80%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models_2.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+<b>Training curve envelope.</b> On the <b>left</b> we show all of our different runs. We launched a range of model sizes going from 70M to 10B, each for four different cosine cycle lengths. From these curves, we extracted the envelope of minimal loss per FLOP, and we used these points to estimate the optimal model size (<b>center</b>) for a given compute budget and the optimal number of training tokens (<b>right</b>). In green, we show projections of optimal model size and training token count based on the number of FLOPs used to train <i>Gopher</i> ($$5.76 \times 10^{23}$$).
 
 </div>
 </details>
@@ -1950,6 +1962,9 @@ on a relatively modest amount of data and stopping significantly before converge
 
 {: style="text-align:center; font-size: small;"}
 <img loading="lazy" width="75%" height="75%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
+
+{: style="text-align:center; font-size: small;"}
+Language modeling performance improves smoothly as we increase the model size, datasetset size, and amount of compute<sup>2</sup> used for training. For optimal performance all three factors must be scaled up in tandem. Empirical performance has a power-law relationship with each individual factor when not bottlenecked by the other two.
 
 **Keypoints:**
 - Model performance depends most strongly on scale, which consists of three factors: the number of model parameters N, the size of the dataset D, and the amount of compute C used for training. Performance has a **power-law** relationship with each of the three scale factors (Fig.1).
