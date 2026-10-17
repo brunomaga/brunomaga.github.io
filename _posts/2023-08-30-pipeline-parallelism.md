@@ -13,7 +13,7 @@ Consider a model that is too large to fit in the local memory of a single proces
 <img width="53%" height="53%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-Left-to-right timeline of the serial training of a model divided across 4 compute units (GPUs) and 4 stages. Blue cells represent forward passes. Green cells represent backward passes, which take twice as long as forward passes. The number on each cell is the data sample index. Gray cells represent idle time, i.e. a worker not performing any computation. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
+Left-to-right timeline of the serial training of a model divided across 4 compute units (GPUs) and 4 stages. Blue cells represent forward passes. Green cells represent backward passes, which take twice as long as forward passes. The number on each cell is the data sample index. Hatched cells represent idle time, i.e. a worker not performing any computation. Source: adapted from <a href="https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/">PipeDream: Generalized Pipeline Parallelism for DNN Training (Microsoft, arXiv)</a>
 
 This method leads to a low utilization of compute resources: each process must wait for the connecting layers in other processes to be computed before it can perform its share of the forward/backward compute. For this reason, pipeline parallelism is usually combined with **micro-batching / gradient accumulation**. The mini-batch is split into several micro-batches, which are passed sequentially to the first process of the pipeline. When a process finishes the current micro-batch, it sends its activations to the following process and receives the activations of the next micro-batch from the previous process. This is mathematically equivalent to regular gradient accumulation. This approach is detailed in the paper [GPipe: Efficient Training of Giant Neural Networks using Pipeline Parallelism (Google, 2018, arXiv)](https://arxiv.org/abs/1811.06965) and is illustrated below:
 
@@ -359,7 +359,7 @@ The diagrams in this section were generated from the reference implementation of
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_interleaved_1f1b.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-1F1B (top) and interleaved 1F1B with 2 model chunks per GPU (bottom). Cells in the colors of the *2nd chunk* legend entry belong to the second chunk on each GPU. Interleaving halves the bubble.
+1F1B (top) and interleaved 1F1B with 2 model chunks per GPU (bottom). Light and dark cells refer to the first and second chunk on each GPU. Interleaving halves the bubble.
 
 ### Zero Bubble (ZB-H1 and ZB-H2)
 
@@ -384,7 +384,7 @@ The Zero Bubble paper also introduces **ZB-V**, which places two model chunks on
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_v.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-ZB-V with 8 model chunks on 4 GPUs. Cells in the colors of the *2nd chunk* legend entry belong to the second chunk on each GPU (chunks 4 to 7, going back up), and the others to the first chunk (chunks 0 to 3, going down). Faded cells belong to the previous and next iterations.
+ZB-V with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (chunks 0 to 3, going down) and dark cells to the second chunk (chunks 4 to 7, going back up). Faded cells belong to the previous and next iterations.
 
 ### DualPipe
 
@@ -398,7 +398,7 @@ The diagrams in this section model only computation, so DualPipe's bubble looks 
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-DualPipe on 4 GPUs: micro-batches 1 to 4 enter at GPU 0, and micro-batches 5 to 8 (in the colors of the *Reverse direction* legend entry) enter at GPU 3. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
+DualPipe on 4 GPUs: micro-batches 1 to 4 (light) enter at GPU 0, and micro-batches 5 to 8 (dark) enter at GPU 3. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other.
 
 ### DualPipeV
 
@@ -408,7 +408,7 @@ Sea AI Lab later observed that DualPipe is made of two mirrored halves, as GPUs 
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipev.svg"/>
 
 {: style="text-align:center; font-size: small;"}
-DualPipeV with 8 model chunks on 4 GPUs. Cells in the colors of the *2nd chunk* legend entry belong to the second chunk on each GPU (going back up), and the others to the first chunk (going down). Cells with a shared black border are overlapped forward and backward passes of two different micro-batches.
+DualPipeV with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (going down) and dark cells to the second chunk (going back up). Cells with a shared black border are overlapped forward and backward passes of two different micro-batches.
 
 ### Summary
 
