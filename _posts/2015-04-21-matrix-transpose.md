@@ -5,21 +5,26 @@ categories: ["Distributed Algorithms"]
 tags: ["MPI", "linear algebra", "matrix transpose", "all-to-all"]
 ---
 
-[Matrix transpose][wiki-transpose] is an important operation, particularly in large-scale algebraic solvers and graph-based algorithms. The transpose of a graph reverses the direction of its edges and provides the orthogonal view of its connectivity matrix. The transpose of an algebraic table (or, equivalently, of the connectivity matrix of a graph) may seem trivial on a single compute node, but it becomes a hard task when the dataset is distributed across multiple compute nodes.
-
-This post describes an efficient method to solve this problem and its implementation with the Message Passing Interface (`MPI`) runtime for distributed execution.
+The [transpose][wiki-transpose] $$M^T$$ of a matrix $$M$$, with $$M^T_{ij} = M_{ji}$$, is a core operation of linear solvers and graph algorithms. On one compute node, it only reorders data in memory. On distributed memory, every rank exchanges data with every other rank. The method below transposes distributed sparse matrices, including matrices with several values per cell, with three to five [MPI][mpi] collective calls.
 
 [wiki-transpose]: https://en.wikipedia.org/wiki/Transpose
+[mpi]: https://en.wikipedia.org/wiki/Message_Passing_Interface
 
-## The basics
+## Graphs and adjacency matrices
 
-A graph $$G = (V, E)$$ is a data structure made of a set of nodes or **vertices** $$V$$, and a set of connections between nodes, or **edges** $$E$$. An edge $$\{i,j,e\} \subset \{\mathbb{N}, \mathbb{N}, T\}$$ in $$E$$ represents a connection between vertices $$i$$ and $$j$$ in $$V$$ with edge information of type $$T$$. Edges are ordered or unordered, depending on whether the graph is directed or undirected.
-A matrix $$M$$ represents the connectivity $$E$$ in $$G$$ iff, for all $$\{i,j,e\} \in E$$, $$M_{ij}=e$$ if $$G$$ is ordered, and $$M_{ij} = M_{ji} = e$$ if it is unordered. Since $$M$$ holds the possible connectivity between nodes in $$V$$, $$M$$ is a square matrix of size $$|V| \times |V|$$.
+A [graph][graph] $$G = (V, E)$$ has a set of vertices $$V$$ and a set of edges $$E$$. An edge $$(i, j, e) \in V \times V \times T$$ connects vertices $$i$$ and $$j$$, and holds a value $$e$$ of type $$T$$. In a directed graph, the pair $$(i, j)$$ is ordered. The [adjacency matrix][adjacency] $$M$$ of $$G$$ is the $$\vert V \vert \times \vert V \vert$$ matrix with $$M_{ij} = e$$ for every edge $$(i, j, e)$$, and also $$M_{ji} = e$$ if $$G$$ is undirected. All other cells are empty.
 
-When a matrix is stored on a single compute node, the transpose is simple and follows the mathematical definition: the transpose of a matrix $$M$$ is $$M^T_{ij} = M_{ji}$$, i.e. it swaps the row and column positions of the cells of the initial matrix. The graph whose connectivity is described by the matrix $$M^T$$ is then simply $$G^{\star} = (V, E^{\star})$$, where $$E^{\star} = \big\{ \{j,i,e\}$$ for all $$\{i,j,e\} \in E \big\}$$.
+The transpose $$M^T$$ is the adjacency matrix of the [transpose graph][transpose-graph] $$G^{\star} = (V, E^{\star})$$, with all edges reversed: $$E^{\star} = \{ (j, i, e) : (i, j, e) \in E \}$$. The vertices do not change.
 
-Given a dense matrix representation of a graph connectivity $$E$$, computing $$G^{\star}_{r} = (V_{r}, E^{\star}_{r})$$ for every rank $$r$$ requires only the computation of the matrix $$M^{T}_{r}$$ for the connectivity $$E^{\star}_{r}$$. Vertex information is local to a compute node and stays in the same memory location after the transpose,
- so $$V$$ is the same for $$G$$ and $$G^{\star}$$. The distributed transpose of a **dense** connectivity matrix is well known and is available via the `MPI_Alltoall` collective call. This call takes as input (output) an array of elements, the size of the array, and the datatype of the elements to be sent (received).
+[graph]: https://en.wikipedia.org/wiki/Graph_(discrete_mathematics)
+[adjacency]: https://en.wikipedia.org/wiki/Adjacency_matrix
+[transpose-graph]: https://en.wikipedia.org/wiki/Transpose_graph
+
+## Distributed layout
+
+The vertices are split across $$R$$ ranks, numbered from 0. Rank $$r$$ holds the vertices $$V_r$$ and their outgoing edges $$E_r = \{ (i, j, e) \in E : i \in V_r \}$$, i.e. the rows of $$M$$ with indices in $$V_r$$. The sets $$V_r$$ are disjoint and cover $$V$$, so the sets $$E_r$$ are disjoint and cover $$E$$. A rank can only access its own rows.
+
+If every rank holds the same number of rows of a dense matrix, `MPI_Alltoall` performs the distributed transpose. Each rank cuts its rows into $$R$$ blocks of columns, and sends block $$s$$ to rank $$s$$. A local transpose of every received block completes the operation.
 
 {: .picture}
 <img width="70%" height="70%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg">
@@ -27,9 +32,9 @@ Given a dense matrix representation of a graph connectivity $$E$$, computing $$G
 {: .caption}
 (image adapted from: MPI Tutorial, Shao-Ching Huang, IDRE High Performance Computing Workshop, 2013-02-13)
 
-For sparse matrices, the problem is harder. A distributed memory data layout assumes that the vertices $$V$$ are distributed across $$R$$ compute nodes (**ranks**), and that each rank can directly access only the rows stored in its own memory region. The notation $$G_{r} = (V_{r}, E_{r})$$ refers to the subset of $$G$$ stored in rank $$r$$, with vertices $$V_{r}$$ and edges $$E_{r}$$. Each rank holds a disjoint subset of rows of the initial graph $$G$$, such that the cover ($$\bigcup\limits_{r} G_{r} = G$$) and disjoint ($$G_{r} \bigcap G_{s} = \emptyset, \forall r \neq s$$) properties hold. Ranks only hold information about outgoing connectivity (edges from vertices in this rank to other vertices), i.e. $$E_{r} = \Big\{ \{i,j,e\} \in E $$ such that $$i \in V_r \Big\}$$. Therefore, the cover and disjoint properties also hold for edges.
+A sparse matrix is stored in a [compressed sparse row][csr] (CSR) format. Each rank stores its rows in four arrays: `row_count`, the number of rows; `counts`, the number of nonzeros per row; `disps`, the column index of each nonzero; and `cells`, the values. This variant of CSR stores the number of nonzeros per row instead of the row offsets. The figure shows a graph with 6 vertices and 12 edges, labeled A to T, its adjacency matrix, and the CSR arrays on 3 ranks:
 
-A common format for the distributed storage of a sparse matrix is the Compressed Sparse Row (CSR) format. Each submatrix stored on a compute node is represented (serialized) as three arrays, holding (1) the number of populated columns per row, (2) the id of each populated column, and (3) their values. The following picture illustrates a sample graph with vertices 0-5 and edges A-T, its sparse matrix, and the CSR data structure on 3 ranks:
+[csr]: https://en.wikipedia.org/wiki/Sparse_matrix
 
 {: .picture}
 <img width="89%" height="89%" src="{{ site.assets }}/matrix-transpose/crs_format.svg">
@@ -37,17 +42,9 @@ A common format for the distributed storage of a sparse matrix is the Compressed
 {: .caption}
 Based on the [original publication]({{ site.assets }}/matrix-transpose/matrix-transposer.pdf).
 
-## How to transpose it?
+## Local transpose and view swap
 
-A sparse matrix transpose can be seen as the composition of two operations: a local matrix transpose and a view swap. These two operations describe a distributed sparse matrix in four different data layouts, illustrated below:
-
-{: .picture}
-<img width="94%" height="94%" src="{{ site.assets }}/matrix-transpose/layouts.svg">
-
-{: .caption}
-Based on the [original publication]({{ site.assets }}/matrix-transpose/matrix-transposer.pdf).
-
-The formulation starts with the mathematical formalism of the distributed matrix transpose operations. A **horizontal concatenation** of two matrices $$M_{n \times m}$$ and $$N_{n \times m'}$$ is represented by $$M \| N$$. It joins two sub-matrices horizontally into a matrix of dimensionality $${n \times (m+m')}$$, such that: 
+$$M \| N$$ denotes the **horizontal concatenation** of the matrices $$M_{n \times m}$$ and $$N_{n \times m'}$$, a matrix of size $${n \times (m+m')}$$:
 
 $$
 (M \| N)_{i j} =\left\{
@@ -57,7 +54,7 @@ $$
   \end{array}\right.
 $$
 
-Similarly, a **vertical concatenation** $$M_{n \times m} // N_{n' \times m}$$ joins two sub-matrices vertically into a matrix of dimensionality $${(n+n') \times m}$$, such that: 
+Similarly, the **vertical concatenation** $$M_{n \times m} // N_{n' \times m}$$ is a matrix of size $${(n+n') \times m}$$:
 
 $$
 (M // N)_{i j} =\left\{
@@ -67,37 +64,31 @@ $$
   \end{array}\right.
 $$
 
-A **view** is the perspective of data storage: the row view describes the matrix as the vertical concatenation of the subsets of rows stored on each rank, and the column view describes it as the horizontal concatenation of the subsets of columns stored on each rank. It follows that $$(M \| N)^T = (M^T // N^T)$$ and $$(M // N)^T = (M^T \| N^T)$$: both concatenations describe the same dataset in two alternative views, and the transpose of a concatenated dataset yields the orthogonally concatenated dataset. 
+The transpose turns one concatenation into the other: $$(M \| N)^T = M^T // N^T$$ and $$(M // N)^T = M^T \| N^T$$.
 
-The **local transpose** of a matrix $$M$$, represented by the concatenation of $$R$$ submatrices in either view, is the concatenation of the transposes of the individual matrices in the orthogonal view:
+A **view** is the way a matrix is split across ranks. In the **row view**, rank $$r$$ holds a block of rows $$M_r$$, and $$M = M_0 // M_1 // \cdots // M_{R-1}$$. In the **column view**, rank $$r$$ holds the block of columns $$M_r$$ with the same indices, and $$M = M_0 \| M_1 \| \cdots \| M_{R-1}$$. Two operations change the layout of a distributed matrix:
+- the **local transpose**: every rank transposes its own block, without communication. For a matrix in row view, $$(M_0 // \cdots // M_{R-1})^T = M_0^T \| \cdots \| M_{R-1}^T$$, so the ranks then hold $$M^T$$ in column view. From the column view, the local transpose gives $$M^T$$ in row view;
+- the **view swap**: the ranks exchange data, so that the same matrix moves from the row view to the column view, or back.
+
+{: .picture}
+<img width="94%" height="94%" src="{{ site.assets }}/matrix-transpose/layouts.svg">
+
+{: .caption}
+Based on the [original publication]({{ site.assets }}/matrix-transpose/matrix-transposer.pdf).
+
+The four layouts are: (a) $$M$$ in row view; (b) its local transpose, $$M^T$$ in column view; (c) its view swap, $$M$$ in column view; (d) $$M^T$$ in row view, the distributed transpose.
+
+## The view swap with MPI
+
+A rank does not know which rows the other ranks hold. So an `MPI_Allgather` first collects the row counts, from which every rank computes the row interval of each rank $$r$$:
 
 $$
-LocalTranspose(M)_{i j} =\left\{
-  \begin{array}{@{}ll@{}}
-    \big( M^T_1 \| M^T_2 \| ... \| M^T_R \big)_{j i}& \text{, if } M \text{ is in row view }\\
-    \big( M^T_1 // M^T_2 // ... // M^T_R \big)_{j i}& \text{, otherwise}
-  \end{array}\right.
+\big[ \sum^{r-1}_{s=0} \vert V_s \vert, \,\, \sum^{r}_{s=0} \vert V_s \vert \big)
 $$
 
-This operation yields the transposes of the original rank matrices that form the initial dataset. No communication between ranks is needed, as the data $$M_r$$ of every rank is locally transposed into $$M^T_r$$. Moreover, it is an involutory function, as $$(LocalTranspose \cdot LocalTranspose) (M) = M$$. 
-
-The **view swap** of a distributed matrix switches the data representation from one view to the orthogonal one (from row- to column-accessible and vice versa), while keeping the same matrix contents. It is defined by:
-
-$$
-ViewSwap(M)_{i j} =\left\{
-  \begin{array}{@{}ll@{}}
-    \big( M_1 \| M_2 \| ... \| M_R \big)_{i j}& \text{, if } M \text{ is in row view}\\
-    \big( M_1 //  M_2 //  ... //  M_R \big)_{i j}& \text{, otherwise}
-  \end{array}\right.
-$$
-
-
-From the perspective of a single rank, the matrix data layout after a view swap is unknown until the swap is performed, as ranks do not hold information about the matrix structure on other ranks. Therefore, a communication step must first gather the number of rows held by each rank, to compute the row interval of every other rank $$r$$ as 
-$$
-\big[ \sum^{r-1}_{s=1} \vert V_s \vert, \,\, \sum^{r}_{s=1} \vert V_s \vert \big)
-$$.
-
-This information is needed to map each column/row id to its target rank in the sparse transpose steps that follow. The view swap then performs two communication steps. The first step performs a dense matrix transpose to send/receive the number of elements to/from other ranks. The second step performs a selective scatter-gather (`MPI_Alltoallv`) that delivers the elements to their final rank.
+These intervals map every column index to its rank after the swap. The swap then takes two communication steps:
+1. an `MPI_Alltoall` transposes the dense $$R \times R$$ matrix of element counts, so that each rank knows how many elements it receives from each rank;
+2. an `MPI_Alltoallv` sends every element, with its row and column indices, to its new rank.
 
 {: .picture}
 <img width="99%" height="99%" src="{{ site.assets }}/matrix-transpose/matrix-transposition-crs.svg">
@@ -105,28 +96,25 @@ This information is needed to map each column/row id to its target rank in the s
 {: .caption}
 Based on the [original publication]({{ site.assets }}/matrix-transpose/matrix-transposer.pdf).
 
-A memory realignment based on column id and row id produces the final distributed matrix. The view swap is also an involutory function: each view swap performs two involutory transpose operations, so two consecutive view swaps yield the initial dataset.
+A final sort of the received elements by their row and column index in $$M^T$$ builds the CSR arrays of $$M^T$$. The distributed transpose of a CSR matrix thus takes three collective calls: one `MPI_Allgather`, one `MPI_Alltoall` and one `MPI_Alltoallv`.
 
+## Correctness
 
-The full transpose algorithm performs only three collective communication calls: an `MPI_Allgather` to compute the row offsets of ranks, and one `MPI_Alltoall` and one `MPI_Alltoallv` for the metadata and cell values transpose in the view swap. Moreover, the involutory property of this transpose method is important, as it guarantees that the distributed transpose can be executed any number of times while preserving the data integrity of a CSR-based graph representation. 
+The distributed transpose is the composition of the two operations. Starting from $$M$$ in row view, the local transpose gives $$M^T$$ in column view, and the view swap then gives $$M^T$$ in row view. In the other order, the view swap gives $$M$$ in column view, and the local transpose then gives $$M^T$$ in row view. So the two operations commute:
 
-## Algorithmic verification
+$$
+Transpose = ViewSwap \cdot LocalTranspose = LocalTranspose \cdot ViewSwap.
+$$
 
-Is this algorithm guaranteed to work for any dataset? This section shows that it is mathematically sound.
+Both operations are [involutions][involution]: applied twice, each returns its input. With $$V$$ the view swap, $$L$$ the local transpose and $$I$$ the identity, the transpose is an involution too: $$(V \cdot L) \cdot (V \cdot L) = V \cdot (L \cdot V) \cdot L = (V \cdot V) \cdot (L \cdot L) = I$$. So a second transpose returns the original matrix, in its original layout.
 
-The **distributed sparse transpose** is defined as the composition of the local transpose and view swap methods. Both the local transpose and the view swap are CSR compatible, and the distributed sparse transpose is also mathematically sound. Take a matrix $$M$$ in row view, represented by the vertical concatenation of partial matrices $$M_1 // M_2 // ... // M_R$$. A local transpose of $$M$$ leads to $$M^T_{i j} = ( M^T_1 \| M^T_2 \| ... \| M^T_R)_{ji}$$.
-Applying a view swap gives $$M^T_{i j} = ( M^T_1 // M^T_2 // ... // M^T_R)_{ji}$$, which is the definition of the distributed transpose of $$M$$ in the original view. In brief, $$Transpose (M) = (ViewSwap \cdot LocalTranspose) (M)$$.
+[involution]: https://en.wikipedia.org/wiki/Involution_(mathematics)
 
-The commuted composition, $$Transpose (M) = (LocalTranspose \cdot ViewSwap) (M)$$, also holds: a view swap over the original dataset leads to $$M_{i j} = ( M_1 \| M_2 \| ... \| M_R)_{i j}$$, and a subsequent local transpose yields the final result $$M^T_{i j} = ( M^T_1 // M^T_2 // ... // M^T_R)_{ji}$$. Since $$Transpose$$ is a composition of two involutory functions that commute, i.e. $$(ViewSwap \cdot LocalTranspose) = (LocalTranspose \cdot ViewSwap)$$, $$Transpose$$ is by definition involutory ([Elements of Operator Theory, Carlos S. Kubrusly, Springer 2011][kubrusly2011elements]).
+## Matrices with several values per cell
 
-[kubrusly2011elements]: https://link.springer.com/content/pdf/10.1007/978-0-8176-4998-2.pdf
+In a [multigraph][multigraph], two vertices can be connected by several edges. Examples are the common interests of two users of a social network, or the hyperlinks between two web pages, each with its own data. Each cell of the adjacency matrix then holds a list of values of variable length. The **extended CSR** format (XCSR) stores such matrices: it adds to CSR the array `cell_counts`, the number of values per cell.
 
-## Higher Cardinality Matrices
-
-In real-life problems, a pair of nodes is often connected by more than one edge. One example is a matrix of common interests between pairs of users in a social network: some pairs of users share hundreds of interests, while others share barely any. Another example is 
-a URL cross-referral map, which may store not only the number of hyperlinks between pages, but also additional information about every link. This section describes the transpose for this case.
-
-The first step is a data format that holds high-cardinality elements per graph node. This format is called the extended CSR, or XCSR, and is defined as the previous CSR data structure with an added dimension that holds the number of elements per matrix cell (i.e. edges between pairs of nodes). The layout is as follows:
+[multigraph]: https://en.wikipedia.org/wiki/Multigraph
 
 {: .picture}
 <img width="97%" height="97%" src="{{ site.assets }}/matrix-transpose/xcrs_format.svg">
@@ -134,15 +122,15 @@ The first step is a data format that holds high-cardinality elements per graph n
 {: .caption}
 Based on the [original publication]({{ site.assets }}/matrix-transpose/matrix-transposer.pdf).
 
-The transpose algorithm has three steps. First, each compute node (rank) collects the metadata of its own sub-matrix: a set of triplets of the form [ row id, column id, number of elements], indicating the row, column and dimensionality of each cell. The ranks then perform a **local transpose** of their own data, by reordering their triplets by column and row id. The following sequence illustrates this first step:
- 
+The transpose takes three steps. First, the **local transpose**: each rank builds the metadata of its cells, one triplet (row index, column index, number of values) per cell. It sorts the triplets and the values by column and row index.
+
 {: .picture}
 <img width="97%" height="97%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_1.svg">
 
 {: .caption}
 Based on the [original publication]({{ site.assets }}/matrix-transpose/matrix-transposer.pdf).
 
-The second step starts the **view swap** method. All ranks pack their triplets and exchange them in an all-to-all communication, sending each triplet to the owner of its cell in the final transposed matrix. The previous local transpose already sorted each sub-matrix by columns (i.e. by rows of the final transposed dataset), so the triplets are already grouped by destination rank. More importantly, the matrix of all triplets across all ranks is a distributed matrix with a fixed element size per cell (a tuple of fixed size). Therefore, this exchange uses the same distributed transpose presented in the section *How to transpose it?*. After the exchange, all ranks hold the triplets of the metadata (*but not the data yet*) of the final matrix structure:   
+Second, the **view swap of the metadata**. The triplets have a fixed size, so they form a distributed sparse matrix with one value per cell, which the CSR view swap above exchanges: an `MPI_Alltoall` of the triplet counts, then an `MPI_Alltoallv` of the triplets. The local sort has already grouped the triplets by destination rank. Every rank then holds the metadata of its part of the transposed matrix, but not the values yet.
 
 {: .picture}
 <img width="99%" height="99%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_2.svg">
@@ -150,7 +138,7 @@ The second step starts the **view swap** method. All ranks pack their triplets a
 {: .caption}
 Based on the [original publication]({{ site.assets }}/matrix-transpose/matrix-transposer.pdf).
 
-Finally, the view swap is completed by communicating the data, based on the metadata of the transposed matrix. First, each rank counts the number of elements to be received. The distributed matrix of counts of elements sent and received per rank is a dense matrix, so it is easily transposed with `MPI_Alltoall`. These counts are then used to allocate the buffers for the incoming data and to perform an `MPI_Alltoallv` that delivers the elements of the final matrix across all compute nodes. Upon completion, the (previously column-oriented) elements are sorted by row and column, which yields the final dataset: 
+Third, the **view swap of the values**. Each rank computes the number of values it sends to each rank, and an `MPI_Alltoall` transposes this dense matrix of counts. The counts give the size of the receive buffers, and an `MPI_Alltoallv` delivers the values. Each rank finally sorts the values by their row and column index in $$M^T$$.
 
 {: .picture}
 <img width="99%" height="99%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_3.svg">
@@ -158,10 +146,8 @@ Finally, the view swap is completed by communicating the data, based on the meta
 {: .caption}
 Based on the [original publication]({{ site.assets }}/matrix-transpose/matrix-transposer.pdf).
 
-
-In summary, the full transpose algorithm requires five collective communication calls: an `MPI_Allgather` to compute the row offsets of ranks, and two `MPI_Alltoall` and two `MPI_Alltoallv` for the metadata and cell values transpose. Moreover, the general applicability of the XCSR format and the involutory property of the transpose method are important, as they guarantee that the distributed transpose can be executed any number of times while preserving the data integrity of an XCSR-based graph representation.
+With the `MPI_Allgather` of the row counts, the XCSR transpose takes five collective calls: one `MPI_Allgather`, two `MPI_Alltoall` and two `MPI_Alltoallv`. Like the CSR transpose, it is an involution.
 
 ## Further details
 
-More details, implementation and benchmark information are available in the <a href="{{ site.assets }}/matrix-transpose/matrix-transposer.pdf">original publication (preprint)</a>. The <a href="{{ site.assets }}/matrix-transpose/matrix-transposer.zip">source code</a> is also available for download.
-
+Details, the implementation and benchmarks are in the <a href="{{ site.assets }}/matrix-transpose/matrix-transposer.pdf">original publication (preprint)</a>. The <a href="{{ site.assets }}/matrix-transpose/matrix-transposer.zip">source code</a> is available for download.
