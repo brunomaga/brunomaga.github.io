@@ -252,9 +252,17 @@ The report stacks four efficiency techniques:
 
 The design philosophy is a balance of three layer types: MoE for sparse parameter scaling, a few attention layers for high-fidelity all-to-all information routing between tokens, and Mamba-2 for fixed-cost sequence modeling. Nemotron 3 Nano 30B-A3B achieves 3.3× higher throughput than Qwen3-30B-A3B (8K input / 16K output), while staying competitive on reasoning and long-context (RULER @ 1M) benchmarks. 
 
-<img loading="lazy" width="1744" height="547" alt="image" src="https://github.com/user-attachments/assets/229ddc64-b770-4ccf-b82d-003722cae9ca" />
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/nemotron3.svg"/>
 
-<img loading="lazy" width="2182" height="1350" alt="image" src="https://github.com/user-attachments/assets/8f3fae96-31fa-45c4-bcd6-0759bf265d8e" />
+{: .caption}
+Nemotron 3 models (e.g., Nemotron Nano 3) leverage a hybrid Mamba-Transformer MoE architecture consisting predominantly of interleaved Mamba-2 and MoE layers, with a select few self attention layers.
+
+{: .picture}
+<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
+
+{: .caption}
+Relative difference in train loss (left) and validation loss (right) between models trained with NVFP4 and BF16, shown at two model scales: Nemotron 3 Nano (A3B) and the larger MoE model (A8B). Loss gaps decrease as model size increases (A3B → A8B). Recipe ablation on Nemotron 3 Nano started from Nemotron 3 NVFP4 checkpoint at 500B tokens, then quantizes sensitive layers (Mamba Output, QKV, and Attention projections) to NVFP4, highlighting the importance of keeping these layers in high precision.
 
 </div>
 </details>
