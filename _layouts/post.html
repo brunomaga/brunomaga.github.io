@@ -14,13 +14,13 @@ layout: default
     <div class="post-labels">
       {% include back-link.html %}
       {%- if page.date %}
-      <time class="post-label post-label--date" datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%b %Y" }}</time>
+      <time class="post-label post-label--date" datetime="{{ page.date | date_to_xmlschema }}"><i class="far fa-calendar" aria-hidden="true"></i> {{ page.date | date: "%b %Y" }}</time>
       {%- endif %}
       {%- for category in page.categories %}
-      <span class="post-label post-label--category">{{ category }}</span>
+      <span class="post-label post-label--category"><i class="far fa-folder" aria-hidden="true"></i> {{ category }}</span>
       {%- endfor %}
       {%- for tag in page.tags %}
-      <span class="post-label">{{ tag }}</span>
+      <span class="post-label post-label--tag">{{ tag }}</span>
       {%- endfor %}
     </div>
   </header>
