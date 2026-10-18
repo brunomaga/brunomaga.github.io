@@ -13,7 +13,7 @@
 // --label-padding-x is the space left and right of the text
 .post-label {
   @extend %box;
-  --label-padding: 6.5px;  // 23px tall
+  --label-padding: 7.5px;  // 25px tall
   --label-padding-x: 10px;
   display: inline-block;
   padding: calc(var(--label-padding) - 1px) var(--label-padding-x) calc(var(--label-padding) - 3px);
