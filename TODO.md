@@ -83,13 +83,12 @@ that is not wrong.
   j* and w_j* in the Kohonen pictures, and "Exact" in the legend of the LIF solutions. Fix, in the order the user
   chose: merge the picture branch first, then merge the main branch into the text rewrite, keeping its text and the
   pictures, img tags and captions of the main branch, and check each caption against the new text.
-- The two kernel fusion posts (2026-08-18-kernel-fusion-tensor-parallelism.md and
-  2026-10-09-kernel-fusion-expert-parallelism.md): their 17 pictures, `inference/imgs/tp_*.svg` and `ep_*.svg`, are
-  not restyled and keep the Times New Roman font of the paper figures. 16 are copies of the figures of the paper
-  repositories, and `tp_expert_sharding.svg` comes from a tab of `inference/inference.drawio` without a figure group.
-  All show at widths set by hand (40% to 100%), so their text sizes differ from the other pictures. Fix: redraw them
-  at page scale and in the fonts of CLAUDE.md, in tabs of `inference/inference.drawio` named after the posts, from the
-  draw.io or TikZ sources of the paper repositories (CLAUDE.md, Pictures, sections 2 to 4), and check their captions.
+- The kernel fusion post on expert parallelism (2026-10-09-kernel-fusion-expert-parallelism.md): its 11 pictures,
+  `inference/imgs/ep_*.svg`, are copies of the figures of the paper repository and keep the Times New Roman font of
+  the paper figures. They show at widths set by hand (40% to 100%), so their text sizes differ from the other
+  pictures. Fix: redraw them at page scale and in the fonts of CLAUDE.md, in a tab `kernel-fusion-expert-parallelism`
+  of `inference/inference.drawio`, from the draw.io or TikZ sources of the paper repository (CLAUDE.md, Pictures,
+  sections 2 to 4), as the tensor parallelism post's pictures are, and check their captions.
 - Style details that the restyle left, from an automated check of the 230 draw.io figures: 178 boxes in 15 figures
   keep the rounded corners of the original with a corner radius of 2 to 4.5 px instead of 5 px (for example the
   GPT-lite pictures, `diffusion/playground_v3.svg` and `publications/visual_transformer.svg`), and the 12 chat
