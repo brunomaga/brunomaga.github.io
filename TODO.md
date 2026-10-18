@@ -248,6 +248,25 @@ that is not wrong.
   distribution, but the AE encoder is a deterministic function; "Input" and "output" differ in capitalization. Fix:
   label the encoder "Encoder φ", and write "Input" and "Output".
 
+### Learning from sequences with Encoder-Decoder, Transformers and BERT (2020-02-28-learning-from-sequences.md)
+
+- `learning-from-sequences/transformer_attention_masked.svg`: the weights of the "rouge" step, 0.16, 0.09, 0.15 and
+  0.66, sum to 1.06, but the softmax makes the weights of each step sum to 1. The caption calls the vectors the
+  input of the masked attention, but they are its attention weights. Fix: change 0.16 to 0.10, and start the
+  caption with "Attention weights of the masked attention of the decoder for the sentence "Le gros chien rouge",
+  one vector per step."
+- Caption of `learning-from-sequences/bert_input.svg`: it says that the position embeddings are similar to those of
+  the transformer, but BERT learns one embedding per position, up to 512, while the transformer uses fixed
+  sinusoids. Fix: "Position embeddings are learned, one per position, unlike the fixed sinusoids of the
+  transformer."
+- Optional, `learning-from-sequences/encoder_decoder.svg`: the output layer has as many neurons as the input
+  embedding and the hidden state, but the decoder outputs a softmax over the target vocabulary, which is much
+  larger. Fix: draw the output layer wider than the other layers, with "softmax over the vocabulary" next to it.
+- Optional, captions of `learning-from-sequences/transformer_attention.svg` and
+  `learning-from-sequences/transformer_attention_masked.svg`: both end with "Source: unknown", and the first writes
+  the sentence length as N, while the text writes n. Fix: write n, and redraw both figures from the text, or find
+  their source.
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
