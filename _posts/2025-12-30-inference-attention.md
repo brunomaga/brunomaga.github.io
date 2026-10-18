@@ -8,10 +8,10 @@ tags: ["LLM", "attention", "FlashAttention", "sparse attention", "linear attenti
 [Attention](https://en.wikipedia.org/wiki/Attention_(machine_learning)) is the only part of a transformer whose cost per token grows with the context length:
 
 $$
-\text{Attention}(Q, K, V) = \text{softmax}\left( \frac{QK^T}{\sqrt{d_\text{head}}} \right) V
+\text{Attention}(Q, K, V) = \text{softmax}\left( \frac{QK^T}{\sqrt{h}} \right) V
 $$
 
-During prefill, $$QK^T$$ compares every token with every previous token. The compute therefore grows quadratically with the prompt length $$n$$, and a naive implementation stores an $$n \times n$$ matrix of scores per head.
+Here $$h$$ is the size of each head. During prefill, $$QK^T$$ compares every token with every previous token. The compute therefore grows quadratically with the prompt length $$S$$, and a naive implementation stores an $$S \times S$$ matrix of scores per head.
 
 {: .picture}
 <img width="68.7%" height="68.7%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
@@ -76,14 +76,14 @@ Decode reads the whole KV cache at every step. A smaller KV cache therefore mean
 {: .picture}
 <img width="97.4%" height="97.4%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
 
-**Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)) is the middle ground, and most current models use it. The heads are split into $$G$$ groups, and the heads of a group share one key head and one value head. The cache shrinks by a factor $$n_\text{heads} / G$$. GQA is multi-head attention when $$G = n_\text{heads}$$, and MQA when $$G = 1$$. A trained multi-head model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute.
+**Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)) is the middle ground, and most current models use it. The $$H$$ heads are split into $$G$$ groups, and the heads of a group share one key head and one value head. The cache shrinks by a factor $$H / G$$. GQA is multi-head attention when $$G = H$$, and MQA when $$G = 1$$. A trained multi-head model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute.
 
 {: .picture}
 <img width="97.5%" height="97.5%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
 
 GQA and MQA speed up decode, and the memory they free allows larger batches. The savings come from the smaller KV cache that decode reads: without a cache, GQA saves only a little compute in the key and value projections.
 
-The following code implements GQA with an optional KV cache. It is also MHA with `num_groups = num_heads`, and MQA with `num_groups = 1`. During decode, the module receives only the new tokens, appends their keys and values to the cache, and returns the updated cache, with $$G$$ heads instead of $$n_\text{heads}$$. The model must give the new tokens the positions that follow the cached ones. MLA and DSA, below, follow the same convention: an optional `kv_cache` argument, and the new cache returned with the output:
+The following code implements GQA with an optional KV cache. It is also MHA with `num_groups = num_heads`, and MQA with `num_groups = 1`. During decode, the module receives only the new tokens, appends their keys and values to the cache, and returns the updated cache, with $$G$$ heads instead of $$H$$. The model must give the new tokens the positions that follow the cached ones. MLA and DSA, below, follow the same convention: an optional `kv_cache` argument, and the new cache returned with the output:
 
 ```python
 class GQA(nn.Module):
@@ -130,9 +130,9 @@ class GQA(nn.Module):
 
 ## FlashAttention
 
-GPUs have a small, fast on-chip memory ([SRAM](https://en.wikipedia.org/wiki/Static_random-access_memory), around 200 KB per streaming multiprocessor) and a large, slower high-bandwidth memory ([HBM](https://en.wikipedia.org/wiki/High_Bandwidth_Memory), tens of GB). A standard attention implementation writes the $$n \times n$$ score matrix $$S = QK^T$$ to HBM, reads it back to compute the softmax $$P$$, writes $$P$$, and reads it again to compute $$PV$$. Its runtime is dominated by these memory round-trips, not by the arithmetic.
+GPUs have a small, fast on-chip memory ([SRAM](https://en.wikipedia.org/wiki/Static_random-access_memory), around 200 KB per streaming multiprocessor) and a large, slower high-bandwidth memory ([HBM](https://en.wikipedia.org/wiki/High_Bandwidth_Memory), tens of GB). A standard attention implementation writes the $$S \times S$$ score matrix $$QK^T$$ to HBM, reads it back to compute the softmax $$P$$, writes $$P$$, and reads it again to compute $$PV$$. Its runtime is dominated by these memory round-trips, not by the arithmetic.
 
-[FlashAttention](https://arxiv.org/abs/2205.14135) computes exactly the same result without ever writing $$S$$ or $$P$$ to HBM. It splits $$Q$$, $$K$$ and $$V$$ into tiles that fit in SRAM. For each tile of queries, it loops over the tiles of keys and values and accumulates the output on chip. The difficulty is the softmax, which needs the maximum and the sum over *all* the keys of a row before it can normalize. FlashAttention solves this with the [online softmax](https://arxiv.org/abs/1805.02867). For each query, it keeps a running maximum $$m$$, a running sum $$\ell$$ and an unnormalized output $$O$$. It corrects them whenever a new tile of scores $$s_j$$ and values $$v_j$$ arrives:
+[FlashAttention](https://arxiv.org/abs/2205.14135) computes exactly the same result without ever writing $$QK^T$$ or $$P$$ to HBM. It splits $$Q$$, $$K$$ and $$V$$ into tiles that fit in SRAM. For each tile of queries, it loops over the tiles of keys and values and accumulates the output on chip. The difficulty is the softmax, which needs the maximum and the sum over *all* the keys of a row before it can normalize. FlashAttention solves this with the [online softmax](https://arxiv.org/abs/1805.02867). For each query, it keeps a running maximum $$m$$, a running sum $$\ell$$ and an unnormalized output $$O$$. It corrects them whenever a new tile of scores $$s_j$$ and values $$v_j$$ arrives:
 
 $$
 \begin{align*}
@@ -142,7 +142,7 @@ O' & = e^{m - m'} \, O + \sum_j e^{s_j - m'} \, v_j
 \end{align*}
 $$
 
-After the last tile, the output is $$O / \ell$$. The memory used by attention drops from $$O(n^2)$$ to $$O(n)$$, and the traffic to HBM drops by a large factor. With a causal mask, the tiles entirely above the diagonal are skipped, which saves about half of the work. During training, the backward pass recomputes $$S$$ and $$P$$ tile by tile instead of storing them. The result is exact, and the arithmetic stays $$O(n^2 d)$$ for a model of width $$d$$: **the speedup comes from less memory traffic, not from fewer FLOPs**.
+After the last tile, the output is $$O / \ell$$. The memory used by attention drops from $$O(S^2)$$ to $$O(S)$$, and the traffic to HBM drops by a large factor. With a causal mask, the tiles entirely above the diagonal are skipped, which saves about half of the work. During training, the backward pass recomputes $$QK^T$$ and $$P$$ tile by tile instead of storing them. The result is exact, and the arithmetic stays $$O(S^2 E)$$ for a model of width $$E$$: **the speedup comes from less memory traffic, not from fewer FLOPs**.
 
 Each new version of FlashAttention adapts the algorithm to newer hardware:
 
@@ -185,7 +185,7 @@ Sparse attention reduces the compute and the amount of KV cache read at each ste
 
 Linear attention, introduced by [Katharopoulos et al.](https://arxiv.org/abs/2006.16236), changes the architecture so that the cost grows linearly with the sequence length, instead of quadratically. It removes the softmax, which allows the matrix products to be reordered. Replacing $$\text{softmax}(QK^T)V$$ with $$\phi(Q)\left(\phi(K)^T V\right)$$, for some feature map $$\phi$$, makes $$\phi(K)^T V$$ a small matrix of size $$d_k \times d_v$$. Here $$d_k$$ is the dimension of the keys and queries after $$\phi$$, and $$d_v$$ the dimension of the values.
 
-During decode, linear attention behaves like a [recurrent neural network](https://en.wikipedia.org/wiki/Recurrent_neural_network). Instead of a KV cache that grows with every token, each layer keeps a state matrix $$S$$ that maps keys to values:
+During decode, linear attention behaves like a [recurrent neural network](https://en.wikipedia.org/wiki/Recurrent_neural_network). Instead of a KV cache that grows with every token, each layer keeps a state matrix $$S_t$$ that maps keys to values:
 
 $$
 S_t = S_{t-1} + v_t \phi(k_t)^T, \quad\quad o_t = S_t \phi(q_t)

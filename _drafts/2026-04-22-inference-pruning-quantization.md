@@ -20,7 +20,7 @@ Unstructured pruning removes individual weights by setting them to zero. Structu
 - removing **embedding channel** $$c$$ removes column $$c$$ of the token and position embeddings and entry $$c$$ of every LayerNorm. It also removes column $$c$$ of every matrix that reads from the residual stream (query, key and value projections, first MLP layer and final output layer), and row $$c$$ (and bias $$c$$) of every matrix that writes to it (attention output projection and second MLP layer). Every layer changes;
 - removing a **transformer block** deletes it, and the [residual connections](https://en.wikipedia.org/wiki/Residual_neural_network) keep the shapes of the other blocks valid.
 
-The picture below shows the rows and columns that each structure removes:
+The picture below shows the rows and columns that each structure removes, for $$n_\text{heads}$$ heads of size $$d_\text{head}$$, an embedding size $$E$$ and an MLP size $$d_\text{ff}$$:
 
 {: .picture}
 <img width="97.4%" height="97.4%" src="{{ site.assets }}/inference/imgs/pruning_structures.svg"/>
@@ -434,7 +434,7 @@ def quantize(model, bits, group_size=64):
 
 ### GPTQ
 
-[GPTQ](https://arxiv.org/abs/2210.17323) quantizes a weight matrix one column at a time. After each column, it updates the columns not yet quantized to compensate for the rounding error of that column. The update uses second-order information: the inverse of the Hessian $$H = 2XX^T$$ of the reconstruction error $$\lVert WX - \hat{W}X \rVert^2$$ of the layer, where the columns of $$X$$ are the calibration inputs. Column $$i$$ is rounded to $$q$$, and every later column $$j$$ moves by $$-(W_{:,i} - q) \, U_{ij} / U_{ii}$$, with $$U$$ the upper [Cholesky factor](https://en.wikipedia.org/wiki/Cholesky_decomposition) of $$H^{-1}$$. This change minimizes the increase of the reconstruction error. GPTQ quantizes 175B-parameter models to 3 or 4 bits in about four GPU hours.
+[GPTQ](https://arxiv.org/abs/2210.17323) quantizes a weight matrix one column at a time. After each column, it updates the columns not yet quantized to compensate for the rounding error of that column. The update uses second-order information: the inverse of the Hessian $$H = 2X^TX$$ of the reconstruction error $$\lVert XW^T - X\hat{W}^T \rVert^2$$ of the layer, where the rows of $$X$$ are the calibration inputs. Column $$i$$ is rounded to $$\hat{W}_{:,i}$$, and every later column $$j$$ moves by $$-(W_{:,i} - \hat{W}_{:,i}) \, U_{ij} / U_{ii}$$, with $$U$$ the upper [Cholesky factor](https://en.wikipedia.org/wiki/Cholesky_decomposition) of $$H^{-1}$$. This change minimizes the increase of the reconstruction error. GPTQ quantizes 175B-parameter models to 3 or 4 bits in about four GPU hours.
 
 {: .picture}
 <img width="58.8%" height="58.8%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
