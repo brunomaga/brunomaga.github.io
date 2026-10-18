@@ -80,4 +80,5 @@ The user picks the items to fix before the next pass. A fixed item leaves the li
 - Rewrite one post at a time: read it in full, check its math and pictures, then rewrite it.
 - Keep the line endings of each file (many posts use CRLF).
 - Build the site with `bundle exec jekyll build --drafts` and check that every formula and picture renders.
-- After each full pass over all posts, push a snapshot branch and show this file to the user.
+- After each full pass over all posts, push a snapshot branch, show the results and this file to the user, and
+  stop. Start the next pass only when the user asks for it.

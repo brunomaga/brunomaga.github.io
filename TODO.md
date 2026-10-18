@@ -70,6 +70,38 @@ Bugs in the code and data files of the posts (under `assets/`).
   while `get_batch` reads it as a number of sequences. The only caller overrides it. Fix: "Brown et al, 2020", and
   `batch_size = 500_000 // 2048`, or a comment that the value counts tokens.
 
+### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
+
+- Post and `assets/gptlite-cpp/gptlite.cpp`, `Head::forward`: the scores are scaled by `std::pow(E,-0.5)`, with
+  E = `n_embd` = 768, instead of `head_size`^-0.5 = 1/8, as in the Python code and the paper. Fix:
+  `wei = wei * std::pow(head_size, -0.5);`.
+- `assets/gptlite-cpp/main.cpp` and `main.py`: `main.cpp` times with `clock()`, the CPU time of all the threads of
+  the process, and `main.py` with `time.time()`, the wall-clock time. Neither waits for the GPU
+  (`torch::cuda::synchronize()`, `torch.cuda.synchronize()`) before it reads the clock. The C++ and Python
+  throughputs thus come from different clocks. E.g. LibTorch is 11% faster than PyTorch 2.1 on the inference of the
+  wide DNN, whose forward pass takes 0.35 s and launches 6 kernels, a gap that the Python overhead cannot explain.
+  Fix: time both with the wall-clock time (`std::chrono::steady_clock` in C++), synchronize the GPU before each
+  reading of the clock, and rerun the benchmark.
+- `assets/gptlite-cpp/main.cpp` and `main.py`, `benchmark_train`: a softmax is applied to the logits before
+  `cross_entropy`, which applies a log-softmax itself, so the model trains on a doubly normalized output. The
+  runtime barely changes, but the training is wrong. Fix: remove the softmax line in both files.
+- `assets/gptlite-cpp/main.py`: it imports `block_size` and `n_embd` from `assets/gptlite/gptlite.py`, which no
+  longer defines them, so it stops with an `ImportError`. The current Python `GPTlite` also takes other constructor
+  arguments, returns logits of shape (B, S, C), and has biases in its projections, so it is not the model of the C++
+  code. `torch_compile_kwargs` sets `mode='default-overhead'`, which is not a mode of `torch.compile`; with
+  `torch_compile_kwargs` set, the script also writes none of the `.pt` files that `./main [jit_folder]` loads. Fix:
+  keep a copy of the GPTlite code of the GPT-lite post in `assets/gptlite-cpp`, so that Python and C++ run the same
+  model, and set `torch_compile_kwargs = None` to export the TorchScript models, or a valid mode such as
+  `dict(mode='reduce-overhead', fullgraph=False)`.
+- Post and `assets/gptlite-cpp`: the post shows `gptlite.h` and `benchmark.h` as header-only files, `GPTlite` built
+  without a device, and benchmark functions without a model name. The repository splits the code into `.h` and
+  `.cpp` files, passes the device to `GPTlite`, runs 10 times more inference iterations than training iterations
+  (`epochs_multiplier = 10`), and uses the Adam betas (0.5, 0.5) in C++ and the defaults (0.9, 0.999) in Python.
+  Fix: show the repository code in the post, and use the same optimizer settings in both languages.
+- `assets/gptlite-cpp/README.md` names the post by an old title, "Building a GPT model in C++, and benchmarking
+  LibTorch, PyTorch, TorchScript and torch.compile", and `gptlite.h` dates the GPT-3 paper to 2021 instead of 2020.
+  Fix: the current title, and 2020.
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -308,6 +340,22 @@ that is not wrong.
   attention module. Fix: remove the frame around "N×".
 - Optional, the GPTlite figures: "N×" and the "more blocks" box both mark the repetition of the block. Fix: keep
   one of the two.
+
+### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
+
+- `gptlite-cpp/gptlite_compact.svg`, and the three GPTlite figures that this post reuses: the post-norm "Add & Norm"
+  boxes and the sinusoidal positional encoding disagree with the code, which is pre-norm, has a final layer
+  normalization and learns its position embeddings. Fix: as for the GPT-lite post.
+- `gptlite-cpp/benchmark_model.svg`: the output is labeled "Output Probabilities", but the model ends with a ReLU,
+  not a softmax, and the ReLUs after the layers are not drawn. Fix: label the output "Output", and each layer
+  "Linear + ReLU (size W)".
+- `gptlite-cpp/benchmark_wide.svg` and `benchmark_deep.svg`: the throughput axes say "samples/sec", but the values
+  are iterations per second on batches of 2048 samples, as the code prints them ("epochs/second"). Fix: label the
+  axes "iterations/sec (batches of 2048 samples)", or multiply the values by 2048.
+- Optional, caption of `gptlite_compact.svg` and `benchmark_model.svg`: it starts with "This post details", and calls
+  the left model "the GPT-3 Small model", while it is GPTlite with the dimensions of GPT-3 Small. Fix: "Left: GPTlite
+  with N decoder blocks, with the dimensions of GPT-3 Small. Right: the benchmark DNN with L layers of width W. The
+  left diagram is adapted from Attention is all you need."
 
 ## Content issues
 
