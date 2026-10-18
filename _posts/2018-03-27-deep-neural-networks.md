@@ -33,9 +33,9 @@ where the matrix $$W^{(l)}$$ holds the weights $$w_{i,j}^{(l)}$$, and $$\phi$$ a
 - [Rectified Linear Unit – ReLU](https://en.wikipedia.org/wiki/Rectifier_(neural_networks)): $$\phi(x) = \max\{0,x\}$$, non-negative and unbounded, and computed with one comparison;
 - leaky ReLU: $$\phi(x) = \max \{\alpha x,x\}$$, with $$0 < \alpha < 1$$, e.g. $$\alpha = 0.01$$.
 
-The derivative of the sigmoid is at most $$1/4$$, and the derivatives of the sigmoid and *tanh* tend to $$0$$ for large $$\vert x \vert$$. Back-propagation (below) multiplies these derivatives across the layers, so the gradients of the first layers can shrink exponentially with the depth: this is the [vanishing gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem). The derivative of ReLU is $$1$$ for positive inputs, so it does not shrink the gradients. For negative inputs, the output and the derivative of ReLU are $$0$$. A ReLU neuron whose input is negative for all training samples, e.g. after a large negative update of its bias, receives no gradient: its weights stop changing, and the neuron has *died*. The derivative of the leaky ReLU is $$\alpha > 0$$ for negative inputs, so its neurons cannot die.
+The derivative of the sigmoid is at most $$1/4$$, and the derivatives of the sigmoid and *tanh* tend to $$0$$ for large $$\vert x \vert$$. Backpropagation (below) multiplies these derivatives across the layers, so the gradients of the first layers can shrink exponentially with the depth: this is the [vanishing gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem). The derivative of ReLU is $$1$$ for positive inputs, so it does not shrink the gradients. For negative inputs, the output and the derivative of ReLU are $$0$$. A ReLU neuron whose input is negative for all training samples, e.g. after a large negative update of its bias, receives no gradient: its weights stop changing, and the neuron has *died*. The derivative of the leaky ReLU is $$\alpha > 0$$ for negative inputs, so its neurons cannot die.
 
-## Back-propagation
+## Backpropagation
 
 Training minimizes a loss over the $$N$$ training samples, e.g. with [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) (SGD), which takes a small step against the gradient of the loss of one sample or of a mini-batch. For regression with the squared error, the loss is:
 
@@ -50,7 +50,7 @@ $$
 \label{eq_gradient}
 $$
 
-Computing each derivative separately repeats most of the work: a finite-difference estimate, for example, needs one forward pass per parameter, so $$P$$ forward passes for $$P$$ parameters. The **back-propagation** algorithm computes all derivatives with one forward and one backward pass. It uses the total input of layer $$l$$, before the activation function:
+Computing each derivative separately repeats most of the work: a finite-difference estimate, for example, needs one forward pass per parameter, so $$P$$ forward passes for $$P$$ parameters. The **backpropagation** algorithm computes all derivatives with one forward and one backward pass. It uses the total input of layer $$l$$, before the activation function:
 
 $$
 z^{(l)} = (W^{(l)})^T x^{(l-1)}+b^{(l)}
@@ -96,13 +96,13 @@ For a mini-batch, the forward pass of a layer is one matrix product, and its bac
 
 ## Automatic Differentiation
 
-Back-propagation is a special case of reverse-mode <a href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation ("autodiff")</a>. Autodiff frameworks, such as <a href="https://pytorch.org/tutorials/beginner/introyt/autogradyt_tutorial.html">PyTorch's autograd</a>, define the derivative of each primitive operation once, and apply the chain rule to any composition of these operations. The derivatives of the loss and of the activation functions are thus not derived by hand.
+Backpropagation is a special case of reverse-mode <a href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation ("autodiff")</a>. Autodiff frameworks, such as <a href="https://pytorch.org/tutorials/beginner/introyt/autogradyt_tutorial.html">PyTorch's autograd</a>, define the derivative of each primitive operation once, and apply the chain rule to any composition of these operations. The derivatives of the loss and of the activation functions are thus not derived by hand.
 
 Forward-mode autodiff propagates derivatives from the inputs to the outputs, together with the forward computation. One pass gives the derivatives of all outputs with respect to one input, so the gradient with respect to $$P$$ parameters needs $$P$$ passes. Reverse mode propagates derivatives from the outputs to the inputs: one backward pass gives the derivatives of one output, such as the loss, with respect to all inputs. Reverse mode stores the intermediate values of the forward pass; forward mode does not. Training uses reverse mode, since the loss is a scalar and the parameters are many.
 
 PyTorch builds the computational graph, a directed acyclic graph (DAG) of the operations, while the `forward` methods run: each operation adds a node, whose `grad_fn` computes its derivative. Loops and conditionals in the code may add different nodes at each `forward` call, so the graph cannot be extracted from the model definition alone (see an example [here](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html)). `tensor.backward()` traverses the graph from the loss to the leaf nodes, and accumulates the gradients of the leaf tensors in their `.grad` fields. It then frees the graph, unless `retain_graph=True` is passed to `backward`, and the next `forward` call builds a new graph. <a href="https://towardsdatascience.com/automatic-differentiation-explained-b4ba8e60c2ad">Chi-Feng Wang's post</a> gives an example of an autodiff graph, and the <a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">Princeton course COS 324 on automatic differentiation</a> explains the whole process.
 
-Activation checkpointing reduces the memory of training: it stores only the inputs of selected modules, and recomputes their activations during the backward pass. Checkpointing every $$\sqrt{L}$$ layers of an $$L$$-layer network reduces the memory of the activations from $$O(L)$$ to $$O(\sqrt{L})$$, for the cost of one extra forward pass ([Chen et al., 2016](https://arxiv.org/abs/1604.06174)). The post [How Activation Checkpointing enables scaling up training deep learning models](https://medium.com/pytorch/how-activation-checkpointing-enables-scaling-up-training-deep-learning-models-7a93ae01ff2d) shows the reentrant and non-reentrant implementations of PyTorch. Step-by-step examples of back-propagation in PyTorch are in [Hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html) and [PyTorch Autograd: Backpropagation](https://colab.research.google.com/drive/1aWNdmYt7RcHMbUk-Xz2Cv5-cGFSWPXe0#scrollTo=LfW6wYg42SEW).
+Activation checkpointing reduces the memory of training: it stores only the inputs of selected modules, and recomputes their activations during the backward pass. Checkpointing every $$\sqrt{L}$$ layers of an $$L$$-layer network reduces the memory of the activations from $$O(L)$$ to $$O(\sqrt{L})$$, for the cost of one extra forward pass ([Chen et al., 2016](https://arxiv.org/abs/1604.06174)). The post [How Activation Checkpointing enables scaling up training deep learning models](https://medium.com/pytorch/how-activation-checkpointing-enables-scaling-up-training-deep-learning-models-7a93ae01ff2d) shows the reentrant and non-reentrant implementations of PyTorch. Step-by-step examples of backpropagation in PyTorch are in [Hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html) and [PyTorch Autograd: Backpropagation](https://colab.research.google.com/drive/1aWNdmYt7RcHMbUk-Xz2Cv5-cGFSWPXe0#scrollTo=LfW6wYg42SEW).
 
 ## Dropout
 
@@ -163,7 +163,7 @@ It has three types of layers:
 - pooling layers reduce each window of neighbouring outputs, e.g. of $$2 \times 2$$, to one value, e.g. the maximum (*max pooling*) or the average;
 - fully connected layers, an MLP at the end, map the features to the output, e.g. to the class scores.
 
-The height and width decrease through the layers, by pooling, by strides larger than 1, or by convolutions without padding at the boundaries. Back-propagation treats each connection as if it had its own weight. The gradient of a shared weight is then the sum of the gradients of all connections that share it.
+The height and width decrease through the layers, by pooling, by strides larger than 1, or by convolutions without padding at the boundaries. Backpropagation treats each connection as if it had its own weight. The gradient of a shared weight is then the sum of the gradients of all connections that share it.
 
 ## Skip connections
 
