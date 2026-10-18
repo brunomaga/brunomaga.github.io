@@ -220,23 +220,23 @@ If the posterior $$p(\theta \mid x)$$ is in the same family of distributions as 
 A distribution with parameters $$\theta$$ is in the [exponential family](https://en.wikipedia.org/wiki/Exponential_family) if its pmf or pdf can be written as
 
 $$
-p(x \mid \eta) = h(x) \exp\left( \eta^\intercal \phi(x) - A(\eta) \right),
+p(x \mid \eta) = h(x) \exp\left( \eta^\intercal T(x) - A(\eta) \right),
 $$
 
-where $$\eta = \eta(\theta)$$ are the **natural parameters**, $$\phi(x)$$ the **sufficient statistics**, $$h(x)$$ the base measure, and $$A(\eta)$$ the **log-partition function**, the logarithm of the normalization constant. For a Bernoulli variable $$x \in \{0, 1\}$$ with mean $$\mu = P(x = 1)$$:
+where $$\eta = \eta(\theta)$$ are the **natural parameters**, $$T(x)$$ the **sufficient statistics**, $$h(x)$$ the base measure, and $$A(\eta)$$ the **log-partition function**, the logarithm of the normalization constant. For a Bernoulli variable $$x \in \{0, 1\}$$ with mean $$\mu = P(x = 1)$$:
 
 $$
 p(x \mid \mu) = \mu^x (1 - \mu)^{1 - x} = \exp\left( x \log \frac{\mu}{1 - \mu} + \log(1 - \mu) \right)
 $$
 
-so $$\phi(x) = x$$, $$h(x) = 1$$, the natural parameter is the [logit](https://en.wikipedia.org/wiki/Logit) $$\eta = \log \frac{\mu}{1 - \mu}$$, and $$A(\eta) = -\log(1 - \mu) = \log(1 + e^\eta)$$. Inverting the logit gives the logistic sigmoid $$\mu = 1 / (1 + e^{-\eta})$$ of logistic regression. The Gaussian has $$\phi(x) = [x, x^2]^\intercal$$.
+so $$T(x) = x$$, $$h(x) = 1$$, the natural parameter is the [logit](https://en.wikipedia.org/wiki/Logit) $$\eta = \log \frac{\mu}{1 - \mu}$$, and $$A(\eta) = -\log(1 - \mu) = \log(1 + e^\eta)$$. Inverting the logit gives the logistic sigmoid $$\mu = 1 / (1 + e^{-\eta})$$ of logistic regression. The Gaussian has $$T(x) = [x, x^2]^\intercal$$.
 
-A statistic $$\phi(x)$$ is [sufficient](https://en.wikipedia.org/wiki/Sufficient_statistic) for $$\theta$$ if the distribution of the data given $$\phi(x)$$ does not depend on $$\theta$$, i.e. $$\phi(x)$$ holds all the information that the data carry about $$\theta$$. By the **Fisher–Neyman factorization theorem**, this holds if and only if $$p(x \mid \theta) = h(x) \, g_\theta(\phi(x))$$ for some $$h(x) \ge 0$$ independent of $$\theta$$. The exponential family has this form, with $$g_\theta(\phi) = \exp(\eta^\intercal \phi - A(\eta))$$.
+A statistic $$T(x)$$ is [sufficient](https://en.wikipedia.org/wiki/Sufficient_statistic) for $$\theta$$ if the distribution of the data given $$T(x)$$ does not depend on $$\theta$$, i.e. $$T(x)$$ holds all the information that the data carry about $$\theta$$. By the **Fisher–Neyman factorization theorem**, this holds if and only if $$p(x \mid \theta) = h(x) \, g_\theta(T(x))$$ for some $$h(x) \ge 0$$ independent of $$\theta$$. The exponential family has this form, with $$g_\theta(t) = \exp(\eta^\intercal t - A(\eta))$$.
 
-The derivatives of the log-partition function are the moments of the sufficient statistics, $$\nabla_\eta A(\eta) = \mathbb{E}[\phi(x)]$$ and $$\nabla_\eta^2 A(\eta) = \mathrm{Var}[\phi(x)]$$, so $$A$$ is convex. For $$N$$ independent samples, this gives the family its main advantages:
-- the log-likelihood $$\sum_i \log h(x_i) + \eta^\intercal \sum_i \phi(x_i) - N A(\eta)$$ is concave in $$\eta$$, so every local maximum is global;
-- at the maximum, the moments match, $$\mathbb{E}_\eta[\phi(x)] = \frac{1}{N} \sum_i \phi(x_i)$$: for a Gaussian, the estimates are the empirical mean and the empirical covariance $$\hat{\Sigma}$$;
-- the data enter only through $$\sum_i \phi(x_i)$$, whose size does not grow with $$N$$, so a streaming estimator keeps only this sum. Among families whose support does not depend on $$\theta$$, only the exponential family has sufficient statistics of a fixed size (Pitman–Koopman–Darmois theorem).
+The derivatives of the log-partition function are the moments of the sufficient statistics, $$\nabla_\eta A(\eta) = \mathbb{E}[T(x)]$$ and $$\nabla_\eta^2 A(\eta) = \mathrm{Var}[T(x)]$$, so $$A$$ is convex. For $$N$$ independent samples, this gives the family its main advantages:
+- the log-likelihood $$\sum_i \log h(x_i) + \eta^\intercal \sum_i T(x_i) - N A(\eta)$$ is concave in $$\eta$$, so every local maximum is global;
+- at the maximum, the moments match, $$\mathbb{E}_\eta[T(x)] = \frac{1}{N} \sum_i T(x_i)$$: for a Gaussian, the estimates are the empirical mean and the empirical covariance $$\hat{\Sigma}$$;
+- the data enter only through $$\sum_i T(x_i)$$, whose size does not grow with $$N$$, so a streaming estimator keeps only this sum. Among families whose support does not depend on $$\theta$$, only the exponential family has sufficient statistics of a fixed size (Pitman–Koopman–Darmois theorem).
 
 Members include the Gaussian, exponential, gamma, chi-squared, beta, Dirichlet, Bernoulli, categorical and Poisson distributions, and the binomial and multinomial with a fixed number of trials. Student's t, most mixtures (such as Gaussian mixture models) and the uniform distribution with unknown bounds are not members. The [exponential family post]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}) derives the Gaussian and Bernoulli cases and their maximum likelihood estimates.
 
