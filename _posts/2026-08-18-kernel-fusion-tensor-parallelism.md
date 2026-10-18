@@ -82,7 +82,7 @@ The all-reduce of a band is a reduce-scatter followed by an all-gather. Each GPU
 
 ## Results
 
-The fused kernel was compared with a tuned, non-fused implementation that uses the all-reduce of NCCL, on the FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs of one node connected by NVLink, in `bfloat16`. It reduces the latency by 22% to 62%, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB.
+The fused kernel was compared with a tuned, non-fused implementation that uses the all-reduce of NCCL, on the FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs of one node connected by NVLink, in `bfloat16`. It reduces the latency by 22% to 62%, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB. The chart below shows seven of these FFNs:
 
 {: .picture}
 <img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
