@@ -65,7 +65,7 @@ A compartmental model cuts the neurites into compartments short enough to hold o
 
 Synapses raise (excitatory) or lower (inhibitory) the membrane potential of the receiving neuron. When the potential at the [axon initial segment][ais], the most excitable part of the neuron, crosses a threshold, the neuron fires an [action potential][action-potential], or spike. The potential rises by about 100 mV and falls back in about 1 ms, then undershoots the resting potential before it returns to rest. The inflow of sodium ions drives the rise. The inactivation of the sodium channels and the outflow of potassium ions drive the fall. The spike then travels along the axon to the synapses.
 
-[ais]: https://en.wikipedia.org/wiki/Axon_initial_segment
+[ais]: https://en.wikipedia.org/wiki/Axon#Axonal_initial_segment
 [action-potential]: https://en.wikipedia.org/wiki/Action_potential
 
 {: .picture}
