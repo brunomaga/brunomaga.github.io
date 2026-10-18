@@ -5,20 +5,30 @@ categories: ["Machine Learning"]
 tags: ["supervised learning", "linear regression", "matrix factorization", "loss functions"]
 ---
 
-Regression relates an input variable to an output, either to predict new outputs or to understand the effect of the input on the output. A regression dataset consists of $$N$$ pairs $$(x_n, y_n)$$, with input $$x_n$$ and output/label $$y_n$$. For a new input $$x_n$$, the goal of regression is to find $$f$$ such that $$ y_n \approx f(x_n) $$. Fitting a multidimensional plane to the dataset is the (multivariate) linear regression problem, which consists of finding the weights $$w$$ such that:
+Regression learns a function $$f$$ that predicts an output from an input, to predict new outputs or to measure the effect of the input on the output. A dataset holds $$N$$ pairs $$(x_n, y_n)$$, with input $$x_n \in \mathbb{R}^D$$ and output, or label, $$y_n \in \mathbb{R}$$. [Linear regression][linear-regression] fits a hyperplane with weights $$w = (w_0, w_1, \ldots, w_D)^T$$:
 
 $$
-y_n \approx f(x_n) = w_0 + w_1 x_{n1} + ... + w_D x_{nD} \hspace{1cm}\text{, or simply}\hspace{1cm} y \approx f(X) = Xw.
+y_n \approx f(x_n) = w_0 + w_1 x_{n1} + \ldots + w_D x_{nD} \text{, or, for all samples, } y \approx Xw,
 $$
 
-An error or loss function $$L(w)$$ measures the quality of the estimation. For example, the Mean Squared Error (MSE) loss is defined as $$ L(w) = \frac{1}{N} \sum_{n=1}^N [ y_n - f(x_n)]^2$$. Due to the square term, it penalizes predictions with larger errors more heavily. The Mean Absolute Error (MAE) loss, $$ L(w) = \frac{1}{N} \sum_{n=1}^N \mid y_n - f(x_n) \mid $$, is more robust to outliers.
+where $$y = (y_1, \ldots, y_N)^T$$, and row $$n$$ of the $$N \times (D+1)$$ matrix $$X$$ is $$(1, x_{n1}, \ldots, x_{nD})$$. The column of ones multiplies the bias $$w_0$$.
 
-The goal is to find the weight values that minimize the loss function. A naive approach is Grid Search, a brute-force method that tests all combinations of $$w$$ in a given interval. It is usually inefficient and only works on very low-dimensional problems. An alternative is to compute the gradient of the loss function and step $$w$$ towards the values that minimize the loss. The most common methods are gradient descent and its variants:
-- Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L (w^t) $$, for step size $$\gamma$$ and gradient $$ \triangledown L (w) = [ \frac{\partial L(w)}{\partial w_1}, ... , \frac{\partial L(w)}{\partial w_D}  ]^T $$;
-- Stochastic Gradient Descent: $$ w^{t+1} = w^{t} - \gamma \triangledown L_n (w^t) $$, for a randomly chosen input $$n$$. It gives a computationally cheap but unbiased estimate of the gradient;
-- Mini-batch SGD: $$ w^{t+1} = w^{t} - \gamma \frac{1}{\mid B \mid} \sum_{n \in B} \triangledown L_n (w^t) $$, for a random subset $$ B \subseteq [N] $$. The gradient of every sample $$n$$ is computed at the same current point $$w^t$$.
+[linear-regression]: https://en.wikipedia.org/wiki/Linear_regression
 
-For linear regression with the Mean Squared Error loss function, the problem is called **Least Squares** and has a closed-form solution. The quantity to minimize is:
+A loss function $$L(w)$$ measures the error of the fit. The [mean squared error][mse] (MSE), $$L(w) = \frac{1}{N} \sum_{n=1}^N (y_n - f(x_n))^2$$, penalizes large errors more than small ones, due to the square. The [mean absolute error][mae] (MAE), $$L(w) = \frac{1}{N} \sum_{n=1}^N \vert y_n - f(x_n) \vert$$, grows linearly with the error, and is thus more robust to outliers.
+
+[mse]: https://en.wikipedia.org/wiki/Mean_squared_error
+[mae]: https://en.wikipedia.org/wiki/Mean_absolute_error
+
+Training finds the weights that minimize the loss. Grid search evaluates the loss on a grid of weights: with $$M$$ values per weight, it needs $$M^{D+1}$$ evaluations, which limits it to a few dimensions. Gradient methods instead move $$w$$ against the gradient of the loss, with a step size, or learning rate, $$\eta$$. With $$L(w) = \frac{1}{N} \sum_{n=1}^N L_n(w)$$, where $$L_n$$ is the loss of sample $$n$$, the main methods are:
+- [gradient descent][gd]: $$w^{t+1} = w^t - \eta \nabla L(w^t)$$, with the gradient $$\nabla L(w) = \left[ \frac{\partial L}{\partial w_0}, \ldots, \frac{\partial L}{\partial w_D} \right]^T$$. A step reads all $$N$$ samples, at a cost of $$O(ND)$$ for linear regression;
+- [stochastic gradient descent][sgd] (SGD): $$w^{t+1} = w^t - \eta \nabla L_n(w^t)$$, for a sample $$n$$ drawn at random. $$\nabla L_n$$ is an unbiased estimate of $$\nabla L$$, at a cost of $$O(D)$$. The estimate is noisy, so SGD needs a decreasing step size to converge;
+- mini-batch SGD: $$w^{t+1} = w^t - \frac{\eta}{\vert B \vert} \sum_{n \in B} \nabla L_n(w^t)$$, for a random subset $$B \subseteq \{1, \ldots, N\}$$, with all gradients computed at the same point $$w^t$$. A step costs $$O(\vert B \vert D)$$. For samples drawn independently, the variance of the estimate falls as $$1 / \vert B \vert$$, and the batch runs as one vectorized operation.
+
+[gd]: https://en.wikipedia.org/wiki/Gradient_descent
+[sgd]: https://en.wikipedia.org/wiki/Stochastic_gradient_descent
+
+Linear regression with the MSE is the [least squares][least-squares] problem, which has a closed-form solution. Up to the factor $$1/N$$, the loss is:
 
   $$
   \begin{align*}
@@ -29,7 +39,9 @@ For linear regression with the Mean Squared Error loss function, the problem is 
   \end{align*}
   $$
 
-The solution is the $$w$$ that minimizes the loss or, equivalently, the $$w$$ at which its derivative is 0:
+[least-squares]: https://en.wikipedia.org/wiki/Least_squares
+
+The Hessian of the loss, $$2X^TX$$, is positive semidefinite, so the loss is convex, and every $$w$$ with a zero gradient is a minimum:
 
   $$
   \begin{align*}
@@ -40,68 +52,73 @@ The solution is the $$w$$ that minimizes the loss or, equivalently, the $$w$$ at
   \end{align*}
   $$
 
-This derivation uses the identity $$\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$$ (<a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, section 2.4.1, eq. 69). The result shows that **if $$X^TX$$ is invertible**, the minimization problem has a unique closed-form solution, given by the final expression above. The **Gram matrix $$X^TX$$** is invertible if **$$X$$ has full column rank**, i.e. $$rank(X)=D$$ (the proof is omitted). The rank of a matrix is the maximum number of linearly independent column vectors in the matrix, so this assumes that all columns are linearly independent.
+The derivation uses $$\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$$ and $$\frac{\partial w^TAw}{\partial w} = (A + A^T)w$$, which is $$2Aw$$ for a symmetric $$A$$ such as $$X^TX$$ (<a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, equations 69 and 81). The solution is unique if the [Gram matrix][gram] $$X^TX$$ is invertible. This holds if and only if $$X$$ has full column [rank][rank], $$\text{rank}(X) = D+1$$: its columns are linearly independent, which requires $$N \geq D+1$$. The reason: $$X^TXv = 0$$ implies $$\Vert Xv \Vert^2 = v^TX^TXv = 0$$, so $$X^TX$$ and $$X$$ have the same null space.
 
+[gram]: https://en.wikipedia.org/wiki/Gram_matrix
+[rank]: https://en.wikipedia.org/wiki/Rank_(linear_algebra)
+
+Forming $$X^TX$$ costs $$O(ND^2)$$ operations and $$O(D^2)$$ memory, and solving the $$(D+1) \times (D+1)$$ system costs $$O(D^3)$$. Solvers do not compute the inverse: they factorize $$X^TX$$ with a [Cholesky decomposition][cholesky], or $$X$$ with a [QR decomposition][qr]. For $$N \gg D$$, QR costs about twice as much, but it does not form $$X^TX$$, whose [condition number][condition-number] is the square of that of $$X$$, so it loses fewer digits to rounding. A gradient descent step costs $$O(ND)$$ and needs $$O(D)$$ memory besides the data, so iterative methods are the better choice for large $$D$$.
+
+[cholesky]: https://en.wikipedia.org/wiki/Cholesky_decomposition
+[qr]: https://en.wikipedia.org/wiki/QR_decomposition
+[condition-number]: https://en.wikipedia.org/wiki/Condition_number
 
 ### Regularization
 
-A common practice is to add to the loss a regularization term $$\Omega$$ that penalizes complex models. The loss minimization problem then becomes:
+A penalty on the weights, added to the loss, favors simple models and reduces [overfitting][overfitting]. A parameter $$\lambda > 0$$ sets its strength. Choosing $$\lambda$$ is a model selection problem, usually solved with [cross-validation][cross-validation]. The two common penalties, with the squared error written as a sum ($$\lambda$$ absorbs the factor $$1/N$$), are:
+- L1: $$\min_w \Vert y - Xw \Vert^2 + \lambda \Vert w \Vert_1$$, with $$\Vert w \Vert_1 = \sum_{i=1}^D \vert w_i \vert$$, so the bias $$w_0$$ is not penalized. This is the [LASSO][lasso], for **L**east **A**bsolute **S**hrinkage and **S**election **O**perator. It yields sparse models, with many weights equal to 0, and thus also selects the input variables. It has no closed-form solution in general; coordinate descent, below, solves it. With highly correlated inputs ([multicollinearity][multicollinearity]), LASSO tends to keep one of them, chosen arbitrarily; ridge regression, or the [elastic net][elastic-net], which combines the L1 and L2 penalties, is then the better choice.
+- L2: $$\min_w \Vert y - Xw \Vert^2 + \lambda \Vert w \Vert_2^2$$, with $$\Vert w \Vert_2^2 = \sum_{i=1}^D w_i^2$$. This is [ridge regression][ridge]. Setting the gradient to zero gives the closed form $$w = (X^TX + \lambda I)^{-1} X^Ty$$. $$X^TX + \lambda I$$ is positive definite for $$\lambda > 0$$, so the solution exists and is unique even when $$X$$ does not have full column rank. This form also penalizes $$w_0$$; excluding the bias sets the first diagonal entry of $$I$$ to 0.
 
-$$
-min_w L(w) + \Omega (w)
-$$
+[overfitting]: https://en.wikipedia.org/wiki/Overfitting
+[cross-validation]: https://en.wikipedia.org/wiki/Cross-validation_(statistics)
+[lasso]: https://en.wikipedia.org/wiki/Lasso_(statistics)
+[multicollinearity]: https://en.wikipedia.org/wiki/Multicollinearity
+[elastic-net]: https://en.wikipedia.org/wiki/Elastic_net_regularization
+[ridge]: https://en.wikipedia.org/wiki/Ridge_regression
 
-Two common regularization approaches are:
-- L1 regularization: $$ \Omega(w) = \lambda \mid w \mid $$, where $$\mid w \mid = \sum_{i=1}^D \mid w_i \mid $$ (the bias $$w_0$$ is not penalized) 
-  - this is called **LASSO Regression**, for **L**east **A**bsolute **S**hrinkage and **S**election **O**perator;
-  - the parameter $$ \lambda \gt 0 $$ is tuned to reduce overfitting. This is the **model selection** problem;
-  - it encourages simple, sparse models (i.e. models with fewer parameters). This type of regression is well suited for automating parts of model selection, such as variable selection/parameter elimination. With highly correlated features (multicollinearity), LASSO tends to keep one of them arbitrarily; Ridge Regression or the elastic net (L1 plus L2) are preferred in that case.
-- L2 regularization (standard Euclidean norm): $$ \Omega(w) = \lambda \| w \|^2 $$, where $$ \| w \|^2 = \sum_{i=1}^D w_i^2 $$
-  - large weights are penalized, as they are *considered unlikely*;
-  - if $$L$$ is the MSE, this is called **Ridge Regression**;
-  - as in the Least Squares problem, the MSE loss with Ridge Regression has an analytical solution:
-    - minimize $$(y - Xw)^T(y-Xw) + \lambda w^Tw$$, and
-    - differentiate with respect to $$w$$ to obtain the normal equation $$w = (X^TX + \lambda I)^{-1} X^Ty$$. This form also penalizes $$w_0$$; excluding the bias sets the first diagonal entry of $$I$$ to 0.
+Both penalties shrink the weights toward 0 ([shrinkage][shrinkage]): the estimate varies less across training sets, at the cost of a bias. For orthonormal columns, $$X^TX = I$$, and a penalty on all weights, ridge regression divides each least-squares weight by $$1 + \lambda$$. LASSO instead reduces its magnitude by $$\lambda / 2$$, and sets it to 0 if the magnitude is below $$\lambda / 2$$. This soft thresholding is the source of the sparsity of LASSO.
 
-Note: in statistics, **shrinkage** is the reduction of the effects of sampling variation on the estimated parameters. Without it, a model can overfit the training data and perform poorly on unseen data. Regularization reduces this effect by "shrinking" model parameters towards 0 in LASSO, or by making them smaller in Ridge Regression.
+[shrinkage]: https://en.wikipedia.org/wiki/Shrinkage_(statistics)
 
-Other techniques improve model accuracy without adding a regularization term to the loss function:
-- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method that *drops out* (ignores) neurons of a (deep) neural network at every batch during training, and uses all neurons at validation. It improves generalization by forcing the model to train without relying on specific weights.
-- [layer, instance, batch, and group normalization](https://arxiv.org/abs/1803.08494): methods that reduce internal covariate shift by fitting the output of activation layers to a standard normal distribution. They can also learn scale and shift parameters, which scale the standard deviation and shift the mean, for better performance than the standard normal distribution.
+Neural networks also use two techniques that improve generalization or training without a penalty in the loss:
+- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): at each training step, each neuron is dropped, its output set to 0, with a fixed probability. Inference uses all neurons, with their outputs scaled by the probability of keeping them. The network cannot rely on specific neurons, which improves generalization.
+- [layer, instance, batch and group normalization](https://arxiv.org/abs/1803.08494): each normalizes the activations of a layer to zero mean and unit variance, over a different set of values: each channel over the batch (batch normalization), all channels of a sample (layer normalization), each channel of a sample (instance normalization), or groups of channels of a sample (group normalization). A learned scale and shift per channel follow. Normalization stabilizes training, and allows larger learning rates.
 
 ## Matrix Factorization
 
-Matrix factorization can discover underlying latent factors and/or predict missing values of a matrix. The goal is to find $$W$$ and $$Z$$ such that $$ X \approx WZ^T $$, i.e. to predict $$x_{dn}$$, where $$d$$ indexes the rows of $$W$$ and $$n$$ the rows of $$Z$$. For movie ratings, $$Z$$ could be users, $$W$$ could be movies, and $$x_{dn}$$ the star rating.
+[Matrix factorization][mf] finds latent factors of a matrix, and predicts its missing entries. In a [recommender system][recommender], $$X$$ is the $$D \times N$$ matrix of the ratings of $$D$$ movies by $$N$$ users. The factorization $$X \approx WZ^T$$ uses two tall matrices, $$W \in \mathbb{R}^{D \times K}$$ and $$Z \in \mathbb{R}^{N \times K}$$, with $$K$$ latent features, such as how much a movie is a comedy, and how much a user likes comedies. Row $$d$$ of $$W$$ holds the features of movie $$d$$, row $$n$$ of $$Z$$ those of user $$n$$, and their dot product $$(WZ^T)_{dn}$$ predicts the rating $$x_{dn}$$. [Koren et al. (2009)][koren2009] review the method, which outperformed nearest-neighbor methods in the Netflix Prize. Only the observed ratings, with indices in $$\Omega \subseteq \{1, \ldots, D\} \times \{1, \ldots, N\}$$, enter the loss:
 
-The optimization problem is:
+[mf]: https://en.wikipedia.org/wiki/Matrix_factorization_(recommender_systems)
+[recommender]: https://en.wikipedia.org/wiki/Recommender_system
+[koren2009]: {{ site.assets }}/linear-regression-matrix-factorization/recommender-systems-netflix.pdf
 
 $$
-min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2
+\min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2
 $$
-
-where $$ W \in R^{D \times K} $$ and $$ Z \in R^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ contains the indices of the observed ratings of the input matrix $$X$$.
 
 {: .picture}
 <img width="60%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
 
-This cost function is neither convex nor [identifiable](https://en.wikipedia.org/wiki/Identifiability). $$K$$ is the number of latent features (e.g. gender, age group, citizenship, etc.). A large $$K$$ facilitates overfitting. A regularizer can be added to the function:
+The loss is not convex in $$(W, Z)$$, and not [identifiable](https://en.wikipedia.org/wiki/Identifiability): for any invertible $$K \times K$$ matrix $$A$$, the factors $$WA$$ and $$ZA^{-T}$$ give the same product. A large $$K$$ leads to overfitting, which a regularizer limits:
 
 $$
-min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2 + \frac{\lambda_w}{2} \| W \|^2 +  \frac{\lambda_z}{2} \| Z \|^2
-$$ 
-
-where $$\lambda_z$$ and $$\lambda_w$$ are again scalars.
-
-Stochastic gradient descent optimizes this problem. The training objective is a sum of \|$$\Omega$$\| terms (one per rating):
-
-$$
-\frac{1}{| \Omega |} \sum_{(d,n) \in \Omega} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2
+\min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2 + \frac{\lambda_w}{2} \| W \|_F^2 +  \frac{\lambda_z}{2} \| Z \|_F^2
 $$
 
-For one fixed element $$(d,n)$$, the gradient entries $$(d',k)$$ for $$W$$ and $$(n',k)$$ for $$Z$$ are:
+with $$\lambda_w, \lambda_z > 0$$ and the [Frobenius norm][frobenius] $$\Vert \cdot \Vert_F$$.
+
+[frobenius]: https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm
+
+SGD visits one rating at a time. Without the regularizer, the objective is a mean of $$\vert \Omega \vert$$ terms, one per rating:
 
 $$
-(d',k) = \frac{\partial}{\partial w_{d',k}} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2 =
+\frac{1}{\vert \Omega \vert} \sum_{(d,n) \in \Omega} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2
+$$
+
+For one rating $$(d,n)$$, the gradient entries for $$W$$ and $$Z$$ are:
+
+$$
+\frac{\partial}{\partial w_{d',k}} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2 =
 \begin{cases}
     -[x_{dn} - (WZ^T)_{dn}] z_{n,k} & \text{, if } d'=d\\
     0              & \text{, otherwise}
@@ -111,40 +128,40 @@ $$
 and
 
 $$
-(n',k) = \frac{\partial}{\partial z_{n',k}} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2 =
+\frac{\partial}{\partial z_{n',k}} \frac{1}{2} [x_{dn} - (WZ^T)_{dn}]^2 =
 \begin{cases}
     -[x_{dn} - (WZ^T)_{dn}] w_{d,k} & \text{, if } n'=n\\
     0              & \text{, otherwise}
 \end{cases} 
 $$
 
-Recall that $$z_{n,k}$$ are user features and $$w_{d,k}$$ are movie features. The gradient has $$(D+N)K$$ entries.
+The gradient has $$(D+N)K$$ entries, but only the $$2K$$ entries of row $$d$$ of $$W$$ and row $$n$$ of $$Z$$ are nonzero. An SGD step thus costs $$O(K)$$, and a pass over all ratings $$O(\vert \Omega \vert K)$$.
 
-**Alternating Least Squares (ALS)** is another option. ALS is the alternating minimization of the same loss: it fixes $$Z$$ and solves for $$W$$, then fixes $$W$$ and solves for $$Z$$, and repeats. Each step is a regularized least-squares problem with a closed-form solution.
+**Alternating least squares** (ALS) minimizes the same loss in turns: it fixes $$Z$$ and solves for $$W$$, then fixes $$W$$ and solves for $$Z$$, and repeats. With one factor fixed, the loss is a regularized least-squares problem in the other, with a closed-form solution, so no step increases the loss.
 
-- If the matrix has **no** missing ratings, i.e. $$ \Omega = [D] \times [N] $$, then:
+- Without missing ratings, $$\Omega = \{1, \ldots, D\} \times \{1, \ldots, N\}$$, and:
 
   $$
   \begin{align*}
-  min_{W,Z} L(W,Z) = & \frac{1}{2} \sum_{d=1}^D \sum_{n=1}^N [x_{dn} - (WZ^T)_{dn}]^2 + \text{ (regularizer) } \\
-  = & \frac{1}{2} \| X - WZ^T \| ^2 + \frac{\lambda_w}{2} \| W \|^2 +  \frac{\lambda_z}{2} \| Z \|^2
+  \min_{W,Z} L(W,Z) = & \frac{1}{2} \sum_{d=1}^D \sum_{n=1}^N [x_{dn} - (WZ^T)_{dn}]^2 + \text{ (regularizer) } \\
+  = & \frac{1}{2} \| X - WZ^T \|_F^2 + \frac{\lambda_w}{2} \| W \|_F^2 +  \frac{\lambda_z}{2} \| Z \|_F^2
   \end{align*}
   $$
 
-  - setting the gradient to zero gives the updates $$W = XZ (Z^TZ + \lambda_w I_K)^{-1}$$ for a fixed $$Z$$, and $$Z = X^TW (W^TW + \lambda_z I_K)^{-1}$$ for a fixed $$W$$;
-- If there are missing entries, the problem is harder, because only the ratings $$ (d,n) \in \Omega $$ contribute to the cost, i.e.:
+  Setting the gradient to zero gives $$W = XZ (Z^TZ + \lambda_w I_K)^{-1}$$ for a fixed $$Z$$, and $$Z = X^TW (W^TW + \lambda_z I_K)^{-1}$$ for a fixed $$W$$.
+- With missing ratings, only the observed ratings enter the loss:
 
   $$
-  min_{W,Z} L(W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [x_{dn} - (WZ^T)_{dn}]^2 + ...
+  \min_{W,Z} L(W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [x_{dn} - (WZ^T)_{dn}]^2 + ...
   $$
 
-  - each row $$w_d$$ of $$W$$ is then solved separately, using only its observed entries: $$w_d = (\sum_{n:(d,n) \in \Omega} z_n z_n^T + \lambda_w I_K)^{-1} \sum_{n:(d,n) \in \Omega} x_{dn} z_n$$, and each row $$z_n$$ of $$Z$$ in the same way;
+  Each row $$w_d$$ of $$W$$ then has its own system, built from the ratings of movie $$d$$: $$w_d = (\sum_{n:(d,n) \in \Omega} z_n z_n^T + \lambda_w I_K)^{-1} \sum_{n:(d,n) \in \Omega} x_{dn} z_n$$, and each row $$z_n$$ of $$Z$$ in the same way.
 
+With missing ratings, an ALS sweep builds and solves one $$K \times K$$ system per row of $$W$$ and of $$Z$$, at a cost of $$O(\vert \Omega \vert K^2 + (D+N)K^3)$$, against $$O(\vert \Omega \vert K)$$ for a pass of SGD. SGD is in general simpler and faster. ALS is the better choice in two cases ([Koren et al., 2009][koren2009]). First, on parallel machines: for a fixed $$Z$$, the rows of $$W$$ are independent of each other, and so are the rows of $$Z$$ for a fixed $$W$$, while two SGD updates on ratings of the same movie or user conflict. Second, with implicit feedback, such as views or clicks, where all entries of $$X$$ count as observations: SGD would visit all $$DN$$ of them, while ALS handles them efficiently.
 
 ### Coordinate Descent 
 
-The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) optimization method minimizes the loss function by iterating over individual coordinates while keeping the others fixed.
-
+[Coordinate descent](https://en.wikipedia.org/wiki/Coordinate_descent) minimizes a function along one coordinate at a time, with the other coordinates fixed, and cycles over the coordinates. ALS is a block coordinate descent with two blocks, $$W$$ and $$Z$$. The picture shows coordinate descent on $$f(x, y) = 5x^2 - 6xy + 5y^2$$: the path alternates steps along $$y$$ and along $$x$$, and zigzags toward the minimum at the origin. The term $$-6xy$$ couples the two coordinates; without it, one exact minimization per coordinate would reach the minimum.
 
 {: .picture}
 <img width="40%" height="40%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
@@ -152,118 +169,122 @@ The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) o
 {: .caption}
 source: Wikipedia
 
-
-Its main advantage is that it is very simple to implement and does not require the derivative of the function. It is useful for very complicated functions, or for functions whose derivatives are much more expensive to compute than the function itself. However, due to its sequential nature, it is not a good candidate for parallelism. It also has an issue with non-smooth multivariable functions: it may get stuck at a non-stationary point if the level curves of the function are not smooth (source: [Wikipedia](https://en.wikipedia.org/wiki/Coordinate_descent#Limitations)).
-
+Each step solves a problem of one variable, often in closed form, and needs no gradient of the whole function. For the LASSO, the minimum along one weight, with the others fixed, is a soft thresholding of its least-squares value, which makes coordinate descent a standard LASSO solver. The steps are sequential, since each one uses the latest values of the other coordinates. Only coordinates that do not interact, such as the rows of $$W$$ in ALS, can be updated in parallel. On non-smooth functions, coordinate descent can stop at a non-stationary point ([Wikipedia](https://en.wikipedia.org/wiki/Coordinate_descent#Limitations)). It still converges when the non-smooth part is a sum of terms of one coordinate each, such as the L1 norm of LASSO.
 
 ## Risk and Loss Functions
 
-In ML, non-probabilistic models follow the principle of empirical risk minimization to find good parameters. The **risk** is the expected loss between the true output $$y_n$$ and the predicted value $$\hat{y}_n$$, i.e.
+[Empirical risk minimization][erm] chooses the parameters $$\theta$$ of a model $$f$$, such as the weights $$w$$ of linear regression. The risk is the expected loss over the distribution of the data,
 
 $$
-r(f) = \mathbb{E}[l(\hat{y}_n, y_n)]
+R(\theta) = \mathbb{E}_{(x,y)} \left[ \ell(f(x, \theta), y) \right],
 $$
 
-where the predictor $$\hat{y}_n = f(x_n, \theta^*)$$ is the output of the model $$f$$ for input data $$x_n$$ and parameters $$\theta^*$$.
+with a per-sample loss $$\ell$$ of the prediction $$\hat{y} = f(x, \theta)$$. The distribution of the data is unknown, so training minimizes the empirical risk, the mean loss over the training set, $$\frac{1}{N} \sum_{n=1}^N \ell(f(x_n, \theta), y_n)$$.
 
-For a statistical model, maximum likelihood estimation finds the parameters for which the model fits the data well, by minimizing the negative log-likelihood:
+[erm]: https://en.wikipedia.org/wiki/Empirical_risk_minimization
+
+A probabilistic model defines the probability $$p(y \mid x, \theta)$$ of the label. [Maximum likelihood estimation][mle] chooses the parameters that minimize the negative log-likelihood of the training set. For independent samples:
 
 $$
-L_x(θ) = −log p(x | θ) .
+L(\theta) = - \log p(y_1, \ldots, y_N \mid x_1, \ldots, x_N, \theta) = - \sum_{n=1}^N \log p(y_n \mid x_n, \theta)
 $$
+
+This is an empirical risk with $$\ell = -\log p(y \mid x, \theta)$$, up to the factor $$1/N$$. The common losses follow from the choice of $$p$$.
+
+[mle]: https://en.wikipedia.org/wiki/Maximum_likelihood_estimation
 
 ### Mean Squared Error
 
-Most regression tasks use the Mean Squared Error loss function:
+Most regression tasks use the MSE or the MAE, defined above. If the labels have Gaussian noise of fixed variance $$\sigma^2$$ around the prediction, $$p(y \mid x, \theta) = \mathcal{N}(y; f(x, \theta), \sigma^2)$$, the negative log-likelihood is
 
 $$
-MSE(\hat{y}_n) = \mathbb{E}\left[ (y_n - \hat{y}_n)^2 \right],
+L(\theta) = \frac{1}{2\sigma^2} \sum_{n=1}^N (y_n - f(x_n, \theta))^2 + \frac{N}{2} \log (2 \pi \sigma^2),
 $$
 
-or the Mean Absolute Error, which is similar to the MSE but uses the absolute difference between $$y$$ and $$\hat{y}$$ instead of the squared difference.
+so minimizing the MSE gives the maximum likelihood estimate. [Laplace][laplace] noise gives the MAE in the same way.
+
+[laplace]: https://en.wikipedia.org/wiki/Laplace_distribution
 
 ### Cross-Entropy
 
-The cross-entropy with one-hot labels equals the negative log-likelihood (of the softmax, when the output of the model is not a distribution). Implementations compute it directly from the logits, fusing the log and the softmax (log-sum-exp). This avoids the overflows and underflows of computing the softmax first and its log afterwards. Most classification tasks use the binary or multi-class cross-entropy loss functions:
-- binary: $$H(p) = -(y \log p(x) + (1-y) \log (1-p(x)))$$. It simplifies to $$-\log p(x)$$ for true label $$y=1$$, and to $$-\log (1-p(x))$$ for true label $$y=0$$.
-- multi-class: $$H(p,q) = -\sum_x p(x) \log(q(x))$$, where $$p$$ is the true distribution and $$q$$ the predicted distribution.
+A classifier predicts a probability $$p_c = p(c \mid x, \theta)$$ for each of the $$C$$ classes, usually with the [softmax][softmax] of its outputs $$z_c$$, the logits: $$p_c = e^{z_c} / \sum_{j=1}^C e^{z_j}$$. The [cross-entropy][cross-entropy] between a target distribution $$q$$ over the classes and the prediction $$p$$ is $$H(q, p) = -\sum_{c=1}^C q_c \log p_c$$. For a label of class $$y$$, the target is [one-hot][one-hot], $$q_y = 1$$, and the loss is $$-\log p_y$$, the negative log-likelihood of the label. With two classes, the predicted probability $$p$$ of class 1 and a label $$y \in \{0, 1\}$$, it is the binary cross-entropy:
+
+$$
+\ell = -(y \log p + (1-y) \log (1-p))
+$$
+
+which is $$-\log p$$ for $$y = 1$$, and $$-\log(1-p)$$ for $$y = 0$$. Implementations compute $$\log p_y = z_y - \log \sum_j e^{z_j}$$ from the logits, in one fused operation, with the [log-sum-exp][logsumexp] trick $$\log \sum_j e^{z_j} = z_{\max} + \log \sum_j e^{z_j - z_{\max}}$$, where $$z_{\max} = \max_j z_j$$. Computing the softmax first and its log afterwards can overflow in $$e^{z_j}$$, or underflow to $$p_y = 0$$ and $$\log p_y = -\infty$$.
+
+[softmax]: https://en.wikipedia.org/wiki/Softmax_function
+[cross-entropy]: https://en.wikipedia.org/wiki/Cross-entropy
+[one-hot]: https://en.wikipedia.org/wiki/One-hot
+[logsumexp]: https://en.wikipedia.org/wiki/LogSumExp
 
 ### Triplet Loss
 
-**[Triplet loss](https://en.wikipedia.org/wiki/Triplet_loss)** is used in classification tasks with a very large number of classes. It learns distributed embedding representations of data points such that, in the high-dimensional vector space, contextually similar data points are projected nearby, and dissimilar data points are projected far apart. The network is trained on triplets of images: an **anchor image** of a person, a **positive image**, which is another image of the same person, and a **negative image**, which is a picture of another person. The Triplet Loss minimizes the Euclidean distance between the anchor and the positive, and maximizes the distance between the anchor and the negative. Typical tasks are face recognition ("who's this person?"), verification ("are these the same person?") and clustering ("find the most similar people"). The formulation is:
+The **[triplet loss](https://en.wikipedia.org/wiki/Triplet_loss)** learns an embedding $$f$$ that maps similar inputs to nearby points, and dissimilar inputs to distant points. It suits tasks with many classes, or with classes unknown at training time, such as the identities of people in face recognition. FaceNet ([Schroff et al., 2015](https://arxiv.org/abs/1503.03832)) trains on triplets of face images: an anchor $$x$$, a positive $$x^+$$ of the same person, and a negative $$x^-$$ of another person. The loss requires the negative to be farther from the anchor than the positive, by a margin $$m$$:
 
-$${\displaystyle {\mathcal {L}}\left(A,P,N\right)=\operatorname {max} \left({\|\operatorname {f} \left(A\right)-\operatorname {f} \left(P\right)\|}^{2}-{\|\operatorname {f} \left(A\right)-\operatorname {f} \left(N\right)\|}^{2}+\alpha ,0\right)}$$
+$$
+\ell(x, x^+, x^-) = \max\left( \Vert f(x) - f(x^+) \Vert^2 - \Vert f(x) - f(x^-) \Vert^2 + m, 0 \right)
+$$
 
-where $$A$$ is an anchor input, $$P$$ is a positive input of the same class as $$A$$, $$N$$ is a negative input of a different class from $$A$$, $$\alpha$$ is a margin between positive and negative pairs, and $$f$$ is an embedding. The details are in the original paper, [FaceNet: A Unified Embedding for Face Recognition and Clustering](https://arxiv.org/abs/1503.03832).
+FaceNet normalizes the embeddings to unit length and uses $$m = 0.2$$. The embedding then serves face verification (are two images of the same person?), recognition (who is this person?) and clustering (which faces belong together?).
 
 ### Contrastive Loss
 
-**[Contrastive loss](https://en.wikipedia.org/wiki/Siamese_neural_network)** is similar to, and often confused with, the triplet loss. However, the two solve different problems. Contrastive loss is used for known similarity relationships. Triplet loss is used for only negative/positive relationships (as in face recognition, where the identity of a person is the anchor). The triplet loss considers anchor-neighbor-distant triplets, while the contrastive loss considers anchor-neighbor and anchor-distant pairs of samples. The contrastive loss trains siamese networks on pairs of inputs labelled as similar or dissimilar (1 or 0). It is formulated in terms of the similarity label $$y$$ (1 for similar, 0 for dissimilar) and the Euclidean distance $$D$$ between two images:
+The **[contrastive loss](https://en.wikipedia.org/wiki/Siamese_neural_network)** ([Hadsell et al., 2006](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf)) trains a siamese network, which maps the two inputs of a pair with the same weights, on pairs labelled similar ($$y = 1$$) or dissimilar ($$y = 0$$); the paper uses the opposite labels. With the distance $$\delta = \Vert f(x) - f(x') \Vert$$ between the embeddings of a pair $$(x, x')$$:
 
 $$
-L = \frac{1}{2} ⋅y⋅D^2 + \frac{1}{2} ⋅(1−y)⋅max(0,m−D)^2
+\ell = \frac{1}{2} y \delta^2 + \frac{1}{2} (1-y) \max(0, m - \delta)^2
 $$
 
-where $$m$$ is a hyper-parameter. The original paper is [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf), and a summary is available in the <a href="{{ site.publications_permalink }}">publications bookmark</a>.
-
+Similar pairs are pulled together, and dissimilar pairs are pushed apart until their distance reaches the margin $$m$$. The two losses constrain the distances differently: the contrastive loss sets absolute targets, 0 for similar pairs and at least $$m$$ for dissimilar pairs, while the triplet loss only orders the distances, with the negative farther from the anchor than the positive. A summary of the paper is in the <a href="{{ site.publications_permalink }}">publications bookmark</a>.
 
 ### Connectionist Temporal Classification loss
 
-**[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)** is a classifier and loss function for noisy, unsegmented sequential input data. It is used to train recurrent neural networks (RNNs), such as LSTM networks, on sequence problems where the timing is variable. It was published in [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf).
+**[Connectionist temporal classification](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)** (CTC) is a loss for sequence labelling without alignment ([Graves et al., 2006](https://www.cs.toronto.edu/~graves/icml_2006.pdf)). In speech recognition, for example, the input has $$T$$ frames, the label sequence has $$U \leq T$$ labels, and the frames of each label are unknown. A [recurrent neural network][rnn], such as an [LSTM][lstm], outputs at each frame a softmax over the labels and a blank. A path picks one output per frame; removing the repeated labels and then the blanks maps it to a label sequence. The probability of a label sequence is the sum of the probabilities of all its paths, and the loss is its negative log. The [forward-backward algorithm][forward-backward] computes it in $$O(TU)$$ operations, by dynamic programming over the label sequence with a blank between labels and at both ends, $$2U+1$$ states.
+
+[rnn]: https://en.wikipedia.org/wiki/Recurrent_neural_network
+[lstm]: https://en.wikipedia.org/wiki/Long_short-term_memory
+[forward-backward]: https://en.wikipedia.org/wiki/Forward%E2%80%93backward_algorithm
 
 ### Focal Loss
 
-**[Focal Loss](https://arxiv.org/abs/1708.02002)** is an extension of the Cross-Entropy Loss that addresses class imbalance. Class imbalance is common in e.g. medical image segmentation, where the background (non-lesion regions) is much more prevalent than the foreground (lesion regions). Focal Loss focuses on hard-to-classify examples and down-weights the loss contribution of easy examples.
+The **[focal loss](https://arxiv.org/abs/1708.02002)** extends the cross-entropy to class imbalance. It was introduced for dense [object detection][object-detection], where a one-stage detector scores about 100,000 candidate locations per image, with about 1 object location for 1,000 background ones, so the many easy negatives dominate the cross-entropy. The focal loss down-weights the well-classified examples:
 
 $$
-\mathcal{L}_{\text{focal}} = -\alpha (1 - p_t)^\gamma \log(p_t)
+\mathcal{L}_{\text{focal}} = -\alpha_y (1 - p_y)^\gamma \log(p_y)
 $$
 
-where:
-- $$p_t$$ is the estimated probability of the model for the true class.
-- $$α$$ is a balancing factor that adjusts the weight of the positive class (especially useful for imbalanced datasets).
-- $$γ$$ is the focusing parameter, usually set to 2, which controls the focus on hard-to-classify examples.
+where $$p_y$$ is the predicted probability of the true class $$y$$, $$\alpha_y$$ is a weight per class ($$\alpha$$ for class 1 and $$1 - \alpha$$ for class 0 with two classes), and $$\gamma \geq 0$$ is the focusing parameter. With $$\gamma = 0$$, the loss is the weighted cross-entropy. With $$\gamma = 2$$, the best value in the paper (with $$\alpha = 0.25$$), an example with $$p_y = 0.9$$ has a 100 times smaller loss than with the cross-entropy.
 
-For multi-class classification, Focal Loss generalizes to:
-
-$$
-\mathcal{L}_{\text{focal}} = -\alpha_t (1 - p_t)^\gamma \log(p_t)
-$$
-
-where $$\alpha_t$$ is the balancing factor for class $$t$$.
+[object-detection]: https://en.wikipedia.org/wiki/Object_detection
 
 ### Dice Loss
 
-**[Dice loss](https://arxiv.org/abs/1707.03237)** (or Dice Similarity Coefficient Loss) is a loss function for image segmentation tasks. It evaluates the overlap between predicted and ground truth segmentation masks. It is based on the Dice coefficient, which measures the similarity between two sets, with values from 0 (no overlap) to 1 (perfect overlap). Dice Loss is typically used when precise object boundaries are important, e.g. when segmenting organs, tumors, or any region of interest in medical imaging, where the object of interest must be accurately separated from the surrounding tissue. Its main benefits are:
-- Direct Focus on Overlap: Dice loss directly optimizes the overlap between predicted and ground truth masks, which is crucial for segmentation tasks that require precise boundaries.
-- Effective for Imbalanced Classes: it performs well under a significant class imbalance between foreground and background, as it measures segmentation performance by the overlap of the foreground regions rather than by pixel accuracy.
-- Works Well with Small Objects: Dice loss is particularly effective in medical imaging tasks where the objects of interest (e.g., tumors, organs) occupy a small portion of the image.
+The **[Dice loss](https://arxiv.org/abs/1707.03237)** is a loss for [image segmentation][segmentation]. It measures the overlap of the set of predicted pixels $$P$$ and the set of ground truth pixels $$G$$ with the [Dice coefficient][dice], which ranges from 0 (no overlap) to 1 (equal sets):
 
 $$
-\mathcal{L}_{\text{Dice}} = 1 - \frac{2 |A \cap B|}{|A| + |B|}
+\mathcal{L}_{\text{Dice}} = 1 - \frac{2 \vert P \cap G \vert}{\vert P \vert + \vert G \vert}
 $$
 
-where:
-- $$A$$ is the set of predicted pixels.
-- $$B$$ is the set of ground truth pixels.
-- $$ \mid A \cap B \mid$$ is the size of the intersection of the predicted and ground truth sets, i.e. the overlap.
-
-In practice, Dice Loss is often computed as:
+For training, a differentiable form replaces the sets by the predicted probability $$p_i \in [0, 1]$$ and the ground truth value $$g_i \in \{0, 1\}$$ of each pixel $$i$$:
 
 $$
-\mathcal{L}_{\text{Dice}} = 1 - \frac{2 \sum_{i=1}^{N} p_i g_i}{\sum_{i=1}^{N} p_i + \sum_{i=1}^{N} g_i}
+\mathcal{L}_{\text{Dice}} = 1 - \frac{2 \sum_{i} p_i g_i}{\sum_{i} p_i + \sum_{i} g_i}
 $$
 
-where:
-- $$p_i$$ is the predicted value for the $$i$$-th pixel.
-- $$g_i$$ is the ground truth value for the $$i$$-th pixel.
-
-For multi-class segmentation, a generalized form of Dice Loss is:
+The loss depends only on the foreground pixels of the prediction and of the ground truth, not on the number of correct background pixels. It thus suits segmentation with a small foreground and precise boundaries, such as a tumor or an organ in a medical image, where a per-pixel loss is dominated by the background. For $$C$$ classes, the loss averages the Dice coefficients of the classes:
 
 $$
-\mathcal{L}_{\text{Dice}} = 1 - \frac{1}{C} \sum_{c=1}^{C} \frac{2 \sum_{i=1}^{N} p_{i,c} \, g_{i,c}}{\sum_{i=1}^{N} p_{i,c} + \sum_{i=1}^{N} g_{i,c}}
+\mathcal{L}_{\text{Dice}} = 1 - \frac{1}{C} \sum_{c=1}^{C} \frac{2 \sum_{i} p_{i,c} \, g_{i,c}}{\sum_{i} p_{i,c} + \sum_{i} g_{i,c}}
 $$
 
-where $$C$$ is the number of classes, and $$p_{i,c}$$ and $$g_{i,c}$$ are the predicted and ground truth values of the $$i$$-th pixel for class $$c$$.
+where $$p_{i,c}$$ and $$g_{i,c}$$ are the predicted and ground truth values of pixel $$i$$ for class $$c$$. The generalized Dice loss of the linked paper instead sums the numerators and the denominators over the classes, with the weight $$\alpha_c = 1 / (\sum_i g_{i,c})^2$$ of each class, the inverse of the squared number of its ground truth pixels, so that the large classes do not dominate the small ones:
 
+$$
+\mathcal{L}_{\text{GDL}} = 1 - \frac{2 \sum_{c=1}^{C} \alpha_c \sum_{i} p_{i,c} \, g_{i,c}}{\sum_{c=1}^{C} \alpha_c \sum_{i} (p_{i,c} + g_{i,c})}
+$$
 
+[segmentation]: https://en.wikipedia.org/wiki/Image_segmentation
+[dice]: https://en.wikipedia.org/wiki/Dice-S%C3%B8rensen_coefficient
