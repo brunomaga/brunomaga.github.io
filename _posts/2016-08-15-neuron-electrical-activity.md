@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Numerical Resolution of the Electrical Activity of Detailed Neuron Models"
+title:  "Numerical Simulation of Detailed Neuron Models"
 categories: ["Computational Neuroscience"]
 tags: ["Hodgkin-Huxley", "cable theory", "NEURON", "numerical methods", "simulation"]
 ---
@@ -198,7 +198,7 @@ At rest, the membrane is most permeable to potassium, so the resting potential l
 [resting]: https://en.wikipedia.org/wiki/Resting_potential
 [ghk]: https://en.wikipedia.org/wiki/Goldman_equation
 
-## Numerical Resolution in NEURON
+## Numerical Solution in NEURON
 
 The [NEURON][neuron] simulator solves equation \eqref{eq_tree} for all compartments, together with the ODEs of the channels ([Hines and Carnevale, 1997][hines1997neuron]; [The NEURON Book][neuron-book]). Two errors limit its accuracy: the spatial error of the compartments, and the time error of the integration method.
 

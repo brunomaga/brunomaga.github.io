@@ -60,17 +60,20 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 - A post title, with the category that the home page puts before it ("Machine Learning: "), fits on one line of
   the home page on a desktop screen. The title column is 815 px wide at 16 px: keep the line under 750 px in the
   site's font, about 90 characters, so that it also fits with wider system fonts.
-- A text task does not change titles: it proposes new ones in `title-issues.md`.
+- A text task does not change titles: it proposes new ones in the title issues of `TODO.md`.
 
-### Issue lists
+### TODO list
 
-Problems that a text task finds but does not fix go in four files at the root of the repository, with one
-section per post and a proposed fix for each item. The user picks the items to fix before the next pass.
+Problems that a task finds but does not fix, or that need a later look, go in `TODO.md` at the root of the
+repository, with a proposed fix for each item. The file has four sections, with one subsection per post:
 
-- `diagrams-issues.md`: pictures that are wrong or disagree with the text.
-- `code-issues.md`: bugs in code and data files.
-- `content-issues.md`: content problems that need the user's decision, such as overlap between posts.
-- `title-issues.md`: proposed changes to post titles.
+- Code issues: bugs in code and data files.
+- Diagram issues: pictures that are wrong or disagree with the text. The picture tasks add their open items here
+  too.
+- Content issues: content problems that need the user's decision, such as overlap between posts.
+- Title issues: proposed changes to post titles.
+
+The user picks the items to fix before the next pass. A fixed item leaves the list.
 
 ### Process
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Closed-form Linear Regression and Matrix Factorization, and loss functions"
+title:  "Linear Regression, Matrix Factorization and Loss Functions"
 categories: ["Machine Learning"]
 tags: ["supervised learning", "linear regression", "matrix factorization", "loss functions"]
 ---

@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "The Leaky Integrate-and-Fire Neuron Model and The Brunel Network"
+title:  "The Leaky Integrate-and-Fire Neuron and the Brunel Network"
 categories: ["Computational Neuroscience"]
 tags: ["spiking neurons", "LIF", "Brunel network", "simulation"]
 ---
