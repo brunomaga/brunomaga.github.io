@@ -55,7 +55,7 @@ The memory use is therefore known in advance, and a balanced load stays balanced
 ## Distributed sample sort
 
 [Sample sort][samplesort] is a distributed bucket sort. Each rank is a bucket, and the bucket ranges come from samples of the data:
-1. every rank sorts its local elements and picks $$p$$ equidistant samples;
+1. every rank sorts its local elements and picks $$p-1$$ equidistant samples;
 2. rank 0 gathers the samples, sorts them, and picks every $$p$$-th one as a **splitter**;
 3. rank 0 broadcasts the splitters. They divide the value range into $$p$$ intervals, one per rank;
 4. an all-to-all exchange (`MPI_Alltoallv`) sends each element to the rank of its interval;

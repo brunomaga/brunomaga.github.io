@@ -116,7 +116,7 @@ Kernel PCA stores the $$n \times n$$ matrix $$\tilde{K}$$, in $$O(n^2)$$ memory,
 
 ## Independent Component Analysis
 
-This section is largely based on the lecture notes of Tatsuya Yokota, Assistant Professor at the Nagoya Institute of Technology.
+This section is largely based on the lecture notes of Tatsuya Yokota (Tokyo Institute of Technology, 2012).
 
 [Independent component analysis](https://en.wikipedia.org/wiki/Independent_component_analysis) (ICA) is a method for [blind source separation](https://en.wikipedia.org/wiki/Blind_signal_separation). It separates a multidimensional signal into additive components, under two assumptions:
 - the source signals $$s_1, \ldots, s_M$$ are statistically independent: $$p(s_1, \ldots, s_M) = p(s_1) \cdots p(s_M)$$;

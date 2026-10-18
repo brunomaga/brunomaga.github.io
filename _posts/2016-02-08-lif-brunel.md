@@ -196,4 +196,4 @@ Its global oscillation has a period of about 50 ms, or 20 Hz, close to the 22 Hz
 
 - [Neuronal Dynamics][lif-gerstner], by Wulfram Gerstner et al., explains the LIF model in detail.
 - [NEST by Example: An Introduction to the Neural Simulation Tool NEST][nest-brunel], by Marc-Oliver Gewaltig et al., implements the Brunel network in `Python` with the [NEST][nest] simulator.
-- The `C++` code is in <a href="{{ site.assets }}/lif-brunel/lif-brunel.tar.gz">lif-brunel.tar.gz</a>, and its class diagram in <a href="{{ site.assets }}/lif-brunel/diagram_class.svg">diagram_class.svg</a>.
+- The `C++` code is in <a href="{{ site.assets }}/lif-brunel/lif-brunel.tar.gz">lif-brunel.tar.gz</a>, and the include graph of `Simulation.cpp` in <a href="{{ site.assets }}/lif-brunel/diagram_class.svg">diagram_class.svg</a>.
