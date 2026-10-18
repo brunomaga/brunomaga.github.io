@@ -202,6 +202,19 @@ Bugs in the code and data files of the posts (under `assets/`).
   (1+n)/(10+n) is the default of the diffusers `EMAModel`, which gives the name "warmup" (`use_ema_warmup`) to
   another formula. Fix: "0.9999 as in the paper, ramped up as in the default EMAModel of diffusers".
 
+### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
+
+- `int8_matmul` (in `inference/quantization.py` and in the post) multiplies INT32 tensors with `@`, which PyTorch
+  runs on the CPU only: on a GPU it fails with `"addmm_cuda" not implemented for 'Int'`. `W8A8Linear` and
+  `LLMInt8Linear` call it, and `quantization.py` runs the model on the GPU when there is one. Fix: on a GPU, use
+  `torch._int_mm` on the INT8 tensors (it needs more than 16 rows and sizes that are multiples of 8), or multiply
+  in FP64, which is exact for these sums.
+- Optional, the FP8 KV cache experiment of `quantization.py` applies `fake_quantize_fp8` to the whole cache after
+  every decode step, with one scale per tensor that follows the largest value so far. When the scale grows, the
+  older entries are rounded again, which adds error that a real FP8 cache, which stores each entry once, does not
+  have (1.4 times the error in a test on random data). Fix: quantize only the new entries, with a fixed scale per
+  layer, for example taken from the prompt.
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -625,6 +638,13 @@ Content problems that need the author's decision, such as overlap between posts.
 - The last section was named "Final remarks and code", but the repository holds no code for this post: no file
   defines `Megatron_f`, `Megatron_g`, `Megatron_FeedForward` or `Megatron_MHA`. Proposed fix: add these classes
   to `assets/distributed-training` with a small test on 2 GPUs, or keep the code in the post only.
+
+### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
+
+- The draft describes the experiments of `inference/pruning.py` and `inference/quantization.py` on GPTlite (pruning
+  with distillation, Wanda, ShortGPT, weight-only and weight-activation quantization, KV cache quantization), but
+  shows none of their results. Fix: run the two scripts and add a table of their outputs (parameters, size,
+  validation loss, time per token, matching tokens), or present the code without the comparisons.
 
 ## Title issues
 
