@@ -24,7 +24,7 @@ plt.rcParams.update({
     'axes.linewidth': 1, 'axes.edgecolor': '#000000', 'axes.labelsize': 14, 'axes.labelcolor': '#000000',
     'xtick.labelsize': 12, 'ytick.labelsize': 12, 'xtick.color': '#000000', 'ytick.color': '#000000',
     'xtick.major.width': 1, 'ytick.major.width': 1, 'xtick.major.size': 0, 'ytick.major.size': 3,
-    'legend.fontsize': 14, 'hatch.linewidth': 0.6,
+    'legend.fontsize': 14, 'svg.hashsalt': 'tp_results',   # the same ids on every run
 })
 
 fig, ax = plt.subplots(figsize=(7.0, 3.0), dpi=72)     # 1 inch = 72 units = 72 px
@@ -63,6 +63,7 @@ out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tp_results.svg')
 fig.savefig(out, bbox_inches='tight', pad_inches=0.02, transparent=True, metadata={'Date': None})
 svg = open(out).read()
 head, rest = svg.split('<svg', 1)
+head = head.split('<!DOCTYPE', 1)[0]                  # no DTD, as in the other SVGs of the site
 attrs, body = rest.split('>', 1)
 attrs = attrs.replace('pt"', '"', 2)                  # the width and height in px, so that 1 unit = 1 px
 open(out, 'w').write(head + '<svg' + attrs + '>' + body)
