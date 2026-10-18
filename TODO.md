@@ -80,9 +80,9 @@ that is not wrong.
 - The text rewrite (PR #92) changes the text of the posts, and the picture restyle (branch
   `claude/project-thread-56yymq`) changes their pictures, img tags and captions, so both change the same Markdown
   files. The restyled pictures already use the symbols of the text rewrite: ranks and p in the sorting pictures, x_i,
-  j* and w_j* in the Kohonen pictures, and "Exact" in the legend of the LIF solutions. Fix: merge the text rewrite
-  first, then merge the main branch into the picture branch, keep the text of the text rewrite and the pictures and
-  captions of the picture branch, and check each caption against the new text.
+  j* and w_j* in the Kohonen pictures, and "Exact" in the legend of the LIF solutions. Fix, in the order the user
+  chose: merge the picture branch first, then merge the main branch into the text rewrite, keeping its text and the
+  pictures, img tags and captions of the main branch, and check each caption against the new text.
 - The two kernel fusion posts (2026-08-18-kernel-fusion-tensor-parallelism.md and
   2026-10-09-kernel-fusion-expert-parallelism.md): their 17 pictures, `inference/imgs/tp_*.svg` and `ep_*.svg`, are
   not restyled. 16 are copies of the figures of the paper repositories, and `tp_expert_sharding.svg` comes from a tab
@@ -121,6 +121,13 @@ that is not wrong.
 - `lif-brunel/action_potential.gif`: a "MakeAGIF.com" watermark in the bottom right corner, and the arrows that show
   the direction of the current are missing in the first and last frames. Fix, asked by the user for after the merge: a
   static SVG in which the arrows are always visible.
+
+### Numerical Simulation of Detailed Neuron Models (2016-08-15-neuron-electrical-activity.md)
+
+- `neuron-electrical-activity/brain_scales.svg`: the LadyofHats drawing is not restyled and not at page scale. It is
+  716 px wide and shows at 50%, so its sans-serif panel letters (a to d) and ion labels show at 61% of their size.
+  Fix: keep the drawing, scale it to about 440 px, redraw the letters and labels in Times New Roman (14 px and 12 px),
+  and set P = W/880.
 
 ### Variable Timestep Simulation of the Electrical Activity of Neurons (2017-02-17-neuron-variable-timestep.md)
 

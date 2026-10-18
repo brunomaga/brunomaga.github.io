@@ -136,17 +136,19 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
 ### 3. Page width and scale
 
 - The post content width is X = 880 px (minima's $content-width 940 px minus 2 x 30 px padding;
-  assets/main.scss). The publications page shows its pictures in a 766 px column, but sizes them for
-  X = 880 px too, so there they appear at 87% of their size in a post.
-- Every picture is drawn at page scale: 1 draw.io px is 1 px on the page when the picture is shown at
-  its natural size. No picture is wider than 880 px.
-- The Markdown shows a picture of width W px at W/880*100 percent, rounded to one decimal:
+  assets/main.scss).
+- Every picture is drawn for a post, also one that only the publications page shows: at page scale, where
+  1 draw.io px is 1 px on the page when the picture is shown at its natural size, and no wider than 880 px.
+  The publications page puts its pictures in a 766 px column, so there they appear at 87% of their size in
+  a post, which is fine.
+- The Markdown of every page, the publications page too, shows a picture of width W px at W/880*100
+  percent, rounded to one decimal:
   ```
   {: .picture}
   <img width="P%" height="P%" src="{{ site.assets }}/<folder>/<name>.svg"/>
   ```
   with P = W / 880 * 100 (W is the width of the exported SVG). So text, lines and arrowheads look the same
-  size in every picture of the site.
+  size in every picture of the posts.
 - Pictures shown side by side in one row each keep their own P. When the P values of a row add up to more
   than 98 (the spaces between pictures take the rest), the pictures wrap onto the next line.
 - A picture that does not fit 880 px at the text sizes below is redrawn: first narrow the empty space
