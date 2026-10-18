@@ -53,10 +53,10 @@ The model assumes that the neuron's potential rises steeply when there is an inp
 To simulate the [Action Potential](https://en.wikipedia.org/wiki/Action_potential) (or *spike*) of biological neurons, each neuron has a *fixed* firing threshold. When the potential reaches this threshold, the neuron *spikes* (or *fires*), and its potential immediately drops to a reset potential. Axonal branches are simulated by a **synaptic delay**, i.e. the time a spike signal takes to reach the connected post-synaptic neurons. The following picture illustrates this propagation of spike and current, which determines the synaptic delay:
 
 {: .picture}
-<img width="40%" height="40%" src="{{ site.assets }}/lif-brunel/action_potential.gif">
+<img width="45.1%" height="45.1%" src="{{ site.assets }}/lif-brunel/action_potential.svg">
 
 {: .caption}
-An action potential travelling along an axon. Source: [Action Potential.gif, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Action_Potential.gif)
+An action potential travelling along an axon, in the direction of the arrow. The membrane is positive outside and negative inside, except at the action potential, where the polarity is reversed. Adapted from: [Action Potential.gif, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Action_Potential.gif)
 
 After a spike, the neuron potential stays constant at the reset value for a given **refractory period**, to simulate the [refraction](https://en.wikipedia.org/wiki/Refractory_period_(physiology)) of biological neurons. This is not a detailed simulation of neuron activity, but it is a good starting point for a simple neuron model, before more complex models in future posts.
 
