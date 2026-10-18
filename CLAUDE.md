@@ -7,12 +7,13 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 
 ### Audience and voice
 
-- The site reads like a college course: a professor teaching undergraduates, who speaks like an engineer. The
-  readers are HPC and ML researchers, engineers and students. They come for clear information, and nobody likes
-  long posts or boring sentences.
-- Factually correct, direct, concise, technical, and relevant to HPC and ML. No business or marketing language,
-  no anecdotes, no opinions, no hype, no motivation speeches, no calls to action. No "in this post we will"
-  opening and no "in conclusion" ending.
+- The site reads like a good college lecture by a young, motivated teacher, written the way a good textbook is
+  written. The readers are HPC and ML researchers, engineers and students. The text is approachable and
+  informative: it explains why each step is needed and how it works, and it is pleasant to read. It is never
+  cold, curt or terse: a string of short, flat statements reads like orders, not like a lecture.
+- Factually correct, technical, and relevant to HPC and ML. No business or marketing language, no anecdotes, no
+  hype, no calls to action. No "in this post we will" opening and no "in conclusion" ending. The warmth comes
+  from clear explanations and a natural tone, not from praise.
 - Third person only. Never "I", "we", "our", "us", "you", "your" or "my". The subject of a sentence is the
   algorithm, the model, the data or the hardware: "Each rank sends its block", not "We send the block". Quotes
   and paper titles keep their original words. The introduction of the home page (`index.md`) is the author's bio
@@ -20,7 +21,12 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 
 ### Sentences and words
 
-- Short sentences, one idea each. Short paragraphs. Direct and precise.
+- Write as in a book: sentences flow from one to the next, joined by words that show how the ideas connect
+  ("so", "because", "this means that", "however", "in other words"), and each paragraph develops one idea from
+  the problem to its solution. Mix short and long sentences, and avoid runs of very short ones. Precise, but
+  never curt.
+- Explain: introduce each concept with the problem it solves, give the intuition, then the formula or the
+  algorithm, and say what its terms mean and why they are there.
 - Simple words that a non-native English speaker knows, plus the exact technical term ("redundant copies",
   "memory footprint", "latency-bound"). No colloquial wording ("wastes memory"), no fancy synonyms, no
   buzzwords.
@@ -28,8 +34,8 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
   "in order to"): use one only where it helps the sentence.
 - Say each thing once. No repeated definitions, no paragraph that restates the previous one, no summary that
   only repeats the post.
-- Short posts. Cut every sentence that adds no information. Keep every formula, algorithm step, number and
-  result that does.
+- A post is as long as its explanation needs, and no longer: no padding and no repetition. Keep every formula,
+  algorithm step, number and result.
 - When a post presents several methods, compare them where they appear, or in a table at the end of the post.
   A simple comparison is enough ("A needs less memory than B"). Say when to use each method, and the idea
   behind it.
@@ -79,6 +85,9 @@ The user picks the items to fix before the next pass. A fixed item leaves the li
 ### Process
 
 - Rewrite one post at a time: read it in full, check its math and pictures, then rewrite it.
+- A rewrite starts from the author's original text, the post on master: it keeps the author's explanations,
+  examples and flow, removes the first person, keeps the section structure of pass 1, and brings in the
+  corrections, references, links and comparisons of pass 1.
 - Keep the line endings of each file (many posts use CRLF).
 - Build the site with `bundle exec jekyll build --drafts` and check that every formula and picture renders.
 - After each full pass over all posts, push a snapshot branch, show the results and this file to the user, and
