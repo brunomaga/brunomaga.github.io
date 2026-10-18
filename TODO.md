@@ -213,6 +213,17 @@ that is not wrong.
   model with 9 Gaussian basis functions and a bias, after 1, 2, 4 and 25 noisy samples (circles) of sin(2 pi x)
   (blue): mean (orange) and mean plus and minus one predictive standard deviation (light orange)".
 
+### Exponential Family of Distributions (2019-03-20-exponential-family.md)
+
+- `exponential-family/common_distributions.svg`: the names of the distributions overlap the bars and the curves in
+  their boxes, e.g. "Uniform", "Negative Binomial", "Normal (Gaussian)" and "Chi-Squared". Fix: place each name
+  above the plot in its box, or give the names a white outline.
+- `exponential-family/common_distributions.svg`: the text says that the binomial approaches the normal for large n
+  (de Moivre-Laplace theorem), as the source post by Sean Owen does, but the figure has no arrow from Binomial to
+  Normal; it has the arrows from Hypergeometric and from Poisson. Fix: add the arrow from Binomial to Normal.
+- Optional: the caption starts with "The 15 most common probability distributions", but the source post only calls
+  them common. Fix: "Fifteen common probability distributions and their relationships", with the same source.
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
