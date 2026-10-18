@@ -5,17 +5,19 @@ categories: ["Distributed Training"]
 tags: ["curriculum learning", "variable sequence length", "adaptive batch size", "CUDA graphs", "DeepSpeed"]
 ---
 
-Many datasets contain samples of variable length, such as audio tracks of different durations, sentences with different numbers of tokens, or videos with different numbers of frames. A common way to train a model on such data is to trim and pad all samples to a fixed length, so that batch shapes are the same in every training iteration. The alternative is to train on the original sample sizes. This adds complexity, especially in distributed (multi-node, multi-GPU) environments.
+Many datasets hold samples of variable length: audio tracks of different durations, sentences with different numbers of tokens, videos with different numbers of frames. The common approach trims and pads all samples to one length, so that every batch has the same shape. Training on the original lengths avoids the padding, but adds complexity, in particular in distributed (multi-node, multi-GPU) runs. Three techniques speed up such runs:
 
-This post describes and implements three techniques that accelerate training with variable-length inputs in multi-process runs: (1) **curriculum learning**, to make learning faster and more stable; (2) **adaptive batch size and learning rate**, to improve hardware utilization with large batches of short samples (and vice versa) and a corresponding learning-rate adjustment; and (3) **static kernel compilation**, to reduce runtime overhead.
+1. **Curriculum learning** orders the samples by difficulty, such as length, which makes training faster and more stable.
+2. An **adaptive batch size and learning rate** pack many short samples or few long samples into each batch, within a token budget, and scale the learning rate (LR) to the batch size.
+3. **Static kernel compilation** compiles one version of the model per input shape, which reduces the runtime overhead.
 
 ## Curriculum Learning
 
-[Curriculum learning](https://arxiv.org/abs/2101.10382) is a training method that presents samples to the model in order of increasing difficulty (e.g., increasing noise level, human score or length). It can improve stability and final performance. Very difficult samples early in training can produce large gradients and abrupt parameter updates, which may destabilize learning. A gradual increase in difficulty leads to a smoother and more stable learning process.
+[Curriculum learning](https://arxiv.org/abs/2101.10382) ([Bengio et al., 2009](https://doi.org/10.1145/1553374.1553380)) presents the samples to the model in order of increasing difficulty, such as increasing noise level, human score or length. Difficult samples early in training can produce large gradients and abrupt parameter updates, which can destabilize training. A gradual increase in difficulty gives a smoother training process, and can improve the quality of the final model.
 
-Curriculum learning also improves efficiency on variable-length data. When short and long sequences are mixed in the same batch, all sequences are padded to the length of the longest one, which adds substantial compute and memory overhead.
+On variable-length data, a curriculum by length also reduces padding. A batch that mixes short and long sequences pads all of them to the length of the longest one, while a batch of sorted samples holds sequences of similar length.
 
-Curriculum learning has three steps: (1) define a difficulty metric per sample, (2) sort samples by increasing difficulty, and (3) iterate through the sorted dataset. In distributed runs with large datasets, however, this is non-trivial. Samples are typically assigned to ranks in an interleaved fashion (e.g., by PyTorch’s `DistributedSampler`; see (a) and (b) below). If each rank sorts only its local shard, the result can be load imbalance.
+Curriculum learning has three steps: define a difficulty metric per sample, sort the samples by increasing difficulty, and iterate over the sorted dataset. On large datasets in distributed runs, the sort is the hard step. The samples are assigned to the ranks in an interleaved order, for example by PyTorch's `DistributedSampler` (panels (a) and (b) below).
 
 {: .picture}
 <img width="71%" height="71%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
@@ -23,21 +25,19 @@ Curriculum learning has three steps: (1) define a difficulty metric per sample, 
 {: .caption}
 The curriculum dataset setup problem, on a network of 4 ranks and a dataset of 16 samples.
 
-There are two main approaches:
+Two approaches sort the dataset:
 
-- **Simple (but potentially imbalanced and non-deterministic):** each rank loads its shard, sorts it locally, and applies curriculum learning to its local order (diagram (c)). This can cause load and runtime imbalance, and the results depend on the number of ranks.
-- **Complex (but balanced and deterministic):** a distributed sort across all ranks (diagram (d)) is followed by an interleaved reassignment of the globally sorted dataset (diagram (e)). The result is an almost perfectly balanced distribution across ranks (diagram (f)).
-
-The following sections describe the second approach.
+- **Local sort** (panel (c)): each rank sorts its own shard, with no communication. At a given step, the ranks process samples of different lengths, so the ranks with short samples wait for the ranks with long samples at every synchronization. The order of the samples, and thus the training result, also depends on the number of ranks.
+- **Distributed sort** (panel (d)), followed by an interleaved assignment of the sorted dataset to the ranks (panels (e) and (f)). At every step, all ranks process samples of similar length, so the load is balanced. The order of the samples does not depend on the number of ranks. It costs one distributed sort before training.
 
 ### Distributed Sorting
 
-The difficult step is the distributed sort that transforms (b) into (d). There are other distributed sorting algorithms, but this implementation uses the **Distributed Sample Sort** algorithm, because it scales well to many processes. The workflow is:
+The distributed sort turns panel (b) into panel (d). The implementation uses [sample sort](https://en.wikipedia.org/wiki/Samplesort), which scales to many ranks because each element moves at most once, in one [all-to-all](https://en.wikipedia.org/wiki/All-to-all_(parallel_pattern)) exchange:
 
 {: .picture}
 <img width="74%" height="74%" src="{{ site.assets }}/distributed-sort/sample_sort.svg"> 
 
-The Python implementation is:
+In the figure, a root rank gathers the samples, picks the splitters (the key values that bound the range of each rank) and broadcasts them. The code below replaces the gather and the broadcast with one all-gather, after which every rank picks the same splitters. It also takes `n_samples=100` samples per rank, where the figure takes as many as there are ranks. More samples give splitters closer to the quantiles of the data, and buckets of closer sizes (the figure ends with 9, 4 and 8 elements):
 
 ```python
 def sample_sort(tensor, comm_group, num_workers, n_samples=100):
@@ -87,54 +87,53 @@ def sample_sort(tensor, comm_group, num_workers, n_samples=100):
     return recv
 ```
 
-The remaining code is available in [DeepSpeed PR 5129](https://github.com/microsoft/DeepSpeed/pull/5129). It includes support utilities, e.g., `file_write_ordered`, which writes the sorted distributed tensor in (d) to a sequential file.
+[DeepSpeed PR 5129](https://github.com/microsoft/DeepSpeed/pull/5129) holds the rest of the code, such as `file_write_ordered`, which writes the sorted distributed tensor of panel (d) to one sequential file.
 
-## Adaptive batch size and learning rate
+## Adaptive Batch Size and Learning Rate
 
-On variable-length datasets, batches are commonly built by *token count* instead of sample count: samples are grouped so that the sum of sequence lengths in each batch stays close to a target. For example, [Attention is all you need](https://arxiv.org/abs/1706.03762), section 5.1, states:
+On variable-length datasets, batches are often built by *token count* instead of sample count: each batch holds samples whose lengths add up to about a target number of tokens. [Attention Is All You Need](https://arxiv.org/abs/1706.03762) (section 5.1) does this:
 
 > Sentence pairs were batched together by approximate sequence length. Each training batch contained a set of sentence pairs containing approximately 25000 source tokens and 25000 target tokens.
 
-This balances the work across batches and across ranks. It is also relevant for curriculum learning: a batch of shape `B x S x E` (batch size × sequence length × embedding size) often has a high `B` and a low `S` early in the curriculum (many short samples), and a low `B` and a high `S` later (fewer long samples).
+A token budget balances the work across batches and across ranks. A batch has the shape $$B \times S \times E$$ (batch size × sequence length × embedding size). With curriculum learning and a token budget, $$B$$ is large and $$S$$ small early in training (many short samples), and $$B$$ is small and $$S$$ large later (few long samples).
 
-However, changing the batch size `B` usually requires adjusting the learning rate (LR). Two common scaling rules are:
+A change of the batch size needs a change of the learning rate. When the batch size grows from a reference $$B_0$$ to $$B = k B_0$$, two rules scale the reference LR $$\eta_0$$:
 
-1. **Linear scaling:** when the minibatch size is multiplied by `k`, the LR is multiplied by `k` (e.g., [Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour, Goyal et al.](https://arxiv.org/abs/1706.02677)).
-2. **Square-root scaling:** when the minibatch size is multiplied by `k`, the LR is multiplied by `sqrt(k)`, which keeps gradient noise roughly constant (e.g., [One weird trick for parallelizing convolutional neural networks, Krizhevsky](https://arxiv.org/abs/1404.5997)).
+1. **Linear scaling**, $$\eta = k \, \eta_0$$. One step on a batch of $$k B_0$$ samples then moves the parameters about as far as $$k$$ steps on batches of $$B_0$$ samples, if the gradients change little over these $$k$$ steps. [Accurate, Large Minibatch SGD: Training ImageNet in 1 Hour](https://arxiv.org/abs/1706.02677) (Goyal et al., 2017) uses this rule, with a warmup phase, to train ResNet-50 with [SGD](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) on batches of up to 8192 images. Beyond that size, the accuracy drops.
+2. **Square-root scaling**, $$\eta = \sqrt{k} \, \eta_0$$. The variance of the gradient estimate falls by $$k$$ when the batch grows by $$k$$, so this rule keeps the variance of each update constant. [One weird trick for parallelizing convolutional neural networks](https://arxiv.org/abs/1404.5997) (Krizhevsky, 2014) states this rule, but finds linear scaling to work better for the batch sizes of that paper. For Adam and RMSprop, [Malladi et al. (2022)](https://arxiv.org/abs/2205.10287) derive square-root scaling, which also changes the $$\beta$$ and $$\epsilon$$ hyperparameters.
 
-The hyperparameters are therefore: (1) a target token count per batch, (2) a reference learning rate, and (3) a reference batch size. During training, samples are packed into each batch until the token budget is reached, and the LR is scaled according to the resulting batch size.
+Linear scaling suits SGD, and square-root scaling suits adaptive optimizers such as Adam. The method has three hyperparameters: the token budget per batch, the reference LR $$\eta_0$$ and the reference batch size $$B_0$$.
 
-### Illustrative example
+### Illustrative Example
 
-Assume a limit of $$30$$ tokens per batch, a reference LR of $$10^{-3}$$, and a reference batch size of $$2$$. Early in curriculum learning (short sequences), batches contain more samples than later (long sequences):
+Take a budget of $$30$$ tokens per batch, $$\eta_0 = 10^{-3}$$ and $$B_0 = 2$$. Early in the curriculum, the sequences are short, and a batch holds more samples than later:
 
 {: .picture}
 <img width="87%" height="87%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
 
-Samples are added to a batch until it reaches at most 30 tokens. The resulting batch sizes (number of samples) are $$10$$ and $$4$$ in the left and right examples, respectively. With linear scaling, the corresponding LRs are $$5 \times 10^{-3}$$ and $$2 \times 10^{-3}$$.
+Both batches hold 30 tokens: $$B = 10$$ short samples on the left and $$B = 4$$ long samples on the right. Linear scaling gives LRs of $$5 \times 10^{-3}$$ and $$2 \times 10^{-3}$$, and square-root scaling gives $$2.24 \times 10^{-3}$$ and $$1.41 \times 10^{-3}$$.
 
-### Pipeline parallelism
+### Pipeline Parallelism
 
-Pipeline parallelism
-requires the same batch size and sequence length in all micro-batches of a batch, because activation shapes must remain fixed during gradient accumulation. A fixed `B x S x E` across micro-batches can lead to smaller micro-batches and more padding. The figure below compares standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right), for 2 processes and 2 gradient accumulation steps (4 micro-batches in total):
+The DeepSpeed pipeline engine requires the same batch size and sequence length in all micro-batches of a batch. The option `PipelineModule(dynamic_shape=True)` lifts this constraint, at a possible performance cost. The figure below compares Distributed Data Parallel (DDP, left) with pipeline parallelism (right), for a batch of 4 micro-batches:
 
 {: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
 
-In the pipeline case (right), all micro-batches have the same `B x S x E` shape. Under this constraint, each micro-batch holds fewer samples than in the non-pipeline case (left), and padding is added where needed.
+With DDP, each micro-batch has its own shape and holds up to 30 tokens. With pipeline parallelism, all micro-batches have the same shape, $$3 \times 11 \times E$$, where 11 is the length of the longest sample. The 4 micro-batches then hold 12 samples instead of 16, and 33% of their tokens are padding instead of 23%.
 
-### Attention matrix
+### Attention Matrix
 
-Attention is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x S x E` usually uses a 2D attention mask of shape `S x S`, broadcast over the batch dimension. With variable lengths, a *per-sample* mask is required, represented as a `B x S x S` tensor. For example, the mask for the non-pipeline micro-batch 1 above (top left, 4 sentences) is:
+With samples of one length, the attention of an input of shape $$B \times S \times E$$ uses one $$S \times S$$ mask, such as the causal mask, for all samples of the batch. With padded samples of different lengths, each sample needs its own mask, which also masks the padding, so the mask is a $$B \times S \times S$$ tensor. For micro-batch 1 of the DDP panel above (4 samples of lengths 9, 7, 8 and 6), the mask has one slice per sample (layers 0 to 3 in the figure):
 
 {: .picture}
 <img width="87%" height="87%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
 
-The cost of attention scales linearly with `B` and quadratically with the maximum `S` in the batch. Letting `S` vary, and adapting `B` accordingly, therefore improves utilization, because sequences are not padded to an unnecessarily large `S`.
+The cost of attention grows linearly with $$B$$ and quadratically with $$S$$, the length of the longest sequence of the batch. A batch of samples of similar length, with $$B$$ adapted to $$S$$, therefore spends little compute on padding. Variable-length attention kernels, such as `flash_attn_varlen_func` of [FlashAttention](https://github.com/Dao-AILab/flash-attention), remove the padding. They take the sequences of a batch concatenated along one dimension, with the offset of each sequence, and need no mask tensor.
 
 ### Implementation
 
-The variable learning rate is implemented as a scheduler wrapper. At each step, it scales the LR of an underlying scheduler based on the realized batch size:
+A scheduler wrapper implements the variable LR. At each step, it takes the LR of an underlying scheduler and scales it to the size of the next batch:
 
 ```python
 class VariableBatchSizeLR(LRScheduler):
@@ -180,7 +179,9 @@ class VariableBatchSizeLR(LRScheduler):
             group['lr'] = scale_lr(self.base_batch_size, batch_size, group['lr'], self.lr_scaling_method)
 ```
 
-The adaptive batch size is implemented as a data loader with a custom collate function that packs samples into micro-batches within the token budget:
+The function `scale_lr` (not shown) multiplies the LR by $$k = B / B_0$$ for linear scaling, or by $$\sqrt{k}$$ for square-root scaling.
+
+A data loader returns the micro-batches. Its input `microbatch_ids` holds the ids of the samples of each micro-batch, packed beforehand within the token budget. A `DistributedSampler` assigns the micro-batches to the ranks in an interleaved order. The collate function loads the samples of each micro-batch and, for pipeline parallelism (`required_microbatches_of_same_seqlen`), pads them to the longest sequence of their batch (`batch_max_seqlens`):
 
 ```python
 def dataloader_for_variable_batch_size(dataset, microbatch_ids, batch_max_seqlens,
@@ -222,17 +223,17 @@ def dataloader_for_variable_batch_size(dataset, microbatch_ids, batch_max_seqlen
     )
 ```
 
-A complete example is available in [DeepSpeed PR 7104](https://github.com/microsoft/DeepSpeed/pull/7104/).
+[DeepSpeed PR 7104](https://github.com/microsoft/DeepSpeed/pull/7104/) holds the complete code and an example.
 
-## Kernels compilation
+## Kernel Compilation
 
-Just-in-time compilation of ML kernels with `torch.compile` can give substantial speedups. This section covers two aspects: (1) compilation in distributed runs and CUDA graphs, and (2) static vs dynamic compilation.
+[`torch.compile`](https://pytorch.org/docs/stable/generated/torch.compile.html) compiles a model [just in time](https://en.wikipedia.org/wiki/Just-in-time_compilation): it captures the operations of the model in graphs, and its default backend, Inductor, fuses the operations of each graph into fewer kernels. The tests of this section used `torch==2.4.0`.
 
-### CUDA graphs compilation on single- vs multi-process runs
+### Compilation in Single- and Multi-Process Runs
 
-Compilation via [`torch.compile`](https://pytorch.org/docs/stable/generated/torch.compile.html) takes a `mode` argument that controls how aggressive the optimizations are. One important optimization is compilation into a CUDA graph. [CUDA graphs](https://developer.nvidia.com/blog/cuda-graphs/) capture and replay a sequence of kernels entirely on the GPU, which reduces the CPU overhead of kernel launches.
+The `mode` argument of `torch.compile` sets how aggressive the optimizations are. The modes `reduce-overhead` and `max-autotune` also use [CUDA graphs](https://developer.nvidia.com/blog/cuda-graphs/). A CUDA graph records a sequence of kernels once and replays it with one launch, which removes the CPU overhead of launching each kernel.
 
-Consider a feed-forward network with 3 linear layers and 3 activations on a single GPU. Its data loading, forward pass, backward pass and optimizer step are illustrated below:
+Take a feed-forward network of 3 linear layers and 3 ReLU activations on one GPU. Without compilation, each layer runs its own kernels in the forward and the backward pass:
 
 {: .picture}
 <img width="52%" height="52%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial.svg"/> 
@@ -240,7 +241,7 @@ Consider a feed-forward network with 3 linear layers and 3 activations on a sing
 {: .caption}
 Workflow of a single-GPU training iteration (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
-In this example, the GPU executes many separate kernels in the forward and backward passes. When captured as a CUDA graph, these kernels are replayed with fewer launches, which often improves throughput:
+`torch.compile` captures the forward pass in one graph and derives one graph for the backward pass. Each graph runs as a few fused kernels, or as one CUDA graph launch:
 
 {: .picture}
 <img width="52%" height="52%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
@@ -248,7 +249,7 @@ In this example, the GPU executes many separate kernels in the forward and backw
 {: .caption}
 Workflow of a single-GPU training iteration with a compiled model (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
-Now consider a Distributed Data Parallel (DDP) run on 2 GPUs. During backpropagation, DDP performs `all_reduce` operations to synchronize gradients across ranks. These collectives can overlap with gradient computation, because `loss.backward()` accumulates gradients into `w.grad` and `optimizer.step()` applies the updates later. The gradients of the last layers, which are computed first, are therefore reduced while the gradients of earlier layers are still being computed:
+In a DDP run on 2 GPUs (Node 1 and Node 2 in the figures), each GPU computes the gradients of its own data. An all-reduce averages the gradients across the GPUs before the optimizer step. DDP groups the gradients in buckets, and starts the all-reduce of a bucket as soon as all its gradients are computed. The backward pass computes the gradients of the last layers first, so their all-reduce overlaps with the backward pass of the earlier layers:
 
 {: .picture}
 <img width="62%" height="62%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
@@ -256,7 +257,7 @@ Now consider a Distributed Data Parallel (DDP) run on 2 GPUs. During backpropaga
 {: .caption}
 DDP execution workflow on 2 GPUs. The optimizer waits for all asynchronous `all_reduce`s of gradients to finish (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
-In a compiled model, intermediate communication steps can introduce **graph breaks**. A naïve option is to compile one large graph and run all `all_reduce`s at the end. However, this reduces overlap and increases the waiting time of the optimizer:
+When `torch.compile` compiles the whole model, the backward pass is one graph, and the all-reduces start only when it ends. Communication then no longer overlaps with computation, and the optimizer waits longer:
 
 {: .picture}
 <img width="56%" height="56%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
@@ -264,7 +265,7 @@ In a compiled model, intermediate communication steps can introduce **graph brea
 {: .caption}
 DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, which increases the waiting time of the optimizer (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
-PyTorch’s `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) solves this problem. It compiles the model into subgraphs separated by the graph breaks, and starts an asynchronous synchronization at each subgraph boundary:
+The `DDPOptimizer` pass of TorchDynamo ([TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) splits the graph into subgraphs whose parameters fill about one DDP bucket each, and compiles each subgraph on its own. The all-reduce of a bucket starts when the backward pass of its subgraph ends, and overlaps with the backward pass of the next subgraph:
 
 {: .picture}
 <img width="62%" height="62%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
@@ -272,13 +273,13 @@ PyTorch’s `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/t
 {: .caption}
 DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization runs asynchronously between subgraphs (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
 
-Note that subgraph boundaries may change with input shapes. In the author's experiments, DeepSpeed ZeRO-0 did not reach the distributed speedups of PyTorch DDP, possibly because DeepSpeed lacks an optimization equivalent to `DDPOptimizer`.
+In the author's tests, a compiled model under DeepSpeed ZeRO stage 0 did not reach the speedup of PyTorch DDP, possibly because DeepSpeed had no equivalent of `DDPOptimizer`.
 
-### Static compilation of variable-shaped inputs
+### Static Compilation of Variable-Shaped Inputs
 
-PyTorch provides limited support for compiling variable-shaped tensors with `torch.compile(dynamic=True)`. In tests with `torch==2.4.0`, dynamic compilation was slower than static compilation, and it did not work reliably when both the batch size and the sequence length were dynamic.
+The `dynamic` argument of `torch.compile` controls the compilation of variable shapes. With `dynamic=True`, it compiles kernels with symbolic shapes, which serve many input shapes. With `dynamic=False`, it compiles one static version per shape. By default (`dynamic=None`), it compiles the first shape statically, and recompiles with symbolic shapes when a new shape appears. In the tests, the dynamic kernels were slower than the static ones, and dynamic compilation was not reliable when both the batch size and the sequence length varied.
 
-Static compilation is preferable, but it must handle variable shapes. A practical solution is to make each rank execute, near the beginning of training, at least one forward and backward pass for every *shape* it will see later. The compiler then generates (and caches) one binary per shape. The idea is illustrated below:
+With static compilation, a rank that meets a new shape late in training recompiles, while the other ranks wait for it at the next collective. To avoid this, each rank runs, early in training, one forward and backward pass for every shape it will see (panel (b) below):
 
 {: .picture}
 <img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/torch_compile_dataset.svg"/>
@@ -286,21 +287,19 @@ Static compilation is preferable, but it must handle variable shapes. A practica
 {: .caption}
 Dataset setup that allows static compilation for variable-length training on 3 processes. **Top (a):** default interleaved assignment (color-coded). The green and yellow ranks encounter a new shape later in training (red cross). This triggers a recompilation and, depending on the settings, possibly a runtime failure. **Bottom (b):** after reshuffling, each rank sees one sample of each shape early on. One binary is compiled per shape, and no recompilation happens afterwards.
 
-Compilation behavior can be inspected by setting `TORCH_LOGS=recompiles`. For example, if the dataset contains lengths $$10$$, $$20$$, $$30$$, and $$40$$, a recompilation is logged whenever a new length appears:
+The environment variable `TORCH_LOGS=recompiles` logs each recompilation. For a dataset of lengths $$10$$, $$20$$, $$30$$ and $$40$$, each new length adds a log entry such as:
 
 ```
 Recompiling function forward in train.py:145 triggered by the following guard failure(s):
     - tensor 'L['timestep']' size mismatch at index 0. expected 10, actual 20
 ```
 
-and similarly for each subsequent new length.
+Each compiled version takes memory, and many shapes can cause out-of-memory (OOM) errors. TorchDynamo also compiles at most `torch._dynamo.config.cache_size_limit` versions of a function (8 by default) and runs every further shape without compilation, so more shapes need a higher limit. Two mitigations reduce the number of versions in memory:
 
-Each new shape can produce a new compiled variant, which consumes memory. With a large number of shapes, this can lead to out-of-memory (OOM) errors. Two practical mitigations are:
+1. **Pad the lengths to a few buckets**, which reduces the number of distinct shapes.
+2. **Order the inputs by size** and call `torch.compiler.reset()` after a set of compilations, which frees the versions that are no longer needed. A curriculum by length already orders the inputs by size.
 
-1. **Pad/bucket lengths** to reduce the number of distinct shapes.
-2. **Order inputs by size** and call `torch.compiler.reset()` after a set of compilations, to free cached variants that are no longer needed.
-
-Finally, arguments such as the following are passed to `torch.compile` to implement this logic:
+The model is compiled with static shapes, and with CUDA graphs only on a single GPU:
 
 ```python
 world_size = torch.distributed.get_world_size()
@@ -309,5 +308,4 @@ dynamic = False  # force static compilation
 model = torch.compile(model, backend="inductor", mode=mode, dynamic=dynamic)
 ```
 
-These tests used `torch==2.4.0`. Newer PyTorch releases continue to improve compilation for distributed and dynamic-shape workloads. For more details, see [“`torch.compile` the missing manual”](https://docs.google.com/document/d/1y5CRfMLdwEoF1nTk9q8qEu1mgMUuUtvhklPKJ2emLU8/).
-
+[`torch.compile`, the missing manual](https://docs.google.com/document/d/1y5CRfMLdwEoF1nTk9q8qEu1mgMUuUtvhklPKJ2emLU8/) covers compilation problems and their fixes in more detail.

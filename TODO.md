@@ -164,6 +164,16 @@ Bugs in the code and data files of the posts (under `assets/`).
   Proposed fix: compute the Switch loss in `forward()` from `probs` and `topk_experts`, and return it with the
   output.
 
+### Variable sequence lengths, curriculum learning, adaptive batch size and LR (2024-05-10-training-variable-length-curriculum.md)
+
+- `sample_sort` assigns each row to a rank by its first column only. Rows with the same key, such as samples of
+  the same length, all go to the same rank, and a dataset with fewer distinct keys than ranks leaves some ranks
+  empty. The result is still sorted, but the memory and the time of the sort are unbalanced. Fix: sample and
+  bucket on a unique key, such as `key * num_rows + row_id` for integer keys.
+- The `assert` in `collate_fn_wrapper` lost its line break: the post puts 21 spaces between
+  `assert sample_padding_fn is not None,` and the message. The DeepSpeed source ends the first line with `\` and
+  puts the message on the next line. The code runs, but the line reads like a typo. Fix: restore the two lines.
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -463,6 +473,15 @@ that is not wrong.
 - Optional, `moe_2017_dean.svg` writes the gate as G(x) and the number of experts as n, and `moe_gshard.svg` writes E
   experts and N layers, as their papers do. The text writes the gate as g(x) and the number of experts as N, and
   names the notation of the first figure. Fix: relabel the figures to g(x) and N experts, and the GShard layers to L.
+
+### Variable sequence lengths, curriculum learning, adaptive batch size and LR (2024-05-10-training-variable-length-curriculum.md)
+
+- Optional, `distributed-training/imgs/dnn_multiproc.svg`, `dnn_multiproc_compiled.svg` and
+  `dnn_multiproc_optimized.svg` name the two processes "Node 1" and "Node 2", while the captions and the text say
+  2 GPUs. The text names the labels. Fix: "GPU 0" and "GPU 1".
+- Optional, `distributed-training/imgs/variable_attn_matrix.svg` names the slices of the mask "layer 0" to
+  "layer 3", which reads as network layers, and calls the causal masks "diagonal mask". The text names the
+  slices. Fix: "sample 0" to "sample 3", and "causal mask".
 
 ## Content issues
 
