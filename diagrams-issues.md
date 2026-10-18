@@ -135,3 +135,16 @@ picture that is not wrong.
   in a small font at 65% of the page width. Optional fix: remove the text from the picture, widen the plots, and put
   a short description in the page caption, e.g. "Five linear mappings of 400 points (left to right: input,
   eigenvectors scaled by their eigenvalues, output)".
+
+## Statistics for ML (2018-06-15-statistics-for-ml.md)
+
+- `statistics-for-ml/bivariate_gaussian.svg`: the caption says "Green: joint density p(x,y)", but the green ellipse
+  is the 3σ contour of the joint density, the dots are samples, and the bars are histograms of the samples. Fix:
+  "Samples of a bivariate Gaussian (dots), the 3σ contour of the joint density p(x,y) (green), and the marginal
+  densities p(x) (blue) and p(y) (red) with histograms of the samples. A conditional distribution is a normalized
+  slice of the joint density at a fixed x or y, and it is also Gaussian. Adapted from: Wikipedia page for
+  Multivariate normal distribution".
+- `statistics-for-ml/confidence_interval.svg`: the picture has no caption and no source. Fix: the caption "95%
+  confidence interval for the mean: the limits X̄ ± 1.96σ/√N leave a probability of 0.025 in each tail", and the
+  source of the drawing. Optional: the curve is centered at X̄, as in many textbooks, but the sampling distribution
+  of X̄ is centered at μ; a curve centered at μ, with the interval drawn around one sample mean X̄, is exact.

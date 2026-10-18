@@ -6,207 +6,188 @@ categories: ["Machine Learning"]
 tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "KL divergence"]
 ---
 
-A brief summary of statistics and probability topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.
+A summary of the probability and statistics used in ML, taken from the books in the <a href="{{ site.resources_permalink }}">resources</a> section, mainly chapter 6 of *Mathematics for Machine Learning* by Deisenroth, Faisal and Ong.
 
-### Basic definitions
+## Probability
 
-The **sample space $$Ω$$** is the set of all *possible* outcomes of an experiment, and the **event space $$\mathcal{A}$$** is a σ-algebra of subsets of $$Ω$$, i.e. the set of events to which probabilities are assigned. The **probability of A**, or $$P(A)$$, is the degree of belief that the event $$A$$ occurs, as a value in the interval $$[0,1]$$.
+### Events and Probability
 
-A **random variable** is a function $$X : Ω → T$$ that maps an outcome in $$Ω$$ to a quantity of interest $$x$$ in the target space $$T$$. The name "random variable" is misleading, as it is neither random nor a variable: it is a function. For example, when tossing two coins and counting the number of heads, a random variable $$X$$ maps to three possible outcomes: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
+The **sample space** $$\Omega$$ is the set of all possible outcomes of an experiment. An **event** is a subset of $$\Omega$$, and the **event space** $$\mathcal{A}$$, a [σ-algebra](https://en.wikipedia.org/wiki/%CE%A3-algebra) on $$\Omega$$, is the set of events that have a probability. Events $$A$$ and $$B$$ combine by **union** $$A \cup B$$, **intersection** $$A \cap B$$, **complement** $$A^c$$ and **difference** $$A \setminus B = A \cap B^c$$. They are **disjoint** if $$A \cap B = \emptyset$$, and a **partition** of $$\Omega$$ is a set of pairwise disjoint events whose union is $$\Omega$$. Union and intersection are associative, each distributes over the other, and [De Morgan's laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws) give $$(A \cup B)^c = A^c \cap B^c$$ and $$(A \cap B)^c = A^c \cup B^c$$.
 
-The pdf of the **sum of independent random variables** is the **convolution** of their pdfs:
-
-$$
-f_{X+Y}(u) = \int_{-\infty}^{+\infty} f_X(u-v) \, f_Y(v) \, dv
-$$
-
-
-### Statistical distributions
-
-Statistical distributions are either <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf"> continuous </a> or <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf"> discrete </a>. Most parametric continuous distributions belong to the exponential family of distributions.
-
-$$p(x)$$ is called a **probability mass function (pmf)** for a discrete variable $$x$$, or a **probability density function (pdf)** for a continuous one. Any function over a discrete (continuous) domain can be a probability distribution, as long as its values are non-negative and sum (integrate) to 1. The **cumulative distribution function (cdf)** is
+The **probability** $$P(A)$$ measures how likely the event $$A$$ is, or the degree of belief in $$A$$. It satisfies the [axioms of probability](https://en.wikipedia.org/wiki/Probability_axioms): $$P(A) \ge 0$$, $$P(\Omega) = 1$$, and the probability of a countable union of pairwise disjoint events is the sum of their probabilities. The axioms imply:
 
 $$
-P(X \le x) = \int^x_{-\infty} p(t) dt
+\begin{align*}
+P(A^c) & = 1 - P(A) \\
+P(A \cup B) & = P(A) + P(B) - P(A \cap B) \le P(A) + P(B) \\
+P(A \cap B) & \le \min \{ P(A), P(B) \}
+\end{align*}
 $$
 
-and some CDFs have no corresponding PDF. The probability of a subset/range of values is the sum of the probabilities of all its values, i.e. $$P( a \le X \le b) = \int^b_a p(t) dt$$, or the equivalent sum in the discrete case.
+### Counting
 
-For discrete probabilities, the **joint probability** of $$x \in X$$ and $$y \in Y$$ (not necessarily independent) is $$P(X=x_i, Y=y_j) = \frac{n_{ij}}{N}$$, where $$n_{ij}$$ can be seen as the $$ij$$-cell of the confusion matrix.
+When all outcomes are equally likely, $$P(A) = \vert A \vert / \vert \Omega \vert$$, and a probability is a ratio of counts. The number of ways to select $$k$$ items from a set of $$n$$ items is:
 
+|   | With replacement | Without replacement |
+|---|---|---|
+| Ordered | $$n^k$$ | $$n! / (n-k)!$$ |
+| Unordered | $$\binom{n+k-1}{k}$$ | $$\binom{n}{k} = \frac{n!}{k! \, (n-k)!}$$ |
 
-### Sum rule
+Unordered selections are **combinations**, and a **permutation** orders all $$n$$ items, in $$n!$$ ways.
 
-The sum rule (or **marginalization property**) states that the probability of $$x$$ is the sum of the joint probabilities of $$x$$ and another variable $$y$$ over all values of $$y$$, i.e. $$p(x) = \sum_{y \in Y} p(x,y)$$ in the discrete case and $$p(x) = \int_Y p(x,y) dy$$ in the continuous case.
+### Random Variables
 
+A **random variable** is a function $$X : \Omega \to \mathcal{T}$$ that maps each outcome to a value $$x$$ in a target space $$\mathcal{T}$$: despite its name, it is neither random nor a variable. For two coin tosses and $$X$$ the number of heads, $$\Omega = \{hh, ht, th, tt\}$$, $$\mathcal{T} = \{0, 1, 2\}$$, $$X(hh) = 2$$, $$X(ht) = X(th) = 1$$ and $$X(tt) = 0$$.
 
-### Product rule
+A discrete random variable has a **probability mass function** (pmf) $$p(x) = P(X = x)$$. A continuous one has a **probability density function** (pdf) $$p(x)$$, with $$P(a \le X \le b) = \int_a^b p(x) \, dx$$. Any non-negative function that sums (or integrates) to 1 over its domain is a valid pmf (or pdf). A pdf value can exceed 1: only its integral over an interval is a probability. The **cumulative distribution function** (CDF) is $$F(x) = P(X \le x)$$, or $$\int_{-\infty}^{x} p(t) \, dt$$ for a continuous variable. It also exists when there is no pmf or pdf. The formula sheets of the EPFL course *Statistics for Data Science* list common <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf">discrete</a> and <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf">continuous</a> distributions.
 
-The product rule relates the joint and the conditional distributions. It states that every joint distribution can be factorized into two other distributions:
+### Sum and Product Rules
 
-$$
-p(x,y) = p(y \mid x) p(x) = p( x \mid y) p(y)
-$$
-
-
-### Bayes rule
-
-Bayes rule relates the prior knowledge $$p(x)$$ about an unobserved random variable $$x$$ to the relationship $$p(y \mid x)$$ between $$x$$ and a second variable $$y$$:
+The **sum rule**, or marginalization, gives the distribution of $$x$$ from the joint distribution of $$x$$ and $$y$$. The **product rule** factorizes a joint distribution into a conditional and a marginal distribution:
 
 $$
-p(x \mid y) = \frac{ p(y \mid x) p(x)}{p(y)}
+\begin{align*}
+p(x) & = \sum_y p(x, y) \quad \text{or} \quad p(x) = \int p(x, y) \, dy \\
+p(x, y) & = p(y \mid x) \, p(x) = p(x \mid y) \, p(y)
+\end{align*}
 $$
 
-read as $$\text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}$$. It is derived by applying the product rule in both orders:
+For two discrete variables observed $$N$$ times, the frequency $$n_{ij} / N$$ of cell $$(i, j)$$ in the [contingency table](https://en.wikipedia.org/wiki/Contingency_table), with $$n_{ij}$$ observations of $$X = x_i$$ and $$Y = y_j$$, estimates $$P(X = x_i, Y = y_j)$$. By the sum rule, the sum of row $$i$$ divided by $$N$$ estimates the marginal $$P(X = x_i)$$.
+
+### Bayes' Rule
+
+The product rule in both orders, $$p(x \mid \theta) \, p(\theta) = p(\theta \mid x) \, p(x)$$, gives **Bayes' rule**. It updates the **prior** $$p(\theta)$$, the knowledge about an unobserved variable $$\theta$$, after observing $$x$$:
 
 $$
-p(y \mid x) p(x) = p(x \mid y) p(y) \Leftrightarrow p(x \mid y) = \frac{p(y \mid x) p(x)}{p(y)}
+p(\theta \mid x) = \frac{p(x \mid \theta) \, p(\theta)}{p(x)}, \qquad \text{posterior} = \frac{\text{likelihood} \times \text{prior}}{\text{evidence}}
 $$
 
-The **evidence** is the **marginal likelihood** $$p(y) = \int p(y \mid x) p(x) dx = \mathbb{E}[ p(y \mid x)]$$. In ML, the quantity of interest is the posterior $$p(\theta \mid x)$$. It describes the knowledge about the parameters $$\theta$$ (i.e. their distribution) after observing the population $$x$$, given its likelihood and a known/estimated prior.
+The **evidence**, or **marginal likelihood**, $$p(x) = \int p(x \mid \theta) \, p(\theta) \, d\theta = \mathbb{E}_{\theta \sim p(\theta)}[p(x \mid \theta)]$$ normalizes the posterior. In Bayesian ML, $$\theta$$ holds the model parameters, $$x$$ the data, and the posterior $$p(\theta \mid x)$$ is the quantity of interest. The evidence integral is usually intractable: conjugate priors give it in closed form, and variational inference bounds it (both below).
 
----
-
+## Moments and Independence
 
 ### Expected Value
 
-The expected value of a function $$g$$ of a univariate random variable $$X$$ is $$\mathbb{E}_X [g(x)] = \int_X g(x) p(x) dx$$, or the equivalent weighted sum in the discrete case. For a multivariate random variable, seen as a finite set of univariate ones, i.e. $$X = \left[X_1, X_2, ..., X_D \right]$$, it is:
+The **expected value** of a function $$g$$ of a random variable $$X$$ with pdf $$p(x)$$ is
 
 $$
-\mathbb{E}_X [g(x)] = \left[ \mathbb{E}_{X_1} [g(x_1)], \mathbb{E}_{X_2} [g(x_2)], ..., \mathbb{E}_{X_D} [g(x_D)] \right] \in \mathbb{R}^D
+\mathbb{E}_X[g(x)] = \int g(x) \, p(x) \, dx,
 $$
 
+or $$\sum_x g(x) \, p(x)$$ for a pmf. For a random vector $$x \in \mathbb{R}^D$$, the expectation of a vector-valued $$g$$ is taken element-wise, and the **mean** is $$\mu = \mathbb{E}[x] = [\mathbb{E}[x_1], \dots, \mathbb{E}[x_D]]^\intercal$$, where each $$\mathbb{E}[x_d]$$ uses the marginal $$p(x_d)$$. The [law of total expectation](https://en.wikipedia.org/wiki/Law_of_total_expectation) computes an expectation in two stages: $$\mathbb{E}[y] = \mathbb{E}\left[ \mathbb{E}[y \mid x] \right]$$.
 
-### Covariance
+### Covariance and Variance
 
-The covariance of two random variables is the expected product of their deviations from their respective means:
+The **covariance** of two random variables is the expected product of their deviations from their means:
 
 $$
 \begin{align*}
-\mathbb{Cov}[X,Y] & = \mathbb{E} \left[ (X- \mathbb{E}[X]) \, (Y- \mathbb{E}[Y]) \right] \\
-& = \mathbb{E}\left[ XY -  X\mathbb{E}[Y] - \mathbb{E}[X]Y +  \mathbb{E}[X]\,\mathbb{E}[Y] \right] \\
-& = \mathbb{E}[XY] - \mathbb{E}[X] \,\mathbb{E}[Y] - \mathbb{E}[X] \,\mathbb{E}[Y] +  \mathbb{E}[X] \, \mathbb{E}[Y] \\
-& = \mathbb{E}[XY] -  \mathbb{E}[X] \,\mathbb{E}[Y]
+\mathrm{Cov}[x, y] & = \mathbb{E}\left[ (x - \mathbb{E}[x]) \, (y - \mathbb{E}[y]) \right] \\
+& = \mathbb{E}\left[ xy - x \, \mathbb{E}[y] - \mathbb{E}[x] \, y + \mathbb{E}[x] \, \mathbb{E}[y] \right] \\
+& = \mathbb{E}[xy] - \mathbb{E}[x] \, \mathbb{E}[y]
 \end{align*}
 $$
 
-In the univariate case:
+For random vectors $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$, it is the $$D \times E$$ matrix $$\mathrm{Cov}[x, y] = \mathbb{E}[x y^\intercal] - \mathbb{E}[x] \, \mathbb{E}[y]^\intercal = \mathrm{Cov}[y, x]^\intercal$$.
+
+The **variance** is the covariance of a variable with itself, $$\mathrm{Var}[x] = \mathrm{Cov}[x, x] = \mathbb{E}\left[ (x - \mu)^2 \right] = \mathbb{E}[x^2] - \mu^2$$. For a random vector, it is the $$D \times D$$ **covariance matrix**
 
 $$
-\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}_{X,Y} \left[ (x-\mathbb{E}_X[x]) (y-\mathbb{E}_Y[y]) \right] = \mathbb{Cov}_{Y,X}[y,x]
+\Sigma = \mathrm{Var}[x] = \mathbb{E}\left[ (x - \mu)(x - \mu)^\intercal \right] = \mathbb{E}[x x^\intercal] - \mu \mu^\intercal,
 $$
 
-and for multivariate random variables $$X$$ and $$Y$$ with states $$x \in \mathbb{R}^D$$ and $$y \in \mathbb{R}^E$$:
+which is symmetric and positive semidefinite, with the variances $$\mathrm{Var}[x_d]$$ on its diagonal and the covariances $$\mathrm{Cov}[x_d, x_{d'}]$$, $$d \neq d'$$, off the diagonal. The [law of total variance](https://en.wikipedia.org/wiki/Law_of_total_variance) states:
 
 $$
-\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[xy^{\intercal}] - \mathbb{E}[x] \,\mathbb{E}[y]^{\intercal} = \mathbb{Cov}[y,x]^{\intercal} \in \mathbb{R}^{D \times E}
+\mathrm{Var}[y] = \mathbb{E}\left[ \mathrm{Var}[y \mid x] \right] + \mathrm{Var}\left[ \mathbb{E}[y \mid x] \right]
 $$
 
-
-### Variance
-
-In the univariate case:
+From $$N$$ samples $$x_1, \dots, x_N$$, the **empirical mean** and the **empirical covariance** are
 
 $$
-\mathbb{Var}_X[x] = \mathbb{Cov}_X[x,x] = \mathbb{E}_{X} \left[ (x-\mathbb{E}_X[x])^2 \right] = \mathbb{E}_X[x^2] - \mathbb{E}_X[x]^2
+\bar{x} = \frac{1}{N} \sum_{i=1}^{N} x_i, \qquad \hat{\Sigma} = \frac{1}{N} \sum_{i=1}^{N} (x_i - \bar{x})(x_i - \bar{x})^\intercal.
 $$
 
-and in the multivariate case:
+Since $$\mathbb{E}[\hat{\Sigma}] = \frac{N - 1}{N} \Sigma$$, dividing by $$N - 1$$ instead of $$N$$ gives an unbiased estimate ([Bessel's correction](https://en.wikipedia.org/wiki/Bessel%27s_correction)).
+
+Computed from running sums of $$x_i$$ and $$x_i^2$$, the form $$\mathbb{E}[x^2] - \mu^2$$ loses precision in floating point when the variance is small relative to $$\mu^2$$ ([catastrophic cancellation](https://en.wikipedia.org/wiki/Catastrophic_cancellation)). [Welford's algorithm](https://en.wikipedia.org/wiki/Algorithms_for_calculating_variance) instead updates the mean and the sum of squared deviations $$S = \sum_i (x_i - \bar{x})^2$$ one sample at a time, and the merge formula of Chan et al. combines these statistics for two disjoint sets of samples $$A$$ and $$B$$:
 
 $$
-\mathbb{Var}_X[x] = \mathbb{Cov}_X[x,x] = \mathbb{E}_X[(x-\mu)(x-\mu)^{\intercal} ] = \mathbb{E}_X[xx^{\intercal}] - \mathbb{E}_X[x] \, \mathbb{E}_X[x]^{\intercal}
+N = N_A + N_B, \qquad \delta = \bar{x}_B - \bar{x}_A, \qquad \bar{x} = \bar{x}_A + \delta \, \frac{N_B}{N}, \qquad S = S_A + S_B + \delta^2 \, \frac{N_A N_B}{N}
 $$
 
-This $$D \times D$$ matrix is also called the **Covariance Matrix** of the multivariate random variable $$X$$:
-- it is symmetric and positive semidefinite;
-- its diagonal terms are the variances $$\mathbb{Var}[x_i]$$, i.e. the covariance of each random variable with itself;
-- its off-diagonal terms are $$\mathbb{Cov}[x_i, x_j]$$ for $$i,j = 1, ..., D$$ and $$i \neq j$$.
-
-The law of total variance states:
-
-$$
-\mathbb{Var}[Y] = \mathbb{E} \left [ \mathbb{Var}[Y \mid X] \right] + \mathbb{Var}\left[ \mathbb{E}[Y \mid X] \right]
-$$
-
+Welford's update is the case $$N_B = 1$$. GPU kernels for layer normalization, for example, run Welford's update in each thread and this merge in a tree reduction.
 
 ### Correlation
 
-Correlation between random variables is a measure of covariance standardized to the interval $$[-1,1]$$. It is computed from the covariance (matrix) as:
+The [Pearson correlation](https://en.wikipedia.org/wiki/Pearson_correlation_coefficient) is the covariance standardized to $$[-1, 1]$$:
 
 $$
-corr[x,y] = \frac{\mathbb{Cov}[x,y]}{\sqrt{\mathbb{Var}[x] \mathbb{Var}[y]}}  \in [-1, 1]
+\mathrm{corr}[x, y] = \frac{\mathrm{Cov}[x, y]}{\sqrt{\mathrm{Var}[x] \, \mathrm{Var}[y]}}
 $$
 
-Positive correlation means that $$y$$ increases as $$x$$ increases (1 = perfect correlation). Negative correlation means that $$y$$ decreases as $$x$$ increases. Zero means no linear correlation.
+A positive (negative) correlation means that $$y$$ tends to increase (decrease) as $$x$$ increases. $$\vert \mathrm{corr}[x, y] \vert = 1$$ if and only if $$y = ax + b$$ for constants $$a \neq 0$$ and $$b$$, and $$\mathrm{corr}[x, y] = 0$$ means no *linear* relation.
 
+### Linear Transformations
 
-### Rules of transformations of Random Variables
-
-$$
-\begin{align*}
-\mathbb{E}[x+y] & = \mathbb{E}[x] + \mathbb{E}[y] \\
-\mathbb{E}[x-y] & = \mathbb{E}[x] - \mathbb{E}[y] \\
-\mathbb{Var}[x+y] & = \mathbb{Var}[x] + \mathbb{Var}[y] + \mathbb{Cov}[x,y] + \mathbb{Cov}[y,x] \\
-\mathbb{Var}[x-y] & = \mathbb{Var}[x] + \mathbb{Var}[y] - \mathbb{Cov}[x,y] - \mathbb{Cov}[y,x]
-\end{align*}
-$$
-
-For an affine transformation $$y = Ax + b$$ of $$x$$, where $$\mu$$ is the mean vector and $$\Sigma$$ is the covariance matrix of $$x$$:
+For random variables $$x$$ and $$y$$ of the same dimension, dependent or not:
 
 $$
 \begin{align*}
-\mathbb{E}[Ax+b] & = A \mathbb{E}[x] + b = A \mu + b \\
-\mathbb{Var}[Ax+b] & = \mathbb{Var}[Ax] = A \mathbb{Var}[x] A^{\intercal} = A \Sigma A^{\intercal}
+\mathbb{E}[x \pm y] & = \mathbb{E}[x] \pm \mathbb{E}[y] \\
+\mathrm{Var}[x \pm y] & = \mathrm{Var}[x] + \mathrm{Var}[y] \pm \left( \mathrm{Cov}[x, y] + \mathrm{Cov}[y, x] \right)
 \end{align*}
 $$
 
-
-### Statistical Independence
-
-Random variables $$X$$ and $$Y$$ are statistically independent iff $$p(x,y)=p(x)p(y)$$. Independence implies $$p(y \mid x) = p(y)$$, $$p(x \mid y) = p(x)$$ and $$\mathbb{E}[xy] = \mathbb{E}[x] \, \mathbb{E}[y]$$, thus:
+For an affine map $$Wx + b$$, such as a linear layer, of a random vector $$x$$ with mean $$\mu$$ and covariance $$\Sigma$$:
 
 $$
-\mathbb{Cov}_{X,Y}[x,y] = \mathbb{E}[xy] - \mathbb{E}[x] \, \mathbb{E}[y] = 0
+\mathbb{E}[Wx + b] = W \mu + b, \qquad \mathrm{Var}[Wx + b] = W \Sigma W^\intercal
 $$
 
-and therefore:
+### Independence
+
+$$X$$ and $$Y$$ are **independent** if and only if $$p(x, y) = p(x) \, p(y)$$. Then $$p(y \mid x) = p(y)$$, $$p(x \mid y) = p(x)$$ and $$\mathbb{E}[xy] = \mathbb{E}[x] \, \mathbb{E}[y]$$, so $$\mathrm{Cov}[x, y] = 0$$ and $$\mathrm{Var}[x + y] = \mathrm{Var}[x] + \mathrm{Var}[y]$$. The converse does not hold: for $$x \sim \mathcal{N}(0, 1)$$ and $$y = x^2$$, $$\mathrm{Cov}[x, y] = \mathbb{E}[x^3] = 0$$, yet $$y$$ is a function of $$x$$.
+
+The pdf of the sum of two independent random variables is the [convolution](https://en.wikipedia.org/wiki/Convolution_of_probability_distributions) of their pdfs:
 
 $$
-\mathbb{Var}_{X,Y}[x+y] = \mathbb{Var}_X[x] + \mathbb{Var}_Y[y]
+p_{X+Y}(u) = \int_{-\infty}^{+\infty} p_X(u - v) \, p_Y(v) \, dv
 $$
 
-Important: the converse does not hold, i.e. zero covariance ($$\mathbb{Cov}_{X,Y}[x,y]=0$$) does not imply independence.
+$$X$$ and $$Y$$ are **conditionally independent** given $$Z$$, written $$X \perp Y \mid Z$$, if and only if $$p(x, y \mid z) = p(x \mid z) \, p(y \mid z)$$ for all $$z$$.
 
-
-### Conditional Independence
-
-Random variables $$X$$ and $$Y$$ are conditionally independent given $$Z$$, written $$X \perp Y \mid Z$$, iff $$p(x,y \mid z) = p(x \mid z) \, p(y \mid z)$$ for all $$z \in Z$$.
-
----
-
+## Distributions
 
 ### Gaussian Distribution
 
-The univariate Gaussian with mean $$\mu$$ and variance $$\sigma^2$$ is:
+The univariate Gaussian with mean $$\mu$$ and variance $$\sigma^2$$, and the multivariate Gaussian with mean $$\mu \in \mathbb{R}^D$$ and covariance $$\Sigma$$, have the pdfs:
 
 $$
-p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
+\begin{align*}
+\mathcal{N}(x \mid \mu, \sigma^2) & = \frac{1}{\sqrt{2 \pi \sigma^2}} \exp\left( -\frac{(x - \mu)^2}{2 \sigma^2} \right) \\
+\mathcal{N}(x \mid \mu, \Sigma) & = \frac{1}{\sqrt{(2 \pi)^D \det(\Sigma)}} \exp\left( -\frac{1}{2} (x - \mu)^\intercal \Sigma^{-1} (x - \mu) \right)
+\end{align*}
 $$
 
-and the multivariate Gaussian with mean vector $$\mu \in \mathbb{R}^D$$ and covariance matrix $$\Sigma$$ is:
+Two Gaussian random vectors $$x$$ and $$y$$ are not always jointly Gaussian. When they are, their joint distribution is
 
 $$
-p(x \mid \mu, \Sigma ) = (2 \pi)^{-\frac{D}{2}} \mid\Sigma\mid^{-\frac{1}{2}} \exp \left( -\frac{1}{2}(x-\mu)^{\intercal} \Sigma^{-1}(x-\mu) \right)
+p(x, y) = \mathcal{N}\left( \begin{bmatrix} \mu_x \\ \mu_y \end{bmatrix}, \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix} \right),
 $$
 
-The marginals and conditionals of multivariate Gaussians are also Gaussian. The joint (bivariate) Gaussian distribution of two Gaussian random variables $$X$$ and $$Y$$ is:
+and the marginal and conditional distributions are also Gaussian:
 
 $$
-p(x,y) = \mathcal{N} \left( \begin{bmatrix} \mu_x \\ \mu_y  \end{bmatrix}, \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix}   \right)
+\begin{align*}
+p(x) & = \int p(x, y) \, dy = \mathcal{N}(x \mid \mu_x, \Sigma_{xx}) \\
+p(x \mid y) & = \mathcal{N}(x \mid \mu_{x \mid y}, \Sigma_{x \mid y}) \\
+\mu_{x \mid y} & = \mu_x + \Sigma_{xy} \Sigma_{yy}^{-1} (y - \mu_y) \\
+\Sigma_{x \mid y} & = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}
+\end{align*}
 $$
 
-Both the conditional, $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$, and the marginal, $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$, are Gaussian.
+The conditional covariance, the [Schur complement](https://en.wikipedia.org/wiki/Schur_complement) of $$\Sigma_{yy}$$, does not depend on the observed $$y$$. Marginalizing only drops blocks, while conditioning solves linear systems in $$\Sigma_{yy}$$, usually with a [Cholesky factorization](https://en.wikipedia.org/wiki/Cholesky_decomposition) in $$O(E^3)$$ operations for $$y \in \mathbb{R}^E$$: the main cost of [Gaussian process](https://en.wikipedia.org/wiki/Gaussian_process) regression. The same formulas give the update step of the [Kalman filter](https://en.wikipedia.org/wiki/Kalman_filter).
 
 {: .picture}
 <img width="45%" height="45%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.svg"/>
@@ -214,233 +195,174 @@ Both the conditional, $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \
 {: .caption}
 A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional distribution is a slice along the X or Y dimension, and it is also Gaussian. <b>Adapted from:</b> Wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a>
 
-The product of two Gaussian pdfs, $$\mathcal{N} (x \mid a, A) \, \mathcal{N}(x \mid b, B)$$, is a Gaussian scaled by a constant $$c \in \mathbb{R}$$.
-
-If $$X,Y$$ are independent univariate Gaussian random variables, then $$p(x,y)=p(x) p(y)$$ and $$p(x+y) = \mathcal{N}(\mu_x + \mu_y, \Sigma_x + \Sigma_y)$$. For a weighted sum, $$p(ax + by) = \mathcal{N}(a\mu_x + b\mu_y, a^2 \Sigma_x + b^2 \Sigma_y)$$.
-
-Any linear/affine transformation of a Gaussian random variable is also Gaussian. Consider $$y=Ax$$, the transformed version of $$x$$:
+The product of two Gaussian pdfs in $$x$$ is a Gaussian scaled by a constant $$c$$ (equation 371 of [The Matrix Cookbook]({{ site.assets }}/resources/the_matrix_cookbook.pdf)):
 
 $$
 \begin{align*}
-\mathbb{E}[y] & = \mathbb{E}[Ax] = A \mathbb{E}[x] = A\mu \\
-\mathbb{Var}[y] & = \mathbb{Var}[Ax] = A \mathbb{Var}[x]A^T = A \Sigma A^{\intercal}
+\mathcal{N}(x \mid \mu_1, \Sigma_1) \, \mathcal{N}(x \mid \mu_2, \Sigma_2) & = c \, \mathcal{N}(x \mid \mu_c, \Sigma_c), \qquad c = \mathcal{N}(\mu_1 \mid \mu_2, \Sigma_1 + \Sigma_2) \\
+\Sigma_c & = \left( \Sigma_1^{-1} + \Sigma_2^{-1} \right)^{-1} \\
+\mu_c & = \Sigma_c \left( \Sigma_1^{-1} \mu_1 + \Sigma_2^{-1} \mu_2 \right)
 \end{align*}
 $$
 
-Therefore, $$p(y) = \mathcal{N}(y \mid A\mu, A \Sigma A^{\intercal})$$.
+The precisions (inverse covariances) add, and the mean is the precision-weighted average of the two means. This gives the posterior for a Gaussian prior and a Gaussian likelihood.
 
-The sum of the squares of $$n$$ independent standard Gaussians $$Z_i \sim \mathcal{N}(0,1)$$ follows a Chi-Square distribution with $$n$$ degrees of freedom, i.e. $$Z_1^2 + Z_2^2 + ... + Z_n^2 \sim \chi_n^2 $$.
+An affine map of a Gaussian vector is Gaussian, with the moments given by the transformation rules above: $$Wx + b \sim \mathcal{N}(W \mu + b, W \Sigma W^\intercal)$$. For independent Gaussian vectors $$x$$ and $$y$$, $$x + y \sim \mathcal{N}(\mu_x + \mu_y, \Sigma_{xx} + \Sigma_{yy})$$.
 
+The sum of the squares of $$D$$ independent standard Gaussians follows the [chi-squared distribution](https://en.wikipedia.org/wiki/Chi-squared_distribution) $$\chi^2_D$$ with $$D$$ degrees of freedom. Hence the squared [Mahalanobis distance](https://en.wikipedia.org/wiki/Mahalanobis_distance) $$(x - \mu)^\intercal \Sigma^{-1} (x - \mu)$$ of $$x \sim \mathcal{N}(\mu, \Sigma)$$ follows $$\chi^2_D$$, which gives the probability inside each elliptical contour of the pdf: in two dimensions, the contour at distance 3 holds $$1 - e^{-4.5} \approx 98.9\%$$, against $$99.7\%$$ within 3 standard deviations in one dimension.
 
-### Conjugacy
+### Conjugate Priors
 
-If the posterior distribution $$p(\theta \mid x)$$ belongs to the same probability distribution *family* as the prior $$p(\theta )$$ (not necessarily the same distribution), the prior and posterior are called **conjugate distributions**, and the prior is called a **conjugate prior** for the likelihood function $$p(x\mid \theta )$$. A conjugate prior is an algebraic convenience that gives a closed-form expression for the posterior; otherwise, numerical integration may be necessary. Every member of the exponential family has a conjugate prior.
-
+If the posterior $$p(\theta \mid x)$$ is in the same family of distributions as the prior $$p(\theta)$$, the prior is a [conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior) for the likelihood $$p(x \mid \theta)$$. The posterior then has a closed form, and the evidence needs no numerical integration. Common pairs (likelihood: conjugate prior) are Bernoulli or binomial: beta; categorical or multinomial: Dirichlet; Poisson: gamma; Gaussian with a known variance: Gaussian. Every likelihood in the exponential family has a conjugate prior, which is also in the exponential family.
 
 ### Exponential Family
 
-The exponential family is the family of distributions that can be written in the form:
+A distribution with parameters $$\theta$$ is in the [exponential family](https://en.wikipedia.org/wiki/Exponential_family) if its pmf or pdf can be written as
 
 $$
-p(x \mid \theta) = h(x) \exp \left(\eta(\theta)^{\intercal} ϕ(x) -A(\theta)\right)
+p(x \mid \eta) = h(x) \exp\left( \eta^\intercal \phi(x) - A(\eta) \right),
 $$
 
-where:
-- $$θ$$ are the **parameters** of the family;
-- $$A(θ)$$ is the **log-partition function**, a normalization constant that ensures that the distribution sums or integrates to one;
-- $$ϕ(x)$$ is a **sufficient statistic** of the distribution;
-- $$\eta$$ is the **natural parameter**.
+where $$\eta = \eta(\theta)$$ are the **natural parameters**, $$\phi(x)$$ the **sufficient statistics**, $$h(x)$$ the base measure, and $$A(\eta)$$ the **log-partition function**, the logarithm of the normalization constant. For a Bernoulli variable $$x \in \{0, 1\}$$ with mean $$\mu = P(x = 1)$$:
 
-The sufficient statistic $$ϕ(x)$$ captures the information about the data (population). Sufficient statistics carry *all* the information needed to make inference about the population, i.e. they are sufficient to represent the distribution. The **Fisher-Neyman theorem** states: Let $$X$$ have probability density function $$p(x \mid θ)$$. Then the statistics $$ϕ(x)$$ are sufficient for $$θ$$ if and only if $$p(x \mid θ)$$ can be written in the form $$p(x \mid \theta) = h(x) g_{\theta}(ϕ(x))$$, where $$h(x)$$ is a non-negative function independent of $$θ$$ and $$g_θ$$ captures all the dependence on $$θ$$ via sufficient statistics $$ϕ(x)$$. The form of the exponential family is a particular expression of $$g_θ(ϕ(x))$$ in the Fisher-Neyman theorem.
+$$
+p(x \mid \mu) = \mu^x (1 - \mu)^{1 - x} = \exp\left( x \log \frac{\mu}{1 - \mu} + \log(1 - \mu) \right)
+$$
 
-For optimization purposes, the form $$ p (x \mid \theta) \propto \exp (\theta^{\intercal} ϕ(x))$$ is used. An alternative notation, the **natural form**, is $$p(x \mid \eta) = h(x) \exp \left(\eta^T T(x) -A(\eta)\right)$$.
+so $$\phi(x) = x$$, $$h(x) = 1$$, the natural parameter is the [logit](https://en.wikipedia.org/wiki/Logit) $$\eta = \log \frac{\mu}{1 - \mu}$$, and $$A(\eta) = -\log(1 - \mu) = \log(1 + e^\eta)$$. Inverting the logit gives the logistic sigmoid $$\mu = 1 / (1 + e^{-\eta})$$ of logistic regression. The Gaussian has $$\phi(x) = [x, x^2]^\intercal$$.
 
-Advantages of the exponential family:
-- its members have finite-dimensional sufficient statistics;
-- conjugate distributions are easy to write down, and they also belong to the exponential family;
-- Maximum Likelihood Estimation behaves well, because empirical estimates of sufficient statistics are optimal estimates of the population values of sufficient statistics (e.g. the mean and covariance of a Gaussian);
-- from an optimization perspective, the log-likelihood function is concave in the natural parameters, which allows efficient optimization methods to be applied.
+A statistic $$\phi(x)$$ is [sufficient](https://en.wikipedia.org/wiki/Sufficient_statistic) for $$\theta$$ if the distribution of the data given $$\phi(x)$$ does not depend on $$\theta$$, i.e. $$\phi(x)$$ holds all the information that the data carry about $$\theta$$. By the **Fisher–Neyman factorization theorem**, this holds if and only if $$p(x \mid \theta) = h(x) \, g_\theta(\phi(x))$$ for some $$h(x) \ge 0$$ independent of $$\theta$$. The exponential family has this form, with $$g_\theta(\phi) = \exp(\eta^\intercal \phi - A(\eta))$$.
 
+The derivatives of the log-partition function are the moments of the sufficient statistics, $$\nabla_\eta A(\eta) = \mathbb{E}[\phi(x)]$$ and $$\nabla_\eta^2 A(\eta) = \mathrm{Var}[\phi(x)]$$, so $$A$$ is convex. For $$N$$ independent samples, this gives the family its main advantages:
+- the log-likelihood $$\sum_i \log h(x_i) + \eta^\intercal \sum_i \phi(x_i) - N A(\eta)$$ is concave in $$\eta$$, so every local maximum is global;
+- at the maximum, the moments match, $$\mathbb{E}_\eta[\phi(x)] = \frac{1}{N} \sum_i \phi(x_i)$$: for a Gaussian, the estimates are the empirical mean and the empirical covariance $$\hat{\Sigma}$$;
+- the data enter only through $$\sum_i \phi(x_i)$$, whose size does not grow with $$N$$, so a streaming estimator keeps only this sum. Among families whose support does not depend on $$\theta$$, only the exponential family has sufficient statistics of a fixed size (Pitman–Koopman–Darmois theorem).
+
+Members include the Gaussian, exponential, gamma, chi-squared, beta, Dirichlet, Bernoulli, categorical and Poisson distributions, and the binomial and multinomial with a fixed number of trials. Student's t, most mixtures (such as Gaussian mixture models) and the uniform distribution with unknown bounds are not members. The [exponential family post]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}) derives the Gaussian and Bernoulli cases and their maximum likelihood estimates.
 
 ### Moment Generating Function
 
-The moment generating function is an alternative representation of a pmf or pdf $$f(x)$$:
+The [moment generating function](https://en.wikipedia.org/wiki/Moment-generating_function) (MGF) of $$X$$ is $$M_X(t) = \mathbb{E}[e^{tX}]$$. Its $$k$$-th derivative at $$t = 0$$ is the $$k$$-th moment, $$M_X^{(k)}(0) = \mathbb{E}[X^k]$$. When the MGF exists in an interval around 0 (it does not for the log-normal distribution), it determines the distribution. For independent $$X$$ and $$Y$$, $$M_{X+Y}(t) = M_X(t) \, M_Y(t)$$. With $$M_X(t) = \exp(\mu t + \sigma^2 t^2 / 2)$$ for $$X \sim \mathcal{N}(\mu, \sigma^2)$$, this shows that the sum of independent Gaussians is Gaussian, with the means and the variances added.
+
+## Limit Theorems and Tests
+
+### Inequalities
+
+For a convex function $$f$$, [Jensen's inequality](https://en.wikipedia.org/wiki/Jensen%27s_inequality) states:
 
 $$
-M(t) = \mathbb{E} \left[ e^{tX} \right]
+f(\mathbb{E}[X]) \le \mathbb{E}[f(X)]
 $$
 
-i.e. $$\sum_{x \in S} e^{tx}\, f(x)$$ for a pmf, or $$\int e^{tx}\, f(x) \, dx$$ for a pdf. For independent random variables, $$M_{X+Y}(t) = M_X(t) * M_Y(t)$$. This property can be used, e.g., to show that the sum of independent Gaussians is a Gaussian.
+For a non-negative $$X$$ and $$\epsilon > 0$$, [Markov's inequality](https://en.wikipedia.org/wiki/Markov%27s_inequality) bounds the tail probability. Applied to $$(X - \mathbb{E}[X])^2$$, it gives [Chebyshev's inequality](https://en.wikipedia.org/wiki/Chebyshev%27s_inequality) for any $$X$$ with a finite variance:
 
----
+$$
+P(X \ge \epsilon) \le \frac{\mathbb{E}[X]}{\epsilon}, \qquad P\left( \vert X - \mathbb{E}[X] \vert \ge \epsilon \right) \le \frac{\mathrm{Var}[X]}{\epsilon^2}
+$$
 
+The [Cauchy–Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality) for random variables, $$\mathrm{Cov}[X, Y]^2 \le \mathrm{Var}[X] \, \mathrm{Var}[Y]$$, bounds the correlation to $$[-1, 1]$$.
 
 ### Law of Large Numbers
 
-Let $$Y_n$$ be iid random variables of any form, with $$\mathbb{E}[Y_k]=\mu$$ for all $$k$$. Then $$\frac{1}{n} (Y_1 + ... + Y_n) \rightarrow \mu$$.
+Let $$X_1, \dots, X_N$$ be independent and identically distributed (iid) random variables with a finite mean $$\mu$$, and let $$\bar{X}_N = \frac{1}{N} \sum_{i=1}^{N} X_i$$ be their sample mean. The [law of large numbers](https://en.wikipedia.org/wiki/Law_of_large_numbers) states that $$\bar{X}_N \to \mu$$ as $$N \to \infty$$, in probability (weak law) and almost surely (strong law). With a finite variance $$\sigma^2$$, the weak law follows from $$\mathrm{Var}[\bar{X}_N] = \sigma^2 / N$$ and Chebyshev's inequality:
 
+$$
+P\left( \vert \bar{X}_N - \mu \vert \ge \epsilon \right) \le \frac{\sigma^2}{N \epsilon^2} \to 0
+$$
 
 ### Central Limit Theorem
 
-Let $$\{ Y_n \}$$ be a sequence of iid random variables of any form, with mean $$\mu$$ and variance $$\sigma^2$$. Then:
+If the iid $$X_i$$ also have a finite variance $$\sigma^2 > 0$$, the [central limit theorem](https://en.wikipedia.org/wiki/Central_limit_theorem) states that the scaled error of the sample mean converges in distribution to a Gaussian, whatever the distribution of the $$X_i$$:
 
 $$
-\sqrt{n} \left( \frac{1}{n} \sum_{i=1}^n (Y_i - \mu) \right) \rightarrow \mathcal{N}(0, \sigma^2)
+\sqrt{N} \left( \bar{X}_N - \mu \right) \xrightarrow{d} \mathcal{N}(0, \sigma^2)
 $$
 
+The standard error of the mean, $$\sigma / \sqrt{N}$$, falls with the square root of the sample size. Halving the error of a Monte Carlo estimate, such as a mini-batch gradient, takes four times as many samples.
 
-### Inequality rules
+### Confidence Intervals and Hypothesis Tests
 
-**Jensen's inequality**, for a convex function $$\phi$$:
+The [quantile function](https://en.wikipedia.org/wiki/Quantile_function) $$Q = F^{-1}$$ inverts the CDF: $$Q(u)$$ is the value below which a fraction $$u$$ of the probability lies, e.g. $$Q(0.975) \approx 1.96$$ for the standard Gaussian.
 
-$$
-\phi (\mathbb{E}[X]) \le \mathbb{E}[ \phi(X)]
-$$
-
-**Markov's inequality**, for a non-negative $$X$$ and $$\epsilon \gt 0$$:
-
-$$
-p(X \ge \epsilon) \le \frac{\mathbb{E}[X]}{\epsilon}
-$$
-
-**Chebyshev's inequality**:
-
-$$
-p \left( \mid X - \mathbb{E}[X] \mid \ge \epsilon \right) \le \frac{\mathbb{Var}[X]}{\epsilon^2}
-$$
-
-**Cauchy-Schwarz inequality**:
-
-$$
-\mathbb{Var}[A] \, \mathbb{Var}[B] \ge \mathbb{Cov}^2[A,B]
-$$
-
-**ELBO inequality**: the left-hand side is the log evidence $$\ln p_{\theta}(x)$$, and the right-hand side is the evidence lower bound (ELBO) for $$x$$:
-
-$$
-\ln p_{\theta }(x)\geq \mathbb {\mathbb {E} } _{z\sim q_{\phi }}\left[\ln {\frac {p_{\theta }(x,z)}{q_{\phi }(z)}}\right]
-$$
-
-
-### Kullback–Leibler / KL divergence
-
-$$
-KL ( p \| q ) =  \int_\mathbb{R} p(x) \log \frac{p(x)}{q(x)} dx
-$$
-
-Jensen's inequality gives:
-
-$$
-KL ( p \| q ) = \mathbb{E} \left[ - \log \frac{q(X)}{p(X)} \right] \ge -\log \mathbb{E} \left[ \frac{q(X)}{p(X)} \right] =0
-$$
-
-The KL divergence is not a metric, because it is not symmetric: $$  KL ( q \| p ) \neq  KL ( p \| q )$$. Also, $$p=q \Leftrightarrow KL ( q \| p ) = 0$$.
-
----
-
-
-### Testing
-
-The **quantile** is the inverse of the CDF. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$\alpha \in [0,1]$$. The **p-value** (or observed significance level) is the smallest value of $$α$$ for which the null hypothesis would be rejected at level $$α$$. The **confidence interval** refers to the probability that a population parameter falls between a set of values for a certain proportion of times. As an example, for a $$95\%$$ **confidence level**:
+A [confidence interval](https://en.wikipedia.org/wiki/Confidence_interval) at level $$1 - \alpha$$ is a random interval, computed from the data, that contains the fixed true parameter with probability $$1 - \alpha$$ over repeated samples; a single computed interval contains it or not. For the mean, the central limit theorem gives the approximate interval $$\bar{X}_N \pm Q(1 - \alpha / 2) \, \sigma / \sqrt{N}$$, with $$Q$$ the standard Gaussian quantile function. At the $$95\%$$ level, this is $$\bar{X}_N \pm 1.96 \, \sigma / \sqrt{N}$$, whose limits cut $$2.5\%$$ of the probability from each tail (figure). With an unknown $$\sigma$$, the empirical standard deviation with Bessel's correction replaces $$\sigma$$, and the quantile of [Student's t-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution) with $$N - 1$$ degrees of freedom replaces $$1.96$$.
 
 {: .picture}
 <img width="30%" height="30%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
 
----
+A [hypothesis test](https://en.wikipedia.org/wiki/Statistical_hypothesis_test) rejects a null hypothesis $$H_0$$ when the data give enough evidence against it. The **significance level** $$\alpha$$ is the probability of rejecting $$H_0$$ when it is true (a type I error). The [p-value](https://en.wikipedia.org/wiki/P-value) is the probability, under $$H_0$$, of a test statistic at least as extreme as the observed one, i.e. the smallest $$\alpha$$ at which the test rejects $$H_0$$. The test rejects $$H_0$$ when the p-value is at most $$\alpha$$.
 
+## Information Theory
 
 ### Entropy
 
-Entropy measures the average level of *surprise* or *uncertainty* in the possible outcomes of a random variable:
+The [entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)) of a discrete random variable is the expected surprise $$-\log p(x)$$ of its outcomes:
 
 $$
-\mathrm {H} (X) = -\int_{x} p(x)\log p(x) dx=\mathbb {E} [-\log p(x)]
+H(X) = -\sum_x p(x) \log p(x) = \mathbb{E}[-\log p(x)]
 $$
 
-Conditional Entropy:
+in bits for $$\log_2$$ and in nats for $$\ln$$. It is maximal, $$\log n$$, for the uniform distribution over $$n$$ outcomes. For a continuous variable, the integral $$-\int p(x) \log p(x) \, dx$$ is the [differential entropy](https://en.wikipedia.org/wiki/Differential_entropy), which can be negative. Among all distributions with variance $$\sigma^2$$, $$\mathcal{N}(\mu, \sigma^2)$$ has the largest one, $$\frac{1}{2} \log(2 \pi e \sigma^2)$$. The **joint** and **conditional** entropies, and the **chain rule** that relates them, are:
 
 $$
-H( Y \mid X) = - \int_x f(x) \int_y f(y \mid x) \log f(y \mid x) \,dy\,dx
+\begin{align*}
+H(X, Y) & = \mathbb{E}[-\log p(x, y)], \qquad H(Y \mid X) = \mathbb{E}[-\log p(y \mid x)] \\
+H(X, Y) & = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y)
+\end{align*}
 $$
 
-Joint Entropy:
+### Cross-Entropy and KL Divergence
+
+The [cross-entropy](https://en.wikipedia.org/wiki/Cross-entropy) of a distribution $$q$$ relative to a distribution $$p$$ is the expected surprise of $$q$$ for samples of $$p$$. The [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) is its excess over the entropy $$H(p)$$ of $$p$$:
 
 $$
-H(X, Y) = - \int_{xy} f(x,y) \log f(x,y) \,dx\,dy
+H(p, q) = \mathbb{E}_{x \sim p}[-\log q(x)], \qquad \mathrm{KL}(p \Vert q) = \mathbb{E}_{x \sim p}\left[ \log \frac{p(x)}{q(x)} \right] = H(p, q) - H(p)
 $$
 
-Entropy Chain Rule:
+Jensen's inequality with the convex function $$-\log$$ shows that the KL divergence is non-negative:
 
 $$
-H(X,Y) = H(X) + H(Y \mid X) = H(Y) + H(X \mid Y)
+\mathrm{KL}(p \Vert q) = \mathbb{E}_{x \sim p}\left[ -\log \frac{q(x)}{p(x)} \right] \ge -\log \mathbb{E}_{x \sim p}\left[ \frac{q(x)}{p(x)} \right] = -\log \int q(x) \, dx = 0
 $$
 
+with equality if and only if $$p = q$$ almost everywhere. The KL divergence is not a distance: it is not symmetric, $$\mathrm{KL}(p \Vert q) \neq \mathrm{KL}(q \Vert p)$$ in general, and it does not satisfy the triangle inequality.
+
+In classification, $$p$$ is the one-hot distribution of the true label $$y$$ and $$q$$ the predicted distribution, so the cross-entropy loss $$-\log q(y)$$ is the negative log-likelihood of the label, and equals $$\mathrm{KL}(p \Vert q)$$. Uniform predictions over $$n$$ classes give a loss of $$\ln n$$, a quick check of the loss at initialization ($$\ln 10 \approx 2.30$$ for 10 classes).
+
+When a model $$q$$ is fitted to a target $$p$$, the direction of the divergence matters. Minimizing $$\mathrm{KL}(p \Vert q)$$, as maximum likelihood does, spreads $$q$$ over all the probability of $$p$$ (mass-covering). Minimizing $$\mathrm{KL}(q \Vert p)$$, as variational inference does, penalizes $$q$$ where $$p$$ is small, so $$q$$ tends to concentrate on one mode of $$p$$ (mode-seeking).
+
+For a model $$p(x, z)$$ with latent variables $$z$$ and any distribution $$q(z)$$, the log evidence splits into the [evidence lower bound](https://en.wikipedia.org/wiki/Evidence_lower_bound) (ELBO) and a KL divergence:
+
+$$
+\log p(x) = {\underbrace{\mathbb{E}_{z \sim q}\left[ \log \frac{p(x, z)}{q(z)} \right]}_{\text{ELBO}}} + \mathrm{KL}\left( q(z) \Vert p(z \mid x) \right) \ge \text{ELBO}
+$$
+
+Maximizing the ELBO over $$q$$ thus minimizes $$\mathrm{KL}(q(z) \Vert p(z \mid x))$$, the divergence of $$q$$ from the posterior, without computing the evidence. This is the objective of [variational inference](https://en.wikipedia.org/wiki/Variational_Bayesian_methods) and of [variational autoencoders]({{ site.baseurl }}{% post_url 2019-10-12-vae-gan %}) ([Kingma and Welling, 2014](https://arxiv.org/abs/1312.6114)). The [variational inference post]({{ site.baseurl }}{% post_url 2019-07-01-variational-inference-gmm %}) applies it to Gaussian mixtures.
 
 ### Mutual Information
 
-Mutual information measures the reduction in uncertainty about one variable when the value of the other variable is known:
+The [mutual information](https://en.wikipedia.org/wiki/Mutual_information) measures how much knowing one variable reduces the uncertainty about the other. It is the KL divergence between the joint distribution and the product of the marginals:
 
 $$
 \begin{align*}
-I(X,Y) & = \int_{x,y} p(x,y) \log \frac{p (x,y)}{p(x) \, p(y)} dx\,dy = \mathbb{E} \left[ D_{KL} \left( p(x \mid y) \,\|\, p(x) \right) \right] \\
-I(X,Y) & = H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)
+I(X; Y) & = \mathrm{KL}\left( p(x, y) \Vert p(x) \, p(y) \right) = \mathbb{E}_{y}\left[ \mathrm{KL}\left( p(x \mid y) \Vert p(x) \right) \right] \\
+& = H(X) - H(X \mid Y) = H(Y) - H(Y \mid X)
 \end{align*}
 $$
 
----
+Hence $$I(X; Y) \ge 0$$, with equality if and only if $$X$$ and $$Y$$ are independent: unlike the covariance, the mutual information detects any dependence.
 
+## Bayesian Networks
 
-### Arrangements
-
-Arrangements of $$k$$ items from a set of size $$n$$:
-- **Arrangement** is an ordering of *some* items, where order matters: $$^nA_k=n^k$$ with replacement, or $$\frac{n!}{(n-k)!}$$ without.
-- **Permutation** is an ordering of *all* items, where order matters: $$^nP_n = n!$$, the case $$k=n$$ of $$^nP_k=\frac{n!}{(n-k)!}$$.
-- **Combination** is a selection of *some* items, where order *does not* matter: $$\binom nk = \, ^nC_k = \frac{1}{k!} ^nP_k = \frac{n!}{k!(n-k)!}$$.
-
----
-
-
-### Sets
-
-The **union** of two subsets is $$F_1 \cup F_2 = \{ ω ∈ Ω : ω ∈ F1 \text{ or } ω ∈ F2 \}$$, and their **intersection** is $$F1 ∩ F2 = \{ ω ∈ Ω : ω ∈ F1 \text{ and } ω ∈ F2 \}$$. Two events F1 and F2 are **disjoint** if they have no elements in common, i.e. $$F_1 ∩ F_2 = ∅$$.
-
-The **complement** of $$F$$, written $$F^c$$, contains all elements of $$\Omega$$ that are not in $$F$$, i.e. $$F^c = \{ ω ∈ Ω : ω \not\in F \}$$. Therefore, $$F ∪ F^c = Ω$$.
-
-A **partition** $$\{ F_n \}$$  for $$n \ge 1$$ is a collection of events such that $$F_i ∩ F_j = ∅$$ for all $$i \neq j$$ and $$\cup_{n≥1} F_n = Ω$$. The **difference** between $$F_1$$ and $$F_2$$ is $$F1 \backslash F2 = F1 ∩ F_2^c$$.
-
-The following **properties** hold:
-- associativity: $$(F1 ∪ F2) ∪ F3 = F1 ∪ (F2 ∪ F3) = F1 ∪ F2 ∪ F3$$
-- associativity: $$(F1 ∩ F2) ∩ F3 = F1 ∩ (F2 ∩ F3) = F1 ∩ F2 ∩ F3$$
-- distributivity: $$F1 ∩ (F2 ∪ F3) = (F1 ∩ F2) ∪ (F1 ∩ F3)$$
-- distributivity: $$F1 ∪ (F2 ∩ F3) = (F1 ∪ F2) ∩ (F1 ∪ F3)$$
-- De Morgan's Laws: $$(F1 ∪ F2)^c = F^c_1 ∩ F^c_2$$  and  $$(F1 ∩ F2)^c = F^c_1 ∪ F^c_2$$
-
-
-From these properties and the axioms of probability, it follows that:
+A [Bayesian network](https://en.wikipedia.org/wiki/Bayesian_network) is a directed acyclic graph (DAG) whose nodes are random variables and whose edges give the conditional dependencies. It factorizes the joint distribution into the distribution of each variable given its parents $$\text{pa}(X_i)$$:
 
 $$
-\begin{align*}
-& Pr(F1 ∪ F2) = Pr(F1) − Pr(F1 ∩ F2) + Pr(F2) \\
-& Pr(F1 ∩ F2) ≤ min\{Pr(F1), Pr(F2)\} \\
-& F ∪ F^c = Ω, \quad 1 = Pr(Ω) = Pr(F) + Pr(F^c), \text{ thus } Pr(F^c) = 1 − Pr(F)
-\end{align*}
+p(X_1, \ldots, X_n) = \prod_{i=1}^{n} p\left( X_i \mid \text{pa}(X_i) \right)
 $$
 
----
-
-
-### Causal Inference
-
-A **Bayesian network** is a probabilistic model in which a directed acyclic graph (DAG) expresses the conditional dependence structure between random variables. The model represents a factorization of the joint probability of all random variables:
+For the network in the figure:
 
 $$
-P(X_1,\ldots ,X_n) =\prod_{i=1}^{n} p \left( X_i \mid \text{pa}(X_i) \right)
-$$
-
-where $$\text{pa}(X_i)$$ are the parents of $$X_i$$. Example:
-
-$$
-p(A,B,C,D) = p(A)\cdot p(B \mid A) \cdot p( C \mid A) \cdot p ( D \mid A,C )
+p(A, B, C, D) = p(A) \, p(B \mid A) \, p(C \mid A) \, p(D \mid A, C)
 $$
 
 {: .picture}
@@ -449,24 +371,23 @@ $$
 {: .caption}
 Adapted from: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Graphical_model">Graphical model</a>
 
----
+Each variable is conditionally independent of its non-descendants given its parents: in the figure, $$B \perp C \mid A$$ and $$D \perp B \mid A, C$$. The factorization also saves memory. For $$n$$ binary variables, the full joint table has $$2^n - 1$$ free parameters, while the network has $$\sum_i 2^{\vert \text{pa}(X_i) \vert} \le n \, 2^k$$ for at most $$k$$ parents per variable: $$1 + 2 + 2 + 4 = 9$$ instead of 15 in the figure. When each edge is a direct cause, the network is a [causal model](https://en.wikipedia.org/wiki/Causal_model), which also predicts the effect of interventions.
 
+## Kernel Density Estimation
 
-### Extra: Non-parametric statistics (Smoothing)
-
-A **Kernel Density Estimator** converts a discrete distribution into a continuous distribution. Given a discrete cumulative distribution function with $$n$$ steps at $$Y_1, ..., Y_n$$, defined as:
-
-$$
-\hat{F}_n (y) = \frac{1}{n} \sum_{i=1}^{n} I(Y_i \le y)
-$$  
-
-the kernel density estimator $$\hat{f}$$ is the random density function:
+A [kernel density estimator](https://en.wikipedia.org/wiki/Kernel_density_estimation) (KDE) estimates a continuous pdf from $$N$$ samples $$x_1, \dots, x_N$$ without a parametric model. The samples define the [empirical CDF](https://en.wikipedia.org/wiki/Empirical_distribution_function), a step function that rises by $$1/N$$ at each sample:
 
 $$
-\hat{f}(x) \, = \, \frac{1}{nh} \sum_{i=1}^n K \left( \frac{x-Y_i}{h}  \right)
+\hat{F}_N(x) = \frac{1}{N} \sum_{i=1}^{N} \mathbb{1}(x_i \le x)
 $$
 
-where $$K$$ is the kernel, a non-negative function, and $$h \gt 0$$ is the smoothing parameter (*bandwidth*). $$h$$ controls the bias-variance trade-off: a large $$h$$ yields a flat estimator, and a small $$h$$ a wiggly one. An example of $$K$$ is the standard normal pdf.
+The KDE smooths these steps by placing a kernel on each sample:
+
+$$
+\hat{p}(x) = \frac{1}{N h} \sum_{i=1}^{N} K\left( \frac{x - x_i}{h} \right)
+$$
+
+where the kernel $$K$$ is a non-negative function that integrates to 1, such as the standard Gaussian pdf, and $$h > 0$$ is the **bandwidth**. The bandwidth sets the bias-variance trade-off: a large $$h$$ gives a flat, biased estimate, and a small $$h$$ a noisy one. For a Gaussian kernel and near-Gaussian data, a rule of thumb is $$h \approx 1.06 \, \hat{\sigma} N^{-1/5}$$, with $$\hat{\sigma}$$ the empirical standard deviation. The figure shows a histogram (left) and a KDE (right) of the same six samples, with the scaled kernels dashed.
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
@@ -474,9 +395,11 @@ where $$K$$ is the kernel, a non-negative function, and $$h \gt 0$$ is the smoot
 {: .caption}
 Adapted from: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel density estimation</a>
 
-The following table summarizes the method for each use case:
+Evaluating $$\hat{p}$$ at $$m$$ points costs $$O(Nm)$$ kernel evaluations. For large $$N$$, binning the samples on a grid of $$G$$ points and convolving the bins with the kernel by FFT reduces the cost to $$O(N + G \log G)$$.
 
-|-|-|-|
-| **Distribution / function $$g$$** | **parametric $$g(x_i^{\intercal}) = x_i^{\intercal} \beta$$** | **non-parametric $$g$$** |
-| Gaussian | Linear Regression | Smoothing (KDE) |
-| Exponential Family | Generalized Linear Models | Generalized Additive Models |
+Smoothing also applies to regression. The table places four regression models by the distribution of the response $$y_i$$ and by its predictor: linear in the coefficients $$\beta$$ (parametric) or a smooth function of the inputs $$x_i$$ (non-parametric). For an exponential family response, a link function maps the mean of $$y_i$$ to the predictor, e.g. the logit in logistic regression.
+
+| Distribution of $$y_i$$ | Parametric predictor $$x_i^\intercal \beta$$ | Non-parametric predictor |
+|---|---|---|
+| Gaussian | Linear regression | Smoothing, e.g. [kernel regression](https://en.wikipedia.org/wiki/Kernel_regression) |
+| Exponential family | [Generalized linear models](https://en.wikipedia.org/wiki/Generalized_linear_model) | [Generalized additive models](https://en.wikipedia.org/wiki/Generalized_additive_model) |

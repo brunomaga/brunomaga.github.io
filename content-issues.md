@@ -8,3 +8,11 @@ Content problems that need the author's decision, found by the text rewrite. Eac
   back-propagation as the chain rule and introduce automatic differentiation. Proposed fix: this post keeps the math
   (the chain rule through K layers and the worked example with its computation graph); the deep neural networks
   post keeps the algorithm, its costs and the PyTorch details.
+
+## Statistics for ML (2018-06-15-statistics-for-ml.md)
+
+- Overlap with the exponential family post (2019-03-20-exponential-family.md), which also covers the canonical form,
+  the Bernoulli example, the derivatives of the log-partition function and maximum likelihood, and with the
+  variational inference post (2019-07-01-variational-inference-gmm.md), which also derives the ELBO. This post keeps
+  a short version of each and links to the dedicated post. Proposed fix: keep the short versions as a reference
+  sheet and the full derivations in the dedicated posts; the alternative is to keep only the links here.
