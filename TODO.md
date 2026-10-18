@@ -224,6 +224,16 @@ that is not wrong.
 - Optional: the caption starts with "The 15 most common probability distributions", but the source post only calls
   them common. Fix: "Fifteen common probability distributions and their relationships", with the same source.
 
+### Variational Inference (ELBO, CAVI) and Gaussian Mixture Models (2019-07-01-variational-inference-gmm.md)
+
+- `variational-inference-gmm/gmm_iterations.svg`: the caption does not say what the gray ellipses are. The source
+  (Blei et al., Figure 3) calls them the 2σ contours of the variational factors, but they are elongated and, at
+  iteration 50, as large as the clusters. In the model of the text, the factor of each mean is an isotropic Gaussian
+  whose variance s_k² = 1/(1/σ² + Σ_i φ_ik) shrinks as the cluster gains points, so the figure comes from a model
+  with unknown covariances. Fix: add to the caption "The gray ellipses are the fitted components at initialization
+  and after 20, 28, 35 and 50 iterations", or redraw the figure with the model of the text in 2D: unit-variance
+  components, drawn as circles of radius 2 around each m_k.
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
@@ -250,6 +260,13 @@ Content problems that need the author's decision, such as overlap between posts.
   appendix of linear algebra rules (the derivations now state the two gradient rules they use; the mathematics for
   ML post and The Matrix Cookbook cover the rest). Proposed fix: keep them removed; restore the appendix if it
   should stay as a refresher.
+
+### Variational Inference (ELBO, CAVI) and Gaussian Mixture Models (2019-07-01-variational-inference-gmm.md)
+
+- The rewrite replaced the derivation of the CAVI update with the chain rule of probability, from the CMU 10-708
+  lecture notes, by the shorter derivation of section 10.1.1 of Bishop's PRML: as a function of one factor, the ELBO
+  is a negative KL divergence. It also removed the recaps of conditional probability and of the chain rule. The CMU
+  notes stay linked. Proposed fix: keep the shorter derivation.
 
 ## Title issues
 

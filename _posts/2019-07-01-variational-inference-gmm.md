@@ -5,390 +5,181 @@ categories: ["Machine Learning"]
 tags: ["variational inference", "ELBO", "GMM", "MCMC"]
 ---
 
-A [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}) about Bayesian inference explained that its goal is to compute the likelihood of the observed data and the mode of the density of the likelihood, marginal distribution and conditional distributions. Recall the formulation of the **posterior** of the latent variable $$z$$ given the observations $$x$$, derived from the Bayes rule, with and without the normalization term:
+Bayesian inference computes the posterior of the latent variables $$z$$ given the observations $$x$$ with [Bayes' rule]({{ site.baseurl }}{% post_url 2018-06-15-statistics-for-ml %}#bayes-rule):
 
 $$
-p (z \mid x) = \frac{p(z) \, p(x \mid z)}{p(x)} \propto p(z) \, p(x \mid z)
-\label{eq_bayes}
+p(z \mid x) = \frac{p(z) \, p(x \mid z)}{p(x)}, \qquad p(x) = \int p(z, x) \, dz
 $$
 
-read as *the posterior is proportional to the prior times the likelihood*. 
-The Bayes rule derives from the definition of [**conditional probability**](https://en.wikipedia.org/wiki/Conditional_probability#Definition) $$p(z\mid x)$$, expressed as:
+The **evidence** $$p(x)$$ integrates the joint density over all values of $$z$$. In the [Bayesian linear regression post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}), a Gaussian prior and a Gaussian likelihood give the posterior and the evidence in closed form. For many models with latent variables, the integral has no closed form or takes exponential time to compute, as in the mixture model below. Exact inference algorithms for graphical models, such as [variable elimination](https://en.wikipedia.org/wiki/Variable_elimination) and the [junction tree algorithm](https://en.wikipedia.org/wiki/Junction_tree_algorithm), take time exponential in the [treewidth](https://en.wikipedia.org/wiki/Treewidth) of the graph. Approximate inference uses loopy [belief propagation](https://en.wikipedia.org/wiki/Belief_propagation), sampling with Markov chain Monte Carlo (MCMC), or optimization with variational inference (VI). The sections below follow the review [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf) (Blei et al., 2017).
+
+## Markov Chain Monte Carlo
+
+[Monte Carlo methods](https://en.wikipedia.org/wiki/Monte_Carlo_method) estimate a quantity from random samples. For example, points drawn uniformly in a square fall inside its inscribed circle with probability $$\pi / 4$$, so four times the fraction of points inside the circle estimates $$\pi$$. A [Markov chain](https://en.wikipedia.org/wiki/Markov_chain) is a sequence of random states in which the distribution of the next state depends only on the current state.
+
+[MCMC](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo) builds a Markov chain whose stationary distribution is the posterior. After a burn-in period, the states of the chain are samples of $$p(z \mid x)$$. The [Metropolis algorithm](https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm) draws a proposal $$z'$$ from a symmetric distribution around the current state $$z$$, e.g. a Gaussian centered at $$z$$, and accepts it with probability $$\min(1, r)$$, where
 
 $$
-p (z \mid x ) = \frac{p(z,x)}{p(x)}
-\label{eq_conditional}
+r = \frac{p(z' \mid x)}{p(z \mid x)} = \frac{p(x \mid z') \, p(z') / p(x)}{p(x \mid z) \, p(z) / p(x)} = \frac{p(x \mid z') \, p(z')}{p(x \mid z) \, p(z)}
 $$
 
-where the denominator is the marginal density of $$x$$ (i.e. the observations), also called the **evidence**. It is calculated by **marginalizing** out the latent variables $$z$$ from the joint distribution:
+Otherwise, the chain stays at $$z$$. The evidence cancels in the ratio, so the algorithm needs only the prior and the likelihood. A proposal with a higher posterior density is always accepted, and one with a lower density is accepted with probability $$r$$, so the chain explores the whole posterior instead of climbing to its mode. [Gibbs sampling](https://en.wikipedia.org/wiki/Gibbs_sampling), another MCMC method, draws each latent variable in turn from its distribution given the data and the other latent variables.
 
-$$
-p(x) = \int p(z,x) dz
-\label{eq_joint}
-$$
+MCMC and VI compare as follows:
+- MCMC gives asymptotically exact samples of the posterior. It needs many iterations, each with a pass over the data to evaluate the likelihood, and consecutive samples are correlated.
+- VI turns inference into an optimization problem. It is faster and scales to large datasets with stochastic optimization, but it finds only the closest member of a chosen family of distributions, and it generally underestimates the variance of the posterior.
 
-The inference problem is to compute the conditional probability of the latent variables $$z$$ given the observations $$x$$ in $$X$$, i.e. to condition on the data and compute the posterior $$p(z \mid x)$$. For many models, the evidence integral has no closed-form solution or requires exponential time to compute. 
-
-**There are several approaches to inference**. Algorithms for exact inference include Brute force, the elimination algorithm, Message passing (sum-product algorithm, Belief propagation) and the Junction tree algorithm. Algorithms for approximate inference include Loopy belief propagation, Variational (Bayesian) inference and Stochastic simulation / sampling / Markov Chain Monte Carlo. Approximate methods are needed because in many cases the posterior distribution cannot be computed directly, i.e. the posterior has an **intractable** form --- often involving integrals --- that cannot be (easily) computed. **This post focuses on the simplest approach to Variational Inference, based on the mean-field approximation**.
-
-## Detour: Markov Chain Monte Carlo
-
-Before moving on to Variational Inference, it helps to understand the place of VI in this type of inference. For many years, the dominant approach was [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). The name itself gives a high-level understanding of MCMC.
-
-[Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods estimate parameters by generating random numbers. For example, to compute the area of a circle, random 2D coordinates are generated within the square that bounds the circle. The proportion of points that fall inside vs outside the circle gives an estimate of the area of the circle, or of the value of $$\pi$$.
-
-A [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain) is a stochastic model describing a sequence of events in which the probability of moving to the next state depends *only* on the current state and not on the previous ones. An example is the probability of the next character in a word, for all *27* possible characters, given the current character.
-
-MCMC methods approximate the distribution (state) of parameters at the next iteration by random sampling from a probabilistic space defined by the current state. MCMC assumes that the prior-likelihood product $$ P(x \mid z) \, P(z)$$ can be computed, i.e. is known, for a given $$z$$. This does not require any knowledge of the function of $$z$$. From a mathematical perspective (eq. \ref{eq_bayes}), the posterior density is expressed as:
-
-$$
-\begin{align*}
-p (z \mid x) & = \frac{p(z) \, p(x \mid z)}{p(x)} \\
-  & \qquad \text{(Bayes equation)} \\
-             & = \frac{p(z) \, p(x \mid z)}{\int p(z) p(x \mid z) \,dz} \\
-               & \qquad \text{(marginalizing } z \text{)} \\
-\end{align*}
-$$
-
-where the numerator can be computed, but the denominator is unknown or intractable. Since the denominator is a *normalizer* --- i.e. it guarantees that the posterior sums to 1 --- it can be discarded, leading to $$ p (z \mid x) \propto p(z) \, p(x \mid z)$$. The rationale is to take several samples of the latent variables (for example, the mean $$\mu$$ or the variance $$\sigma^2$$ of a normal distribution) from the current space, and to update the model with the values that explain the data better than the values at the current state, i.e. that have a higher posterior probability. In practice, this is done with the acceptance ratio of the proposed over the current posterior, which cancels out the term $$P(x)$$ that cannot be computed:
-
-$$
-  \frac{ P(z \mid x) }{ P(z_0 \mid x) }
-=  \frac{ \hspace{0.5cm}{ } \frac{P(x \mid z) \, P(z)}{ P(x) } \hspace{0.5cm} } { \,\, \frac{P(x \mid z_0) \, P(z_0)}{ P(x) } \,\, }
-= \frac{ P(x \mid z) \, P(z) }{ P(x \mid z_0) \, P(z_0)}
-$$
-
-and accept the proposed state $$z$$ with probability $$\min(1, \text{ratio})$$, otherwise keep the current state $$z_0$$ (Metropolis algorithm, with a symmetric proposal distribution). 
-
-The main advantage of MCMC is that it approximates the *true* posterior. However, an exact posterior that does not follow a parametric distribution has many disadvantages, such as being hard to interpret in high dimensions. MCMC also requires massive computational power for problems with large latent spaces. Variational Inference addresses these issues: it is faster and works well if the parametric distribution of the posterior is known, but it is sometimes *over-confident* when the posterior does not exactly match the approximation.
-
-As a rule of thumb, variational methods are the default choice, but in case of doubt the results should be checked against an MCMC estimate of the posterior. MCMC is also approximate, but it converges to the true posterior as the number of samples grows.
-
-The theory behind MCMC is covered in the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/variational-inference-gmm/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf), and a practical explanation with code is available in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
+VI thus suits large datasets and the fast comparison of many models, and MCMC suits smaller datasets, where precise samples justify the cost. [An Introduction to MCMC for Machine Learning]({{ site.assets }}/variational-inference-gmm/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf) (Andrieu et al., 2003) covers the theory of MCMC, and [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/) an implementation.
 
 ## Variational Inference
 
-**The idea behind Variational Inference (VI) methods is to find a parametric distribution $$q(z)$$ that is an approximation of an intractable/non-parametric posterior $$p(z \mid x)$$**. This requires a function that measures the approximation/similarity/closeness/proximity between the two distributions $$p$$ and $$q$$. A common choice is the [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence), defined between two distributions $$f(x)$$ and $$g(x)$$ as:
+[Variational inference](https://en.wikipedia.org/wiki/Variational_Bayesian_methods) chooses a family $$\mathcal{Q}$$ of distributions over the latent variables and finds its member closest to the posterior in [Kullback–Leibler (KL) divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence):
 
 $$
-KL (f(x) || g(x)) =  \int f(x) \log \frac{f(x)}{g(x)} dx= \mathbb{E} \left[ \log \frac{f(x)}{g(x)} \right] = \mathbb{E} \left[ \log f(x) \right] - \mathbb{E} \left[ \log g(x) \right]
-$$ 
-
-and, applied to the problem at hand:
-
-$$
-KL (q(z) || p(z \mid x)) =  \int q(z) \log \frac{q(z)}{p(z \mid x)} dz= \mathbb{E} \left[ \log \frac{q(z)}{p( z\mid x)} \right]
-\label{eq_KLdiv}
-$$ 
-
-Note that the **KL divergence is a dissimilarity function and not a metric**, as it is not symmetric. Other divergences besides the KL divergence also exist, as part of the [f-divergence family](https://en.wikipedia.org/wiki/F-divergence).
-
-Equation \ref{eq_KLdiv} includes the true posterior $$p(z \mid x)$$, which is exactly the unknown value. Therefore, it cannot be minimized directly. Instead, the optimization targets a function that is *equal to its negative (up to a constant)*, known as the Evidence Lower Bound.
-
-## Evidence Lower Bound (ELBO)
-
-The KL divergence can be rewritten as:
-
-$$
-\begin{align*}
-KL (q(z) || p(z \mid x)) 
-  & = \int q(z) \log \frac{q(z)}{p(z \mid x)} dz \\
-  & = \int q(z) \log \frac{q(z)p(x)}{p(z, x)} dz \\
-    & \qquad \text{(definition of conditional prob.)} \\
-  & = \int q(z) \left( \log p(x) + \log \frac{q(z)}{p(z, x)} \right) dz \\
-    & \qquad \text{(expanding } \log \text{)} \\
-  & = \log p(x) \int q(z) dz + \int q(z) \log \frac{q(z)}{p(z, x)} dz \\
-    & \qquad \text{(splitting the integral)} \\
-  & = \log p(x) - \int q(z) \log \frac{p(z, x)}{q(z)} dz \\
-    & \qquad \text{(negate log; } q(z) \text{ is a dist. thus } \int q(z) dz =1 \text{)} \\
-  &= \log p(x) - ELBO(q,p)\\
-\end{align*}
+q^*(z) = \underset{q \in \mathcal{Q}}{\arg\min} \; \mathrm{KL}\left( q(z) \Vert p(z \mid x) \right), \qquad \mathrm{KL}\left( q(z) \Vert p(z \mid x) \right) = \mathbb{E}_q\left[ \log \frac{q(z)}{p(z \mid x)} \right]
 $$
 
-This replaces the original $$KL$$-divergence formulation, which cannot be minimized, by an expression that can be optimized: minimizing the KL divergence is equivalent to maximizing the ELBO. On the right-hand side of the expression:
-- The KL divergence is minimized over $$q$$, so the term $$\log p(x)$$ can be ignored as it does not depend on $$q$$;
-- All terms inside $$ELBO(q,p)$$ are known, as $$p(z,x)$$ is the prior times the likelihood $$p(z,x) = p(z) \, p(x \mid z)$$, which are the inputs of the problem;
-- The KL divergence cannot be negative. Thus $$\log p(x) \ge ELBO$$, i.e. the ELBO is never larger than the log evidence $$\log p(x)$$. This explains the name **Evidence Lower Bound**.
+where $$\mathbb{E}_q$$ is the expectation over $$z \sim q$$. The family must be simple enough for the expectations under $$q$$ to be computable, and rich enough to approximate the posterior. The KL divergence is not symmetric: $$\mathrm{KL}(q \Vert p)$$ penalizes $$q$$ where the posterior is small, so $$q$$ tends to fit one mode of the posterior and to underestimate its variance (see the [statistics post]({{ site.baseurl }}{% post_url 2018-06-15-statistics-for-ml %}#cross-entropy-and-kl-divergence)). Other [f-divergences](https://en.wikipedia.org/wiki/F-divergence) give other variational objectives.
 
-The ELBO is also commonly written in terms of two expectations:
+## Evidence Lower Bound
 
-$$
-ELBO(q,p) = \int q(z) \log \frac{p(z, x)}{q(z)} dz =  \int q(z) \log p(z, x) dz - \int q(z) \log q(z) dz  = \mathbb{E} [\log p(x,z)] - \mathbb{E}[\log q(z)]
-\label{eq_elbo}
-$$
-
-There are several options to solve this optimization problem: coordinate descent in all variables $$z_i$$ (slow, and requires deriving the gradients by hand), Stochastic Variational Inference (faster), Mean-field approximation, etc.
-
-## Mean-field approximation
-
-So far, the analysis assumed a single posterior defined by a family with a single distribution $$q$$, whose posterior $$p(z \mid x)$$ is tractable. This section extends the analysis to complex families, where the posterior is not tractable.
-
-One solution is to approximate the posterior probability with a simpler model, for example by assuming that a set of latent variables is independent of the other variables. Another is to enforce full independence among all latent variables given $$x$$. This assumption is known as the **mean-field approximation**.
-
-This method originates from mean-field theory. From [Wikipedia](https://en.wikipedia.org/wiki/Mean-field_theory): 
-> "Mean-field theory [...] studies the behavior of high-dimensional random (stochastic) models by studying a simpler model that approximates the original by averaging over degrees of freedom. [...] The effect of all the other individuals on any given individual is approximated by a single averaged effect, thus reducing a many-body problem to a one-body problem."
-
-More complex scenarios, such as a variational family with dependencies between variables (structured variational inference) or with mixtures of variational families (covered in [Chris Bishop's PRML book]({{ site.resources_permalink }})), are not covered in this post. Note that **because the latent variables are assumed to be independent, the mean-field approach that follows usually does not contain the true posterior**.
-
-In this type of Variational Inference, the latent variables are independent, so the variational distribution over them factorizes as:
+The KL divergence contains the posterior, whose evidence is unknown, so it cannot be minimized directly. With $$p(z \mid x) = p(z, x) / p(x)$$, it splits into two terms:
 
 $$
-q(z) = q(z_1, ..., z_m) = \prod_{j=1}^{m} q(z_j)
-\label{eq_posterior_mf}
+\mathrm{KL}\left( q(z) \Vert p(z \mid x) \right) = \mathbb{E}_q[\log q(z)] - \mathbb{E}_q[\log p(z, x)] + \log p(x) = \log p(x) - \mathrm{ELBO}(q)
 $$
 
-where each latent variable $$z_j$$ is governed by its own density $$q(z_j)$$. Note that the variational family does not depend on the input data $$x$$, which does not appear in the equation.
-
-The latent variables can also be partitioned into $$K$$ groups $$z_{G_1}, ..., z_{G_K}$$, and the approximation is then:
+where the [evidence lower bound](https://en.wikipedia.org/wiki/Evidence_lower_bound) (ELBO) is
 
 $$
-q(z) =  q(z_1, ..., z_m) =  q(z_{G_1}, ..., z_{G_K}) = \prod_{j=1}^{K} q_j(z_{G_j}) 
+\mathrm{ELBO}(q) = \mathbb{E}_q[\log p(z, x)] - \mathbb{E}_q[\log q(z)]
 $$
 
-This setup is often called **generalized mean field**, as opposed to **naive mean field**. Each latent variable $$z_j$$ is governed by its own variational factor, the density $$q_j(z_j)$$. A complete formulation also requires the parametric form of each variational factor. In principle, each factor can take any parametric distribution appropriate to the corresponding random variable (e.g. a combination of Gaussian and Categorical distributions).
+- $$\log p(x)$$ does not depend on $$q$$, so maximizing the ELBO minimizes the KL divergence.
+- The ELBO needs only the joint density $$p(z, x) = p(z) \, p(x \mid z)$$, the prior times the likelihood.
+- The KL divergence is non-negative, so $$\mathrm{ELBO}(q) \le \log p(x)$$: the ELBO is a lower bound of the log evidence, with a gap equal to the KL divergence.
 
+## Mean-Field Variational Family
 
-## Coordinate Ascent Variational Inference 
-
-The main objective is to **optimize the ELBO in mean-field variational inference**, i.e. to choose the variational factors that maximize the ELBO (eq. \ref{eq_elbo}). A common approach is the **coordinate ascent** method, which optimizes the variational approximation of each latent variable $$q_{z_j}$$ while holding the others fixed.
-
-Recall the [probability chain rule](https://en.wikipedia.org/wiki/Chain_rule_(probability)) for more than two events $$X_1, \ldots , X_n$$:
-
-$$
-P(X_n, \ldots , X_1)  = P(X_n | X_{n-1}, \ldots , X_1) \cdot P(X_{n-1}, \ldots , X_1)
-$$
-
-in its recursive form, or the following in its general form: 
+The **mean-field** family makes the latent variables $$z = (z_1, \dots, z_m)$$ independent, each with its own factor:
 
 $$
-P\left(\bigcap_{k=1}^n X_k\right) = \prod_{k=1}^n P\left(X_k \,\Bigg|\, \bigcap_{j=1}^{k-1} X_j\right)
+q(z) = \prod_{j=1}^m q_j(z_j)
 $$
 
-Recall from eq. \ref{eq_elbo} that $$ELBO(q) = \mathbb{E} [\log p(z, x)] - \mathbb{E}[\log q(z)]$$.
-Applying the chain rule to the joint probability $$p(z_{1:m}, x_{1:n})$$ for $$m$$ variational factors and $$n$$ datapoints gives:
+The name comes from [mean-field theory](https://en.wikipedia.org/wiki/Mean-field_theory) in physics, which replaces the effect of all other particles on one particle by a single averaged effect. Each factor can take any parametric form that suits its variable, e.g. a Gaussian for a continuous variable and a categorical distribution for a discrete one. The data $$x$$ does not appear in $$q$$: the ELBO connects $$q$$ to the data. The family cannot represent correlations between latent variables, so it usually does not contain the posterior. **Generalized mean field** factorizes $$q$$ over disjoint groups of latent variables and keeps the correlations within each group. Structured variational families, with dependencies between variables, and mixtures of variational densities approximate the posterior better, at the cost of a harder optimization (Blei et al., section 2.3).
+
+## Coordinate Ascent Variational Inference
+
+Coordinate ascent variational inference (CAVI) maximizes the ELBO over one factor $$q_j$$ at a time, with the other factors fixed, as in [coordinate ascent](https://en.wikipedia.org/wiki/Coordinate_descent). Let $$z_{-j}$$ be the latent variables other than $$z_j$$, and $$\mathbb{E}_{-j}$$ the expectation over $$\prod_{l \ne j} q_l$$. As a function of $$q_j$$, the ELBO is
 
 $$
-%source: assets: 10708-scribe-lecture13.pdf
-p(z_{1:m}, x_{1:n}) = p(x_{1:n}) \prod_{j=1}^m p(z_j \mid z_{1: (j-1)}, x_{1:n})
+\mathrm{ELBO}(q_j) = \mathbb{E}_{q_j}\left[ \mathbb{E}_{-j}[\log p(z_j, z_{-j}, x)] \right] - \mathbb{E}_{q_j}[\log q_j(z_j)] + \text{const} = -\mathrm{KL}\left( q_j \Vert \tilde{q}_j \right) + \text{const}
 $$
 
-and the entropy term decomposes under the mean-field variational approximation as:
+where $$\tilde{q}_j(z_j) \propto \exp\left( \mathbb{E}_{-j}[\log p(z_j, z_{-j}, x)] \right)$$ is a normalized density, and the constants do not depend on $$q_j$$. The KL divergence is zero for $$q_j = \tilde{q}_j$$, so the optimal factor is
 
 $$
-\mathbb{E}_q [ \log q(z_{1:m})] = \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)]
+q_j^*(z_j) \propto \exp\left( \mathbb{E}_{-j}[\log p(z_j, z_{-j}, x)] \right) \propto \exp\left( \mathbb{E}_{-j}[\log p(z_j \mid z_{-j}, x)] \right)
 $$
 
-Inserting both decompositions into the ELBO equation gives the ELBO for the mean-field variational approximation:
+The two forms are equal up to a constant, since $$p(z_j, z_{-j}, x) = p(z_j \mid z_{-j}, x) \, p(z_{-j}, x)$$ and the last factor does not depend on $$z_j$$. The density $$p(z_j \mid z_{-j}, x)$$ is the **complete conditional** of $$z_j$$: Gibbs sampling draws $$z_j$$ from it, and CAVI sets $$q_j$$ to the normalized exponential of its expected logarithm.
+
+CAVI cycles through the factors and applies this update to each, until the ELBO stops increasing. No update decreases the ELBO, so CAVI converges, but the ELBO is not concave in general: CAVI reaches a local optimum that depends on the initialization. Section 10.1.1 of [Bishop's PRML]({{ site.resources_permalink }}) derives the update in the same way, and the [CMU 10-708 lecture notes]({{ site.assets }}/variational-inference-gmm/10708-scribe-lecture13.pdf) derive it with the chain rule of probability.
+
+When the complete conditional is in the [exponential family]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}), with natural parameter $$\eta_j(z_{-j}, x)$$ and sufficient statistic $$T(z_j)$$, the optimal factor is in the same family, with the expected natural parameter:
 
 $$
-%source: assets: 10708-scribe-lecture13.pdf
-\begin{align*}
-ELBO(q) & = \mathbb{E}_q [\log p(x_{1:n},z_{1:m})] - \mathbb{E}_q[\log q(z_{1:m})] \\
-        & = \mathbb{E}_q \left[ \log \left ( p(x_{1:n}) \prod_{j=1}^m p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \\
-        & = \log p(x_{1:n}) + \sum_j^m \mathbb{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \\
-\end{align*}
+q_j^*(z_j) \propto h(z_j) \exp\left( \mathbb{E}_{-j}[\eta_j(z_{-j}, x)]^T \, T(z_j) \right)
 $$
 
-Coordinate ascent variational inference (CAVI) computes the derivative with respect to each variational factor and updates one factor at a time to the value that maximizes the ELBO, with the other factors fixed. The derivative uses the notation:
+Each update then only computes an expectation, as in the mixture model below.
 
-$$
-p (z_j \mid z_{\neq j}, x) = p (z_j \mid z_1, ..., z_{j-1}, z_{j+1}, ..., z_m, x)
-$$
+## Gaussian Mixture Model
 
-where $$\neq j$$ means *all indices except the $$j^{th}$$*. The coordinate ascent update for a latent variable, with the others fixed, is $$arg\,max_{q_j} \, ELBO$$:
+The example follows sections 2.1, 3.1 and 3.2 of Blei et al. A [mixture model](https://en.wikipedia.org/wiki/Mixture_model) assumes that each observation comes from one of $$K$$ components. The Bayesian mixture of $$K$$ univariate Gaussians with unit variance has two kinds of latent variables: the means $$\mu = (\mu_1, \dots, \mu_K)$$ of the components, and the assignments $$c_1, \dots, c_n$$ of the $$n$$ observations to the components. Each $$c_i$$ is a one-hot [indicator vector](https://en.wikipedia.org/wiki/Indicator_vector) of length $$K$$, so $$c_i^T \mu$$ is the mean of the component of $$x_i$$. The variance $$\sigma^2$$ of the prior is a hyperparameter:
 
 $$
 \begin{align*}
-  & arg\,max_{q_j} \, ELBO (q)\\
-= & arg\,max_{q_j} \, \left( \log p(x_{1:n}) + \sum_j^m \mathbb{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \right)\\  
-= & arg\,max_{q_j} \, \left( \mathbb{E}_q \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \mathbb{E}_{q_j}[\log q(z_j)] \right) \\
-  & \qquad \text{(removing vars that don't depend on } q(z_j) \text{)} \\
-= & arg\,max_{q_j} \, \left( \int q(z_j) \, \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] dz_j - \int q(z_j) \log q(z_j) dz_j \right) \\
-  & \qquad \text{(def. Expected Value)} \\
+\mu_k & \sim \mathcal{N}(0, \sigma^2), & k & = 1, \dots, K \\
+c_i & \sim \text{Categorical}(1/K, \dots, 1/K), & i & = 1, \dots, n \\
+x_i \mid c_i, \mu & \sim \mathcal{N}(c_i^T \mu, 1), & i & = 1, \dots, n
 \end{align*}
 $$
 
-This argmax is found by taking the derivative of the loss with respect to $$q(z_j)$$, using Lagrange multipliers, and setting the derivative to zero:
+The joint density is $$p(\mu, c, x) = p(\mu) \prod_{i=1}^n p(c_i) \, p(x_i \mid c_i, \mu)$$, and the evidence sums over all assignments $$c = (c_1, \dots, c_n)$$:
 
 $$
-\frac{d\,L}{d\,q(z_j)} = \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \log q(z_j) -1 = 0
-$$
- 
-This leads to the final coordinate ascent update:
-
-$$
-\begin{align}
-q^{\star}(z_j) & \propto \exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j \mid z_{\neq j}, x)] \} \\
-               & \propto \exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j, z_{\neq j}, x)] \} \label{eq_CAVI} \\
-                 & \qquad \text{(} p(z_{\neq j}, x) \text{ does not depend on } z_j \text{)} \\
-\end{align}
+p(x) = \sum_c p(c) \int p(\mu) \prod_{i=1}^n p(x_i \mid c_i, \mu) \, d\mu
 $$
 
-However, this gives the factorization, or the template of the computation, but not the final form of the optimal $$q_j$$ (i.e. its application to a specific distribution family). The chosen form determines the complexity of the coordinate update $$q^{\star}(z_j)$$.
+The Gaussian prior is conjugate to the Gaussian likelihood, so each integral has a closed form, but there are $$K^n$$ assignments: the evidence costs $$O(K^n)$$ operations.
 
-## Gaussian Mixture Models
-
-Credit: this section is a more detailed explanation of sections 2.1, 3.1 and 3.2 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).
-
-A Gaussian mixture model is a probabilistic model that assumes all data points are generated from a mixture of a finite number of Gaussian distributions with unknown parameters. The problem is to fit a set of Gaussian density functions to the input dataset.
-
-Consider a mixture of $$K$$ univariate Gaussian distributions with means $$\mu = \mu_{1:K} = \{ \mu_1, \mu_2, ..., \mu_K \}$$. The means are drawn from a common prior $$p(\mu_k)$$, assumed to be Gaussian $$\mathcal{N}(0, \sigma^2)$$. **The latent variables are the means $$\mu_{1:K}$$ and the cluster assignments $$c_{1:n}$$** for each observation $$x_i$$. **$$\sigma^2$$ is a hyper-parameter**. $$c_i$$ is an indicator $$K$$-vector, i.e. all zeros except for a one at the index of the allocated cluster. Each observation $$x_i$$ (from a total of $$n$$ observations) is drawn from the corresponding Gaussian $$\mathcal{N}(c_i^T \mu, 1)$$. The model is:
+The mean-field family has a Gaussian factor for each mean and a categorical factor for each assignment:
 
 $$
-%source: section 2.1: https://arxiv.org/pdf/1601.00670.pdf
-\begin{align}
-\mu_k              & \thicksim \mathcal{N}(0, \sigma^2),             & & k=1,...,K, \\
-c_i                & \thicksim \text{Categorical} (1/K, ..., 1/K),   & & i=1,...,n, \\
-x_i \mid c_i, \mu & \thicksim \mathcal{N}(c_i^T \mu, 1)            & & i=1,...,n. \label{eq_gmm_likelihood}\\
-\end{align}
+q(\mu, c) = \prod_{k=1}^K q(\mu_k; m_k, s_k^2) \prod_{i=1}^n q(c_i; \varphi_i)
 $$
 
-The joint probability of the latent and observed variables for a sample of size $$n$$ is then:
-
-$$
-p (\mu, c, x) = p(\mu) p(c,x \mid \mu) = p(\mu) \, \prod_{i=1}^n p(c_i) p(x_i \mid c_i, \mu)
-\label{eq_7_source}
-$$
-
-This again applies the probability chain rule. The latent variables are $$z=\{\mu, c\}$$, holding the $$K$$-class means and the $$n$$-point class assignments. The evidence is:
+The factor $$q(\mu_k; m_k, s_k^2)$$ has mean $$m_k$$ and variance $$s_k^2$$, and $$\varphi_{ik}$$ is the probability that $$x_i$$ belongs to component $$k$$. With all expectations under $$q$$, the ELBO is
 
 $$
 \begin{align*}
-p(x) & = \int p(\mu) \prod_{i=1}^n \sum_{c_i} p(c_i) \, p(x_i \mid c_i, \mu) d\mu \\
-     & = \sum_c p(c) \int p(\mu) \prod_{i=1}^n p(x_i \mid c_i, \mu) d\mu \\
+\mathrm{ELBO}(m, s^2, \varphi) = & \sum_{k=1}^K \mathbb{E}\left[ \log p(\mu_k) \right] + \sum_{i=1}^n \left( \mathbb{E}\left[ \log p(c_i) \right] + \mathbb{E}\left[ \log p(x_i \mid c_i, \mu) \right] \right) \\
+& - \sum_{i=1}^n \mathbb{E}\left[ \log q(c_i; \varphi_i) \right] - \sum_{k=1}^K \mathbb{E}\left[ \log q(\mu_k; m_k, s_k^2) \right]
 \end{align*}
 $$
 
-That is, the evidence is a sum over all possible configurations of cluster assignments, with a computational complexity of $$O(K^n)$$, due to the $$K$$ classes that have to be assigned to $$n$$ points.
-Each integral in the previous equation can be computed, since the Gaussian prior and likelihood are conjugate.
-However, the evidence is still computationally intractable due to the $$K^n$$ complexity.
+### Update of the Assignments
 
-An alternative is the mean-field approximation described earlier. From eq. \ref{eq_posterior_mf}, the mean-field approximation yields approximate posterior probabilities of the form:
+The CAVI update of $$c_i$$ keeps the terms of $$\log p(\mu, c, x)$$ that depend on $$c_i$$:
 
 $$
-q(\mu,c) = \prod_{k=1}^K q(\mu_k; m_k, s^2_k) \prod_{i=1}^n q(c_i; \varphi_i).
-\label{eq_variational_family}
+q^*(c_i; \varphi_i) \propto \exp\left( \log p(c_i) + \mathbb{E}\left[ \log p(x_i \mid c_i, \mu) \right] \right)
 $$
 
-As before, each latent variable is governed by its own variational factor. The factor $$q(\mu_k; m_k, s^2_k)$$ is a Gaussian distribution on the mean of the $$k^{th}$$ mixture component, with mean $$m_k$$ and variance $$s^2_k$$. The factor $$q(c_i; \varphi_i)$$ is a distribution on the $$i^{th}$$ observation's mixture assignment; its assignment probabilities are a $$K$$-vector $$\varphi_i$$.
-
-There are two types of variational parameters: (1) the Gaussian parameters $$m_k$$ and $$s^2_k$$ to approximate the posterior of the $$k^{th}$$ component; and (2) the Categorical parameters $$\varphi_i$$ to approximate the posterior cluster assignment of the $$i^{th}$$ data point. Combining the joint density of the latent and observed variables (eq. \ref{eq_7_source}) and the variational family (eq. \ref{eq_variational_family}) gives the ELBO for the mixture of Gaussians:
+The prior term $$\log p(c_i) = -\log K$$ is the same for all assignments. Since $$c_i$$ is one-hot, $$p(x_i \mid c_i, \mu) = \prod_{k=1}^K \mathcal{N}(x_i \mid \mu_k, 1)^{c_{ik}}$$, and
 
 $$
-%source https://arxiv.org/pdf/1601.00670.pdf
-\begin{align}
-ELBO(m, s^2, \varphi) = & \sum_{k=1}^K \mathbb{E} \left[ \log p(\mu_k); m_k, s_k^2 \right] \\
-                        & + \sum_{i=1}^n \left( \mathbb{E} \left[ \log p(c_i); \varphi_i \right] + \mathbb{E} \left[ \log p(x_i \mid c_i, \mu); \varphi_i, m, s^2 \right] \right) \\
-                        & - \sum_{i=1}^n \mathbb{E} \left[ \log q(c_i; \varphi_i) \right] - \sum_{k=1}^K \mathbb{E} \left[ \log q(\mu_k ; m_k, s_k^2) \right] \label{eq_algo_elbo} \\
-\end{align}
+\mathbb{E}\left[ \log p(x_i \mid c_i, \mu) \right] = \sum_{k=1}^K c_{ik} \, \mathbb{E}\left[ -\frac{(x_i - \mu_k)^2}{2} \right] + \text{const} = \sum_{k=1}^K c_{ik} \left( \mathbb{E}[\mu_k] \, x_i - \frac{\mathbb{E}[\mu_k^2]}{2} \right) + \text{const}
 $$
 
-The CAVI (coordinate ascent variational inference) algorithm updates each variational parameter in turn, so both updates must be computed.
-
-### Update 1: Variational update for cluster assignment
-
-The first update is for the cluster assignment $$c_i$$. Using the mean-field recipe from equation \ref{eq_CAVI}:
+The constants hold the terms that are the same for all assignments, such as $$-x_i^2 / 2$$, since $$\sum_k c_{ik} = 1$$. With $$\mathbb{E}[\mu_k] = m_k$$ and $$\mathbb{E}[\mu_k^2] = m_k^2 + s_k^2$$, the update is
 
 $$
-q^{\star}(c_i; \varphi_i) \propto \exp \left( \log p(c_i) + \mathbb{E} [ \log p(x_i \mid c_i, \mu); m, s^2] \right).
+\varphi_{ik} \propto \exp\left( m_k x_i - \frac{m_k^2 + s_k^2}{2} \right)
 $$
 
-The first term is the log prior of $$c_i$$, which is the same for all values of $$c_i$$: $$\log p(c_i)= \log \frac{1}{K} = \log 1 - \log K = -\log K$$. The second term is the expected log probability of the $$c_i^{th}$$ Gaussian density. Because $$c_i$$ is an [indicator vector](https://en.wikipedia.org/wiki/Indicator_vector), the likelihood can be written as:
+normalized so that $$\sum_k \varphi_{ik} = 1$$.
 
-$$
-p (x_i \mid c_i, \mu) = \prod_{k=1}^K p(x_i \mid \mu_k)^{c_{ik}}
-$$
+### Update of the Component Means
 
-i.e. because $$c_{ik} \in \{0,1\}$$, this is a product of terms that are equal to one, except when cluster $$k$$ is allocated to the datapoint $$x_i$$. This gives the following expansion of the second term:
+The CAVI update of $$\mu_k$$ keeps the prior of $$\mu_k$$ and the likelihood terms of component $$k$$, with $$\mathbb{E}[c_{ik}] = \varphi_{ik}$$:
 
 $$
 \begin{align*}
-  & \mathbb{E} [ \log p(x_i \mid c_i, \mu); m, s^2] \\
-= & \sum_k c_{ik} \mathbb{E} [ \log p(x_i \mid \mu_k); m_k, s_k^2] \\
-  & \qquad \text{(sum of matching assignments } ik \text{)} \\
-= & \sum_k c_{ik} \mathbb{E} \left[ \log \mathcal{N}(x_i \mid \mu_k, 1) \right] \\
-  & \qquad \text{(likelihood eq. \ref{eq_gmm_likelihood})} \\
-= & \sum_k c_{ik} \mathbb{E} \left[ \log \left( \frac{1}{1 \sqrt{2\pi}} \right) - \frac{1}{2} \left( \frac{x_i - \mu_k}{1} \right)^2 ; m_k, s_k^2 \right] \\
-  & \qquad \text{(log of normal distribution)} \\
-= & \sum_k c_{ik} \mathbb{E} \left[ -\frac{1}{2}(x_i - \mu_k)^2; m_k, s_k^2 \right] + const \\
-  & \qquad \text{(removed terms that are constant with respect to } c_i \text{)} \\
-= & \sum_k c_{ik} \mathbb{E} \left[ -\frac{1}{2} x_i^2 + \mu_k x_i -\frac{1}{2} \mu_k^2; m_k, s_k^2 \right] + const \\
-  & \qquad \text{(decomposed square of sum)} \\
-= & \sum_k c_{ik} \left( x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k] \right) + const \\
-  & \qquad \text{(removed terms that are constant with respect to } c_i \text{)} \\
+\log q^*(\mu_k) & = \log p(\mu_k) + \sum_{i=1}^n \varphi_{ik} \log \mathcal{N}(x_i \mid \mu_k, 1) + \text{const} \\
+& = \left( \sum_{i=1}^n \varphi_{ik} x_i \right) \mu_k - \left( \frac{1}{2 \sigma^2} + \frac{1}{2} \sum_{i=1}^n \varphi_{ik} \right) \mu_k^2 + \text{const}
 \end{align*}
 $$
 
-The calculation requires $$\mathbb{E} [\mu_k]$$ and $$\mathbb{E} [\mu_k^2]$$, which are computable from the variational Gaussian on the $$k^{th}$$ mixture component. Thus the variational update for the $$i^{th}$$ cluster assignment --- expressed only as a function of the variational parameters of the mixture component --- is:
+This is an exponential family density with sufficient statistics $$T(\mu_k) = [\mu_k, \mu_k^2]^T$$ and natural parameters $$\eta_1 = \sum_i \varphi_{ik} x_i$$ and $$\eta_2 = -\frac{1}{2 \sigma^2} - \frac{1}{2} \sum_i \varphi_{ik}$$: a Gaussian. Its mean $$-\eta_1 / (2 \eta_2)$$ and its variance $$-1 / (2 \eta_2)$$, derived in the [exponential family post]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}#examples), give the update
 
 $$
-\varphi_{ik} \propto \exp \left\{ x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k] \right\}
-\label{eq_algo_first_step}
+m_k = \frac{\sum_i \varphi_{ik} x_i}{1 / \sigma^2 + \sum_i \varphi_{ik}}, \qquad s_k^2 = \frac{1}{1 / \sigma^2 + \sum_i \varphi_{ik}}
 $$
 
+The mean $$m_k$$ is the average of the observations weighted by their assignment probabilities, shrunk toward the prior mean 0. The variance $$s_k^2$$ decreases as the expected number of observations in the component, $$\sum_i \varphi_{ik}$$, grows. The two updates resemble the two steps of the [expectation–maximization (EM) algorithm](https://en.wikipedia.org/wiki/Expectation%E2%80%93maximization_algorithm) for mixtures, soft assignments and weighted means, but CAVI also keeps the uncertainty of each mean.
 
-### Update 2: Variational update for cluster mean
+### Algorithm
 
-The second update is for the variational density $$q(\mu_k; m_k, s^2_k)$$ in equation \ref{eq_variational_family}. Equation \ref{eq_CAVI} (the exponentiated log of the joint) is again applied to the mean values $$\mu_k$$:
+CAVI for the mixture repeats three steps until the ELBO converges:
 
-$$
-q(\mu_k) \propto \exp \{ \log p(\mu_k) + \sum_{i=1}^n \mathbb{E} [ \log p(x_i \mid c_i, \mu); \varphi_i, m_{\neq k}, s^2_{\neq k} ] \}
-$$
+1. for $$i = 1, \dots, n$$ and $$k = 1, \dots, K$$, set $$\varphi_{ik} \propto \exp\left( m_k x_i - (m_k^2 + s_k^2) / 2 \right)$$, normalized over $$k$$;
+2. for $$k = 1, \dots, K$$, set $$m_k \leftarrow \frac{\sum_i \varphi_{ik} x_i}{1 / \sigma^2 + \sum_i \varphi_{ik}}$$ and $$s_k^2 \leftarrow \frac{1}{1 / \sigma^2 + \sum_i \varphi_{ik}}$$;
+3. compute $$\mathrm{ELBO}(m, s^2, \varphi)$$.
 
-where, as before, $$\varphi_{ik}$$ is the probability that the $$i^{th}$$ observation comes from the $$k^{th}$$ cluster, and $$c_i$$ is a one-hot (or indicator) vector. The log probability is then:
-
-$$
-\log q(\mu_k) = \log p(\mu_k) + \sum_i \mathbb{E} [ \log p(x_i \mid c_i, \mu); \varphi_i, m_{\neq k}, s^2_{\neq k}] + const\\
-$$
-
-This reduction is omitted here; the details are in equations 28-32 of [the paper](https://arxiv.org/pdf/1601.00670.pdf). The result is:
-
-$$
-\log q(\mu_k) = (\sum_i \varphi_{ik} x_i) \mu_k - (\frac{1}{2 \sigma^2} + \frac{1}{2} \sum_i \varphi_{ik} ) \mu_k^2 + const.\\
-$$
-
-Therefore, the CAVI optimal variational density of $$\mu_k$$ is a member of the Exponential Family of Distributions with sufficient statistics $$\{\mu_k, \mu_k^2\}$$ and natural parameters $$\left\{\sum_{i=1}^n \varphi_{ik} x_i, -\frac{1}{2 \sigma^2} - \frac{1}{2}\sum_{i=1}^n \varphi_{ik} \right\}$$. 
- For a detailed discussion of the exponential family, sufficient statistics and natural parameters, see the previous [post]({{ site.baseurl }}{% post_url 2019-03-20-exponential-family %}). The updates for the mean and the variance are then:
-
-$$
-\begin{align*}
-0 & = \frac{d\, \log q(\mu_k)}{d\mu_k} \\
-0 & = \sum_i \varphi_{ik}x_i - 2 \left( \frac{1}{2 \sigma^2} + \frac{1}{2} \sum_i \varphi_{ik} \right) \mu_k \\
-\hat{\mu_k} & = \frac{\sum_i \varphi_{ik} x_i}{1/\sigma^2 + \sum_i \varphi_{ik}}\\ 
-\end{align*}
-$$
-
-The final variable $$\hat{\mu_k}$$ is referred to as $$m_k$$, in line with the paper and to avoid confusion. Similarly, the update of the variance is:
-
-$$
-s^2_k = \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}\\
-\label{eq_algo_second_step}
-$$
-
-### Algorithm and Visualization
-
-Putting it all together, the algorithm is as follows:
-
-While the ELBO has not converged:
-
-1. for all $$i \in \{1, ..., n\}$$, set (equation \ref{eq_algo_first_step}):
-
-   $$
-   \varphi_{ik} \propto \exp \left\{ x_i \, \mathbb{E} [ \mu_k; m_k, s_k^2] - \frac{1}{2} \mathbb{E}[ \mu^2_k; m_k, s^2_k] \right\}
-   $$
-
-2. for $$k \in \{1, ..., K\}$$, set (equation \ref{eq_algo_second_step}):
-
-   $$
-   \begin{align*}
-   m_k & \leftarrow \frac{\sum_i \varphi_{ik} x_i}{1/\sigma^2 + \sum_i \varphi_{ik}} \\
-   s^2_k & \leftarrow \hat{\sigma}^2 = \frac{1}{1/\sigma^2 + \sum_i \varphi_{ik}}
-   \end{align*}
-   $$
-
-3. compute $$ELBO(m, s^2, \varphi)$$ (equation \ref{eq_algo_elbo})
-
-The algorithm is iterative and converges on a certain loss threshold (ELBO), based on the fit of each Gaussian to the data points. The illustration below shows several iterations of the fitting of Gaussian models to five clusters of points:
+Each iteration costs $$O(nK)$$ operations. The update of $$m$$ and $$s^2$$ needs the data only through the $$2K$$ sums $$\sum_i \varphi_{ik} x_i$$ and $$\sum_i \varphi_{ik}$$. When the observations are split across workers, each worker computes $$\varphi_i$$ and the partial sums for its observations, and one [all-reduce](https://en.wikipedia.org/wiki/Collective_operation#All-Reduce) of the $$2K$$ sums per iteration gives every worker the new $$m$$ and $$s^2$$. In the figure, the gray ellipses are the variational densities of the components, from the initialization to iteration 50:
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/variational-inference-gmm/gmm_iterations.svg"/>
@@ -397,16 +188,14 @@ The algorithm is iterative and converges on a certain loss threshold (ELBO), bas
 Application of the CAVI algorithm to Gaussian Mixture Models, on a dataset of 2D points assigned to five color-coded clusters. The figure uses the multivariate (2D) version of the model; the derivation above uses univariate Gaussians.
 (source: <a href="https://arxiv.org/pdf/1601.00670.pdf">Variational Inference: A Review for Statisticians</a>)
 
-
 ## Stochastic Variational Inference
 
-CAVI does not scale well to very large datasets.
-CAVI iterates between re-analyzing every data point in the dataset and re-estimating its hidden structure. This is inefficient for large datasets, because each iteration requires a full pass through the data.
+CAVI passes over the whole dataset in every iteration, which is slow for large datasets. [Stochastic variational inference](https://jmlr.org/papers/volume14/hoffman13a/hoffman13a.pdf) (SVI, Hoffman et al., 2013) instead updates the global variational parameters after each mini-batch of observations. It uses stochastic optimization ([Robbins and Monro, 1951](https://projecteuclid.org/euclid.aoms/1177729586)): it follows noisy but unbiased estimates of the natural gradient of the ELBO, with step sizes $$\rho_t$$ that satisfy $$\sum_t \rho_t = \infty$$ and $$\sum_t \rho_t^2 < \infty$$.
 
-Another well-known method, [Stochastic Variational Inference](https://jmlr.org/papers/volume14/hoffman13a/hoffman13a.pdf) (SVI), uses a more efficient algorithm based on stochastic optimization ([Robbins and Monro, 1951](https://projecteuclid.org/euclid.aoms/1177729586)), a technique that follows noisy estimates of the gradient of the objective.
+For the mixture, the global parameters are the natural parameters $$\lambda_k$$ of the factors $$q(\mu_k)$$, which CAVI sets to $$\left( \sum_i \varphi_{ik} x_i, \; -\frac{1}{2 \sigma^2} - \frac{1}{2} \sum_i \varphi_{ik} \right)$$. At step $$t$$, SVI draws a mini-batch $$B$$ of observations, computes $$\varphi_i$$ for $$i \in B$$ with step 1 of CAVI, and computes $$\hat{\lambda}_k$$ with the CAVI formula, in which each sum $$\sum_i$$ is replaced by $$\frac{n}{\vert B \vert} \sum_{i \in B}$$, as if the mini-batch were repeated to the size of the dataset. It then updates
 
-SVI is stochastic gradient descent applied to variational inference. It scales to the large datasets of modern machine learning, since the ELBO can be computed on a single mini-batch at each iteration.
+$$
+\lambda_k \leftarrow (1 - \rho_t) \, \lambda_k + \rho_t \, \hat{\lambda}_k
+$$
 
-SVI iterates between subsampling the data and adjusting the hidden structure based only on the subsample, which makes it more efficient than traditional variational inference. For this reason, several ML libraries such as [Pyro](https://pyro.ai/examples/svi_part_i.html) use SVI.
-
-The details of SVI are not covered here; see section 4.3 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).
+This update is a step along the noisy natural gradient $$\hat{\lambda}_k - \lambda_k$$. It costs $$O(\vert B \vert K)$$ operations instead of $$O(nK)$$, and needs only the mini-batch in memory. SVI thus suits large and streaming datasets, while CAVI needs no step sizes. Section 4.3 of Blei et al. gives the general algorithm. Probabilistic programming libraries such as [Pyro](https://pyro.ai/examples/svi_part_i.html) extend SVI to models without conjugate complete conditionals, with Monte Carlo estimates of the ELBO gradient, as in the [variational autoencoder]({{ site.baseurl }}{% post_url 2019-10-12-vae-gan %}).
