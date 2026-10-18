@@ -5,7 +5,7 @@ and a proposed fix. The user picks the items to fix before the next pass.
 
 ## Code issues
 
-Bugs in the code and data files of the posts (under `assets/`).
+Bugs in the code and data files of the posts (under `assets/`), and in the styles of the site (under `_sass/`).
 
 ### Distributed Sorting Algorithms (2014-06-21-distributed-sort.md)
 
@@ -14,6 +14,14 @@ Bugs in the code and data files of the posts (under `assets/`).
   gives rank r `1000000 + 3r` elements. A simulation with unequal counts fails to sort in about a third of the
   cases after p phases. Fix: balance the counts first, or run phases until an even and an odd phase in a row change
   nothing (an all-reduce of a "changed" flag per phase).
+- `assets/distributed-sort/distributedmemorysorter.cxx`, sample sort: lines 687 to 691 take the samples at
+  floor((m-1) i/p) for i = 1 to p (the comment says p-1, and only p-1 are gathered), and line 805 picks the splitters
+  `recvSamples[i*p-1]`, the largest sample of each group. Both shift the splitters upward. A simulation with 2,000
+  elements per rank gives rank 0 1.44 n/p elements and the last rank 0.67 n/p at p = 64 (at most 1.54 n/p), and 1.17
+  and 0.86 n/p at p = 16. Fix: take p regular samples per rank at i m/p, for i = 0 to p-1, and the splitters at
+  k p + p/2 - 1, as in PSRS (Shi and Schaeffer, 1992), which gives about 1.0 n/p on the first and the last ranks, and
+  at most 1.13 n/p at p = 64. The example of the post's picture does not change (splitters 4 and 10, counts 9, 4
+  and 8).
 
 ### Distributed Load Balancing and Spatial Slicing (2015-12-01-slicing.md)
 
@@ -23,6 +31,21 @@ Bugs in the code and data files of the posts (under `assets/`).
   (`outputWarnings = false`). Fix: warn when the difference is larger than a relative tolerance, e.g.
   `std::abs(pre_sum - post_sum) > 1e-9 * std::abs(pre_sum)`, since the sum of many doubles changes with the order
   of the additions.
+- Optional, `assets/slicing/slicing.tar.gz`, `DistributedSorting.cxx` line 414: the splitters are chosen as in the
+  sample sort of the sorting post, and shift upward in the same way. The balance step then evens out the counts, but
+  more data moves. Fix: as for the sorting post.
+
+### The Leaky Integrate-and-Fire Neuron and the Brunel Network (2016-02-08-lif-brunel.md)
+
+- `assets/lif-brunel/lif-brunel.tar.gz`, `include/Neuron.hpp` line 6 includes itself, which shows as the self-loop of
+  `diagram_class.svg`. Fix: delete the line and the duplicate include in `src/Neuron.cpp`, then regenerate the graph.
+- Same archive, `src/Network.cpp`, `make_connections`: each pair of neurons is connected with the probability
+  epsilon, so the in-degrees are binomial around 800 and 200, while Brunel's model and the caption of the network
+  picture give every neuron exactly C_E excitatory and C_I inhibitory inputs. Fix: draw exactly C_E and C_I inputs per
+  neuron.
+- Same archive, `Physics.hpp`: `NUMBER_OF_NEURONS` defaults to 12,500, while the tables and plots of the post use
+  10,000 neurons. Fix: a default of 10,000, or `-n 10000` in the instructions.
+- Optional, same archive, `step_analytic` computes `exp(-dt/tau)` at every step. Fix: compute it once.
 
 ### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
 
@@ -148,6 +171,8 @@ Bugs in the code and data files of the posts (under `assets/`).
 - `Megatron_FeedForward.__init__` builds `nn.Dropout(dropout)`, but `dropout` is not one of its arguments, while
   `Megatron_MHA` takes it as an argument. The class only works with a global `dropout`. Fix: add a `dropout`
   argument to `Megatron_FeedForward.__init__`.
+- A comment of `Megatron_MHA` says "then we all-reduce (Megatron_g) to combine ranks", in the first person. Fix:
+  "then Megatron_g all-reduces (sums) the outputs across ranks".
 
 ### Mixture-of-Experts and Expert Parallelism (2024-01-19-mixture-of-experts.md)
 
@@ -191,6 +216,9 @@ Bugs in the code and data files of the posts (under `assets/`).
 - The comments of the ring `MultiHeadAttention.forward` use `E` for both the embedding size and the head size:
   `(B, S/P, E) -> (H, B, S/P, E)`. Fix: `(H, B, S/P, d_head)` and `(B, S/P, H, d_head)`.
 - The ring `MultiHeadAttention.forward` is indented by 5 spaces. Fix: 4 spaces.
+- The docstring of `dist_view_swap` and its line `H, B, S, E = full_shape` call the last dimension E, but
+  `MultiHeadAttention` calls the function on tensors whose last dimension is the head size. Fix: `(H, B, S, d)` in the
+  docstring, and `H, B, S, d = full_shape`.
 
 ### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
 
@@ -201,6 +229,13 @@ Bugs in the code and data files of the posts (under `assets/`).
 - The EMA comment "with a warmup as in diffusers" (in `diffusion/diffusion.py` and in the post): the decay
   (1+n)/(10+n) is the default of the diffusers `EMAModel`, which gives the name "warmup" (`use_ema_warmup`) to
   another formula. Fix: "0.9999 as in the paper, ramped up as in the default EMAModel of diffusers".
+
+### Faster attention (GQA, FlashAttention, sparse, linear and latent attention) (2025-12-30-inference-attention.md)
+
+- `indexer_loss` in the DSA code block masks the scores with -1e9, which does not fit in float16 (its largest value
+  is 65,504), while the comment of `scaled_dot_product_attention` in the same post gives this as the reason to use
+  `torch.finfo(dtype).min`. The queries of the first block of CSA have rows that are fully masked. Fix: replace both
+  -1e9 of `indexer_loss` with `torch.finfo(<tensor>.dtype).min`.
 
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
@@ -214,6 +249,18 @@ Bugs in the code and data files of the posts (under `assets/`).
   older entries are rounded again, which adds error that a real FP8 cache, which stores each entry once, does not
   have (1.4 times the error in a test on random data). Fix: quantize only the new entries, with a fixed scale per
   layer, for example taken from the prompt.
+- Optional, the comment `# ... (ReLU(z / s) = ReLU(z) / s for s > 0)` of `quantize_awq` (`inference/quantization.py`
+  line 178, and in the post) writes the input as z, which is the zero point in the text. Fix:
+  `ReLU(y / s) = ReLU(y) / s`, as the text writes it.
+
+### Publications bookmark (publications.md)
+
+- `_sass/site/_labels.scss`: the rules `.label-table td`, `td:first-child` (`width: 1%`), `td + td` and the phone
+  rule (`.label-table tbody, tr, td { display: block }`) also match the table inside the notes of DeepSeek-V2, the
+  only table in the notes. Its first column shrinks, so $$2\,n_h\,d_h$$ wraps over two lines, its cells lose their
+  padding and borders, and on phones the table breaks into blocks (also on master). Fix: child selectors for the
+  label table only, `.label-table > tbody > tr > td` (and the same for `:first-child`, `+ td` and `:empty`), and in
+  the `$on-palm` rule `.label-table > tbody`, `.label-table > tbody > tr` and `.label-table > tbody > tr > td`.
 
 ## Diagram issues
 
@@ -368,6 +415,9 @@ that is not wrong.
   results.
 - Optional, `algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg`: the plots have unequal axis scales. Fix: the same
   scale on both axes.
+- `algebra-for-ml/autodiff.svg`: the square-root node (cell `autodiff-x12`) writes √ in Source Sans 3 and the
+  argument as a raised dot, so it renders as a small √ under a dot. Fix: the label "√( · )" in
+  NewComputerModernSansMath only, like "exp( · )" and "cos( · )", then export the picture again.
 
 ### Statistics for ML (2018-06-15-statistics-for-ml.md)
 
@@ -434,15 +484,13 @@ that is not wrong.
   attention scores", while the text calls them attention weights, and calls scores the values before the softmax.
   Fix: "to obtain the attention weights $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averages the values
   $$V_1,...,V_{N^{KV}}$$ with these weights".
+- Optional, caption of `learning-from-sequences/transformer_attention_masked.svg`: "The algorithm performs four
+  iterations, one per word" holds only at inference: in training, the mask lets the decoder compute the four vectors
+  at once, as the text says. Fix: "At inference, the decoder performs four iterations, one per word; in training, the
+  mask computes the four vectors at once."
 
 ### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
 
-- `gptlite-cpp/gptlite_compact.svg`, and the three GPTlite figures that this post reuses: the post-norm "Add & Norm"
-  boxes and the sinusoidal positional encoding disagree with the code, which is pre-norm, has a final layer
-  normalization and learns its position embeddings. Fix: as for the GPT-lite post.
-- `gptlite-cpp/benchmark_model.svg`: the output is labeled "Output Probabilities", but the model ends with a ReLU,
-  not a softmax, and the ReLUs after the layers are not drawn. Fix: label the output "Output", and each layer
-  "Linear + ReLU (size W)".
 - `gptlite-cpp/benchmark_wide.svg` and `benchmark_deep.svg`: the throughput axes say "samples/sec", but the values
   are iterations per second on batches of 2048 samples, as the code prints them ("epochs/second"). Fix: label the
   axes "iterations/sec (batches of 2048 samples)", or multiply the values by 2048.
@@ -455,23 +503,19 @@ that is not wrong.
 
 ### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
 
-- `distributed-training/workflow_sharding.svg` and its caption show ZeRO-3 as the ZeRO paper describes it: each
-  process owns whole layers, broadcasts their parameters, and "gathers" their gradients, which is a reduction (a
-  sum) to the owner. DeepSpeed ZeRO-3 and PyTorch FSDP split every layer into one shard per process, with an
-  all-gather of the parameters and a reduce-scatter of the gradients. The text explains both. Optional fix: label
-  the arrows "reduce gradients" instead of "gather gradients" and "send grads", or redraw each layer as four shards,
-  with all-gathers and reduce-scatters.
+- Optional, `distributed-training/workflow_sharding.svg` shows ZeRO-3 as the ZeRO paper describes it: each process
+  owns whole layers, broadcasts their parameters and reduces their gradients. DeepSpeed ZeRO-3 and PyTorch FSDP split
+  every layer into one shard per process, with an all-gather of the parameters and a reduce-scatter of the
+  gradients. The text explains both. Fix: redraw each layer as four shards, with all-gathers and reduce-scatters.
 - `distributed-training/imgs/vdnn2.svg` and `vdnn3.svg` label the last layer "Layer(N)", and the caption says "at
   layer N", while the text numbers the layers from 1 to $$L+1$$, and `deepspeed_stages.svg` uses N for the processes.
   Fix: "Layer(L+1)", and the caption "at its last layer, $$L+1$$".
 - Optional, `distributed-training/deepspeed_stages.svg`: the number of processes is N_d (and gpu_N-1), while
   `data_parallelism.svg` and the text use P; the text states that N_d = P. The caption calls the stages
   "ZeRO FSDP". Fix: write P in the figure, and "the three stages of ZeRO" in the caption.
-- Optional, `workflow_data_parallelism.svg` and `workflow_sharding.svg` write "optimiser", while
-  `deepspeed_stages.svg` and the text write "optimizer". Fix: "optimizer".
-- Optional, `distributed-training/benchmark_gptlite.svg` has no caption, and does not say how the memory is
-  averaged. Fix: a caption such as "GPTlite on one node with 8 GPUs, in fp32, with micro-batches of 1 sample:
-  average and peak allocated memory per GPU, and throughput over all GPUs".
+- Optional, the caption of `distributed-training/imgs/benchmark_gptlite.svg` does not say how the memory is averaged.
+  Fix: "GPTlite on one node with 8 GPUs, in fp32, with micro-batches of 1 sample: average and peak allocated memory
+  per GPU, and throughput over all GPUs".
 - Optional, caption of `distributed-training/imgs/data_parallelism.svg`: it names "the DDP data layout" before the
   text introduces DDP, while the layout is the same for DDP, FSDP and ZeRO. Fix: "The data layout of data
   parallelism, split across $$P = 4$$ processes color-coded as blue, yellow, red and green."
@@ -489,24 +533,8 @@ that is not wrong.
   forward passes in flight "belong to different micro-batches". PipeDream pipelines mini-batches and updates the
   weights after each one, as the text says. Fix: "different mini-batches".
 
-### Tensor parallelism (2023-09-02-tensor-parallelism.md)
-
-- `distributed-training/argonne_parallel_2.svg`: the right panel is labelled "(a) Sample parallelism" and shows data
-  parallelism, where an all-reduce sums the weight gradients. The caption calls it "communication between
-  processors p0 and p1", as if it belonged to the spatial split on the left, and the panel letters run (b), (a)
-  from left to right. The text now explains the right panel. Fix: caption "RIGHT: sample (data) parallelism on
-  processors p0 and p1, where an all-reduce sums the weight gradients", and swap the letters, or crop the right
-  panel.
-- Optional, the captions of `dnn_model_parallelism.svg` and `argonne_parallel_2.svg` write the processors as p0,
-  p1 and p0-p3, while the figures write P0 to P3 with subscripts. Fix: P0 to P3 in the captions.
-
 ### Mixture-of-Experts and Expert Parallelism (2024-01-19-mixture-of-experts.md)
 
-- `distributed-training/imgs/moe_megablocks.svg`: the router outputs the expert indices 1 2 0 2 1 2 for "the quick
-  brown fox jumped over", which send "quick", "fox" and "over" to expert 2 and "brown" to expert 0. The permutation,
-  the computation and the output put "brown" at Expert-2, and "quick" and "fox" at Expert-0. Fix: indices
-  1 0 2 0 1 0. Check whether Figure 1 of the MegaBlocks paper has the same error.
-- `distributed-training/imgs/moe_gshard.svg`: the three titles write "Transfomer". Fix: "Transformer".
 - Optional, `moe_2017_dean.svg` writes the gate as G(x) and the number of experts as n, and `moe_gshard.svg` writes E
   experts and N layers, as their papers do. The text writes the gate as g(x) and the number of experts as N, and
   names the notation of the first figure. Fix: relabel the figures to g(x) and N experts, and the GShard layers to D
@@ -525,6 +553,11 @@ that is not wrong.
   above". Fix: "Micro-batches for DDP", and "micro-batch 1 of the DDP panel above" in the caption.
 - Optional, caption of `distributed-training/imgs/variable_batch_lr.svg`: it does not say which of the two scaling
   rules of the text gives the LRs of the picture. Fix: "and thus a larger LR (linear scaling)".
+- Optional, `distributed-training/imgs/variable_batch_lr_pipeline.svg`: the right panel packs consecutive samples
+  (0 to 2, 3 to 5, ...) into micro-batches, while `batch_by_seqlens` of DeepSpeed, with
+  `required_microbatches_of_same_size`, interleaves them (`batch[b::n]`). Interleaved, the 16 samples fit 4
+  micro-batches of 4 samples (30, 28, 26 and 30 tokens), of shape 4 x 11 x E, with 35% padding. Fix: none if the
+  picture only shows the constraint; otherwise say in the caption that consecutive samples are packed.
 - Optional, caption of `distributed-training/imgs/torch_compile_dataset.svg`: it says both processes and ranks, while
   the text says ranks. Fix: "on 3 ranks" and "to the ranks (color-coded)".
 
@@ -568,6 +601,7 @@ that is not wrong.
   "Left of the ridge point ... right of it" in the caption.
 - Optional, `inference/imgs/semantic_caching.svg`: the label d names the size of the query embedding, while d is the
   width of the LLM in the post. Fix: "dim", as in the code, or no label.
+- `inference/imgs/prefill_decode.svg` writes "(n - 1)" with a hyphen. Fix: a true minus sign, "(n − 1)".
 
 ### Faster attention (GQA, FlashAttention, sparse, linear and latent attention) (2025-12-30-inference-attention.md)
 
@@ -597,6 +631,10 @@ that is not wrong.
   (W_1)_A), while the text numbers the GPUs g = 1 to G, writes their slices with a superscript, $$H^{(g)}$$, and uses
   subscripts for tiles. Fix: "GPU 1" and "GPU 2", H⁽¹⁾, W₁⁽¹⁾, W₂⁽¹⁾ and so on, "(GPU 1 in green, GPU 2 in blue)" in
   the caption, and the same GPU names in `tp_expert_sharding.svg`.
+- Optional, `inference/imgs/tp_timeline.svg`: the fused row applies the bias and the activation once, after all the
+  reduce steps, while the text and `tp_block_specialization.svg` apply them to each band, right after the all-reduce
+  of that band. The figure of the paper has the same simplification. Fix: a small bias and activation step after
+  each reduce step, or keep the picture as a schematic.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
@@ -625,6 +663,10 @@ that is not wrong.
 - Optional, `inference/imgs/ep_timeline.svg` labels the dispatch call of P_2 as put_signal_01, but the call goes to
   the INC switch, while the caption says that a subscript names the destination of the call. Fix: put_signal*
   without a subscript, or a caption that says the subscript names the final destinations P_0 and P_1.
+- `inference/imgs/ep_communication_models.svg` labels the transfers "W hops of T tokens per link" and "INC switch
+  (fewer hops, less data)". There, a hop means one packet on a link, but the text and the paper say that both fused
+  implementations cross the same number of hops. The text says "one packet per link instead of W". Fix at the
+  redraw: "W packets of T tokens per link", "1 packet of ..." and "INC switch (fewer packets, less data)".
 
 ### Knowledge distillation, speculative decoding and multi-token decoding (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
@@ -648,6 +690,9 @@ that is not wrong.
   columns of X as the inputs, and q as the quantized column. The text, the code and `llm_int8.svg` take the rows of X
   as the inputs, the text writes the quantized column as $$\hat{W}_{:,i}$$, and `int4_packing.svg` uses q for the
   integers. Fix: "err = W[:, i] − Ŵ[:, i]" and "H = 2 XT X".
+- Optional, `inference/imgs/quantization_granularity.svg`: the per-group panel colors its 12 groups with 6 colors
+  (rows 1 and 3, and rows 2 and 4, repeat their colors). In the per-row panel each color is one scale, so the
+  per-group panel reads as 6 scales. Fix: a black frame around each group, or 12 distinct fills.
 
 ### Publications bookmark (publications.md)
 
@@ -672,11 +717,18 @@ that is not wrong.
   same caption and in the notes. Fix: "($$DN$$, times the batch size and the sequence length $$L$$)".
 - `publications/dylora.svg`: the label "W ∈ ℝ^(m×d)" names the frozen weight W, while the notes and the paper write
   $$W_0$$. Fix: "W₀ ∈ ℝ^(m×d)".
-- `publications/performers.svg`: "O(Lmd)", "L × m" and "m × L" write the number of random features as m, as the blog
-  figure does, while the notes and the paper write r. Fix: "O(Lrd)", "L × r" and "r × L".
-- `publications/lora.svg`: "W ∈ ℝ^(d×d)", with d under x, shows the square case of the paper's figure, while the
-  notes write $$W \in \mathbb{R}^{d \times k}$$, with the input dimension k. Fix: "W ∈ ℝ^(d×k)" and k under x, or the
-  caption "LoRA reparametrization, shown for a square $$W$$ ($$k = d$$): only <i>A</i> and <i>B</i> are trained."
+- Optional, `publications/performers.svg`: "O(Lmd)", "L × m" and "m × L" write the number of random features as m,
+  as the blog figure does, while the notes and the paper write r. The notes now say "($$r$$ is $$m$$ in the first
+  figure)". Fix: "O(Lrd)", "L × r" and "r × L", then remove that remark from the notes.
+- Optional, `publications/lora.svg`: "W ∈ ℝ^(d×d)", with d under x, shows the square case of the paper's figure,
+  while the notes write $$W \in \mathbb{R}^{d \times k}$$, with the input dimension k. The notes now say "The figure
+  below shows the square case, $$k = d$$." Fix: "W ∈ ℝ^(d×k)" and k under x, then remove that sentence from the
+  notes; or keep both as they are.
+- Optional, `publications/zeroplusplus.svg`: the labels follow Fig. 2(a) of ZeRO++, but call "scale" a range of
+  values (9.22 = max |x|, with q = round(127 x / 9.22); and for a block, max − min = 9.07, with
+  q = round(255 (x − zp) / 9.07) − 128). The text of the paper calls qwZ symmetric, with one scaling coefficient per
+  block, while its figure uses a zero point. Fix: rename the label to "range", or add "(the scale is the range of
+  the block)" to the caption.
 - Optional, caption of `publications/flashattention.svg`: "(dotted box)", but the box is dashed. Fix: "(dashed box)".
 
 ## Content issues
@@ -691,6 +743,24 @@ Content problems that need the author's decision, such as overlap between posts.
   the weighted harmonic mean of the speed-ups, which the text bounds by 28.5 on 1,024 neurons and 6.7 on 65,536
   neurons. The text gives both, and says that a brain-like mix, with more quiet neurons, gives a higher speed-up.
   Proposed fix: keep the estimate of the text; the alternative is to give only the numbers of the preprint.
+- The default absolute tolerance of CVODE in NEURON: the NEURON Book and the CVode documentation give 1e-2, while the
+  source of NEURON (`netcvode.cpp`) sets 1e-3, the value that the preprint calls the default and uses in its tests.
+  The text gives both. Proposed fix: keep the text as it is, or keep only the value of the code.
+
+### Linear Regression, Matrix Factorization and Loss Functions (2017-08-17-linear-regression-matrix-factorization.md)
+
+- Optional: "dropout" links to a Medium article, in this post and in the deep neural networks post. Proposed fix:
+  link the paper of Srivastava et al. (2014), https://jmlr.org/papers/v15/srivastava14a.html, or, in this post, the
+  dropout section of the deep neural networks post.
+
+### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
+
+- The definition of PCA that the post credits to "Gerstner's lecture notes" is the first sentence of the Wikipedia
+  article on PCA. Proposed fix: check the lecture notes, or credit Wikipedia.
+- Optional: independent sections reuse symbols. Λ is the matrix of eigenvalues of ICA and the neighbourhood
+  function Λ(j, j*) of the SOM, U is the rotation of ICA and the matrix of eigenvectors of spectral clustering, and d
+  is the degree of the polynomial kernel and the distance d(·,·). Proposed fix: h(j, j*) for the SOM (Kohonen's
+  notation), H for the eigenvectors of spectral clustering, and ‖·‖ or dist(·,·) for the distances.
 
 ### Mathematics for ML (2018-04-20-algebra-for-ml.md)
 
@@ -702,10 +772,15 @@ Content problems that need the author's decision, such as overlap between posts.
 ### Statistics for ML (2018-06-15-statistics-for-ml.md)
 
 - Overlap with the exponential family post (2019-03-20-exponential-family.md), which also covers the canonical form,
-  the Bernoulli example, the derivatives of the log-partition function and maximum likelihood, and with the
-  variational inference post (2019-07-01-variational-inference-gmm.md), which also derives the ELBO. This post keeps
-  a short version of each and links to the dedicated post. Proposed fix: keep the short versions as a reference
-  sheet and the full derivations in the dedicated posts; the alternative is to keep only the links here.
+  the derivatives of the log-partition function and maximum likelihood, and with the variational inference post
+  (2019-07-01-variational-inference-gmm.md), which also derives the ELBO. The Bernoulli example and the list of
+  members of the family are now only in the exponential family post. This post keeps a short version of the rest and
+  links to the dedicated post. Proposed fix: keep the short versions as a reference sheet and the full derivations in
+  the dedicated posts; the alternative is to keep only the links here.
+- Optional, the post could be about 200 words shorter without these sentences, which other posts do not need: the
+  costs of the Cholesky decomposition, Gaussian processes and Kalman filters, the FFT paragraph of the KDE, the
+  parameter count of the Bayesian network, the mini-batch sentence of the central limit theorem, and the conjugate
+  pairs. Proposed fix: the user decides.
 
 ### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
 
@@ -719,8 +794,9 @@ Content problems that need the author's decision, such as overlap between posts.
 
 - The rewrite replaced the derivation of the CAVI update with the chain rule of probability, from the CMU 10-708
   lecture notes, by the shorter derivation of section 10.1.1 of Bishop's PRML: as a function of one factor, the ELBO
-  is a negative KL divergence. It also removed the recaps of conditional probability and of the chain rule. The CMU
-  notes stay linked. Proposed fix: keep the shorter derivation.
+  is a negative KL divergence. It also removed the recap of the chain rule, and keeps the definition of the
+  conditional probability in one line, since the introduction and the ELBO derivation use it. The CMU notes stay
+  linked. Proposed fix: keep the shorter derivation.
 
 ### Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) (2019-10-12-vae-gan.md)
 
@@ -735,15 +811,18 @@ Content problems that need the author's decision, such as overlap between posts.
   checkpointing section, still in the first and second person. The visible text now introduces ZeRO++ and
   activation checkpointing in a few sentences. The hidden text sets buckets of `4e5` elements, while the configs
   use `5e4`, and calls `to_layers()` `lo_layers()`. Proposed fix: delete the comment, or rewrite and publish it.
+- The link to vDNN+, `ieeexplore.ieee.org/document/8820980`, could not be checked from the sandbox (IEEE Xplore,
+  dblp and Crossref do not load). Proposed fix: check by hand that it is "Dynamic Memory Management for GPU-Based
+  Training of Deep Neural Networks" (Shriram S B, Garg and Kulkarni, IPDPS 2019), or link its DOI.
 
 ### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
 
-- Results, memory per GPU: the first GPU used more memory than the others, also with the deep benchmark model, and
-  the post says that 1F1B causes such an imbalance. With micro-batches of 1 sample, the activations of the deep
-  benchmark model take about 0.5 MB per micro-batch and stage, so 1F1B explains a few MB at most for that model,
-  and the cause of a larger gap is not known. Proposed fix: measure the peak memory of every GPU
-  (`torch.cuda.max_memory_allocated()` on each rank, and `nvidia-smi` for the CUDA contexts on GPU 0), then give
-  the numbers in the post, or drop the benchmark model from that sentence.
+- Optional, results, memory per GPU: the first GPU used more memory than the others, also with the deep benchmark
+  model. The text now says that 1F1B explains at most a few MB of this gap for that model, and that the cause of the
+  rest is not known. Proposed fix: measure the peak memory of every GPU (`torch.cuda.max_memory_allocated()` on each
+  rank, and `nvidia-smi` for the CUDA contexts on GPU 0), and give the numbers and the cause in the post.
+- The DualPipeV row of the summary table does not list the doubled point-to-point communication, which the text
+  names, under "Main cost". Proposed fix: add "2× point-to-point communication" to that cell.
 - The post keeps the workaround `outputs = outputs.requires_grad_(True)` for the error of the swapaxes lambda. If
   `outputs` has no `grad_fn`, this call lets the backward pass run, but no gradient reaches the layers before it.
   Proposed fix: check that the parameters of the last stage get gradients with the workaround (`p.grad` after
@@ -755,12 +834,43 @@ Content problems that need the author's decision, such as overlap between posts.
   defines `Megatron_f`, `Megatron_g`, `Megatron_FeedForward` or `Megatron_MHA`. Proposed fix: add these classes
   to `assets/distributed-training` with a small test on 2 GPUs, or keep the code in the post only.
 
+### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
+
+- The link for the EMA of the weights (openreview.net, `2M9CUnYnBA`) opens a browser check, so it could not be
+  verified. Proposed fix: open it by hand, and replace it if it does not point to the source of the EMA.
+
+### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
+
+- The post does not mention DySHARP (Zhang et al., "Accelerating MoE with Dynamic In-Switch Computing on
+  Multi-GPUs", ISCA 2026), the closest related work, which the paper compares with at length. Proposed fix: one
+  linked sentence after the DeepSeek-V3 example, saying that DySHARP adds multicast and reduction to the switch but
+  still uses 2 of 4 SM groups to issue the dispatch and the combine; check its public link and title first.
+
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
 - The draft describes the experiments of `inference/pruning.py` and `inference/quantization.py` on GPTlite (pruning
   with distillation, Wanda, ShortGPT, weight-only and weight-activation quantization, KV cache quantization), but
   shows none of their results. Fix: run the two scripts and add a table of their outputs (parameters, size,
   validation loss, time per token, matching tokens), or present the code without the comparisons.
+- Optional: once both drafts are published, "knowledge distillation" in the introduction could link to the
+  distillation post instead of Wikipedia.
+
+### Publications bookmark (publications.md)
+
+- DeepSeek-V3.2-Exp: the title and the author line write the hyphens as non-breaking hyphens (U+2011),
+  "DeepSeek‑V3.2‑Exp" and "DeepSeek‑AI", while the rest of the page uses ASCII hyphens, so a search for
+  "DeepSeek-V3.2-Exp" misses the title. Proposed fix: ASCII hyphens.
+- NSA: the paper gives 260B pre-training tokens in its introduction and 270B in its section 4.1, and the notes say
+  260B. Proposed fix: keep 260B, or write "260B tokens (270B in Sec. 4.1)".
+- DeepSeek-V3.2: the notes say that it is the first DeepSeek model to integrate thinking into tool use, and that
+  DeepSeek-V3.2-Speciale has no tool use. Both come from the release note of DeepSeek, not from the report.
+  Proposed fix: link the note (https://api-docs.deepseek.com/news/news251201), or keep the notes as they are.
+- Optional, links that redirect: blog.research.google/2020/10/... (Performers) and blog.research.google/2021/12/...
+  (GSPMD) go to research.google/blog/..., www.tensorflow.org/xla (operator fusion in XLA, and GSPMD) goes to
+  openxla.org/xla, and papers.nips.cc/paper/5346-... (the sequence to sequence paper, in the notes on neural machine
+  translation) goes to proceedings.neurips.cc/.... The GPT-3 notes link GPT-2 to a third-party copy of its paper
+  (insightcivic.s3.us-east-1.amazonaws.com/language-models.pdf), which is the right paper. Proposed fix: use the
+  target URLs, and the PDF of OpenAI for GPT-2 after a check.
 
 ## Title issues
 
