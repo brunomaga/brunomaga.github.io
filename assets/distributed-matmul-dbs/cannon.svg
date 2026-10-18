@@ -1,2 +1,1221 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="959px" height="283px" viewBox="-0.5 -0.5 959 283"><defs/><rect x="11" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 16px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,0</sub></div></div></div></foreignObject><text x="42" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="11" y="147" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 16px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,0</sub></div></div></div></foreignObject><text x="42" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="73" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 78px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,1</sub></div></div></div></foreignObject><text x="104" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="73" y="147" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 78px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,1</sub></div></div></div></foreignObject><text x="104" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="135" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 140px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,2</sub></div></div></div></foreignObject><text x="166" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="135" y="147" width="62" height="32" fill="#dae8fc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 140px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,2</sub></div></div></div></foreignObject><text x="166" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="11" y="33" width="62" height="32" fill="#dae8fc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 16px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,0</sub></div></div></div></foreignObject><text x="42" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="11" y="179" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 16px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,0</sub></div></div></div></foreignObject><text x="42" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="73" y="33" width="62" height="32" fill="#d5e8d4" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 78px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,1</sub></div></div></div></foreignObject><text x="104" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="73" y="179" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 78px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,1</sub></div></div></div></foreignObject><text x="104" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="135" y="33" width="62" height="32" fill="#f8cecc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 140px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,2</sub></div></div></div></foreignObject><text x="166" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="135" y="179" width="62" height="32" fill="#d5e8d4" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 140px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,2</sub></div></div></div></foreignObject><text x="166" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="11" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 16px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,0</sub></div></div></div></foreignObject><text x="42" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="11" y="211" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 16px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,0</sub></div></div></div></foreignObject><text x="42" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="73" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 78px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,1</sub></div></div></div></foreignObject><text x="104" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="73" y="211" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 78px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,1</sub></div></div></div></foreignObject><text x="104" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="135" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 140px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,2</sub></div></div></div></foreignObject><text x="166" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="135" y="211" width="62" height="32" fill="#f8cecc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 140px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,2</sub></div></div></div></foreignObject><text x="166" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="135" y="33" width="62" height="32" fill="none" stroke="#000000" stroke-width="3" pointer-events="none"/><rect x="135" y="179" width="62" height="32" fill="none" stroke="#000000" stroke-width="3" pointer-events="none"/><path d="M 177 122 L 42.24 122" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><path d="M 33.24 122 L 42.24 117.5 L 42.24 126.5 Z" fill="#000000" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><path d="M 219 239 L 219 162.24" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><path d="M 219 153.24 L 223.5 162.24 L 214.5 162.24 Z" fill="#000000" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 208px; height: 1px; padding-top: 268px; margin-left: 0px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">initial layout</div></div></div></foreignObject><text x="104" y="273" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="261" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 266px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,0</sub></div></div></div></foreignObject><text x="292" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="261" y="147" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 266px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,0</sub></div></div></div></foreignObject><text x="292" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="323" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 328px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,1</sub></div></div></div></foreignObject><text x="354" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="323" y="147" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 328px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,1</sub></div></div></div></foreignObject><text x="354" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="385" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 390px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,2</sub></div></div></div></foreignObject><text x="416" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="385" y="147" width="62" height="32" fill="#f8cecc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 390px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,2</sub></div></div></div></foreignObject><text x="416" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="261" y="33" width="62" height="32" fill="#d5e8d4" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 266px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,1</sub></div></div></div></foreignObject><text x="292" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="261" y="179" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 266px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,0</sub></div></div></div></foreignObject><text x="292" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="323" y="33" width="62" height="32" fill="#f8cecc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 328px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,2</sub></div></div></div></foreignObject><text x="354" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="323" y="179" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 328px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,1</sub></div></div></div></foreignObject><text x="354" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="385" y="33" width="62" height="32" fill="#dae8fc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 390px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,0</sub></div></div></div></foreignObject><text x="416" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="385" y="179" width="62" height="32" fill="#dae8fc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 390px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,2</sub></div></div></div></foreignObject><text x="416" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="261" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 266px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,2</sub></div></div></div></foreignObject><text x="292" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="261" y="211" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 266px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,0</sub></div></div></div></foreignObject><text x="292" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="323" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 328px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,0</sub></div></div></div></foreignObject><text x="354" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="323" y="211" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 328px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,1</sub></div></div></div></foreignObject><text x="354" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="385" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 390px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,1</sub></div></div></div></foreignObject><text x="416" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="385" y="211" width="62" height="32" fill="#d5e8d4" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 390px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,2</sub></div></div></div></foreignObject><text x="416" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="385" y="33" width="62" height="32" fill="none" stroke="#000000" stroke-width="3" pointer-events="none"/><rect x="385" y="179" width="62" height="32" fill="none" stroke="#000000" stroke-width="3" pointer-events="none"/><path d="M 427 122 L 292.24 122" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><path d="M 283.24 122 L 292.24 117.5 L 292.24 126.5 Z" fill="#000000" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><path d="M 469 239 L 469 162.24" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><path d="M 469 153.24 L 473.5 162.24 L 464.5 162.24 Z" fill="#000000" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 208px; height: 1px; padding-top: 268px; margin-left: 250px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">after the alignment</div></div></div></foreignObject><text x="354" y="273" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="511" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 516px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,1</sub></div></div></div></foreignObject><text x="542" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="511" y="147" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 516px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,0</sub></div></div></div></foreignObject><text x="542" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="573" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 578px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,2</sub></div></div></div></foreignObject><text x="604" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="573" y="147" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 578px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,1</sub></div></div></div></foreignObject><text x="604" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="635" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 640px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,0</sub></div></div></div></foreignObject><text x="666" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="635" y="147" width="62" height="32" fill="#dae8fc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 640px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,2</sub></div></div></div></foreignObject><text x="666" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="511" y="33" width="62" height="32" fill="#f8cecc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 516px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,2</sub></div></div></div></foreignObject><text x="542" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="511" y="179" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 516px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,0</sub></div></div></div></foreignObject><text x="542" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="573" y="33" width="62" height="32" fill="#dae8fc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 578px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,0</sub></div></div></div></foreignObject><text x="604" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="573" y="179" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 578px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,1</sub></div></div></div></foreignObject><text x="604" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="635" y="33" width="62" height="32" fill="#d5e8d4" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 640px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,1</sub></div></div></div></foreignObject><text x="666" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="635" y="179" width="62" height="32" fill="#d5e8d4" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 640px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,2</sub></div></div></div></foreignObject><text x="666" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="511" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 516px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,0</sub></div></div></div></foreignObject><text x="542" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="511" y="211" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 516px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,0</sub></div></div></div></foreignObject><text x="542" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="573" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 578px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,1</sub></div></div></div></foreignObject><text x="604" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="573" y="211" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 578px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,1</sub></div></div></div></foreignObject><text x="604" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="635" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 640px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,2</sub></div></div></div></foreignObject><text x="666" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="635" y="211" width="62" height="32" fill="#f8cecc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 640px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,2</sub></div></div></div></foreignObject><text x="666" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="635" y="33" width="62" height="32" fill="none" stroke="#000000" stroke-width="3" pointer-events="none"/><rect x="635" y="179" width="62" height="32" fill="none" stroke="#000000" stroke-width="3" pointer-events="none"/><path d="M 677 122 L 542.24 122" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><path d="M 533.24 122 L 542.24 117.5 L 542.24 126.5 Z" fill="#000000" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><path d="M 719 239 L 719 162.24" fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><path d="M 719 153.24 L 723.5 162.24 L 714.5 162.24 Z" fill="#000000" stroke="#000000" stroke-width="2" stroke-miterlimit="10" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 208px; height: 1px; padding-top: 268px; margin-left: 500px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">after shift 1</div></div></div></foreignObject><text x="604" y="273" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="761" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 766px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,2</sub></div></div></div></foreignObject><text x="792" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="761" y="147" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 766px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,0</sub></div></div></div></foreignObject><text x="792" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="823" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 828px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,0</sub></div></div></div></foreignObject><text x="854" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="823" y="147" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 828px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,1</sub></div></div></div></foreignObject><text x="854" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="885" y="1" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 17px; margin-left: 890px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>0,1</sub></div></div></div></foreignObject><text x="916" y="22" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="885" y="147" width="62" height="32" fill="#d5e8d4" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 163px; margin-left: 890px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,2</sub></div></div></div></foreignObject><text x="916" y="168" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="761" y="33" width="62" height="32" fill="#dae8fc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 766px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,0</sub></div></div></div></foreignObject><text x="792" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="761" y="179" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 766px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,0</sub></div></div></div></foreignObject><text x="792" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="823" y="33" width="62" height="32" fill="#d5e8d4" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 828px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,1</sub></div></div></div></foreignObject><text x="854" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="823" y="179" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 828px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,1</sub></div></div></div></foreignObject><text x="854" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="885" y="33" width="62" height="32" fill="#f8cecc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 49px; margin-left: 890px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>1,2</sub></div></div></div></foreignObject><text x="916" y="54" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="885" y="179" width="62" height="32" fill="#f8cecc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 195px; margin-left: 890px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,2</sub></div></div></div></foreignObject><text x="916" y="200" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="761" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 766px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,1</sub></div></div></div></foreignObject><text x="792" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="761" y="211" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 766px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>1,0</sub></div></div></div></foreignObject><text x="792" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="823" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 828px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,2</sub></div></div></div></foreignObject><text x="854" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="823" y="211" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 828px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>2,1</sub></div></div></div></foreignObject><text x="854" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="885" y="65" width="62" height="32" fill="#ffffff" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 81px; margin-left: 890px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">A<sub>2,0</sub></div></div></div></foreignObject><text x="916" y="86" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="885" y="211" width="62" height="32" fill="#dae8fc" stroke="#000000" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 52px; height: 1px; padding-top: 227px; margin-left: 890px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">B<sub>0,2</sub></div></div></div></foreignObject><text x="916" y="232" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g><rect x="885" y="33" width="62" height="32" fill="none" stroke="#000000" stroke-width="3" pointer-events="none"/><rect x="885" y="179" width="62" height="32" fill="none" stroke="#000000" stroke-width="3" pointer-events="none"/><g><switch><foreignObject style="overflow: visible; text-align: left;" pointer-events="none" width="100%" height="100%" requiredFeatures="http://www.w3.org/TR/SVG11/feature#Extensibility"><div xmlns="http://www.w3.org/1999/xhtml" style="display: flex; align-items: unsafe center; justify-content: unsafe center; width: 208px; height: 1px; padding-top: 268px; margin-left: 750px;"><div style="box-sizing: border-box; font-size: 0; text-align: center; "><div style="display: inline-block; font-size: 16.7px; font-family: Helvetica; color: #000000; line-height: 1.2; pointer-events: none; white-space: normal; word-wrap: normal; ">after shift 2</div></div></div></foreignObject><text x="854" y="273" fill="#000000" font-family="Helvetica" font-size="17px" text-anchor="middle">[Object]</text></switch></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="785.4" height="231.9" viewBox="0.890 -0.110 565.470 166.970">
+<defs>
+<g>
+<g id="glyph-0-0">
+<path d="M 4.59375 -2.234375 L 2.015625 -2.234375 L 1.5625 -1.171875 C 1.457031 -0.921875 1.40625 -0.726562 1.40625 -0.59375 C 1.40625 -0.5 1.453125 -0.410156 1.546875 -0.328125 C 1.640625 -0.253906 1.847656 -0.207031 2.171875 -0.1875 L 2.171875 0 L 0.078125 0 L 0.078125 -0.1875 C 0.359375 -0.226562 0.539062 -0.289062 0.625 -0.375 C 0.789062 -0.53125 0.972656 -0.847656 1.171875 -1.328125 L 3.515625 -6.796875 L 3.6875 -6.796875 L 6 -1.265625 C 6.1875 -0.828125 6.351562 -0.539062 6.5 -0.40625 C 6.65625 -0.269531 6.867188 -0.195312 7.140625 -0.1875 L 7.140625 0 L 4.515625 0 L 4.515625 -0.1875 C 4.785156 -0.195312 4.960938 -0.238281 5.046875 -0.3125 C 5.140625 -0.382812 5.1875 -0.476562 5.1875 -0.59375 C 5.1875 -0.726562 5.125 -0.953125 5 -1.265625 Z M 4.453125 -2.59375 L 3.328125 -5.28125 L 2.171875 -2.59375 Z M 4.453125 -2.59375 "/>
+</g>
+<g id="glyph-0-1">
+<path d="M 4.640625 -3.390625 C 5.097656 -3.296875 5.441406 -3.140625 5.671875 -2.921875 C 5.992188 -2.617188 6.15625 -2.25 6.15625 -1.8125 C 6.15625 -1.488281 6.050781 -1.175781 5.84375 -0.875 C 5.632812 -0.570312 5.347656 -0.347656 4.984375 -0.203125 C 4.617188 -0.0664062 4.0625 0 3.3125 0 L 0.171875 0 L 0.171875 -0.1875 L 0.421875 -0.1875 C 0.691406 -0.1875 0.890625 -0.273438 1.015625 -0.453125 C 1.085938 -0.566406 1.125 -0.804688 1.125 -1.171875 L 1.125 -5.46875 C 1.125 -5.882812 1.078125 -6.144531 0.984375 -6.25 C 0.859375 -6.394531 0.671875 -6.46875 0.421875 -6.46875 L 0.171875 -6.46875 L 0.171875 -6.65625 L 3.046875 -6.65625 C 3.578125 -6.65625 4.003906 -6.613281 4.328125 -6.53125 C 4.816406 -6.414062 5.191406 -6.207031 5.453125 -5.90625 C 5.710938 -5.601562 5.84375 -5.257812 5.84375 -4.875 C 5.84375 -4.539062 5.738281 -4.242188 5.53125 -3.984375 C 5.332031 -3.722656 5.035156 -3.523438 4.640625 -3.390625 Z M 2.0625 -3.65625 C 2.1875 -3.632812 2.328125 -3.617188 2.484375 -3.609375 C 2.640625 -3.597656 2.8125 -3.59375 3 -3.59375 C 3.476562 -3.59375 3.835938 -3.644531 4.078125 -3.75 C 4.316406 -3.851562 4.5 -4.007812 4.625 -4.21875 C 4.75 -4.425781 4.8125 -4.660156 4.8125 -4.921875 C 4.8125 -5.304688 4.648438 -5.632812 4.328125 -5.90625 C 4.015625 -6.1875 3.554688 -6.328125 2.953125 -6.328125 C 2.628906 -6.328125 2.332031 -6.289062 2.0625 -6.21875 Z M 2.0625 -0.484375 C 2.445312 -0.390625 2.820312 -0.34375 3.1875 -0.34375 C 3.78125 -0.34375 4.234375 -0.472656 4.546875 -0.734375 C 4.859375 -1.003906 5.015625 -1.335938 5.015625 -1.734375 C 5.015625 -1.992188 4.941406 -2.242188 4.796875 -2.484375 C 4.660156 -2.722656 4.429688 -2.910156 4.109375 -3.046875 C 3.796875 -3.179688 3.40625 -3.25 2.9375 -3.25 C 2.738281 -3.25 2.566406 -3.242188 2.421875 -3.234375 C 2.273438 -3.234375 2.15625 -3.222656 2.0625 -3.203125 Z M 2.0625 -0.484375 "/>
+</g>
+<g id="glyph-0-2">
+<path d="M 1.453125 -6.96875 C 1.585938 -6.96875 1.703125 -6.921875 1.796875 -6.828125 C 1.898438 -6.734375 1.953125 -6.617188 1.953125 -6.484375 C 1.953125 -6.347656 1.898438 -6.226562 1.796875 -6.125 C 1.703125 -6.03125 1.585938 -5.984375 1.453125 -5.984375 C 1.316406 -5.984375 1.195312 -6.03125 1.09375 -6.125 C 1 -6.226562 0.953125 -6.347656 0.953125 -6.484375 C 0.953125 -6.617188 1 -6.734375 1.09375 -6.828125 C 1.195312 -6.921875 1.316406 -6.96875 1.453125 -6.96875 Z M 1.859375 -4.625 L 1.859375 -1.015625 C 1.859375 -0.734375 1.878906 -0.546875 1.921875 -0.453125 C 1.960938 -0.359375 2.023438 -0.285156 2.109375 -0.234375 C 2.191406 -0.191406 2.335938 -0.171875 2.546875 -0.171875 L 2.546875 0 L 0.359375 0 L 0.359375 -0.171875 C 0.578125 -0.171875 0.722656 -0.191406 0.796875 -0.234375 C 0.878906 -0.273438 0.941406 -0.34375 0.984375 -0.4375 C 1.023438 -0.539062 1.046875 -0.734375 1.046875 -1.015625 L 1.046875 -2.75 C 1.046875 -3.238281 1.03125 -3.550781 1 -3.6875 C 0.976562 -3.789062 0.941406 -3.863281 0.890625 -3.90625 C 0.847656 -3.945312 0.785156 -3.96875 0.703125 -3.96875 C 0.609375 -3.96875 0.492188 -3.945312 0.359375 -3.90625 L 0.296875 -4.078125 L 1.640625 -4.625 Z M 1.859375 -4.625 "/>
+</g>
+<g id="glyph-0-3">
+<path d="M 1.625 -3.671875 C 2.144531 -4.304688 2.644531 -4.625 3.125 -4.625 C 3.375 -4.625 3.585938 -4.5625 3.765625 -4.4375 C 3.941406 -4.320312 4.082031 -4.125 4.1875 -3.84375 C 4.257812 -3.644531 4.296875 -3.34375 4.296875 -2.9375 L 4.296875 -1.015625 C 4.296875 -0.734375 4.316406 -0.539062 4.359375 -0.4375 C 4.398438 -0.351562 4.457031 -0.285156 4.53125 -0.234375 C 4.613281 -0.191406 4.765625 -0.171875 4.984375 -0.171875 L 4.984375 0 L 2.75 0 L 2.75 -0.171875 L 2.84375 -0.171875 C 3.0625 -0.171875 3.210938 -0.203125 3.296875 -0.265625 C 3.378906 -0.335938 3.4375 -0.429688 3.46875 -0.546875 C 3.476562 -0.597656 3.484375 -0.753906 3.484375 -1.015625 L 3.484375 -2.859375 C 3.484375 -3.265625 3.429688 -3.554688 3.328125 -3.734375 C 3.222656 -3.921875 3.039062 -4.015625 2.78125 -4.015625 C 2.394531 -4.015625 2.007812 -3.804688 1.625 -3.390625 L 1.625 -1.015625 C 1.625 -0.710938 1.640625 -0.523438 1.671875 -0.453125 C 1.722656 -0.359375 1.785156 -0.285156 1.859375 -0.234375 C 1.941406 -0.191406 2.109375 -0.171875 2.359375 -0.171875 L 2.359375 0 L 0.125 0 L 0.125 -0.171875 L 0.234375 -0.171875 C 0.460938 -0.171875 0.613281 -0.226562 0.6875 -0.34375 C 0.769531 -0.46875 0.8125 -0.691406 0.8125 -1.015625 L 0.8125 -2.6875 C 0.8125 -3.226562 0.796875 -3.554688 0.765625 -3.671875 C 0.742188 -3.785156 0.707031 -3.863281 0.65625 -3.90625 C 0.613281 -3.945312 0.550781 -3.96875 0.46875 -3.96875 C 0.375 -3.96875 0.257812 -3.945312 0.125 -3.90625 L 0.0625 -4.078125 L 1.40625 -4.625 L 1.625 -4.625 Z M 1.625 -3.671875 "/>
+</g>
+<g id="glyph-0-4">
+<path d="M 1.625 -5.96875 L 1.625 -4.5 L 2.671875 -4.5 L 2.671875 -4.15625 L 1.625 -4.15625 L 1.625 -1.234375 C 1.625 -0.941406 1.664062 -0.742188 1.75 -0.640625 C 1.832031 -0.546875 1.9375 -0.5 2.0625 -0.5 C 2.175781 -0.5 2.28125 -0.53125 2.375 -0.59375 C 2.476562 -0.664062 2.554688 -0.765625 2.609375 -0.890625 L 2.8125 -0.890625 C 2.695312 -0.566406 2.53125 -0.320312 2.3125 -0.15625 C 2.101562 0 1.890625 0.078125 1.671875 0.078125 C 1.523438 0.078125 1.378906 0.0351562 1.234375 -0.046875 C 1.085938 -0.128906 0.976562 -0.25 0.90625 -0.40625 C 0.84375 -0.5625 0.8125 -0.800781 0.8125 -1.125 L 0.8125 -4.15625 L 0.09375 -4.15625 L 0.09375 -4.3125 C 0.28125 -4.382812 0.46875 -4.503906 0.65625 -4.671875 C 0.84375 -4.847656 1.007812 -5.050781 1.15625 -5.28125 C 1.226562 -5.40625 1.332031 -5.632812 1.46875 -5.96875 Z M 1.625 -5.96875 "/>
+</g>
+<g id="glyph-0-5">
+<path d="M 2.859375 -0.640625 C 2.398438 -0.285156 2.109375 -0.0820312 1.984375 -0.03125 C 1.816406 0.0507812 1.628906 0.09375 1.421875 0.09375 C 1.117188 0.09375 0.863281 -0.0078125 0.65625 -0.21875 C 0.457031 -0.4375 0.359375 -0.71875 0.359375 -1.0625 C 0.359375 -1.28125 0.40625 -1.472656 0.5 -1.640625 C 0.632812 -1.859375 0.867188 -2.066406 1.203125 -2.265625 C 1.535156 -2.460938 2.085938 -2.703125 2.859375 -2.984375 L 2.859375 -3.15625 C 2.859375 -3.601562 2.785156 -3.910156 2.640625 -4.078125 C 2.503906 -4.242188 2.300781 -4.328125 2.03125 -4.328125 C 1.820312 -4.328125 1.65625 -4.269531 1.53125 -4.15625 C 1.40625 -4.050781 1.34375 -3.925781 1.34375 -3.78125 L 1.359375 -3.5 C 1.359375 -3.34375 1.316406 -3.222656 1.234375 -3.140625 C 1.160156 -3.054688 1.0625 -3.015625 0.9375 -3.015625 C 0.820312 -3.015625 0.722656 -3.054688 0.640625 -3.140625 C 0.566406 -3.234375 0.53125 -3.351562 0.53125 -3.5 C 0.53125 -3.78125 0.671875 -4.035156 0.953125 -4.265625 C 1.242188 -4.503906 1.648438 -4.625 2.171875 -4.625 C 2.566406 -4.625 2.894531 -4.554688 3.15625 -4.421875 C 3.34375 -4.316406 3.484375 -4.160156 3.578125 -3.953125 C 3.640625 -3.804688 3.671875 -3.515625 3.671875 -3.078125 L 3.671875 -1.5625 C 3.671875 -1.132812 3.675781 -0.867188 3.6875 -0.765625 C 3.707031 -0.671875 3.734375 -0.609375 3.765625 -0.578125 C 3.804688 -0.546875 3.851562 -0.53125 3.90625 -0.53125 C 3.957031 -0.53125 4.003906 -0.539062 4.046875 -0.5625 C 4.109375 -0.601562 4.238281 -0.722656 4.4375 -0.921875 L 4.4375 -0.640625 C 4.070312 -0.148438 3.722656 0.09375 3.390625 0.09375 C 3.234375 0.09375 3.101562 0.0351562 3 -0.078125 C 2.90625 -0.191406 2.859375 -0.378906 2.859375 -0.640625 Z M 2.859375 -0.96875 L 2.859375 -2.671875 C 2.367188 -2.484375 2.050781 -2.347656 1.90625 -2.265625 C 1.644531 -2.117188 1.457031 -1.96875 1.34375 -1.8125 C 1.238281 -1.65625 1.1875 -1.484375 1.1875 -1.296875 C 1.1875 -1.054688 1.253906 -0.859375 1.390625 -0.703125 C 1.535156 -0.546875 1.695312 -0.46875 1.875 -0.46875 C 2.125 -0.46875 2.453125 -0.632812 2.859375 -0.96875 Z M 2.859375 -0.96875 "/>
+</g>
+<g id="glyph-0-6">
+<path d="M 1.859375 -6.96875 L 1.859375 -1.015625 C 1.859375 -0.734375 1.878906 -0.546875 1.921875 -0.453125 C 1.960938 -0.359375 2.023438 -0.285156 2.109375 -0.234375 C 2.191406 -0.191406 2.347656 -0.171875 2.578125 -0.171875 L 2.578125 0 L 0.375 0 L 0.375 -0.171875 C 0.582031 -0.171875 0.722656 -0.191406 0.796875 -0.234375 C 0.878906 -0.273438 0.941406 -0.34375 0.984375 -0.4375 C 1.023438 -0.539062 1.046875 -0.734375 1.046875 -1.015625 L 1.046875 -5.09375 C 1.046875 -5.601562 1.03125 -5.914062 1 -6.03125 C 0.976562 -6.144531 0.941406 -6.222656 0.890625 -6.265625 C 0.847656 -6.304688 0.785156 -6.328125 0.703125 -6.328125 C 0.617188 -6.328125 0.507812 -6.300781 0.375 -6.25 L 0.296875 -6.421875 L 1.640625 -6.96875 Z M 1.859375 -6.96875 "/>
+</g>
+<g id="glyph-0-7">
+</g>
+<g id="glyph-0-8">
+<path d="M 0.0625 -4.5 L 2.15625 -4.5 L 2.15625 -4.3125 L 2.046875 -4.3125 C 1.898438 -4.3125 1.789062 -4.28125 1.71875 -4.21875 C 1.644531 -4.15625 1.609375 -4.078125 1.609375 -3.984375 C 1.609375 -3.847656 1.660156 -3.671875 1.765625 -3.453125 L 2.859375 -1.1875 L 3.875 -3.671875 C 3.925781 -3.796875 3.953125 -3.925781 3.953125 -4.0625 C 3.953125 -4.125 3.941406 -4.164062 3.921875 -4.1875 C 3.890625 -4.226562 3.847656 -4.257812 3.796875 -4.28125 C 3.742188 -4.300781 3.644531 -4.3125 3.5 -4.3125 L 3.5 -4.5 L 4.96875 -4.5 L 4.96875 -4.3125 C 4.84375 -4.300781 4.75 -4.273438 4.6875 -4.234375 C 4.625 -4.191406 4.550781 -4.117188 4.46875 -4.015625 C 4.4375 -3.960938 4.378906 -3.835938 4.296875 -3.640625 L 2.46875 0.84375 C 2.289062 1.28125 2.054688 1.609375 1.765625 1.828125 C 1.484375 2.054688 1.210938 2.171875 0.953125 2.171875 C 0.753906 2.171875 0.59375 2.113281 0.46875 2 C 0.351562 1.882812 0.296875 1.757812 0.296875 1.625 C 0.296875 1.476562 0.335938 1.363281 0.421875 1.28125 C 0.515625 1.195312 0.640625 1.15625 0.796875 1.15625 C 0.898438 1.15625 1.046875 1.191406 1.234375 1.265625 C 1.367188 1.316406 1.453125 1.34375 1.484375 1.34375 C 1.578125 1.34375 1.679688 1.289062 1.796875 1.1875 C 1.921875 1.09375 2.039062 0.898438 2.15625 0.609375 L 2.46875 -0.171875 L 0.859375 -3.5625 C 0.804688 -3.664062 0.726562 -3.789062 0.625 -3.9375 C 0.539062 -4.050781 0.472656 -4.128906 0.421875 -4.171875 C 0.347656 -4.222656 0.226562 -4.269531 0.0625 -4.3125 Z M 0.0625 -4.5 "/>
+</g>
+<g id="glyph-0-9">
+<path d="M 2.515625 -4.625 C 3.191406 -4.625 3.738281 -4.363281 4.15625 -3.84375 C 4.5 -3.40625 4.671875 -2.898438 4.671875 -2.328125 C 4.671875 -1.929688 4.570312 -1.523438 4.375 -1.109375 C 4.1875 -0.691406 3.921875 -0.378906 3.578125 -0.171875 C 3.242188 0.0351562 2.867188 0.140625 2.453125 0.140625 C 1.773438 0.140625 1.238281 -0.128906 0.84375 -0.671875 C 0.507812 -1.128906 0.34375 -1.640625 0.34375 -2.203125 C 0.34375 -2.617188 0.441406 -3.03125 0.640625 -3.4375 C 0.847656 -3.84375 1.117188 -4.140625 1.453125 -4.328125 C 1.785156 -4.523438 2.140625 -4.625 2.515625 -4.625 Z M 2.359375 -4.3125 C 2.179688 -4.3125 2.003906 -4.257812 1.828125 -4.15625 C 1.660156 -4.050781 1.519531 -3.867188 1.40625 -3.609375 C 1.300781 -3.347656 1.25 -3.015625 1.25 -2.609375 C 1.25 -1.960938 1.378906 -1.398438 1.640625 -0.921875 C 1.898438 -0.453125 2.242188 -0.21875 2.671875 -0.21875 C 2.984375 -0.21875 3.242188 -0.347656 3.453125 -0.609375 C 3.660156 -0.867188 3.765625 -1.316406 3.765625 -1.953125 C 3.765625 -2.753906 3.59375 -3.382812 3.25 -3.84375 C 3.019531 -4.15625 2.722656 -4.3125 2.359375 -4.3125 Z M 2.359375 -4.3125 "/>
+</g>
+<g id="glyph-0-10">
+<path d="M 4.25 -4.5 L 4.25 -1.765625 C 4.25 -1.242188 4.257812 -0.925781 4.28125 -0.8125 C 4.3125 -0.695312 4.351562 -0.613281 4.40625 -0.5625 C 4.457031 -0.519531 4.519531 -0.5 4.59375 -0.5 C 4.695312 -0.5 4.8125 -0.53125 4.9375 -0.59375 L 5.015625 -0.421875 L 3.671875 0.140625 L 3.4375 0.140625 L 3.4375 -0.8125 C 3.050781 -0.394531 2.753906 -0.128906 2.546875 -0.015625 C 2.347656 0.0859375 2.140625 0.140625 1.921875 0.140625 C 1.671875 0.140625 1.453125 0.0664062 1.265625 -0.078125 C 1.078125 -0.222656 0.945312 -0.410156 0.875 -0.640625 C 0.800781 -0.867188 0.765625 -1.191406 0.765625 -1.609375 L 0.765625 -3.625 C 0.765625 -3.832031 0.742188 -3.976562 0.703125 -4.0625 C 0.660156 -4.144531 0.59375 -4.207031 0.5 -4.25 C 0.40625 -4.289062 0.242188 -4.3125 0.015625 -4.3125 L 0.015625 -4.5 L 1.578125 -4.5 L 1.578125 -1.484375 C 1.578125 -1.066406 1.648438 -0.789062 1.796875 -0.65625 C 1.941406 -0.53125 2.117188 -0.46875 2.328125 -0.46875 C 2.472656 -0.46875 2.632812 -0.507812 2.8125 -0.59375 C 2.988281 -0.6875 3.195312 -0.859375 3.4375 -1.109375 L 3.4375 -3.65625 C 3.4375 -3.90625 3.390625 -4.070312 3.296875 -4.15625 C 3.210938 -4.25 3.019531 -4.300781 2.71875 -4.3125 L 2.71875 -4.5 Z M 4.25 -4.5 "/>
+</g>
+<g id="glyph-0-11">
+<path d="M 2.0625 -4.140625 L 2.0625 -1.1875 C 2.0625 -0.769531 2.109375 -0.503906 2.203125 -0.390625 C 2.328125 -0.242188 2.488281 -0.171875 2.6875 -0.171875 L 3.09375 -0.171875 L 3.09375 0 L 0.421875 0 L 0.421875 -0.171875 L 0.625 -0.171875 C 0.75 -0.171875 0.863281 -0.203125 0.96875 -0.265625 C 1.082031 -0.335938 1.160156 -0.425781 1.203125 -0.53125 C 1.242188 -0.644531 1.265625 -0.863281 1.265625 -1.1875 L 1.265625 -4.140625 L 0.390625 -4.140625 L 0.390625 -4.5 L 1.265625 -4.5 L 1.265625 -4.78125 C 1.265625 -5.226562 1.332031 -5.609375 1.46875 -5.921875 C 1.613281 -6.234375 1.832031 -6.484375 2.125 -6.671875 C 2.425781 -6.867188 2.765625 -6.96875 3.140625 -6.96875 C 3.484375 -6.96875 3.796875 -6.851562 4.078125 -6.625 C 4.265625 -6.476562 4.359375 -6.316406 4.359375 -6.140625 C 4.359375 -6.035156 4.316406 -5.941406 4.234375 -5.859375 C 4.148438 -5.773438 4.0625 -5.734375 3.96875 -5.734375 C 3.882812 -5.734375 3.800781 -5.757812 3.71875 -5.8125 C 3.632812 -5.863281 3.53125 -5.976562 3.40625 -6.15625 C 3.289062 -6.332031 3.179688 -6.453125 3.078125 -6.515625 C 2.984375 -6.578125 2.875 -6.609375 2.75 -6.609375 C 2.59375 -6.609375 2.460938 -6.566406 2.359375 -6.484375 C 2.253906 -6.410156 2.175781 -6.289062 2.125 -6.125 C 2.082031 -5.957031 2.0625 -5.519531 2.0625 -4.8125 L 2.0625 -4.5 L 3.234375 -4.5 L 3.234375 -4.140625 Z M 2.0625 -4.140625 "/>
+</g>
+<g id="glyph-0-12">
+<path d="M 1.0625 -2.796875 C 1.0625 -2.128906 1.226562 -1.609375 1.5625 -1.234375 C 1.882812 -0.847656 2.265625 -0.65625 2.703125 -0.65625 C 3.003906 -0.65625 3.257812 -0.734375 3.46875 -0.890625 C 3.6875 -1.054688 3.867188 -1.335938 4.015625 -1.734375 L 4.171875 -1.640625 C 4.109375 -1.191406 3.910156 -0.78125 3.578125 -0.40625 C 3.242188 -0.0390625 2.828125 0.140625 2.328125 0.140625 C 1.796875 0.140625 1.335938 -0.0664062 0.953125 -0.484375 C 0.566406 -0.910156 0.375 -1.476562 0.375 -2.1875 C 0.375 -2.957031 0.570312 -3.554688 0.96875 -3.984375 C 1.363281 -4.410156 1.859375 -4.625 2.453125 -4.625 C 2.953125 -4.625 3.363281 -4.457031 3.6875 -4.125 C 4.007812 -3.800781 4.171875 -3.359375 4.171875 -2.796875 Z M 1.0625 -3.078125 L 3.15625 -3.078125 C 3.132812 -3.367188 3.097656 -3.570312 3.046875 -3.6875 C 2.960938 -3.875 2.835938 -4.019531 2.671875 -4.125 C 2.515625 -4.226562 2.347656 -4.28125 2.171875 -4.28125 C 1.898438 -4.28125 1.65625 -4.175781 1.4375 -3.96875 C 1.226562 -3.757812 1.101562 -3.460938 1.0625 -3.078125 Z M 1.0625 -3.078125 "/>
+</g>
+<g id="glyph-0-13">
+<path d="M 1.625 -4.625 L 1.625 -3.609375 C 2 -4.285156 2.382812 -4.625 2.78125 -4.625 C 2.96875 -4.625 3.117188 -4.566406 3.234375 -4.453125 C 3.347656 -4.347656 3.40625 -4.222656 3.40625 -4.078125 C 3.40625 -3.953125 3.363281 -3.84375 3.28125 -3.75 C 3.195312 -3.664062 3.097656 -3.625 2.984375 -3.625 C 2.867188 -3.625 2.738281 -3.679688 2.59375 -3.796875 C 2.445312 -3.910156 2.34375 -3.96875 2.28125 -3.96875 C 2.21875 -3.96875 2.148438 -3.929688 2.078125 -3.859375 C 1.929688 -3.734375 1.78125 -3.515625 1.625 -3.203125 L 1.625 -1.046875 C 1.625 -0.796875 1.65625 -0.609375 1.71875 -0.484375 C 1.757812 -0.398438 1.832031 -0.328125 1.9375 -0.265625 C 2.050781 -0.203125 2.207031 -0.171875 2.40625 -0.171875 L 2.40625 0 L 0.109375 0 L 0.109375 -0.171875 C 0.335938 -0.171875 0.507812 -0.207031 0.625 -0.28125 C 0.707031 -0.332031 0.765625 -0.414062 0.796875 -0.53125 C 0.804688 -0.59375 0.8125 -0.753906 0.8125 -1.015625 L 0.8125 -2.75 C 0.8125 -3.269531 0.800781 -3.582031 0.78125 -3.6875 C 0.757812 -3.789062 0.71875 -3.863281 0.65625 -3.90625 C 0.601562 -3.945312 0.535156 -3.96875 0.453125 -3.96875 C 0.347656 -3.96875 0.234375 -3.945312 0.109375 -3.90625 L 0.0625 -4.078125 L 1.421875 -4.625 Z M 1.625 -4.625 "/>
+</g>
+<g id="glyph-0-14">
+<path d="M 1.640625 -6.96875 L 1.640625 -3.6875 C 1.992188 -4.082031 2.273438 -4.335938 2.484375 -4.453125 C 2.703125 -4.566406 2.921875 -4.625 3.140625 -4.625 C 3.390625 -4.625 3.601562 -4.550781 3.78125 -4.40625 C 3.96875 -4.269531 4.109375 -4.050781 4.203125 -3.75 C 4.265625 -3.539062 4.296875 -3.160156 4.296875 -2.609375 L 4.296875 -1.015625 C 4.296875 -0.734375 4.316406 -0.539062 4.359375 -0.4375 C 4.390625 -0.351562 4.441406 -0.285156 4.515625 -0.234375 C 4.597656 -0.191406 4.742188 -0.171875 4.953125 -0.171875 L 4.953125 0 L 2.75 0 L 2.75 -0.171875 L 2.859375 -0.171875 C 3.066406 -0.171875 3.210938 -0.203125 3.296875 -0.265625 C 3.378906 -0.335938 3.4375 -0.429688 3.46875 -0.546875 C 3.476562 -0.609375 3.484375 -0.765625 3.484375 -1.015625 L 3.484375 -2.609375 C 3.484375 -3.097656 3.457031 -3.414062 3.40625 -3.5625 C 3.351562 -3.71875 3.269531 -3.832031 3.15625 -3.90625 C 3.050781 -3.988281 2.914062 -4.03125 2.75 -4.03125 C 2.59375 -4.03125 2.425781 -3.988281 2.25 -3.90625 C 2.082031 -3.820312 1.878906 -3.648438 1.640625 -3.390625 L 1.640625 -1.015625 C 1.640625 -0.703125 1.65625 -0.507812 1.6875 -0.4375 C 1.71875 -0.363281 1.78125 -0.300781 1.875 -0.25 C 1.96875 -0.195312 2.128906 -0.171875 2.359375 -0.171875 L 2.359375 0 L 0.125 0 L 0.125 -0.171875 C 0.332031 -0.171875 0.492188 -0.203125 0.609375 -0.265625 C 0.671875 -0.296875 0.71875 -0.359375 0.75 -0.453125 C 0.789062 -0.546875 0.8125 -0.734375 0.8125 -1.015625 L 0.8125 -5.078125 C 0.8125 -5.597656 0.800781 -5.914062 0.78125 -6.03125 C 0.757812 -6.144531 0.722656 -6.222656 0.671875 -6.265625 C 0.617188 -6.304688 0.550781 -6.328125 0.46875 -6.328125 C 0.394531 -6.328125 0.28125 -6.300781 0.125 -6.25 L 0.0625 -6.421875 L 1.40625 -6.96875 Z M 1.640625 -6.96875 "/>
+</g>
+<g id="glyph-0-15">
+<path d="M 1.515625 -1.640625 C 1.242188 -1.773438 1.03125 -1.960938 0.875 -2.203125 C 0.726562 -2.441406 0.65625 -2.707031 0.65625 -3 C 0.65625 -3.445312 0.820312 -3.828125 1.15625 -4.140625 C 1.5 -4.460938 1.929688 -4.625 2.453125 -4.625 C 2.878906 -4.625 3.25 -4.519531 3.5625 -4.3125 L 4.515625 -4.3125 C 4.660156 -4.3125 4.742188 -4.304688 4.765625 -4.296875 C 4.785156 -4.285156 4.800781 -4.273438 4.8125 -4.265625 C 4.832031 -4.234375 4.84375 -4.175781 4.84375 -4.09375 C 4.84375 -4.007812 4.832031 -3.953125 4.8125 -3.921875 C 4.800781 -3.910156 4.785156 -3.898438 4.765625 -3.890625 C 4.742188 -3.878906 4.660156 -3.875 4.515625 -3.875 L 3.9375 -3.875 C 4.113281 -3.632812 4.203125 -3.332031 4.203125 -2.96875 C 4.203125 -2.550781 4.039062 -2.191406 3.71875 -1.890625 C 3.40625 -1.597656 2.976562 -1.453125 2.4375 -1.453125 C 2.21875 -1.453125 1.988281 -1.484375 1.75 -1.546875 C 1.613281 -1.421875 1.519531 -1.3125 1.46875 -1.21875 C 1.414062 -1.125 1.390625 -1.046875 1.390625 -0.984375 C 1.390625 -0.921875 1.414062 -0.863281 1.46875 -0.8125 C 1.519531 -0.757812 1.625 -0.722656 1.78125 -0.703125 C 1.875 -0.691406 2.101562 -0.679688 2.46875 -0.671875 C 3.144531 -0.648438 3.582031 -0.628906 3.78125 -0.609375 C 4.082031 -0.566406 4.320312 -0.453125 4.5 -0.265625 C 4.6875 -0.078125 4.78125 0.144531 4.78125 0.40625 C 4.78125 0.78125 4.609375 1.128906 4.265625 1.453125 C 3.753906 1.929688 3.085938 2.171875 2.265625 2.171875 C 1.628906 2.171875 1.097656 2.023438 0.671875 1.734375 C 0.421875 1.578125 0.296875 1.410156 0.296875 1.234375 C 0.296875 1.148438 0.316406 1.070312 0.359375 1 C 0.410156 0.875 0.523438 0.703125 0.703125 0.484375 C 0.722656 0.460938 0.890625 0.285156 1.203125 -0.046875 C 1.023438 -0.140625 0.898438 -0.226562 0.828125 -0.3125 C 0.765625 -0.394531 0.734375 -0.484375 0.734375 -0.578125 C 0.734375 -0.691406 0.78125 -0.828125 0.875 -0.984375 C 0.96875 -1.140625 1.179688 -1.359375 1.515625 -1.640625 Z M 2.375 -4.390625 C 2.125 -4.390625 1.914062 -4.289062 1.75 -4.09375 C 1.59375 -3.90625 1.515625 -3.613281 1.515625 -3.21875 C 1.515625 -2.695312 1.625 -2.296875 1.84375 -2.015625 C 2.019531 -1.796875 2.238281 -1.6875 2.5 -1.6875 C 2.75 -1.6875 2.953125 -1.78125 3.109375 -1.96875 C 3.265625 -2.15625 3.34375 -2.445312 3.34375 -2.84375 C 3.34375 -3.363281 3.234375 -3.769531 3.015625 -4.0625 C 2.847656 -4.28125 2.632812 -4.390625 2.375 -4.390625 Z M 1.46875 0 C 1.3125 0.164062 1.191406 0.320312 1.109375 0.46875 C 1.035156 0.613281 1 0.742188 1 0.859375 C 1 1.015625 1.09375 1.15625 1.28125 1.28125 C 1.613281 1.476562 2.085938 1.578125 2.703125 1.578125 C 3.296875 1.578125 3.726562 1.472656 4 1.265625 C 4.28125 1.054688 4.421875 0.835938 4.421875 0.609375 C 4.421875 0.429688 4.335938 0.304688 4.171875 0.234375 C 4.003906 0.160156 3.671875 0.117188 3.171875 0.109375 C 2.429688 0.0859375 1.863281 0.0507812 1.46875 0 Z M 1.46875 0 "/>
+</g>
+<g id="glyph-0-16">
+<path d="M 1.640625 -3.671875 C 1.972656 -3.992188 2.171875 -4.179688 2.234375 -4.234375 C 2.378906 -4.359375 2.535156 -4.453125 2.703125 -4.515625 C 2.867188 -4.585938 3.035156 -4.625 3.203125 -4.625 C 3.484375 -4.625 3.722656 -4.539062 3.921875 -4.375 C 4.128906 -4.21875 4.269531 -3.984375 4.34375 -3.671875 C 4.675781 -4.066406 4.957031 -4.320312 5.1875 -4.4375 C 5.425781 -4.5625 5.664062 -4.625 5.90625 -4.625 C 6.144531 -4.625 6.359375 -4.5625 6.546875 -4.4375 C 6.734375 -4.320312 6.878906 -4.125 6.984375 -3.84375 C 7.054688 -3.65625 7.09375 -3.359375 7.09375 -2.953125 L 7.09375 -1.015625 C 7.09375 -0.734375 7.113281 -0.539062 7.15625 -0.4375 C 7.1875 -0.363281 7.242188 -0.300781 7.328125 -0.25 C 7.421875 -0.195312 7.566406 -0.171875 7.765625 -0.171875 L 7.765625 0 L 5.546875 0 L 5.546875 -0.171875 L 5.640625 -0.171875 C 5.835938 -0.171875 5.988281 -0.210938 6.09375 -0.296875 C 6.164062 -0.347656 6.222656 -0.429688 6.265625 -0.546875 C 6.273438 -0.597656 6.28125 -0.753906 6.28125 -1.015625 L 6.28125 -2.953125 C 6.28125 -3.316406 6.234375 -3.570312 6.140625 -3.71875 C 6.015625 -3.925781 5.8125 -4.03125 5.53125 -4.03125 C 5.363281 -4.03125 5.191406 -3.988281 5.015625 -3.90625 C 4.835938 -3.820312 4.625 -3.660156 4.375 -3.421875 L 4.359375 -3.375 L 4.375 -3.15625 L 4.375 -1.015625 C 4.375 -0.703125 4.390625 -0.507812 4.421875 -0.4375 C 4.460938 -0.363281 4.53125 -0.300781 4.625 -0.25 C 4.71875 -0.195312 4.878906 -0.171875 5.109375 -0.171875 L 5.109375 0 L 2.828125 0 L 2.828125 -0.171875 C 3.078125 -0.171875 3.25 -0.203125 3.34375 -0.265625 C 3.4375 -0.328125 3.503906 -0.414062 3.546875 -0.53125 C 3.554688 -0.582031 3.5625 -0.742188 3.5625 -1.015625 L 3.5625 -2.953125 C 3.5625 -3.316406 3.507812 -3.578125 3.40625 -3.734375 C 3.257812 -3.941406 3.054688 -4.046875 2.796875 -4.046875 C 2.617188 -4.046875 2.445312 -4 2.28125 -3.90625 C 2.007812 -3.757812 1.796875 -3.597656 1.640625 -3.421875 L 1.640625 -1.015625 C 1.640625 -0.722656 1.660156 -0.53125 1.703125 -0.4375 C 1.742188 -0.351562 1.804688 -0.285156 1.890625 -0.234375 C 1.972656 -0.191406 2.132812 -0.171875 2.375 -0.171875 L 2.375 0 L 0.15625 0 L 0.15625 -0.171875 C 0.363281 -0.171875 0.507812 -0.191406 0.59375 -0.234375 C 0.675781 -0.285156 0.738281 -0.359375 0.78125 -0.453125 C 0.820312 -0.546875 0.84375 -0.734375 0.84375 -1.015625 L 0.84375 -2.734375 C 0.84375 -3.222656 0.828125 -3.539062 0.796875 -3.6875 C 0.773438 -3.789062 0.738281 -3.863281 0.6875 -3.90625 C 0.632812 -3.945312 0.566406 -3.96875 0.484375 -3.96875 C 0.390625 -3.96875 0.28125 -3.945312 0.15625 -3.90625 L 0.078125 -4.078125 L 1.4375 -4.625 L 1.640625 -4.625 Z M 1.640625 -3.671875 "/>
+</g>
+<g id="glyph-0-17">
+<path d="M 3.21875 -4.625 L 3.21875 -3.09375 L 3.0625 -3.09375 C 2.9375 -3.570312 2.773438 -3.898438 2.578125 -4.078125 C 2.378906 -4.253906 2.128906 -4.34375 1.828125 -4.34375 C 1.597656 -4.34375 1.410156 -4.28125 1.265625 -4.15625 C 1.128906 -4.03125 1.0625 -3.894531 1.0625 -3.75 C 1.0625 -3.570312 1.113281 -3.414062 1.21875 -3.28125 C 1.320312 -3.144531 1.53125 -3.003906 1.84375 -2.859375 L 2.5625 -2.5 C 3.226562 -2.175781 3.5625 -1.75 3.5625 -1.21875 C 3.5625 -0.8125 3.40625 -0.484375 3.09375 -0.234375 C 2.78125 0.015625 2.4375 0.140625 2.0625 0.140625 C 1.78125 0.140625 1.460938 0.0859375 1.109375 -0.015625 C 1.003906 -0.046875 0.914062 -0.0625 0.84375 -0.0625 C 0.769531 -0.0625 0.710938 -0.0195312 0.671875 0.0625 L 0.515625 0.0625 L 0.515625 -1.53125 L 0.671875 -1.53125 C 0.765625 -1.070312 0.9375 -0.726562 1.1875 -0.5 C 1.445312 -0.269531 1.738281 -0.15625 2.0625 -0.15625 C 2.289062 -0.15625 2.472656 -0.21875 2.609375 -0.34375 C 2.753906 -0.476562 2.828125 -0.640625 2.828125 -0.828125 C 2.828125 -1.054688 2.75 -1.242188 2.59375 -1.390625 C 2.4375 -1.546875 2.117188 -1.738281 1.640625 -1.96875 C 1.171875 -2.207031 0.863281 -2.425781 0.71875 -2.625 C 0.5625 -2.8125 0.484375 -3.046875 0.484375 -3.328125 C 0.484375 -3.691406 0.609375 -4 0.859375 -4.25 C 1.117188 -4.5 1.453125 -4.625 1.859375 -4.625 C 2.035156 -4.625 2.25 -4.585938 2.5 -4.515625 C 2.664062 -4.460938 2.773438 -4.4375 2.828125 -4.4375 C 2.878906 -4.4375 2.921875 -4.445312 2.953125 -4.46875 C 2.984375 -4.5 3.019531 -4.550781 3.0625 -4.625 Z M 3.21875 -4.625 "/>
+</g>
+<g id="glyph-0-18">
+<path d="M 1.171875 -6 L 2.796875 -6.796875 L 2.953125 -6.796875 L 2.953125 -1.171875 C 2.953125 -0.796875 2.96875 -0.5625 3 -0.46875 C 3.03125 -0.382812 3.09375 -0.316406 3.1875 -0.265625 C 3.289062 -0.210938 3.492188 -0.1875 3.796875 -0.1875 L 3.796875 0 L 1.296875 0 L 1.296875 -0.1875 C 1.609375 -0.1875 1.8125 -0.207031 1.90625 -0.25 C 2 -0.300781 2.0625 -0.367188 2.09375 -0.453125 C 2.132812 -0.535156 2.15625 -0.773438 2.15625 -1.171875 L 2.15625 -4.765625 C 2.15625 -5.242188 2.132812 -5.554688 2.09375 -5.703125 C 2.070312 -5.804688 2.03125 -5.878906 1.96875 -5.921875 C 1.914062 -5.972656 1.84375 -6 1.75 -6 C 1.632812 -6 1.46875 -5.945312 1.25 -5.84375 Z M 1.171875 -6 "/>
+</g>
+<g id="glyph-0-19">
+<path d="M 4.609375 -1.28125 L 4.140625 0 L 0.21875 0 L 0.21875 -0.1875 C 1.375 -1.238281 2.1875 -2.097656 2.65625 -2.765625 C 3.125 -3.429688 3.359375 -4.039062 3.359375 -4.59375 C 3.359375 -5.007812 3.226562 -5.351562 2.96875 -5.625 C 2.707031 -5.894531 2.398438 -6.03125 2.046875 -6.03125 C 1.722656 -6.03125 1.429688 -5.9375 1.171875 -5.75 C 0.910156 -5.5625 0.71875 -5.28125 0.59375 -4.90625 L 0.40625 -4.90625 C 0.488281 -5.507812 0.695312 -5.972656 1.03125 -6.296875 C 1.375 -6.628906 1.800781 -6.796875 2.3125 -6.796875 C 2.84375 -6.796875 3.289062 -6.617188 3.65625 -6.265625 C 4.019531 -5.921875 4.203125 -5.515625 4.203125 -5.046875 C 4.203125 -4.703125 4.125 -4.363281 3.96875 -4.03125 C 3.71875 -3.5 3.320312 -2.9375 2.78125 -2.34375 C 1.96875 -1.457031 1.460938 -0.921875 1.265625 -0.734375 L 3 -0.734375 C 3.351562 -0.734375 3.597656 -0.742188 3.734375 -0.765625 C 3.878906 -0.796875 4.007812 -0.851562 4.125 -0.9375 C 4.238281 -1.019531 4.335938 -1.132812 4.421875 -1.28125 Z M 4.609375 -1.28125 "/>
+</g>
+<g id="glyph-1-0">
+<path d="M 0.296875 -2.734375 C 0.296875 -3.367188 0.390625 -3.914062 0.578125 -4.375 C 0.773438 -4.832031 1.03125 -5.171875 1.34375 -5.390625 C 1.59375 -5.566406 1.847656 -5.65625 2.109375 -5.65625 C 2.535156 -5.65625 2.914062 -5.441406 3.25 -5.015625 C 3.675781 -4.472656 3.890625 -3.742188 3.890625 -2.828125 C 3.890625 -2.179688 3.796875 -1.632812 3.609375 -1.1875 C 3.421875 -0.738281 3.179688 -0.410156 2.890625 -0.203125 C 2.609375 -0.00390625 2.332031 0.09375 2.0625 0.09375 C 1.539062 0.09375 1.101562 -0.21875 0.75 -0.84375 C 0.445312 -1.363281 0.296875 -1.992188 0.296875 -2.734375 Z M 1.109375 -2.640625 C 1.109375 -1.878906 1.203125 -1.253906 1.390625 -0.765625 C 1.546875 -0.359375 1.773438 -0.15625 2.078125 -0.15625 C 2.222656 -0.15625 2.375 -0.222656 2.53125 -0.359375 C 2.695312 -0.492188 2.820312 -0.710938 2.90625 -1.015625 C 3.03125 -1.484375 3.09375 -2.144531 3.09375 -3 C 3.09375 -3.632812 3.023438 -4.164062 2.890625 -4.59375 C 2.796875 -4.90625 2.671875 -5.125 2.515625 -5.25 C 2.398438 -5.34375 2.265625 -5.390625 2.109375 -5.390625 C 1.921875 -5.390625 1.753906 -5.304688 1.609375 -5.140625 C 1.410156 -4.910156 1.273438 -4.550781 1.203125 -4.0625 C 1.140625 -3.582031 1.109375 -3.109375 1.109375 -2.640625 Z M 1.109375 -2.640625 "/>
+</g>
+<g id="glyph-1-1">
+<path d="M 0.453125 1.390625 L 0.453125 1.21875 C 0.734375 1.125 0.945312 0.976562 1.09375 0.78125 C 1.25 0.582031 1.328125 0.375 1.328125 0.15625 C 1.328125 0.101562 1.316406 0.0625 1.296875 0.03125 C 1.273438 0.0078125 1.253906 0 1.234375 0 C 1.203125 0 1.140625 0.0234375 1.046875 0.078125 C 0.992188 0.0976562 0.941406 0.109375 0.890625 0.109375 C 0.753906 0.109375 0.644531 0.0703125 0.5625 0 C 0.488281 -0.0820312 0.453125 -0.191406 0.453125 -0.328125 C 0.453125 -0.460938 0.5 -0.578125 0.59375 -0.671875 C 0.695312 -0.765625 0.828125 -0.8125 0.984375 -0.8125 C 1.160156 -0.8125 1.316406 -0.734375 1.453125 -0.578125 C 1.597656 -0.421875 1.671875 -0.210938 1.671875 0.046875 C 1.671875 0.328125 1.570312 0.585938 1.375 0.828125 C 1.175781 1.066406 0.867188 1.253906 0.453125 1.390625 Z M 0.453125 1.390625 "/>
+</g>
+<g id="glyph-1-2">
+<path d="M 0.984375 -5 L 2.328125 -5.65625 L 2.46875 -5.65625 L 2.46875 -0.984375 C 2.46875 -0.671875 2.476562 -0.472656 2.5 -0.390625 C 2.53125 -0.316406 2.582031 -0.257812 2.65625 -0.21875 C 2.738281 -0.175781 2.910156 -0.15625 3.171875 -0.15625 L 3.171875 0 L 1.078125 0 L 1.078125 -0.15625 C 1.335938 -0.15625 1.503906 -0.175781 1.578125 -0.21875 C 1.660156 -0.257812 1.71875 -0.3125 1.75 -0.375 C 1.78125 -0.445312 1.796875 -0.648438 1.796875 -0.984375 L 1.796875 -3.96875 C 1.796875 -4.375 1.78125 -4.632812 1.75 -4.75 C 1.726562 -4.832031 1.691406 -4.894531 1.640625 -4.9375 C 1.597656 -4.976562 1.539062 -5 1.46875 -5 C 1.363281 -5 1.222656 -4.957031 1.046875 -4.875 Z M 0.984375 -5 "/>
+</g>
+<g id="glyph-1-3">
+<path d="M 3.84375 -1.0625 L 3.453125 0 L 0.1875 0 L 0.1875 -0.15625 C 1.144531 -1.03125 1.816406 -1.742188 2.203125 -2.296875 C 2.597656 -2.859375 2.796875 -3.367188 2.796875 -3.828125 C 2.796875 -4.179688 2.6875 -4.46875 2.46875 -4.6875 C 2.257812 -4.914062 2.003906 -5.03125 1.703125 -5.03125 C 1.429688 -5.03125 1.1875 -4.953125 0.96875 -4.796875 C 0.75 -4.640625 0.585938 -4.40625 0.484375 -4.09375 L 0.34375 -4.09375 C 0.40625 -4.59375 0.578125 -4.976562 0.859375 -5.25 C 1.140625 -5.519531 1.492188 -5.65625 1.921875 -5.65625 C 2.367188 -5.65625 2.742188 -5.507812 3.046875 -5.21875 C 3.347656 -4.9375 3.5 -4.597656 3.5 -4.203125 C 3.5 -3.921875 3.429688 -3.640625 3.296875 -3.359375 C 3.097656 -2.921875 2.773438 -2.453125 2.328125 -1.953125 C 1.640625 -1.210938 1.210938 -0.769531 1.046875 -0.625 L 2.5 -0.625 C 2.789062 -0.625 2.992188 -0.632812 3.109375 -0.65625 C 3.234375 -0.675781 3.34375 -0.71875 3.4375 -0.78125 C 3.53125 -0.851562 3.613281 -0.945312 3.6875 -1.0625 Z M 3.84375 -1.0625 "/>
+</g>
+</g>
+<clipPath id="clip-0">
+<path clip-rule="nonzero" d="M 0 0.128906 L 566.242188 0.128906 L 566.242188 1 L 0 1 Z M 0 0.128906 "/>
+</clipPath>
+<clipPath id="clip-1">
+<path clip-rule="nonzero" d="M 0 0.128906 L 566.242188 0.128906 L 566.242188 167.867188 L 0 167.867188 Z M 0 0.128906 "/>
+</clipPath>
+<clipPath id="clip-2">
+<path clip-rule="nonzero" d="M 1 0.128906 L 39 0.128906 L 39 21 L 1 21 Z M 1 0.128906 "/>
+</clipPath>
+<clipPath id="clip-3">
+<path clip-rule="nonzero" d="M 1 0.128906 L 40 0.128906 L 40 21 L 1 21 Z M 1 0.128906 "/>
+</clipPath>
+<clipPath id="clip-4">
+<path clip-rule="nonzero" d="M 38 0.128906 L 77 0.128906 L 77 21 L 38 21 Z M 38 0.128906 "/>
+</clipPath>
+<clipPath id="clip-5">
+<path clip-rule="nonzero" d="M 76 0.128906 L 114 0.128906 L 114 21 L 76 21 Z M 76 0.128906 "/>
+</clipPath>
+<clipPath id="clip-6">
+<path clip-rule="nonzero" d="M 75 0.128906 L 114 0.128906 L 114 21 L 75 21 Z M 75 0.128906 "/>
+</clipPath>
+<clipPath id="clip-7">
+<path clip-rule="nonzero" d="M 151 0.128906 L 190 0.128906 L 190 21 L 151 21 Z M 151 0.128906 "/>
+</clipPath>
+<clipPath id="clip-8">
+<path clip-rule="nonzero" d="M 189 0.128906 L 227 0.128906 L 227 21 L 189 21 Z M 189 0.128906 "/>
+</clipPath>
+<clipPath id="clip-9">
+<path clip-rule="nonzero" d="M 188 0.128906 L 227 0.128906 L 227 21 L 188 21 Z M 188 0.128906 "/>
+</clipPath>
+<clipPath id="clip-10">
+<path clip-rule="nonzero" d="M 226 0.128906 L 264 0.128906 L 264 21 L 226 21 Z M 226 0.128906 "/>
+</clipPath>
+<clipPath id="clip-11">
+<path clip-rule="nonzero" d="M 226 0.128906 L 265 0.128906 L 265 21 L 226 21 Z M 226 0.128906 "/>
+</clipPath>
+<clipPath id="clip-12">
+<path clip-rule="nonzero" d="M 302 0.128906 L 340 0.128906 L 340 21 L 302 21 Z M 302 0.128906 "/>
+</clipPath>
+<clipPath id="clip-13">
+<path clip-rule="nonzero" d="M 302 0.128906 L 341 0.128906 L 341 21 L 302 21 Z M 302 0.128906 "/>
+</clipPath>
+<clipPath id="clip-14">
+<path clip-rule="nonzero" d="M 339 0.128906 L 378 0.128906 L 378 21 L 339 21 Z M 339 0.128906 "/>
+</clipPath>
+<clipPath id="clip-15">
+<path clip-rule="nonzero" d="M 377 0.128906 L 415 0.128906 L 415 21 L 377 21 Z M 377 0.128906 "/>
+</clipPath>
+<clipPath id="clip-16">
+<path clip-rule="nonzero" d="M 376 0.128906 L 415 0.128906 L 415 21 L 376 21 Z M 376 0.128906 "/>
+</clipPath>
+<clipPath id="clip-17">
+<path clip-rule="nonzero" d="M 452 0.128906 L 491 0.128906 L 491 21 L 452 21 Z M 452 0.128906 "/>
+</clipPath>
+<clipPath id="clip-18">
+<path clip-rule="nonzero" d="M 490 0.128906 L 528 0.128906 L 528 21 L 490 21 Z M 490 0.128906 "/>
+</clipPath>
+<clipPath id="clip-19">
+<path clip-rule="nonzero" d="M 489 0.128906 L 528 0.128906 L 528 21 L 489 21 Z M 489 0.128906 "/>
+</clipPath>
+<clipPath id="clip-20">
+<path clip-rule="nonzero" d="M 527 0.128906 L 565 0.128906 L 565 21 L 527 21 Z M 527 0.128906 "/>
+</clipPath>
+<clipPath id="clip-21">
+<path clip-rule="nonzero" d="M 527 0.128906 L 566 0.128906 L 566 21 L 527 21 Z M 527 0.128906 "/>
+</clipPath>
+</defs>
+<g clip-path="url(#clip-0)">
+
+</g>
+<g clip-path="url(#clip-1)">
+
+</g>
+<g clip-path="url(#clip-2)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 1.410156 0.777344 L 38.738281 0.777344 L 38.738281 20.042969 L 1.410156 20.042969 Z M 1.410156 0.777344 "/>
+</g>
+<g clip-path="url(#clip-3)">
+<path fill="none" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M -0.00188049 0.00129549 L 51.981309 0.00129549 L 51.981309 26.830627 L -0.00188049 26.830627 Z M -0.00188049 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="10.847536" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="18.118103" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="22.303167" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="24.395699" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M -0.00188049 122.397881 L 51.981309 122.397881 L 51.981309 149.232653 L -0.00188049 149.232653 Z M -0.00188049 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="11.128036" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="17.837602" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="22.022666" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="24.115198" y="102.957052"/>
+</g>
+<g clip-path="url(#clip-4)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 51.981309 0.00129549 L 103.959059 0.00129549 L 103.959059 26.830627 L 51.981309 26.830627 Z M 51.981309 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="48.187732" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="55.458299" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="59.643363" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="61.735895" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 51.981309 122.397881 L 103.959059 122.397881 L 103.959059 149.232653 L 51.981309 149.232653 Z M 51.981309 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="48.468232" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="55.177798" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="59.362862" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="61.455394" y="102.957052"/>
+</g>
+<g clip-path="url(#clip-5)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 76.054688 0.777344 L 113.382812 0.777344 L 113.382812 20.042969 L 76.054688 20.042969 Z M 76.054688 0.777344 "/>
+</g>
+<g clip-path="url(#clip-6)">
+<path fill="none" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 103.94818 0.00129549 L 155.93137 0.00129549 L 155.93137 26.830627 L 103.94818 26.830627 Z M 103.94818 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="85.527928" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="92.798495" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="96.983559" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="99.076091" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(85.488892%, 90.979004%, 98.81897%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 103.94818 122.397881 L 155.93137 122.397881 L 155.93137 149.232653 L 103.94818 149.232653 Z M 103.94818 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="85.808428" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="92.517994" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="96.703058" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="98.79559" y="102.957052"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(85.488892%, 90.979004%, 98.81897%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M -0.00188049 26.830627 L 51.981309 26.830627 L 51.981309 53.659959 L -0.00188049 53.659959 Z M -0.00188049 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="10.847536" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="18.118103" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="22.303167" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="24.395699" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M -0.00188049 149.221773 L 51.981309 149.221773 L 51.981309 176.051105 L -0.00188049 176.051105 Z M -0.00188049 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="11.128036" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="17.837602" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="22.022666" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="24.115198" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(83.529663%, 90.979004%, 83.139038%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 51.981309 26.830627 L 103.959059 26.830627 L 103.959059 53.659959 L 51.981309 53.659959 Z M 51.981309 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="48.187732" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="55.458299" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="59.643363" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="61.735895" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 51.981309 149.221773 L 103.959059 149.221773 L 103.959059 176.051105 L 51.981309 176.051105 Z M 51.981309 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="48.468232" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="55.177798" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="59.362862" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="61.455394" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(97.24884%, 80.778503%, 79.998779%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 103.94818 26.830627 L 155.93137 26.830627 L 155.93137 53.659959 L 103.94818 53.659959 Z M 103.94818 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="85.527928" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="92.798495" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="96.983559" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="99.076091" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(83.529663%, 90.979004%, 83.139038%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 103.94818 149.221773 L 155.93137 149.221773 L 155.93137 176.051105 L 103.94818 176.051105 Z M 103.94818 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="85.808428" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="92.517994" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="96.703058" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="98.79559" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M -0.00188049 53.649079 L 51.981309 53.649079 L 51.981309 80.478411 L -0.00188049 80.478411 Z M -0.00188049 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="10.847536" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="18.118103" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="22.303167" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="24.395699" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M -0.00188049 176.051105 L 51.981309 176.051105 L 51.981309 202.880436 L -0.00188049 202.880436 Z M -0.00188049 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="11.128036" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="17.837602" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="22.022666" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="24.115198" y="141.015332"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 51.981309 53.649079 L 103.959059 53.649079 L 103.959059 80.478411 L 51.981309 80.478411 Z M 51.981309 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="48.187732" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="55.458299" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="59.643363" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="61.735895" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 51.981309 176.051105 L 103.959059 176.051105 L 103.959059 202.880436 L 51.981309 202.880436 Z M 51.981309 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="48.468232" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="55.177798" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="59.362862" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="61.455394" y="141.015332"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 103.94818 53.649079 L 155.93137 53.649079 L 155.93137 80.478411 L 103.94818 80.478411 Z M 103.94818 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="85.527928" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="92.798495" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="96.983559" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="99.076091" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(97.24884%, 80.778503%, 79.998779%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 103.94818 176.051105 L 155.93137 176.051105 L 155.93137 202.880436 L 103.94818 202.880436 Z M 103.94818 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="85.808428" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="92.517994" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="96.703058" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="98.79559" y="141.015332"/>
+</g>
+<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 103.947714 26.830161 L 155.930904 26.830161 L 155.930904 53.659493 L 103.947714 53.659493 Z M 103.947714 26.830161 " transform="matrix(0.718081, 0, 0, 0.718081, 1.052466, 0.417373)"/>
+<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 103.947714 149.221307 L 155.930904 149.221307 L 155.930904 176.050639 L 103.947714 176.050639 Z M 103.947714 149.221307 " transform="matrix(0.718081, 0, 0, 0.718081, 1.052466, 0.417373)"/>
+<path fill="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 139.160318 101.438146 L 24.890865 101.438146 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 17.88978 101.438146 L 24.890865 97.940323 L 24.890865 104.941408 Z M 17.88978 101.438146 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<path fill="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 174.372455 199.51861 L 174.372455 133.870521 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 174.372455 126.869436 L 177.870278 133.870521 L 170.869193 133.870521 Z M 174.372455 126.869436 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-2" x="31.514796" y="164.139771"/>
+<use xlink:href="#glyph-0-3" x="34.307877" y="164.139771"/>
+<use xlink:href="#glyph-0-2" x="39.334442" y="164.139771"/>
+<use xlink:href="#glyph-0-4" x="42.127523" y="164.139771"/>
+<use xlink:href="#glyph-0-2" x="44.920605" y="164.139771"/>
+<use xlink:href="#glyph-0-5" x="47.713686" y="164.139771"/>
+<use xlink:href="#glyph-0-6" x="52.175744" y="164.139771"/>
+<use xlink:href="#glyph-0-7" x="54.968826" y="164.139771"/>
+<use xlink:href="#glyph-0-6" x="57.482108" y="164.139771"/>
+<use xlink:href="#glyph-0-5" x="60.27519" y="164.139771"/>
+<use xlink:href="#glyph-0-8" x="64.737248" y="164.139771"/>
+<use xlink:href="#glyph-0-9" x="69.763812" y="164.139771"/>
+<use xlink:href="#glyph-0-10" x="74.790377" y="164.139771"/>
+<use xlink:href="#glyph-0-4" x="79.816942" y="164.139771"/>
+</g>
+<g clip-path="url(#clip-7)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 209.579153 0.00129549 L 261.562343 0.00129549 L 261.562343 26.830627 L 209.579153 26.830627 Z M 209.579153 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="161.644485" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="168.915052" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="173.100116" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="175.192648" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 209.579153 122.397881 L 261.562343 122.397881 L 261.562343 149.232653 L 209.579153 149.232653 Z M 209.579153 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="161.924981" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="168.634548" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="172.819612" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="174.912144" y="102.957052"/>
+</g>
+<g clip-path="url(#clip-8)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 189.234375 0.777344 L 226.558594 0.777344 L 226.558594 20.042969 L 189.234375 20.042969 Z M 189.234375 0.777344 "/>
+</g>
+<g clip-path="url(#clip-9)">
+<path fill="none" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 261.562343 0.00129549 L 313.540093 0.00129549 L 313.540093 26.830627 L 261.562343 26.830627 Z M 261.562343 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="198.984681" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="206.255248" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="210.440312" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="212.532844" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 261.562343 122.397881 L 313.540093 122.397881 L 313.540093 149.232653 L 261.562343 149.232653 Z M 261.562343 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="199.265177" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="205.974744" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="210.159808" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="212.25234" y="102.957052"/>
+</g>
+<g clip-path="url(#clip-10)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 226.550781 0.777344 L 263.878906 0.777344 L 263.878906 20.042969 L 226.550781 20.042969 Z M 226.550781 0.777344 "/>
+</g>
+<g clip-path="url(#clip-11)">
+<path fill="none" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 313.529213 0.00129549 L 365.512403 0.00129549 L 365.512403 26.830627 L 313.529213 26.830627 Z M 313.529213 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="236.324877" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="243.595444" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="247.780508" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="249.87304" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(97.24884%, 80.778503%, 79.998779%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 313.529213 122.397881 L 365.512403 122.397881 L 365.512403 149.232653 L 313.529213 149.232653 Z M 313.529213 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="236.605373" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="243.31494" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="247.500004" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="249.592536" y="102.957052"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(83.529663%, 90.979004%, 83.139038%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 209.579153 26.830627 L 261.562343 26.830627 L 261.562343 53.659959 L 209.579153 53.659959 Z M 209.579153 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="161.644485" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="168.915052" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="173.100116" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="175.192648" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 209.579153 149.221773 L 261.562343 149.221773 L 261.562343 176.051105 L 209.579153 176.051105 Z M 209.579153 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="161.924981" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="168.634548" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="172.819612" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="174.912144" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(97.24884%, 80.778503%, 79.998779%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 261.562343 26.830627 L 313.540093 26.830627 L 313.540093 53.659959 L 261.562343 53.659959 Z M 261.562343 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="198.984681" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="206.255248" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="210.440312" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="212.532844" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 261.562343 149.221773 L 313.540093 149.221773 L 313.540093 176.051105 L 261.562343 176.051105 Z M 261.562343 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="199.265177" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="205.974744" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="210.159808" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="212.25234" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(85.488892%, 90.979004%, 98.81897%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 313.529213 26.830627 L 365.512403 26.830627 L 365.512403 53.659959 L 313.529213 53.659959 Z M 313.529213 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="236.324877" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="243.595444" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="247.780508" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="249.87304" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(85.488892%, 90.979004%, 98.81897%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 313.529213 149.221773 L 365.512403 149.221773 L 365.512403 176.051105 L 313.529213 176.051105 Z M 313.529213 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="236.605373" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="243.31494" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="247.500004" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="249.592536" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 209.579153 53.649079 L 261.562343 53.649079 L 261.562343 80.478411 L 209.579153 80.478411 Z M 209.579153 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="161.644485" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="168.915052" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="173.100116" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="175.192648" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 209.579153 176.051105 L 261.562343 176.051105 L 261.562343 202.880436 L 209.579153 202.880436 Z M 209.579153 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="161.924981" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="168.634548" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="172.819612" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="174.912144" y="141.015332"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 261.562343 53.649079 L 313.540093 53.649079 L 313.540093 80.478411 L 261.562343 80.478411 Z M 261.562343 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="198.984681" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="206.255248" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="210.440312" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="212.532844" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 261.562343 176.051105 L 313.540093 176.051105 L 313.540093 202.880436 L 261.562343 202.880436 Z M 261.562343 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="199.265177" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="205.974744" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="210.159808" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="212.25234" y="141.015332"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 313.529213 53.649079 L 365.512403 53.649079 L 365.512403 80.478411 L 313.529213 80.478411 Z M 313.529213 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="236.324877" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="243.595444" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="247.780508" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="249.87304" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(83.529663%, 90.979004%, 83.139038%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 313.529213 176.051105 L 365.512403 176.051105 L 365.512403 202.880436 L 313.529213 202.880436 Z M 313.529213 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="236.605373" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="243.31494" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="247.500004" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="249.592536" y="141.015332"/>
+</g>
+<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 313.528747 26.830161 L 365.511937 26.830161 L 365.511937 53.659493 L 313.528747 53.659493 Z M 313.528747 26.830161 " transform="matrix(0.718081, 0, 0, 0.718081, 1.052466, 0.417373)"/>
+<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 313.528747 149.221307 L 365.511937 149.221307 L 365.511937 176.050639 L 313.528747 176.050639 Z M 313.528747 149.221307 " transform="matrix(0.718081, 0, 0, 0.718081, 1.052466, 0.417373)"/>
+<path fill="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 348.741351 101.438146 L 234.471899 101.438146 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 227.470814 101.438146 L 234.471899 97.940323 L 234.471899 104.941408 Z M 227.470814 101.438146 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<path fill="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 383.948049 199.51861 L 383.948049 133.870521 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 383.948049 126.869436 L 387.451311 133.870521 L 380.450227 133.870521 Z M 383.948049 126.869436 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-5" x="169.532149" y="164.139771"/>
+<use xlink:href="#glyph-0-11" x="173.994207" y="164.139771"/>
+<use xlink:href="#glyph-0-4" x="177.341977" y="164.139771"/>
+<use xlink:href="#glyph-0-12" x="180.135059" y="164.139771"/>
+<use xlink:href="#glyph-0-13" x="184.597117" y="164.139771"/>
+<use xlink:href="#glyph-0-7" x="187.944888" y="164.139771"/>
+<use xlink:href="#glyph-0-4" x="190.45817" y="164.139771"/>
+<use xlink:href="#glyph-0-14" x="193.251252" y="164.139771"/>
+<use xlink:href="#glyph-0-12" x="198.277816" y="164.139771"/>
+<use xlink:href="#glyph-0-7" x="202.739874" y="164.139771"/>
+<use xlink:href="#glyph-0-5" x="205.253157" y="164.139771"/>
+<use xlink:href="#glyph-0-6" x="209.715215" y="164.139771"/>
+<use xlink:href="#glyph-0-2" x="212.508296" y="164.139771"/>
+<use xlink:href="#glyph-0-15" x="215.301378" y="164.139771"/>
+<use xlink:href="#glyph-0-3" x="220.327943" y="164.139771"/>
+<use xlink:href="#glyph-0-16" x="225.354508" y="164.139771"/>
+<use xlink:href="#glyph-0-12" x="233.174154" y="164.139771"/>
+<use xlink:href="#glyph-0-3" x="237.636212" y="164.139771"/>
+<use xlink:href="#glyph-0-4" x="242.662777" y="164.139771"/>
+</g>
+<g clip-path="url(#clip-12)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 302.402344 0.777344 L 339.726562 0.777344 L 339.726562 20.042969 L 302.402344 20.042969 Z M 302.402344 0.777344 "/>
+</g>
+<g clip-path="url(#clip-13)">
+<path fill="none" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 419.160187 0.00129549 L 471.137937 0.00129549 L 471.137937 26.830627 L 419.160187 26.830627 Z M 419.160187 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="311.723349" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="318.993916" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="323.17898" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="325.271512" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 419.160187 122.397881 L 471.137937 122.397881 L 471.137937 149.232653 L 419.160187 149.232653 Z M 419.160187 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="312.003846" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="318.713413" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="322.898477" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="324.991009" y="102.957052"/>
+</g>
+<g clip-path="url(#clip-14)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 471.137937 0.00129549 L 523.121127 0.00129549 L 523.121127 26.830627 L 471.137937 26.830627 Z M 471.137937 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="349.063545" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="356.334112" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="360.519176" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="362.611708" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 471.137937 122.397881 L 523.121127 122.397881 L 523.121127 149.232653 L 471.137937 149.232653 Z M 471.137937 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="349.344042" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="356.053609" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="360.238673" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="362.331205" y="102.957052"/>
+</g>
+<g clip-path="url(#clip-15)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 377.046875 0.777344 L 414.371094 0.777344 L 414.371094 20.042969 L 377.046875 20.042969 Z M 377.046875 0.777344 "/>
+</g>
+<g clip-path="url(#clip-16)">
+<path fill="none" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 523.110247 0.00129549 L 575.087997 0.00129549 L 575.087997 26.830627 L 523.110247 26.830627 Z M 523.110247 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="386.403741" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="393.674308" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="397.859372" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="399.951904" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(85.488892%, 90.979004%, 98.81897%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 523.110247 122.397881 L 575.087997 122.397881 L 575.087997 149.232653 L 523.110247 149.232653 Z M 523.110247 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="386.684238" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="393.393805" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="397.578869" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="399.671401" y="102.957052"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(97.24884%, 80.778503%, 79.998779%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 419.160187 26.830627 L 471.137937 26.830627 L 471.137937 53.659959 L 419.160187 53.659959 Z M 419.160187 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="311.723349" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="318.993916" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="323.17898" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="325.271512" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 419.160187 149.221773 L 471.137937 149.221773 L 471.137937 176.051105 L 419.160187 176.051105 Z M 419.160187 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="312.003846" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="318.713413" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="322.898477" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="324.991009" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(85.488892%, 90.979004%, 98.81897%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 471.137937 26.830627 L 523.121127 26.830627 L 523.121127 53.659959 L 471.137937 53.659959 Z M 471.137937 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="349.063545" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="356.334112" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="360.519176" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="362.611708" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 471.137937 149.221773 L 523.121127 149.221773 L 523.121127 176.051105 L 471.137937 176.051105 Z M 471.137937 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="349.344042" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="356.053609" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="360.238673" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="362.331205" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(83.529663%, 90.979004%, 83.139038%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 523.110247 26.830627 L 575.087997 26.830627 L 575.087997 53.659959 L 523.110247 53.659959 Z M 523.110247 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="386.403741" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="393.674308" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="397.859372" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="399.951904" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(83.529663%, 90.979004%, 83.139038%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 523.110247 149.221773 L 575.087997 149.221773 L 575.087997 176.051105 L 523.110247 176.051105 Z M 523.110247 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="386.684238" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="393.393805" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="397.578869" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="399.671401" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 419.160187 53.649079 L 471.137937 53.649079 L 471.137937 80.478411 L 419.160187 80.478411 Z M 419.160187 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="311.723349" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="318.993916" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="323.17898" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="325.271512" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 419.160187 176.051105 L 471.137937 176.051105 L 471.137937 202.880436 L 419.160187 202.880436 Z M 419.160187 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="312.003846" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="318.713413" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="322.898477" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="324.991009" y="141.015332"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 471.137937 53.649079 L 523.121127 53.649079 L 523.121127 80.478411 L 471.137937 80.478411 Z M 471.137937 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="349.063545" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="356.334112" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="360.519176" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="362.611708" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 471.137937 176.051105 L 523.121127 176.051105 L 523.121127 202.880436 L 471.137937 202.880436 Z M 471.137937 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="349.344042" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="356.053609" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="360.238673" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="362.331205" y="141.015332"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 523.110247 53.649079 L 575.087997 53.649079 L 575.087997 80.478411 L 523.110247 80.478411 Z M 523.110247 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="386.403741" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="393.674308" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="397.859372" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="399.951904" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(97.24884%, 80.778503%, 79.998779%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 523.110247 176.051105 L 575.087997 176.051105 L 575.087997 202.880436 L 523.110247 202.880436 Z M 523.110247 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="386.684238" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="393.393805" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="397.578869" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="399.671401" y="141.015332"/>
+</g>
+<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 523.109781 26.830161 L 575.087531 26.830161 L 575.087531 53.659493 L 523.109781 53.659493 Z M 523.109781 26.830161 " transform="matrix(0.718081, 0, 0, 0.718081, 1.052466, 0.417373)"/>
+<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 523.109781 149.221307 L 575.087531 149.221307 L 575.087531 176.050639 L 523.109781 176.050639 Z M 523.109781 149.221307 " transform="matrix(0.718081, 0, 0, 0.718081, 1.052466, 0.417373)"/>
+<path fill="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 558.322385 101.438146 L 444.047493 101.438146 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 437.051848 101.438146 L 444.047493 97.940323 L 444.047493 104.941408 Z M 437.051848 101.438146 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<path fill="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 593.529083 199.51861 L 593.529083 133.870521 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 593.529083 126.869436 L 597.032345 133.870521 L 590.03126 133.870521 Z M 593.529083 126.869436 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-5" x="334.769252" y="164.139771"/>
+<use xlink:href="#glyph-0-11" x="339.23131" y="164.139771"/>
+<use xlink:href="#glyph-0-4" x="342.57908" y="164.139771"/>
+<use xlink:href="#glyph-0-12" x="345.372162" y="164.139771"/>
+<use xlink:href="#glyph-0-13" x="349.83422" y="164.139771"/>
+<use xlink:href="#glyph-0-7" x="353.181991" y="164.139771"/>
+<use xlink:href="#glyph-0-17" x="355.695273" y="164.139771"/>
+<use xlink:href="#glyph-0-14" x="359.607551" y="164.139771"/>
+<use xlink:href="#glyph-0-2" x="364.634115" y="164.139771"/>
+<use xlink:href="#glyph-0-11" x="367.427197" y="164.139771"/>
+<use xlink:href="#glyph-0-4" x="370.774968" y="164.139771"/>
+<use xlink:href="#glyph-0-7" x="373.568049" y="164.139771"/>
+<use xlink:href="#glyph-0-18" x="376.081331" y="164.139771"/>
+</g>
+<g clip-path="url(#clip-17)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 628.74122 0.00129549 L 680.718971 0.00129549 L 680.718971 26.830627 L 628.74122 26.830627 Z M 628.74122 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="462.520295" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="469.790862" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="473.975926" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="476.068458" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 628.74122 122.397881 L 680.718971 122.397881 L 680.718971 149.232653 L 628.74122 149.232653 Z M 628.74122 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="462.800791" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="469.510358" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="473.695422" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="475.787954" y="102.957052"/>
+</g>
+<g clip-path="url(#clip-18)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 490.222656 0.777344 L 527.550781 0.777344 L 527.550781 20.042969 L 490.222656 20.042969 Z M 490.222656 0.777344 "/>
+</g>
+<g clip-path="url(#clip-19)">
+<path fill="none" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 680.718971 0.00129549 L 732.70216 0.00129549 L 732.70216 26.830627 L 680.718971 26.830627 Z M 680.718971 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="499.860491" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="507.131058" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="511.316122" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="513.408654" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 680.718971 122.397881 L 732.70216 122.397881 L 732.70216 149.232653 L 680.718971 149.232653 Z M 680.718971 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="500.140987" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="506.850554" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="511.035618" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="513.12815" y="102.957052"/>
+</g>
+<g clip-path="url(#clip-20)">
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" d="M 527.542969 0.777344 L 564.867188 0.777344 L 564.867188 20.042969 L 527.542969 20.042969 Z M 527.542969 0.777344 "/>
+</g>
+<g clip-path="url(#clip-21)">
+<path fill="none" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 732.691281 0.00129549 L 784.669031 0.00129549 L 784.669031 26.830627 L 732.691281 26.830627 Z M 732.691281 0.00129549 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="537.200687" y="11.906664"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="544.471254" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="548.656318" y="14.633127"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="550.74885" y="14.633127"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(83.529663%, 90.979004%, 83.139038%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 732.691281 122.397881 L 784.669031 122.397881 L 784.669031 149.232653 L 732.691281 149.232653 Z M 732.691281 122.397881 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="537.481183" y="100.230589"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="544.19075" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="548.375814" y="102.957052"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="550.468346" y="102.957052"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(85.488892%, 90.979004%, 98.81897%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 628.74122 26.830627 L 680.718971 26.830627 L 680.718971 53.659959 L 628.74122 53.659959 Z M 628.74122 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="462.520295" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="469.790862" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="473.975926" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="476.068458" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 628.74122 149.221773 L 680.718971 149.221773 L 680.718971 176.051105 L 628.74122 176.051105 Z M 628.74122 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="462.800791" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="469.510358" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="473.695422" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="475.787954" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(83.529663%, 90.979004%, 83.139038%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 680.718971 26.830627 L 732.70216 26.830627 L 732.70216 53.659959 L 680.718971 53.659959 Z M 680.718971 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="499.860491" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="507.131058" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="511.316122" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="513.408654" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 680.718971 149.221773 L 732.70216 149.221773 L 732.70216 176.051105 L 680.718971 176.051105 Z M 680.718971 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="500.140987" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="506.850554" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="511.035618" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="513.12815" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(97.24884%, 80.778503%, 79.998779%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 732.691281 26.830627 L 784.669031 26.830627 L 784.669031 53.659959 L 732.691281 53.659959 Z M 732.691281 26.830627 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="537.200687" y="31.294843"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="544.471254" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="548.656318" y="34.021306"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="550.74885" y="34.021306"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(97.24884%, 80.778503%, 79.998779%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 732.691281 149.221773 L 784.669031 149.221773 L 784.669031 176.051105 L 732.691281 176.051105 Z M 732.691281 149.221773 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="537.481183" y="119.618768"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="544.19075" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="548.375814" y="122.345234"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="550.468346" y="122.345234"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 628.74122 53.649079 L 680.718971 53.649079 L 680.718971 80.478411 L 628.74122 80.478411 Z M 628.74122 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="462.520295" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="469.790862" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="473.975926" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="476.068458" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 628.74122 176.051105 L 680.718971 176.051105 L 680.718971 202.880436 L 628.74122 202.880436 Z M 628.74122 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="462.800791" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="469.510358" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="473.695422" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="475.787954" y="141.015332"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 680.718971 53.649079 L 732.70216 53.649079 L 732.70216 80.478411 L 680.718971 80.478411 Z M 680.718971 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="499.860491" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="507.131058" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="511.316122" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="513.408654" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 680.718971 176.051105 L 732.70216 176.051105 L 732.70216 202.880436 L 680.718971 202.880436 Z M 680.718971 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="500.140987" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="506.850554" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="511.035618" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-2" x="513.12815" y="141.015332"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(100%, 100%, 100%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 732.691281 53.649079 L 784.669031 53.649079 L 784.669031 80.478411 L 732.691281 80.478411 Z M 732.691281 53.649079 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-0" x="537.200687" y="50.683022"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="544.471254" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="548.656318" y="53.409484"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="550.74885" y="53.409484"/>
+</g>
+<path fill-rule="nonzero" fill="rgb(85.488892%, 90.979004%, 98.81897%)" fill-opacity="1" stroke-width="0.8" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 732.691281 176.051105 L 784.669031 176.051105 L 784.669031 202.880436 L 732.691281 202.880436 Z M 732.691281 176.051105 " transform="matrix(0.718081, 0, 0, 0.718081, 1.411507, 0.776413)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-1" x="537.481183" y="138.288866"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-0" x="544.19075" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-1" x="548.375814" y="141.015332"/>
+</g>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-1-3" x="550.468346" y="141.015332"/>
+</g>
+<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 732.690815 26.830161 L 784.668565 26.830161 L 784.668565 53.659493 L 732.690815 53.659493 Z M 732.690815 26.830161 " transform="matrix(0.718081, 0, 0, 0.718081, 1.052466, 0.417373)"/>
+<path fill="none" stroke-width="2" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="4" d="M 732.690815 149.221307 L 784.668565 149.221307 L 784.668565 176.050639 L 732.690815 176.050639 Z M 732.690815 149.221307 " transform="matrix(0.718081, 0, 0, 0.718081, 1.052466, 0.417373)"/>
+<g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
+<use xlink:href="#glyph-0-5" x="485.566197" y="164.139771"/>
+<use xlink:href="#glyph-0-11" x="490.028255" y="164.139771"/>
+<use xlink:href="#glyph-0-4" x="493.376026" y="164.139771"/>
+<use xlink:href="#glyph-0-12" x="496.169107" y="164.139771"/>
+<use xlink:href="#glyph-0-13" x="500.631165" y="164.139771"/>
+<use xlink:href="#glyph-0-7" x="503.978936" y="164.139771"/>
+<use xlink:href="#glyph-0-17" x="506.492218" y="164.139771"/>
+<use xlink:href="#glyph-0-14" x="510.404496" y="164.139771"/>
+<use xlink:href="#glyph-0-2" x="515.431061" y="164.139771"/>
+<use xlink:href="#glyph-0-11" x="518.224142" y="164.139771"/>
+<use xlink:href="#glyph-0-4" x="521.571913" y="164.139771"/>
+<use xlink:href="#glyph-0-7" x="524.364994" y="164.139771"/>
+<use xlink:href="#glyph-0-19" x="526.878277" y="164.139771"/>
+</g>
+</svg>

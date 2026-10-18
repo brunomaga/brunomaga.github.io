@@ -18,10 +18,10 @@ Curriculum learning also improves efficiency on variable-length data. When short
 Curriculum learning has three steps: (1) define a difficulty metric per sample, (2) sort samples by increasing difficulty, and (3) iterate through the sorted dataset. In distributed runs with large datasets, however, this is non-trivial. Samples are typically assigned to ranks in an interleaved fashion (e.g., by PyTorch’s `DistributedSampler`; see (a) and (b) below). If each rank sorts only its local shard, the result can be load imbalance.
 
 {: .picture}
-<img width="71%" height="71%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
+<img width="80.4%" height="80.4%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
 
 {: .caption}
-The curriculum dataset setup problem, on a network of 4 ranks and a dataset of 16 samples.
+The curriculum dataset setup problem, on a network of 4 ranks and a dataset of 16 samples. (a) Original dataset, with an interleaved assignment of the 16 samples (bars) of variable lengths (bar heights) to the 4 ranks (color-coded). (b) Dataset in (a) after distributed data loading. (c) Dataset in (b) after local sorting. (d) Dataset in (b) after distributed sorting. (e) Dataset in (d) with an interleaved assignment of the 16 samples to the 4 ranks (color-coded). (f) Dataset in (e) after distributed data loading.
 
 There are two main approaches:
 
@@ -35,7 +35,10 @@ The following sections describe the second approach.
 The difficult step is the distributed sort that transforms (b) into (d). There are other distributed sorting algorithms, but this implementation uses the **Distributed Sample Sort** algorithm, because it scales well to many processes. The workflow is:
 
 {: .picture}
-<img width="74%" height="74%" src="{{ site.assets }}/distributed-sort/sample_sort.svg"> 
+<img width="57%" height="57%" src="{{ site.assets }}/distributed-sort/sample_sort.svg"> 
+
+{: .caption}
+Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards.
 
 The Python implementation is:
 
@@ -109,7 +112,10 @@ The hyperparameters are therefore: (1) a target token count per batch, (2) a ref
 Assume a limit of $$30$$ tokens per batch, a reference LR of $$10^{-3}$$, and a reference batch size of $$2$$. Early in curriculum learning (short sequences), batches contain more samples than later (long sequences):
 
 {: .picture}
-<img width="87%" height="87%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
+<img width="74.6%" height="74.6%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
+
+{: .caption}
+Batches of at most 30 tokens, of shape BxSxE (batch size x sequence length x embedding size), with a reference batch size of 2 and a reference learning rate (LR) of 1e-3. Short sentences (left) give a larger batch, and thus a larger LR, than long sentences (right). Grey cells are padding tokens.
 
 Samples are added to a batch until it reaches at most 30 tokens. The resulting batch sizes (number of samples) are $$10$$ and $$4$$ in the left and right examples, respectively. With linear scaling, the corresponding LRs are $$5 \times 10^{-3}$$ and $$2 \times 10^{-3}$$.
 
@@ -119,7 +125,7 @@ Pipeline parallelism
 requires the same batch size and sequence length in all micro-batches of a batch, because activation shapes must remain fixed during gradient accumulation. A fixed `B x S x E` across micro-batches can lead to smaller micro-batches and more padding. The figure below compares standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right), for 2 processes and 2 gradient accumulation steps (4 micro-batches in total):
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
+<img width="95%" height="95%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
 
 In the pipeline case (right), all micro-batches have the same `B x S x E` shape. Under this constraint, each micro-batch holds fewer samples than in the non-pipeline case (left), and padding is added where needed.
 
@@ -128,7 +134,10 @@ In the pipeline case (right), all micro-batches have the same `B x S x E` shape.
 Attention is a particular challenge in variable-length training. With fixed shapes, an input of shape `B x S x E` usually uses a 2D attention mask of shape `S x S`, broadcast over the batch dimension. With variable lengths, a *per-sample* mask is required, represented as a `B x S x S` tensor. For example, the mask for the non-pipeline micro-batch 1 above (top left, 4 sentences) is:
 
 {: .picture}
-<img width="87%" height="87%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
+
+{: .caption}
+3D attention mask (BxSxS) of the non-pipeline micro-batch 1 above: its 4 samples of lengths 9, 7, 8 and 6 give a mask of size 4x9x9, with one causal mask per sample, padded to the length of the longest sample.
 
 The cost of attention scales linearly with `B` and quadratically with the maximum `S` in the batch. Letting `S` vary, and adapting `B` accordingly, therefore improves utilization, because sequences are not padded to an unnecessarily large `S`.
 
@@ -235,42 +244,42 @@ Compilation via [`torch.compile`](https://pytorch.org/docs/stable/generated/torc
 Consider a feed-forward network with 3 linear layers and 3 activations on a single GPU. Its data loading, forward pass, backward pass and optimizer step are illustrated below:
 
 {: .picture}
-<img width="52%" height="52%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial.svg"/> 
+<img width="59.6%" height="59.6%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial.svg"/> 
 
 {: .caption}
-Workflow of a single-GPU training iteration (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+Workflow of a single-GPU training iteration. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 In this example, the GPU executes many separate kernels in the forward and backward passes. When captured as a CUDA graph, these kernels are replayed with fewer launches, which often improves throughput:
 
 {: .picture}
-<img width="52%" height="52%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
+<img width="59.4%" height="59.4%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
 
 {: .caption}
-Workflow of a single-GPU training iteration with a compiled model (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+Workflow of a single-GPU training iteration with a compiled model. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 Now consider a Distributed Data Parallel (DDP) run on 2 GPUs. During backpropagation, DDP performs `all_reduce` operations to synchronize gradients across ranks. These collectives can overlap with gradient computation, because `loss.backward()` accumulates gradients into `w.grad` and `optimizer.step()` applies the updates later. The gradients of the last layers, which are computed first, are therefore reduced while the gradients of earlier layers are still being computed:
 
 {: .picture}
-<img width="62%" height="62%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
+<img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
 
 {: .caption}
-DDP execution workflow on 2 GPUs. The optimizer waits for all asynchronous `all_reduce`s of gradients to finish (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+DDP execution workflow on 2 GPUs. The optimizer waits for all asynchronous `all_reduce`s of gradients to finish. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 In a compiled model, intermediate communication steps can introduce **graph breaks**. A naïve option is to compile one large graph and run all `all_reduce`s at the end. However, this reduces overlap and increases the waiting time of the optimizer:
 
 {: .picture}
-<img width="56%" height="56%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
+<img width="64.4%" height="64.4%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
 
 {: .caption}
-DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, which increases the waiting time of the optimizer (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, which increases the waiting time of the optimizer. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 PyTorch’s `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) solves this problem. It compiles the model into subgraphs separated by the graph breaks, and starts an asynchronous synchronization at each subgraph boundary:
 
 {: .picture}
-<img width="62%" height="62%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
+<img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
 
 {: .caption}
-DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization runs asynchronously between subgraphs (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization runs asynchronously between subgraphs. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 Note that subgraph boundaries may change with input shapes. In the author's experiments, DeepSpeed ZeRO-0 did not reach the distributed speedups of PyTorch DDP, possibly because DeepSpeed lacks an optimization equivalent to `DDPOptimizer`.
 
@@ -281,10 +290,10 @@ PyTorch provides limited support for compiling variable-shaped tensors with `tor
 Static compilation is preferable, but it must handle variable shapes. A practical solution is to make each rank execute, near the beginning of training, at least one forward and backward pass for every *shape* it will see later. The compiler then generates (and caches) one binary per shape. The idea is illustrated below:
 
 {: .picture}
-<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/torch_compile_dataset.svg"/>
+<img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/torch_compile_dataset.svg"/>
 
 {: .caption}
-Dataset setup that allows static compilation for variable-length training on 3 processes. **Top (a):** default interleaved assignment (color-coded). The green and yellow ranks encounter a new shape later in training (red cross). This triggers a recompilation and, depending on the settings, possibly a runtime failure. **Bottom (b):** after reshuffling, each rank sees one sample of each shape early on. One binary is compiled per shape, and no recompilation happens afterwards.
+Dataset setup that allows static compilation for variable-length training on 3 processes. **Top (a):** original dataset of 31 samples (bars) of 4 different lengths (bar heights), with the default interleaved assignment to the processes (color-coded). The green and yellow ranks encounter a new shape later in training (red cross). This triggers a recompilation and, depending on the settings, possibly a runtime failure. **Bottom (b):** after reshuffling, each rank sees one sample of each shape (shapes 1 to 4) early on. One binary is compiled per shape, and no recompilation happens afterwards.
 
 Compilation behavior can be inspected by setting `TORCH_LOGS=recompiles`. For example, if the dataset contains lengths $$10$$, $$20$$, $$30$$, and $$40$$, a recompilation is logged whenever a new length appears:
 

@@ -82,7 +82,10 @@ $$
 where $$ W \in R^{D \times K} $$ and $$ Z \in R^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ contains the indices of the observed ratings of the input matrix $$X$$.
 
 {: .picture}
-<img width="60%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
+<img width="43.1%" height="43.1%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
+
+{: .caption}
+Matrix factorization $$X \approx WZ^T$$ of the ratings of $$D = 7$$ movies by $$N = 7$$ users, with 11 observed ratings and $$K = 3$$ latent features. The rating $$x_{dn}$$ of movie $$d$$ by user $$n$$ is approximated by the dot product of row $$d$$ of $$W$$, the features of movie $$d$$, and column $$n$$ of $$Z^T$$, the features of user $$n$$.
 
 This cost function is neither convex nor [identifiable](https://en.wikipedia.org/wiki/Identifiability). $$K$$ is the number of latent features (e.g. gender, age group, citizenship, etc.). A large $$K$$ facilitates overfitting. A regularizer can be added to the function:
 
@@ -147,10 +150,10 @@ The [**coordinate descent**](https://en.wikipedia.org/wiki/Coordinate_descent) o
 
 
 {: .picture}
-<img width="40%" height="40%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
+<img width="36.6%" height="36.6%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
 
 {: .caption}
-source: Wikipedia
+Coordinate descent on $$f(x, y) = 5x^2 - 6xy + 5y^2$$ from $$(-0.5, -1)$$: each step minimizes $$f$$ along one coordinate, alternating $$y$$ and $$x$$, and the iterates converge to the minimum at the origin. Adapted from: [Coordinate descent](https://en.wikipedia.org/wiki/Coordinate_descent)
 
 
 Its main advantage is that it is very simple to implement and does not require the derivative of the function. It is useful for very complicated functions, or for functions whose derivatives are much more expensive to compute than the function itself. However, due to its sequential nature, it is not a good candidate for parallelism. It also has an issue with non-smooth multivariable functions: it may get stuck at a non-stationary point if the level curves of the function are not smooth (source: [Wikipedia](https://en.wikipedia.org/wiki/Coordinate_descent#Limitations)).

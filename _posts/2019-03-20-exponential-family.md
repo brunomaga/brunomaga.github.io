@@ -14,11 +14,10 @@ However, this property is not exclusive to the Gaussian distribution. Most commo
 Probability distributions describe the probability of each outcome, and the probabilities of all outcomes add up to 1. Distributions fall into two groups: those described by a probability **mass function**, defined over discrete values, and those described by a probability **density function**, defined over a continuous interval. There are dozens (possibly hundreds) of distributions, but only 15 of them are commonly used. These are related to each other as follows:
 
 {: .picture}
-<img width="70%" height="70%" src="{{ site.assets }}/exponential-family/common_distributions.svg"/>
+<img width="86.4%" height="86.4%" src="{{ site.assets }}/exponential-family/common_distributions.svg"/>
 
 {: .caption}
-The 15 most common probability distributions and their relationships.
-(source: post <a href="https://medium.com/@srowen/common-probability-distributions-347e6b945ce4">Common probability distributions</a> by Sean Owen)
+The 15 most common probability distributions and their relationships. Adapted from: [Common probability distributions: the data scientist's crib sheet, S. Owen](https://medium.com/@srowen/common-probability-distributions-347e6b945ce4)
 
 
 A brief summary of their relationships follows. More details are available in the original [post](https://medium.com/@srowen/common-probability-distributions-347e6b945ce4) by Sean Owen:

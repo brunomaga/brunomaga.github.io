@@ -155,10 +155,10 @@ Two vectors are **codirected** if they point in the same direction, and **collin
 Graphical intuition: a linear mapping scales space along the directions of its eigenvectors, each by its eigenvalue. For a diagonal matrix, the eigenvectors are the canonical basis vectors, i.e. the cardinal axes:
 
 {: .picture}
-<img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg"/>
+<img width="41.1%" height="41.1%" src="{{ site.assets }}/algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg"/>
 
 {: .caption}
-Adapted from: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
+Determinants and eigenspaces. Overview of five linear mappings and their associated transformation matrices $$A_i \in \mathbb{R}^{2 \times 2}$$ projecting 400 color-coded points $$x \in \mathbb{R}^2$$ (left column) onto target points $$A_i x$$ (right column). The central column depicts the first eigenvector, stretched by its associated eigenvalue $$\lambda_1$$, and the second eigenvector stretched by its eigenvalue $$\lambda_2$$. Each row depicts the effect of one of five transformation matrices $$A_i$$ with respect to the standard basis, and gives $$\lambda_1$$, $$\lambda_2$$ and $$\det(A_i)$$. Adapted from: [Mathematics for Machine Learning, Figure 4.4](https://mml-book.github.io/)
 
 ### Cholesky Decomposition
 
@@ -181,10 +181,10 @@ and $$A^k = (PDP^{−1})^k = PD^kP^{−1}$$. A symmetric matrix can always be di
 The Singular Value Decomposition (SVD) decomposes a matrix as $$A = U \Sigma V^{\intercal}$$:
 
 {: .picture}
-<img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/mml_svd.svg"/>
+<img width="40.8%" height="40.8%" src="{{ site.assets }}/algebra-for-ml/mml_svd.svg"/>
 
 {: .caption}
-Adapted from: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
+The SVD of a matrix $$A \in \mathbb{R}^{m \times n}$$, $$A = U \Sigma V^{\intercal}$$, with the orthogonal matrices $$U \in \mathbb{R}^{m \times m}$$ and $$V \in \mathbb{R}^{n \times n}$$, and $$\Sigma \in \mathbb{R}^{m \times n}$$, whose only non-zero entries are the singular values on its diagonal. Adapted from: [Mathematics for Machine Learning, Section 4.5](https://mml-book.github.io/)
 
 The SVD exists for every matrix, not only for square ones:
 - $$\Sigma$$ is the **singular value matrix**, a (possibly non-square) matrix with non-negative diagonal entries $$\Sigma_{ii} = \sigma_{i} \ge 0$$ and zeros elsewhere. The values $$\sigma_{i}$$ are the **singular values**. $$\Sigma$$ is unique. By convention, the $$\sigma_{i}$$ are sorted by value, with the largest at $$i=1$$;
@@ -200,10 +200,10 @@ $$
 $$
 
 {: .picture}
-<img width="43%" height="43%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="{{ site.assets }}/algebra-for-ml/svd_example.svg"/>
+<img width="39.6%" height="39.6%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="57.9%" height="57.9%" src="{{ site.assets }}/algebra-for-ml/svd_example.svg"/>
 
 {: .caption}
-**Left:** intuition behind the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequence of transformations. The SVD decomposes the corresponding linear mapping into three operations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$. Bottom-left to bottom-right: $$\Sigma$$ scales and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$, and the third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$. **Right**: an example application of the SVD. Image sources: adapted from <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>, and <a href="https://scholarworks.gsu.edu/math_theses/52/">Workalemahu, Tsegaselassie, "Singular Value Decomposition in Image Noise Filtering and Reconstruction." Thesis, Georgia State University, 2008</a>
+**Left:** the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequence of three transformations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$, which maps the right-singular vectors $$v_1$$, $$v_2$$ to the standard basis vectors $$e_1$$, $$e_2$$. Bottom-left to bottom-right: $$\Sigma$$ scales by the singular values $$\sigma_1$$, $$\sigma_2$$ and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$, and the third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$, to the left-singular vectors $$u_1$$, $$u_2$$. Top-left to top-right: $$A = U \Sigma V^{\intercal}$$ maps the unit circle directly. **Right:** an application of the SVD to image compression: (a) a $$256 \times 256$$ gray image, and its approximations with its (b) 20, (c) 50 and (d) 85 largest singular values. Adapted from: [Mathematics for Machine Learning, Figure 4.8](https://mml-book.github.io/) (left) and [T. Workalemahu, Singular Value Decomposition in Image Noise Filtering and Reconstruction, Georgia State University, 2008](https://scholarworks.gsu.edu/math_theses/52/) (right)
 
 ### Eigenvalue Decomposition vs. Singular Value Decomposition
 
@@ -254,7 +254,7 @@ The initial value $$x_0$$ should be as close as possible to the zero. The line t
 <img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/newton_method.gif"/>
 
 {: .caption}
-(Source: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)
+Newton's method: the tangent of $$f$$ at each guess crosses the $$x$$ axis at the next, improved guess, and the guesses converge to the zero of $$f$$. The animation numbers the initial guess $$x_1$$ (the text's $$x_0$$), and its legend reads \"Funktion\" (the function $$f$$) and \"Tangente\" (the tangent). Source: [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method)
 
 ### Gradient and Hessian
 
@@ -346,12 +346,12 @@ f & = d + e \, .
 $$
 
 {: .picture}
-<img width="57%" height="57%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
-
-This is the same kind of thinking process that occurs when applying the chain rule. Note that the preceding set of equations requires fewer operations than a direct implementation of the function $$f(x)$$.
+<img width="64.9%" height="64.9%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
 
 {: .caption}
-(Adapted from: example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
+Computation graph of $$f(x) = \sqrt{x^2 + \exp(x^2)} + \cos(x^2 + \exp(x^2))$$, with the intermediate variables $$a = x^2$$, $$b = \exp(a)$$, $$c = a + b$$, $$d = \sqrt{c}$$ and $$e = \cos(c)$$, and $$f = d + e$$. Adapted from: [Mathematics for Machine Learning, Example 5.14](https://mml-book.github.io/)
+
+This is the same kind of thinking process that occurs when applying the chain rule. Note that the preceding set of equations requires fewer operations than a direct implementation of the function $$f(x)$$.
 
 
 ## Continuous Optimization

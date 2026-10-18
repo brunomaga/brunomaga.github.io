@@ -4,820 +4,442 @@
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="torch_compile-label" value="torch_compile.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+        <mxCell id="torch_compile-label" value="torch_compile.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
           <mxGeometry x="0" y="0" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="torch_compile-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="40" width="931" height="469" as="geometry" />
+          <mxGeometry x="0" y="40" width="707.38" height="364.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="0" y="0" width="931" height="469" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-8" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;dashed=1;dashPattern=5 5;fixDash=1;" edge="1" parent="torch_compile-figure">
+        <mxCell id="torch_compile-8" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;dashed=1;fixDash=1;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="292" y="60.5" as="sourcePoint" />
-            <mxPoint x="292" y="469" as="targetPoint" />
+            <mxPoint x="225.93" y="114.4" as="sourcePoint" />
+            <mxPoint x="225.93" y="364.78" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="torch_compile-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;dashed=1;dashPattern=5 5;fixDash=1;" edge="1" parent="torch_compile-figure">
+        <mxCell id="torch_compile-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;dashed=1;fixDash=1;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="457" y="60.5" as="sourcePoint" />
-            <mxPoint x="457" y="469" as="targetPoint" />
+            <mxPoint x="354.26" y="114.4" as="sourcePoint" />
+            <mxPoint x="354.26" y="364.78" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="torch_compile-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;dashed=1;dashPattern=5 5;fixDash=1;" edge="1" parent="torch_compile-figure">
+        <mxCell id="torch_compile-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;dashed=1;fixDash=1;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="644.5" y="60.5" as="sourcePoint" />
-            <mxPoint x="644.5" y="469" as="targetPoint" />
+            <mxPoint x="500.1" y="114.4" as="sourcePoint" />
+            <mxPoint x="500.1" y="364.78" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="torch_compile-26" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
+        <mxCell id="torch_compile-26" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=6;startSize=5.5;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="280.5" y="309" as="sourcePoint" />
-            <mxPoint x="307.5" y="309" as="targetPoint" />
+            <mxPoint x="216.99" y="240.33" as="sourcePoint" />
+            <mxPoint x="237.99" y="240.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="torch_compile-27" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
+        <mxCell id="torch_compile-27" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=6;startSize=5.5;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="444.5" y="309" as="sourcePoint" />
-            <mxPoint x="471.5" y="309" as="targetPoint" />
+            <mxPoint x="344.54" y="240.33" as="sourcePoint" />
+            <mxPoint x="365.54" y="240.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="torch_compile-28" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
+        <mxCell id="torch_compile-28" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=6;startSize=5.5;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="632.5" y="309" as="sourcePoint" />
-            <mxPoint x="659.5" y="309" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-34" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="374.5" y="237.5" as="sourcePoint" />
-            <mxPoint x="374.5" y="246.2" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-35" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="374.5" y="276.5" as="sourcePoint" />
-            <mxPoint x="374.5" y="293.2" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-36" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="374.5" y="325.5" as="sourcePoint" />
-            <mxPoint x="374.5" y="342.2" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-37" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="374.5" y="370.5" as="sourcePoint" />
-            <mxPoint x="374.5" y="379.2" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-46" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="497.5" y="322.5" as="sourcePoint" />
-            <mxPoint x="616.5" y="322.5" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-50" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="512.5" y="230.5" as="sourcePoint" />
-            <mxPoint x="512.5" y="239.2" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-51" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="540" y="230" as="sourcePoint" />
-            <mxPoint x="540" y="238.5" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-52" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="551.5" y="270.5" as="sourcePoint" />
-            <mxPoint x="551.5" y="288.2" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-53" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="551.5" y="357.5" as="sourcePoint" />
-            <mxPoint x="551.5" y="375.2" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="torch_compile-54" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.5;endFill=1;startFill=1;endSize=5.5;startSize=5.5;endArrow=block;" edge="1" parent="torch_compile-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="551.5" y="407.5" as="sourcePoint" />
-            <mxPoint x="551.5" y="416.2" as="targetPoint" />
+            <mxPoint x="490.76" y="240.33" as="sourcePoint" />
+            <mxPoint x="511.76" y="240.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-55" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="744" y="224.5" as="sourcePoint" />
-            <mxPoint x="773" y="224.5" as="targetPoint" />
+            <mxPoint x="577.49" y="174.61" as="sourcePoint" />
+            <mxPoint x="600.04" y="174.61" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-56" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="827.5" y="224.5" as="sourcePoint" />
-            <mxPoint x="856.5" y="224.5" as="targetPoint" />
+            <mxPoint x="642.43" y="174.61" as="sourcePoint" />
+            <mxPoint x="664.99" y="174.61" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-57" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="744" y="309.5" as="sourcePoint" />
-            <mxPoint x="773" y="309.5" as="targetPoint" />
+            <mxPoint x="577.49" y="240.72" as="sourcePoint" />
+            <mxPoint x="600.04" y="240.72" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-58" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="827.5" y="309.5" as="sourcePoint" />
-            <mxPoint x="856.5" y="309.5" as="targetPoint" />
+            <mxPoint x="642.43" y="240.72" as="sourcePoint" />
+            <mxPoint x="664.99" y="240.72" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-59" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="744" y="394.5" as="sourcePoint" />
-            <mxPoint x="773" y="394.5" as="targetPoint" />
+            <mxPoint x="577.49" y="306.83" as="sourcePoint" />
+            <mxPoint x="600.04" y="306.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-60" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="827.5" y="394.5" as="sourcePoint" />
-            <mxPoint x="856.5" y="394.5" as="targetPoint" />
+            <mxPoint x="642.43" y="306.83" as="sourcePoint" />
+            <mxPoint x="664.99" y="306.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-61" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="716.5" y="252.5" as="sourcePoint" />
-            <mxPoint x="716.5" y="282" as="targetPoint" />
+            <mxPoint x="556.1" y="196.39" as="sourcePoint" />
+            <mxPoint x="556.1" y="219.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-62" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="716.5" y="337" as="sourcePoint" />
-            <mxPoint x="716.5" y="366" as="targetPoint" />
+            <mxPoint x="556.1" y="262.11" as="sourcePoint" />
+            <mxPoint x="556.1" y="284.67" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-63" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="800" y="252.5" as="sourcePoint" />
-            <mxPoint x="800" y="282" as="targetPoint" />
+            <mxPoint x="621.04" y="196.39" as="sourcePoint" />
+            <mxPoint x="621.04" y="219.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-64" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="800" y="337" as="sourcePoint" />
-            <mxPoint x="800" y="366" as="targetPoint" />
+            <mxPoint x="621.04" y="262.11" as="sourcePoint" />
+            <mxPoint x="621.04" y="284.67" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-65" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="884" y="252.5" as="sourcePoint" />
-            <mxPoint x="884" y="282" as="targetPoint" />
+            <mxPoint x="686.38" y="196.39" as="sourcePoint" />
+            <mxPoint x="686.38" y="219.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-66" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="884" y="337" as="sourcePoint" />
-            <mxPoint x="884" y="366" as="targetPoint" />
+            <mxPoint x="686.38" y="262.11" as="sourcePoint" />
+            <mxPoint x="686.38" y="284.67" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-67" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="744" y="252.5" as="sourcePoint" />
-            <mxPoint x="773" y="282" as="targetPoint" />
+            <mxPoint x="577.49" y="196.39" as="sourcePoint" />
+            <mxPoint x="600.04" y="219.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-68" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="856.5" y="252.5" as="sourcePoint" />
-            <mxPoint x="827.5" y="282" as="targetPoint" />
+            <mxPoint x="664.99" y="196.39" as="sourcePoint" />
+            <mxPoint x="642.43" y="219.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-69" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="744" y="366" as="sourcePoint" />
-            <mxPoint x="773" y="337" as="targetPoint" />
+            <mxPoint x="577.49" y="284.67" as="sourcePoint" />
+            <mxPoint x="600.04" y="262.11" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="torch_compile-70" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="torch_compile-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="856.5" y="366" as="sourcePoint" />
-            <mxPoint x="827.5" y="337" as="targetPoint" />
+            <mxPoint x="664.99" y="284.67" as="sourcePoint" />
+            <mxPoint x="642.43" y="262.11" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="torch_compile-23" value="y = F.conv2d(x, ...)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=18;align=left;spacingLeft=2.5;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="19" y="269" width="169" height="25" as="geometry" />
+        <mxCell id="torch_compile-23" value="y = F.conv2d(x, ...)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;align=left;spacingLeft=1.94;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="13.6" y="209.22" width="115.1" height="19.44" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-24" value="z = F.batch_norm2d(y, ...)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=18;align=left;spacingLeft=2.5;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="19" y="295" width="236" height="25" as="geometry" />
+        <mxCell id="torch_compile-24" value="z = F.batch_norm(y, ...)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;align=left;spacingLeft=1.94;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="13.6" y="229.44" width="139.06" height="19.44" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-25" value="return F.relu(z)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=18;align=left;spacingLeft=2.5;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="19" y="321" width="146" height="25" as="geometry" />
+        <mxCell id="torch_compile-25" value="return F.relu(z)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;align=left;spacingLeft=1.94;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="13.6" y="249.67" width="92.4" height="19.44" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-29" value="x" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="366.5" y="216.5" width="16" height="17" as="geometry" />
+        <mxCell id="torch_compile-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="535.1" y="153.61" width="42.39" height="42.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-30" value="Conv2d" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="336.5" y="249" width="76.5" height="18" as="geometry" />
+        <mxCell id="torch_compile-72" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="539.76" y="159.06" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-31" value="BatchNorm" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="336.5" y="299" width="76.5" height="19" as="geometry" />
+        <mxCell id="torch_compile-73" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="552.21" y="159.06" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-32" value="ReLU" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="336.5" y="350" width="76.5" height="19" as="geometry" />
+        <mxCell id="torch_compile-74" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="564.65" y="159.06" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-33" value="y" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="366.5" y="383.5" width="16" height="17" as="geometry" />
+        <mxCell id="torch_compile-75" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="539.76" y="171.5" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-38" value="x" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="505" y="208.5" width="15.5" height="18" as="geometry" />
+        <mxCell id="torch_compile-76" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="552.21" y="171.5" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-39" value="w" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="532.5" y="208.5" width="15.5" height="18.5" as="geometry" />
+        <mxCell id="torch_compile-77" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="564.65" y="171.5" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-40" value="Conv" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="505.5" y="241" width="42.5" height="19" as="geometry" />
+        <mxCell id="torch_compile-78" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="539.76" y="183.94" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-42" value="bias" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="565.5" y="241" width="43.5" height="19" as="geometry" />
+        <mxCell id="torch_compile-79" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="552.21" y="183.94" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-43" value="x" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="505.5" y="299.5" width="15" height="18" as="geometry" />
+        <mxCell id="torch_compile-80" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="564.65" y="183.94" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-45" value="mean(x)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="540.5" y="299" width="68.5" height="19" as="geometry" />
+        <mxCell id="torch_compile-81" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="600.04" y="153.61" width="42.39" height="42.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-47" value="stdv(x)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="526.5" y="328" width="61.5" height="19" as="geometry" />
+        <mxCell id="torch_compile-82" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="604.71" y="159.06" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-48" value="max(x,0)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="513.5" y="385" width="76.5" height="18" as="geometry" />
+        <mxCell id="torch_compile-83" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="617.15" y="159.06" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-49" value="y" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="543.5" y="420.5" width="15" height="18" as="geometry" />
+        <mxCell id="torch_compile-84" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="629.6" y="159.06" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="689.5" y="197.5" width="54.5" height="55" as="geometry" />
+        <mxCell id="torch_compile-85" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="604.71" y="171.5" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-72" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="695.5" y="204.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="617.15" y="171.5" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-73" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="711.5" y="204.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-87" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="629.6" y="171.5" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-74" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="727.5" y="204.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-88" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="604.71" y="183.94" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-75" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="695.5" y="220.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-89" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="617.15" y="183.94" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-76" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="711.5" y="220.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-90" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="629.6" y="183.94" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-77" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="727.5" y="220.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-91" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="664.99" y="153.61" width="42.39" height="42.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-78" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="695.5" y="236.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-92" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="669.65" y="159.06" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-79" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="711.5" y="236.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-93" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="682.1" y="159.06" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-80" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="727.5" y="236.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-94" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="694.54" y="159.06" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-81" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="773" y="197.5" width="54.5" height="55" as="geometry" />
+        <mxCell id="torch_compile-95" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="669.65" y="171.5" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-82" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="779" y="204.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-96" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="682.1" y="171.5" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-83" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="795" y="204.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-97" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="694.54" y="171.5" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-84" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="811" y="204.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-98" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="669.65" y="183.94" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-85" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="779" y="220.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-99" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="682.1" y="183.94" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="795" y="220.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="694.54" y="183.94" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-87" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="811" y="220.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-101" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="535.1" y="219.33" width="42.39" height="42.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-88" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="779" y="236.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-102" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="539.76" y="224.78" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-89" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="795" y="236.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-103" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="552.21" y="224.78" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-90" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="811" y="236.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-104" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="564.65" y="224.78" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-91" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="856.5" y="197.5" width="54.5" height="55" as="geometry" />
+        <mxCell id="torch_compile-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="539.76" y="237.22" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-92" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="862.5" y="204.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="552.21" y="237.22" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-93" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="878.5" y="204.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="564.65" y="237.22" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-94" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="894.5" y="204.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="539.76" y="249.67" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-95" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="862.5" y="220.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-109" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="552.21" y="249.67" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-96" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="878.5" y="220.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-110" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="564.65" y="249.67" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-97" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="894.5" y="220.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-111" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="600.04" y="219.33" width="42.39" height="42.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-98" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="862.5" y="236.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-112" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="604.71" y="224.78" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-99" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="878.5" y="236.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-113" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="617.15" y="224.78" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-100" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="894.5" y="236.5" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-114" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="629.6" y="224.78" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-101" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="689.5" y="282" width="54.5" height="55" as="geometry" />
+        <mxCell id="torch_compile-115" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="604.71" y="237.22" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-102" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="695.5" y="289" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-116" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="617.15" y="237.22" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-103" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="711.5" y="289" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-117" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="629.6" y="237.22" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-104" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="727.5" y="289" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-118" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="604.71" y="249.67" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-105" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="695.5" y="305" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="617.15" y="249.67" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-106" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="711.5" y="305" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-120" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="629.6" y="249.67" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="727.5" y="305" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="664.99" y="219.33" width="42.39" height="42.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="695.5" y="321" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-122" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="669.65" y="224.78" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-109" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="711.5" y="321" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-123" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="682.1" y="224.78" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-110" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="727.5" y="321" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-124" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="694.54" y="224.78" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-111" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="773" y="282" width="54.5" height="55" as="geometry" />
+        <mxCell id="torch_compile-125" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="669.65" y="237.22" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-112" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="779" y="289" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-126" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="682.1" y="237.22" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-113" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="795" y="289" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-127" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="694.54" y="237.22" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-114" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="811" y="289" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-128" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="669.65" y="249.67" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-115" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="779" y="305" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-129" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="682.1" y="249.67" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-116" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="795" y="305" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-130" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="694.54" y="249.67" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-117" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="811" y="305" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-131" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="535.1" y="284.67" width="42.39" height="42.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-118" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="779" y="321" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-132" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="539.76" y="290.11" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="795" y="321" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-133" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="552.21" y="290.11" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-120" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="811" y="321" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-134" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="564.65" y="290.11" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="856.5" y="282" width="54.5" height="55" as="geometry" />
+        <mxCell id="torch_compile-135" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="539.76" y="302.56" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-122" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="862.5" y="289" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-136" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="552.21" y="302.56" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-123" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="878.5" y="289" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-137" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="564.65" y="302.56" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-124" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="894.5" y="289" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-138" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="539.76" y="315" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-125" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="862.5" y="305" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-139" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="552.21" y="315" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-126" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="878.5" y="305" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-140" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="564.65" y="315" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-127" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="894.5" y="305" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-141" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="600.04" y="284.67" width="42.39" height="42.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-128" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="862.5" y="321" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-142" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="604.71" y="290.11" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-129" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="878.5" y="321" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-143" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="617.15" y="290.11" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-130" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="894.5" y="321" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-144" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="629.6" y="290.11" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-131" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="689.5" y="366" width="54.5" height="55" as="geometry" />
+        <mxCell id="torch_compile-145" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="604.71" y="302.56" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-132" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="695.5" y="373" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-146" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="617.15" y="302.56" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-133" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="711.5" y="373" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-147" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="629.6" y="302.56" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-134" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="727.5" y="373" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-148" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="604.71" y="315" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-135" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="695.5" y="389" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-149" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="617.15" y="315" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-136" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="711.5" y="389" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-150" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="629.6" y="315" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-137" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="727.5" y="389" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-151" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="664.99" y="284.67" width="42.39" height="42.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-138" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="695.5" y="405" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-152" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="669.65" y="290.11" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-139" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="711.5" y="405" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-153" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="682.1" y="290.11" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-140" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="727.5" y="405" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-154" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="694.54" y="290.11" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-141" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="773" y="366" width="54.5" height="55" as="geometry" />
+        <mxCell id="torch_compile-155" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="669.65" y="302.56" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-142" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="779" y="373" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-156" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="682.1" y="302.56" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-143" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="795" y="373" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-157" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="694.54" y="302.56" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-144" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="811" y="373" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-158" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="669.65" y="315" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-145" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="779" y="389" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-159" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="682.1" y="315" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-146" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="795" y="389" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-160" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="694.54" y="315" width="7.78" height="7.78" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-147" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="811" y="389" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-161" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=12;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="618.71" y="262.5" width="4.67" height="4.67" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-148" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="779" y="405" width="10" height="10" as="geometry" />
+        <mxCell id="torch_compile-22" value="def foo(x):" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Times New Roman;fontColor=#000000;" vertex="1" parent="torch_compile-figure">
+          <mxGeometry x="0" y="186.52" width="65.25" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="torch_compile-149" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="795" y="405" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-150" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="811" y="405" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-151" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="856.5" y="366" width="54.5" height="55" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-152" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="862.5" y="373" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-153" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="878.5" y="373" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-154" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="894.5" y="373" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-155" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#9673a6;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="862.5" y="389" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-156" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="878.5" y="389" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-157" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="894.5" y="389" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-158" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="862.5" y="405" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-159" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="878.5" y="405" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-160" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="894.5" y="405" width="10" height="10" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-161" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d79b00;fontSize=14;strokeColor=#000000;strokeWidth=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="797" y="337.5" width="6" height="6" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-2" value="Graph" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=20;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="257.7094" y="3.87" width="67.5813" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-3" value="Acquisition" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=20;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="237.1422" y="31.17" width="108.7156" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-4" value="Graph" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=20;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="423.2094" y="3.87" width="67.5813" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-5" value="Lowering" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=20;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="410.4219" y="31.17" width="93.1562" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-6" value="Graph" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=20;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="610.2094" y="3.87" width="67.5812" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-7" value="Compilation" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=20;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="585.2" y="31.17" width="117.6" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-11" value="TorchDynamo" style="text;html=1;align=left;verticalAlign=middle;fontSize=14.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="238.2" y="66.2758" width="108.4046" height="17.4" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-12" value="+AOTAutograd" style="text;html=1;align=left;verticalAlign=middle;fontSize=14.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="238.9" y="83.2758" width="114.4312" height="17.4" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-13" value="ATen/Prim IR" style="text;html=1;align=left;verticalAlign=middle;fontSize=14.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="413.5" y="75.2758" width="100.8895" height="17.4" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-14" value="TorchInductor (default) powered by Triton" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="649" y="75.749" width="250" height="16.8" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-15" value="Future:" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="651" y="92.0618" width="48.1577" height="12.6" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-16" value="Your Own Backend" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="651" y="104.5618" width="107.4844" height="12.6" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-17" value="nvFuser" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="651" y="117.0618" width="52.8434" height="12.6" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-18" value="TVM" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="651" y="129.5617" width="34.1632" height="12.6" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-19" value="XLA" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="651" y="142.0617" width="33" height="12.6" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-20" value="AITemplate" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="651" y="154.5617" width="67.8141" height="12.6" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-21" value="TensorRT" style="text;html=1;align=left;verticalAlign=middle;fontSize=10.5;fontStyle=1;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="651" y="167.0617" width="60.2213" height="12.6" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-22" value="def foo(x):" style="text;html=1;align=left;verticalAlign=middle;fontSize=20;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="2.8" y="241.17" width="102.0312" height="24" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-41" value="+" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="550.5" y="241.5" width="13" height="18" as="geometry" />
-        </mxCell>
-        <mxCell id="torch_compile-44" value="-" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;" vertex="1" parent="torch_compile-figure">
-          <mxGeometry x="523.5" y="299.5" width="14" height="18" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-label" value="gptlite_compact.png" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="0" y="589" width="600" height="30" as="geometry" />
+        <mxCell id="torch_compile-x2249" parent="torch_compile-figure" value="Graph&lt;br&gt;Acquisition" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=1;" vertex="1"><mxGeometry x="191.2" y="0" width="69.46" height="33.6" as="geometry" /></mxCell><mxCell id="torch_compile-x2250" parent="torch_compile-figure" value="Graph&lt;br&gt;Lowering" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=1;" vertex="1"><mxGeometry x="324.99" y="0" width="58.55" height="33.6" as="geometry" /></mxCell><mxCell id="torch_compile-x2251" parent="torch_compile-figure" value="Graph&lt;br&gt;Compilation" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=1;" vertex="1"><mxGeometry x="462.26" y="0" width="75.67" height="33.6" as="geometry" /></mxCell><mxCell id="torch_compile-x2252" parent="torch_compile-figure" value="TorchDynamo&lt;br&gt;+ AOTAutograd" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="179.86" y="40" width="92.15" height="33.6" as="geometry" /></mxCell><mxCell id="torch_compile-x2253" parent="torch_compile-figure" value="ATen/Prim IR" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="314.78" y="40" width="78.96" height="16.8" as="geometry" /></mxCell><mxCell id="torch_compile-x2254" parent="torch_compile-figure" value="TorchInductor (default)&lt;br&gt;powered by Triton" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="433.82" y="40" width="132.57" height="33.6" as="geometry" /></mxCell><mxCell id="torch_compile-x2255" parent="torch_compile-figure" value="Other backends: custom backend,&lt;br&gt;nvFuser, TVM, XLA, AITemplate, TensorRT" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=12;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="391.27" y="77.6" width="217.65" height="28.8" as="geometry" /></mxCell><mxCell id="torch_compile-x2256" parent="torch_compile-figure" value="x" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffffff;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="281.1" y="164.33" width="18" height="18" as="geometry" /></mxCell><mxCell id="torch_compile-x2257" parent="torch_compile-figure" value="Conv2d" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffe6cc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="252.1" y="196.33" width="76" height="20" as="geometry" /></mxCell><mxCell id="torch_compile-x2258" parent="torch_compile-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="290.1" y="182.33" as="sourcePoint" /><mxPoint x="290.1" y="196.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2259" parent="torch_compile-figure" value="BatchNorm" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#f8cecc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="252.1" y="230.33" width="76" height="20" as="geometry" /></mxCell><mxCell id="torch_compile-x2260" parent="torch_compile-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="290.1" y="216.33" as="sourcePoint" /><mxPoint x="290.1" y="230.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2261" parent="torch_compile-figure" value="ReLU" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#e1d5e7;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="252.1" y="264.33" width="76" height="20" as="geometry" /></mxCell><mxCell id="torch_compile-x2262" parent="torch_compile-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="290.1" y="250.33" as="sourcePoint" /><mxPoint x="290.1" y="264.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2263" parent="torch_compile-figure" value="y" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffffff;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="281.1" y="298.33" width="18" height="18" as="geometry" /></mxCell><mxCell id="torch_compile-x2264" parent="torch_compile-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="290.1" y="284.33" as="sourcePoint" /><mxPoint x="290.1" y="298.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2265" parent="torch_compile-figure" value="x" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffffff;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="381.86" y="151.33" width="18" height="18" as="geometry" /></mxCell><mxCell id="torch_compile-x2266" parent="torch_compile-figure" value="w" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffe6cc;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="404.03" y="151.33" width="18" height="18" as="geometry" /></mxCell><mxCell id="torch_compile-x2267" parent="torch_compile-figure" value="Conv" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffe6cc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="379.78" y="183.33" width="44.34" height="20" as="geometry" /></mxCell><mxCell id="torch_compile-x2268" parent="torch_compile-figure" value="+" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="427.66" y="184.93" width="8.9" height="16.8" as="geometry" /></mxCell><mxCell id="torch_compile-x2269" parent="torch_compile-figure" value="bias" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffe6cc;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="440.11" y="183.33" width="34.55" height="20" as="geometry" /></mxCell><mxCell id="torch_compile-x2270" parent="torch_compile-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="390.86" y="169.33" as="sourcePoint" /><mxPoint x="390.86" y="183.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2271" parent="torch_compile-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="413.03" y="169.33" as="sourcePoint" /><mxPoint x="413.03" y="183.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2272" parent="torch_compile-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="427.22" y="203.33" as="sourcePoint" /><mxPoint x="427.22" y="217.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2273" parent="torch_compile-figure" value="x" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffffff;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="380.9" y="217.33" width="18" height="20" as="geometry" /></mxCell><mxCell id="torch_compile-x2274" parent="torch_compile-figure" value="−" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="402.45" y="218.93" width="8.9" height="16.8" as="geometry" /></mxCell><mxCell id="torch_compile-x2275" parent="torch_compile-figure" value="mean(x)" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#f8cecc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="414.9" y="217.33" width="58.64" height="20" as="geometry" /></mxCell><mxCell id="torch_compile-x2276" parent="torch_compile-figure" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="374.9" y="240.33" as="sourcePoint" /><mxPoint x="479.54" y="240.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2277" parent="torch_compile-figure" value="stdv(x)" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#f8cecc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="401.39" y="243.33" width="51.66" height="20" as="geometry" /></mxCell><mxCell id="torch_compile-x2278" parent="torch_compile-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="427.22" y="263.33" as="sourcePoint" /><mxPoint x="427.22" y="277.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2279" parent="torch_compile-figure" value="max(x, 0)" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#e1d5e7;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="394.01" y="277.33" width="66.43" height="20" as="geometry" /></mxCell><mxCell id="torch_compile-x2280" parent="torch_compile-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="427.22" y="297.33" as="sourcePoint" /><mxPoint x="427.22" y="311.33" as="targetPoint" /></mxGeometry></mxCell><mxCell id="torch_compile-x2281" parent="torch_compile-figure" value="y" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffffff;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="418.22" y="311.33" width="18" height="18" as="geometry" /></mxCell><mxCell id="gptlite_compact-label" value="gptlite_compact.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="464.78" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="gptlite_compact-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="629" width="347" height="949" as="geometry" />
+          <mxGeometry x="0" y="504.78" width="220.08" height="590.58" as="geometry" />
         </mxCell>
-        <mxCell id="gptlite_compact-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="0" y="0" width="347" height="949" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-8" value="more blocks" style="rounded=1;absoluteArcSize=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=26;spacingRight=15.5;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="14" y="243" width="237.5" height="56" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-12" value="" style="rounded=1;absoluteArcSize=1;arcSize=40;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="14" y="354" width="237.5" height="352" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-4" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="89" as="sourcePoint" />
-            <mxPoint x="114" y="58" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-5" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="152" as="sourcePoint" />
-            <mxPoint x="114" y="119.7" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-9" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;dashed=1;dashPattern=8 6;fixDash=1;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="255.5" as="sourcePoint" />
-            <mxPoint x="114" y="182.7" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;dashed=1;dashPattern=8 6;fixDash=1;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="339" as="sourcePoint" />
-            <mxPoint x="114" y="285.5" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="369" as="sourcePoint" />
-            <mxPoint x="114" y="345.5" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-17" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="410" as="sourcePoint" />
-            <mxPoint x="114" y="399" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-18" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="510" as="sourcePoint" />
-            <mxPoint x="114" y="475.7" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-19" value="" style="endArrow=classic;startArrow=none;html=1;rounded=1;arcSize=24;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="499.5" as="sourcePoint" />
-            <mxPoint x="195.7" y="384" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="234" y="499.5" />
-              <mxPoint x="234" y="384" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-20" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="551" as="sourcePoint" />
-            <mxPoint x="114" y="540" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-21" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="750.25" as="sourcePoint" />
-            <mxPoint x="114" y="643.2" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-22" value="" style="endArrow=classic;startArrow=none;html=1;rounded=1;arcSize=20;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="668" as="sourcePoint" />
-            <mxPoint x="54" y="643.2" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="54" y="668" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-23" value="" style="endArrow=classic;startArrow=none;html=1;rounded=1;arcSize=20;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="668" as="sourcePoint" />
-            <mxPoint x="174" y="643.2" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="174" y="668" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-24" value="" style="endArrow=classic;startArrow=none;html=1;rounded=1;arcSize=24;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="690.5" as="sourcePoint" />
-            <mxPoint x="195.7" y="525" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="234" y="690.5" />
-              <mxPoint x="234" y="525" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-29" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="151.5" y="761.75" as="sourcePoint" />
-            <mxPoint x="125.5" y="761.75" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-31" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="799" as="sourcePoint" />
-            <mxPoint x="114" y="773.9" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-32" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=3;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="114" y="913" as="sourcePoint" />
-            <mxPoint x="114" y="864.7" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-2" value="Softmax" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=24;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="33" y="89" width="162" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-3" value="Linear" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=24;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="33" y="152" width="162" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-13" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=24;spacingTop=2;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="33" y="369" width="162" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-14" value="Feed&lt;br&gt;Forward" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=24;spacingBottom=3;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="33" y="410" width="162" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-15" value="Add &amp;amp; Norm" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=24;spacingTop=2;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="33" y="510" width="162" height="30" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-16" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=24;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="33" y="551" width="162" height="91.5" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-26" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="102.5" y="750.25" width="23" height="23" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-27" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="151.5" y="735.75" width="52" height="52" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-30" value="Input&lt;br&gt;Embedding" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=24;strokeColor=#000000;strokeWidth=1.33;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="33" y="799" width="162" height="65" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-6" value="&lt;div style=&quot;line-height:0.6;&quot;&gt;Output&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=27;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="67.2268" y="0.6445" width="93.0464" height="16.2" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-7" value="Probabilities" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=27;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="34.4651" y="25.5445" width="159.0698" height="32.4" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-25" value="N×" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=27;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="263.3656" y="511.1445" width="47.2688" height="32.4" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-28" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;curved=1;strokeColor=#000000;strokeWidth=2;endFill=1;startFill=1;endSize=7;startSize=7;" edge="1" parent="gptlite_compact-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="151.5" y="761.75" as="sourcePoint" />
-            <mxPoint x="203.5" y="761.75" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="164.5" y="735.75" />
-              <mxPoint x="190.5" y="787.75" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="gptlite_compact-33" value="Positional" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=27;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="217.9" y="727.7445" width="129.0661" height="32.4" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-34" value="Encoding" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=27;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="217.9" y="761.5445" width="124.5816" height="32.4" as="geometry" />
-        </mxCell>
-        <mxCell id="gptlite_compact-35" value="&lt;div style=&quot;line-height:0.9;&quot;&gt;Inputs&lt;/div&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=27;" vertex="1" parent="gptlite_compact-figure">
-          <mxGeometry x="65.2273" y="921.5945" width="85.5455" height="24.3" as="geometry" />
-        </mxCell>
-        <mxCell id="benchmark_model-label" value="benchmark_model.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
-          <mxGeometry x="0" y="3210.8" width="600" height="30" as="geometry" />
+        <mxCell id="gptlite_compact-x2282" parent="gptlite_compact-figure" value="Output&lt;br&gt;Probabilities" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="22.45" y="0" width="71.77" height="33.6" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2283" parent="gptlite_compact-figure" value="" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#f5f5f5;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="0" y="159.1" width="132.58" height="286.8" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2284" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="49.6" as="sourcePoint" /><mxPoint x="58.33" y="33.6" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2285" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="86.1" as="sourcePoint" /><mxPoint x="58.33" y="67.1" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2286" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="122.6" as="sourcePoint" /><mxPoint x="58.33" y="103.6" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2287" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="167.1" as="sourcePoint" /><mxPoint x="58.33" y="140.1" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2288" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="199.1" as="sourcePoint" /><mxPoint x="58.33" y="187.1" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2289" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="249.02" as="sourcePoint" /><mxPoint x="58.33" y="237.02" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2290" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="294.52" as="sourcePoint" /><mxPoint x="58.33" y="266.52" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2291" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=1;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;arcSize=24;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="280.52" as="sourcePoint" /><mxPoint x="68.33" y="177.1" as="targetPoint" /><Array as="points"><mxPoint x="121.58" y="280.52" /><mxPoint x="121.58" y="177.1" /></Array></mxGeometry></mxCell><mxCell id="gptlite_compact-x2292" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="326.52" as="sourcePoint" /><mxPoint x="58.33" y="314.52" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2293" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="404.4" as="sourcePoint" /><mxPoint x="58.33" y="379.9" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2294" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=1;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;arcSize=20;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="394.4" as="sourcePoint" /><mxPoint x="23.33" y="379.9" as="targetPoint" /><Array as="points"><mxPoint x="23.33" y="394.4" /></Array></mxGeometry></mxCell><mxCell id="gptlite_compact-x2295" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=1;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;arcSize=20;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="394.4" as="sourcePoint" /><mxPoint x="93.33" y="379.9" as="targetPoint" /><Array as="points"><mxPoint x="93.33" y="394.4" /></Array></mxGeometry></mxCell><mxCell id="gptlite_compact-x2296" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="469.9" as="sourcePoint" /><mxPoint x="58.33" y="421.9" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2297" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=1;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;arcSize=24;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="435.9" as="sourcePoint" /><mxPoint x="68.33" y="304.52" as="targetPoint" /><Array as="points"><mxPoint x="121.58" y="435.9" /><mxPoint x="121.58" y="304.52" /></Array></mxGeometry></mxCell><mxCell id="gptlite_compact-x2298" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="510.86" as="sourcePoint" /><mxPoint x="58.33" y="489.9" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2299" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="125.58" y="479.9" as="sourcePoint" /><mxPoint x="68.33" y="479.9" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2300" parent="gptlite_compact-figure" value="Softmax" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#d5e8d4;absoluteArcSize=1;arcSize=8.75;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="11.08" y="49.6" width="94.5" height="17.5" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2301" parent="gptlite_compact-figure" value="Linear" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#e1d5e7;absoluteArcSize=1;arcSize=8.75;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="11.08" y="86.1" width="94.5" height="17.5" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2302" parent="gptlite_compact-figure" value="Layer Norm" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#fff2cc;absoluteArcSize=1;arcSize=8.75;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="11.08" y="122.6" width="94.5" height="17.5" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2303" parent="gptlite_compact-figure" value="" vertex="1" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;"><mxGeometry x="48.33" y="167.1" width="20" height="20" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2304" parent="gptlite_compact-figure" value="Feed&lt;br&gt;Forward" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#dae8fc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="11.08" y="199.1" width="94.5" height="37.92" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2305" parent="gptlite_compact-figure" value="Layer Norm" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#fff2cc;absoluteArcSize=1;arcSize=8.75;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="11.08" y="249.02" width="94.5" height="17.5" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2306" parent="gptlite_compact-figure" value="" vertex="1" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;"><mxGeometry x="48.33" y="294.52" width="20" height="20" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2307" parent="gptlite_compact-figure" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#ffe6cc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="11.08" y="326.52" width="94.5" height="53.38" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2308" parent="gptlite_compact-figure" value="Layer Norm" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#fff2cc;absoluteArcSize=1;arcSize=8.75;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="11.08" y="404.4" width="94.5" height="17.5" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2309" parent="gptlite_compact-figure" value="" vertex="1" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=0.8;"><mxGeometry x="48.33" y="469.9" width="20" height="20" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2310" parent="gptlite_compact-figure" value="Position&lt;br&gt;Embedding" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#f8cecc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="125.58" y="460.94" width="94.5" height="37.92" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2311" parent="gptlite_compact-figure" value="Token&lt;br&gt;Embedding" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#f8cecc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="11.08" y="510.86" width="94.5" height="37.92" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2312" parent="gptlite_compact-figure" value="N×" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=left;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="142.58" y="294.1" width="19.01" height="16.8" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2313" parent="gptlite_compact-figure" value="Inputs" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="40.33" y="573.78" width="36" height="16.8" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2314" parent="gptlite_compact-figure" value="Positions" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="146.65" y="573.78" width="52.35" height="16.8" as="geometry" /></mxCell><mxCell id="gptlite_compact-x2315" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="58.33" y="573.78" as="sourcePoint" /><mxPoint x="58.33" y="548.78" as="targetPoint" /></mxGeometry></mxCell><mxCell id="gptlite_compact-x2316" parent="gptlite_compact-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="172.83" y="573.78" as="sourcePoint" /><mxPoint x="172.83" y="498.86" as="targetPoint" /></mxGeometry></mxCell><mxCell id="benchmark_model-label" value="benchmark_model.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="0" y="1155.36" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="benchmark_model-figure" value="" style="group" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="3250.8" width="240" height="386" as="geometry" />
+          <mxGeometry x="0" y="1195.36" width="226.65" height="223.6" as="geometry" />
         </mxCell>
-        <mxCell id="benchmark_model-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=none;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry x="1.18" y="0" width="238.82" height="386" as="geometry" />
-        </mxCell>
-        <mxCell id="benchmark_model-1" value="Linear (size W)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.02;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry y="218.7555" width="177.33990147783248" height="35.28315196998124" as="geometry" x="0" />
-        </mxCell>
-        <mxCell id="benchmark_model-2" value="Inputs" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry x="19.04" y="346.95" width="139.26" height="39.05" as="geometry" />
-        </mxCell>
-        <mxCell id="benchmark_model-3" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;fontSize=16;" edge="1" parent="benchmark_model-figure">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="89.8522" y="354.0076" as="sourcePoint" />
-            <mxPoint x="89.8522" y="306.9634" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="benchmark_model-4" value="Linear (size W)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.02;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry y="265.7997" width="177.33990147783248" height="35.28315196998124" as="geometry" x="0" />
-        </mxCell>
-        <mxCell id="benchmark_model-5" value="Linear (size W)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.02;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry y="171.7113" width="177.33990147783248" height="35.28315196998124" as="geometry" x="0" />
-        </mxCell>
-        <mxCell id="benchmark_model-6" value="Output Probabilities" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry x="6.08" y="8.47" width="167.54" height="35.28" as="geometry" />
-        </mxCell>
-        <mxCell id="benchmark_model-7" value="" style="endArrow=classic;html=1;rounded=0;strokeWidth=2;fontSize=16;" edge="1" parent="benchmark_model-figure">
-          <mxGeometry width="50" height="50" relative="1" as="geometry">
-            <mxPoint x="87.2611" y="78.5083" as="sourcePoint" />
-            <mxPoint x="87.8522" y="44.4012" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="benchmark_model-8" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;...&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;rotation=-90;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry x="47.2906" y="138.7804" width="70.935960591133" height="35.28315196998124" as="geometry" />
-        </mxCell>
-        <mxCell id="benchmark_model-9" value="more Linear layers" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.02;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry x="1.1823" y="105.8495" width="177.33990147783248" height="35.28315196998124" as="geometry" />
-        </mxCell>
-        <mxCell id="benchmark_model-10" value="&lt;font style=&quot;font-size: 16px;&quot;&gt;&lt;b style=&quot;font-size: 16px;&quot;&gt;...&lt;/b&gt;&lt;/font&gt;" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=16;rotation=-90;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry x="47.2906" y="73.7424" width="70.935960591133" height="35.28315196998124" as="geometry" />
-        </mxCell>
-        <mxCell id="benchmark_model-11" value="Lx" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=top;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="benchmark_model-figure">
-          <mxGeometry x="169.064" y="105.8495" width="70.935960591133" height="35.28315196998124" as="geometry" />
-        </mxCell>
-      </root>
+        <mxCell id="benchmark_model-x2317" parent="benchmark_model-figure" value="Outputs" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="55.68" y="0" width="45.34" height="16.8" as="geometry" /></mxCell><mxCell id="benchmark_model-x2318" parent="benchmark_model-figure" value="Linear (size W) + ReLU" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#dae8fc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="0" y="36.8" width="156.69" height="30" as="geometry" /></mxCell><mxCell id="benchmark_model-x2319" parent="benchmark_model-figure" value="Linear (size W) + ReLU" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#dae8fc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="0" y="106.8" width="156.69" height="30" as="geometry" /></mxCell><mxCell id="benchmark_model-x2320" parent="benchmark_model-figure" value="Linear (size W) + ReLU" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fillColor=#dae8fc;absoluteArcSize=1;arcSize=10;fontStyle=0;verticalAlign=middle;align=center;" vertex="1"><mxGeometry x="0" y="156.8" width="156.69" height="30" as="geometry" /></mxCell><mxCell id="benchmark_model-x2321" parent="benchmark_model-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="78.35" y="36.8" as="sourcePoint" /><mxPoint x="78.35" y="16.8" as="targetPoint" /></mxGeometry></mxCell><mxCell id="benchmark_model-x2322" parent="benchmark_model-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;dashed=1;dashPattern=1 2;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="78.35" y="106.8" as="sourcePoint" /><mxPoint x="78.35" y="66.8" as="targetPoint" /></mxGeometry></mxCell><mxCell id="benchmark_model-x2323" parent="benchmark_model-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="78.35" y="156.8" as="sourcePoint" /><mxPoint x="78.35" y="136.8" as="targetPoint" /></mxGeometry></mxCell><mxCell id="benchmark_model-x2324" parent="benchmark_model-figure" value="Inputs" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=center;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="60.35" y="206.8" width="36" height="16.8" as="geometry" /></mxCell><mxCell id="benchmark_model-x2325" parent="benchmark_model-figure" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;" edge="1"><mxGeometry relative="1" as="geometry"><mxPoint x="78.35" y="206.8" as="sourcePoint" /><mxPoint x="78.35" y="186.8" as="targetPoint" /></mxGeometry></mxCell><mxCell id="benchmark_model-x2326" parent="benchmark_model-figure" value="" vertex="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=1;flipH=1;size=0.5;strokeColor=#000000;strokeWidth=1;fillColor=none;"><mxGeometry x="164.69" y="36.8" width="10" height="150" as="geometry" /></mxCell><mxCell id="benchmark_model-x2327" parent="benchmark_model-figure" value="L layers" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Times New Roman;fontSize=14;fontColor=#000000;align=left;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="180.69" y="103.4" width="45.96" height="16.8" as="geometry" /></mxCell></root>
     </mxGraphModel>
   </diagram>
 </mxfile>

@@ -46,7 +46,9 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   both pages link to that file. The same holds for a picture used by two posts (for example
   matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts).
 - Charts drawn from data (plots, benchmarks, histograms) keep their data and the script or spreadsheet that
-  draws them next to the SVG, and follow the same palette, font and sizes as the diagrams.
+  draws them next to the SVG, and follow the same palette, font and sizes as the diagrams. A chart whose data
+  or script is not in the repository is restyled in its SVG: its font, text sizes, colors and line weights
+  change, its data and marks stay.
 - Paper figures are redrawn in this style too, and their captions credit the paper (section 9).
 
 ### 3. Page width and scale
@@ -87,6 +89,11 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   sizes at least 1.1 times larger become 16, sizes under 0.9 times smaller become 12.
   Italic is allowed for variables and for emphasis, bold only for titles, subtitles and names the post's
   text refers to.
+- Charts use the same sizes: tick labels 12, axis labels and legends 14, panel titles 14 bold. A panel title
+  that is a sentence goes into the caption; panel letters and short panel names stay. A legend with many
+  entries in a small chart may use 10 (llama3_scaling_laws).
+- Numbers: a true minus sign (−), a space between a number and its unit (25 μs), upright units, and commas
+  between thousands (48,001).
 - Text color: black #000000. Secondary text (faded, next iteration, notes): grey #666666. Accent text, for
   names the text refers to, uses the dark accent colors in section 5.
 - Free text does not wrap inside a box narrower than the text (whiteSpace=nowrap, explicit <br> for
@@ -142,6 +149,8 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
     grid lines without fill.
 - Thin arrows and connectors: black #000000, 1 px, endArrow=block, endFill=1, endSize=6. Dashed arrows
   use the same head. Grey #666666 only for faded or "next iteration" content.
+- Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1 px black line with a
+  flat bar head, endArrow=baseDash;endSize=10.
 - Frames and lines without fill: black, 1 px (2 px for an emphasis). Lines thinner than 0.7 px at page scale
   (grid lines drawn over a photo or a matrix) keep their weight.
 - No end-of-sequence cells or tokens in schedules: the last decode cell is the last token.
