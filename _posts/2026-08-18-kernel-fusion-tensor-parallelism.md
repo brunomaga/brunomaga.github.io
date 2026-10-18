@@ -82,7 +82,7 @@ The all-reduce of a band is a reduce-scatter followed by an all-gather. Each GPU
 
 ## Results
 
-The fused kernel was compared with a tuned, non-fused implementation that uses the all-reduce of NCCL, on the FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs of one node connected by NVLink, in `bfloat16`. It is 22% to 62% faster, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB.
+The fused kernel was compared with a tuned, non-fused implementation that uses the all-reduce of NCCL, on the FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs of one node connected by NVLink, in `bfloat16`. It reduces the latency by 22% to 62%, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB.
 
 {: .picture}
 <img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
@@ -92,8 +92,8 @@ Latency of the regular (baseline) and fused (ours) FFNs, sorted by improvement.
 
 The gains depend on the size of the FFN:
 
-- **Small FFNs** (DeepSeek V3 experts, Llama 3 8B) gain the most, 46% to 62%. Their runtime is short and dominated by fixed costs: the extra kernels, the stores of $$H$$, and the all-reduce. The fused kernel removes or hides these costs.
-- **Large FFNs** (Llama 3 70B, DeepSeek V3 dense, Llama 4 Scout shared) gain 29% to 38%. The two large matrix multiplications dominate their runtime. The absolute savings are larger, up to 122 ms, but the relative gain is smaller.
+- **Small FFNs** (DeepSeek V3 experts, Llama 3 8B) gain the most: their latency drops by 46% to 62%. Their runtime is short and dominated by fixed costs: the extra kernels, the stores of $$H$$, and the all-reduce. The fused kernel removes or hides these costs.
+- **Large FFNs** (Llama 3 70B, DeepSeek V3 dense, Llama 4 Scout shared): their latency drops by 29% to 38%. The two large matrix multiplications dominate their runtime. The absolute savings are larger, up to 122 ms, but the relative gain is smaller.
 
 An ablation study shows that all three steps are needed. Without fusion, the in-network all-reduce runs on full tensors and is slower than the baseline. Without block specialization, the communication is not hidden, and the kernel is slower than the baseline in most cases. Without in-network computing, with [NVSHMEM](https://developer.nvidia.com/nvshmem) instead, the kernel is faster than the baseline but slower than the full method.
 
@@ -109,7 +109,7 @@ In a [Mixture-of-Experts (MoE)]({{ site.baseurl }}{% post_url 2024-01-19-mixture
 {: .caption}
 One expert, with $$W_i$$ in green and $$W_o$$ in red. The activation is omitted. **(a)** Without parallelism, one GPU holds the whole expert. **(b)** With expert sharding, GPU A holds the first half of the columns of $$W_i$$ and of the rows of $$W_o$$, and GPU B the second half. The dashed slices are on the other GPU. Both GPUs process all the tokens $$x$$, and a sum-reduce adds their partial outputs $$y_A$$ and $$y_B$$. Inspired by Figure 2 of [Accelerating MoE Model Inference with Expert Sharding](https://arxiv.org/abs/2503.08467).
 
-Every GPU then does the same amount of work, however the tokens are routed. No GPU waits for another, no tokens are dropped, and popular experts need no replicas. Both methods keep the same share of the expert weights on each GPU. Expert parallelism sends each token only to the GPUs of its experts, but its runtime follows the most loaded GPU. Expert sharding needs all the tokens on every GPU and an all-reduce of the partial outputs: it trades more communication for a perfect load balance. The fused kernel overlaps this all-reduce with the computation and runs it in the network switch. The results above include two experts split across 8 GPUs this way: the fused kernel is 55% faster on an expert of DeepSeek V3, and 45% faster on an expert of Llama 4 Scout.
+Every GPU then does the same amount of work, however the tokens are routed. No GPU waits for another, no tokens are dropped, and popular experts need no replicas. Both methods keep the same share of the expert weights on each GPU. Expert parallelism sends each token only to the GPUs of its experts, but its runtime follows the most loaded GPU. Expert sharding needs all the tokens on every GPU and an all-reduce of the partial outputs: it trades more communication for a perfect load balance. The fused kernel overlaps this all-reduce with the computation and runs it in the network switch. The results above include two experts split across 8 GPUs this way: the fused kernel reduces the latency by 55% on an expert of DeepSeek V3, and by 45% on an expert of Llama 4 Scout.
 
 ## Related work
 
