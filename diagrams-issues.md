@@ -148,3 +148,21 @@ picture that is not wrong.
   confidence interval for the mean: the limits X̄ ± 1.96σ/√N leave a probability of 0.025 in each tail", and the
   source of the drawing. Optional: the curve is centered at X̄, as in many textbooks, but the sampling distribution
   of X̄ is centered at μ; a curve centered at μ, with the interval drawn around one sample mean X̄, is exact.
+
+## Bayesian Linear Regression, Maximum Likelihood and Maximum-A-Posteriori (2018-08-20-bayesian-linear-regression.md)
+
+- `bayesian-linear-regression/linear_bayesian_posterior_5.svg`: the posterior panel shows a large jagged purple
+  curve far from the posterior. It is the contour at density 0: it traces where the pdf underflows to 0 in double
+  precision, at a Mahalanobis distance of about 39. Fix: draw the contours at fixed fractions of the maximum
+  density, e.g. `levels = pdf.max() * np.exp(-0.5 * np.array([9, 4, 1]))` for the 3σ, 2σ and 1σ ellipses.
+- Caption of the four `linear_bayesian_posterior_*.svg` pictures: it does not say what the rows, the cross and the
+  lines are. Fix: "Online learning for y = w0 + w1 x after 1, 2, 3 and 20 samples (rows). Left: the posterior over
+  (w0, w1); the cross marks the true weights (-0.3, 0.5). Right: the samples and six lines with weights drawn from
+  the posterior. Inspired by Fig. 3.7 of Pattern Recognition and Machine Learning, Chris Bishop". Optional: the
+  panel title "prior/posterior" becomes "posterior", since no row shows the prior.
+- `bayesian-linear-regression/linear_bayesian_predictive_distribution_*.svg`: the model assumes a noise standard
+  deviation of 0.71 (noise precision beta = 2), but the data have a noise standard deviation of 0.25. After 25
+  samples, the band is thus 0.76 to 0.88 wide on each side of the mean, three times the scatter of the samples.
+  Fix: redraw with beta = 16 (band 0.27 to 0.32), see `code-issues.md`. Caption: "Predictive distribution of a
+  model with 9 Gaussian basis functions and a bias, after 1, 2, 4 and 25 noisy samples (circles) of sin(2 pi x)
+  (blue): mean (orange) and mean plus and minus one predictive standard deviation (light orange)".

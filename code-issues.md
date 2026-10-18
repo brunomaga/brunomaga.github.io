@@ -26,3 +26,17 @@ the problem and a proposed fix.
   which is not in the zip, so the script stops with a `FileNotFoundError` before the training starts. Fix: add
   `hash.mat` to the zip, or set the digits directly, e.g. `targetdigits = [0, 1, 2, 3]`, the digits of the post's
   figure.
+
+## Bayesian Linear Regression, Maximum Likelihood and Maximum-A-Posteriori (2018-08-20-bayesian-linear-regression.md)
+
+- `assets/bayesian-linear-regression/bayesian_linear_regression.ipynb`, predictive distribution cell: the data
+  have a noise standard deviation of 0.25 (`create_toy_data(sinusoidal, 25, 0.25)`), but the model uses
+  `BayesianRegression(alpha=1e-3, beta=2.)`, i.e. a noise standard deviation of 0.71. The predictive band is thus
+  three times too wide. Fix: `beta=16.` (1 / 0.25^2).
+- Same notebook, posterior cell: `plt.contour(w0, w1, multivariate_normal.pdf(...))` uses the default levels, and
+  draws the contour at density 0 where the pdf underflows. Fix: pass
+  `levels=pdf.max() * np.exp(-0.5 * np.array([9, 4, 1]))`, or draw the contours of the log-density.
+- Same notebook, `GaussianFeature` docstring: "exp(-0.5 * (x - m) / v)" misses the square that the code applies.
+  Fix: "exp(-0.5 * (x - m)^2 / v)". `predict(..., sample_size)` says it samples "from the predictive
+  distribution", but it returns the noise-free lines `X @ w` for weights drawn from the posterior. Fix: "samples of
+  the mean function X @ w, with w drawn from the posterior".

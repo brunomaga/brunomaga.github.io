@@ -52,3 +52,8 @@ Proposed changes to post titles. A new title keeps the URL, which comes from the
 ## Prefill vs decode, roofline, KV cache, continuous/ragged batching, disaggregation (2025-06-07-inference-prefill-decode-roofline-cache.md)
 
 - The line is 766 px wide. Proposed: "Prefill vs decode, roofline, KV cache, batching and disaggregation" (646 px).
+
+## Bayesian Linear Regression, Maximum Likelihood and Maximum-A-Posteriori (2018-08-20-bayesian-linear-regression.md)
+
+- "Maximum-A-Posteriori" is not the usual spelling of the estimate. Proposed: "Bayesian Linear Regression, Maximum
+  Likelihood and Maximum a Posteriori" (718 px).
