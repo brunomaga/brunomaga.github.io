@@ -47,7 +47,7 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts).
 - Charts drawn from data (plots, benchmarks, histograms) keep their data and the script or spreadsheet that
   draws them next to the SVG, and follow the same palette, font and sizes as the diagrams.
-- Paper figures are redrawn in this style too, and their captions credit the paper (section 7).
+- Paper figures are redrawn in this style too, and their captions credit the paper (section 9).
 
 ### 3. Page width and scale
 
@@ -118,15 +118,15 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   backward for weights #d79b00                                     #856000
   next iteration       #dae8fc with grey #666666 outline and text, forward passes only, then "..."
                        in the vertical centre
-  idle                 hatched (fillStyle=hatch, black)
+  idle                 hatched (section 7)
   ```
-  Numbers inside the dark cells are white. Every pipeline picture uses 4 GPUs, except DualPipe (6),
-  shows no previous iteration, and ends with the forward passes of the next iteration on every GPU.
+  Every pipeline picture uses 4 GPUs, except DualPipe (6), and shows no previous iteration. Section 8 gives
+  the layout.
 - The same thing has the same color within a post (one color per process, GPU, head, expert...), and the
   same meaning keeps its color across posts where possible (blue forward, green backward).
 - New colors are only added when the palette above runs out, and must look like part of it (pastel fill,
   readable black text on top).
-- Real photos keep their own colors (section 8).
+- Real photos keep their own colors (section 10).
 
 ### 6. Lines, outlines and arrows
 
@@ -146,7 +146,70 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   (grid lines drawn over a photo or a matrix) keep their weight.
 - No end-of-sequence cells or tokens in schedules: the last decode cell is the last token.
 
-### 7. Captions
+### 7. Shapes, blocks and sizes
+
+- The same shape means the same thing in every picture:
+  ```
+  data (tensors, matrices, vectors, tokens, buffers)    rectangle with square corners
+  operation, layer, module, kernel                       rounded rectangle
+  device, process, group (GPU, rank, node, worker)       frame with a light fill, its name at the top left
+  3D tensor                                              isometric cube (isoCube2); CNN feature map: cube
+  storage (disk, database, cache)                        cylinder
+  encoder, decoder                                       trapezoid
+  decision                                               rhombus
+  neuron, graph node                                     circle
+  operator (+, x, concatenation)                         circle 20 px wide with the symbol inside
+  span of several parts                                  curly bracket, 1 px
+  transformation of a whole stage (a model into another) block arrow; thin arrows everywhere else
+  ```
+- Rounded rectangles have a 5 px corner radius (absoluteArcSize=1;arcSize=10). Capsules (fully round ends)
+  keep their shape.
+- Block arrows: body 10 px wide, head 20 px wide and 10 px long (flexArrow: width=10;endWidth=10;endSize=3.07;
+  singleArrow: 20 px tall, arrowWidth=0.5). A block arrow with a label inside keeps a body taller than its
+  label, with the same proportions. A block arrow thinner than 6 px is a thin arrow (section 6).
+- Dashed lines use draw.io's default dash pattern; dotted lines use dashPattern=1 2.
+- Arrows are straight or orthogonal (edgeStyle=orthogonalEdgeStyle). Curves only for pointers to a part of
+  the drawing and for loops.
+- Hatching (idle, masked or padding areas): black lines 0.6 px wide every 4 px at 45 degrees, drawn as vector
+  paths: fillColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;
+  disableMultiStroke=1;disableMultiStrokeFill=1. draw.io's fillStyle=hatch turns into a bitmap in the PDF
+  export. A hatched area without outline lies 0.5 px inside the frame drawn over it, so the line ends stay
+  under the frame.
+- The pictures of one series in a post (the attention variants, the pipeline schedules...) use the same
+  element sizes: the same cube, cell, row and box sizes in every picture of the series.
+- Sizes for new and redrawn pictures: a one-line box 30 px tall, 20 px between boxes in a row, 40 px between
+  rows (room for an arrow and its label), matrix and array cells 20 x 20 px with 12 px numbers (10 px when they
+  do not fit).
+
+### 8. Pipeline schedules
+
+All pipeline schedules (the pipeline parallelism post and the publications page) share one layout:
+- One row per GPU, labelled "GPU 0" to "GPU 3" ("Worker 1" to "Worker 4" where the post's text says workers,
+  as for the PipeDream pictures), 14 px regular, right-aligned 4 px left of the first cell.
+- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide: a forward pass takes 1 unit, a backward pass
+  2 units, or 1 unit each for the backward for inputs (B) and the backward for weights (W). With two chunks per
+  GPU (interleaved 1F1B, ZB-V, DualPipe, DualPipeV), each pass of a chunk takes half as long.
+- Each row is a 1 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch is
+  idle time. A pass is one cell with a 0.8 px black outline, in the pipeline colors of section 5; a backward pass
+  is one cell of two units, not two cells.
+- Micro-batch numbers are 10 px: black on the base colors, white on the dark ones, grey #666666 in the
+  next-iteration cells.
+- The schedule ends with the forward passes of the next iteration on every GPU, then "..." (16 px, grey),
+  vertically centred to the right of the rows.
+- A marker (for example "1F1B ends", the time at which the post's 1F1B schedule ends) is a dashed grey
+  vertical line with a 12 px grey label right-aligned to it, above the rows.
+- Overlapped forward and backward passes (DualPipe) have a 2 px black frame around them.
+- The legend is centred under the rows, 12 px below them (or below the time axis): each entry is a 20 x 12 px
+  swatch (two 10 x 12 px halves for the two chunks or directions) and its 14 px label 4 px to the right, with
+  16 px between entries, on two rows when it is wider than the schedule. The labels are Forward, Backward,
+  Backward for inputs, Backward for weights, Overlapped forward & backward, Idle, Next iteration.
+- Schedules redrawn from a paper's grid of outlined cells over a hatched block (PipeDream) follow this layout
+  too; their annotations ("Pipeline flush", "Startup State", the time axis) keep their place relative to
+  the rows.
+- No title inside a schedule (section 9). Pictures compared side by side in one row (pipeline_8_stages,
+  pipeline_4_stages, pipeline_2_stages) are at most 287 px wide each, so that three fit one row.
+
+### 9. Captions
 
 - No caption inside a picture. The caption is Markdown below the picture, in the site's caption style
   (centred, small, black), one paragraph:
@@ -171,7 +234,7 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   into the caption, not the picture.
 - Labels and legends stay inside the picture.
 
-### 8. Real photos inside pictures
+### 10. Real photos inside pictures
 
 - Never destroy a real photo inside a figure (faces, the duck in Soft MoE, the dog in vDNN, satellite
   images, brains, stars...). Everything around the photo is redrawn as vector elements; the photo part
@@ -181,14 +244,15 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
 - Tiles or patches cut from a photo must match the photo they come from (same crop, same detail).
 - If a photo cannot be kept or redrawn faithfully, leave the picture as it is and say so.
 
-### 9. Export
+### 11. Export
 
 - Export with _tools/export_figures.py, which runs the draw.io desktop CLI:
   ```
   DRAWIO="xvfb-run -a drawio --no-sandbox" python3 _tools/export_figures.py assets/<folder>/<folder>.drawio [name ...]
   ```
   It renders each "<name>-figure" group (or the names given) to a cropped PDF, which turns the text into
-  glyph outlines, converts it to SVG with pdftocairo, writes it over the SVG of the same name in the folder,
+  glyph outlines, converts it to SVG with pdftocairo, removes the white page background, crops the SVG to its
+  drawn content (its non-white pixels plus 0.5 px), writes it over the SVG of the same name in the folder,
   and prints the width P to use in the Markdown. Outlined text looks the same on every device, whatever
   fonts it has, as in the kernel paper figures.
 - Times New Roman must be installed where the export runs (for example the msttcorefonts package):
@@ -198,7 +262,7 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
 - Check every exported SVG at its page size (P% of 880 px) before committing: no overlapping text, no
   text outside its box, arrows ending on their targets.
 
-### 10. Changes and review
+### 12. Changes and review
 
 - A picture task changes pictures, their draw.io sources, their Markdown (img tags, widths) and their
   captions. In the post's text it only makes tiny fixes that keep the text in agreement with a corrected
