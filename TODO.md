@@ -143,6 +143,12 @@ Bugs in the code and data files of the posts (under `assets/`).
   post's `LayerSpec(Block, n_embd, n_head)` follows the old `Block` signature. Fix: as in the data parallelism
   entry.
 
+### Tensor parallelism (2023-09-02-tensor-parallelism.md)
+
+- `Megatron_FeedForward.__init__` builds `nn.Dropout(dropout)`, but `dropout` is not one of its arguments, while
+  `Megatron_MHA` takes it as an argument. The class only works with a global `dropout`. Fix: add a `dropout`
+  argument to `Megatron_FeedForward.__init__`.
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -421,6 +427,17 @@ that is not wrong.
   forward passes in flight "belong to different micro-batches". PipeDream pipelines mini-batches and updates the
   weights after each one, as the text says. Fix: "different mini-batches".
 
+### Tensor parallelism (2023-09-02-tensor-parallelism.md)
+
+- `distributed-training/argonne_parallel_2.svg`: the right panel is labelled "(a) Sample parallelism" and shows data
+  parallelism, where an all-reduce sums the weight gradients. The caption calls it "communication between
+  processors p0 and p1", as if it belonged to the spatial split on the left, and the panel letters run (b), (a)
+  from left to right. The text now explains the right panel. Fix: caption "RIGHT: sample (data) parallelism on
+  processors p0 and p1, where an all-reduce sums the weight gradients", and swap the letters, or crop the right
+  panel.
+- Optional, the captions of `dnn_model_parallelism.svg` and `argonne_parallel_2.svg` write the processors as p0,
+  p1 and p0-p3, while the figures write P0 to P3 with subscripts. Fix: P0 to P3 in the captions.
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
@@ -481,6 +498,12 @@ Content problems that need the author's decision, such as overlap between posts.
   `outputs` has no `grad_fn`, this call lets the backward pass run, but no gradient reaches the layers before it.
   Proposed fix: check that the parameters of the last stage get gradients with the workaround (`p.grad` after
   `train_batch()`), and remove the sentence if they do not.
+
+### Tensor parallelism (2023-09-02-tensor-parallelism.md)
+
+- The last section was named "Final remarks and code", but the repository holds no code for this post: no file
+  defines `Megatron_f`, `Megatron_g`, `Megatron_FeedForward` or `Megatron_MHA`. Proposed fix: add these classes
+  to `assets/distributed-training` with a small test on 2 GPUs, or keep the code in the post only.
 
 ## Title issues
 
