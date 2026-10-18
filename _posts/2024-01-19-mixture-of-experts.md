@@ -206,7 +206,7 @@ The experts specialize in syntax and semantics (Appendix E, Table 9 of the paper
 | ... | ... | ... |
 
 {: .caption}
-Contexts corresponding to a few of the 2048 experts in the MoE layer in the encoder portion of the WMT’14 En→Fr translation model. For each expert $$i$$, we sort the inputs in a training batch in decreasing order of $$G(x)_i$$, and show the words surrounding the corresponding positions in the input sentences. Source: [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
+Contexts corresponding to a few of the 2048 experts in the MoE layer in the encoder portion of the WMT’14 En→Fr translation model. For each expert $$i$$, the inputs of a training batch are sorted in decreasing order of $$G(x)_i$$, and the table shows the words around the corresponding positions in the input sentences. Source: [Outrageously Large Neural Networks: The Sparsely-Gated Mixture-of-Experts Layer](https://arxiv.org/abs/1701.06538)
 
 A PyTorch implementation of this layer is available in [this repository](https://github.com/lucidrains/mixture-of-experts).
 

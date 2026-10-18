@@ -163,7 +163,7 @@ The delay of backward Euler grows spike after spike. After 1 s, it is about 2 ms
 {: .picture}
 <img width="95.2%" height="95.2%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg">
 
-The next test injects a constant current for 1 s, from 0 to 5 times the threshold current, the smallest constant current that makes the neuron spike. The runs use an Intel Core i5 at 1.6 GHz. Below half the threshold current, the voltage settles to a steady state, and CVODE takes 434 times fewer steps than backward Euler and runs 98 times faster. At the threshold current, the gains are 62 and 11.6 times, and at 5 times the threshold current, 9.4 and 2.5 times. A CVODE step costs 4 to 5 times as much as a backward Euler step: it runs Newton iterations, each with an evaluation of $$f$$ and a linear solve, and an error test.
+The next test injects a constant current for 1 s, from 0 to 5 times the threshold current, the smallest constant current that makes the neuron spike. The runs use an Intel Core i5 at 1.6 GHz. Below half the threshold current, the voltage settles to a steady state, and CVODE takes 434 times fewer steps than backward Euler and runs 98 times faster. At the threshold current, the gains are 62 and 11.6 times, and at 5 times the threshold current, 9.4 and 2.3 times. A CVODE step costs 4 to 5 times as much as a backward Euler step: it runs Newton iterations, each with an evaluation of $$f$$ and a linear solve, and an error test.
 
 {: .picture}
 <img width="98%" height="98%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_variation_solution.svg">
@@ -199,7 +199,7 @@ The pictures show two neurons of the top 1% by number of incoming events: the ev
 <img width="59.3%" height="59.3%" src="{{ site.assets }}/neuron-variable-timestep/neuron_203076.svg">
 <img width="59.5%" height="59.5%" src="{{ site.assets }}/neuron-variable-timestep/neuron_138083.svg">
 
-The neurons of the median 1% receive 541 to 558 events, about 73 per second:
+The neurons of the median 1% receive 541 to 558 events, about 73 per second. The two neurons below receive 584 and 586 events:
 
 {: .picture}
 <img width="58.3%" height="58.3%" src="{{ site.assets }}/neuron-variable-timestep/neuron_208223.svg">

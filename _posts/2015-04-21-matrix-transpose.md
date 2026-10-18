@@ -32,7 +32,7 @@ If every rank holds the same number of rows of a dense matrix, `MPI_Alltoall` pe
 {: .caption}
 `MPI_Alltoall` on 6 processes: block $$j$$ of process $$i$$ goes to process $$j$$, as its block $$i$$. The blocks of process A (red frame) become the first block of every process. Adapted from: [MPI Tutorial, Shao-Ching Huang, IDRE High Performance Computing Workshop, 2013](https://www.slideshare.net/slideshow/mpi-49244468/49244468)
 
-A sparse matrix is stored in a [compressed sparse row][csr] (CSR) format. Each rank stores its rows in four arrays: `row_count`, the number of rows; `counts`, the number of nonzeros per row; `disps`, the column index of each nonzero; and `cells`, the values. This variant of CSR stores the number of nonzeros per row instead of the row offsets. The figure shows a graph with 6 vertices and 12 edges, labeled A to T, its adjacency matrix, and the CSR arrays on 3 ranks:
+A sparse matrix is stored in a [compressed sparse row][csr] (CSR) format. Each rank stores its rows in four arrays: `row_count`, the number of rows; `counts`, the number of nonzeros per row; `disps`, the column index of each nonzero; and `cells`, the values. This variant of CSR stores the number of nonzeros per row instead of the row offsets. The figure shows a graph with 6 vertices and 12 edges, labeled with letters from A to T, its adjacency matrix, and the CSR arrays on 3 ranks:
 
 [csr]: https://en.wikipedia.org/wiki/Sparse_matrix
 

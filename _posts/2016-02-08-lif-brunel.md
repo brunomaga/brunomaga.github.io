@@ -144,7 +144,7 @@ The tables list the parameters of a network of 10,000 neurons:
 </table>
 
 {: .caption}
-source: Marc-Oliver Gewaltig, ResearchGate
+Source: Marc-Oliver Gewaltig, ResearchGate
 
 The state of the network depends on two parameters: the relative strength of inhibition $$g = -J_I / J_E$$, here 5, and the external rate $$\eta$$. $$\nu_{\text{thr}} = \theta / (J_E C_E \tau)$$ is the external rate at which the mean external input alone reaches the threshold. Brunel finds four states:
 - **SR**, synchronous regular ($$g = 3$$, $$\eta = 2$$): the neurons fire regularly, almost in synchrony, at high rates;
@@ -167,7 +167,7 @@ The table compares the firing rates and global oscillation frequencies of his si
 </table>
 
 {: .caption}
-source: Brunel 2000
+Source: [Dynamics of Sparsely Connected Networks of Excitatory and Inhibitory Spiking Neurons][brunel-paper]
 
 The simulated rates are within 5 Hz of the predictions, and the frequencies within 10 Hz. The model is also cheap to simulate. A LIF neuron has one state variable, $$V$$, updated with one multiplication and one addition per step. A Hodgkin-Huxley neuron has four state variables per compartment, the potential and three gating variables, with nonlinear rate functions evaluated at every step. LIF networks thus suit long simulations of large networks.
 

@@ -222,12 +222,6 @@ that is not wrong.
 
 ### All pictures
 
-- The text rewrite (PR #92) changes the text of the posts, and the picture restyle (branch
-  `claude/project-thread-56yymq`) changes their pictures, img tags and captions, so both change the same Markdown
-  files. The restyled pictures already use the symbols of the text rewrite: ranks and p in the sorting pictures, x_i,
-  j* and w_j* in the Kohonen pictures, and "Exact" in the legend of the LIF solutions. Fix, in the order the user
-  chose: merge the picture branch first, then merge the main branch into the text rewrite, keeping its text and the
-  pictures, img tags and captions of the main branch, and check each caption against the new text.
 - The kernel fusion post on expert parallelism (2026-10-09-kernel-fusion-expert-parallelism.md): its 11 pictures,
   `inference/imgs/ep_*.svg`, are copies of the figures of the paper repository and keep the Times New Roman font of
   the paper figures. They show at widths set by hand (40% to 100%), so their text sizes differ from the other
@@ -247,11 +241,29 @@ that is not wrong.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
+- `matrix-transpose/all_to_all.svg`: the caption writes "block $$j$$ of process $$i$$ goes to process $$j$$, as its
+  block $$i$$", while the post calls the processes ranks, numbers them $$r$$ and $$s$$, and uses $$i$$ and $$j$$ for
+  vertices. Fix: "`MPI_Alltoall` on 6 ranks: block $$s$$ of rank $$r$$ goes to rank $$s$$, as its block $$r$$. The
+  blocks of the first rank, A0 to A5 (red frame), become the first block of every rank." The label "processes" of the
+  picture can stay, since the mixture-of-experts post shows the same picture and says processes.
+- `matrix-transpose/matrix-transposition-crs.svg`: the labels "Metadata counts (MPI_Alltoall)" and "Metadata sparse
+  matrix (MPI_Alltoallv)", and the group label "Metadata" over "Row id", "Column id" and "Element", copy the XCSR
+  wording. The CSR transpose sends the element counts, then the elements with their row and column indices, and the
+  post uses "metadata" only for XCSR. Fix: "Element counts (MPI_Alltoall)" and "Elements with their indices
+  (MPI_Alltoallv)", without the group label. Optional: "Row index" and "Column index", as in the text.
 - `matrix-transpose/crs_format.svg`, `xcrs_format.svg`: the array of column indices is labeled `disps`, MPI's name
   for displacements, which reads as offsets. Optional fix: `col_idx`, as in the matmul post.
+- Optional, `matrix-transpose/xcrs_transpose_3.svg`: the labels "Objects to be sent" and "Objects to be received"
+  name the values of the view swap, which the post calls values. Fix: "Values to be sent" and "Values to be
+  received".
 
 ### Distributed Load Balancing and Spatial Slicing (2015-12-01-slicing.md)
 
+- `slicing/balance.svg`, its caption, and `split.svg` call the items elements ("19 sorted elements", "7, 6, 6
+  elements", "18 elements"), while the text and the caption of `sbs.svg` call them objects. Fix: "objects" in the
+  labels and in the caption.
+- `slicing/n_body_slicing.svg` has no caption, and does not name the source of its N-body render. Fix: a caption,
+  with a credit if the render comes from a source.
 - `slicing/mini-*.svg`: the four layouts have 10 (single axis), 35 (NUG, 5 x 7), 16 (ORB) and 35 (STR, 5 x 7)
   slices. Optional fix: 16 slices in all four (4 x 4 for NUG and STR), so that they compare on equal terms.
 
@@ -270,6 +282,26 @@ that is not wrong.
   716 px wide and shows at 50%, so its sans-serif panel letters (a to d) and ion labels show at 61% of their size.
   Fix: keep the drawing, scale it to about 440 px, redraw the letters and labels in Source Sans 3 (14 px and 12 px),
   and set P = W/880.
+- Caption of `neuron-electrical-activity/brain_scales.svg`: the first credit, "Mariana Villarreal (LadyofHats),
+  Wikimedia Commons", has no title and no link, and the author's name is Mariana Ruiz Villarreal. Panel (b) is her
+  public-domain drawing "Complete neuron cell diagram en.svg". Fix: "Adapted from: [Complete neuron cell diagram,
+  Mariana Ruiz Villarreal (LadyofHats), Wikimedia
+  Commons](https://commons.wikimedia.org/wiki/File:Complete_neuron_cell_diagram_en.svg); and Blausen.com staff, ...",
+  after a check of the sources of panels (c) and (d).
+- Caption of `neuron-electrical-activity/neuron_model_scales.svg`: the credit "J. M. Eppler, Introduction to NEST,
+  First community workshop on NESTML, 2015" has no link. Fix: a link to the slides, if they are online.
+- Caption of `neuron-electrical-activity/net_current_conservation.svg`: "the axial currents $$i_a$$ balance the
+  membrane current $$i_m$$", but the text defines $$i_m$$ as a current density (mA/cm²), and the axial currents
+  balance its integral over the membrane. Fix: "the axial currents $$i_a$$ balance the membrane current density
+  $$i_m$$, integrated over the membrane area".
+- `neuron-electrical-activity/compartment_rc_circuit.svg` and its caption name the capacitor $$C$$, each resistor
+  $$R$$ and the total current $$I$$. In the text, the capacitance of compartment $$j$$ is $$c_j$$, $$R$$ is the gas
+  constant, and $$I$$ is the inhibitory population and the identity matrix. One resistor stands for all the channels
+  of one type, not for one ion channel, and the caption has no final period. Fix: the label c_j, and the caption "The
+  electrical circuit of one compartment. The membrane is the capacitor $$c_j$$. Each channel type $$s$$ is a resistor
+  $$R_s$$ in series with a battery $$E_s$$, its reversal potential. Arrows mark gated channels, whose resistance
+  changes over time. The leak $$L$$ has a constant resistance. $$I = i_{m,j} A_j$$ is the total current through the
+  membrane."
 
 ### Variable Timestep Simulation of the Electrical Activity of Neurons (2017-02-17-neuron-variable-timestep.md)
 
@@ -278,9 +310,11 @@ that is not wrong.
   "0.1µA" to "1mA"), as in the preprint. NEURON's `IClamp` amplitude is in nA, and the threshold current of a cortical
   pyramidal cell model is of the order of 0.1 to 1 nA, so 0.206 mA is likely 0.206 nA. The text gives no current
   values. Fix, after a check of the simulation scripts: mA to nA and µA to pA in the labels.
-- `benchmark_two_rows_2.svg`: the legend entry "(2a) BSP Deriv. Implicit†" has no key for the dagger. The preprint's
-  caption defines it: Newton iterations solve each mechanism implicitly, but the coupling between mechanisms stays
-  explicit. Fix: a key line in the legend, "† implicit per mechanism, explicit across mechanisms".
+- `benchmark_two_rows_2.svg`: the legend writes (1a) as "BSP CN Exponential" and (2a) as "BSP Deriv. Implicit†",
+  while the text writes `cnexp` and `derivimplicit`. The dagger has no key: it is the footnote of the preprint's
+  caption (Newton iterations solve each mechanism implicitly, but the coupling between mechanisms stays explicit),
+  which the text explains for `derivimplicit`. Fix: "(1a) BSP cnexp" and "(2a) BSP derivimplicit", without the
+  dagger.
 - Optional, `benchmark_two_rows_2.svg`: the orange "region of similar runtime growth" does not follow from the plotted
   runtimes. Fix: check it against the benchmark data, or remove it.
 - `neuron_203076.svg`, `neuron_138083.svg`, `neuron_208223.svg` and `neuron_87784.svg`: the last 10 ms bar of each
@@ -290,6 +324,16 @@ that is not wrong.
 - `cvode_pulse_currents_table.svg`: the CVODE step counts cover 1.1 s of simulation, while the 48,001 steps of
   backward Euler cover 1.2 s. The values are those of the table of the preprint. Fix, after a check of the simulation
   scripts: step counts for the same time span.
+- `neuron_208223.svg` and `neuron_87784.svg` are shown for the median 1% of neurons, which receive 541 to 558 events,
+  but their 10 ms bars add up to 584 and 586 events. The same sums give 6,146 and 5,574 for the top neurons, which
+  agree with the text. Fig. 8 of the preprint has the same mismatch, and the text now gives both counts. Fix: show
+  two neurons of the median 1%, from the event data, and drop the sentence with the counts.
+- `benchmark_two_rows_2.svg`: the text gives the speed-ups of the preprint, 7.7 to 1.8 at the moderate rate, but the
+  chart reads about 1.5 on 65,536 neurons. Fix: check the speed-ups with the benchmark data.
+- The 13 pictures without a caption, most of them figures of the preprint, have no credit. The kernel fusion posts
+  have the same open point. Fix: a caption under each picture, ending with "Source: [Fully-Asynchronous
+  Fully-Implicit Variable-Order Variable-Timestep Simulation of Neural Networks](link)", if the user wants credits
+  for the own preprint.
 
 ### Linear Regression, Matrix Factorization and Loss Functions (2017-08-17-linear-regression-matrix-factorization.md)
 
@@ -304,11 +348,20 @@ that is not wrong.
 - Optional, `unsupervised-learning/k-means_convergence.gif`: an animation of 15 frames. Fix: an SVG with a few
   iterations side by side, computed by running k-means on the same data.
 
+### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
+
+- `deep-neural-networks/fully_sparse_connectivity.svg` and its caption keep the symbols of Figure 9.2 of the Deep
+  Learning book: inputs x1 to x5 and outputs s1 to s5. The text writes the input of a layer as $$x^{(0)}$$ and its
+  output as $$x^{(1)}$$, as `dnn.svg` does. Fix: inputs x₁⁽⁰⁾ to x₅⁽⁰⁾ and outputs x₁⁽¹⁾ to x₅⁽¹⁾ in both rows, and
+  the caption "... where the input $$x_3^{(0)}$$ affects only the outputs $$x_2^{(1)}$$, $$x_3^{(1)}$$ and
+  $$x_4^{(1)}$$. Bottom: a fully connected layer, where $$x_3^{(0)}$$ affects every output."
+
 ### Mathematics for ML (2018-04-20-algebra-for-ml.md)
 
 - `algebra-for-ml/newton_method.gif`: the legend is in German ("Funktion", "Tangente"), and the animation numbers the
-  first guess x1, while the text starts at x0. The caption translates both words and explains the numbering. Fix: one
-  SVG with the function, the first three tangents and the guesses x0 to x3, labeled in English.
+  first guess x1, while the text starts at $$x^{(0)}$$. The caption translates both words and explains the numbering,
+  but writes the text's first guess as $$x_0$$. Fix: "(the text's $$x^{(0)}$$)" in the caption, then one SVG with the
+  function, the first three tangents and the guesses x⁽⁰⁾ to x⁽³⁾, labeled in English.
 - `algebra-for-ml/svd_example.svg`: the panels are crops of the "Lenna" test image, which IEEE no longer allows in its
   publications since April 1, 2024, and the panels with 50 and 85 singular values look like ranks 25 to 35. Optional
   fix: the same experiment (all 256, then 20, 50 and 85 singular values) on another test image, with the computed
@@ -325,6 +378,8 @@ that is not wrong.
   center line. Fix: name the source of the drawing, or redraw it, and move the label. Optional: the curve is centered
   at X̄, as in many textbooks, but the sampling distribution of X̄ is centered at μ; a curve centered at μ, with the
   interval drawn around one sample mean X̄, is exact.
+- Caption of `statistics-for-ml/kde.svg`: "each divided by $$n$$", while the text and the formula write the number of
+  samples as $$N$$. Fix: "each divided by $$N$$".
 
 ### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
 
@@ -332,6 +387,10 @@ that is not wrong.
   deviation of 0.71 (noise precision beta = 2, as the caption states), but the data have a noise standard deviation of
   0.25. After 25 samples, the band is thus 0.76 to 0.88 wide on each side of the mean, three times the scatter of the
   samples. Fix: redraw with beta = 16 (band 0.27 to 0.32), see the code issues above, and change the caption.
+- Caption of the same pictures: it gives the prior precision $$\alpha = 10^{-3}$$ and the noise precision
+  $$\beta = 2$$ of Bishop's PRML and of the notebook, which the post never defines: it writes the prior with its
+  covariance and the noise with its variance $$\sigma^2$$. Fix: "The model has the prior $$\mathcal{N}(0, 10^3 I)$$
+  and the noise variance $$\sigma^2 = 0.5$$", or $$\sigma^2 = 1/16$$ after the redraw with beta = 16.
 
 ### Exponential Family of Distributions (2019-03-20-exponential-family.md)
 
@@ -356,6 +415,9 @@ that is not wrong.
 - `vae-gan/gan.svg`: the discriminator has two output arrows, "1 (real)" and "0 (generated)", but D outputs one
   number, the probability that its input is real, as the caption says. Fix: one output arrow labeled "D(x):
   probability that x is real (1) or generated (0)".
+- `vae-gan/vae.svg`: the labels "μz", "Σz" and "z ∼ 𝒩(μz, Σz)" keep the symbols of the source blog. The text writes
+  the outputs of the encoder as the mean $$\mu$$ and the variance $$\sigma^2$$, and never uses $$\Sigma$$. Fix: "μ",
+  "σ²" and "z ∼ 𝒩(μ, σ²)".
 - Optional, `vae-gan/vae.svg`: the encoder box shared by the AE and the VAE paths is labeled q_φ(z|x), a distribution,
   but the AE encoder is a deterministic function. Fix: label the encoder "Encoder φ".
 
@@ -365,7 +427,13 @@ that is not wrong.
   embedding and the hidden state, but the decoder outputs a softmax over the target vocabulary, which is much
   larger. Fix: draw the output layer wider than the other layers, with "softmax over the vocabulary" next to it.
 - Caption of `learning-from-sequences/transformer_attention.svg`: it writes the sentence length as N, while the text
-  rewrite writes n. Fix: n, at the merge with the text rewrite.
+  writes n. Fix: n.
+- Optional, `learning-from-sequences/encoder_decoder.svg`: the label "hidden space t−1" names the hidden state of the
+  previous step, as the text calls it. Fix: "hidden state t−1".
+- Optional, caption of `learning-from-sequences/transformer_attention_lbdl.svg`: it calls $$A_{q,k}$$ "normalized
+  attention scores", while the text calls them attention weights, and calls scores the values before the softmax.
+  Fix: "to obtain the attention weights $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averages the values
+  $$V_1,...,V_{N^{KV}}$$ with these weights".
 
 ### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
 
@@ -382,6 +450,8 @@ that is not wrong.
   the left model "the GPT-3 Small model", while it is GPTlite with the dimensions of GPT-3 Small. Fix: "Left: GPTlite
   with N decoder blocks, with the dimensions of GPT-3 Small. Right: the benchmark DNN with L layers of width W. The
   left diagram is adapted from Attention is all you need."
+- Optional, caption of `gptlite-cpp/benchmark_gptlite.svg`: "GPTlite Small" is a model name that the posts use
+  nowhere else. Fix: "GPTlite (with the dimensions of GPT-3 Small)".
 
 ### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
 
@@ -391,6 +461,9 @@ that is not wrong.
   all-gather of the parameters and a reduce-scatter of the gradients. The text explains both. Optional fix: label
   the arrows "reduce gradients" instead of "gather gradients" and "send grads", or redraw each layer as four shards,
   with all-gathers and reduce-scatters.
+- `distributed-training/imgs/vdnn2.svg` and `vdnn3.svg` label the last layer "Layer(N)", and the caption says "at
+  layer N", while the text numbers the layers from 1 to $$L+1$$, and `deepspeed_stages.svg` uses N for the processes.
+  Fix: "Layer(L+1)", and the caption "at its last layer, $$L+1$$".
 - Optional, `distributed-training/deepspeed_stages.svg`: the number of processes is N_d (and gpu_N-1), while
   `data_parallelism.svg` and the text use P; the text states that N_d = P. The caption calls the stages
   "ZeRO FSDP". Fix: write P in the figure, and "the three stages of ZeRO" in the caption.
@@ -399,9 +472,19 @@ that is not wrong.
 - Optional, `distributed-training/benchmark_gptlite.svg` has no caption, and does not say how the memory is
   averaged. Fix: a caption such as "GPTlite on one node with 8 GPUs, in fp32, with micro-batches of 1 sample:
   average and peak allocated memory per GPU, and throughput over all GPUs".
+- Optional, caption of `distributed-training/imgs/data_parallelism.svg`: it names "the DDP data layout" before the
+  text introduces DDP, while the layout is the same for DDP, FSDP and ZeRO. Fix: "The data layout of data
+  parallelism, split across $$P = 4$$ processes color-coded as blue, yellow, red and green."
 
 ### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
 
+- `distributed-training/imgs/pipeline_8_stages.svg`, `pipeline_4_stages.svg` and `pipeline_2_stages.svg` label their
+  rows "Worker 1" to "Worker 8", and the caption says "8 workers", while the text says GPUs and the other schedules
+  label their rows "GPU 0" to "GPU 3" (CLAUDE.md keeps "Worker" for the PipeDream pictures). The caption also calls
+  the center and right panels "2 data-parallel groups of 4 pipeline stages" and "4 data-parallel groups of 2 pipeline
+  stages", but in Megatron-LM and DeepSpeed a data-parallel group holds the GPUs of one stage: the panels show 2
+  pipelines of 4 stages and 4 pipelines of 2 stages. Fix: rows "GPU 0" to "GPU 7", and the caption "... on 8 GPUs.
+  ... Center: 2 pipelines of 4 stages. Right: 4 pipelines of 2 stages."
 - Optional, the caption of `distributed-training/pipedream_dnn_pipeline_parallel_microsoft.svg` says that the
   forward passes in flight "belong to different micro-batches". PipeDream pipelines mini-batches and updates the
   weights after each one, as the text says. Fix: "different mini-batches".
@@ -426,23 +509,31 @@ that is not wrong.
 - `distributed-training/imgs/moe_gshard.svg`: the three titles write "Transfomer". Fix: "Transformer".
 - Optional, `moe_2017_dean.svg` writes the gate as G(x) and the number of experts as n, and `moe_gshard.svg` writes E
   experts and N layers, as their papers do. The text writes the gate as g(x) and the number of experts as N, and
-  names the notation of the first figure. Fix: relabel the figures to g(x) and N experts, and the GShard layers to L.
+  names the notation of the first figure. Fix: relabel the figures to g(x) and N experts, and the GShard layers to D
+  (L is the loss in the post), with "The encoder has $$D$$ Transformer layers" in the caption.
+- Optional, `distributed-training/imgs/moe_switch_transformers.svg`: the label "Switching FFN Layer", while the
+  method and the caption say Switch FFN layer (the figure of the paper has the same mismatch). Fix: "Switch FFN
+  Layer".
+- Optional, caption of `distributed-training/imgs/moe_switch_transformers_2.svg`: it writes the expert capacity as
+  (total_tokens / num_experts) × capacity_factor, while the Terminology box of the picture writes tokens_per_batch.
+  Fix: tokens_per_batch in the caption.
 
 ### Variable sequence lengths, curriculum learning, adaptive batch size and LR (2024-05-10-training-variable-length-curriculum.md)
 
-- Optional, `distributed-training/imgs/dnn_multiproc.svg`, `dnn_multiproc_compiled.svg` and
-  `dnn_multiproc_optimized.svg` name the two processes "Node 1" and "Node 2", while the captions and the text say
-  2 GPUs. The text names the labels. Fix: "GPU 0" and "GPU 1".
-- Optional, `distributed-training/imgs/variable_attn_matrix.svg` names the slices of the mask "layer 0" to
-  "layer 3", which reads as network layers, and calls the causal masks "diagonal mask". The text names the
-  slices. Fix: "sample 0" to "sample 3", and "causal mask".
+- `distributed-training/imgs/variable_batch_lr_pipeline.svg`: the left panel is titled "Micro-batches for regular use
+  case", while the text names it DDP; the caption of `variable_attn_matrix.svg` says "the non-pipeline micro-batch 1
+  above". Fix: "Micro-batches for DDP", and "micro-batch 1 of the DDP panel above" in the caption.
+- Optional, caption of `distributed-training/imgs/variable_batch_lr.svg`: it does not say which of the two scaling
+  rules of the text gives the LRs of the picture. Fix: "and thus a larger LR (linear scaling)".
+- Optional, caption of `distributed-training/imgs/torch_compile_dataset.svg`: it says both processes and ranks, while
+  the text says ranks. Fix: "on 3 ranks" and "to the ranks (color-coded)".
 
 ### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
 
-- `distributed-training/imgs/ulysses_sequence_parallelism.svg`: the left label reads "same input to both procs
-  (split by time dimension)", but 4 processes hold different chunks of the input. The bottom label reads "Local
-  attention weights KQ^T : B*H/P, S, S, E", but the attention weights are QK^T, of shape B*H/P x S x S. Fix:
-  "input split along the sequence across 4 processes" and "Local attention weights QK^T: B*H/P x S x S".
+- `distributed-training/imgs/ulysses_sequence_parallelism.svg`: the label "Local attention shape: B x H/P x S x E"
+  and the axis E of the middle cube give the head size as E, the embedding size. An all-to-all keeps the number of
+  elements per process, B·(S/P)·E before it and B·(H/P)·S·d after it, with Hd = E, so the label is H times too large.
+  Fix: "Local attention shape: B x H/P x S x d", and the axis d on the middle cube.
 - Optional, `distributed-training/imgs/context_parallelism.svg` writes the head size as E and leaves out the scale
   1/sqrt(d) of the scores. The text names the label. Fix: write the head size as d.
 
@@ -454,10 +545,29 @@ that is not wrong.
   the post adds the input of the block, and three experts are gated, while the code routes each token to 2 experts.
   The picture follows the figure of the paper, which draws both this way. Fix: check both against the code, and say in
   the caption where the code differs.
-- Optional, `diffusion/masked_autoencoders.svg`, `masked_autoencoders_cropped.svg` and `align_your_latents.svg`
-  (with its caption) write the number of frames as T, the symbol of the diffusion steps in the post. The text uses
-  F, as the Latte figures do. These are figures from the papers. Fix: relabel the frame axis of the two MAE figures
-  as F, or keep the paper labels.
+- Optional, `diffusion/masked_autoencoders.svg`, `masked_autoencoders_cropped.svg` and `align_your_latents.svg` (with
+  its caption) write the number of frames as T, the symbol of the diffusion steps in the post, and
+  `anymate_anyone.svg` writes the frames, height and width as t, h, w and 2w, while t is the diffusion step. The text
+  uses F, H and W, as the Latte figures do. These are figures from the papers. Fix: F for the frame axis of the two
+  MAE figures, B·F in `align_your_latents.svg` and its caption, and F, H, W and 2W in `anymate_anyone.svg`; or keep
+  the paper labels.
+- Optional, caption of `diffusion/diffusion.svg`: "A diffusion model is a $$T$$-step Markov chain", while the text
+  counts two Markov chains. Fix: "A diffusion model has two Markov chains of $$T$$ steps: a forward process $$q$$
+  that adds noise, and a trainable reverse process $$p_\theta$$ that removes it."
+
+### Prefill vs decode, roofline, KV cache, batching and disaggregation (2025-06-07-inference-prefill-decode-roofline-cache.md)
+
+- `inference/imgs/kv_cache.svg`: the panel with the KV cache writes the length of the cache plus the new token as S
+  ("KT: h x S", "qKT: 1 x S", "V: S x h"), while the code of the post writes the new tokens as S and the cached ones
+  as P, as `static_cache.svg` does ("cache: P x h", "new tensor: (P+1) x h"). Fix: "KT: h x (P+1)", "qKT: 1 x (P+1)"
+  and "V: (P+1) x h" in that panel, and "$$h$$ is the head size and $$P$$ the number of cached tokens" in the
+  caption.
+- Optional, `inference/imgs/roofline.svg`: the label "overlap computation and communication" reads as transfers
+  between devices, while the roofline counts the memory transfers of one device; the caption says "Below the ridge
+  point ... beyond it", while the text says left and right. Fix: "overlap computation and memory transfers", and
+  "Left of the ridge point ... right of it" in the caption.
+- Optional, `inference/imgs/semantic_caching.svg`: the label d names the size of the query embedding, while d is the
+  width of the LLM in the post. Fix: "dim", as in the code, or no label.
 
 ### Faster attention (GQA, FlashAttention, sparse, linear and latent attention) (2025-12-30-inference-attention.md)
 
@@ -467,11 +577,26 @@ that is not wrong.
 
 ### Kernel Fusion for Megatron-LM Tensor Parallelism and MoE Expert Sharding (2026-08-18-kernel-fusion-tensor-parallelism.md)
 
-- Optional, `inference/imgs/tp_results.svg` names the fused kernel "Ours" in its legend, and its caption says
-  "fused (ours)", in the first person. Fix: "Fused" in the legend and "fused" in the caption.
+- `inference/imgs/tp_megatron_lm.svg` and `tp_expert_sharding.svg` label the reduction "sum-reduce", and the caption
+  of `tp_expert_sharding.svg` says "a sum-reduce adds their partial outputs", while the text says all-reduce. The sum
+  ends on every GPU ("Y_A = Y_B", "replicated"), which is an all-reduce, as in Megatron-LM. Fix: "all-reduce" in both
+  pictures and in the caption.
+- Caption of `inference/imgs/tp_expert_sharding.svg`: the credit "Inspired by Figure 2 of [...]." does not follow the
+  credit form of CLAUDE.md. Fix: "Inspired by: [Accelerating MoE Model Inference with Expert
+  Sharding](https://arxiv.org/abs/2503.08467)".
+- The captions of `tp_megatron_lm.svg`, `tp_timeline.svg`, `tp_matmuls.svg` and `tp_block_specialization.svg`,
+  redrawn from the figures of the post's paper, and of `tp_results.svg`, drawn from its data, have no credit. The
+  paper is the author's own and not public yet. Fix: "Adapted from: [Towards Efficient LLM Inference via Full-Stack
+  Fusion of Computation, Communication, and In-Network Computing](link)" once the paper has a public link; the user
+  decides.
 - Optional, `inference/imgs/tp_expert_sharding.svg` and its caption write the weights of an expert as W_i and W_o,
-  while the rest of the post writes the same matrices as W_1 and W_2. The text names the mapping. Fix: relabel the
-  figure and the caption to W_1 and W_2, and drop "(the W_1 and W_2 above)" from the text.
+  and the tokens and outputs as x, y, y_A and y_B, while the rest of the post writes the same matrices as W_1, W_2, X
+  and Y. The text names the mapping of the weights. Fix: relabel the figure and the caption to W_1, W_2, X, Y, Y_A
+  and Y_B, and drop "(the W_1 and W_2 above)" from the text.
+- Optional, `inference/imgs/tp_megatron_lm.svg` names the GPUs A and B and writes their slices with subscripts (H_A,
+  (W_1)_A), while the text numbers the GPUs g = 1 to G, writes their slices with a superscript, $$H^{(g)}$$, and uses
+  subscripts for tiles. Fix: "GPU 1" and "GPU 2", H⁽¹⁾, W₁⁽¹⁾, W₂⁽¹⁾ and so on, "(GPU 1 in green, GPU 2 in blue)" in
+  the caption, and the same GPU names in `tp_expert_sharding.svg`.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
@@ -483,6 +608,20 @@ that is not wrong.
   time axis, or replace the timings with measured ones.
 - `inference/imgs/ep_results.svg`: the right panel plots decode times that are placeholders, not measurements, as the
   caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
+- Caption of `inference/imgs/ep_data_movement.svg`: "$$\star$$ marks memory of the shared heap", while the text
+  defines the symmetric heap of SHMEM. Fix: "$$\star$$ marks memory on the symmetric heap", and the same words in the
+  legend at the redraw.
+- Caption of `inference/imgs/ep_all_to_all_reduce.svg` and `ep_all_to_all_unique.svg`: $$E_x$$ names the expert ids
+  and weights of rank $$P_x$$, while everywhere else the subscript of E is an expert index ($$E_0$$ to $$E_5$$). Fix:
+  $$R_x$$, in the caption and in the two figures at the redraw.
+- The captions write one quantity, the sum of the expert outputs of one rank for one token, as $$A_0$$
+  (`ep_routing_table.svg`), $$\sigma_C$$ (`ep_all_to_all_inc.svg` and `ep_timeline.svg`) and $$\sigma_x$$
+  (`ep_all_to_all_reduce.svg`), and the subscript of σ is a token in the second and a rank in the third. Fix:
+  $$\sigma_A^{(0)}$$, $$\sigma_C^{(x)}$$ and $$\sigma^{(x)}$$, in the captions and in the figures at the redraw.
+- The captions have no credit to the post's paper, whose figures the pictures copy. The paper is the author's own and
+  not public yet. Fix: "Source: [MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and
+  In-Network Compute](link)" once the paper has a public link, and "Adapted from:" after the redraw; the user
+  decides.
 - Optional, `inference/imgs/ep_timeline.svg` labels the dispatch call of P_2 as put_signal_01, but the call goes to
   the INC switch, while the caption says that a subscript names the destination of the call. Fix: put_signal*
   without a subscript, or a caption that says the subscript names the final destinations P_0 and P_1.
@@ -497,6 +636,19 @@ that is not wrong.
   and mtp_sequential write them as t_i. The text follows each figure. Fix: keep the paper notations, or write t_i in
   mtp_parallel and in the formulas of the parallel heads.
 
+### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
+
+- Caption of `inference/imgs/hadamard_rotation.svg`: "the INT4 levels are closer together (5.7 instead of 12.6
+  apart)" gives the distances between the drawn level lines in pixels. In the units of x, the INT4 step is 40/7 =
+  5.71 before the rotation and 18.03/7 = 2.58 after it. Fix: "(2.6 instead of 5.7 apart)".
+- `inference/imgs/pruning_structures.svg` writes the number of heads as H ("H·d_head × E", "E × H·d_head"), while H
+  is the Hessian of GPTQ in the post, and the text writes the number of heads as $$n_\text{heads}$$, as the code
+  does. Fix: "n_heads·d_head × E" and "E × n_heads·d_head".
+- `inference/imgs/gptq.svg`: the labels "err = W[:, i] − q" and "H = 2 X XT, from the calibration inputs X" take the
+  columns of X as the inputs, and q as the quantized column. The text, the code and `llm_int8.svg` take the rows of X
+  as the inputs, the text writes the quantized column as $$\hat{W}_{:,i}$$, and `int4_packing.svg` uses q for the
+  integers. Fix: "err = W[:, i] − Ŵ[:, i]" and "H = 2 XT X".
+
 ### Publications bookmark (publications.md)
 
 - Optional, `publications/llama_3_multi_modal.svg`: the connectors "Every 4th layer" and "Every ~3rd layer" have arrow
@@ -508,10 +660,37 @@ that is not wrong.
 - Caption of `publications/performers2.gif`: no credit. Fix: "Source: [Rethinking Attention with
   Performers](https://research.google/blog/rethinking-attention-with-performers/)". Optional: a static SVG of the
   prefix sums instead of the animation.
+- Caption of `publications/latentmoe.svg`: the tokens are projected into the latent dimension $$\ell$$ "for expert
+  routing and computation", while the router scores the full $$d$$-dimensional token (the notes, panel (b) of the
+  picture and the paper). Fix: "for the all-to-all dispatch, the routed experts and the combine (the router still
+  scores the full $$d$$-dimensional token)".
+- Caption of `publications/tpla.svg`: it says that the heads are distributed across devices during decoding, which
+  describes GLA. In TPLA, every device computes all the heads on its slice of the latent KV cache, and an all-reduce
+  sums the outputs (the notes, and panel (c) of the picture). Fix: "every device computes all the attention heads on
+  its local slice of the latent KV cache, and an all-reduce sums the partial outputs."
+- Caption of `publications/mamba.svg`: "times batch size $$B$$", while $$B$$ is the input matrix of the SSM in the
+  same caption and in the notes. Fix: "($$DN$$, times the batch size and the sequence length $$L$$)".
+- `publications/dylora.svg`: the label "W ∈ ℝ^(m×d)" names the frozen weight W, while the notes and the paper write
+  $$W_0$$. Fix: "W₀ ∈ ℝ^(m×d)".
+- `publications/performers.svg`: "O(Lmd)", "L × m" and "m × L" write the number of random features as m, as the blog
+  figure does, while the notes and the paper write r. Fix: "O(Lrd)", "L × r" and "r × L".
+- `publications/lora.svg`: "W ∈ ℝ^(d×d)", with d under x, shows the square case of the paper's figure, while the
+  notes write $$W \in \mathbb{R}^{d \times k}$$, with the input dimension k. Fix: "W ∈ ℝ^(d×k)" and k under x, or the
+  caption "LoRA reparametrization, shown for a square $$W$$ ($$k = d$$): only <i>A</i> and <i>B</i> are trained."
+- Optional, caption of `publications/flashattention.svg`: "(dotted box)", but the box is dashed. Fix: "(dashed box)".
 
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
+
+### Variable Timestep Simulation of the Electrical Activity of Neurons (2017-02-17-neuron-variable-timestep.md)
+
+- The preprint estimates the speed-up of FAP CVODE on its mix of firing rates as the mean of the speed-ups at the
+  five rates, weighted by the shares of neurons: 224.5 to 11.9 with exact event delivery, and 228.5 to 24.6 with
+  grouping per $$\Delta t$$. The runtime of a mixed network is the weighted sum of the runtimes, so its speed-up is
+  the weighted harmonic mean of the speed-ups, which the text bounds by 28.5 on 1,024 neurons and 6.7 on 65,536
+  neurons. The text gives both, and says that a brain-like mix, with more quiet neurons, gives a higher speed-up.
+  Proposed fix: keep the estimate of the text; the alternative is to give only the numbers of the preprint.
 
 ### Mathematics for ML (2018-04-20-algebra-for-ml.md)
 
