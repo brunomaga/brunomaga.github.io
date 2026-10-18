@@ -15,7 +15,8 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
   opening and no "in conclusion" ending.
 - Third person only. Never "I", "we", "our", "us", "you", "your" or "my". The subject of a sentence is the
   algorithm, the model, the data or the hardware: "Each rank sends its block", not "We send the block". Quotes
-  and paper titles keep their original words.
+  and paper titles keep their original words. The introduction of the home page (`index.md`) is the author's bio
+  and keeps its first person.
 
 ### Sentences and words
 
