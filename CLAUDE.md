@@ -136,7 +136,8 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
 ### 3. Page width and scale
 
 - The post content width is X = 880 px (minima's $content-width 940 px minus 2 x 30 px padding;
-  assets/main.scss). The publications page has the same width.
+  assets/main.scss). The publications page shows its pictures in a 766 px column, but sizes them for
+  X = 880 px too, so there they appear at 87% of their size in a post.
 - Every picture is drawn at page scale: 1 draw.io px is 1 px on the page when the picture is shown at
   its natural size. No picture is wider than 880 px.
 - The Markdown shows a picture of width W px at W/880*100 percent, rounded to one decimal:

@@ -83,10 +83,6 @@ that is not wrong.
   j* and w_j* in the Kohonen pictures, and "Exact" in the legend of the LIF solutions. Fix: merge the text rewrite
   first, then merge the main branch into the picture branch, keep the text of the text rewrite and the pictures and
   captions of the picture branch, and check each caption against the new text.
-- `publications.md`: the pictures of the publications page sit in a column 766 px wide, not 880 px. With P = W/880,
-  every picture shows at 87% of its natural size, so its 14 px text shows at 12 px. CLAUDE.md (Pictures, section 3)
-  says that the page has the same width as a post. Fix: P = W/766 on this page, and redraw the 19 pictures wider than
-  766 px to fit, or keep P = W/880 and correct CLAUDE.md.
 - The two kernel fusion posts (2026-08-18-kernel-fusion-tensor-parallelism.md and
   2026-10-09-kernel-fusion-expert-parallelism.md): their 17 pictures, `inference/imgs/tp_*.svg` and `ep_*.svg`, are
   not restyled. 16 are copies of the figures of the paper repositories, and `tp_expert_sharding.svg` comes from a tab
