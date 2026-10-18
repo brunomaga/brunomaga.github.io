@@ -174,6 +174,24 @@ Bugs in the code and data files of the posts (under `assets/`).
   `assert sample_padding_fn is not None,` and the message. The DeepSpeed source ends the first line with `\` and
   puts the message on the next line. The code runs, but the line reads like a typo. Fix: restore the two lines.
 
+### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
+
+- `isend_k_and_v` passes the group ranks `(rank + 1) % P` and `(rank - 1) % P` as the `peer` of `dist.P2POp`, but
+  `torch.distributed` reads `peer` as a global rank (`isend`: "Destination rank on global process group
+  (regardless of group argument)"). The code works only for a group of the global ranks 0 to P-1, not for the
+  second sequence-parallel group of a data- and sequence-parallel run. Fix:
+  `dst = dist.get_global_rank(group, (rank + 1) % P)`, and the same for `src`.
+- The ring code calls `fa._flash_attn_forward` with 8 return values and a `window_size` tuple, and
+  `fa._flash_attn_backward` with the same tuple, as in flash-attn 2.6. In current flash-attn (2.8),
+  `_flash_attn_forward` returns 4 values and takes `window_size_left` and `window_size_right`. The text names the
+  version. Fix: pin `flash-attn==2.6.*`, or update the calls.
+- Both attention implementations run without a causal mask, while the GPTlite blocks they replace are causal. The
+  text states it. Fix: `causal=True` in the `flash_attn_func` of Ulysses; in the ring, the causal mask on the
+  diagonal block, and no computation for the blocks above the diagonal.
+- The comments of the ring `MultiHeadAttention.forward` use `E` for both the embedding size and the head size:
+  `(B, S/P, E) -> (H, B, S/P, E)`. Fix: `(H, B, S/P, d_head)` and `(B, S/P, H, d_head)`.
+- The ring `MultiHeadAttention.forward` is indented by 5 spaces. Fix: 4 spaces.
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -482,6 +500,15 @@ that is not wrong.
 - Optional, `distributed-training/imgs/variable_attn_matrix.svg` names the slices of the mask "layer 0" to
   "layer 3", which reads as network layers, and calls the causal masks "diagonal mask". The text names the
   slices. Fix: "sample 0" to "sample 3", and "causal mask".
+
+### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
+
+- `distributed-training/imgs/ulysses_sequence_parallelism.svg`: the left label reads "same input to both procs
+  (split by time dimension)", but 4 processes hold different chunks of the input. The bottom label reads "Local
+  attention weights KQ^T : B*H/P, S, S, E", but the attention weights are QK^T, of shape B*H/P x S x S. Fix:
+  "input split along the sequence across 4 processes" and "Local attention weights QK^T: B*H/P x S x S".
+- Optional, `distributed-training/imgs/context_parallelism.svg` writes the head size as E and leaves out the scale
+  1/sqrt(d) of the scores. The text names the label. Fix: write the head size as d.
 
 ## Content issues
 
