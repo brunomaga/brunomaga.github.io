@@ -218,7 +218,7 @@ All three types run in a single fused GPU kernel, for both the forward and backw
 MLA mainly accelerates decode, which is bound by memory bandwidth. Like MQA and GQA, it shrinks the KV cache that every decoding step reads. With absorption, attention also runs directly over the cached latent vectors, without up-projecting them into the keys and values of every head. Prefill, in contrast, is compute-bound, and absorbed attention costs more FLOPs per score, as it works in the latent dimension (512 in DeepSeek-V2) instead of the head dimension (128). Implementations therefore usually up-project the latent vectors into keys and values during prefill, and use absorption during decode.
 
 {: .picture}
-<img width="89.3%" height="89.3%" src="{{ site.assets }}/inference/imgs/mla.svg"/>
+<img width="89.4%" height="89.4%" src="{{ site.assets }}/inference/imgs/mla.svg"/>
 
 {: .caption}
 Multi-head latent attention, with S = 4 tokens, a latent dimension C = 3, H = 4 heads and a head dimension h = 2. With absorb = False (usually prefill), the keys and values of every head are recomputed from the cached latent vectors c. With absorb = True (usually decode), the queries are multiplied by W_uk, the attention runs directly over the cached latent vectors, and W_uv is applied to its output. Both panels show a whole sequence; in decode, the single new token attends to all the cached latent vectors, with no masked cells.

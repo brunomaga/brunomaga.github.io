@@ -835,49 +835,49 @@
         <mxCell id="common_distributions-149" value="" style="shape=stencil(lVnLchs5DPwaXVkE3zxnk/9QHO1GFUdy2d5k8/cLloyR2DPqKp1sUegR2QSBZs8ufnr7vn857II/7X8edvGvXQgv5+c/+kfHfl8GJHvX/WXo+2WoeOc/RvZvL4en98vwr/3rcf/1+XD55u399fzj8Pv47f0DdTx9P7we38e38fMufno6n06KPZ5Pb7vw5TL2df/045/X87+nb5fPL/uBHv/9PP8aE/3v8qzrBP5cBnJz7TLy8aTn42mK7+mReHGtPxIfXIuPxEdX6yPxydXwSHx2pTwSX1x5iM/qcn4kvrm04rP2+/HdpRWfOZD98i6uCA0MIC4Co9X2fBsQXCgIyIkAogseAVIJIDkBUoulyTYgO98REDMBFOeB1uy6UEBvCEjsF6rrQGtyna1B86YgIBUC6K7JDIh2uLePpnc1IyCSndbDX4DW5XhvA4IrEQGBsKTHPwOtYgd2G5As+28Ani06G4kLwLtEdlorQJppTZ0mn5aAmBEgrETqgZxpTc1O+TaguzAX7VRdJYuO3klDAGMpipOZ1lSsLGwDgvNzmUnZKuc2IDoPtCZL+HuAnhEgZONiWrqzASItAjG7BrQGS8dtgFYhoFV4c6vYrRTg2RqaK0Crp9U7dldmWnUkEYA+DxrW+E0yJZ1xnmkdqyJVQ0lMM63KG6t8Y5saAoRsnCZCnMuMbiXLVs3NMNOqyZLITmv2B6A1usKmpB1tLjN6QhqjtVmNWADCWep2gm8AEiigz2VGy0Igix7ydqZ1qA9SNbT0tplWLW2ZpEYO2LK0eFZCqzaoOtOq5Zn1ae2Z1SPAE1q1jZeZVu0YgRRjVRZ5plV7UmIKVNUR0Kpdj01JuwHQGjhLy5FfAGJbuS1yVSQWBLBcKioSgVZ9BNmHsvR9A6hcyQwQncy0qiCqbEraDWZah+Qi2VpUJDYECOlARTNnplVVINNLCugzrbJk1zagYstS6cu0d1GRmBFA19CtVi+ASLVGVZEItAa6D1UFW0OAZwAViUCrZhdhqepxAVq9tcltQLJUuwGwtlsXLW+Abreo7fglDyy+0QNaqy3wGi9sxc0KtcUv18zt+G4iweJ5x23e7l/XeCYampjyWkS0a6STNM0AuGlQPltEFyNZZ7kXDy5GogezJZvu0gppqWi6vADxmV3qC7oY0S6k2/Ha9aAPWtvajm8mPq7x7MS0ji6GmBbYNhm8XeCv8YXsbxdTT9d4xn8P6GLwdtMjmhie5ltP1oyu8axA9IwWhjdbZju+oIPhTYFux1c73tf4QOpPb9iaPL3q9I72hafXO43vyCerh+K9qawbAHMJvaB74W2KdwDBbk43AOY6+WhX3huOGgMkdC+8iZg7gIzuhecGjC+m427SjgIquheeW22+oXsh9GYkvpsWvQLoGoZfCIqC+8HarMG9CNzMG34h6F96SRBVKILV2rNFDw20KtfMkBx+YYH+4ekayrpBlcwBHTtgoL9QV0a7GYh3AA2d9mLpewfQ0b2otCnL8AsDqhaWS0HQbG+07cjwCwV0V6NTiuheaP5W+hMJDXdN4EpXkdG/GAqYzqqggaEp3FgCDuoD6vjOEmqYhhUvI6xHyHANBe877M4mwzbMeAdjN1WJgsb7cKVZVR7GYcKrZ0gcAdb7SBvG1bAOA17RKVcxrZyMzE/TMA9XVoawTBzuYUa3pNFZVTQzItcpMry8hDYUffsTOzrwygXVBsNBXLlvje1HEjQ0Ird9ZHiIK1uz0lnFlQsv9N4qw0Vc+cW09Q0bMaHpzXwWSWVlxDeqfGUYiRHfV9AyrU8EKz4HUz53EB29+Lw0xLuIvn7nx7i6eVd+78Wo/nN9q60f8JX33+fXw/T5+Px8eZd++wiM0qHLu/z4+X8=);whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;strokeWidth=1;fontFamily=Source Sans 3;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="436.43" y="483.9" width="132.04" height="35.33" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-19" value="Uniform" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-19" value="Uniform" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="126.6" y="2" width="49.21" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-23" value="Bernoulli" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-23" value="Bernoulli" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="357.78" y="2" width="53.88" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-42" value="Hypergeometric" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-42" value="Hypergeometric" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="23.75" y="87.05" width="95.3" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-61" value="Binomial" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-61" value="Binomial" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="227.69" y="87.05" width="53.11" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-80" value="Geometric" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-80" value="Geometric" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="473.15" y="87.05" width="62" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-99" value="Negative Binomial" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-99" value="Negative Binomial" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="633.17" y="132.2" width="107.14" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-118" value="Poisson" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-118" value="Poisson" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="230.95" y="172.1" width="46.6" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-122" value="Exponential" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-122" value="Exponential" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="468.85" y="172.1" width="70.6" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-126" value="Log-Normal" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-126" value="Log-Normal" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="35.91" y="257.15" width="70.98" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-130" value="Weibull" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-130" value="Weibull" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="572.48" y="257.15" width="44.98" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-134" value="Normal (Gaussian)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-134" value="Normal (Gaussian)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="200.29" y="297.05" width="107.92" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-138" value="Chi-Squared" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-138" value="Chi-Squared" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="382.09" y="297.05" width="73.5" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-142" value="Student’s &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;t&lt;/span&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-142" value="Student’s &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;t&lt;/span&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="39.2" y="342.2" width="64.4" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-146" value="Gamma" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-146" value="Gamma" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="480.65" y="382.1" width="47" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-150" value="Beta" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-150" value="Beta" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="490.82" y="461.9" width="26.65" height="16.8" as="geometry" />
         </mxCell>
       </root>

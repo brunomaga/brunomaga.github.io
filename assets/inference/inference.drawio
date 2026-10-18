@@ -286,7 +286,7 @@
         <mxCell id="kv_cache-207" value="h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-202">
           <mxGeometry x="2.6" y="-2.08" width="13" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-208" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;o&lt;/span&gt;: 1 x h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-202">
+        <mxCell id="kv_cache-208" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;o&lt;/b&gt;&lt;/span&gt;: 1 x h" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-202">
           <mxGeometry x="-0.39" y="45.73" width="49.39" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-178" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-177">
@@ -355,7 +355,7 @@
         <mxCell id="kv_cache-199" value="h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-177">
           <mxGeometry x="2.6" y="-2.08" width="13" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-200" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;V&lt;/span&gt;: S x h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-177">
+        <mxCell id="kv_cache-200" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;V&lt;/b&gt;&lt;/span&gt;: S x h" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-177">
           <mxGeometry x="17.61" y="74.75" width="52.25" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-169" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-168">
@@ -376,7 +376,7 @@
         <mxCell id="kv_cache-174" value="S" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-168">
           <mxGeometry x="7.12" y="-2.08" width="13.67" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-175" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;qK&lt;/span&gt;&lt;sup&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;T&lt;/span&gt;&lt;/sup&gt;: 1 x S" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-168">
+        <mxCell id="kv_cache-175" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;qK&lt;/b&gt;&lt;/span&gt;&lt;sup&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;T&lt;/b&gt;&lt;/span&gt;&lt;/sup&gt;: 1 x S" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-168">
           <mxGeometry x="-4.9" y="48.05" width="68.14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-144" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-143">
@@ -445,7 +445,7 @@
         <mxCell id="kv_cache-165" value="S" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-143">
           <mxGeometry x="7.13" y="-2.08" width="13.67" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-166" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;&lt;sup&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;T&lt;/span&gt;&lt;/sup&gt;: h x S" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-143">
+        <mxCell id="kv_cache-166" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;K&lt;/b&gt;&lt;/span&gt;&lt;sup&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;T&lt;/b&gt;&lt;/span&gt;&lt;/sup&gt;: h x S" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-143">
           <mxGeometry x="13.17" y="72.42" width="61.14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-136" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-135">
@@ -463,7 +463,7 @@
         <mxCell id="kv_cache-140" value="h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-135">
           <mxGeometry x="2.6" y="-2.08" width="13" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-141" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;q&lt;/span&gt;: 1 x h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-135">
+        <mxCell id="kv_cache-141" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;q&lt;/b&gt;&lt;/span&gt;: 1 x h" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-135">
           <mxGeometry x="-0.39" y="45.73" width="49.39" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-110" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-109">
@@ -532,7 +532,7 @@
         <mxCell id="kv_cache-131" value="h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-109">
           <mxGeometry x="2.6" y="-2.08" width="13" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-132" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;O&lt;/span&gt;: S x h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-109">
+        <mxCell id="kv_cache-132" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;O&lt;/b&gt;&lt;/span&gt;: S x h" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-109">
           <mxGeometry x="17.1" y="74.75" width="53.29" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-85" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-84">
@@ -601,7 +601,7 @@
         <mxCell id="kv_cache-106" value="h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-84">
           <mxGeometry x="2.6" y="-2.08" width="13" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-107" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;V&lt;/span&gt;: S x h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-84">
+        <mxCell id="kv_cache-107" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;V&lt;/b&gt;&lt;/span&gt;: S x h" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-84">
           <mxGeometry x="17.61" y="74.75" width="52.25" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-55" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-54">
@@ -685,7 +685,7 @@
         <mxCell id="kv_cache-81" value="S" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-54">
           <mxGeometry x="7.12" y="-2.08" width="13.67" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-82" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;QK&lt;/span&gt;&lt;sup&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;T&lt;/span&gt;&lt;/sup&gt;: S x S" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-54">
+        <mxCell id="kv_cache-82" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;QK&lt;/b&gt;&lt;/span&gt;&lt;sup&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;T&lt;/b&gt;&lt;/span&gt;&lt;/sup&gt;: S x S" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-54">
           <mxGeometry x="12.58" y="77.09" width="72.04" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-30" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-29">
@@ -754,7 +754,7 @@
         <mxCell id="kv_cache-51" value="S" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-29">
           <mxGeometry x="7.12" y="-2.08" width="13.67" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-52" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;&lt;sup&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;T&lt;/span&gt;&lt;/sup&gt;: h x S" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-29">
+        <mxCell id="kv_cache-52" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;K&lt;/b&gt;&lt;/span&gt;&lt;sup&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;T&lt;/b&gt;&lt;/span&gt;&lt;/sup&gt;: h x S" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-29">
           <mxGeometry x="13.17" y="72.42" width="61.14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-5" value="" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f8cecc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-4">
@@ -823,7 +823,7 @@
         <mxCell id="kv_cache-26" value="h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="kv_cache-4">
           <mxGeometry x="2.6" y="-2.08" width="13" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="kv_cache-27" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Q&lt;/span&gt;: S x h" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-4">
+        <mxCell id="kv_cache-27" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;Q&lt;/b&gt;&lt;/span&gt;: S x h" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kv_cache-4">
           <mxGeometry x="17.1" y="74.75" width="53.29" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="kv_cache-x2696" parent="kv_cache-figure" value="masked" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="481.56" y="329.88" width="47" height="16.8" as="geometry" /></mxCell><mxCell id="kv_cache-x2695" parent="kv_cache-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.2;fillColor=#b3b3b3;" vertex="1"><mxGeometry x="457.56" y="332.28" width="20" height="12" as="geometry" /></mxCell><mxCell id="kv_cache-x2694" parent="kv_cache-figure" value="computed, and appended to the cache" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="216.56" y="329.88" width="226" height="16.8" as="geometry" /></mxCell><mxCell id="kv_cache-x2693" parent="kv_cache-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.2;fillColor=#e1d5e7;" vertex="1"><mxGeometry x="192.56" y="332.28" width="20" height="12" as="geometry" /></mxCell><mxCell id="kv_cache-x2692" parent="kv_cache-figure" value="read from the KV cache" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="455.56" y="305.88" width="135" height="16.8" as="geometry" /></mxCell><mxCell id="kv_cache-x2691" parent="kv_cache-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.2;fillColor=#ffe6cc;" vertex="1"><mxGeometry x="431.56" y="308.28" width="20" height="12" as="geometry" /></mxCell><mxCell id="kv_cache-x2690" parent="kv_cache-figure" value="computed again" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="320.56" y="305.88" width="96" height="16.8" as="geometry" /></mxCell><mxCell id="kv_cache-x2689" parent="kv_cache-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.2;fillColor=#f8cecc;" vertex="1"><mxGeometry x="296.56" y="308.28" width="20" height="12" as="geometry" /></mxCell><mxCell id="kv_cache-x2688" parent="kv_cache-figure" value="computed in this step" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="154.56" y="305.88" width="127" height="16.8" as="geometry" /></mxCell><mxCell id="kv_cache-x2687" parent="kv_cache-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.2;fillColor=#dae8fc;" vertex="1"><mxGeometry x="130.56" y="308.28" width="20" height="12" as="geometry" /></mxCell><mxCell id="static_cache-label" value="static_cache.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -2526,7 +2526,7 @@
         <mxCell id="sdpa-109" parent="sdpa-99" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" as="geometry" x="-1.15" y="-2.07" />
         </mxCell>
-        <mxCell id="sdpa-110" parent="sdpa-99" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;v&lt;/span&gt;: Sk x h" vertex="1">
+        <mxCell id="sdpa-110" parent="sdpa-99" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;v&lt;/b&gt;&lt;/span&gt;: Sk x h" vertex="1">
           <mxGeometry height="20.8" width="57.17" x="5.99" y="65.42" as="geometry" />
         </mxCell>
         <mxCell id="sdpa-80" parent="sdpa-79" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -2583,7 +2583,7 @@
         <mxCell id="sdpa-97" parent="sdpa-79" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="Sk" vertex="1">
           <mxGeometry height="18.4" width="19.67" x="3.36" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="sdpa-98" parent="sdpa-79" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="causal_mask(&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Sq&lt;/span&gt;, &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Sk&lt;/span&gt;)" vertex="1">
+        <mxCell id="sdpa-98" parent="sdpa-79" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;causal_mask&lt;/b&gt;(&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Sq&lt;/span&gt;, &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Sk&lt;/span&gt;)" vertex="1">
           <mxGeometry height="20.8" width="124.43" y="70.08" as="geometry" x="-15.91" />
         </mxCell>
         <mxCell id="sdpa-68" parent="sdpa-67" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -2616,7 +2616,7 @@
         <mxCell id="sdpa-77" parent="sdpa-67" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" as="geometry" x="-1.16" y="-2.07" />
         </mxCell>
-        <mxCell id="sdpa-78" parent="sdpa-67" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;k&lt;/span&gt;: Sk x h" vertex="1">
+        <mxCell id="sdpa-78" parent="sdpa-67" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;k&lt;/b&gt;&lt;/span&gt;: Sk x h" vertex="1">
           <mxGeometry height="20.8" width="57.17" x="5.99" y="65.42" as="geometry" />
         </mxCell>
         <mxCell id="sdpa-56" parent="sdpa-55" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -2649,7 +2649,7 @@
         <mxCell id="sdpa-65" parent="sdpa-55" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" y="20.74" as="geometry" x="-1.15" />
         </mxCell>
-        <mxCell id="sdpa-66" parent="sdpa-55" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="out: Sq x h" vertex="1">
+        <mxCell id="sdpa-66" parent="sdpa-55" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;out&lt;/b&gt;: Sq x h" vertex="1">
           <mxGeometry height="20.8" width="68.06" x="0.54" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="sdpa-36" parent="sdpa-35" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -2706,7 +2706,7 @@
         <mxCell id="sdpa-53" parent="sdpa-35" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="Sk" vertex="1">
           <mxGeometry height="18.4" width="19.67" x="-1.77" y="25.4" as="geometry" />
         </mxCell>
-        <mxCell id="sdpa-54" parent="sdpa-35" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="probs: Sq x Sk" vertex="1">
+        <mxCell id="sdpa-54" parent="sdpa-35" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;probs&lt;/b&gt;: Sq x Sk" vertex="1">
           <mxGeometry height="20.8" width="89.07" x="-3.36" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="sdpa-16" parent="sdpa-15" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -2763,7 +2763,7 @@
         <mxCell id="sdpa-33" parent="sdpa-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="Sk" vertex="1">
           <mxGeometry height="18.4" width="19.67" x="-1.77" y="25.4" as="geometry" />
         </mxCell>
-        <mxCell id="sdpa-34" parent="sdpa-15" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="scores: Sq x Sk" vertex="1">
+        <mxCell id="sdpa-34" parent="sdpa-15" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;scores&lt;/b&gt;: Sq x Sk" vertex="1">
           <mxGeometry height="20.8" width="92.95" x="-5.28" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="sdpa-4" parent="sdpa-3" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -2796,7 +2796,7 @@
         <mxCell id="sdpa-13" parent="sdpa-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" y="20.74" as="geometry" x="-1.16" />
         </mxCell>
-        <mxCell id="sdpa-14" parent="sdpa-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;q&lt;/span&gt;: Sq x h" vertex="1">
+        <mxCell id="sdpa-14" parent="sdpa-3" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;q&lt;/b&gt;&lt;/span&gt;: Sq x h" vertex="1">
           <mxGeometry height="20.8" width="57.17" x="5.99" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mha-label" value="mha.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -2950,7 +2950,7 @@
         <mxCell id="mha-247" parent="mha-221" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.66" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="mha-248" parent="mha-221" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;V&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mha-248" parent="mha-221" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;V&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="76.36" x="82.12" y="45.59" as="geometry" />
         </mxCell>
         <mxCell id="mha-194" parent="mha-193" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -3031,7 +3031,7 @@
         <mxCell id="mha-219" parent="mha-193" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="mha-220" parent="mha-193" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mha-220" parent="mha-193" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;K&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="82.12" y="45.59" as="geometry" />
         </mxCell>
         <mxCell id="mha-166" parent="mha-165" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -3112,7 +3112,7 @@
         <mxCell id="mha-191" parent="mha-165" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="E" vertex="1">
           <mxGeometry height="18.4" width="14.33" x="11.43" y="30.07" as="geometry" />
         </mxCell>
-        <mxCell id="mha-192" parent="mha-165" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="output: S x E" vertex="1">
+        <mxCell id="mha-192" parent="mha-165" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;output&lt;/b&gt;: S x E" vertex="1">
           <mxGeometry height="20.8" width="80.5" x="8.35" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mha-130" parent="mha-129" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -3298,7 +3298,7 @@
         <mxCell id="mha-127" parent="mha-101" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="mha-128" parent="mha-101" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;O&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mha-128" parent="mha-101" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;O&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.7" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mha-60" parent="mha-59" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -3421,7 +3421,7 @@
         <mxCell id="mha-99" parent="mha-59" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="S" vertex="1">
           <mxGeometry height="18.4" width="13.67" x="45.37" y="25.4" as="geometry" />
         </mxCell>
-        <mxCell id="mha-100" parent="mha-59" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="masked &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;softmax(Q K&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
+        <mxCell id="mha-100" parent="mha-59" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;whiteSpace=nowrap;" value="&lt;b&gt;masked &lt;/b&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;softmax&lt;/b&gt;(Q K&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
           <mxGeometry height="37.6" width="176.1" as="geometry" x="-6.62" y="-20.08" />
         </mxCell>
         <mxCell id="mha-32" parent="mha-31" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -3502,7 +3502,7 @@
         <mxCell id="mha-57" parent="mha-31" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.02" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="mha-58" parent="mha-31" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Q&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mha-58" parent="mha-31" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;Q&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.06" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mha-4" parent="mha-3" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -3583,7 +3583,7 @@
         <mxCell id="mha-29" parent="mha-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="E" vertex="1">
           <mxGeometry height="18.4" width="14.33" x="11.44" y="30.07" as="geometry" />
         </mxCell>
-        <mxCell id="mha-30" parent="mha-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;x&lt;/span&gt;: S x E" vertex="1">
+        <mxCell id="mha-30" parent="mha-3" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;x&lt;/b&gt;&lt;/span&gt;: S x E" vertex="1">
           <mxGeometry height="20.8" width="51.73" x="22.75" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mqa-label" value="mqa.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -3689,7 +3689,7 @@
         <mxCell id="mqa-215" parent="mqa-205" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" as="geometry" x="-1.15" y="-2.07" />
         </mxCell>
-        <mxCell id="mqa-216" parent="mqa-205" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;V&lt;/span&gt;: 1 x S x h" vertex="1">
+        <mxCell id="mqa-216" parent="mqa-205" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;V&lt;/b&gt;&lt;/span&gt;: 1 x S x h" vertex="1">
           <mxGeometry height="20.8" width="73.25" x="71.3" y="22.26" as="geometry" />
         </mxCell>
         <mxCell id="mqa-194" parent="mqa-193" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -3722,7 +3722,7 @@
         <mxCell id="mqa-203" parent="mqa-193" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" as="geometry" x="-1.15" y="-2.07" />
         </mxCell>
-        <mxCell id="mqa-204" parent="mqa-193" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;: 1 x S x h" vertex="1">
+        <mxCell id="mqa-204" parent="mqa-193" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;K&lt;/b&gt;&lt;/span&gt;: 1 x S x h" vertex="1">
           <mxGeometry height="20.8" width="74.29" x="71.3" y="22.26" as="geometry" />
         </mxCell>
         <mxCell id="mqa-166" parent="mqa-165" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -3803,7 +3803,7 @@
         <mxCell id="mqa-191" parent="mqa-165" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="E" vertex="1">
           <mxGeometry height="18.4" width="14.33" x="11.43" y="30.07" as="geometry" />
         </mxCell>
-        <mxCell id="mqa-192" parent="mqa-165" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="output: S x E" vertex="1">
+        <mxCell id="mqa-192" parent="mqa-165" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;output&lt;/b&gt;: S x E" vertex="1">
           <mxGeometry height="20.8" width="80.5" x="8.35" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mqa-130" parent="mqa-129" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -3989,7 +3989,7 @@
         <mxCell id="mqa-127" parent="mqa-101" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="mqa-128" parent="mqa-101" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;O&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mqa-128" parent="mqa-101" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;O&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.7" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mqa-60" parent="mqa-59" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -4112,7 +4112,7 @@
         <mxCell id="mqa-99" parent="mqa-59" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="S" vertex="1">
           <mxGeometry height="18.4" width="13.67" x="45.37" y="25.4" as="geometry" />
         </mxCell>
-        <mxCell id="mqa-100" parent="mqa-59" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="masked &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;softmax(Q K&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
+        <mxCell id="mqa-100" parent="mqa-59" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;whiteSpace=nowrap;" value="&lt;b&gt;masked &lt;/b&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;softmax&lt;/b&gt;(Q K&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
           <mxGeometry height="37.6" width="176.1" as="geometry" x="-6.62" y="-20.08" />
         </mxCell>
         <mxCell id="mqa-32" parent="mqa-31" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -4193,7 +4193,7 @@
         <mxCell id="mqa-57" parent="mqa-31" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.02" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="mqa-58" parent="mqa-31" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Q&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mqa-58" parent="mqa-31" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;Q&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.06" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mqa-4" parent="mqa-3" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -4274,7 +4274,7 @@
         <mxCell id="mqa-29" parent="mqa-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="E" vertex="1">
           <mxGeometry height="18.4" width="14.33" x="11.44" y="30.07" as="geometry" />
         </mxCell>
-        <mxCell id="mqa-30" parent="mqa-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;x&lt;/span&gt;: S x E" vertex="1">
+        <mxCell id="mqa-30" parent="mqa-3" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;x&lt;/b&gt;&lt;/span&gt;: S x E" vertex="1">
           <mxGeometry height="20.8" width="51.73" x="22.75" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="gqa-label" value="gqa.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -4398,7 +4398,7 @@
         <mxCell id="gqa-227" parent="gqa-211" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="10.22" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="gqa-228" parent="gqa-211" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;V&lt;/span&gt;: G x S x h" vertex="1">
+        <mxCell id="gqa-228" parent="gqa-211" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;V&lt;/b&gt;&lt;/span&gt;: G x S x h" vertex="1">
           <mxGeometry height="20.8" width="76.36" x="82.68" y="30.03" as="geometry" />
         </mxCell>
         <mxCell id="gqa-194" parent="gqa-193" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -4449,7 +4449,7 @@
         <mxCell id="gqa-209" parent="gqa-193" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="10.22" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="gqa-210" parent="gqa-193" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;: G x S x h" vertex="1">
+        <mxCell id="gqa-210" parent="gqa-193" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;K&lt;/b&gt;&lt;/span&gt;: G x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="82.68" y="30.03" as="geometry" />
         </mxCell>
         <mxCell id="gqa-166" parent="gqa-165" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -4530,7 +4530,7 @@
         <mxCell id="gqa-191" parent="gqa-165" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="E" vertex="1">
           <mxGeometry height="18.4" width="14.33" x="11.43" y="30.07" as="geometry" />
         </mxCell>
-        <mxCell id="gqa-192" parent="gqa-165" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="output: S x E" vertex="1">
+        <mxCell id="gqa-192" parent="gqa-165" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;output&lt;/b&gt;: S x E" vertex="1">
           <mxGeometry height="20.8" width="80.5" x="8.35" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="gqa-130" parent="gqa-129" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -4716,7 +4716,7 @@
         <mxCell id="gqa-127" parent="gqa-101" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="gqa-128" parent="gqa-101" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;O&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="gqa-128" parent="gqa-101" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;O&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.7" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="gqa-60" parent="gqa-59" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -4839,7 +4839,7 @@
         <mxCell id="gqa-99" parent="gqa-59" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="S" vertex="1">
           <mxGeometry height="18.4" width="13.67" x="45.37" y="25.4" as="geometry" />
         </mxCell>
-        <mxCell id="gqa-100" parent="gqa-59" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="masked &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;softmax(Q K&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
+        <mxCell id="gqa-100" parent="gqa-59" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;whiteSpace=nowrap;" value="&lt;b&gt;masked &lt;/b&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;softmax&lt;/b&gt;(Q K&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
           <mxGeometry height="37.6" width="176.1" as="geometry" x="-6.62" y="-20.08" />
         </mxCell>
         <mxCell id="gqa-32" parent="gqa-31" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -4920,7 +4920,7 @@
         <mxCell id="gqa-57" parent="gqa-31" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.02" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="gqa-58" parent="gqa-31" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Q&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="gqa-58" parent="gqa-31" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;Q&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.06" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="gqa-4" parent="gqa-3" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5001,7 +5001,7 @@
         <mxCell id="gqa-29" parent="gqa-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="E" vertex="1">
           <mxGeometry height="18.4" width="14.33" x="11.44" y="30.07" as="geometry" />
         </mxCell>
-        <mxCell id="gqa-30" parent="gqa-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;x&lt;/span&gt;: S x E" vertex="1">
+        <mxCell id="gqa-30" parent="gqa-3" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;x&lt;/b&gt;&lt;/span&gt;: S x E" vertex="1">
           <mxGeometry height="20.8" width="51.73" x="22.75" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mla-label" value="mla.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -5010,13 +5010,13 @@
         <mxCell id="mla-figure" connectable="0" parent="1" style="group;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="915.7" width="784.08" x="0" y="1625.56" as="geometry" />
         </mxCell>
-        <mxCell id="mla-405" parent="mla-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#000000;strokeWidth=1;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+        <mxCell id="mla-405" parent="mla-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#000000;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="365.84" width="784.08" y="549.86" as="geometry" x="0" />
         </mxCell>
         <mxCell id="mla-397" parent="mla-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#d79b00;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="127.56" width="207.36" x="293.22" y="775.18" as="geometry" />
         </mxCell>
-        <mxCell id="mla-211" parent="mla-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#000000;strokeWidth=1;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+        <mxCell id="mla-211" parent="mla-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#000000;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="501.91" width="784.08" y="0" as="geometry" x="0" />
         </mxCell>
         <mxCell id="mla-203" parent="mla-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#d79b00;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5157,7 +5157,7 @@
         <mxCell id="mla-395" parent="mla-381" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="C" vertex="1">
           <mxGeometry height="18.4" width="15" x="49.31" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="mla-396" parent="mla-381" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;c&lt;/span&gt;: S x C,&lt;br&gt;the keys and values of all heads" vertex="1">
+        <mxCell id="mla-396" parent="mla-381" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;whiteSpace=nowrap;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;c&lt;/b&gt;&lt;/span&gt;: S x C,&lt;br&gt;the keys and values of all heads" vertex="1">
           <mxGeometry height="37.6" width="185.9" y="59.35" as="geometry" x="-5.75" />
         </mxCell>
         <mxCell id="mla-354" parent="mla-353" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5238,7 +5238,7 @@
         <mxCell id="mla-379" parent="mla-353" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="mla-380" parent="mla-353" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;O&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mla-380" parent="mla-353" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;O&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.7" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mla-319" parent="mla-318" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5340,7 +5340,7 @@
         <mxCell id="mla-351" parent="mla-318" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="C" vertex="1">
           <mxGeometry height="18.4" width="15" x="12.37" y="23.07" as="geometry" />
         </mxCell>
-        <mxCell id="mla-352" parent="mla-318" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="attn_latent: H x S x C" vertex="1">
+        <mxCell id="mla-352" parent="mla-318" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;attn_latent&lt;/b&gt;: H x S x C" vertex="1">
           <mxGeometry height="20.8" width="128.71" x="-14.09" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mla-277" parent="mla-276" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5463,7 +5463,7 @@
         <mxCell id="mla-316" parent="mla-276" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="S" vertex="1">
           <mxGeometry height="18.4" width="13.67" x="57.47" y="25.4" as="geometry" />
         </mxCell>
-        <mxCell id="mla-317" parent="mla-276" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="masked &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;softmax(q_latent c&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
+        <mxCell id="mla-317" parent="mla-276" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;whiteSpace=nowrap;" value="&lt;b&gt;masked &lt;/b&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;softmax&lt;/b&gt;(q_latent c&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
           <mxGeometry height="37.6" width="212.5" as="geometry" x="-12.73" y="-20.08" />
         </mxCell>
         <mxCell id="mla-242" parent="mla-241" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5565,7 +5565,7 @@
         <mxCell id="mla-274" parent="mla-241" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="C" vertex="1">
           <mxGeometry height="18.4" width="15" x="12.36" y="23.07" as="geometry" />
         </mxCell>
-        <mxCell id="mla-275" parent="mla-241" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="q_latent: H x S x C" vertex="1">
+        <mxCell id="mla-275" parent="mla-241" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;q_latent&lt;/b&gt;: H x S x C" vertex="1">
           <mxGeometry height="20.8" width="114.72" x="-7.11" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mla-214" parent="mla-213" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5646,7 +5646,7 @@
         <mxCell id="mla-239" parent="mla-213" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.66" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="mla-240" parent="mla-213" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Q&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mla-240" parent="mla-213" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;Q&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.7" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mla-188" parent="mla-187" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5691,7 +5691,7 @@
         <mxCell id="mla-201" parent="mla-187" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="C" vertex="1">
           <mxGeometry height="18.4" width="15" as="geometry" x="-2.21" y="-2.07" />
         </mxCell>
-        <mxCell id="mla-202" parent="mla-187" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;c&lt;/span&gt;: S x C" vertex="1">
+        <mxCell id="mla-202" parent="mla-187" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;c&lt;/b&gt;&lt;/span&gt;: S x C" vertex="1">
           <mxGeometry height="20.8" width="51.73" x="9.81" y="67.75" as="geometry" />
         </mxCell>
         <mxCell id="mla-158" parent="mla-157" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5772,7 +5772,7 @@
         <mxCell id="mla-183" parent="mla-157" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="mla-184" parent="mla-157" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;V&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mla-184" parent="mla-157" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;V&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="76.36" x="82.12" y="45.59" as="geometry" />
         </mxCell>
         <mxCell id="mla-130" parent="mla-129" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5853,7 +5853,7 @@
         <mxCell id="mla-155" parent="mla-129" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="mla-156" parent="mla-129" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mla-156" parent="mla-129" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;K&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="82.12" y="45.59" as="geometry" />
         </mxCell>
         <mxCell id="mla-102" parent="mla-101" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -5934,7 +5934,7 @@
         <mxCell id="mla-127" parent="mla-101" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="mla-128" parent="mla-101" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;O&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mla-128" parent="mla-101" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;O&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.7" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mla-60" parent="mla-59" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -6057,7 +6057,7 @@
         <mxCell id="mla-99" parent="mla-59" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="S" vertex="1">
           <mxGeometry height="18.4" width="13.67" x="45.37" y="25.4" as="geometry" />
         </mxCell>
-        <mxCell id="mla-100" parent="mla-59" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="masked &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;softmax(Q K&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
+        <mxCell id="mla-100" parent="mla-59" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;whiteSpace=nowrap;" value="&lt;b&gt;masked &lt;/b&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;softmax&lt;/b&gt;(Q K&lt;sup&gt;T&lt;/sup&gt; / &lt;/span&gt;√&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h)&lt;/span&gt;:&lt;br&gt;H x S x S" vertex="1">
           <mxGeometry height="37.6" width="176.1" as="geometry" x="-6.62" y="-20.08" />
         </mxCell>
         <mxCell id="mla-32" parent="mla-31" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -6138,7 +6138,7 @@
         <mxCell id="mla-57" parent="mla-31" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="mla-58" parent="mla-31" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Q&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="mla-58" parent="mla-31" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;Q&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="6.7" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="mla-4" parent="mla-3" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -6219,7 +6219,7 @@
         <mxCell id="mla-29" parent="mla-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="E" vertex="1">
           <mxGeometry height="18.4" width="14.33" x="11.44" y="30.07" as="geometry" />
         </mxCell>
-        <mxCell id="mla-30" parent="mla-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;x&lt;/span&gt;: S x E" vertex="1">
+        <mxCell id="mla-30" parent="mla-3" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;x&lt;/b&gt;&lt;/span&gt;: S x E" vertex="1">
           <mxGeometry height="20.8" width="51.73" x="22.75" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="dsa-label" value="dsa.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -6406,7 +6406,7 @@
         <mxCell id="dsa-347" parent="dsa-311" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="dsa-348" parent="dsa-311" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;V&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="dsa-348" parent="dsa-311" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;V&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="76.36" x="101.56" y="50.26" as="geometry" />
         </mxCell>
         <mxCell id="dsa-274" parent="dsa-273" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -6517,7 +6517,7 @@
         <mxCell id="dsa-309" parent="dsa-273" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="dsa-310" parent="dsa-273" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="dsa-310" parent="dsa-273" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;K&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="101.56" y="50.26" as="geometry" />
         </mxCell>
         <mxCell id="dsa-234" parent="dsa-233" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -6634,7 +6634,7 @@
         <mxCell id="dsa-271" parent="dsa-233" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="S" vertex="1">
           <mxGeometry height="18.4" width="13.67" x="12.54" y="30.07" as="geometry" />
         </mxCell>
-        <mxCell id="dsa-272" parent="dsa-233" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="index scores: S x S" vertex="1">
+        <mxCell id="dsa-272" parent="dsa-233" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;index scores&lt;/b&gt;: S x S" vertex="1">
           <mxGeometry height="20.8" width="113.55" x="1.54" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="dsa-194" parent="dsa-193" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -6751,7 +6751,7 @@
         <mxCell id="dsa-231" parent="dsa-193" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="S" vertex="1">
           <mxGeometry height="18.4" width="13.67" x="12.54" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="dsa-232" parent="dsa-193" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="top_k mask: S x S" vertex="1">
+        <mxCell id="dsa-232" parent="dsa-193" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;b&gt;top_k mask&lt;/b&gt;: S x S" vertex="1">
           <mxGeometry height="20.8" width="108.9" x="124.21" y="26.93" as="geometry" />
         </mxCell>
         <mxCell id="dsa-156" parent="dsa-155" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -6862,7 +6862,7 @@
         <mxCell id="dsa-191" parent="dsa-155" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" y="20.74" as="geometry" />
         </mxCell>
-        <mxCell id="dsa-192" parent="dsa-155" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;O&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="dsa-192" parent="dsa-155" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;O&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="16.41" as="geometry" y="-3.28" />
         </mxCell>
         <mxCell id="dsa-82" parent="dsa-81" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -7192,7 +7192,7 @@
         <mxCell id="dsa-79" parent="dsa-43" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="h" vertex="1">
           <mxGeometry height="18.4" width="13" x="9.67" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="dsa-80" parent="dsa-43" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Q&lt;/span&gt;: H x S x h" vertex="1">
+        <mxCell id="dsa-80" parent="dsa-43" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;Q&lt;/b&gt;&lt;/span&gt;: H x S x h" vertex="1">
           <mxGeometry height="20.8" width="77.4" x="16.41" y="121.41" as="geometry" />
         </mxCell>
         <mxCell id="dsa-4" parent="dsa-3" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -7309,7 +7309,7 @@
         <mxCell id="dsa-41" parent="dsa-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" value="E" vertex="1">
           <mxGeometry height="18.4" width="14.33" x="57.57" as="geometry" y="-2.07" />
         </mxCell>
-        <mxCell id="dsa-42" parent="dsa-3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;x&lt;/span&gt;: S x E" vertex="1">
+        <mxCell id="dsa-42" parent="dsa-3" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;b&gt;x&lt;/b&gt;&lt;/span&gt;: S x E" vertex="1">
           <mxGeometry height="20.8" width="51.73" y="26.93" as="geometry" x="-13.16" />
         </mxCell>
         <mxCell id="csa-label" value="csa.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">

@@ -5253,10 +5253,10 @@
         <mxCell id="megatron-lm-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="439.83" width="670" height="631.4" as="geometry" />
         </mxCell>
-        <mxCell id="megatron-lm-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=10;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
+        <mxCell id="megatron-lm-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=20;strokeColor=#000000;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="40" y="0" width="348" height="230" as="geometry" />
         </mxCell>
-        <mxCell id="megatron-lm-2" value="&lt;i&gt;Y&lt;/i&gt; = GeLU(&lt;i&gt;XA&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
+        <mxCell id="megatron-lm-2" value="&lt;i&gt;Y&lt;/i&gt; = GeLU(&lt;i&gt;XA&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="157.99" y="4.6" width="102.02" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-3" value="&lt;i&gt;X&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
@@ -5346,10 +5346,10 @@
         <mxCell id="megatron-lm-22" value="&lt;i&gt;A&lt;/i&gt; = [&lt;i&gt;A&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;, &lt;i&gt;A&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;]" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="165.5" y="196.6" width="87.01" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="megatron-lm-23" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=10;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
+        <mxCell id="megatron-lm-23" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=20;strokeColor=#000000;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="408" y="0" width="262" height="230" as="geometry" />
         </mxCell>
-        <mxCell id="megatron-lm-24" value="&lt;i&gt;Z&lt;/i&gt; = Dropout(&lt;i&gt;YB&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
+        <mxCell id="megatron-lm-24" value="&lt;i&gt;Z&lt;/i&gt; = Dropout(&lt;i&gt;YB&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="484.1" y="4.6" width="109.8" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-25" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="megatron-lm-figure">
@@ -5450,10 +5450,10 @@
         <mxCell id="megatron-lm-44" value="(a)" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="324.34" y="240.6" width="21.32" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="megatron-lm-45" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=10;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
+        <mxCell id="megatron-lm-45" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=20;strokeColor=#000000;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="40" y="290" width="348" height="310" as="geometry" />
         </mxCell>
-        <mxCell id="megatron-lm-46" value="&lt;i&gt;Y&lt;/i&gt; = Self-Attention(&lt;i&gt;X&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
+        <mxCell id="megatron-lm-46" value="&lt;i&gt;Y&lt;/i&gt; = Self-Attention(&lt;i&gt;X&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="138.7" y="294.6" width="144.6" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-47" value="&lt;i&gt;X&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
@@ -5675,10 +5675,10 @@
         <mxCell id="megatron-lm-90" value="&lt;i&gt;Q&lt;/i&gt; = [&lt;i&gt;Q&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;, &lt;i&gt;Q&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;], &lt;i&gt;K&lt;/i&gt; = [&lt;i&gt;K&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;, &lt;i&gt;K&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;], &lt;i&gt;V&lt;/i&gt; = [&lt;i&gt;V&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;, &lt;i&gt;V&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;]" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;whiteSpace=nowrap;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="79.1" y="571.6" width="269.8" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="megatron-lm-91" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=10;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
+        <mxCell id="megatron-lm-91" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;arcSize=20;strokeColor=#000000;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="408" y="290" width="262" height="310" as="geometry" />
         </mxCell>
-        <mxCell id="megatron-lm-92" value="&lt;i&gt;Z&lt;/i&gt; = Dropout(&lt;i&gt;YB&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
+        <mxCell id="megatron-lm-92" value="&lt;i&gt;Z&lt;/i&gt; = Dropout(&lt;i&gt;YB&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="megatron-lm-figure">
           <mxGeometry x="484.1" y="294.6" width="109.8" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="megatron-lm-93" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="megatron-lm-figure">

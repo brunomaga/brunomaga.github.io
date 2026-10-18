@@ -403,25 +403,25 @@
         <mxCell id="vae-4" value="Output" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">
           <mxGeometry x="573.77" y="0.23" width="43.89" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vae-8" value="Encoder" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">
+        <mxCell id="vae-8" value="Encoder" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">
           <mxGeometry x="210.77" y="51.36" width="46.98" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="vae-9" value="&lt;i&gt;q&lt;/i&gt;&lt;sub&gt;ϕ&lt;/sub&gt;(&lt;i&gt;z&lt;/i&gt;|&lt;i&gt;x&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="vae-figure">
           <mxGeometry x="210.91" y="72.79" width="46.71" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vae-11" value="Decoder" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">
+        <mxCell id="vae-11" value="Decoder" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">
           <mxGeometry x="470.14" y="50.42" width="47.64" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="vae-12" value="&lt;i&gt;p&lt;/i&gt;&lt;sub&gt;θ&lt;/sub&gt;(&lt;i&gt;x&lt;/i&gt;|&lt;i&gt;z&lt;/i&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="vae-figure">
           <mxGeometry x="470.95" y="68.82" width="46.05" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vae-14" value="For AE" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">
+        <mxCell id="vae-14" value="For AE" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">
           <mxGeometry x="338.21" y="17.26" width="47.84" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vae-19" value="&lt;i&gt;z&lt;/i&gt; ∼ 𝒩(&lt;i&gt;μ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;z&lt;/i&gt;&lt;/sub&gt;, Σ&lt;sub&gt;&lt;i&gt;z&lt;/i&gt;&lt;/sub&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="vae-figure">
           <mxGeometry x="321.19" y="189.3" width="91" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vae-20" value="For VAE" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">
+        <mxCell id="vae-20" value="For VAE" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">
           <mxGeometry x="338.36" y="216.1" width="56.66" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vae-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=12;strokeWidth=2;dashed=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae-figure">

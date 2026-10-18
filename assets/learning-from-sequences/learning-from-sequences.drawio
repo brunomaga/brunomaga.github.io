@@ -25,7 +25,7 @@
         <mxCell id="transformer-5" value="Multi-Head&lt;br&gt;Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer-figure">
           <mxGeometry x="80.58" y="374.91" width="93.94" height="37.85" as="geometry" />
         </mxCell>
-        <mxCell id="transformer-6" value="N×" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer-figure">
+        <mxCell id="transformer-6" value="N×" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer-figure">
           <mxGeometry x="9.27" y="332.15" width="25.01" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="transformer-7" value="" style="endArrow=block;startArrow=none;html=1;rounded=1;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="transformer-figure">
@@ -197,7 +197,7 @@
         <mxCell id="transformer-39" value="Masked&lt;br&gt;Multi-Head&lt;br&gt;Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer-figure">
           <mxGeometry x="221.16" y="360.72" width="93.27" height="52.04" as="geometry" />
         </mxCell>
-        <mxCell id="transformer-40" value="N×" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer-figure">
+        <mxCell id="transformer-40" value="N×" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="transformer-figure">
           <mxGeometry x="358.69" y="277.34" width="25.01" height="28.8" as="geometry" />
         </mxCell>
         <mxCell id="transformer-41" value="" style="endArrow=block;startArrow=none;html=1;rounded=1;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="transformer-figure">

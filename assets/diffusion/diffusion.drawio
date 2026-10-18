@@ -85,7 +85,7 @@
         <mxCell id="dit-17" value="DiT Block" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="69.78" y="277.85" width="233.91" height="82.06" as="geometry" />
         </mxCell>
-        <mxCell id="dit-18" value="N×" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-18" value="N×" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="dit-figure">
           <mxGeometry x="19.52" y="306.95" width="25.58" height="23.2" as="geometry" />
         </mxCell>
         <mxCell id="dit-19" value="Patchify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=16;strokeColor=#000000;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">

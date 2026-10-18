@@ -186,7 +186,9 @@ sections 6 and 7, and the font section 4.
   A picture redrawn from an older one keeps the order of its text sizes: its most common size becomes 14,
   sizes at least 1.1 times larger become 16, sizes under 0.9 times smaller become 12.
   Italic is allowed for variables and for emphasis, bold only for titles, subtitles and names the post's
-  text refers to.
+  text refers to: the title of a frame or panel (its topmost label), N×, Encoder and Decoder, and the tensor
+  name of a label "name: shape" or "name(a, b)" (only the name: **q**: Sq x h). Bold changes the weight of a
+  label, never its words, also in pictures from external sources.
 - Charts use the same fonts and sizes: tick labels 12, axis labels and legends 14, panel titles 14 bold. A
   panel title that is a sentence goes into the caption; panel letters and short panel names stay. A legend
   with many entries in a small chart may use 10 (llama3_scaling_laws).
@@ -266,8 +268,8 @@ sections 6 and 7, and the font section 4.
     in all_to_all);
   - thicker lines that emphasise a part of a drawing (for example DualPipe's "overlapped forward &
     backward" frames): 2.5 px;
-  - dashed outlines: 0.8 px on filled elements, 1 px on frames and lines without fill (the dash keeps its
-    pattern);
+  - dashed outlines of elements that are not frames: 0.8 px on filled elements, 1 px on lines without fill
+    (a dashed frame is 2 px, as other frames; the dash keeps its pattern);
   - white masks that hide parts of a drawing, faded elements, curly brackets, red cross marks, and table
     grid lines without fill.
 - Thin arrows: black #000000, 1.6 px, endArrow=block, endFill=1, endSize=5. Dashed arrows use the same
