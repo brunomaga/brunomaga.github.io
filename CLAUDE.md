@@ -19,6 +19,9 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   (the paper itself, university lecture notes, textbooks, Wikipedia), and with the post's text, code and
   formulas: the same names and symbols for the same quantities (for example "rank" and p, when the text says
   so). Check the source before drawing or changing a picture, and name the sources checked in the PR.
+- The logic of a picture makes sense: each step follows from the previous one, arrows connect the right
+  parts in the right direction, and shapes, data flow and results agree with the algorithm and the formulas.
+  When they do not, the picture is fixed with facts from the sources.
 - Worked examples (data, steps, results) are computed by running the algorithm, not by hand, and the picture
   shows the computed values.
 - Third person, as the post text: no "I", "we", "our", "ours", "us", "you" or "your" in a picture. A paper's
@@ -44,7 +47,7 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts).
 - Charts drawn from data (plots, benchmarks, histograms) keep their data and the script or spreadsheet that
   draws them next to the SVG, and follow the same palette, font and sizes as the diagrams.
-- Paper figures are redrawn in this style too, with the caption "Adapted from: <paper link>".
+- Paper figures are redrawn in this style too, and their captions credit the paper (section 7).
 
 ### 3. Page width and scale
 
@@ -154,6 +157,15 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   {: .caption}
   Caption text. Adapted from: [paper](link)
   ```
+- A picture that comes from a source is credited in the last sentence of its caption, with a link to the
+  paper (its arXiv abstract page when it has one), the Wikipedia article, the documentation or the lecture
+  notes:
+  - "Source: [title](link)" for the source's own figure or photo, shown as it is;
+  - "Adapted from: [title](link)" for a picture redrawn from a figure of the source (same content,
+    restyled, simplified or corrected);
+  - "Inspired by: [title](link)" for a picture drawn for the post that loosely follows an idea or a figure
+    of the source.
+  A picture drawn from the post's own example, data or code has no credit.
 - Panel letters such as "(a)" may stay inside the picture; the panel's text goes into the caption.
 - Titles that describe a schedule or a variant (for example "ZB-H1 (same activation memory as 1F1B)") go
   into the caption, not the picture.
@@ -188,6 +200,10 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
 
 ### 10. Changes and review
 
+- A picture task changes pictures, their draw.io sources, their Markdown (img tags, widths) and their
+  captions. In the post's text it only makes tiny fixes that keep the text in agreement with a corrected
+  picture (a word, a symbol, a number), never whole sentences or paragraphs; larger text issues are reported
+  to the user.
 - Show a before/after of the changed pictures, as images at their page size, and wait for an OK before
   merging.
 - Check the content against the sources (section 1). Fix content errors only when certainly wrong, and
