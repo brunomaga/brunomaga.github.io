@@ -149,6 +149,21 @@ Bugs in the code and data files of the posts (under `assets/`).
   `Megatron_MHA` takes it as an argument. The class only works with a global `dropout`. Fix: add a `dropout`
   argument to `Megatron_FeedForward.__init__`.
 
+### Mixture-of-Experts and Expert Parallelism (2024-01-19-mixture-of-experts.md)
+
+- The single-node `MoE` builds its experts with `FeedForward(input_size, output_size, dropout=dropout)`, but the
+  `FeedForward` of the GPTlite post takes only `n_embd`, as `MoE_dist` uses it. The post defines no `FeedForward`
+  with an output size, and `MoE_deep` needs one for its last layer. Fix: define
+  `FeedForward(input_size, output_size, dropout)` in the post, next to the `Router`.
+- `MoE_dist` sets `capacity = int(S / self.num_experts * self.capacity_factor)` with `k=2`. Each row sends `k*S`
+  tokens to the experts, `k*S/N` per expert on average, so the default capacity factor of 1.25 drops at least 37.5%
+  of the assignments, even with a perfect balance. GShard sets the capacity of top-2 gating to `2T/N`, and the
+  `top2gating` of DeepSpeed doubles the capacity factor. Fix:
+  `capacity = int(self.k * S / self.num_experts * self.capacity_factor)`.
+- `MoE_dist` has no load balancing loss, so the router can send most tokens to a few experts. The text states this.
+  Proposed fix: compute the Switch loss in `forward()` from `probs` and `topk_experts`, and return it with the
+  output.
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -437,6 +452,17 @@ that is not wrong.
   panel.
 - Optional, the captions of `dnn_model_parallelism.svg` and `argonne_parallel_2.svg` write the processors as p0,
   p1 and p0-p3, while the figures write P0 to P3 with subscripts. Fix: P0 to P3 in the captions.
+
+### Mixture-of-Experts and Expert Parallelism (2024-01-19-mixture-of-experts.md)
+
+- `distributed-training/imgs/moe_megablocks.svg`: the router outputs the expert indices 1 2 0 2 1 2 for "the quick
+  brown fox jumped over", which send "quick", "fox" and "over" to expert 2 and "brown" to expert 0. The permutation,
+  the computation and the output put "brown" at Expert-2, and "quick" and "fox" at Expert-0. Fix: indices
+  1 0 2 0 1 0. Check whether Figure 1 of the MegaBlocks paper has the same error.
+- `distributed-training/imgs/moe_gshard.svg`: the three titles write "Transfomer". Fix: "Transformer".
+- Optional, `moe_2017_dean.svg` writes the gate as G(x) and the number of experts as n, and `moe_gshard.svg` writes E
+  experts and N layers, as their papers do. The text writes the gate as g(x) and the number of experts as N, and
+  names the notation of the first figure. Fix: relabel the figures to g(x) and N experts, and the GShard layers to L.
 
 ## Content issues
 
