@@ -45,6 +45,31 @@ Bugs in the code and data files of the posts (under `assets/`).
   distribution", but it returns the noise-free lines `X @ w` for weights drawn from the posterior. Fix: "samples of
   the mean function X @ w, with w drawn from the posterior".
 
+### Building a GPT model in PyTorch from scratch (2023-02-28-gptlite.md)
+
+- Post, section "Multi-Head Masked Attention": the uniform attention matrix is created on `device`, but `x` and
+  `tril` on the CPU, so on a GPU machine `wei @ x` and `wei.masked_fill(tril==0, ...)` fail with a device mismatch.
+  The alternative notation applies the mask and the softmax to the `wei` of the previous snippet, which gives the
+  uniform matrix only because the unmasked entries of each row are equal. Fix: drop `device=device` from the first
+  snippet, and start the second one with `wei = torch.zeros((S,S))`.
+- Post, section "Training Loop": `eval_loss` runs with dropout on, since the model never switches to eval mode, and
+  the loop defines the function again at every step. Fix: define `eval_loss` once before the loop, and call
+  `m.eval()` at its start and `m.train()` before it returns, as `assets/gptlite/main.py` does.
+- Post, section "Final Model": the comment "one layer normalization layer after transformer blocks and one before
+  linear layer that outputs the vocabulary" describes the single `self.ln` as two layers. Fix: "one layer
+  normalization after the transformer blocks, before the linear layer that outputs the vocabulary".
+- Post, section "Tokenization": the code block that lists the 65 characters is marked `python`, so the highlighter
+  marks "!" as an error. Fix: remove the language tag `python` from the opening fence.
+- `assets/gptlite/gptlite.py`, `GPTlite.__init__`: the comment `# Add this` after `self.ln = nn.LayerNorm(d_model)`
+  is a leftover editing note. Fix: remove it.
+- `assets/gptlite/utils.py`, `sin_cos_positional_embeddings`: no code calls it, and it differs from the formula of
+  the transformer: the base is 1000 instead of 10000, and the odd dimension 2i+1 uses the exponent (2i+1)/E instead
+  of the 2i/E of its pair. Fix: remove the function, or set `div_term = 10000 ** (2 * (torch.arange(E) // 2) / E)`.
+- `assets/gptlite/utils.py`, `get_gpt3_small_model_parameters`: the docstring dates the GPT-3 paper to 2021 instead
+  of 2020, and `batch_size = 500_000` counts tokens in the paper (0.5M tokens, about 244 sequences of 2048 tokens),
+  while `get_batch` reads it as a number of sequences. The only caller overrides it. Fix: "Brown et al, 2020", and
+  `batch_size = 500_000 // 2048`, or a comment that the value counts tokens.
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -266,6 +291,23 @@ that is not wrong.
   `learning-from-sequences/transformer_attention_masked.svg`: both end with "Source: unknown", and the first writes
   the sentence length as N, while the text writes n. Fix: write n, and redraw both figures from the text, or find
   their source.
+
+### Building a GPT model in PyTorch from scratch (2023-02-28-gptlite.md)
+
+- `gptlite/gptlite_embedding.svg`, `gptlite_pos_enc.svg`, `gptlite_attention.svg`, `gptlite_feedforward.svg`,
+  `gptlite_blocks.svg` and the right model of `gptlite/all_models.svg`: the block has the post-norm "Add & Norm"
+  boxes of the transformer paper, but GPTlite normalizes the input of each sublayer (pre-norm) and has a layer
+  normalization between the last block and "Linear". The positional encoding is drawn as a sinusoid, but GPTlite
+  learns a table of position embeddings. Fix: draw a "LayerNorm" box before the masked multi-head attention and
+  before the feed-forward network, a ⊕ after each of them, and a "LayerNorm" box before "Linear", and label the
+  positional input "Position Embedding", without the sinusoid. The gptlite-cpp post also uses three of these
+  figures.
+- `gptlite/all_models.svg`: the caption calls the middle model "a single-block decoder-only model", but the figure
+  draws it with "N×". Fix: remove "N×" from the middle model.
+- `gptlite/gptlite_attention.svg`: the red frame also marks "N×", the number of blocks, which is not part of the
+  attention module. Fix: remove the frame around "N×".
+- Optional, the GPTlite figures: "N×" and the "more blocks" box both mark the repetition of the block. Fix: keep
+  one of the two.
 
 ## Content issues
 
