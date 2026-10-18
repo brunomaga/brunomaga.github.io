@@ -115,6 +115,34 @@ Bugs in the code and data files of the posts (under `assets/`).
   instead. Fix: flatten in the post, `loss = criterion(outputs.flatten(0, 1), labels.flatten())`, or show
   `CrossEntropyLoss_FlatView`.
 
+### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
+
+- Toy PyTorch pipeline in the post (`pipeline_step_no_overlap`): stage 0 and the middle stages overwrite `act` with
+  the stage output. A middle stage then sends `act.grad` of its output, which is `None`, so a pipeline with more than
+  2 stages stops at the first backward pass. Stage 0 also calls `requires_grad_(True)` on its input, which fails for
+  integer token ids, and the receive buffers take the shape of the input `x_mb`, not of the activations. Fix: keep
+  the input and the output of the stage apart, as `pytorch_pipeline_train_step()` in
+  `assets/distributed-training/gptlite_ds.py` does (`act_in`, `act_out`, then `dist.send(act_in.grad, ...)`).
+- `GPTlite.to_layers()` in the post starts with a lambda that sums the embeddings. `PipelineModule` does not
+  register the parameters of a layer that is not an `nn.Module`, so the optimizer does not update the embedding
+  tables, and `partition_method="parameters"` counts them as 0, as the partition output in the results shows.
+  `gptlite_ds.py` returns the module `emb_sum` instead. Fix: show the `gptlite_ds.py` version,
+  `[self.emb_sum, *self.blocks, self.ln, self.lm_head]`, adapt the paragraph after it, and rerun the partition
+  example of the results with the `LayerSpec` version that the runs use.
+- The activation checkpointing snippet reads `args.activation_checkpoint_interval` inside `get_model()`, where
+  `args` is not defined. Fix: `'activation_checkpoint_interval': activation_checkpoint_interval`, as in
+  `gptlite_ds.py`.
+- Post and `train.py`: `step_count = len(train_dataset) // engine.gradient_accumulation_steps()` is the number of
+  `train_batch()` calls per epoch only with one pipeline and micro-batches of 1 sample. With 4 stages on 8 GPUs (2
+  pipelines), each epoch of the loop runs 2 passes over the data. Fix:
+  `step_count = len(train_dataset) // engine.train_batch_size()`.
+- `train.py` also uses `CrossEntropyLoss_FlatView` for the benchmark model, whose outputs have shape
+  (batch, classes), so `B, S, C = logits.shape` stops with a `ValueError`. Fix:
+  `F.cross_entropy(logits.flatten(0, -2), labels.flatten())`, which accepts both shapes.
+- The `ImportError` of `gptlite_ds.py` (see the data parallelism entry) also stops the code of this post, and the
+  post's `LayerSpec(Block, n_embd, n_head)` follows the old `Block` signature. Fix: as in the data parallelism
+  entry.
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -387,6 +415,12 @@ that is not wrong.
   averaged. Fix: a caption such as "GPTlite on one node with 8 GPUs, in fp32, with micro-batches of 1 sample:
   average and peak allocated memory per GPU, and throughput over all GPUs".
 
+### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
+
+- Optional, the caption of `distributed-training/pipedream_dnn_pipeline_parallel_microsoft.svg` says that the
+  forward passes in flight "belong to different micro-batches". PipeDream pipelines mini-batches and updates the
+  weights after each one, as the text says. Fix: "different mini-batches".
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
@@ -434,6 +468,19 @@ Content problems that need the author's decision, such as overlap between posts.
   checkpointing section, still in the first and second person. The visible text now introduces ZeRO++ and
   activation checkpointing in a few sentences. The hidden text sets buckets of `4e5` elements, while the configs
   use `5e4`, and calls `to_layers()` `lo_layers()`. Proposed fix: delete the comment, or rewrite and publish it.
+
+### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
+
+- Results, memory per GPU: the first GPU used more memory than the others, also with the deep benchmark model, and
+  the post says that 1F1B causes such an imbalance. With micro-batches of 1 sample, the activations of the deep
+  benchmark model take about 0.5 MB per micro-batch and stage, so 1F1B explains a few MB at most for that model,
+  and the cause of a larger gap is not known. Proposed fix: measure the peak memory of every GPU
+  (`torch.cuda.max_memory_allocated()` on each rank, and `nvidia-smi` for the CUDA contexts on GPU 0), then give
+  the numbers in the post, or drop the benchmark model from that sentence.
+- The post keeps the workaround `outputs = outputs.requires_grad_(True)` for the error of the swapaxes lambda. If
+  `outputs` has no `grad_fn`, this call lets the backward pass run, but no gradient reaches the layers before it.
+  Proposed fix: check that the parameters of the last stage get gradients with the workaround (`p.grad` after
+  `train_batch()`), and remove the sentence if they do not.
 
 ## Title issues
 
