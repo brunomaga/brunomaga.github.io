@@ -89,19 +89,22 @@ to SVG, sizing it in the Markdown and writing its caption. Read this section bef
 each new picture rule the user gives to it, in the same change.
 
 The two kernel fusion paper repositories (brunomaga/moe_paper_huawei and brunomaga/ffn_tp_paper_huawei)
-are the style reference only. Never change them. Their imgs/*.svg figures are the example of the look to
-follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accent text, boxes with square
-corners), except for their font (section 4).
+are the style reference only. Never change them. Their imgs/*.svg figures are the example of the palette to
+follow (pastel draw.io fills, black outlines and arrows, dark accent text). The line weights and corners follow
+sections 6 and 7, and the font section 4.
 
 ### 1. Content
 
-- A picture is correct, simple and factual, with a standard layout, like a figure in a college course or a
-  textbook: one idea per picture, parts aligned on a grid, flow from left to right or from top to bottom, no
-  decoration.
+- A picture is correct, simple and factual, with a standard layout, like a figure in a college course, a
+  conference paper or a textbook: direct to understand, one idea per picture, parts aligned on a grid, flow
+  from left to right or from top to bottom, no decoration.
 - Every label, dimension, number, arrow and step agrees with the original paper or another reliable source
   (the paper itself, university lecture notes, textbooks, Wikipedia), and with the post's text, code and
   formulas: the same names and symbols for the same quantities (for example "rank" and p, when the text says
   so). Check the source before drawing or changing a picture, and name the sources checked in the PR.
+- A picture that comes from an external source (a paper, a book, a website) keeps the source's text, labels
+  and content: only its style changes. Its content changes only after a check of the source shows an error;
+  when the source cannot be reached, the content stays as it is.
 - The logic of a picture makes sense: each step follows from the previous one, arrows connect the right
   parts in the right direction, and shapes, data flow and results agree with the algorithm and the formulas.
   When they do not, the picture is fixed with facts from the sources.
@@ -125,6 +128,8 @@ corners), except for their font (section 4).
   so the posts need copies). A copy that does not follow the sizing in section 3 or the font in section 4
   is redrawn in this repo, in a tab of assets/inference/inference.drawio named after the post, from the
   paper repository's draw.io or TikZ source. The paper repositories stay unchanged.
+- A picture or an animation shown unchanged from Wikimedia Commons (the Newton's method and k-means GIFs)
+  links to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
   both pages link to that file. The same holds for a picture used by two posts (for example
   matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts).
@@ -155,6 +160,8 @@ corners), except for their font (section 4).
 - A picture that does not fit 880 px at the text sizes below is redrawn: first narrow the empty space
   between its parts, then move parts (wrap a row into two rows, stack panels, break long labels over two
   lines). Never shrink the text to make it fit.
+- A picture whose arrows or labels are crowded grows, taller or wider up to 880 px, before any text or arrow
+  gets smaller (the transformer picture is taller, the DualPipe schedule wider).
 
 ### 4. Font
 
@@ -208,9 +215,14 @@ corners), except for their font (section 4).
   color (the tokens #6c8ebf and the padding #f5f5f5 of variable_batch_lr_pipeline). The accent colors may also
   fill small marks (dots of a scatter plot, nodes of a graph, heat map cells, filled tokens) where pastel
   fills are too faint.
+- Fills are flat: no gradients, shadows or glow, and the faces of a cube share one fill.
+- A colored outline or frame always has a meaning that the text or the caption gives (a highlight, a group,
+  the KV cache). No decorative accent frames.
 - A picture redrawn from a paper figure takes, for each color of the figure, the closest color of the
-  palette: a pastel fill for a light color, an accent for a saturated one (the dark green blocks of the
-  Megatron-LM figure become #82b366).
+  palette: a pastel fill for a box, an accent only for a small mark, as a large accent fill clashes with the
+  pastel fills. When the closest fill already means something else in the picture, the box takes another
+  fill (the dark green f and g blocks of the Megatron-LM figure are purple #e1d5e7, as green marks its Y and
+  Z boxes).
 - Dark accent text (from the kernel paper figures): blue #1e3a5f, green #456e36, orange #885e10,
   purple #6b4a80, red #b85450.
 - Pipeline schedules and other pictures that need more distinct colors (all pipeline pictures share it):
@@ -223,8 +235,8 @@ corners), except for their font (section 4).
                        in the vertical centre
   idle                 hatched (section 7)
   ```
-  Every pipeline picture uses 4 GPUs, except DualPipe (6), and shows no previous iteration. Section 8 gives
-  the layout.
+  Every pipeline picture uses 4 GPUs, except DualPipe (8) and the 8 workers of pipeline_8_stages,
+  pipeline_4_stages and pipeline_2_stages, and shows no previous iteration. Section 8 gives the layout.
 - The same thing has the same color within a post (one color per process, GPU, head, expert...), and the
   same meaning keeps its color across posts where possible (blue forward, green backward).
 - New colors are only added when the palette above runs out, and must look like part of it (pastel fill,
@@ -234,23 +246,48 @@ corners), except for their font (section 4).
 ### 6. Lines, outlines and arrows
 
 - Every geometric element with a fill (rectangles, rounded boxes, circles, cubes, cylinders, filled table
-  cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000,
-  strokeWidth=0.8, no stroke opacity. Dashed elements too (the dash keeps its pattern).
+  cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000, no stroke
+  opacity. Its width depends on its role, so that boxes stand out and the cells of a matrix stay light:
+  ```
+  operation, layer, module, kernel                 2 px
+  device, process, group, section (frame)          2 px
+  operator (+, x, concatenation)                   2 px
+  data (tensor, vector, token, buffer)             1.2 px
+  block arrow                                      1.2 px
+  neuron, graph node                               1.2 px
+  matrix or array cell                             1 px, and a 2 px outline around each block of cells
+  isometric cube cell                              0.6 px, and a 2 px outline around each block of cubes
+  pipeline pass                                    1 px (section 8)
+  ```
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
     frame around the box (the red #b85450 2 px outlines of the modules in the GPT-lite pictures);
   - colored frames that highlight a group of parts (the orange KV cache frames, the red frame of process A
     in all_to_all);
   - thicker lines that emphasise a part of a drawing (for example DualPipe's "overlapped forward &
-    backward" frame): 2 px;
+    backward" frames): 2.5 px;
+  - dashed outlines: 0.8 px on filled elements, 1 px on frames and lines without fill (the dash keeps its
+    pattern);
   - white masks that hide parts of a drawing, faded elements, curly brackets, red cross marks, and table
     grid lines without fill.
-- Thin arrows and connectors: black #000000, 1 px, endArrow=block, endFill=1, endSize=6. Dashed arrows
-  use the same head. Grey #666666 only for faded or "next iteration" content.
-- Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1 px black line with a
+- Thin arrows: black #000000, 1.6 px, endArrow=block, endFill=1, endSize=5. Dashed arrows use the same
+  head. Grey #666666 only for faded or "next iteration" content. Lines without a head that join two parts of
+  the flow (two boxes, or a box and an arrow): 1.6 px.
+- The links of a dense network (each neuron to each neuron of the next layer): 1.2 px, without heads, which
+  would overlap at every node.
+- Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.6 px black line with a
   flat bar head, endArrow=baseDash;endSize=10.
-- Frames and lines without fill: black, 1 px (2 px for an emphasis). Lines thinner than 0.7 px at page scale
-  (grid lines drawn over a photo or a matrix) keep their weight.
+- Lines without fill (brackets, table grid lines): black, 1 px. Lines thinner than 0.7 px at page scale (grid
+  lines drawn over a photo or a matrix) keep their weight.
+- Arrow layout:
+  - an arrow has at least 6 px of line before its head, and a bent arrow at least 6 px before its first turn;
+  - arrowheads are at least 2 px apart: arrows into one box end at different points of its edge, or one
+    joins the line of the other before the head;
+  - two arrows share a segment only when they leave the same point (fan-out) or end at the same point
+    (fan-in);
+  - a label never covers its arrow: it sits above a horizontal segment or right of a vertical one, with no
+    background (labelBackgroundColor=none);
+  - text keeps at least 2.5 px from every line and shape that does not hold it.
 - No end-of-sequence cells or tokens in schedules: the last decode cell is the last token.
 
 ### 7. Shapes, blocks and sizes
@@ -258,8 +295,9 @@ corners), except for their font (section 4).
 - The same shape means the same thing in every picture:
   ```
   data (tensors, matrices, vectors, tokens, buffers)    rectangle with square corners
-  operation, layer, module, kernel                       rectangle with square corners
-  device, process, group (GPU, rank, node, worker)       frame with a light fill, its name at the top left
+  operation, layer, module, kernel                       rectangle with 5 px round corners
+  device, process, group (GPU, rank, node, worker),      frame with 10 px round corners and a light fill, its
+  section                                                name at the top left
   3D tensor                                              isometric cube (isoCube2); CNN feature map: cube
   storage (disk, database, cache)                        cylinder
   encoder, decoder                                       trapezoid
@@ -269,9 +307,9 @@ corners), except for their font (section 4).
   span of several parts                                  curly bracket, 1 px
   transformation of a whole stage (a model into another) block arrow; thin arrows everywhere else
   ```
-- Boxes have square corners (rounded=0), as in the kernel paper figures. Only a picture redrawn from an
-  original with rounded boxes keeps them, with a 5 px corner radius (absoluteArcSize=1;arcSize=10).
-  Capsules (fully round ends) keep their shape.
+- Operations and frames have round corners: 5 px for an operation (rounded=1;absoluteArcSize=1;arcSize=10),
+  10 px for a frame (arcSize=20). Data, matrix and array cells, plot bars and the cells of a schedule or a
+  time line have square corners (rounded=0). Capsules (fully round ends) keep their shape.
 - Block arrows: body 10 px wide, head 20 px wide and 10 px long (flexArrow: width=10;endWidth=10;endSize=3.07;
   singleArrow: 20 px tall, arrowWidth=0.5). A block arrow with a label inside keeps a body taller than its
   label, with the same proportions. A block arrow thinner than 6 px is a thin arrow (section 6).
@@ -285,6 +323,8 @@ corners), except for their font (section 4).
   under the frame.
 - The pictures of one series in a post (the attention variants, the pipeline schedules...) use the same
   element sizes: the same cube, cell, row and box sizes in every picture of the series.
+- A legend is a row of entries, each a swatch with its label 4 px to its right, and 16 px between entries
+  (section 8 gives the pipeline legend).
 - Sizes for new and redrawn pictures: a one-line box 30 px tall, 20 px between boxes in a row, 40 px between
   rows (room for an arrow and its label), matrix and array cells 20 x 20 px with 12 px numbers (10 px when they
   do not fit).
@@ -292,21 +332,25 @@ corners), except for their font (section 4).
 ### 8. Pipeline schedules
 
 All pipeline schedules (the pipeline parallelism post and the publications page) share one layout:
-- One row per GPU, labelled "GPU 0" to "GPU 3" ("Worker 1" to "Worker 4" where the post's text says workers,
-  as for the PipeDream pictures), 14 px regular, right-aligned 4 px left of the first cell.
-- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide: a forward pass takes 1 unit, a backward pass
-  2 units, or 1 unit each for the backward for inputs (B) and the backward for weights (W). With two chunks per
-  GPU (interleaved 1F1B, ZB-V, DualPipe, DualPipeV), each pass of a chunk takes half as long.
-- Each row is a 1 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch is
-  idle time. A pass is one cell with a 0.8 px black outline, in the pipeline colors of section 5; a backward pass
-  is one cell of two units, not two cells.
-- Micro-batch numbers are 10 px: black on the base colors, white on the dark ones, grey #666666 in the
-  next-iteration cells.
+- One row per GPU, labelled "GPU 0" to "GPU 3" (to "GPU 7" for DualPipe; "Worker 1" to "Worker 4" where the
+  post's text says workers, as for the PipeDream pictures), 14 px regular, right-aligned 4 px left of the
+  first cell.
+- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (12.10 px for DualPipe, so that its 8 GPUs
+  and 16 micro-batches fit 880 px): a forward pass takes 1 unit, a backward pass 2 units, or 1 unit each for
+  the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
+  ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
+  GPU, so its passes take the full time.
+- Each row is a 1.5 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
+  is idle time. A pass is one cell with a 1 px black outline, in the pipeline colors of section 5; a backward
+  pass is one cell of two units, not two cells.
+- Every pass cell holds its micro-batch number, also the single micro-batch 1 of pipeline_8_stages,
+  pipeline_4_stages and pipeline_2_stages. Micro-batch numbers are 10 px: black on the base colors, white on
+  the dark ones, grey #666666 in the next-iteration cells.
 - The schedule ends with the forward passes of the next iteration on every GPU, then "..." (16 px, grey),
   vertically centred to the right of the rows.
 - A marker (for example "1F1B ends", the time at which the post's 1F1B schedule ends) is a dashed grey
   vertical line with a 12 px grey label right-aligned to it, above the rows.
-- Overlapped forward and backward passes (DualPipe) have a 2 px black frame around them.
+- Overlapped forward and backward passes (DualPipe) have a 2.5 px black frame around them.
 - The legend is centred under the rows, 12 px below them (or below the time axis): each entry is a 20 x 12 px
   swatch (two 10 x 12 px halves for the two chunks or directions) and its 14 px label 4 px to the right, with
   16 px between entries, on two rows when it is wider than the schedule. The labels are Forward, Backward,

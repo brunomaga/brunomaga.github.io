@@ -22,7 +22,7 @@ Given a dense matrix representation of a graph connectivity $$E$$, computing $$G
  so $$V$$ is the same for $$G$$ and $$G^{\star}$$. The distributed transpose of a **dense** connectivity matrix is well known and is available via the `MPI_Alltoall` collective call. This call takes as input (output) an array of elements, the size of the array, and the datatype of the elements to be sent (received).
 
 {: .picture}
-<img width="71%" height="71%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg">
+<img width="71.1%" height="71.1%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg">
 
 {: .caption}
 `MPI_Alltoall` on 6 processes: block $$j$$ of process $$i$$ goes to process $$j$$, as its block $$i$$. The blocks of process A (red frame) become the first block of every process. Adapted from: [MPI Tutorial, Shao-Ching Huang, IDRE High Performance Computing Workshop, 2013](https://www.slideshare.net/slideshow/mpi-49244468/49244468)

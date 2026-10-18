@@ -355,7 +355,7 @@ The code is available in the [distributed-training repo](https://github.com/{{ s
 
 Even with 1F1B, every stage idles for `(p-1)(F+B)` per iteration, where `p` is the number of stages and `F` and `B` are the times of the forward and backward passes of one micro-batch on one stage. Relative to the compute of `m` micro-batches, this is a bubble fraction of `(p-1)/m`. Therefore, 1F1B can only reduce the bubble with more micro-batches per iteration (i.e. a larger batch or smaller micro-batches) or with fewer stages. Newer schedules reduce the bubble directly. They are not part of DeepSpeed, where they would require a [custom schedule](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule), but they are available in [Megatron-LM](https://github.com/NVIDIA/Megatron-LM), in [PyTorch's `torch.distributed.pipelining`](https://docs.pytorch.org/docs/stable/distributed.pipelining.html) and in [DeepSeek's DualPipe repository](https://github.com/deepseek-ai/DualPipe).
 
-The diagrams in this section, like the GPipe and 1F1B diagrams above, were generated from the reference implementation of each schedule, for 4 GPUs and 8 micro-batches (6 GPUs and 12 micro-batches for DualPipe), and the diagrams on 4 GPUs share the same time scale. Time is normalized so that every GPU performs the same amount of compute in all diagrams on 4 GPUs: a forward pass takes 1 unit and a backward pass takes 2 units (1+1 when it is split into the gradients for inputs and for weights, as explained below). Schedules that place two model chunks on each GPU run each chunk in half the time. Communication time is not modeled. The number in each cell is the micro-batch id, hatched cells are idle time, pale cells with gray outlines are the forward passes of the next iteration, and the dashed line marks the end of the 1F1B schedule.
+The diagrams in this section, like the GPipe and 1F1B diagrams above, were generated from the reference implementation of each schedule, for 4 GPUs and 8 micro-batches (8 GPUs and 16 micro-batches for DualPipe), and the diagrams on 4 GPUs share the same time scale. Time is normalized so that every GPU performs the same amount of compute in all diagrams on 4 GPUs: a forward pass takes 1 unit and a backward pass takes 2 units (1+1 when it is split into the gradients for inputs and for weights, as explained below). Schedules that place two model chunks on each GPU run each chunk in half the time. Communication time is not modeled. The number in each cell is the micro-batch id, hatched cells are idle time, pale cells with gray outlines are the forward passes of the next iteration, and the dashed line marks the end of the 1F1B schedule.
 
 ### Interleaved 1F1B
 
@@ -407,10 +407,10 @@ To have enough of these forward-backward pairs, DualPipe uses a *bidirectional* 
 The diagrams in this section model only computation, so DualPipe's bubble looks comparable to ZB-H1's. The main advantage of DualPipe is that, within each black-bordered pair, the all-to-all communication of expert parallelism is hidden behind useful computation.
 
 {: .picture}
-<img width="86.8%" height="86.8%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
-DualPipe on 6 GPUs: micro-batches 1 to 6 (light) enter at GPU 0, and micro-batches 7 to 12 (dark) enter at GPU 5. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)
+DualPipe on 8 GPUs: micro-batches 1 to 8 (light) enter at GPU 0, and micro-batches 9 to 16 (dark) enter at GPU 7. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)
 
 ### DualPipeV
 

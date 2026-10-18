@@ -97,8 +97,8 @@ that is not wrong.
   `publications/graphconvnets.svg`); 176 filled cells of `distributed-training/imgs/mixture_of_depths.svg`, and a few
   in other figures, have no outline; `learning-from-sequences/transformer_attention.svg` (#97afd2, a heat map shade)
   and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 8 figures have lines thinner than 0.7 px;
-  `publications/attention_mech.svg` has 8 arrow heads smaller than size 6; `vae-gan/gan.svg` has a gradient glow
-  around the prior. Fix: set them to the values of CLAUDE.md, then run the check again.
+  `publications/attention_mech.svg` has 8 arrow heads smaller than size 6. Fix: set them to the values of CLAUDE.md,
+  then run the check again.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
@@ -156,14 +156,9 @@ that is not wrong.
 - `unsupervised-learning/gaussianscatterpca.svg`: the arrow heads end past the scaled eigenvectors, at 3.75 and 1.75
   instead of 3 and 1, the lengths in the Wikipedia figure it follows. Fix: arrow heads that end at the tips of the
   vectors.
-- Optional, `unsupervised-learning/k-means_convergence.gif`: an animation of 15 frames. Fix: an SVG with a few
-  iterations side by side, computed by running k-means on the same data.
 
 ### Mathematics for ML (2018-04-20-algebra-for-ml.md)
 
-- `algebra-for-ml/newton_method.gif`: the legend is in German ("Funktion", "Tangente"), and the animation numbers the
-  first guess x1, while the text starts at x0. The caption translates both words and explains the numbering. Fix: one
-  SVG with the function, the first three tangents and the guesses x0 to x3, labeled in English.
 - `algebra-for-ml/svd_example.svg`: the panels are crops of the "Lenna" test image, which IEEE no longer allows in its
   publications since April 1, 2024, and the panels with 50 and 85 singular values look like ranks 25 to 35. Optional
   fix: the same experiment (all 256, then 20, 50 and 85 singular values) on another test image, with the computed
@@ -221,6 +216,13 @@ that is not wrong.
   larger. Fix: draw the output layer wider than the other layers, with "softmax over the vocabulary" next to it.
 - Caption of `learning-from-sequences/transformer_attention.svg`: it writes the sentence length as N, while the text
   rewrite writes n. Fix: n, at the merge with the text rewrite.
+
+### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
+
+- Text and `distributed-training/imgs/pipeline_dualpipe.svg`: the text says that schedules with two model chunks per
+  GPU run each chunk in half the time, but DualPipe holds two full stages per GPU, one for each direction, so its
+  passes take the full time, as the picture shows. Fix: "Schedules that split the model into two chunks per GPU
+  (interleaved 1F1B, ZB-V and DualPipeV) run each chunk in half the time."
 
 ### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
 

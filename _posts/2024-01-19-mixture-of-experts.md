@@ -398,7 +398,7 @@ The **permutation step** sends each token to the processor of its expert, using 
 ```
 
 {: .picture}
-<img width="71%" height="71%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg"/>
+<img width="71.1%" height="71.1%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg"/>
 
 {: .caption}
 An illustration of the MPI all-to-all collective operation. When each process sends one element to each process, the operation is equivalent to a distributed matrix transpose: the row framed in red before the all-to-all (left), the data of process A, becomes the first column after the all-to-all (right). A single-element all-to-all exchanges the number of items to be sent and received among processes. These counts are then used by two all-to-alls with variable-sized elements in the permutation step, one for the token metadata and one for the tokens. In the un-permutation step, another all-to-all performs the reverse communication by swapping the send and receive counts and buffers. Adapted from: [MPI Tutorial, Shao-Ching Huang, IDRE High Performance Computing Workshop, 2013](https://www.slideshare.net/slideshow/mpi-49244468/49244468)
@@ -590,7 +590,7 @@ averages of all tokens (with weights that depend on both tokens and experts), an
 It addresses the main challenges of current sparse MoEs: training instability, token dropping, inability to scale the number of experts, and ineffective finetuning.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/soft_moes.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/distributed-training/imgs/soft_moes.svg"/>
 
 {: .caption}
 <b>Sparse and Soft MoE layers.</b> While the router in Sparse MoE layers (left) learns to <i>assign</i> individual input tokens to each of the available slots, in Soft MoE layers (right) each slot is the result of a (different) <i>weighted average</i> of all the input tokens. Learning to make discrete assignments introduces several optimization and implementation issues that Soft MoE sidesteps. Adapted from: [From Sparse to Soft Mixtures of Experts](https://arxiv.org/abs/2308.00951)

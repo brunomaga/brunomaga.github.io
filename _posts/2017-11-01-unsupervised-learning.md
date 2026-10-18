@@ -249,7 +249,7 @@ which is the definition of the center of mass of cluster $$i$$. The error decrea
 In a 2D space, a run with 3 clusters looks as follows:
 
 {: .picture}
-<img width="30%" height="30%" src="{{ site.assets }}/unsupervised-learning/k-means_convergence.gif">
+<img width="30%" height="30%" src="https://upload.wikimedia.org/wikipedia/commons/e/ea/K-means_convergence.gif">
 
 {: .caption}
 Iterations of k-means with $$k = 3$$ on 2D data, with the Voronoi borders of the current means, until the assignments no longer change. Source: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
