@@ -43,7 +43,10 @@ The first is the **Odd-Even sort**, a distributed swap-based sorting algorithm. 
 The following workflow illustrates the algorithm on a sample dataset: 
 
 {: .picture}
-<img width="75%" height="75%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
+<img width="65.8%" height="65.8%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
+
+{: .caption}
+Odd-even sort of 20 elements on $$p = 5$$ ranks, colored by rank. Every rank holds 4 elements, so the list is sorted after $$p$$ phases. Step 2.2 shows the compare-split of ranks 0 and 1 in phase 0.
 
 The algorithm is very *memory-stable*, i.e. its worst-case memory consumption is known in advance. Moreover, each compute node ends up with the same number of elements it started with, so the load is balanced across nodes. However, it is inefficient on very large networks, as it requires a high number of iterations.
 
@@ -59,7 +62,10 @@ A faster alternative is a distributed implementation of the **sample sort**, wit
 The following workflow illustrates the method:
 
 {: .picture}
-<img width="74%" height="74%" src="{{ site.assets }}/distributed-sort/sample_sort.svg">
+<img width="57%" height="57%" src="{{ site.assets }}/distributed-sort/sample_sort.svg">
+
+{: .caption}
+Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards.
 
 This method is computationally very efficient, as the number of communication steps is constant, regardless of the input size or network size. However, it may lead to very different numbers of elements across nodes, causing computational and memory imbalance. If needed, a balancing step can follow the sort to redistribute the dataset evenly across the network.
 

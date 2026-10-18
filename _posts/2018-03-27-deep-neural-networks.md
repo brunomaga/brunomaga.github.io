@@ -10,10 +10,10 @@ Deep Neural Networks -- also known as Multi-Layer Perceptrons -- are **[universa
 A basic NN has one input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and one output layer. It is a **feedforward network**: the computation starts with the input on the left and flows to the right, with no feedback loop. It can be used for regression (when input and output are provided) and for classification (when the input is provided and the output is the class).
 
 {: .picture}
-<img width="33%" height="33%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
+<img width="36.5%" height="36.5%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
 
 {: .caption}
-Source: Machine Learning lecture notes, M. Jaggi, EPFL
+A fully connected feedforward network with an input layer of size $$D = 4$$, one hidden layer of size $$K = 5$$ and one output $$\hat{y}$$. Adapted from: [Machine Learning course CS-433 lecture notes, M. Jaggi, EPFL](https://github.com/epfml/ML_course)
 
 The input and output layers work as in the regression methods described previously. The hidden layers are different. The output at node $$j$$ of hidden layer $$l$$ is:
 
@@ -126,7 +126,10 @@ The original publication found that dropping 20% of input units and 50% of hidde
 Since a fully connected layer holds most of the parameters, it is prone to overfitting. Therefore, dropout improves model generalization.
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/deep-neural-networks/dropout.svg">
+<img width="54.8%" height="54.8%" src="{{ site.assets }}/deep-neural-networks/dropout.svg">
+
+{: .caption}
+Dropout. Left: a standard network with two hidden layers ($$p = 0$$). Right: a thinned network produced by dropout with $$p = 0.5$$, where $$p$$ is the probability of dropping a unit: the crossed units are dropped, with their connections. Adapted from: [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](https://jmlr.org/papers/v15/srivastava14a.html)
 
 ## Convolutional Neural Networks
  
@@ -146,13 +149,19 @@ $$
 The output $$ x^{(1)} $$ at position $$ [n, m] $$ depends only on the values of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. Therefore, a fully connected network is not needed: a network that represents the local structure suffices, with fewer parameters. This structure also implies that the same filter (i.e., the same connection pattern and the same weights) should be used at every position. This is called **weight sharing**, and it reduces the number of parameters even further. The difference between a locally/sparsely connected and a fully connected network is illustrated below:
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
+<img width="41.2%" height="41.2%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
+
+{: .caption}
+Sparse and full connectivity, viewed from below. Top: a locally connected layer with a kernel of width 3, where the input $$x_3$$ affects only the outputs $$s_2$$, $$s_3$$ and $$s_4$$. Bottom: a fully connected layer, where $$x_3$$ affects every output. Adapted from: [Deep Learning, I. Goodfellow, Y. Bengio and A. Courville, Figure 9.2](https://www.deeplearningbook.org/contents/convnets.html)
 
 It is common to compute the outputs of multiple filters instead of a single one. These outputs are called channels, and they add parameters to the model.
 With several channels, the output of the next level is not 2D but 3D. Deeper layers have more channels but a smaller “footprint.” Applying local connectivity to a 2D input in a *deep* neural network leads to the following structure:
 
 {: .picture}
-<img width="65%" height="65%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
+<img width="99.6%" height="99.6%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
+
+{: .caption}
+A CNN that classifies $$16 \times 16$$ RGB patches of a satellite image as road or non-road: two stages of convolution and pooling, two fully connected layers, and the output probabilities of the two classes. Each label gives the shape of the data after a layer for $$N$$ input images, with the number of channels or units in brackets.
 
 There are three types of operations:
 - convolutional layer: applies a convolution operation to the input and passes the result to the next layer. The convolution emulates the response of an individual neuron to visual stimuli;
@@ -172,10 +181,10 @@ In very deep networks, the performance of the model drops as the depth increases
 A better remedy is to feed layers with the outputs of layers that are not directly connected to them. These connections *skip* some layers and feed the output of one layer as input to later layers, hence the name *skip connections*. In practice, the input of a given layer is a combination (typically an addition or concatenation) of the outputs of several previous layers. 
 
 {: .picture}
-<img width="65%" height="65%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
+<img width="82%" height="82%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
 
 {: .caption}
-An example of a CNN with skip connections (DenseNet). Adapted from: <a href="https://arxiv.org/abs/1608.06993">Densely Connected Convolutional Networks</a> 
+A 5-layer dense block of DenseNet with a growth rate of $$k = 4$$: each layer $$H_i$$ (BN-ReLU-Conv) takes the feature maps $$x_0, \ldots, x_{i-1}$$ of all preceding layers as input and produces $$k$$ new feature maps $$x_i$$. The transition layer takes all of them. Adapted from: [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
 
 Many CNN implementations exist with different layouts of skip connections, e.g. [ResNet](https://arxiv.org/abs/1512.03385), [DenseNet](https://arxiv.org/abs/1608.06993) and [U-net](https://arxiv.org/abs/1505.04597).
 

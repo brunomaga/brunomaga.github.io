@@ -15,7 +15,7 @@ The brain can be studied at many scales, as shown in the picture below. At the l
 <img width="50%" height="50%" src="{{ site.assets }}/neuron-electrical-activity/brain_scales.svg">
 
 {: .caption}
-The scales of the brain: (a) brain regions, (b) neuron, (c) synapse, and (d) ion channels in the neuron membrane. Adapted from: Mariana Villarreal (LadyofHats), Wikimedia Commons; and Blausen.com staff, Blausen Medical 2014, WikiJournal of Medicine
+The scales of the brain: (a) brain regions, (b) neuron, (c) synapse, and (d) ion channels in the neuron membrane. Adapted from: Mariana Villarreal (LadyofHats), Wikimedia Commons; and Blausen.com staff, [Medical gallery of Blausen Medical 2014, WikiJournal of Medicine](https://doi.org/10.15347/wjm/2014.010)
 
 Because of the complex anatomical structure and behaviour of neurons, numerical methods are used to approximate neuron models and simulate the electrical activity of neural networks.
 
@@ -26,10 +26,10 @@ Because of the complex anatomical structure and behaviour of neurons, numerical 
 Brain simulators also work at different levels of detail, as shown in the picture below. Each model zooms into a part of the model on its left:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
 
 {: .caption}
-Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
+Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
 
 - **Population models** describe the average activity of large groups of neurons. A simple example is one excitatory population ($$E$$) and one inhibitory population ($$I$$) that drive each other.
 - **Point neuron networks** model each neuron as a single point, with no shape. The simplest example is the [Leaky Integrate-and-Fire model][lif-post] (1907). It has no ion channels. It treats the membrane as an RC circuit, and the neuron spikes when its voltage reaches a threshold.
@@ -51,10 +51,10 @@ A neuron's membrane is formed by a phospholipid bilayer, a dielectric material t
 Synapses are another important mechanism. They represent the interneural connections of the circuit. Synapses drive the post-synaptic membrane potential upwards or downwards, depending on the excitatory or inhibitory properties of the pre-synaptic cell. A spike is initiated when the membrane potential reaches a given Action Potential (AP) threshold, and is characterized by a stiff change of membrane potential. The lowest AP threshold of a neuron is typically at the beginning of the axon (the Axon Initial Segment), where spikes are first initiated. Other APs may occur throughout the axonal arborization as a current propagation mechanism. Spikes are driven by a fast influx of Sodium ($$Na^+$$) ions and by a slow outflux of Potassium ($$K^+$$) ions. The chloride ($$Cl^-$$) conductance helps to bring the membrane potential back to the rest state after an activation. Several other mechanisms also exist, such as gap junctions (active electrical synapses), extracellular space mechanisms, or second messengers. In the cable approximation model, the complexity of these mechanisms is reduced to their ionic conductance. A constant conductance is called a leak (passive) conductance. A compartment in ionic equilibrium, i.e. where the influx and outflux of ions cause no variation of its potential, is said to be at its reversal potential.
 
 {: .picture}
-<img width="40%" height="40%" src="{{ site.assets }}/neuron-electrical-activity/action_potential.svg">
+<img width="41.9%" height="41.9%" src="{{ site.assets }}/neuron-electrical-activity/action_potential.svg">
 
 {: .caption}
-The voltage trajectory during an Action Potential (spike). Adapted from: unknown
+The voltage trajectory during an action potential (spike). Adapted from: [OpenStax, Anatomy and Physiology, Fig. 12.24](https://openstax.org/books/anatomy-and-physiology/pages/12-4-the-action-potential)
 
 ### Mathematical Basis
 
@@ -74,7 +74,10 @@ $$
 where $$i_a$$ is the axial current [mA] flowing through the compartment's region, and $$\int_A i_m dA$$ is the integral of the transmembrane current density $$i_m$$ [mA/cm$$^2$$] over the membrane area $$A$$ [cm$$^2$$]. The following picture illustrates this concept:
 
 {: .picture}
-<img width="20%" height="20%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
+<img width="22.8%" height="22.8%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
+
+{: .caption}
+The net current entering a region is zero: the axial currents $$i_a$$ balance the membrane current $$i_m$$. Adapted from: [Hines and Carnevale (1997), The NEURON simulation environment, Fig. 3.1](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p1.htm)
 
 A common assumption is that the neuron is divided into compartments small enough (about $$40 \, \mu m$$ long in the models of this post) that the spatially varying $$i_m$$ in any compartment $$j$$ is well approximated by its value at the center. Therefore:
 
@@ -160,7 +163,7 @@ $$
 where each channel $$i$$ has a maximum conductance $$g_i$$, a gating term $$x_i$$ (such as $$m^3 h$$ for sodium) and a reversal potential $$E_i$$. This equation describes the electrical circuit in the picture below. The membrane is a capacitor. Each ion channel is a resistor in series with a battery, whose voltage is the reversal potential of that ion.
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-electrical-activity/compartment_rc_circuit.svg">
+<img width="49%" height="49%" src="{{ site.assets }}/neuron-electrical-activity/compartment_rc_circuit.svg">
 
 {: .caption}
 The electrical circuit of one compartment. The membrane is the capacitor $$C$$. Each ion channel is a resistor $$R$$ in series with a battery $$E$$, its reversal potential. Arrows mark gated channels, whose resistance changes over time. The leak $$L$$ has a constant resistance. $$I$$ is the total current through the membrane
@@ -213,7 +216,7 @@ Most equations that govern brain mechanisms do not have an analytic solution. Th
 Given the tree-shaped morphology of a discretized neuron in the cable model, NEURON implements an optimized linear solver for branched trees, called the Hines Algorithm ([Efficient computation of branched nerve equations, Hines, Elsevier][hines1984efficient]). Data is represented as a sparse tridiagonal matrix, and an extra vector $$p$$ holds the indices of the parent nodes (the ones immediately above in the tree structure). The main diagonal holds the membrane potential of each compartment. The contributions from a parent to its children compartments (and vice versa) are stored in the cells on the same row (column) of the upper (lower) diagonal of the matrix. Since each compartment has only one parent, there is only one cell per row on the lower diagonal, and one cell per column on the upper diagonal. The following pictures show a neuron's dendritic arborization spatially discretized based on the cable model (left) and its sparse matrix representation in the Hines algorithm (right).
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="25%" height="25%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
+<img width="44%" height="44%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.2%" height="34.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
 
 
 The main rationale of the Hines algorithm is that, if the compartments are numbered so that each one has an index greater than its parent's, the computational complexity of the solver drops from the $$O(n^3)$$ of a typical Gaussian elimination to $$O(n)$$. Consider a tridiagonal matrix with vectors $$d$$ (main diagonal), $$b$$ (lower diagonal) and $$a$$ (upper diagonal), representing a single cable without branching. The following steps show that the Hines algorithm is an inverted Gaussian elimination adapted for branched structures:
