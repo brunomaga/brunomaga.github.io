@@ -24,7 +24,7 @@ $$
 where $$W_1 \in \mathbb{R}^{N \times O}$$ and $$W_2 \in \mathbb{R}^{O \times P}$$. On $$G$$ GPUs, Megatron-LM splits $$W_1$$ column-wise and $$W_2$$ row-wise. Each GPU $$g$$ computes a slice $$H^{(g)} \in \mathbb{R}^{M \times O/G}$$ of the hidden activations and a partial output $$H^{(g)} W_2^{(g)}$$. An all-reduce then sums the partial outputs of all GPUs, $$H W_2 = \sum_{g=1}^{G} H^{(g)} W_2^{(g)}$$, and the bias $$b_2$$ and the second activation follow. This all-reduce is the only communication step per pair of layers.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
+<img width="96.7%" height="96.7%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
 
 {: .caption}
 Megatron-LM tensor parallelism of an FFN on 2 GPUs (A in green, B in blue). The bias and activation are omitted.
@@ -32,7 +32,7 @@ Megatron-LM tensor parallelism of an FFN on 2 GPUs (A in green, B in blue). The 
 A regular implementation launches 7 kernels for this FFN: a matrix multiplication, a bias addition and an activation per layer, plus the all-reduce. Each kernel loads its inputs from global memory and stores its outputs there (top of the figure below). The fused kernel runs the whole FFN as one kernel (bottom). It loads the input and stores the output once, and its small all-reduce steps overlap with the computation. It is built in three steps, presented next.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_timeline.svg"/>
+<img width="95.5%" height="95.5%" src="{{ site.assets }}/inference/imgs/tp_timeline.svg"/>
 
 {: .caption}
 Execution timeline of an FFN with Megatron-LM tensor parallelism. **Top:** the regular execution, with 7 kernels that load from (arrow up) and store to (arrow down) global memory. **Bottom:** the fused kernel, with several small, overlapping all-reduce steps performed in the network switch.
@@ -44,7 +44,7 @@ Two linear layers without a nonlinearity in between collapse into a single one. 
 A matrix multiplication on a GPU is computed in *tiles*: each [thread block](https://en.wikipedia.org/wiki/Thread_block_(CUDA_programming)) runs on one SM and computes one small submatrix of the output. The fused kernel keeps this tiling for the first layer. However, as soon as a tile $$H_{i,j}$$ is computed, with its bias and activation, it is multiplied by every tile in row $$j$$ of $$W_2$$. The partial products are added to the tiles in row $$i$$ of the output $$Y$$. When all tiles of $$H$$ are processed, $$Y$$ holds the partial output $$H W_2$$ of the GPU, and $$H$$ was never stored in global memory.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
+<img width="97.8%" height="97.8%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
 
 {: .caption}
 **Left:** the regular execution computes all tiles of $$H$$, stores $$H$$ in global memory, and a second kernel computes $$Y$$. **Right:** the fused kernel multiplies each tile of $$H$$ by a row of tiles of $$W_2$$ and accumulates the results in a row of tiles of $$Y$$.
@@ -65,7 +65,7 @@ Compute blocks never wait for communication, and communication blocks never comp
 The same idea appears at other levels. Inside a block, [FlashAttention-3](https://arxiv.org/abs/2407.08608) uses *warp specialization*: some warps load data from global memory while the others compute. Across the GPU, [DeepSeek-V3](https://arxiv.org/abs/2412.19437) dedicates 20 of the 132 SMs of an H800 GPU to the communication of its Mixture-of-Experts layers. Here, the specialized blocks run the all-reduce of the tensor-parallel FFN, band by band.
 
 {: .picture}
-<img width="50%" height="50%" src="{{ site.assets }}/inference/imgs/tp_block_specialization.svg"/>
+<img width="64.4%" height="64.4%" src="{{ site.assets }}/inference/imgs/tp_block_specialization.svg"/>
 
 {: .caption}
 An example on a GPU with 6 SMs. **(a)** Without block specialization, all SMs compute and then spin-wait before each band is all-reduced. **(b)** With block specialization, SM1 and SM2 all-reduce each band as soon as SM3 to SM6 have computed it.
@@ -85,10 +85,10 @@ The all-reduce of a band is a reduce-scatter followed by an all-gather. Each GPU
 The fused kernel was compared with a tuned, non-fused implementation that uses the all-reduce of NCCL, on the FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models, on 8 GPUs of one node connected by NVLink, in `bfloat16`. It reduces the latency by 22% to 62%, halves the memory of the activations, and reduces the communication buffer from gigabytes to 32 KiB.
 
 {: .picture}
-<img width="45%" height="45%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
+<img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
 
 {: .caption}
-Latency of the regular (baseline) and fused (ours) FFNs, sorted by improvement.
+Latency of the regular (baseline) and fused FFNs, sorted by improvement.
 
 The gains depend on the size of the FFN:
 
@@ -104,7 +104,7 @@ In a [Mixture-of-Experts (MoE)]({{ site.baseurl }}{% post_url 2024-01-19-mixture
 [Expert sharding](https://arxiv.org/abs/2503.08467) splits every expert across all GPUs instead, as Megatron-LM splits the FFN. Each GPU holds a $$1/G$$ share of the columns of $$W_i$$ and the matching rows of $$W_o$$ of every expert. It processes all the tokens with these slices, and the partial outputs of all GPUs are summed. Each expert is then an FFN with Megatron-LM tensor parallelism, and runs with the fused kernel.
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
+<img width="59.5%" height="59.5%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
 
 {: .caption}
 One expert, with $$W_i$$ in green and $$W_o$$ in red. The activation is omitted. **(a)** Without parallelism, one GPU holds the whole expert. **(b)** With expert sharding, GPU A holds the first half of the columns of $$W_i$$ and of the rows of $$W_o$$, and GPU B the second half. The dashed slices are on the other GPU. Both GPUs process all the tokens $$x$$, and a sum-reduce adds their partial outputs $$y_A$$ and $$y_B$$. Inspired by Figure 2 of [Accelerating MoE Model Inference with Expert Sharding](https://arxiv.org/abs/2503.08467).

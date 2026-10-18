@@ -55,10 +55,10 @@ where $$J_{ij}$$ is the **postsynaptic potential** (PSP) amplitude, $$\delta$$ t
 A spike, or [action potential](https://en.wikipedia.org/wiki/Action_potential), is modeled by a fixed **firing threshold** $$\theta$$. When $$V$$ reaches $$\theta$$, the neuron spikes, and $$V$$ drops to the **reset potential** $$V_r$$. The spike reaches the postsynaptic neurons after the delay $$D$$, which models its propagation along the axon:
 
 {: .picture}
-<img width="40%" height="40%" src="{{ site.assets }}/lif-brunel/action_potential.gif">
+<img width="45.1%" height="45.1%" src="{{ site.assets }}/lif-brunel/action_potential.svg">
 
 {: .caption}
-An action potential travelling along an axon. Source: [Action Potential.gif, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Action_Potential.gif)
+An action potential travelling along an axon, in the direction of the arrow. The membrane is positive outside and negative inside, except at the action potential, where the polarity is reversed. Adapted from: [Action Potential.gif, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Action_Potential.gif)
 
 After a spike, $$V$$ stays at $$V_r$$ during the **refractory period** $$\tau_{\text{rp}}$$, as in the [refractory period](https://en.wikipedia.org/wiki/Refractory_period_(physiology)) of biological neurons. The LIF model ignores the shape of the action potential and the morphology of the neuron. Detailed models are in the post on [the electrical activity of detailed neuron models]({{ site.baseurl }}{% post_url 2016-08-15-neuron-electrical-activity %}).
 
