@@ -7,131 +7,133 @@ tags: ["CVODE", "variable timestep", "numerical methods", "simulation", "HPC"]
 
 [neuron-methods-post]: {{ site.baseurl }}{% post_url 2016-08-15-neuron-electrical-activity %}
 
-The [previous post][neuron-methods-post] covered the mathematical background of neuron activity and the simulation of the electrical activity of simple neuron models. It showed that an interleaved voltage-current resolution of linear, unrelated state ODEs allows the problem to be solved as a system of linear equations. However, such a resolution is only possible for *simple* models. Neuron models with non-linear state variable ODEs and correlation between states require a fully-implicit resolution, which is possible with Backward Euler with Newton iterations. This is a common use case. It underlies the resolution of extra-cellular mechanisms, capacitors between nodes, and other mechanisms that couple the evolution of neurons over time.
+The [previous post][neuron-methods-post] integrates detailed neuron models with a fixed time step $$\Delta t$$, usually 25 μs. The step must resolve the fastest change of the solution, the rise of a spike, which lasts a fraction of a millisecond. Between spikes, the voltages and states change slowly, and most fixed steps add no accuracy. A [variable time step][adaptive-step] method sizes each step from an estimate of its error: short steps during a spike, long steps between spikes. Its weakness is discontinuities: every synaptic event changes the input of a neuron at once, and restarts the method with short steps. Variable steps thus pay off on neurons that receive few events.
 
-A fully-implicit method commonly used for this problem is the Backward (Implicit) Euler method:
+[adaptive-step]: https://en.wikipedia.org/wiki/Adaptive_step_size
 
-$$
-y_{n+1} - y_n = h f (t_{n+1}, y_{n+1})
-$$
+Implicit methods matter for complex models. The fixed-step method of the previous post solves one linear system per step when each state ODE is linear in its own state. Some models have nonlinear and coupled state equations, such as the synaptic plasticity model of [Graupner and Brunel (2012)][graupner2012], a cubic ODE of the synaptic efficacy driven by the calcium concentration. With fixed steps, NEURON integrates such models with `derivimplicit`: backward Euler with Newton iterations, at first order, one mechanism at a time, so the coupling between mechanisms stays explicit. CVODE, NEURON's variable-step method, solves the voltages and all the states together, implicitly, at variable order.
 
-where $$h$$ is the timestep, $$y$$ is the array of states and $$f$$ is the right-hand side function of the ODE. This post presents a more efficient alternative: a fully-implicit method based on variable-order variable timestepping.
+[graupner2012]: https://www.pnas.org/doi/10.1073/pnas.1109359109
 
-## CVODE for fully-implicit adaptive-order adaptive-step interpolation
- 
+## CVODE
+
 [cvode]: https://aip.scitation.org/doi/pdf/10.1063/1.4822377
 [sundials]: https://computation.llnl.gov/projects/sundials
 
-The main argument for adaptive time stepping is its efficiency: it takes large steps during long periods of slowly varying states, e.g. interspike intervals. NEURON's adaptive algorithm, [CVODE][cvode], uses separate variable-step integrators for individual neurons in the network. NEURON uses CVODE as an interface to a collection of methods built on top of the existing CVODE and IDA (Integrator for Differential-Algebraic problems) integrators of the [SUNDIALS package][sundials], a SUite of Nonlinear and DIfferential/ALgebraic Equation Solvers. NEURON employs the Backward Differentiation Formula (BDF), a family of implicit multi-step methods for the numerical integration of (stiff) ordinary differential equations. For a given function and time, BDF approximates the derivative using information from previously computed times, which increases the accuracy of the approximation. BDF methods are implicit, so they require solving nonlinear equations at every step. The BDF multistep method is suitable for stiff problems, such as those that describe neuronal activity. A stiff equation includes terms that may lead to rapid variation of the solution. This makes certain numerical methods unstable unless the step size is *extremely* small. CVODE is a solver for the Initial Value Problem (IVP) --- an ODE together with an initial condition of the unknown function at a given point in the domain of the solution --- that can be written abstractly as:
+CVODE ([Cohen and Hindmarsh, 1996][cvode]) solves the [initial value problem][ivp]
 
 $$
-\dot{y} = f(t,y) \text{, } y(t_0) = y_0 \text{ where } y \in \mathbb{R}^N
+\dot{y} = f(t,y) \text{, } y(t_0) = y_0 \text{, with } y \in \mathbb{R}^N
 $$
 
-where $$\dot{y}$$ denotes $$\frac{dy}{dt}$$. The derivative of the solution $$y$$ is computed from past (backward) values, i.e. $$\dot{y}_n$$ is a linear combination of $$y_n$$, $$y_{n-1}$$, $$y_{n-2}, ...$$. Here, $$y$$ is the array of all state variables: the voltages $$V_n$$ of all compartments (governed by $$dV_n/dt$$) and the states $$x_i$$ (governed by $$dx_i/dt$$), where $$x_i$$ is a given state variable of an ion $$i$$. The variable-step BDF of order $$q$$ can be written as:
+where $$\dot{y} = dy/dt$$. For neurons, $$y$$ holds the voltages of all compartments and the states of all mechanisms, of one cell or of a whole network. NEURON's `CVode` class wraps two solvers of the [SUNDIALS][sundials] suite: CVODE for ODEs, and IDA for differential-algebraic equations, which the `extracellular` and `LinearMechanism` mechanisms require.
+
+[ivp]: https://en.wikipedia.org/wiki/Initial_value_problem
+
+Neuron models are [stiff][stiff]: their time scales differ by orders of magnitude, and explicit methods are stable on them only with steps of the order of the fastest time scale. For stiff problems, CVODE uses the [backward differentiation formulas][bdf] (BDF), a family of implicit [linear multistep methods][lmm]. The BDF of order $$q$$ computes $$y_n$$, the approximation of $$y(t_n)$$, from the $$q$$ previous values and the derivative at $$t_n$$:
 
 $$
-y_n = \sum_{i=1}^{q} \alpha_{n,i} y_{n-i} + h_n \beta _{n,0} \dot{y}_n
+y_n = \sum_{i=1}^{q} \alpha_{n,i} \, y_{n-i} + h_n \beta_{n,0} \, \dot{y}_n
 $$
 
-where $$y_n$$ are the computed approximations of $$y (t_n)$$, $$h_n = t_n - t_{n-1}$$ is the step size, $$q$$ is the order (number of previous steps used by the BDF), and $$\alpha$$ and $$\beta$$ are the unique BDF coefficients, which depend on the method order. For each order, the method is:
+where $$h_n = t_n - t_{n-1}$$ is the step size, and the coefficients $$\alpha_{n,i}$$ and $$\beta_{n,0}$$ depend on the order and on the recent step sizes. With a constant step $$h$$, the BDFs of orders 1 to 6 are:
 
-- BDF-1: $$ y_{n+1} - y_n = h f (t_{n+1}, y_{n+1})$$, i.e. the Backward Euler;
+- BDF-1, the [backward Euler][backward-euler] method: $$ y_{n+1} - y_n = h f (t_{n+1}, y_{n+1})$$;
 - BDF-2: $$ 3y_{n+2} - 4y_{n+1} + y_n = 2 h f (t_{n+2}, y_{n+2})$$;
 - BDF-3: $$ 11y_{n+3} - 18y_{n+2} + 9y_{n+1} - 2y_n = 6 h f (t_{n+3}, y_{n+3})$$;
 - BDF-4: $$ 25y_{n+4} - 48y_{n+3} + 36y_{n+2} - 16y_{n+1} + 3y_n = 12 h f (t_{n+4}, y_{n+4})$$;
 - BDF-5: $$ 137y_{n+5} - 300y_{n+4} + 300y_{n+3} - 200y_{n+2} + 75y_{n+1} - 12y_n = 60 h f (t_{n+5}, y_{n+5})$$;
-- BDF-6: $$ 147y_{n+6} - 360y_{n+5} + 450y_{n+4} - 400y_{n+3} + 225y_{n+2} - 72y_{n+1} + 10y_n = 60 h f(t_{n+6}, y_{n+6})$$;
+- BDF-6: $$ 147y_{n+6} - 360y_{n+5} + 450y_{n+4} - 400y_{n+3} + 225y_{n+2} - 72y_{n+1} + 10y_n = 60 h f(t_{n+6}, y_{n+6})$$.
 
-BDF with order $$q > 6$$ is not zero-stable and therefore cannot be used. Zero-stability means that, if a perturbation $$\epsilon$$ is applied to an initial value, the difference between the perturbed and unperturbed results is no bigger than $$k \epsilon$$, for some constant $$k \in \mathbb{R}$$. CVODE allows a maximum order of 5.
+[stiff]: https://en.wikipedia.org/wiki/Stiff_equation
+[bdf]: https://en.wikipedia.org/wiki/Backward_differentiation_formula
+[lmm]: https://en.wikipedia.org/wiki/Linear_multistep_method
+[backward-euler]: https://en.wikipedia.org/wiki/Backward_Euler_method
 
-Denoting the iterates by $$y_{n,m}$$, the functional iteration of the BDF is given by:
+A method is zero-stable when a perturbation $$\epsilon$$ of its initial values changes the numerical solution on a finite interval by at most $$K \epsilon$$, with $$K$$ independent of the step size. The BDFs above order 6 are not zero-stable, so they do not converge. Orders 1 and 2 are A-stable: on a decaying linear ODE, they are stable with any step. Orders 3 to 6 are stable only when $$h \lambda$$ lies in a region that shrinks as the order grows, where $$\lambda$$ is an eigenvalue of the [Jacobian][jacobian] $$J = \partial f / \partial y$$. CVODE uses the BDFs of orders 1 to 5.
+
+[jacobian]: https://en.wikipedia.org/wiki/Jacobian_matrix_and_determinant
+
+### Newton Iterations
+
+Each step of CVODE solves the nonlinear system
 
 $$
-y_{n,m+1} = h_n \beta _{n,0} f ( t_n, y_{n,m} ) + a_n
-\label{eq_newton_method_derivation}
-$$
-
-As with any implicit method, every step must (approximately) solve the nonlinear system:
-
-$$
-G(y_n) \equiv y_n - h_n \beta_{n,0} f(t_n, y_n) - a_n = 0 \text{ , where } a_n \equiv \sum_{i=1}^{q} \alpha_{n,i} y_{n-i}  
+G(y_n) \equiv y_n - \gamma f(t_n, y_n) - a_n = 0 \text{, with } \gamma = h_n \beta_{n,0} \text{ and } a_n = \sum_{i=1}^{q} \alpha_{n,i} \, y_{n-i}
 \label{eq_variable_time_step_bdf}
 $$
 
-CVODE solves this system with Newton iterations. Newton's method finds successively better approximations to the roots (or zeroes) of a function. For one variable, it iterates $$x_{n+1} = x_n - f(x_n) / f'(x_n)$$ until a sufficiently accurate value is reached. In practice, it requires solving the linear systems:
+The fixed-point iteration $$y_{n(m+1)} = \gamma f(t_n, y_{n(m)}) + a_n$$ converges when all eigenvalues of $$\gamma J$$ have a magnitude below 1. A stiff problem has eigenvalues of large magnitude, so this condition limits the step to the fastest time scale, as for an explicit method. CVODE uses [Newton's method][newton] instead. Starting from a prediction $$y_{n(0)}$$, extrapolated from the past values, iteration $$m$$ solves the linear system
 
 $$
-M [y_{n(m+1)} - y_{n(m)}] = - G(y_{n(m)})
+M \, (y_{n(m+1)} - y_{n(m)}) = - G(y_{n(m)}) \text{, with } M \approx I - \gamma J
 $$
 
-where 
+[newton]: https://en.wikipedia.org/wiki/Newton%27s_method
+
+The solves with $$M$$ are the main cost of a step. NEURON offers three solvers, selected with `CVode.jacobian`:
+- **dense** (`jacobian(1)`): $$J$$ from finite differences, and an [LU factorization][lu] of $$M$$ in $$O(N^3)$$ time and $$O(N^2)$$ memory. A detailed cell has $$10^4$$ or more states, so its matrix alone takes 800 MB or more;
+- **diagonal** (`jacobian(2)`): the diagonal of $$J$$ only, in $$O(N)$$ time and memory. It ignores the axial coupling between compartments, the stiffest part of the system;
+- **NEURON's own solver** (`jacobian(0)`, the default): $$J$$ keeps the axial coupling of the voltages and the derivatives of the state equations of each mechanism with respect to its own states. It drops the derivatives of the currents with respect to the states, and of the state equations with respect to the voltage. The voltage part is the tree matrix of the backward Euler step of the previous post, with $$\gamma$$ in place of $$\Delta t$$, which the Hines algorithm solves in $$O(N)$$ time. Each mechanism then solves for its own states.
+
+[lu]: https://en.wikipedia.org/wiki/LU_decomposition
+
+A poorer $$M$$ slows the convergence of the iterations, which then need more iterations or shorter steps. In the tests of Magalhães et al. (<a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">preprint, 2019</a>), the diagonal solver ran faster but gave inaccurate results, and the dense solver was accurate but too slow and too large. CVODE also has a banded solver and a matrix-free [Krylov][gmres] solver (SPGMR), which NEURON does not use.
+
+[gmres]: https://en.wikipedia.org/wiki/Generalized_minimal_residual_method
+
+### Error Control
+
+The user sets no step size, but an absolute tolerance $$\text{atol}_i$$ per state and a relative tolerance $$\text{rtol}$$. CVODE measures errors and corrections with the weighted [root mean square][rms] norm
 
 $$
-M \approx I - \gamma J \text{ , } J = \partial f / \partial y \text{ , and } \gamma = h_n \beta_{n,0}
+\Vert v \Vert = \sqrt{ \frac{1}{N} \sum_{i=1}^N \left( \frac{v_i}{W_i} \right)^2 } \text{, with } W_i = \text{rtol} \, \vert y_i \vert + \text{atol}_i
 $$
 
-For the Newton corrections, CVODE provides the following options: (a) a direct dense solver, (b) a direct banded solver, (c) a diagonal approximate Jacobian solver, or the SPGMR (Scaled Preconditioned GMRES) method. A preconditioner matrix is a transformation that conditions a problem into a form more suitable for numerical solvers. NEURON applies the SPGMR method, which uses a matrix $$M$$ (or a preconditioner matrix $$P$$, in the SPGMR case) and performs an Inexact Newton iteration. In this iteration, $$M$$ is applied in a matrix-free manner, and the matrix-vector products $$Jv$$ are obtained either by difference quotients or by a user-supplied routine. In NEURON, $$Jv$$ is provided by the *SOLVE* block in the mechanisms. In practice, SPGMR transforms the nonlinear problem into a linear one by introducing a multiplication by the Jacobian (in vector calculus, the Jacobian matrix is the matrix of all first-order partial derivatives of a vector-valued function). It computes the solution of the equation:
+so that a vector of norm 1 is at the tolerance. The local truncation error of a step is estimated as $$C' \Delta_n$$, where $$\Delta_n = y_{n(m)} - y_{n(0)}$$ is the difference between the corrected and the predicted solution, and $$C'$$ depends on the order. The step passes the error test when $$\Vert \Delta_n \Vert \le \epsilon = 1 / \vert C' \vert$$. Otherwise, CVODE repeats it with a shorter step, and after three failures, at order 1. The next step size is $$\eta h_n$$, with
 
 $$
-\begin{align*}
-y_{n(m+1)} = & y_{n(m)} -  M^{-1} G(y_{n(m)}) \\
-\equiv & y_{n(m+1)} - y_{n(m)} = - M^{-1} G(y_{n(m)}) \\
-\equiv & M [y_{n(m+1)} - y_{n(m)}] = - G(y_{n(m)}) \\
-\equiv & P^{-1} M [y_{n(m+1)} - y_{n(m)}] = - P^{-1} G(y_{n(m)}) \\
-\end{align*}
+\eta = \left( \frac{\epsilon}{6 \, \Vert \Delta_n \Vert} \right)^{1/(q+1)}
 $$
 
-where 
+capped at 10. After $$q+1$$ steps at order $$q$$, CVODE also computes $$\eta$$ for the orders $$q-1$$ and $$q+1$$, and moves to the order that allows the longest step.
+
+[rms]: https://en.wikipedia.org/wiki/Root_mean_square
+
+The Newton iterations stop when the iteration error is ten times below the error test: $$\Vert y_n - y_{n(m)} \Vert < 0.1 \epsilon$$, where $$y_n$$ solves equation \eqref{eq_variable_time_step_bdf} and the factor 0.1 can be changed. CVODE estimates this error from the convergence rate $$R$$ of the iterations. $$R$$ starts at 1, returns to 1 when $$M$$ is updated, and after each correction $$\delta_m = y_{n(m)} - y_{n(m-1)}$$ with $$m > 1$$ becomes
 
 $$
- P \approx I - \gamma J \text{ , } J = \partial f / \partial y \text{ , and } \gamma = h_n \beta_{n,0}
+R \leftarrow \max \left\{ 0.3 R, \frac{\Vert \delta_m \Vert}{\Vert \delta_{m-1} \Vert} \right\}
 $$
 
-The previous equation requires a division by $$M$$, the Jacobian of $$G$$, i.e. a multiplication by its inverse. Since computing the inverse of the Jacobian is expensive, CVODE allows a trade-off between accuracy and solution time by only requiring a solver for $$P y = b$$. For the linear case, NEURON supports a resolution with the Hines solver (default) or with the (a) or (c) methods mentioned previously, but the non-Hines approaches have been little explored.
-
-## Error Handling
-
-One main difference between fixed and variable time stepping is that the user does not specify the time step, but the relative (*rtol*) and absolute (*atol*) local error tolerances instead. The solver then adjusts $$\Delta t$$ based on these two values. The local error is based on the extrapolation process within a time step. CVODE uses a weighted root-mean-square norm for all error-like quantities:
+Then $$\Vert y_n - y_{n(m)} \Vert \approx \Vert y_{n(m+1)} - y_{n(m)} \Vert \approx R \, \Vert \delta_m \Vert$$, and the convergence test is
 
 $$
-|| v || = \sqrt{ \frac{1}{N} \sum_{i=1}^N (v_i / W_i)^2}
+R \, \Vert \delta_m \Vert < 0.1 \epsilon
 $$
 
-where $$v_i$$ are the deviations, and the weights $$W_i$$ are based on the current solution (with components $$y^i$$), the user-specified absolute tolerances $$atol_i$$ and the relative tolerance $$rtol$$:
+A step allows at most three iterations. When they do not converge, CVODE updates $$M$$ and retries the step, or, if $$M$$ was up to date, retries it with a step four times shorter.
 
-$$
-W_i =  rtol \cdot | y^i | + atol_i
-$$
-
-If $$y_n$$ is the exact solution of equation \ref{eq_variable_time_step_bdf}, the iteration error $$y_n - y_{n(m)}$$ must be small enough, such that $$\| y_n - y_{n(m)} \| < 0.1 \epsilon$$, where $$\epsilon$$ is the tolerance of the local error test in the weighted norm above (and $$0.1$$ is user-changeable). For this, the solver also estimates the linear convergence rate constant $$R$$, initialized at $$1$$ and reset to $$1$$ when $$M$$ or $$P$$ is updated. After computing a correction $$\delta_m = y_{n(m)} - y_{n(m-1)}$$, $$R$$ is updated (if $$m > 1$$) as:
-
-$$
-R \leftarrow \text{max} \left\{ 0.3 R, \frac{|| \delta_m ||}{||\delta_{m-1} ||} \right\}
-$$
-
-This rate is used to estimate
-
-$$
-||y_n - y_{n(m)}|| \approx || y_{n(m+1)} - y_{n(m)}|| \approx R || y_{n(m)} - y_{n(m-1)}|| = R || \delta_m ||
-$$
-
-Thus, the convergence test is 
-
-$$
-R || \delta_m || < 0.1 \epsilon
-$$
-
-## Local and Global Time Stepping
-
-NEURON's default error setting for CVODE is $$10 \mu V$$ for membrane potential and $$0.1 nM$$ for internal free calcium concentration. This gives an HH-based action potential an accuracy equivalent to that of a fixed time step of $$\Delta t = 25 \mu s$$. The default maximum order for BDF is $$5$$, although *it is recommended* to let CVODE decide the best order.
-
-[lytton2005independent]: https://www.mitpressjournals.org/doi/abs/10.1162/0899766053429453
 [neuron-book]: https://www.cambridge.org/core/books/neuron-book/7C8D9BD861D288E658BEB652F593F273
 
-Large networks of cells cannot be integrated with global adaptive time stepping. A high frequency of events such as gating channels or synapses causes discontinuities in parameters or state variables. Each discontinuity requires a reinitialization of the computation and forces the integrator to restart with a new initial value problem. NEURON's workaround is a local variable time stepping scheme called *lvardt* ([Lytton and Hines, Independent Variable Time-Step Integration of Individual Neurons for Network Simulations, MIT Press][lytton2005independent]). It creates one CVODE integrator per cell, and aims at short time step integration for active neurons and long time step integration for inactive neurons, while keeping the integration accuracy consistent. All cells are kept in an ordered queue, where their position is given by their event delivery time or their current simulation time. Since the system advances in time with multiple, independent integrators, the overall computation is reduced compared to the global counterpart. The main issue is the coordination of the time advancement of each cell: all the state variables of a given cell must be correctly available to any incoming event. To solve this, every cell holds the information of all states between its current time instant and the previous time steps. This allows backward interpolation when required. The integration coordinator also ensures that the interpolation intervals of connected cells overlap, so that no event between two cells is missed. The critical point of this approach is that the time step is tentative: an event received by the cell in the interim may reinitialize the cell to a time prior to the tentatively calculated threshold time.
+NEURON's defaults are $$\text{atol} = 10^{-2}$$ and $$\text{rtol} = 0$$: an absolute error control in the units of each state, scaled per state with `CVode.atolscale`. The tolerances are 10 μV for voltages in mV, and 0.1 nM for the internal calcium concentration ([Carnevale and Hines, 2006][neuron-book]). For a Hodgkin-Huxley action potential at 6.3 °C, they give an accuracy comparable to that of the second-order fixed-step method with $$\Delta t = 25$$ μs.
 
-The following picture illustrates a timeline (from A to D) of six cells running the *lvardt* algorithm. The intervals of possible interpolation are displayed as black rectangles. The right end of a cell's rectangle, $$t_b$$, is the time up to which that cell has integrated. The vertical line traversing all neurons marks the system's earliest event time. Triggers of discrete events on a neuron are displayed as short thick vertical bars. (A) The cell with the smallest $$t_b$$ advances by the length of the hashed rectangle; (B) Cell 5 has the smallest $$t_b$$ and integrates forward; (C) The next earliest event in the system is at neuron 3. This event trigger creates three new events to be delivered to cells 3, 4 and 5; (D) The new earliest event forces cell 3 to back-interpolate, the event is handled, and cell 3 reinitializes. Cell 3 will be the next cell to integrate forward:
+## Events and the Local Variable Time Step
+
+[lytton2005independent]: https://www.mitpressjournals.org/doi/abs/10.1162/0899766053429453
+
+An event, such as a synaptic input, changes the right-hand side $$f$$ at a given time. The BDF history before the event does not describe the solution after it. The integrator therefore stops at the event time, applies the event, and restarts as a new initial value problem, at order 1 and with a short step. Each event thus costs a series of short steps.
+
+With one integrator for the whole network, every event restarts all cells, and all cells advance with the steps of the most active one. The **local variable time step** method (lvardt) of [Lytton and Hines (2005)][lytton2005independent] gives each cell its own CVODE integrator instead. An event restarts the integrator of its target cell only: an active cell takes short steps, while a quiet cell takes long ones. A coordinator advances the integrators:
+- each integrator can interpolate its solution to any time of its last step, $$[t_a, t_b]$$, from its BDF history;
+- an integrator queue orders the cells by $$t_b$$, and an event queue orders the events by delivery time. Both are [priority queues][priority-queue], with $$O(\log N_c)$$ time per operation for $$N_c$$ cells;
+- at each iteration, the coordinator takes the earliest item of the two queues. A cell integrates one step forward. An event makes its target cell interpolate back to the event time, handle the event, and restart its integrator there.
+
+[priority-queue]: https://en.wikipedia.org/wiki/Priority_queue
+
+Since the coordinator always takes the earliest item, no $$t_b$$ and no event time ever falls behind any $$t_a$$: every event lies within the interpolation interval of its target cell, or ahead of it. A spike found in a step stays tentative until the earliest $$t_b$$ and event time reach it, since an earlier event to the spiking cell can restart the cell before the spike.
+
+The picture shows lvardt on six cells. The black rectangles are the intervals $$[t_a, t_b]$$, the vertical line marks the earliest $$t_b$$ or event time, and the short thick bars are events. (A) Cell 0 has the smallest $$t_b$$ and integrates one step (hatched). Its voltage crosses the spike threshold during the step, which creates a tentative spike. (B) Cell 5 now has the smallest $$t_b$$ and integrates one step. (C) The spike of cell 0 is now the earliest item. Handling it creates three events, for cells 3, 4 and 5, with different delays, and the event of cell 3 becomes the earliest. (D) Cell 3 interpolates back to the event time, handles the event and restarts its integrator, so its interval shrinks to a point. Cell 3 integrates next:
 
 {: .picture}
 <img width="30%" height="30%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.svg">
@@ -139,46 +141,43 @@ The following picture illustrates a timeline (from A to D) of six cells running 
 {: .caption}
 Adapted from: [The NEURON book][neuron-book]
 
-## Single Neuron Performance
+## Single Neuron
 
-The following picture shows the difference in performance of the Backward Euler and Variable Timestep interpolators during a stiff trajectory of an Action Potential.
+The following tests of Magalhães et al. (<a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">preprint, 2019</a>) compare NEURON's backward Euler, with its default $$\Delta t = 25$$ μs, and CVODE, with $$\text{atol} = 10^{-3}$$, on a model of a layer 5 pyramidal cell of the Blue Brain Project (L5_TTPC2_cADpyr232_1), with a current injected at the soma. The first test follows one spike. Backward Euler takes equidistant steps. CVODE takes long steps while the voltage changes slowly, before the spike, and short steps on the rise and around the peak:
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.svg">
 
-Note the difference in interpolation instants: equidistant in the Backward Euler case, and adapted to the solution gradient in the variable step case. A current injection at the soma forces the neuron to spike at a rate that increases with the injected current. A simple test enforces different levels of stiffness and measures the number of interpolation steps of both methods:
+A constant current from 100 ms to 1,100 ms makes the neuron fire at a rate that grows with the current. Over the 1.2 s of simulation, backward Euler takes 48,001 steps for every current. CVODE takes 338 steps without spikes, and 9,750 at the highest current:
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_pulse_currents_table.svg">
 
-The slow dynamics of the fixed step method --- which accounts for events at discrete intervals instead of at the event delivery times of its variable step counterpart --- lead to a shift in the voltage trajectory that propagates over time (Euler with $$\Delta t=1 \mu s$$ and CVODE with $$\text{atol}=10^{-4}$$ serve as reference solutions):
+The step size also sets the accuracy. Over 100 ms, backward Euler with $$\Delta t = 1$$ μs and CVODE with $$\text{atol} = 10^{-4}$$ give the same spike times, and serve as references. With longer steps, backward Euler spikes later. CVODE with $$\text{atol} = 10^{-2}$$ matches the accuracy of backward Euler with $$\Delta t = 25$$ μs in 7 times fewer steps (566 against 4,001), and CVODE with $$\text{atol} = 10^{-3}$$ matches that of $$\Delta t = 5$$ μs in 22 times fewer steps (910 against 20,001):
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg">
 
-After one second of simulation, the spike time phase shift is substantial, which demonstrates the benefit of variable step methods for this use case.
+The delay of backward Euler grows spike after spike. After 1 s, it is about 2 ms with $$\Delta t = 5$$ μs and 6.5 ms with $$\Delta t = 25$$ μs, a large error at the time scale of spikes. CVODE with $$\text{atol} = 10^{-3}$$ takes 6,240 steps, against 40,001 and 200,001 for backward Euler:
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg">
 
-To study whether these advantages hold in practice, the simulation runtime of both methods was measured. The first test measures the impact of stiffness on the number of simulation steps and on the time to solution, on an Intel i5 at 2.6 GHz. The different current values are injected as a proportion of the *action potential threshold* current, i.e. the minimum current that must be continuously injected for the neuron to spike.
+The next test injects a constant current for 1 s, from 0 to 5 times the threshold current, the smallest constant current that makes the neuron spike. The runs use an Intel Core i5 at 1.6 GHz. Below half the threshold current, the voltage settles to a steady state, and CVODE takes 434 times fewer steps than backward Euler and runs 98 times faster. At the threshold current, the gains are 62 and 11.6 times, and at 5 times the threshold current, 9.4 and 2.5 times. A CVODE step costs 4 to 5 times as much as a backward Euler step: it runs Newton iterations, each with an evaluation of $$f$$ and a linear solve, and an error test.
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_variation_solution.svg">
 
-The results are promising: even at an extremely high current value, the speed-up is significant. A second test enforces discontinuities and resets of the IVP by artificially injecting current pulses of $$1 \mu s$$ at given frequencies.
+The last single-cell test replaces the constant current by pulses of 1 μs at a fixed rate, as a model of synaptic events. Each pulse is a discontinuity. The runtime of CVODE grows with the pulse rate, and depends little on the pulse amplitude. At 10 pulses per second, CVODE takes 153 to 322 times fewer steps than backward Euler and runs 51 to 100 times faster, from the strongest to the weakest pulse. For the strongest pulse, both methods run equally fast at about 1,000 pulses per second.
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_events_arrival.svg">
 
-In this scenario, the runtime depends strongly on the number of discontinuities, and only slightly on the discontinuity value (i.e. the amount of current injected). The key question is then how these results apply to networks of neurons.
+## Homogeneous Networks
 
-## Simulation of a network of homogeneous neurons
+[Lytton and Hines (2005)][lytton2005independent] tested lvardt on one compute node. Their worst case is a fully connected network of 100 inhibitory neurons, which synchronize through mutual inhibition: each population spike sends 9,900 events at almost the same time. A fixed step of 2.5 μs gave results close to those of lvardt with $$\text{atol} = 10^{-3}$$ or $$10^{-5}$$. Event delivery took about 12% of the CPU time of lvardt. A single integrator for the whole network was up to 60 times slower than lvardt, since every event restarted all cells.
 
-The performance of *lvardt*'s integration model was tested ([Lytton and Hines 2005][lytton2005independent]) on a connected homogeneous network of 100 inhibitory neurons on a single compute node. Because the neurons are inhibitory, the circuit shows rapid synchronization through mutual inhibition, a case where variable time step integrators are likely to encounter problems. A fixed time step of $$0.0025 ms$$ yielded *closely comparable* results to those of *lvardt* with an absolute error tolerance (atol) of $$10^{-3}$$ or $$10^{-5}$$. The event deliveries and the associated interpolations took about $$12\%$$ of the total execution time. With global variable time stepping instead, the authors report that the large number of events leads to a roughly 60-fold increase in execution time. Another experiment featured a thalamocortical simulation with four cell types (cortical pyramidal neurons and interneurons, thalamocortical
-cells, and thalamic reticular neurons). The two thalamic cell types produced bursts with long interburst intervals, which makes them very suitable for the *lvardt* algorithm. A simulation of $$150 ms$$ at high precision, with an error tolerance (atol) of $$10^{-6}$$ for *lvardt* and $$\Delta t = 10^{-4} ms$$ for the fixed time step, took 6 minutes 13 seconds and 10 hours 20 minutes, respectively: a 100-fold speed-up. For a standard-precision run, with an atol of $$10^{-3}$$ and $$\Delta t = 10^{-2} ms$$, the simulations took 2 minutes for *lvardt* and 5 minutes 53 seconds for the fixed time step: a 3-fold speed-up.
-
-The following picture shows these results for the comparison of fixed and variable time step methods on the mutual-inhibition model. Execution time grows linearly with simulation time for the fixed-step integration (dashed lines). Variable-step methods show a reduction in CPU load at the onset of synchrony. The non-linearity of adaptive time stepping has the following cause: *lvardt* produces time steps that jump around during the initial presynchrony phase of the simulation (fast uprising phase), and then slowly stabilizes to an alternation between large steps in the long intervals separating the population spikes and extremely short time steps during the population spike itself:
+The picture shows the CPU time of this model. With fixed steps (dashed lines), it grows linearly with the simulated time. lvardt is slow at the start, while the cells are not yet synchronized and its steps vary widely. Once the network synchronizes, lvardt alternates long steps between the population spikes and short steps during them, and its CPU time grows slowly:
 
 {: .picture}
 <img width="30%" height="30%" src="{{ site.assets }}/neuron-variable-timestep/lvardt_exec_time_comparison.svg">
@@ -186,75 +185,77 @@ The following picture shows these results for the comparison of fixed and variab
 {: .caption}
 source: Lytton et al. 2005 
 
-## Simulation of a network of heterogeneous neurons
+Their best case, a synfire chain of 100 single-compartment Hodgkin-Huxley cells, ran 20 times faster with lvardt than with a fixed step of similar accuracy. A thalamocortical model has four cell types: cortical pyramidal cells and interneurons, thalamocortical cells and thalamic reticular cells. The two thalamic types fire bursts separated by long silent intervals, which suits lvardt. For 150 ms of simulation at high precision, lvardt with $$\text{atol} = 10^{-6}$$ took 6 min 13 s, and a fixed step of 0.1 μs took 10 h 20 min, 100 times longer. At standard precision, with $$\text{atol} = 10^{-3}$$ and $$\Delta t = 10$$ μs, the runs took 2 min and 5 min 53 s, 3 times longer.
+
+## A Heterogeneous Network
 
 [markram2015cell]: https://www.cell.com/fulltext/S0092-8674(15)01191-5
 
-Networks of similarly behaving neurons give only a rough *estimation* of the speed-up achievable with fixed and variable time step interpolations. In practice, brain activity differs widely across space and time.
+Homogeneous networks give only a rough estimate of the speed-up, since the activity of a brain region varies across neurons and over time. The event rates of a realistic network come from a fixed-step simulation of a digital reconstruction of the rat neocortex by the Blue Brain Project ([Markram et al., 2015][markram2015cell]): 7.5 s of spontaneous activity of 219,247 neurons under tonic depolarization. The network shows slow oscillations, with population bursts that start in layer 5 and spread to the other layers.
 
-To measure the efficiency across the different spiking dynamics of neurons, the digital reconstruction of a [laboratory experiment that the Blue Brain Project published in the journal Cell][markram2015cell] was reproduced. The reproduction is a fixed-step simulation of 7.5 seconds of the spontaneous electrical activity of 219,247 neurons during tonic depolarization. For readers interested in the biology: the network exhibits spontaneous slow oscillatory population bursts, initiated in Layer 5, spreading down to L6, and then up to L4 and L2/3 with secondary bursts spreading back to L6. For further details, refer to the section *Simulating Spontaneous Activity* of that paper.
- 
-Two sample neurons are taken from the top 1% *busiest* neurons (in terms of incoming spikes, i.e. discontinuities). The plots show the number of spikes arriving per time interval (left, each time bin accounts for 10ms) and the distribution of time intervals between spike arrivals (right):
+The pictures show two neurons of the top 1% by number of incoming events: the events per 10 ms (left), and the histogram of the intervals between events (right). The neurons of the top 1% receive 3,040 to 6,146 events, 405 to 820 per second:
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_203076.svg">
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_138083.svg">
 
-The neurons in that top 1% received between 3040 and 6146 events. The same analysis for two sample neurons from the median 1% of neurons in terms of spike arrivals:
+The neurons of the median 1% receive 541 to 558 events, about 73 per second:
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_208223.svg">
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_87784.svg">
 
-These received 541 to 558 spiking events. Finally, the neurons in the bottom 1%
+The neurons of the bottom 1% receive fewer than 100 events:
 
 {: .picture}
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_132412.svg">
 <img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_2101.svg">
 
-received fewer than 100 events.
+In total, the neurons receive about 155 million events, 707 per neuron on average, or 94 per second: an order of magnitude below the break-even rate of the pulse test. The median and bottom neurons have long silent intervals between events, which suits variable steps. The top neurons do not.
 
-The total number of events received across all neurons in the network was approximately 155 million, i.e. a mean of 707 incoming spikes per neuron. In practice, this means that most brain regions (or activity patterns) fall within the interval of acceleration described in the previous section.
+## Distributed Execution
 
-Is the theoretical speed-up guaranteed to hold in practice? A saying often attributed to Einstein states: *"In theory, there's no difference between theory and practice, but in practice, there is"*. This is the case here, where two main issues arise.
+Networks of this size need distributed memory: as in the [previous post][neuron-methods-post], each rank integrates its own neurons, and the ranks exchange spikes.
 
-### 1. Distributed CVODE executions
+### Bulk-Synchronous Parallel
 
-Simulations of this scale require parallel/distributed computing due to their memory and computation requirements.
+NEURON splits the simulation into intervals of $$\Delta t_{\text{comm}}$$, the minimum synaptic delay between neurons on different ranks. Within an interval, each rank integrates its neurons independently. At its end, a collective call exchanges the spikes, and acts as a barrier: no rank starts the next interval before all ranks finish the current one. This is the [bulk synchronous parallel][bsp] (BSP) model. With variable steps, a neuron may take one step past the barrier. When an event from another rank arrives for a time inside that step, the neuron interpolates back and restarts, which discards part of the step. The barriers also cost more with variable steps than with fixed steps. The work of a rank depends on the activity of its neurons, so the ranks finish each interval at different times, and all of them wait for the slowest one: a [load imbalance][load-balancing] at every interval.
 
-However, in parallel computing environments, the step synchronization of neurons spread across different compute nodes is a bottleneck. Neurons held on different compute nodes must *communicate* their time instant. When a neuron spikes, the synaptic current must be delivered to a second neuron that has not advanced beyond the delivery time, otherwise the spike is *missed*.
+[bsp]: https://en.wikipedia.org/wiki/Bulk_synchronous_parallel
+[load-balancing]: https://en.wikipedia.org/wiki/Load_balancing_(computing)
 
-To address this, the simulation is split into equidistant time intervals equal to the shortest delay of any global event --- typically the minimal synaptic delay across all synapses, or (when applicable) the update frequency of extra-cellular mechanisms or gap junctions. At every time interval, all nodes in the network perform a collective communication call and share the events (spikes) to be sent in the next time frame. This approach has previously been shown ([Lytton and Hines 2005][lytton2005independent]) to provide a good speed-up. It guarantees:
-1. Asynchronous computation: every core in every compute node computes its dataset (neurons) independently, and advances the neurons up to the time limit of the next synchronization interval;
-2. Asynchronous communication: synaptic activity can be transmitted immediately after it occurs, or together with the synchronization information in an **all-to-all communication**;
-3. Synchronous communication: neuron interpolation and spike communication for a stepping time window must be completed before the computation and communication for the next window start.
- 
-However, at the *extreme* of the possible optimisation, this **collective synchronization of neurons** has three main downsides: (a) no compute node can perform a CVODE timestep that exceeds the limits of the current time frame, (b) all compute nodes must wait for the slowest one to reach the end of the time frame, and (c) all compute nodes restart CVODE at the initial instant of every time frame. A solution to this problem is the **fully-asynchronous execution model**, which guarantees asynchronous communication, computation and synchronization. Detailed information on the implementation (and its added cache-efficiency benefits) is available <a href="{{ site.assets }}/neuron-variable-timestep/neurox-cache-efficient.pdf">in the original publication</a>. The main concept is:
-- Each neuron keeps a map of all its pre-synaptic dependencies, i.e. the neurons whose axons connect to its synapses or, in practice, those that may spike and deliver current into the neuron;
-  - This map is actively updated by small stepping notifications from the pre-synaptic dependencies;
-- Each neuron keeps a map of all its post-synaptic dependencies, i.e. the neurons whose dendrites connect to its axon terminal or, in practice, those that receive current from the neuron when it spikes;
-  - In addition to spike communication, the neuron must regularly inform its dependencies that it *stepped*, i.e. advanced in time;
-- Collective synchronization barriers are removed. Instead, neurons advance in time as far as possible given their pre-synaptic dependencies, i.e. up to the timestep that guarantees no missed event if any pre-synaptic dependency spikes;
+### Fully-Asynchronous Parallel
 
-This approach increases computational efficiency: neurons can step beyond the synchronization intervals of the other approaches and perform more interpolation steps in a row, staying longer in the more efficient CPU cache levels.
+The fully-asynchronous parallel (FAP) model of Magalhães et al. (<a href="{{ site.assets }}/neuron-variable-timestep/neurox-cache-efficient.pdf">ICCS 2019</a>) removes the barriers. Each neuron $$j$$ stores, for each pre-synaptic neuron $$i$$, the last time $$t_i$$ that $$i$$ reported, and the minimum delay $$d_{ij}$$ of the connections from $$i$$ to $$j$$. A spike of $$i$$ after $$t_i$$ reaches $$j$$ at $$t_i + d_{ij}$$ or later, so $$j$$ can integrate up to
 
-### 2. Testing conditions alter spike rates
+$$
+t_j^{\max} = \min_{i \in \text{pre}(j)} \left( t_i + d_{ij} \right)
+$$
+
+without missing an event. Each neuron reports its time to its post-synaptic neurons at intervals set per pair, from 0.1 ms to several milliseconds, with one message per target rank. A scheduler on each rank steps the neuron with the earliest time first. No step is ever undone, and no rank waits at a barrier. Most delays $$d_{ij}$$ exceed $$\Delta t_{\text{comm}}$$, so neurons integrate longer between messages, while their data stays in cache. With fixed steps, FAP alone runs 26% to 65% faster than BSP on one compute node, depending on the architecture, and 16% to 40% faster on 32 nodes. The gain shrinks as the network grows.
+
+A speculative variant, which lets neurons step ahead and undo the steps that a late event invalidates, does not scale: an undone step can invalidate spikes already sent to other ranks, which then undo their own steps.
+
+### Benchmark
 
 [LIF-model-post]: {{ site.baseurl }}{% post_url 2016-02-08-lif-brunel %}
 
-Even though these results are promising, different mammals, brain regions and mental states can change the simulation conditions and lead to very different spiking rates. The final test therefore measures how these factors alter the simulation efficiency. To that end, the fully-asynchronous execution model was applied to five different brain dynamics:
-- a model of *quiet dynamics* with a mean spiking rate of 0.25 Hz per neuron, representing neurons almost at rest and/or with little activity. This model gives an upper bound of the runtime of about 90% of neurons in the brain during regular activity;
-- a model of *slow dynamics* at 1.5Hz, representing the lower bound of active neurons, described next;
-- a model of *moderate dynamics* with a spiking rate of 6.5 Hz, an approximation of the irregular regime of slow oscillations displayed by the [Brunel network][LIF-model-post]; also an upper limit to the spiking rate of the rat frontal cortex; and a loose approximation of the visual cortex of cats;
-- a model of *fast dynamics* of 38 Hz, approximating the cortical and thalamic neuronal activity during periods of high vigilance, and the regular regime of the theoretical inhibition-dominated model of the Brunel network; and 
-- a model of *burst dynamics* at 55.8 Hz, typically a by-product of depolarizing current injections, representative of the fast-spiking regime of the inhibition-dominated irregular dynamics of the Brunel network.
+The <a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">preprint</a> compares fixed and variable steps, with BSP and FAP, on 64 Cray XE6 nodes (AMD Opteron 6380, 16 cores at 2.5 GHz), for networks of 1,024 to 65,536 neurons and 1 s of activity, with $$\Delta t = 25$$ μs and $$\text{atol} = 10^{-3}$$:
+- simple models, with state ODEs linear in their own state: (1a) BSP with `cnexp`, (1b) BSP with explicit Euler for the states, and (1c) FAP with explicit Euler;
+- complex models: (2a) BSP with `derivimplicit`, (2b) BSP with CVODE, and (2c) FAP with CVODE, with each event delivered at its exact time, or with event grouping (EG): the events of each window of $$\Delta t / 2$$ or $$\Delta t$$ are delivered together, as with fixed steps.
 
-The comparison included several fixed- and variable-step interpolation methods, detailed <a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">in the original publication preprint</a>. The benchmark results are:
+A constant current drives all neurons to one of five spiking rates:
+- quiet, 0.25 Hz: neurons almost at rest. The studies that the preprint cites place about 90% of the neurons of the brain at or below this rate in regular activity;
+- slow, 1.5 Hz: the lowest rate of active neurons;
+- moderate, 6.5 Hz: the rate of the SI slow state of the [Brunel network][LIF-model-post], above the 0.005 to 5 Hz of the rat frontal cortex;
+- fast, 38 Hz: the rate of the AI state of the Brunel network, and of cortical and thalamic neurons during high vigilance, 30 to 40 Hz;
+- burst, 55.8 Hz: the rate of the SI fast state of the Brunel network, typical of strong depolarizing currents.
 
 {: .picture}
 <img width="90%" height="90%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.svg">
 
-Quoting the previous paper: "Fixed step methods do not yield significantly-different execution times across different spiking regimes. This is due to the homogeneous computation of neuron  state updates throughout time, and the light computation attached to synaptic events and collective communication not yielding a substantial increase of runtime. The difference in execution times measured across the five regimes was of about $$2\%$$, which we consider negligible. On the other hand, as expected, variable step executions are penalized on regimes with high discontinuity rates. It is noticeable that the runtimes of fixed- and variable-step solvers approximate as we increase the spiking rate, i.e. the increase of runtimes with the input size is steeper for variable timestep (2b$$\hspace{0.3mm}{\color{#b85450}\bullet}$$ and  2c$$\hspace{0.3mm}{\color{black}\bullet}{\color{#666666}\bullet}{\color{#b3b3b3}\bullet}$$) compared to fixed timestep methods (2a$$\hspace{0.3mm}{\color{#6c8ebf}\bullet}$$). This is due to discontinuities in variable-step being delivered throughout a continuous time line, compared to the discrete delivery instants of the fixed-step methods --- therefore increase the number of interpolation steps; and the iterative model of the variable timestep reinitializing the state computation with small step sizes on each IVP reset, compared to the constant-sized step of fixed step methods.  A remarkable performance is visible on the quiet dynamics use case, where our fully-implicit ODE solver of complex models (with Newton iterations), still runs faster than the simple solver resolving only a system of linear equations. The underlying rationale is that --- despite the inherent computation cost of Newton iterations in the variable step methods --- the low level of discontinuities allow for very long steps, that surpass the simulation throughput of simple solvers running on fixed step methods." 
+The runtimes of the fixed-step methods differ by about 2% across the five rates: each step costs the same with or without spikes, and spikes add little work. The runtimes of CVODE grow with the rate, since events arrive at any time, not only at the ends of fixed steps, and each one restarts its target cell with short steps. Against the fixed-step method for complex models (2a), FAP CVODE with grouping per $$\Delta t$$ runs 544 times faster on 1,024 neurons and 65 times faster on 65,536 neurons at the quiet rate, and 7.7 to 1.8 times faster at the moderate rate. At the fast rate, it runs 2 times faster on 1,024 neurons and as fast on 65,536. At the burst rate, it runs 1.5 times faster on 1,024 neurons and 1.5 times slower on 65,536. At the quiet rate, FAP CVODE, which solves the complex model with Newton iterations, also beats the fixed-step methods for simple models, which solve one linear system per step: the rare events allow long steps.
 
-For further details, including detailed comparisons of the performance of *Variable Step Event Grouping*, *Fully-Asynchronous vs Bulk-Synchronous Execution Models*, *Runtime Dependency on Input Size and Spike Activity*, and the *Overall Runtime Speed-up Estimation* of 228.5-24.6x (based on the distribution of neurons per spiking regime in the brain), refer to the <a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">article preprint</a>.
+Event grouping matters on large networks: on 65,536 neurons at the quiet rate, the speed-up falls from 65 times to 47 with grouping per $$\Delta t / 2$$, and to 33 without grouping. The gap between BSP and FAP shrinks as the network grows, since more connections per neuron bring $$t_j^{\max}$$ closer to $$\Delta t_{\text{comm}}$$. On 65,536 neurons, both models run in similar times with fixed steps, and with CVODE at the moderate, fast and burst rates.
 
+To estimate the speed-up on a realistic mix of rates, the preprint groups the 31,346 neurons of the central column of the 219,247-neuron network by firing rate, between 2 s and 4 s of activity: 31.43% quiet, 38.44% slow, 27.02% moderate, 3.10% fast and 0.01% burst. Weighting the runtimes of each rate gives a speed-up of FAP CVODE over the fixed-step method (2a) of 224.5 to 11.9 times with exact event delivery, and of 228.5 to 24.6 times with grouping per $$\Delta t$$, from 1,024 to 65,536 neurons. The quiet rate holds 31% of the neurons here, against about 90% in the literature, so these estimates are lower bounds. Over 95% of the neurons fall in the three slowest rates, where the runtimes of both methods grow at the same rate beyond 16,384 to 32,768 neurons, so the speed-up should hold on larger networks.
