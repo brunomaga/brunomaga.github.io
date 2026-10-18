@@ -192,6 +192,16 @@ Bugs in the code and data files of the posts (under `assets/`).
   `(B, S/P, E) -> (H, B, S/P, E)`. Fix: `(H, B, S/P, d_head)` and `(B, S/P, H, d_head)`.
 - The ring `MultiHeadAttention.forward` is indented by 5 spaces. Fix: 4 spaces.
 
+### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
+
+- The decoder comment in `DiT.__init__` (in `diffusion/dit.py` and in the post) quotes the DiT paper with other
+  words. The paper reads "We use a standard linear decoder to do this; we apply the final layer norm (adaptive if
+  using adaLN) and linearly decode each token into a p×p×2C tensor". Fix: quote these words, or drop the quotation
+  marks.
+- The EMA comment "with a warmup as in diffusers" (in `diffusion/diffusion.py` and in the post): the decay
+  (1+n)/(10+n) is the default of the diffusers `EMAModel`, which gives the name "warmup" (`use_ema_warmup`) to
+  another formula. Fix: "0.9999 as in the paper, ramped up as in the default EMAModel of diffusers".
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -509,6 +519,13 @@ that is not wrong.
   "input split along the sequence across 4 processes" and "Local attention weights QK^T: B*H/P x S x S".
 - Optional, `distributed-training/imgs/context_parallelism.svg` writes the head size as E and leaves out the scale
   1/sqrt(d) of the scores. The text names the label. Fix: write the head size as d.
+
+### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
+
+- Optional, `diffusion/masked_autoencoders.svg`, `masked_autoencoders_cropped.svg` and `align_your_latents.svg`
+  (with its caption) write the number of frames as T, the symbol of the diffusion steps in the post. The text uses
+  F, as the Latte figures do. These are figures from the papers. Fix: relabel the frame axis of the two MAE figures
+  as F, or keep the paper labels.
 
 ## Content issues
 
