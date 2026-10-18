@@ -119,9 +119,6 @@ that is not wrong.
   names. Fix: a caption under each plot, e.g. "SI slow (g = 4.5, eta = 0.9)", since CLAUDE.md puts titles in captions.
 - Same three plots: the label "time interval (ms)" overlaps the bars at the right end of the lower panel, and
   "spikes count" reads better as "spike count (per ms)". Fix: move the label below the axis.
-- `lif-brunel/action_potential.gif`: a "MakeAGIF.com" watermark in the bottom right corner, and the arrows that show
-  the direction of the current are missing in the first and last frames. Fix, asked by the user for after the merge: a
-  static SVG in which the arrows are always visible.
 
 ### Numerical Simulation of Detailed Neuron Models (2016-08-15-neuron-electrical-activity.md)
 
