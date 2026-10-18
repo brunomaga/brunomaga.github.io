@@ -549,6 +549,16 @@ that is not wrong.
   the INC switch, while the caption says that a subscript names the destination of the call. Fix: put_signal*
   without a subscript, or a caption that says the subscript names the final destinations P_0 and P_1.
 
+### Knowledge distillation, speculative decoding and multi-token decoding (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
+
+- `inference/imgs/layerskip.svg` labels the drafts "drafts of the first E = 4 layers". E is the embedding dimension
+  in the code and in the eagle, medusa and mtp_parallel figures. The figure also names the predictions of the target
+  p_1 to p_3, while p is the distribution of the draft model in spec_sampling. Fix: "drafts of the first 4 layers",
+  and y_1 to y_3 (or no symbol) for the predictions.
+- Optional, `inference/imgs/mtp_parallel.svg` writes the tokens as x_t, as Gloeckle et al. do, while eagle, layerskip
+  and mtp_sequential write them as t_i. The text follows each figure. Fix: keep the paper notations, or write t_i in
+  mtp_parallel and in the formulas of the parallel heads.
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
