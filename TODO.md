@@ -527,6 +527,14 @@ that is not wrong.
   F, as the Latte figures do. These are figures from the papers. Fix: relabel the frame axis of the two MAE figures
   as F, or keep the paper labels.
 
+### Kernel Fusion for Megatron-LM Tensor Parallelism and MoE Expert Sharding (2026-08-18-kernel-fusion-tensor-parallelism.md)
+
+- Optional, `inference/imgs/tp_results.svg` names the fused kernel "Ours" in its legend, and its caption says
+  "fused (ours)", in the first person. Fix: "Fused" in the legend and "fused" in the caption.
+- Optional, `inference/imgs/tp_expert_sharding.svg` and its caption write the weights of an expert as W_i and W_o,
+  while the rest of the post writes the same matrices as W_1 and W_2. The text names the mapping. Fix: relabel the
+  figure and the caption to W_1 and W_2, and drop "(the W_1 and W_2 above)" from the text.
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
