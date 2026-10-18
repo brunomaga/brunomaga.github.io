@@ -37,3 +37,7 @@ exclude:
   - node_modules
   - vendor
   - CLAUDE.md
+  - diagrams-issues.md
+  - code-issues.md
+  - content-issues.md
+  - title-issues.md
