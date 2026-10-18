@@ -215,7 +215,7 @@ where $$\sigma$$ is the [sigmoid function](https://en.wikipedia.org/wiki/Sigmoid
 
 ### Distributed Algorithm
 
-Each process holds a chunk of the sequence of $$q$$, $$k$$ and $$v$$. It keeps its queries, and the blocks of keys and values move around a ring of the $$P$$ processes. At each of the $$P$$ steps, a process computes the attention of its queries with the key and value block it holds. Meanwhile, it sends this block to the next process and receives the block of the previous one:
+Each process holds a chunk of the sequence of $$Q$$, $$K$$ and $$V$$. It keeps its queries, and the blocks of keys and values move around a ring of the $$P$$ processes. At each of the $$P$$ steps, a process computes the attention of its queries with the key and value block it holds. Meanwhile, it sends this block to the next process and receives the block of the previous one:
 
 {: .picture}
 <img width="98.9%" height="98.9%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.svg"/>

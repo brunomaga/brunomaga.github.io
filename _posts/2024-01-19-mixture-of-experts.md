@@ -17,7 +17,7 @@ In 1991, [Adaptive Mixtures of Local Experts](https://www.cs.toronto.edu/~hinton
 {: .caption}
 **Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). <br/>Adapted from: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
 
-An MoE has $$N$$ **experts**, the feed-forward networks $$f_1(x), \dots, f_N(x)$$, and a **gating network** $$g(x)$$, also a feed-forward network. The superscripts in the figure number the layers. All experts and the gating network receive the same input $$x$$. The gating network outputs one probability per expert, the relevance of that expert for the input. In its simplest form, $$g(x) = \mathrm{softmax}(x W_g)$$, where the learnable matrix $$W_g$$ maps the input to one logit per expert. The output of the MoE is the sum of the outputs of the experts, weighted by the gate:
+An MoE has $$N$$ **experts**, the feed-forward networks $$f_1(x), \dots, f_N(x)$$, and a **gating network** $$g(x)$$, also a feed-forward network. The superscripts in the figure number the layers, and the second layer has $$M$$ experts. All experts and the gating network receive the same input $$x$$. The gating network outputs one probability per expert, the relevance of that expert for the input. In its simplest form, $$g(x) = \mathrm{softmax}(x W_g)$$, where the learnable matrix $$W_g$$ maps the input to one logit per expert. The output of the MoE is the sum of the outputs of the experts, weighted by the gate:
 
 $$
 z = \sum_{i=1}^{N} g_i(x) \, f_i(x)
@@ -427,7 +427,7 @@ The **un-permutation step** writes the outputs of the expert in the order in whi
     x = AllToAll.apply(out_flat, fn_count(send_count), fn_count(recv_count)) # sum(send_count) rows, E columns
 ```
 
-Finally, the **scale step** multiplies each output by the router probability of its expert, and sums the top-`k` outputs of each token. The outputs arrive grouped by expert, so `index_add` adds each one at the position `(b, s)` of its token, given by the metadata of the permutation step:
+Finally, the un-permutation step **scales** each output by the router probability of its expert, and sums the top-`k` outputs of each token. The outputs arrive grouped by expert, so `index_add` adds each one at the position `(b, s)` of its token, given by the metadata of the permutation step:
 
 ```python
     x = x * torch.cat(probs_per_expert).view(-1,1) # multiply by router probabilities

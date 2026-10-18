@@ -27,7 +27,7 @@ In the figure, every layer needs activations that the other processor holds (red
 
 The MLP computes a MatMul (a GEMM) $$XA$$, a GeLU, a MatMul $$YB$$ and a dropout, where $$Y$$ is the output of the GeLU. The first MatMul and the GeLU can be split in two ways.
 
-**Split by rows.** "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point before the GeLU function". The synchronization is an all-reduce that sums the partial products $$X_1 A_1$$ and $$X_2 A_2$$ (the *sum-reduce* in the figure below). Splitting both MatMuls this way needs two all-reduces.
+**Option 1: split by rows.** "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point before the GeLU function". The synchronization is an all-reduce that sums the partial products $$X_1 A_1$$ and $$X_2 A_2$$ (the *sum-reduce* in the figure below). Splitting both MatMuls this way needs two all-reduces.
 
   {: .picture}
   <img width="84.4%" height="84.4%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.svg">
@@ -36,7 +36,7 @@ The MLP computes a MatMul (a GEMM) $$XA$$, a GeLU, a MatMul $$YB$$ and a dropout
   Option 1 on two GPUs: $$X$$ is split by columns and $$A$$ by rows. Each GPU computes a partial product of size $$M \times O$$, and a sum-reduce adds them into $$XA$$ on both GPUs before the GeLU, which then gives the same $$Y$$ on both GPUs. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
 
 
-**Split by columns.** Another option is to keep $$X$$ whole and to split $$A$$ along its columns, which "allows the GeLU nonlinearity to be independently applied to the output of each partitioned GEMM". The output of the GeLU is then $$[Y_1, Y_2] = [GeLU (X A_1), GeLU(X A_2)]$$, with no synchronization point.
+**Option 2: split by columns.** Another option is to keep $$X$$ whole and to split $$A$$ along its columns, which "allows the GeLU nonlinearity to be independently applied to the output of each partitioned GEMM". The output of the GeLU is then $$[Y_1, Y_2] = [GeLU (X A_1), GeLU(X A_2)]$$, with no synchronization point.
 The second MatMul receives $$Y$$ split by columns, which is the input of a split by rows. Megatron-LM therefore splits $$B$$ by rows, and one all-reduce sums the partial products $$Y_1 B_1$$ and $$Y_2 B_2$$ before the dropout. The two MatMuls need one all-reduce in total.
 
   {: .picture}
@@ -212,7 +212,7 @@ The input $$X$$ of each block, and the activations of the layer norms and dropou
 
 Megatron-LM minimizes the number of communication steps, because each step moves a large volume of data. In [convolutional neural networks](https://en.wikipedia.org/wiki/Convolutional_neural_network), a split of the activations needs little communication. A convolution kernel covers a small spatial window, so a processor needs only a thin border of the activations of its neighbors. [Improving Strong-Scaling of CNN Training by Exploiting Finer-Grained Parallelism](https://arxiv.org/pdf/1903.06681.pdf) (Dryden et al., 2019) calls this *spatial parallelism*:
 1. The input and the activations are split along the height and the width across processors.
-2. Each processor computes the convolution of its part. The activations next to the split boundaries, the *halo region* (violet in the figure below), are exchanged with the neighbors at every forward and backward pass.
+2. Each processor computes the convolution of its part. The activations next to the split boundaries, the *halo region* (purple in the figure below), are exchanged with the neighbors at every forward and backward pass.
 
 {: .picture}
 <img width="98.8%" height="98.8%" src="{{ site.assets }}/distributed-training/imgs/argonne_parallel_2.svg"/>

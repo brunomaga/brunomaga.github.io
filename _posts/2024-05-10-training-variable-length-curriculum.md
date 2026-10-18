@@ -40,7 +40,7 @@ The distributed sort turns panel (b) into panel (d). The implementation uses [sa
 {: .caption}
 Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards.
 
-In the figure, a root rank gathers the samples, picks the splitters (the key values that bound the range of each rank) and broadcasts them. The code below replaces the gather and the broadcast with one all-gather, after which every rank picks the same splitters. It also takes `n_samples=100` samples per rank, where the figure takes as many as there are ranks. More samples give splitters closer to the quantiles of the data, and buckets of closer sizes (the figure ends with 9, 4 and 8 elements):
+In the figure, a root rank gathers the samples, picks the splitters (the key values that bound the range of each rank) and broadcasts them. The code below replaces the gather and the broadcast with one all-gather, after which every rank picks the same splitters. It also takes `n_samples=100` samples per rank, where the figure takes 2, one fewer than the number of ranks. More samples give splitters closer to the quantiles of the data, and buckets of closer sizes (the figure ends with 9, 4 and 8 elements):
 
 ```python
 def sample_sort(tensor, comm_group, num_workers, n_samples=100):
@@ -130,7 +130,7 @@ With DDP, each micro-batch has its own shape and holds up to 30 tokens. With pip
 
 ### Attention Matrix
 
-With samples of one length, the attention of an input of shape $$B \times S \times E$$ uses one $$S \times S$$ mask, such as the causal mask, for all samples of the batch. With padded samples of different lengths, each sample needs its own mask, which also masks the padding, so the mask is a $$B \times S \times S$$ tensor. For micro-batch 1 of the DDP panel above (4 samples of lengths 9, 7, 8 and 6), the mask has one slice per sample (layers 0 to 3 in the figure):
+With samples of one length, the attention of an input of shape $$B \times S \times E$$ uses one $$S \times S$$ mask, such as the causal mask, for all samples of the batch. With padded samples of different lengths, each sample needs its own mask, which also masks the padding, so the mask is a $$B \times S \times S$$ tensor. For micro-batch 1 of the DDP panel above (4 samples of lengths 9, 7, 8 and 6), the mask has one slice per sample (samples 0 to 3 in the figure):
 
 {: .picture}
 <img width="98.9%" height="98.9%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
@@ -258,7 +258,7 @@ Workflow of a single-GPU training iteration. Adapted from: [TorchDynamo Update 9
 {: .caption}
 Workflow of a single-GPU training iteration with a compiled model. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
-In a DDP run on 2 GPUs (Node 1 and Node 2 in the figures), each GPU computes the gradients of its own data. An all-reduce averages the gradients across the GPUs before the optimizer step. DDP groups the gradients in buckets, and starts the all-reduce of a bucket as soon as all its gradients are computed. The backward pass computes the gradients of the last layers first, so their all-reduce overlaps with the backward pass of the earlier layers:
+In a DDP run on 2 GPUs (GPU 1 and GPU 2 in the figures), each GPU computes the gradients of its own data. An all-reduce averages the gradients across the GPUs before the optimizer step. DDP groups the gradients in buckets, and starts the all-reduce of a bucket as soon as all its gradients are computed. The backward pass computes the gradients of the last layers first, so their all-reduce overlaps with the backward pass of the earlier layers:
 
 {: .picture}
 <img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>

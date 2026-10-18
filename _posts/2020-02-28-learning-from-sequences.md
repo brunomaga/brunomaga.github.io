@@ -103,7 +103,7 @@ $$
 
 The learned parameters are the projections $$W_i^Q$$, $$W_i^K$$ and $$W_i^V$$ of each head and the output projection $$W^O$$. Each head can learn a different relation between words. The base model has $$h = 8$$ heads with $$D^{QK} = D^V = d / h = 64$$, so the 8 heads cost about as much as one head of size $$d$$.
 
-**Masked multi-head attention** in the decoder sets the scores of the future positions, above the diagonal of $$Q K^T$$, to $$-\infty$$ before the softmax, so that their weights are zero. The decoder input is the target sentence shifted right by one position, with a start token in the first position, so the output at position $$t$$ predicts word $$t$$ from the words before it. In training, the mask lets the decoder process all the positions of the target sentence at once. At inference, the decoder generates one word per step and appends it to its input. For the output "Le gros chien rouge", the attention weights of the four steps are:
+**Masked multi-head attention** in the decoder sets the scores of the future positions, above the diagonal of $$Q K^T$$, to $$-\infty$$ before the softmax, so that their weights are zero. The decoder input is the target sentence shifted right by one position, with a start token in the first position, so the output at position $$t$$ predicts word $$t$$ from the words before it. In training, the mask lets the decoder process all the positions of the target sentence at once. At inference, the decoder generates one word per step and appends it to its input. For the decoder input "Le gros chien rouge", the attention weights of the four steps are:
 
 {: .picture}
 <img width="30.5%" height="30.5%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_masked.svg"/>
