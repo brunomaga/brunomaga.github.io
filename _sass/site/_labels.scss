@@ -34,14 +34,27 @@
   }
 }
 
-// left to right: back link in the link colour (below), date in charcoal, category in mid grey, tags in
-// light grey (default above)
+// left to right: back link in the link colour (below), date in charcoal with a calendar, category in mid grey with
+// a folder, tags in light grey (default above) after a lighter #
 .post-label--date { border-color: $label-date-color; color: $label-date-color; }
 
 .post-label--category,
 .label-table .post-label {  // the years and resource types too
   border-color: $label-category-border-color;
   color: $label-category-color;
+}
+
+.post-label--tag::before {
+  content: "#";
+  margin-right: 2px;
+  opacity: 0.6;
+}
+
+// the icons: the arrow of the back link, the logos of the home page links, the calendar of the date and the folder
+// of the category
+.post-label i {
+  font-size: 0.9em;  // as tall as the capitals (the logos, the calendar and the folder a little taller)
+  line-height: 0;    // so that it doesn't make the label taller where text-box isn't supported
 }
 
 // links (the back link, and the links of the home page): labels in the link colour, visited or not, that fill on
@@ -57,11 +70,6 @@ a.post-label--link:focus-visible {
   background-color: $brand-color;
   color: #fff;
   text-decoration: none;
-}
-
-a.post-label--link i {
-  font-size: 0.9em;  // as tall as the capitals (the GitHub and LinkedIn logos a little taller)
-  line-height: 0;    // so that it doesn't make the label taller where text-box isn't supported
 }
 
 // Label tables: the blog posts and resources on the home page, and the publications. No borders, and rows
