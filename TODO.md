@@ -102,6 +102,19 @@ Bugs in the code and data files of the posts (under `assets/`).
   LibTorch, PyTorch, TorchScript and torch.compile", and `gptlite.h` dates the GPT-3 paper to 2021 instead of 2020.
   Fix: the current title, and 2020.
 
+### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
+
+- `assets/distributed-training/gptlite_ds.py` imports `n_layer`, `n_embd`, `n_head`, `block_size` and `Block` from
+  `assets/gptlite/gptlite.py`, which no longer defines the first four, and whose `Block` now takes
+  `(d_model, n_heads, d_head, dropout_p)`. `train.py` thus stops with an `ImportError`, for this post and for the
+  pipeline parallelism post. Fix: define the GPT-3 Small dimensions in `gptlite_ds.py`, and build the blocks with
+  `Block(n_embd, n_head, n_embd // n_head, dropout)`.
+- Post, PyTorch and DeepSpeed training loops: `torch.nn.functional.cross_entropy(outputs, labels)` and
+  `torch.nn.CrossEntropyLoss()` receive GPTlite logits of shape (B, S, C) and labels of shape (B, S). Cross-entropy
+  reads dimension 1 (S) as the classes and stops with a shape error. `train.py` uses `CrossEntropyLoss_FlatView`
+  instead. Fix: flatten in the post, `loss = criterion(outputs.flatten(0, 1), labels.flatten())`, or show
+  `CrossEntropyLoss_FlatView`.
+
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
@@ -357,6 +370,23 @@ that is not wrong.
   with N decoder blocks, with the dimensions of GPT-3 Small. Right: the benchmark DNN with L layers of width W. The
   left diagram is adapted from Attention is all you need."
 
+### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
+
+- `distributed-training/workflow_sharding.svg` and its caption show ZeRO-3 as the ZeRO paper describes it: each
+  process owns whole layers, broadcasts their parameters, and "gathers" their gradients, which is a reduction (a
+  sum) to the owner. DeepSpeed ZeRO-3 and PyTorch FSDP split every layer into one shard per process, with an
+  all-gather of the parameters and a reduce-scatter of the gradients. The text explains both. Optional fix: label
+  the arrows "reduce gradients" instead of "gather gradients" and "send grads", or redraw each layer as four shards,
+  with all-gathers and reduce-scatters.
+- Optional, `distributed-training/deepspeed_stages.svg`: the number of processes is N_d (and gpu_N-1), while
+  `data_parallelism.svg` and the text use P; the text states that N_d = P. The caption calls the stages
+  "ZeRO FSDP". Fix: write P in the figure, and "the three stages of ZeRO" in the caption.
+- Optional, `workflow_data_parallelism.svg` and `workflow_sharding.svg` write "optimiser", while
+  `deepspeed_stages.svg` and the text write "optimizer". Fix: "optimizer".
+- Optional, `distributed-training/benchmark_gptlite.svg` has no caption, and does not say how the memory is
+  averaged. Fix: a caption such as "GPTlite on one node with 8 GPUs, in fp32, with micro-batches of 1 sample:
+  average and peak allocated memory per GPU, and throughput over all GPUs".
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
@@ -397,6 +427,13 @@ Content problems that need the author's decision, such as overlap between posts.
   that the law of large numbers makes the average of many trials approach the expected value. The losses in the
   post are expectations estimated with mini-batch averages, which the VI and statistics posts cover. Proposed fix:
   keep it removed.
+
+### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
+
+- The post holds a hidden HTML comment, from the mixed precision paragraph to the end of the activation
+  checkpointing section, still in the first and second person. The visible text now introduces ZeRO++ and
+  activation checkpointing in a few sentences. The hidden text sets buckets of `4e5` elements, while the configs
+  use `5e4`, and calls `to_layers()` `lo_layers()`. Proposed fix: delete the comment, or rewrite and publish it.
 
 ## Title issues
 
