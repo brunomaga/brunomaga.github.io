@@ -38,7 +38,7 @@ $$
 \hat{x} = (A^{\intercal}A)^{-1}A^{\intercal}b = A^{+}b
 $$
 
-$$A^{+} = (A^{\intercal}A)^{-1}A^{\intercal}$$ is the [Moore–Penrose pseudo-inverse](https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse) of $$A$$, defined for non-square $$A$$. The SVD, below, extends it to any matrix. If the data follow $$b = Ax + \epsilon$$, with zero-mean noise of covariance $$\mathbb{Var}[\epsilon] = \sigma_\epsilon^2 I$$ (uncorrelated, with equal variances), then $$\hat{x}$$ is unbiased:
+$$A^{+} = (A^{\intercal}A)^{-1}A^{\intercal}$$ is the [Moore–Penrose pseudo-inverse](https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse) of $$A$$, defined for non-square $$A$$. The SVD, below, extends it to any matrix. If the data follow $$b = Ax + \epsilon$$, with zero-mean noise of covariance $$\mathrm{Var}[\epsilon] = \sigma_\epsilon^2 I$$ (uncorrelated, with equal variances), then $$\hat{x}$$ is unbiased:
 
 $$
 \mathbb{E}[\hat{x}] = A^{+} \, \mathbb{E}[b] = (A^{\intercal}A)^{-1}A^{\intercal}Ax = x
@@ -47,10 +47,10 @@ $$
 and its covariance is:
 
 $$
-\mathbb{Var}[\hat{x}] = A^{+} \, \mathbb{Var}[b] \, (A^{+})^{\intercal} = \sigma_\epsilon^2 \, (A^{\intercal}A)^{-1}A^{\intercal}A(A^{\intercal}A)^{-1} = \sigma_\epsilon^2 \, (A^{\intercal}A)^{-1}
+\mathrm{Var}[\hat{x}] = A^{+} \, \mathrm{Var}[b] \, (A^{+})^{\intercal} = \sigma_\epsilon^2 \, (A^{\intercal}A)^{-1}A^{\intercal}A(A^{\intercal}A)^{-1} = \sigma_\epsilon^2 \, (A^{\intercal}A)^{-1}
 $$
 
-The derivation uses $$\mathbb{Var}[Mb] = M \, \mathbb{Var}[b] \, M^{\intercal}$$ for a constant matrix $$M$$ (equation 313 of [The Matrix Cookbook]({{ site.assets }}/resources/the_matrix_cookbook.pdf)), $$\mathbb{Var}[b] = \mathbb{Var}[\epsilon]$$, and $$(A^{+})^{\intercal} = A(A^{\intercal}A)^{-1}$$, since $$A^{\intercal}A$$ is symmetric.
+The derivation uses $$\mathrm{Var}[Mb] = M \, \mathrm{Var}[b] \, M^{\intercal}$$ for a constant matrix $$M$$ (equation 313 of [The Matrix Cookbook]({{ site.assets }}/resources/the_matrix_cookbook.pdf)), $$\mathrm{Var}[b] = \mathrm{Var}[\epsilon]$$, and $$(A^{+})^{\intercal} = A(A^{\intercal}A)^{-1}$$, since $$A^{\intercal}A$$ is symmetric.
 
 Three methods compute $$\hat{x}$$ for $$A \in \mathbb{R}^{m \times n}$$ with $$m \ge n$$:
 - the normal equations, solved with a Cholesky decomposition: about $$mn^2 + \frac{1}{3}n^3$$ flops, the cheapest. Forming $$A^{\intercal}A$$ squares the [condition number](https://en.wikipedia.org/wiki/Condition_number) $$\kappa(A)$$, the ratio of the largest to the smallest singular value of $$A$$, so the error bound grows with $$\kappa(A)^2$$. They suit well-conditioned problems;
@@ -107,7 +107,7 @@ An [affine mapping](https://en.wikipedia.org/wiki/Affine_transformation) $$x \ma
 
 A *bilinear mapping* $$\Omega: V \times V \rightarrow \mathbb{R}$$ is linear in each argument. It is *symmetric* if $$\Omega(x, y) = \Omega(y, x)$$, and *positive definite* if $$\Omega(x, x) > 0$$ for all $$x \neq 0$$. A symmetric, positive definite bilinear mapping is an *inner product* $$\langle x, y \rangle$$.
 
-A symmetric matrix $$A \in \mathbb{R}^{n \times n}$$ is [positive definite](https://en.wikipedia.org/wiki/Definite_matrix), or s.p.d., if $$x^{\intercal}Ax > 0$$ for all $$x \neq 0$$, and *positive semidefinite* if $$x^{\intercal}Ax \ge 0$$. Positive definite matrices are the matrix analogue of positive numbers. The covariance matrix of a random vector $$x$$ is positive semidefinite, since $$w^{\intercal} \, \mathbb{Var}[x] \, w = \mathbb{Var}[w^{\intercal}x] \ge 0$$ for any $$w$$.
+A symmetric matrix $$A \in \mathbb{R}^{n \times n}$$ is [positive definite](https://en.wikipedia.org/wiki/Definite_matrix), or s.p.d., if $$x^{\intercal}Ax > 0$$ for all $$x \neq 0$$, and *positive semidefinite* if $$x^{\intercal}Ax \ge 0$$. Positive definite matrices are the matrix analogue of positive numbers. The covariance matrix of a random vector $$x$$ is positive semidefinite, since $$w^{\intercal} \, \mathrm{Var}[x] \, w = \mathrm{Var}[w^{\intercal}x] \ge 0$$ for any $$w$$.
 
 For an s.p.d. $$A$$, $$\langle x, y \rangle = \hat{x}^{\intercal}A\hat{y}$$ is an inner product, where $$\hat{x}$$ and $$\hat{y}$$ are the coordinates of $$x$$ and $$y$$ in a basis of $$V$$. Every inner product on a finite-dimensional space has this form. An s.p.d. matrix:
 - has a kernel that holds only $$0$$, since $$x^{\intercal}Ax > 0$$ implies $$Ax \neq 0$$ for $$x \neq 0$$. It is therefore invertible;
@@ -270,7 +270,7 @@ f(x) \approx f(x_0) + \nabla f(x_0)^{\intercal}(x - x_0) + \frac{1}{2}(x - x_0)^
 $$
 
 Uses in ML:
-- expectations $$\mathbb{E}[f(x)] = \int f(x) p(x) \, dx$$ often have no closed form. The second-order expansion around the mean $$\mu$$ of $$x$$ gives $$\mathbb{E}[f(x)] \approx f(\mu) + \frac{1}{2} f''(\mu) \, \mathbb{Var}[x]$$. More details in [Taylor expansions for the moments of functions of random variables](https://en.wikipedia.org/wiki/Taylor_expansions_for_the_moments_of_functions_of_random_variables);
+- expectations $$\mathbb{E}[f(x)] = \int f(x) p(x) \, dx$$ often have no closed form. The second-order expansion around the mean $$\mu$$ of $$x$$ gives $$\mathbb{E}[f(x)] \approx f(\mu) + \frac{1}{2} f''(\mu) \, \mathrm{Var}[x]$$. More details in [Taylor expansions for the moments of functions of random variables](https://en.wikipedia.org/wiki/Taylor_expansions_for_the_moments_of_functions_of_random_variables);
 - the posterior $$p(\theta \mid \mathcal{D}) = p(\mathcal{D} \mid \theta) \, p(\theta) / p(\mathcal{D})$$ needs the evidence $$p(\mathcal{D}) = \int p(\mathcal{D} \mid \theta) \, p(\theta) \, d\theta$$, which has a closed form only in special cases, such as conjugate priors. The [Laplace approximation](https://en.wikipedia.org/wiki/Laplace%27s_approximation) expands $$\log p(\theta \mid \mathcal{D})$$ to second order around its mode $$\theta^*$$. The result is a Gaussian with mean $$\theta^*$$ and covariance $$\mathbf{H}^{-1}$$, where $$\mathbf{H}$$ is the Hessian of $$-\log p(\theta \mid \mathcal{D})$$ at $$\theta^*$$;
 - maximum likelihood estimation needs only derivatives, which are easier to compute than integrals. Newton's method, below, uses the second-order expansion at each step.
 
