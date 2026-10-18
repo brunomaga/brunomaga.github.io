@@ -311,16 +311,16 @@ in line with equations 3.50 and 3.51 of [Chris Bishop's PRML book]({{ site.resou
 Online learning updates the posterior continuously as new data is observed. Following the $$posterior \propto likelihood * prior$$ principle, the posterior of each iteration becomes the prior of the next one, i.e. the new initial knowledge is what was learnt previously. The main advantage is that training does not require all the data at once, so the model can learn from datasets that are not fully available at a given time. The principle is illustrated below:
 
 {: .picture}
-<img width="44.1%" height="44.1%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_1.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_1.svg"/>
 
 {: .picture}
-<img width="44.1%" height="44.1%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_3.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_3.svg"/>
 
 {: .picture}
-<img width="44.1%" height="44.1%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_4.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_4.svg"/>
 
 {: .picture}
-<img width="44.1%" height="44.1%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_5.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_5.svg"/>
 
 {: .caption}
 Online learning for the linear model $$y = w_0 + w_1x$$, after 1, 2, 3 and 20 data points (the last update adds 17 points at once). Left: the posterior density of the weights $$(w_0, w_1)$$; the cross marks the true weights $$(-0.3, 0.5)$$. Right: the data points and six lines drawn from the posterior. Inspired by: [Pattern Recognition and Machine Learning, C. Bishop, Figure 3.7](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
@@ -360,16 +360,16 @@ As in the previous visualization, introducing new datapoints improves the accura
 
 
 {: .picture}
-<img width="34.3%" height="34.3%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_0.svg"/>
+<img width="34.2%" height="34.2%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_0.svg"/>
 
 {: .picture}
-<img width="34.3%" height="34.3%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_1.svg"/>
+<img width="34.2%" height="34.2%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_1.svg"/>
 
 {: .picture}
-<img width="34.3%" height="34.3%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_2.svg"/>
+<img width="34.2%" height="34.2%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_2.svg"/>
 
 {: .picture}
-<img width="34.3%" height="34.3%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.svg"/>
+<img width="34.2%" height="34.2%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.svg"/>
 
 {: .caption}
 Bayesian linear regression of synthetic sinusoidal data with 9 Gaussian basis functions, after 1, 2, 4 and 25 data points. Each plot shows the ground truth $$\sin(2 \pi x)$$ in blue, the predictive mean in orange, and the predictive mean plus and minus one predictive standard deviation as a light-orange area. The model has a prior precision $$\alpha = 10^{-3}$$ and a noise precision $$\beta = 2$$. Inspired by: [Pattern Recognition and Machine Learning, C. Bishop, Figure 3.8](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)

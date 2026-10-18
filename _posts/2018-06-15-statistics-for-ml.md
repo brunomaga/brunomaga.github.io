@@ -209,7 +209,7 @@ $$
 Both the conditional, $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$, and the marginal, $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$, are Gaussian.
 
 {: .picture}
-<img width="42%" height="42%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.svg"/>
+<img width="42.3%" height="42.3%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.svg"/>
 
 {: .caption}
 A bivariate Gaussian with mean $$\mu = (0, 0)$$ and covariance entries $$\Sigma_{xx} = 1$$, $$\Sigma_{xy} = \Sigma_{yx} = 0.6$$ and $$\Sigma_{yy} = 2$$. Dots: samples from the joint density $$p(x,y)$$. Green: the 3σ ellipse of the joint density. Blue: the marginal density $$p(x)$$. Red: the marginal density $$p(y)$$. The bars are histograms of the samples. A conditional distribution, a slice of the joint density along $$x$$ or $$y$$, is also Gaussian. Adapted from: [Multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution)
@@ -344,7 +344,7 @@ The KL divergence is not a metric, because it is not symmetric: $$  KL ( q \| p 
 The **quantile** is the inverse of the CDF. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$\alpha \in [0,1]$$. The **p-value** (or observed significance level) is the smallest value of $$α$$ for which the null hypothesis would be rejected at level $$α$$. The **confidence interval** refers to the probability that a population parameter falls between a set of values for a certain proportion of times. As an example, for a $$95\%$$ **confidence level**:
 
 {: .picture}
-<img width="29.7%" height="29.7%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
+<img width="29.6%" height="29.6%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
 
 {: .caption}
 A 95% confidence interval for a normally distributed estimate centred at $$\bar{X}$$: the lower and upper limits lie 1.96 standard errors either side of $$\bar{X}$$, so the interval holds a probability of 0.95, and each tail 0.025.
@@ -472,7 +472,7 @@ $$
 where $$K$$ is the kernel, a non-negative function, and $$h \gt 0$$ is the smoothing parameter (*bandwidth*). $$h$$ controls the bias-variance trade-off: a large $$h$$ yields a flat estimator, and a small $$h$$ a wiggly one. An example of $$K$$ is the standard normal pdf.
 
 {: .picture}
-<img width="60.1%" height="60.1%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
+<img width="60.4%" height="60.4%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
 
 {: .caption}
 Histogram with bins of width 2 (left) and Gaussian kernel density estimate with bandwidth $$h = 1.5$$ (right) of the same six data points. The estimate is the sum of six kernels centred at the points, each divided by $$n$$. Adapted from: [Kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation)

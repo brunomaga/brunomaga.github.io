@@ -90,7 +90,8 @@ each new picture rule the user gives to it, in the same change.
 
 The two kernel fusion paper repositories (brunomaga/moe_paper_huawei and brunomaga/ffn_tp_paper_huawei)
 are the style reference only. Never change them. Their imgs/*.svg figures are the example of the look to
-follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accent text).
+follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accent text, boxes with square
+corners), except for their font (section 4).
 
 ### 1. Content
 
@@ -121,9 +122,9 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
 - The SVG keeps its path: assets/<folder>/[imgs/]<name>.svg. Delete the old PNG/JPG when it becomes an SVG,
   and fix every link to it.
 - The kernel fusion posts show copies of the paper repositories' imgs/*.svg (the repositories are private,
-  so the posts need copies). A copy that does not follow the sizing in section 3 is redrawn in this repo,
-  in a tab of assets/inference/inference.drawio named after the post, from the paper repository's draw.io
-  or TikZ source. The paper repositories stay unchanged.
+  so the posts need copies). A copy that does not follow the sizing in section 3 or the font in section 4
+  is redrawn in this repo, in a tab of assets/inference/inference.drawio named after the post, from the
+  paper repository's draw.io or TikZ source. The paper repositories stay unchanged.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
   both pages link to that file. The same holds for a picture used by two posts (for example
   matrix-transpose/all_to_all.svg in the matrix transpose and mixture-of-experts posts).
@@ -157,10 +158,15 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
 
 ### 4. Font
 
-- One font family in every picture: Times New Roman (fontFamily=Times New Roman), as in the kernel paper
-  figures. Its metric twin Liberation Serif stands in where Times New Roman is not installed. Code
-  identifiers may use Courier New. Formulas use draw.io's math or Unicode sub/superscripts in the same
-  font.
+- Text, labels and tensor dimensions: Source Sans 3 (fontFamily=Source Sans 3). Formulas: New Computer
+  Modern Sans Math (fontFamily=NewComputerModernSansMath), the sans-serif math font of the Computer Modern
+  family (no font is named "Latin Modern Sans Math"; Latin Modern Sans has no math symbols). Code
+  identifiers may use Courier New. Indices use Unicode sub/superscripts or <sub>/<sup>.
+- A formula is a variable with its indices, an expression or an equation (x, W_q, Δt = 25, softmax(QKᵀ)). A
+  label that is only a formula has the math font in its style; a label that mixes words and formulas has it
+  on the formulas only, as <span style="font-family: NewComputerModernSansMath;">. Words, numbers, units,
+  tensor dimensions (S x H·h), tick labels and names with an index (TRM1, FFN2) keep the text font. The
+  math font has no bold or italic face: the browser slants and emboldens it.
 - Text sizes, in page px (draw.io fontSize at page scale):
   ```
   title          16           the picture's title, and labels drawn larger than the regular text
@@ -174,9 +180,9 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   sizes at least 1.1 times larger become 16, sizes under 0.9 times smaller become 12.
   Italic is allowed for variables and for emphasis, bold only for titles, subtitles and names the post's
   text refers to.
-- Charts use the same sizes: tick labels 12, axis labels and legends 14, panel titles 14 bold. A panel title
-  that is a sentence goes into the caption; panel letters and short panel names stay. A legend with many
-  entries in a small chart may use 10 (llama3_scaling_laws).
+- Charts use the same fonts and sizes: tick labels 12, axis labels and legends 14, panel titles 14 bold. A
+  panel title that is a sentence goes into the caption; panel letters and short panel names stay. A legend
+  with many entries in a small chart may use 10 (llama3_scaling_laws).
 - Numbers: a true minus sign (−), a space between a number and its unit (25 μs), upright units, and commas
   between thousands (48,001).
 - Text color: black #000000. Secondary text (faded, next iteration, notes): grey #666666. Accent text, for
@@ -197,9 +203,14 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   grey     fill #f5f5f5   accent #666666
   white    fill #ffffff
   ```
-  Dark grey #b3b3b3 fills masked, padding, NULL or inactive elements, so they stand out from the white and
-  light grey ones. The accent colors may also fill small marks (dots of a scatter plot, nodes of a graph,
-  heat map cells) where pastel fills are too faint.
+  Masked, padding, NULL or inactive elements are grey, in the grey that stands out from the data next to
+  them: dark grey #b3b3b3 next to white or pastel data, light grey #f5f5f5 next to data filled with an accent
+  color (the tokens #6c8ebf and the padding #f5f5f5 of variable_batch_lr_pipeline). The accent colors may also
+  fill small marks (dots of a scatter plot, nodes of a graph, heat map cells, filled tokens) where pastel
+  fills are too faint.
+- A picture redrawn from a paper figure takes, for each color of the figure, the closest color of the
+  palette: a pastel fill for a light color, an accent for a saturated one (the dark green blocks of the
+  Megatron-LM figure become #82b366).
 - Dark accent text (from the kernel paper figures): blue #1e3a5f, green #456e36, orange #885e10,
   purple #6b4a80, red #b85450.
 - Pipeline schedules and other pictures that need more distinct colors (all pipeline pictures share it):
@@ -226,8 +237,10 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000,
   strokeWidth=0.8, no stroke opacity. Dashed elements too (the dash keeps its pattern).
 - Exceptions that keep their own look:
-  - colored lines and frames that highlight part of a drawing (for example the red frames around modules
-    in the GPT-lite pictures, the orange KV cache frames, the red frame of process A in all_to_all);
+  - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
+    frame around the box (the red #b85450 2 px outlines of the modules in the GPT-lite pictures);
+  - colored frames that highlight a group of parts (the orange KV cache frames, the red frame of process A
+    in all_to_all);
   - thicker lines that emphasise a part of a drawing (for example DualPipe's "overlapped forward &
     backward" frame): 2 px;
   - white masks that hide parts of a drawing, faded elements, curly brackets, red cross marks, and table
@@ -245,7 +258,7 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
 - The same shape means the same thing in every picture:
   ```
   data (tensors, matrices, vectors, tokens, buffers)    rectangle with square corners
-  operation, layer, module, kernel                       rounded rectangle
+  operation, layer, module, kernel                       rectangle with square corners
   device, process, group (GPU, rank, node, worker)       frame with a light fill, its name at the top left
   3D tensor                                              isometric cube (isoCube2); CNN feature map: cube
   storage (disk, database, cache)                        cylinder
@@ -256,8 +269,9 @@ follow (pastel draw.io fills, thin black outlines, thin black arrows, dark accen
   span of several parts                                  curly bracket, 1 px
   transformation of a whole stage (a model into another) block arrow; thin arrows everywhere else
   ```
-- Rounded rectangles have a 5 px corner radius (absoluteArcSize=1;arcSize=10). Capsules (fully round ends)
-  keep their shape.
+- Boxes have square corners (rounded=0), as in the kernel paper figures. Only a picture redrawn from an
+  original with rounded boxes keeps them, with a 5 px corner radius (absoluteArcSize=1;arcSize=10).
+  Capsules (fully round ends) keep their shape.
 - Block arrows: body 10 px wide, head 20 px wide and 10 px long (flexArrow: width=10;endWidth=10;endSize=3.07;
   singleArrow: 20 px tall, arrowWidth=0.5). A block arrow with a label inside keeps a body taller than its
   label, with the same proportions. A block arrow thinner than 6 px is a thin arrow (section 6).
@@ -349,8 +363,9 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   drawn content (its non-white pixels plus 0.5 px), writes it over the SVG of the same name in the folder,
   and prints the width P to use in the Markdown. Outlined text looks the same on every device, whatever
   fonts it has, as in the kernel paper figures.
-- Times New Roman must be installed where the export runs (for example the msttcorefonts package):
-  without it draw.io draws another serif font, with other widths.
+- Source Sans 3 (Google Fonts) and New Computer Modern Sans Math (NewCMSansMath-Regular.otf, from the
+  newcomputermodern package on CTAN) must be installed where the export runs: without them draw.io draws
+  other fonts, with other widths.
 - Transparent background, no embedded fonts. Stencils from mxgraph.* libraries need the real draw.io CLI
   to render; do not export them with another renderer.
 - Check every exported SVG at its page size (P% of 880 px) before committing: no overlapping text, no

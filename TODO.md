@@ -85,18 +85,19 @@ that is not wrong.
   pictures, img tags and captions of the main branch, and check each caption against the new text.
 - The two kernel fusion posts (2026-08-18-kernel-fusion-tensor-parallelism.md and
   2026-10-09-kernel-fusion-expert-parallelism.md): their 17 pictures, `inference/imgs/tp_*.svg` and `ep_*.svg`, are
-  not restyled. 16 are copies of the figures of the paper repositories, and `tp_expert_sharding.svg` comes from a tab
-  of `inference/inference.drawio` without a figure group. All show at widths set by hand (40% to 100%), so their text
-  sizes differ from the other pictures. Fix: redraw them at page scale in tabs of `inference/inference.drawio` named
-  after the posts, from the draw.io or TikZ sources of the paper repositories (CLAUDE.md, Pictures, section 2), and
-  check their captions.
-- Style details that the restyle left, from an automated check of the 231 draw.io figures: 384 rounded boxes in 39
-  figures have a corner radius of 1 to 4 px instead of 5 px, and the 12 chat bubbles of `publications/llama2_gatt.svg`
-  15 px; 147 arrows in 19 figures are curved but are neither pointers nor loops (for example in
-  `deep-neural-networks/densenet.svg`, `lif-brunel/diagram_class.svg` and `publications/graphconvnets.svg`); 176
-  filled cells of `distributed-training/imgs/mixture_of_depths.svg`, and a few in other figures, have no outline;
-  `learning-from-sequences/transformer_attention.svg` (#97afd2, a heat map shade) and `diffusion/sora_vae.svg`
-  (#333333) use colors outside the palette; 8 figures have lines thinner than 0.7 px;
+  not restyled and keep the Times New Roman font of the paper figures. 16 are copies of the figures of the paper
+  repositories, and `tp_expert_sharding.svg` comes from a tab of `inference/inference.drawio` without a figure group.
+  All show at widths set by hand (40% to 100%), so their text sizes differ from the other pictures. Fix: redraw them
+  at page scale and in the fonts of CLAUDE.md, in tabs of `inference/inference.drawio` named after the posts, from the
+  draw.io or TikZ sources of the paper repositories (CLAUDE.md, Pictures, sections 2 to 4), and check their captions.
+- Style details that the restyle left, from an automated check of the 230 draw.io figures: 178 boxes in 15 figures
+  keep the rounded corners of the original with a corner radius of 2 to 4.5 px instead of 5 px (for example the
+  GPT-lite pictures, `diffusion/playground_v3.svg` and `publications/visual_transformer.svg`), and the 12 chat
+  bubbles of `publications/llama2_gatt.svg` 15 px; 147 arrows in 19 figures are curved but are neither pointers nor
+  loops (for example in `deep-neural-networks/densenet.svg`, `lif-brunel/diagram_class.svg` and
+  `publications/graphconvnets.svg`); 176 filled cells of `distributed-training/imgs/mixture_of_depths.svg`, and a few
+  in other figures, have no outline; `learning-from-sequences/transformer_attention.svg` (#97afd2, a heat map shade)
+  and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 8 figures have lines thinner than 0.7 px;
   `publications/attention_mech.svg` has 8 arrow heads smaller than size 6; `vae-gan/gan.svg` has a gradient glow
   around the prior. Fix: set them to the values of CLAUDE.md, then run the check again.
 
@@ -126,7 +127,7 @@ that is not wrong.
 
 - `neuron-electrical-activity/brain_scales.svg`: the LadyofHats drawing is not restyled and not at page scale. It is
   716 px wide and shows at 50%, so its sans-serif panel letters (a to d) and ion labels show at 61% of their size.
-  Fix: keep the drawing, scale it to about 440 px, redraw the letters and labels in Times New Roman (14 px and 12 px),
+  Fix: keep the drawing, scale it to about 440 px, redraw the letters and labels in Source Sans 3 (14 px and 12 px),
   and set P = W/880.
 
 ### Variable Timestep Simulation of the Electrical Activity of Neurons (2017-02-17-neuron-variable-timestep.md)

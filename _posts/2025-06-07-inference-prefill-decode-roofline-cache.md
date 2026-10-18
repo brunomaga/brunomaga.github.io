@@ -15,7 +15,7 @@ A GPT-like model generates text *autoregressively*: it reads the prompt, predict
 - The total runtime, or **time to last token (TTLT)**, is $$\text{TTLT} = \text{TTFT} + \text{TPOT} \times ( n - 1)$$, where $$n$$ is the number of output tokens.
 
 {: .picture}
-<img width="96%" height="96%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
+<img width="96.4%" height="96.4%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
 
 This difference motivates most of this post. Almost every decode optimization does one of three things:
 - it **reads fewer bytes** per token (quantization, smaller KV caches, smaller models), or
@@ -380,7 +380,7 @@ def generate_kvcache(model, prompt, n_tokens, seqlen, kv_cache=None):
 ```
 
 {: .picture}
-<img width="58.4%" height="58.4%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
+<img width="59.3%" height="59.3%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
 
 The code above uses a dynamic cache. The following code implements a static cache for one layer, where the keys and values of the new tokens are written in place:
 
@@ -466,7 +466,7 @@ The prefill runs once per request and has a different shape, so it is not compil
 Serving many requests at once makes memory management difficult, because the final length of each sequence is unknown. A naive engine reserves a contiguous KV buffer of the maximum length for every request, and most of that memory stays empty: the authors of [vLLM](https://arxiv.org/abs/2309.06180) measured that only 20% to 40% of the KV memory reserved by existing systems held actual tokens. PagedAttention adopts the idea of virtual memory from operating systems. The KV cache is split into fixed-size *blocks* (pages), allocated on demand, and a *block table* maps the logical blocks of each sequence to physical blocks anywhere in GPU memory. The attention kernel reads the blocks through this table. Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. Several sequences can also share a block, which is copied only when one of them writes to it (copy-on-write). Prefix caching, parallel sampling and beam search use this mechanism to share their common prefix.
 
 {: .picture}
-<img width="98.6%" height="98.6%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 {: .caption}
 The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block. Inspired by: [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)
@@ -535,7 +535,7 @@ Many requests start with the same tokens: a system prompt, tool definitions, a l
 - Next request: the engine hashes the new prompt block by block from the start, reuses blocks until the first mismatch, and prefills only the rest.
 
 {: .picture}
-<img width="92.6%" height="92.6%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
+<img width="93%" height="93%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
 
 {: .caption}
 Automatic prefix caching, with blocks of 4 tokens (16 in vLLM). The hash of each block chains the hash of the previous block with the tokens of the block. Request 2 reuses the first two blocks of request 1 and prefills 4 tokens. Request 3 reuses only the first block: its last block holds the same tokens as that of request 1, but its hash differs because its second block differs, so request 3 prefills 8 tokens.
@@ -715,7 +715,7 @@ def continuous_batching(model, requests, batch_size, seqlen):
 With continuous batching, a waiting request takes a free slot as soon as one is available, so its prefill runs in the same step as the decode of the other requests. The prefill of a short prompt costs about as much as a decode step, but the prefill of a long prompt can take many times longer, and all other requests of the batch wait for it: their text output pauses, and their time per output token spikes. **Chunked prefill** solves this by processing a long prompt in several smaller pieces (chunks), one per step, instead of in one forward pass. Every step then takes about the same time, and the other requests keep generating one token per step.
 
 {: .picture}
-<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
+<img width="99.4%" height="99.4%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
 
 {: .caption}
 The same 6 requests (R1 to R6) on 3 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R4 takes three. Static batching runs the requests in groups of 3 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R4 stalls R1 and R3. With chunked prefill, R4 processes its prompt in 3 chunks of one time unit each, while R1 and R3 continue decoding.
@@ -727,7 +727,7 @@ Each chunk, e.g., of 512 tokens, attends to the KV cache of the earlier chunks. 
 - With a causal mask, tokens only attend to previous tokens, so **attention is final after each chunk**. Without a causal mask, the attention of the previous chunks needs an extra, final computation. This recomputation requires reloading the previous chunks into GPU SRAM, which increases the memory bandwidth overhead. For this reason, **chunked prefill is rarely used for non-causal models**.
 
 {: .picture}
-<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
+<img width="99.6%" height="99.6%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
 
 The following code implements chunked prefill:
 
@@ -812,7 +812,7 @@ Prefill is compute-bound and decode is memory-bound, so they interfere when they
 Prefill-decode disaggregation therefore requires transmitting the KV cache from prefill to decode GPUs. To avoid sending large KV cache chunks and waiting for them, modern engines use **Layer-Wise Streaming (a pipeline overlap of computation and communication)**: as soon as Layer 1 finishes its prefill, it starts transmitting its KV cache chunks over the network, while Layer 2 is still computing. The destination can be the High-Bandwidth Memory (HBM) of a decode GPU or, in more advanced setups, a shared cluster acting as a **KV Cache Store**, e.g., [Mooncake](https://www.zhongzhuzhou.org/blog/2026-05-28-mooncake-technical-review-en/) or [LMCache](https://docs.lmcache.ai/mp/disaggregated_prefill.html).
 
 {: .picture}
-<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
+<img width="99.6%" height="99.6%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
 
 {: .caption}
 The prefill pool computes the KV cache and the first token of each request, and sends them to the decode pool. In the layer-wise streaming of the KV cache, the transfer of each layer overlaps with the compute of the next layers, and only the transfer of the last layer delays the decode. Inspired by: [Splitwise: Efficient Generative LLM Inference Using Phase Splitting](https://arxiv.org/abs/2311.18677)

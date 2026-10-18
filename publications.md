@@ -259,7 +259,7 @@ The design philosophy is a balance of three layer types: MoE for sparse paramete
 <b>Nemotron-3-Nano-30B-A3B.</b> Nemotron 3 models (e.g., Nemotron 3 Nano) leverage a hybrid Mamba-Transformer MoE architecture consisting predominantly of interleaved Mamba-2 and MoE layers, with a select few self attention layers. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
 
 {: .picture}
-<img loading="lazy" width="98.4%" height="98.4%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
+<img loading="lazy" width="98.7%" height="98.7%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
 
 {: .caption}
 Relative difference in train loss (left) and validation loss (right) between models trained with NVFP4 and BF16 (higher is better), shown at two model scales: Nemotron 3 Nano (A3B) and the larger MoE model (A8B). Loss gaps decrease as model size increases (A3B → A8B). Recipe ablation on Nemotron 3 Nano started from Nemotron 3 NVFP4 checkpoint at 500B tokens, then quantizes sensitive layers (Mamba Output, QKV, and Attention projections) to NVFP4, highlighting the importance of keeping these layers in high precision. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
@@ -282,7 +282,7 @@ Comet works in two parts. (1) Dependency resolving: it maps out which pieces of 
 Authors note that the division point of how many computation vs communication SMs to be allocated depends on the model layer, input shape and level of parallelism:
 
 {: .picture}
-<img loading="lazy" width="89.7%" height="89.7%" src="{{ site.assets }}/publications/comet.svg"/>
+<img loading="lazy" width="90%" height="90%" src="{{ site.assets }}/publications/comet.svg"/>
 
 {: .caption}
 Duration of the MoE layer1 kernel with varying number of thread blocks assigned for communication ($$n_c$$). The total number of thread blocks is identical to the number of SMs on Hopper(132). The figure shows four cases with different parallelisms. Adapted from: [Comet: Fine-grained Computation-communication Overlapping for Mixture-of-Experts](https://arxiv.org/abs/2502.19811)
@@ -950,7 +950,7 @@ DualPipe is a bidirectional pipeline-parallelism algorithm introduced in the Dee
 The result is fewer bubbles and full forward/backward computation-communication overlap, at the cost of holding two copies of model parameters (one per direction) and slightly higher activation memory. The parameter duplication is affordable because DeepSeek-V3 uses a large expert-parallel size, so each rank holds relatively few parameters; separately, careful memory savings (recomputation, CPU-resident EMA, an output head shared with the MTP module) let them train without costly tensor parallelism. Unlike PipeFill, which accepts bubbles and fills them with unrelated jobs, DualPipe attacks the bubbles directly by densifying the main job's own schedule—making the two approaches complementary rather than competing.
 
 {: .picture}
-<img loading="lazy" width="87.2%" height="87.2%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+<img loading="lazy" width="86.8%" height="86.8%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
 DualPipe on 6 GPUs: micro-batches 1 to 6 (light) enter at GPU 0, and micro-batches 7 to 12 (dark) enter at GPU 5. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)
@@ -971,8 +971,8 @@ Zero Bubble is the first scheduling strategy to achieve zero pipeline bubbles un
 The two variants trade memory for bubble reduction: ZB-H1 keeps the same peak activation memory as 1F1B but cuts the bubble to about a third of 1F1B's, while ZB-H2 eliminates bubbles entirely at the cost of higher peak memory (roughly 2× activations) and an extra optimizer validation/rollback step (it bypasses optimizer synchronization, then corrects after the step). In experiments, the zero-bubble schedules outperform 1F1B by up to 23% in throughput under a similar memory limit, and by up to 31% when the memory constraint is relaxed. The method is orthogonal to data, tensor, and ZeRO parallelism and can drop in as a replacement for the PP component. Like DualPipe, it attacks bubbles by reshaping the main job's schedule—contrasting with PipeFill, which leaves bubbles in place and fills them with other jobs.
 
 {: .picture}
-<img loading="lazy" width="86.9%" height="86.9%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h1.svg"/>
-<img loading="lazy" width="86.9%" height="86.9%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h2.svg"/>
+<img loading="lazy" width="86.5%" height="86.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h1.svg"/>
+<img loading="lazy" width="86.5%" height="86.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h2.svg"/>
 
 {: .caption}
 ZB-H1 (top) and ZB-H2 (bottom). Every backward pass is split into a backward for inputs and a backward for weights, and the latter fill the bubbles. ZB-H1 keeps the activation memory of 1F1B; ZB-H2 uses about twice as much, and when the optimizer step does not synchronize the stages, the next iteration starts on the first GPUs while the last GPUs finish the current one. Adapted from: [Zero Bubble Pipeline Parallelism](https://arxiv.org/abs/2401.10241)
@@ -1019,7 +1019,7 @@ Llama 3 405B is trained on up to 16K H100 GPUs, via 4D parallelism (tensor, pipe
 The authors used scaling laws (Hoffmann et al., 2022) to determine the optimal model size for their flagship model given their pre-training compute budget (section 3.2.1): they first correlate the compute-optimal model's negative log-likelihood on downstream tasks with the training FLOPs, and then establish a sigmoidal relation between that log-likelihood and task accuracy (figure 4):
 
 {: .picture}
-<img loading="lazy" width="74.5%" height="74.5%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
+<img loading="lazy" width="74.9%" height="74.9%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
 
 {: .caption}
 <b>Left:</b> <b>Scaling law IsoFLOPs curves</b> between $$6 \times 10^{18}$$ and $$10^{22}$$ FLOPs. The loss is the negative log-likelihood on a held-out validation set. Measurements at each compute scale are approximated by a second-degree polynomial. <b>Right:</b> <b>Number of training tokens in identified compute-optimal models as a function of pre-training compute budget.</b> The line is the fitted scaling-law prediction. The compute-optimal models correspond to the parabola minima of the left plot. Adapted from: [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
@@ -1044,7 +1044,7 @@ The authors also experiment adding image, video, and speech capabilities, by add
 The image encoder is a standard vision transformer trained to align images and text, the ViT-H/14 variant. They introduce cross-attention layers (using grouped-query attention) between the visual token representations produced by the image encoder and the token representations produced by the language model, after every 4th self-attention layer.
 
 {: .picture}
-<img loading="lazy" width="98.5%" height="98.5%" src="{{ site.assets }}/publications/llama_3_multi_modal.svg"/>
+<img loading="lazy" width="99.4%" height="99.4%" src="{{ site.assets }}/publications/llama_3_multi_modal.svg"/>
 
 {: .caption}
 <b>Illustration of the compositional approach to adding multimodal capabilities to Llama 3 studied in the paper.</b> This approach leads to a multimodal model that is trained in five stages: <b>(1)</b> language model pre-training, <b>(2)</b> multi-modal encoder pre-training, <b>(3)</b> vision adapter training, <b>(4)</b> model finetuning, and <b>(5)</b> speech adapter training. Adapted from: [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
@@ -1084,7 +1084,7 @@ Domino "provides a generic scheme to hide communication behind computation" when
 communication overhead is more pronounced". The paper proposes "Domino, a generic approach that breaks data dependency of transformer model training into pieces, and then pipelines these pieces training to overlap communication with computation ….  Domino provides a much wider scope of computation and communication overlapping (e.g., AllReduce not only overlaps with a single GeMM, but also LayerNorm, DropOut, etc). … To hide TP communication behind computation, Domino provides extra and generic tensor partition in two dimensions on every GPU: row-wise split on inputs X and column-wise split on weights B on top of original TP model partitions. At high level, Domino generically breaks TP’s $$X \cdot A \cdot B$$ into smaller compute units without data dependency. Then it pipelines these independent compute units with collective communication to achieve fine-grained computation and communication overlapping … we keep $$A$$ untouched and do not conduct any tensor partitioning on $$A$$. Therefore, we only conduct tensor slicing on input tensor $$X$$ (section 3.2) and the second group of linear weights as $$B$$ (section 3.3). We also provide a hybrid tensor partition strategy of both $$X$$ and $$B$$ (section 3.4). After these tensor slicing, Domino breaks $$X \cdot A \cdot B$$ into pieces and removes data dependency. Then we enable computation-communication overlapping on these independent pieces to reduce communication overhead in TP."
 
 {: .picture}
-<img loading="lazy" width="99.7%" height="99.7%" src="{{ site.assets }}/publications/domino.svg"/>
+<img loading="lazy" width="99.6%" height="99.6%" src="{{ site.assets }}/publications/domino.svg"/>
 
 {: .caption}
 **Left:** Domino row-wise (batch-dim) split on input <i>X</i>. **Right:** Domino col-wise (last-dim) split on weights <i>B</i>. Adapted from: [Domino: Eliminating Communication in LLM Training via Generic Tensor Slicing and Overlapping](https://arxiv.org/abs/2409.15241)
@@ -1317,7 +1317,7 @@ two modules: a multi-scale retention (MSR) module, and a feed-forward network (F
 Finally, the model uses $$h = d_{model}/d$$ retention heads in each layer, where $$d$$ is the head dimension. The heads use different parameter matrices $$W_Q, W_K, W_V \in \mathbb{R}^{d \times d}$$ and scalar $$γ$$ per head. The overall architecture for a given layer $$l$$ of the RetNet is then $$Y_l = MSR(LayerNorm(X_l)) + X_l$$ and $$X_{l+1} = FFN(LN(Y_l)) + Y_l$$, ie similar to a regular transformer but replacing the attention by a retention head.
 
 {: .picture}
-<img loading="lazy" width="62.9%" height="62.9%" src="{{ site.assets }}/publications/retnet.svg"/>
+<img loading="lazy" width="63%" height="63%" src="{{ site.assets }}/publications/retnet.svg"/>
 
 {: .caption}
 Dual form of RetNet: <b>(a)</b> parallel representation and <b>(b)</b> recurrent representation. “GN” is short for GroupNorm. Adapted from: [Retentive Network: A Successor to Transformer for Large Language Models](https://arxiv.org/abs/2307.08621)
@@ -1454,7 +1454,7 @@ during training. Using Tensor Programs, we can recursively calculate such coordi
 With that in mind, here they propose a hyper-parameter tuning paradigm called muTransfer: "parametrize the target model in muP, tune the HP indirectly on a smaller model, and zero-shot transfer them to the full-sized model". By transferring from a 40M-parameter proxy, they outperform the published numbers of the 6.7B GPT-3 with a tuning cost of only 7% of the total pretraining cost; transferring from a 13M-parameter model beats the published BERT-large (350M) numbers.
 
 {: .picture}
-<img loading="lazy" width="77.4%" height="77.4%" src="{{ site.assets }}/publications/mutransfer.svg"/>
+<img loading="lazy" width="77.6%" height="77.6%" src="{{ site.assets }}/publications/mutransfer.svg"/>
 
 {: .caption}
 Training loss against learning rate on Transformers of varying $$d_{model}$$ trained with Adam, in the standard parametrization (left) and in µP (right). In the standard parametrization, unlike in µP, different widths do not share the same optimal hyperparameter; wider networks do not always perform better than narrower ones; in fact they underperform the same-width networks in µP even after tuning learning rate (see dotted line). Adapted from: [Tensor Programs V: Tuning Large Neural Networks via Zero-Shot Hyperparameter Transfer](https://arxiv.org/abs/2203.03466)
@@ -1529,7 +1529,7 @@ LoRA blocks "suffer from two major problems: first, the size of these blocks is 
 They report training such dynamic, search-free models 4–7× faster than LoRA (depending on the task) without significantly compromising performance.
 
 {: .picture}
-<img loading="lazy" width="99.2%" height="99.2%" src="{{ site.assets }}/publications/dylora.svg"/>
+<img loading="lazy" width="99.3%" height="99.3%" src="{{ site.assets }}/publications/dylora.svg"/>
 
 {: .caption}
 The overall diagram of DyLoRA. In each iteration, a rank $$b$$ is sampled from a pre-defined random distribution $$P_B$$, which truncates the up-projection and down-projection matrices in the LoRA (Hu et al., 2021) objective: the forward pass uses only the first $$b$$ columns of $$W_{up}$$ and the first $$b$$ rows of $$W_{dw}$$, and the parameter update changes only the $$b$$-th column and row, while the others stay frozen (snowflakes). Adapted from: [DyLoRA: Parameter-Efficient Tuning of Pretrained Models using Dynamic Search-Free Low Rank Adaptation](https://arxiv.org/abs/2210.07558)
@@ -1553,7 +1553,7 @@ Related to attention layers (section 3.3), "Multihead attention can be paralleli
 The most similar partitioning layout for multiquery attention (shown in Figure 4(b)) treats the KV cache the same as in multihead attention. Even though the key and value tensors are shared across all heads, they must be replicated on each chip and the memory cost savings of multiquery attention are lost". Instead the paper proposes "a partitioning strategy for the multiquery attention where the Q, K, and V matrices are partitioned over the batch $$B$$ dimension into $$n_{chips}$$ partitions". This reduces the cost of loading the KV cache per chip by a factor of $$n_{chips}$$ but incurs additional communication cost of resharding the input activation tensors. "With the proposed partitioning layout, multiquery attention enables using larger batch sizes and sequence lengths, thereby increasing throughput in addition to the latency reduction from reduced memory time".
 
 {: .picture}
-<img loading="lazy" width="65.1%" height="65.1%" src="{{ site.assets }}/publications/efficiently_scaling_transformer_inference_multiquery.svg"/>
+<img loading="lazy" width="65.2%" height="65.2%" src="{{ site.assets }}/publications/efficiently_scaling_transformer_inference_multiquery.svg"/>
 
 {: .caption}
 Multiquery attention has lower memory cost to load the KV cache when sharded over batch. Top: the shapes of Q and K/V in multi-head and multi-query attention. <b>(a)</b> Multi-head attention, sharded over heads: it can be sharded across heads without replication. <b>(b)</b> Multi-query attention, sharded over heads: it requires full replication of the single head for K, increasing memory access cost. <b>(c)</b> Multi-query attention, sharded over batch: only a slice of K is needed for einsum, reducing memory access cost. Adapted from: [Efficiently Scaling Transformer Inference](https://arxiv.org/abs/2211.05102)
@@ -1693,13 +1693,13 @@ Heavily related to HPC's performance modelling applied to large language models.
 To be compute optimal (i.e., lowest loss for a given compute budget), Kaplan et al. (2020) claims that models should not be trained to their lowest possible loss, and for a 10× increase in computational budget, the model should increase by 5.5× and the training tokens by 1.8x. In this paper, the authors defend that model size and training tokens should be scaled in equal proportions. 
 
 {: .picture}
-<img loading="lazy" width="61%" height="61%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.svg"/>
+<img loading="lazy" width="60.2%" height="60.2%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models.svg"/>
 
 {: .caption}
 <b>Overlaid predictions.</b> Predictions of the paper's three approaches, overlaid with the projections of Kaplan et al. (2020). All three approaches predict that current large models should be substantially smaller and therefore trained much longer than is currently done. <b><i>Chinchilla</i> outperforms <i>Gopher</i> and the other large models (Section 4.2 of the paper).</b> Adapted from: [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)
 
 {: .picture}
-<img loading="lazy" width="77.2%" height="77.2%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models_2.svg"/>
+<img loading="lazy" width="77.4%" height="77.4%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models_2.svg"/>
 
 {: .caption}
 <b>Training curve envelope.</b> The <b>left</b> panel shows all the training runs: model sizes from 70M to 10B parameters, each trained with four different cosine cycle lengths. The envelope of minimal loss per FLOP, taken from these curves, gives the optimal model size (<b>center</b>) and the optimal number of training tokens (<b>right</b>) for a given compute budget. Green: the projected optimal model size and number of training tokens for the FLOPs used to train <i>Gopher</i> ($$5.76 \times 10^{23}$$). Adapted from: [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)
@@ -1852,7 +1852,7 @@ The dataset is an abundantly available source of supervision: 400 million pairs 
 For the image encoder, the authors consider 5 ResNets (ResNet-50, ResNet-101 and three EfficientNet-style scaled-up ResNet-50s with 4×, 16× and 64× the compute), with improvements such as attention pooling similar to a QKV attention, and 3 Vision Transformers. The text encoder is a transformer with masked self-attention, with Byte-Pair encoding with a 49152 vocab size. The max sequence length was capped at 76 (section 2.4).
 
 {: .picture}
-<img loading="lazy" width="67.6%" height="67.6%" src="{{ site.assets }}/publications/clip.svg"/> 
+<img loading="lazy" width="67.5%" height="67.5%" src="{{ site.assets }}/publications/clip.svg"/> 
 
 {: .caption}
 Summary of CLIP: (1) contrastive pre-training, (2) creating a dataset classifier from label text and (3) using it for zero-shot prediction. While standard image models jointly train an image feature extractor and a linear classifier to predict some label, CLIP jointly trains an image encoder and a text encoder to predict the correct pairings of a batch of (image, text) training examples. At test time the learned text encoder synthesizes a zero-shot linear classifier by embedding the names or descriptions of the target dataset’s classes. Adapted from: [Learning Transferable Visual Models From Natural Language Supervision](https://arxiv.org/abs/2103.00020)
@@ -1904,7 +1904,7 @@ The sharding properties are user-defined with `mesh_split(tensor, device_mesh, d
 all types of sharding, across the dimension(s) of batch, features, channels and/or others. The automatic partitioner in GSPMD is implemented as transformation/compiler passes in the XLA compiler (Section 3.5), using information about the operator (e.g. dot product is a generalized matrix multiply) or using iterative methods where  shardings assigned by the pass are refined incrementally over the iterations. GSPMD achieves 50% to 62% compute utilization on 128 to 2048 Cloud TPUv3 cores for models with up to one trillion parameters, and since it produces a single program for all devices, its compilation time stays constant as the number of devices grows.
 
 {: .picture}
-<img loading="lazy" width="88.3%" height="88.3%" src="{{ site.assets }}/publications/gspmd.svg"/>
+<img loading="lazy" width="88.1%" height="88.1%" src="{{ site.assets }}/publications/gspmd.svg"/>
 
 {: .caption}
 **Left:** Computation where tensors are annotated to be split over 4 devices. A simplified feedforward layer of a Transformer model. Blue rectangles represent tensors with dashed red & blue lines overlaid representing the desired partitioning across a 2x2 mesh of devices. **Right:** Partitioned execution graph generated by GSPMD. A single partition, after GSPMD has been applied. Adapted from: [General and Scalable Parallelization for Neural Networks](https://research.google/blog/general-and-scalable-parallelization-for-neural-networks/)
@@ -1969,7 +1969,7 @@ Overview of the gMLP architecture with Spatial Gating Unit (SGU). The model cons
 Introduces Vision Transformers (ViTs), an extension of the transformer architecture to images. Works by passing as input to the transformer a sequence of linear embeddings of image patches (e.g., 16×16 pixels), which also avoids the quadratic cost of letting every pixel attend to every other pixel. When pre-trained on large datasets (ImageNet-21k, JFT-300M), ViT matches or beats state-of-the-art CNNs (ResNets) on image classification while requiring substantially fewer computational resources to train; on mid-sized datasets like ImageNet alone it underperforms comparable ResNets, since it lacks the convolutional inductive biases (locality, translation equivariance).
 
 {: .picture}
-<img loading="lazy" width="76.3%" height="76.3%" src="{{ site.assets }}/publications/visual_transformer.svg"/>
+<img loading="lazy" width="76.2%" height="76.2%" src="{{ site.assets }}/publications/visual_transformer.svg"/>
 
 {: .caption}
 Model overview. The image is split into fixed-size patches; each patch is linearly embedded, position embeddings are added, and the resulting sequence of vectors is fed to a standard Transformer encoder. For classification, an extra learnable “classification token” is added to the sequence, the standard approach. The illustration of the Transformer encoder was inspired by Vaswani et al. (2017). Adapted from: [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929)
@@ -2016,7 +2016,7 @@ optimal allocation of a fixed compute budget. Larger models are significantly mo
 on a relatively modest amount of data and stopping significantly before convergence.
 
 {: .picture}
-<img loading="lazy" width="73.7%" height="73.7%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
+<img loading="lazy" width="74%" height="74%" src="{{ site.assets }}/publications/scaling_laws.svg"/>
 
 {: .caption}
 Language modeling performance improves smoothly as the model size, dataset size, and amount of compute used for training increase. For optimal performance all three factors must be scaled up in tandem. Empirical performance has a power-law relationship with each individual factor when not bottlenecked by the other two. Adapted from: [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361)
@@ -2035,7 +2035,7 @@ and stopping significantly short of convergence (Chinchilla later revised this a
 - The ideal batch size for training these models is roughly a power of the loss only
 
 {: .picture}
-<img loading="lazy" width="75.6%" height="75.6%" src="{{ site.assets }}/publications/scaling_laws_2.svg"/>
+<img loading="lazy" width="76.3%" height="76.3%" src="{{ site.assets }}/publications/scaling_laws_2.svg"/>
 
 {: .caption}
 Test loss of language model training runs, for models from 10<sup>3</sup> to 10<sup>9</sup> parameters (excluding embeddings). Left: against tokens processed; larger models require fewer samples to reach the same performance. Right: against compute; the optimal model size grows smoothly with the loss target and compute budget. Adapted from: [Scaling Laws for Neural Language Models](https://arxiv.org/abs/2001.08361)
@@ -2075,7 +2075,7 @@ a natural language instruction describing the task.
 <b>Zero-shot, one-shot and few-shot, contrasted with traditional fine-tuning</b>. The panels above show four methods for performing a task with a language model – fine-tuning is the traditional method, whereas zero-, one-, and few-shot, the settings studied in the paper, require the model to perform the task with only forward passes at test time. In the few-shot setting the model is typically given a few dozen examples. Exact phrasings for all task descriptions, examples and prompts are in Appendix G of the paper. Adapted from: [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
 
 {: .picture}
-<img loading="lazy" width="97.4%" height="97.4%" src="{{ site.assets }}/publications/gpt3_fig11.svg"/> 
+<img loading="lazy" width="97.3%" height="97.3%" src="{{ site.assets }}/publications/gpt3_fig11.svg"/> 
 
 {: .caption}
 <b>Language model meta-learning.</b> During unsupervised pre-training, a language model develops a broad set of skills and pattern recognition abilities. It then uses these abilities at inference time to rapidly adapt to or recognize the desired task. The term “in-context learning” describes the inner loop of this process, which occurs within the forward-pass upon each sequence. The sequences in this diagram are not intended to be representative of the data a model would see during pre-training, but are intended to show that there are sometimes repeated sub-tasks embedded within a single sequence. Adapted from: [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
@@ -2206,7 +2206,7 @@ ALBERT ("A Lite BERT") lowers memory consumption and increases the training spee
 This paper presents Group Normalization (GN), which divides the channels into groups and normalizes the features within each group, so its computation is independent of the batch size. GN surpasses Batch Normalization particularly on small batch sizes, where BN's error increases rapidly: on ResNet-50 trained on ImageNet with a batch size of 2, GN has 10.6% lower error than BN, and with typical batch sizes it is comparably good. Layer Normalization and Instance Normalization also avoid normalizing along the batch dimension. These methods are effective for training sequential models (RNN/LSTM) or generative models (GANs), but both have limited success in visual recognition, for which GN presented better results. 
 
 {: .picture}
-<img loading="lazy" width="78.9%" height="78.9%" src="{{ site.assets }}/publications/group_normalization.svg"/>
+<img loading="lazy" width="79%" height="79%" src="{{ site.assets }}/publications/group_normalization.svg"/>
 
 {: .caption}
 <b>Normalization methods</b>. Each subplot shows a feature map tensor, with <i>N</i> as the batch axis, <i>C</i> as the channel axis, and (<i>H</i>, <i>W</i>) as the spatial axes. The pixels in blue are normalized by the same mean and variance, computed by aggregating the values of these pixels. Adapted from: [Group Normalization](https://arxiv.org/abs/1803.08494)
@@ -2301,11 +2301,10 @@ Batch Normalization (BatchNorm) is a technique used in deep learning to improve 
 The paper describes **siamese neural networks** (see below for details) for efficient **one-shot learning**. General strategy. 1) Train a model to discriminate between a collection of same/different pairs; 2) Generalize to evaluate new categories based on learned feature mappings for verification.  The architecture of each siamese network is a convolutional neural network, with a flattening and a feed-forward network in the head; the two twins share weights and the prediction is a sigmoid over a weighted L1 distance between their feature vectors. The loss function is a **binary cross-entropy** with a regularizer. On Omniglot 20-way one-shot classification, it reaches 92% accuracy.
 
 {: .picture}
-<img loading="lazy" width="73.7%" height="73.7%" src="{{ site.assets }}/publications/siamese_networks.svg"/>
 <img loading="lazy" width="51%" height="51%" src="{{ site.assets }}/publications/siamese_networks_2.svg"/>
 
 {: .caption}
-**Top:** General strategy. 1) Train a model to discriminate between a collection of same/different pairs. 2) Generalize to evaluate new categories based on learned feature mappings for verification. **Bottom:** A simple 2 hidden layer siamese network for binary classification with logistic prediction <i>p</i>. The structure of the network is replicated across the top and bottom sections to form twin networks, with shared weight matrices at each layer; the output weights <i>α<sub>j</sub></i> weight the component-wise distances <i>d<sub>j</sub></i>. Adapted from: [Siamese Neural Networks for One-shot Image Recognition](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)
+A simple 2 hidden layer siamese network for binary classification with logistic prediction <i>p</i>. The structure of the network is replicated across the top and bottom sections to form twin networks, with shared weight matrices at each layer; the output weights <i>α<sub>j</sub></i> weight the component-wise distances <i>d<sub>j</sub></i>. Adapted from: [Siamese Neural Networks for One-shot Image Recognition](https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf)
 
 </div>
 </details>

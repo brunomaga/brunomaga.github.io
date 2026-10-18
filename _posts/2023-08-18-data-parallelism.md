@@ -9,7 +9,7 @@ tags: ["data parallelism", "ZeRO", "FSDP", "CPU offloading", "activation checkpo
 Distributed data parallelism (DDP) refers to the parallel execution of different input samples across processors. Consider an input of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size). Data parallelism splits this input along the batch dimension across $$P$$ processes, resulting in a local input of shape $$B/P \times S \times E$$ per process:
 
 {: .picture}
-<img width="24.2%" height="24.2%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
+<img width="24.1%" height="24.1%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
 
 {: .caption}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.
@@ -21,7 +21,7 @@ There are two main data parallelism approaches:
 **Distributed Data Parallelism** keeps a full copy of the model (weights, optimizer states and gradients) on each processor. All replicas are initialized with the same parameters. Each processor takes a different mini-batch as input and performs a forward pass to compute the loss of that batch. During the backward pass, at every layer, each process computes the gradients of its local batch, and an all-reduce computes the mean gradients across all processors. The optimizer then uses these mean gradients to update the parameters. Since all replicas start from the same parameters and apply the same updates, they remain identical throughout training.
 
 {: .picture}
-<img width="65.7%" height="65.7%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
+<img width="65.8%" height="65.8%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
 
 {: .caption}
 Distributed data parallelism (DDP) on 4 processes. Each process holds a full copy of a 4-layer model (the parameters, optimizer states and gradients of every layer), initialized identically, and takes its own input. The forward pass (left arrow) computes the activations and the loss of each process. In the backward pass (right arrow), each process computes the local gradients of every layer, and an all-reduce averages them across the processes. The optimizer then applies the same mean gradients on every process, so all copies stay identical.
@@ -37,7 +37,7 @@ As shown in the diagram, every processor holds a full replica of the model, so t
 Note that activations are not sharded, i.e. each processor keeps them in *full shape*. In modern models, **a large fraction of memory is allocated to residual memory (activations, normalization layers, etc.), which FSDP does not shard**. The following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
 
 {: .picture}
-<img width="95.2%" height="95.2%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
+<img width="95.3%" height="95.3%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
 
 {: .caption}
 Stage 3 sharding (ZeRO-3) on 4 processes. Process k holds the parameters, optimizer states and gradients of layer k only (solid boxes; the dashed boxes are layers held by other processes), takes its own input and keeps its own activations. Forward pass (left): before layer k is computed, process k broadcasts its parameters, and the other processes discard them after use. Backward pass (right): process k broadcasts the parameters of layer k again, every process computes its local gradients of layer k, and these gradients are summed (reduced) on process k, which updates the parameters of layer k. Inspired by: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054)
@@ -45,7 +45,7 @@ Stage 3 sharding (ZeRO-3) on 4 processes. Process k holds the parameters, optimi
 Higher stages lead to a lower memory footprint. Stages 1 and 2 have the same communication volume as regular data parallelism, while stage 3 communicates 1.5x as much. The memory savings of each stage are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
 
 {: .picture}
-<img width="85.9%" height="85.9%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
+<img width="85.8%" height="85.8%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
 
 {: .caption}
 Per-GPU memory of the model states (parameters, gradients and optimizer states) with plain data parallelism (baseline) and with the three ZeRO stages: $$P_{os}$$ partitions the optimizer states across the GPUs, $$P_{os+g}$$ also the gradients, and $$P_{os+g+p}$$ also the parameters. $$\Psi$$ is the number of parameters, $$K$$ the memory multiplier of the optimizer states and $$N_d$$ the data-parallel degree; the example uses $$K=12$$ (mixed-precision Adam), $$\Psi=7.5B$$ and $$N_d=64$$. The last column is the communication volume relative to the baseline. Adapted from: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) and the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
@@ -453,7 +453,7 @@ All implementations use the same mixed-precision representation, communication b
 The results for the GPTlite model with a micro-batch size of 1 sample per GPU are:
 
 {: .picture}
-<img width="99.7%" height="99.7%" src="{{ site.assets }}/distributed-training/imgs/benchmark_gptlite.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/benchmark_gptlite.svg"/>
 
 {: .caption}
 Maximum and average memory allocated, and throughput, of GPTlite (GPT-3 small) with distributed data parallelism, DeepSpeed ZeRO-1 to ZeRO-3, and ZeRO-3 with CPU offloading, at a micro-batch size of 1 sample per GPU.

@@ -124,7 +124,7 @@ The acceptance rule depends on the decoding strategy.
 With **greedy decoding**, draft tokens are accepted as long as they match the target's most likely token. At the first mismatch, the draft token is replaced by the target's most likely token, and the remaining drafts are discarded. If all $$K$$ drafts are accepted, the target's prediction after the last draft is appended as a *bonus* token. The output is identical to greedy decoding with the target alone.
 
 {: .picture}
-<img width="94.1%" height="94.1%" src="{{ site.assets }}/inference/imgs/spec_decoding.svg"/>
+<img width="94.6%" height="94.6%" src="{{ site.assets }}/inference/imgs/spec_decoding.svg"/>
 
 With **sampling** (*speculative sampling*), the draft model samples each token $$x$$ from its distribution $$p$$, and the target accepts it with probability $$\min\left(1, q(x) / p(x)\right)$$, where $$q$$ is the target's distribution. On rejection, a replacement token is sampled from the normalized residual distribution $$\max(0, q - p)$$, and the remaining drafts are discarded. This modified rejection sampling produces tokens distributed exactly as $$q$$. If all $$K$$ drafts are accepted, a bonus token is sampled from the target's distribution after the last draft. The rule holds for any $$p$$, as long as it is the distribution the drafts were actually sampled from. Greedy drafts are the special case of a one-hot $$p$$: the target accepts the draft $$x$$ with probability $$q(x)$$, and on rejection samples from $$q$$ without $$x$$, which still yields tokens distributed as $$q$$. The guarantee breaks when the drafts are generated greedily but the draft model's softmax probabilities are used as $$p$$.
 
@@ -236,7 +236,7 @@ def accept_sampling(drafts, p, q):
 [Prompt lookup decoding](https://github.com/apoorvumang/prompt-lookup-decoding) requires no draft model. It takes the last few generated tokens (an n-gram), searches for the same n-gram earlier in the prompt or in the generated text, and proposes the tokens that followed it as drafts. The verification is the same as above. The method costs almost nothing, and gives large speedups when the output copies from the input, as in summarization, code editing, question answering over documents, or rewriting a previous answer. Related methods draft from other sources: [lookahead decoding](https://arxiv.org/abs/2402.02057) collects n-grams from Jacobi iterations of the model itself, and [REST](https://arxiv.org/abs/2311.08252) retrieves continuations from a datastore of text.
 
 {: .picture}
-<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
 
 The following code implements prompt lookup decoding. It reuses the verification loop of speculative decoding with a different source of drafts:
 
@@ -267,7 +267,7 @@ def prompt_lookup(tokens, n_drafts, max_ngram=3):
 [Medusa](https://arxiv.org/abs/2401.10774) adds a few extra *decoding heads* on top of the last hidden state of the target model. The original output head predicts the next token, and head $$i$$ predicts the token $$i+1$$ positions ahead. The top candidates of each head are combined into a tree of possible continuations. All candidates are verified in a single forward pass with *tree attention*, a mask that lets each candidate attend only to its own ancestors in the tree. The longest accepted path is kept. Training only the heads, with the model frozen (Medusa-1), gives speedups above 2.2 times. Training the heads together with the model (Medusa-2) reaches 2.3 to 3.6 times. Medusa needs no separate draft model. However, each head guesses its token independently, without seeing the tokens guessed by the other heads, so the accuracy drops quickly for later positions. For sampling, Medusa also proposes a faster *typical acceptance* rule, which is not exactly lossless.
 
 {: .picture}
-<img width="94.1%" height="94.1%" src="{{ site.assets }}/inference/imgs/medusa.svg"/>
+<img width="94.6%" height="94.6%" src="{{ site.assets }}/inference/imgs/medusa.svg"/>
 
 {: .caption}
 The output head and the Medusa heads read the last hidden state $$h$$. Their top candidates combine into a tree, which the target verifies in one forward pass with a tree attention mask, in which each node sees its ancestors. Inspired by: [Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads](https://arxiv.org/abs/2401.10774)
@@ -428,7 +428,7 @@ def draft_with_features(drafter, features, tokens, n_drafts):
 A drafter this small predicts poorly on its own: without target features, a 5-layer diffusion drafter only reaches a speedup of about 3 times. DFlash therefore conditions it on the target. The hidden states of 5 target layers, spread from shallow to deep, are concatenated, projected, and injected into the keys and values of every draft layer, instead of only into the drafter's input as in EAGLE-3. As a result, the acceptance length keeps improving as draft layers are added. The drafter reuses the target's frozen embedding and output head. Only its transformer layers are trained, on responses generated by the target. Each training block starts at a randomly sampled anchor token, as at inference. All blocks of a sequence are trained in one pass with a block-sparse attention mask. The loss favors early positions, since one early mistake invalidates the rest of the block. Verification is unchanged, so the output stays lossless. Each round verifies a single drafted block, not a tree. [DDTree](https://arxiv.org/abs/2604.12989) builds a draft tree from the per-position predictions of the DFlash drafter, and verifies it with tree attention.
 
 {: .picture}
-<img width="94.9%" height="94.9%" src="{{ site.assets }}/inference/imgs/dflash.svg"/>
+<img width="95.1%" height="95.1%" src="{{ site.assets }}/inference/imgs/dflash.svg"/>
 
 {: .caption}
 The hidden states of 5 layers of the frozen target, spread from shallow to deep, are concatenated, projected, and injected into the keys and values of every draft layer. The drafter fills all the mask positions of the block in one forward pass. Inspired by: [DFlash: Block Diffusion for Flash Speculative Decoding](https://arxiv.org/abs/2602.06036)
@@ -440,7 +440,7 @@ On Qwen3-8B with greedy decoding, the paper reports an average of about 6.5 toke
 [LayerSkip](https://arxiv.org/abs/2404.16710) uses the early layers of the target model as the draft. The model is trained with *layer dropout*, which skips the later layers more often, and with an *early exit loss*, which trains every layer to make good predictions through the shared output head. At inference, the draft exits after the first $$E$$ layers. The verification runs only the remaining layers, reusing the computation and the cache of the first $$E$$. No second model is stored, and the reported speedups reach up to about 2 times on summarization and coding tasks.
 
 {: .picture}
-<img width="98.6%" height="98.6%" src="{{ site.assets }}/inference/imgs/layerskip.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/layerskip.svg"/>
 
 {: .caption}
 Every layer also learns to predict through the shared head (early exit loss). The layer dropout rate grows linearly with depth, as in the code; in the paper, it grows exponentially. Inspired by: [LayerSkip: Enabling Early Exit Inference and Self-Speculative Decoding](https://arxiv.org/abs/2404.16710)
@@ -515,7 +515,7 @@ $$
 As the vocabulary is large, holding the logits of all heads at once would dominate the memory footprint of training. Instead, after the forward pass of the trunk, the forward and backward passes of the heads run one after the other. Their gradients accumulate at the output of the trunk, so only the logits of one head are in memory at a time. The benefits grow with the model size, and small models can even get worse. The 13B model of the paper solves 12% more problems on HumanEval and 17% more on MBPP than a comparable next-token model. At inference, the extra heads act as drafts for self-speculative decoding, making a model trained to predict 4 tokens up to 3 times faster. However, as in Medusa, each head predicts its token without seeing the tokens predicted by the other heads.
 
 {: .picture}
-<img width="86.3%" height="86.3%" src="{{ site.assets }}/inference/imgs/mtp_parallel.svg"/>
+<img width="87.1%" height="87.1%" src="{{ site.assets }}/inference/imgs/mtp_parallel.svg"/>
 
 {: .caption}
 In training, the heads run their forward and backward passes one at a time. Adapted from: [Better & Faster Large Language Models via Multi-token Prediction](https://arxiv.org/abs/2404.19737)

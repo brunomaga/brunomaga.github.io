@@ -252,7 +252,7 @@ struct FeedForward : nn::Module {
 A GPT *block* is the sequence of a multi-head attention and a feed-forward module. As in the Python implementation, it includes skip connections, and normalization before the attention and the feed-forward network.
 
 {: .picture}
-<img width="25.7%" height="25.7%" src="{{ site.assets }}/gptlite/gptlite_blocks.svg"/>
+<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_blocks.svg"/>
 
 {: .caption}
 The GPT block(s) in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
@@ -526,7 +526,7 @@ Both the Python and C++ implementations of Torch leak GPU memory when several mo
 The results for the GPTlite model are: 
 
 {: .picture}
-<img width="87.4%" height="87.4%" src="{{ site.assets }}/gptlite-cpp/benchmark_gptlite.svg"/>
+<img width="88.1%" height="88.1%" src="{{ site.assets }}/gptlite-cpp/benchmark_gptlite.svg"/>
 
 {: .caption}
 Memory usage and throughput of GPTlite Small in PyTorch 1.13.1, PyTorch 2.1, C++ LibTorch 2.1 and TorchScript 2.1 (inference only).

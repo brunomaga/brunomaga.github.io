@@ -43,7 +43,7 @@ The first is the **Odd-Even sort**, a distributed swap-based sorting algorithm. 
 The following workflow illustrates the algorithm on a sample dataset: 
 
 {: .picture}
-<img width="63.1%" height="63.1%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
+<img width="65.8%" height="65.8%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
 
 {: .caption}
 Odd-even sort of 20 elements on $$p = 5$$ ranks, colored by rank. Every rank holds 4 elements, so the list is sorted after $$p$$ phases. Step 2.2 shows the compare-split of ranks 0 and 1 in phase 0.

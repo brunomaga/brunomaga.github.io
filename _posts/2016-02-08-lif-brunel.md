@@ -178,7 +178,7 @@ A `C++` implementation of the Brunel network model of LIF neurons, with the appr
 **Slow dynamics**:
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/lif-brunel/raster_plot_g4.5_f0.9.svg">
+<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g4.5_f0.9.svg">
 
 **Regular dynamics**:
 
@@ -188,7 +188,7 @@ A `C++` implementation of the Brunel network model of LIF neurons, with the appr
 **Fast dynamics**:
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/lif-brunel/raster_plot_g3_f2.svg">
+<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g3_f2.svg">
 
 
 ## Other resources

@@ -495,7 +495,7 @@ The other challenge with video data is attention: how to correlate image patches
 - a full 3D attention, which collects all patches of all frames and uses them as the sequence dimension in the attention, i.e. converts an input of shape $$B \times T \times H \times W \times C$$ into $$B \times (T * H * W) \times C$$. This leads to a very large sequence dimension, which is a problem because the computation in the attention mechanism grows quadratically with the sequence length. However, [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) showed that masked autoencoders (MAE) are scalable self-supervised learners for computer vision that only need to encode a random subset of the patches (25% on images). [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113) extended this to videos, where only 10% of the $$T * H * W$$ spacetime patches are needed. [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304) also uses random token dropping, together with sequence packing, to speed up training.
 
 {: .picture}
-<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
+<img width="90.6%" height="90.6%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
 
 {: .caption}
 An illustration of a masked autoencoder that randomly picks 10% of the spacetime patches of a video. These patches retain enough representative power to reconstruct the original video. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
@@ -518,7 +518,7 @@ To train on videos, the authors use the method from [Align your Latents: High-Re
 > first pre-train the diffusion model on images only; then, turn the image generator into a video generator by introducing a temporal dimension to the latent space diffusion model and fine-tuning on encoded image sequences, i.e., videos.
 
 {: .picture}
-<img width="93.9%" height="93.9%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
+<img width="93.8%" height="93.8%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
 
 {: .caption}
 **Left:** a pre-trained LDM is turned into a video generator by inserting temporal layers that learn to align frames into temporally consistent sequences. During optimization, the image backbone $$\theta$$ remains fixed and only the parameters $$\phi$$ of the temporal layers $$l^i_\phi$$ are trained. **Right:** During training, the base model $$\theta$$ interprets the input sequence of length $$T$$ as a batch of images. For the temporal layers $$l^i_\phi$$, these batches are reshaped into video format. Their output $$z'$$ is combined with the spatial output $$z$$, using a learned merge parameter $$\alpha$$. During inference, skipping the temporal layers ($$\alpha^i_\phi=1$$) yields the original image model. For illustration purposes, only a single U-Net Block is shown. $$B$$ denotes the batch size, $$T$$ the sequence length, $$C$$ the input channels and $$H$$ and $$W$$ the spatial dimensions of the input. $$c_S$$ is an optional context-frame conditioning, used when training prediction models. Adapted from: [Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2304.08818).
@@ -562,7 +562,7 @@ The following are examples of DiT-inspired conditional diffusion models:
 OmniGen is a diffusion model made only of a VAE and a transformer (initialized from the Phi-3 LLM). It performs several image generation tasks: text-to-image, image editing, subject-driven generation and visual-conditional generation. Text input is tokenized, and image inputs are converted into embeddings by a VAE.
 
 {: .picture}
-<img width="99.5%" height="99.5%" src="{{ site.assets }}/diffusion/omnigen.svg"/> 
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/diffusion/omnigen.svg"/> 
 
 {: .caption}
 The framework of OmniGen. Texts are tokenized into tokens, while input images are transformed into embedding via VAE. OmniGen can accept free-form multi-modal prompts and generate images through the rectified flow approach. The attention mask (left) is causal across the input sequence and bidirectional within each image. Adapted from: [OmniGen: Unified Image Generation](https://arxiv.org/abs/2409.11340).
@@ -613,7 +613,7 @@ The paper also compares 2 methods for video patch embedding: (1) collecting all 
 
 
 {: .picture}
-<img width="70.1%" height="70.1%" src="{{ site.assets }}/diffusion/latte2.svg"/> 
+<img width="70%" height="70%" src="{{ site.assets }}/diffusion/latte2.svg"/> 
 
 {: .caption}
 <b>The video clip patch embedding</b>. (a) Uniform frame patch embedding: <i>F</i> frames are sampled and each frame is embedded into tokens as in ViT. (b) Compression frame patch embedding: to capture temporal information, the ViT patch embedding is extended from 2D to 3D and tubes are extracted along the temporal dimension. The original video clip is shown for clarity; the patch embedding in the latent space of videos follows the same approach. Adapted from: [Latte: Latent Diffusion Transformer for Video Generation](https://arxiv.org/abs/2401.03048).
@@ -650,7 +650,7 @@ data. A high masking ratio leads to a large speedup, e.g., > 4× in wall-clock t
 or even more.
 
 {: .picture}
-<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders.svg"/> 
+<img width="90.6%" height="90.6%" src="{{ site.assets }}/diffusion/masked_autoencoders.svg"/> 
 
 {: .caption}
 <b>Masked Autoencoders as spatiotemporal learners</b>. A large subset (<i>e.g.</i>, 90%) of random patches in spacetime is masked. An encoder operates on the set of visible patches. A small decoder then processes the full set of encoded patches and mask tokens to reconstruct the input. Except for patch and positional embeddings, <i>neither the encoder, the decoder, nor the masking strategy, has any spatiotemporal inductive bias</i>. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113).
@@ -667,7 +667,7 @@ The following works address multi-dimensional parallelism for large-scale models
 Presents DiT-MoE, a sparse Mixture of Experts (MoE) version of DiT, with good scaling properties, performance comparable to dense DiTs, and highly optimized inference.
 
 {: .picture}
-<img width="96.8%" height="96.8%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
+<img width="96.6%" height="96.6%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
 
 {: .caption}
 <b>Overview of the DiT-MoE architecture.</b> DiT-MoE is built upon the DiT and composed of MoE-inserted Transformer blocks. In each block, the MLP is replaced by a sparsely activated mixture of MLPs. The right subfigure shows the MoE layer with the shared expert strategy. Adapted from: [Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633).
@@ -681,7 +681,7 @@ Presents DiT-MoE, a sparse Mixture of Experts (MoE) version of DiT, with good sc
 LongVILA describes a 5-stage pipeline for training long-context visual-language models. The first 3 stages, from [VILA: On Pre-training for Visual Language Models](https://arxiv.org/abs/2312.07533v2), are multi-modal alignment, large-scale pre-training and short supervised fine-tuning. Stage 4 extends the context of the LLM by increasing the sequence length of input samples (i.e. curriculum learning) up to 262K tokens. In Stage 5, the model is fine-tuned for long video understanding with Multi-Modal Sequence Parallelism (MM-SP), based on [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485).
 
 {: .picture}
-<img width="99.3%" height="99.3%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
+<img width="99.1%" height="99.1%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
 
 {: .caption}
 Workflow of Multi-Modal Sequence Parallelism (MM-SP) with a Batch Size (bs) of 4 and a Sequence Parallel Size (SP\_Size) of 3. To support sequence parallelism for multi-modal inputs, MM-SP uses a custom sharding strategy that balances the workload and is compatible with SP communication. Adapted from: [LongVILA: Scaling Long-Context Visual Language Models for Long Videos](https://arxiv.org/abs/2408.10188).

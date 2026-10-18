@@ -84,7 +84,7 @@ The tiles of the next step do not depend on the current product. So a rank can r
 3. wait for both messages (`MPI_Waitall`), and swap the buffers.
 
 {: .picture}
-<img width="90.9%" height="90.9%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
+<img width="91.6%" height="91.6%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
 
 {: .caption}
 Timeline of one rank in Cannon's algorithm on a $$3 \times 3$$ grid. **Top:** shifts and multiplications take turns. **Bottom:** each shift runs during a multiplication.
@@ -126,7 +126,7 @@ We split $$A$$ by rows again. An all-gather of $$x$$ would work, but a rank need
 3. **local product:** each rank runs the CSR loop over its own and ghost entries.
 
 {: .picture}
-<img width="64.2%" height="64.2%" src="{{ site.assets }}/distributed-matmul-dbs/spmv.svg">
+<img width="64.4%" height="64.4%" src="{{ site.assets }}/distributed-matmul-dbs/spmv.svg">
 
 {: .caption}
 Sparse matrix-vector product on 3 ranks. **Left:** nonzeros colored by rank. A dot marks a nonzero whose entry of $$x$$ is on another rank. **Right:** the entries of $$x$$ on each rank after the exchange. Dashed boxes are ghost entries.

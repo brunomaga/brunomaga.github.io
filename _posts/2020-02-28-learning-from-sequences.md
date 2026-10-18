@@ -22,7 +22,7 @@ Its Recurrent Neural Network (RNN) has the following structure:
 This structure is represented in the following picture:
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
+<img width="33.8%" height="33.8%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
 
 {: .caption}
 The recurrent neural network trained at each step of the encoder-decoder architecture. Its input layer is the concatenation of the hidden layer of the previous iteration (green) and the embedding of the current input word (blue). The hidden layer (green) holds the states of the GRU or LSTM neurons, and the output layer (red) holds the model output. 
@@ -52,7 +52,7 @@ Accurate results for long sentences are hard to obtain, because recurrent neural
 In 2017, researchers at Google introduced the Transformer (original paper [Attention is all you need (2017, Google, arXiv)](https://arxiv.org/abs/1706.03762)), which overcomes many of these issues and achieves better results. The transformer architecture is:
 
 {: .picture}
-<img width="43.7%" height="43.7%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
+<img width="43.8%" height="43.8%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
 
 {: .caption}
 The transformer architecture. Grey regions represent one encoder layer (left) and one decoder layer (right), each repeated N times. Adapted from: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
@@ -72,7 +72,7 @@ The positional encoding is thus given by $$sine$$ and $$cosine$$ waves with a di
 
 
 {: .picture}
-<img width="70.2%" height="70.2%" src="{{ site.assets }}/learning-from-sequences/transformer-embedding.svg"/>
+<img width="70.1%" height="70.1%" src="{{ site.assets }}/learning-from-sequences/transformer-embedding.svg"/>
 
 {: .caption}
 Output of the positional encoding of the transformer for dimensions 4 to 7 of an embedding array of size $$d=20$$, for a word whose position in the sentence is given by the x axis. Adapted from: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
@@ -84,7 +84,7 @@ The main component of the transformer is the attention mechanism, which determin
 Consider a single attention head first. For a sentence of $$N$$ words, how is each word related to every other word in that sentence? The output of a single attention mechanism is the $$N \times N$$ matrix that stores these inter-word importance metrics. An example is shown below:
 
 {: .picture}
-<img width="33.4%" height="33.4%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
+<img width="33.3%" height="33.3%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
 
 {: .caption}
 Attention weights of one attention head for the sentence "The big red dog", of length $$N=4$$. Each row holds the softmax-normalized relevance of that word to every word of the sentence, itself included, and sums to 1.
@@ -110,7 +110,7 @@ $$
 The term $$ \frac{1}{\sqrt{D^{QK}}} $$ keeps the range of values roughly unchanged, even for large $$D^{QK}$$. For each query, the final value is the sum of the input values weighted by the attention scores: $$Y_q = \sum_k A_{q,k} \, V_k $$. 
 
 {: .picture}
-<img width="33.3%" height="33.3%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_lbdl.svg"/>
+<img width="33.6%" height="33.6%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_lbdl.svg"/>
 
 {: .caption}
 The attention operator matches every query $$Q_q$$ with all keys $$K_1, ..., K_{N^{KV}}$$ to obtain normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averages the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute $$Y_q$$ (right). Adapted from: [The Little Book of Deep Learning](https://fleuret.org/public/lbdl.pdf).
@@ -175,7 +175,7 @@ The main rationale of the Transformer's Encoder-Decoder is that:
 The encoder is trained efficiently and learns a *context*. This raises the question: can the Encoder's context alone be used to learn complex tasks? This led to the BERT model (original paper [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google AI](https://arxiv.org/abs/1810.04805)). BERT is a stack of Transformer encoders that learns language contexts and performs interpretation tasks.
 
 {: .picture}
-<img width="95.6%" height="95.6%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
+<img width="95.3%" height="95.3%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
 
 {: .caption}
 The BERT model, as a stack of Transformer encoders. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)

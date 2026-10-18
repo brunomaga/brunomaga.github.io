@@ -294,7 +294,7 @@ DSA was added to an already trained model, in two stages. The first stage is a s
 With a KV cache, the indexer key of every token is also cached. Index scores are often tied, since the ReLU outputs many zeros. The selection below therefore uses a stable sort, which breaks ties in the same way whether the tokens are processed together or one at a time. As a result, decoding with a KV cache gives the same result as processing the whole sequence.
 
 {: .picture}
-<img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
+<img width="97.4%" height="97.4%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
 
 The following code adds DeepSeek Sparse Attention to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained multi-head attention module, and adds an indexer. During the dense warm-up (`dense = True`), the queries attend to all past tokens, and the module computes `indexer_loss`. This loss is backpropagated alone to train the indexer. After the warm-up, each query attends only to the `top_k` past tokens with the highest index scores:
 
@@ -408,13 +408,13 @@ Both types use multi-query attention with a single key-value vector per entry. T
 | DeepSeek-V4, HCA layers | compression by 128 | an entry every 128 tokens, plus the last 128 tokens | all the entries and the last 128 tokens |
 
 {: .picture}
-<img width="78.4%" height="78.4%" src="{{ site.assets }}/inference/imgs/csa.svg"/>
+<img width="81%" height="81%" src="{{ site.assets }}/inference/imgs/csa.svg"/>
 
 {: .caption}
 Compressed Sparse Attention (CSA) for query 15, with S = 16 tokens, blocks of m = 4 tokens, top_k = 2 and a window of the last 4 tokens. Each compressed entry also covers the previous block (dashed arrows). Entry 3 (dark grey) compresses the block of query 15 and is not visible to it. Inspired by: [DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence](https://arxiv.org/abs/2606.19348)
 
 {: .picture}
-<img width="87.5%" height="87.5%" src="{{ site.assets }}/inference/imgs/hca.svg"/>
+<img width="89.3%" height="89.3%" src="{{ site.assets }}/inference/imgs/hca.svg"/>
 
 {: .caption}
 Heavily Compressed Attention (HCA) for query 23, with S = 24 tokens, blocks of m' = 8 tokens, no overlap, and a window of the last 8 tokens. Entries 0 and 1 cover tokens 0 to 15, and the window covers tokens 16 to 23, the block of query 23, whose entry 2 (dark grey) is not visible to it. Inspired by: [DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence](https://arxiv.org/abs/2606.19348)

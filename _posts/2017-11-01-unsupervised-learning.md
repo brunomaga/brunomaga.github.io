@@ -82,7 +82,7 @@ Given $$n$$ data points $$x_1, ..., x_n$$, the algorithm is:
 The figure below shows an example, where PCA rotates the data towards the new axes of the cluster of data points:
 
 {: .picture}
-<img width="26.5%" height="26.5%" src="{{ site.assets }}/unsupervised-learning/gaussianscatterpca.svg">
+<img width="26.4%" height="26.4%" src="{{ site.assets }}/unsupervised-learning/gaussianscatterpca.svg">
 
 {: .caption}
 PCA of a 2D Gaussian centred at $$(1, 3)$$, with a standard deviation of 3 roughly along the direction $$(0.866, 0.5)$$ and of 1 in the orthogonal direction. The arrows are the eigenvectors of the covariance matrix, scaled by the square roots of their eigenvalues, with their tails at the mean. Adapted from: [Principal component analysis](https://en.wikipedia.org/wiki/Principal_component_analysis)
@@ -146,9 +146,9 @@ $$
 where $$U$$ is an orthogonal matrix. **Whitening simplifies ICA**, since only $$U$$ remains to be estimated. The figures below show the source, observed and whitened data:
 
 {: .picture}
-<img width="20.2%" height="20.2%" src="{{ site.assets }}/unsupervised-learning/ica_source.svg">
+<img width="20.1%" height="20.1%" src="{{ site.assets }}/unsupervised-learning/ica_source.svg">
 <img width="19.1%" height="19.1%" src="{{ site.assets }}/unsupervised-learning/ica_observed.svg"> 
-<img width="18%" height="18%" src="{{ site.assets }}/unsupervised-learning/ica_whitening.svg">
+<img width="17.9%" height="17.9%" src="{{ site.assets }}/unsupervised-learning/ica_whitening.svg">
 
 {: .caption}
 Independent component analysis of two mixed signals: (a) the sources $$s_1$$, $$s_2$$, independent and uniformly distributed; (b) the observed signals $$x_1$$, $$x_2$$, mixed as $$x = As$$; (c) the whitened signals $$z_1$$, $$z_2$$, $$z = Vx$$, with zero mean and identity covariance, from which only the orthogonal matrix $$U$$ remains to be found. Adapted from: [T. Yokota, Independent Component Analysis for Blind Source Separation, Tokyo Institute of Technology, 2012](https://www.slideshare.net/slideshow/independent-component-analysis-11359849/11359849)
@@ -334,7 +334,7 @@ A self-organizing map (SOM) is an unsupervised artificial neural network, typica
 
 {: .picture}
 <img width="45.8%" height="45.8%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg">
-<img width="24.6%" height="24.6%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
+<img width="24.5%" height="24.5%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
 
 {: .caption}
 **Left:** the neuron layer of Kohonen's model. The input fibres running horizontally carry the input signal (the stimulus) and excite the neurons of the layer through synaptic connections. Lateral interactions between the neurons confine the response to a spatially bounded local excitation zone. The layer acts as a topographic feature map if the position $$j^*$$ of the excitation zone varies continuously with the stimulus features of interest. **Right:** the adaptation step. The input $$x_i$$ in the input space $$V$$ selects the winner neuron $$j^*$$ in the lattice of neurons $$A$$ ($$\phi$$ is the map from $$V$$ to $$A$$). The winner and its neighbours shift their weight vectors towards $$x_i$$, by an amount that decreases with the distance from $$j^*$$, shown by the sizes and gray levels of the neurons. Only the shift $$\Delta w_{j^*}$$ of the winner's weights $$w_{j^*}$$ is drawn. Adapted from: [Neural Computation and Self-Organizing Maps, H. Ritter, T. Martinetz and K. Schulten, 1992, Figures 4.1 and 4.2](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf)

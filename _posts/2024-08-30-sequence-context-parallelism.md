@@ -45,7 +45,7 @@ A feed-forward network applied to a tensor of this shape achieves parallelism of
 [(DeepSpeed) Ulysses parallelism](https://arxiv.org/abs/2309.14509) solves this by swapping the distributed view from sequence-split to head-split before the MHA module, and back after it, as in the following illustration:
 
 {: .picture}
-<img width="82.7%" height="82.7%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
+<img width="82.6%" height="82.6%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
 
 {: .caption}
 Overview of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **Center:** the *first all-to-all* changes the distributed view from sequence-split to head-split. Each process now holds full sequences for a subset of heads and computes attention locally. **Right:** the *second all-to-all* changes the view back from head-split to sequence-split. Inspired by: [DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models](https://arxiv.org/abs/2309.14509)
@@ -214,7 +214,7 @@ In ring attention, each process keeps its local chunk of queries and **rotates t
 This pattern is illustrated below:
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.svg"/>
 
 {: .caption}
 Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **1st Ring Attention step:** each process holds its part of the Query, Key and Value tensors (Q, K and V) and computes block attention on them. Meanwhile, each process asynchronously sends its Key and Value tensors to the next process in the ring (clockwise). **2nd, 3rd, and 4th steps:** each process receives the Key and Value blocks of the previous process and computes the attention output for its original Query tensor and the received Key/Value tensors. **After Ring Attention:** the MHA output is already sequence-split across processes, as in the initial data layout. Inspired by: [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889)
@@ -407,7 +407,7 @@ PyTorch has no notion of *partial sequences*, in the way data parallelism has a 
 Multi-dimensional parallelism (e.g., data + sequence) also requires process groups for the data-parallel processes (which load different samples) and for the sequence-parallel processes (which load different chunks of the same sample). These groups are created with PyTorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) or manually. As an example, $$2 \times 2$$ data and Ulysses sequence parallelism on 4 GPUs gives the following memory layout before and during multi-head attention:
 
 {: .picture}
-<img width="64.9%" height="64.9%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
+<img width="64.8%" height="64.8%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
 
 {: .caption}
 Allocation of activations on 4 GPUs with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: the blue and green processes form one sequence-parallel group and share one sample; the red and yellow processes form the other group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes then compute attention over full sequences.

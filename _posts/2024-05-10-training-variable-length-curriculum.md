@@ -125,7 +125,7 @@ Pipeline parallelism
 requires the same batch size and sequence length in all micro-batches of a batch, because activation shapes must remain fixed during gradient accumulation. A fixed `B x S x E` across micro-batches can lead to smaller micro-batches and more padding. The figure below compares standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right), for 2 processes and 2 gradient accumulation steps (4 micro-batches in total):
 
 {: .picture}
-<img width="95%" height="95%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
+<img width="94.9%" height="94.9%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
 
 In the pipeline case (right), all micro-batches have the same `B x S x E` shape. Under this constraint, each micro-batch holds fewer samples than in the non-pipeline case (left), and padding is added where needed.
 

@@ -15,7 +15,8 @@ the PDF's units. The script prints each picture's width and height in px and the
 in the Markdown: <img width="P%" height="P%" ...>.
 
 Requires the draw.io desktop app (DRAWIO, default "drawio"; on a headless Linux machine for example
-DRAWIO="xvfb-run -a drawio --no-sandbox"), pdftocairo and pdftoppm (poppler-utils) and the Times New Roman font.
+DRAWIO="xvfb-run -a drawio --no-sandbox"), pdftocairo and pdftoppm (poppler-utils), and the fonts Source Sans 3
+and New Computer Modern Sans Math (CLAUDE.md, Pictures, section 11).
 """
 import copy, os, re, shlex, shutil, subprocess, sys, tempfile
 import xml.etree.ElementTree as ET

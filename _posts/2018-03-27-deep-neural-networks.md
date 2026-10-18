@@ -10,7 +10,7 @@ Deep Neural Networks -- also known as Multi-Layer Perceptrons -- are **[universa
 A basic NN has one input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and one output layer. It is a **feedforward network**: the computation starts with the input on the left and flows to the right, with no feedback loop. It can be used for regression (when input and output are provided) and for classification (when the input is provided and the output is the class).
 
 {: .picture}
-<img width="36.4%" height="36.4%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
+<img width="36.5%" height="36.5%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
 
 {: .caption}
 A fully connected feedforward network with an input layer of size $$D = 4$$, one hidden layer of size $$K = 5$$ and one output $$\hat{y}$$. Adapted from: [Machine Learning course CS-433 lecture notes, M. Jaggi, EPFL](https://github.com/epfml/ML_course)
@@ -158,7 +158,7 @@ It is common to compute the outputs of multiple filters instead of a single one.
 With several channels, the output of the next level is not 2D but 3D. Deeper layers have more channels but a smaller “footprint.” Applying local connectivity to a 2D input in a *deep* neural network leads to the following structure:
 
 {: .picture}
-<img width="99.2%" height="99.2%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
+<img width="99.6%" height="99.6%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
 
 {: .caption}
 A CNN that classifies $$16 \times 16$$ RGB patches of a satellite image as road or non-road: two stages of convolution and pooling, two fully connected layers, and the output probabilities of the two classes. Each label gives the shape of the data after a layer for $$N$$ input images, with the number of channels or units in brackets.

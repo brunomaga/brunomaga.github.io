@@ -225,7 +225,7 @@ The goal of Megatron-LM is to reduce the number of communication steps, because 
 2. For a given convolutional layer, each processor computes the convolution independently, except for the activations at the split boundaries. These activations (the *halo region* in purple in the picture below) are communicated at every forward/backward step.
 
 {: .picture}
-<img width="98.9%" height="98.9%" src="{{ site.assets }}/distributed-training/imgs/argonne_parallel_2.svg"/>
+<img width="98.8%" height="98.8%" src="{{ site.assets }}/distributed-training/imgs/argonne_parallel_2.svg"/>
 
 {: .caption}
 Two ways to parallelize a convolutional neural network. (a) Spatial parallelism: the activations of a 2D input are split across four processors $$P_0$$ to $$P_3$$. The red box is where the 3x3 convolution filter is centered, the red arrows are the data that must be received from the other processors to compute it, and the purple region is the halo, formed by all the elements exchanged at every step. (b) Sample (data) parallelism on two processors $$P_0$$ and $$P_1$$, with a global mini-batch of 4 samples. Blue arrows are the dependencies of the forward pass, which computes the output $$y$$ from the input $$x$$ and the filters $$w$$; green arrows are those of the backward pass, which computes the gradients of the filters, $$dL/dw$$, and of the input, $$dL/dx$$, from $$dL/dy$$. The only communication between $$P_0$$ and $$P_1$$ is the all-reduce of $$dL/dw$$. Adapted from: [Improving Strong-Scaling of CNN Training by Exploiting Finer-Grained Parallelism](https://arxiv.org/abs/1903.06681)
