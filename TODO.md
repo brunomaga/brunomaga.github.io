@@ -535,6 +535,20 @@ that is not wrong.
   while the rest of the post writes the same matrices as W_1 and W_2. The text names the mapping. Fix: relabel the
   figure and the caption to W_1 and W_2, and drop "(the W_1 and W_2 above)" from the text.
 
+### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
+
+- `inference/imgs/ep_all_to_all_reduce.svg` names the buffer of the partial result of rank x as Σ_{x/B}. This index
+  gives W buffers for B = 1, and a single buffer for B = W, the opposite of the text. The picture (W = 4, B = 2) puts
+  σ_0 and σ_1 in Σ_0, and σ_2 and σ_3 in Σ_1. Fix: Σ_{⌊xB/W⌋}.
+- `inference/imgs/ep_stages.svg` draws the eight stages on a time axis from 0 to 300 µs. In the paper, this figure is
+  the decode step, and its timings are placeholders, not measurements. The caption does not say so. Fix: remove the
+  time axis, or replace the timings with measured ones.
+- `inference/imgs/ep_results.svg`: the right panel plots decode times that are placeholders, not measurements, as the
+  caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
+- Optional, `inference/imgs/ep_timeline.svg` labels the dispatch call of P_2 as put_signal_01, but the call goes to
+  the INC switch, while the caption says that a subscript names the destination of the call. Fix: put_signal*
+  without a subscript, or a caption that says the subscript names the final destinations P_0 and P_1.
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
