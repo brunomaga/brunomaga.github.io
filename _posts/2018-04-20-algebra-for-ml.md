@@ -6,153 +6,162 @@ categories: ["Machine Learning"]
 tags: ["linear algebra", "matrix decompositions", "vector calculus", "optimization"]
 ---
 
-A brief summary of algebra topics that ML engineers use on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.
+A summary of the linear algebra, vector calculus and optimization used in ML, taken from the books in the <a href="{{ site.resources_permalink }}">resources</a> section, mainly *Mathematics for Machine Learning* (MML) by Deisenroth, Faisal and Ong.
 
 
 ## Properties of Matrices
 
-Matrix multiplication is associative, $$(AB)C = A(BC)$$, and distributive, $$(A+B)C = AC + BC$$ and $$A(B+C)=AB+AC$$. Division between matrices is not defined. Its equivalent is multiplication by the inverse (when it exists), i.e. $$A/B = AB^{-1}$$.
+Matrix multiplication is associative, $$(AB)C = A(BC)$$, and distributive, $$(A+B)C = AC + BC$$ and $$A(B+C) = AB + AC$$. It is not commutative: in general, $$AB \neq BA$$. There is no matrix division. Its role is taken by the multiplication with an inverse, $$AB^{-1}$$ or $$B^{-1}A$$, which differ in general.
 
-**Inverse**: not every matrix $$A$$ has an inverse $$A^{-1}$$. If the inverse exists, $$A$$ is called regular/invertible/non-singular; otherwise, it is called singular/non-invertible. The inverse satisfies $$AA^{-1} = I = A^{-1}A$$ and $$(AB)^{-1}=B^{-1}A^{-1}$$. Two matrices $$A$$ and $$B$$ are inverses of each other if $$AB=I=BA$$.
+**Inverse**: a square matrix $$A \in \mathbb{R}^{n \times n}$$ is *invertible* (or *regular*, *non-singular*) if a matrix $$A^{-1}$$ exists with $$AA^{-1} = I = A^{-1}A$$. Otherwise, it is *singular*. For invertible $$A$$ and $$B$$, $$(AB)^{-1} = B^{-1}A^{-1}$$.
 
-**Transpose**: $${(A^{\intercal})^{\intercal}}=A$$, $$(A+B)^{\intercal}=A^{\intercal}+B^{\intercal}$$, $$(AB)^{\intercal}=B^{\intercal}A^{\intercal}$$.
+**Transpose**: $$(A^{\intercal})^{\intercal} = A$$, $$(A+B)^{\intercal} = A^{\intercal} + B^{\intercal}$$ and $$(AB)^{\intercal} = B^{\intercal}A^{\intercal}$$. If $$A$$ is invertible, so is $$A^{\intercal}$$, with $$(A^{\intercal})^{-1} = (A^{-1})^{\intercal}$$.
 
-**Symmetric** iff $$A=A^{\intercal}$$, which implies that $$A$$ is square. If $$A$$ is invertible, then $$A^{\intercal}$$ is also invertible and $$(A^{\intercal})^{-1}=(A^{-1})^{\intercal}$$. The sum of symmetric matrices is symmetric, but their product usually is not.
+**Symmetric**: $$A = A^{\intercal}$$, which requires a square $$A$$. The sum of symmetric matrices is symmetric. Their product is symmetric only if they commute, since $$(AB)^{\intercal} = B^{\intercal}A^{\intercal} = BA$$.
 
 
 ## Systems of Linear Equations
 
-A **System of Linear Equations** (SLE) is a set of equations of the type $$a_1x_1 + ...+ a_nx_n = b$$, with constants $$a_1$$ to $$a_n$$ and $$b$$ and unknown $$x$$. It can be written as $$A x=b$$. The general solution of an SLE is found analytically or with **Gaussian Elimination** of the augmented matrix $$[A \mid b]$$.
+A system of linear equations (SLE) is a set of $$m$$ equations $$a_{i1}x_1 + \dots + a_{in}x_n = b_i$$, for $$i = 1, \dots, m$$, with known coefficients $$a_{ij}$$ and $$b_i$$, and unknowns $$x_1, \dots, x_n$$. In matrix form, it is $$Ax = b$$, with $$A \in \mathbb{R}^{m \times n}$$, $$x \in \mathbb{R}^n$$ and $$b \in \mathbb{R}^m$$. Each equation defines a hyperplane, and the solutions are the points common to all hyperplanes. An SLE has no solution, exactly one, or infinitely many. With fewer equations than unknowns, it has none or infinitely many.
 
-Such a system has no solution, exactly one solution, or infinitely many solutions (e.g. when there are more unknowns than equations). When $$Ax=b$$ has no solution, an approximate solution is used instead. Geometrically, the solution is the intersection of all the lines defined by the equations.
+### Gaussian Elimination
 
-Analytically, when $$A$$ is square and invertible, the solution of $$Ax=b$$ is $$x=A^{-1}b$$. Otherwise, $$Ax = b \Rightarrow A^{\intercal} Ax = A^{\intercal}b$$ and, when $$A^{\intercal}A$$ is invertible:
+When $$A$$ is square and invertible, the solution is $$x = A^{-1}b$$. Gaussian elimination finds the solutions of any SLE, with elementary row operations on the augmented matrix $$[A \mid b]$$: swapping two rows, scaling a row, and adding a multiple of a row to another. The forward pass brings the matrix to *row-echelon form*, a staircase structure in which the first non-zero entry of each row, its *pivot*, lies to the right of the pivot of the row above. The backward pass brings it to *reduced row-echelon form*, in which each pivot is 1 and is the only non-zero entry of its column. The same elimination on $$[A \mid I]$$ gives $$[I \mid A^{-1}]$$.
 
-$$
-x = (A^{\intercal}A)^{−1}A^{\intercal}b
-$$
+On a dense $$n \times n$$ matrix, Gaussian elimination, in the form of an LU decomposition, costs $$\frac{2}{3}n^3$$ flops and $$O(n^2)$$ memory. The [HPL benchmark](https://en.wikipedia.org/wiki/LINPACK_benchmarks), which ranks the supercomputers of the TOP500 list, measures the speed of this dense solve.
 
-which is also the solution to the **Least Squares** problem. The matrix $$(A^{\intercal}A)^{−1}A^{\intercal}$$ is called the **pseudo-inverse** of $$A$$, and it can be computed for non-square matrices $$A$$. It only requires $$A^{\intercal}A$$ to be positive definite, which holds iff $$A$$ has full column rank. Let $$\hat{x}$$ be the solution above and $$x$$ the true value. Then:
+### Least Squares
 
-$$
-\mathbb{E}[\hat{x}] = (A^{\intercal}A)^{−1}A^{\intercal} \, \mathbb{E}[b] = (A^{\intercal}A)^{−1}A^{\intercal}(Ax) = x
-$$
-
-Let $$P=(A^{\intercal}A)^{−1}A^{\intercal}$$. Then:
+When $$Ax = b$$ has no solution, the least-squares solution minimizes $$\Vert Ax - b \Vert^2$$. Setting the gradient to zero gives the *normal equations* $$A^{\intercal}Ax = A^{\intercal}b$$. $$A^{\intercal}A$$ is invertible iff the columns of $$A$$ are linearly independent, and then:
 
 $$
-\mathbb{Var}[\hat{x}] = \mathbb{Var}[Pb] = P\, \mathbb{Var}[b] P^{\intercal} = \sigma^2 P P^{\intercal} = \sigma^2 \, (A^{\intercal}A)^{−1}A^{\intercal} \, A (A^{\intercal}A)^{-1} = \sigma^2 \, (A^{\intercal}A)^{−1}
+\hat{x} = (A^{\intercal}A)^{-1}A^{\intercal}b = A^{+}b
 $$
 
-This derivation assumes uncorrelated noise with equal variance, i.e. $$\mathbb{Var}[b] = \sigma^2 I$$. It uses $$\mathbb{Var}[Pb] = P \, \mathbb{Var}[b] P^{\intercal}$$ (formula 375 in the Matrix Cookbook) and $$A^{\intercal} \, A (A^{\intercal}A)^{-1}=I$$.
+$$A^{+} = (A^{\intercal}A)^{-1}A^{\intercal}$$ is the [Moore–Penrose pseudo-inverse](https://en.wikipedia.org/wiki/Moore%E2%80%93Penrose_inverse) of $$A$$, defined for non-square $$A$$. The SVD, below, extends it to any matrix. If the data follow $$b = Ax + \epsilon$$, with zero-mean noise of covariance $$\mathbb{Var}[\epsilon] = \sigma_\epsilon^2 I$$ (uncorrelated, with equal variances), then $$\hat{x}$$ is unbiased:
 
-In Gaussian Elimination on $$[A \mid b]$$, the forward pass brings the matrix to **Row-Echelon** form, a staircase structure. A row-echelon matrix is in **reduced row-echelon** form if the leading entry of each row (the **pivot**) is 1 and the pivot is the only nonzero entry in its *column*.
+$$
+\mathbb{E}[\hat{x}] = A^{+} \, \mathbb{E}[b] = (A^{\intercal}A)^{-1}A^{\intercal}Ax = x
+$$
 
-The **inverse** of $$A$$ is the matrix $$X$$ that satisfies $$AX=I$$, so that $$X=A^{-1}$$. Gaussian Elimination on the SLE $$[A \mid I]$$ turns it into $$[I \mid A^{-1}]$$. Gaussian Elimination is not feasible for large matrices, due to its cubic computational complexity. In practice, large systems are solved iteratively, e.g. with the Jacobi or Gauss-Seidel methods. The main idea is to solve $$Ax=b$$ with an iteration of the form $$x^{(k+1)} = Cx^{(k)} + d$$, with suitable $$C$$ and $$d$$, that reduces the error $$\mid x^{(k+1)}-x_* \mid$$ in every iteration and converges to the solution $$x_*$$.
+and its covariance is:
+
+$$
+\mathbb{Var}[\hat{x}] = A^{+} \, \mathbb{Var}[b] \, (A^{+})^{\intercal} = \sigma_\epsilon^2 \, (A^{\intercal}A)^{-1}A^{\intercal}A(A^{\intercal}A)^{-1} = \sigma_\epsilon^2 \, (A^{\intercal}A)^{-1}
+$$
+
+The derivation uses $$\mathbb{Var}[Mb] = M \, \mathbb{Var}[b] \, M^{\intercal}$$ for a constant matrix $$M$$ (equation 313 of [The Matrix Cookbook]({{ site.assets }}/resources/the_matrix_cookbook.pdf)), $$\mathbb{Var}[b] = \mathbb{Var}[\epsilon]$$, and $$(A^{+})^{\intercal} = A(A^{\intercal}A)^{-1}$$, since $$A^{\intercal}A$$ is symmetric.
+
+Three methods compute $$\hat{x}$$ for $$A \in \mathbb{R}^{m \times n}$$ with $$m \ge n$$:
+- the normal equations, solved with a Cholesky decomposition: about $$mn^2 + \frac{1}{3}n^3$$ flops, the cheapest. Forming $$A^{\intercal}A$$ squares the [condition number](https://en.wikipedia.org/wiki/Condition_number) $$\kappa(A)$$, the ratio of the largest to the smallest singular value of $$A$$, so the error bound grows with $$\kappa(A)^2$$. They suit well-conditioned problems;
+- a Householder QR decomposition $$A = QR$$, followed by the triangular solve $$R\hat{x} = Q^{\intercal}b$$: about $$2mn^2 - \frac{2}{3}n^3$$ flops, up to twice as many. It is backward stable, and the standard method for full-rank problems;
+- the SVD: the most expensive, and the most robust when $$A$$ is rank deficient or ill-conditioned.
+
+### Iterative Methods
+
+In large sparse systems, such as those of discretized PDEs, elimination fills in zero entries of the factors, and a dense factorization would need $$O(n^2)$$ memory and $$O(n^3)$$ time. Iterative methods only need matrix-vector products, at a cost of $$O(\text{nnz})$$ for $$\text{nnz}$$ non-zero entries, and $$O(n)$$ extra memory. Stationary methods, such as the [Jacobi](https://en.wikipedia.org/wiki/Jacobi_method) and [Gauss–Seidel](https://en.wikipedia.org/wiki/Gauss%E2%80%93Seidel_method) methods, iterate $$x^{(k+1)} = Cx^{(k)} + d$$, with $$C$$ and $$d$$ derived from $$A$$ and $$b$$. Each step multiplies the error to the solution $$x_*$$ by $$C$$, $$x^{(k+1)} - x_* = C(x^{(k)} - x_*)$$, so the iteration converges from any $$x^{(0)}$$ iff the [spectral radius](https://en.wikipedia.org/wiki/Spectral_radius) of $$C$$, its largest absolute eigenvalue, is below 1. For a symmetric positive definite $$A$$, the [conjugate gradient method](https://en.wikipedia.org/wiki/Conjugate_gradient_method) converges faster: it gains a digit of accuracy every $$O(\sqrt{\kappa(A)})$$ iterations.
 
 
 ## Vector Spaces
 
-The **norm** of a vector $$x$$ is written as $$\| x \|$$ or $$\mid x \mid$$. Examples of norms are the Manhattan and the Euclidean norms. The **length of a vector** is $$\| x \| = \sqrt{<x,x>} = \sqrt{x^{\intercal}x}$$, and the **distance** between two vectors is $$d(x,y) = \| x-y \| = \sqrt{ <x-y, x-y>}$$. The **Cauchy-Schwarz Inequality** states that $$\mid <x, y> \mid \,\, \le \,\, \| x \| \, \| y \|$$.
+A norm $$\Vert x \Vert$$ is the length of a vector $$x$$. Examples are the Manhattan norm $$\Vert x \Vert_1 = \sum_i \vert x_i \vert$$ and the Euclidean norm $$\Vert x \Vert_2 = \sqrt{x^{\intercal}x}$$. An inner product $$\langle x, y \rangle$$, defined below, induces the norm $$\Vert x \Vert = \sqrt{\langle x, x \rangle}$$ and the distance $$d(x, y) = \Vert x - y \Vert$$. The dot product $$\langle x, y \rangle = x^{\intercal}y$$ induces the Euclidean norm. The [Cauchy–Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality) states that $$\vert \langle x, y \rangle \vert \le \Vert x \Vert \, \Vert y \Vert$$.
 
-The term *vector multiplication* is ambiguous. It can refer to:
-- an element-wise **multiplication** $$c_j = a_j b_j$$,
-- the **outer product** $$ab^{\intercal}$$, or 
-- the **inner product**, **scalar product** or **dot product** $$<a, b> = a \cdot b = a^{\intercal}b$$, with the geometric interpretation $$a \cdot b = \vert a \vert \, \vert b \vert \, \cos \, \theta$$, where $$\vert a \vert$$ is the magnitude (norm) of $$a$$ and $$\theta$$ is the angle between $$a$$ and $$b$$. The dot product is defined specifically for Euclidean spaces, while the inner product is defined for a generic vector space. It is commutative: $$a \cdot b = b \cdot a$$.
-- the **cross product**, with the geometric interpretation $$a \times b = \vert a \vert \, \vert b \vert \, \sin \, \theta \, n$$, where $$n$$ is the unit vector perpendicular to $$a$$ and $$b$$, given by the right-hand rule. Unlike the dot product, it returns a vector instead of a scalar. It is not commutative: $$a \times b \neq b \times a$$.
+The product of two vectors $$a, b \in \mathbb{R}^n$$ can mean:
+- the element-wise or [Hadamard product](https://en.wikipedia.org/wiki/Hadamard_product_(matrices)) $$a \odot b$$, with entries $$a_j b_j$$;
+- the outer product $$ab^{\intercal} \in \mathbb{R}^{n \times n}$$, a matrix of rank 1 for non-zero $$a$$ and $$b$$;
+- the dot product $$a \cdot b = a^{\intercal}b = \Vert a \Vert \, \Vert b \Vert \cos \omega$$, a scalar, where $$\omega$$ is the angle between $$a$$ and $$b$$. It is commutative, and it is the standard inner product of $$\mathbb{R}^n$$;
+- the cross product $$a \times b = \Vert a \Vert \, \Vert b \Vert \sin(\omega) \, u$$, defined for $$n = 3$$, where $$u$$ is the unit vector perpendicular to $$a$$ and $$b$$ given by the right-hand rule. It is a vector, and it is anti-commutative: $$a \times b = -(b \times a)$$.
 
-A **linear combination** $$v$$ of vectors $$x_1, ..., x_k$$ is a sum of the scaled vectors, i.e. $$v = \sum_{i=1}^k \lambda_i x_i \in V$$, for constants $$\lambda_i$$. The vectors $$x_1, ..., x_k$$ are **linearly dependent** if there is a linear combination $$\sum_{i=1}^k \lambda_i x_i=0$$ with at least one $$\lambda_i \neq 0$$. If only the trivial solution exists, with all $$\lambda_i=0$$, they are **linearly independent**.
+A *linear combination* of vectors $$x_1, \dots, x_k$$ of a vector space $$V$$ is the vector $$\sum_{i=1}^k \lambda_i x_i \in V$$, for scalars $$\lambda_i$$. The vectors are *linearly dependent* if a combination with at least one $$\lambda_i \neq 0$$ gives $$0$$, and *linearly independent* if only the trivial combination, with all $$\lambda_i = 0$$, does. In a linearly independent set, no vector is a combination of the others. To test independence, Gaussian elimination brings the matrix with the vectors as columns to row-echelon form. The vectors are independent iff every column has a pivot. A column without a pivot is a linear combination of the pivot columns to its left.
 
-Intuitively, a set of linearly independent vectors has no redundancy: removing any vector from the set loses information in the representation. To test whether a set of vectors is linearly independent, write the vectors as columns of a matrix and perform the forward pass of Gaussian Elimination, up to the row-echelon form. All column vectors are linearly independent iff all columns are pivot columns. Otherwise, every column without a pivot is a linear combination of the pivot columns (which form a *basis* of that vector space).
+The *span* of a set of vectors is the set of all their linear combinations. A set *generates* $$V$$ if its span is $$V$$. A linearly independent generating set is a *basis*: a minimal generating set, and a maximal linearly independent set. All bases of $$V$$ have the same number of vectors, the *dimension* $$\dim(V)$$. The columns of a matrix at the pivot positions of its row-echelon form are a basis of the span of all its columns.
 
-Given a vector space $$V$$, if every vector can be expressed as a linear combination of a set of vectors $$A=\{ x_1, ..., x_n\}$$, then $$A$$ is a **generating set** of $$V$$. The set of all linear combinations of $$A$$ is called the **span** of $$A$$. $$A$$ is called minimal if no smaller set spans $$V$$. Every linearly independent generating set of $$V$$ is minimal and is called a **basis** of $$V$$. A basis is both a minimal generating set and a maximal linearly independent set of vectors. The dimension of a vector space is the number of its basis vectors. A basis of a vector space $$U$$ can be found from the row-echelon form of a matrix whose columns are the spanning vectors of $$U$$. The spanning vectors in the pivot columns form *a* basis of $$U$$.
-
-The **rank** of a matrix is the number of *linearly independent* columns/rows. Thus, $$rk(A)=rk(A^{\intercal})$$. A matrix $$A \in \mathbb{R}^{n \times n}$$ is invertible iff $$rk(A)=n$$, and an SLE $$Ax=b$$ has a solution only if $$rk(A) = rk (A \mid b)$$. A matrix has **full rank** if its rank equals the largest possible rank for its dimensions; otherwise, it is **rank deficient**. Note that the **dimension** of a vector space is the number of vectors in *any* of its bases, and the rank of a matrix is the dimension of its column space.
+The *rank* $$\text{rk}(A)$$ of a matrix is the number of its linearly independent columns, i.e. the dimension of the span of its columns. It equals the number of linearly independent rows, so $$\text{rk}(A) = \text{rk}(A^{\intercal})$$. $$A \in \mathbb{R}^{m \times n}$$ has *full rank* if $$\text{rk}(A) = \min(m, n)$$, and is *rank deficient* otherwise. A square $$A \in \mathbb{R}^{n \times n}$$ is invertible iff $$\text{rk}(A) = n$$. The SLE $$Ax = b$$ has a solution iff $$\text{rk}(A) = \text{rk}([A \mid b])$$, by the [Rouché–Capelli theorem](https://en.wikipedia.org/wiki/Rouch%C3%A9%E2%80%93Capelli_theorem).
 
 
-## Linear Mapping
+## Linear Mappings
 
-A **Linear Mapping** (also called linear transformation or map) is a function $$\phi: V \rightarrow W$$ between vector spaces $$V$$ and $$W$$, such that $$\phi (\lambda x + \psi y) = \lambda \phi(x) + \psi \phi(y)$$, for constants $$\lambda, \psi$$ and $$x, y \in V$$. A linear mapping can be represented as a function or as a matrix.
+A *linear mapping* $$\Phi: V \rightarrow W$$ between vector spaces $$V$$ and $$W$$ satisfies $$\Phi(\lambda x + \psi y) = \lambda \Phi(x) + \psi \Phi(y)$$ for all $$x, y \in V$$ and scalars $$\lambda, \psi$$. For finite-dimensional spaces with fixed bases, every linear mapping is a matrix: the *transformation matrix* $$A_\Phi$$ maps the coordinates of $$x$$ in the basis of $$V$$ to the coordinates of $$\Phi(x)$$ in the basis of $$W$$.
 
-$$\phi$$ is called **injective** if $$\phi(x)=\phi(y) \rightarrow x = y$$; $$\,\,$$ **surjective** if $$\phi(V)=W$$; $$\,\,$$ **bijective** if both. Surjective means that every element in $$W$$ can be reached from $$V$$. Bijective means that the mapping can be undone, i.e. there is a mapping $$\Psi : W \rightarrow V$$ such that $$\Psi \circ \phi(x) = x$$. Special cases:
-- **Isomorphism** $$\phi: V \rightarrow W$$ if linear and bijective. Finite-dimensional vector spaces $$V$$ and $$W$$ are isomorphic iff $$dim(V) = dim(W)$$, i.e. there is a linear, bijective mapping between any two vector spaces of the same dimension;
-- **Endomorphism** $$\phi : V \rightarrow V$$ if linear;
-- **Automorphism** $$\phi : V \rightarrow V$$ if linear and bijective.
+$$\Phi$$ is *injective* if $$\Phi(x) = \Phi(y) \Rightarrow x = y$$, *surjective* if $$\Phi(V) = W$$, i.e. if it reaches every element of $$W$$, and *bijective* if both. A bijective mapping can be undone: it has an inverse $$\Phi^{-1}: W \rightarrow V$$, with $$\Phi^{-1}(\Phi(x)) = x$$. Special cases:
+- *isomorphism*: $$\Phi: V \rightarrow W$$ linear and bijective. Finite-dimensional $$V$$ and $$W$$ are isomorphic iff $$\dim(V) = \dim(W)$$;
+- *endomorphism*: $$\Phi: V \rightarrow V$$ linear;
+- *automorphism*: $$\Phi: V \rightarrow V$$ linear and bijective.
 
-For linear mappings $$Φ : V → W$$ and $$Ψ : W → X$$, the mapping $$Ψ ◦ Φ : V → X$$ is also linear. If $$Φ : V → W$$ is an isomorphism, then $$Φ^{−1} : W → V$$ is also an isomorphism.
+The composition of linear mappings is linear, and the inverse of an isomorphism is an isomorphism.
 
-For $$y=Ax$$, where $$x$$ is a vector of coordinates, $$A$$ is the **transformation matrix** that maps $$x$$ to the new coordinates $$y$$. In other words, a transformation matrix maps coordinates from one ordered basis to another ordered basis.
+Two matrices $$A, B \in \mathbb{R}^{m \times n}$$ are *equivalent* if $$B = T^{-1}AS$$ for invertible $$S \in \mathbb{R}^{n \times n}$$ and $$T \in \mathbb{R}^{m \times m}$$: they represent the same linear mapping in other bases of $$V$$ and $$W$$, and elementary row and column operations turn one into the other. Two square matrices are [similar](https://en.wikipedia.org/wiki/Matrix_similarity) if $$B = S^{-1}AS$$: they represent the same endomorphism in another basis. Similar matrices are equivalent, but not the reverse. Similar matrices have the same rank, determinant, trace and eigenvalues.
 
-Two matrices $$A, B \in \mathbb{R}^{m \times n}$$ are **equivalent** if there exist regular matrices $$S \in \mathbb{R}^{n \times n}$$ and  $$T \in \mathbb{R}^{m \times m}$$ such that $$B = T^{-1}A S$$, i.e. one matrix can be transformed into the other by a combination of elementary row and column operations. Two matrices $$A, B \in \mathbb{R}^{n \times n}$$ are **similar** if there exists a regular matrix $$S \in \mathbb{R}^{n \times n}$$ such that $$B = S^{-1}A S$$. Thus, similar matrices are always equivalent, but the converse does not hold.
+The *kernel* (null space) $$\ker(\Phi) = \{x \in V : \Phi(x) = 0\}$$ is a subspace of the domain $$V$$. For a matrix, it is the solution set of $$Ax = 0$$: the coefficients of all combinations of the columns of $$A$$ that give $$0$$. The *image* $$\text{Im}(\Phi) = \{\Phi(x) : x \in V\}$$ is a subspace of the codomain $$W$$. For a matrix, it is the span of the columns, of dimension $$\text{rk}(A)$$. The [rank–nullity theorem](https://en.wikipedia.org/wiki/Rank%E2%80%93nullity_theorem) states that:
 
-For $$\phi : V \rightarrow W$$, the **kernel** is the set of vectors $$v \in V$$ that $$\phi$$ maps onto the neutral element $$0_W \in W$$, i.e. $$\{ v \in V : \phi(v)=0_W \}$$. The **kernel space** ($$ker$$ or **null space**, a subspace of the **domain**) of a linear mapping is the solution set of the SLE $$Ax=0$$, i.e. all linear combinations of the elements in $$R^n$$ that produce $$0$$. The **image** ($$Im$$, a subspace of the **codomain**) of a linear mapping $$Φ : V → W$$ is the set of vectors $$w \in W$$ that can be reached from any vector in $$V$$. For a linear mapping $$Φ : V →W$$, it holds that $$\,\,ker(Φ) \subseteq V$$ and $$Im(Φ) \subseteq W$$.
+$$
+\dim(\ker(\Phi)) + \dim(\text{Im}(\Phi)) = \dim(V)
+$$
 
-The **Rank-Nullity theorem** states that $$dim(ker(Φ)) + dim(Im(Φ)) = dim(V)$$ for vector spaces $$V$$, $$W$$ and a linear mapping $$Φ : V →W$$.
+A mapping to a space of lower dimension, $$\dim(W) < \dim(V)$$, thus has a non-trivial kernel: different inputs give the same output.
 
-An **affine mapping / transformation** is a linear transformation followed by a translation. It can represent translation, scaling, rotation and shearing. Affine transformations keep the structure invariant and preserve parallelism and dimension.
+An [affine mapping](https://en.wikipedia.org/wiki/Affine_transformation) $$x \mapsto Ax + t$$ is a linear mapping followed by a translation by $$t$$. It represents translations, scalings, rotations and shears. With an invertible $$A$$, it maps lines to lines and keeps parallel lines parallel, but it changes lengths and angles in general. A fully connected layer of a neural network, before its activation function, is an affine mapping, with the weight matrix as $$A$$ and the bias as $$t$$.
 
 
 ## Analytic Geometry
 
-A bilinear mapping $$\Omega : V \times V \rightarrow \mathbb{R}$$ is called **symmetric** if the order of its arguments does not change the result, and **positive definite** if $$∀x \in V \setminus \{0\} : Ω(x, x) > 0 , Ω(0, 0) = 0$$.
+A *bilinear mapping* $$\Omega: V \times V \rightarrow \mathbb{R}$$ is linear in each argument. It is *symmetric* if $$\Omega(x, y) = \Omega(y, x)$$, and *positive definite* if $$\Omega(x, x) > 0$$ for all $$x \neq 0$$. A symmetric, positive definite bilinear mapping is an *inner product* $$\langle x, y \rangle$$.
 
-A symmetric matrix $$A$$ is called **symmetric, positive definite**, or just positive definite, iff $$∀x ∈ V\setminus \{0\} : x^{\intercal}Ax > 0$$. If only $$\ge$$ holds, it is **positive semidefinite**. Informally, positive definite matrices are the matrix analogue of positive numbers. As an example, the covariance matrix is positive semidefinite.
+A symmetric matrix $$A \in \mathbb{R}^{n \times n}$$ is [positive definite](https://en.wikipedia.org/wiki/Definite_matrix), or s.p.d., if $$x^{\intercal}Ax > 0$$ for all $$x \neq 0$$, and *positive semidefinite* if $$x^{\intercal}Ax \ge 0$$. Positive definite matrices are the matrix analogue of positive numbers. The covariance matrix of a random vector $$x$$ is positive semidefinite, since $$w^{\intercal} \, \mathbb{Var}[x] \, w = \mathbb{Var}[w^{\intercal}x] \ge 0$$ for any $$w$$.
 
-A symmetric, positive definite, bilinear mapping  $$\Omega : V \times V \rightarrow \mathbb{R}$$ is called an inner product on $$V$$ and is typically written as $$<x,y>$$. If $$A$$ is s.p.d., then $$<x,y> = \hat{x}^{\intercal}A\hat{y}$$ defines an inner product, where $$\hat{x}, \hat{y}$$ are the coordinate representations of $$x, y \in V$$. If $$A \in \mathbb{R}^{n \times n}$$ is s.p.d., then:
-- the null space (kernel) of $$A$$ contains only $$0$$, because $$x^{\intercal} A x \gt 0$$ for all $$x \neq 0$$. This implies $$Ax \neq 0$$ if $$x \neq 0$$;
-- the diagonal elements $$a_{ii}$$ of $$A$$ are positive, because $$a_{ii} = e^{\intercal}_i A e_i > 0$$, where $$e_i$$ is the $$i$$-th vector of the standard basis in $$\mathbb{R}^n$$.
+For an s.p.d. $$A$$, $$\langle x, y \rangle = \hat{x}^{\intercal}A\hat{y}$$ is an inner product, where $$\hat{x}$$ and $$\hat{y}$$ are the coordinates of $$x$$ and $$y$$ in a basis of $$V$$. Every inner product on a finite-dimensional space has this form. An s.p.d. matrix:
+- has a kernel that holds only $$0$$, since $$x^{\intercal}Ax > 0$$ implies $$Ax \neq 0$$ for $$x \neq 0$$. It is therefore invertible;
+- has positive diagonal entries, $$a_{ii} = e_i^{\intercal}Ae_i > 0$$, where $$e_i$$ is the $$i$$-th vector of the standard basis;
+- defines a quadratic form $$x^{\intercal}Ax$$ that is strictly convex, with its only minimum at $$x = 0$$.
 
-In optimization, quadratic forms $$x^{\intercal}Ax$$ of positive definite matrices are positive for any non-zero $$x$$, and they are convex. *Important:* all eigenvalues of a positive definite matrix are positive. Since the determinant is the product of the eigenvalues, the determinant of a positive definite matrix is positive. A non-zero determinant implies that an s.p.d. matrix is invertible.
+A *metric* $$d: V \times V \rightarrow \mathbb{R}$$ is:
+- positive definite: $$d(x, y) \ge 0$$, and $$d(x, y) = 0 \Leftrightarrow x = y$$;
+- symmetric: $$d(x, y) = d(y, x)$$;
+- subject to the triangle inequality: $$d(x, z) \le d(x, y) + d(y, z)$$.
 
-A **metric** is a function $$d:V ×V → R$$, with $$(x, y) → d(x, y)$$, that satisfies the following properties:
-- $$d$$ is positive definite, i.e. $$d(x, y) ⩾ 0$$ for all $$x, y ∈ V$$ and $$d(x, y) = 0 \Leftrightarrow x = y$$;
-- $$d$$ is symmetric, i.e. $$d(x, y) = d(y, x)$$ for all $$x, y ∈ V$$;
-- triangle inequality: $$d(x, z) ⩽ d(x, y) + d(y, z)$$ for all $$x, y, z ∈ V$$.
-
-The angle $$w$$ between two vectors is given by $$\cos w = \frac{<x,y>}{\|x\| \|y\|}$$, where $$ <x,y> $$ is typically the dot product $$x^{\intercal}y$$. Thus:
+The distance $$\Vert x - y \Vert$$ induced by a norm is a metric. The angle $$\omega$$ between two vectors satisfies:
 
 $$
-\cos w = \frac{<x,y>}{\sqrt{<x,x> <y,y>}} =  \frac{x^{\intercal}y}{\sqrt{x^{\intercal}xy^{\intercal}y}}
+\cos \omega = \frac{\langle x, y \rangle}{\Vert x \Vert \, \Vert y \Vert} = \frac{x^{\intercal}y}{\sqrt{x^{\intercal}x \; y^{\intercal}y}}
 $$
 
-If $$<x,y>=0$$, the two vectors are **orthogonal**, written $$x \perp y$$ (x and y are **perpendicular**). If, in addition, $$\|x\|=\|y\|=1$$, they are **orthonormal**.
+where the second form uses the dot product. It is the [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity), used to compare embeddings. $$x$$ and $$y$$ are *orthogonal*, $$x \perp y$$, if $$\langle x, y \rangle = 0$$, and *orthonormal* if, in addition, $$\Vert x \Vert = \Vert y \Vert = 1$$.
 
-A square matrix $$A$$ is an **orthogonal matrix** iff its columns are orthonormal. Then $$AA^{\intercal} = I = A^{\intercal}A$$, which implies $$A^{-1}=A^{\intercal}$$.
+A square matrix $$Q$$ is an *orthogonal matrix* iff its columns are orthonormal. Then $$Q^{\intercal}Q = I = QQ^{\intercal}$$, so $$Q^{-1} = Q^{\intercal}$$. It preserves lengths and angles, $$\Vert Qx \Vert = \Vert x \Vert$$: it is a rotation, possibly combined with a reflection.
 
-The **inner product** of two functions $$u : \mathbb{R} \rightarrow \mathbb{R} $$ and $$v: \mathbb{R} \rightarrow \mathbb{R}$$ is defined as $$ <u,v> = \int_a^b u(x) v(x) dx $$, with lower and upper limits $$a, b < \infty$$.
+The inner product of two functions $$u, v: \mathbb{R} \rightarrow \mathbb{R}$$ on an interval $$[a, b]$$ is $$\langle u, v \rangle = \int_a^b u(x)v(x) \, dx$$. For example, $$\sin$$ and $$\cos$$ are orthogonal on $$[-\pi, \pi]$$.
 
-Let $$V$$ be a vector space and $$U ⊆ V$$ a subspace of $$V$$. A linear mapping $$π : V → U$$ is a **projection** if $$π^2 = π ◦ π = π$$, i.e. if $$\pi$$ is idempotent. For matrices, $$P$$ is a projection iff $$P^2 = P$$.
+A linear mapping $$\pi: V \rightarrow U$$ onto a subspace $$U \subseteq V$$ is a *projection* if $$\pi^2 = \pi \circ \pi = \pi$$, i.e. if it is idempotent. A matrix $$P_\pi$$ is a projection iff $$P_\pi^2 = P_\pi$$. The orthogonal projection onto the span of the columns of $$A$$, for linearly independent columns, is $$P_\pi = A(A^{\intercal}A)^{-1}A^{\intercal}$$. The least-squares fit $$A\hat{x} = P_\pi b$$ is thus the orthogonal projection of $$b$$ onto the image of $$A$$, and the residual $$b - A\hat{x}$$ is orthogonal to that image.
+
 
 ## Matrix Decompositions
 
 ### Determinant
 
-Properties of the determinant:
-- $$\det(AB) = \det(A) \det(B)$$; 
-- $$\det(A) = \det(A^{\intercal})$$; 
-- $$\det(A^{-1})=\frac{1}{\det(A)}$$;
-- for matrices with more than 2 columns or rows: $$\det(A) = \sum_{k=1}^{n} (−1)^{k+j}a_{kj} \det(A_{k,j})$$.
-- *Similar* matrices have the same determinant;
-- a matrix $$A$$ is **invertible** if $$\det(A) \neq 0$$;
-- for a diagonal matrix, the determinant is the product of the diagonal elements.
+The *determinant* $$\det(A)$$ of a square matrix is the signed volume of the parallelepiped spanned by its columns, i.e. the signed factor by which the mapping scales volumes. Its properties:
+- $$\det(AB) = \det(A)\det(B)$$, $$\det(A^{\intercal}) = \det(A)$$ and $$\det(A^{-1}) = 1/\det(A)$$;
+- similar matrices have the same determinant;
+- $$A \in \mathbb{R}^{n \times n}$$ is invertible iff $$\det(A) \neq 0$$, iff $$\text{rk}(A) = n$$;
+- the determinant of a triangular matrix, such as a diagonal one, is the product of its diagonal entries.
 
-The determinant is the signed volume of the parallelepiped spanned by the columns of the matrix. It can also be computed as the product of the diagonal elements of the row-echelon form, if this form is obtained without scaling rows, with a sign change for each row swap. Important: $$A$$ is invertible *iff* it has full rank, and a square matrix $$A \in \mathbb{R}^{n \times n}$$ has $$\det(A) \neq 0$$ iff $$rank(A)=n$$.
+The [Laplace expansion](https://en.wikipedia.org/wiki/Laplace_expansion) along column $$j$$ computes it recursively, $$\det(A) = \sum_{k=1}^{n} (-1)^{k+j} a_{kj} \det(A_{k,j})$$, where $$A_{k,j}$$ is $$A$$ without row $$k$$ and column $$j$$. It costs $$O(n!)$$ operations. Gaussian elimination costs $$O(n^3)$$: without row scaling, the determinant is the product of the diagonal entries of the row-echelon form, with a sign change for each row swap.
 
 ### Trace
 
-The **trace** of a square matrix is the sum of its diagonal elements, which equals the sum of its eigenvalues. For a square matrix $$A \in \mathbb{R}^{n \times n}$$, $$λ ∈ \mathbb{R}$$ is an **eigenvalue** of $$A$$ and $$x ∈ \mathbb{R}^n \setminus \{0\}$$ is a corresponding **eigenvector** of $$A$$ if  $$Ax = λx$$.
+The *trace* $$\text{tr}(A)$$ of a square matrix is the sum of its diagonal entries. It is linear, and invariant under cyclic permutations, $$\text{tr}(ABC) = \text{tr}(BCA) = \text{tr}(CAB)$$. For example, $$x^{\intercal}Ax = \text{tr}(Axx^{\intercal})$$.
 
-### Eigenvalues and eigenvectors
+### Eigenvalues and Eigenvectors
 
-The **eigenvalues** of $$A$$ are found by solving $$Ax = \lambda x$$, or equivalently $$\det(A - \lambda I)=0$$, for $$\lambda$$, where $$p(\lambda) = \det(A - \lambda I)$$ is called the **characteristic polynomial**. The eigenvectors $$x_i$$ are then found by solving $$Ax_i=\lambda_i x_i$$ for each eigenvalue $$\lambda_i$$. Eigenvectors of distinct eigenvalues are linearly independent. Therefore, the eigenvectors of a matrix with $$n$$ distinct eigenvalues form *a* basis of $$\mathbb{R}^n$$. A square matrix with fewer linearly independent eigenvectors than its dimension is called **defective**.
+$$\lambda$$ is an *eigenvalue* of $$A \in \mathbb{R}^{n \times n}$$, and $$x \in \mathbb{R}^n \setminus \{0\}$$ a corresponding *eigenvector*, if $$Ax = \lambda x$$. The eigenvalues are the roots of the *characteristic polynomial* $$p(\lambda) = \det(A - \lambda I)$$, and they can be complex for a real $$A$$. The eigenvectors of $$\lambda_i$$ are the non-zero vectors of $$\ker(A - \lambda_i I)$$. They are not unique: if $$x$$ is an eigenvector, so is $$cx$$, for any $$c \neq 0$$. Properties:
+- eigenvectors of distinct eigenvalues are linearly independent, so a matrix with $$n$$ distinct eigenvalues has a basis of eigenvectors. A matrix with fewer than $$n$$ linearly independent eigenvectors is *defective*;
+- $$A$$ and $$A^{\intercal}$$ have the same eigenvalues, but not necessarily the same eigenvectors;
+- $$\det(A)$$ is the product of the eigenvalues, and $$\text{tr}(A)$$ is their sum;
+- by the [spectral theorem](https://en.wikipedia.org/wiki/Spectral_theorem), a symmetric matrix has real eigenvalues and an orthonormal basis of eigenvectors. It is positive definite iff all its eigenvalues are positive, and then $$\det(A) > 0$$;
+- for any $$A \in \mathbb{R}^{m \times n}$$, $$A^{\intercal}A$$ is symmetric and positive semidefinite, since $$x^{\intercal}A^{\intercal}Ax = \Vert Ax \Vert^2 \ge 0$$. It is positive definite iff $$\text{rk}(A) = n$$.
 
-Two vectors are **codirected** if they point in the same direction, and **collinear** if they point in the same or opposite directions. All vectors collinear to $$x$$ are also eigenvectors of $$A$$:
-- non-uniqueness of eigenvectors: if $$x$$ is an eigenvector of $$A$$ with eigenvalue $$λ$$, then $$cx$$ is also an eigenvector of $$A$$ with the same eigenvalue, for any $$c ∈ \mathbb{R}\setminus\{0\}$$;
-- a matrix and its transpose have the same eigenvalues, but not necessarily the same eigenvectors;
-- symmetric, positive definite matrices, such as a non-singular covariance matrix, always have positive, real eigenvalues. Since the determinant is the product of the eigenvalues, it is not zero, and the matrix is invertible;
-- any matrix $$A \in \mathbb{R}^{m \times n}$$ yields a symmetric positive semidefinite matrix $$S=A^{\intercal}A$$. If $$rk(A)=n$$, then $$A^{\intercal}A$$ is symmetric positive definite. By the spectral theorem, $$S$$ has eigenvectors with real eigenvalues, so $$S$$ is positive definite iff all its eigenvalues are positive.
+Numerical libraries do not solve $$p(\lambda) = 0$$, since its roots are sensitive to rounding errors in its coefficients. The [QR algorithm](https://en.wikipedia.org/wiki/QR_algorithm) computes all eigenvalues in $$O(n^3)$$. [Power iteration](https://en.wikipedia.org/wiki/Power_iteration) and the [Lanczos algorithm](https://en.wikipedia.org/wiki/Lanczos_algorithm) compute a few extreme eigenvalues with matrix-vector products only. They suit large sparse matrices, and problems that need only the leading eigenvectors, such as PCA.
 
-Graphical intuition: a linear mapping scales space along the directions of its eigenvectors, each by its eigenvalue. For a diagonal matrix, the eigenvectors are the canonical basis vectors, i.e. the cardinal axes:
+The picture applies five matrices $$A_i \in \mathbb{R}^{2 \times 2}$$ to 400 points. A matrix with a basis of real eigenvectors stretches space along each eigenvector by its eigenvalue, and scales areas by its determinant. Row 1 is diagonal, with the axes as eigenvectors. Row 2 is a shear, a defective matrix with a single eigenvector direction. Row 3 is a rotation, with complex eigenvalues. Row 4 has the eigenvalue 0: it maps the plane onto a line, and its determinant is 0. Row 5 is symmetric, with orthogonal eigenvectors.
 
 {: .picture}
 <img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg"/>
@@ -162,23 +171,15 @@ Adapted from: <a href="{{ site.resources_permalink }}">Mathematics for Machine L
 
 ### Cholesky Decomposition
 
-A symmetric, positive definite matrix $$A$$ can be factorized into a product $$A = LL^{\intercal}$$, where $$L$$ is a *lower-triangular matrix* with positive diagonal elements. $$L$$ is unique, and its entries can be computed one at a time by expanding $$LL^{\intercal}$$ and comparing the result with $$A$$. The Cholesky decomposition is used, e.g., to sample from Gaussian distributions and to compute determinants efficiently, since $$\det(A) = \det(L) \det(L^⊤) = \det(L)^2$$.
+An s.p.d. matrix factorizes uniquely as $$A = LL^{\intercal}$$, where $$L$$ is lower triangular with positive diagonal entries. The [Cholesky decomposition](https://en.wikipedia.org/wiki/Cholesky_decomposition) costs $$\frac{1}{3}n^3$$ flops, half the cost of an LU decomposition, and solves s.p.d. systems such as the normal equations. It also samples from a Gaussian $$\mathcal{N}(\mu, A)$$, as $$\mu + Lz$$ with $$z \sim \mathcal{N}(0, I)$$, and gives the determinant $$\det(A) = \det(L)^2 = \prod_i L_{ii}^2$$.
 
-### Diagonalizable
+### Eigendecomposition
 
-A matrix $$A \in \mathbb{R}^{n \times n}$$ is diagonalizable if it is similar to a diagonal matrix, i.e. if there is an invertible matrix $$P \in \mathbb{R}^{n \times n}$$ such that $$D=P^{-1}AP$$. The inverse of a diagonal matrix is obtained by replacing each diagonal element $$a_{ii}$$ by its reciprocal $$\frac{1}{a_{ii}}$$.
-
-A matrix $$A \in \mathbb{R}^{n \times n}$$ can be factored into $$A = PDP^{-1}$$, where $$P \in \mathbb{R}^{n \times n}$$ and $$D$$ is a diagonal matrix with the eigenvalues of $$A$$ on its diagonal, iff the eigenvectors of $$A$$ form a basis of $$\mathbb{R}^n$$. When this eigendecomposition exists:
-
-$$
-\det(A) = \det(PDP^{−1}) = \det(P) \, \det(D) \, \det(P^{−1})
-$$
-
-and $$A^k = (PDP^{−1})^k = PD^kP^{−1}$$. A symmetric matrix can always be diagonalized.
+A matrix $$A \in \mathbb{R}^{n \times n}$$ is *diagonalizable* if it is similar to a diagonal matrix, $$D = P^{-1}AP$$, for an invertible $$P$$. This holds iff the eigenvectors of $$A$$ form a basis of $$\mathbb{R}^n$$. Then $$A = PDP^{-1}$$, the *eigendecomposition*, where the columns of $$P$$ are the eigenvectors and $$D$$ holds the eigenvalues. Powers and inverses become cheap: $$A^k = PD^kP^{-1}$$, and, when no eigenvalue is 0, $$A^{-1} = PD^{-1}P^{-1}$$, where $$D^{-1}$$ holds the reciprocals of the eigenvalues. A symmetric matrix is always diagonalizable, with an orthogonal $$P$$: $$A = PDP^{\intercal}$$.
 
 ### Singular Value Decomposition
 
-The Singular Value Decomposition (SVD) decomposes a matrix as $$A = U \Sigma V^{\intercal}$$:
+The singular value decomposition (SVD) factorizes any matrix $$A \in \mathbb{R}^{m \times n}$$ as $$A = U \Sigma V^{\intercal}$$:
 
 {: .picture}
 <img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/mml_svd.svg"/>
@@ -186,18 +187,19 @@ The Singular Value Decomposition (SVD) decomposes a matrix as $$A = U \Sigma V^{
 {: .caption}
 Adapted from: <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning book</a>
 
-The SVD exists for every matrix, not only for square ones:
-- $$\Sigma$$ is the **singular value matrix**, a (possibly non-square) matrix with non-negative diagonal entries $$\Sigma_{ii} = \sigma_{i} \ge 0$$ and zeros elsewhere. The values $$\sigma_{i}$$ are the **singular values**. $$\Sigma$$ is unique. By convention, the $$\sigma_{i}$$ are sorted by value, with the largest at $$i=1$$;
-- $$U$$ is orthogonal, i.e. $$(UU^{\intercal}=U^{\intercal}U=I)$$, so its columns are orthonormal. Its column vectors $$u_i$$ are called **left-singular vectors**. The left-singular vectors of $$A$$ are the eigenbasis (i.e. the eigenvectors) of $$AA^{\intercal}$$;
-- $$V$$ is orthogonal, and its column vectors $$v_i$$ are called **right-singular vectors**. The right-singular vectors of $$A$$ are the eigenvectors of $$A^{\intercal}A$$.
+- $$U \in \mathbb{R}^{m \times m}$$ is orthogonal. Its columns $$u_i$$, the *left-singular vectors*, are eigenvectors of $$AA^{\intercal}$$;
+- $$V \in \mathbb{R}^{n \times n}$$ is orthogonal. Its columns $$v_i$$, the *right-singular vectors*, are eigenvectors of $$A^{\intercal}A$$;
+- $$\Sigma \in \mathbb{R}^{m \times n}$$ is zero except for its diagonal, which holds the *singular values* $$\sigma_1 \ge \sigma_2 \ge \dots \ge 0$$. The non-zero $$\sigma_i^2$$ are the non-zero eigenvalues of $$A^{\intercal}A$$ and of $$AA^{\intercal}$$. $$\Sigma$$ is unique; $$U$$ and $$V$$ are not.
 
-Computing the SVD of $$A \in \mathbb{R}^{m \times n}$$ is equivalent to finding two sets of orthonormal bases, $$U = (u_1,... , u_m)$$ and $$V = (v_1,... , v_n)$$, of the codomain $$\mathbb{R}^m$$ and the domain $$\mathbb{R}^n$$, respectively. These ordered bases form the matrices $$U$$ and $$V$$. For an s.p.d. matrix, the eigendecomposition ($$S = S^⊤ = PDP^⊤$$) and the SVD ($$S = UΣV^⊤$$) are equivalent, with $$U = P = V$$ and $$D = Σ$$.
+The SVD finds orthonormal bases of the domain $$\mathbb{R}^n$$ and of the codomain $$\mathbb{R}^m$$ with $$Av_i = \sigma_i u_i$$. For an s.p.d. matrix, the SVD and the eigendecomposition $$A = PDP^{\intercal}$$ coincide, with $$U = V = P$$ and $$\Sigma = D$$. The SVD gives the pseudo-inverse of any matrix, $$A^{+} = V \Sigma^{+} U^{\intercal}$$, where $$\Sigma^{+} \in \mathbb{R}^{n \times m}$$ is the transpose of $$\Sigma$$ with each non-zero $$\sigma_i$$ replaced by $$1/\sigma_i$$.
 
-Matrix approximation (compression) reconstructs the original matrix from fewer singular values $$\sigma$$. A rank-$$k$$ approximation is:
+Keeping the $$k$$ largest singular values gives the rank-$$k$$ approximation:
 
 $$
-\hat{A}(k) = \sum_{i=1}^{k} \sigma_i u_i v_i^{\intercal} = \sum_{i=1}^k \sigma_i A_i
+\hat{A}(k) = \sum_{i=1}^{k} \sigma_i u_i v_i^{\intercal}
 $$
+
+a sum of $$k$$ outer products of rank 1. By the Eckart–Young theorem, it is the best [rank-$$k$$ approximation](https://en.wikipedia.org/wiki/Low-rank_approximation) of $$A$$ in the spectral and Frobenius norms, with a spectral-norm error $$\Vert A - \hat{A}(k) \Vert_2 = \sigma_{k+1}$$. It stores $$k(m + n + 1)$$ numbers instead of $$mn$$. For the $$256 \times 256$$ image on the right of the picture below, 20 singular values take 16% of the storage, and 85 take 67%.
 
 {: .picture}
 <img width="43%" height="43%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="50%" height="50%" src="{{ site.assets }}/algebra-for-ml/svd_example.svg"/>
@@ -207,58 +209,28 @@ $$
 
 ### Eigenvalue Decomposition vs. Singular Value Decomposition
 
-- the SVD exists for any matrix. The ED is defined only for square matrices, and exists only if there is a basis of eigenvectors in $$\mathbb{R}^n$$;
-- in the SVD, the domain and codomain can be vector spaces of different dimensions;
-- the vectors of $$P$$ in the ED are not necessarily orthogonal. The vectors in the matrices $$U$$ and $$V$$ of the SVD are orthonormal, so they represent rotations, possibly combined with a reflection.
+- The SVD exists for any matrix. The eigendecomposition exists only for square matrices with a basis of eigenvectors.
+- In the SVD, the domain and the codomain can have different dimensions.
+- The eigenvectors in $$P$$ are not orthogonal in general, so $$P$$ is a general change of basis. $$U$$ and $$V$$ are orthogonal: rotations, possibly combined with reflections.
+- Eigenvalues can be negative or complex. Singular values are real and non-negative.
+- Both cost $$O(n^3)$$ for an $$n \times n$$ matrix. The SVD of an $$m \times n$$ matrix costs $$O(mn \min(m, n))$$.
 
 
 ## Vector Calculus
 
 ### Derivative
 
-The **derivative** of $$f$$ at $$x$$ is defined as the following limit, for $$h > 0$$:
+The derivative of $$f: \mathbb{R} \rightarrow \mathbb{R}$$ at $$x$$ is the limit:
 
 $$
 \frac{df}{dx} = \lim_{h \rightarrow 0} \frac{f(x+h) - f(x)}{h}
 $$
 
-In the limit, this yields the $$tangent$$.
+It is the slope of the tangent to the graph of $$f$$ at $$x$$.
 
-### Taylor series
+### Gradient, Jacobian and Hessian
 
-The **Taylor series** represents a function $$f$$ as an infinite sum of terms, computed from the derivatives of $$f$$ at a single point $$x_0$$. The **Taylor Polynomial** of degree $$n$$ of $$f$$ at $$x_0$$ is:
-
-$$
-T_n(x) = \sum_{k=0}^n \frac{f^{(k)}(x_0)}{k!}(x-x_0)^k
-$$
-
-where $$f^{(k)}$$ is the $$k$$-th derivative of $$f$$. The Taylor series is the Taylor polynomial of infinite order, $$T_{\infty}(x)$$. If $$T_{\infty}(x)=f(x)$$, $$f$$ is called **analytic**.
-
-Relevance to ML:
-- ML often requires expectations, i.e. integrals of the form $$ \mathbb{E}[f(x)] = \int f(x) p(x) dx$$. Even for a parametric $$p(x)$$, this integral typically has no analytical solution. The Taylor series expansion of $$f(x)$$ gives an approximate solution $$\mathbb{E}[f(x)] \approx \mathbb{E}[T_k(x)]$$.
-- in Bayesian statistics, computing the posterior often involves integrals: $$p(x \mid y) = \frac{ p(y \mid x) p(x)}{p(y)}$$, where $$p(y) = \int p(y \mid x) p(x) dx$$. In realistic problems, these integrals are often multidimensional and analytically intractable (except in a few special cases, such as with conjugate priors), so approximate inference is required.
-- much of non-Bayesian statistics is based on maximum likelihood, i.e. finding the maximum of a (usually multidimensional) function. This requires its derivatives, i.e. differentiation. Numerical methods are not always required, but they are used because they are simpler (faster). In short, differentiation is more tractable than integration.
-- more details in [Taylor expansions for the moments of functions of random variables](https://en.wikipedia.org/wiki/Taylor_expansions_for_the_moments_of_functions_of_random_variables).
-
-### Newton's method
-
-**Newton's method** is a root-finding algorithm that produces successively better approximations to the roots (or zeroes) of a real-valued function, i.e. it solves equations of the form $$f(x)=0$$ by successive approximation. The iterations are:
-
-$$
-x_{n+1}=x_{n}-{\frac {f(x_{n})}{f'(x_{n})}}
-$$
-
-The initial value $$x_0$$ should be as close as possible to the zero. The line tangent to $$y=f(x)$$ at $$x=x_0$$ crosses the $$x$$ axis at a new, improved guess $$x_1$$. A stationary point of a function (a minimum, maximum or saddle point) can be found by computing the root of its derivative, i.e. $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$. For multivariate functions, division is not defined, so it is replaced by multiplication by the inverse of the Hessian, i.e. $$x_{n+1}=x_{n}- \left(\triangledown^2 f(x_{n})\right)^{-1} \triangledown f(x_{n})$$.
-
-{: .picture}
-<img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/newton_method.gif"/>
-
-{: .caption}
-(Source: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)
-
-### Gradient and Hessian
-
-The **gradient** or **Jacobian** $$\triangledown_x f(x)$$ of a function $$f : \mathbb{R}^n \rightarrow \mathbb{R}^m$$ is the $$m \times n$$ matrix of *partial* derivatives $$\frac{\partial f_i(x)}{\partial x_j}$$, for each function $$i$$ and variable $$j$$. Useful rules of partial differentiation:
+The *gradient* of $$f: \mathbb{R}^n \rightarrow \mathbb{R}$$ is the column vector of its partial derivatives, $$\nabla f(x) = \left[ \frac{\partial f}{\partial x_1}, \dots, \frac{\partial f}{\partial x_n} \right]^{\intercal}$$. The *Jacobian* of $$f: \mathbb{R}^n \rightarrow \mathbb{R}^m$$ is the $$m \times n$$ matrix $$J_f = \frac{\partial f}{\partial x}$$, with entries $$\frac{\partial f_i}{\partial x_j}$$. For $$m = 1$$, $$J_f = \nabla f^{\intercal}$$. The rules of differentiation, for $$f, g: \mathbb{R} \rightarrow \mathbb{R}$$, are:
 
 $$
 \begin{align*}
@@ -269,7 +241,9 @@ $$
 \end{align*}
 $$
 
-The **Hessian** $$\triangledown^2_{x,y} f(x,y)$$ of a function is the matrix of all second-order partial derivatives of all variables with respect to all other variables. It is *symmetric* if the second-order partial derivatives are continuous:
+For vector functions, the chain rule multiplies Jacobians: $$J_{g \circ f}(x) = J_g(f(x)) \, J_f(x)$$.
+
+The *Hessian* $$\mathbf{H}_f \in \mathbb{R}^{n \times n}$$ of $$f: \mathbb{R}^n \rightarrow \mathbb{R}$$ holds all its second-order partial derivatives. It is symmetric if they are continuous, by [Schwarz's theorem](https://en.wikipedia.org/wiki/Symmetry_of_second_derivatives):
 
 $$
 \mathbf{H}_f =
@@ -281,16 +255,59 @@ $$
 \end{bmatrix}
 $$
 
+### Taylor Series
 
-## Deep Neural Networks
-
-The output $$y$$ of a $$K$$-deep DNN is:
+The Taylor polynomial of degree $$q$$ of $$f$$ at $$x_0$$ is:
 
 $$
-y = (f_K ◦ f_{K−1} ◦ ... ◦ f_1)(x) = f_K(f_{K−1}( ... (f_1(x)) ... ))
+T_q(x) = \sum_{j=0}^{q} \frac{f^{(j)}(x_0)}{j!}(x-x_0)^j
 $$
 
-The **chain rule** gives the partial derivatives as follows:
+where $$f^{(j)}$$ is the $$j$$-th derivative of $$f$$. The Taylor series is the limit $$T_{\infty}$$. $$f$$ is *analytic* at $$x_0$$ if $$T_{\infty}(x) = f(x)$$ for all $$x$$ near $$x_0$$. For $$f: \mathbb{R}^n \rightarrow \mathbb{R}$$, the expansion to second order is:
+
+$$
+f(x) \approx f(x_0) + \nabla f(x_0)^{\intercal}(x - x_0) + \frac{1}{2}(x - x_0)^{\intercal} \, \mathbf{H}_f(x_0) \, (x - x_0)
+$$
+
+Uses in ML:
+- expectations $$\mathbb{E}[f(x)] = \int f(x) p(x) \, dx$$ often have no closed form. The second-order expansion around the mean $$\mu$$ of $$x$$ gives $$\mathbb{E}[f(x)] \approx f(\mu) + \frac{1}{2} f''(\mu) \, \mathbb{Var}[x]$$. More details in [Taylor expansions for the moments of functions of random variables](https://en.wikipedia.org/wiki/Taylor_expansions_for_the_moments_of_functions_of_random_variables);
+- the posterior $$p(\theta \mid \mathcal{D}) = p(\mathcal{D} \mid \theta) \, p(\theta) / p(\mathcal{D})$$ needs the evidence $$p(\mathcal{D}) = \int p(\mathcal{D} \mid \theta) \, p(\theta) \, d\theta$$, which has a closed form only in special cases, such as conjugate priors. The [Laplace approximation](https://en.wikipedia.org/wiki/Laplace%27s_approximation) expands $$\log p(\theta \mid \mathcal{D})$$ to second order around its mode $$\theta^*$$. The result is a Gaussian with mean $$\theta^*$$ and covariance $$\mathbf{H}^{-1}$$, where $$\mathbf{H}$$ is the Hessian of $$-\log p(\theta \mid \mathcal{D})$$ at $$\theta^*$$;
+- maximum likelihood estimation needs only derivatives, which are easier to compute than integrals. Newton's method, below, uses the second-order expansion at each step.
+
+### Newton's Method
+
+Newton's method finds a root of $$f$$, i.e. it solves $$f(x) = 0$$, by iterating:
+
+$$
+x^{(k+1)} = x^{(k)} - \frac{f(x^{(k)})}{f'(x^{(k)})}
+$$
+
+Each step follows the tangent to $$f$$ at $$x^{(k)}$$ to where it crosses the $$x$$ axis. Near a simple root, the number of correct digits roughly doubles at each step. From a starting point $$x^{(0)}$$ far from the root, the iteration can diverge.
+
+{: .picture}
+<img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/newton_method.gif"/>
+
+{: .caption}
+(Source: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Newton%27s_method">Newton's method</a>)
+
+A stationary point of $$f$$ (a minimum, maximum or saddle point) is a root of $$f'$$, found with $$x^{(k+1)} = x^{(k)} - f'(x^{(k)}) / f''(x^{(k)})$$. In $$n$$ dimensions, the division becomes a multiplication with the inverse of the Hessian:
+
+$$
+x^{(k+1)} = x^{(k)} - \mathbf{H}_f(x^{(k)})^{-1} \, \nabla f(x^{(k)})
+$$
+
+This step goes to the stationary point of the second-order Taylor expansion of $$f$$ at $$x^{(k)}$$, which is its minimum when the Hessian is positive definite. It solves an $$n \times n$$ linear system, at $$O(n^3)$$ time and $$O(n^2)$$ memory, which rules out Newton's method for neural networks with billions of parameters. Quasi-Newton methods, such as [L-BFGS](https://en.wikipedia.org/wiki/Limited-memory_BFGS), approximate the inverse Hessian from the last few steps and gradients, at $$O(n)$$ memory per stored step.
+
+
+## Backpropagation and Automatic Differentiation
+
+A neural network of $$K$$ layers computes:
+
+$$
+y = (f_K \circ f_{K-1} \circ \dots \circ f_1)(x) = f_K(f_{K-1}( \dots (f_1(x)) \dots ))
+$$
+
+where layer $$f_{i+1}$$ has the parameters $$\boldsymbol{\theta}_i$$. The chain rule gives the derivatives of a loss $$L$$ with respect to the parameters, as products of Jacobians:
 
 $$
 \begin{align*}
@@ -301,17 +318,15 @@ $$
 \end{align*}
 $$
 
-where the orange terms are partial derivatives of a layer with respect to its inputs, and the blue terms are partial derivatives of a layer with respect to its parameters.
+The orange terms are the derivatives of a layer with respect to its input, and the blue terms with respect to its parameters. Each line reuses the product of the line above, and adds only the boxed terms. Backpropagation evaluates the products from the left, from the loss towards the input. Each product is then a row vector times a Jacobian, so the backward pass costs a small multiple of the forward pass.
 
-Backpropagation is a special case of **automatic differentiation**, a technique that evaluates the gradient of a function through intermediate variables and their dependencies, by applying the chain rule. Example: 
-
-Consider the function
+Backpropagation is a special case of [automatic differentiation](https://en.wikipedia.org/wiki/Automatic_differentiation), which computes the exact derivatives of a program by applying the chain rule to its elementary operations. Take the function:
 
 $$
-f(x) = \sqrt{x^2 + \exp(x^2)} + \cos\left(x^2 + \exp(x^2)\right) \, .
+f(x) = \sqrt{x^2 + \exp(x^2)} + \cos\left(x^2 + \exp(x^2)\right)
 $$
 
-By application of the chain rule, and noting that differentiation is linear, we compute the gradient
+Its derivative, written out explicitly, is:
 
 $$
 \begin{align*}
@@ -322,17 +337,7 @@ $$
 
 (Source: section 5.6, <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
 
-"Writing out the gradient in this explicit way is often impractical since it often results in a very lengthy expression for a derivative. In practice, it means that, if we are not careful, the implementation of the gradient could be significantly more expensive than computing the function, which imposes unnecessary overhead."
-
-Automatic differentiation instead performs an efficient *forward* pass by reusing intermediate results, and breaks the *back propagation* algorithm into partial derivatives that propagate backwards through the graph:
-
-Consider the function
-
-$$
-f(x) = \sqrt{x^2 + \exp(x^2)} + \cos\left(x^2 + \exp(x^2)\right)
-$$
-
-If we were to implement a function $$f$$ on a computer, we would be able to save some computation by using *intermediate variables*:
+The explicit expression repeats subexpressions, such as $$x^2 + \exp(x^2)$$, and evaluating it as written costs more than evaluating $$f$$. Automatic differentiation instead names each intermediate result once:
 
 $$
 \begin{align*}
@@ -348,62 +353,104 @@ $$
 {: .picture}
 <img width="57%" height="57%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
 
-This is the same kind of thinking process that occurs when applying the chain rule. Note that the preceding set of equations requires fewer operations than a direct implementation of the function $$f(x)$$.
-
 {: .caption}
 (Adapted from: example 5.14 in <a href="{{ site.resources_permalink }}">Mathematics for Machine Learning</a>)
+
+The forward pass computes $$a$$ to $$f$$ in this order, with fewer operations than a direct implementation of $$f$$. The local derivatives of the operations are:
+
+$$
+\frac{\partial a}{\partial x} = 2x, \quad
+\frac{\partial b}{\partial a} = \exp(a), \quad
+\frac{\partial c}{\partial a} = \frac{\partial c}{\partial b} = 1, \quad
+\frac{\partial d}{\partial c} = \frac{1}{2\sqrt{c}}, \quad
+\frac{\partial e}{\partial c} = -\sin(c), \quad
+\frac{\partial f}{\partial d} = \frac{\partial f}{\partial e} = 1
+$$
+
+The backward pass applies the chain rule from $$f$$ back to $$x$$, and sums over the paths of the graph:
+
+$$
+\begin{align*}
+\frac{\partial f}{\partial c} & = \frac{\partial f}{\partial d} \frac{\partial d}{\partial c} + \frac{\partial f}{\partial e} \frac{\partial e}{\partial c} = \frac{1}{2\sqrt{c}} - \sin(c) \\
+\frac{\partial f}{\partial b} & = \frac{\partial f}{\partial c} \frac{\partial c}{\partial b} = \frac{\partial f}{\partial c} \\
+\frac{\partial f}{\partial a} & = \frac{\partial f}{\partial b} \frac{\partial b}{\partial a} + \frac{\partial f}{\partial c} \frac{\partial c}{\partial a} = \frac{\partial f}{\partial c} \left( \exp(a) + 1 \right) \\
+\frac{\partial f}{\partial x} & = \frac{\partial f}{\partial a} \frac{\partial a}{\partial x} = 2x \, \frac{\partial f}{\partial c} \left( \exp(a) + 1 \right)
+\end{align*}
+$$
+
+The result equals the explicit derivative above. Each step reuses the values of the forward pass and the derivatives already computed, so the backward pass costs a small multiple of the forward pass, whatever the number of inputs. The price is memory: the backward pass needs the intermediate values of the forward pass.
 
 
 ## Continuous Optimization
 
-A stationary point is a minimum or a maximum depending on the sign of the second derivative at that point. The second derivative $$\frac{d^2f(x)}{dx^2}$$ is evaluated at all stationary points: if $$f′′(x)>0$$, the function is concave up and the point is a minimum. If $$<0$$, it is concave down and the point is a maximum.
+A *stationary point* $$x_*$$ of $$f$$ has $$\nabla f(x_*) = 0$$. It is a local minimum if $$\mathbf{H}_f(x_*)$$ is positive definite, a local maximum if it is negative definite, and a saddle point if it has both positive and negative eigenvalues. In one dimension, $$f''(x_*) > 0$$ gives a minimum, where $$f$$ is concave up, and $$f''(x_*) < 0$$ gives a maximum.
 
 ### Gradient Descent
 
-Gradient Descent is an iterative method to minimize a function $$f$$. For iteration $$i$$ and step size $$\gamma$$:
+Gradient descent minimizes $$f$$ with steps of size $$\gamma$$ along the negative gradient:
 
 $$
-x_{i+1} = x_i − γ((∇f)(x_i))^{\intercal}
+x^{(k+1)} = x^{(k)} - \gamma \nabla f(x^{(k)})
 $$
 
-**Gradient Descent with Momentum** stores the update $$\Delta x_i$$ of each iteration $$i$$, and computes the next update as a linear combination of the current and previous gradients:
+For a strongly convex $$f$$ and a well-chosen $$\gamma$$, the error shrinks by a factor of about $$1 - 1/\kappa$$ per step, where $$\kappa$$ is the ratio of the largest to the smallest eigenvalue of the Hessian. Badly conditioned problems zigzag across narrow valleys and converge slowly.
+
+**Gradient descent with momentum** adds a fraction $$\alpha$$ of the previous update $$\Delta x^{(k)} = x^{(k)} - x^{(k-1)}$$:
 
 $$
-x_{i+1} = x_i − γ_i((∇f)(x_i))^{\intercal} + α∆x_i
+x^{(k+1)} = x^{(k)} - \gamma_k \nabla f(x^{(k)}) + \alpha \Delta x^{(k)}
 $$
 
-where $$∆x_i = x_i − x_{i−1} = α∆x_{i−1} − γ_{i−1}((∇f)(x_{i−1}))^{\intercal}$$ and $$\alpha \in [0,1]$$. $$\alpha$$ is a user-defined hyper-parameter, close to $$1$$. With $$\alpha=0$$, the method reduces to regular Gradient Descent.
+with $$\alpha \in [0, 1]$$; a common value is $$0.9$$, and $$\alpha = 0$$ gives gradient descent. The update is a moving average of past gradients. Gradient components that change sign between steps cancel out, which damps the zigzag, and consistent components add up, which speeds up the descent. Momentum stores one extra vector.
 
-**Stochastic Gradient Descent** is a computationally cheaper and noisy approximation of gradient descent that uses only a subset of the inputs at each iteration.
-
-### Constrained optimization
-
-The goal is to find $$min_x f(x)$$ subject to $$g_i(x) \le 0$$, for all $$i=1,...,m$$. The constrained problem is converted into an unconstrained problem of minimizing $$J$$, where:
-
-$$
-J(x) = f(x) + \sum_{i=1}^m \mathbb{1} (g_i(x))
-$$
-
-where $$\mathbb{1}(z)$$ is an infinite step function: $$\mathbb{1}(z)=0$$ if $$z \le 0$$, and $$\mathbb{1}(z)=\infty$$ otherwise. This step function is difficult to optimize, so it is replaced by **Lagrange multipliers** $$\lambda$$. The new function to minimize is:
-
-$$
-L(x) = f(x) + \sum_{i=1}^m \lambda_i (g_i(x)) = f(x) + \lambda^{\intercal} g(x)
-$$
-
-**Lagrange duality** converts an optimization problem in one set of variables x (the **primal variables**) into another optimization problem in a different set of variables λ (the **dual variables**). Further details are in section 7.2 of the <a href="{{ site.resources_permalink }}">MML book</a>.
+**Stochastic gradient descent** (SGD) applies when the loss is an average over $$N$$ samples, $$f(x) = \frac{1}{N} \sum_{i=1}^{N} f_i(x)$$. It replaces the gradient by the average gradient of a random mini-batch of $$B$$ samples. This estimate is unbiased, its variance decreases as $$1/B$$, and a step costs $$B$$ instead of $$N$$ sample gradients. On large datasets, many cheap noisy steps make faster progress than a few exact ones, and SGD and its variants train almost all deep networks.
 
 ### Adam Optimizer
 
-Adam (ADAptive Moment estimation) uses estimates of the first and second moments of the gradient (the second moment is the exponential moving average of the squared gradients, a per-parameter estimate of the gradient scale) to adapt the learning rate of each weight of the neural network:
-- the second moment is not the second derivative (the curvature), which would be too expensive to compute;
-- "The method computes individual adaptive learning rates for different parameters from estimates of first and second moments of the gradients."
-- in some cases, Adam does not converge to the optimal solution, while SGD does. According to Keskar and Socher (2017), switching to SGD in some cases yields better generalization performance than Adam alone;
-- it computes the exponential moving averages of the gradients and of the squared gradients. Parameters $$\beta_1$$ and $$\beta_2$$ control the decay rates of these moving averages. Adam combines two gradient descent methods: Momentum and RMSP.
+[Adam](https://arxiv.org/abs/1412.6980) (adaptive moment estimation, Kingma and Ba, ICLR 2015) gives each parameter its own step size. With the mini-batch gradient $$g^{(k)}$$, it keeps exponential moving averages of the gradient (the first moment) and of its element-wise square (the second moment). It corrects their bias towards their zero initialization, and divides the step of each parameter by the square root of its second moment:
 
-### Convex sets and functions
+$$
+\begin{align*}
+m^{(k)} & = \beta_1 m^{(k-1)} + (1 - \beta_1) \, g^{(k)} \\
+v^{(k)} & = \beta_2 v^{(k-1)} + (1 - \beta_2) \, g^{(k)} \odot g^{(k)} \\
+\hat{m}^{(k)} & = m^{(k)} / (1 - \beta_1^k), \quad \hat{v}^{(k)} = v^{(k)} / (1 - \beta_2^k) \\
+x^{(k)} & = x^{(k-1)} - \gamma \, \hat{m}^{(k)} / \left( \sqrt{\hat{v}^{(k)}} + \epsilon \right)
+\end{align*}
+$$
 
-**Convex sets** are sets in which the straight line connecting any two elements lies inside the set. Similarly, a **[convex function](https://en.wikipedia.org/wiki/Convex_function)** is a function where the line segment between any two distinct points on its graph lies on or above the graph between those points. A convex function is concave up. If it is twice differentiable, its second derivative is non-negative on its entire domain. A strictly convex function has at most one global minimum.
+with an element-wise square root and division, $$m^{(0)} = v^{(0)} = 0$$, and the defaults $$\gamma = 0.001$$, $$\beta_1 = 0.9$$, $$\beta_2 = 0.999$$ and $$\epsilon = 10^{-8}$$. The first moment acts as momentum. The second moment, the per-parameter scaling of RMSProp (Tieleman and Hinton, 2012), estimates the scale of each gradient component. It is not the curvature, which would be too expensive to compute. Adam stores two extra values per parameter. It can fail to converge, even on simple convex problems ([Reddi et al., 2018](https://arxiv.org/abs/1904.09237)), and switching from Adam to SGD during training can close the gap in generalization between the two ([Keskar and Socher, 2017](https://arxiv.org/abs/1712.07628)).
 
-### Linear programming
+The optimizers compare as follows, for $$n$$ parameters:
 
-**Linear programming**, or **linear optimization**, is a method to achieve the best outcome (maximum profit or lowest cost) in a mathematical model whose requirements are linear relationships, e.g. of the form $$f(x) = ax+b$$. In algebraic notation, a linear program is: find a vector $$x$$ that maximizes/minimizes $$c^{\intercal} x$$, subject to $$Ax \le b$$ and $$x \ge 0$$, where $$A \in \mathbb{R}^{m \times d}$$ and $$b \in \mathbb{R}^m$$. Solvers include Simplex, HiGHS, etc.
+| Method | Extra memory | Work per step | Idea | When to use |
+|---|---|---|---|---|
+| Gradient descent | none | one full gradient | steepest descent | small, smooth problems |
+| SGD | none | one mini-batch gradient | many cheap, noisy steps | large datasets |
+| Momentum | $$n$$ | as SGD | average of past gradients | badly conditioned problems, usually with SGD |
+| Adam | $$2n$$ | as SGD | a step size per parameter | deep networks with badly scaled gradients, with little tuning |
+| L-BFGS | a few vectors of size $$n$$ | one gradient, plus $$O(n)$$ per stored step | approximate inverse Hessian | smooth, deterministic problems |
+| Newton | $$n^2$$ | $$O(n^3)$$ | minimum of the quadratic model | small problems that need high accuracy |
+
+### Constrained Optimization
+
+The problem $$\min_x f(x)$$ subject to $$g_i(x) \le 0$$, for $$i = 1, \dots, m$$, is equivalent to the unconstrained minimization of:
+
+$$
+f(x) + \sum_{i=1}^m \mathbb{1}(g_i(x))
+$$
+
+where $$\mathbb{1}(z) = 0$$ if $$z \le 0$$, and $$\mathbb{1}(z) = \infty$$ otherwise. This step function is hard to optimize. [Lagrange multipliers](https://en.wikipedia.org/wiki/Lagrange_multiplier) $$\lambda_i \ge 0$$ replace it by a linear term, in the *Lagrangian*:
+
+$$
+\mathfrak{L}(x, \lambda) = f(x) + \sum_{i=1}^m \lambda_i g_i(x) = f(x) + \lambda^{\intercal} g(x)
+$$
+
+Since $$\max_{\lambda \ge 0} \mathfrak{L}(x, \lambda)$$ equals the function above, the original *primal* problem is $$\min_x \max_{\lambda \ge 0} \mathfrak{L}(x, \lambda)$$. [Lagrange duality](https://en.wikipedia.org/wiki/Duality_(optimization)) swaps the order, into the *dual* problem $$\max_{\lambda \ge 0} \mathfrak{D}(\lambda)$$, with $$\mathfrak{D}(\lambda) = \min_x \mathfrak{L}(x, \lambda)$$: an optimization over the dual variables $$\lambda$$ instead of the primal variables $$x$$. $$\mathfrak{D}$$ is concave even when $$f$$ and the $$g_i$$ are not convex, and the dual optimum is a lower bound of the primal one (weak duality). For convex problems that satisfy [Slater's condition](https://en.wikipedia.org/wiki/Slater%27s_condition), the two optima are equal (strong duality). Section 7.2 of the <a href="{{ site.resources_permalink }}">MML book</a> gives the details.
+
+### Convex Sets and Functions
+
+A **convex set** contains the line segment between any two of its points. A **[convex function](https://en.wikipedia.org/wiki/Convex_function)** lies on or below the line segment between any two points of its graph. A twice-differentiable $$f$$ is convex iff its Hessian is positive semidefinite everywhere, i.e. $$f'' \ge 0$$ in one dimension. Every local minimum of a convex function is a global minimum, and a strictly convex function has at most one minimum. Convex problems, such as least squares, logistic regression and the training of SVMs, can thus be solved to global optimality. The losses of neural networks are not convex.
+
+### Linear Programming
+
+A **linear program** optimizes a linear objective under linear constraints: find the $$x \in \mathbb{R}^n$$ that maximizes $$c^{\intercal} x$$ subject to $$Ax \le b$$ and $$x \ge 0$$, with $$A \in \mathbb{R}^{m \times n}$$ and $$b \in \mathbb{R}^m$$. The [simplex method](https://en.wikipedia.org/wiki/Simplex_algorithm) moves between the vertices of the feasible polytope; it is fast in practice, but exponential in the worst case. [Interior-point methods](https://en.wikipedia.org/wiki/Interior-point_method) cross the inside of the polytope, in polynomial time. Solvers such as HiGHS implement both.

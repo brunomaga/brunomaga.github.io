@@ -123,3 +123,15 @@ picture that is not wrong.
   Adapted from: Densely Connected Convolutional Networks".
 - `deep-neural-networks/dropout.svg`: the picture has no caption. Optional fix: "A network without dropout (left) and
   with a dropout rate of 0.5 (right); crossed units are dropped."
+
+## Mathematics for ML (2018-04-20-algebra-for-ml.md)
+
+- `algebra-for-ml/newton_method.gif`: the legend is in German ("Funktion", "Tangente"). Fix: "function" and
+  "tangent".
+- `algebra-for-ml/svd_example.svg`: the right half is the "Lenna" test image, which IEEE no longer allows in its
+  publications since April 1, 2024. Optional fix: the same experiment (all 256, then 20, 50 and 85 singular values)
+  on another test image.
+- `algebra-for-ml/mml_eigenvalues_and_eigenvectors.svg`: the right third of the picture is the book's caption text,
+  in a small font at 65% of the page width. Optional fix: remove the text from the picture, widen the plots, and put
+  a short description in the page caption, e.g. "Five linear mappings of 400 points (left to right: input,
+  eigenvectors scaled by their eigenvalues, output)".
