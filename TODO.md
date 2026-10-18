@@ -234,6 +234,20 @@ that is not wrong.
   and after 20, 28, 35 and 50 iterations", or redraw the figure with the model of the text in 2D: unit-variance
   components, drawn as circles of radius 2 around each m_k.
 
+### Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) (2019-10-12-vae-gan.md)
+
+- Caption of `vae-gan/vae2.svg`: it is the caption of Figure 2.3 of An Introduction to Variational Autoencoders
+  (Kingma and Welling, 2019), copied without quotes or source, and in the first person ("We wish to compute", "we
+  cannot", "allows us"). Fix: "The reparameterization trick. Left: z is a random node, and the gradient of f with
+  respect to φ cannot pass through it. Right: z = g(φ, x, ε) is a deterministic function of φ, x and the random
+  variable ε, so backpropagation computes ∇φ f through z. Adapted from: An Introduction to Variational
+  Autoencoders, Kingma and Welling, Figure 2.3".
+- `vae-gan/gan.svg`: the discriminator has two outputs, 1 and 0, but D outputs one number, the probability that its
+  input is real. Fix: one output arrow labeled "D(x): probability that x is real (1) or generated (0)".
+- Optional, `vae-gan/vae.svg`: the encoder box shared by the AE and the VAE paths is labeled q_φ(z|x), a
+  distribution, but the AE encoder is a deterministic function; "Input" and "output" differ in capitalization. Fix:
+  label the encoder "Encoder φ", and write "Input" and "Output".
+
 ## Content issues
 
 Content problems that need the author's decision, such as overlap between posts.
@@ -267,6 +281,13 @@ Content problems that need the author's decision, such as overlap between posts.
   lecture notes, by the shorter derivation of section 10.1.1 of Bishop's PRML: as a function of one factor, the ELBO
   is a negative KL divergence. It also removed the recaps of conditional probability and of the chain rule. The CMU
   notes stay linked. Proposed fix: keep the shorter derivation.
+
+### Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) (2019-10-12-vae-gan.md)
+
+- The rewrite removed the section "Detour: why maximize the Expected Value?", which explained with games of chance
+  that the law of large numbers makes the average of many trials approach the expected value. The losses in the
+  post are expectations estimated with mini-batch averages, which the VI and statistics posts cover. Proposed fix:
+  keep it removed.
 
 ## Title issues
 
