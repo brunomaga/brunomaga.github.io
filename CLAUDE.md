@@ -55,6 +55,13 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 - Math is written in `$$...$$`, inline and on its own lines, as in the existing posts. In inline math, write
   `\vert` instead of `|`: kramdown reads a paragraph line that holds a `|` as a table row.
 
+### Titles
+
+- A post title, with the category that the home page puts before it ("Machine Learning: "), fits on one line of
+  the home page on a desktop screen. The title column is 815 px wide at 16 px: keep the line under 750 px in the
+  site's font, about 90 characters, so that it also fits with wider system fonts.
+- A text task does not change titles: it proposes new ones in `title-issues.md`.
+
 ### Issue lists
 
 Problems that a text task finds but does not fix go in four files at the root of the repository, with one
