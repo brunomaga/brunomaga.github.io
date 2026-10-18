@@ -23,7 +23,7 @@ Unstructured pruning removes individual weights by setting them to zero. Structu
 The picture below shows the rows and columns that each structure removes:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/pruning_structures.svg"/>
+<img width="97.4%" height="97.4%" src="{{ site.assets }}/inference/imgs/pruning_structures.svg"/>
 
 All the structured methods below build a smaller linear layer from the rows and columns they keep:
 
@@ -45,10 +45,10 @@ def prune_linear(linear, rows=None, columns=None):
 A weight matrix with 50% zeros scattered at random is still multiplied as a dense matrix by GPUs, so it saves no time, and saves memory only with a [sparse](https://en.wikipedia.org/wiki/Sparse_matrix) storage format. The exception is NVIDIA's *2:4 semi-structured sparsity* ([Mishra et al.](https://arxiv.org/abs/2104.08378)): in every group of 4 consecutive weights, 2 are zero. The matrix is stored as its non-zero values plus a 2-bit index per value, the position of that value in its group. The sparse tensor cores of Ampere and newer GPUs read this format and skip the zeros, which doubles the peak throughput of these matrix multiplications. The end-to-end speedups are smaller, since attention, memory traffic and the other operations are not accelerated.
 
 {: .picture}
-<img width="90%" height="90%" src="{{ site.assets }}/inference/imgs/sparsity_2_4.svg"/>
+<img width="77%" height="77%" src="{{ site.assets }}/inference/imgs/sparsity_2_4.svg"/>
 
 {: .caption}
-**Unstructured 50%:** zeros anywhere, which a dense matmul does not skip. **2:4 semi-structured:** 2 zeros in every group of 4 consecutive weights. **Values** and **2-bit indices:** half the values, and the position of each one in its group.
+**Unstructured 50%:** zeros anywhere, which a dense matmul does not skip. **2:4 semi-structured:** 2 zeros in every group of 4 consecutive weights. **Values** and **2-bit indices:** half the values, and the position of each one in its group. Inspired by: [Accelerating Sparse Deep Neural Networks](https://arxiv.org/abs/2104.08378)
 
 The following functions build the two masks from a score per weight, such as its magnitude. The unstructured mask keeps the highest scores of every row, while the picture above keeps the highest of the whole matrix. The 2:4 mask keeps the 2 highest scores of every group of 4. Once the weights follow the 2:4 pattern, PyTorch's `to_sparse_semi_structured` converts them to the compressed format, and the multiplications of these layers run on the sparse tensor cores:
 
@@ -96,7 +96,10 @@ The next sections implement Wanda, the Taylor importance and ShortGPT on GPTlite
 Magnitude pruning ignores the inputs. A small weight that multiplies a large input feature can contribute more to the output than a large weight that multiplies a small one. Wanda therefore multiplies the magnitude of each weight by the norm of its input feature over the calibration tokens, and compares the weights of the same output row. In the picture below, magnitude pruning removes the weights $$-0.2$$ and $$0.1$$, which multiply the largest inputs. Wanda keeps them, and removes $$0.5$$ and $$-0.6$$ instead:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/wanda.svg"/>
+<img width="44.5%" height="44.5%" src="{{ site.assets }}/inference/imgs/wanda.svg"/>
+
+{: .caption}
+Each output row keeps its 3 highest scores (50%). The magnitude alone removes the weights of the two input features with the largest norms (6 and 8); the Wanda score keeps them. Inspired by: [A Simple and Effective Pruning Approach for Large Language Models](https://arxiv.org/abs/2306.11695)
 
 The following code prunes the linear layers of every block of GPTlite with Wanda, to unstructured or 2:4 sparsity. A forward pre-hook collects the sum of squares of each input feature. As in the original implementation, the blocks are pruned one at a time, so the inputs of a block come from the blocks already pruned before it:
 
@@ -158,7 +161,7 @@ def taylor_importance(model, data, n_batches, batch_size, seqlen):
 ShortGPT measures how much each block changes its input. The *Block Influence* of a block is one minus the cosine similarity between its input and its output hidden states, averaged over the tokens of a calibration set. The blocks with the lowest influence are removed first. In deep models, these are often the later blocks, but not the last one:
 
 {: .picture}
-<img width="52%" height="52%" src="{{ site.assets }}/inference/imgs/shortgpt.svg"/>
+<img width="33.3%" height="33.3%" src="{{ site.assets }}/inference/imgs/shortgpt.svg"/>
 
 {: .caption}
 The blocks whose output is most similar to their input change the hidden state the least, and are removed first.
@@ -201,7 +204,10 @@ NVIDIA's [Minitron](https://arxiv.org/abs/2407.14679) combines structured prunin
 4. repeat for smaller sizes.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/minitron.svg"/>
+<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/minitron.svg"/>
+
+{: .caption}
+The importance of each head, neuron, embedding channel and layer is estimated on a small calibration set, the model is pruned to the target size, and the pruned model is retrained by distillation from the trained one. The steps repeat for each smaller size. Adapted from: [Compact Language Models via Pruning and Knowledge Distillation](https://arxiv.org/abs/2407.14679)
 
 Deriving 8B and 4B models from a 15B one this way required up to 40 times fewer training tokens than training them from scratch, and gave better accuracy. A [follow-up](https://arxiv.org/abs/2408.11796) on Llama 3.1 8B found that width pruning (heads, neurons and channels) preserves more accuracy, while depth pruning (whole blocks) gives larger speedups. The pruned model is a much better starting point for the student than a random initialization.
 
@@ -274,7 +280,10 @@ Quantization stores numbers with fewer bits. The weights take less memory, fewer
 A [floating-point](https://en.wikipedia.org/wiki/Floating-point_arithmetic) number has a sign bit, exponent bits that set its *range*, and mantissa (fraction) bits that set its *precision*. The picture below compares the three most common formats: FP32, FP16 and BF16. [BF16](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format) (*brain floating point*) keeps the 8 exponent bits of FP32 and only 7 mantissa bits, so it covers the same range as FP32 with the memory and speed of a 16-bit format. FP16 has more precision but a much smaller range (5 exponent bits), so large values can overflow. BF16 is therefore the default format of LLMs.
 
 {: .picture}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/floating_point_representation.svg"/>
+<img width="73%" height="73%" src="{{ site.assets }}/inference/imgs/floating_point_representation.svg"/>
+
+{: .caption}
+The bits of $$0.15625 = 1.01_2 \times 2^{-3}$$ in FP32, FP16 and BF16. BF16 keeps the 8 exponent bits of FP32, and so its range, with fewer fraction bits. Adapted from: [Bfloat16 floating-point format](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format)
 
 Recent GPUs added smaller formats:
 
@@ -302,10 +311,10 @@ $$
 where $$\hat{x}$$ is the dequantized approximation of $$x$$. In **symmetric** (*absmax*) quantization, $$z = 0$$ and $$s = \max \lvert x \rvert / q_\text{max}$$, for example with $$q_\text{max} = 127$$ for INT8. **Asymmetric** (*min-max*) quantization maps the range $$[\min x, \max x]$$ onto the full integer range, which fits skewed distributions better. The picture below quantizes the same values to 4 bits both ways. Symmetric quantization leaves the levels on the side without values unused:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/inference/imgs/quantization_mapping.svg"/>
+<img width="54.1%" height="54.1%" src="{{ site.assets }}/inference/imgs/quantization_mapping.svg"/>
 
 {: .caption}
-**Symmetric (absmax):** $$s = \max \lvert x \rvert / 7$$ and $$z = 0$$, so the levels below $$-1$$ are never used. **Asymmetric (min-max):** $$s = (\max x - \min x) / 15$$ and $$z = \text{round}(-\min x / s) = 4$$, so all 16 levels are used.
+**Symmetric (absmax):** $$s = \max \lvert x \rvert / 7$$ and $$z = 0$$, so the levels $$-7$$ to $$-3$$, for values below $$-1$$, are never used. **Asymmetric (min-max):** $$s = (\max x - \min x) / 15$$ and $$z = \text{round}(-\min x / s) = 4$$, so all 16 levels are used.
 
 The following functions implement both. `quantize_tensor` returns the integers, the scales and the zero-points, and the values along `dim` share one scale. `fake_quantize` quantizes and dequantizes, and returns the values that the low-precision format can represent. Most of this section uses this *fake quantization* to simulate formats that the GPU, or PyTorch, cannot multiply directly:
 
@@ -341,7 +350,7 @@ def fake_quantize_groups(W, bits, group_size):
 The **granularity** of the scales matters as much as the number of bits. A single scale per tensor is cheap but fragile. Finer scales follow the data much more closely, at the cost of storing more scales. The weights take one scale per output channel (a row of the weight matrix) or per *group* of, for example, 128 consecutive weights, and the activations one scale per token. Group-wise scales are the standard for 4-bit weights.
 
 {: .picture}
-<img width="97%" height="97%" src="{{ site.assets }}/inference/imgs/quantization_granularity.svg"/>
+<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/quantization_granularity.svg"/>
 
 {: .caption}
 **One scale per tensor:** 1 scale, and the outlier stretches the scale of 47 other weights. **One scale per output channel (row):** 4 scales, and the outlier stretches the scale of 11 other weights. **One scale per group of 4 weights:** 12 scales, and the outlier stretches the scale of 3 other weights.
@@ -355,7 +364,7 @@ Quantization is applied after training, often with a small calibration dataset (
 Weight-only quantization stores the weights in 4 or 8 bits and computes in 16 bits (W4A16: 4-bit weights, 16-bit activations). Decode is memory-bound, so it speeds up almost in proportion to the bytes saved: 4-bit weights are read four times faster than BF16 ones. The kernel must dequantize the weights on the fly, in registers, right before the multiplication. Dequantizing the whole matrix to memory first would cancel the gain. Prefill, which is compute-bound, barely benefits.
 
 {: .picture}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
+<img width="64.1%" height="64.1%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
 
 Rounding each weight to the nearest level (*round-to-nearest*) works well at 8 bits, but loses much more accuracy at 4 bits. GPTQ and AWQ, below, made 4-bit weights practical. Other common formats are NF4, from [QLoRA](https://arxiv.org/abs/2305.14314), whose levels are placed for normally distributed weights, and the GGUF formats of llama.cpp, for CPUs and edge devices.
 
@@ -428,7 +437,10 @@ def quantize(model, bits, group_size=64):
 [GPTQ](https://arxiv.org/abs/2210.17323) quantizes a weight matrix one column at a time. After each column, it updates the columns not yet quantized to compensate for the rounding error of that column. The update uses second-order information: the inverse of the Hessian $$H = 2XX^T$$ of the reconstruction error $$\lVert WX - \hat{W}X \rVert^2$$ of the layer, where the columns of $$X$$ are the calibration inputs. Column $$i$$ is rounded to $$q$$, and every later column $$j$$ moves by $$-(W_{:,i} - q) \, U_{ij} / U_{ii}$$, with $$U$$ the upper [Cholesky factor](https://en.wikipedia.org/wiki/Cholesky_decomposition) of $$H^{-1}$$. This change minimizes the increase of the reconstruction error. GPTQ quantizes 175B-parameter models to 3 or 4 bits in about four GPU hours.
 
 {: .picture}
-<img width="75%" height="75%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
+<img width="58.8%" height="58.8%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
+
+{: .caption}
+GPTQ quantizes the columns of $$W$$ one at a time, and spreads the rounding error of each column over the columns not yet quantized. Inspired by: [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323)
 
 The following code implements GPTQ for one linear layer, and applies it to GPTlite one block at a time. The rows of $$U$$ hold the updates in the order the columns are quantized, as in the original implementation. The scale of each group comes from its weights after the updates of the columns before it. For simplicity, the code updates one column at a time. The original implementation processes blocks of 128 columns, which gives the same result much faster on a GPU:
 
@@ -493,10 +505,10 @@ def quantize_gptq(model, data, n_batches, batch_size, seqlen, bits=4, group_size
 [AWQ](https://arxiv.org/abs/2306.00978) (Activation-aware Weight Quantization) observes that a small fraction of the weights matters much more than the rest: those that multiply large activations. Instead of keeping them in high precision, it multiplies the salient input channels of the weights by a factor before quantization, so that they are rounded more accurately. The corresponding activations are divided by the same factor, which is folded into the previous operation, so the layer computes the same output. The factors are searched on calibration data.
 
 {: .picture}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
+<img width="62.7%" height="62.7%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
 
 {: .caption}
-$$s_j = \text{mean}\lvert X_j \rvert^\alpha$$, with $$\alpha$$ searched on calibration data. The weights of the salient channel become larger, so rounding loses less of them. The division by $$s$$ is folded into the operation before.
+$$s_j = \text{mean}\lvert X_j \rvert^\alpha$$, with $$\alpha$$ searched on calibration data. The weights of the salient channel become larger, so rounding loses less of them. The division by $$s$$ is folded into the operation before. Inspired by: [AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration](https://arxiv.org/abs/2306.00978)
 
 The following code implements AWQ for GPTlite. For each input of a block, it searches the exponent $$\alpha$$ of the factors $$s_j = \text{mean}\lvert X_j \rvert^\alpha$$ that minimizes the output error of the quantized linear layers that read it. The divisions are folded into the LayerNorms, into the value projection (attention is linear in the values), and into the first MLP layer (since $$\text{ReLU}(y / s) = \text{ReLU}(y) / s$$ for $$s > 0$$):
 
@@ -575,7 +587,10 @@ class W8A8Linear(nn.Module):
 **LLM.int8()** keeps the few outlier feature dimensions in 16 bits and runs everything else in INT8. A feature is an outlier when any of its values is larger in magnitude than a threshold, 6 in the paper. The outliers are rare, so more than 99.9% of the multiplications still run in INT8:
 
 {: .picture}
-<img width="75%" height="75%" src="{{ site.assets }}/inference/imgs/llm_int8.svg"/>
+<img width="77.7%" height="77.7%" src="{{ site.assets }}/inference/imgs/llm_int8.svg"/>
+
+{: .caption}
+The feature columns of $$X$$ with outliers and the matching rows of $$W^T$$ are multiplied in FP16, the other features in INT8, and the two results are added. Adapted from: [LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale](https://arxiv.org/abs/2208.07339)
 
 ```python
 class LLMInt8Linear(nn.Module):
@@ -599,7 +614,10 @@ class LLMInt8Linear(nn.Module):
 [SmoothQuant](https://arxiv.org/abs/2211.10438) moves the difficulty from the activations to the weights. Dividing the $$j$$-th channel of the activations by a factor $$s_j$$, and multiplying the $$j$$-th input channel of the weights by the same factor, keeps the output of the layer but reduces the outliers. With $$s_j = \max \lvert X_j \rvert^\alpha / \max \lvert W_j \rvert^{1-\alpha}$$ and typically $$\alpha = 0.5$$, both the weights and the activations become easy to quantize to INT8 (W8A8):
 
 {: .picture}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/smoothquant.svg"/>
+<img width="81.8%" height="81.8%" src="{{ site.assets }}/inference/imgs/smoothquant.svg"/>
+
+{: .caption}
+Dividing the activations of input channel $$j$$ by $$s_j$$, and multiplying the weights of that channel by $$s_j$$, keeps the output, and moves part of the range of the activation outliers into the weights, so that both are easy to quantize. Inspired by: [SmoothQuant: Accurate and Efficient Post-Training Quantization for Large Language Models](https://arxiv.org/abs/2211.10438)
 
 The following code smooths the inputs of the linear layers that follow each LayerNorm of GPTlite, and folds the division into the LayerNorm. The model then uses the `W8A8Linear` layers above:
 
@@ -629,10 +647,10 @@ def smoothquant(model, data, n_batches, batch_size, seqlen, alpha=0.5):
 [QuaRot](https://arxiv.org/abs/2404.00456) and [SpinQuant](https://arxiv.org/abs/2405.16406) multiply the weights and the activations by [orthogonal matrices](https://en.wikipedia.org/wiki/Orthogonal_matrix), such as [Hadamard matrices](https://en.wikipedia.org/wiki/Hadamard_matrix). Since $$R^TR = I$$, the output does not change, but the rotation spreads each outlier across all channels. This makes 4-bit weights, activations and KV cache possible (W4A4KV4). QuaRot uses random Hadamard matrices, and SpinQuant learns the rotations.
 
 {: .picture}
-<img width="77%" height="77%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
+<img width="80.5%" height="80.5%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
 
 {: .caption}
-Rotating the weights the other way, $$W R^T$$, keeps the output: $$(W R^T)(R x) = W x$$. After the rotation, the INT4 levels are closer together, and the small values are no longer rounded to 0.
+Rotating the weights the other way, $$W R^T$$, keeps the output: $$(W R^T)(R x) = W x$$. After the rotation, the INT4 levels are closer together (5.7 instead of 12.6 apart), so the small values lose much less precision.
 
 The following code builds Hadamard matrices, and a linear layer that simulates low-precision weights and activations with fake quantization, with an optional rotation of its inputs. For simplicity, it rotates the input of every layer on the fly. QuaRot instead folds most rotations into the weights of the previous layers, and applies the few remaining ones with fast Hadamard kernels. Sylvester's construction builds a Hadamard matrix of size $$n$$ when $$n$$ is a power of 2. For other sizes, such as the 384 features of the attention output of GPTlite, the code uses a block-diagonal matrix of smaller Hadamard matrices, which is also orthogonal:
 
@@ -675,7 +693,7 @@ class FakeQuantLinear(nn.Module):
 FP4 needs fine-grained scales. In the **micro-scaling** ([MX](https://arxiv.org/abs/2310.10537)) formats, every block of 32 consecutive values shares an 8-bit power-of-two scale (MXFP8, MXFP6 and MXFP4). NVIDIA's **NVFP4** uses blocks of 16 values with an FP8 scale, plus one FP32 scale per tensor. Its smaller blocks and finer scales follow the data more closely, at the cost of a quarter of a bit more per value: 4.5 bits instead of 4.25. Blackwell tensor cores apply these scales in hardware. OpenAI's gpt-oss models, for example, ship their mixture-of-experts weights in MXFP4.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
+<img width="99.3%" height="99.3%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
 
 The following code simulates both formats with fake quantization. Used with the `FakeQuantLinear` layer above, it quantizes the weights and activations of GPTlite to FP4:
 
@@ -715,10 +733,10 @@ def fake_quantize_nvfp4(x):
 At long contexts and large batches, the KV cache can be larger than the model weights. Storing it in FP8 or INT8 halves its size and the bytes read at each decode step, with almost no loss of quality. Most serving engines enable it with a single configuration flag. More aggressive methods go down to 2 bits. [KIVI](https://arxiv.org/abs/2402.02750) quantizes the keys per channel, since their outliers live in fixed channels, and the values per token, and keeps the most recent tokens in full precision. Quantized attention kernels, such as [SageAttention](https://github.com/thu-ml/SageAttention), apply the same ideas to the attention computation itself.
 
 {: .picture}
-<img width="80%" height="80%" src="{{ site.assets }}/inference/imgs/kivi.svg"/>
+<img width="88.1%" height="88.1%" src="{{ site.assets }}/inference/imgs/kivi.svg"/>
 
 {: .caption}
-The outliers of the keys live in a few fixed channels, so each channel gets its own scale. The outlined cells share one scale and zero-point.
+The outliers of the keys live in a few fixed channels, so each channel gets its own scale. The outlined cells share one scale and zero-point. Inspired by: [KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache](https://arxiv.org/abs/2402.02750)
 
 The following code quantizes the KV cache of GPTlite to FP8, or to 2 bits with KIVI, and generates text with it. The loss of quality is measured as the fraction of the generated tokens that match those generated with the full-precision cache:
 

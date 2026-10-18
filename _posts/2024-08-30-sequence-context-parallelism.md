@@ -19,7 +19,7 @@ Two remarks:
 A sequence-parallel run loads chunks of samples instead of full samples. A custom `DistributedSampler` assigns the chunks of each sample to the processes of a sequence-parallel group:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
+<img width="97.1%" height="97.1%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
 
 {: .caption}
 Data loading for hybrid data parallelism (DP) and sequence parallelism (SP) on 4 color-coded processes/GPUs and a dataset of 8 samples. First row: all 4 processes run distributed data parallelism. Second row: a custom `DistributedSampler` that yields chunks of sequences enables a hybrid data- and sequence-parallel execution with 2 groups of 2 sequence-parallel processes. Third row: no data parallelism; all 4 processes run sequence parallelism on the same sample.
@@ -31,7 +31,7 @@ Layers that act on each token separately, such as the feed-forward network and t
 Each process holds the queries of its chunk, but attention needs the keys and values of the full sequence. For one head, attention computes $$\text{softmax}(Q K^T / \sqrt{d}) V$$, where $$Q$$, $$K$$ and $$V$$ have the shape `(B, S, d)` for a head size $$d$$ (written $$E$$ in the figure; most models have $$Hd = E$$). A process with the rows $$Q_p$$ of shape `(B, S/P, d)` computes $$Q_p K^T$$, the row-wise softmax and the product with $$V$$, so it needs all of $$K$$ and $$V$$. Its output has the shape `(B, S/P, d)`:
 
 {: .picture}
-<img width="90%" height="90%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.svg"/>
+<img width="77.1%" height="77.1%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.svg"/>
 
 Sequence parallelism thus needs communication in the attention layers. Ulysses and Ring Attention provide it in two different ways.
 
@@ -40,10 +40,10 @@ Sequence parallelism thus needs communication in the attention layers. Ulysses a
 [DeepSpeed Ulysses](https://arxiv.org/abs/2309.14509) (Jacobs et al., 2023) changes the split of the activations from the sequence to the heads before attention, and back after it:
 
 {: .picture}
-<img width="79%" height="79%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
+<img width="82.6%" height="82.6%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
 
 {: .caption}
-Overview of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **Center:** the *first all-to-all* changes the distributed view from sequence-split to head-split. Each process now holds full sequences for a subset of heads and computes attention locally. **Right:** the *second all-to-all* changes the view back from head-split to sequence-split.
+Overview of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **Center:** the *first all-to-all* changes the distributed view from sequence-split to head-split. Each process now holds full sequences for a subset of heads and computes attention locally. **Right:** the *second all-to-all* changes the view back from head-split to sequence-split. Inspired by: [DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models](https://arxiv.org/abs/2309.14509)
 
 Before attention, an [all-to-all](https://en.wikipedia.org/wiki/All-to-all_(parallel_pattern)) turns the queries, keys and values of shape `(H, B, S/P, d)` into `(H/P, B, S, d)`. Each process then holds the full sequences of $$H/P$$ heads, and computes their attention without communication. A second all-to-all turns the output back into `(H, B, S/P, d)`. The function `dist_view_swap()` takes a `tensor` distributed across the process group `group`, and moves its split from the dimension `old_split_dim` to `new_split_dim`:
 
@@ -218,15 +218,15 @@ where $$\sigma$$ is the [sigmoid function](https://en.wikipedia.org/wiki/Sigmoid
 Each process holds a chunk of the sequence of $$q$$, $$k$$ and $$v$$. It keeps its queries, and the blocks of keys and values move around a ring of the $$P$$ processes. At each of the $$P$$ steps, a process computes the attention of its queries with the key and value block it holds. Meanwhile, it sends this block to the next process and receives the block of the previous one:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/distributed-training/imgs/ring_attention.svg"/>
 
 {: .caption}
-Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **1st Ring Attention step:** each process holds its part of the Query, Key and Value tensors and computes block attention on them. Meanwhile, each process asynchronously sends its Key and Value tensors to the next process in the ring (clockwise). **2nd, 3rd, and 4th steps:** each process receives the Key and Value blocks of the previous process and computes the attention output for its original Query tensor and the received Key/Value tensors. **After Ring Attention:** the MHA output is already sequence-split across processes, as in the initial data layout.
+Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **1st Ring Attention step:** each process holds its part of the Query, Key and Value tensors (Q, K and V) and computes block attention on them. Meanwhile, each process asynchronously sends its Key and Value tensors to the next process in the ring (clockwise). **2nd, 3rd, and 4th steps:** each process receives the Key and Value blocks of the previous process and computes the attention output for its original Query tensor and the received Key/Value tensors. **After Ring Attention:** the MHA output is already sequence-split across processes, as in the initial data layout. Inspired by: [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889)
 
 After $$P$$ steps, each process has combined its queries with all blocks of keys and values. For example, the third (red) process above sees:
 
 {: .picture}
-<img width="40%" height="40%" src="{{ site.assets }}/distributed-training/imgs/ring_attention_qkv.svg"/>
+<img width="39.6%" height="39.6%" src="{{ site.assets }}/distributed-training/imgs/ring_attention_qkv.svg"/>
 
 Ulysses waits for its all-to-alls to finish. Ring Attention overlaps its point-to-point transfers with computation, and hides them when the computation of a block takes longer than the transfer of the next one.
 
@@ -422,7 +422,7 @@ A sequence-parallel group of $$P$$ processes trains on the samples that one data
 Data and sequence parallelism together need two kinds of process groups: data-parallel groups, whose processes load different samples, and sequence-parallel groups, whose processes load different chunks of the same samples. PyTorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) creates them, or they are created manually. With 2-way data parallelism and 2-way Ulysses on 4 GPUs, the activations before and during attention are:
 
 {: .picture}
-<img width="66%" height="66%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
+<img width="64.8%" height="64.8%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
 
 {: .caption}
 Allocation of activations on 4 GPUs with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: the blue and green processes form one sequence-parallel group and share one sample; the red and yellow processes form the other group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes then compute attention over full sequences.

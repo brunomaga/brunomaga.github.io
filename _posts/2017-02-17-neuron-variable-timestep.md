@@ -136,42 +136,42 @@ Since the coordinator always takes the earliest item, no $$t_b$$ and no event ti
 The picture shows lvardt on six cells. The black rectangles are the intervals $$[t_a, t_b]$$, the vertical line marks the earliest $$t_b$$ or event time, and the short thick bars are events. (A) Cell 0 has the smallest $$t_b$$ and integrates one step (hatched). Its voltage crosses the spike threshold during the step, which creates a tentative spike. (B) Cell 5 now has the smallest $$t_b$$ and integrates one step. (C) The spike of cell 0 is now the earliest item. Handling it creates three events, for cells 3, 4 and 5, with different delays, and the event of cell 3 becomes the earliest. (D) Cell 3 interpolates back to the event time, handles the event and restarts its integrator, so its interval shrinks to a point. Cell 3 integrates next:
 
 {: .picture}
-<img width="30%" height="30%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.svg">
+<img width="40.4%" height="40.4%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.svg">
 
 {: .caption}
-Adapted from: [The NEURON book][neuron-book]
+Adapted from: [Lytton and Hines (2005), Independent variable time-step integration of individual neurons for network simulations, Fig. 1](https://pmc.ncbi.nlm.nih.gov/articles/PMC2712447/)
 
 ## Single Neuron
 
 The following tests of Magalhães et al. (<a href="{{ site.assets }}/neuron-variable-timestep/neurox-vardt-arxiv.pdf">preprint, 2019</a>) compare NEURON's backward Euler, with its default $$\Delta t = 25$$ μs, and CVODE, with $$\text{atol} = 10^{-3}$$, on a model of a layer 5 pyramidal cell of the Blue Brain Project (L5_TTPC2_cADpyr232_1), with a current injected at the soma. The first test follows one spike. Backward Euler takes equidistant steps. CVODE takes long steps while the voltage changes slowly, before the spike, and short steps on the rise and around the peak:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.svg">
+<img width="97%" height="97%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_soma_voltage_per_step_6ms.svg">
 
 A constant current from 100 ms to 1,100 ms makes the neuron fire at a rate that grows with the current. Over the 1.2 s of simulation, backward Euler takes 48,001 steps for every current. CVODE takes 338 steps without spikes, and 9,750 at the highest current:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_pulse_currents_table.svg">
+<img width="60.3%" height="60.3%" src="{{ site.assets }}/neuron-variable-timestep/cvode_pulse_currents_table.svg">
 
 The step size also sets the accuracy. Over 100 ms, backward Euler with $$\Delta t = 1$$ μs and CVODE with $$\text{atol} = 10^{-4}$$ give the same spike times, and serve as references. With longer steps, backward Euler spikes later. CVODE with $$\text{atol} = 10^{-2}$$ matches the accuracy of backward Euler with $$\Delta t = 25$$ μs in 7 times fewer steps (566 against 4,001), and CVODE with $$\text{atol} = 10^{-3}$$ matches that of $$\Delta t = 5$$ μs in 22 times fewer steps (910 against 20,001):
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg">
+<img width="93.6%" height="93.6%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg">
 
 The delay of backward Euler grows spike after spike. After 1 s, it is about 2 ms with $$\Delta t = 5$$ μs and 6.5 ms with $$\Delta t = 25$$ μs, a large error at the time scale of spikes. CVODE with $$\text{atol} = 10^{-3}$$ takes 6,240 steps, against 40,001 and 200,001 for backward Euler:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg">
+<img width="95.2%" height="95.2%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse_1000ms_results.svg">
 
 The next test injects a constant current for 1 s, from 0 to 5 times the threshold current, the smallest constant current that makes the neuron spike. The runs use an Intel Core i5 at 1.6 GHz. Below half the threshold current, the voltage settles to a steady state, and CVODE takes 434 times fewer steps than backward Euler and runs 98 times faster. At the threshold current, the gains are 62 and 11.6 times, and at 5 times the threshold current, 9.4 and 2.5 times. A CVODE step costs 4 to 5 times as much as a backward Euler step: it runs Newton iterations, each with an evaluation of $$f$$ and a linear solve, and an error test.
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_variation_solution.svg">
+<img width="98%" height="98%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_variation_solution.svg">
 
 The last single-cell test replaces the constant current by pulses of 1 μs at a fixed rate, as a model of synaptic events. Each pulse is a discontinuity. The runtime of CVODE grows with the pulse rate, and depends little on the pulse amplitude. At 10 pulses per second, CVODE takes 153 to 322 times fewer steps than backward Euler and runs 51 to 100 times faster, from the strongest to the weakest pulse. For the strongest pulse, both methods run equally fast at about 1,000 pulses per second.
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_events_arrival.svg">
+<img width="97.9%" height="97.9%" src="{{ site.assets }}/neuron-variable-timestep/cvode_dependency_on_events_arrival.svg">
 
 ## Homogeneous Networks
 
@@ -180,10 +180,10 @@ The last single-cell test replaces the constant current by pulses of 1 μs at a 
 The picture shows the CPU time of this model. With fixed steps (dashed lines), it grows linearly with the simulated time. lvardt is slow at the start, while the cells are not yet synchronized and its steps vary widely. Once the network synchronizes, lvardt alternates long steps between the population spikes and short steps during them, and its CPU time grows slowly:
 
 {: .picture}
-<img width="30%" height="30%" src="{{ site.assets }}/neuron-variable-timestep/lvardt_exec_time_comparison.svg">
+<img width="31.1%" height="31.1%" src="{{ site.assets }}/neuron-variable-timestep/lvardt_exec_time_comparison.svg">
 
 {: .caption}
-source: Lytton et al. 2005 
+Adapted from: [Lytton and Hines (2005), Fig. 3A](https://pmc.ncbi.nlm.nih.gov/articles/PMC2712447/)
 
 Their best case, a synfire chain of 100 single-compartment Hodgkin-Huxley cells, ran 20 times faster with lvardt than with a fixed step of similar accuracy. A thalamocortical model has four cell types: cortical pyramidal cells and interneurons, thalamocortical cells and thalamic reticular cells. The two thalamic types fire bursts separated by long silent intervals, which suits lvardt. For 150 ms of simulation at high precision, lvardt with $$\text{atol} = 10^{-6}$$ took 6 min 13 s, and a fixed step of 0.1 μs took 10 h 20 min, 100 times longer. At standard precision, with $$\text{atol} = 10^{-3}$$ and $$\Delta t = 10$$ μs, the runs took 2 min and 5 min 53 s, 3 times longer.
 
@@ -196,20 +196,20 @@ Homogeneous networks give only a rough estimate of the speed-up, since the activ
 The pictures show two neurons of the top 1% by number of incoming events: the events per 10 ms (left), and the histogram of the intervals between events (right). The neurons of the top 1% receive 3,040 to 6,146 events, 405 to 820 per second:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_203076.svg">
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_138083.svg">
+<img width="59.3%" height="59.3%" src="{{ site.assets }}/neuron-variable-timestep/neuron_203076.svg">
+<img width="59.5%" height="59.5%" src="{{ site.assets }}/neuron-variable-timestep/neuron_138083.svg">
 
 The neurons of the median 1% receive 541 to 558 events, about 73 per second:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_208223.svg">
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_87784.svg">
+<img width="58.3%" height="58.3%" src="{{ site.assets }}/neuron-variable-timestep/neuron_208223.svg">
+<img width="58.1%" height="58.1%" src="{{ site.assets }}/neuron-variable-timestep/neuron_87784.svg">
 
 The neurons of the bottom 1% receive fewer than 100 events:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_132412.svg">
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-variable-timestep/neuron_2101.svg">
+<img width="57.6%" height="57.6%" src="{{ site.assets }}/neuron-variable-timestep/neuron_132412.svg">
+<img width="58%" height="58%" src="{{ site.assets }}/neuron-variable-timestep/neuron_2101.svg">
 
 In total, the neurons receive about 155 million events, 707 per neuron on average, or 94 per second: an order of magnitude below the break-even rate of the pulse test. The median and bottom neurons have long silent intervals between events, which suits variable steps. The top neurons do not.
 
@@ -252,7 +252,7 @@ A constant current drives all neurons to one of five spiking rates:
 - burst, 55.8 Hz: the rate of the SI fast state of the Brunel network, typical of strong depolarizing currents.
 
 {: .picture}
-<img width="90%" height="90%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.svg">
+<img width="87.6%" height="87.6%" src="{{ site.assets }}/neuron-variable-timestep/benchmark_two_rows_2.svg">
 
 The runtimes of the fixed-step methods differ by about 2% across the five rates: each step costs the same with or without spikes, and spikes add little work. The runtimes of CVODE grow with the rate, since events arrive at any time, not only at the ends of fixed steps, and each one restarts its target cell with short steps. Against the fixed-step method for complex models (2a), FAP CVODE with grouping per $$\Delta t$$ runs 544 times faster on 1,024 neurons and 65 times faster on 65,536 neurons at the quiet rate, and 7.7 to 1.8 times faster at the moderate rate. At the fast rate, it runs 2 times faster on 1,024 neurons and as fast on 65,536. At the burst rate, it runs 1.5 times faster on 1,024 neurons and 1.5 times slower on 65,536. At the quiet rate, FAP CVODE, which solves the complex model with Newton iterations, also beats the fixed-step methods for simple models, which solve one linear system per step: the rare events allow long steps.
 

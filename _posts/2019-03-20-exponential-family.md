@@ -18,11 +18,10 @@ The [statistics post]({{ site.baseurl }}{% post_url 2018-06-15-statistics-for-ml
 The figure relates 15 common distributions. Bars mark the discrete ones, defined by a probability mass function, and filled curves the continuous ones, defined by a probability density function.
 
 {: .picture}
-<img width="70%" height="70%" src="{{ site.assets }}/exponential-family/common_distributions.svg"/>
+<img width="86.4%" height="86.4%" src="{{ site.assets }}/exponential-family/common_distributions.svg"/>
 
 {: .caption}
-The 15 most common probability distributions and their relationships.
-(source: post <a href="https://medium.com/@srowen/common-probability-distributions-347e6b945ce4">Common probability distributions</a> by Sean Owen)
+The 15 most common probability distributions and their relationships. Adapted from: [Common probability distributions: the data scientist's crib sheet, S. Owen](https://medium.com/@srowen/common-probability-distributions-347e6b945ce4)
 
 - **Bernoulli and uniform**: the Bernoulli distribution gives the probabilities $$p$$ and $$1 - p$$ to two outcomes, e.g. the toss of a biased coin. The discrete uniform distribution gives the same probability to each of $$n$$ outcomes, e.g. the roll of a fair die.
 - **Binomial and hypergeometric**: the binomial distribution counts the successes in $$n$$ independent Bernoulli trials with probability $$p$$, e.g. the number of sixes in 30 rolls of a die ($$n = 30$$, $$p = 1/6$$). The trials are draws with replacement. The hypergeometric distribution counts the successes in $$n$$ draws *without* replacement from a finite population. The two agree when the population is much larger than $$n$$.

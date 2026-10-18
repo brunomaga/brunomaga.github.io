@@ -23,7 +23,7 @@ Each PyTorch operation launches one or more GPU kernels. Each launch costs a few
 3. **Graph compilation**: the kernels call the low-level operations of the device.
 
 {: .picture}
-<img width="85%" height="85%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
+<img width="80.3%" height="80.3%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
 
 {: .caption}
 A diagram of the three steps of `torch.compile`. Adapted from: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
@@ -44,12 +44,12 @@ The benchmark runs the training and the inference of two kinds of models on PyTo
 2. a deep neural network (DNN) with `L` linear layers of width `W`, in section [Benchmark Model on LibTorch C++](#benchmark-model). Its depth and width are free, so it separates the cost of many small kernels from that of a few large ones.
 
 {: .picture}
-<img width="24%" height="24%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
+<img width="25.2%" height="25.2%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="22%" height="22%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
+<img width="25.7%" height="25.7%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 
 {: .caption}
-This post details the C++ implementation of the GPT-3 Small model with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W (right). The left diagram is adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762). The C++, PyTorch, TorchScript and `torch.compile` implementations of both models are then benchmarked.
+This post details the C++ implementation of the GPT-3 Small model with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W, each followed by a ReLU (right). The C++, PyTorch, TorchScript and `torch.compile` implementations of both models are then benchmarked. Left diagram adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
 ## GPTlite on LibTorch C++ {#gptlite-model}
 
@@ -108,10 +108,10 @@ $$
 where $$h$$ is the number of heads and $$d_k$$ is the size of a head. Each of the $$N$$ blocks of the model applies it with the lower-triangular mask `tril`:
 
 {: .picture}
-<img width="24%" height="24%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
+<img width="25.2%" height="25.2%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
 
 {: .caption}
-The multi-head attention module in the GPTlite model, emphasized in red. Adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762).
+The multi-head attention module in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
 The first module is one attention head:
 
@@ -208,10 +208,10 @@ struct MultiHeadAttention : nn::Module {
 The feed-forward network has two linear layers with a ReLU between them:
 
 {: .picture}
-<img width="24%" height="24%" src="{{ site.assets }}/gptlite/gptlite_feedforward.svg"/>
+<img width="25.2%" height="25.2%" src="{{ site.assets }}/gptlite/gptlite_feedforward.svg"/>
 
 {: .caption}
-The feed forward network in the GPTlite model, emphasized in red. Adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762).
+The feed forward network in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
 ```cpp
 struct FeedForward : nn::Module {
@@ -239,10 +239,10 @@ struct FeedForward : nn::Module {
 As in Python, a block applies the multi-head attention and the feed-forward network, each with a layer normalization of its input and a residual connection:
 
 {: .picture}
-<img width="24%" height="24%" src="{{ site.assets }}/gptlite/gptlite_blocks.svg"/>
+<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_blocks.svg"/>
 
 {: .caption}
-The GPT block(s) in the GPTlite model, emphasized in red. Adapted from [Attention is all you need](https://arxiv.org/abs/1706.03762).
+The GPT block(s) in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
 
 ```cpp
 struct Block : nn::Module {
@@ -504,7 +504,10 @@ The benchmark measures the throughput, in training or inference iterations per s
 Each model runs on PyTorch 1.13.1 and 2.1, on LibTorch 2.1, and on PyTorch 2.1 with `torch.compile`. TorchScript runs only the inference, in C++, of a model exported from PyTorch 2.1. The caching allocators of PyTorch and LibTorch keep freed GPU memory reserved for later allocations, so the memory measured for a model depends on the models allocated before it in the same process. Each value was thus measured in a separate run. The results for GPTlite are:
 
 {: .picture}
-<img width="90%" height="90%" src="{{ site.assets }}/gptlite-cpp/benchmark_gptlite.svg"/>
+<img width="88.1%" height="88.1%" src="{{ site.assets }}/gptlite-cpp/benchmark_gptlite.svg"/>
+
+{: .caption}
+Memory usage and throughput of GPTlite Small in PyTorch 1.13.1, PyTorch 2.1, C++ LibTorch 2.1 and TorchScript 2.1 (inference only).
 
 The results for the DNNs are in <a href="{{ site.assets }}/gptlite-cpp/benchmark_wide.svg">benchmark_wide.svg</a> and <a href="{{ site.assets }}/gptlite-cpp/benchmark_deep.svg">benchmark_deep.svg</a>. The runs that train and then infer use 3.6 to 10.4 times the GPU memory of the inference-only runs of TorchScript (purple bars): training also stores the gradients, the states of the optimizer, and the activations that the backward pass needs.
 

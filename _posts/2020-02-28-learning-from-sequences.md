@@ -12,10 +12,10 @@ Translation and other language tasks map a sequence of words to another sequence
 The encoder-decoder, or sequence-to-sequence model, maps an input sequence to an output sequence of a different length, e.g. a sentence to its translation. It was introduced with [recurrent neural networks](https://en.wikipedia.org/wiki/Recurrent_neural_network) (RNNs) by [Cho et al. (2014)](https://arxiv.org/abs/1406.1078) and in [Sequence to Sequence Learning with Neural Networks](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf) (Sutskever et al., 2014). An RNN processes one word per step. At step $$t$$, it concatenates its hidden state of step $$t-1$$, of size $$d_h$$, with the embedding of word $$t$$, of size $$d$$, and computes a new hidden state and an output:
 
 {: .picture}
-<img width="32%" height="32%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
+<img width="33.8%" height="33.8%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
 
 {: .caption}
-The recurrent neural network trained at each step of the encoder-decoder architecture. The blue area represents input neurons. The green area represents a single hidden layer formed by the states of the GRU/LSTM neurons of the RNN. The red area represents the model output. The model input is the concatenation of the hidden layer of the previous iteration and the input of the current iteration. 
+The recurrent neural network trained at each step of the encoder-decoder architecture. Its input layer is the concatenation of the hidden layer of the previous iteration (green) and the embedding of the current input word (blue). The hidden layer (green) holds the states of the GRU or LSTM neurons, and the output layer (red) holds the model output. 
 
 The hidden state carries the information of the previous words. A plain RNN learns long-range dependencies poorly, because the gradients through many steps vanish ([vanishing gradient problem](https://en.wikipedia.org/wiki/Vanishing_gradient_problem)). [Long short-term memory](https://en.wikipedia.org/wiki/Long_short-term_memory) (LSTM) and [gated recurrent unit](https://en.wikipedia.org/wiki/Gated_recurrent_unit) (GRU) cells use gates that keep the information over many steps. An LSTM cell has two states, the hidden state and the cell state, and four weight matrices. A GRU, introduced by Cho et al., has one state and three weight matrices, so a step costs about 3/4 of an LSTM step of the same size.
 
@@ -24,7 +24,7 @@ Training has an encoding and a decoding phase:
 - The **decoder**, a second RNN, starts from a beginning-of-sentence token (BOS) and predicts one word per step, with a softmax over the target vocabulary. Each step takes the previous word of the target sentence as input (teacher forcing), and the last step predicts the end-of-sentence token (EOS). The loss is the sum of the cross-entropies of the predicted words, and [backpropagation through time](https://en.wikipedia.org/wiki/Backpropagation_through_time) computes its gradient through all the steps of both RNNs.
 
 {: .picture}
-<img width="90%" height="90%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
+<img width="96%" height="96%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
 
 {: .caption}
 Training workflow of an encoder-decoder architecture that learns the translation of the English sentence "Hello World." into the French sentence "Bonjour le monde.".
@@ -40,11 +40,10 @@ The [PyTorch tutorial "NLP from scratch: translation with a sequence to sequence
 The [transformer](https://en.wikipedia.org/wiki/Transformer_(deep_learning_architecture)), introduced in [Attention Is All You Need](https://arxiv.org/abs/1706.03762) (Vaswani et al., 2017), replaces the recurrence with attention, so that all the positions of a sequence are processed at once. Its encoder (left) and its decoder (right) are stacks of 6 layers ($$N \times$$ in the figure):
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
+<img width="43.8%" height="43.8%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
 
 {: .caption}
-The transformer architecture. Grey regions represent the Encoder (left) and Decoder (right) architectures.
-Adapted from: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
+The transformer architecture. Grey regions represent one encoder layer (left) and one decoder layer (right), each repeated N times. Adapted from: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
 
 [The Annotated Transformer](https://nlp.seas.harvard.edu/2018/04/03/attention.html) implements the model in PyTorch, and the [GPT-lite post]({{ site.baseurl }}{% post_url 2023-02-28-gptlite %}) implements a decoder-only transformer.
 
@@ -59,20 +58,20 @@ $$
 Each pair of dimensions holds a sine and a cosine of the same frequency, and the wavelengths grow geometrically from $$2\pi$$ to $$10000 \cdot 2\pi$$. For any offset $$k$$, $$PE_{pos+k}$$ is a linear function of $$PE_{pos}$$, a rotation of each pair, which makes relative positions easy to learn. The figure shows the dimensions 4 to 7 for $$d = 20$$:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/transformer-embedding.svg"/>
+<img width="70.1%" height="70.1%" src="{{ site.assets }}/learning-from-sequences/transformer-embedding.svg"/>
 
 {: .caption}
-Output of the positional encoding of the transformer for dimensions 4 to 7 of the embedding array, for a word whose position in the sentence is given by the x axis. Adapted from: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
+Output of the positional encoding of the transformer for dimensions 4 to 7 of an embedding array of size $$d=20$$, for a word whose position in the sentence is given by the x axis. Adapted from: <a href="https://nlp.seas.harvard.edu/2018/04/03/attention.html">The Annotated Transformer</a>
 
 ### Attention
 
 Self-attention computes how relevant each word of a sentence is to every other word. For the sentence "The big red dog" ($$n = 4$$ words), it gives a $$4 \times 4$$ matrix of **attention weights**, whose rows sum to 1:
 
 {: .picture}
-<img width="32%" height="32%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
+<img width="33.3%" height="33.3%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
 
 {: .caption}
-Output of the attention mechanism. For the sentence "The big red dog", of length $$N=4$$, each row of the attention matrix holds the normalized relevance of that word to every other word in the sentence. Source: unknown. 
+Attention weights of one attention head for the sentence "The big red dog", of length $$N=4$$. Each row holds the softmax-normalized relevance of that word to every word of the sentence, itself included, and sums to 1.
 
 An attention head computes these weights from queries and keys, and averages values with them. The $$N^Q$$ queries, the $$N^{KV}$$ keys and the $$N^{KV}$$ values are the rows of the matrices $$Q \in \mathbb{R}^{N^Q \times D^{QK}}$$, $$K \in \mathbb{R}^{N^{KV} \times D^{QK}}$$ and $$V \in \mathbb{R}^{N^{KV} \times D^V}$$:
 
@@ -89,10 +88,10 @@ $$
 and the output of query $$q$$ is the average of the values weighted by these weights, $$Y_q = \sum_k A_{q,k} V_k$$, a vector of size $$D^V$$. The output $$AV$$ has the size $$N^Q \times D^V$$. The division by $$\sqrt{D^{QK}}$$ keeps the scores in the range where the softmax has useful gradients: for independent query and key components with zero mean and unit variance, the dot product $$Q_q^T K_k$$ has the variance $$D^{QK}$$.
 
 {: .picture}
-<img width="50%" height="50%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_lbdl.svg"/>
+<img width="33.6%" height="33.6%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_lbdl.svg"/>
 
 {: .caption}
-The attention operator matches every query $$Q_q$$ with all keys $$K_1, ..., K_{N^{KV}}$$ to obtain normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averages the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute $$Y_q$$ (right). Adapted from: [The Little Book of Deep Learning]({{ site.resources_permalink }}). 
+The attention operator matches every query $$Q_q$$ with all keys $$K_1, ..., K_{N^{KV}}$$ to obtain normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averages the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute $$Y_q$$ (right). Adapted from: [The Little Book of Deep Learning](https://fleuret.org/public/lbdl.pdf).
 
 In self-attention, the queries, the keys and the values come from the same sequence, and $$N^Q = N^{KV} = n$$: the attention sublayers of the encoder read the source sentence, and the first attention sublayer of each decoder layer reads the target sentence. In **cross-attention**, the second attention sublayer of each decoder layer, the queries come from the decoder, and the keys and the values from the output of the encoder: this is where the decoder reads the source sentence.
 
@@ -107,10 +106,10 @@ The learned parameters are the projections $$W_i^Q$$, $$W_i^K$$ and $$W_i^V$$ of
 **Masked multi-head attention** in the decoder sets the scores of the future positions, above the diagonal of $$Q K^T$$, to $$-\infty$$ before the softmax, so that their weights are zero. The decoder input is the target sentence shifted right by one position, with a start token in the first position, so the output at position $$t$$ predicts word $$t$$ from the words before it. In training, the mask lets the decoder process all the positions of the target sentence at once. At inference, the decoder generates one word per step and appends it to its input. For the output "Le gros chien rouge", the attention weights of the four steps are:
 
 {: .picture}
-<img width="27%" height="27%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_masked.svg"/>
+<img width="30.5%" height="30.5%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_masked.svg"/>
 
 {: .caption}
-Input of the masked attention mechanism of the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every iterated word. Masking sets the attention scores of unseen words to $$-\infty$$ before the softmax, which gives them an attention weight of zero. Source: unknown.
+Attention weights of the masked attention of the decoder for the sentence "Le gros chien rouge". The algorithm performs four iterations, one per word. Attention is computed for every iterated word. Masking sets the attention scores of unseen words to $$-\infty$$ before the softmax, which gives them an attention weight of zero. Each vector sums to 1.
 
 ### Feed-Forward, Residual and Output Layers
 
@@ -139,10 +138,10 @@ At each of its $$n$$ steps, a recurrent layer multiplies a $$d \times d$$ weight
 [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805) (Devlin et al., 2019) keeps only the encoder of the transformer. Its stack of encoder layers computes a representation of each token from the whole sentence, on both sides of the token (bidirectional):
 
 {: .picture}
-<img width="80%" height="80%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
+<img width="95.3%" height="95.3%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
 
 {: .caption}
-The BERT model, as a stack of Transformer encoders.
+The BERT model, as a stack of Transformer encoders. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
 
 Training has two phases: pre-training on unlabeled text, then fine-tuning on each task.
 
@@ -164,10 +163,10 @@ Output = [NotNext] the man went to the store [SEP] penguins like to jump [SEP]
 The output at the `[CLS]` position feeds the classifier of the second task, and the outputs at the masked positions predict the masked words. The input of the model is the sum of three embeddings per token. Unlike the transformer, BERT learns its position embeddings:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/bert_input.svg"/>
+<img width="90.7%" height="90.7%" src="{{ site.assets }}/learning-from-sequences/bert_input.svg"/>
 
 {: .caption}
-Input of the BERT model. Position embeddings are similar to those of the transformer described above. Segment embeddings flag each word as part of the first or second sentence. Token embeddings are the text embeddings of the input data. The input to the model is the sum of these three embeddings. Adapted from: <a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018, Google, arXiv)</a>
+Input of the BERT model. Position embeddings are learned, one vector per position (up to 512), unlike the fixed sine and cosine encoding of the transformer described above. Segment embeddings flag each word as part of the first or second sentence. Token embeddings are the text embeddings of the input data. The input to the model is the sum of these three embeddings. Adapted from: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)
 
 BERT-base has 12 layers, $$d = 768$$ and 12 heads (110M parameters), and BERT-large has 24 layers, $$d = 1024$$ and 16 heads (340M parameters). Both were pre-trained on BooksCorpus (800M words) and English Wikipedia (2,500M words), for 1M steps with batches of 256 sequences: 4 days on 16 TPU chips for BERT-base, and on 64 TPU chips for BERT-large. The cost of attention grows with $$n^2$$, so 90% of the steps use sequences of 128 tokens, and the last 10% use 512 tokens to learn the position embeddings.
 
@@ -182,10 +181,9 @@ Fine-tuning adds an output layer for the task, and trains all the parameters on 
 4. **Single sentence tagging**, e.g. [named-entity recognition](https://en.wikipedia.org/wiki/Named-entity_recognition) (CoNLL-2003): the output at each token feeds a classifier over the tags, such as B-PER for the first token of the name of a person, and O for a token outside any named entity.
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
+<img width="99.7%" height="99.7%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
 
 {: .caption}
-Input and output of the fine-tuning phase of a BERT network, applied to four different interpretation tasks.
-Adapted from: <a href="https://arxiv.org/abs/1810.04805">BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding (2018, Google, arXiv)</a>
+Input and output of the fine-tuning phase of a BERT network, applied to four types of tasks: (a) sentence pair classification (MNLI, QQP, QNLI, STS-B, MRPC, RTE, SWAG), (b) single sentence classification (SST-2, CoLA), (c) question answering (SQuAD v1.1) and (d) single sentence tagging (CoNLL-2003 NER). Adapted from: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)
 
 BERT has no decoder, so it does not generate text. It can initialize the encoder of a translation model: [Clinchant et al. (2019)](https://arxiv.org/abs/1909.12744) gain up to 0.6 BLEU points on WMT 2014 English-to-German by fine-tuning such an encoder, while a frozen BERT encoder loses accuracy. Decoder-only transformers, such as GPT, keep the masked decoder without cross-attention, and generate text one token at a time.

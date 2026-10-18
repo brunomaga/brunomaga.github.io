@@ -9,10 +9,10 @@ tags: ["generative models", "diffusion", "DDPM", "DiT", "video generation"]
 [Diffusion models](https://en.wikipedia.org/wiki/Diffusion_model) date back to [Deep Unsupervised Learning using Nonequilibrium Thermodynamics](https://arxiv.org/abs/1503.03585) (2015), and became popular with [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239) (DDPM, 2020). Like [GANs](https://en.wikipedia.org/wiki/Generative_adversarial_network) and [VAEs](https://en.wikipedia.org/wiki/Variational_autoencoder), they are [generative models](https://en.wikipedia.org/wiki/Generative_model) that learn to turn noise into data samples. A diffusion model has two [Markov chains](https://en.wikipedia.org/wiki/Markov_chain): a forward process that gradually adds noise to the data, and a **learned** reverse process that removes it. The reverse transitions are learned with [variational inference](https://en.wikipedia.org/wiki/Variational_Bayesian_methods). After training, a sampling algorithm runs the reverse chain from pure noise to generate new data.
 
 {: .picture}
-<img width="80%" height="80%" src="{{ site.assets }}/diffusion/diffusion.svg"/> 
+<img width="66.3%" height="66.3%" src="{{ site.assets }}/diffusion/diffusion.svg"/> 
 
 {: .caption}
-A diffusion model is a $$T$$-step Markov chain, defined by a forward process $$q$$ and a trainable reverse process $$p_\theta$$. Source: [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
+A diffusion model is a $$T$$-step Markov chain, defined by a forward process $$q$$ and a trainable reverse process $$p_\theta$$. Adapted from: [Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2006.11239).
 
 The derivation and the [U-Net](https://en.wikipedia.org/wiki/U-Net) code follow DDPM, the Hugging Face post [The Annotated Diffusion Model](https://huggingface.co/blog/annotated-diffusion) and the post [Lil'Log: what are diffusion models](https://lilianweng.github.io/posts/2021-07-11-diffusion-models/) of Lilian Weng. The learned variance and the noise schedule for fewer steps follow [Improved Denoising Diffusion Probabilistic Models](https://arxiv.org/abs/2102.09672) (Improved DDPM) and its [official implementation](https://github.com/openai/improved-diffusion). Equation numbers refer to DDPM unless stated otherwise. The full code is in [diffusion.py]({{ site.assets }}/diffusion/diffusion.py) and [dit.py]({{ site.assets }}/diffusion/dit.py).
 
@@ -328,10 +328,10 @@ The inner loop below runs steps 2 to 5 for each batch. After each epoch, the EMA
 [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748) replaced the U-Net with a Transformer, the diffusion transformer (DiT). DiT is a [Vision Transformer](https://arxiv.org/abs/2010.11929) (ViT): it splits its input into patches and processes them as a sequence of tokens (Figure 4 in the paper). Its input is the latent representation of the image produced by a pre-trained VAE, as in the latent diffusion models of the video section. DiT-XL/2 outperforms the earlier U-Net diffusion models on class-conditional ImageNet, with a [Fréchet inception distance](https://en.wikipedia.org/wiki/Fr%C3%A9chet_inception_distance) (FID) of 2.27 at 256x256. The FID falls as the model Gflops grow, from more layers, wider layers or more tokens. A smaller patch size adds tokens and Gflops but no parameters, and lowers the FID: the Gflops, not the parameter count, set the quality. Larger DiT models also reach a given FID with less training compute.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/dit.svg"/> 
+<img width="82.4%" height="82.4%" src="{{ site.assets }}/diffusion/dit.svg"/> 
 
 {: .caption}
-<b>The Diffusion Transformer (DiT) architecture.</b> <i>Left:</i> We train conditional latent DiT models. The input latent is decomposed into patches and processed by several DiT blocks. <i>Right:</i> Details of our DiT blocks. We experiment with variants of standard transformer blocks that incorporate conditioning via adaptive layer norm, cross-attention and extra input tokens. Adaptive layer norm works best.
+<b>The Diffusion Transformer (DiT) architecture.</b> <i>Top left:</i> a conditional latent DiT; the input latent is decomposed into patches and processed by several DiT blocks. <i>Top right and bottom:</i> variants of the DiT block that add the conditioning by adaptive layer norm (adaLN-Zero), cross-attention or extra input tokens (in-context conditioning); adaptive layer norm works best. Adapted from: [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748).
 
 In the adaLN-Zero block of the figure, adaptive layer normalization conditions each block on the timestep $$t$$ and the class label $$y$$. The scale $$\gamma$$ and shift $$\beta$$ of each layer norm are not learned parameters: an MLP regresses them from the sum of the embeddings of $$t$$ and $$y$$. adaLN-Zero also regresses scales $$\alpha$$, applied before each residual connection, and initializes them to zero, so that each block starts as the identity function. These $$\alpha$$ and $$\beta$$ are unrelated to the $$\alpha_t$$ and $$\beta_t$$ of the noise schedule.
 
@@ -476,10 +476,10 @@ Each sampling step runs the model twice, with and without the label, which doubl
 Diffusion on pixels is expensive at high resolution. The [latent diffusion model](https://arxiv.org/abs/2112.10752) (LDM) runs diffusion in the latent space of a pre-trained [autoencoder](https://en.wikipedia.org/wiki/Autoencoder), such as a VAE. The latent is smaller than the image, which cuts the cost of training and sampling. A video holds many frames per sample, so video models compress their input in both space and time:
 
 {: .picture}
-<img width="90%" height="90%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
 
 {: .caption}
-An overview of the latent space compression in SORA. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". Source: [Video generation models as world simulators, OpenAI](https://openai.com/index/video-generation-models-as-world-simulators/)
+An overview of the latent space compression in Sora. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". Adapted from: [Video generation models as world simulators (OpenAI)](https://openai.com/index/video-generation-models-as-world-simulators/)
 
 The second problem is attention, which must relate patches within a frame (space) and across frames (time). For a latent video of shape $$B \times F \times H \times W \times C$$ (batch, frames, height and width in patches, and channels), there are two main designs:
 - **Spatio-temporal attention** factorizes the attention. A spatial attention relates the patches of each frame, on the input reshaped to $$(B F) \times (H W) \times C$$. A temporal attention then relates the patches at the same position across frames, on the input reshaped to $$(B H W) \times F \times C$$. One spatial and one temporal attention connect any two patches in two hops.
@@ -490,10 +490,10 @@ The cost of attention grows with the square of the sequence length. Per layer, s
 Training can also shorten the sequence by dropping tokens. [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) (MAE) trains a ViT encoder on a random 25% of the patches of each image, which speeds up training by 3x or more. [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113) keeps only 10% of the spacetime patches of a video. [Fast Training of Diffusion Models with Masked Transformers](https://arxiv.org/abs/2306.09305) (MaskDiT) applies the idea to diffusion: it masks a large fraction of the patches during training (e.g. 50%), and matches DiT in about 30% of its training time. [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304) also drops random tokens, together with sequence packing, to speed up training.
 
 {: .picture}
-<img width="70%" height="70%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
+<img width="90.6%" height="90.6%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
 
 {: .caption}
-An illustration of a masked autoencoder that randomly picks 10% of the spacetime patches of a video. These patches retain enough representative power to reconstruct the original video. Source: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
+An illustration of a masked autoencoder that randomly picks 10% of the spacetime patches of a video. These patches retain enough representative power to reconstruct the original video. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
 
 ## Further Reading
 
@@ -513,10 +513,10 @@ To train on videos, it adds temporal layers to a pre-trained image model, as in 
 > We first pre-train an LDM on images only; then, we turn the image generator into a video generator by introducing a temporal dimension to the latent space diffusion model and fine-tuning on encoded image sequences, i.e., videos.
 
 {: .picture}
-<img width="68%" height="68%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
+<img width="93.8%" height="93.8%" src="{{ site.assets }}/diffusion/align_your_latents.svg"/> 
 
 {: .caption}
-**Left:** We turn a pre-trained LDM into a video generator by inserting temporal layers that learn to align frames into temporally consistent sequences. During optimization, the image backbone $$\theta$$ remains fixed and only the parameters $$\phi$$ of the temporal layers $$l^i_\phi$$ are trained, cf. Eq. (2). **Right:** During training, the base model $$\theta$$ interprets the input sequence of length $$T$$ as a batch of images. For the temporal layers $$l^i_\phi$$, these batches are reshaped into video format. Their output $$z'$$ is combined with the spatial output $$z$$, using a learned merge parameter $$\alpha$$. During inference, skipping the temporal layers ($$\alpha^i_\phi=1$$) yields the original image model. For illustration purposes, only a single U-Net Block is shown. $$c_S$$ is optional context frame conditioning, when training prediction models (Sec. 3.2). Caption and figure adapted from: [Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2304.08818).
+**Left:** a pre-trained LDM is turned into a video generator by inserting temporal layers that learn to align frames into temporally consistent sequences. During optimization, the image backbone $$\theta$$ remains fixed and only the parameters $$\phi$$ of the temporal layers $$l^i_\phi$$ are trained. **Right:** During training, the base model $$\theta$$ interprets the input sequence of length $$T$$ as a batch of images. For the temporal layers $$l^i_\phi$$, these batches are reshaped into video format. Their output $$z'$$ is combined with the spatial output $$z$$, using a learned merge parameter $$\alpha$$. During inference, skipping the temporal layers ($$\alpha^i_\phi=1$$) yields the original image model. For illustration purposes, only a single U-Net Block is shown. $$B$$ denotes the batch size, $$T$$ the sequence length, $$C$$ the input channels and $$H$$ and $$W$$ the spatial dimensions of the input. $$c_S$$ is an optional context-frame conditioning, used when training prediction models. Adapted from: [Align your Latents: High-Resolution Video Synthesis with Latent Diffusion Models](https://arxiv.org/abs/2304.08818).
 </details>
 {::options parse_block_html="false" /}
 
@@ -525,10 +525,10 @@ To train on videos, it adds temporal layers to a pre-trained image model, as in 
 A U-Net model that animates the person in a reference image with a pose sequence (a moving stick figure). A VAE and CLIP encode the reference image. The model has two U-Nets. ReferenceNet merges detail features of the reference image into the denoising U-Net through spatial attention. The denoising U-Net generates the video from the pose sequence, encoded by a *pose guider*. Each of its blocks runs spatial attention, cross-attention to the CLIP features, and temporal attention: the spatio-temporal attention of the video section.
 
 {: .picture}
-<img width="90%" height="90%" src="{{ site.assets }}/diffusion/anymate_anyone.svg"/> 
+<img width="100%" height="100%" src="{{ site.assets }}/diffusion/anymate_anyone.svg"/> 
 
 {: .caption}
-The overview of our method. The pose sequence is initially encoded using Pose Guider and fused with multi-frame noise, followed by the Denoising UNet conducting the denoising process for video generation. The computational block of the Denoising UNet consists of Spatial-Attention, Cross-Attention, and Temporal-Attention, as illustrated in the dashed box on the right. The integration of reference image involves two aspects. Firstly, detailed features are extracted through ReferenceNet and utilized for Spatial-Attention. Secondly, semantic features are extracted through the CLIP image encoder for Cross-Attention. Temporal-Attention operates in the temporal dimension. Finally, the VAE decoder decodes the result into a video clip.
+Overview of Animate Anyone. The pose sequence is initially encoded using Pose Guider and fused with multi-frame noise, followed by the Denoising UNet conducting the denoising process for video generation. The computational block of the Denoising UNet consists of Spatial-Attention, Cross-Attention, and Temporal-Attention, as illustrated in the dashed box on the right. The integration of reference image involves two aspects. Firstly, detailed features are extracted through ReferenceNet and utilized for Spatial-Attention. Secondly, semantic features are extracted through the CLIP image encoder for Cross-Attention. Temporal-Attention operates in the temporal dimension. Finally, the VAE decoder decodes the result into a video clip. Adapted from: [Animate Anyone: Consistent and Controllable Image-to-Video Synthesis for Character Animation](https://arxiv.org/abs/2311.17117).
 
 </details>
 {::options parse_block_html="false" /}
@@ -553,10 +553,10 @@ The following are conditional models based on DiT:
 OmniGen is only a VAE and a Transformer, initialized from the Phi-3 LLM. One model performs text-to-image generation, image editing, subject-driven generation and visual-conditional generation.
 
 {: .picture}
-<img width="68%" height="68%" src="{{ site.assets }}/diffusion/omnigen.svg"/> 
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/diffusion/omnigen.svg"/> 
 
 {: .caption}
-The framework of OmniGen. Texts are tokenized into tokens, while input images are transformed into embedding via VAE. OmniGen can accept free-form multi-modal prompts and generate images through the rectified flow approach.
+The framework of OmniGen. Texts are tokenized into tokens, while input images are transformed into embedding via VAE. OmniGen can accept free-form multi-modal prompts and generate images through the rectified flow approach. The attention mask (left) is causal across the input sequence and bidirectional within each image. Adapted from: [OmniGen: Unified Image Generation](https://arxiv.org/abs/2409.11340).
 
 </details>
 {::options parse_block_html="false" /}
@@ -566,10 +566,10 @@ The framework of OmniGen. Texts are tokenized into tokens, while input images ar
 A text-to-image model whose Transformer blocks mirror those of a frozen Llama3-8B LLM: each image block takes the hidden states of the corresponding LLM layer as conditioning.
 
 {: .picture}
-<img width="68%" height="68%" src="{{ site.assets }}/diffusion/playground_v3.svg"/> 
+<img width="100%" height="100%" src="{{ site.assets }}/diffusion/playground_v3.svg"/> 
 
 {: .caption}
-PGv3 model structure overview simplified. There have been a lot of research efforts aimed at leveraging LLMs to improve t2i models’ prompt-following abilities. These efforts typically involve either using LLMs as the text encoder to replace the commonly-used T5 and CLIP, or employing LLMs to adapt or revise prompts for a pretrained T5/CLIP-based t2i model \[19, 56, 47, 24, 38, 3\]. In PGv3, we adopt the former approach, i.e. we don’t use any NLP encoders like T5 and CLIP, and solely rely on Llama3-8B to provide text conditioning to our diffusion model, from the initial stage of the model training.
+Simplified structure of Playground v3 (PGv3). Text conditioning comes only from Llama3-8B, with no T5 or CLIP encoder: each PGv3 block attends jointly to the image tokens and to the keys and values of the matching Llama3 block. Adapted from: [Playground v3: Improving Text-to-Image Alignment with Deep-Fusion Large Language Models](https://arxiv.org/abs/2409.10695).
 
 </details>
 {::options parse_block_html="false" /}
@@ -601,19 +601,19 @@ A DiT for video generation: unconditional, class-conditional and text-to-video. 
 Variant 1 performs best.
 
 {: .picture}
-<img width="70%" height="70%" src="{{ site.assets }}/diffusion/latte.svg"/> 
+<img width="77.9%" height="77.9%" src="{{ site.assets }}/diffusion/latte.svg"/> 
 
 {: .caption}
-<b>The pipeline of Latte for video generation</b>. Four model variants of Latte are proposed to efficiently capture spatio-temporal information in videos. Each block depicted in light orange represents a Transformer block. The standard Transformer blocks (described in Fig. 4b) are employed in (a) and (b). Meanwhile, (c) and (d) employ our respective Transformer block variants. For the sake of simplicity, encoding and decoding processes for VAE are not shown in the diagram.
+<b>The pipeline of Latte for video generation</b>. Four model variants of Latte are proposed to efficiently capture spatio-temporal information in videos. Each block depicted in light orange represents a Transformer block. The standard Transformer blocks are used in (a) and (b), while (c) and (d) use Latte's own block variants. For the sake of simplicity, encoding and decoding processes for VAE are not shown in the diagram. Adapted from: [Latte: Latent Diffusion Transformer for Video Generation](https://arxiv.org/abs/2401.03048).
 
 The paper also compares two video patch embeddings. The uniform frame patch embedding (a) embeds each frame into tokens as in ViT. The compression frame patch embedding (b) extends the ViT patch embedding to 3D, and extracts tubes along the time dimension. Embedding (a) performs better:
 
 
 {: .picture}
-<img width="57%" height="57%" src="{{ site.assets }}/diffusion/latte2.svg"/> 
+<img width="70%" height="70%" src="{{ site.assets }}/diffusion/latte2.svg"/> 
 
 {: .caption}
-<b>The video clip patch embedding</b>. (a) We sample <i>F</i> frames and embed each individual video frame into tokens using the method described in ViT. (b) We consider capturing temporal information and then extending the ViT patch embedding method from 2D to 3D and subsequently extracting tubes along the temporal dimension. For ease of understanding, we use the original video clip here to demonstrate the patch embedding method. The patch embedding in the latent space of videos follows the same processing approach.
+<b>The video clip patch embedding</b>. (a) Uniform frame patch embedding: <i>F</i> frames are sampled and each frame is embedded into tokens as in ViT. (b) Compression frame patch embedding: to capture temporal information, the ViT patch embedding is extended from 2D to 3D and tubes are extracted along the temporal dimension. The original video clip is shown for clarity; the patch embedding in the latent space of videos follows the same approach. Adapted from: [Latte: Latent Diffusion Transformer for Video Generation](https://arxiv.org/abs/2401.03048).
 
 </details>
 {::options parse_block_html="false" /}
@@ -624,10 +624,10 @@ The paper also compares two video patch embeddings. The uniform frame patch embe
 Tora generates videos guided by trajectories, images, texts or their combinations. It "employs the Spatial-Temporal Diffusion Transformer (ST-DiT) from OpenSora as its foundational model": each block runs a spatial and then a temporal attention, as variant 3 of Latte. Its Trajectory Extractor "converts the trajectory into motion patches, which inhabit the same latent space as the video patches". T5 encodes the text.
 
 {: .picture}
-<img width="76%" height="76%" src="{{ site.assets }}/diffusion/tora.svg"/> 
+<img width="98.5%" height="98.5%" src="{{ site.assets }}/diffusion/tora.svg"/> 
 
 {: .caption}
-Overview of the Tora Architecture. We introduce two novel modules: the Trajectory Extractor and the Motion-guidance Fuser. The Trajectory Extractor uses a 3D motion VAE to embed trajectory vectors into the same latent space as video patches, preserving motion information across frames. It then employs stacked convolutional layers to extract hierarchical motion features. The Motion-guidance Fuser utilizes adaptive normalization layers to integrate these multi-level motion conditions into the corresponding DiT blocks, ensuring that generated videos consistently follow defined trajectories. Our method leverages the scalability of DiT, enabling the creation of motion-controllable videos of extended duration.
+Overview of the Tora architecture. Tora adds two modules: the Trajectory Extractor and the Motion-guidance Fuser. The Trajectory Extractor uses a 3D motion VAE to embed trajectory vectors into the same latent space as video patches, preserving motion information across frames. It then employs stacked convolutional layers to extract hierarchical motion features. The Motion-guidance Fuser uses adaptive normalization layers to integrate these multi-level motion conditions into the corresponding DiT blocks, so that generated videos follow the defined trajectories. Tora uses the scalability of DiT to create motion-controllable videos of extended duration. Adapted from: [Tora: Trajectory-oriented Diffusion Transformer for Video Generation](https://arxiv.org/abs/2407.21705).
 
 </details>
 {::options parse_block_html="false" /}
@@ -647,10 +647,10 @@ data. A high masking ratio leads to a large speedup, e.g., > 4× in wall-clock t
 or even more.
 
 {: .picture}
-<img width="66%" height="66%" src="{{ site.assets }}/diffusion/masked_autoencoders.svg"/> 
+<img width="90.6%" height="90.6%" src="{{ site.assets }}/diffusion/masked_autoencoders.svg"/> 
 
 {: .caption}
-<b>Masked Autoencoders as spatiotemporal learners</b>. We mask a large subset (<i>e.g.</i>, 90%) of random patches in spacetime. An encoder operates on the set of visible patches. A small decoder then processes the full set of encoded patches and mask tokens to reconstruct the input. Except for patch and positional embeddings, <i>neither the encoder, the decoder, nor the masking strategy, has any spatiotemporal inductive bias</i>.
+<b>Masked Autoencoders as spatiotemporal learners</b>. A large subset (<i>e.g.</i>, 90%) of random patches in spacetime is masked. An encoder operates on the set of visible patches. A small decoder then processes the full set of encoded patches and mask tokens to reconstruct the input. Except for patch and positional embeddings, <i>neither the encoder, the decoder, nor the masking strategy, has any spatiotemporal inductive bias</i>. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113).
 
 </details>
 {::options parse_block_html="false" /}
@@ -664,10 +664,10 @@ The following works address multi-dimensional parallelism for large models such 
 DiT-MoE is a sparse [mixture of experts](https://en.wikipedia.org/wiki/Mixture_of_experts) (MoE) version of DiT, with shared expert routing and an expert-level balance loss. It scales to 16.5B parameters, matches dense DiTs with less compute at inference, and reaches an FID of 1.80 on ImageNet 512x512.
 
 {: .picture}
-<img width="70%" height="70%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
+<img width="96.6%" height="96.6%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
 
 {: .caption}
-<b>Overview of the DiT-MoE architecture.</b> Generally, DiT-MoE is built upon the DiT and composed of MoE-inserted Transformer blocks. In between, we replace the MLP with a sparsely activated mixture of MLPs. The right subfigure demonstrates the details of MoE layer integration of the shared expert strategy.
+<b>Overview of the DiT-MoE architecture.</b> DiT-MoE is built upon the DiT and composed of MoE-inserted Transformer blocks. In each block, the MLP is replaced by a sparsely activated mixture of MLPs. The right subfigure shows the MoE layer with the shared expert strategy. Adapted from: [Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633).
 
 </details>
 {::options parse_block_html="false" /}
@@ -678,10 +678,10 @@ DiT-MoE is a sparse [mixture of experts](https://en.wikipedia.org/wiki/Mixture_o
 LongVILA trains long-context visual-language models, for video understanding, in five stages. The first three come from [VILA: On Pre-training for Visual Language Models](https://arxiv.org/abs/2312.07533v2): multi-modal alignment, large-scale pre-training and short supervised fine-tuning. Stage 4 extends the context of the LLM progressively, from 8K to 262K tokens. Stage 5 fine-tunes on long videos with Multi-Modal Sequence Parallelism (MM-SP), which follows the 2D attention of [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719) and [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485). MM-SP trains with a context of 2M tokens on 256 GPUs. It is 2.1x to 5.7x faster than ring-style sequence parallelism, and 1.1x to 1.4x faster than Megatron with context and tensor parallelism.
 
 {: .picture}
-<img width="68%" height="68%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
+<img width="99.1%" height="99.1%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
 
 {: .caption}
-Workflow of Multi-Modal Sequence Parallelism with a Batch Size (bs) of 4 and a Sequence Parallel Size (SP\_Size) of 3. To facilitate sequence parallelism for multi-modal inputs, we developed a customized sharding strategy that ensures balanced workload distribution and compatibility with SP communcation.
+Workflow of Multi-Modal Sequence Parallelism (MM-SP) with a Batch Size (bs) of 4 and a Sequence Parallel Size (SP\_Size) of 3. To support sequence parallelism for multi-modal inputs, MM-SP uses a custom sharding strategy that balances the workload and is compatible with SP communication. Adapted from: [LongVILA: Scaling Long-Context Visual Language Models for Long Videos](https://arxiv.org/abs/2408.10188).
 
 </details>
 {::options parse_block_html="false" /}
@@ -693,10 +693,10 @@ Workflow of Multi-Modal Sequence Parallelism with a Batch Size (bs) of 4 and a S
 PipeFusion is a pipeline-parallel inference method for DiTs. It splits the image into patches and the network layers across GPUs, and pipelines the patches through the layers. Consecutive diffusion steps have similar inputs, so each patch takes the context of the other patches from the previous step (one-step stale feature maps). This needs less communication than tensor parallelism, sequence parallelism and DistriFusion. xDiT is a parallel inference engine for DiTs. It combines Unified Sequence Parallelism (USP: Ulysses and Ring Attention), PipeFusion, CFG parallelism (the two model runs of classifier-free guidance on different GPUs) and data parallelism.
 
 {: .picture}
-<img width="70%" height="70%" src="{{ site.assets }}/diffusion/pipefusion.svg"/> 
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/diffusion/pipefusion.svg"/> 
 
 {: .caption}
-(a) DistriFusion replicates DiT parameters on two devices. It splits an image into 2 patches and employs asynchronous allgather for activations of every layer. (b) PipeFusion shards DiT parameters on two devices. It splits an image into 4 patches and employs asynchronous P2P for activations across two devices.
+(a) DistriFusion replicates DiT parameters on two devices. It splits an image into 2 patches and employs asynchronous allgather for activations of every layer. (b) PipeFusion shards DiT parameters on two devices. It splits an image into 4 patches and employs asynchronous P2P for activations across two devices. In both panels, the orange and blue blocks run on the two devices. Adapted from: [PipeFusion: Displaced Patch Pipeline Parallelism for Inference of Diffusion Transformer Models](https://arxiv.org/abs/2405.14430).
 
 </details>
 {::options parse_block_html="false" /}

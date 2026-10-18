@@ -8,7 +8,7 @@ tags: ["data parallelism", "ZeRO", "FSDP", "CPU offloading", "activation checkpo
 [Data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) trains one model on different input samples in parallel. For an input of shape $$B \times S \times E$$ (batch size, sequence length and embedding size), it splits the batch dimension across $$P$$ processes, so each process holds a local input of shape $$B/P \times S \times E$$:
 
 {: .picture}
-<img width="26%" height="26%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
+<img width="24.1%" height="24.1%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
 
 {: .caption}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.
@@ -20,10 +20,10 @@ The examples below train the GPTlite model of the [GPT-lite post]({{ site.baseur
 Distributed data parallelism (DDP) keeps a full copy of the model on each process: its parameters, gradients and optimizer states. All copies start with the same parameters. Each process runs the forward and backward passes on its own samples. During the backward pass, an [all-reduce](https://en.wikipedia.org/wiki/Collective_operation) averages the gradients across the processes. Each process then runs the same optimizer step with the same average gradients, so the copies stay identical:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
+<img width="65.8%" height="65.8%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
 
 {: .caption}
-Workflow for distributed data parallelism (DDP) across 4 color-coded processes. Each process holds a copy of a 4-layer feed-forward model, initialized identically. Each process performs a forward pass on its own data (arrow pointing up on the left of the model). On the backward pass, all processes compute the local gradients and mean-reduce them across the network (arrow pointing down on the right of the model). The mean of the gradients is then used by the optimizer to update the parameter states. 
+Distributed data parallelism (DDP) on 4 processes. Each process holds a full copy of a 4-layer model (the parameters, optimizer states and gradients of every layer), initialized identically, and takes its own input. The forward pass (left arrow) computes the activations and the loss of each process. In the backward pass (right arrow), each process computes the local gradients of every layer, and an all-reduce averages them across the processes. The optimizer then applies the same mean gradients on every process, so all copies stay identical.
 
 The $$P$$ processes thus hold $$P$$ identical copies of the model states. Sharding removes these redundant copies.
 
@@ -40,20 +40,20 @@ ZeRO splits only the model states. Each process still holds temporary buffers an
 The figure shows ZeRO-3 as the ZeRO paper describes it: each process owns the states of one layer, broadcasts its parameters before the layer runs, and receives the reduced gradients after its backward pass:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
+<img width="95.3%" height="95.3%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
 
 {: .caption}
-Workflow for stage 3 sharding. Each processor contains a non-overlapping subset of parameters, gradients and optimizer data, split by assigning different layers to different processes. Each processor loads a different data batch. During the forward and backward passes (represented by arrows on the left and right of the model, respectively), when a given layer needs to be computed, the process responsible for that layer broadcasts and gathers those values to/from the remaining processes. Example for processor 1 (yellow): **Data loading:** the yellow process loads data sample 1. **Forward pass:** the yellow process receives the parameters from rank 0 (blue) and computes the activations for layer 1. Afterwards, the yellow process broadcasts its parameters to ranks 0, 2 and 3, so that they compute their activations for layer 2. Activations for layers 3 and 4 are computed similarly to layer 1, led by the red and green processes, respectively. **Backward pass:** the green process (3) broadcasts its parameters to all other processes. Each process can use its activations and the received parameters to compute the gradients for the top layer. All processes gather their local gradients in process 3, which uses them to update the parameters of the last layer. The same happens for the remaining layers, with the red, yellow and blue processes (iteratively) broadcasting the parameters and gathering the gradients.
+Stage 3 sharding (ZeRO-3) on 4 processes. Process k holds the parameters, optimizer states and gradients of layer k only (solid boxes; the dashed boxes are layers held by other processes), takes its own input and keeps its own activations. Forward pass (left): before layer k is computed, process k broadcasts its parameters, and the other processes discard them after use. Backward pass (right): process k broadcasts the parameters of layer k again, every process computes its local gradients of layer k, and these gradients are summed (reduced) on process k, which updates the parameters of layer k. Inspired by: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054)
 
 ZeRO-3 in DeepSpeed and PyTorch FSDP split the tensors of every layer into $$P$$ equal shards instead, and each process owns one shard of every layer. An all-gather replaces each broadcast, and a reduce-scatter each reduction, with the same communication volume.
 
 A reduce-scatter and an all-gather move as much data as an all-reduce, so stages 1 and 2 have the communication volume of DDP. Stage 3 adds the all-gather of the backward pass, and communicates 1.5 times as much. The [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) summarizes the memory per GPU of each stage:
 
 {: .picture}
-<img width="80%" height="80%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
+<img width="85.8%" height="85.8%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
 
 {: .caption}
-Memory consumption of the three stages of ZeRO FSDP, where $$\Psi$$ is the number of parameters, $$K$$ the memory multiplier of the optimizer states and $$N_d$$ the data-parallel degree. Adapted from: [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
+Per-GPU memory of the model states (parameters, gradients and optimizer states) with plain data parallelism (baseline) and with the three ZeRO stages: $$P_{os}$$ partitions the optimizer states across the GPUs, $$P_{os+g}$$ also the gradients, and $$P_{os+g+p}$$ also the parameters. $$\Psi$$ is the number of parameters, $$K$$ the memory multiplier of the optimizer states and $$N_d$$ the data-parallel degree; the example uses $$K=12$$ (mixed-precision Adam), $$\Psi=7.5B$$ and $$N_d=64$$. The last column is the communication volume relative to the baseline. Adapted from: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) and the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
 
 With mixed precision and Adam, each parameter takes 2 bytes in fp16, its gradient 2 bytes, and its optimizer states $$K = 12$$ bytes. The data-parallel degree $$N_d$$ is the number of processes $$P$$. For 7.5 billion parameters on 64 GPUs, ZeRO-3 reduces the model states per GPU from 120 GB to 1.9 GB. DDP communicates the least, and suits models whose states fit in one GPU. ZeRO-1 and ZeRO-2 save memory for the same communication volume. ZeRO-3 trains models whose fp16 parameters alone do not fit in one GPU, for 1.5 times the communication.
 
@@ -70,18 +70,18 @@ $$
 where $$f^{(l)}$$ is the function of layer $$l$$, $$L$$ is the number of hidden layers, and $$y_b$$ is the label of the input $$x_b$$. The forward pass of a layer needs only its weights and the output of the previous layer. Its backward pass needs only its weights, its input and the gradient from the next layer. vDNN copies the input of each layer to the CPU during the forward pass, and back to the GPU during the backward pass, before the layer needs it. Two CUDA streams overlap these transfers with the computation:
 
 {: .picture}
-<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/vdnn2.svg"/>
+<img width="88.3%" height="88.3%" src="{{ site.assets }}/distributed-training/imgs/vdnn2.svg"/>
 
 {: .caption}
-The forward pass of the vDNN(+) implementation on convolutional neural networks. Red arrows represent the data flow of variables $$x$$ and $$y$$ (layer input and output) during forward propagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Data not associated with the current layer being processed (layer N) is marked with a black cross and can safely be removed from the GPU's memory. Adapted from: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
+The forward pass of vDNN on a convolutional neural network, at layer N. Blue arrows are the input and output feature maps $$X$$ and $$Y$$ of the current layer, the purple arrow its weights $$W$$ and the yellow arrow its cuDNN workspace $$WS$$. White arrows are data that the current layer does not use. The input feature maps $$X$$ of the preceding layers, marked with a black cross, are not used by the current layer and can be released from GPU memory. Adapted from: [vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design](https://arxiv.org/abs/1602.08124)
 
 The backward pass also propagates the gradients down the network:
 
 {: .picture}
-<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/vdnn3.svg"/>
+<img width="88.3%" height="88.3%" src="{{ site.assets }}/distributed-training/imgs/vdnn3.svg"/>
 
 {: .caption}
-The back propagation phase of the vDNN(+) implementation on convolutional neural networks. Red arrows represent the data flow of variables $$x$$ and $$y$$ (layer input and output) during forward propagation. Blue arrows represent the data flow during backward propagation. Green arrows represent weight variables. Yellow arrows represent the *variables workspace in cuDNN*, needed in certain convolutional algorithms. Data not associated with the current layer being processed (layer 2) is marked with a black cross and can safely be removed from the GPU's memory. Adapted from: <a href="https://arxiv.org/pdf/1602.08124.pdf">vDNN (Rhu et al.)</a>
+The backward pass of vDNN at layer 2. Blue arrows are the feature maps $$X$$ and $$Y$$ of the current layer, green arrows its gradients $$dX$$ and $$dY$$, the purple arrow its weights $$W$$ and the yellow arrow its cuDNN workspace $$WS$$. White arrows are data that the current layer does not use. The data used only by the layers whose backward pass is complete (the layers after layer 2 and the loss function), marked with a black cross, is not reused for this batch and can be released from GPU memory. Adapted from: [vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design](https://arxiv.org/abs/1602.08124)
 
 ## Model and Dataset
 
@@ -454,6 +454,9 @@ With micro-batches of 1 sample per GPU, GPTlite gives:
 
 {: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/benchmark_gptlite.svg"/>
+
+{: .caption}
+Maximum and average memory allocated, and throughput, of GPTlite (GPT-3 small) with distributed data parallelism, DeepSpeed ZeRO-1 to ZeRO-3, and ZeRO-3 with CPU offloading, at a micro-batch size of 1 sample per GPU.
 
 **Throughput.** DeepSpeed reduces the gradients of DDP and ZeRO-1 once per optimizer step, after the last micro-batch. It reduces those of ZeRO-2 and ZeRO-3 after every micro-batch, since each process keeps only the gradients of its partition, and ZeRO-3 also gathers the parameters for every micro-batch. With 32 micro-batches per step, ZeRO-2 thus communicates about 16 times the volume of DDP per step, and ZeRO-3 at least 32 times. ZeRO-1 loses 3% of the throughput of DDP, and ZeRO-2, which overlaps the reductions with the backward pass (`overlap_comm`), loses 9%. ZeRO-3, which must gather the parameters of a layer before it computes the layer, loses 38%, and the CPU offloading another 13%.
 

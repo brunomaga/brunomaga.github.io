@@ -182,11 +182,10 @@ CAVI for the mixture repeats three steps until the ELBO converges:
 Each iteration costs $$O(nK)$$ operations. The update of $$m$$ and $$s^2$$ needs the data only through the $$2K$$ sums $$\sum_i \varphi_{ik} x_i$$ and $$\sum_i \varphi_{ik}$$. When the observations are split across workers, each worker computes $$\varphi_i$$ and the partial sums for its observations, and one [all-reduce](https://en.wikipedia.org/wiki/Collective_operation#All-Reduce) of the $$2K$$ sums per iteration gives every worker the new $$m$$ and $$s^2$$. In the figure, the gray ellipses are the variational densities of the components, from the initialization to iteration 50:
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/variational-inference-gmm/gmm_iterations.svg"/>
+<img width="59.8%" height="59.8%" src="{{ site.assets }}/variational-inference-gmm/gmm_iterations.svg"/>
 
 {: .caption}
-Application of the CAVI algorithm to Gaussian Mixture Models, on a dataset of 2D points assigned to five color-coded clusters. The figure uses the multivariate (2D) version of the model; the derivation above uses univariate Gaussians.
-(source: <a href="https://arxiv.org/pdf/1601.00670.pdf">Variational Inference: A Review for Statisticians</a>)
+The CAVI algorithm on a Gaussian mixture model, for a dataset of 2D points from five color-coded clusters: the initialization and the variational factors after 20, 28, 35 and 50 iterations. The ellipses are 2σ contours of the variational approximating factors. The figure uses the multivariate (2D) version of the model; the derivation above uses univariate Gaussians. Adapted from: [Variational Inference: A Review for Statisticians](https://arxiv.org/abs/1601.00670)
 
 ## Stochastic Variational Inference
 

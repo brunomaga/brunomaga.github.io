@@ -20,10 +20,10 @@ On variable-length data, a curriculum by length also reduces padding. A batch th
 Curriculum learning has three steps: define a difficulty metric per sample, sort the samples by increasing difficulty, and iterate over the sorted dataset. On large datasets in distributed runs, the sort is the hard step. The samples are assigned to the ranks in an interleaved order, for example by PyTorch's `DistributedSampler` (panels (a) and (b) below).
 
 {: .picture}
-<img width="71%" height="71%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
+<img width="80.4%" height="80.4%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
 
 {: .caption}
-The curriculum dataset setup problem, on a network of 4 ranks and a dataset of 16 samples.
+The curriculum dataset setup problem, on a network of 4 ranks and a dataset of 16 samples. (a) Original dataset, with an interleaved assignment of the 16 samples (bars) of variable lengths (bar heights) to the 4 ranks (color-coded). (b) Dataset in (a) after distributed data loading. (c) Dataset in (b) after local sorting. (d) Dataset in (b) after distributed sorting. (e) Dataset in (d) with an interleaved assignment of the 16 samples to the 4 ranks (color-coded). (f) Dataset in (e) after distributed data loading.
 
 Two approaches sort the dataset:
 
@@ -35,7 +35,10 @@ Two approaches sort the dataset:
 The distributed sort turns panel (b) into panel (d). The implementation uses [sample sort](https://en.wikipedia.org/wiki/Samplesort), which scales to many ranks because each element moves at most once, in one [all-to-all](https://en.wikipedia.org/wiki/All-to-all_(parallel_pattern)) exchange:
 
 {: .picture}
-<img width="74%" height="74%" src="{{ site.assets }}/distributed-sort/sample_sort.svg"> 
+<img width="57%" height="57%" src="{{ site.assets }}/distributed-sort/sample_sort.svg"> 
+
+{: .caption}
+Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards.
 
 In the figure, a root rank gathers the samples, picks the splitters (the key values that bound the range of each rank) and broadcasts them. The code below replaces the gather and the broadcast with one all-gather, after which every rank picks the same splitters. It also takes `n_samples=100` samples per rank, where the figure takes as many as there are ranks. More samples give splitters closer to the quantiles of the data, and buckets of closer sizes (the figure ends with 9, 4 and 8 elements):
 
@@ -109,7 +112,10 @@ Linear scaling suits SGD, and square-root scaling suits adaptive optimizers such
 Take a budget of $$30$$ tokens per batch, $$\eta_0 = 10^{-3}$$ and $$B_0 = 2$$. Early in the curriculum, the sequences are short, and a batch holds more samples than later:
 
 {: .picture}
-<img width="87%" height="87%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
+<img width="74.6%" height="74.6%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
+
+{: .caption}
+Batches of at most 30 tokens, of shape BxSxE (batch size x sequence length x embedding size), with a reference batch size of 2 and a reference learning rate (LR) of 1e-3. Short sentences (left) give a larger batch, and thus a larger LR, than long sentences (right). Grey cells are padding tokens.
 
 Both batches hold 30 tokens: $$B = 10$$ short samples on the left and $$B = 4$$ long samples on the right. Linear scaling gives LRs of $$5 \times 10^{-3}$$ and $$2 \times 10^{-3}$$, and square-root scaling gives $$2.24 \times 10^{-3}$$ and $$1.41 \times 10^{-3}$$.
 
@@ -118,7 +124,7 @@ Both batches hold 30 tokens: $$B = 10$$ short samples on the left and $$B = 4$$ 
 The DeepSpeed pipeline engine requires the same batch size and sequence length in all micro-batches of a batch. The option `PipelineModule(dynamic_shape=True)` lifts this constraint, at a possible performance cost. The figure below compares Distributed Data Parallel (DDP, left) with pipeline parallelism (right), for a batch of 4 micro-batches:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
+<img width="94.9%" height="94.9%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
 
 With DDP, each micro-batch has its own shape and holds up to 30 tokens. With pipeline parallelism, all micro-batches have the same shape, $$3 \times 11 \times E$$, where 11 is the length of the longest sample. The 4 micro-batches then hold 12 samples instead of 16, and 33% of their tokens are padding instead of 23%.
 
@@ -127,7 +133,10 @@ With DDP, each micro-batch has its own shape and holds up to 30 tokens. With pip
 With samples of one length, the attention of an input of shape $$B \times S \times E$$ uses one $$S \times S$$ mask, such as the causal mask, for all samples of the batch. With padded samples of different lengths, each sample needs its own mask, which also masks the padding, so the mask is a $$B \times S \times S$$ tensor. For micro-batch 1 of the DDP panel above (4 samples of lengths 9, 7, 8 and 6), the mask has one slice per sample (layers 0 to 3 in the figure):
 
 {: .picture}
-<img width="87%" height="87%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/distributed-training/imgs/variable_attn_matrix.svg"/>
+
+{: .caption}
+3D attention mask (BxSxS) of the non-pipeline micro-batch 1 above: its 4 samples of lengths 9, 7, 8 and 6 give a mask of size 4x9x9, with one causal mask per sample, padded to the length of the longest sample.
 
 The cost of attention grows linearly with $$B$$ and quadratically with $$S$$, the length of the longest sequence of the batch. A batch of samples of similar length, with $$B$$ adapted to $$S$$, therefore spends little compute on padding. Variable-length attention kernels, such as `flash_attn_varlen_func` of [FlashAttention](https://github.com/Dao-AILab/flash-attention), remove the padding. They take the sequences of a batch concatenated along one dimension, with the offset of each sequence, and need no mask tensor.
 
@@ -236,42 +245,42 @@ The `mode` argument of `torch.compile` sets how aggressive the optimizations are
 Take a feed-forward network of 3 linear layers and 3 ReLU activations on one GPU. Without compilation, each layer runs its own kernels in the forward and the backward pass:
 
 {: .picture}
-<img width="52%" height="52%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial.svg"/> 
+<img width="59.6%" height="59.6%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial.svg"/> 
 
 {: .caption}
-Workflow of a single-GPU training iteration (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+Workflow of a single-GPU training iteration. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 `torch.compile` captures the forward pass in one graph and derives one graph for the backward pass. Each graph runs as a few fused kernels, or as one CUDA graph launch:
 
 {: .picture}
-<img width="52%" height="52%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
+<img width="59.4%" height="59.4%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
 
 {: .caption}
-Workflow of a single-GPU training iteration with a compiled model (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+Workflow of a single-GPU training iteration with a compiled model. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 In a DDP run on 2 GPUs (Node 1 and Node 2 in the figures), each GPU computes the gradients of its own data. An all-reduce averages the gradients across the GPUs before the optimizer step. DDP groups the gradients in buckets, and starts the all-reduce of a bucket as soon as all its gradients are computed. The backward pass computes the gradients of the last layers first, so their all-reduce overlaps with the backward pass of the earlier layers:
 
 {: .picture}
-<img width="62%" height="62%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
+<img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
 
 {: .caption}
-DDP execution workflow on 2 GPUs. The optimizer waits for all asynchronous `all_reduce`s of gradients to finish (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+DDP execution workflow on 2 GPUs. The optimizer waits for all asynchronous `all_reduce`s of gradients to finish. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 When `torch.compile` compiles the whole model, the backward pass is one graph, and the all-reduces start only when it ends. Communication then no longer overlaps with computation, and the optimizer waits longer:
 
 {: .picture}
-<img width="56%" height="56%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
+<img width="64.4%" height="64.4%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
 
 {: .caption}
-DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, which increases the waiting time of the optimizer (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, which increases the waiting time of the optimizer. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 The `DDPOptimizer` pass of TorchDynamo ([TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) splits the graph into subgraphs whose parameters fill about one DDP bucket each, and compiles each subgraph on its own. The all-reduce of a bucket starts when the backward pass of its subgraph ends, and overlaps with the backward pass of the next subgraph:
 
 {: .picture}
-<img width="62%" height="62%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
+<img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
 
 {: .caption}
-DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization runs asynchronously between subgraphs (adapted from the original [PyTorch dev discussion](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)).
+DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization runs asynchronously between subgraphs. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
 
 In the author's tests, a compiled model under DeepSpeed ZeRO stage 0 did not reach the speedup of PyTorch DDP, possibly because DeepSpeed had no equivalent of `DDPOptimizer`.
 
@@ -282,10 +291,10 @@ The `dynamic` argument of `torch.compile` controls the compilation of variable s
 With static compilation, a rank that meets a new shape late in training recompiles, while the other ranks wait for it at the next collective. To avoid this, each rank runs, early in training, one forward and backward pass for every shape it will see (panel (b) below):
 
 {: .picture}
-<img width="55%" height="55%" src="{{ site.assets }}/distributed-training/imgs/torch_compile_dataset.svg"/>
+<img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/torch_compile_dataset.svg"/>
 
 {: .caption}
-Dataset setup that allows static compilation for variable-length training on 3 processes. **Top (a):** default interleaved assignment (color-coded). The green and yellow ranks encounter a new shape later in training (red cross). This triggers a recompilation and, depending on the settings, possibly a runtime failure. **Bottom (b):** after reshuffling, each rank sees one sample of each shape early on. One binary is compiled per shape, and no recompilation happens afterwards.
+Dataset setup that allows static compilation for variable-length training on 3 processes. **Top (a):** original dataset of 31 samples (bars) of 4 different lengths (bar heights), with the default interleaved assignment to the processes (color-coded). The green and yellow ranks encounter a new shape later in training (red cross). This triggers a recompilation and, depending on the settings, possibly a runtime failure. **Bottom (b):** after reshuffling, each rank sees one sample of each shape (shapes 1 to 4) early on. One binary is compiled per shape, and no recompilation happens afterwards.
 
 The environment variable `TORCH_LOGS=recompiles` logs each recompilation. For a dataset of lengths $$10$$, $$20$$, $$30$$ and $$40$$, each new length adds a log entry such as:
 

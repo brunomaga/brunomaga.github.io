@@ -14,7 +14,7 @@ $$
 During prefill, $$QK^T$$ compares every token with every previous token. The compute therefore grows quadratically with the prompt length $$n$$, and a naive implementation stores an $$n \times n$$ matrix of scores per head.
 
 {: .picture}
-<img width="83%" height="83%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
+<img width="68.7%" height="68.7%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
 
 The following code implements this attention, with an optional mask, and the causal mask of a decoder. Most modules below reuse both functions:
 
@@ -69,17 +69,17 @@ Decode reads the whole KV cache at every step. A smaller KV cache therefore mean
 **Multi-Head Attention** ([MHA](https://arxiv.org/abs/1706.03762)) keeps one query, one key and one value per head.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
+<img width="97.5%" height="97.5%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
 
 **Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)) keeps one query per head, but all heads share a single key head and a single value head. This shrinks the KV cache by a factor equal to the number of heads, at some cost in quality.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
+<img width="97.4%" height="97.4%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
 
 **Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)) is the middle ground, and most current models use it. The heads are split into $$G$$ groups, and the heads of a group share one key head and one value head. The cache shrinks by a factor $$n_\text{heads} / G$$. GQA is multi-head attention when $$G = n_\text{heads}$$, and MQA when $$G = 1$$. A trained multi-head model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
+<img width="97.5%" height="97.5%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
 
 GQA and MQA speed up decode, and the memory they free allows larger batches. The savings come from the smaller KV cache that decode reads: without a cache, GQA saves only a little compute in the key and value projections.
 
@@ -214,7 +214,10 @@ All three types run in a single fused GPU kernel, for both the forward and backw
 MLA mainly speeds up decode, which is bound by memory bandwidth: like MQA and GQA, it shrinks the KV cache that every decode step reads. Prefill, in contrast, is compute-bound, and absorbed attention costs more FLOPs per score, as it works in the latent dimension (512 in DeepSeek-V2) instead of the head dimension (128). Implementations therefore usually up-project the latent vectors into keys and values during prefill, and use absorption during decode.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/mla.svg"/>
+<img width="89.3%" height="89.3%" src="{{ site.assets }}/inference/imgs/mla.svg"/>
+
+{: .caption}
+Multi-head latent attention, with S = 4 tokens, a latent dimension C = 3, H = 4 heads and a head dimension h = 2. With absorb = False (usually prefill), the keys and values of every head are recomputed from the cached latent vectors c. With absorb = True (usually decode), the queries are multiplied by W_uk, the attention runs directly over the cached latent vectors, and W_uv is applied to its output. Both panels show a whole sequence; in decode, the single new token attends to all the cached latent vectors, with no masked cells.
 
 The following code implements MLA. With absorption (`absorb = True`), attention runs directly over the latent vectors. The output is the same as when the keys and values of every head are recomputed (`absorb = False`). As in the other modules, the positions come with the input, so the code has no RoPE and no separate position key:
 
@@ -287,7 +290,7 @@ DSA was added to an already trained model, in two stages. The first stage is a s
 With a KV cache, the indexer key of every token is also cached. Index scores are often tied, since the ReLU outputs many zeros. The selection below therefore uses a stable sort, which breaks ties in the same way whether the tokens are processed together or one at a time. As a result, decoding with a KV cache gives the same result as processing the whole sequence.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
+<img width="97.4%" height="97.4%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
 
 The following code adds DeepSeek Sparse Attention to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained multi-head attention module, and adds an indexer. During the dense warm-up (`dense = True`), the queries attend to all past tokens, and the module computes `indexer_loss`. This loss is backpropagated alone to train the indexer. After the warm-up, each query attends only to the `top_k` past tokens with the highest index scores:
 
@@ -401,10 +404,16 @@ Both types use multi-query attention with a single key-value vector per entry. T
 | DeepSeek-V4, HCA layers | compression by 128 | an entry every 128 tokens, plus the last 128 tokens | all the entries and the last 128 tokens |
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/csa.svg"/>
+<img width="81%" height="81%" src="{{ site.assets }}/inference/imgs/csa.svg"/>
+
+{: .caption}
+Compressed Sparse Attention (CSA) for query 15, with S = 16 tokens, blocks of m = 4 tokens, top_k = 2 and a window of the last 4 tokens. Each compressed entry also covers the previous block (dashed arrows). Entry 3 (dark grey) compresses the block of query 15 and is not visible to it. Inspired by: [DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence](https://arxiv.org/abs/2606.19348)
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/hca.svg"/>
+<img width="89.3%" height="89.3%" src="{{ site.assets }}/inference/imgs/hca.svg"/>
+
+{: .caption}
+Heavily Compressed Attention (HCA) for query 23, with S = 24 tokens, blocks of m' = 8 tokens, no overlap, and a window of the last 8 tokens. Entries 0 and 1 cover tokens 0 to 15, and the window covers tokens 16 to 23, the block of query 23, whose entry 2 (dark grey) is not visible to it. Inspired by: [DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence](https://arxiv.org/abs/2606.19348)
 
 The following code implements both attention types in one module: CSA when `top_k` is given, and HCA otherwise. It includes the overlapping compression, the lightning indexer, the shared key-value multi-query attention, the sliding window, the low-rank queries, RMSNorm, the attention sink and the grouped output projection. A model alternates CSA and HCA across its blocks. The module expects positional information in its input, such as learned positional embeddings, and omits rotary embeddings. As in DSA, the indexer receives an input detached from the rest of the model. It learns to imitate the attention over the compressed entries through the KL-divergence loss `indexer_loss`, which is added to the training loss. These attention types change the architecture, so a model that uses them is trained from scratch. Unlike the other modules, this module has no KV cache, and processes whole sequences, as in training and prefill:
 

@@ -45,7 +45,10 @@ The two recursive calls of quicksort and merge sort are independent, so these al
 [oddeven]: https://en.wikipedia.org/wiki/Odd%E2%80%93even_sort
 
 {: .picture}
-<img width="75%" height="75%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
+<img width="65.8%" height="65.8%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
+
+{: .caption}
+Odd-even sort of 20 elements on $$p = 5$$ ranks, colored by rank. Every rank holds 4 elements, so the list is sorted after $$p$$ phases. Step 2.2 shows the compare-split of ranks 0 and 1 in phase 0.
 
 The memory use is therefore known in advance, and a balanced load stays balanced. However, every phase sends all local elements: the $$p$$ phases move $$n$$ elements per rank, with $$p$$ message latencies. The sort is slow for large $$p$$.
 
@@ -61,7 +64,10 @@ The memory use is therefore known in advance, and a balanced load stays balanced
 [samplesort]: https://en.wikipedia.org/wiki/Samplesort
 
 {: .picture}
-<img width="74%" height="74%" src="{{ site.assets }}/distributed-sort/sample_sort.svg">
+<img width="57%" height="57%" src="{{ site.assets }}/distributed-sort/sample_sort.svg">
+
+{: .caption}
+Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards.
 
 Sample sort uses three collective operations, whatever $$n$$ and $$p$$: a gather of the samples, a broadcast of the splitters and an all-to-all of the elements. Each element moves once. However, the ranks may end with different numbers of elements, which unbalances computation and memory. Regular sampling, as here, bounds this imbalance: with distinct keys, no rank receives more than about $$2n/p$$ elements. If needed, a final exchange rebalances the elements.
 

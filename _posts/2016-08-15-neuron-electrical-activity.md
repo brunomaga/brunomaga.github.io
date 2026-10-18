@@ -19,7 +19,7 @@ Neurons are the cells of the nervous system that process and transmit signals. T
 <img width="50%" height="50%" src="{{ site.assets }}/neuron-electrical-activity/brain_scales.svg">
 
 {: .caption}
-The scales of the brain: (a) brain regions, (b) neuron, (c) synapse, and (d) ion channels in the neuron membrane. Adapted from: Mariana Villarreal (LadyofHats), Wikimedia Commons; and Blausen.com staff, Blausen Medical 2014, WikiJournal of Medicine
+The scales of the brain: (a) brain regions, (b) neuron, (c) synapse, and (d) ion channels in the neuron membrane. Adapted from: Mariana Villarreal (LadyofHats), Wikimedia Commons; and Blausen.com staff, [Medical gallery of Blausen Medical 2014, WikiJournal of Medicine](https://doi.org/10.15347/wjm/2014.010)
 
 A detailed neuron model computes this voltage over the branched shape of the neuron. Its equations have no analytic solution, so simulators solve them numerically.
 
@@ -28,10 +28,10 @@ A detailed neuron model computes this voltage over the branched shape of the neu
 Brain simulators model neurons at different levels of detail. In the picture, each model describes in more detail the part circled in the model on its left:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
 
 {: .caption}
-Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
+Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
 
 - **Population models** describe the mean activity of large groups of neurons, such as an excitatory population $$E$$ and an inhibitory population $$I$$ that drive each other, as in the [Wilson–Cowan model][wilson-cowan].
 - **Point neuron networks** reduce each neuron to a point without shape, such as the [leaky integrate-and-fire][lif-post] (LIF) neuron: its membrane is an RC circuit, and the neuron spikes when its voltage reaches a threshold.
@@ -69,10 +69,10 @@ Synapses raise (excitatory) or lower (inhibitory) the membrane potential of the 
 [action-potential]: https://en.wikipedia.org/wiki/Action_potential
 
 {: .picture}
-<img width="40%" height="40%" src="{{ site.assets }}/neuron-electrical-activity/action_potential.svg">
+<img width="41.9%" height="41.9%" src="{{ site.assets }}/neuron-electrical-activity/action_potential.svg">
 
 {: .caption}
-The voltage trajectory during an Action Potential (spike). Adapted from: unknown
+The voltage trajectory during an action potential (spike). Adapted from: [OpenStax, Anatomy and Physiology, Fig. 12.24](https://openstax.org/books/anatomy-and-physiology/pages/12-4-the-action-potential)
 
 Other mechanisms also change the membrane current: [gap junctions][gap-junction], electrical synapses that connect two cells directly; the extracellular field; and second messengers, chemical signals inside the cell. In the cable model, every mechanism enters as a current through the membrane, most often as a conductance times a driving force (below). A channel with a constant conductance is a **leak**, or passive, channel.
 
@@ -87,7 +87,10 @@ $$
 $$
 
 {: .picture}
-<img width="20%" height="20%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
+<img width="22.8%" height="22.8%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
+
+{: .caption}
+The net current entering a region is zero: the axial currents $$i_a$$ balance the membrane current $$i_m$$. Adapted from: [Hines and Carnevale (1997), The NEURON simulation environment, Fig. 3.1](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p1.htm)
 
 A compartment is short enough for $$i_m$$ to be uniform over it, so the integral over compartment $$j$$ is $$i_{m,j} A_j$$. By Ohm's law, the axial current from a neighbor compartment $$k$$ is the voltage difference between the two compartment centers over the axial resistance $$r_{jk}$$ between them, $$(v_k - v_j)/r_{jk}$$. The membrane current is the sum of a capacitive current and the ionic current $$i_{\text{ion},j}$$ through the channels. With the membrane capacitance $$c_j$$ of the compartment:
 
@@ -165,7 +168,7 @@ With the capacitive current, this is the circuit in the picture: the membrane is
 [channelpedia]: https://channelpedia.epfl.ch/
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/neuron-electrical-activity/compartment_rc_circuit.svg">
+<img width="49%" height="49%" src="{{ site.assets }}/neuron-electrical-activity/compartment_rc_circuit.svg">
 
 {: .caption}
 The electrical circuit of one compartment. The membrane is the capacitor $$C$$. Each ion channel is a resistor $$R$$ in series with a battery $$E$$, its reversal potential. Arrows mark gated channels, whose resistance changes over time. The leak $$L$$ has a constant resistance. $$I$$ is the total current through the membrane
@@ -272,7 +275,7 @@ since $$2 \left( I - \tfrac{\Delta t}{2} A \right)^{-1} - I = \left( I - \tfrac{
 Each implicit step solves a linear system $$H \mathbf{v} = \mathbf{b}$$, with one row per compartment. By equation \eqref{eq_tree}, $$H_{jk} \neq 0$$ only on the diagonal and where $$j$$ and $$k$$ are parent and child. An unbranched cable gives a tridiagonal matrix, and each branch adds a pair of entries outside the three diagonals. The pictures show a dendritic tree cut into 13 compartments (left) and the nonzero entries of its matrix (right). Compartment 6 branches from compartment 2, and compartment 9 from compartment 1, so their entries lie outside the band.
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="25%" height="25%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
+<img width="44%" height="44%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.2%" height="34.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
 
 [Hines (1984)][hines1984efficient] showed that [Gaussian elimination][gauss] on this matrix takes $$O(N)$$ operations if it eliminates the compartments from the leaves to the root. NEURON numbers each compartment after its parent, for example in depth-first order as in the picture, with the root at index 0. The elimination then runs in two loops:
 1. **triangulation**, from the leaves to the root: for $$j = N-1, \dots, 1$$, row $$j$$ eliminates the entry $$H_{p_j j}$$ of the row of its parent:

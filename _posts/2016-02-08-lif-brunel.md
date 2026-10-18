@@ -23,10 +23,10 @@ tags: ["spiking neurons", "LIF", "Brunel network", "simulation"]
 The [leaky integrate-and-fire][neuron-model] (LIF) model, first described in 1907 by [Louis Lapicque](https://en.wikipedia.org/wiki/Louis_Lapicque), reduces a neuron to a single compartment without spatial extent, a *point neuron*. Its membrane is an [RC circuit][rc]:
 
 {: .picture}
-<img width="20%" height="20%" src="{{ site.assets }}/lif-brunel/rc.svg">
+<img width="22.5%" height="22.5%" src="{{ site.assets }}/lif-brunel/rc.svg">
 
 {: .caption}
-Adapted from: Neuronal Dynamics, Gerstner et al., Cambridge University Press
+A neuron receives an input current $$I(t)$$. Its membrane acts as a capacitor $$C$$ in parallel with a resistor $$R$$, in series with a battery of potential $$u_{\text{rest}}$$. Adapted from: [Neuronal Dynamics, Fig. 1.6](https://neuronaldynamics.epfl.ch/online/Ch1.S3.html)
 
 The figure writes the membrane potential as $$u$$, and the text uses $$V = u - u_{\text{rest}}$$, the potential relative to the resting potential. By [Kirchhoff's current law][kirchhoff], the input current $$I$$ splits into two currents:
 - the capacitor current $$I_C = \frac{dQ}{dt} = C \frac{dV}{dt}$$, for the charge $$Q = CV$$ of the capacitance $$C$$;
@@ -55,7 +55,10 @@ where $$J_{ij}$$ is the **postsynaptic potential** (PSP) amplitude, $$\delta$$ t
 A spike, or [action potential](https://en.wikipedia.org/wiki/Action_potential), is modeled by a fixed **firing threshold** $$\theta$$. When $$V$$ reaches $$\theta$$, the neuron spikes, and $$V$$ drops to the **reset potential** $$V_r$$. The spike reaches the postsynaptic neurons after the delay $$D$$, which models its propagation along the axon:
 
 {: .picture}
-<img width="40%" height="40%" src="{{ site.assets }}/lif-brunel/action_potential.gif">source: Wikipedia
+<img width="40%" height="40%" src="{{ site.assets }}/lif-brunel/action_potential.gif">
+
+{: .caption}
+An action potential travelling along an axon. Source: [Action Potential.gif, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Action_Potential.gif)
 
 After a spike, $$V$$ stays at $$V_r$$ during the **refractory period** $$\tau_{\text{rp}}$$, as in the [refractory period](https://en.wikipedia.org/wiki/Refractory_period_(physiology)) of biological neurons. The LIF model ignores the shape of the action potential and the morphology of the neuron. Detailed models are in the post on [the electrical activity of detailed neuron models]({{ site.baseurl }}{% post_url 2016-08-15-neuron-electrical-activity %}).
 
@@ -92,7 +95,7 @@ $$RI_{(t-\Delta t, t]} / \Delta t$$ is the mean input over the step. All three f
 The figure compares the four methods on one neuron of the 10,000-neuron network below, over 100 ms, with $$\Delta t = 0.1$$ ms for the fixed steps:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/neuron_plot_equations.svg">
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/lif-brunel/neuron_plot_equations.svg">
 
 The vertical lines are the resets after a spike, and the horizontal lines at 10 mV are the refractory periods. The four solutions agree for the first 14 ms, and diverge after the first spikes of the network: a small change in a spike time changes the input of all postsynaptic neurons.
 
@@ -101,10 +104,10 @@ The vertical lines are the resets after a spike, and the horizontal lines at 10 
 Without input, a LIF neuron stays at rest. The [Brunel network][brunel-paper] ([pdf][brunel-paper-pdf]) provides the input with a sparse network of LIF neurons, 80% excitatory and 20% inhibitory. Excitatory neurons have positive PSPs, and inhibitory neurons negative ones. Each neuron also receives excitatory input from $$C_E$$ external neurons, at a rate $$\nu_{\text{ext}}$$ each. The external neurons are not simulated: their spikes come from a [Poisson process][poisson] (PG in the figure).
 
 {: .picture}
-<img width="30%" height="30%" src="{{ site.assets }}/lif-brunel/network.svg">
+<img width="33.4%" height="33.4%" src="{{ site.assets }}/lif-brunel/network.svg">
 
 {: .caption}
-Adapted from: Brunel 2000
+The Brunel network: $$N_E$$ excitatory neurons (E) and $$N_I$$ inhibitory neurons (I). Each neuron receives $$C_E$$ connections from excitatory neurons, $$C_I$$ from inhibitory neurons, and $$C_E$$ from Poisson generators (PG). Arrows are excitatory connections, and open circles inhibitory ones. Adapted from: [NEST by Example, Fig. 2](https://www.nest-simulator.org/wp-content/uploads/2015/02/NEST_by_Example.pdf)
 
 The tables list the parameters of a network of 10,000 neurons:
 

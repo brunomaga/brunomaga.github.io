@@ -107,20 +107,19 @@ $$
 After the last batch, the result equals the posterior of all data at once, in any order of the batches. Training thus needs neither the whole dataset in memory nor a second pass over old data, which suits data streams and datasets that are deleted after use. The state, $$S_t^{-1}$$ and $$S_t^{-1} m_t$$, has size $$O(D^2)$$ whatever the number of samples. The same sums parallelize over the data: each worker computes $$X_k^T X_k$$ and $$X_k^T y_k$$ on its shard, and an [all-reduce](https://en.wikipedia.org/wiki/Collective_operation#All-Reduce) adds them.
 
 {: .picture}
-<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_1.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_1.svg"/>
 
 {: .picture}
-<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_3.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_3.svg"/>
 
 {: .picture}
-<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_4.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_4.svg"/>
 
 {: .picture}
-<img width="45%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_5.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_posterior_5.svg"/>
 
 {: .caption}
-Illustration of four steps of online learning for the linear model $$y = w_0 + w_1x$$.
-(inspired by fig 3.7, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
+Online learning for the linear model $$y = w_0 + w_1x$$, after 1, 2, 3 and 20 data points (the last update adds 17 points at once). Left: the posterior density of the weights $$(w_0, w_1)$$; the cross marks the true weights $$(-0.3, 0.5)$$. Right: the data points and six lines drawn from the posterior. Inspired by: [Pattern Recognition and Machine Learning, C. Bishop, Figure 3.7](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
 
 The figure shows online learning for the line $$y = w_0 + w_1 x$$, with data from $$w_0 = -0.3$$ and $$w_1 = 0.5$$ (cross) and Gaussian noise of standard deviation $$\sigma = 0.1$$, which the model knows. The prior is $$\mathcal{N}(0, I)$$. The rows show the posterior (left) and the samples with six lines drawn from the posterior (right), after 1, 2, 3 and 20 samples. One sample constrains only a line in the weight space, $$w_0 + w_1 x_1 = y_1$$, so the first posterior is a ridge along it. Two samples set both weights, and the posterior shrinks to a small ellipse, off the true weights because of the noise in two samples. After 20 samples, the posterior is concentrated around the true weights, and the sampled lines almost coincide.
 
@@ -135,19 +134,19 @@ $$
 The output $$y_* = x_*^T w + \varepsilon$$ is a linear function of the Gaussian $$w$$ plus independent Gaussian noise, so it is Gaussian, with mean $$x_*^T m_N$$ and variance $$x_*^T S_N x_* + \sigma^2$$ (PRML, equations 3.58 and 3.59). The variance has two terms: the noise $$\sigma^2$$, which more data cannot reduce, and the uncertainty about the weights, $$x_*^T S_N x_*$$, which falls as data arrive and is largest far from the training inputs. A prediction costs $$O(D)$$ for the mean and $$O(D^2)$$ for the variance.
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_0.svg"/>
+<img width="34.2%" height="34.2%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_0.svg"/>
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_1.svg"/>
+<img width="34.2%" height="34.2%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_1.svg"/>
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_2.svg"/>
+<img width="34.2%" height="34.2%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_2.svg"/>
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.svg"/>
+<img width="34.2%" height="34.2%" src="{{ site.assets }}/bayesian-linear-regression/linear_bayesian_predictive_distribution_3.svg"/>
 
 {: .caption}
-Illustration of four steps modelling synthetic sinusoidal data. Each plot shows the ground truth in blue, the model mean approximation in orange, and the model mean plus and minus one predictive standard deviation as a light-orange area. (inspired by fig 3.8, <a href="{{ site.resources_permalink }}">Pattern Recognition and Machine Learning, Chris Bishop</a>)
+Bayesian linear regression of synthetic sinusoidal data with 9 Gaussian basis functions, after 1, 2, 4 and 25 data points. Each plot shows the ground truth $$\sin(2 \pi x)$$ in blue, the predictive mean in orange, and the predictive mean plus and minus one predictive standard deviation as a light-orange area. The model has a prior precision $$\alpha = 10^{-3}$$ and a noise precision $$\beta = 2$$. Inspired by: [Pattern Recognition and Machine Learning, C. Bishop, Figure 3.8](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/)
 
 The figure shows the predictive distribution of a model with 9 Gaussian basis functions and a bias as features, fitted to noisy samples of $$\sin(2 \pi x)$$, after 1, 2, 4 and 25 samples. The band is narrow near the samples and wide away from them, where only the prior constrains the weights.
 

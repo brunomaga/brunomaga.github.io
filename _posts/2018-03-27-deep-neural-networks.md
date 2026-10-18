@@ -10,10 +10,10 @@ A deep neural network (DNN) is a stack of layers of artificial neurons. The simp
 An MLP has an input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and an output layer. It is a **feedforward network**: the computation flows from the input on the left to the output on the right, with no feedback loop. It serves regression, where the output is a real value, and classification, where the output scores each class.
 
 {: .picture}
-<img width="33%" height="33%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
+<img width="36.5%" height="36.5%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
 
 {: .caption}
-Source: Machine Learning lecture notes, M. Jaggi, EPFL
+A fully connected feedforward network with an input layer of size $$D = 4$$, one hidden layer of size $$K = 5$$ and one output $$\hat{y}$$. Adapted from: [Machine Learning course CS-433 lecture notes, M. Jaggi, EPFL](https://github.com/epfml/ML_course)
 
 The output of neuron $$j$$ of layer $$l$$ is:
 
@@ -123,7 +123,10 @@ class MyDropout(nn.Module):
 Dropout reduces overfitting: the network cannot rely on any single neuron, so it learns redundant representations, spread over several neurons. It also makes the activations sparse, without a sparsity penalty such as an L1 norm. Max-norm regularization, a large decaying learning rate and a high momentum improve its results further. Typical drop probabilities are $$0.2$$ for real-valued inputs, and $$0.2$$ to $$0.5$$ for hidden layers. Dropout approximates the average of the predictions of exponentially many thinned networks, at the cost of a single network. Training takes 2 to 3 times longer than without dropout, because the parameter updates are noisy. In CNNs such as AlexNet and VGG, the fully connected layers hold most of the parameters, and dropout is applied to them.
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/deep-neural-networks/dropout.svg">
+<img width="54.8%" height="54.8%" src="{{ site.assets }}/deep-neural-networks/dropout.svg">
+
+{: .caption}
+Dropout. Left: a standard network with two hidden layers ($$p = 0$$). Right: a thinned network produced by dropout with $$p = 0.5$$, where $$p$$ is the probability of dropping a unit: the crossed units are dropped, with their connections. Adapted from: [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](https://jmlr.org/papers/v15/srivastava14a.html)
 
 ## Convolutional Neural Networks
 
@@ -142,12 +145,18 @@ $$
 The output at position $$[n, m]$$ depends only on the input at the positions close to $$[n, m]$$, so a locally connected layer suffices. The same filter, i.e. the same weights, applies at every position. This **weight sharing** reduces the number of parameters further. For a $$256 \times 256$$ image and an output of the same size, a fully connected layer has $$256^4 \approx 4.3 \times 10^9$$ weights, a locally connected layer with $$3 \times 3$$ windows has $$256^2 \times 9 \approx 5.9 \times 10^5$$, and a convolution with a $$3 \times 3$$ filter has $$9$$. The picture compares local (top) and full (bottom) connectivity:
 
 {: .picture}
-<img width="35%" height="35%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
+<img width="41.2%" height="41.2%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
+
+{: .caption}
+Sparse and full connectivity, viewed from below. Top: a locally connected layer with a kernel of width 3, where the input $$x_3$$ affects only the outputs $$s_2$$, $$s_3$$ and $$s_4$$. Bottom: a fully connected layer, where $$x_3$$ affects every output. Adapted from: [Deep Learning, I. Goodfellow, Y. Bengio and A. Courville, Figure 9.2](https://www.deeplearningbook.org/contents/convnets.html)
 
 A convolutional layer applies several filters to the same input, and each filter produces one output *channel*. For images, the input and the output of a layer are thus 3D: height, width and channels. A layer with $$C_{in}$$ input channels, $$C_{out}$$ output channels and filters of $$(2r+1) \times (2r+1)$$ has $$C_{in} C_{out} (2r+1)^2$$ weights, and computes as many multiply-accumulate operations per output position. Each weight is reused at every output position, which gives convolutions with many channels a high [arithmetic intensity](https://en.wikipedia.org/wiki/Roofline_model#Arithmetic_intensity). Deeper layers typically have more channels, and a smaller height and width. A convolutional neural network (CNN) for images has the following structure:
 
 {: .picture}
-<img width="65%" height="65%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
+<img width="99.6%" height="99.6%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
+
+{: .caption}
+A CNN that classifies $$16 \times 16$$ RGB patches of a satellite image as road or non-road: two stages of convolution and pooling, two fully connected layers, and the output probabilities of the two classes. Each label gives the shape of the data after a layer for $$N$$ input images, with the number of channels or units in brackets.
 
 It has three types of layers:
 - convolutional layers apply the filters. Deep learning libraries compute a [cross-correlation](https://en.wikipedia.org/wiki/Cross-correlation), $$\sum_{u} h[u] \, x[n+u]$$, which is a convolution with the flipped filter. The filters are learned, so the two are equivalent;
@@ -163,10 +172,10 @@ Deep *plain* networks, without skip connections, train worse as their depth grow
 *Skip connections* feed the output of a layer to later layers that are not directly connected to it. A residual block of ResNet computes $$y = F(x) + x$$, where $$F$$ is a stack of two or three layers. The block learns only the residual $$F(x) = y - x$$, and the gradient flows to the earlier layers through the identity path. [DenseNet](https://arxiv.org/abs/1608.06993) instead concatenates the outputs of all previous layers of a block as the input of each layer. Addition keeps the number of channels constant. Concatenation increases it with every layer, which costs memory, but gives each layer direct access to all earlier features.
 
 {: .picture}
-<img width="65%" height="65%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
+<img width="82%" height="82%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
 
 {: .caption}
-An example of a CNN with skip connections (DenseNet). Adapted from: <a href="https://arxiv.org/abs/1608.06993">Densely Connected Convolutional Networks</a> 
+A 5-layer dense block of DenseNet with a growth rate of $$k = 4$$: each layer $$H_i$$ (BN-ReLU-Conv) takes the feature maps $$x_0, \ldots, x_{i-1}$$ of all preceding layers as input and produces $$k$$ new feature maps $$x_i$$. The transition layer takes all of them. Adapted from: [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)
 
 [U-net](https://arxiv.org/abs/1505.04597) concatenates the features of each downsampling stage to the upsampling stage of the same resolution.
 

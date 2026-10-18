@@ -97,7 +97,10 @@ $$
 $$
 
 {: .picture}
-<img width="60%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
+<img width="44.1%" height="44.1%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
+
+{: .caption}
+Matrix factorization $$X \approx WZ^T$$ of the ratings of $$D = 7$$ movies by $$N = 7$$ users, with 11 observed ratings and $$K = 3$$ latent features. The rating $$x_{dn}$$ of movie $$d$$ by user $$n$$ is approximated by the dot product of row $$d$$ of $$W$$, the features of movie $$d$$, and column $$n$$ of $$Z^T$$, the features of user $$n$$.
 
 The loss is not convex in $$(W, Z)$$, and not [identifiable](https://en.wikipedia.org/wiki/Identifiability): for any invertible $$K \times K$$ matrix $$A$$, the factors $$WA$$ and $$ZA^{-T}$$ give the same product. A large $$K$$ leads to overfitting, which a regularizer limits:
 
@@ -164,10 +167,10 @@ With missing ratings, an ALS sweep builds and solves one $$K \times K$$ system p
 [Coordinate descent](https://en.wikipedia.org/wiki/Coordinate_descent) minimizes a function along one coordinate at a time, with the other coordinates fixed, and cycles over the coordinates. ALS is a block coordinate descent with two blocks, $$W$$ and $$Z$$. The picture shows coordinate descent on $$f(x, y) = 5x^2 - 6xy + 5y^2$$: the path alternates steps along $$y$$ and along $$x$$, and zigzags toward the minimum at the origin. The term $$-6xy$$ couples the two coordinates; without it, one exact minimization per coordinate would reach the minimum.
 
 {: .picture}
-<img width="40%" height="40%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
+<img width="36.4%" height="36.4%" src="{{ site.assets }}/linear-regression-matrix-factorization/coordinate_descent.svg">
 
 {: .caption}
-source: Wikipedia
+Coordinate descent on $$f(x, y) = 5x^2 - 6xy + 5y^2$$ from $$(-0.5, -1)$$: each step minimizes $$f$$ along one coordinate, alternating $$y$$ and $$x$$, and the iterates converge to the minimum at the origin. Adapted from: [Coordinate descent](https://en.wikipedia.org/wiki/Coordinate_descent)
 
 Each step solves a problem of one variable, often in closed form, and needs no gradient of the whole function. For the LASSO, the minimum along one weight, with the others fixed, is a soft thresholding of its least-squares value, which makes coordinate descent a standard LASSO solver. The steps are sequential, since each one uses the latest values of the other coordinates. Only coordinates that do not interact, such as the rows of $$W$$ in ALS, can be updated in parallel. On non-smooth functions, coordinate descent can stop at a non-stationary point ([Wikipedia](https://en.wikipedia.org/wiki/Coordinate_descent#Limitations)). It still converges when the non-smooth part is a sum of terms of one coordinate each, such as the L1 norm of LASSO.
 

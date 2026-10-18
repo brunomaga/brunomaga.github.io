@@ -15,7 +15,7 @@ A GPT-like model generates text *autoregressively*: it reads the prompt, predict
 - The total runtime, or **time to last token (TTLT)**, is $$\text{TTLT} = \text{TTFT} + \text{TPOT} \times ( n - 1)$$, where $$n$$ is the number of output tokens.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
+<img width="96.4%" height="96.4%" src="{{ site.assets }}/inference/imgs/prefill_decode.svg"/>
 
 Most decode optimizations do one of three things:
 - they **read fewer bytes** per token (quantization, smaller KV caches, smaller models);
@@ -38,10 +38,10 @@ The first term does not depend on the context length, while the second grows wit
 The [roofline model](https://en.wikipedia.org/wiki/Roofline_model) shows whether a program is limited by compute or by memory bandwidth. It bounds the performance $$P$$ of a program by its *arithmetic intensity* $$I$$, the number of FLOPs per byte moved between memory and the processor: $$P \le \min(P_\text{peak}, B_\text{peak} \times I)$$, where $$P_\text{peak}$$ is the peak compute performance and $$B_\text{peak}$$ the peak memory bandwidth of the hardware. A roofline chart plots the arithmetic intensity (FLOPs/byte) on the x-axis and the achieved performance (GFLOPs/s) on the y-axis, both on a log scale.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
+<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
 
 {: .caption}
-A roofline plot. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound and runs below the peak performance. Adapted from [Wikipedia's Roofline Model](https://en.wikipedia.org/wiki/Roofline_model).
+A roofline plot, on a log-log scale. Below the ridge point, the roof rises with the arithmetic intensity at the peak memory bandwidth; beyond it, the roof is flat at the peak performance. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound and runs below the peak performance. The arrows show how an application at ❌ moves right (more FLOPs per byte), moves up (closer to the roof), or gains from a higher roof. Adapted from: [Roofline model, Wikipedia](https://en.wikipedia.org/wiki/Roofline_model)
 
 The two terms of the minimum form a "roof": a slanted line for the bandwidth bound and a flat line for the peak compute. They meet at the **ridge point**, at the intensity $$P_\text{peak} / B_\text{peak}$$:
 - Left of the ridge point, a program is **memory-bound**: the processor waits for data. It gets faster with fewer bytes moved, more FLOPs per byte, or an achieved bandwidth closer to the peak. Decode typically falls in this region.
@@ -93,7 +93,7 @@ The roofline point ❌ of this example is therefore $$\mathbf{(0.083, 10)}$$.
 Consider the product of an $$A \times B$$ matrix and a $$B \times C$$ matrix, with an output of shape $$A \times C$$ and $$dt$$ bytes per element.
 
 {: .picture}
-<img width="56%" height="56%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
+<img width="36.9%" height="36.9%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
 
 {: .caption}
 **FLOPs:** $$AC$$ outputs $$\times$$ $$B$$ multiply-adds $$\times$$ 2 FLOPs $$= 2ABC$$. **Memory traffic, naive:** matrix 1 read $$C$$ times and matrix 2 read $$A$$ times, $$2ABC\text{ }dt$$. **Memory traffic, with cache:** inputs read once and output written once, $$(AB + BC + AC)\text{ }dt$$. **Arithmetic intensity:** $$2ABC / ((AB + BC + AC)\text{ }dt)$$, about $$2N / (3\text{ }dt)$$ for $$A = B = C = N$$.
@@ -199,7 +199,7 @@ The KV cache reuses work within one request and is always on. Prefix caching reu
 In attention, the query of a new token attends to the keys and values of all previous tokens. In a causal model, these keys and values never change, since token $$i$$ depends only on itself and the tokens before it. Without a cache, each decode step recomputes them for the whole sequence. With a cache, each step computes the query, key and value of the new token only, appends the key and value to the cache, and attends over all cached entries. Queries are not cached: the query of a past token was needed only for the output at its position.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
+<img width="81.8%" height="81.8%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
 
 {: .caption}
 **Without KV cache:** generating $$n$$ tokens costs $$O(n^2)$$ in the projections and the MLP, and $$O(n^3)$$ in attention. **With KV cache:** generating $$n$$ tokens costs $$O(n)$$ in the projections and the MLP, and $$O(n^2)$$ in attention.
@@ -336,7 +336,7 @@ def generate_kvcache(model, prompt, n_tokens, seqlen, kv_cache=None):
 ```
 
 {: .picture}
-<img width="65%" height="65%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
+<img width="59.3%" height="59.3%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
 
 The code above uses a dynamic cache. The following static cache of one layer writes the keys and values of the new tokens in place:
 
@@ -426,10 +426,10 @@ A server runs many requests at once, and the final length of each sequence is un
 Sequences can also share blocks, with [copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write): a shared block is copied only when one of the sequences writes to it. Prefix caching, parallel sampling and [beam search](https://en.wikipedia.org/wiki/Beam_search) share their common prefix this way.
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 {: .caption}
-The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block.
+The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block. Inspired by: [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)
 
 The following code implements a paged KV cache and the attention of one decode step over it:
 
@@ -492,7 +492,10 @@ Prefix caching keeps the keys and values of a request after it finishes. A later
 **Lookup.** vLLM splits the KV cache into fixed-size blocks, typically of 16 tokens. Each full block is labeled with a hash of its token IDs and of the hash of the previous block. The hash of a block therefore identifies the whole prefix up to the end of the block. A new request hashes its prompt block by block from the start, reuses the cached blocks up to the first miss, and prefills only the rest.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
+<img width="93%" height="93%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
+
+{: .caption}
+Automatic prefix caching, with blocks of 4 tokens (16 in vLLM). The hash of each block chains the hash of the previous block with the tokens of the block. Request 2 reuses the first two blocks of request 1 and prefills 4 tokens. Request 3 reuses only the first block: its last block holds the same tokens as that of request 1, but its hash differs because its second block differs, so request 3 prefills 8 tokens.
 
 vLLM calls this Automatic Prefix Caching. It builds on PagedAttention: requests share cached blocks through their block tables, without copies. Its memory cost is a hash table from block hashes to physical blocks, plus the cached blocks. These stay in memory after their request finishes, until new requests need the space, and are then evicted, [least recently used](https://en.wikipedia.org/wiki/Cache_replacement_policies) first. [SGLang](https://arxiv.org/abs/2312.07104) introduced RadixAttention, which stores the cached sequences in a [radix tree](https://en.wikipedia.org/wiki/Radix_tree). A new request reuses its longest prefix found in the tree, and the least recently used leaves are evicted first. The tree matches prefixes token by token, while the hash chain of vLLM matches whole blocks.
 
@@ -544,10 +547,10 @@ A semantic cache sits in front of the model, in the application. For each query,
 4. otherwise, calls the model and stores the new (embedding, answer) pair.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
+<img width="93.9%" height="93.9%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
 
 {: .caption}
-In this example, the closest past query, "What is the price of corn in Rome?", has a cosine similarity of 0.91, above a threshold of 0.85: a cache hit.
+A semantic cache. The vector index finds the past query whose embedding is closest to that of the new query. If their similarity reaches the threshold, as it may for a paraphrase such as "What is the price of corn in Rome?", the cache returns the stored answer of that query. Otherwise, the LLM answers, and the embedding and the answer are stored.
 
 **Embeddings.** A separate *embedding model* computes the embeddings: typically a small transformer encoder of the [Sentence-BERT](https://arxiv.org/abs/1908.10084) family (e.g., all-MiniLM-L6-v2), E5, BGE or GTE, or an embedding API. The encoder is trained with *contrastive learning*: texts with the same meaning (paraphrases, or a question and its answer) are pulled together, and the other texts of the batch are pushed apart. The [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) of two embeddings then measures how close their meanings are. The raw hidden states of a generative LLM make poor embeddings, unless the LLM is fine-tuned in the same contrastive way, as in E5-Mistral and NV-Embed.
 
@@ -667,7 +670,7 @@ def continuous_batching(model, requests, batch_size, seqlen):
 With continuous batching, the prefill of a new request runs in the same step as the decode of the running requests. A short prompt adds little time to the step, but a long prompt can make it many times longer: the other requests stall, and their TPOT spikes. **Chunked prefill**, introduced by [SARATHI](https://arxiv.org/abs/2308.16369), splits a long prompt into chunks and processes one chunk per step. Every step then takes about the same time, and the other requests keep generating one token per step.
 
 {: .picture}
-<img width="95%" height="95%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
+<img width="99.4%" height="99.4%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
 
 {: .caption}
 The same 6 requests (R1 to R6) on 3 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R4 takes three. Static batching runs the requests in groups of 3 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R4 stalls R1 and R3. With chunked prefill, R4 processes its prompt in 3 chunks of one time unit each, while R1 and R3 continue decoding.
@@ -677,7 +680,7 @@ Each chunk attends to the KV cache of the earlier chunks and to itself, with a c
 - With a budget of 512 tokens per step, each step processes the 50 decode tokens plus 462 prompt tokens, and the prompt finishes in 18 steps. The other sequences get a token at every step. A smaller budget lowers their TPOT, and a larger one lowers the TTFT of the new request.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
+<img width="99.6%" height="99.6%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
 
 Chunking relies on the causal mask. In a bidirectional model, such as an encoder, earlier tokens attend to later ones: the keys and values of a chunk change with every new chunk, in every layer after the first, so the prompt cannot be processed piece by piece. An encoder also has no decode phase to overlap with.
 
@@ -701,7 +704,7 @@ With continuous batching and chunked prefill, a step runs the prefill chunks of 
 - The output layer computes the logits only at the last token of each sequence, found with the metadata, and samples the next token of each sequence from them.
 
 {: .picture}
-<img width="91%" height="91%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
+<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
 
 The following code packs sequences of different lengths into one flat sequence, and returns the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
 
@@ -761,7 +764,7 @@ Prefill is compute-bound and decode is memory-bound, so they interfere when they
 **KV cache transfer.** The decode GPU needs the keys and values of the whole prompt. Recomputing them would repeat the prefill and defeat the purpose of disaggregation. The prefill GPU therefore sends the KV cache, e.g., 1 GiB for 8,192 tokens of Llama 3 8B, over [NVLink](https://en.wikipedia.org/wiki/NVLink) or over the network with [RDMA](https://en.wikipedia.org/wiki/Remote_direct_memory_access). To hide this transfer, engines stream the KV cache **layer by layer**: the KV cache of a layer is sent as soon as its prefill finishes, while the next layers compute. The destination is the [HBM](https://en.wikipedia.org/wiki/High_Bandwidth_Memory) of a decode GPU, or a shared **KV cache store**. A store, such as [Mooncake](https://www.zhongzhuzhou.org/blog/2026-05-28-mooncake-technical-review-en/) or [LMCache](https://docs.lmcache.ai/mp/disaggregated_prefill.html), keeps the KV caches of many requests in CPU memory and on SSDs.
 
 {: .picture}
-<img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
+<img width="99.6%" height="99.6%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
 
 {: .caption}
-In the layer-wise streaming of the KV cache, the transfer of each layer overlaps with the compute of the next layers, and only the transfer of the last layer delays the decode.
+The prefill pool computes the KV cache and the first token of each request, and sends them to the decode pool. In the layer-wise streaming of the KV cache, the transfer of each layer overlaps with the compute of the next layers, and only the transfer of the last layer delays the decode. Inspired by: [Splitwise: Efficient Generative LLM Inference Using Phase Splitting](https://arxiv.org/abs/2311.18677)

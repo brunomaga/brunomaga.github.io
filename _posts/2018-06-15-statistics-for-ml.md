@@ -190,10 +190,10 @@ $$
 The conditional covariance, the [Schur complement](https://en.wikipedia.org/wiki/Schur_complement) of $$\Sigma_{yy}$$, does not depend on the observed $$y$$. Marginalizing only drops blocks, while conditioning solves linear systems in $$\Sigma_{yy}$$, usually with a [Cholesky factorization](https://en.wikipedia.org/wiki/Cholesky_decomposition) in $$O(E^3)$$ operations for $$y \in \mathbb{R}^E$$: the main cost of [Gaussian process](https://en.wikipedia.org/wiki/Gaussian_process) regression. The same formulas give the update step of the [Kalman filter](https://en.wikipedia.org/wiki/Kalman_filter).
 
 {: .picture}
-<img width="45%" height="45%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.svg"/>
+<img width="42.3%" height="42.3%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.svg"/>
 
 {: .caption}
-A bivariate Gaussian. <b>Green:</b> joint density p(x,y). <b>Blue:</b> marginal density p(x). <b>Red:</b> marginal density p(y). The conditional distribution is a slice along the X or Y dimension, and it is also Gaussian. <b>Adapted from:</b> Wikipedia page for <a href="https://en.wikipedia.org/wiki/Multivariate_normal_distribution">Multivariate normal distribution</a>
+A bivariate Gaussian with mean $$\mu = (0, 0)$$ and covariance entries $$\Sigma_{xx} = 1$$, $$\Sigma_{xy} = \Sigma_{yx} = 0.6$$ and $$\Sigma_{yy} = 2$$. Dots: samples from the joint density $$p(x,y)$$. Green: the 3σ ellipse of the joint density. Blue: the marginal density $$p(x)$$. Red: the marginal density $$p(y)$$. The bars are histograms of the samples. A conditional distribution, a slice of the joint density along $$x$$ or $$y$$, is also Gaussian. Adapted from: [Multivariate normal distribution](https://en.wikipedia.org/wiki/Multivariate_normal_distribution)
 
 The product of two Gaussian pdfs in $$x$$ is a Gaussian scaled by a constant $$c$$ (equation 371 of [The Matrix Cookbook]({{ site.assets }}/resources/the_matrix_cookbook.pdf)):
 
@@ -287,7 +287,10 @@ The [quantile function](https://en.wikipedia.org/wiki/Quantile_function) $$Q = F
 A [confidence interval](https://en.wikipedia.org/wiki/Confidence_interval) at level $$1 - \alpha$$ is a random interval, computed from the data, that contains the fixed true parameter with probability $$1 - \alpha$$ over repeated samples; a single computed interval contains it or not. For the mean, the central limit theorem gives the approximate interval $$\bar{X}_N \pm Q(1 - \alpha / 2) \, \sigma / \sqrt{N}$$, with $$Q$$ the standard Gaussian quantile function. At the $$95\%$$ level, this is $$\bar{X}_N \pm 1.96 \, \sigma / \sqrt{N}$$, whose limits cut $$2.5\%$$ of the probability from each tail (figure). With an unknown $$\sigma$$, the empirical standard deviation with Bessel's correction replaces $$\sigma$$, and the quantile of [Student's t-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution) with $$N - 1$$ degrees of freedom replaces $$1.96$$.
 
 {: .picture}
-<img width="30%" height="30%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
+<img width="29.6%" height="29.6%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
+
+{: .caption}
+A 95% confidence interval for a normally distributed estimate centred at $$\bar{X}$$: the lower and upper limits lie 1.96 standard errors either side of $$\bar{X}$$, so the interval holds a probability of 0.95, and each tail 0.025.
 
 A [hypothesis test](https://en.wikipedia.org/wiki/Statistical_hypothesis_test) rejects a null hypothesis $$H_0$$ when the data give enough evidence against it. The **significance level** $$\alpha$$ is the probability of rejecting $$H_0$$ when it is true (a type I error). The [p-value](https://en.wikipedia.org/wiki/P-value) is the probability, under $$H_0$$, of a test statistic at least as extreme as the observed one, i.e. the smallest $$\alpha$$ at which the test rejects $$H_0$$. The test rejects $$H_0$$ when the p-value is at most $$\alpha$$.
 
@@ -366,10 +369,10 @@ p(A, B, C, D) = p(A) \, p(B \mid A) \, p(C \mid A) \, p(D \mid A, C)
 $$
 
 {: .picture}
-<img width="20%" height="20%" src="{{ site.assets }}/statistics-for-ml/directed_graph.svg"/>
+<img width="10.5%" height="10.5%" src="{{ site.assets }}/statistics-for-ml/directed_graph.svg"/>
 
 {: .caption}
-Adapted from: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Graphical_model">Graphical model</a>
+A directed acyclic graph of the factorization $$p(A,B,C,D) = p(A) \cdot p(B \mid A) \cdot p(C \mid A) \cdot p(D \mid A,C)$$: each node depends only on its parents. Adapted from: [Graphical model](https://en.wikipedia.org/wiki/Graphical_model)
 
 Each variable is conditionally independent of its non-descendants given its parents: in the figure, $$B \perp C \mid A$$ and $$D \perp B \mid A, C$$. The factorization also saves memory. For $$n$$ binary variables, the full joint table has $$2^n - 1$$ free parameters, while the network has $$\sum_i 2^{\vert \text{pa}(X_i) \vert} \le n \, 2^k$$ for at most $$k$$ parents per variable: $$1 + 2 + 2 + 4 = 9$$ instead of 15 in the figure. When each edge is a direct cause, the network is a [causal model](https://en.wikipedia.org/wiki/Causal_model), which also predicts the effect of interventions.
 
@@ -390,10 +393,10 @@ $$
 where the kernel $$K$$ is a non-negative function that integrates to 1, such as the standard Gaussian pdf, and $$h > 0$$ is the **bandwidth**. The bandwidth sets the bias-variance trade-off: a large $$h$$ gives a flat, biased estimate, and a small $$h$$ a noisy one. For a Gaussian kernel and near-Gaussian data, a rule of thumb is $$h \approx 1.06 \, \hat{\sigma} N^{-1/5}$$, with $$\hat{\sigma}$$ the empirical standard deviation. The figure shows a histogram (left) and a KDE (right) of the same six samples, with the scaled kernels dashed.
 
 {: .picture}
-<img width="60%" height="60%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
+<img width="60.4%" height="60.4%" src="{{ site.assets }}/statistics-for-ml/kde.svg"/>
 
 {: .caption}
-Adapted from: Wikipedia entry for <a href="https://en.wikipedia.org/wiki/Kernel_density_estimation">Kernel density estimation</a>
+Histogram with bins of width 2 (left) and Gaussian kernel density estimate with bandwidth $$h = 1.5$$ (right) of the same six data points. The estimate is the sum of six kernels centred at the points, each divided by $$n$$. Adapted from: [Kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation)
 
 Evaluating $$\hat{p}$$ at $$m$$ points costs $$O(Nm)$$ kernel evaluations. For large $$N$$, binning the samples on a grid of $$G$$ points and convolving the bins with the kernel by FFT reduces the cost to $$O(N + G \log G)$$.
 
