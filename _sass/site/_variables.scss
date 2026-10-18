@@ -1,10 +1,13 @@
 // The site's own colours. The link blue ($brand-color), the grey of secondary text ($grey-color), the phone width
 // ($on-palm) and the spacing unit ($spacing-unit, 30px) are minima's.
 
-// the labels' greys, text and border, from dark to light: the post date, the category (also the years and
-// resource types of the label tables), halfway in lightness between the date and the tags, and the tags
+// the labels' greys, text and border: the post date and the category (also the years and resource types of the
+// label tables) in charcoal, the category with a mid grey border, and the tags in a lighter grey
 $label-date-color:            #333;
-$label-category-color:        #555;
-$label-category-border-color: #868686;
-$label-color:                 #777;
-$label-border-color:          #e4e4e4;
+$label-category-color:        #333;
+$label-category-border-color: #888;
+$label-color:                 #666;
+$label-border-color:          #d0d0d0;
+
+// the light grey border of the boxes (_base.scss), which the labels replace with their own
+$box-border-color:            #e4e4e4;

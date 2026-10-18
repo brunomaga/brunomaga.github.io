@@ -13,7 +13,7 @@
 // --label-padding-x is the space left and right of the text
 .post-label {
   @extend %box;
-  --label-padding: 7.5px;  // 25px tall
+  --label-padding: 6.5px;  // 23px tall
   --label-padding-x: 10px;
   display: inline-block;
   padding: calc(var(--label-padding) - 1px) var(--label-padding-x) calc(var(--label-padding) - 3px);
@@ -22,6 +22,7 @@
   line-height: 1;
   letter-spacing: 0.05em;
   text-transform: uppercase;
+  border-color: $label-border-color;
   color: $label-color;
   white-space: nowrap;
 }
@@ -34,20 +35,14 @@
   }
 }
 
-// left to right: back link in the link colour (below), date in charcoal with a calendar, category in mid grey with
-// a folder, tags in light grey (default above) after a lighter #
+// left to right: back link in the link colour (below), date in charcoal with a calendar, category in charcoal with
+// a mid grey border and a folder, tags in a lighter grey (default above)
 .post-label--date { border-color: $label-date-color; color: $label-date-color; }
 
 .post-label--category,
 .label-table .post-label {  // the years and resource types too
   border-color: $label-category-border-color;
   color: $label-category-color;
-}
-
-.post-label--tag::before {
-  content: "#";
-  margin-right: 2px;
-  opacity: 0.6;
 }
 
 // the icons: the arrow of the back link, the logos of the home page links, the calendar of the date and the folder
