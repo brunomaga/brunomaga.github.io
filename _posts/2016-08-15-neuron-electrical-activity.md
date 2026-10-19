@@ -383,7 +383,5 @@ The conductance of HH-type channels is given by a function of the state variable
 
 An important message here is that this resolution as a system of linear equations is only possible for *simple* models. Neuron models with non-linear state variable ODEs and correlation between states require a fully-implicit resolution, which is possible with Backward Euler with [Newton iterations](https://en.wikipedia.org/wiki/Newton%27s_method). This is a common use case, and underlies the resolution of extra-cellular mechanisms, capacitors between nodes, and other mechanisms that connect neurons' evolution over time. For such use cases, the regular Euler and Crank-Nicolson methods described previously have to be used, at the cost of a computationally heavier simulation.
 
-[vardt-post]: {{ site.baseurl }}{% post_url 2017-02-17-neuron-variable-timestep %}
-
-To find more about the topic, [The NEURON book][neuron-book] explains how to express neuron models in mathematical terms (chapter 3), the numerical methods of NEURON (chapter 4) and how to add new mechanisms with NMODL (chapter 9). The variable time step methods of NEURON are the topic of the [follow-up post on variable timestep simulation][vardt-post].
+To find more about the topic, [The NEURON book][neuron-book] explains how to express neuron models in mathematical terms (chapter 3), the numerical methods of NEURON (chapter 4) and how to add new mechanisms with NMODL (chapter 9).
 

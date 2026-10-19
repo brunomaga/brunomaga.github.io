@@ -228,7 +228,7 @@ To find more about the topic, [Efficient Transformers: A Survey](https://arxiv.o
 
 ## Sparse plus linear attention: SLA
 
-[Diffusion transformers](https://arxiv.org/abs/2212.09748) (DiTs), the models behind modern image and video generators (see the [post on diffusion models]({{ site.baseurl }}{% post_url 2025-02-25-diffusion %})), use bidirectional attention over very long sequences. A short video has tens of thousands of tokens, and attention runs at every denoising step, so it dominates the generation time.
+[Diffusion transformers](https://arxiv.org/abs/2212.09748) (DiTs), the models behind modern image and video generators, use bidirectional attention over very long sequences. A short video has tens of thousands of tokens, and attention runs at every denoising step, so it dominates the generation time.
 
 [SLA](https://arxiv.org/abs/2509.24006) (Sparse-Linear Attention; Tsinghua University; ICLR 2026) starts from an observation: the attention weights split into a small fraction of large weights, which have a high rank, and a large majority of small weights, which have a very low rank. Sparse attention alone must keep too many blocks to stay accurate, and linear attention alone, whose attention matrix $$\phi(Q)\phi(K)^T$$ has a rank of at most $$d_k$$, loses too much quality. Thus, SLA splits the attention matrix into blocks and classifies each block as:
 

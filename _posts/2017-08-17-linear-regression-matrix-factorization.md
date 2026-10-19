@@ -5,7 +5,7 @@ categories: ["Machine Learning"]
 tags: ["supervised learning", "linear regression", "matrix factorization", "loss functions"]
 ---
 
-The earliest form of [regression](https://en.wikipedia.org/wiki/Regression_analysis) is the method of least squares, published by Legendre in 1805 and by Gauss in 1809. Both applied it to determine the orbits of comets and minor planets around the Sun from astronomical observations. This post derives the closed-form solution of linear regression, presents regularization and matrix factorization, and reviews the most common loss functions.
+The earliest form of [regression](https://en.wikipedia.org/wiki/Regression_analysis) is the method of least squares, published by Legendre in 1805 and by Gauss in 1809 to determine the orbits of comets and minor planets from astronomical observations. This post derives the closed-form solution of linear regression, presents regularization and matrix factorization, and reviews the most common loss functions.
 
 Regression relates an input variable to an output, either to predict new outputs or to understand the effect of the input on the output. A regression dataset consists of a set of $$N$$ pairs $$(x_n, y_n)$$, with input $$x_n$$ and output/label $$y_n$$. For a new input $$x_n$$, the goal of regression is to find $$f$$ such that $$ y_n \approx f(x_n) $$. Fitting a multidimensional plane to the dataset means solving the (multiple) [linear regression](https://en.wikipedia.org/wiki/Linear_regression) problem, by finding the weights $$w$$ such that:
 
@@ -77,7 +77,7 @@ Other techniques that do not add a regularization term to the loss function, but
 
 ## Matrix Factorization
 
-[Matrix factorization](https://en.wikipedia.org/wiki/Matrix_factorization_(recommender_systems)) can be used to discover underlying latent factors and/or to predict missing values of the matrix. It became widely known during the [Netflix Prize](https://en.wikipedia.org/wiki/Netflix_Prize) competition, started in 2006, where it predicted the ratings of movies by users better than classic nearest-neighbor techniques ([Koren et al., 2009]({{ site.assets }}/linear-regression-matrix-factorization/recommender-systems-netflix.pdf)). The goal is to find $$W$$ and $$Z$$ such that $$ X \approx WZ^T $$, i.e. to predict $$x_{dn}$$, where $$d$$ indexes the rows of $$W$$ and $$n$$ the rows of $$Z$$. For movie ratings, $$Z$$ could be users, $$W$$ could be movies, and $$x_{dn}$$ the star rating.
+[Matrix factorization](https://en.wikipedia.org/wiki/Matrix_factorization_(recommender_systems)) can be used to discover underlying latent factors and/or to predict missing values of the matrix. It became widely known during the [Netflix Prize](https://en.wikipedia.org/wiki/Netflix_Prize) competition, started in 2006, where it outperformed classic nearest-neighbor techniques ([Koren et al., 2009]({{ site.assets }}/linear-regression-matrix-factorization/recommender-systems-netflix.pdf)). The goal is to find $$W$$ and $$Z$$ such that $$ X \approx WZ^T $$, i.e. to predict $$x_{dn}$$, where $$d$$ indexes the rows of $$W$$ and $$n$$ the rows of $$Z$$. For movie ratings, $$Z$$ could be users, $$W$$ could be movies, and $$x_{dn}$$ the star rating.
 
 The aim is to optimize:
 
@@ -183,9 +183,9 @@ $$
 L_x(θ) = −log p(x | θ) .
 $$
 
-For linear regression with Gaussian noise, minimizing the negative log-likelihood is equivalent to the Least Squares problem above, as derived in the [Bayesian linear regression post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}).
+For linear regression with Gaussian noise, this minimization is equivalent to the Least Squares problem above.
 
-The choice of the loss function depends on the task. The following sections present the most common ones: the MSE for regression, the cross-entropy for classification, the triplet and contrastive losses to learn [embeddings](https://en.wikipedia.org/wiki/Embedding_(machine_learning)), the CTC loss for unsegmented sequences, and the focal and Dice losses for imbalanced classes and image segmentation.
+The choice of the loss function depends on the task. The most common ones are the MSE for regression, the cross-entropy for classification, the triplet and contrastive losses to learn [embeddings](https://en.wikipedia.org/wiki/Embedding_(machine_learning)), the CTC loss for unsegmented sequences, and the focal and Dice losses for imbalanced classes and image segmentation.
 
 ### Mean Squared Error
 
@@ -230,11 +230,11 @@ where $$m$$ is a hyper-parameter (the margin). The original paper is [Dimensiona
 
 **[Connectionist Temporal Classification (CTC)](https://en.wikipedia.org/wiki/Connectionist_temporal_classification)** is a classifier and loss function for noisy, unsegmented sequential input data, used to train [recurrent neural networks](https://en.wikipedia.org/wiki/Recurrent_neural_network) (RNNs) such as [LSTM](https://en.wikipedia.org/wiki/Long_short-term_memory) networks to tackle sequence problems where the timing is variable. CTC was published by Graves et al. in 2006, in [Connectionist Temporal Classification: Labelling Unsegmented Sequence Data with Recurrent Neural Networks](https://www.cs.toronto.edu/~graves/icml_2006.pdf).
 
-At each time step, the network outputs the probability of each label and of an extra *blank* label (no label). The probability of a target sequence is the sum of the probabilities of all the alignments (one output per time step) that give the target once repeated labels and blanks are removed. The CTC loss is the negative logarithm of this probability, computed efficiently by dynamic programming.
+At each time step, the network outputs the probability of each label and of an extra *blank* label (no label). The probability of a target sequence is the sum of the probabilities of all the alignments (one output per time step) that give the target once repeated labels and blanks are removed. The CTC loss is the negative logarithm of this probability, computed by dynamic programming.
 
 ### Focal Loss
 
-**[Focal Loss](https://arxiv.org/abs/1708.02002)** is an extension of the Cross-Entropy Loss designed to address class imbalance, a common issue in e.g. dense [object detection](https://en.wikipedia.org/wiki/Object_detection) and medical image segmentation, where the background (non-lesion regions) is much more prevalent than the foreground (lesion regions). Focal Loss focuses on hard-to-classify examples and down-weights the loss contribution from easy examples. For binary classification, it is defined as (Eq. 5 in the paper):
+**[Focal Loss](https://arxiv.org/abs/1708.02002)** (Lin et al., 2017) is an extension of the Cross-Entropy Loss designed to address class imbalance, a common issue in e.g. dense [object detection](https://en.wikipedia.org/wiki/Object_detection) and medical image segmentation, where the background (non-lesion regions) is much more prevalent than the foreground (lesion regions). Focal Loss focuses on hard-to-classify examples and down-weights the loss contribution from easy examples. For binary classification, it is defined as (Eq. 5 in the paper):
 
 $$
 \mathcal{L}_{\text{focal}} = -\alpha_t (1 - p_t)^\gamma \log(p_t)
@@ -245,7 +245,7 @@ where:
 - $$\alpha_t$$ is a balancing factor, equal to $$α$$ for the positive class and to $$1-α$$ for the negative class (especially useful for imbalanced datasets).
 - $$γ$$ is the focusing parameter, usually set to 2, which adjusts the focus on hard-to-classify examples.
 
-In practice, the factor $$(1 - p_t)^\gamma$$ is close to 0 for well-classified examples, where $$p_t$$ is close to 1, so their loss is down-weighted, and close to 1 for misclassified examples. With $$\gamma = 0$$, the focal loss is the cross-entropy weighted by $$\alpha_t$$ (Eq. 3 in the paper). For multi-class classification, the same formula applies, with one balancing factor $$\alpha_t$$ per class $$t$$.
+In practice, the factor $$(1 - p_t)^\gamma$$ is close to 0 for well-classified examples, where $$p_t$$ is close to 1, and close to 1 for misclassified examples. With $$\gamma = 0$$, the focal loss is the cross-entropy weighted by $$\alpha_t$$ (Eq. 3 in the paper). For multi-class classification, the same formula applies, with one balancing factor $$\alpha_t$$ per class $$t$$.
 
 ### Dice Loss
 
