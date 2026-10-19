@@ -71,6 +71,8 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
     the switch", "about 15% of the SMs").
 - These two posts name no authors and have no acknowledgements, and nothing in them traces the work back to the
   company where it was developed.
+- Only these two posts have these limits: the other posts, the drafts and the publications page name hardware,
+  vendors and libraries as usual.
 
 ### Titles
 
