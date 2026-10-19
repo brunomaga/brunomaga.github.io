@@ -355,14 +355,19 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   is 65,504), while the comment of `scaled_dot_product_attention` in the same post gives this as the reason to use
   `torch.finfo(dtype).min`. The queries of the first block of CSA have rows that are fully masked. Fix: replace both
   -1e9 of `indexer_loss` with `torch.finfo(<tensor>.dtype).min`.
-- The DSA code block trains the indexer only during the dense warm-up: in the sparse branch (`dense = False`) it sets
-  `self.indexer_loss = None`, and since `x_index = x.detach()` and the top-k selection has no gradient, the indexer
-  stops learning. DeepSeek-V3.2 (arXiv 2512.02556, Sec. 2.1.1, "Sparse Training Stage", Eq. 4) keeps training the
-  indexer in that stage, with the KL-divergence loss restricted to the selected tokens, and the post's text says so
-  ("the indexer learns only from its own loss"). Fix: in the sparse branch, compute the logits `scores = q @
-  k.transpose(-1, -2) / h ** 0.5` and set `self.indexer_loss = indexer_loss(index_scores, scores, mask)` with the mask
-  of the selected tokens (the function already takes a `[B, Sq, Sk]` mask), and update the comments of `self.dense`
-  and `self.indexer_loss`; or keep the code and say before it that it trains the indexer only during the warm-up.
+- Optional: the DSA code block trains the indexer only during the dense warm-up, as the text before it says: in the
+  sparse branch (`dense = False`) it sets `self.indexer_loss = None`, and since `x_index = x.detach()` and the top-k
+  selection has no gradient, the indexer stops learning. DeepSeek-V3.2 (arXiv 2512.02556, Sec. 2.1.1, "Sparse
+  Training Stage", Eq. 4) keeps training the indexer in that stage, with the KL-divergence loss restricted to the
+  selected tokens. Fix: in the sparse branch, compute the logits `scores = q @ k.transpose(-1, -2) / h ** 0.5` and set
+  `self.indexer_loss = indexer_loss(index_scores, scores, mask)` with the mask of the selected tokens (the function
+  already takes a `[B, Sq, Sk]` mask), update the comments of `self.dense` and `self.indexer_loss`, and remove "for
+  simplicity, the code trains the indexer only during the warm-up" from the text.
+- The code comments call the number of cached past tokens P (`[B, G, P+S, h]`, and the docstring of `causal_mask`),
+  while the text writes $$P$$ for the softmax matrix of FlashAttention and SageAttention, as the FlashAttention paper
+  does. A comment of the MLA code also calls the attention weights `w_t`, while the text writes $$w^I_{t,j}$$ for the
+  weights of the indexer heads. Fix: rename the past tokens to T, and the attention weights to `a_t`, in the comments
+  and docstrings of the code.
 
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
@@ -1273,18 +1278,6 @@ Content problems that need the author's decision, such as overlap between posts.
     1's counts can follow the two terms. With an MLP of hidden size $$4d$$, a token costs about $$24d^2$$ FLOPs in the
     linear layers and $$4Td$$ in attention. So attention dominates beyond $$T = 6d$$ tokens, i.e. 24,576 tokens for
     $$d = 4096$$.
-
-### Faster attention (GQA, FlashAttention, sparse, linear and latent attention) (2025-12-30-inference-attention.md)
-
-- Three symbols still name two quantities in this post, in different sections: $$m$$ and $$m'$$ are the running
-  maximum of the online softmax (FlashAttention) and the compression rates of CSA and HCA ($$m = 4$$, $$m' = 128$$,
-  also in the code and in the captions of csa.svg and hca.svg); $$P$$ is the softmax matrix in the FlashAttention and
-  SageAttention text and the number of cached past tokens in the code comments (`[B, G, P+S, h]`); $$w$$ is the
-  sliding-window size in the text, the attention weights `w_t` in a comment of the MLA code, and $$w_{t,j}$$ the
-  weights of the indexer heads. The text follows each paper's notation, and each use is local to its section. Fix, if
-  the author wants one symbol per quantity: write the running maximum as $$\mu$$ and $$\mu'$$, and the window size as
-  $$n_w$$ (DeepSeek-V4 writes $$n_{win}$$); for $$P$$, rename the past tokens of the code comments (for example to
-  `T`) in a code task, or keep $$P$$ as in the FlashAttention paper.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 

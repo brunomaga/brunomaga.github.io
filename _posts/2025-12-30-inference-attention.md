@@ -5,18 +5,20 @@ categories: ["Efficient Inference"]
 tags: ["LLM", "attention", "FlashAttention", "sparse attention", "linear attention", "MLA", "DeepSeek"]
 ---
 
-This post focuses on [attention](https://en.wikipedia.org/wiki/Attention_(machine_learning)), the only part of a transformer whose cost per token grows with the context length:
+In 2017, the Transformer model was presented in the paper [Attention Is All You Need](https://arxiv.org/abs/1706.03762). Its [attention](https://en.wikipedia.org/wiki/Attention_(machine_learning)) mechanism lets each token gather information from the other tokens of the sequence, and it is the only part of a Transformer whose cost per token grows with the context length. This post covers the methods that make attention faster, from better kernels to new attention architectures, and implements several of them in PyTorch.
+
+The scaled dot-product attention of a head is computed as:
 
 $$
 \text{Attention}(Q, K, V) = \text{softmax}\left( \frac{QK^T}{\sqrt{h}} \right) V
 $$
 
-where $$Q$$, $$K$$ and $$V$$ are the queries, keys and values of a head, and $$h$$ is the head size. During prefill, $$QK^T$$ compares every token with every previous token, so the compute grows quadratically with the prompt length $$S$$, and a naive implementation stores an $$S \times S$$ matrix of scores per head.
+where $$Q$$, $$K$$ and $$V$$ are the queries, keys and values of the head, $$h$$ is the head size, and the [softmax](https://en.wikipedia.org/wiki/Softmax_function) turns each row of scores into weights that sum to one. The following picture illustrates this computation for $$S_q$$ queries and $$S_k$$ keys, with the names used in the code below:
 
 {: .picture}
 <img width="68.7%" height="68.7%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
 
-The following code implements this attention, with an optional mask, and the causal mask of a decoder; most modules of this post reuse both functions:
+The following code implements this attention. The function `scaled_dot_product_attention` takes an optional mask of the keys that each query can see, and `causal_mask` builds the mask of a decoder, where each token sees only itself and the previous tokens. Most modules of this post reuse both functions:
 
 ```python
 def scaled_dot_product_attention(q, k, v, mask=None, scale=None):
@@ -52,38 +54,44 @@ def causal_mask(Sq, Sk, device=None):
     return torch.ones(Sq, Sk, dtype=torch.bool, device=device).tril(diagonal=Sk - Sq)
 ```
 
-During decode, every new token reads the keys and values of the whole context from the KV cache, described in the [post on prefill, decode and the KV cache]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}), so the cost of each step grows linearly with the context. Attention dominates at long contexts, roughly once the context is longer than six times the model width $$E$$ (a layer of about $$12E^2$$ weights costs $$24E^2$$ FLOPs per token, and attending to $$S$$ tokens costs $$4SE$$): the authors of Native Sparse Attention (below) estimated that attention accounts for 70-80% of the latency when decoding with a 64K-token context. Long documents, long conversations, agents and reasoning models with long chains of thought all live in this regime.
+During prefill, $$QK^T$$ compares every token of the prompt with every previous token, so the compute grows quadratically with the prompt length $$S$$, and a naive implementation stores an $$S \times S$$ matrix of scores per head. During decode, every new token reads the keys and values of the whole context from the KV cache, described in the [post on prefill, decode and the KV cache]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}), so the cost of each step grows linearly with the context.
+
+A Transformer layer of width $$E$$ holds about $$12E^2$$ weights ($$4E^2$$ in the attention projections and $$8E^2$$ in an MLP with a hidden size of $$4E$$), and each weight costs 2 FLOPs per token, i.e. $$24E^2$$ FLOPs in total. Attending to $$S$$ tokens costs $$4SE$$ FLOPs per token, as $$QK^T$$ and the product with $$V$$ take $$2SE$$ FLOPs each. So attention costs more than the rest of the layer once the context is longer than $$6E$$ tokens, e.g. 24,576 tokens for $$E = 4096$$.
+
+In practice, the authors of Native Sparse Attention (below) estimated that attention accounts for 70-80% of the latency when decoding with a 64K-token context. Long documents, long conversations, agents and reasoning models with long chains of thought all live in this regime.
 
 There are three families of solutions, which can be combined:
 
 - **compute the full attention faster**, with better kernels (FlashAttention, FlashDecoding) and lower precision (SageAttention);
 - **store fewer keys and values**, by sharing or compressing them (MQA, GQA and MLA);
-- **compute less attention**, by attending only to the most relevant tokens (sparse attention), or by replacing [softmax](https://en.wikipedia.org/wiki/Softmax_function) attention with a linear-time alternative (linear attention and hybrid models).
+- **compute less attention**, by attending only to the most relevant tokens (sparse attention), or by replacing softmax attention with a linear-time alternative (linear attention and hybrid models).
 
-Prefill processes all the tokens of the prompt at once and is limited by compute, so it benefits most from faster kernels (FlashAttention and SageAttention). Decode processes one token at a time and is limited by memory bandwidth, so it benefits most from storing and reading fewer keys and values (MQA, GQA, MLA and KV eviction), and from kernels that spread the reading of a long KV cache over the whole GPU (FlashDecoding). Sparse attention, linear attention and hybrid models help both phases. The summary table at the end of the post lists where each method helps most.
+Prefill processes all the tokens of the prompt at once and is limited by compute, so it benefits most from faster kernels (FlashAttention and SageAttention). Decode processes one token at a time and is limited by memory bandwidth, so it benefits most from storing and reading fewer keys and values (MQA, GQA, MLA and KV eviction). It also benefits from kernels that spread the reading of a long KV cache over the whole GPU (FlashDecoding). Sparse attention, linear attention and hybrid models help both phases, and the summary table at the end of the post lists where each method helps most.
 
 ## Multi-Head (MHA), Multi-Query (MQA) and Grouped-Query Attention (GQA)
 
-Decode reads the whole KV cache at every step, so a smaller KV cache means faster decoding, and room for larger batches and longer contexts.
+Decode reads the whole KV cache at every step, so a smaller KV cache means faster decoding, and leaves room for larger batches and longer contexts.
 
-**Multi-Head Attention** ([MHA](https://arxiv.org/abs/1706.03762)) keeps one query, one key and one value per head.
+**Multi-Head Attention** ([MHA](https://arxiv.org/abs/1706.03762)), the attention of the original Transformer, keeps one query, one key and one value per head. The following picture illustrates it with $$H = 4$$ heads, one color per head, where the keys and values of all heads form the KV cache:
 
 {: .picture}
 <img width="97.5%" height="97.5%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
 
-**Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)) keeps one query per head, but all heads share a single key head and a single value head. The KV cache shrinks by a factor equal to the number of heads, at some cost in quality.
+In 2019, Noam Shazeer proposed **Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)), which keeps one query per head, but all heads share a single key head and a single value head. The KV cache shrinks by a factor equal to the number of heads, at some cost in quality. The following picture shows the same example with MQA:
 
 {: .picture}
 <img width="97.7%" height="97.7%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
 
-**Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)) is the middle ground, used by most current models: the $$H$$ heads are split into $$G$$ groups, and the heads of a group share one key head and one value head. The cache shrinks by a factor $$H / G$$. GQA becomes multi-head attention when $$G = H$$, and MQA when $$G = 1$$. A trained multi-head model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute.
+**Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)), proposed in 2023, is the middle ground, and most current models use it. The $$H$$ heads are split into $$G$$ groups, and the heads of a group share one key head and one value head, so the cache shrinks by a factor $$H / G$$. Thus, GQA becomes MHA when $$G = H$$, and MQA when $$G = 1$$. The following picture illustrates GQA with $$H = 4$$ heads in $$G = 2$$ groups:
 
 {: .picture}
 <img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
 
-GQA and MQA primarily accelerate the decode phase, though they also provide a large secondary benefit to the overall system throughput by freeing up memory. These savings *only appear when there is a KV cache to read during decode*. Without a cache, GQA only saves a little compute in the key and value projections.
+A trained MHA model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute. Note that the savings of MQA and GQA appear only when there is a KV cache to read during decode: without a cache, GQA only saves a little compute in the key and value projections.
 
-The following code implements GQA with an optional KV cache; it is also MHA with `num_groups = num_heads`, and MQA with `num_groups = 1`. During decode, the module receives only the new tokens, appends their keys and values to the cache, and returns the updated cache, whose keys and values have $$G$$ heads instead of $$H$$. The model must also give the new tokens the positions that follow the cached ones. MLA and DSA, below, follow the same convention: an optional `kv_cache` argument, and the new cache returned with the output:
+The following code implements GQA with an optional KV cache; it is also MHA with `num_groups = num_heads`, and MQA with `num_groups = 1`. First, the module projects the input into $$H$$ query heads and $$G$$ key and value heads. Then, it appends the keys and values of the new tokens to the cache, which therefore holds $$G$$ heads instead of $$H$$. Finally, it repeats each key and value head for the $$H / G$$ query heads of its group, and computes the attention.
+
+During decode, the module receives only the new tokens, and the model must give them the positions that follow the cached ones. MLA and DSA, below, follow the same convention: an optional `kv_cache` argument, and the new cache returned with the output:
 
 ```python
 class GQA(nn.Module):
@@ -132,90 +140,111 @@ class GQA(nn.Module):
 
 GPUs have a small amount of very fast on-chip memory ([SRAM](https://en.wikipedia.org/wiki/Static_random-access_memory), around 200 KB per streaming multiprocessor) and a large amount of slower high-bandwidth memory ([HBM](https://en.wikipedia.org/wiki/High_Bandwidth_Memory), tens of GB). A standard attention implementation writes the $$S \times S$$ score matrix $$QK^T$$ to HBM, reads it back to compute the softmax $$P$$, writes $$P$$, and reads it again to compute $$PV$$. These memory round-trips, not the math, dominate its runtime.
 
-[FlashAttention](https://arxiv.org/abs/2205.14135) computes exactly the same result without ever writing $$QK^T$$ or $$P$$ to HBM. It splits $$Q$$, $$K$$ and $$V$$ into tiles that fit in SRAM and, for each tile of queries, loops over the tiles of keys and values while accumulating the output on chip. The challenge is the softmax, which needs the maximum and the sum over *all* the keys of a row before it can normalize. FlashAttention uses an **online softmax** ([Milakov and Gimelshein](https://arxiv.org/abs/1805.02867)): it keeps, for each query, a running maximum $$m$$, a running sum $$\ell$$ and an unnormalized output $$o$$, and corrects them whenever a new tile of scores $$s_j$$ and values $$v_j$$ arrives:
+In 2022, Tri Dao and colleagues presented [FlashAttention](https://arxiv.org/abs/2205.14135), which computes exactly the same result without ever writing $$QK^T$$ or $$P$$ to HBM. It splits $$Q$$, $$K$$ and $$V$$ into tiles that fit in SRAM and, for each tile of queries, loops over the tiles of keys and values while accumulating the output on chip. The difficulty is the softmax, which needs the maximum and the sum over *all* the keys of a row before it can normalize.
+
+FlashAttention solves it with an **online softmax** ([Milakov and Gimelshein, 2018](https://arxiv.org/abs/1805.02867)). For each query, it keeps a running maximum $$\mu$$, a running sum $$\ell$$ and an unnormalized output $$o$$, starting from $$\mu = -\infty$$, $$\ell = 0$$ and $$o = 0$$. Whenever a new tile of scores $$s_j$$ and values $$v_j$$ arrives, they are updated as:
 
 $$
 \begin{align*}
-m' & = \max\left(m, \max_j s_j\right) \\
-\ell' & = e^{m - m'} \, \ell + \sum_j e^{s_j - m'} \\
-o' & = e^{m - m'} \, o + \sum_j e^{s_j - m'} \, v_j
+\mu' & = \max\left(\mu, \max_j s_j\right) \\
+\ell' & = e^{\mu - \mu'} \, \ell + \sum_j e^{s_j - \mu'} \\
+o' & = e^{\mu - \mu'} \, o + \sum_j e^{s_j - \mu'} \, v_j
 \end{align*}
 $$
 
-Subtracting the maximum keeps every exponential at most 1, so it cannot overflow, and the factor $$e^{m - m'}$$ rescales what was accumulated with the previous maximum. After the last tile, the output is $$o / \ell$$. The memory used by attention drops from $$O(S^2)$$ to $$O(S)$$, and the traffic to HBM drops by a large factor. With a causal mask, the tiles that are entirely above the diagonal are skipped, which saves about half of the work. During training, the backward pass recomputes $$QK^T$$ and $$P$$ tile by tile instead of storing them.
+where $$j$$ runs over the keys of the tile, and $$\mu'$$, $$\ell'$$ and $$o'$$ are the updated values. Subtracting the maximum keeps every exponential at most 1, so it cannot overflow, and the factor $$e^{\mu - \mu'}$$ rescales what was accumulated with the previous maximum. After the last tile, the output is $$o / \ell$$.
 
-Thus, FlashAttention's **speedup comes primarily from better memory usage**, not from fewer FLOPs. It computes exactly the same result with essentially the same asymptotic arithmetic, $$O(S^2 E)$$, but tiles the computation to keep the intermediate values on chip and reduce the expensive reads and writes to HBM. This cuts the memory traffic and often makes attention faster, but it does not fundamentally reduce the number of attention operations.
+Thus, the **speedup of FlashAttention comes from better memory usage**, not from fewer FLOPs: the memory used by attention drops from $$O(S^2)$$ to $$O(S)$$, and the traffic to HBM drops by a large factor, while the arithmetic stays $$O(S^2 E)$$. With a causal mask, the tiles entirely above the diagonal are skipped, which saves about half of the work. During training, the backward pass recomputes $$QK^T$$ and $$P$$ tile by tile instead of storing them.
 
 Each new version of FlashAttention adapted the algorithm to newer hardware:
 
-- [FlashAttention-2](https://arxiv.org/abs/2307.08691) improved the parallelism and the partitioning of work across the GPU, and reduced the non-matmul operations (on an A100, a non-matmul FLOP is 16 times more expensive than a matmul FLOP), roughly doubling the speed of the first version.
-- [FlashAttention-3](https://arxiv.org/abs/2407.08608) targets NVIDIA Hopper GPUs (H100). It overlaps data movement, matrix multiplications and softmax using Hopper's asynchronous hardware, and supports FP8.
-- [FlashAttention-4](https://arxiv.org/abs/2603.05451) (2026) targets NVIDIA Blackwell GPUs (B200), whose tensor cores became much faster while the units computing exponentials and the shared memory did not. It emulates part of the exponentials in software, skips most of the rescaling steps of the online softmax, and keeps intermediate results in Blackwell's new tensor memory. On a B200, it reaches up to 1,613 TFLOP/s in BF16 (71% utilization), up to 1.3 times faster than cuDNN 9.13 and 2.7 times faster than Triton.
+- [FlashAttention-2](https://arxiv.org/abs/2307.08691) (2023) improved the parallelism and the partitioning of work across the GPU, and reduced the non-matmul operations, as, on an A100, a non-matmul FLOP is 16 times more expensive than a matmul FLOP. It is about twice as fast as the first version.
+- [FlashAttention-3](https://arxiv.org/abs/2407.08608) (2024) targets NVIDIA Hopper GPUs (H100). It overlaps data movement, matrix multiplications and softmax with the asynchronous hardware of Hopper, and supports FP8.
+- [FlashAttention-4](https://arxiv.org/abs/2603.05451) (2026) targets NVIDIA Blackwell GPUs (B200), whose tensor cores became much faster while the units computing exponentials and the shared memory did not. It emulates part of the exponentials in software, skips most of the rescaling steps of the online softmax, and keeps intermediate results in the new tensor memory of Blackwell. On a B200, it reaches up to 1,613 TFLOP/s in BF16 (71% utilization), up to 1.3 times faster than cuDNN 9.13 and 2.7 times faster than Triton.
 
-In PyTorch, `torch.nn.functional.scaled_dot_product_attention` (SDPA) computes the same result as the `scaled_dot_product_attention` function above, but dispatches to a FlashAttention or memory-efficient kernel when the inputs allow it, and FlexAttention generates fused kernels for custom masks.
+In PyTorch, `torch.nn.functional.scaled_dot_product_attention` (SDPA) computes the same result as the `scaled_dot_product_attention` function above, but dispatches to a FlashAttention or memory-efficient kernel when the inputs allow it. Also, FlexAttention generates fused kernels for custom masks.
 
 ## FlashDecoding
 
-FlashAttention parallelizes over the batch, the heads and the blocks of queries. During decode there is a single query per sequence, so with a small batch most of the GPU sits idle while a few thread blocks walk through a long KV cache. [Flash-Decoding](https://crfm.stanford.edu/2023/10/12/flashdecoding.html) also splits the keys and values along the sequence: the chunks are processed in parallel, each producing a partial output and its softmax statistics (maximum and sum), and a final reduction combines them with the same rescaling as the online softmax. This makes decoding with very long contexts up to 8 times faster. Kernel libraries such as [FlashInfer](https://github.com/flashinfer-ai/flashinfer) implement this split-KV strategy, together with attention over paged KV caches.
+FlashAttention parallelizes over the batch, the heads and the blocks of queries. During decode there is a single query per sequence, so with a small batch most of the GPU sits idle while a few thread blocks walk through a long KV cache.
 
+[Flash-Decoding](https://crfm.stanford.edu/2023/10/12/flashdecoding.html) (2023) also splits the keys and values along the sequence. The chunks are processed in parallel, each producing a partial output and its softmax statistics (maximum and sum), and a final reduction combines them with the same rescaling as the online softmax. This makes decoding with very long contexts up to 8 times faster. Kernel libraries such as [FlashInfer](https://github.com/flashinfer-ai/flashinfer) implement this split-KV strategy, together with attention over paged KV caches.
 
 ## Quantized attention: SageAttention
 
 Attention can also run in lower precision. The [SageAttention](https://github.com/thu-ml/SageAttention) family, from Tsinghua University, quantizes the inputs of the two matrix multiplications of attention, in a plug-and-play way that needs no retraining:
 
-- [SageAttention](https://arxiv.org/abs/2410.02367) computes $$QK^T$$ in INT8 and $$PV$$ in 16 bits. In some channels, all keys share a large common value that would waste the INT8 range, so it first *smooths* $$K$$ by subtracting its mean over the tokens. This does not change the result: subtracting the same vector $$\bar{k}$$ from all keys subtracts the same value $$q \cdot \bar{k}$$ from every score of a row, and the softmax is not affected by that.
+- [SageAttention](https://arxiv.org/abs/2410.02367) computes $$QK^T$$ in INT8 and $$PV$$ in 16 bits. In some channels, all keys share a large common value that would waste the INT8 range, so it first *smooths* $$K$$ by subtracting its mean over the tokens. This does not change the result: subtracting the mean key $$\bar{k}$$ from all keys subtracts the same value $$q \cdot \bar{k}$$ from every score of a row, and the softmax is not affected by such a shift.
 - [SageAttention2](https://arxiv.org/abs/2411.10958) quantizes $$Q$$ and $$K$$ to INT4 with fine-grained (per-thread) scales, and computes $$PV$$ in FP8.
 - [SageAttention3](https://arxiv.org/abs/2505.11594) uses the FP4 tensor cores of NVIDIA Blackwell GPUs with micro-scaling, and reaches 1,038 TOPS on an RTX 5090, about 5 times faster than the fastest FlashAttention on that GPU.
 
 ## Sparse attention
 
-In practice, each query puts most of its attention weight on a small subset of the tokens. Sparse attention computes attention only over the tokens that matter. The difficulty is to find them cheaply, and to read them from memory efficiently: GPUs are fast on contiguous blocks of memory, and slow on scattered individual tokens. **Sparse attention kernels are faster primarily because they avoid loading unnecessary blocks of keys and values from HBM** into the fast on-chip SRAM.
+In practice, each query puts most of its attention weight on a small subset of the tokens. **Sparse attention** computes attention only over the tokens that matter. The difficulty is to find them cheaply, and to read them from memory efficiently: GPUs are fast on contiguous blocks of memory, and slow on scattered individual tokens. The speedup of sparse attention kernels comes mostly from the blocks of keys and values that they do not load from HBM into SRAM.
 
-**Fixed patterns.** The simplest patterns are known in advance. In *sliding window* attention, each token attends only to the last $$w$$ tokens, which bounds the size of the KV cache; it is used, for example, in [Mistral 7B](https://arxiv.org/abs/2310.06825), and stacking layers still lets information travel further than $$w$$ tokens. [Longformer](https://arxiv.org/abs/2004.05150) combines local windows with a few global tokens, and [BigBird](https://arxiv.org/abs/2007.14062) also adds a few random tokens. [StreamingLLM](https://arxiv.org/abs/2309.17453) found that models put a lot of attention on the first few tokens, regardless of their content, and called them *attention sinks*: the softmax weights of a query must sum to one, so a query puts the weight it does not need on the first tokens, which every later token can see. Keeping these few tokens plus a window of recent tokens lets a model generate stably over millions of tokens without retraining, where a plain sliding window collapses once the first tokens leave the window.
+**Fixed patterns.** The simplest patterns are known in advance. In **sliding window** attention, each token attends only to a window of the most recent tokens, which bounds the size of the KV cache. As an example, [Mistral 7B](https://arxiv.org/abs/2310.06825) uses a window of 4,096 tokens, and since each of its 32 layers moves information forward by up to one window, its theoretical attention span is about 131K tokens. [Longformer](https://arxiv.org/abs/2004.05150) combines local windows with a few global tokens, and [BigBird](https://arxiv.org/abs/2007.14062) also adds a few random tokens.
 
-**KV eviction and selection without retraining.** [H2O](https://arxiv.org/abs/2306.14048) keeps only the recent tokens and the "heavy hitters" that received the most attention so far, and evicts the others; [SnapKV](https://arxiv.org/abs/2404.14469) selects the important tokens of each head from the attention of the last prompt tokens. Eviction saves memory, but an evicted token is lost even if it becomes relevant later. [Quest](https://arxiv.org/abs/2406.10774) keeps the whole cache, but stores the element-wise minimum and maximum of the keys of each page. These bound the attention score that any query can give to the page, so each decode step loads only the most promising pages for the current query.
+[StreamingLLM](https://arxiv.org/abs/2309.17453) found that models put a lot of attention on the first few tokens, regardless of their content, and called them **attention sinks**. The softmax weights of a query must sum to one, so a query puts the weight it does not need on the first tokens, which every later token can see. Keeping these few tokens plus a window of recent tokens lets a model generate stably over millions of tokens without retraining, while a plain sliding window collapses once the first tokens leave the window.
 
-**Trainable sparse attention.** Applying sparsity only at inference creates a mismatch with how the model was trained, and selecting individual tokens is hard to make fast. Recent methods train the model with sparse attention:
+**KV eviction and selection without retraining.** [H2O](https://arxiv.org/abs/2306.14048) keeps only the recent tokens and the *heavy hitters*, the tokens that received the most attention so far, and evicts the others. [SnapKV](https://arxiv.org/abs/2404.14469) selects the important tokens of each head from the attention of the last prompt tokens. Eviction saves memory, but an evicted token is lost, even if it becomes relevant later.
 
-- **Native Sparse Attention** ([NSA](https://arxiv.org/abs/2502.11089); DeepSeek-AI, Peking University and University of Washington; ACL 2025 Best Paper) runs three attention branches in parallel and mixes their outputs with learned gates: a *compressed* branch attends to coarse summaries of blocks of tokens, a cheap global view; a *selected* branch uses the scores of the compressed branch to pick the most important blocks and attends to their tokens in full detail; and a *sliding window* branch covers the local context. Selection works on contiguous blocks, and all heads of a GQA group share the same selected blocks, so they are loaded only once, which keeps the kernels fast. NSA matches or beats full attention on general, long-context and reasoning benchmarks, and on 64K-token sequences it is up to 9 times faster in the forward pass, 6 times faster in the backward pass and 11.6 times faster in decoding.
-- **Mixture of Block Attention** ([MoBA](https://arxiv.org/abs/2502.13189), Moonshot AI) applies the idea of [mixture of experts](https://en.wikipedia.org/wiki/Mixture_of_experts) to attention: for each query, a gate picks the few blocks of keys and values to attend to.
-- **DeepSeek Sparse Attention** ([DSA](https://arxiv.org/abs/2512.02556)), introduced in DeepSeek-V3.2, selects individual tokens with a small *lightning indexer*; the section on the DeepSeek models, below, describes and implements it.
+[Quest](https://arxiv.org/abs/2406.10774) keeps the whole cache instead, and stores the element-wise minimum and maximum of the keys of each page. These bound the attention score that any query can give to the page, so each decode step loads only the most promising pages for the current query.
 
-Sparse attention reduces the compute and the amount of KV cache read at each step; except for the eviction methods, the cache itself still stores every token.
+**Trainable sparse attention.** Applying sparsity only at inference creates a mismatch with how the model was trained, and selecting individual tokens is hard to make fast. Recent methods therefore train the model with sparse attention. In 2025, **Native Sparse Attention** ([NSA](https://arxiv.org/abs/2502.11089)), from DeepSeek-AI, Peking University and the University of Washington (ACL 2025 Best Paper), runs three attention branches in parallel and mixes their outputs with learned gates:
+
+- a *compressed* branch attends to coarse summaries of blocks of tokens, a cheap global view;
+- a *selected* branch uses the scores of the compressed branch to pick the most important blocks, and attends to their tokens in full detail;
+- a *sliding window* branch covers the local context.
+
+Selection works on contiguous blocks, and all heads of a GQA group share the same selected blocks, so these are loaded only once, which keeps the kernels fast. NSA matches or beats full attention on general, long-context and reasoning benchmarks. On 64K-token sequences, it is up to 9 times faster in the forward pass, 6 times faster in the backward pass and 11.6 times faster in decoding.
+
+Two other methods select blocks or tokens in a similar way. **Mixture of Block Attention** ([MoBA](https://arxiv.org/abs/2502.13189)), from Moonshot AI, applies the idea of [mixture of experts](https://en.wikipedia.org/wiki/Mixture_of_experts) to attention: for each query, a gate picks the few blocks of keys and values to attend to. **DeepSeek Sparse Attention** ([DSA](https://arxiv.org/abs/2512.02556)), introduced in DeepSeek-V3.2, selects individual tokens with a small *lightning indexer*; the section on the DeepSeek models, below, describes and implements it.
+
+Note that sparse attention reduces the compute and the amount of KV cache read at each step, but except for the eviction methods, the cache still stores every token.
 
 ## Linear attention and hybrid models
 
-Linear attention takes a completely different architectural approach to the transformer's $$O(S^2)$$ bottleneck: it rewrites the attention formula so that its cost grows linearly with the sequence length, $$O(S)$$.
+In 2020, [Katharopoulos et al.](https://arxiv.org/abs/2006.16236) showed that attention can run in linear time, if the softmax is removed so that the matrix products can be reordered. Replacing $$\text{softmax}(QK^T)V$$ with $$\phi(Q)\left(\phi(K)^T V\right)$$, for some feature map $$\phi$$, turns $$\phi(K)^T V$$ into a small $$d_k \times d_v$$ matrix, where $$d_k$$ is the size of the features $$\phi(k)$$ and $$d_v$$ the size of the values. Thus, the cost grows linearly with the sequence length, instead of quadratically.
 
-Linear attention removes the softmax, so that the matrix products can be reordered. Replacing $$\text{softmax}(QK^T)V$$ with $$\phi(Q)\left(\phi(K)^T V\right)$$, for some feature map $$\phi$$, makes $$\phi(K)^T V$$ a small $$h \times h$$ matrix, and the cost becomes linear in the sequence length ([Katharopoulos et al.](https://arxiv.org/abs/2006.16236)).
-
-During decode, linear attention behaves like a [recurrent neural network](https://en.wikipedia.org/wiki/Recurrent_neural_network): instead of a KV cache that grows with every token, each layer keeps a fixed-size state matrix $$M$$ that maps keys to values, using the feature map $$\phi$$:
+During decode, linear attention behaves like a [recurrent neural network](https://en.wikipedia.org/wiki/Recurrent_neural_network): instead of a KV cache that grows with every token, each layer keeps a fixed-size state matrix $$M$$ that maps keys to values. The state and the output of token $$t$$ are computed as:
 
 $$
 M_t = M_{t-1} + v_t \phi(k_t)^T, \quad\quad o_t = M_t \phi(q_t)
 $$
 
-where $$q_t$$, $$k_t$$ and $$v_t$$ are the query, key and value of token $$t$$, and $$o_t$$ is its output. The matrix $$M$$ has a **fixed size** of $$d_v \times d_k$$ (where $$d_k$$ is the feature dimension of the keys/queries after applying $$\phi$$, and $$d_v$$ is the dimension of the values). This allows for **sequence independence**: the sequence length $$S$$ is completely absent from its dimensions, so the memory and the time per token are constant, whatever the context length. The weakness is that a **fixed-size state is a lossy memory** that cannot hold all the details of a long context, so pure linear attention models recall exact information worse than softmax attention. A few methods improved this in recent years:
+where $$q_t$$, $$k_t$$ and $$v_t$$ are the query, key and value of token $$t$$, and $$o_t$$ is its output. The state $$M$$ has a fixed size of $$d_v \times d_k$$, without the sequence length in its dimensions, so the memory and the time per token stay constant, whatever the context length.
 
-- **Gating** lets the model forget: $$M_t = \alpha_t M_{t-1} + v_t k_t^T$$, with a data-dependent decay $$\alpha_t \in (0, 1)$$ and with $$\phi$$ folded into $$k_t$$. State space models such as [Mamba](https://arxiv.org/abs/2312.00752) and [Mamba-2](https://arxiv.org/abs/2405.21060) are closely related.
+However, a **fixed-size state is a lossy memory** that cannot hold all the details of a long context, so pure linear attention models recall exact information worse than softmax attention. A few methods improved this in recent years:
+
+- **Gating** lets the model forget: $$M_t = \alpha_t M_{t-1} + v_t k_t^T$$, with a data-dependent decay $$\alpha_t \in (0, 1)$$, and with $$\phi$$ folded into $$k_t$$. State space models such as [Mamba](https://arxiv.org/abs/2312.00752) and [Mamba-2](https://arxiv.org/abs/2405.21060) are closely related.
 - The [**delta rule**](https://en.wikipedia.org/wiki/Delta_rule) lets the model overwrite: $$M_t = M_{t-1} - \beta_t \left(M_{t-1} k_t - v_t\right) k_t^T$$. Instead of adding $$v_t$$ on top of what is already stored for the key $$k_t$$, it moves the stored value towards $$v_t$$ by a learned step $$\beta_t$$ (for keys of unit length, as in these models). [Gated DeltaNet](https://arxiv.org/abs/2412.06464) combines both ideas.
-- [**Kimi Linear**](https://github.com/MoonshotAI/Kimi-Linear) introduces Kimi Delta Attention ([KDA](https://arxiv.org/abs/2510.26692)), a Gated DeltaNet with a finer-grained gate: one decay per channel instead of one per head. It is a *hybrid* model: for every three KDA layers, there is one full attention layer (MLA), which keeps the exact recall that linear attention lacks. With the same training recipe, the 48B-parameter model (a mixture of experts with 3B active parameters) outperformed full MLA, while reducing the KV cache by up to 75% and increasing the decoding throughput up to 6 times at a 1M-token context. Other hybrid models follow the same recipe with different linear layers, such as Jamba (Mamba layers), MiniMax-01 (lightning attention) and Qwen3-Next (Gated DeltaNet).
+- **Kimi Delta Attention** ([KDA](https://arxiv.org/abs/2510.26692)), from Moonshot AI, is a Gated DeltaNet with a finer-grained gate: one decay per channel instead of one per head.
+
+**Hybrid models** keep the exact recall of softmax attention: they interleave the linear attention layers with a few full attention layers. As an example, [Kimi Linear](https://github.com/MoonshotAI/Kimi-Linear) has one full attention layer (MLA) for every three KDA layers, and its 48B-parameter model (a mixture of experts with 3B active parameters) outperformed full MLA with the same training recipe. It also reduced the KV cache by up to 75%, and increased the decoding throughput up to 6 times at a 1M-token context. Other hybrid models follow the same recipe with different linear layers, such as Jamba (Mamba layers), MiniMax-01 (lightning attention) and Qwen3-Next (Gated DeltaNet).
+
+To find more about the topic, [Efficient Transformers: A Survey](https://arxiv.org/abs/2009.06732) (Tay et al.) reviews many earlier sparse and linear attention variants.
 
 ## Sparse plus linear attention: SLA
 
-[Diffusion transformers](https://arxiv.org/abs/2212.09748) (DiTs), the models behind modern image and video generators, use bidirectional attention over very long sequences: a short video has tens of thousands of tokens, and attention runs at every denoising step, so it dominates the generation time. [SLA](https://arxiv.org/abs/2509.24006) (Sparse-Linear Attention; Tsinghua University; ICLR 2026) starts from an observation: the attention weights split into a small fraction of large weights, which have a high rank, and a large majority of small weights, which have a very low rank. Sparse attention alone must keep too many blocks to stay accurate, and linear attention alone, whose attention matrix $$\phi(Q)\phi(K)^T$$ has a rank of at most $$d_k$$, loses too much quality. SLA splits the attention matrix into blocks and classifies each block as:
+[Diffusion transformers](https://arxiv.org/abs/2212.09748) (DiTs), the models behind modern image and video generators, use bidirectional attention over very long sequences. A short video has tens of thousands of tokens, and attention runs at every denoising step, so it dominates the generation time.
+
+[SLA](https://arxiv.org/abs/2509.24006) (Sparse-Linear Attention; Tsinghua University; ICLR 2026) starts from an observation: the attention weights split into a small fraction of large weights, which have a high rank, and a large majority of small weights, which have a very low rank. Sparse attention alone must keep too many blocks to stay accurate, and linear attention alone, whose attention matrix $$\phi(Q)\phi(K)^T$$ has a rank of at most $$d_k$$, loses too much quality. Thus, SLA splits the attention matrix into blocks and classifies each block as:
 
 - **critical**, computed exactly with FlashAttention (quadratic cost, but only for a few blocks);
 - **marginal**, computed with linear attention (cheap);
 - **negligible**, skipped.
 
-All three run in a single fused GPU kernel, for both the forward and backward passes, and a few fine-tuning steps adapt the model to it. On the Wan2.1-1.3B video model, SLA reduces the attention computation by 95% without degrading the generation quality, with a 13.7 times faster attention kernel and 2.2 times faster end-to-end video generation. SLA targets diffusion transformers; it is not designed for the token-by-token decoding of language models.
+All three run in a single fused GPU kernel, for both the forward and backward passes, and a few fine-tuning steps adapt the model to it. On the Wan2.1-1.3B video model, SLA reduces the attention computation by 95% without degrading the generation quality, with a 13.7 times faster attention kernel and 2.2 times faster end-to-end video generation. Note that SLA targets diffusion transformers, and is not designed for the token-by-token decoding of language models.
 
 ## DeepSeek Multi-head Latent Attention
 
-**Multi-head Latent Attention** (MLA), introduced in [DeepSeek-V2](https://arxiv.org/abs/2405.04434), compresses the key and value of each token into a single small *latent* vector, and caches only that vector. The keys and values of each head are recovered with up-projection matrices, and these matrices can be merged ("absorbed") into the query and output projections, so that attention runs directly on the cached latent vectors. [Rotary positional embeddings](https://arxiv.org/abs/2104.09864) (RoPE) prevent this merge (their rotation, which depends on the positions of the query and the key, sits between the query projection and the key up-projection), so MLA adds a small separate key component that carries the position. With absorption, the cached latent vectors act as the keys and the values: MLA behaves like multi-query attention with a single, larger key-value head shared by all heads. Per token and layer, DeepSeek-V2 caches 576 values (the latent vector and the position key), against 2,048 for GQA with 8 key-value heads of size 128. DeepSeek-V2 reduced the KV cache by 93.3% compared with DeepSeek 67B, and increased its maximum generation throughput 5.76 times.
+In 2024, [DeepSeek-V2](https://arxiv.org/abs/2405.04434) introduced **Multi-head Latent Attention** (MLA), which compresses the key and value of each token into a single small *latent* vector, and caches only that vector. The keys and values of each head are recovered with up-projection matrices. These matrices can be merged (*absorbed*) into the query and output projections, so that attention runs directly on the cached latent vectors.
 
-MLA mainly accelerates decode, which is limited by memory bandwidth: like MQA and GQA, it shrinks the KV cache that every decoding step reads, and with absorption, attention runs directly over the cached latent vectors, without up-projecting them into the keys and values of every head. Prefill is limited by compute instead, and absorbed attention costs more FLOPs per score, as it works in the latent dimension (512 in DeepSeek-V2) instead of the head dimension (128). Implementations therefore usually up-project the latent vectors into keys and values during prefill, and use absorption during decode.
+With absorption, the cached latent vectors act as the keys and the values: MLA behaves like MQA, with a single, larger key-value head shared by all heads. However, [rotary positional embeddings](https://arxiv.org/abs/2104.09864) (RoPE) prevent the merge, because their rotation, which depends on the positions of the query and the key, sits between the query projection and the key up-projection. So MLA adds a small separate key component that carries the position.
+
+Per token and layer, DeepSeek-V2 caches 576 values (a latent vector of 512 values and a position key of 64), against 2,048 for GQA with 8 key-value heads of size 128. Compared with DeepSeek 67B, DeepSeek-V2 reduced the KV cache by 93.3%, and increased its maximum generation throughput 5.76 times.
+
+MLA mainly accelerates decode, which is limited by memory bandwidth: as MQA and GQA, it shrinks the KV cache that every decoding step reads. Prefill is limited by compute instead, and absorbed attention costs more FLOPs per score, as it works in the latent dimension (512 in DeepSeek-V2) instead of the head dimension (128). Therefore, implementations usually up-project the latent vectors into keys and values during prefill, and use absorption during decode. The following picture illustrates both ways:
 
 {: .picture}
 <img width="89.4%" height="89.4%" src="{{ site.assets }}/inference/imgs/mla.svg"/>
@@ -223,7 +252,7 @@ MLA mainly accelerates decode, which is limited by memory bandwidth: like MQA an
 {: .caption}
 Multi-head latent attention, with S = 4 tokens, a latent dimension C = 3, H = 4 heads and a head dimension h = 2. With absorb = False (usually prefill), the keys and values of every head are recomputed from the cached latent vectors c. With absorb = True (usually decode), the queries are multiplied by W_uk, the attention runs directly over the cached latent vectors, and W_uv is applied to its output. Both panels show a whole sequence; in decode, the single new token attends to all the cached latent vectors, with no masked cells.
 
-The following code implements MLA, without RoPE and its separate position key. With absorption (`absorb = True`), attention runs directly over the latent vectors, and gives the same output as recomputing the keys and values of every head (`absorb = False`):
+The following code implements MLA, without RoPE and its separate position key. First, the module computes the queries, and compresses the input into the latent vectors, which are the only tensors of the KV cache. Without absorption (`absorb = False`), it then recomputes the keys and values of every head from the latent vectors. With absorption (`absorb = True`), it multiplies the queries by the key up-projection, attends directly over the latent vectors, and applies the value up-projection to the output, which gives the same result:
 
 ```python
 class MLA(nn.Module):
@@ -281,22 +310,24 @@ class MLA(nn.Module):
 
 ## DeepSeek-V3.2: DeepSeek Sparse Attention
 
-[DeepSeek-V3.2](https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp) keeps MLA and adds DeepSeek Sparse Attention (DSA). For each query token $$t$$, a small *lightning indexer* scores every past token $$s$$:
+[DeepSeek-V3.2](https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp) (2025) keeps MLA and adds DeepSeek Sparse Attention (DSA). For each query token $$t$$, a small **lightning indexer** scores every past token $$s$$, with an index score given by:
 
 $$
-I_{t,s} = \sum_{j} w_{t,j} \cdot \text{ReLU}\left( q_{t,j} \cdot k_s \right)
+I_{t,s} = \sum_{j} w^I_{t,j} \cdot \text{ReLU}\left( q^I_{t,j} \cdot k^I_s \right)
 $$
 
-where $$q_{t,j}$$ are the queries of the indexer heads $$j$$ and $$w_{t,j}$$ their weights, both computed from the query token, and $$k_s$$ is a single indexer key per token. The indexer runs in FP8 and is much cheaper than the main attention. The main attention then reads only the 2,048 tokens with the highest index scores, the same tokens for all heads, so its cost per query stops growing with the context (only the cheap indexer still scores every past token).
+where $$q^I_{t,j}$$ are the queries of the indexer heads $$j$$ and $$w^I_{t,j}$$ their weights, both computed from the query token, and $$k^I_s$$ is a single indexer key per token. The indexer runs in FP8 and is much cheaper than the main attention. The main attention then reads only the 2,048 tokens with the highest index scores, the same tokens for all heads. Thus, its cost per query stops growing with the context, and only the cheap indexer still scores every past token.
 
-DSA was added to an already trained model, in two stages. During a short *dense warm-up*, the model keeps its dense attention and only the indexer is trained, to imitate the attention distribution of its layer (the attention weights summed over the heads and normalized) with a [KL-divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) loss. Then the whole model is trained with sparse attention, and the input of the indexer is detached from the rest of the model, so the indexer learns only from its own loss.
+DSA was added to an already trained model, in two stages. First, during a short *dense warm-up*, the model keeps its dense attention, and only the indexer is trained to imitate the attention distribution of its layer (the attention weights summed over the heads and normalized), with a [KL-divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) loss. Then, the whole model is trained with sparse attention, and the input of the indexer is detached from the rest of the model, so that the indexer learns only from its own loss.
 
-With a KV cache, the indexer key of every token is cached too. Index scores are often tied, since the ReLU outputs many zeros, so the selection below uses a [stable sort](https://en.wikipedia.org/wiki/Sorting_algorithm#Stability), which breaks ties the same way whether the tokens are processed together or one at a time: decoding with a KV cache then gives the same result as processing the whole sequence.
+With a KV cache, the indexer key of every token is cached too. Index scores are often tied, since the ReLU outputs many zeros, so the selection uses a [stable sort](https://en.wikipedia.org/wiki/Sorting_algorithm#Stability), which breaks ties the same way whether the tokens are processed together or one at a time. Decoding with a KV cache then gives the same result as processing the whole sequence at once. The following picture illustrates DSA with $$H = 4$$ heads, where each query attends only to the 3 tokens with the highest index scores:
 
 {: .picture}
 <img width="97.3%" height="97.3%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
 
-The following code adds DeepSeek Sparse Attention to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained multi-head attention module, and adds an indexer. During the dense warm-up (`dense = True`), the queries attend to all past tokens and the module computes `indexer_loss`, which is backpropagated alone to train the indexer; afterwards, each query attends only to the `top_k` past tokens with the highest index scores:
+The following code adds DSA to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained MHA module, and adds the indexer. First, `lightning_index_scores` computes the index scores of the formula above, `top_k_indices` selects the highest ones with a stable sort, and `indexer_loss` computes the loss of the warm-up.
+
+During the dense warm-up (`dense = True`), the queries attend to all past tokens, and the module computes `indexer_loss`, which is backpropagated alone to train the indexer. Afterwards, each query attends only to the `top_k` past tokens with the highest index scores; for simplicity, the code trains the indexer only during the warm-up. Note that the selection is applied as a mask over all the scores: the code shows the effect of DSA on quality, but its speedup needs a kernel that reads only the selected keys and values:
 
 ```python
 def lightning_index_scores(q, w, k):
@@ -395,10 +426,14 @@ class DSA(nn.Module):
 
 [DeepSeek-V4](https://arxiv.org/abs/2606.19348) (2026) supports a context of one million tokens. It replaces MLA with two types of attention that compress the KV cache along the sequence, interleaved across the layers ([Hugging Face's implementation](https://huggingface.co/docs/transformers/en/model_doc/deepseek_v4) documents the details):
 
-- **Compressed Sparse Attention (CSA)** compresses the keys and values of every $$m = 4$$ tokens into a single entry. Each entry is a sum of per-token vectors, weighted by a softmax over the tokens, computed separately for every channel. Each entry also covers the previous block, so the windows overlap. A lightning indexer, as in DSA but over the compressed entries, then selects the top entries of each query (512 in the default configuration).
-- **Heavily Compressed Attention (HCA)** compresses every $$m' = 128$$ tokens into a single entry, without overlap, and attends to all the entries: the compressed sequence is short enough for dense attention.
+- **Compressed Sparse Attention (CSA)** compresses the keys and values of every $$m = 4$$ tokens into a single entry. Each entry is a sum of per-token vectors, weighted by a softmax over the tokens, computed separately for every channel, and it also covers the previous block, so the windows overlap. A lightning indexer, as in DSA but over the compressed entries, then selects the top entries of each query: 512 in DeepSeek-V4-Flash, and 1,024 in DeepSeek-V4-Pro.
+- **Heavily Compressed Attention (HCA)** compresses every $$m' = 128$$ tokens into a single entry, without overlap, and attends to all the entries, as the compressed sequence is short enough for dense attention.
 
-Both use multi-query attention with a single key-value vector per entry, shared by all the query heads and used both as the key and as the value. A query only sees the entries of blocks that ended before its own block (the entry of its own block may also cover later tokens), so every layer also attends to the uncompressed vectors of the last 128 tokens: a sliding window that keeps the local details. A few other details complete the design: low-rank queries whose latent vector is shared with the indexer, RMSNorm on the queries and the entries to keep the attention logits from exploding, an *attention sink* per head (a learned logit that lets a head attend to almost nothing), and a grouped output projection. Serving engines must manage a different cache in every layer: the compressed entries, the indexer keys, the sliding window, and the tokens of the last, incomplete block. With a context of one million tokens, DeepSeek-V4-Pro needs only 27% of the per-token inference FLOPs and 10% of the KV cache of DeepSeek-V3.2.
+Both use multi-query attention with a single key-value vector per entry, shared by all the query heads and used both as the key and as the value. A query only sees the entries of the blocks before its own block, as the entry of its own block may also cover later tokens. Therefore, every layer also attends to the uncompressed vectors of the last 128 tokens, a sliding window that keeps the local details.
+
+A few other details complete the design: low-rank queries whose latent vector is shared with the indexer, and RMSNorm on the queries and the entries, which keeps the attention logits from exploding. Each head also has an attention sink (a learned logit that lets it attend to almost nothing), and the output projection is grouped. As a side note, serving engines must manage a different cache in every layer: the compressed entries, the indexer keys, the sliding window, and the tokens of the last, incomplete block.
+
+With a context of one million tokens, DeepSeek-V4-Pro needs only 27% of the per-token inference FLOPs and 10% of the KV cache of DeepSeek-V3.2. The following table compares the attention of the DeepSeek models:
 
 | Model | Attention | KV cache per layer | Each query attends to |
 |---|---|---|---|
@@ -406,6 +441,8 @@ Both use multi-query attention with a single key-value vector per entry, shared 
 | DeepSeek-V3.2 | MLA and DSA | 576 values and an indexer key per token | the top 2,048 past tokens |
 | DeepSeek-V4, CSA layers | compression by 4, then top-k | an entry and an indexer key every 4 tokens, plus the last 128 tokens | the top-k entries and the last 128 tokens |
 | DeepSeek-V4, HCA layers | compression by 128 | an entry every 128 tokens, plus the last 128 tokens | all the entries and the last 128 tokens |
+
+The following pictures illustrate CSA and HCA on short sequences, for the last query of each sequence:
 
 {: .picture}
 <img width="81%" height="81%" src="{{ site.assets }}/inference/imgs/csa.svg"/>
@@ -419,7 +456,11 @@ Compressed Sparse Attention (CSA) for query 15, with S = 16 tokens, blocks of m 
 {: .caption}
 Heavily Compressed Attention (HCA) for query 23, with S = 24 tokens, blocks of m' = 8 tokens, no overlap, and a window of the last 8 tokens. Entries 0 and 1 cover tokens 0 to 15, and the window covers tokens 16 to 23, the block of query 23, whose entry 2 (dark grey) is not visible to it. Inspired by: [DeepSeek-V4: Towards Highly Efficient Million-Token Context Intelligence](https://arxiv.org/abs/2606.19348)
 
-The following code implements both attention types in a single module, CSA when `top_k` is given and HCA otherwise, with the overlapping compression, the lightning indexer, the shared key-value multi-query attention, the sliding window, the low-rank queries, RMSNorm, the attention sink and the grouped output projection. A model alternates CSA and HCA across its blocks. The module expects positional information in its input, such as learned positional embeddings, so it omits rotary embeddings. As in DSA, the indexer receives an input detached from the rest of the model, and learns to imitate the attention over the compressed entries with the KL-divergence loss `indexer_loss`, which is added to the training loss. These attention types change the architecture, so a model that uses them is trained from scratch. Unlike the other modules, it has no KV cache (whose four parts are listed above), and processes whole sequences, as in training and prefill:
+The following code implements both attention types in a single module, CSA when `top_k` is given and HCA otherwise. First, `Compressor` compresses the hidden states of every $$m$$ tokens into one entry, with the overlap of CSA. Then, `CompressedAttention` masks the entries that each query cannot see, keeps the `top_k` entries of the lightning indexer for CSA, and attends to the entries and to the window together with the attention sink.
+
+A model alternates CSA and HCA across its blocks. The module expects positional information in its input, such as learned positional embeddings, so it omits rotary embeddings. As in DSA, the indexer receives an input detached from the rest of the model, and learns to imitate the attention over the compressed entries with the KL-divergence loss `indexer_loss`, which is added to the training loss.
+
+These attention types change the architecture, so a model that uses them is trained from scratch. Unlike the other modules of this post, this one has no KV cache, whose four parts are listed above, and processes whole sequences, as in training and prefill:
 
 ```python
 # lightning_index_scores, top_k_indices and indexer_loss are defined in the DSA code above
@@ -542,6 +583,8 @@ class CompressedAttention(nn.Module):
 ```
 
 ## Summary of attention methods
+
+The following table compares the methods of this post:
 
 | Method | Exact? | Needs training? | What it reduces | Best for |
 |---|---|---|---|---|
