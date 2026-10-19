@@ -13,12 +13,12 @@
 // --label-padding-x is the space left and right of the text
 .post-label {
   @extend %box;
-  --label-padding: 7.5px;  // 25px tall
-  --label-padding-x: 10px;
+  --label-padding: 6.5px;  // 22px tall
+  --label-padding-x: 9px;
   display: inline-block;
   padding: calc(var(--label-padding) - 1px) var(--label-padding-x) calc(var(--label-padding) - 3px);
   font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   line-height: 1;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -91,8 +91,6 @@ a.post-label--link:focus-visible {
 
 .label-table .post-label {
   --label-padding: 4px;  // 17px tall, so that a row with a label is no taller than one without
-  --label-padding-x: 9px;
-  font-size: 0.7rem;
   vertical-align: middle;
 }
 
