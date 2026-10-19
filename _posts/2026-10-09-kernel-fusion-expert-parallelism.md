@@ -9,7 +9,7 @@ A [Mixture-of-Experts]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-exper
 
 The usual remedies are of two kinds: scheduling the layer in chunks, so that the communication of one chunk overlaps the computation of another, and fusing the communication into the compute kernels, so that the arrival of a chunk starts its matrix multiplication. However, both run the transfers on the accelerator's own compute units, as a transfer must be issued by *some* execution unit of the device. A kernel that communicates must therefore reserve some of its units for it: thread blocks in COMET, and a configurable number of streaming multiprocessors (SMs) in DeepSeek's [DeepEP](https://github.com/deepseek-ai/DeepEP) library. As an example, [DeepSeek-V3](https://arxiv.org/abs/2412.19437) gives about 15% of the SMs of each GPU to communication, and calls for hardware that takes this work off them. In practice, every unit given to communication is taken from the experts.
 
-This post describes a kernel that takes the transfers off the compute units. It fuses the whole MoE layer into a single kernel of eight stages, pipelines the stages over microbatches so that three classes of hardware units work at the same time, and moves the two collectives into an **in-network computing** (INC) element, i.e. a network switch that computes. The post then covers the two collectives that this element runs, their non-collective variants, the one-sided operations that implement them, and the results on a node of four accelerators.
+This post describes a kernel that takes the transfers off the compute units. It fuses the whole MoE layer into a single kernel of eight stages, pipelines the stages over microbatches so that three classes of hardware units work at the same time, and moves the two collectives into an **in-network computing** (INC) element, i.e. a network switch that computes. The post then covers the two collectives that this element runs, their partial collective forms, the one-sided operations that implement them, and the results on a node of four accelerators.
 
 ## Expert parallelism: dispatch and combine
 
@@ -82,7 +82,7 @@ The following picture follows one microbatch through the memories that an MoE la
 <img width="75%" height="75%" src="{{ site.assets }}/inference/imgs/ep_data_movement.svg"/>
 
 {: .caption}
-Data movement for one microbatch. **Left:** Baseline, one kernel per stage. **Right:** MegaKernel+INC, one fused kernel with the INC transfers. Each row is a stage (colored box) and the tensor it stores in global memory (white box), and $$\star$$ marks the symmetric heap. Dashed lines mark kernel boundaries, and the brace one kernel launch. Each INC stage runs as the collective or the non-collective operation.
+Data movement for one microbatch. **Left:** Baseline, one kernel per stage. **Right:** MegaKernel+INC, one fused kernel with the INC transfers. Each row is a stage (colored box) and the tensor it stores in global memory (white box), and $$\star$$ marks the symmetric heap. Dashed lines mark kernel boundaries, and the brace one kernel launch. Each INC stage runs as the collective or the partial collective operation.
 
 Three implementations are compared in this post, from no fusion to fusion with INC:
 
@@ -150,9 +150,9 @@ The combine pulls, because pulling lets the element add each partial result to t
 
 The cost is that the element starts transfers itself, rather than being a purely reactive switch, which departs from SHArP and from other in-switch designs. This is the price of fusing a reduction that is permuted, rather than symmetric.
 
-## Collective or non-collective
+## Collective or partial collective
 
-All-to-All-Unique and All-to-All-Reduce are collectives: they are asynchronous on the compute ranks, but synchronous on the element, which delivers nothing until all $$W$$ ranks have arrived. Their non-collective forms are partial collectives over the $$d$$ ranks that a microbatch selects:
+All-to-All-Unique and All-to-All-Reduce are collectives: they are asynchronous on the compute ranks, but synchronous on the element, which delivers nothing until all $$W$$ ranks have arrived. Their **partial collective** forms span only the $$d$$ ranks that a microbatch selects:
 
 - **One-to-Many-Unique** relays the tokens of each sender, still sent once, as soon as they land, without waiting for the other senders;
 - **Many-to-One-Reduce** lets the owner, once signalled by its $$d$$ expert ranks that their outputs are ready ($$r$$), name them to the element ($$s$$), which relays the request to each of them ($$s$$), pulls their partial results, and returns the sum to the owner alone.
@@ -163,7 +163,7 @@ The two $$s$$ steps carry the identity of the owner to its expert ranks, so that
 <img width="75.3%" height="75.3%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
 
 {: .caption}
-The non-collective operations, One-to-Many-Unique (left) and Many-to-One-Reduce (right), with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. The INC element relays the tokens of each sender as they land. $$P_0$$ and $$P_1$$ signal $$P_2$$ that their outputs are ready (dashed), $$P_2$$ signals the element $$s^{01}_C$$, naming them, and the element multicasts it to each, pulls $$\sigma^0_C$$ and $$\sigma^1_C$$, and returns their sum $$\Sigma_C$$ to $$P_2$$ alone. The element holds the data of one token rank at a time, and no transfer waits for another token rank.
+The partial collective operations, One-to-Many-Unique (left) and Many-to-One-Reduce (right), with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. The INC element relays the tokens of each sender as they land. $$P_0$$ and $$P_1$$ signal $$P_2$$ that their outputs are ready (dashed), $$P_2$$ signals the element $$s^{01}_C$$, naming them, and the element multicasts it to each, pulls $$\sigma^0_C$$ and $$\sigma^1_C$$, and returns their sum $$\Sigma_C$$ to $$P_2$$ alone. The element holds the data of one token rank at a time, and no transfer waits for another token rank.
 
 The timelines below follow token C through both forms, with the operations of each device:
 
@@ -173,7 +173,7 @@ The timelines below follow token C through both forms, with the operations of ea
 {: .caption}
 The dispatch and combine of token C, owned by $$P_2$$. **Left:** All-to-All-Unique and All-to-All-Reduce. **Right:** One-to-Many-Unique and Many-to-One-Reduce. $$P_2$$ sends $$C_{01}$$, i.e. token C for the expert ranks $$P_0$$ and $$P_1$$, which the INC element sends on as $$C_0$$ to $$P_0$$ and $$C_1$$ to $$P_1$$ once all ranks have arrived (left), or as soon as it lands (right). The element pulls the partial sums $$\sigma^0_C$$ and $$\sigma^1_C$$ as each rank signals it $$r^0_C$$ or $$r^1_C$$ (left), or once $$P_2$$, signalled $$r^0_C$$ and $$r^1_C$$, has signalled it $$s^{01}_C$$, which it relays as $$s^0_C$$ and $$s^1_C$$ (right), and sends their sum $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls, and dotted arrows are flags raised with `signal`.
 
-The collective form takes fewer steps and relays: its combine takes three steps where the non-collective one takes five, and one relay per link and direction where the non-collective one takes up to $$W$$, plus $$\mathcal{O}(W^2)$$ signals. However, it pays in memory and latency: until the last rank arrives, the element holds the data of every rank, $$W$$ times what the non-collective form holds, and it waits for the slowest rank, which the non-collective form never does.
+The collective form takes fewer steps and relays: its combine takes three steps where the partial collective one takes five, and one relay per link and direction where the partial collective one takes up to $$W$$, plus $$\mathcal{O}(W^2)$$ signals. However, it pays in memory and latency: until the last rank arrives, the element holds the data of every rank, $$W$$ times what the partial collective form holds, and it waits for the slowest rank, which the partial collective form never does.
 
 The routing density decides which form to use. Under uniform routing, each of the $$k\,m_b$$ expert choices of a microbatch misses a given rank with probability $$1-1/W$$, so the number of distinct ranks that the microbatch selects is approximately given by:
 
@@ -181,7 +181,7 @@ $$
 d \approx W \left( 1 - \left( 1 - \frac{1}{W} \right)^{k\, m_b} \right)
 $$
 
-where $$d$$ tends to $$W$$ once $$k\,m_b \gg W$$. The join of the collective form then waits for no rank that the owner would not wait for anyway, and during prefill it hides behind the matrix units. Thus, the collective form wins and is the default: at $$k=8$$ and $$W=4$$, even a single token selects 3.6 ranks on average. Sparse routing favors the non-collective form: with the 256 experts and $$k=8$$ of DeepSeek-V3 on 64 ranks, a decode microbatch of 4 tokens selects about 25 ranks, yet the collective form makes each rank wait for all 64. The non-collective form also wins with stragglers, with a switch of little memory, and when attention and experts run on separate ranks, as in [MegaScale-Infer](https://arxiv.org/abs/2504.02263), so that only some ranks send.
+where $$d$$ tends to $$W$$ once $$k\,m_b \gg W$$. The join of the collective form then waits for no rank that the owner would not wait for anyway, and during prefill it hides behind the matrix units. Thus, the collective form wins and is the default: at $$k=8$$ and $$W=4$$, even a single token selects 3.6 ranks on average. Sparse routing favors the partial collective form: with the 256 experts and $$k=8$$ of DeepSeek-V3 on 64 ranks, a decode microbatch of 4 tokens selects about 25 ranks, yet the collective form makes each rank wait for all 64. The partial collective form also wins with stragglers, with a switch of little memory, and when attention and experts run on separate ranks, as in [MegaScale-Infer](https://arxiv.org/abs/2504.02263), so that only some ranks send.
 
 ## The four communication models
 
@@ -192,19 +192,17 @@ The choice of backend (AllGather-ReduceScatter or All-to-All) and the choice of 
 - **All-to-All → All-to-All**: the all-to-all of the first picture of this post, where every rank pushes to each rank only the tokens bound for its experts, $$\emptyset$$ where there are none, and the combine pushes the outputs back to their owners.
 - **INC All-to-All-Unique → All-to-All-Reduce**: the collectives of this post, which send each expert rank only its tokens, and return to each owner only the outputs of its tokens.
 
-The following pictures illustrate the four models, and the non-collective form of the last one:
+The following picture illustrates the four models, the partial collective form of the last one, and the routing table of the example:
 
 {: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_communication_models.svg"/>
-<br/>
-<img width="75.3%" height="75.3%" src="{{ site.assets }}/inference/imgs/ep_communication_models_noncollective.svg"/>
 
 {: .caption}
-**Top:** the four communication models, with AllGather-ReduceScatter in the upper row and All-to-All in the lower row, without INC on the left and with INC on the right. **Bottom:** the non-collective form of INC All-to-All-Unique → All-to-All-Reduce. $$W=3$$ ranks $$P_0$$ to $$P_2$$ hold $$T=1$$ token and one expert each, and each rank is the token rank of its token and the expert rank of its expert. A to C are the input tokens, $$A_{02}$$ token A for the expert ranks $$P_0$$ and $$P_2$$, $$E_y$$(AB) the expert of $$P_y$$ processing tokens A and B, $$\emptyset$$ a header-only packet or a token without output, and $$\Sigma_t$$ the final output of token $$t$$. Below each model, the picture lists its steps in order, as relays per link or as signals. In the non-collective form, token C of $$P_2$$ and every rank and expert on its path are in black, and the others in grey.
+The four communication models, with AllGather-ReduceScatter in the upper row and All-to-All in the middle row, without INC on the left and with INC on the right. **Bottom right:** the partial collective form of INC All-to-All-Unique → All-to-All-Reduce, with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. **Bottom left:** the routing table of the example, as in the first picture of this post. $$W=3$$ ranks $$P_0$$ to $$P_2$$ hold $$T=1$$ token and one expert each, and each rank is the token rank of its token and the expert rank of its expert. A to C are the input tokens, $$A_{02}$$ token A for the expert ranks $$P_0$$ and $$P_2$$, $$E_y$$(AB) the expert of $$P_y$$ processing tokens A and B, $$\emptyset$$ a header-only packet or a token without output, and $$\Sigma_t$$ the final output of token $$t$$. Below each model, the picture lists its steps in order, as pushes or pulls per link, where a signal-pull is a pull after the ready signal of the rank, or as signals.
 
 ## One-sided operations of the dispatch and combine
 
-The following tables list the one-sided operations per microbatch on $$W$$ compute ranks, through the relay switch of MegaKernel, and through the INC element of MegaKernel+INC, collective or not. $$P_x$$ is the owner of a token and $$P_y$$ one of its expert ranks; in the non-collective operations, $$P_y$$ is one of the $$d_x \le \min(k\,m_b, W)$$ ranks that the microbatch of $$P_x$$ selects, and $$\sum d$$ is the sum of $$d_x$$ over the $$W$$ owners, at most $$W^2$$. Steps are the transfers on the critical path, from the data being ready to its delivery, and relays are the packets that cross the switch.
+The following tables list the one-sided operations per microbatch on $$W$$ compute ranks, through the relay switch of MegaKernel, and through the INC element of MegaKernel+INC, collective or partial collective. $$P_x$$ is the owner of a token and $$P_y$$ one of its expert ranks; in the partial collective operations, $$P_y$$ is one of the $$d_x \le \min(k\,m_b, W)$$ ranks that the microbatch of $$P_x$$ selects, and $$\sum d$$ is the sum of $$d_x$$ over the $$W$$ owners, at most $$W^2$$. Steps are the transfers on the critical path, from the data being ready to its delivery, and relays are the packets that cross the switch.
 
 The dispatch, from $$P_x$$ to $$P_y$$, follows the push model:
 
@@ -230,7 +228,7 @@ The combine, from $$P_y$$ to $$P_x$$, follows the push model without INC and the
 | Switch holds | one packet | the sums of every owner | the sums of one owner |
 | Switch waits for | none | all $$W$$ ranks | none |
 
-On the non-collective dispatch, $$P_y$$ keeps one slot and one flag per sender, so that packets from different senders never collide. As $$P_y$$ cannot know how many senders will select it, the join moves from the microbatch to the layer: each sender marks its last microbatch, and once the element has relayed the last microbatch of every sender, it raises a layer-done flag on every rank, i.e. the $$W$$ signals per layer of the table. On the non-collective combine, each $$P_y$$ signals $$P_x$$ through the switch, which forwards the signal unprocessed, and the request of $$P_x$$ to the element carries neither a payload nor addresses: the element reuses the counts of the dispatch, and every rank keeps the sums of each owner at the same offset of its symmetric heap. Every partial result that a request names is ready when the request arrives, so no `get` waits on a straggler.
+On the partial collective dispatch, $$P_y$$ keeps one slot and one flag per sender, so that packets from different senders never collide. As $$P_y$$ cannot know how many senders will select it, the join moves from the microbatch to the layer: each sender marks its last microbatch, and once the element has relayed the last microbatch of every sender, it raises a layer-done flag on every rank, i.e. the $$W$$ signals per layer of the table. On the partial collective combine, each $$P_y$$ signals $$P_x$$ through the switch, which forwards the signal unprocessed, and the request of $$P_x$$ to the element carries neither a payload nor addresses: the element reuses the counts of the dispatch, and every rank keeps the sums of each owner at the same offset of its symmetric heap. Every partial result that a request names is ready when the request arrives, so no `get` waits on a straggler.
 
 Every flag is a 32-bit integer, into which each sender writes the *magic* of its step, a value that strictly increases from step to step, so that a flag left from an earlier step never reads as an arrival. Slots are indexed by the microbatch modulo the pipeline depth, and a slot is written again only after the combine of the microbatch that used it has completed, so no further flow control is needed.
 

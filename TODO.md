@@ -771,28 +771,27 @@ that is not wrong.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
-- The twelve `inference/imgs/ep_*.svg` pictures are copies of the figures of the paper (its
-  repository's `imgs/`, commit c867dee), not yet redrawn. The TikZ exports (`ep_pipeline.svg`, `ep_stages.svg`, `ep_results.svg`,
+- The eleven `inference/imgs/ep_*.svg` pictures are copies of the figures of the paper (its
+  repository's `imgs/`, commit 7d15d86), not yet redrawn. The TikZ exports (`ep_pipeline.svg`, `ep_stages.svg`, `ep_results.svg`,
   `ep_data_movement.svg`) have 4 to 6 pt text at their natural size, and the post shows them at 75% to 100% of the
   page, with text of 8 to 13 px. `ep_communication_models.svg` is 1019 px wide, wider than a post, and is shown at
-  100%, i.e. at 86% of its size. Fix: redraw all twelve in a "kernel-fusion-expert-parallelism" tab of
+  100%, i.e. at 86% of its size. Fix: redraw all eleven in a "kernel-fusion-expert-parallelism" tab of
   `assets/inference/inference.drawio`, from the paper's `imgs/moe_dispatch_and_combine.drawio` and TikZ sources,
   with the sizes and fonts of CLAUDE.md (Pictures, sections 3 and 4); the four models of
   `ep_communication_models.svg` fit 880 px in one column.
-- Five copies name the ranks after the hardware of the paper: "Token NPU" and "Expert NPU" in `ep_all_to_all.svg`,
-  `ep_all_to_all_inc.svg`, `ep_one_to_many_inc.svg`, `ep_communication_models.svg` and
-  `ep_communication_models_noncollective.svg`, and "collective push, NPU reduce" in `ep_communication_models.svg`. The
-  kernel fusion posts name no hardware of the papers (Writing rules, "The author's papers"), and the captions say
-  "rank". Fix: "Token rank", "Expert rank" and "rank reduce".
+- Four copies name the ranks after the hardware of the paper: "Token NPU" and "Expert NPU" in `ep_all_to_all.svg`,
+  `ep_all_to_all_inc.svg`, `ep_one_to_many_inc.svg` and `ep_communication_models.svg`, and "collective push, NPU
+  reduce" in `ep_communication_models.svg`. The kernel fusion posts name no hardware of the papers (Writing rules,
+  "The author's papers"), and the captions say "rank". Fix: "Token rank", "Expert rank" and "rank reduce".
 - `inference/imgs/ep_stages.svg` draws the eight stages on the time axis of the decode step, whose costs are
   placeholders, not measurements, as the caption says. Fix: remove the time axis until the decode step is measured,
   or redraw it with the measured costs.
 - `inference/imgs/ep_results.svg`: the right panel plots decode times that are placeholders, not measurements, as the
   caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
-- Signals are dashed arrows in `ep_all_to_all_inc.svg`, `ep_one_to_many_inc.svg`, `ep_communication_models.svg` and
-  `ep_communication_models_noncollective.svg`, and dotted arrows in `ep_timeline.svg` and
-  `ep_timeline_noncollective.svg`. The paper calls them dotted in all its captions; the captions of the post follow
-  each picture. Fix at the redraw: dotted signals (dashPattern=1 2) in every picture, and "dotted" in every caption.
+- Signals are dashed arrows in `ep_all_to_all_inc.svg`, `ep_one_to_many_inc.svg` and `ep_communication_models.svg`,
+  and dotted arrows in `ep_timeline.svg` and `ep_timeline_noncollective.svg`. The paper calls them dotted in all its
+  captions; the captions of the post follow each picture. Fix at the redraw: dotted signals (dashPattern=1 2) in every
+  picture, and "dotted" in every caption.
 - The captions have no credit to the post's paper, whose figures the pictures copy. The paper is the author's own and
   not public yet. Fix: "Source: [MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and
   In-Network Compute](link)" once the paper has a public link, and "Adapted from:" after the redraw; the user
@@ -1289,7 +1288,7 @@ Content problems that need the author's decision, such as overlap between posts.
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
 - The paper has not measured the decode step (the right panel of its runtime figure, and its decode timeline), the
-  non-collective operations (its table of collective and non-collective results) and the number of microbatches in
+  partial collective operations (its table of collective and partial collective results) and the number of microbatches in
   flight with the memory each one takes. The post shows the two decode placeholders with a note in their captions,
   and leaves the rest out. Fix: add these results to the post once the paper has them.
 
