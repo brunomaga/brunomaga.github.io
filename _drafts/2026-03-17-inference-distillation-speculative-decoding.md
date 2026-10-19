@@ -17,7 +17,7 @@ As a quick example, take a two-label (dog, cat) classification task. An image of
 There are several categories of KD methods. The loss can match the soft labels of the student and the teacher, as in the example above, or intermediate representations such as feature maps. The student can be a scaled-down version of the teacher's architecture, or a different one. In **offline distillation**, the teacher is trained first and then frozen while the student learns from it; in **online distillation**, both are trained simultaneously. A single teacher or an [ensemble](https://en.wikipedia.org/wiki/Ensemble_learning) of teachers can be used.
 
 {: .picture}
-<img width="80.9%" height="80.9%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
+<img width="80.8%" height="80.8%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
 
 {: .caption}
 Illustration of knowledge distillation (a) with a pre-trained teacher model (offline): step 1 trains the teacher, and step 2 distills its knowledge into the student; and (b) while training the teacher model simultaneously (online). Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/)
@@ -236,7 +236,7 @@ def accept_sampling(drafts, p, q):
 [Prompt lookup decoding](https://github.com/apoorvumang/prompt-lookup-decoding) needs no draft model at all. It takes the last few generated tokens (an [n-gram](https://en.wikipedia.org/wiki/N-gram)), searches for the same n-gram earlier in the prompt or in the generated text, and proposes the tokens that followed it as drafts; the verification is the same as above. It costs almost nothing, and gives large speedups when the output copies from the input, as in summarization, code editing, question answering over documents, or rewriting a previous answer. Related methods draft from other sources: [lookahead decoding](https://arxiv.org/abs/2402.02057) collects n-grams from [Jacobi iterations](https://en.wikipedia.org/wiki/Jacobi_method) of the model itself, and [REST](https://arxiv.org/abs/2311.08252) retrieves continuations from a datastore of text.
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
+<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
 
 The following code implements prompt lookup decoding. It reuses the verification loop of speculative decoding, with a different source of drafts:
 
@@ -573,7 +573,7 @@ With $$D$$ modules, the main model predicts $$t_{i+1}$$; module 1 combines its h
 The authors report better results on most benchmarks, and suggest that MTP may make the model pre-plan its representations for better predictions of future tokens. At inference, the module can be discarded, so that the model runs as a regular next-token model, or used as a draft: the second predicted token is accepted 85-90% of the time, giving 1.8 times more tokens per second. Note that an MTP module is very close to an EAGLE draft layer: both combine the features of the target with the embedding of the next token, run one transformer layer, and predict with the target's output head. The difference is that the MTP module is trained together with the model, during pre-training.
 
 {: .picture}
-<img width="96.9%" height="96.9%" src="{{ site.assets }}/inference/imgs/mtp_sequential.svg"/>
+<img width="96.8%" height="96.8%" src="{{ site.assets }}/inference/imgs/mtp_sequential.svg"/>
 
 {: .caption}
 MTP module $$k$$ combines the hidden state of depth $$k - 1$$ with the embeddings of the input tokens shifted by $$k$$, and predicts the token $$k + 1$$ positions ahead, through the shared output head. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)

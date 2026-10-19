@@ -16,7 +16,7 @@ $$
 where $$Q$$, $$K$$ and $$V$$ are the queries, keys and values of the head, $$h$$ is the head size, and the [softmax](https://en.wikipedia.org/wiki/Softmax_function) turns each row of scores into weights that sum to one. The following picture illustrates this computation for $$S_q$$ queries and $$S_k$$ keys, with the names used in the code below:
 
 {: .picture}
-<img width="68.7%" height="68.7%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
+<img width="68.6%" height="68.6%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
 
 The following code implements this attention. The function `scaled_dot_product_attention` takes an optional mask of the keys that each query can see, and `causal_mask` builds the mask of a decoder, where each token sees only itself and the previous tokens. Most modules of this post reuse both functions:
 
@@ -75,17 +75,17 @@ Decode reads the whole KV cache at every step, so a smaller KV cache means faste
 **Multi-Head Attention** ([MHA](https://arxiv.org/abs/1706.03762)), the attention of the original Transformer, keeps one query, one key and one value per head. The following picture illustrates it with $$H = 4$$ heads, one color per head, where the keys and values of all heads form the KV cache:
 
 {: .picture}
-<img width="97.5%" height="97.5%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
+<img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/mha.svg"/>
 
 In 2019, Noam Shazeer proposed **Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)), which keeps one query per head, but all heads share a single key head and a single value head. The KV cache shrinks by a factor equal to the number of heads, at some cost in quality. The following picture shows the same example with MQA:
 
 {: .picture}
-<img width="97.7%" height="97.7%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
+<img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
 
 **Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)), proposed in 2023, is the middle ground, and most current models use it. The $$H$$ heads are split into $$G$$ groups, and the heads of a group share one key head and one value head, so the cache shrinks by a factor $$H / G$$. Thus, GQA becomes MHA when $$G = H$$, and MQA when $$G = 1$$. The following picture illustrates GQA with $$H = 4$$ heads in $$G = 2$$ groups:
 
 {: .picture}
-<img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
+<img width="97.5%" height="97.5%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
 
 A trained MHA model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute. Note that the savings of MQA and GQA appear only when there is a KV cache to read during decode: without a cache, GQA only saves a little compute in the key and value projections.
 

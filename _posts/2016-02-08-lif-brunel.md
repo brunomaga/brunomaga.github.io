@@ -15,7 +15,7 @@ tags: ["spiking neurons", "LIF", "Brunel network", "simulation"]
 The Leaky Integrate-and-Fire [neuron model](https://en.wikipedia.org/wiki/Biological_neuron_model) (LIF, first described in 1907 by [Louis Lapicque](https://en.wikipedia.org/wiki/Louis_Lapicque)) simplifies the complexity of neurons and assumes the neuron structure to be a single leaky compartment (*point neuron model*) with a membrane described by an [RC circuit](https://en.wikipedia.org/wiki/RC_circuit), as:
 
 {: .picture}
-<img width="22.6%" height="22.6%" src="{{ site.assets }}/lif-brunel/rc.svg">
+<img width="22.5%" height="22.5%" src="{{ site.assets }}/lif-brunel/rc.svg">
 
 {: .caption}
 A neuron receives an input current $$I(t)$$. Its membrane acts as a capacitor $$C$$ in parallel with a resistor $$R$$, in series with a battery of potential $$u_{\text{rest}}$$. Adapted from: [Neuronal Dynamics, Fig. 1.6](https://neuronaldynamics.epfl.ch/online/Ch1.S3.html)
@@ -53,7 +53,7 @@ The neuron's potential is considered to rise steeply when there is an input curr
 To simulate the [Action Potential](https://en.wikipedia.org/wiki/Action_potential) (or *spike*) of biological neurons, the model assumes that each neuron has a certain *fixed* firing threshold. When the potential reaches the firing threshold, the neuron *spikes* (or *fires*), and its potential immediately drops to a reset potential. Axonal branches of neurons are simulated by a **synaptic delay** that regulates the time a spike signal takes to reach the connected post-synaptic neurons. This propagation of spike and current, which dictates the synaptic delay, is illustrated in the following picture:
 
 {: .picture}
-<img width="41.9%" height="41.9%" src="{{ site.assets }}/lif-brunel/action_potential.svg">
+<img width="45.2%" height="45.2%" src="{{ site.assets }}/lif-brunel/action_potential.svg">
 
 {: .caption}
 An action potential travelling along an axon, in the direction of the arrow. The membrane is positive outside and negative inside, except at the action potential, where the polarity is reversed. Adapted from: [Action Potential.gif, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Action_Potential.gif)
