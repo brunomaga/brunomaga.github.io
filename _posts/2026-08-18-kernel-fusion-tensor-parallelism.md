@@ -5,7 +5,7 @@ categories: ["Efficient Inference"]
 tags: ["LLM", "kernel fusion", "tensor parallelism", "Megatron-LM", "in-network computing", "collectives", "Mixture-of-Experts", "expert sharding"]
 ---
 
-In 2019, the paper [Megatron-LM](https://arxiv.org/abs/1909.08053) showed how to split the layers of a Transformer across GPUs with [tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}), with a single collective communication per pair of linear layers. Inference engines commonly use the same scheme to serve large language models (LLMs) on the GPUs of a node. Each layer then follows the [bulk synchronous parallel](https://en.wikipedia.org/wiki/Bulk_synchronous_parallel) (BSP) model: a compute kernel runs to completion, a collective kernel (e.g. an all-reduce) exchanges its full output, and only then does the next layer start. Thus, communication sits on the critical path of every layer.
+In 2019, the paper [Megatron-LM](https://arxiv.org/abs/1909.08053) showed how to split the layers of a Transformer across GPUs with [tensor parallelism]({{ site.baseurl }}{% post_url 2023-09-02-tensor-parallelism %}), with a single [collective communication](https://en.wikipedia.org/wiki/Collective_operation) per pair of linear layers. Inference engines commonly use the same scheme to serve large language models (LLMs) on the GPUs of a node. Each layer then follows the [bulk synchronous parallel](https://en.wikipedia.org/wiki/Bulk_synchronous_parallel) (BSP) model: a compute kernel runs to completion, a collective kernel (e.g. an all-reduce) exchanges its full output, and only then does the next layer start. Thus, communication sits on the critical path of every layer.
 
 This post describes a kernel that removes these barriers from the [feedforward network](https://en.wikipedia.org/wiki/Feedforward_neural_network) (FFN) of a Transformer. The kernel fuses the two linear layers of the FFN and their communication into a single GPU kernel, and runs the all-reduce inside the network switch that connects the GPUs. The same kernel then applies to the experts of a Mixture-of-Experts layer.
 
@@ -15,9 +15,9 @@ An LLM runs as a long sequence of GPU kernels, where one or more kernels impleme
 
 **Kernel fusion** combines a sequence of kernels into a single kernel, so that the intermediate results stay on chip and are consumed directly by the next operation, without being written to global memory. Fusion is trickier than it seems, as the on-chip memory of an SM holds hundreds of kilobytes, while the HBM holds tens of gigabytes. Therefore, automatic fusion is restricted to kernels whose intermediate results are *local*, i.e. the partial result computed by one SM does not depend on the results of other SMs.
 
-This is the approach of the PyTorch compiler, [`torch.compile`](https://pytorch.org/docs/stable/generated/torch.compile.html), which converts a sequence of layers written in Python into fused [Triton](https://triton-lang.org/main/index.html) kernels, and compiles them just in time. On a single GPU, it reduces both the number of kernels launched and the memory of the intermediate tensors.
+This is the approach of the PyTorch compiler, [`torch.compile`](https://pytorch.org/docs/stable/generated/torch.compile.html), which converts a sequence of layers written in Python into fused [Triton](https://triton-lang.org/main/index.html) kernels, and compiles them [just in time](https://en.wikipedia.org/wiki/Just-in-time_compilation). On a single GPU, it reduces both the number of kernels launched and the memory of the intermediate tensors.
 
-However, on several GPUs, a [collective communication](https://en.wikipedia.org/wiki/Collective_operation) is not fused with the computation around it. It acts as a *fusion boundary*, which splits the program into separate kernels, with a synchronous collective between them and its large communication buffers in HBM. As a result, the speedup of fusion shrinks when a model moves from one GPU to several: there are fewer kernels to fuse, and the communication adds its own cost.
+However, on several GPUs, a collective communication is not fused with the computation around it. It acts as a *fusion boundary*, which splits the program into separate kernels, with a synchronous collective between them and its large communication buffers in HBM. As a result, the speedup of fusion shrinks when a model moves from one GPU to several: there are fewer kernels to fuse, and the communication adds its own cost.
 
 ## Megatron-LM tensor parallelism
 
@@ -51,7 +51,7 @@ A regular implementation of this FFN launches 7 kernels: a matrix multiplication
 {: .caption}
 Execution timeline of an FFN with Megatron-LM tensor parallelism. **Top:** the regular execution, with 7 kernels that load from (arrow up) and store to (arrow down) global memory. **Bottom:** the fused kernel, with several small, overlapping all-reduce steps performed in the network switch.
 
-The fused kernel is built in three steps, each of which adds to the gains of the previous ones: the fusion of the two linear layers, the overlap of their computation with the communication, and an all-reduce executed in the switch.
+The fused kernel is built in three steps, each adding to the gains of the previous ones: the fusion of the two linear layers, the overlap of their computation with the communication, and an all-reduce executed in the switch.
 
 ## Step 1: fusing the two linear layers
 
@@ -63,9 +63,9 @@ $$
 
 and the intermediate tensor $$H$$ is never needed. With an activation in between, this collapse is no longer possible, and the usual approach *materializes* (i.e. stores) the full tensor $$H$$ in global memory, from where a second kernel reads it back.
 
-A matrix multiplication (GEMM, for *general matrix multiply*) on a GPU is computed in *tiles*: each thread block, a group of threads that runs on one SM, computes a tile, i.e. a small submatrix of the output, by iterating over the matching tiles of its inputs. The fused kernel keeps this tiling for the first layer. In this section, $$H$$, $$W_2$$ and $$Y$$ stand for the slices $$H^{(g)}$$ and $$W_2^{(g)}$$ of one GPU and for its partial output $$H^{(g)} W_2^{(g)}$$, as in the next picture.
+A matrix multiplication (GEMM, for *general matrix multiply*) on a GPU is computed in *tiles*, i.e. small submatrices of the output. Each thread block, a group of threads that runs on one SM, computes a tile by iterating over the matching tiles of its inputs. The fused kernel keeps this tiling for the first layer. In this section, $$H$$, $$W_2$$ and $$Y$$ stand for the slices $$H^{(g)}$$ and $$W_2^{(g)}$$ of one GPU and for its partial output $$H^{(g)} W_2^{(g)}$$, as in the next picture.
 
-The key idea is that, as soon as a tile $$H_{i,j}$$ is computed (with its bias and activation), it is multiplied by every tile in row $$j$$ of $$W_2$$, and the products are added to the tiles in row $$i$$ of $$Y$$. This follows from the product of [block matrices](https://en.wikipedia.org/wiki/Block_matrix), where each tile of the output is given by:
+The key idea is that, as soon as a tile $$H_{i,j}$$ is computed (with its bias and activation), it is multiplied by every tile in row $$j$$ of $$W_2$$. The products are added to the tiles in row $$i$$ of $$Y$$. This follows from the product of [block matrices](https://en.wikipedia.org/wiki/Block_matrix), where each tile of the output is given by:
 
 $$
 Y_{i,k} = \sum_{j} H_{i,j} \, (W_2)_{j,k}
@@ -87,7 +87,9 @@ These reductions overlap the next matrix multiplications in a *ping-pong* patter
 - **intermediate tiles**: compute the product, wait for the reduction of the previous tile to complete, and issue the reduction of the current tile;
 - **final tile**: compute the product, issue its reduction, and wait for the last two reductions to complete.
 
-Thus, the latency of the accumulation is mostly hidden behind the computation of the next tile. The kernel also needs to know when a tile of $$Y$$ is complete: a per-tile counter, which each contributing block increments atomically, counts the contributions to the tile, and the block that makes the last contribution marks the tile as *ready* with a per-tile flag in global memory. Each tile of $$Y$$ receives $$\lceil (O/G)/T \rceil$$ contributions, one per tile of $$H^{(g)}$$ along the hidden dimension for tiles of width $$T$$, which is a small number for the FFNs of this post. As a side note, a variant that replaces the counter by an array of flags, one per contributing block, removes the contention on the counter, but gives no measurable speedup, as the counter is not on the critical path.
+Thus, the latency of the accumulation is mostly hidden behind the computation of the next tile.
+
+The kernel also needs to know when a tile of $$Y$$ is complete. A per-tile counter, which each contributing block increments atomically, counts the contributions to the tile, and the block that makes the last contribution marks the tile as *ready* with a per-tile flag in global memory. Each tile of $$Y$$ receives $$\lceil (O/G)/T \rceil$$ contributions, one per tile of $$H^{(g)}$$ along the hidden dimension for tiles of width $$T$$, which is a small number for the FFNs of this post. As a side note, a variant that replaces the counter by an array of flags, one per contributing block, removes the contention on the counter, but gives no measurable speedup, as the counter is not on the critical path.
 
 Note that a ready tile is final, and can be sent to the other GPUs right away, without waiting for the rest of $$Y$$. Therefore, the communication happens per tile, with buffers of 32 KiB (a tile of $$128 \times 128$$ values in [`bfloat16`](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format)) instead of a buffer of several gigabytes for the whole $$Y$$.
 
@@ -110,13 +112,13 @@ An example on a GPU with 6 SMs. **(a)** Without block specialization, all SMs co
 
 Looking at the diagram above, the bands of (b) take longer to compute than those of (a), as they run on four SMs instead of six. However, the all-reduce of each band runs on SM1 and SM2 while SM3 to SM6 compute the next band, so the kernel finishes earlier.
 
-Similar specializations exist at other levels. Inside a thread block, [FlashAttention-3](https://arxiv.org/abs/2407.08608) uses *warp specialization*, where some warps load data from global memory while the others compute. Across the GPU, [DeepSeek-V3](https://arxiv.org/abs/2412.19437) gives about 15% of the SMs to the communication of its Mixture-of-Experts layers. Here, the specialized blocks run the all-reduce of the tensor-parallel FFN, one band at a time.
+Similar specializations exist at other levels. Inside a thread block, [FlashAttention-3](https://arxiv.org/abs/2407.08608) uses *warp specialization*, where some warps, the groups of threads that an SM schedules together, load data from global memory while the others compute. Across the GPU, [DeepSeek-V3](https://arxiv.org/abs/2412.19437) gives about 15% of the SMs to the communication of its Mixture-of-Experts layers. Here, the specialized blocks run the all-reduce of the tensor-parallel FFN, one band at a time.
 
 ## Step 3: all-reduce with in-network computing
 
 **In-network computing** (INC) performs the reductions of a collective while the data traverses the network switches, instead of on the end devices. In 2019, [SwitchML](https://arxiv.org/abs/1903.06701) used it to sum the gradients of data-parallel training inside programmable switches. Within a node, the switch that connects the GPUs also offers reductions and [multicasts](https://en.wikipedia.org/wiki/Multicast), which the threads of a GPU kernel can issue directly.
 
-The all-reduce of the collective communication library (CCL) is launched from the CPU, as a separate kernel that operates on full tensors, so it cannot be called on single tiles from inside a running kernel. A GPU-side [shmem](https://en.wikipedia.org/wiki/SHMEM) library can be called from inside a kernel, but it uses only part of the operations of the switch: it does not use the switch reductions for its barriers, and it imposes fixed layouts of threads and buffers, which prevent the best overlap at the tile level. Therefore, the kernel implements its own all-reduce, issued by the communication blocks and executed by the switch, on top of three operations on memory addresses that are mapped on all GPUs:
+The all-reduce of the collective communication library (CCL) is launched from the CPU, as a separate kernel that operates on full tensors, so it cannot be called on single tiles from inside a running kernel. A GPU-side [shmem](https://en.wikipedia.org/wiki/SHMEM) library can be called from inside a kernel, but it uses only part of the operations of the switch. It does not use the switch reductions for its barriers, and it imposes fixed layouts of threads and buffers, which prevent the best overlap at the tile level. Therefore, the kernel implements its own all-reduce, issued by the communication blocks and executed by the switch, on top of three operations on memory addresses that are mapped on all GPUs:
 
 - a **load-reduce** reads a value from all GPUs and returns their sum (all-to-one);
 - a **multicast store** writes one value to all GPUs (one-to-all);
@@ -128,7 +130,9 @@ This acts as a lightweight [barrier](https://en.wikipedia.org/wiki/Barrier_(comp
 
 ## Results
 
-The fused kernel was compared to a baseline, a tuned implementation of the same FFN without fusion, block specialization or in-network computing, which uses the all-reduce of the CCL. The benchmarks run the FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models on 8 GPUs in one node, in `bfloat16`, with batches of 8,192 to 262,144 tokens, and time one pass of the FFN, i.e. two matrix multiplications, two bias additions and one activation. The fused kernel reduces the latency by 22% to 62%, roughly halves the memory of the activations, and shrinks the communication buffer from gigabytes to 32 KiB. Seven of these FFNs are compared below:
+The fused kernel was compared to a baseline, a tuned implementation of the same FFN without fusion, block specialization or in-network computing, which uses the all-reduce of the CCL. The benchmarks run the FFNs of Llama, DeepSeek, GPT, Mistral and Qwen models on 8 GPUs in one node, in `bfloat16`, with batches of 8,192 to 262,144 tokens. They time one pass of the FFN, i.e. two matrix multiplications, two bias additions and one activation.
+
+The fused kernel reduces the latency by 22% to 62%, roughly halves the memory of the activations, and shrinks the communication buffer from gigabytes to 32 KiB. Seven of these FFNs are compared below:
 
 {: .picture}
 <img width="55%" height="55%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
@@ -177,6 +181,13 @@ The main lesson is that computation, communication and the network switch should
 - **expert parallelism**: its dispatch and combine collectives can be fused in the same way, as described in the post [Kernel Fusion for MoE Expert Parallelism]({{ site.baseurl }}{% post_url 2026-10-09-kernel-fusion-expert-parallelism %});
 - **compilers**: the kernel is written by hand, and compilers such as [Triton-distributed](https://arxiv.org/abs/2504.19442) could generate such kernels, with tile sizes and numbers of communication blocks tuned for each model and hardware.
 
-Other systems that overlap the computation and the communication of tensor parallelism inside kernels are a good start to find more about the topic. [CoCoNet](https://arxiv.org/abs/2105.05720) is a compiler that fuses and overlaps a matrix multiplication with the collective that follows it, [Flux](https://arxiv.org/abs/2406.06858) splits the Megatron-LM matrix multiplications and their collectives into tiles, fused into one kernel per layer, [TileLink](https://arxiv.org/abs/2503.20313) schedules the computation and the communication tile by tile, and [TokenWeave](https://arxiv.org/abs/2505.11329) fuses the all-reduce with the normalization that follows it, on a few SMs. These methods fuse one operation at a time, and keep the intermediate activations $$H$$ in global memory. **Megakernels** go further and fuse a whole forward pass, on a single GPU, as the [low-latency megakernel for Llama-1B](https://hazyresearch.stanford.edu/blog/2025-05-27-no-bubbles), or across GPUs, as [MPK](https://arxiv.org/abs/2512.22219), which is built on the [Mirage](https://arxiv.org/abs/2405.05751) superoptimizer.
+Other systems that overlap the computation and the communication of tensor parallelism inside kernels are a good start to find more about the topic:
+
+- [CoCoNet](https://arxiv.org/abs/2105.05720) is a compiler that fuses and overlaps a matrix multiplication with the collective that follows it;
+- [Flux](https://arxiv.org/abs/2406.06858) splits the Megatron-LM matrix multiplications and their collectives into tiles, fused into one kernel per layer;
+- [TileLink](https://arxiv.org/abs/2503.20313) schedules the computation and the communication tile by tile;
+- [TokenWeave](https://arxiv.org/abs/2505.11329) fuses the all-reduce with the normalization that follows it, on a few SMs.
+
+These methods fuse one operation at a time, and keep the intermediate activations $$H$$ in global memory. **Megakernels** go further and fuse a whole forward pass, on a single GPU, as the [low-latency megakernel for Llama-1B](https://hazyresearch.stanford.edu/blog/2025-05-27-no-bubbles), or across GPUs, as [MPK](https://arxiv.org/abs/2512.22219), which is built on the [Mirage](https://arxiv.org/abs/2405.05751) superoptimizer.
 
 This post summarizes the paper *Towards Efficient LLM Inference via Full-Stack Fusion of Computation, Communication, and In-Network Computing*.

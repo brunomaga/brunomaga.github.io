@@ -5,9 +5,13 @@ categories: ["Distributed Training"]
 tags: ["sequence parallelism", "context parallelism", "Ulysses", "Ring attention", "attention"]
 ---
 
+Long input sequences are a memory bottleneck of Transformer models: the activations of every layer grow linearly with the sequence length, and the attention scores quadratically. In 2021, the paper [Sequence Parallelism: Long Sequence Training from System Perspective](https://arxiv.org/abs/2105.13120) proposed to split the sequence dimension across GPUs, and to compute attention by passing the keys and the values from GPU to GPU in a ring. In 2023, DeepSpeed Ulysses and Ring Attention scaled sequence parallelism to sequences of over a million tokens.
+
 This post discusses and implements context and sequence parallelism, techniques that parallelize computation across the sequence-length dimension. Sequence parallelism is another dimension of model parallelism, in the universe of data, tensor, pipeline, context, sequence and expert parallelism.
 
-Many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Examples include text and other temporal data, with shape `(B, S, E)` for batch size `B`, sequence length (or token count) `S` and embedding size `E`. Videos have shape `(B, C, T, H, W)` for `C` channels, `T` frames, and `HxW` pixels per frame. Attention scores and probabilities have shape `(B, H, S, S)` for `H` heads and sequences of length `S`. In these scenarios, parallelism can be exploited along the sequence dimension `S` (or `T` for videos). Using the notation for text, sequence parallelism over `P` processes requires local storage of shape `(B, S/P, E)` per process. With that in mind, this post implements two existing techniques for sequence parallelism: Ulysses and Ring Attention. The use case is a model composed of a sequence of [GPTlite blocks]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), where each block is a multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
+Many model inputs and activations include an extra dimension that represents an (un)ordered sequence of tokens. Examples include text and other temporal data, with shape `(B, S, E)` for batch size `B`, sequence length (or token count) `S` and embedding size `E`. Videos have shape `(B, C, T, H, W)` for `C` channels, `T` frames, and `HxW` pixels per frame. Attention scores and probabilities have shape `(B, H, S, S)` for `H` heads and sequences of length `S`.
+
+In these scenarios, parallelism can be exploited along the sequence dimension `S` (or `T` for videos). Using the notation for text, sequence parallelism over `P` processes requires local storage of shape `(B, S/P, E)` per process. With that in mind, this post implements two existing techniques for sequence parallelism: Ulysses and Ring Attention. The use case is a model composed of a sequence of [GPTlite blocks]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), where each block is a multi-head attention (MHA) module followed by a feed-forward network (FFN), with some normalization and skip connections.
 
 Before continuing, it is important to emphasize the following:
 
@@ -16,7 +20,7 @@ Before continuing, it is important to emphasize the following:
 
 ## Data loader setup for sequence parallelism
 
-To implement sequence parallelism, the data loader first has to be adapted to load data at the token level, in a way that matches the hybrid data- and sequence-parallel setup. All that is needed is to configure a `DataLoader` and a `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader workers.
+To implement sequence parallelism, the data loader first has to be adapted to load data at the token level, in a way that matches the hybrid data- and sequence-parallel setup. All that is needed is to configure a `DataLoader` and a `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader workers. The following picture illustrates this allocation for three combinations of data and sequence parallelism:
 
 {: .picture}
 <img width="97%" height="97%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
@@ -30,7 +34,7 @@ Once this is in place, most layers (like the feed-forward network) operate on th
 
 During training/inference, the model runtime can scale well with the sequence parallelism degree, except for the attention layer. This is because, to reduce the activation memory footprint, each GPU stores only a subset of the KV elements.
 
-In practice, to compute attention, each process uses its own subset/chunk of queries, but **needs the keys and values for the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$ (without the scaling of the scores, for simplicity), where all tensors are shaped `(B, S, E)`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `(B, S/P, E)`, it needs to access all elements of $$K^T$$ and $$V$$ to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product with $$V$$, resulting in an attention output of shape `(B, S/P, E)` per process:
+In practice, to compute attention, each process uses its own subset/chunk of queries, but **needs the keys and values for the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$ (without the scaling of the scores, for simplicity), where all tensors are shaped `(B, S, E)`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `(B, S/P, E)`, it needs to access all elements of $$K^T$$ and $$V$$ to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product with $$V$$. The result is an attention output of shape `(B, S/P, E)` per process, as illustrated in the following picture, where the blue elements are the ones that one process uses or computes:
 
 {: .picture}
 <img width="77.1%" height="77.1%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.svg"/>
@@ -164,7 +168,9 @@ class MultiHeadAttention(nn.Module):
 
 And that is it. It is conceptually simple.
 
-As an important note, there are other similar approaches to this problem, such as [ColAI-SP](https://arxiv.org/abs/2105.13120) and [Megatron-SP](https://arxiv.org/abs/2205.05198). The big advantage of [DeepSpeed Ulysses parallelism](https://arxiv.org/abs/2309.14509) is that it requires less communication than the alternatives: per link, its all-to-alls send `P` times less data than the all-gathers and reduce-scatters of Megatron-SP, as shown in Section 3.2 of the paper. Its main downsides are that the maximum parallelism is dictated by the number of attention heads (or of key-value heads with [Grouped Query Attention](https://arxiv.org/abs/2305.13245) (GQA), typically 8), and that the all-to-all is a blocking collective communication that may incur heavy overhead on slow interconnects. That is where Ring Attention comes into play.
+As an important note, there are other similar approaches to this problem, such as [ColAI-SP](https://arxiv.org/abs/2105.13120) and [Megatron-SP](https://arxiv.org/abs/2205.05198). The big advantage of [DeepSpeed Ulysses parallelism](https://arxiv.org/abs/2309.14509) is that it requires less communication than the alternatives: per link, its all-to-alls send `P` times less data than the all-gathers and reduce-scatters of Megatron-SP, as shown in Section 3.2 of the paper.
+
+Its main downside is that the maximum parallelism is dictated by the number of attention heads (or of key-value heads with [Grouped Query Attention](https://arxiv.org/abs/2305.13245) (GQA), typically 8). Also, the all-to-all is a blocking [collective communication](https://en.wikipedia.org/wiki/Collective_operation) that may incur heavy overhead on slow interconnects. That is where Ring Attention comes into play.
 
 ## Ring Attention
 
@@ -186,13 +192,15 @@ This formulation shows that the output is a fraction whose numerator and denomin
 
 ### Improving numerical stability
 
-The previous formulation is not numerically stable in floating-point arithmetic, because the softmax exponentials can become very large numbers. A standard solution is to compute the softmax *by subtracting the maximum score from all scores*. This does not change the result of the softmax but avoids overflow/underflow. This is called the **safe softmax** trick and is well explained [in this post](https://coconut-mode.com/posts/ring-attention/). The safe softmax formulation is:
+The previous formulation is not [numerically stable](https://en.wikipedia.org/wiki/Numerical_stability) in floating-point arithmetic, because the softmax exponentials can become very large numbers. A standard solution is to compute the softmax *by subtracting the maximum score from all scores*. This does not change the result of the softmax but avoids overflow/underflow.
+
+This is called the **safe softmax** trick and is well explained [in this post](https://coconut-mode.com/posts/ring-attention/). The safe softmax formulation is:
 
 $$
 safe\_softmax(s_i) = \frac{\exp (s_i - s_{max})}{ \sum_j \exp( s_j - s_{max})}.
 $$
 
-The issue is how to compute the maximum when the computation is done in blocks. This is done by keeping the maximum over all blocks *seen so far* in the loop over blocks. Then, if $$m_j$$ is the maximum over all blocks up to and including block $$j$$, and $$m_{j-1}$$ is the previous maximum (up to block $$j-1$$), the accumulators are updated as:
+The issue is how to compute the maximum when the computation is done in blocks. This is done by keeping the maximum over all blocks *seen so far* in the loop over blocks, a method known as the **online softmax**, from the paper [Online normalizer calculation for softmax](https://arxiv.org/abs/1805.02867). Then, if $$m_j$$ is the maximum over all blocks up to and including block $$j$$, and $$m_{j-1}$$ is the previous maximum (up to block $$j-1$$), the accumulators are updated as:
 
 $$
 \begin{align*}
@@ -209,9 +217,9 @@ $$
 
 ### Distributed algorithm
 
-Now that the attention output can be computed per block, attention can be parallelized by assigning a sub-block to each process. The algorithm starts with sequence parallelism of the tensors $$q$$, $$k$$ and $$v$$ across $$P$$ processes, i.e., **each process holds a non-overlapping sequence block of the $$q$$, $$k$$ and $$v$$ tensors**. Just like Ulysses, this allows for direct `P`-order parallelism on the feed-forward network, but not on multi-head attention.
+Now that the attention output can be computed per block, attention can be parallelized by assigning a sub-block to each process. The algorithm starts with sequence parallelism of the tensors $$q$$, $$k$$ and $$v$$ across $$P$$ processes, i.e., **each process holds a non-overlapping sequence block of the $$q$$, $$k$$ and $$v$$ tensors**. Similarly to Ulysses, this allows for direct `P`-order parallelism on the feed-forward network, but not on multi-head attention.
 
-During ring attention, each process keeps its local chunk of queries and **rotates the key/value blocks** among all $$P$$ processes in a ring: at each communication step (out of $$P$$ steps), each process sends its block of keys/values to the next process and receives the block of keys/values from the previous process in the ring. After $$P$$ steps, every process has seen all key/value blocks and can compute attention for its local queries.
+During ring attention, each process keeps its local chunk of queries and **rotates the key/value blocks** among all $$P$$ processes in a ring. At each communication step (out of $$P$$ steps), each process sends its block of keys/values to the next process and receives the block of keys/values from the previous process in the ring. After $$P$$ steps, every process has seen all key/value blocks and can compute attention for its local queries.
 
 This pattern can be illustrated as:
 
@@ -221,16 +229,16 @@ This pattern can be illustrated as:
 {: .caption}
 Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **1st Ring Attention step:** each process holds its part of the Query, Key and Value tensors (Q, K and V) and computes block attention on them. Meanwhile, each process asynchronously sends its Key and Value tensors to the next process in the ring (clockwise). **2nd, 3rd, and 4th steps:** each process receives the Key and Value blocks of the previous process and computes the attention output for its original Query tensor and the received Key/Value tensors. **After Ring Attention:** the MHA output is already sequence-split across processes, as in the initial data layout. Inspired by: [Ring Attention with Blockwise Transformers for Near-Infinite Context](https://arxiv.org/abs/2310.01889)
 
-From a process standpoint, after all ring steps, each process has kept its own sequence block of $$q$$ and has iterated over the full $$k$$ and $$v$$ tensors (in chunks). For example, the third (red) process above sees the following data:
+From a process standpoint, after all ring steps, each process has kept its own sequence block of $$q$$ and has iterated over the full $$k$$ and $$v$$ tensors (in chunks). For example, the third (red) process above sees the following data at each step:
 
 {: .picture}
 <img width="39.3%" height="39.3%" src="{{ site.assets }}/distributed-training/imgs/ring_attention_qkv.svg"/>
 
-An important point is that, while Ulysses communicates synchronously (all-to-all), forcing processes to wait for the communication to complete, ring attention can use asynchronous point-to-point communication. If the computation time of a block exceeds its transmission time, the communication overhead can be hidden behind computation.
+An important point is that, while Ulysses communicates synchronously (all-to-all), forcing processes to wait for the communication to complete, ring attention can use asynchronous point-to-point communication. If the computation time of a block exceeds its transmission time, the communication overhead can be hidden behind computation. For the sake of comparison, ring attention sends about $$P/2$$ times more data than Ulysses in the forward pass. Each process sends its key and value blocks at every step, while each of the four all-to-alls of Ulysses sends less than one block per process.
 
 ### Implementation
 
-The implementation starts with two helper functions: `isend_k_and_v(k, v, recv_k, recv_v, group)` asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`; and `accumulate_out_and_lse(out, lse, block_out, block_lse)` merges the attention output and LogSumExp of a block into the accumulated ones, rescaling both so that the softmax is normalized over all the blocks seen so far:
+The implementation starts with two helper functions. First, `isend_k_and_v(k, v, recv_k, recv_v, group)` asynchronously sends the tensors `k` and `v` to the next neighbour, asynchronously receives the previous neighbour's `k` and `v` into `recv_k` and `recv_v`, and returns the send/receive communication futures, which must be waited on with `req.wait()`. Then, `accumulate_out_and_lse(out, lse, block_out, block_lse)` merges the attention output and LogSumExp of a block into the accumulated ones, rescaling both so that the softmax is normalized over all the blocks seen so far:
 
 ```python
 import flash_attn.flash_attn_interface as fa  # flash attention
@@ -386,17 +394,19 @@ class MultiHeadAttention(nn.Module):
         return out
 ```
 
-And that is all. As can be seen, a key disadvantage of ring attention is that the number of communication steps equals the number of processes. This may be a limiting factor on large networks, where very fine-grained sequence splits lead to small per-process workloads, making it harder to fully hide communication behind computation: the compute time of a step shrinks quadratically with the chunk length, and its communication time only linearly.
+And that is all. As can be seen, a key disadvantage of ring attention is that the number of communication steps equals the number of processes. This may be a limiting factor on large networks, where very fine-grained sequence splits lead to small per-process workloads, making it harder to fully hide communication behind computation. This is because the compute time of a step shrinks quadratically with the chunk length, and its communication time only linearly.
 
-Keep in mind that deterministic behaviour of sequence parallelism across networks with different node counts is difficult to achieve, because random number generators produce different values during model initialization and dropout.
+Note that deterministic behaviour of sequence parallelism across networks with different node counts is difficult to achieve, because random number generators produce different values during model initialization and dropout.
 
 ## When to use Ulysses and Ring attention
 
 Ulysses should be used when the sequence-parallel group sits on a fast interconnect, like [NVLink](https://en.wikipedia.org/wiki/NVLink) within a node, and the parallelism degree is at most the number of attention heads. That means Ulysses cannot be used with [Multi-Query Attention](https://arxiv.org/abs/1911.02150) (MQA), and its use with GQA is limited. A benefit of Ulysses is that any attention kernel works unchanged, and that it works well for any mask. However, the all-to-all is hard to overlap with compute and slows down across nodes.
 
-Ring attention should be used when a parallelism degree beyond the head count, or parallelism across nodes, is needed. It has no head limit and hides communication, but only if each local chunk is long enough for compute to cover the transfer. However, Ring Attention is not ideal for custom or arbitrary attention masks: while the fundamental blockwise formulation can mathematically support any masking pattern, its real-world implementation depends on overlapping communication with computation (so the mask should ideally yield computation on each step). In practice, most standard Ring Attention libraries natively support only causal masks (the triangular masks used in autoregressive models) or full masks (unmasked bidirectional attention). To overcome this, variants like [**Striped Attention**](https://arxiv.org/abs/2311.09431 "Striped Attention Paper") and the zigzag chunks of [**Llama 3's context parallelism**](https://arxiv.org/abs/2407.21783 "Llama 3 Paper") (which all-gathers the keys and values instead of passing them in a ring) explicitly permute and optimize data chunks around the specific mathematical structure of a causal mask to balance the hardware workload.
+Ring attention should be used when a parallelism degree beyond the head count, or parallelism across nodes, is needed. It has no head limit and hides communication, but only if each local chunk is long enough for compute to cover the transfer.
 
-Both methods have drawbacks. The rule of thumb is to use a hybrid algorithm once the run spans multiple nodes: Ulysses within each node and Ring across nodes, which usually beats either one alone at scale. Hybrid algorithms for sequence parallelism are also discussed in [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719), [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485v1), and [Megatron's a2a+p2p](https://docs.nvidia.com/nemo/megatron-bridge/0.5.0/training/hierarchical-context-parallel.html) for Hierarchical Context Parallelism (HCP, where p2p is the ring exchange and a2a is Ulysses-style parallelism).  
+However, Ring Attention is not ideal for custom or arbitrary attention masks: while the blockwise formulation can support any masking pattern, its implementation depends on overlapping communication with computation (so the mask should yield computation on each step). In practice, most standard Ring Attention libraries natively support only causal masks (the triangular masks used in autoregressive models) or full masks (unmasked bidirectional attention). To overcome this, variants like [**Striped Attention**](https://arxiv.org/abs/2311.09431 "Striped Attention Paper") and the zigzag chunks of [**Llama 3's context parallelism**](https://arxiv.org/abs/2407.21783 "Llama 3 Paper") explicitly permute and optimize data chunks around the specific mathematical structure of a causal mask to balance the hardware workload. Note that Llama 3's context parallelism all-gathers the keys and values instead of passing them in a ring.
+
+Both methods have drawbacks. The rule of thumb is to use a hybrid algorithm once the run spans multiple nodes: Ulysses within each node and Ring across nodes, which usually beats either one alone at scale. Hybrid algorithms for sequence parallelism are also discussed in [USP: A Unified Sequence Parallelism Approach for Long Context Generative AI](https://arxiv.org/abs/2405.07719) and [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485v1). [Megatron's a2a+p2p](https://docs.nvidia.com/nemo/megatron-bridge/0.5.0/training/hierarchical-context-parallel.html) for Hierarchical Context Parallelism (HCP) is one such hybrid, where p2p is the ring exchange and a2a is Ulysses-style parallelism.
 
 
 ## Training with sequence- and multi-dimensional parallelism
@@ -410,3 +420,5 @@ Moreover, when multi-dimensional parallelism (e.g., data + sequence) is performe
 
 {: .caption}
 Allocation of activations on 4 GPUs with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: the blue and green processes form one sequence-parallel group and share one sample; the red and yellow processes form the other group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes then compute attention over full sequences.
+
+To find more about the topic, the DeepSpeed tutorial [Getting Started with DeepSpeed-Ulysses](https://www.deepspeed.ai/tutorials/ds-sequence/) shows how to replace the attention module of a model with the `DistributedAttention` of Ulysses. The [ring-flash-attention](https://github.com/zhuzilin/ring-flash-attention) repository implements ring attention and its zigzag and striped variants with FlashAttention, together with the context parallelism of Llama 3, and PyTorch provides ring attention in its [Context Parallel](https://docs.pytorch.org/tutorials/unstable/context_parallel.html) API.

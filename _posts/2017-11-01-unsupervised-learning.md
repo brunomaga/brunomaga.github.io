@@ -5,13 +5,17 @@ categories: ["Machine Learning"]
 tags: ["unsupervised learning", "PCA", "clustering", "dimensionality reduction"]
 ---
 
-Unsupervised learning is the field of machine learning dedicated to learning without supervision or reward signals. Unlike [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning](https://en.wikipedia.org/wiki/Supervised_learning), the data is the only information given to the method. Still, these methods are very powerful, and are commonly used for image compression, dimensionality reduction, clustering and visualization, and to learn representations of the data that other models then build on.
+In 1901, Karl Pearson described the method known today as principal component analysis, in the paper [On lines and planes of closest fit to systems of points in space](https://doi.org/10.1080/14786440109462720). In 1957, Stuart Lloyd proposed the algorithm known today as k-means, to quantize signals, although his paper [Least squares quantization in PCM](https://doi.org/10.1109/TIT.1982.1056489) was only published in 1982.
+
+Unsupervised learning is the field of machine learning dedicated to learning without supervision or reward signals. Unlike [reinforcement learning](https://en.wikipedia.org/wiki/Reinforcement_learning) and [supervised learning](https://en.wikipedia.org/wiki/Supervised_learning), the data is the only information given to the method. Still, these methods are very powerful, and are commonly used for image compression, dimensionality reduction, clustering and visualization, and to learn representations of the data that other models then build on. This post covers Hebbian learning, principal and independent component analysis (PCA and ICA), clustering methods (k-means, Gaussian mixtures, hierarchical clustering, DBSCAN and spectral clustering), self-organizing maps, t-SNE and UMAP, and autoencoders and self-supervised learning.
 
 ## Foreword: Hebbian Learning
 
-Among the many *biologically inspired* learning models, [Hebbian learning](https://en.wikipedia.org/wiki/Hebbian_theory) ([Donald Hebb](https://en.wikipedia.org/wiki/Donald_O._Hebb), 1949) is probably the oldest. Its principle underlies many unsupervised learning rules, including several in this post. It is based on the synaptic changes between neurons that spike at close instants in time (motto: "*if they fire together, they wire together*"). Spike-Timing-Dependent Plasticity ([STDP, Markram et al., Frontiers](https://www.frontiersin.org/articles/10.3389/fnsyn.2012.00002/full)) shows that the increase or decrease of the strength of a synapse depends on the time difference between the spikes of the pre- and the post-synaptic neurons. In essence, if a neuron spikes and leads to the firing of the output neuron, the synapse between them is strengthened.
+Among the many *biologically inspired* learning models, [Hebbian learning](https://en.wikipedia.org/wiki/Hebbian_theory) ([Donald Hebb](https://en.wikipedia.org/wiki/Donald_O._Hebb), 1949) is probably the oldest. Its principle underlies many unsupervised learning rules, including several in this post. It is based on the [synaptic](https://en.wikipedia.org/wiki/Synapse) changes between neurons that spike at close instants in time (motto: "*if they fire together, they wire together*").
 
-In his own words (Hebb, 1949):
+Spike-Timing-Dependent Plasticity ([STDP, Markram et al., Frontiers](https://www.frontiersin.org/articles/10.3389/fnsyn.2012.00002/full)) shows that the increase or decrease of the strength of a synapse depends on the time difference between the spikes of the pre- and the post-synaptic neurons. In essence, if a neuron spikes and leads to the firing of the output neuron, the synapse between them is strengthened.
+
+In Hebb's own words (1949):
 
 > When an axon of cell A is near enough to excite a cell B and repeatedly or persistently takes part in firing it, some growth process or metabolic change takes place in one or both cells such that A's efficiency, as one of the cells firing B, is increased.
 
@@ -27,7 +31,9 @@ $$
 \frac{d}{dt}w_{ij} = \eta \, x_i \, y_j
 $$
 
-where $$\eta$$ is the learning rate. Hebbian learning is **local**, i.e. it only looks at the two neurons involved, and ignores the activity of the rest of the system. It is a form of **unsupervised learning**: learning acquired from the data alone, without any external signal or measure of accuracy. As long as both activities are positive, the simple rule above only increases the weights. A common way to keep them bounded is [Oja's learning rule](http://www.scholarpedia.org/article/Oja_learning_rule):
+where $$\eta$$ is the learning rate. Hebbian learning is **local**, i.e. it only looks at the two neurons involved, and ignores the activity of the rest of the system. It is a form of **unsupervised learning**: learning acquired from the data alone, without any external signal or measure of accuracy.
+
+As long as both activities are positive, the simple rule above only increases the weights. A common way to keep them bounded is [Oja's learning rule](http://www.scholarpedia.org/article/Oja_learning_rule):
 
 $$
 \frac{d}{dt}w_{ij} = \eta \, (x_i y_j - y_j^2 w_{ij}).
@@ -46,7 +52,7 @@ $$
 \frac{d}{dt}w_{ij} = \eta \, x_i \, y_j \, (y_j - \theta_j)
 $$
 
-a theory of learning in the visual cortex. The weight increases (long-term potentiation, LTP) when the post-synaptic activity is above the threshold $$\theta_j$$, and decreases (long-term depression, LTD) when it is below. The threshold slides with the time-averaged post-synaptic activity (e.g. $$\theta_j = \langle y_j^2 \rangle$$), which stabilizes synaptic plasticity.
+a theory of learning in the visual cortex. The weight increases ([long-term potentiation](https://en.wikipedia.org/wiki/Long-term_potentiation), LTP) when the post-synaptic activity is above the threshold $$\theta_j$$, and decreases ([long-term depression](https://en.wikipedia.org/wiki/Long-term_depression), LTD) when it is below. The threshold slides with the time-averaged post-synaptic activity (e.g. $$\theta_j = \langle y_j^2 \rangle$$), which stabilizes synaptic plasticity.
 
 Typically, the output of a neuron is a function of the weighted sum of its inputs:
 
@@ -60,11 +66,13 @@ $$
 y_j = \sum_i w_{ij} x_i
 $$
 
-**Sigmoidal functions** are commonly used instead (see [here](https://en.wikipedia.org/wiki/Sigmoid_function#Examples) for a list of examples), as they are more *powerful* ways of describing an output than a linear function. Generally speaking, in unsupervised learning, $$\Delta w \propto F(pre,post)$$. When a reward signal is added to each update, i.e. $$\Delta w \propto F(pre, post, reward)$$, the learning rule belongs to the field of **reinforcement learning**. While unsupervised learning relates to the synaptic weight changes in the brain derived from [Long-Term Potentiation (LTP)](https://en.wikipedia.org/wiki/Long-term_potentiation) and [Long-Term Depression (LTD)](https://en.wikipedia.org/wiki/Long-term_depression), reinforcement learning relates more to the dopamine [reward system](https://en.wikipedia.org/wiki/Reward_system) of the brain, an external factor that rewards the learning of a behaviour.
+**Sigmoidal functions** are commonly used instead (see [here](https://en.wikipedia.org/wiki/Sigmoid_function#Examples) for a list of examples), as they are more *powerful* ways of describing an output than a linear function. Generally speaking, in unsupervised learning, $$\Delta w \propto F(pre,post)$$. When a reward signal is added to each update, i.e. $$\Delta w \propto F(pre, post, reward)$$, the learning rule belongs to the field of **reinforcement learning**. While unsupervised learning relates to the synaptic weight changes in the brain derived from LTP and LTD, reinforcement learning relates more to the dopamine [reward system](https://en.wikipedia.org/wiki/Reward_system) of the brain, an external factor that rewards the learning of a behaviour.
+
+For more details, chapter 19 of the book [Neuronal Dynamics](https://neuronaldynamics.epfl.ch/online/Ch19.html) by Gerstner, Kistler, Naud and Paninski covers the Hebbian rules of this section, models of STDP and reward-based learning.
 
 ## Principal Component Analysis
 
-[Principal Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis) (PCA) is a dimensionality (feature) reduction method that rotates the data towards the directions of largest variance, so that one can analyse the data along its most meaningful dimensions and discard the dimensions of low variance. In the words of Gerstner's lecture notes on unsupervised learning:
+**[Principal Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis)** (PCA) is a dimensionality (feature) reduction method that rotates the data towards the directions of largest variance, so that one can analyse the data along its most meaningful dimensions and discard the dimensions of low variance. In the words of an earlier version of the Wikipedia article on PCA:
 
 <blockquote class="blockquote text-right">
 Principal component analysis (PCA) is a statistical procedure that uses an orthogonal transformation to convert a set of observations of possibly correlated variables into a set of values of linearly uncorrelated variables called principal components.
@@ -101,23 +109,23 @@ In practice, PCA is usually computed with the [singular value decomposition](htt
 
 ## Kernel PCA
 
-PCA only finds linear structure. [Kernel PCA](https://en.wikipedia.org/wiki/Kernel_principal_component_analysis) (Schölkopf et al., 1998) applies PCA in a high-dimensional feature space $$\phi(x)$$, where non-linear structure of the input space may become linear. The [*kernel trick*](https://en.wikipedia.org/wiki/Kernel_method) avoids computing $$\phi$$, as the method only needs the dot products $$k(x_i, x_j) = \phi(x_i)^T \phi(x_j)$$, given by a kernel function such as the Gaussian kernel $$k(x_i, x_j) = \exp \left( - \| x_i - x_j \|^2 / 2 \sigma^2 \right)$$ or the polynomial kernel $$k(x_i, x_j) = (x_i^T x_j + c)^d$$. The algorithm is:
+PCA only finds linear structure. **[Kernel PCA](https://en.wikipedia.org/wiki/Kernel_principal_component_analysis)** ([Schölkopf et al., 1998](https://doi.org/10.1162/089976698300017467)) applies PCA in a high-dimensional feature space $$\phi(x)$$, where non-linear structure of the input space may become linear. The [*kernel trick*](https://en.wikipedia.org/wiki/Kernel_method) avoids computing $$\phi$$, as the method only needs the dot products $$k(x_i, x_j) = \phi(x_i)^T \phi(x_j)$$, given by a kernel function such as the Gaussian kernel $$k(x_i, x_j) = \exp \left( - \| x_i - x_j \|^2 / 2 \sigma^2 \right)$$ or the polynomial kernel $$k(x_i, x_j) = (x_i^T x_j + c)^d$$. The algorithm is:
 - compute the $$n \times n$$ kernel matrix $$K$$, with $$K_{ij} = k(x_i, x_j)$$;
 - center the data in the feature space: $$\tilde{K} = K - 1_n K - K 1_n + 1_n K 1_n$$, where $$1_n$$ is the $$n \times n$$ matrix with all entries equal to $$1/n$$;
 - compute the eigenvalues $$\lambda_m$$ and eigenvectors $$\alpha^{(m)}$$ of $$\tilde{K}$$, and scale each eigenvector so that $$\lambda_m \, \alpha^{(m)T} \alpha^{(m)} = 1$$, which gives the corresponding direction in the feature space a unit norm;
 - the $$m$$-th principal component of a data point $$x_j$$ is $$\sum_{i=1}^n \alpha_i^{(m)} \tilde{K}_{ij}$$, i.e. the $$j$$-th entry of $$\tilde{K} \alpha^{(m)} = \lambda_m \alpha^{(m)}$$.
 
-The eigendecomposition of an $$n \times n$$ matrix limits kernel PCA to datasets of moderate size, and mapping a point back to the input space (the *pre-image* problem) is only approximate.
+The eigendecomposition of an $$n \times n$$ matrix limits kernel PCA to datasets of moderate size, and mapping a point back to the input space (the *pre-image* problem) is only approximate. For the sake of comparison, the cost of PCA grows only linearly with the number of data points, as the size of its covariance matrix depends only on the number of features.
 
 ## Independent Component Analysis
 
 This section was largely inspired by the lecture notes of Tatsuya Yokota (Tokyo Institute of Technology, 2012).
 
-A related topic is [Independent Component Analysis](https://en.wikipedia.org/wiki/Independent_component_analysis) (ICA), a method for [blind source separation](https://en.wikipedia.org/wiki/Blind_signal_separation): it separates a multidimensional signal into additive subcomponents, under the assumptions that:
+A related topic is **[Independent Component Analysis](https://en.wikipedia.org/wiki/Independent_component_analysis)** (ICA), a method for [blind source separation](https://en.wikipedia.org/wiki/Blind_signal_separation): it separates a multidimensional signal into additive subcomponents, under the assumptions that:
 - the source signals $$s_1$$, ..., $$s_n$$ are statistically independent, i.e. $$p(s_1, s_2, ..., s_n) = p(s_1)\,\,p(s_2) \,\, ... \,\, p(s_n)$$;
 - the sources are not Gaussian (at most one of them may be), otherwise ICA is impossible.
 
-ICA builds on the [Central Limit Theorem](https://en.wikipedia.org/wiki/Central_limit_theorem), which states that the distribution of the sum of $$N$$ independent random variables approaches a Gaussian as $$N \rightarrow \infty$$. As an example, the throw of a die has a uniform distribution from 1 to 6, but the distribution of the sum of several throws is not uniform: it is better approximated by a Gaussian as the number of throws increases. A mixture of independent signals is thus *more Gaussian* than the signals themselves, and the most non-Gaussian directions recover the independent signals. In short, *non-Gaussianity is independence*.
+ICA builds on the [Central Limit Theorem](https://en.wikipedia.org/wiki/Central_limit_theorem), which states that the distribution of the sum of $$N$$ independent random variables approaches a Gaussian as $$N \rightarrow \infty$$. As an example, the throw of a die has a uniform distribution from 1 to 6, but the distribution of the sum of several throws is better approximated by a Gaussian as the number of throws increases. A mixture of independent signals is thus *more Gaussian* than the signals themselves, and the most non-Gaussian directions recover the independent signals. In short, *non-Gaussianity is independence*.
 
 A famous example is the [cocktail party](https://en.wikipedia.org/wiki/Cocktail_party_effect) problem. A guest hears observed signals $$x$$ that are mixtures of the original signals $$s$$, as in:
 
@@ -143,7 +151,7 @@ $$
 s(t) = U z (t) = U V x (t) = B x (t)
 $$
 
-where $$U$$ is an orthogonal matrix. **Whitening simplifies ICA**, as it is then only necessary to estimate $$U$$: the whitened signals are already uncorrelated, like the principal components of PCA, and $$U$$ is the rotation that makes them independent. An illustration of the source, observed and whitened data is displayed below:
+where $$U$$ is an orthogonal matrix. **Whitening simplifies ICA**, as it is then only necessary to estimate $$U$$: the whitened signals are already uncorrelated, like the principal components of PCA, and $$U$$ is the rotation that makes them independent. An illustration of the source, observed and whitened data is displayed below, where the mixing turns the square of the sources into a parallelogram, and whitening turns it back into a square, rotated:
 
 {: .picture}
 <img width="20.1%" height="20.1%" src="{{ site.assets }}/unsupervised-learning/ica_source.svg">
@@ -156,41 +164,41 @@ Independent component analysis of two mixed signals: (a) the sources $$s_1$$, $$
 **Non-Gaussianity is a measure of independence**. [Kurtosis](https://en.wikipedia.org/wiki/Kurtosis) is a measure of non-Gaussianity, defined for a variable $$y$$ of zero mean by:
 
 $$
-k(y) =  E [y^4] - 3 (E[y^2])^2.
+\mathrm{kurt}(y) =  E [y^4] - 3 (E[y^2])^2.
 $$
 
 It is zero for a Gaussian. Assume that $$y$$ is white, i.e. $$E[y]=0$$ and $$E[y^2]=1$$, thus
 
 $$
-k(y) = E[y^4]-3.
+\mathrm{kurt}(y) = E[y^4]-3.
 $$
 
 Each row $$b^T$$ of $$B$$ recovers one source, $$s_i = b^T x$$. The ICA problem is solved with
 
 $$
-\hat{b} = \arg\max_b | k(b^T x(t)) |
+\hat{b} = \arg\max_b | \mathrm{kurt}(b^T x(t)) |
 $$
 
-where $$b^T x(t)$$ is constrained to unit variance. On the whitened data, $$b^T x(t) = w^T z(t)$$, where $$w^T = b^T V^{-1}$$ is a row of $$U$$, and the unit-variance constraint becomes $$w^T w=1$$. The absolute value of the *kurtosis* $$\mid k(w^Tz) \mid$$ is then maximized, subject to $$w^T w=1$$. Its gradient is:
+where $$b^T x(t)$$ is constrained to unit variance. On the whitened data, $$b^T x(t) = w^T z(t)$$, where $$w^T = b^T V^{-1}$$ is a row of $$U$$, and the unit-variance constraint becomes $$w^T w=1$$. The absolute value of the *kurtosis* $$\mid \mathrm{kurt}(w^Tz) \mid$$ is then maximized, subject to $$w^T w=1$$. Its gradient is:
 
 $$
 \begin{align*}
-\frac{\partial \vert k(w^T z) \vert}{\partial w} & = \frac{\partial}{\partial w} \left\vert E[(w^T z)^4] - 3 (E[(w^T z)^2])^2 \right\vert \\
+\frac{\partial \vert \mathrm{kurt}(w^T z) \vert}{\partial w} & = \frac{\partial}{\partial w} \left\vert E[(w^T z)^4] - 3 (E[(w^T z)^2])^2 \right\vert \\
 & = \frac{\partial}{\partial w} \left\vert E[(w^T z)^4] - 3 (\| w \|^2)^2 \right\vert \quad \text{(because } E[z z^T] = I) \\
-& = 4 \, \text{sign}[k(w^T z)] \left( E[z (w^T z)^3] - 3 w \| w \|^2 \right)
+& = 4 \, \text{sign}[\mathrm{kurt}(w^T z)] \left( E[z (w^T z)^3] - 3 w \| w \|^2 \right)
 \end{align*}
 $$
 
 The problem can now be solved by gradient ascent (with $$\| w \| = 1$$):
-- $$\Delta w \propto \text{sign} [ k(w^T z)] \, ( E [ z(w^T z)^3 ] - 3w )$$;
+- $$\Delta w \propto \text{sign} [ \mathrm{kurt}(w^T z)] \, ( E [ z(w^T z)^3 ] - 3w )$$;
 - $$w \leftarrow w + \Delta w$$, followed by the normalization $$w \leftarrow w / \| w \|$$.
 
-Or, because the algorithm converges when $$w \propto \Delta w$$, and $$w$$ and $$-w$$ are equivalent, with the fixed-point iteration of **[FastICA](https://en.wikipedia.org/wiki/FastICA)**:
+Or, because the algorithm converges when $$w \propto \Delta w$$, and $$w$$ and $$-w$$ are equivalent, with the fixed-point iteration of **[FastICA](https://en.wikipedia.org/wiki/FastICA)** ([Hyvärinen and Oja, 1997](https://doi.org/10.1162/neco.1997.9.7.1483)):
 - $$w \leftarrow E [ z ( w^T z)^3 ] - 3w$$, followed by $$w \leftarrow w / \| w \|$$.
 
-The other components are found in the same way, keeping each new $$w$$ orthogonal to the previous ones, as the rows of $$U$$ are orthonormal.
+Unlike gradient ascent, FastICA has no learning rate to tune, and its convergence is cubic, so it is usually much faster. The other components are found in the same way, keeping each new $$w$$ orthogonal to the previous ones, as the rows of $$U$$ are orthonormal.
 
-As a final remark, *kurtosis is very sensitive to outliers, because it is a fourth-order function*. A more robust alternative is the negentropy. It is omitted here for brevity, but the details are in the [original lecture notes](https://www.slideshare.net/yokotatsuya/independent-component-analysis-11359849).
+As a final remark, *kurtosis is very sensitive to outliers, because it is a fourth-order function*. A more robust alternative is the [negentropy](https://en.wikipedia.org/wiki/Negentropy). It is omitted here for brevity, but the details are in the [original lecture notes](https://www.slideshare.net/yokotatsuya/independent-component-analysis-11359849).
 
 ## Competitive Learning and k-means
 
@@ -213,19 +221,19 @@ This kind of partitioning underlies problems such as the [Voronoi diagram](https
 The Voronoi diagram of 20 prototypes (black dots) in 2D: each colored cell holds the points closer to its prototype than to any other, in Euclidean distance. Adapted from: [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram)
 
 
-Such methods can be applied to e.g. image compression, where one may reduce every RGB pixel in the range $$[0, 255]^3$$ to the closest color of a smaller set. The reconstruction (squared) error is the sum of the errors of all data points over all clusters $$C_k$$:
+Such methods can be applied to e.g. image compression, where one may reduce every RGB pixel in the range $$[0, 255]^3$$ to the closest color of a smaller set. The reconstruction (squared) error is the sum of the errors of all data points over all clusters $$C_i$$:
 
 $$
-E = \sum_k \sum_{u \in C_k} \| w_k - x_u \|^2
+E = \sum_{i=1}^{k} \sum_{u \in C_i} \| w_i - x_u \|^2
 $$
 
-**[k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)** is an iterative method for prototype clustering. Its objective is to find the partition $$S = \{ S_1, ..., S_k \}$$ of the data points into $$k$$ clusters that minimizes the error above:
+**[k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)** is an iterative method for prototype clustering. Its objective is to find the partition of the data points into $$k$$ clusters $$C_1, ..., C_k$$ that minimizes the error above:
 
 $$
-\arg\min_S \sum_{i=1}^{k} \sum_{x \in S_i} \| x - w_i \|^2
+\arg\min_{C_1, ..., C_k} \sum_{i=1}^{k} \sum_{x \in C_i} \| x - w_i \|^2
 $$
 
-where $$w_i$$ is the mean of the points in $$S_i$$. The algorithm iterates over 2 steps:
+where $$w_i$$ is the mean of the points in $$C_i$$. The algorithm iterates over 2 steps:
 - assignment step: assign each observation to the closest mean, based on e.g. the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance);
 - update step: compute the new means as the centroids of the observations in each new cluster:
   $$ w_i^{(t+1)} = \frac{1}{\mid C^{(t)}_i \mid} \sum_{x_j \in C_i^{(t)}} x_j $$
@@ -271,7 +279,7 @@ Both problems can be fixed with Gaussian [mixture models](https://en.wikipedia.o
 
 ## Gaussian Mixture Models and Expectation-Maximization
 
-A Gaussian mixture model (GMM) describes the data as drawn from $$K$$ Gaussians: each data point picks a component $$k$$ with probability $$\pi_k$$, and is then drawn from the Gaussian $$\mathcal{N}(\mu_k, \Sigma_k)$$, so that:
+A **Gaussian mixture model** (GMM) describes the data as drawn from $$K$$ Gaussians: each data point picks a component $$k$$ with probability $$\pi_k$$, and is then drawn from the Gaussian $$\mathcal{N}(\mu_k, \Sigma_k)$$, so that:
 
 $$
 p(x) = \sum_{k=1}^K \pi_k \, \mathcal{N}(x \mid \mu_k, \Sigma_k), \text{ with } \sum_{k=1}^K \pi_k = 1.
@@ -292,11 +300,11 @@ $$
 \pi_k = \frac{N_k}{N}
 $$
 
-Each iteration never decreases the log-likelihood, and the algorithm converges to a local maximum, so, as with k-means, it is usually run from several initializations, or initialized with the result of k-means. In fact, k-means is a limit case of EM: for a GMM whose components share the covariance $$\sigma^2 I$$, the responsibilities become hard assignments to the closest mean as $$\sigma \rightarrow 0$$. The number of components $$K$$ can be chosen with a model selection criterion, such as the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion).
+Each iteration never decreases the log-likelihood, and the algorithm converges to a local maximum, so, as with k-means, it is usually run from several initializations, or initialized with the result of k-means. In fact, k-means is a limit case of EM: for a GMM whose components share the covariance $$\sigma^2 I$$, the responsibilities become hard assignments to the closest mean as $$\sigma \rightarrow 0$$. The number of components $$K$$ can be chosen with a model selection criterion, such as the [Bayesian information criterion](https://en.wikipedia.org/wiki/Bayesian_information_criterion). In practice, k-means is cheaper per iteration and is preferred for large datasets with compact clusters, while a GMM suits elliptical or overlapping clusters.
 
 ## Hierarchical Clustering
 
-[Hierarchical clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering) builds a tree of clusters (a *dendrogram*) instead of a single partition. Its common *agglomerative* (bottom-up) variant starts with one cluster per data point, and repeatedly merges the two closest clusters, until a single cluster remains. The distance between two clusters $$A$$ and $$B$$ is given by the *linkage* criterion:
+**[Hierarchical clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering)** builds a tree of clusters (a *[dendrogram](https://en.wikipedia.org/wiki/Dendrogram)*) instead of a single partition. Its common *agglomerative* (bottom-up) variant starts with one cluster per data point, and repeatedly merges the two closest clusters, until a single cluster remains. The distance between two clusters $$A$$ and $$B$$ is given by the *linkage* criterion:
 - single linkage: the distance between their closest points, $$\min_{a \in A, b \in B} d(a,b)$$. It finds elongated clusters, but can chain distinct clusters together through a few close points;
 - complete linkage: the distance between their farthest points, $$\max_{a \in A, b \in B} d(a,b)$$, which favours compact clusters;
 - average linkage: the average distance between all pairs of points, $$\frac{1}{\mid A \mid \mid B \mid} \sum_{a \in A} \sum_{b \in B} d(a,b)$$;
@@ -306,7 +314,7 @@ Cutting the dendrogram at a given height yields a partition, so the number of cl
 
 ## DBSCAN
 
-[DBSCAN](https://en.wikipedia.org/wiki/DBSCAN) (Density-Based Spatial Clustering of Applications with Noise, Ester et al., 1996) defines clusters as dense regions separated by sparse ones. It takes two parameters, a radius $$\varepsilon$$ and a minimum number of points $$m$$, and labels each point as:
+**[DBSCAN](https://en.wikipedia.org/wiki/DBSCAN)** (Density-Based Spatial Clustering of Applications with Noise, [Ester et al., 1996](https://cdn.aaai.org/KDD/1996/KDD96-037.pdf)) defines clusters as dense regions separated by sparse ones. It takes two parameters, a radius $$\varepsilon$$ and a minimum number of points $$m$$, and labels each point as:
 - a *core point*, if at least $$m$$ points (itself included) lie within distance $$\varepsilon$$ of it;
 - a *border point*, if it is not a core point but lies within distance $$\varepsilon$$ of a core point;
 - *noise*, otherwise.
@@ -315,7 +323,7 @@ Two core points within distance $$\varepsilon$$ of each other belong to the same
 
 ## Spectral Clustering
 
-[Spectral clustering](https://en.wikipedia.org/wiki/Spectral_clustering) treats clustering as a graph partitioning problem. It builds a graph of the data points, with a similarity $$W_{ij}$$ for each pair of points, e.g. $$W_{ij} = \exp ( - \| x_i - x_j \|^2 / 2\sigma^2 )$$ between each point and its nearest neighbours and $$0$$ otherwise, and looks for clusters connected by edges of little weight. With the degree matrix $$D$$, a diagonal matrix with $$D_{ii} = \sum_j W_{ij}$$, the graph [Laplacian](https://en.wikipedia.org/wiki/Laplacian_matrix) is $$L = D - W$$, and for any vector $$f$$:
+**[Spectral clustering](https://en.wikipedia.org/wiki/Spectral_clustering)** treats clustering as a graph partitioning problem. It builds a graph of the data points, with a similarity $$W_{ij}$$ for each pair of points, e.g. $$W_{ij} = \exp ( - \| x_i - x_j \|^2 / 2\sigma^2 )$$ between each point and its nearest neighbours and $$0$$ otherwise, and looks for clusters connected by edges of little weight. With the degree matrix $$D$$, a diagonal matrix with $$D_{ii} = \sum_j W_{ij}$$, the graph [Laplacian](https://en.wikipedia.org/wiki/Laplacian_matrix) is $$L = D - W$$, and for any vector $$f$$:
 
 $$
 f^T L f = \frac{1}{2} \sum_{i,j} W_{ij} (f_i - f_j)^2
@@ -323,14 +331,16 @@ $$
 
 So $$f^T L f$$ is small when $$f$$ takes similar values on strongly connected points, and the eigenvectors of $$L$$ with the smallest eigenvalues vary little within clusters. In particular, the multiplicity of the eigenvalue $$0$$ is the number of connected components of the graph. The algorithm is:
 - compute the eigenvectors $$u_1, ..., u_k$$ of the $$k$$ smallest eigenvalues of $$L$$, or of the normalized Laplacian $$L_{sym} = I - D^{-1/2} W D^{-1/2}$$;
-- stack them as the columns of an $$n \times k$$ matrix $$U$$, and take its $$i$$-th row as the new $$k$$-dimensional representation of point $$x_i$$ (with $$L_{sym}$$, after normalizing each row to unit length);
-- cluster the rows of $$U$$ with k-means.
+- stack them as the columns of an $$n \times k$$ matrix $$H$$, and take its $$i$$-th row as the new $$k$$-dimensional representation of point $$x_i$$ (with $$L_{sym}$$, after normalizing each row to unit length);
+- cluster the rows of $$H$$ with k-means.
 
 This is a relaxation of the NP-hard problem of finding the *ratio cut* (with $$L$$) or the *normalized cut* (with $$L_{sym}$$) of the graph. Spectral clustering separates non-convex clusters (e.g. two concentric rings) that k-means cannot, at the cost of an eigendecomposition of an $$n \times n$$ (sparse) matrix.
 
+For more details, [A Tutorial on Spectral Clustering](https://arxiv.org/abs/0711.0189) (von Luxburg, 2007) derives these algorithms from graph cuts, random walks and perturbation theory, and discusses which graph Laplacian to use.
+
 ## Self-Organizing Maps and Kohonen Maps
 
-A self-organizing map (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). Its main purpose is to represent the training data by localized regions (neurons) that represent agglomerates of inputs, with neighbouring neurons of the grid representing nearby regions of the input space:
+A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by localized regions (neurons) that represent agglomerates of inputs, with neighbouring neurons of the grid representing nearby regions of the input space. The following picture illustrates Kohonen's model (left) and one step of its learning algorithm (right):
 
 {: .picture}
 <img width="45.9%" height="45.9%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg">
@@ -343,27 +353,29 @@ A self-organizing map (SOM) is an unsupervised artificial neural network, typica
 The algorithm is the following:
 - neurons are randomly placed in the multidimensional space;
 - at every iteration, choose an input $$x_u$$;
-- determine which neuron $$k$$ is the *winner* (or *best matching unit*, BMU), i.e. the closest in space:
+- determine which neuron $$j^*$$ is the *winner* (or *best matching unit*, BMU), i.e. the closest in space:
 
 $$
-\| w_k - x_u \| \leq \| w_i - x_u \| \text{, for all } i
+\| w_{j^*} - x_u \| \leq \| w_j - x_u \| \text{, for all } j
 $$
 
 - update the weights of the winner and of its neighbours, by pulling them closer to the input vector:
 
 $$
-\Delta w_j = \eta \, \Lambda (j,k) \, (x_u - w_j)
+\Delta w_j = \eta \, h(j, j^*) \, (x_u - w_j)
 $$
 
-where $$\Lambda (j,k)$$ is the *neighbourhood function*, which decreases with the distance between neurons $$j$$ and $$k$$ in the grid (e.g. a Gaussian). If $$\Lambda$$ is $$1$$ for the winner and $$0$$ for all other neurons, the update above is the online update rule of k-means. It is also common to decrease $$\eta$$ and the width of $$\Lambda$$ as the iterations progress;
+where $$h(j, j^*)$$ is the *neighbourhood function*, which decreases with the distance between neurons $$j$$ and $$j^*$$ in the grid (e.g. a Gaussian). If $$h$$ is $$1$$ for the winner and $$0$$ for all other neurons, the update above is the online update rule of k-means. It is also common to decrease $$\eta$$ and the width of $$h$$ as the iterations progress;
 - repeat until stabilization: either when reaching the maximum number of iterations, or when the change in weights falls below a given threshold.
 
 Very nice videos demonstrating an iterative execution of the Kohonen map can be found [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs).
 
 A good example is the recognition of handwritten digits from the [MNIST database](http://yann.lecun.com/exdb/mnist/).
-Each digit is a 28x28 (=784) pixel array, represented as a data point in a 784-dimensional space. Each pixel is monochromatic, so each dimension takes values between 0 and 255. The task is, given a database of 5000 handwritten digits, to find the 6x6 SOM that best represents 4 of the digits from 0 to 9. This example studies how the neighbourhood width and the learning rate affect the performance of the Kohonen map.
+Each digit is a 28x28 (=784) pixel array, represented as a data point in a 784-dimensional space. Each pixel is monochromatic, so each dimension takes values between 0 and 255.
 
-The input dataset and the `python` implementation are available in <a href="{{ site.assets }}/unsupervised-learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to fine-tune the neighbourhood width and the learning rate $$\eta$$. A good solution gives a visual perception of the digits being identified (in this case 0, 1, 2 and 3), as the weights of each neuron form a 28x28 image. Three possible outputs are discussed below:
+The task is, given a database of 5000 handwritten digits, to find the 6x6 SOM that best represents 4 of the digits from 0 to 9. This example studies how the neighbourhood width and the learning rate affect the performance of the Kohonen map.
+
+The input dataset and the `python` implementation are available in <a href="{{ site.assets }}/unsupervised-learning/kohonen_mnist.zip">kohonen_mnist.zip</a>. The goal is to fine-tune the neighbourhood width and the learning rate $$\eta$$. A good solution gives a visual perception of the digits being identified (in this case 0, 1, 2 and 3), as the weights of each neuron form a 28x28 image. Three possible outputs are displayed in the pictures below:
 - left: a nicely tuned SOM, where each quadrant of neurons represents a digit;
 - center: a SOM with a high learning rate. The large step size makes neurons *step* over long distances during training, leading to a mixing of digits on nearby neurons, and possibly a *tangled* SOM;
 - right: a SOM with a large neighbourhood width. The large width causes all neurons to behave almost synchronously, due to the very wide range of the update function. This leads to very similar outputs per neuron.
@@ -383,13 +395,13 @@ More examples can be found in the [Wikipedia entry for self-organizing maps](htt
 
 PCA preserves the global, linear structure of the data, which is often not what one wants to see when visualizing high-dimensional data in 2D or 3D. *Neighbour embedding* methods instead place similar points close together, preserving local neighbourhoods.
 
-[t-SNE](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding) (t-distributed Stochastic Neighbor Embedding, van der Maaten and Hinton, 2008) turns distances into probabilities. In the input space, the similarity of point $$x_j$$ to point $$x_i$$ is:
+**[t-SNE](https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding)** (t-distributed Stochastic Neighbor Embedding, [van der Maaten and Hinton, 2008](https://www.jmlr.org/papers/v9/vandermaaten08a.html)) turns distances into probabilities. In the input space, the similarity of point $$x_j$$ to point $$x_i$$ is:
 
 $$
 p_{j \mid i} = \frac{\exp \left( - \| x_i - x_j \|^2 / 2 \sigma_i^2 \right)}{\sum_{k \neq i} \exp \left( - \| x_i - x_k \|^2 / 2 \sigma_i^2 \right)}
 $$
 
-where each $$\sigma_i$$ is set so that the distribution $$p_{\cdot \mid i}$$ has a given *perplexity* (roughly, the number of effective neighbours, typically 5 to 50), and the symmetric similarity of the pair is $$p_{ij} = (p_{j \mid i} + p_{i \mid j}) / 2n$$. In the low-dimensional embedding $$y_1, ..., y_n$$, similarities follow a Student t-distribution with one degree of freedom:
+where each $$\sigma_i$$ is set so that the distribution $$p_{\cdot \mid i}$$ has a given *[perplexity](https://en.wikipedia.org/wiki/Perplexity)* (roughly, the number of effective neighbours, typically 5 to 50), and the symmetric similarity of the pair is $$p_{ij} = (p_{j \mid i} + p_{i \mid j}) / 2n$$. In the low-dimensional embedding $$y_1, ..., y_n$$, similarities follow a [Student t-distribution](https://en.wikipedia.org/wiki/Student%27s_t-distribution) with one degree of freedom:
 
 $$
 q_{ij} = \frac{\left(1 + \| y_i - y_j \|^2 \right)^{-1}}{\sum_{k \neq l} \left( 1 + \| y_k - y_l \|^2 \right)^{-1}}
@@ -401,15 +413,15 @@ $$
 \frac{\partial KL}{\partial y_i} = 4 \sum_{j} (p_{ij} - q_{ij}) (y_i - y_j) \left( 1 + \| y_i - y_j \|^2 \right)^{-1}
 $$
 
-The heavy tails of the t-distribution let moderately distant points move far apart in the embedding. This avoids the *crowding problem* that a Gaussian would have in low dimensions, and produces well-separated clusters. Two caveats: the sizes of the clusters and the distances between them in a t-SNE plot carry little meaning, and the result depends on the perplexity and the random initialization. Each iteration costs $$O(n^2)$$, or $$O(n \log n)$$ with the Barnes-Hut approximation.
+The heavy tails of the t-distribution let moderately distant points move far apart in the embedding. This avoids the *crowding problem* that a Gaussian would have in low dimensions, and produces well-separated clusters. Two caveats: the sizes of the clusters and the distances between them in a t-SNE plot carry little meaning, and the result depends on the perplexity and the random initialization. Each iteration costs $$O(n^2)$$, or $$O(n \log n)$$ with the [Barnes-Hut approximation](https://en.wikipedia.org/wiki/Barnes%E2%80%93Hut_simulation).
 
-[UMAP](https://umap-learn.readthedocs.io/) (Uniform Manifold Approximation and Projection, [McInnes et al., 2018](https://arxiv.org/abs/1802.03426)) follows the same idea with a different construction. It builds a weighted graph of the $$k$$ nearest neighbours of each point, with weights:
+**[UMAP](https://umap-learn.readthedocs.io/)** (Uniform Manifold Approximation and Projection, [McInnes et al., 2018](https://arxiv.org/abs/1802.03426)) follows the same idea with a different construction. It builds a weighted graph of the $$k$$ nearest neighbours of each point, with weights:
 
 $$
 v_{j \mid i} = \exp \left( - \frac{d(x_i, x_j) - \rho_i}{\sigma_i} \right)
 $$
 
-where $$\rho_i$$ is the distance from $$x_i$$ to its nearest neighbour, and $$\sigma_i$$ is set so that $$\sum_j v_{j \mid i} = \log_2 k$$. The weights are made symmetric as $$v_{ij} = v_{j \mid i} + v_{i \mid j} - v_{j \mid i} \, v_{i \mid j}$$. In the embedding, the similarities are $$w_{ij} = \left( 1 + a \| y_i - y_j \|^{2b} \right)^{-1}$$, with $$a$$ and $$b$$ set by the minimum distance between embedded points, and the embedding minimizes the cross-entropy between the two graphs:
+where $$\rho_i$$ is the distance from $$x_i$$ to its nearest neighbour, and $$\sigma_i$$ is set so that $$\sum_j v_{j \mid i} = \log_2 k$$. The weights are made symmetric as $$v_{ij} = v_{j \mid i} + v_{i \mid j} - v_{j \mid i} \, v_{i \mid j}$$. In the embedding, the similarities are $$w_{ij} = \left( 1 + a \| y_i - y_j \|^{2b} \right)^{-1}$$, with $$a$$ and $$b$$ set by the minimum distance between embedded points, and the embedding minimizes the [cross-entropy](https://en.wikipedia.org/wiki/Cross-entropy) between the two graphs:
 
 $$
 \sum_{i \neq j} v_{ij} \log \frac{v_{ij}}{w_{ij}} + (1 - v_{ij}) \log \frac{1 - v_{ij}}{1 - w_{ij}}
@@ -419,7 +431,7 @@ with stochastic gradient descent and negative sampling. The second term pushes a
 
 ## Autoencoders and Self-Supervised Learning
 
-An [autoencoder](https://en.wikipedia.org/wiki/Autoencoder) is a neural network trained to reproduce its input. An encoder $$f$$ maps the input $$x$$ to a lower-dimensional *code* $$z = f(x)$$, and a decoder $$g$$ maps the code back to a reconstruction $$\hat{x} = g(z)$$. Both are trained together to minimize the reconstruction error, e.g.:
+An **[autoencoder](https://en.wikipedia.org/wiki/Autoencoder)** is a neural network trained to reproduce its input. An encoder $$f$$ maps the input $$x$$ to a lower-dimensional *code* $$z = f(x)$$, and a decoder $$g$$ maps the code back to a reconstruction $$\hat{x} = g(z)$$. Both are trained together to minimize the reconstruction error, e.g.:
 
 $$
 \min_{f, g} \sum_{n} \| x_n - g(f(x_n)) \|^2
@@ -430,15 +442,19 @@ The narrow code (the *bottleneck*) forces the network to keep only the most info
 - *denoising autoencoders*, that reconstruct the clean input $$x$$ from a corrupted version $$\tilde{x}$$ (e.g. with added noise or masked entries), which forces them to learn the structure of the data instead of the identity function;
 - [variational autoencoders](https://en.wikipedia.org/wiki/Variational_autoencoder), that learn a distribution over the codes, which turns the decoder into a generative model.
 
-Denoising autoencoders are an early example of **[self-supervised learning](https://en.wikipedia.org/wiki/Self-supervised_learning)**: the training targets come from the data itself, by hiding part of the input and predicting it. This is how most large models are pretrained today: language models predict the next token of a text, BERT ([Devlin et al., 2018](https://arxiv.org/abs/1810.04805)) predicts masked words, and masked autoencoders ([He et al., 2021](https://arxiv.org/abs/2111.06377)) reconstruct masked patches of images. *Contrastive learning* is another self-supervised approach: methods like [SimCLR](https://arxiv.org/abs/2002.05709) create two augmented views of each image, and train an encoder so that the embeddings $$z_i$$ and $$z_j$$ of two views of the same image are close, and far from the embeddings of the other images in the batch, with the loss:
+Denoising autoencoders are an early example of **[self-supervised learning](https://en.wikipedia.org/wiki/Self-supervised_learning)**: the training targets come from the data itself, by hiding part of the input and predicting it. This is how most large models are pretrained today: language models predict the next token of a text, BERT ([Devlin et al., 2018](https://arxiv.org/abs/1810.04805)) predicts masked words, and masked autoencoders ([He et al., 2021](https://arxiv.org/abs/2111.06377)) reconstruct masked patches of images. *Contrastive learning* is another self-supervised approach: methods like [SimCLR](https://arxiv.org/abs/2002.05709) (Chen et al., 2020) create two augmented views of each image. An encoder is then trained so that the embeddings $$z_i$$ and $$z_j$$ of two views of the same image are close, and far from the embeddings of the other images in the batch, with the loss:
 
 $$
 \ell_{i,j} = - \log \frac{\exp \left( \text{sim}(z_i, z_j) / \tau \right)}{\sum_{k \neq i} \exp \left( \text{sim}(z_i, z_k) / \tau \right)}
 $$
 
-where $$\text{sim}$$ is the cosine similarity and $$\tau$$ is a temperature. The representations learned this way can then be used for clustering or retrieval, or fine-tuned on a supervised task with few labels.
+where $$\text{sim}$$ is the [cosine similarity](https://en.wikipedia.org/wiki/Cosine_similarity) and $$\tau$$ is a temperature. The representations learned this way can then be used for clustering or retrieval, or fine-tuned on a supervised task with few labels.
 
 ## The Curse of Dimensionality
 
-As a final remark, distance-based methods struggle with high-dimensional data, in particular with Euclidean distances. This is due to a phenomenon called the [curse of dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality): as the number of dimensions increases, the distances between any two points become similar, which makes the distance metric almost irrelevant. For example, for points with independent and identically distributed coordinates, the relative difference between the distances from a point to its farthest and to its nearest neighbour, $$(d_{max} - d_{min}) / d_{min}$$, tends to 0 as the number of dimensions grows ([Beyer et al., 1999](https://link.springer.com/chapter/10.1007/3-540-49257-7_15)). The soundness of the claim is not detailed here, but this [blog post](https://medium.com/towards-data-science/that-cursing-dimensionality-ac317fb0fdcc) covers the curse of dimensionality in more detail. This is one more reason to reduce the dimensionality of the data, e.g. with PCA, before clustering it.
+As a final remark, distance-based methods struggle with high-dimensional data, in particular with Euclidean distances. This is due to a phenomenon called the **[curse of dimensionality](https://en.wikipedia.org/wiki/Curse_of_dimensionality)**: as the number of dimensions increases, the distances between any two points become similar, which makes the distance metric almost irrelevant. For example, for points with independent and identically distributed coordinates, the relative difference between the distances from a point to its farthest and nearest neighbours, $$(d_{max} - d_{min}) / d_{min}$$, tends to 0 as the number of dimensions grows ([Beyer et al., 1999](https://link.springer.com/chapter/10.1007/3-540-49257-7_15)).
+
+The soundness of the claim is not detailed here, but this [blog post](https://medium.com/towards-data-science/that-cursing-dimensionality-ac317fb0fdcc) covers the curse of dimensionality in more detail. This phenomenon is one more reason to reduce the dimensionality of the data, e.g. with PCA, before clustering it.
+
+To find more about the topic, the book [Pattern Recognition and Machine Learning](https://www.microsoft.com/en-us/research/publication/pattern-recognition-machine-learning/) by Christopher Bishop covers k-means, Gaussian mixtures and the EM algorithm (chapter 9), and PCA, kernel PCA, ICA and autoencoders (chapter 12).
 

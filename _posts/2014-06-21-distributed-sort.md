@@ -32,14 +32,14 @@ Sorting is probably the most common algorithm in computer science. At some point
 
 Most of these algorithms allow for a multicore implementation: the underlying recursive- or tree-based nature of the problem makes them well suited for parallel execution on a single memory region.
 
-However, if the list of elements is spread across a network of compute nodes (i.e. a [distributed memory](https://en.wikipedia.org/wiki/Distributed_memory) environment), the solution is not trivial. With that in mind, this post presents two algorithms for sorting distributed lists.
+However, if the list of elements is spread across a network of compute nodes (i.e. a [distributed memory](https://en.wikipedia.org/wiki/Distributed_memory) environment), the solution is not trivial. With that in mind, this post presents two algorithms for sorting distributed lists: the odd-even sort and the sample sort.
 
 ## Distributed Odd-Even Sort
 
-The first one is the **[Odd-Even sort](https://en.wikipedia.org/wiki/Odd%E2%80%93even_sort)**, a distributed swap-based sorting algorithm. Its rationale is the following:
+The first one is the **[Odd-Even sort](https://en.wikipedia.org/wiki/Odd%E2%80%93even_sort)**, a distributed swap-based sorting algorithm. It was presented by Habermann in 1972 for a line of processors that hold one element each, and extended to several elements per processor by [Baudet and Stevenson](https://doi.org/10.1109/TC.1978.1674957) in 1978. Its rationale is the following:
 1. compute nodes (ranks) are numbered sequentially. Each node has two neighbors: the next and the previous rank;
-2. every node sorts its elements. Then, at every iteration, it exchanges all its elements with one of its neighbors (alternately the next and the previous rank), merges them with its own, and keeps the smallest elements if it is the lower rank of the pair, or the largest ones otherwise (a **compare-split** operation);
-3. if all nodes hold the same number of elements, the operation is complete after a number of iterations equal to the number of compute nodes (otherwise, it continues until two consecutive iterations change no element).
+2. every node sorts its elements. Then, at every iteration (or *phase*), it exchanges all its elements with one of its neighbors (alternately the next and the previous rank), merges them with its own, and keeps the smallest elements if it is the lower rank of the pair, or the largest ones otherwise (a **compare-split** operation);
+3. if all nodes hold the same number of elements, the operation is complete after a number of phases equal to the number of compute nodes (otherwise, it continues until two consecutive phases change no element).
 
 The algorithm is illustrated with a sample dataset in the following workflow: 
 
@@ -49,14 +49,14 @@ The algorithm is illustrated with a sample dataset in the following workflow:
 {: .caption}
 Odd-even sort of 20 elements on $$p = 5$$ ranks, colored by rank. Every rank holds 4 elements, so the list is sorted after $$p$$ phases. Step 2.2 shows the compare-split of ranks 0 and 1 in phase 0.
 
-The algorithm has the advantage of being very *memory-stable*, i.e. one can predict the worst-case memory consumption in advance. Moreover, each compute node ends up with the same number of elements it started with, so the initial load balancing across nodes is preserved. However, it is inefficient for a very large network of nodes, as it requires a high number of iterations, and each iteration sends all the elements of a node to its neighbor.
+The algorithm has the advantage of being very *memory-stable*, i.e. one can predict the worst-case memory consumption in advance. Moreover, each compute node ends up with the same number of elements it started with, so the initial load balancing across nodes is preserved. However, it is inefficient for a very large network of nodes, as it requires a high number of phases, and each phase sends all the elements of a node to its neighbor.
 
 ## Distributed Sample Sort
 
-A faster alternative is based on a distributed implementation of the **[sample sort](https://en.wikipedia.org/wiki/Samplesort)**. The algorithm is as follows:
+A faster alternative is based on a distributed implementation of the **[sample sort](https://en.wikipedia.org/wiki/Samplesort)**, a serial sorting algorithm introduced by [Frazer and McKellar](https://doi.org/10.1145/321592.321600) in 1970. The algorithm is as follows:
 1. Each compute node sorts its local dataset and collects a few equidistant samples from it;
 2. Samples are sent to the master rank, which sorts them and picks $$p-1$$ equidistant samples (the **splitters**, for $$p$$ compute nodes) from the set of received samples;
-3. The master rank broadcasts the new samples to the network. The $$p-1$$ splitters delimit the range/interval of values to be sent to each of the $$p$$ nodes; 
+3. The master rank broadcasts the splitters to the network. The $$p-1$$ splitters delimit the range/interval of values to be sent to each of the $$p$$ nodes; 
 4. Based on those ranges, the compute nodes perform a [collective](https://en.wikipedia.org/wiki/Collective_operation) scatter-gather (or a selective all-to-all) in which each element is sent to the appropriate target rank;
 5. A final sort of the data in each memory region yields a globally sorted dataset, distributed across the network.
 
@@ -68,6 +68,8 @@ Here is an illustrative workflow:
 {: .caption}
 Sample sort of 21 elements on $$p = 3$$ ranks, colored by rank. Each rank sends $$p-1 = 2$$ samples to rank 0, which sorts them and picks every $$p$$-th one as a splitter (yellow): 4 and 10. The last interval is open: rank 2 receives every element from 10 upwards.
 
-This method is computationally very efficient, as the number of communication operations is constant, regardless of the input size or network size. However, it may lead to a highly heterogeneous number of elements across nodes, which leads to a computational and memory imbalance. If necessary, a network balancing operation may follow the sorting to balance the dataset across the network. In brief, the sample sort is preferred on large networks, and the odd-even sort on small networks or when each node must keep its number of elements.
+This method is computationally very efficient, as the number of communication operations is constant, regardless of the input size or network size, and each element is sent at most once. However, it may lead to a highly heterogeneous number of elements across nodes (from 4 to 9 in the example above), which leads to a computational and memory imbalance. If necessary, a network balancing operation may follow the sorting to balance the dataset across the network. In brief, the sample sort is preferred on large networks, and the odd-even sort on small networks or when each node must keep its number of elements.
 
-The `C++` implementation of both algorithms is available in <a href="https://github.com/{{ site.repository }}/blob/master/assets/distributed-sort/distributedmemorysorter.cxx">DistributedMemorySorter.cxx</a> and <a href="https://github.com/{{ site.repository }}/blob/master/assets/distributed-sort/distributedmemorysorter.h">DistributedMemorySorter.h</a>. 
+The `C++` implementation of both algorithms, with [MPI](https://en.wikipedia.org/wiki/Message_Passing_Interface), is available in <a href="https://github.com/{{ site.repository }}/blob/master/assets/distributed-sort/distributedmemorysorter.cxx">DistributedMemorySorter.cxx</a> and <a href="https://github.com/{{ site.repository }}/blob/master/assets/distributed-sort/distributedmemorysorter.h">DistributedMemorySorter.h</a>.
+
+To find more about the topic, the [slides of chapter 9](https://www.cs.purdue.edu/homes/ayg/book/Slides/chap9_slides.pdf) of the book Introduction to Parallel Computing by Grama, Gupta, Karypis and Kumar cover both algorithms, and the parallel versions of the quicksort and the bitonic sort.

@@ -12,7 +12,9 @@ tags: ["spiking neurons", "LIF", "Brunel network", "simulation"]
 [nest]:http://www.nest-simulator.org/
 [euler]: https://en.wikipedia.org/wiki/Euler_method
 
-The Leaky Integrate-and-Fire [neuron model](https://en.wikipedia.org/wiki/Biological_neuron_model) (LIF, first described in 1907 by [Louis Lapicque](https://en.wikipedia.org/wiki/Louis_Lapicque)) simplifies the complexity of neurons and assumes the neuron structure to be a single leaky compartment (*point neuron model*) with a membrane described by an [RC circuit](https://en.wikipedia.org/wiki/RC_circuit), as:
+The Leaky Integrate-and-Fire [neuron model](https://en.wikipedia.org/wiki/Biological_neuron_model) (LIF) was first described in 1907 by [Louis Lapicque](https://en.wikipedia.org/wiki/Louis_Lapicque). This post derives the equations of the LIF neuron, compares exact and approximate methods to solve them, and simulates the Brunel network of excitatory and inhibitory LIF neurons.
+
+The LIF model simplifies the complexity of neurons and assumes the neuron structure to be a single leaky compartment (*point neuron model*) with a membrane described by an [RC circuit](https://en.wikipedia.org/wiki/RC_circuit), as:
 
 {: .picture}
 <img width="22.5%" height="22.5%" src="{{ site.assets }}/lif-brunel/rc.svg">
@@ -30,7 +32,7 @@ $$
 C \frac{dV}{dt}(t) = -\frac{V(t)}{R} + I(t) 
 $$
 
-It is common to multiply all terms by $$R$$ to expose the **time constant** $$\tau = R C$$. This is a very important metric in the analysis of the behaviour of models, as it tells how *fast* the dynamics of the neuron are. The formulation then becomes:
+It is common to multiply all terms by $$R$$ to expose the **[time constant](https://en.wikipedia.org/wiki/Time_constant)** $$\tau = R C$$. This is a very important metric in the analysis of the behaviour of models, as it tells how *fast* the dynamics of the neuron are. The formulation then becomes:
 
 $$
 \tau \frac{dV}{dt}(t) = -V(t) + RI(t) 
@@ -44,7 +46,7 @@ RI(t)_i = \tau \sum_{j} J_{ij} \sum_{t^\prime} \delta (t-t^\prime _{j} -D)
 \label{equation_current}
 $$
 
-where $$J_{ij}$$ is the **postsynaptic potential** (PSP) amplitude, 
+where $$J_{ij}$$ is the **[postsynaptic potential](https://en.wikipedia.org/wiki/Postsynaptic_potential)** (PSP) amplitude, 
 $$\delta (t)$$ the [Dirac function](https://en.wikipedia.org/wiki/Dirac_delta_function), $$t^\prime _{j}$$ the spiking times $$t^\prime$$ of the pre-synaptic neuron $$j$$, and 
 $$D$$ the transmission delay. For simplicity, $$V(t)$$ is represented as $$V_t$$. 
 
@@ -66,13 +68,13 @@ Two different stepping methods are derived from the analytical solution of the f
 - Calculate the decay from the previous step: $$V_t \leftarrow V_{t- \Delta t} \exp(\frac{-\Delta t}{\tau})$$  
 - Add the voltage change due to the network current $$RI$$ between $$t-\Delta t$$ and $$t$$: $$V_t \leftarrow  V_t + RI_{(t-\Delta t, t]} / \tau $$, where $$RI_{(t-\Delta t, t]}$$ is the integral of $$RI$$ over that interval.
 
-Neurons can be advanced with fixed-step or variable-step interpolation:
-- **Fixed step** interpolation assumes the interpolation interval $$\Delta t$$ to be constant throughout the execution.
+Neurons can be advanced with fixed-step or variable-step integration:
+- **Fixed step** integration assumes the time step $$\Delta t$$ to be constant throughout the execution.
 - **Variable step** methods advance the neuron with the smallest $$t$$ in the network, with a $$\Delta t$$ computed as the minimum of the following two values:
   - the time difference to the next incoming spike, so that each spike is added at its exact time;
   - $$t^\star + D - t$$, where $$t^\star$$ is the time of the neuron with the second smallest $$t$$ and $$D$$ is the synaptic delay, i.e. the largest step that can be taken from the neuron at $$t$$ without missing a spike from the neuron at time $$t^\star$$ (if it spikes).  
 
-The fixed and variable step interpolations can also be solved numerically, instead of using the analytical solution.
+The fixed and variable step integrations can also be computed numerically, instead of using the analytical solution.
 This is common practice for efficiency purposes, as the required exponential and division operations are computationally costly when $$\Delta t$$ changes at every step. The solution is not exact, but it approximates the exact solution *well enough* when the timestep $$\Delta t$$ is *small enough*. As a simple example, two approximate fixed-step [Euler methods][euler] can be used:
 - **Explicit Forward Euler:** 
 
@@ -100,6 +102,8 @@ with $$\frac{dV_{t}}{dt}$$ and $$RI_{(t-\Delta t, t]}$$ computed from equations 
 
 With a fixed step, however, the three methods have the same cost, as the factor $$\exp(\frac{-\Delta t}{\tau})$$ of the analytical solution is a constant, computed only once. Explicit Euler is stable only for $$\Delta t < 2 \tau$$, while implicit Euler is stable for any $$\Delta t$$.
 
+The variable step method is an **event-driven** algorithm: it is the most accurate, as each spike is added at its exact time, but it advances one neuron at a time. The fixed step methods are **clock-driven**: they advance all neurons together at every step, but align the spike times to the time grid ([Brette et al., 2007](https://arxiv.org/abs/q-bio/0611089)). In practice, the fixed step suits large networks, as all neurons run the same operations at every step, while the variable step suits models where the exact timing of spikes matters.
+
 For the sake of comparison, the picture below illustrates the potential over time of a given neuron in a network, for the aforementioned methods, on a $$100ms$$ simulation of a (Brunel) network of $$10000$$ neurons with default neuron parameters. Results are given for the Implicit and Explicit Euler methods with $$\Delta t = 0.1ms$$, and for the analytical solution with fixed ($$\Delta t=0.1ms$$) and variable timestepping:
 
 {: .picture}
@@ -109,9 +113,11 @@ Note the vertical straight lines, which refer to the voltage reset after a spike
 
 ## Brunel Network
 
-Network activity was just mentioned in the previous section. Indeed, a neuron without any kind of stimulus (either electric current injection or synaptic currents) will always remain at rest.
+Network activity was mentioned in the previous section. Indeed, a neuron without any kind of stimulus (either electric current injection or synaptic currents) will always remain at rest.
 
-The most common model of network activity is called the Brunel Network Model ([Dynamics of Sparsely Connected Networks of Excitatory and Inhibitory Spiking Neurons, Brunel, Journal of Computational Neuroscience][brunel-paper], [pdf][brunel-paper-pdf]). It is highly relevant, as it provides a good estimation of network dynamics. The model proposes a network of 10000 simulated LIF neurons (80% excitatory, 20% inhibitory; the simulations of the paper use 12500), with external stimuli provided by excitatory neurons outside the network, which connect to both the excitatory and the inhibitory neurons. Excitatory means that the PSP is positive; the converse holds for inhibitory neurons. The external neurons are not simulated, so their spiking is generated by a [Poisson](https://en.wikipedia.org/wiki/Poisson_point_process) random generator (PG). The diagram is the following:
+The most common model of network activity is called the **Brunel Network Model** ([Dynamics of Sparsely Connected Networks of Excitatory and Inhibitory Spiking Neurons, Brunel, Journal of Computational Neuroscience, 2000][brunel-paper], [pdf][brunel-paper-pdf]). It is highly relevant, as it provides a good estimation of network dynamics.
+
+The model proposes a network of 10000 simulated LIF neurons (80% excitatory, 20% inhibitory; the paper simulates 12500), with external stimuli from excitatory neurons outside the network, which connect to both the excitatory and the inhibitory neurons. Excitatory means that the PSP is positive; the converse holds for inhibitory neurons. The external neurons are not simulated, so their spiking is generated by a [Poisson](https://en.wikipedia.org/wiki/Poisson_point_process) random generator (PG). The diagram is the following:
 
 {: .picture}
 <img width="33.5%" height="33.5%" src="{{ site.assets }}/lif-brunel/network.svg">
@@ -140,11 +146,11 @@ The tricky part here is to define the parameters of the network in terms of conn
     <tr><th style="text-align: left">Parameter</th><th style="text-align: right">Value</th></tr>
   </thead>
   <tbody>
-    <tr><td style="text-align: left" markdown="span">Membrane time constant $$\tau_m$$</td><td style="text-align: right">20 ms</td></tr>
+    <tr><td style="text-align: left" markdown="span">Membrane time constant $$\tau$$</td><td style="text-align: right">20 ms</td></tr>
     <tr><td style="text-align: left" markdown="span">Refractory period $$\tau_{\text{rp}}$$</td><td style="text-align: right">2 ms</td></tr>
     <tr><td style="text-align: left" markdown="span">Firing threshold $$V_{\text{th}}$$</td><td style="text-align: right">20 mV</td></tr>
-    <tr><td style="text-align: left" markdown="span">Membrane capacitance $$C_m$$</td><td style="text-align: right">1pF</td></tr>
-    <tr><td style="text-align: left" markdown="span">Resting potential $$V_E$$</td><td style="text-align: right">0 mV</td></tr>
+    <tr><td style="text-align: left" markdown="span">Membrane capacitance $$C$$</td><td style="text-align: right">1 pF</td></tr>
+    <tr><td style="text-align: left" markdown="span">Resting potential $$u_{\text{rest}}$$</td><td style="text-align: right">0 mV</td></tr>
     <tr><td style="text-align: left" markdown="span">Reset potential $$V_{\text{reset}}$$</td><td style="text-align: right">10 mV</td></tr>
     <tr><td style="text-align: left" markdown="span">Excitatory PSP amplitude $$J_E$$</td><td style="text-align: right">0.1 mV</td></tr>
     <tr><td style="text-align: left" markdown="span">Inhibitory PSP amplitude $$J_I$$</td><td style="text-align: right">-0.5 mV</td></tr>
@@ -156,7 +162,7 @@ The tricky part here is to define the parameters of the network in terms of conn
 {: .caption}
 source: Marc-Oliver Gewaltig, ResearchGate
 
-The stimuli parameters can now be adjusted to regulate network activity. Brunel defines a model for slow, asynchronous and fast network dynamics, which exhibit the following average neuron spiking rates (Hz) and global oscillation frequencies (Hz) of the network activity, where SI stands for synchronous irregular and AI for asynchronous irregular:
+The stimuli parameters can now be adjusted to regulate network activity. The background rate $$\eta$$ is the rate of the Poisson generators, in units of the rate that brings a neuron to its threshold without the input of the network. The relative strength $$g$$ of the inhibitory synapses sets $$J_I = -g J_E$$. Brunel defines a model for slow, asynchronous and fast network dynamics, which exhibit the following average neuron spiking rates (Hz) and global oscillation frequencies (Hz) of the network activity, where SI stands for synchronous irregular and AI for asynchronous irregular:
 
 <table>
   <thead>
@@ -194,9 +200,11 @@ A `C++`-based Brunel network model of LIF neurons was implemented, and the appro
 {: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/lif-brunel/raster_plot_g3_f2.svg">
 
+In the pictures above, the global activity oscillates slowly in the SI slow state, where each neuron fires irregularly at a very low rate, and is stationary in the AI state. In the SR state, the network is almost fully synchronized, and the neurons fire regularly at high rates.
 
 ## Other resources
 
 - A thorough explanation of the Leaky Integrate-and-Fire model is available in the relevant section of the online copy of the [Neuronal Dynamics book from Wulfram Gerstner at EPFL][lif-gerstner].
+- The states of the Brunel network and its phase diagram are explained in [section 13.4 of the same book](https://neuronaldynamics.epfl.ch/online/Ch13.S4.html).
 - A `Python` implementation of a Brunel network using the [NEST][nest] simulator is described in [NEST by Example: An Introduction to the Neural Simulation Tool NEST, Marc-Oliver Gewaltig et al., Springer Link][nest-brunel].
 - The `C++` code of this exercise can be downloaded as <a href="{{ site.assets }}/lif-brunel/lif-brunel.tar.gz">lif-brunel.tar.gz</a>. To help understand the code, the include graph of `Simulation.cpp` is available in <a href="{{ site.assets }}/lif-brunel/diagram_class.svg">diagram_class.svg</a>.

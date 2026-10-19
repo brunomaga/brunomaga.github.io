@@ -5,7 +5,9 @@ categories: ["Machine Learning"]
 tags: ["variational inference", "ELBO", "GMM", "MCMC"]
 ---
 
-A [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}) about Bayesian inference showed that its goal is to compute the likelihood of the observed data and the mode of the density of the likelihood, marginal distribution and conditional distributions. Recall the formulation of the **posterior** of the latent variable $$z$$ given the observations $$x$$, derived from the Bayes rule, with and without the normalization term:
+In 1987, the paper [A Mean Field Theory Learning Algorithm for Neural Networks](https://www.complex-systems.com/abstracts/v01_i05_a06/) sped up the training of a neural network by replacing its slow stochastic sampling with the deterministic equations of mean-field theory, a method of statistical physics. This idea was then extended to a wide class of probabilistic models, as presented in the tutorial [An Introduction to Variational Methods for Graphical Models](https://doi.org/10.1023/A:1007665907178) in 1999.
+
+A [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}) about Bayesian inference showed that its goal is to compute the likelihood of the observed data and the mode of the density of the likelihood, marginal distribution and conditional distributions. Recall the formulation of the **posterior** of the [latent variable](https://en.wikipedia.org/wiki/Latent_and_observable_variables) $$z$$ given the observations $$x$$, derived from the Bayes rule, with and without the normalization term:
 
 $$
 p (z \mid x) = \frac{p(z) \, p(x \mid z)}{p(x)} \propto p(z) \, p(x \mid z)
@@ -20,7 +22,7 @@ p (z \mid x ) = \frac{p(z,x)}{p(x)}
 \label{eq_conditional}
 $$
 
-where the denominator represents the marginal density of $$x$$ (i.e. the observations), also referred to as the **evidence**, which can be calculated by **marginalizing** out the latent variables $$z$$ from the joint distribution:
+where the denominator represents the marginal density of $$x$$ (i.e. the observations), also referred to as the **[evidence](https://en.wikipedia.org/wiki/Marginal_likelihood)**, which can be calculated by **marginalizing** out the latent variables $$z$$ from the joint distribution:
 
 $$
 p(x) = \int p(z,x) dz
@@ -29,17 +31,19 @@ $$
 
 The inference problem is to compute the conditional probability of the latent variables $$z$$ given the observations $$x$$ in $$X$$, i.e. to condition on the data and compute the posterior $$p(z \mid x)$$. For many models, this evidence integral has no closed-form solution or requires exponential time to compute. 
 
-**There are several approaches to inference**, comprising algorithms for exact inference (Brute force, the [elimination algorithm](https://en.wikipedia.org/wiki/Variable_elimination), Message passing (sum-product algorithm, [Belief propagation](https://en.wikipedia.org/wiki/Belief_propagation)), [Junction tree algorithm](https://en.wikipedia.org/wiki/Junction_tree_algorithm)), and for approximate inference (Loopy belief propagation, [Variational (Bayesian) inference](https://en.wikipedia.org/wiki/Variational_Bayesian_methods), Stochastic simulation / sampling / Markov Chain Monte Carlo). Why are approximate methods needed after all? Simply because in many cases the posterior distribution cannot be computed directly, i.e. the posterior has an **intractable** form (often involving integrals) that cannot be (easily) computed. **This post focuses on the simplest approach to Variational Inference, based on the mean-field approximation**.
+**There are several approaches to inference**, comprising algorithms for exact inference (Brute force, the [elimination algorithm](https://en.wikipedia.org/wiki/Variable_elimination), Message passing (sum-product algorithm, [Belief propagation](https://en.wikipedia.org/wiki/Belief_propagation)), [Junction tree algorithm](https://en.wikipedia.org/wiki/Junction_tree_algorithm)). Other algorithms perform approximate inference (Loopy belief propagation, [Variational (Bayesian) inference](https://en.wikipedia.org/wiki/Variational_Bayesian_methods), Stochastic simulation / sampling / Markov Chain Monte Carlo). Approximate methods are needed because, in many cases, the posterior distribution cannot be computed directly, i.e. the posterior has an **intractable** form (often involving integrals) that cannot be (easily) computed.
+
+**This post focuses on the simplest approach to Variational Inference, based on the mean-field approximation**. After a detour on Markov Chain Monte Carlo, it derives the Evidence Lower Bound (ELBO) and the coordinate ascent variational inference (CAVI) algorithm, applies it to a Gaussian mixture model, and ends with Stochastic Variational Inference.
 
 ## Detour: Markov Chain Monte Carlo
 
 Before moving on to Variational Inference, it helps to understand the place of VI in this type of inference. For many years, the dominant approach was [Markov chain Monte Carlo (MCMC)](https://en.wikipedia.org/wiki/Markov_chain_Monte_Carlo). A simple high-level understanding of MCMC follows from the name itself.
 
-[Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters by generating random numbers. A simple example is to compute the area of a circle by generating random 2D coordinates within the bounding square around the circle, and to estimate the value of $$\pi$$ or the area of the circle from the proportion of generated datapoints that fall inside vs outside the circle in the square.
+[Monte Carlo](https://en.wikipedia.org/wiki/Monte_Carlo_method) methods are a simple way of estimating parameters by generating random numbers. A simple example is to compute the area of a circle by generating random 2D coordinates within the bounding square around the circle. The value of $$\pi$$ or the area of the circle is then estimated from the proportion of generated datapoints that fall inside vs outside the circle in the square.
 
-A [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain) is a stochastic model describing a sequence of events in which the probability of moving to the next state depends *only* on the current state and not on the previous ones; an example would be the probability of the next character in a word, for all *27* possible characters, given the current character.
+A [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain) is a stochastic model describing a sequence of events in which the probability of moving to the next state depends *only* on the current state and not on the previous ones. An example is the probability of the next character in a word, for all *27* possible characters, given the current character.
 
-Therefore, MCMC methods are used to approximate the distribution (state) of parameters at the next iteration by random sampling from a probabilistic space defined by the current state. MCMC is based on the assumption that the prior-likelihood product $$ P(x \mid z) \, P(z)$$ can be computed, i.e. is known, for a given $$z$$. However, this can be done without any knowledge of the function of $$z$$. But, from a mathematical perspective (eq. \ref{eq_bayes}), the posterior density is expressed as:
+Therefore, MCMC methods are used to approximate the distribution (state) of parameters at the next iteration by random sampling from a probabilistic space defined by the current state. MCMC is based on the assumption that the prior-likelihood product $$ p(x \mid z) \, p(z)$$ can be computed, i.e. is known, for a given $$z$$. However, this can be done without any knowledge of the function of $$z$$. But, from a mathematical perspective (eq. \ref{eq_bayes}), the posterior density is expressed as:
 
 $$
 \begin{align*}
@@ -50,19 +54,21 @@ p (z \mid x) & = \frac{p(z) \, p(x \mid z)}{p(x)} \\
 \end{align*}
 $$
 
-where the top term of the division can be computed, but the bottom one is unknown or intractable. Since the bottom term is a *normalizer* (i.e. it guarantees that the posterior sums to 1), it can be discarded, leading to the expression $$ p (z \mid x) \propto p(z) \, p(x \mid z)$$. Therefore, the rationale is to take several samples of the latent variables (for example, the mean $$\mu$$ or the variance $$\sigma^2$$ of a normal distribution) from the current space, and to update the model with the values that explain the data better than the values at the current state, i.e. that have a higher posterior probability. A simpler way to express this is to compute the acceptance ratio of the proposed over the current posterior (which cancels out the term $$P(x)$$ that could not be computed):
+where the top term of the division can be computed, but the bottom one is unknown or intractable. Since the bottom term is a *normalizer* (i.e. it guarantees that the posterior sums to 1), it can be discarded, leading to the expression $$ p (z \mid x) \propto p(z) \, p(x \mid z)$$.
+
+Therefore, the rationale is to take several samples of the latent variables (for example, the mean $$\mu$$ or the variance $$\sigma^2$$ of a normal distribution) from the current space. The model is then updated with the values that explain the data better than the values at the current state, i.e. that have a higher posterior probability. A simpler way to express this is to compute the **acceptance ratio** of the proposed over the current posterior (which cancels out the term $$p(x)$$ that could not be computed):
 
 $$
-  \frac{ P(z \mid x) }{ P(z_0 \mid x) }
-=  \frac{ \hspace{0.5cm}{ } \frac{P(x \mid z) \, P(z)}{ P(x) } \hspace{0.5cm} } { \,\, \frac{P(x \mid z_0) \, P(z_0)}{ P(x) } \,\, }
-= \frac{ P(x \mid z) \, P(z) }{ P(x \mid z_0) \, P(z_0)}
+  \frac{ p(z \mid x) }{ p(z_0 \mid x) }
+=  \frac{ \hspace{0.5cm}{ } \frac{p(x \mid z) \, p(z)}{ p(x) } \hspace{0.5cm} } { \,\, \frac{p(x \mid z_0) \, p(z_0)}{ p(x) } \,\, }
+= \frac{ p(x \mid z) \, p(z) }{ p(x \mid z_0) \, p(z_0)}
 $$
 
 and accept the proposed state $$z$$ with probability $$\min(1, \text{ratio})$$, otherwise keep the current state $$z_0$$ (the [Metropolis algorithm](https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm), with a symmetric proposal distribution). 
 
-The main advantage of MCMC is that it provides an approximation of the *true* posterior, although there are many disadvantages in handling an exact posterior that does not follow a parametric distribution (such as being hard to interpret in high dimensions). Moreover, it requires massive computational power for problems with large latent spaces. That is where Variational Inference enters the picture: it is faster and works well if the parametric distribution of the posterior is known, but it is sometimes *over-confident* when the posterior does not exactly match the approximation.
+The main advantage of MCMC is that it provides an approximation of the *true* posterior. However, there are many disadvantages in handling an exact posterior that does not follow a parametric distribution (such as being hard to interpret in high dimensions). Moreover, it requires massive computational power for problems with large latent spaces. That is where Variational Inference enters the picture: it is faster and works well if the parametric distribution of the posterior is known, but it is sometimes *over-confident* when the posterior does not exactly match the approximation.
 
-So as a golden rule, variational methods are the default choice, but if in doubt, the results should be double-checked against an MCMC estimate of the posterior, which is also approximate but converges to the true posterior as the number of samples grows.
+So as a golden rule, variational methods are the default choice. If in doubt, the results should be double-checked against an MCMC estimate of the posterior, which is also approximate but converges to the true posterior as the number of samples grows. In practice, the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/abs/1601.00670) suggests variational inference for large datasets and for the fast exploration of many models, and MCMC for smaller datasets, where a higher computational cost buys more precise samples.
 
 The theory behind MCMC is covered in the paper [An Introduction to MCMC for Machine Learning]({{ site.assets }}/variational-inference-gmm/andrieu_defreitas_doucet_jordan_intromontecarlomachinelearning.pdf), and a practical explanation with code is available in [Thomas Wiecki's post](https://twiecki.io/blog/2015/11/10/mcmc-sampling/).
 
@@ -145,12 +151,12 @@ $$
 q(z) =  q(z_1, ..., z_m) =  q(z_{G_1}, ..., z_{G_R}) = \prod_{j=1}^{R} q_j(z_{G_j}) 
 $$
 
-This setup is often called **generalized mean field**, as opposed to **naive mean field**. Each latent variable $$z_j$$ is governed by its own variational factor, the density $$q_j(z_j)$$. For the formulation to be complete, the parametric form of the individual variational factors would have to be specified. In principle, each can take on any parametric distribution appropriate to the corresponding random variable (e.g. a combination of Gaussian and Categorical distributions).
+This setup is often called **generalized mean field**, as opposed to **naive mean field**. In the naive mean field, each latent variable $$z_j$$ is governed by its own **variational factor**, the density $$q_j(z_j)$$. For the formulation to be complete, the parametric form of the individual variational factors would have to be specified. In principle, each can take on any parametric distribution appropriate to the corresponding random variable (e.g. a combination of Gaussian and [Categorical](https://en.wikipedia.org/wiki/Categorical_distribution) distributions).
 
 
 ## Coordinate Ascent Variational Inference 
 
-The main objective is to **optimize the ELBO in mean-field variational inference**, or equivalently, to choose the variational factors that maximize the ELBO (eq. \ref{eq_elbo}). A common approach is to use the **coordinate ascent** method, optimizing the variational approximation of each latent variable $$q_{z_j}$$ while holding the others fixed.
+The main objective is to **optimize the ELBO in mean-field variational inference**, or equivalently, to choose the variational factors that maximize the ELBO (eq. \ref{eq_elbo}). A common approach is to use the **coordinate ascent** method, optimizing the variational approximation of each latent variable $$q(z_j)$$ while holding the others fixed. The derivation below follows the lecture notes [Variational Inference: Mean Field Approximation]({{ site.assets }}/variational-inference-gmm/10708-scribe-lecture13.pdf) of the CMU course Probabilistic Graphical Models (10-708).
 
 Recall the [probability chain rule](https://en.wikipedia.org/wiki/Chain_rule_(probability)) for more than two events $$X_1, \ldots , X_n$$:
 
@@ -169,13 +175,13 @@ Now the chain rule is applied to the joint probability $$p(z_{1:m}, x_{1:n})$$ f
 
 $$
 %source: assets: 10708-scribe-lecture13.pdf
-p(z_{1:m}, x_{1:n}) = p(x_{1:n}) \prod_{j=1}^m p(z_j \mid z_{1: (j-1)}, x_{1:n})
+p(z_{1:m}, x_{1:n}) = p(x_{1:n}) \prod_{l=1}^m p(z_l \mid z_{1: (l-1)}, x_{1:n})
 $$
 
 and the entropy term can be decomposed using the mean-field variational approximation as:
 
 $$
-\mathbb{E}_q [ \log q(z_{1:m})] = \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)]
+\mathbb{E}_q [ \log q(z_{1:m})] = \sum_{l=1}^m \mathbb{E}_{q_l}[\log q(z_l)]
 $$
 
 Inserting the two previous decompositions into the ELBO equation, it can now be expressed for the mean-field variational approximation as:
@@ -184,8 +190,8 @@ $$
 %source: assets: 10708-scribe-lecture13.pdf
 \begin{align*}
 ELBO(q) & = \mathbb{E}_q [\log p(x_{1:n},z_{1:m})] - \mathbb{E}_q[\log q(z_{1:m})] \\
-        & = \mathbb{E}_q \left[ \log \left ( p(x_{1:n}) \prod_{j=1}^m p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \\
-        & = \log p(x_{1:n}) + \sum_j^m \mathbb{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \\
+        & = \mathbb{E}_q \left[ \log \left ( p(x_{1:n}) \prod_{l=1}^m p(z_l \mid z_{1: (l-1)}, x_{1:n}) \right) \right] - \sum_{l=1}^m \mathbb{E}_{q_l}[\log q(z_l)] \\
+        & = \log p(x_{1:n}) + \sum_{l=1}^m \mathbb{E}_q \left[ \log p(z_l \mid z_{1: (l-1)}, x_{1:n}) \right] - \sum_{l=1}^m \mathbb{E}_{q_l}[\log q(z_l)] \\
 \end{align*}
 $$
 
@@ -200,7 +206,7 @@ where $$\neq j$$ means *all indices except the $$j^{th}$$*. Now the goal is to d
 $$
 \begin{align*}
   & arg\,max_{q_j} \, ELBO (q)\\
-= & arg\,max_{q_j} \, \left( \log p(x_{1:n}) + \sum_j^m \mathbb{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \right)\\  
+= & arg\,max_{q_j} \, \left( \log p(x_{1:n}) + \sum_{l=1}^m \mathbb{E}_q \left[ \log p(z_l \mid z_{1: (l-1)}, x_{1:n}) \right] - \sum_{l=1}^m \mathbb{E}_{q_l}[\log q(z_l)] \right)\\  
 = & arg\,max_{q_j} \, \left( \mathbb{E}_q \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \mathbb{E}_{q_j}[\log q(z_j)] \right) \\
   & \qquad \text{(removing vars that do not depend on } q(z_j) \text{)} \\
 = & arg\,max_{q_j} \, \left( \int q(z_j) \, \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] dz_j - \int q(z_j) \log q(z_j) dz_j \right) \\
@@ -211,10 +217,10 @@ $$
 To find this argmax, one takes the derivative of the ELBO, denoted $$L$$, with respect to $$q(z_j)$$, uses [Lagrange multipliers](https://en.wikipedia.org/wiki/Lagrange_multiplier) (as $$q(z_j)$$ must integrate to one), and sets the derivative to zero:
 
 $$
-\frac{d\,L}{d\,q(z_j)} = \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \log q(z_j) -1 = 0
+\frac{d\,L}{d\,q(z_j)} = \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \log q(z_j) - 1 + \lambda = 0
 $$
  
-This leads to the final coordinate ascent update:
+where $$\lambda$$ is the Lagrange multiplier of the constraint $$\int q(z_j) \, dz_j = 1$$. Solving for $$q(z_j)$$ gives $$q(z_j) = e^{\lambda - 1} \exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j \mid z_{\neq j}, x)] \}$$, in which the factor $$e^{\lambda - 1}$$ is the normalization constant that makes $$q(z_j)$$ integrate to one. This leads to the final coordinate ascent update:
 
 $$
 \begin{align}
@@ -232,7 +238,9 @@ Credit: this section is a more verbose explanation of sections 2.1, 3.1 and 3.2 
 
 A [Gaussian mixture model](https://en.wikipedia.org/wiki/Mixture_model) is a probabilistic model that assumes all the data points are generated from a mixture of a finite number of Gaussian distributions with unknown parameters. The problem at hand is to fit a set of Gaussian density functions to the input dataset.
 
-Take a mixture of $$K$$ univariate Gaussian distributions with means $$\mu = \mu_{1:K} = \{ \mu_1, \mu_2, ..., \mu_K \}$$. The means are drawn from a common prior $$p(\mu_k)$$, which is assumed to be Gaussian $$\mathcal{N}(0, \sigma^2)$$. **The latent variables are the means $$\mu_{1:K}$$ and the cluster assignments $$c_{1:n}$$** for each observation $$x_i$$. **$$\sigma^2$$ is a hyper-parameter**. $$c_i$$ is described as an indicator $$K$$-vector, i.e. all zeros except for a one at the index of the allocated cluster. Each new observation $$x_i$$ (from a total of $$n$$ observations) is drawn from the corresponding Gaussian $$\mathcal{N}(c_i^T \mu, 1)$$. The model can be expressed as:
+Take a mixture of $$K$$ univariate Gaussian distributions with means $$\mu = \mu_{1:K} = \{ \mu_1, \mu_2, ..., \mu_K \}$$. The means are drawn from a common prior $$p(\mu_k)$$, which is assumed to be Gaussian $$\mathcal{N}(0, \sigma^2)$$. **The latent variables are the means $$\mu_{1:K}$$ and the cluster assignments $$c_{1:n}$$** for each observation $$x_i$$. **$$\sigma^2$$ is a hyper-parameter**.
+
+$$c_i$$ is described as an indicator $$K$$-vector, i.e. all zeros except for a one at the index of the allocated cluster. Each new observation $$x_i$$ (from a total of $$n$$ observations) is drawn from the corresponding Gaussian $$\mathcal{N}(c_i^T \mu, 1)$$. The model can be expressed as:
 
 $$
 %source: section 2.1: https://arxiv.org/pdf/1601.00670.pdf
@@ -283,7 +291,7 @@ ELBO(m, s^2, \varphi) = & \sum_{k=1}^K \mathbb{E} \left[ \log p(\mu_k); m_k, s_k
 \end{align}
 $$
 
-The CAVI (coordinate ascent variational inference) algorithm updates each variational parameter in turn, so both updates need to be computed.
+The CAVI algorithm updates each variational parameter in turn, so both updates need to be computed.
 
 ### Update 1: Variational update for cluster assignment
 
@@ -388,7 +396,7 @@ While the ELBO has not converged:
 
 3. compute $$ELBO(m, s^2, \varphi)$$ (equation \ref{eq_algo_elbo})
 
-The algorithm is iterative and will converge on a certain loss threshold (ELBO), based on the fitting of each Gaussian to the data points. The concept can be easily understood by looking at the illustration of several iterations of the fitting of Gaussian models to five clusters of points:
+The algorithm is iterative and will converge on a certain loss threshold (ELBO), based on the fitting of each Gaussian to the data points. Note that the ELBO is in general not convex, so CAVI only converges to a local optimum, which depends on the initialization. The concept can be easily understood by looking at the illustration of several iterations of the fitting of Gaussian models to five clusters of points:
 
 {: .picture}
 <img width="59.8%" height="59.8%" src="{{ site.assets }}/variational-inference-gmm/gmm_iterations.svg"/>
@@ -396,16 +404,20 @@ The algorithm is iterative and will converge on a certain loss threshold (ELBO),
 {: .caption}
 The CAVI algorithm on a Gaussian mixture model, for a dataset of 2D points from five color-coded clusters: the initialization and the variational factors after 20, 28, 35 and 50 iterations. The ellipses are 2σ contours of the variational approximating factors. The figure uses the multivariate (2D) version of the model; the derivation above uses univariate Gaussians. Adapted from: [Variational Inference: A Review for Statisticians](https://arxiv.org/abs/1601.00670)
 
+The picture above shows that the Gaussians start near the center of the dataset, with a wide variance, and, as the iterations progress, each one moves towards a cluster and narrows around it.
+
 
 ## Stochastic Variational Inference
 
 The coordinate ascent variational inference method presented does not scale well to very large datasets.
 The underlying reason is that CAVI requires iterating between re-analyzing every data point in the dataset and re-estimating its hidden structure. This is inefficient for large datasets, because it requires a full pass through the data at each iteration.
 
-Another famous method, [Stochastic Variational Inference](https://jmlr.org/papers/volume14/hoffman13a/hoffman13a.pdf) (SVI), uses a more efficient algorithm based on stochastic optimization ([Robbins and Monro, 1951](https://projecteuclid.org/euclid.aoms/1177729586)), a technique that follows noisy estimates of the gradient of the objective.
+Another famous method is [Stochastic Variational Inference](https://jmlr.org/papers/volume14/hoffman13a/hoffman13a.pdf) (SVI), introduced by Hoffman, Blei, Wang and Paisley in 2013. It uses a more efficient algorithm based on stochastic optimization ([Robbins and Monro, 1951](https://projecteuclid.org/euclid.aoms/1177729586)), a technique that follows noisy estimates of the gradient of the objective.
 
-SVI is in fact stochastic gradient descent applied to variational inference. It allows the algorithm to scale to large datasets that are encountered in modern machine learning, since the ELBO and its gradient can be estimated on a single mini-batch at each iteration.
+SVI is in fact [stochastic gradient descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent) applied to variational inference. It allows the algorithm to scale to large datasets that are encountered in modern machine learning, since the ELBO and its gradient can be estimated on a single mini-batch at each iteration.
 
-When used in variational inference, SVI iterates between subsampling the data and adjusting the hidden structure based only on the subsample, making it more efficient than traditional variational inference. For this reason, several ML libraries such as [Pyro](https://pyro.ai/examples/svi_part_i.html) use SVI.
+SVI iterates between subsampling the data and adjusting the hidden structure based only on the subsample, making it more efficient than traditional variational inference. For this reason, several ML libraries such as [Pyro](https://pyro.ai/examples/svi_part_i.html) use SVI.
 
 The details of SVI are omitted here; they are in section 4.3 of the paper [Variational Inference: A Review for Statisticians](https://arxiv.org/pdf/1601.00670.pdf).
+
+To find more about the topic, chapter 10 of Chris Bishop's PRML book covers variational inference in more depth, including a variational mixture of Gaussians that also infers the mixing coefficients and the covariances of the components (section 10.2).

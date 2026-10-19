@@ -384,6 +384,18 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
 - Optional, the comment `# ... (ReLU(z / s) = ReLU(z) / s for s > 0)` of `quantize_awq` (`inference/quantization.py`
   line 178, and in the post) writes the input as z, which is the zero point in the text. Fix:
   `ReLU(y / s) = ReLU(y) / s`, as the text writes it.
+- The GPTlite checkpoint of the inference scripts cannot be made with the code of the repository. `load_model`
+  (`inference/inference_utils.py`), which `pruning.py`, `quantization.py`, `kvcache.py`, `gqa.py`, `prompt_lookup.py`
+  and `speculative_decoding.py` call, builds a GPTlite with `get_gptlite_model_parameters()` (d_model 512, 6 heads,
+  seqlen 128) and loads `assets/gptlite/gptlite.pth`, which is not in the repository; without it, the scripts print
+  "Couldn't find ...: GPTlite has random weights" and report the results of a random model. The only training script,
+  `assets/gptlite/main.py`, trains a GPTlite with `get_gptlite_distilled_model_parameters()` (d_model 256, 4 heads,
+  seqlen 64) and saves it as `gptlite.pth` in the working directory: run from `assets/gptlite`, its file has the path
+  that `load_model` reads but the shapes of the smaller model, so `load_state_dict` fails with a size mismatch.
+  Proposed fix: a short script in `assets/inference` that trains GPTlite with `get_gptlite_model_parameters()` (for
+  example with `train_steps` of `inference_utils.py`) and saves it to `GPTLITE_CKPT_PATH`, or the same change in
+  `main.py` (the parameters of `get_gptlite_model_parameters()` and the path `GPTLITE_CKPT_PATH`), and one sentence in
+  the inference posts that says to run it first.
 
 ### Publications bookmark (publications.md)
 
@@ -446,6 +458,12 @@ that is not wrong.
   - `inference/imgs/prefill_decode.svg`, `publications/helix.svg` and `distributed-training/imgs/moe_megablocks.svg`
     are crowded. Fix: draw them 880 px wide (100%), with more space between their parts.
   - `distributed-training/imgs/dnn_model_parallelism.svg` is hard to read at its width. Fix: draw it larger.
+
+### Distributed Sorting Algorithms (2014-06-21-distributed-sort.md)
+
+- `distributed-sort/sample_sort.svg`: in step 5, the label "rank 1" is bold (`<b>rank 1</b>` in
+  `distributed-sort.drawio`), while "rank 0" and "rank 2" are regular. Fix: the regular weight for the three labels
+  (CLAUDE.md, Pictures, section 4), and export the SVG again.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
@@ -514,6 +532,10 @@ that is not wrong.
   membrane is the capacitor $$c_j$$. Each channel type $$i$$ is a resistor $$R_i$$ in series with a battery $$E_i$$,
   its reversal potential. Arrows mark gated channels, whose resistance changes over time. The leak $$L$$ has a
   constant resistance. $$I = i_{m,j} A_j$$ is the total current through the membrane."
+- `neuron-electrical-activity/compartment_rc_circuit.svg`: the open item on this picture proposes the equation $$I =
+  c_j \frac{dv_j}{dt} + \sum_i g_i x_i (v_j - E_i)$$, but the text now names the gating term $$w_i$$ (content item
+  "Symbols that the author uses", applied in iteration 2). Fix: write $$w_i$$ in that item's equation, $$I = c_j
+  \frac{dv_j}{dt} + \sum_i g_i w_i (v_j - E_i)$$, when the picture, the caption and the equation are changed.
 
 ### Variable Timestep Simulation of the Electrical Activity of Neurons (2017-02-17-neuron-variable-timestep.md)
 
@@ -554,6 +576,14 @@ that is not wrong.
 - `unsupervised-learning/gaussianscatterpca.svg`: the arrow heads end past the scaled eigenvectors, at 3.75 and 1.75
   instead of 3 and 1, the lengths in the Wikipedia figure it follows. Fix: arrow heads that end at the tips of the
   vectors.
+- `unsupervised-learning/kohonen2.svg` and its caption name the input $$x_i$$, while the SOM text names it $$x_u$$
+  (since iteration 2, the text names the winner $$j^*$$, as the picture does). The picture keeps the labels of Ritter,
+  Martinetz and Schulten (1992). Fix: say in the caption that $$x_i$$ is the input $$x_u$$ of the text, e.g. "The
+  input $$x_i$$ (the $$x_u$$ of the text) in the input space $$V$$ selects the winner neuron $$j^*$$ ...".
+- Optional: `unsupervised-learning/kohonen_1.svg`, `kohonen_2.svg` and `kohonen_3.svg` have no caption; the list
+  before them describes the three maps. Fix: one caption under the three pictures, e.g. "The weights of the 6x6
+  neurons of the SOM, each drawn as a 28x28 image, for the digits 0 to 3: a tuned SOM (left), a high learning rate
+  (center) and a large neighbourhood width (right)." (no credit: the pictures come from the post's own code).
 
 ### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
 
@@ -596,6 +626,11 @@ that is not wrong.
   constant $$\alpha$$ equals $$1/b^2$$, the prior precision, as the notebook's `alpha`), but it never defines the
   noise precision $$\beta = 1/\sigma^2$$. Fix (in a picture task): "a prior precision $$\alpha = 1/b^2 = 10^{-3}$$ and
   a noise precision $$\beta = 1/\sigma^2 = 2$$" (or 16 after the redraw with beta = 16).
+- Caption of `bayesian-linear-regression/linear_bayesian_predictive_distribution_*.svg`: the text now names the prior
+  standard deviation $$\sigma_w$$ (prior $$\mathcal{N}(0, \sigma_w^2 I)$$, $$\alpha = 1/\sigma_w^2$$), so the caption
+  proposed in the existing item, "a prior precision $$\alpha = 1/b^2 = 10^{-3}$$", is stale. Proposed fix: replace the
+  proposed caption of that item by "a prior precision $$\alpha = 1/\sigma_w^2 = 10^{-3}$$ and a noise precision
+  $$\beta = 1/\sigma^2 = 2$$" (or 16 after the redraw with beta = 16).
 
 ### Exponential Family of Distributions (2019-03-20-exponential-family.md)
 
@@ -717,6 +752,11 @@ that is not wrong.
   picture only shows the constraint; otherwise say in the caption that consecutive samples are packed.
 - Optional, caption of `distributed-training/imgs/torch_compile_dataset.svg`: it says both processes and ranks, while
   the text says ranks. Fix: "on 3 ranks" and "to the ranks (color-coded)".
+- `distributed-training/imgs/variable_batch_lr_pipeline.svg` has no caption, unlike the ten other pictures of the
+  post. Fix: add one, e.g. "Micro-batches of at most 30 tokens, on 2 processes with 2 gradient accumulation steps, for
+  DDP (left) and pipeline parallelism (right). Pipeline parallelism needs the same shape in all micro-batches of a
+  batch (here 3x11xE), so it packs fewer samples per micro-batch." (The left micro-batches hold 30, 28, 30 and 26
+  tokens, the right ones 24, 25, 22 and 17.)
 
 ### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
 
@@ -726,6 +766,13 @@ that is not wrong.
   Fix: "Local attention shape: B x H/P x S x d", and the axis d on the middle cube.
 - Optional, `distributed-training/imgs/context_parallelism.svg` writes the head size as E. Fix: write the head size as
   d (see the content item on E).
+- `distributed-training/imgs/ulysses_sequence_parallelism.svg`, `ring_attention.svg` and `ring_attention_qkv.svg`
+  color the sequence chunks blue, yellow, red and green (and the ring in this order), while `spdistributedsampler.svg`
+  gives the chunks of a sample to process 1 (blue), 2 (green), 3 (red) and 4 (yellow), the colors that
+  `sequence_and_data_parallelism.svg` and its caption also use. So the second chunk belongs to process 2 in one
+  picture and to process 4 in the others. Fix: swap yellow and green in the three pictures (chunks and ring blue,
+  green, red, yellow); the red process of `ring_attention_qkv.svg` then sees red, green, blue and yellow blocks, and
+  the text ("the third (red) process") stays as it is.
 
 ### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
 
@@ -818,7 +865,7 @@ that is not wrong.
   In-Network Compute](link)" once the paper has a public link, and "Adapted from:" after the redraw; the user
   decides.
 
-### Knowledge distillation, speculative decoding and multi-token decoding (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
+### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
 - Optional, `inference/imgs/mtp_parallel.svg` writes the tokens as x_t, as Gloeckle et al. do, while eagle, layerskip
   and mtp_sequential write them as t_i. The text follows each figure. Fix: keep the paper notations, or write t_i in
@@ -880,331 +927,136 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
-- The formulas number the ranks from 1 ($$M_1 // M_2 // ... // M_R$$, and the row interval $$\big[ \sum^{r-1}_{s=1}
-  \vert V_s \vert, \,\, \sum^{r}_{s=1} \vert V_s \vert \big)$$), as the preprint does, while every picture numbers
-  them from 0 ("rank 0" to "rank 2"). Fix: number the ranks from 0 in the text, i.e. $$M_0 // M_1 // ... // M_{R-1}$$
-  (and the same for $$\|$$ and for the transposed blocks) in the definitions of the local transpose and the view swap
-  and in the verification, and $$\big[ \sum^{r-1}_{s=0} \vert V_s \vert, \,\, \sum^{r}_{s=0} \vert V_s \vert \big)$$
-  for the row interval, as pass 2 did (1563211); or keep the notation of the preprint and say once, where the ranks
-  are introduced, that they are numbered from 1 in the formulas. This rewrite keeps the author's notation, as it is
-  not wrong in itself and the fix changes eight formulas.
-- Optional: the paragraph on the dense transpose ("Given a dense matrix representation ...") uses the rank $$r$$,
-  $$G^{\star}_{r}$$, $$V_r$$ and $$E^{\star}_{r}$$ one paragraph before the text defines the ranks and $$G_{r} =
-  (V_{r}, E_{r})$$. Fix: move the two sentences "A distributed memory data layout assumes ..." and "Let $$G_{r} =
-  (V_{r}, E_{r})$$ be the subset ..." to the start of that paragraph, or add there "(the subgraph held by rank $$r$$,
-  defined below)".
-
-### Distributed Load Balancing and Spatial Slicing (2015-12-01-slicing.md)
-
-- Optional: the ORB row of the table says "requires one sorting of half of the elements of a slice per iteration",
-  while each level sorts all the objects, in slices that hold half of the objects of the slice they come from (the
-  cost $$n \log_2 \frac{n}{2^{i-1}}$$ of the same row). Fix: "requires, at every iteration, one sorting of each slice,
-  which holds half of the elements of its parent slice".
-
-### The Leaky Integrate-and-Fire Neuron and the Brunel Network (2016-02-08-lif-brunel.md)
-
-- The neuron parameter table writes the membrane time constant as $$\tau_m$$ and the resting potential as $$V_E$$ (the
-  symbols of NEST by Example), while the text uses $$\tau$$ and the RC picture $$u_{\text{rest}}$$; "1pF" has no
-  space. Fix: $$\tau$$, $$u_{\text{rest}}$$ and "1 pF" in the table, in a table task.
+- Optional: the definitions of the concatenations index rows and columns from 1 ("if $$j \leq m$$", "if $$i \leq
+  n$$"), while the row interval $$\big[ \sum^{r-1}_{s=0} \vert V_s \vert, \,\, \sum^{r}_{s=0} \vert V_s \vert \big)$$
+  and the pictures number rows and columns from 0. Fix: say once, after the two definitions, that the formulas index
+  the cells of a matrix from 1, or write the conditions as $$j < m$$ and $$i < n$$ with indices from 0.
 
 ### Numerical Simulation of Detailed Neuron Models (2016-08-15-neuron-electrical-activity.md)
 
-- Symbols that the author uses for more than one quantity, kept in this pass because the formulas are the author's:
-  $$A$$ (membrane area, and the matrix of the linear system $$dy/dt = Ay$$); $$I$$ (inhibitory population, total
-  membrane current, identity matrix, besides $$I_k$$, $$I_{inj}$$ and $$I(V,t)$$); $$n$$ (HH gating variable, number
-  of half waves, time step index $$y^n$$, order of accuracy, size of the matrix in $$O(n)$$); $$m$$ (gating variable,
-  points per cable); $$h$$ (gating variable, step size in $$E(h) = Ch^n$$); $$E$$ (excitatory population, reversal
-  potentials, error $$E(h)$$); $$C$$ (capacitance, constant of $$E(h)$$); $$L$$ (leak, cable length); $$R$$
-  (resistance, gas constant); $$x$$ (position, gating term $$x_i$$); $$d$$ (diameter, main diagonal of the Hines
-  matrix); $$k$$ (neighbor index, rate constant $$k_{nm}$$); and $$u$$, $$V$$ and $$v$$ for the membrane potential.
-  Proposed fix: in a later pass, with the author's approval, name the matrix of the linear system $$J$$, write the
-  order of accuracy as $$\varepsilon(\Delta t) = K \Delta t^p$$, the gating term as $$w_i$$, the HH potential as
-  $$v$$, and the main diagonal of the Hines matrix as $$D$$, and leave the remaining clashes, which are standard
-  notation in their own paragraphs.
-- The heading "Fixed Time Stepping Interpolation" names a time integration "interpolation" (the sentence below it now
-  says "integration"). Proposed fix: rename the heading to "Fixed Time Step Integration".
-- "For an extremely small time step of $$\Delta t=0.0001 ms$$, the system almost achieves equilibrium" is unclear:
-  forward Euler with a small step follows the analytic solution closely, and does not bring the system to an
-  equilibrium. Proposed fix: after a check of The NEURON book, ch. 4, write "the numerical solution comes close to the
-  analytic one, at the cost of a very high computational load".
-- The GHK equation ends with "$$\approx -60 mV$$" but the text gives no permeabilities. With the listed concentrations
-  at 34 °C and the resting squid axon ratio $$P_K : P_{Na} : P_{Cl} = 1 : 0.04 : 0.45$$ of Hodgkin and Katz (1949), it
-  gives about $$-75$$ mV, and the action potential picture shows rest at $$-70$$ mV. Proposed fix: add the ratio and
-  its result after the equation ("with $$P_K : P_{Na} : P_{Cl} = 1 : 0.04 : 0.45$$, the resting potential is about
-  $$-75$$ mV"), or write "between $$-60$$ and $$-75$$ mV, depending on the permeabilities". Source of the ratio: [The
-  enduring legacy of the constant field
-  equation](https://rupress.org/jgp/article/149/10/911/43579/The-enduring-legacy-of-the-constant-field-equation), J.
-  Gen. Physiol. (2017).
-- "NEURON's variant of Crank-Nicolson with staggered time stepping applies the Strang splitting method": Hines and
-  Carnevale (1997) describe the staggered scheme (states at half steps, voltage at whole steps) without naming Strang
-  splitting, and so does the analysis of Hines' method in [arXiv 1702.05917](https://arxiv.org/abs/1702.05917).
-  Proposed fix: check The NEURON book, ch. 4; if it does not name it, write "applies a staggered scheme, similar to
-  Strang splitting, to calculate ...".
+- The membrane time constant has two symbols in the post: $$\tau = R_m C_m$$ in the scaling of the cable equation ($$t
+  = T \tau$$, end of "Mathematical Basis"), and $$\tau_m = c/g$$ in the rate constant $$k_{nm}$$ ("Fixed Time Step
+  Integration"), the same quantity ($$c/g = R_m C_m$$); the paragraph between them also uses $$\tau = RC$$ for a
+  generic capacitor. Fix: write $$\tau_m = R_m C_m$$ and $$t = T \tau_m$$ at the end of "Mathematical Basis", and keep
+  $$\tau = RC$$ for the capacitor.
+- The renames of the item "Symbols that the author uses" bring two letters that the post also uses elsewhere: the
+  order of accuracy $$p$$ in $$\varepsilon(\Delta t) = K \Delta t^p$$, also the parent vector $$p$$ and the parent
+  index $$p_j$$ of the Hines solver, and the constant $$K$$, also potassium ($$K^+$$, $$g_K$$, $$E_K$$, $$P_K$$). Fix:
+  keep them, as each is standard notation in its own section; or write the order as $$q$$ and the constant as
+  $$c_\varepsilon$$.
 
 ### Variable Timestep Simulation of the Electrical Activity of Neurons (2017-02-17-neuron-variable-timestep.md)
 
-- NEURON's default tolerance (Local and Global Time Stepping). The text gives NEURON's default error setting for CVODE
-  as 10 μV for the membrane potential, i.e. atol 1e-2 in mV. That is the value of the NEURON Book and of the
-  documentation of `CVode.atol` ("The default absolute tolerance is 1e-2"). However, NEURON's code sets `atol_ = 1e-3`
-  (`src/nrncvode/netcvode.cpp`), i.e. 1 μV. The preprint calls 1e-3 the default and uses it in all its tests (Figs. 5
-  to 7 and the benchmark). Proposed fix: add "(the tests below use $$\text{atol} = 10^{-3}$$, the default in NEURON's
-  code)" after the sentence, or give only the value of the code.
-- The speed-up estimate (last paragraph). The *Overall Runtime Speed-up Estimation* of 228.5-24.6x is the preprint's
-  mean of the per-regime speed-ups, weighted by the shares of neurons per regime (31.43%, 38.44%, 27.02%, 3.10% and
-  0.01%, Section 4.5). The runtime of a network that mixes the regimes is the weighted sum of the per-regime runtimes.
-  So its speed-up is the weighted harmonic mean of the per-regime speed-ups. The moderate regime alone (27.02% of the
-  neurons, speed-ups of 7.7 and 1.8) bounds it by 7.7/0.2702 ≈ 28.5 on 1,024 neurons and 1.8/0.2702 ≈ 6.7 on 65,536
-  neurons. Proposed fix: add after the estimate "As the runtime of a mixed network is the sum of the runtimes of its
-  parts, its speed-up is the weighted harmonic mean of the per-regime speed-ups, at most 28.5 on 1,024 neurons and 6.7
-  on 65,536 neurons.", or keep only the preprint's numbers, as now.
+- Optional: the references `[cvode]` (https://aip.scitation.org/doi/pdf/10.1063/1.4822377) and
+  `[lytton2005independent]` (on mitpressjournals.org) point to old publisher domains. Proposed fix: link the DOIs,
+  https://doi.org/10.1063/1.4822377 and https://doi.org/10.1162/0899766053429453, after a check that both resolve.
+- Optional: the step size has two symbols, $$h$$ and $$h_n$$ in the formulas of the CVODE section, and $$\Delta t$$ in
+  "The solver then adjusts $$\Delta t$$" and in the fixed-step values of the later sections. Proposed fix: write "The
+  solver then adjusts the step size $$h_n$$", and keep $$\Delta t$$ for the fixed step of Backward Euler.
 
 ### Linear Regression, Matrix Factorization and Loss Functions (2017-08-17-linear-regression-matrix-factorization.md)
 
-- Optional: "dropout" links to a Medium article, in this post and in the deep neural networks post. Proposed fix:
-  link the paper of Srivastava et al. (2014), https://jmlr.org/papers/v15/srivastava14a.html, or, in this post, the
-  dropout section of the deep neural networks post.
-- One symbol for several quantities in the loss sections: $$N$$ is the number of samples and also the negative input
-  of the triplet loss and the number of pixels of the Dice loss; $$D$$ is the number of input features and also the
-  distance of the contrastive loss; $$\alpha$$ is the margin of the triplet loss and the balancing factor of the focal
-  loss, while the contrastive loss names its margin $$m$$. Proposed fix: write the triplet loss with $$x$$, $$x^+$$,
-  $$x^-$$ (anchor, positive, negative) and the margin $$m$$, as the contrastive loss; name the contrastive distance
-  $$\delta$$ (or $$D_W$$, as Hadsell et al.); use $$M$$ for the number of pixels in the Dice formulas.
-- Focal loss: the binary formula $$-\alpha (1 - p_t)^\gamma \log(p_t)$$ uses one constant $$\alpha$$, while the text
-  (now) and the paper weight the positive class by $$\alpha$$ and the negative class by $$1-\alpha$$. Proposed fix:
-  write the binary formula as $$-\alpha_t (1 - p_t)^\gamma \log(p_t)$$, with $$\alpha_t = \alpha$$ for the positive
-  class and $$1-\alpha$$ for the negative class (Lin et al. 2017, section 3.1 and eq. 5), and the multi-class form as
-  the same formula with one $$\alpha_t$$ per class; or leave it, as the author's two formulas read.
-- Optional, typesetting of formulas: $$min_w$$, $$min_{W,Z}$$, $$max(0,m−D)$$ and $$rank(X)$$ render in italics as
-  products of letters, $$R^{D \times K}$$ stands for the real numbers, and $$L_x(θ) = −log p(x | θ)$$ renders as an
-  italic "logp". Proposed fix: $$\min_w$$, $$\min_{W,Z}$$, $$\max(0, m-D)$$, $$\text{rank}(X)$$, $$\mathbb{R}^{D
-  \times K}$$ and $$L_x(\theta) = -\log p(x \mid \theta)$$ (formula changes that the author reviews).
-
-### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
-
-- The definition of PCA that the post credits to "Gerstner's lecture notes" is the first sentence of the Wikipedia
-  article on PCA. Proposed fix: check the lecture notes, or credit Wikipedia.
-- SOM section: the text names the input $$x_u$$ and the winner neuron $$k$$ ($$\| w_k - x_u \| \leq \| w_i - x_u \|$$,
-  $$\Lambda (j,k)$$), while `kohonen2.svg`, adapted from Ritter, Martinetz and Schulten (1992), and its caption name
-  them $$x_i$$ and $$j^*$$, so the post has two symbols for the winner. Proposed fix: write the winner as $$j^*$$ in
-  the SOM text and formulas ("determine which neuron $$j^*$$ is the *winner*", $$\| w_{j^*} - x_u \| \leq \| w_j - x_u
-  \| \text{, for all } j$$, $$\Delta w_j = \eta \, \Lambda (j,j^*) \, (x_u - w_j)$$), and, in a picture task, say in
-  the caption that $$x_i$$ is the input $$x_u$$ of the text.
-- Optional, k-means section: the clusters are $$C_k$$ in the reconstruction error and $$C_i^{(t)}$$, $$C_i$$ in the
-  update step and the convergence paragraph, but $$S = \{ S_1, ..., S_k \}$$ and $$S_i$$ in the objective (Wikipedia's
-  notation). Proposed fix: "the partition of the data points into $$k$$ clusters $$C_1, ..., C_k$$ that minimizes the
-  error above", $$\arg\min_{C_1, ..., C_k} \sum_{i=1}^{k} \sum_{x \in C_i} \| x - w_i \|^2$$, "where $$w_i$$ is the
-  mean of the points in $$C_i$$".
-- Optional: independent sections reuse symbols. $$k$$ is the kernel function $$k(x_i, x_j)$$ of kernel PCA, the
-  kurtosis $$k(y)$$ of ICA, the number of principal components kept, the number of clusters, the winner neuron of the
-  SOM and the number of neighbours of UMAP; $$\Lambda$$ is the matrix of eigenvalues of the whitening and the
-  neighbourhood function $$\Lambda (j,k)$$ of the SOM; $$U$$ and $$V$$ are the singular vectors of the SVD, the
-  rotation and the whitening matrix of ICA, and $$U$$ also the eigenvectors of spectral clustering; $$d$$ is the
-  degree of the polynomial kernel and the distance $$d(a,b)$$. Proposed fix: $$\mathrm{kurt}(y)$$ for the kurtosis
-  (the notation of Hyvärinen and Oja and of Yokota's slides), so that $$k(\cdot, \cdot)$$ is only the kernel; $$h(j,
-  j^*)$$ for the neighbourhood function (Kohonen's notation) with the winner $$j^*$$ (item above); $$H$$ for the
-  eigenvectors of spectral clustering.
-
-### Deep Neural Networks, Backpropagation, Dropout, CNNs and Embeddings (2018-03-27-deep-neural-networks.md)
-
-- Deep neural networks: symbols reused across sections. $$K$$ is the size of the hidden layers and the half-width of
-  the filter ($$f[k]=0$$ for $$\vert k \vert \ge K$$); $$f$$ is the function of a layer, $$f^{(l)}$$, and the filter
-  $$f[n]$$; $$l$$ is the layer index and an index of the 2D filter ($$\sum_{k,l} f[k,l]x^{(0)} [n-k,m-l]$$); $$\phi$$
-  is the activation function and the message function $$\phi^{(k)}$$ of the graph formula. Proposed fix: write the
-  filter as $$h$$, its half-width as $$r$$ and the 2D indices as $$u, v$$ ($$x^{(1)}[n] = \sum_u h[u]x^{(0)} [n-u]$$,
-  $$h[u]=0$$ for $$\vert u \vert \ge r$$, $$x^{(1)}[n,m] = \sum_{u,v} h[u,v]x^{(0)} [n-u,m-v]$$), and the message
-  function as $$\psi^{(k)}$$ (two formulas of the CNN section, three inline symbols, and the graph formula with its
-  "where" item). Left for the author because it changes the author's formulas and the notation of the cited PyTorch
-  Geometric page.
-- Deep neural networks, embeddings list: "words: one-hot vectors or Word2vec" lists one-hot vectors as an embedding
-  type, while the paragraph above defines embeddings as dense and low-dimensional; one-hot vectors are sparse and as
-  long as the vocabulary. Proposed fix: "words: [Word2vec] (*skipgram* or *continuous bag of words*), whose inputs are
-  one-hot vectors of the words", or keep the item and add "(sparse, as long as the vocabulary)".
-- Deep neural networks, embeddings list: "i.e. the [*information
-  bottleneck*](https://en.wikipedia.org/wiki/Information_bottleneck_method)" links Tishby's information bottleneck
-  method (an information-theoretic trade-off between compression and prediction), while the U-net item means the
-  bottleneck layer, the narrowest part of the network (pass 2 dropped the link for this reason; master kept it).
-  Proposed fix: "i.e. the *bottleneck* of the network", without the link, or keep the link if the author means the
-  information bottleneck theory of deep learning.
-
-### Mathematics for ML (2018-04-20-algebra-for-ml.md)
-
-- Overlap with the deep neural networks post (2018-03-27-deep-neural-networks.md): both posts explain
-  backpropagation as the chain rule and introduce automatic differentiation. Proposed fix: this post keeps the math
-  (the chain rule through K layers and the worked example with its computation graph); the deep neural networks
-  post keeps the algorithm, its costs and the PyTorch details.
-- Optional: independent sections of the post reuse symbols. $$P$$ is the pseudo-inverse
-  $$(A^{\intercal}A)^{−1}A^{\intercal}$$ in the least squares derivation, a projection matrix in the Analytic Geometry
-  section and the matrix of eigenvectors of the eigendecomposition; $$\sigma^2$$ is the noise variance of the least
-  squares derivation, while $$\sigma_i$$ (and the bare $$\sigma$$ of "fewer singular values $$\sigma$$") are the
-  singular values. Smaller reuses stay within one section ($$d$$ is the metric, the vector of the iterative solvers,
-  an intermediate variable of the autodiff example and the number of variables; $$L$$ is the Cholesky factor and the
-  loss). Proposed fix: $$A^{+}$$, the usual symbol of the Moore-Penrose inverse, for the pseudo-inverse in the
-  derivation (three formulas, one of them a display), $$P_\pi$$ for the projection matrix (as in the MML book), and
-  "fewer singular values $$\sigma_i$$" in the SVD paragraph; or keep the symbols, as each one is defined in its
-  section.
+- Optional, other symbols with two meanings: $$\gamma$$ is the step size of gradient descent and the focusing
+  parameter of the focal loss; $$\Omega$$ is the regularization term and the set of observed ratings of matrix
+  factorization; $$x$$ is the input everywhere, but the class in the multi-class cross-entropy $$H(q,p) = -\sum_x q(x)
+  \log(p(x))$$. Proposed fix: name the step size $$\eta$$ in the three update rules of gradient descent (the focal
+  loss keeps the $$\gamma$$ of its paper); write the regularizer as $$\mathcal{R}(w)$$ in the section Regularization;
+  write the multi-class cross-entropy as $$H(q,p) = -\sum_{c=1}^{C} q_c \log p_c$$, over the $$C$$ classes, as in the
+  Dice section.
+- Optional, Dice loss: the link on "Dice loss" points to the Generalised Dice Loss of Sudre et al. (2017), which
+  weights each class $$l$$ by $$w_l = 1/(\sum_n r_{ln})^2$$, the inverse of the square of its number of ground truth
+  pixels, while the multi-class formula of the post is the unweighted mean over the classes. Proposed fix: add after
+  the multi-class formula "The Generalised Dice Loss of Sudre et al. also weights each class by the inverse of the
+  square of its number of ground truth pixels, so that small structures count as much as large ones."
 
 ### Statistics for ML (2018-06-15-statistics-for-ml.md)
 
-- Notation, one symbol per quantity: the probability of an event is written $$P$$ (basic definitions, cdf, joint
-  probability), $$p$$ (Markov's and Chebyshev's inequalities) and $$Pr$$ (sets), and the factorization of the Bayesian
-  network has $$P$$ on its left side and $$p$$ on its right side; a density is written $$p$$ in the entropy formula
-  and $$f$$ in the conditional and joint entropy formulas; a transpose is written $$^{\intercal}$$ and also $$^T$$
-  ($$A \mathbb{Var}[x]A^T$$, $$\eta^T T(x)$$); the Cauchy-Schwarz inequality names its random variables $$A$$ and
-  $$B$$, which name events in the basic definitions; $$\alpha$$ is both the level of the quantile and the significance
-  level of the p-value. Proposed fix: $$P$$ for the probability of an event and $$p$$ for a density throughout ($$P(X
-  \ge \epsilon)$$ in the two inequalities, $$P(F_1 ∪ F_2)$$ in the sets, $$p$$ on both sides of the factorization, as
-  in its example $$p(A,B,C,D)$$), $$p$$ in all entropy formulas, $$^{\intercal}$$ for every transpose, $$X$$ and $$Y$$
-  in the Cauchy-Schwarz inequality, and optionally another letter for the level of the quantile (e.g. $$u \in
-  [0,1]$$); formula changes that the author reviews.
-- Exponential family: "For optimization purposes, $$p(x \mid \theta) \propto \exp(\theta^{\intercal} ϕ(x))$$ is used."
-  drops $$h(x)$$ and $$A(\theta)$$, and writes $$\theta$$ where the form above has the natural parameter
-  $$\eta(\theta)$$. Maximum likelihood needs $$A$$: the gradient of the log-likelihood in the natural parameters is
-  $$ϕ(x) - \nabla A(\eta)$$, while $$\eta^{\intercal} ϕ(x)$$ alone is linear in $$\eta$$ and has no maximum. The MML
-  book, which this section follows, gives the proportional form (section 6.6, from memory: the PDF could not be read
-  here) as an intuitive view of the family. Proposed fix: "As an intuition, the family can be seen as $$p(x \mid \eta)
-  \propto \exp(\eta^{\intercal} ϕ(x))$$, ignoring $$h(x)$$ and the normalization $$A(\eta)$$.", or drop the sentence.
-- Optional, the table at the end: "Smoothing (KDE)" stands in the column of non-parametric regression models for a
-  Gaussian response, but a KDE estimates a density, not a regression function; and the header $$g(x_i^{\intercal}) =
-  x_i^{\intercal} \beta$$ applies $$g$$ to a transposed vector. Proposed fix: "Smoothing (e.g. [kernel
-  regression](https://en.wikipedia.org/wiki/Kernel_regression))", as pass 2 had, and $$g(x_i) = x_i^{\intercal}
-  \beta$$ (a table change that the author reviews).
-- Optional, overlap with the exponential family post (2019-03-20-exponential-family.md) and the variational inference
-  post (2019-07-01-variational-inference-gmm.md): this post defines the exponential family (canonical form, sufficient
-  statistics, Fisher-Neyman theorem, natural form, why it is used), which the exponential family post covers in full,
-  and states the ELBO inequality, which the variational inference post derives. Both parts are the author's original
-  text, and #69 removed the links between the posts. Proposed fix: keep both parts as a reference sheet, as the author
-  wrote them, or shorten the exponential family section of this post to its definition.
+- `\mathbb{Var}` and `\mathbb{Cov}` render in MathJax 4 as double-struck letters, lowercase included (𝕍𝕒𝕣, ℂ𝕠𝕧): 42
+  times in 18 formulas of this post, 6 times in 2 formulas of the algebra post (2018-04-20-algebra-for-ml.md) and 15
+  times in 7 formulas of the Bayesian linear regression post (2018-08-20-bayesian-linear-regression.md); the
+  correlation of this post is written $$corr[x,y]$$, in italics like a product of variables. Proposed fix:
+  $$\mathrm{Var}$$ and $$\mathrm{Cov}$$ in the three posts (and $$\mathrm{corr}$$ here), keeping $$\mathbb{E}$$ for
+  the expectation; or $$\mathbb{V}$$ for the variance, as the MML book writes it; formula changes that the author
+  reviews.
+- Optional: one symbol for three quantities: $$\phi$$ is the convex function of Jensen's inequality, $$ϕ(x)$$ the
+  sufficient statistics of the exponential family, and $$\phi$$ the variational parameters of $$q_{\phi}$$ in the ELBO
+  inequality. Proposed fix: $$f$$ for the convex function of Jensen's inequality ($$f(\mathbb{E}[X]) \le
+  \mathbb{E}[f(X)]$$), as the MML book writes convex functions (section 7.3); the other two keep their usual symbols.
+- Optional: the Gaussian section repeats the mean and the covariance of an affine transformation ($$\mathbb{E}[Ax] =
+  A\mu$$, $$\mathbb{Var}[Ax] = A \Sigma A^{\intercal}$$), which the Rules of transformations section gives just
+  before. Proposed fix: replace the formula block of the Gaussian section with a reference to those rules ("With the
+  rules of transformations above, $$y = Ax$$ has the distribution $$p(y) = \mathcal{N}(y \mid A\mu, A \Sigma
+  A^{\intercal})$$."); or keep both, as in the author's original reference sheet.
 
 ### Bayesian Linear Regression, Maximum Likelihood and Maximum a Posteriori (2018-08-20-bayesian-linear-regression.md)
 
-- One symbol for two quantities: $$b$$ is the bias of $$y = mx + b$$ in the introduction and the prior standard
-  deviation of the MAP estimation ($$\mathcal{N}(0, b^2 I)$$, $$\frac{\sigma^2}{b^2}I$$, $$\alpha = 1/b^2$$, $$S_0 =
-  b^2 I$$); the appendix also uses it for a right-hand side ($$Ax = b$$) and an offset ($$y = Xw + b$$). Proposed fix:
-  name the prior standard deviation $$\sigma_w$$ (prior $$\mathcal{N}(0, \sigma_w^2 I)$$, $$w_{MAP} = (X^TX +
-  \frac{\sigma^2}{\sigma_w^2}I)^{-1}X^Ty$$, $$\alpha = 1/\sigma_w^2$$, $$S_0 = \sigma_w^2 I$$), about ten formulas of
-  the MAP and closed-form sections. It is left to the author because it changes the derivation.
-- Appendix, rule 5 (layout of derivatives): rules 5.1 to 5.4 write the derivative of a scalar with respect to a vector
-  as a column ($$\frac{d X^Tw}{dw} = X$$, the layout of The Matrix Cookbook, eqs. 69 to 72), while rule 5.5 and every
-  derivation of the post write it as a row ($$\frac{d \, w^TAw}{dw} = w^T(A+A^T)$$, $$\frac{1}{\sigma^2}(w^TX^TX -
-  y^TX)$$). Proposed fix: write rules 5.1 to 5.4 as rows (e.g. $$\frac{d X^Tw}{dw} = X^T$$), or add one sentence
-  saying which layout the derivations use.
-- Final remarks (minor): the Gaussian process equivalent to Bayesian linear regression with the prior $$\mathcal{N}(0,
-  S_0)$$ has the kernel $$x^TS_0x'$$ (GPML, section 2.2, with $$\Sigma_p = S_0$$); the post's $$K(x, x') = x^Tx'$$
-  holds for the prior $$\mathcal{N}(0, I)$$. Proposed fix: "with the kernel $$K(x, x') = x^TS_0x'$$ (i.e. $$x^Tx'$$
-  for the prior $$S_0 = I$$)", or leave it.
-- Introduction (minor): "the parameters to be learnt would then be all $$\mu$$ and $$\sigma$$": the posterior of $$m$$
-  and $$b$$ is a joint Gaussian with a non-diagonal covariance (the tilted ellipses of the online learning pictures).
-  Proposed fix: add "(and, in the posterior, the covariance between $$m$$ and $$b$$)", or leave it, since the sentence
-  describes the prior.
+- Section Maximum Likelihood Estimator, the coordinate ascent paragraph: "When the prior and posterior distributions
+  are computationally tractable, the optimization of the parameters that define them can be performed using the
+  coordinate ascent method ... each iteration computes the partial derivative of the prior/posterior with respect to
+  one model parameter". The section is about the likelihood (the prior only comes with the MAP section), the MLE of
+  the post has a closed form, and coordinate ascent is used when there is no closed-form maximum, not because the
+  distributions are tractable. Proposed fix: "When the likelihood (or, with a prior, the posterior) has no closed-form
+  maximum, its parameters can be optimized with the coordinate ascent method. ... In practice, each iteration computes
+  the partial derivative of the log-likelihood (or log-posterior) with respect to one model parameter ...", or move
+  the paragraph to the MAP section.
+- Formulas: 14 formulas of the post write `log` without a backslash (26 times, e.g. $$log \,\, p(w \mid X, y)$$,
+  $$-\frac{N}{2} log \sigma^2$$), which MathJax sets in italics as the product of $$l$$, $$o$$ and $$g$$, while two
+  formulas write $$\log$$. Proposed fix: write `\log` in all formulas of the post (a mechanical change, with no change
+  of meaning).
 
 ### Exponential Family of Distributions (2019-03-20-exponential-family.md)
 
-- Detour, Geometric and Negative Binomial, and the table: the text follows the source post (the negative binomial
-  counts the failures until $$r$$ successes), while the table row "negative binomial distribution with known number of
-  failures $$r$$", with $$f(x; r, p) = \binom{x+r-1}{x} p^x(1-p)^r$$, counts the successes $$x$$ before $$r$$
-  failures. Both conventions are in use and swap $$p$$ and $$1-p$$. Proposed fix: add to the bullet "(the table below
-  counts the successes before $$r$$ failures instead, which swaps $$p$$ and $$1-p$$)", or leave it.
-- One symbol per quantity (minor): $$\mu$$ is the mean of $$x$$ in the Gaussian example, the Bernoulli mean $$\alpha$$
-  in the Bernoulli example, and the mean parameter $$\mathbf{E}[T(X)]$$ in the Maximum Likelihood derivation
-  ($$\mu_{MLE}$$, a vector $$(\mu, \mu^2 + \sigma^2)$$ for the Gaussian); $$h$$ is the base measure $$h(x)$$ and an
-  arbitrary function of $$x$$ in the factorization list; the Bernoulli parameter is $$\alpha$$ in the example and
-  $$p$$ in the table. Proposed fix: write the mean parameter of the derivation as $$\boldsymbol{\mu} =
-  \mathbf{E}[T(X)]$$ (bold, two formulas), and leave the other two, which follow Wikipedia's notation.
+- `assets/exponential-family/chapter8.pdf` is a copy of chapter 8 of M. I. Jordan's unpublished book draft, which no
+  page links but which the site serves to anyone. The course page that lists the chapters of the same draft (Berkeley
+  CS 281A, 2003) asks readers not to distribute the chapters or link to them from public sites. The post names the
+  chapter without a link, as the course page asks. Proposed fix: delete the copy from the repository, or keep it
+  outside the published folders. The other unlinked file of the folder, `lec-10-5.pdf` (scribe notes of lecture 11 of
+  Jordan's Stat 241A course, Fall 2004), can stay or go with it.
 
 ### Variational Inference (ELBO, CAVI) and Gaussian Mixture Models (2019-07-01-variational-inference-gmm.md)
 
-- Optional, Coordinate Ascent Variational Inference, the Lagrange step: the text says that the derivative uses
-  Lagrange multipliers, but the equation of the derivative, $$\frac{d\,L}{d\,q(z_j)} = \mathbb{E}_{q_{\neq j}}
-  [\ldots] - \log q(z_j) - 1 = 0$$, has no multiplier (as in the CMU 10-708 notes that it follows); the constant is
-  absorbed later by the proportionality of $$q^{\star}(z_j)$$. Proposed fix: add the multiplier $$\lambda$$ of the
-  constraint $$\int q(z_j) \, dz_j = 1$$ to the equation ("$$- \log q(z_j) - 1 + \lambda = 0$$"), and say after it
-  that the factor $$e^{\lambda - 1}$$ is the normalization constant of $$q^{\star}(z_j)$$.
-- Optional, one symbol per quantity: (1) in the argmax derivation, $$j$$ is both the index of the updated factor
-  $$q_j$$ and the summation index of $$\sum_j^m$$; (2) $$m$$ is the number of latent variables ($$z_{1:m}$$) and the
-  vector of variational means ($$ELBO(m, s^2, \varphi)$$, $$m_{\neq k}$$); (3) the MCMC section writes the densities
-  as $$P(\cdot)$$ and the rest of the post as $$p(\cdot)$$. Proposed fix: write the sums of the ELBO derivations as
-  $$\sum_{l=1}^m$$ with $$z_l$$, $$q_l$$; keep $$m$$ (both sources use it in both meanings, Blei et al. and the CMU
-  notes) or call the number of latent variables $$M$$; write $$p$$ in the MCMC section.
+- End of the ELBO section: "There are several options to solve the previous optimization problem: coordinate descent
+  in all variables $$z_i$$ (...), Stochastic Variational Inference (faster), Mean-field approximation, etc." lists the
+  mean-field approximation, which is a choice of the variational family, next to two optimization methods. Proposed
+  fix: "... coordinate ascent over the variational factors (slow, ...), as in CAVI below, or stochastic optimization,
+  as in Stochastic Variational Inference (faster)", with the mean-field approximation introduced as the family that
+  both methods optimize over.
+- Start of the Mean-field approximation section: "So far, the focus was on a single posterior defined by a family with
+  a single distribution $$q$$, whose posterior $$p(z \mid x)$$ is tractable" contradicts the Variational Inference
+  section, which approximates an intractable posterior. Proposed fix: "So far, $$q(z)$$ was a single distribution over
+  all latent variables. The analysis now restricts it to a family that makes the optimization tractable."
 
 ### Variational Autoencoders (VAEs) and Generative Adversarial Networks (GANs) (2019-10-12-vae-gan.md)
 
-- Heading "Challenge: saturation of discriminator loss": the term that saturates is the generator's term of the value
-  function, $$\log(1 - D(G(z)))$$, and the problem is the vanishing gradient of the generator (the section's own
-  text). Proposed fix: rename the heading to "Challenge: saturation of the generator loss".
-- Heading "Generative Adversarial Neural Network (GAN)": the paper, the approved title and now the introduction say
-  "Generative Adversarial Network(s)". Proposed fix: rename the heading to "Generative Adversarial Network (GAN)".
-  Optional, in the same change: "The reparametrization Trick" to "The reparameterization trick", the spelling of the
-  text and of the papers.
-- Introduction: "two new methods for non-parametric distributions based on neural networks". VAEs and GANs are
-  parametric models (a fixed number of weights); what they model are complex distributions that no standard parametric
-  family describes, with an implicit density in the case of the GAN. Proposed fix: "two new methods based on neural
-  networks for distributions that no standard parametric family describes", or leave the author's wording.
-
-### Learning from sequences with Encoder-Decoder, Transformers and BERT (2020-02-28-learning-from-sequences.md)
-
-- Heading "BERT: Bidirectional Encoder Representation from Transformers": the model's name is "Bidirectional Encoder
-  Representations from Transformers" (BERT paper, abstract). Fix: "## BERT: Bidirectional Encoder Representations from
-  Transformers".
-- Opening of the Encoder-Decoder section: the link labelled "Sequence to Sequence Learning with Neural Networks
-  (Google, arXiv)" points to the NeurIPS proceedings (`papers.nips.cc/paper/5346-...pdf`, a 302 redirect to
-  proceedings.neurips.cc), not to arXiv. Fix: link the arXiv abstract page https://arxiv.org/abs/1409.3215 (checked:
-  Sutskever, Vinyals and Le), which matches the label, or change the label to "(Google, NeurIPS 2014)".
-- Optional, "Other components" of the transformer: the list does not describe the "Add & Norm" blocks that the
-  transformer and BERT pictures show. Fix: add one item, e.g. "The *Add & Norm* component adds the input of the
-  previous component to its output (a [residual connection](https://en.wikipedia.org/wiki/Residual_neural_network))
-  and normalizes the result ([layer
-  normalization](https://en.wikipedia.org/wiki/Normalization_(machine_learning)#Layer_normalization)), which keeps the
-  training of the stacked layers stable;" (Vaswani et al., Section 3.1).
-
-### Building a GPT model in PyTorch from scratch (2023-02-28-gptlite.md)
-
-- Building a GPT model (gptlite), introduction: "The fundamental difference between the encoder and the decoder is the
-  *mask* in the decoder's attention matrix" leaves out the second difference, the cross-attention of the decoder over
-  the output of the encoder, which the left model of the first picture shows and the attention section mentions.
-  Proposed fix: "The fundamental differences between the encoder and the decoder are the *mask* in the decoder's
-  attention matrix, which hides ..., and the cross-attention, through which the decoder attends to the output of the
-  encoder."
-- Building a GPT model (gptlite), section "Batching and dimensionality": "for a given input, the dataset includes all
-  sequences from size `1` to size `block_size`", while `get_batch` only takes windows of `block_size` tokens; it is
-  the mask of the attention that turns each window into `block_size` training examples. Proposed fix: add, after that
-  sentence, "A single input of `block_size` tokens holds all of them: thanks to the mask of the attention (see below),
-  the output at position `t` depends only on the tokens `0` to `t`."
-
-### GPT in C++: LibTorch vs. PyTorch, TorchScript and torch.compile (2023-06-27-gptlite-cpp.md)
-
-- Post, TorchScript section, "**Important**" paragraph: `torch.jit.trace` on a model compiled with `torch.compile`
-  works in PyTorch 2.1 only. From PyTorch 2.2 on, it raises "Detected that you are using FX to torch.jit.trace a
-  dynamo-optimized function. This is not supported at the moment." (`error_on_nested_jit_trace = True` in
-  `torch/_dynamo/config.py`). Even in 2.1, the TorchScript file holds the traced eager graph, not the kernels of
-  `torch.compile`. Proposed fix, if the author agrees: add "(in PyTorch 2.1; later versions raise an error, so the
-  model is traced before it is compiled, and the TorchScript file does not hold the compiled kernels)".
-- Overlap with other posts: the paragraph of #66 on CUDA graphs and the static KV cache repeats the section "Static
-  shapes for CUDA graphs" of the KV cache post (`2025-06-07-inference-prefill-decode-roofline-cache.md`), and the
-  megakernel sentence repeats the related-work paragraph of the kernel fusion tensor parallelism post, which cites the
-  same work. Proposed fix, for the author to decide: keep the CUDA graph modes and gpt-fast here, and shorten the KV
-  cache sentence to "For text generation, this requires a static KV cache, preallocated to its maximum length.", as
-  the KV cache post explains and implements it.
+- Optional, one symbol per quantity: $$\sigma$$ is the standard deviation of the encoder in the reparameterization
+  trick ($$z = \mu + \sigma \cdot \epsilon$$), a parameter of the prior in the KL paragraph ($$p(z)=\mathcal{N}(\mu=0,
+  \sigma^2=1)$$, where $$\mu$$ is reused too) and the sigmoid of the discriminator in the saturation section
+  ($$\sigma(a)$$, $$\log(1 - \sigma(a))$$, $$\log \sigma(a)$$). Proposed fix: write the prior as $$p(z)=\mathcal{N}(0,
+  I)$$, as in the paper, and the sigmoid as $$\text{sigmoid}(a)$$ in the three formulas of the saturation section; or
+  leave it, since each section defines its symbols.
 
 ### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
 
-- The post holds a hidden HTML comment, from the mixed precision paragraph to the end of the activation checkpointing
-  section, still in the first and second person. The hidden text sets buckets of `4e5` elements, while the configs use
-  `5e4`, and calls `to_layers()` `lo_layers()`. The front matter has the tag "activation checkpointing", which only
-  the hidden text covers. Proposed fix: delete the comment and the tag, or rewrite the comment in the author's voice
-  and publish it.
-- Optional, the residual memory list "(activations, normalization layers, etc.)": it holds for the buffers of the
-  normalization layers ("FSDP does not shard buffers", `torch/distributed/fsdp/api.py`, v2.0.1), but the LayerNorm
-  weights of GPTlite are parameters, which ZeRO-3 and FSDP shard. The ZeRO paper (Sec. 3.2) defines the residual
-  states as activations, temporary buffers and unusable fragmented memory. Proposed fix: "(activations, temporary
-  buffers, fragmented memory, buffers of normalization layers, etc.)".
-- The precision of the benchmark: the text now says fp32, from the configuration files, where the original said mixed
-  precision. Proposed fix: confirm that the runs used these configurations, then add "in fp32" to the caption of the
-  benchmark (diagram item).
+- Hidden text in the source of the post: about 110 lines inside an HTML comment (`<!--` ... `-->`), between the end of
+  the section DeepSpeed implementation and the detour on measuring the memory of the parameters, which the site does
+  not show. It is an early draft of three sections: mixed precision (with an `fp16` DeepSpeed config), communication
+  quantization with ZeRO++, and activation checkpointing (with its `train.py` and `gptlite.py` code). The draft is in
+  the first and second person ("we will store", "if you need to"), sets buckets of `4e5` elements while the configs of
+  the post use `5e4`, and calls `to_layers()` `lo_layers()`. The front matter has the tag "activation checkpointing",
+  which only this hidden text covers. Proposed fix, for the author to pick in the next iteration: delete the hidden
+  text and the tag (git keeps the text), or rewrite the three sections in the author's voice, check them against the
+  code, and show them on the page.
+- The precision of the benchmark: the post says that all implementations use fp32, as both configuration files of the
+  post set `"fp16": {"enabled": false}`, while the original text said mixed precision. The history of the
+  configuration does not settle it: `fp16` was enabled in the commit of the first results (4ade5d7, 2023-10-08 02:31),
+  disabled at 12:02 (75ac452), and the benchmark pictures were updated again at 17:20 (0beddf7). The author thinks
+  that the runs used fp16, but is not sure (2026-10-19). Proposed fix, in the next iteration: confirm the precision of
+  the runs (from their logs, or by running one configuration again); if they used fp16, write "mixed precision (fp16)"
+  in the text, set `fp16` in the configuration files, and add "in fp16" to the caption of the benchmark (diagram
+  item); otherwise add "in fp32" to the caption.
 
 ### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
 
-- The DualPipeV row of the summary table does not list the doubled point-to-point communication, which the text
-  names, under "Main cost". Proposed fix: add "2× point-to-point communication" to that cell.
 - The post keeps the workaround `outputs = outputs.requires_grad_(True)` for the error of the swapaxes lambda. If
   `outputs` has no `grad_fn`, this call lets the backward pass run, but no gradient reaches the layers before it.
   Proposed fix: check that the parameters of the last stage get gradients with the workaround (`p.grad` after
@@ -1214,38 +1066,14 @@ Content problems that need the author's decision, such as overlap between posts.
   not known. Fix: measure the peak memory of every GPU (`torch.cuda.max_memory_allocated()` on each rank, and
   `nvidia-smi` for the CUDA contexts on GPU 0), and give the numbers and the cause in the post.
 
-### Tensor parallelism (2023-09-02-tensor-parallelism.md)
+### Variable sequence lengths, curriculum learning, adaptive batch size and LR (2024-05-10-training-variable-length-curriculum.md)
 
-- The last section was named "Final remarks and code", but the repository holds no code for this post: no file
-  defines `Megatron_f`, `Megatron_g`, `Megatron_FeedForward` or `Megatron_MHA`. Proposed fix: add these classes
-  to `assets/distributed-training` with a small test on 2 GPUs, or keep the code in the post only.
-- Section "Final remarks and code": the last two paragraphs are about the DeepSpeed config files and the DeepSpeed
-  features of the distributed training series, while this post uses neither DeepSpeed nor a config file (the configs
-  are `assets/distributed-training/ds_config.json` and `ds_config_offload.json`, used by the data parallelism post).
-  The text now says "the DeepSpeed config files and parallelism settings of the distributed training posts" and "These
-  posts only scratched the surface". Proposed fix: move both paragraphs to the end of the data parallelism post, and
-  keep here only the paragraph on PyTorch and DeepSpeed model parallelism; or keep them here as the closing remarks of
-  the series.
-
-### Mixture-of-Experts and Expert Parallelism (2024-01-19-mixture-of-experts.md)
-
-- The post reuses symbols across sections: $$E$$ is the 1991 error function, the experts $$E_j$$ of the importance
-  example, the number of experts in GShard and in the Tutel table, and the embedding size in the code comments
-  (`B*S*E`); $$N$$ is the number of experts in the Switch and ST-MoE sections and the number of layers in the GShard
-  picture; $$n$$ is the number of experts in the 2017 picture and in the Mixtral formula. Within each section the
-  symbols now follow the paper and its picture. Fix: decide whether the post keeps each paper's notation per section
-  (as now), or uses one notation (e.g. $$N$$ experts, $$T$$ tokens, $$E$$ only for the embedding size), which also
-  needs the GShard and 2017 pictures and the Tutel table relabelled.
-- The capacity factor advice of ST-MoE appears twice, in the Switch section (Expert Capacity) and in the ST-MoE
-  recommendations of the further reading. Fix: keep it in the ST-MoE note only, and give in the Switch section the
-  Switch paper's own finding, that Switch Transformers perform better at lower capacity factors (1.0, 1.25); or keep
-  both.
-- The main part of the post presents four routing schemes (dense softmax gating, noisy top-k gating, GShard's top-2
-  with random routing, Switch's top-1), and the further reading adds expert choice and Soft MoE, without a summary.
-  Fix, if wanted: a short table at the end of the Switch Transformers section that compares the experts per token, the
-  expert compute per token and the load balancing method of the four schemes (pass 2 had one).
-- The heading "Conditional Computing for improved scaling" uses "computing", while the GShard title and the post's own
-  text say "conditional computation". Fix: "Conditional Computation for improved scaling".
+- The pipeline parallelism section says that its picture compares DDP and pipeline parallelism "for 2 processes and 2
+  gradient accumulation steps (4 micro-batches total)". For DDP, 2 processes with 2 accumulation steps give 4
+  micro-batches. For pipeline parallelism, 2 processes are the 2 stages of one pipeline, which processes every
+  micro-batch of the batch, so 4 micro-batches need 4 accumulation steps, or 2 data-parallel pipelines of several GPUs
+  each. Fix: "for 2 data-parallel ranks (each a whole pipeline in the right panel) and 2 gradient accumulation steps
+  (4 micro-batches total)", or "for a batch of 4 micro-batches" without the processes.
 
 ### Sequence and context parallelism with Ulysses and Ring attention (2024-08-30-sequence-context-parallelism.md)
 
@@ -1260,28 +1088,16 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Diffusion models, from DDPMs to DiTs (2025-02-25-diffusion.md)
 
-- The symbol $$C$$ is the constant of Eqs. 8, 9-10 and 12 ("where $$C$$ is a constant that does not depend on
-  $$\theta$$", the notation of DDPM) and the number of channels in the DiT and video sections (and in the caption of
-  `align_your_latents.svg`). Fix: write the constant of the three equations and of the "where" sentence as
-  $$\text{const}$$, or keep the paper's notation; the text already notes the same double use of $$T$$ ("here $$T$$ is
-  the number of frames, not of diffusion steps").
-- Movie Gen entry: "and on the use of activation checkpointing for improved memory efficiency" could not be checked.
-  Section 3.1.6 does not mention activation checkpointing, and every fetched copy of the paper stops before Appendix
-  A.2. Fix: check Appendix A.2 by hand, and remove the clause if the appendix does not mention it.
+- The Animate Anyone entry of the further reading repeats, with the same shapes, the definition of the spatial and
+  temporal attentions given in the first item of the section "Video diffusion and 3D attention" ("a spatial attention
+  that converts an input $$B \times T \times H \times W \times C$$ into ..."). Fix: shorten it to "Spatio-temporal
+  attention is achieved by a spatial attention followed by a temporal attention, the first approach of the section
+  Video diffusion and 3D attention.", or keep it so that the entry reads on its own.
 
 ### Prefill vs decode, roofline, KV cache, batching and disaggregation (2025-06-07-inference-prefill-decode-roofline-cache.md)
 
-- Symbols with two meanings. In "Where does the compute go", $$n$$ is the context length, while the prefill section
-  defines $$n$$ as the number of output tokens. The other reuses stay within their own sections:
-  - $$P$$ is the performance in the roofline, and the number of prompt or cached tokens in the KV cache code and in
-    prefix caching;
-  - $$B$$ is the peak bandwidth ($$B_{\text{peak}}$$), an inner matrix dimension, and the batch size of static
-    batching;
-  - $$N$$ is the vector length, the size of square matrices, and the length of a reused prefix. Fix: write $$T$$ for
-    the context length in "Where does the compute go", as pass 1 did. If the author wants more precision there, pass
-    1's counts can follow the two terms. With an MLP of hidden size $$4d$$, a token costs about $$24d^2$$ FLOPs in the
-    linear layers and $$4Td$$ in attention. So attention dominates beyond $$T = 6d$$ tokens, i.e. 24,576 tokens for
-    $$d = 4096$$.
+- Optional: the heading "Vector Sum (real use case)" names a worked example whose execution time is assumed ("If the
+  GPU runs the vector loop above in exactly 0.0001 seconds"), not measured. Fix: "Vector sum (example)".
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
@@ -1289,18 +1105,28 @@ Content problems that need the author's decision, such as overlap between posts.
   partial collective operations (its table of collective and partial collective results) and the number of microbatches in
   flight with the memory each one takes. The post shows the two decode placeholders with a note in their captions,
   and leaves the rest out. Fix: add these results to the post once the paper has them.
+- The SHArP reference of the section In-network computing links to a PDF on the website of a network vendor
+  (network.nvidia.com), in one of the two posts that follow "The author's papers". The text names no vendor, but the
+  link does. Fix: link the paper's page in IEEE Xplore instead (Graham et al., "Scalable Hierarchical Aggregation
+  Protocol (SHArP): A Hardware Architecture for Efficient Data Reduction", COMHPC 2016), after checking its address;
+  or keep the link if the user accepts a vendor address for cited work.
+- Results, the AllGather-ReduceScatter backend: "the results have the same shape and are slightly smaller:
+  MegaKernel+INC improves on the Baseline by 8.9% to 18.5%, and on MegaKernel by up to 10.6%". The gain over the
+  Baseline is about that of All-to-All (8.7% to 19.2% from the values of `ep_results.svg`), and the gain over
+  MegaKernel is larger than with All-to-All (up to 7.8%), so "slightly smaller" does not say what is smaller. Fix:
+  check the numbers in the paper and write, e.g., "the results have the same shape: MegaKernel+INC improves on the
+  Baseline by 8.9% to 18.5%, about as much as with All-to-All, and on MegaKernel by up to 10.6%, more than with
+  All-to-All".
+- A new version of the paper is in the paper's repository. Proposed fix, in iteration 3, after the merge of iteration
+  2: update the text of the post where the new version of the paper changes it. The new pictures of the paper come
+  with the picture work, which owns the figure files.
 
-### Knowledge distillation, speculative decoding and multi-token decoding (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
+### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
 - The usage comment of the Medusa code ("prefill the prompt: [1, S], with the causal_mask of the post on attention")
   relies on `causal_mask` from the post on attention, which the text no longer links (#69). Fix: in the code pass,
   write the mask in the comment as `torch.ones(S, S, dtype=torch.bool).tril()` (True where a token may attend, as in
   `tree_attention_mask`) and drop "of the post on attention", or keep the mention without a link.
-- Optional: the LayerSkip text ("exits after the first $$E$$ layers") and `layerskip.svg` ("drafts of the first E = 4
-  layers") use E for the number of draft layers, as the LayerSkip paper does, while the shape comments of the code
-  blocks, the LayerSkip block included, use E for the embedding size. Fix: keep it, as the prose uses E only for the
-  draft layers; or drop the symbol in the text ("the first layers") and in the picture ("drafts of the first 4
-  layers") together.
 
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
@@ -1310,45 +1136,24 @@ Content problems that need the author's decision, such as overlap between posts.
   validation loss, time per token, matching tokens), or present the code without the comparisons.
 - Optional: once both drafts are published, "knowledge distillation" in the introduction could link to the
   distillation post instead of Wikipedia.
-- The last section, "Which one to use", is a subsection of "Quantization", but its guide now also compares 2:4
-  sparsity with structured pruning and distillation. Fix: make it a section of its own ("## Which one to use"), or
-  move the pruning sentence to the end of the pruning part.
 
 ### Publications bookmark (publications.md)
 
-- DeepSeek-V3.2-Exp: the title and the author line write the hyphens as non-breaking hyphens (U+2011),
-  "DeepSeek‑V3.2‑Exp" and "DeepSeek‑AI", while the rest of the page uses ASCII hyphens, so a search for
-  "DeepSeek-V3.2-Exp" misses the title. Proposed fix: ASCII hyphens.
-- NSA: the paper gives 260B pre-training tokens in its introduction and 270B in its section 4.1, and the notes say
-  260B. Proposed fix: keep 260B, or write "260B tokens (270B in Sec. 4.1)".
-- DeepSeek-V3.2: the notes say that it is the first DeepSeek model to integrate thinking into tool use, and that
-  DeepSeek-V3.2-Speciale has no tool use. Both come from the release note of DeepSeek, not from the report.
-  Proposed fix: link the note (https://api-docs.deepseek.com/news/news251201), or keep the notes as they are.
-- Optional, links that redirect: blog.research.google/2020/10/... (Performers) and blog.research.google/2021/12/...
-  (GSPMD) go to research.google/blog/..., www.tensorflow.org/xla (operator fusion in XLA, and GSPMD) goes to
-  openxla.org/xla, and papers.nips.cc/paper/5346-... (the sequence to sequence paper, in the notes on neural machine
-  translation) goes to proceedings.neurips.cc/.... The GPT-3 notes link GPT-2 to a third-party copy of its paper
-  (insightcivic.s3.us-east-1.amazonaws.com/language-models.pdf), which is the right paper. Proposed fix: use the
-  target URLs, and the PDF of OpenAI for GPT-2 after a check.
-- Optional, DeepSeek-V3.2 and DeepSeek-V3.2-Exp: both entries describe DeepSeek Sparse Attention in nearly the same
-  words:
-  - the lightning indexer with a few heads, ReLU and FP8;
-  - the top-k selection with $$k = 2048$$;
-  - $$O(L^2)$$ to $$O(Lk)$$;
-  - the dense warm-up with a KL loss. Proposed fix: keep the description in the DeepSeek-V3.2 entry. Shorten the
-    second paragraph of the V3.2-Exp entry to what only it says (the KV cache does not shrink, the reads per step
-    drop). Or keep both, as the model card came first.
-- Optional, Rectified flow (entry 064): the transcription of Sec. 2.1 of the paper stops after Eq. (2), so its "First,
-  for a given input coupling ..." has no "Second". Proposed fix: add one sentence on what follows in the paper (the
-  rectified flow averages the directions of the lines that cross at a point, so its paths do not cross, and reflow
-  makes them straighter), or drop "First,".
-- Graph Transformer Networks: one symbol for two quantities.
-  - The notes write a meta-path as $$R = t_1 \circ t_2 \circ \cdots \circ t_l$$ between nodes $$v_1$$ and $$v_{l+1}$$,
-    so $$l$$ is the length of the meta-path (the notation of Sec. 3.1 of the paper).
-  - The caption and the picture use l for the index of the GT layer (𝔸<sup>(l)</sup>, ℚ<sub>1</sub><sup>(l)</sup>). A
-    stack of l GT layers learns meta-paths of length up to l + 1.
-  - Proposed fix: write the meta-path length as $$k$$ in the notes ($$t_k$$ and $$v_{k+1}$$), or keep the paper's
-    notation.
+- DeepSeek-V2 (entry 038): the last sentence of item 2 of DeepSeekMoE, "Finely segmenting the experts into $$mN$$ ones
+  and activating $$mK$$ from them allows for a more flexible combination of activated experts", restates the sentence
+  before it ("far more *combinations* of experts per token"). Proposed fix: remove the sentence (a text pass that
+  removes math must report it as a formula change, so iteration 2 left it).
+- Optional, ZeRO-Offload++ (entry 052): the entry title links the blog on the branch `offloadpp-news` of
+  microsoft/DeepSpeed, and the caption links it on `master`; both copies exist today, and the repository has moved to
+  deepspeedai/DeepSpeed. Proposed fix: link
+  https://github.com/deepspeedai/DeepSpeed/tree/master/blogs/deepspeed-offloadpp in both places, after a check that it
+  opens.
+- RoFormer (entry 076) and LoRA (entry 079): the formulas write the same quantities with Unicode mathematical italic
+  letters ($$𝜃_𝑝$$, $$Δ𝑊$$, $$𝑊$$) and with TeX letters ($$\theta$$, $$ΔW$$, $$W$$). In RoFormer, $$R(x)$$ is the
+  rotated pair while $$R_m$$ is the rotation matrix of position $$m$$, and the angle $$𝜃_𝑝 = p \, w_i$$ depends on the
+  pair $$i$$, which its symbol does not show. Proposed fix: write the letters in TeX ($$\theta$$, $$W$$, $$\Delta
+  W$$), write the angle of the $$i$$-th pair at position $$p$$ as $$\theta_{p,i} = p \, w_i$$, and the rotation of a
+  pair as $$R_p x$$, so that $$R_p$$ is the rotation matrix of position $$p$$ in both formulas.
 
 ## Title issues
 
@@ -1366,24 +1171,8 @@ category that the home page puts before it, fits on one line of the home page on
   clustering, DBSCAN, spectral clustering, self-organizing maps, t-SNE, UMAP and self-supervised learning.
   Proposed: "Dimensionality Reduction, Clustering and Self-Supervised Learning" (652 px).
 
-### Knowledge distillation, speculative decoding and multi-token decoding (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
-
-- The title says "multi-token decoding", while the post, its tags and the papers that it cites call the method
-  "multi-token prediction" (MTP). Proposed title: "Knowledge distillation, speculative decoding and multi-token
-  prediction". With "Efficient Inference: " before it, the home page line measures 686 px in the site's font and 637
-  px in Arial (the current title: 681 px), under 750 px, at 92 characters.
-
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
 - Optional: the other posts of the series name their methods in the title ("Faster attention (GQA, FlashAttention,
   sparse, linear and latent attention)", "Prefill vs decode, roofline, KV cache, batching and disaggregation"). Fix:
   "Pruning and quantization (Wanda, Minitron, GPTQ, AWQ, FP8, FP4)", 84 characters with "Efficient Inference: ".
-
-### Publications bookmark (publications.md)
-
-- Three entry titles do not follow the capitalization of their papers. Proposed fix: write them as the papers do.
-  - "Siamese neural networks for one-shot image recognition" should be "Siamese Neural Networks for One-shot Image
-    Recognition", as its caption writes it.
-  - "Dropout: a simple way to prevent neural networks from overfitting" should be "Dropout: A Simple Way to Prevent
-    Neural Networks from Overfitting", as its caption writes it.
-  - "Deeply-supervised Nets" should be "Deeply-Supervised Nets", as on arXiv 1409.5185.
