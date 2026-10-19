@@ -407,7 +407,7 @@ To have enough of these forward-backward pairs, DualPipe uses a *bidirectional* 
 Note that the diagrams model only computation, so DualPipe's bubble looks comparable to ZB-H1's. Its main advantage is that, within each black-bordered pair, the all-to-all communication of expert parallelism is hidden behind useful computation. DualPipe on 8 GPUs is illustrated in the following picture:
 
 {: .picture}
-<img width="99.3%" height="99.3%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+<img width="99.1%" height="99.1%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
 DualPipe on 8 GPUs: micro-batches 1 to 8 (light) enter at GPU 0, and micro-batches 9 to 16 (dark) enter at GPU 7. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)

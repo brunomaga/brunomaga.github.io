@@ -19,7 +19,7 @@ Before continuing, it is important to emphasize the following:
 To implement sequence parallelism, the data loader first has to be adapted to load data at the token level, in a way that matches the hybrid data- and sequence-parallel setup. All that is needed is to configure a `DataLoader` and a `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader workers.
 
 {: .picture}
-<img width="97.1%" height="97.1%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
+<img width="97%" height="97%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
 
 {: .caption}
 Data loading for hybrid data parallelism (DP) and sequence parallelism (SP) on 4 color-coded processes/GPUs and a dataset of 8 samples. First row: all 4 processes run distributed data parallelism. Second row: a custom `DistributedSampler` that yields chunks of sequences enables a hybrid data- and sequence-parallel execution with 2 groups of 2 sequence-parallel processes. Third row: no data parallelism; all 4 processes run sequence parallelism on the same sample.

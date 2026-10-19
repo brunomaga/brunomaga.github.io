@@ -952,7 +952,7 @@ DualPipe is a bidirectional pipeline-parallelism algorithm introduced in the Dee
 The result is fewer bubbles and full forward/backward computation-communication overlap, at the cost of holding two copies of model parameters (one per direction) and slightly higher activation memory. The parameter duplication is affordable because DeepSeek-V3 uses a large expert-parallel size, so each rank holds relatively few parameters; separately, careful memory savings (recomputation, a CPU-resident [EMA](https://en.wikipedia.org/wiki/Exponential_smoothing) of the parameters, an embedding and an output head shared with the MTP module) allow training without costly tensor parallelism. Unlike PipeFill, which accepts bubbles and fills them with unrelated jobs, DualPipe attacks the bubbles directly by densifying the main job's own schedule, making the two approaches complementary rather than competing.
 
 {: .picture}
-<img loading="lazy" width="99.3%" height="99.3%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+<img loading="lazy" width="99.1%" height="99.1%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
 DualPipe on 8 GPUs: micro-batches 1 to 8 (light) enter at GPU 0, and micro-batches 9 to 16 (dark) enter at GPU 7. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)
@@ -1775,7 +1775,7 @@ A clearer explanation can be found on this [Google Research post](https://blog.r
 **Bidirectional attention**, where there is no notion of past and future: decoupling matrices $$Q′$$ and $$K′$$ (the random features of the queries and the keys) used in lower rank decomposition of the attention matrix $$A$$ and conducting matrix multiplications in the order indicated by dashed-boxes gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation:
 
 {: .picture}
-<img loading="lazy" width="70.7%" height="70.7%" src="{{ site.assets }}/publications/performers.svg"/> 
+<img loading="lazy" width="70.6%" height="70.6%" src="{{ site.assets }}/publications/performers.svg"/> 
 
 {: .caption}
 **Left:** Standard attention module computation, where the final desired result is computed by performing a matrix multiplication with the attention matrix $$A$$ and value tensor $$V$$. **Right:** Decoupling matrices $$Q′$$ and $$K′$$ used in the lower rank decomposition of $$A$$ and conducting the matrix multiplications in the order indicated by the dashed boxes gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation. Adapted from: [Rethinking Attention with Performers](https://research.google/blog/rethinking-attention-with-performers/)

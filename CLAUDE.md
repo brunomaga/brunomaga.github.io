@@ -273,7 +273,7 @@ sections 6 and 7, and the font section 4.
   <img width="P%" height="P%" src="{{ site.assets }}/<folder>/<name>.svg"/>
   ```
   with P = W / 880 * 100 (W is the width of the exported SVG). So text, lines and arrowheads look the same
-  size in every picture of the posts.
+  size in every picture of the posts. A picture with a title above it takes P on its span (section 9).
 - Pictures shown side by side in one row each keep their own P. When the P values of a row add up to more
   than 98 (the spaces between pictures take the rest), the pictures wrap onto the next line.
 - A picture that does not fit 880 px at the text sizes below is redrawn: first narrow the empty space
@@ -366,28 +366,34 @@ sections 6 and 7, and the font section 4.
 
 - Every geometric element with a fill (rectangles, rounded boxes, circles, cubes, cylinders, filled table
   cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000, no stroke
-  opacity. Four weights, the same at page scale in every picture:
+  opacity. The cells of a block are the exception: their outlines are grey (see the blocks below). Four
+  weights, the same at page scale in every picture:
   ```
   thin       0.6 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
-                      block into cells, the faces of a 3D tensor, pipeline passes
+                      block into cells, the faces of a 3D tensor, pipeline passes and the other cells of a
+                      schedule or a time line
   regular    1.2 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
                       nodes, operators, single cubes, block arrows, curly brackets
   thick      1.6 px   arrows and lines, frames of regions (devices, processes, groups, sections), the outline
                       of each block of cells (matrix, array, table, stack of objects), the silhouette of each 3D
                       tensor or block of cubes and the three edges at its front corner, axes of charts and time
                       lines, pipeline rows, black lines that divide a drawing into regions
-  emphasis   2.4 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
+  emphasis   2.8 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
                       (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frame of
                       process A in all_to_all), and black frames that emphasise a part (DualPipe's overlapped
                       forward and backward passes, the selected experts in moe_switch_transformers)
   ```
-- A block (a matrix, an array, a table, a stack of objects, a block of cubes) has the thick outline around it
-  and thin lines between its cells. Boxes glued into one matrix (the column and row splits of the Megatron-LM
-  pictures) share a thin line inside one thick outline. A single cell (a token, a K or V block, a single cube)
-  has no block outline.
-- Tables have black text, thin lines between their cells and a thick outline, in black; the tables of the
-  matrix transpose post are grey (#b3b3b3 lines and outline) and keep their blue cells, and the stacks of
-  objects that their pointers point to are black arrays.
+- A block (a matrix, an array, a table, a stack of objects, a block of cubes) has the thick black outline
+  around it and thin grey #666666 lines between its cells: the cells, the lines that divide the block and the
+  faces of a 3D tensor are grey. Boxes glued into one matrix (the column and row splits of the Megatron-LM
+  pictures) share a thin grey line inside one thick black outline. A single cell (a token, a K or V block, a
+  single cube) has no block outline and keeps its black outline.
+- The cells of a schedule or a time line are intervals of time, not the cells of a block: their thin outlines
+  stay black (pipeline passes, tp_timeline, tp_block_specialization, continuous_chunked_batching,
+  local_variable_timestep_six_cell_example, the time row of prefill_decode).
+- Tables have black text, thin grey lines between their cells and a thick black outline; the tables of the
+  matrix transpose post keep their blue cells, and the stacks of objects that their pointers point to are
+  black arrays.
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
     frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
@@ -395,10 +401,14 @@ sections 6 and 7, and the font section 4.
     cross marks are not emphasis lines;
   - dashed outlines of elements that are not frames: 0.6 px on filled elements, 1.6 px on lines without fill
     (a dashed frame is 1.6 px, as other frames; the dash keeps its pattern);
-  - white masks that hide parts of a drawing, faded elements and red cross marks.
+  - white masks that hide parts of a drawing, faded elements and red cross marks;
+  - the memory bars of deepspeed_stages and their legend swatches: thin black outlines, as their strips are
+    4 px tall.
 - Thin arrows: black #000000, 1.6 px, endArrow=block, endFill=1, endSize=6. Dashed arrows use the same
-  head. Grey #666666 only for faded content. Lines without a head that join two parts of the flow (two boxes,
-  or a box and an arrow): 1.6 px. The axis of a chart or a time line: 1.6 px, with the same head.
+  head. An arrow at the emphasis weight has endSize=4.8, so that its head, whose length is endSize plus the
+  line weight, has the size of the others. Grey #666666 only for faded content. Lines without a head that
+  join two parts of the flow (two boxes, or a box and an arrow): 1.6 px. The axis of a chart or a time line:
+  1.6 px, with the same head.
 - The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
   the others; the heads that converge on one node may touch.
 - Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.6 px black line with a
@@ -461,7 +471,7 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
 - One row per GPU, labelled "GPU 0" to "GPU 3" (to "GPU 7" for DualPipe; "Worker 1" to "Worker 4" where the
   post's text says workers, as for the PipeDream pictures), 14 px regular, right-aligned 4 px left of the
   first cell.
-- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (15.45 px for DualPipe, so that its 8 GPUs
+- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (15.44 px for DualPipe, so that its 8 GPUs
   and 16 micro-batches fit 880 px): a forward pass takes 1 unit, a backward pass 2 units, or 1 unit each for
   the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
@@ -474,7 +484,7 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   the dark ones.
 - The schedule ends with its last pass: no passes of the next iteration and no "..." after the rows.
 - No time markers over the rows (no "1F1B ends" line).
-- Overlapped forward and backward passes (DualPipe) have a 2.4 px black frame around them.
+- Overlapped forward and backward passes (DualPipe) have a 2.8 px black frame around them.
 - A time axis under the rows is 1.6 px, as the axes of section 6.
 - The legend is centred under the rows, 12 px below them (or below the time axis): each entry is a 20 x 12 px
   swatch (two 10 x 12 px halves for the two chunks or directions) and its 14 px label 4 px to the right, with
@@ -509,6 +519,14 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
 - Panel letters such as "(a)" may stay inside the picture; the panel's text goes into the caption.
 - Titles that describe a schedule or a variant (for example "ZB-H1 (same activation memory as 1F1B)") go
   into the caption, not the picture.
+- Pictures side by side in one row that the text names one by one (the four slicing layouts) may each have
+  a short title above them, centred and bold, outside the picture. Each picture and its title go in a span of
+  the picture's width P, with 4% of the width between the spans:
+  ```
+  {: .picture}
+  <span style="display:inline-block; width:P%; vertical-align:bottom;"><b>Title</b><br><img width="100%" src="{{ site.assets }}/<folder>/<name>.svg"></span>
+  <span style="display:inline-block; width:4%;"></span>
+  ```
 - Labels and legends stay inside the picture.
 
 ### 10. Real photos inside pictures
