@@ -379,7 +379,7 @@ Quantization can be applied after training, often with a small calibration datas
 
 ### Weight-only quantization
 
-Storing the weights in 4 or 8 bits while computing in 16 bits (e.g., W4A16: 4-bit weights, 16-bit activations) speeds up decode almost in proportion to the bytes saved, because decode is [memory-bound]({{ site.baseurl }}{% post_url 2025-06-07-inference-prefill-decode-roofline-cache %}#roofline-model). As an example, 4-bit weights are read four times faster than BF16 ones. The kernel must dequantize the weights on the fly, in registers, right before the multiplication; dequantizing the whole matrix to memory first would cancel the gain. Prefill, which is compute-bound, barely benefits.
+Storing the weights in 4 or 8 bits while computing in 16 bits (e.g., W4A16: 4-bit weights, 16-bit activations) speeds up decode almost in proportion to the bytes saved, because decode is memory-bound. As an example, 4-bit weights are read four times faster than BF16 ones. The kernel must dequantize the weights on the fly, in registers, right before the multiplication; dequantizing the whole matrix to memory first would cancel the gain. Prefill, which is compute-bound, barely benefits.
 
 The picture below shows how INT4 weights are quantized, packed two per byte, and dequantized in the kernel:
 
