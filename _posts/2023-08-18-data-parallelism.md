@@ -6,7 +6,7 @@ tags: ["data parallelism", "ZeRO", "FSDP", "CPU offloading", "activation checkpo
 ---
 
 
-In 2012, the paper [Large Scale Distributed Deep Networks](https://papers.nips.cc/paper/2012/hash/6aca97005c68f1206823815f66102863-Abstract.html) trained a neural network with billions of parameters on tens of thousands of CPU cores, by running copies (*replicas*) of the model on different subsets of the training data. The replicas sent their updates to a *parameter server* split across many machines, while modern frameworks such as PyTorch exchange the gradients directly between processes, with a collective communication at every training step.
+In 2012, the paper [Large Scale Distributed Deep Networks](https://papers.nips.cc/paper/2012/hash/6aca97005c68f1206823815f66102863-Abstract.html) addressed the training of neural networks with billions of parameters on tens of thousands of CPU cores, by running copies (*replicas*) of the model on different subsets of the training data. The replicas sent their updates to a *parameter server* split across many machines, while modern frameworks such as PyTorch exchange the gradients directly between processes, with a collective communication at every training step.
 
 Distributed [data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) (DDP) refers to the parallel execution of different input samples across processors. Consider any data input of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size): data parallelism refers to the use case where the data is split across $$P$$ processes, leading to a local input of shape $$B/P \times S \times E$$:
 
@@ -175,7 +175,7 @@ Now the code defines the [`DataLoader`](https://pytorch.org/docs/stable/data.htm
 dataloader = torch.utils.data.DataLoader(dataset, batch_size=4, sampler=sampler)
 ```
 
-Note the argument `sampler`, a `torch.utils.data.distributed.DistributedSampler` that assigns different samples of the dataset to different processes. Without it, all processes would load exactly the same datapoints in every iteration.
+Note the argument `sampler`, a `torch.utils.data.distributed.DistributedSampler` that assigns different samples of the dataset to different processes. Without it, all processes would load exactly the same datapoints in every iteration. The sampler is created as:
 
 ```python 
 sampler = torch.utils.data.distributed.DistributedSampler(

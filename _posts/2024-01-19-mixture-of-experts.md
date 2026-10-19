@@ -468,7 +468,7 @@ Finally, the un-permutation step also **scales** the outputs: it computes, for e
 
 ### Applying the MoE to an existing LLM
 
-Remember that the MoE module can replace the feed-forward module in existing architectures. So here it is applied to the [GPT2-based `GPTlite` model built in a previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}). This is straightforward: all that is needed is to distribute its modules in a [Distributed Data Parallel]({{ site.baseurl }}{% post_url 2023-08-18-data-parallelism %}) fashion, except the feed-forward module of the transformer block, which is replaced with the model-parallel mixture of experts:
+Remember that the MoE module can replace the feed-forward module in existing architectures. So here it is applied to the [GPT2-based `GPTlite` model built in a previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}). This is straightforward: all that is needed is to distribute its modules in a Distributed Data Parallel fashion, except the feed-forward module of the transformer block, which is replaced with the model-parallel mixture of experts:
 
 ```python
   # ddp function takes a torch module and distributes it in a data parallel fashion

@@ -12,7 +12,7 @@ This post is a brief summary of the topics in statistics and probability that ar
 
 ### Basic definitions
 
-The **sample space $$Ω$$** is the set of all *possible* outcomes of an experiment. The **event space $$\mathcal{A}$$** is the space of *potential* results of the experiment, i.e. a [σ-algebra](https://en.wikipedia.org/wiki/%CE%A3-algebra) of subsets of $$Ω$$ (the events) to which probabilities are assigned. The **probability of A**, or $$P(A)$$, is the degree of belief that the event $$A$$ will occur, in the interval $$[0,1]$$.
+The **sample space $$Ω$$** is the set of all *possible* outcomes of an experiment. The **event space $$\mathcal{A}$$** is the space of *potential* results of the experiment, i.e. a [σ-algebra](https://en.wikipedia.org/wiki/%CE%A3-algebra) of subsets of $$Ω$$ (the events) to which probabilities are assigned. The **probability of $$A$$**, or $$P(A)$$, is the degree of belief that the event $$A$$ will occur, in the interval $$[0,1]$$.
 
 A **random variable** is a function $$X : Ω → T$$ that takes an outcome in $$Ω$$ and returns a particular quantity of interest $$x$$ in the target space $$T$$. Note: the name "random variable" creates confusion because it is neither random nor a variable: it is a function! For example, in the case of tossing two coins and counting the number of heads, a random variable $$X$$ maps to the three possible outcomes: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
 
@@ -25,7 +25,7 @@ $$
 
 ### Statistical distributions
 
-Statistical distributions can be either <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf"> continuous </a> or <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf"> discrete </a>. Most of the common parametric continuous distributions belong to the [exponential family of distributions](https://en.wikipedia.org/wiki/Exponential_family).
+Statistical distributions can be either <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf">continuous</a> or <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf">discrete</a>. Most of the commonly used parametric continuous distributions belong to the [exponential family of distributions](https://en.wikipedia.org/wiki/Exponential_family).
 
 $$p(x)$$ is called a **probability mass function (pmf)** or a **probability density function (pdf)** for a discrete or continuous variable $$x$$, respectively. Any function over a discrete (continuous) domain can be a probability distribution, as long as it only has non-negative values and all values sum (integrate) to 1. The **cumulative distribution function (cdf)** is
 
@@ -210,7 +210,7 @@ $$
 p(x,y) = \mathcal{N} \left( \begin{bmatrix} \mu_x \\ \mu_y  \end{bmatrix}, \begin{bmatrix} \Sigma_{xx} & \Sigma_{xy} \\ \Sigma_{yx} & \Sigma_{yy} \end{bmatrix}   \right)
 $$
 
-The conditional is also Gaussian, $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$, and the marginal is also Gaussian, $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$. The conditional mean and covariance are given by $$\mu_{x \mid y} = \mu_x + \Sigma_{xy} \Sigma_{yy}^{-1} (y - \mu_y)$$ and $$\Sigma_{x \mid y} = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}$$ (<a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, eq. 353). An illustration of a bivariate Gaussian is displayed below:
+The conditional is $$p(x \mid y) = \mathcal{N} ( \mu_{x \mid y} , \Sigma_{x \mid y})$$, and the marginal is $$p(x) = \int p(x,y) dy = \mathcal{N} ( x \mid \mu_x, \Sigma_{xx})$$. The conditional mean and covariance are given by $$\mu_{x \mid y} = \mu_x + \Sigma_{xy} \Sigma_{yy}^{-1} (y - \mu_y)$$ and $$\Sigma_{x \mid y} = \Sigma_{xx} - \Sigma_{xy} \Sigma_{yy}^{-1} \Sigma_{yx}$$ (<a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, eq. 353). An illustration of a bivariate Gaussian is displayed below:
 
 {: .picture}
 <img width="42.3%" height="42.3%" src="{{ site.assets }}/statistics-for-ml/bivariate_gaussian.svg"/>
@@ -265,7 +265,7 @@ Why use the exponential family:
 - they have finite-dimensional sufficient statistics;
 - conjugate distributions are easy to write down, and the conjugate distributions also come from an exponential family;
 - [Maximum Likelihood Estimation](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) behaves nicely because empirical estimates of sufficient statistics are optimal estimates of the population values of sufficient statistics (recall the mean and covariance of a Gaussian);
-- From an optimization perspective, the log-likelihood function is concave in the natural parameters, allowing for efficient optimization approaches to be applied.
+- from an optimization perspective, the log-likelihood function is concave in the natural parameters, allowing for efficient optimization approaches to be applied.
 
 
 ### Moment Generating Function
@@ -283,7 +283,7 @@ i.e. $$\sum_{x \in S} e^{tx}\, p(x)$$ for a pmf, or $$\int e^{tx}\, p(x) \, dx$$
 
 ### Law of Large Numbers
 
-Let $$Y_n$$ be [iid](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) random variables (of any form) with $$\mathbb{E}[Y_k]=\mu$$ for all $$k$$. Then $$\frac{1}{n} (Y_1 + ... + Y_n) \rightarrow \mu$$. In practice, this is why the average loss over a large training set approximates the expected loss over the data distribution.
+Let $$Y_n$$ be [iid](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) random variables (of any form) with $$\mathbb{E}[Y_k]=\mu$$ for all $$k$$. Then $$\frac{1}{n} (Y_1 + ... + Y_n) \rightarrow \mu$$. In practice, this is why the average loss of a given model over many samples approximates its expected loss over the data distribution.
 
 
 ### Central Limit Theorem
@@ -294,7 +294,7 @@ $$
 \sqrt{n} \left( \frac{1}{n} \sum_{i=1}^n (Y_i - \mu) \right) \rightarrow \mathcal{N}(0, \sigma^2)
 $$
 
-In practice, the mean of many iid samples is approximately Gaussian, whatever their distribution, which is the basis of the confidence intervals of the Testing section.
+Thus, the mean of many iid samples is approximately Gaussian, whatever their distribution, which is the basis of the confidence intervals of the Testing section.
 
 
 ### Inequality rules
@@ -491,7 +491,7 @@ where $$K$$ is the kernel, a non-negative function that integrates to 1, and $$h
 {: .caption}
 Histogram with bins of width 2 (left) and Gaussian kernel density estimate with bandwidth $$h = 1.5$$ (right) of the same six data points. The estimate is the sum of six kernels centred at the points, each divided by $$n$$. Adapted from: [Kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation)
 
-Compared to the histogram of the same points, the kernel density estimate is smooth and does not depend on the position of the bins, while its shape depends on the bandwidth $$h$$.
+Compared to the histogram on the left, the kernel density estimate is smooth, does not depend on the position of the bins, and converges faster to the true density of a continuous random variable.
 
 The following table summarizes the method used for each use case:
 

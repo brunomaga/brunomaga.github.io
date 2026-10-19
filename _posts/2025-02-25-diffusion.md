@@ -471,9 +471,7 @@ In fact, the DiT paper implements a **conditional diffusion model** that takes e
 
 ## Conditioning
 
-The previous model learns to generate samples from the data distribution. On a dataset like CIFAR-10, which has 10 classes of objects, it would generate an image from a random class, with no way to pick which one. So it would be helpful to add some guidance that tells the model which class to generate. This can be done by adding conditional information.
-
-The previous implementation generated (sampled) new images from a diffusion process. One can add conditioning on the class id, an input text, a guiding image, or any other information to train on.
+The previous model learns to generate samples from the data distribution. On a dataset like CIFAR-10, which has 10 classes of objects, it would generate an image from a random class, with no way to pick which one. So it would be helpful to add some guidance that tells the model which class to generate. This can be done by adding conditional information, such as the class id, an input text, a guiding image, or any other information to train on.
 
 The DiT implementation takes the class `label` as optional additional information: when created with a number of labels `num_labels`, it learns a class embedding that is added to all patches of an image, like the timestep embedding:
 
