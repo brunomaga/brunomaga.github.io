@@ -6,24 +6,26 @@ categories: ["Machine Learning"]
 tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "KL divergence"]
 ---
 
-A brief summary of topics in statistics and probability that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section.
+In 1763, two years after the death of Thomas Bayes, his essay [An Essay Towards Solving a Problem in the Doctrine of Chances](https://en.wikipedia.org/wiki/An_Essay_Towards_Solving_a_Problem_in_the_Doctrine_of_Chances) was published by his friend Richard Price. It used conditional probability to compute limits on an unknown parameter from evidence, the idea behind [Bayes rule](https://en.wikipedia.org/wiki/Bayes%27_theorem). In 1933, Andrey Kolmogorov founded modern probability theory on three [axioms](https://en.wikipedia.org/wiki/Probability_axioms).
+
+This post is a brief summary of the topics in statistics and probability that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. It covers the rules of probability, moments and independence, the Gaussian and exponential family distributions, limit theorems and inequalities, testing, information theory, combinatorics, sets, Bayesian networks and kernel density estimation.
 
 ### Basic definitions
 
-The **sample space $$Ω$$** is the set of all *possible* outcomes of an experiment, and the **event space $$\mathcal{A}$$** is the space of *potential* results of the experiment, i.e. a [σ-algebra](https://en.wikipedia.org/wiki/%CE%A3-algebra) of subsets of $$Ω$$ (the events) to which probabilities are assigned. The **probability of A**, or $$P(A)$$, is the degree of belief that the event $$A$$ will occur, in the interval $$[0,1]$$.
+The **sample space $$Ω$$** is the set of all *possible* outcomes of an experiment. The **event space $$\mathcal{A}$$** is the space of *potential* results of the experiment, i.e. a [σ-algebra](https://en.wikipedia.org/wiki/%CE%A3-algebra) of subsets of $$Ω$$ (the events) to which probabilities are assigned. The **probability of A**, or $$P(A)$$, is the degree of belief that the event $$A$$ will occur, in the interval $$[0,1]$$.
 
 A **random variable** is a function $$X : Ω → T$$ that takes an outcome in $$Ω$$ and returns a particular quantity of interest $$x$$ in the target space $$T$$. Note: the name "random variable" creates confusion because it is neither random nor a variable: it is a function! For example, in the case of tossing two coins and counting the number of heads, a random variable $$X$$ maps to the three possible outcomes: $$X(hh) = 2$$, $$X(ht) = 1$$, $$X(th) = 1$$, and $$X(tt) = 0$$.
 
 The pdf of the **sum of independent random variables** is the **[convolution](https://en.wikipedia.org/wiki/Convolution_of_probability_distributions)** of their pdfs:
 
 $$
-f_{X+Y}(u) = \int_{-\infty}^{+\infty} f_X(u-v) \, f_Y(v) \, dv
+p_{X+Y}(u) = \int_{-\infty}^{+\infty} p_X(u-v) \, p_Y(v) \, dv
 $$
 
 
 ### Statistical distributions
 
-Statistical distributions can be either <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf"> continuous </a> or <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf"> discrete </a>. Most parametric continuous distributions belong to the [exponential family of distributions](https://en.wikipedia.org/wiki/Exponential_family).
+Statistical distributions can be either <a href="{{ site.epfl_statistics }}/formula-sheet-continuous-distributions.pdf"> continuous </a> or <a href="{{ site.epfl_statistics }}/formula-sheet-discrete-distributions.pdf"> discrete </a>. Most of the common parametric continuous distributions belong to the [exponential family of distributions](https://en.wikipedia.org/wiki/Exponential_family).
 
 $$p(x)$$ is called a **probability mass function (pmf)** or a **probability density function (pdf)** for a discrete or continuous variable $$x$$, respectively. Any function over a discrete (continuous) domain can be a probability distribution, as long as it only has non-negative values and all values sum (integrate) to 1. The **cumulative distribution function (cdf)** is
 
@@ -31,7 +33,7 @@ $$
 P(X \le x) = \int^x_{-\infty} p(t) dt
 $$
 
-and there are CDFs which do not have a corresponding PDF. The probability of a subset/range of values is the sum of the probabilities of all its values, i.e. $$P( a \le X \le b) = \int^b_a p(t) dt$$, or the equivalent sum for the discrete case.
+and there are cdfs which do not have a corresponding pdf. The probability of a subset/range of values is the sum of the probabilities of all its values, i.e. $$P( a \le X \le b) = \int^b_a p(t) dt$$, or the equivalent sum for the discrete case.
 
 For discrete probabilities, the **joint probability** of $$x \in X$$ and $$y \in Y$$ (not necessarily independent) is $$P(X=x_i, Y=y_j) = \frac{n_{ij}}{N}$$ for $$N$$ observations, where $$n_{ij}$$ can be taken as the $$ij$$-cell in the confusion matrix.
 
@@ -143,6 +145,8 @@ Positive correlation means $$y$$ tends to increase as $$x$$ increases (1=perfect
 
 ### Rules of transformations of Random Variables
 
+The expected value and the variance of the sum and of the difference of two random variables are given by:
+
 $$
 \begin{align*}
 \mathbb{E}[x+y] & = \mathbb{E}[x] + \mathbb{E}[y] \\
@@ -223,7 +227,7 @@ Any linear/affine transformation of a Gaussian random variable is also Gaussian.
 $$
 \begin{align*}
 \mathbb{E}[y] & = \mathbb{E}[Ax] = A \mathbb{E}[x] = A\mu \\
-\mathbb{Var}[y] & = \mathbb{Var}[Ax] = A \mathbb{Var}[x]A^T = A \Sigma A^{\intercal}
+\mathbb{Var}[y] & = \mathbb{Var}[Ax] = A \mathbb{Var}[x]A^{\intercal} = A \Sigma A^{\intercal}
 \end{align*}
 $$
 
@@ -234,7 +238,7 @@ The sum of the squares of $$n$$ independent standard Gaussians $$Z_i \sim \mathc
 
 ### Conjugacy
 
-If the posterior distribution $$p(\theta \mid x)$$ is in the same probability distribution *family* (not necessarily the same distribution) as the prior $$p(\theta )$$, the prior and posterior are then called **conjugate distributions**, and the prior is called a **[conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior)** for the likelihood function $$p(x\mid \theta )$$. A conjugate prior is an algebraic convenience, giving a closed-form expression for the posterior; otherwise, numerical integration may be necessary. Every member of the exponential family has a conjugate prior.
+If the posterior distribution $$p(\theta \mid x)$$ is in the same probability distribution *family* (not necessarily the same distribution) as the prior $$p(\theta )$$, the prior and posterior are called **conjugate distributions**. The prior is then called a **[conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior)** for the likelihood function $$p(x\mid \theta )$$. A conjugate prior is an algebraic convenience, giving a closed-form expression for the posterior; otherwise, numerical integration may be necessary. Every member of the exponential family has a conjugate prior, e.g. the Beta distribution for the Bernoulli distribution (MML book, Example 6.12).
 
 
 ### Exponential Family
@@ -251,9 +255,11 @@ where:
 - $$ϕ(x)$$ is a **[sufficient statistic](https://en.wikipedia.org/wiki/Sufficient_statistic)** of the distribution;
 - $$\eta$$ is the **natural parameter**.
 
-Information about data (population) can be captured in $$ϕ(x)$$. Sufficient statistics carry *all* the information needed to make inference about the population, that is, they are the statistics that are sufficient to represent the distribution. The **Fisher-Neyman theorem** states: Let $$X$$ have probability density function $$p(x \mid θ)$$. Then the statistics $$ϕ(x)$$ are sufficient for $$θ$$ if and only if $$p(x \mid θ)$$ can be written in the form $$p(x \mid \theta) = h(x) g_{\theta}(ϕ(x))$$, where $$h(x)$$ is a non-negative function independent of $$θ$$ and $$g_θ$$ captures all the dependence on $$θ$$ via sufficient statistics $$ϕ(x)$$. Note that the form of the exponential family is essentially a particular expression of $$g_θ(ϕ(x))$$ in the Fisher-Neyman theorem.
+Information about data (population) can be captured in $$ϕ(x)$$. Sufficient statistics carry *all* the information needed to make inference about the population, that is, they are the statistics that are sufficient to represent the distribution.
 
-For optimization purposes, $$ p (x \mid \theta) \propto \exp (\theta^{\intercal} ϕ(x))$$ is used. An alternative notation in **natural form** is $$p(x \mid \eta) = h(x) \exp \left(\eta^T T(x) -A(\eta)\right)$$, where $$T(x)$$ is the sufficient statistic $$ϕ(x)$$.
+The **Fisher-Neyman theorem** states: Let $$X$$ have probability density function $$p(x \mid θ)$$. Then the statistics $$ϕ(x)$$ are sufficient for $$θ$$ if and only if $$p(x \mid θ)$$ can be written in the form $$p(x \mid \theta) = h(x) g_{\theta}(ϕ(x))$$. Here, $$h(x)$$ is a non-negative function independent of $$θ$$, and $$g_θ$$ captures all the dependence on $$θ$$ via the sufficient statistics $$ϕ(x)$$. Note that the form of the exponential family is essentially a particular expression of $$g_θ(ϕ(x))$$ in the Fisher-Neyman theorem.
+
+As an intuition, the family can be seen as $$p(x \mid \eta) \propto \exp(\eta^{\intercal} ϕ(x))$$, ignoring $$h(x)$$ and the normalization $$A(\eta)$$ (MML book, section 6.6.3). An alternative notation in **natural form** is $$p(x \mid \eta) = h(x) \exp \left(\eta^{\intercal} T(x) -A(\eta)\right)$$, where $$T(x)$$ is the sufficient statistic $$ϕ(x)$$.
 
 Why use the exponential family:
 - they have finite-dimensional sufficient statistics;
@@ -264,20 +270,20 @@ Why use the exponential family:
 
 ### Moment Generating Function
 
-The [moment generating function](https://en.wikipedia.org/wiki/Moment-generating_function) is an alternative formulation of a pmf or pdf $$f(x)$$:
+The [moment generating function](https://en.wikipedia.org/wiki/Moment-generating_function) is an alternative formulation of a pmf or pdf $$p(x)$$:
 
 $$
 M(t) = \mathbb{E} \left[ e^{tX} \right]
 $$
 
-i.e. $$\sum_{x \in S} e^{tx}\, f(x)$$ for a pmf, or $$\int e^{tx}\, f(x) \, dx$$ for a pdf. If the random variables are independent, $$M_{X+Y}(t) = M_X(t) \, M_Y(t)$$. It can be used to show e.g. that the sum of independent Gaussians is a Gaussian.
+i.e. $$\sum_{x \in S} e^{tx}\, p(x)$$ for a pmf, or $$\int e^{tx}\, p(x) \, dx$$ for a pdf. If the random variables are independent, $$M_{X+Y}(t) = M_X(t) \, M_Y(t)$$. It can be used to show e.g. that the sum of independent Gaussians is a Gaussian.
 
 ---
 
 
 ### Law of Large Numbers
 
-Let $$Y_n$$ be [iid](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) random variables (of any form) with $$\mathbb{E}[Y_k]=\mu$$ for all $$k$$. Then $$\frac{1}{n} (Y_1 + ... + Y_n) \rightarrow \mu$$.
+Let $$Y_n$$ be [iid](https://en.wikipedia.org/wiki/Independent_and_identically_distributed_random_variables) random variables (of any form) with $$\mathbb{E}[Y_k]=\mu$$ for all $$k$$. Then $$\frac{1}{n} (Y_1 + ... + Y_n) \rightarrow \mu$$. In practice, this is why the average loss over a large training set approximates the expected loss over the data distribution.
 
 
 ### Central Limit Theorem
@@ -287,6 +293,8 @@ Let $$\{ Y_n \}$$ be a sequence of iid random variables (of any form) with mean 
 $$
 \sqrt{n} \left( \frac{1}{n} \sum_{i=1}^n (Y_i - \mu) \right) \rightarrow \mathcal{N}(0, \sigma^2)
 $$
+
+In practice, the mean of many iid samples is approximately Gaussian, whatever their distribution, which is the basis of the confidence intervals of the Testing section.
 
 
 ### Inequality rules
@@ -300,19 +308,19 @@ $$
 **[Markov's inequality](https://en.wikipedia.org/wiki/Markov%27s_inequality)**, where $$X$$ is non-negative and $$\epsilon \gt 0$$:
 
 $$
-p(X \ge \epsilon) \le \frac{\mathbb{E}[X]}{\epsilon}
+P(X \ge \epsilon) \le \frac{\mathbb{E}[X]}{\epsilon}
 $$
 
 **[Chebyshev's inequality](https://en.wikipedia.org/wiki/Chebyshev%27s_inequality)**:
 
 $$
-p \left( \mid X - \mathbb{E}[X] \mid \ge \epsilon \right) \le \frac{\mathbb{Var}[X]}{\epsilon^2}
+P \left( \mid X - \mathbb{E}[X] \mid \ge \epsilon \right) \le \frac{\mathbb{Var}[X]}{\epsilon^2}
 $$
 
 **[Cauchy-Schwarz inequality](https://en.wikipedia.org/wiki/Cauchy%E2%80%93Schwarz_inequality)**:
 
 $$
-\mathbb{Var}[A] \, \mathbb{Var}[B] \ge \mathbb{Cov}^2[A,B]
+\mathbb{Var}[X] \, \mathbb{Var}[Y] \ge \mathbb{Cov}^2[X,Y]
 $$
 
 **ELBO inequality**, for any distribution $$q_{\phi}(z)$$ of the latent variables $$z$$, where the left-hand side is the log evidence $$\ln p_{\theta}(x)$$, and the right-hand side is the [evidence lower bound](https://en.wikipedia.org/wiki/Evidence_lower_bound) (ELBO) for $$x$$:
@@ -324,6 +332,8 @@ $$
 
 ### Kullback–Leibler / KL divergence
 
+The [KL divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) measures how much a distribution $$q$$ differs from a reference distribution $$p$$, and is defined as:
+
 $$
 KL ( p \| q ) =  \int_\mathbb{R} p(x) \log \frac{p(x)}{q(x)} dx
 $$
@@ -334,14 +344,16 @@ $$
 KL ( p \| q ) = \mathbb{E} \left[ - \log \frac{q(X)}{p(X)} \right] \ge -\log \mathbb{E} \left[ \frac{q(X)}{p(X)} \right] =0
 $$
 
-The [KL divergence](https://en.wikipedia.org/wiki/Kullback%E2%80%93Leibler_divergence) is not a metric because it is not symmetric: $$  KL ( q \| p ) \neq  KL ( p \| q )$$. Also, $$p=q \Leftrightarrow KL ( q \| p ) = 0$$.
+The KL divergence is not a metric because it is not symmetric: $$  KL ( q \| p ) \neq  KL ( p \| q )$$. Also, $$p=q \Leftrightarrow KL ( q \| p ) = 0$$.
 
 ---
 
 
 ### Testing
 
-The **[quantile](https://en.wikipedia.org/wiki/Quantile_function)** is the inverse of the CDF. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$\alpha \in [0,1]$$. The **[p-value](https://en.wikipedia.org/wiki/P-value)** (or observed significance level) is the smallest value of $$α$$ for which the [null hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis) would be rejected at level $$α$$. The **[confidence interval](https://en.wikipedia.org/wiki/Confidence_interval)** refers to a set of values, computed from the data, that contains the population parameter for a certain proportion of times when the experiment is repeated. For example, for a $$95\%$$ **confidence level**:
+The **[quantile](https://en.wikipedia.org/wiki/Quantile_function)** is the inverse of the cdf. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$\alpha \in [0,1]$$. The **[p-value](https://en.wikipedia.org/wiki/P-value)** (or observed significance level) is the smallest value of $$α$$ for which the [null hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis) would be rejected at level $$α$$.
+
+The **[confidence interval](https://en.wikipedia.org/wiki/Confidence_interval)** refers to a set of values, computed from the data, that contains the population parameter for a certain proportion of times when the experiment is repeated. For example, for a $$95\%$$ **confidence level**:
 
 {: .picture}
 <img width="29.6%" height="29.6%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
@@ -357,19 +369,19 @@ A 95% confidence interval for a normally distributed estimate centred at $$\bar{
 [Entropy](https://en.wikipedia.org/wiki/Entropy_(information_theory)) measures the average level of *surprise* or *uncertainty* inherent to the possible outcomes of a random variable:
 
 $$
-\mathrm {H} (X) = -\int_{x} p(x)\log p(x) dx=\mathbb {E} [-\log p(x)]
+H(X) = -\int_{x} p(x)\log p(x) dx=\mathbb {E} [-\log p(x)]
 $$
 
 Conditional Entropy:
 
 $$
-H( Y \mid X) = - \int_x f(x) \int_y f(y \mid x) \log f(y \mid x) \,dy\,dx
+H( Y \mid X) = - \int_x p(x) \int_y p(y \mid x) \log p(y \mid x) \,dy\,dx
 $$
 
 Joint Entropy:
 
 $$
-H(X, Y) = - \int_{xy} f(x,y) \log f(x,y) \,dx\,dy
+H(X, Y) = - \int_{xy} p(x,y) \log p(x,y) \,dx\,dy
 $$
 
 Entropy Chain Rule:
@@ -385,7 +397,7 @@ $$
 
 $$
 \begin{align*}
-I(X,Y) & = \int_{x,y} p(x,y) \log \frac{p (x,y)}{p(x) \, p(y)} dx\,dy = \mathbb{E} \left[ D_{KL} \left( p(x \mid y) \,\|\, p(x) \right) \right] \\
+I(X,Y) & = \int_{x,y} p(x,y) \log \frac{p (x,y)}{p(x) \, p(y)} dx\,dy = \mathbb{E} \left[ KL \left( p(x \mid y) \,\|\, p(x) \right) \right] \\
 I(X,Y) & = H(Y) - H(Y \mid X) = H(X) - H(X \mid Y)
 \end{align*}
 $$
@@ -405,27 +417,27 @@ Arrangements of $$k$$ items out of a set of size $$n$$:
 
 ### Sets
 
-The **union** of two subsets is written as $$F_1 \cup F_2 = \{ ω ∈ Ω : ω ∈ F1 \text{ or } ω ∈ F2 \}$$, and the **intersection** is $$F1 ∩ F2 = \{ ω ∈ Ω : ω ∈ F1 \text{ and } ω ∈ F2 \}$$. Two events F1 and F2 are **disjoint** if they have no elements in common, or $$F_1 ∩ F_2 = ∅$$.
+The **union** of two subsets is written as $$F_1 \cup F_2 = \{ ω ∈ Ω : ω ∈ F_1 \text{ or } ω ∈ F_2 \}$$, and the **intersection** is $$F_1 ∩ F_2 = \{ ω ∈ Ω : ω ∈ F_1 \text{ and } ω ∈ F_2 \}$$. Two events $$F_1$$ and $$F_2$$ are **disjoint** if they have no elements in common, or $$F_1 ∩ F_2 = ∅$$.
 
 The **complement** of $$F$$ is written as $$F^c$$ and contains all elements of $$\Omega$$ that are not in $$F$$, i.e. $$F^c = \{ ω ∈ Ω : ω \not\in F \}$$. From this, $$F ∪ F^c = Ω$$.
 
-A **partition** $$\{ F_n \}$$  for $$n \ge 1$$ is a collection of events such that $$F_i ∩ F_j = ∅$$ for all $$i \neq j$$ and $$\cup_{n≥1} F_n = Ω$$. The **difference** between $$F_1$$ and $$F_2$$ is defined as $$F1 \backslash F2 = F1 ∩ F_2^c$$.
+A **partition** $$\{ F_n \}$$  for $$n \ge 1$$ is a collection of events such that $$F_i ∩ F_j = ∅$$ for all $$i \neq j$$ and $$\cup_{n≥1} F_n = Ω$$. The **difference** between $$F_1$$ and $$F_2$$ is defined as $$F_1 \backslash F_2 = F_1 ∩ F_2^c$$.
 
 The following **properties** hold:
-- associativity: $$(F1 ∪ F2) ∪ F3 = F1 ∪ (F2 ∪ F3) = F1 ∪ F2 ∪ F3$$
-- associativity: $$(F1 ∩ F2) ∩ F3 = F1 ∩ (F2 ∩ F3) = F1 ∩ F2 ∩ F3$$
-- distributivity: $$F1 ∩ (F2 ∪ F3) = (F1 ∩ F2) ∪ (F1 ∩ F3)$$
-- distributivity: $$F1 ∪ (F2 ∩ F3) = (F1 ∪ F2) ∩ (F1 ∪ F3)$$
-- [De Morgan's Laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws): $$(F1 ∪ F2)^c = F^c_1 ∩ F^c_2$$  and  $$(F1 ∩ F2)^c = F^c_1 ∪ F^c_2$$
+- associativity: $$(F_1 ∪ F_2) ∪ F_3 = F_1 ∪ (F_2 ∪ F_3) = F_1 ∪ F_2 ∪ F_3$$
+- associativity: $$(F_1 ∩ F_2) ∩ F_3 = F_1 ∩ (F_2 ∩ F_3) = F_1 ∩ F_2 ∩ F_3$$
+- distributivity: $$F_1 ∩ (F_2 ∪ F_3) = (F_1 ∩ F_2) ∪ (F_1 ∩ F_3)$$
+- distributivity: $$F_1 ∪ (F_2 ∩ F_3) = (F_1 ∪ F_2) ∩ (F_1 ∪ F_3)$$
+- [De Morgan's Laws](https://en.wikipedia.org/wiki/De_Morgan%27s_laws): $$(F_1 ∪ F_2)^c = F^c_1 ∩ F^c_2$$  and  $$(F_1 ∩ F_2)^c = F^c_1 ∪ F^c_2$$
 
 
-Using these properties and the [axioms of probability](https://en.wikipedia.org/wiki/Probability_axioms), it can be shown that:
+Using these properties and the axioms of probability, it can be shown that:
 
 $$
 \begin{align*}
-& Pr(F1 ∪ F2) = Pr(F1) − Pr(F1 ∩ F2) + Pr(F2) \\
-& Pr(F1 ∩ F2) ≤ min\{Pr(F1), Pr(F2)\} \\
-& F ∪ F^c = Ω, \quad 1 = Pr(Ω) = Pr(F) + Pr(F^c), \text{ thus } Pr(F^c) = 1 − Pr(F)
+& P(F_1 ∪ F_2) = P(F_1) − P(F_1 ∩ F_2) + P(F_2) \\
+& P(F_1 ∩ F_2) ≤ \min\{P(F_1), P(F_2)\} \\
+& F ∪ F^c = Ω, \quad 1 = P(Ω) = P(F) + P(F^c), \text{ thus } P(F^c) = 1 − P(F)
 \end{align*}
 $$
 
@@ -437,7 +449,7 @@ $$
 A **[Bayesian network](https://en.wikipedia.org/wiki/Bayesian_network)** is a probabilistic model for which a directed acyclic graph (DAG) expresses the conditional dependence structure between random variables (a [causal model](https://en.wikipedia.org/wiki/Causal_model) when the edges represent direct causes). The model represents a factorization of the joint probability of all random variables:
 
 $$
-P(X_1,\ldots ,X_n) =\prod_{i=1}^{n} p \left( X_i \mid \text{pa}(X_i) \right)
+p(X_1,\ldots ,X_n) =\prod_{i=1}^{n} p \left( X_i \mid \text{pa}(X_i) \right)
 $$
 
 where $$\text{pa}(X_i)$$ are the parents of $$X_i$$. Example:
@@ -445,6 +457,8 @@ where $$\text{pa}(X_i)$$ are the parents of $$X_i$$. Example:
 $$
 p(A,B,C,D) = p(A)\cdot p(B \mid A) \cdot p( C \mid A) \cdot p ( D \mid A,C )
 $$
+
+The following diagram illustrates the corresponding graph, with an arrow from each parent to its child:
 
 {: .picture}
 <img width="10.5%" height="10.5%" src="{{ site.assets }}/statistics-for-ml/directed_graph.svg"/>
@@ -460,7 +474,7 @@ A directed acyclic graph of the factorization $$p(A,B,C,D) = p(A) \cdot p(B \mid
 A **[Kernel Density Estimator](https://en.wikipedia.org/wiki/Kernel_density_estimation)** is used to convert a discrete distribution into a continuous distribution. Formulation: given a discrete cumulative distribution function (the [empirical distribution function](https://en.wikipedia.org/wiki/Empirical_distribution_function)) with $$n$$ steps at $$Y_1, ..., Y_n$$, defined as:
 
 $$
-\hat{F}_n (y) = \frac{1}{n} \sum_{i=1}^{n} I(Y_i \le y)
+\hat{F}_n (y) = \frac{1}{n} \sum_{i=1}^{n} \mathbb{1}(Y_i \le y)
 $$  
 
 the kernel density estimator $$\hat{f}$$ is the random density function:
@@ -477,9 +491,13 @@ where $$K$$ is the kernel, a non-negative function that integrates to 1, and $$h
 {: .caption}
 Histogram with bins of width 2 (left) and Gaussian kernel density estimate with bandwidth $$h = 1.5$$ (right) of the same six data points. The estimate is the sum of six kernels centred at the points, each divided by $$n$$. Adapted from: [Kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation)
 
+Compared to the histogram of the same points, the kernel density estimate is smooth and does not depend on the position of the bins, while its shape depends on the bandwidth $$h$$.
+
 The following table summarizes the method used for each use case:
 
 |-|-|-|
 | **Distribution / function $$g$$** | **parametric $$g(x_i^{\intercal}) = x_i^{\intercal} \beta$$** | **non-parametric $$g$$** |
 | Gaussian | Linear Regression | Smoothing (KDE) |
-| Exponential Family | Generalized Linear Models | Generalized Additive Models |
+| Exponential Family | [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model) | [Generalized Additive Models](https://en.wikipedia.org/wiki/Generalized_additive_model) |
+
+To find more about the topic, the book [Mathematics for Machine Learning](https://mml-book.github.io/) by Deisenroth, Faisal and Ong covers probability and distributions in chapter 6. The book [Pattern Recognition and Machine Learning](https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf) by Bishop covers information theory (section 1.6), the Gaussian distribution and the exponential family (sections 2.3 and 2.4), kernel density estimators (section 2.5.1) and Bayesian networks (section 8.1).
