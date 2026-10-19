@@ -275,8 +275,8 @@ sections 6 and 7, and the font section 4.
 - Thin arrows: black #000000, 1.6 px, endArrow=block, endFill=1, endSize=5. Dashed arrows use the same
   head. Grey #666666 only for faded or "next iteration" content. Lines without a head that join two parts of
   the flow (two boxes, or a box and an arrow): 1.6 px.
-- The links of a dense network (each neuron to each neuron of the next layer): 1.2 px, without heads, which
-  would overlap at every node.
+- The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
+  the others; the heads that converge on one node may touch.
 - Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.6 px black line with a
   flat bar head, endArrow=baseDash;endSize=10.
 - Lines without fill (brackets, table grid lines): black, 1 px. Lines thinner than 0.7 px at page scale (grid
@@ -337,7 +337,7 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
 - One row per GPU, labelled "GPU 0" to "GPU 3" (to "GPU 7" for DualPipe; "Worker 1" to "Worker 4" where the
   post's text says workers, as for the PipeDream pictures), 14 px regular, right-aligned 4 px left of the
   first cell.
-- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (12.10 px for DualPipe, so that its 8 GPUs
+- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (14.10 px for DualPipe, so that its 8 GPUs
   and 16 micro-batches fit 880 px): a forward pass takes 1 unit, a backward pass 2 units, or 1 unit each for
   the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
@@ -350,8 +350,7 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   the dark ones, grey #666666 in the next-iteration cells.
 - The schedule ends with the forward passes of the next iteration on every GPU, then "..." (16 px, grey),
   vertically centred to the right of the rows.
-- A marker (for example "1F1B ends", the time at which the post's 1F1B schedule ends) is a dashed grey
-  vertical line with a 12 px grey label right-aligned to it, above the rows.
+- No time markers over the rows (no "1F1B ends" line).
 - Overlapped forward and backward passes (DualPipe) have a 2.5 px black frame around them.
 - The legend is centred under the rows, 12 px below them (or below the time axis): each entry is a 20 x 12 px
   swatch (two 10 x 12 px halves for the two chunks or directions) and its 14 px label 4 px to the right, with
