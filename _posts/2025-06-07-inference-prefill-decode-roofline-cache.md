@@ -38,7 +38,7 @@ The [roofline model](https://en.wikipedia.org/wiki/Roofline_model) represents th
 * **Y-Axis (Attainable Performance):** the speed the code actually achieves (GFLOPs/s).
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
 
 {: .caption}
 A roofline plot, on a log-log scale. Below the ridge point, the roof rises with the arithmetic intensity at the peak memory bandwidth; beyond it, the roof is flat at the peak performance. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound and runs below the peak performance. The arrows show how an application at ❌ moves right (more FLOPs per byte), moves up (closer to the roof), or gains from a higher roof. Adapted from: [Roofline model, Wikipedia](https://en.wikipedia.org/wiki/Roofline_model)
@@ -93,7 +93,7 @@ The roofline point ❌ of this example is therefore $$\mathbf{(0.083, 10)}$$.
 Consider the multiplication of two matrices of shapes **$$A \times B$$** and **$$B \times C$$**, with an output matrix of shape **$$A \times C$$** and a data type of **$$dt$$** bytes per element. The FLOPs and the memory traffic are as follows.
 
 {: .picture}
-<img width="36.9%" height="36.9%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
+<img width="37.2%" height="37.2%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
 
 {: .caption}
 **FLOPs:** $$AC$$ outputs $$\times$$ $$B$$ multiply-adds $$\times$$ 2 FLOPs $$= 2ABC$$. **Memory traffic, naive:** matrix 1 read $$C$$ times and matrix 2 read $$A$$ times, $$2ABC\text{ }dt$$. **Memory traffic, with cache:** inputs read once and output written once, $$(AB + BC + AC)\text{ }dt$$. **Arithmetic intensity:** $$2ABC / ((AB + BC + AC)\text{ }dt)$$, about $$2N / (3\text{ }dt)$$ for $$A = B = C = N$$.
@@ -592,7 +592,7 @@ A semantic cache sits in front of the model, in the application. For every incom
 4. otherwise, calls the model and stores the new (embedding, answer) pair.
 
 {: .picture}
-<img width="93.9%" height="93.9%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
+<img width="94.1%" height="94.1%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
 
 {: .caption}
 A semantic cache. The vector index finds the past query whose embedding is closest to that of the new query. If their similarity reaches the threshold, as it may for a paraphrase such as "What is the price of corn in Rome?", the cache returns the stored answer of that query. Otherwise, the LLM answers, and the embedding and the answer are stored.
@@ -749,7 +749,7 @@ With continuous batching and chunked prefill, a step runs the prefill chunks of 
 - At the output layer, the forward pass does not compute predictions for every position. It uses the metadata to find the index of the last token of each sequence, and performs the argmax/sampling only on those tokens, to obtain the next token of every running sequence.
 
 {: .picture}
-<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
+<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
 
 The following code packs sequences of different lengths into one flat sequence, and returns the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
 
@@ -812,7 +812,7 @@ Prefill is compute-bound and decode is memory-bound, so they interfere when they
 Prefill-decode disaggregation therefore requires transmitting the KV cache from prefill to decode GPUs. To avoid sending large KV cache chunks and waiting for them, modern engines use **Layer-Wise Streaming (a pipeline overlap of computation and communication)**: as soon as Layer 1 finishes its prefill, it starts transmitting its KV cache chunks over the network, while Layer 2 is still computing. The destination can be the High-Bandwidth Memory (HBM) of a decode GPU or, in more advanced setups, a shared cluster acting as a **KV Cache Store**, e.g., [Mooncake](https://www.zhongzhuzhou.org/blog/2026-05-28-mooncake-technical-review-en/) or [LMCache](https://docs.lmcache.ai/mp/disaggregated_prefill.html).
 
 {: .picture}
-<img width="99.6%" height="99.6%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
+<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/disaggregation.svg"/>
 
 {: .caption}
 The prefill pool computes the KV cache and the first token of each request, and sends them to the decode pool. In the layer-wise streaming of the KV cache, the transfer of each layer overlaps with the compute of the next layers, and only the transfer of the last layer delays the decode. Inspired by: [Splitwise: Efficient Generative LLM Inference Using Phase Splitting](https://arxiv.org/abs/2311.18677)

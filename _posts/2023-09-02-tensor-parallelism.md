@@ -10,7 +10,7 @@ This post covers tensor (model) parallelism, in particular the [Megatron-LM](htt
 Tensor parallelism partitions the computation across the model’s tensor dimensions (e.g., by sharding the weights of linear layers and the corresponding activations). This is a hard problem: each tensor needs a partitioning dimension (row-wise, column-wise, or none), and the communication and computation must be adapted accordingly. The implementation is therefore model- and data-specific.
 
 {: .picture}
-<img width="54.5%" height="54.5%" src="{{ site.assets }}/distributed-training/imgs/dnn_model_parallelism.svg"/>
+<img width="54.6%" height="54.6%" src="{{ site.assets }}/distributed-training/imgs/dnn_model_parallelism.svg"/>
 
 {: .caption}
 A fully-connected network (left) and the same network split by tensor parallelism over two processors $$P_0$$ and $$P_1$$ (right), each holding half of the neurons of every layer. Red lines are the connections between neurons on different processors, whose activations must be communicated.
@@ -34,7 +34,7 @@ The MLP is a sequence of (1) a MatMul $$XA$$, (2) a GeLU $$Y$$, (3) a MatMul $$Y
 1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point (*sum-reduce*) before the GeLU function". Applying this approach (pictured below) to both MatMuls requires two communication steps in total.
 
   {: .picture}
-  <img width="84.4%" height="84.4%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.svg">
+  <img width="84.7%" height="84.7%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.svg">
 
   {: .caption}
   Option 1 on two GPUs: $$X$$ is split by columns and $$A$$ by rows. Each GPU computes a partial product of size $$M \times O$$, and a sum-reduce adds them into $$XA$$ on both GPUs before the GeLU, which then gives the same $$Y$$ on both GPUs. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
@@ -44,7 +44,7 @@ The MLP is a sequence of (1) a MatMul $$XA$$, (2) a GeLU $$Y$$, (3) a MatMul $$Y
 The MatMul and GeLU are followed by another MatMul and a dropout. With this approach (pictured below), the output $$Y$$ of the first MatMul, which is the input of the second MatMul, is split column-wise. Megatron therefore uses the previous approach for the second MatMul, which requires 1 collective communication step. In total, the 2 MatMuls require 1 communication step.
 
   {: .picture}
-  <img width="60.8%" height="60.8%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_2.svg">
+  <img width="61.1%" height="61.1%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_2.svg">
 
   {: .caption}
   Option 2 on two GPUs: $$X$$ is replicated and $$A$$ is split by columns, so each GPU computes its own columns of $$XA$$ and applies the GeLU to them without any communication. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)

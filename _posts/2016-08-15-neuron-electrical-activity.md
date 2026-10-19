@@ -26,7 +26,7 @@ Because of the complex anatomical structure and behaviour of neurons, numerical 
 Brain simulators also work at different levels of detail, as shown in the picture below. Each model zooms into a part of the model on its left:
 
 {: .picture}
-<img width="99.2%" height="99.2%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
+<img width="99.1%" height="99.1%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
 
 {: .caption}
 Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
@@ -216,7 +216,7 @@ Most equations that govern brain mechanisms do not have an analytic solution. Th
 Given the tree-shaped morphology of a discretized neuron in the cable model, NEURON implements an optimized linear solver for branched trees, called the Hines Algorithm ([Efficient computation of branched nerve equations, Hines, Elsevier][hines1984efficient]). Data is represented as a sparse tridiagonal matrix, and an extra vector $$p$$ holds the indices of the parent nodes (the ones immediately above in the tree structure). The main diagonal holds the membrane potential of each compartment. The contributions from a parent to its children compartments (and vice versa) are stored in the cells on the same row (column) of the upper (lower) diagonal of the matrix. Since each compartment has only one parent, there is only one cell per row on the lower diagonal, and one cell per column on the upper diagonal. The following pictures show a neuron's dendritic arborization spatially discretized based on the cable model (left) and its sparse matrix representation in the Hines algorithm (right).
 
 {: .picture}
-<img width="44%" height="44%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.2%" height="34.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
+<img width="44.2%" height="44.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.1%" height="34.1%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
 
 
 The main rationale of the Hines algorithm is that, if the compartments are numbered so that each one has an index greater than its parent's, the computational complexity of the solver drops from the $$O(n^3)$$ of a typical Gaussian elimination to $$O(n)$$. Consider a tridiagonal matrix with vectors $$d$$ (main diagonal), $$b$$ (lower diagonal) and $$a$$ (upper diagonal), representing a single cable without branching. The following steps show that the Hines algorithm is an inverted Gaussian elimination adapted for branched structures:

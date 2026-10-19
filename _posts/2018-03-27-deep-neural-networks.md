@@ -149,7 +149,7 @@ $$
 The output $$ x^{(1)} $$ at position $$ [n, m] $$ depends only on the values of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. Therefore, a fully connected network is not needed: a network that represents the local structure suffices, with fewer parameters. This structure also implies that the same filter (i.e., the same connection pattern and the same weights) should be used at every position. This is called **weight sharing**, and it reduces the number of parameters even further. The difference between a locally/sparsely connected and a fully connected network is illustrated below:
 
 {: .picture}
-<img width="41.2%" height="41.2%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
+<img width="41.3%" height="41.3%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
 
 {: .caption}
 Sparse and full connectivity, viewed from below. Top: a locally connected layer with a kernel of width 3, where the input $$x_3$$ affects only the outputs $$s_2$$, $$s_3$$ and $$s_4$$. Bottom: a fully connected layer, where $$x_3$$ affects every output. Adapted from: [Deep Learning, I. Goodfellow, Y. Bengio and A. Courville, Figure 9.2](https://www.deeplearningbook.org/contents/convnets.html)
@@ -181,7 +181,7 @@ In very deep networks, the performance of the model drops as the depth increases
 A better remedy is to feed layers with the outputs of layers that are not directly connected to them. These connections *skip* some layers and feed the output of one layer as input to later layers, hence the name *skip connections*. In practice, the input of a given layer is a combination (typically an addition or concatenation) of the outputs of several previous layers. 
 
 {: .picture}
-<img width="82%" height="82%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
+<img width="82.1%" height="82.1%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
 
 {: .caption}
 A 5-layer dense block of DenseNet with a growth rate of $$k = 4$$: each layer $$H_i$$ (BN-ReLU-Conv) takes the feature maps $$x_0, \ldots, x_{i-1}$$ of all preceding layers as input and produces $$k$$ new feature maps $$x_i$$. The transition layer takes all of them. Adapted from: [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)

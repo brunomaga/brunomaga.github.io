@@ -24,7 +24,7 @@ $$
 where $$W_1 \in \mathbb{R}^{N \times O}$$ and $$W_2 \in \mathbb{R}^{O \times P}$$. On $$G$$ GPUs, Megatron-LM splits $$W_1$$ column-wise and $$W_2$$ row-wise. Each GPU $$g$$ computes a slice $$H^{(g)}$$ of the hidden activations and a partial output $$H^{(g)} W_2^{(g)}$$. An all-reduce then sums the partial outputs of all GPUs, $$H W_2 = \sum_{g=1}^{G} H^{(g)} W_2^{(g)}$$. This is the only communication step per pair of layers.
 
 {: .picture}
-<img width="96.7%" height="96.7%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
+<img width="96.8%" height="96.8%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
 
 {: .caption}
 Megatron-LM tensor parallelism of an FFN on 2 GPUs (A in green, B in blue). The bias and activation are omitted.
@@ -44,7 +44,7 @@ Two linear layers without a nonlinearity in between collapse into a single one. 
 A matrix multiplication on a GPU is computed in *tiles*: each thread block (one SM) computes one small submatrix of the output. The fused kernel keeps this tiling for the first layer. However, as soon as a tile $$H_{i,j}$$ is computed (with its bias and activation), it is multiplied by every tile in row $$j$$ of $$W_2$$. The partial products are added to the tiles in row $$i$$ of the output $$Y$$. When all tiles of $$H$$ are processed, $$Y$$ holds the full product $$H W_2$$, and $$H$$ was never stored in global memory.
 
 {: .picture}
-<img width="97.8%" height="97.8%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
+<img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
 
 {: .caption}
 **Left:** the regular execution computes all tiles of $$H$$, stores $$H$$ in global memory, and a second kernel computes $$Y$$. **Right:** the fused kernel multiplies each tile of $$H$$ by a row of tiles of $$W_2$$ and accumulates the results in a row of tiles of $$Y$$.
@@ -104,7 +104,7 @@ In a [Mixture-of-Experts (MoE)]({{ site.baseurl }}{% post_url 2024-01-19-mixture
 [Expert sharding](https://arxiv.org/abs/2503.08467) splits every expert across all GPUs instead, exactly as Megatron-LM splits the FFN. Each GPU holds a $$1/G$$ share of the columns of $$W_i$$ and the matching rows of $$W_o$$ of every expert. It processes all the tokens with these slices, and the partial outputs of all GPUs are summed. Each expert is then an FFN with Megatron-LM tensor parallelism, so it runs with the fused kernel of this post.
 
 {: .picture}
-<img width="59.5%" height="59.5%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
+<img width="59.7%" height="59.7%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
 
 {: .caption}
 One expert, with $$W_i$$ in green and $$W_o$$ in red. The activation is omitted. **(a)** Without parallelism, one GPU holds the whole expert. **(b)** With expert sharding, GPU A holds the first half of the columns of $$W_i$$ and of the rows of $$W_o$$, and GPU B the second half. The dashed slices are on the other GPU. Both GPUs process all the tokens $$x$$, and a sum-reduce adds their partial outputs $$y_A$$ and $$y_B$$. Inspired by Figure 2 of [Accelerating MoE Model Inference with Expert Sharding](https://arxiv.org/abs/2503.08467).
