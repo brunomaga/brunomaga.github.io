@@ -782,9 +782,8 @@ that is not wrong.
   reduce steps, while the text and `tp_block_specialization.svg` apply them to each band, right after the all-reduce
   of that band. The figure of the paper has the same simplification. Fix: a small bias and activation step after
   each reduce step, or keep the picture as a schematic.
-- `inference/imgs/tp_timeline.svg` labels the baseline collective "NCCL AllReduce". The kernel fusion posts name no
-  hardware or library of the papers (Writing rules, "The author's papers"), and the text says "the communication
-  library". Fix: "AllReduce".
+- `inference/imgs/tp_timeline.svg` labels the baseline collective with the name of a vendor's library. The kernel
+  fusion posts call it CCL (Writing rules, "The author's papers"). Fix: "CCL AllReduce".
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
@@ -796,10 +795,6 @@ that is not wrong.
   `assets/inference/inference.drawio`, from the paper's `imgs/moe_dispatch_and_combine.drawio` and TikZ sources,
   with the sizes and fonts of CLAUDE.md (Pictures, sections 3 and 4); the four models of
   `ep_communication_models.svg` fit 880 px in one column.
-- Four copies name the ranks after the hardware of the paper: "Token NPU" and "Expert NPU" in `ep_all_to_all.svg`,
-  `ep_all_to_all_inc.svg`, `ep_one_to_many_inc.svg` and `ep_communication_models.svg`, and "collective push, NPU
-  reduce" in `ep_communication_models.svg`. The kernel fusion posts name no hardware of the papers (Writing rules,
-  "The author's papers"), and the captions say "rank". Fix: "Token rank", "Expert rank" and "rank reduce".
 - `inference/imgs/ep_stages.svg` draws the eight stages on the time axis of the decode step, whose costs are
   placeholders, not measurements, as the caption says. Fix: remove the time axis until the decode step is measured,
   or redraw it with the measured costs.
