@@ -5,9 +5,11 @@ categories: ["Machine Learning"]
 tags: ["deep learning", "backpropagation", "autodiff", "CNN", "embeddings"]
 ---
 
-Deep Neural Networks (also known as [Multi-Layer Perceptrons](https://en.wikipedia.org/wiki/Multilayer_perceptron)) are **[universal approximators](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. they can approximate any continuous function on a closed and bounded domain. They are the most important and relevant ML tool in the field of supervised learning, as they are part of the models used for most supervised tasks.
+In 1958, Frank Rosenblatt described the [perceptron](https://en.wikipedia.org/wiki/Perceptron), an artificial neuron that learns to separate two classes with a linear boundary. Networks with several layers of such neurons can learn much more complex functions. In 1986, the paper [Learning representations by back-propagating errors](https://www.nature.com/articles/323533a0) showed how to train them with gradient descent, by propagating the errors backwards from the output layer to the first one.
 
-The structure of a basic NN is the following: one input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and one output layer. It is a **feedforward network**: the computation performed by the network starts with the input from the left and flows to the right. There is no feedback loop. It can be used for regression (when the output is a real value) and for classification (when the output is the class).
+Deep Neural Networks (also known as [Multi-Layer Perceptrons](https://en.wikipedia.org/wiki/Multilayer_perceptron)) are **[universal approximators](https://en.wikipedia.org/wiki/Universal_approximation_theorem)**, i.e. they can approximate any continuous function on a closed and bounded domain. They are the most important and relevant ML tool in the field of supervised learning, as they are part of the models used for most supervised tasks. This post covers their structure, the back propagation algorithm that trains them and its implementation with automatic differentiation, and then dropout, convolutional networks, skip connections and embeddings.
+
+The structure of a basic NN is the following: one input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and one output layer. It is a **[feedforward network](https://en.wikipedia.org/wiki/Feedforward_neural_network)**: the computation performed by the network starts with the input from the left and flows to the right, with no feedback loop. It can be used for regression (when the output is a real value) and for classification (when the output is the class). The following picture illustrates a network with one hidden layer, where each node is connected to every node of the next layer, i.e. a **fully connected** network:
 
 {: .picture}
 <img width="36.5%" height="36.5%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
@@ -21,7 +23,7 @@ $$
 x_j^{(l)} = \phi ( \sum_i w_{i,j}^{(l)} x_i^{(l-1)}+b_j^{(l)}). 
 $$
 
-where $$b$$ is the bias term, trained like any other weight. Note that, to compute the output, each neuron first computes the weighted sum of the inputs and then applies an **activation function** $$\phi$$ to this sum. The activation function must be non-linear, otherwise the whole network would be equivalent to a single linear layer. The function implemented by each layer can equally be described in the form:
+where $$b$$ is the bias term, trained like any other weight. Note that, to compute the output, each neuron first computes the weighted sum of the inputs and then applies an **[activation function](https://en.wikipedia.org/wiki/Activation_function)** $$\phi$$ to this sum. The activation function must be non-linear, otherwise the whole network would be equivalent to a single linear layer. The function implemented by each layer can equally be described in the form:
 
 $$
 x^{(l)} = f^{(l)} (x^{(l-1)}) = \phi ((W^{(l)})^T x^{(l-1)}+b^{(l)})
@@ -34,29 +36,30 @@ where $$f$$ is the regression function of neurons, as previously. Some popular c
 - Leaky ReLU: $$\phi(x) = max \{\alpha x,x\}$$, with $$0 < \alpha < 1$$. Fixes the *dying ReLU* problem of non-leaky rectified linear units;
   - In brief, if the dot product of the input to a ReLU with its weights is negative, the output is 0. The gradient of $$ max\{ 0,x \} $$ is $$0$$ when the output is $$0$$. If for any reason the output is consistently $$0$$ (for example, if the ReLU has a large negative bias), then the gradient will be consistently 0. The error signal backpropagated from later layers gets multiplied by this 0, so no error signal ever passes to earlier layers. The ReLU has died. With leaky ReLUs, the gradient is never 0, and this problem is avoided.  
 
+In practice, ReLU and its variants are the default choice for hidden layers, while the sigmoid and *tanh* are used where a bounded output is needed, e.g. a probability at the output of a binary classifier.
+
 ## Back-propagation
 
-Similarly to previous regression use cases, the loss of the system needs to be minimized, using e.g. [Stochastic Gradient Descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). As always when dealing with gradient descent, the algorithm computes the gradient of the cost function for a particular input sample (with respect to all weights of the network and all bias terms) and then takes a small step in the direction opposite to this gradient. Computing the derivative with respect to a particular parameter is just applying the chain rule of calculus. The cost function over $$N$$ samples can be written as (details omitted):
+Similarly to previous regression use cases, the loss of the system needs to be minimized, using e.g. [Stochastic Gradient Descent](https://en.wikipedia.org/wiki/Stochastic_gradient_descent). As always with gradient descent, the algorithm computes the gradient of the cost function for a particular input sample (with respect to all weights and bias terms), and takes a small step in the direction opposite to this gradient. Computing the derivative with respect to a particular parameter is an application of the [chain rule](https://en.wikipedia.org/wiki/Chain_rule) of calculus. The cost function over $$N$$ samples can be written as (details omitted):
 
 $$
 \mathcal{L} = \frac{1}{N} \sum_{n=1}^N ( y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) ) ^2
 $$
 
-Since in general there are many parameters, it would not be efficient to do this for each parameter individually. However, the **back propagation** algorithm does it more efficiently, as it computes the derivatives of all parameters with one forward and one backward pass through the network. The aim is to compute, for the loss $$\mathcal{L}_n$$ of a sample $$n$$:
+Since in general there are many parameters, it would not be efficient to do this for each parameter individually. However, the **[back propagation](https://en.wikipedia.org/wiki/Backpropagation)** algorithm does it more efficiently, as it computes the derivatives of all parameters with one forward and one backward pass through the network. The aim is to compute, for the loss $$\mathcal{L}_n$$ of a sample $$n$$:
 
 $$
 \frac{\partial \mathcal{L}_n}{\partial w_{i,j}^{(l)}}, l=1, ..., L+1 \text {, and } \frac{\partial \mathcal{L}_n}{\partial b_{j}^{(l)}}, l=1, ..., L+1 
 \label{eq_gradient}
 $$
 
-For simplicity, the total input computed at the $$l$$-th layer is represented as
+For simplicity, the total input computed at the $$l$$-th layer, before the activation function, is represented as:
 
 $$
 z^{(l)} = (W^{(l)})^T x^{(l-1)}+b^{(l)} .
 \label{eq_z}
 $$
 
-i.e. $$z^{(l)}$$ is the total input computed at layer $$l$$ before applying the activation function.
 These quantities are easy to compute by a forward pass in the network, starting at $$ x^{(0)} = x_n $$ and then applying this recursion for $$ l=1,...,L+1 $$.
 
 Now, let
@@ -101,7 +104,9 @@ The complete back propagation algorithm is then summarized as:
 
 The chain rule shows the theoretical framework, but not how to compute it efficiently. In practice, contrary to the back-propagation algorithm above, <a href="https://en.wikipedia.org/wiki/Automatic_differentiation">automatic differentiation ("autodiff")</a> algorithms such as <a href="https://pytorch.org/tutorials/beginner/introyt/autogradyt_tutorial.html">PyTorch's autograd</a> do not require the derivatives of the loss and activation functions to be specified explicitly.
 
-Instead, a computational graph (a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) is created dynamically, where nodes are added to the graph as the modules' `forward` methods are called. The backward propagation is then computed by applying the chain rule to the derivatives (`grad_fn`) of the nodes in the computational graph. Recursive calls will add new nodes to the graph for every call, and conditional calls may add different nodes at each `forward` pass; therefore, the computational graph cannot be extracted from the model definition directly (see an example [here](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html)). Finally, when `tensor.backward()` is called, it recursively computes the gradients up to the leaf nodes of the graph. When this process ends, the computational graph is discarded, and a new one may be created via a new `forward` call (unless `retain_graph=True` is set in the `backward` function). For more details, <a href="https://towardsdatascience.com/automatic-differentiation-explained-b4ba8e60c2ad">Chi-Feng Wang's post</a> gives an illustrative example of the automatic differentiation graph, and the <a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">Princeton course COS 324 on automatic differentiation</a> a thorough explanation of the whole process.
+Instead, a computational graph (a [DAG](https://en.wikipedia.org/wiki/Directed_acyclic_graph)) is created dynamically, where nodes are added to the graph as the modules' `forward` methods are called. The backward propagation is then computed by applying the chain rule to the derivatives (`grad_fn`) of the nodes in the computational graph. Recursive calls add new nodes to the graph for every call, and conditional calls may add different nodes at each `forward` pass; therefore, the computational graph cannot be extracted from the model definition directly (see an example [here](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html)).
+
+Finally, when `tensor.backward()` is called, it recursively computes the gradients up to the leaf nodes of the graph. When this process ends, the computational graph is discarded, and a new one may be created via a new `forward` call (unless `retain_graph=True` is set in the `backward` function). For more details, <a href="https://towardsdatascience.com/automatic-differentiation-explained-b4ba8e60c2ad">Chi-Feng Wang's post</a> gives an illustrative example of the automatic differentiation graph, and the <a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">Princeton course COS 324 on automatic differentiation</a> a thorough explanation of the whole process.
 
 Storing a computational graph is also useful for [activation checkpointing](https://arxiv.org/abs/1604.06174), where one needs to recompute a module's output during the backward pass, as it is discarded during the forward pass to save memory. A good example of activation checkpointing based on the reentrant and non-reentrant PyTorch implementations can be found in the post [How Activation Checkpointing enables scaling up training deep learning models](https://medium.com/pytorch/how-activation-checkpointing-enables-scaling-up-training-deep-learning-models-7a93ae01ff2d).
 
@@ -109,7 +114,8 @@ It also follows that inference requires less memory than training, as training r
 
 ## Dropout
 
-[Dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5) is a method that drops neurons (in different layers) with a given probability $$p$$ at training time. For each training sample in a minibatch, a new network is sampled. 
+[Dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5) is a method that drops neurons (in different layers) with a given probability $$p$$ at training time. For each training sample in a minibatch, a new network is sampled.
+
 The outputs of the kept neurons are scaled by $$1/(1-p)$$, so that their expected value is the same at training and inference time. At inference time, all neurons are used, and no dropout is applied. A simple code snippet to explain this is:
 
 ```python
@@ -120,10 +126,11 @@ class MyDropout(nn.Module):
             return X * binomial.sample(X.size()) * (1.0/(1-self.p))
         return X
 ```
-Dropout helps reduce overfitting, as the network learns to never rely on any given activation, so it learns *redundant* ways of solving the task with multiple neurons. It also leads to sparse activations, similar to a regularization (L1).
-Dropout can be improved by adding max-norm regularization, a decaying learning rate and high momentum.
-Dropping 20% of input units and 50% of hidden units was often found to be optimal in the [original publication](https://jmlr.org/papers/v15/srivastava14a.html). It is computationally less expensive than regular model averaging of multiple trained DNNs. However, it takes 2-3 times longer to train than a single fully-connected DNN, because it requires many more epochs, as parameter updates are very noisy.
-Because a fully connected layer holds most of the parameters, it is prone to overfitting. Therefore, dropout increases model generalization.
+Dropout helps reduce [overfitting](https://en.wikipedia.org/wiki/Overfitting), as the network learns to never rely on any given activation, so it learns *redundant* ways of solving the task with multiple neurons. It also leads to sparse activations, similar to a regularization (L1).
+
+Dropout can be improved by adding max-norm regularization, a decaying learning rate and high momentum. Dropping 20% of input units and 50% of hidden units was often found to be optimal in the [original publication](https://jmlr.org/papers/v15/srivastava14a.html). It is computationally less expensive than regular model averaging of multiple trained DNNs. However, it takes 2-3 times longer to train than a single fully-connected DNN, because it requires many more epochs, as parameter updates are very noisy.
+
+Because a fully connected layer holds most of the parameters, it is prone to overfitting. Therefore, dropout increases model generalization. The following picture illustrates a standard network (left) and one of the thinned networks that dropout samples from it (right):
 
 {: .picture}
 <img width="54.8%" height="54.8%" src="{{ site.assets }}/deep-neural-networks/dropout.svg">
@@ -133,20 +140,22 @@ Dropout. Left: a standard network with two hidden layers ($$p = 0$$). Right: a t
 
 ## Convolutional Neural Networks
  
-The disadvantage of large neural networks is that they have a very high number of parameters, so they may require lots of data to be trained. In some scenarios, local connectivity should suffice: e.g. in an audio stream, it is natural to process an input stream $$ x^{(0)}[n] $$ by running it through a [linear time-invariant](https://en.wikipedia.org/wiki/Linear_time-invariant_system) filter, whose output $$ x^{(1)}[n] $$ is given by the [convolution](https://en.wikipedia.org/wiki/Convolution) of the input $$ x^{(0)}[n] $$ and the filter $$ f [n] $$, as:
+The disadvantage of large neural networks is that they have a very high number of parameters, so they may require lots of data to be trained. In some scenarios, local connectivity should suffice. For example, in an audio stream, it is natural to process an input stream $$ x^{(0)}[n] $$ by running it through a [linear time-invariant](https://en.wikipedia.org/wiki/Linear_time-invariant_system) filter, whose output $$ x^{(1)}[n] $$ is given by the [convolution](https://en.wikipedia.org/wiki/Convolution) of the input $$ x^{(0)}[n] $$ and the filter $$ h[n] $$, as:
 
 $$
-x^{(1)}[n] = \sum_k f[k]x^{(0)} [n-k]
+x^{(1)}[n] = \sum_u h[u]x^{(0)} [n-u]
 $$
 
 
-The filter $$f$$ is local, i.e. $$ f[k]=0 $$ for $$ \vert k \vert \ge K $$. By choosing an appropriate type of filter, one can bring out various aspects of the underlying signal, e.g. smooth features by averaging, or enhance differences between neighboring elements by using a *high-pass* filter. An analogous scenario applies to a picture:
+The filter $$h$$ is local, i.e. $$ h[u]=0 $$ for $$ \vert u \vert \ge r $$. By choosing an appropriate type of filter, one can bring out various aspects of the underlying signal, e.g. smooth features by averaging, or enhance differences between neighboring elements by using a *high-pass* filter. An analogous scenario applies to a picture:
 
 $$
-x^{(1)}[n,m] = \sum_{k,l} f[k,l]x^{(0)} [n-k,m-l]
+x^{(1)}[n,m] = \sum_{u,v} h[u,v]x^{(0)} [n-u,m-v]
 $$
 
-The output $$ x^{(1)} $$ at position $$ [n, m] $$ only depends on the values of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. So a fully connected network is no longer needed, but only one that represents the local structure, leading to fewer parameters to deal with. This structure implies that the same filter (i.e., not only the same connection pattern but also the same weights) should be used at every position! This is called **weight sharing**, and it reduces the number of parameters even further. The difference between a locally/sparsely connected and a fully connected network is obvious:
+The output $$ x^{(1)} $$ at position $$ [n, m] $$ only depends on the values of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. So a fully connected network is no longer needed, but only one that represents the local structure, leading to fewer parameters to deal with.
+
+This structure implies that the same filter (i.e., not only the same connection pattern but also the same weights) should be used at every position! This is called **weight sharing**, and it reduces the number of parameters even further. The difference between a locally/sparsely connected and a fully connected network is obvious:
 
 {: .picture}
 <img width="41.3%" height="41.3%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
@@ -154,8 +163,9 @@ The output $$ x^{(1)} $$ at position $$ [n, m] $$ only depends on the values of 
 {: .caption}
 Sparse and full connectivity, viewed from below. Top: a locally connected layer with a kernel of width 3, where the input $$x_3$$ affects only the outputs $$s_2$$, $$s_3$$ and $$s_4$$. Bottom: a fully connected layer, where $$x_3$$ affects every output. Adapted from: [Deep Learning, I. Goodfellow, Y. Bengio and A. Courville, Figure 9.2](https://www.deeplearningbook.org/contents/convnets.html)
 
-It is common to not only compute the output of a single filter but to use multiple filters. The various outputs are called channels. This introduces some additional parameters into the model.
-With several channels, the result is not a 2D output in the next level, but in fact a 3D output. Layer after layer, there are increasingly more channels but a smaller “footprint.” In brief, applying local connectivity to a 2D input dataset on a *deep* neural network leads to the following final structure:
+It is common to not only compute the output of a single filter but to use multiple filters. The various outputs are called **channels**. This introduces some additional parameters into the model.
+
+With several channels, the result is not a 2D output in the next level, but in fact a 3D output. Layer after layer, there are increasingly more channels but a smaller “footprint”. In brief, applying local connectivity to a 2D input dataset on a *deep* neural network leads to the following final structure, a **[convolutional neural network](https://en.wikipedia.org/wiki/Convolutional_neural_network)** (CNN):
 
 {: .picture}
 <img width="99.6%" height="99.6%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
@@ -166,7 +176,7 @@ A CNN that classifies $$16 \times 16$$ RGB patches of a satellite image as road 
 Notice the three types of operations involved:
 - convolutional layer: applies a convolution operation to the input, passing the result to the next layer. The convolution emulates the response of an individual neuron to visual stimuli;
   - convolution is a mathematical operation on two functions that produces a third function, which expresses how the shape of one is modified by the other. Convolution is similar to [cross-correlation](https://en.wikipedia.org/wiki/Cross-correlation);
-- pooling: combines the outputs of neuron clusters at one layer into a single neuron in the next layer.
+- [pooling](https://en.wikipedia.org/wiki/Pooling_layer): combines the outputs of neuron clusters at one layer into a single neuron in the next layer.
   - A very common operation is max pooling, which uses the maximum value of each cluster of neurons at the prior layer;
 - fully connected: similar to a multi-layer perceptron, providing the *universal approximator* function;
 
@@ -176,9 +186,13 @@ Training is done with backpropagation, ignoring that some weights are shared and
 
 ## Skip connections
 
-An issue with very deep networks is that the performance of the model drops as the depth of the architecture increases. This is known as the *degradation problem*. It is not caused by overfitting, since the training error increases as well. Possible reasons are vanishing and/or exploding gradients. One way to improve this is to use [normalization](https://arxiv.org/abs/1803.08494) techniques to ensure that gradients have healthy norms. However, the authors of [ResNet](https://arxiv.org/abs/1512.03385) observed the degradation problem even with normalization layers and healthy gradient norms.
+An issue with very deep networks is that the performance of the model drops as the depth of the architecture increases. This is known as the *degradation problem*. It is not caused by overfitting, since the training error increases as well.
 
-A better way to improve this is to provide layers of the network with the outputs of layers that are not directly connected to them. These connections *skip* some of the layers in the neural network and feed the output of one layer as the input of later layers, hence the name *skip connections*. In practice, the input to a given layer will be the combination (typically via addition or concatenation) of the outputs of several previous layers. With an addition, the skipped layers only need to learn a correction (a *residual*) to their input, which is easier to optimize than the whole mapping. 
+Possible reasons are vanishing and/or exploding gradients. One way to improve this is to use [normalization](https://arxiv.org/abs/1803.08494) techniques to ensure that gradients have healthy norms. However, the authors of [ResNet](https://arxiv.org/abs/1512.03385) observed the degradation problem even with normalization layers and healthy gradient norms.
+
+A better way to improve this is to provide layers of the network with the outputs of layers that are not directly connected to them. These connections *skip* some of the layers in the neural network and feed the output of one layer as the input of later layers, hence the name **skip connections**. In practice, the input to a given layer is the combination (typically via addition or concatenation) of the outputs of several previous layers.
+
+With an addition, as in ResNet, the skipped layers only need to learn a correction (a *residual*) to their input, which is easier to optimize than the whole mapping. With a concatenation, as in DenseNet, each layer receives the feature maps of all the layers before it, so the number of channels grows with every layer. The following picture illustrates a dense block of DenseNet:
 
 {: .picture}
 <img width="82.1%" height="82.1%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
@@ -191,10 +205,10 @@ There is currently a plethora of different implementations of CNNs with several 
 
 ## Embeddings
 
-Embeddings in machine learning are dense, low-dimensional vector representations of data (e.g., words, images, or users) that capture their semantic or contextual meaning in a continuous vector space. Embeddings can be collected by passing input data (e.g., text, images) through a *trained* machine learning model (e.g., a neural network) and extracting the values from a specific intermediate layer, typically before the final output layer.
+**[Embeddings](https://en.wikipedia.org/wiki/Embedding_(machine_learning))** in machine learning are dense, low-dimensional vector representations of data (e.g., words, images, or users) that capture their semantic or contextual meaning in a continuous vector space. Embeddings can be collected by passing input data (e.g., text, images) through a *trained* machine learning model (e.g., a neural network) and extracting the values from a specific intermediate layer, typically before the final output layer.
 
 A list of the most common data types and embedding types:
-- words: one-hot vectors or [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (*skipgram* or *continuous bag of words*)
+- words: [Word2vec](https://en.wikipedia.org/wiki/Word2vec) (*skipgram* or *continuous bag of words*), whose inputs are one-hot vectors of the words
   - skipgram: slower to train ("3 days" in the [original paper](https://arxiv.org/abs/1301.3781)), better at capturing semantic relationships, e.g. for 'cat' it returns 'dog' as a word with close embeddings;
   - CBOW: faster to train ("1 day" on the same data), better at capturing syntactic relationships between words, e.g. for 'cat' it returns 'cats';
 - text (word sequences): [BERT](https://en.wikipedia.org/wiki/BERT_(language_model))
@@ -202,20 +216,21 @@ A list of the most common data types and embedding types:
 - point cluster or array: [Principal Component Analysis](https://en.wikipedia.org/wiki/Principal_component_analysis)
 - images:
   - in a classification task: the activation of the last layer *before* the layer that does logit/softmax, i.e. the input to the final layer, which is the output of the one before last;
-  - in an image-to-image task, e.g. segmentation using a [U-net](https://arxiv.org/abs/1505.04597): the activation of the last downsampling layer, which is the input of the first upsampling layer, i.e. the [*information bottleneck*](https://en.wikipedia.org/wiki/Information_bottleneck_method);
+  - in an image-to-image task, e.g. segmentation using a [U-net](https://arxiv.org/abs/1505.04597): the activation of the last downsampling layer, which is the input of the first upsampling layer, i.e. the *bottleneck* of the network;
 - audio: a waveform is a long 1D sequence of samples (typically 16-bit integers at 16 to 48 kHz), too long to model directly, so it is first turned into a shorter sequence of frames:
   - spectrograms: the waveform is converted into a log-Mel [spectrogram](https://en.wikipedia.org/wiki/Spectrogram), a 2D time-frequency image, and fed to a CNN or Transformer encoder whose activations are the embeddings. E.g. [Whisper](https://arxiv.org/abs/2212.04356) resamples audio to 16 kHz and computes 80 Mel channels on 25 ms windows with a 10 ms stride. A vocoder turns a spectrogram back into a waveform, as in the text-to-speech model [TorToise](https://arxiv.org/abs/2305.07243);
   - neural audio codecs: a convolutional encoder downsamples the waveform into embeddings, and a decoder with transposed convolutions reconstructs it. In between, residual [vector quantization](https://en.wikipedia.org/wiki/Vector_quantization) (RVQ) turns each embedding into discrete tokens: the embedding is replaced by its nearest entry in a codebook, the residual is quantized with a second codebook, and so on. E.g. [EnCodec](https://arxiv.org/abs/2210.13438) turns 24 kHz audio into 75 embeddings per second, a 320-fold reduction, and the number of codebooks sets the bitrate (8 codebooks of 1024 entries give 6 kbps), while [DAC](https://arxiv.org/abs/2306.06546) compresses 44.1 kHz audio into 8 kbps of tokens. These tokens can be modeled like text, e.g. [VALL-E](https://arxiv.org/abs/2301.02111) does text-to-speech by predicting EnCodec tokens with a language model;
 - videos: the input is now 5D (batch size, time, channels, height, width), i.e. a sequence of video frames stacked on the time dimension. Embeddings are collected similarly to a regular CNN (adapted to use 3D instead of 2D convolutions, etc.);
 - graphs: the embedding of a node is given by its state after several steps of the [message passing algorithm](https://pytorch-geometric.readthedocs.io/en/latest/notes/create_gnn.html), and the embedding of a graph by a readout (e.g. sum, mean or max) over all node embeddings. A message passing step is given by:
 
-  $$x_i^{(k)} = \gamma^{(k)} \left( x_i^{(k-1)}, \Box_{j \in \mathcal{N}(i)} \, \phi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$
+  $$x_i^{(k)} = \gamma^{(k)} \left( x_i^{(k-1)}, \Box_{j \in \mathcal{N}(i)} \, \psi^{(k)} \left( x_i^{(k-1)}, x_j^{(k-1)}, e_{j,i} \right) \right)$$
 
   where:
   - $$x_i^{(k)}$$ is the embedding of node $$i$$ at message passing step $$k$$;
   - $$\mathcal{N}(i)$$ is the set of neighbors of node $$i$$;
   - $$e_{j,i}$$ is the embedding of the edge from node $$j$$ to node $$i$$;
   - $$\Box$$ is a differentiable, permutation-invariant function, e.g. sum, mean or max;
-  - and $$\gamma$$ and $$\phi$$ are differentiable functions such as DNNs or RNNs (LSTMs, GRUs).
- 
+  - and $$\gamma$$ and $$\psi$$ are differentiable functions such as DNNs or RNNs (LSTMs, GRUs).
+
+To find more about the topic, the [Deep Learning](https://www.deeplearningbook.org/) book by Goodfellow, Bengio and Courville covers feedforward networks and back propagation (chapter 6), regularization and dropout (chapter 7) and convolutional networks (chapter 9).
 
