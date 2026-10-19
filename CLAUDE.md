@@ -15,6 +15,9 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 - The text reads as the author's own writing, not as an LLM's. Each page keeps the author's explanations,
   examples, derivations and order of ideas, and as much of the author's wording as the other rules allow: a
   reader who knows the original post recognizes it paragraph by paragraph.
+- In practice, the rewrite writes in the third person, updates phrases with clearer and simpler synonyms, keeps
+  the flow of the author's text, adds the missing sentences, and removes the redundant sentences and the
+  redundant information.
 - Third person only. Never "I", "we", "our", "us", "you", "your" or "my". The subject of a sentence is the
   algorithm, the model, the data or the hardware ("Each rank sends its block", not "We send the block"), or the
   sentence is passive ("the loss is computed as"). The imperatives of mathematics ("consider", "take", "imagine",
@@ -61,7 +64,8 @@ text was not written by the author alone; they are rewritten in this style too.
 
 ### From the author's first person to the third person
 
-Only the words that carry the person change; the rest of the author's sentence stays:
+The words that carry the person change, and the rest of the author's sentence stays, unless a clearer or simpler
+word helps:
 - "Bayesian methods allow us to model the relationship ..." becomes "Bayesian methods model the relationship
   ...".
 - "we compute the point of minimum loss as:" becomes "the point of minimum loss is computed as:".
@@ -75,17 +79,19 @@ Only the words that carry the person change; the rest of the author's sentence s
   loop is then written as usual, and PyTorch does all the communication".
 - "Imagine we have a model that is too large ..." becomes "Imagine a model that is too large ...".
 
-### What an LLM rewrite does, and this one does not
+### What the rewrite may change
 
-- It does not replace the author's words with synonyms, reorder the author's ideas, or merge, split or add
-  paragraphs and sections without need.
-- No rhetorical question answered right away ("Why? Because ..."), no "This is where X comes in", no "the key
-  idea is", no "crucial", no closing sentence that sums up the paragraph, no triplets that the author did not
-  write, no em-dashes, no "the figure shows", no runs of sentences that start with "With", "Since" or "Each", no
-  "Notice how" or "Think of X as", no "Note:" callouts.
-- Additions are short and few: a clause or a sentence that explains why a step is needed, a Wikipedia link, a
-  one-sentence comparison of two methods, a reference to the paper that introduced a method. A comparison table
-  goes at the end of a post only when the post compares three or more methods.
+- Clearer and simpler synonyms may replace the author's words. Redundant sentences are removed, and missing
+  sentences and paragraphs relevant to the topic may be added. The flow of the author's ideas stays: no
+  reordered ideas, and no merged or split paragraphs and sections without need.
+- Phrases that help a student follow and understand the flow of logic are allowed: "This is where X comes in",
+  "the key idea is", "crucial", a closing sentence that sums up the paragraph, triplets, em-dashes, "the figure
+  shows", sentences that start with "With", "Since" or "Each", "Notice how", "Think of X as", "Note:" callouts.
+- No rhetorical question answered right away ("Why? Because ...").
+- Additions: a clause or a sentence that explains why a step is needed, a missing sentence, a paragraph relevant
+  to the topic, a Wikipedia link, a one-sentence comparison of two methods, a reference to the paper that
+  introduced a method. A comparison table goes at the end of a post only when the post compares three or more
+  methods.
 
 ### Sentences and words
 
@@ -95,20 +101,24 @@ Only the words that carry the person change; the rest of the author's sentence s
   author's "very" and "Note that" stay where they carry meaning.
 - Say each thing once. No repeated definitions, no paragraph that restates the previous one, no summary that
   only repeats the post.
-- A post is about as long as the author's original, plus the short additions above. The author's explanations,
-  examples, derivations, numbers and results stay, unless they are wrong.
+- A post is about as long as the author's original, plus the additions above and minus the redundant sentences.
+  The author's explanations, examples, derivations, numbers and results stay, unless they are wrong or
+  redundant.
 - When a post presents several methods, compare them where they appear, or in a table at the end of the post.
   A simple comparison is enough ("A needs less memory than B"). Say when to use each method, and the idea
   behind it.
 
 ### References
 
+- The author's pattern: relevant historical references at the beginning of a section, when needed; then the
+  explanation of the topic; then, at its end, a paragraph such as "To find more about the topic ..." or "More
+  advanced use cases can be found in ..." with further references. When each topic of a post comes from a
+  different paper, each topic cites its paper.
 - Add the references a post needs, and only the important and relevant ones. Keep the existing references.
   Verify each new reference before adding it.
 - Place each reference where it makes sense: a method links to the paper that introduced it, when needed. Always
   name the paper that introduced a recent method.
-- The introduction cites only a background paper that the introduction needs. The end of a post can close with
-  where to find more.
+- The introduction cites only a background paper that the introduction needs.
 - Describe other work in a brief note, not at length.
 
 ### Technical correctness
@@ -148,9 +158,11 @@ The user picks the items to fix before the next pass. A fixed item leaves the li
 
 ### Process
 
+This section is only for the current rewrite: it is removed from this file at the end of its last iteration.
+
 - The rewrite runs in three iterations. Each iteration is a pass over all posts, drafts and the publications
   page, on top of the previous one, and ends with a pull request that the user reviews and merges before the
-  next iteration starts.
+  next iteration starts. The first iteration makes small changes; each later one builds on the approved one.
 - Iteration 1 starts from the post on master and returns to the author's wording. For each paragraph, the
   author's original text (commit 9c353c1) is the reference for the voice: where master changed only the style,
   the rewrite goes back to the original words; where master corrected a fact, a formula or a link, or added
@@ -163,6 +175,8 @@ The user picks the items to fix before the next pass. A fixed item leaves the li
 - At the end of each iteration, show the user a review page with each changed paragraph before (left) and after
   (right), and the formula fixes, together with this file. Then stop: the next iteration starts when the user
   asks for it.
+
+---
 
 ## Pictures
 
