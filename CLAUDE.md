@@ -135,6 +135,15 @@ word helps:
 - Math is written in `$$...$$`, inline and on its own lines, as in the existing posts. In inline math, write
   `\vert` instead of `|`: kramdown reads a paragraph line that holds a `|` as a table row.
 
+### The author's papers
+
+- The two kernel fusion posts summarize the author's own papers. For confidentiality, they never name the hardware of
+  the experiments, its vendor, its interconnect or its libraries, in the text, the captions or the pictures: they give
+  only the number of devices ("8 GPUs in one node", "four accelerators"), call the devices ranks or accelerators,
+  write "the communication library" for the collective library and "shmem" for a GPU-side shmem library. Hardware of
+  other vendors may appear where the post describes other work (the SMs of DeepSeek-V3), without numbers that point
+  to a device model ("about 15% of the SMs", not "20 of 132").
+
 ### Titles
 
 - A post title, with the category that the home page puts before it ("Machine Learning: "), fits on one line of

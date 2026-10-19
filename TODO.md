@@ -765,46 +765,38 @@ that is not wrong.
   reduce steps, while the text and `tp_block_specialization.svg` apply them to each band, right after the all-reduce
   of that band. The figure of the paper has the same simplification. Fix: a small bias and activation step after
   each reduce step, or keep the picture as a schematic.
-- Optional, `inference/imgs/tp_timeline.svg` labels the baseline collective "NCCL AllReduce", while the text names the
-  library generically ("the communication library", a choice of commit a48070d). Fix: keep the label, which is the
-  paper's, or write "AllReduce" if the pictures should be generic too.
+- `inference/imgs/tp_timeline.svg` labels the baseline collective "NCCL AllReduce". The kernel fusion posts name no
+  hardware or library of the papers (Writing rules, "The author's papers"), and the text says "the communication
+  library". Fix: "AllReduce".
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
-- `inference/imgs/ep_all_to_all_reduce.svg` names the buffer of the partial result of rank x as Σ_{x/B}. This index
-  gives W buffers for B = 1, and a single buffer for B = W, the opposite of the text. The picture (W = 4, B = 2) puts
-  σ_0 and σ_1 in Σ_0, and σ_2 and σ_3 in Σ_1. Fix: Σ_{⌊xB/W⌋}.
-- `inference/imgs/ep_stages.svg` draws the eight stages on a time axis from 0 to 300 µs. In the paper, this figure is
-  the decode step, and its timings are placeholders, not measurements. The caption does not say so. Fix: remove the
-  time axis, or replace the timings with measured ones.
+- The twelve `inference/imgs/ep_*.svg` pictures are copies of the figures of the paper (its
+  repository's `imgs/`, commit c867dee), not yet redrawn. The TikZ exports (`ep_pipeline.svg`, `ep_stages.svg`, `ep_results.svg`,
+  `ep_data_movement.svg`) have 4 to 6 pt text at their natural size, and the post shows them at 75% to 100% of the
+  page, with text of 8 to 13 px. `ep_communication_models.svg` is 1019 px wide, wider than a post, and is shown at
+  100%, i.e. at 86% of its size. Fix: redraw all twelve in a "kernel-fusion-expert-parallelism" tab of
+  `assets/inference/inference.drawio`, from the paper's `imgs/moe_dispatch_and_combine.drawio` and TikZ sources,
+  with the sizes and fonts of CLAUDE.md (Pictures, sections 3 and 4); the four models of
+  `ep_communication_models.svg` fit 880 px in one column.
+- Five copies name the ranks after the hardware of the paper: "Token NPU" and "Expert NPU" in `ep_all_to_all.svg`,
+  `ep_all_to_all_inc.svg`, `ep_one_to_many_inc.svg`, `ep_communication_models.svg` and
+  `ep_communication_models_noncollective.svg`, and "collective push, NPU reduce" in `ep_communication_models.svg`. The
+  kernel fusion posts name no hardware of the papers (Writing rules, "The author's papers"), and the captions say
+  "rank". Fix: "Token rank", "Expert rank" and "rank reduce".
+- `inference/imgs/ep_stages.svg` draws the eight stages on the time axis of the decode step, whose costs are
+  placeholders, not measurements, as the caption says. Fix: remove the time axis until the decode step is measured,
+  or redraw it with the measured costs.
 - `inference/imgs/ep_results.svg`: the right panel plots decode times that are placeholders, not measurements, as the
   caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
-- Caption of `inference/imgs/ep_data_movement.svg`: "$$\star$$ marks memory of the shared heap", while the text
-  defines the symmetric heap of SHMEM. Fix: "$$\star$$ marks memory on the symmetric heap", and the same words in the
-  legend at the redraw.
-- Caption of `inference/imgs/ep_all_to_all_reduce.svg` and `ep_all_to_all_unique.svg`: $$E_x$$ names the expert ids
-  and weights of rank $$P_x$$, while everywhere else the subscript of E is an expert index ($$E_0$$ to $$E_5$$). Fix:
-  $$R_x$$, in the caption and in the two figures at the redraw.
-- The captions write one quantity, the sum of the expert outputs of one rank for one token, as $$A_0$$
-  (`ep_routing_table.svg`), $$\sigma_C$$ (`ep_all_to_all_inc.svg` and `ep_timeline.svg`) and $$\sigma_x$$
-  (`ep_all_to_all_reduce.svg`), and the subscript of σ is a token in the second and a rank in the third. Fix:
-  $$\sigma_A^{(0)}$$, $$\sigma_C^{(x)}$$ and $$\sigma^{(x)}$$, in the captions and in the figures at the redraw.
+- Signals are dashed arrows in `ep_all_to_all_inc.svg`, `ep_one_to_many_inc.svg`, `ep_communication_models.svg` and
+  `ep_communication_models_noncollective.svg`, and dotted arrows in `ep_timeline.svg` and
+  `ep_timeline_noncollective.svg`. The paper calls them dotted in all its captions; the captions of the post follow
+  each picture. Fix at the redraw: dotted signals (dashPattern=1 2) in every picture, and "dotted" in every caption.
 - The captions have no credit to the post's paper, whose figures the pictures copy. The paper is the author's own and
   not public yet. Fix: "Source: [MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and
   In-Network Compute](link)" once the paper has a public link, and "Adapted from:" after the redraw; the user
   decides.
-- Optional, `inference/imgs/ep_timeline.svg` labels the dispatch call of P_2 as put_signal_01, but the call goes to
-  the INC switch, while the caption says that a subscript names the destination of the call. Fix: put_signal*
-  without a subscript, or a caption that says the subscript names the final destinations P_0 and P_1.
-- `inference/imgs/ep_communication_models.svg` labels the transfers "W hops of T tokens per link" and "INC switch
-  (fewer hops, less data)". There, a hop means one packet on a link, but the text and the paper say that both fused
-  implementations cross the same number of hops. The text says "one packet per link instead of W". Fix at the
-  redraw: "W packets of T tokens per link", "1 packet of ..." and "INC switch (fewer packets, less data)".
-- `inference/imgs/ep_timeline.svg` labels the activation "SwiGlu", while the text and the other pictures
-  (`ep_stages.svg`, `ep_data_movement.svg`, `ep_pipeline.svg`) write "SwiGLU". Fix at the redraw: "SwiGLU".
-- `inference/imgs/ep_routing_table.svg` calls $$P_0$$ to $$P_2$$ "Processes" in its title, while the text and the
-  captions call them ranks. Fix at the redraw: "ranks", with the title moved into the caption (CLAUDE.md, Pictures,
-  section 9).
 
 ### Knowledge distillation, speculative decoding and multi-token decoding (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
@@ -1296,10 +1288,10 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
-- The post does not mention DySHARP (Zhang et al., "Accelerating MoE with Dynamic In-Switch Computing on
-  Multi-GPUs", ISCA 2026), the closest related work, which the paper compares with at length. Proposed fix: one
-  linked sentence after the DeepSeek-V3 example, saying that DySHARP adds multicast and reduction to the switch but
-  still uses 2 of 4 SM groups to issue the dispatch and the combine; check its public link and title first.
+- The paper has not measured the decode step (the right panel of its runtime figure, and its decode timeline), the
+  non-collective operations (its table of collective and non-collective results) and the number of microbatches in
+  flight with the memory each one takes. The post shows the two decode placeholders with a note in their captions,
+  and leaves the rest out. Fix: add these results to the post once the paper has them.
 
 ### Knowledge distillation, speculative decoding and multi-token decoding (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
