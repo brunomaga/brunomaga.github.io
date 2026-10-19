@@ -55,6 +55,23 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 - Math is written in `$$...$$`, inline and on its own lines, as in the existing posts. In inline math, write
   `\vert` instead of `|`: kramdown reads a paragraph line that holds a `|` as a table row.
 
+### The author's papers
+
+- The two kernel fusion posts, for tensor parallelism (the FFN) and for expert parallelism (MoE), summarize the
+  author's own papers. For confidentiality, they hold no information that is specific to the hardware of the
+  experiments, in the text, the captions or the pictures:
+  - the only hardware fact is the number of GPUs ("8 GPUs in one node"). The devices are called GPUs, devices or
+    ranks, with no vendor, device model, interconnect or switch name, and no number that points to a device model
+    (an SM count, a bandwidth, a memory size);
+  - libraries take generic names: CCL (collective communication library) for NCCL, HCCL and the like, and shmem
+    for NVSHMEM and the like. Vendor programming models, instructions and APIs (CUDA, PTX, TMA, multimem,
+    atomicAdd...) are described by what they do;
+  - generic GPU terms stay (SMs, thread blocks, shared memory, HBM);
+  - other work cited in these posts is described without hardware names either ("multicast and reduction inside
+    the switch", "about 15% of the SMs").
+- These two posts name no authors and have no acknowledgements, and nothing in them traces the work back to the
+  company where it was developed.
+
 ### Titles
 
 - A post title, with the category that the home page puts before it ("Machine Learning: "), fits on one line of
@@ -112,6 +129,9 @@ sections 6 and 7, and the font section 4.
   shows the computed values.
 - Third person, as the post text: no "I", "we", "our", "ours", "us", "you" or "your" in a picture. A paper's
   "Ours" becomes the method's name. Quoted inputs (prompts, chat turns, example sentences) keep their words.
+- The pictures of the two kernel fusion posts follow "The author's papers" in the writing rules: no hardware
+  names (CCL, shmem, GPUs or ranks), and nothing that traces the work back to the company where it was
+  developed.
 
 ### 2. Sources and files
 
