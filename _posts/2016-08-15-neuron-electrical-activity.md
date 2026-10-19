@@ -74,7 +74,7 @@ $$
 where $$i_a$$ is the axial current [mA] flowing through the compartment's region, and $$\int_A i_m dA$$ is the integral of the transmembrane current density $$i_m$$ [mA/cm$$^2$$] over the membrane area $$A$$ [cm$$^2$$]. This concept is illustrated in the following picture:
 
 {: .picture}
-<img width="22.7%" height="22.7%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
+<img width="22.8%" height="22.8%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
 
 {: .caption}
 The net current entering a region is zero: the axial currents $$i_a$$ balance the membrane current $$i_m$$. Adapted from: [Hines and Carnevale (1997), The NEURON simulation environment, Fig. 3.1](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p1.htm)

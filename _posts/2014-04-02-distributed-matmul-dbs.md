@@ -80,7 +80,7 @@ As an example, rank $$(1,2)$$ of a $$3 \times 3$$ grid computes $$C_{1,2} = A_{1
 Steps 2 and 3 are repeated until each rank has done $$q$$ multiplications, as illustrated below:
 
 {: .picture}
-<img width="89.5%" height="89.5%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
+<img width="89.6%" height="89.6%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
 
 {: .caption}
 Cannon's algorithm on a $$3 \times 3$$ grid of ranks. Tiles of $$A$$ (top) shift left, and tiles of $$B$$ (bottom) shift up. The thick frame marks rank $$(1,2)$$, and colors show its three pairs: blue for $$k=0$$, green for $$k=1$$ and red for $$k=2$$.

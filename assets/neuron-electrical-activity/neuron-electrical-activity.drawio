@@ -10,7 +10,7 @@
         <mxCell id="net_current_conservation-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="198.87" height="200.35" as="geometry" />
         </mxCell>
-        <mxCell id="net_current_conservation-1" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-1" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="0.5" y="79.05" as="sourcePoint" />
             <mxPoint x="100.14" y="0" as="targetPoint" />
@@ -117,7 +117,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="net_current_conservation-2" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-2" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="198.87" y="103.82" as="sourcePoint" />
             <mxPoint x="125.62" y="0" as="targetPoint" />
@@ -264,7 +264,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="net_current_conservation-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-3" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="0.5" y="104.67" as="sourcePoint" />
             <mxPoint x="122.51" y="200.35" as="targetPoint" />
@@ -401,7 +401,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="net_current_conservation-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
+        <mxCell id="net_current_conservation-4" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="net_current_conservation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="198.87" y="129.73" as="sourcePoint" />
             <mxPoint x="147.25" y="200.35" as="targetPoint" />
@@ -1234,115 +1234,115 @@
             <mxPoint x="302.01" y="300.93" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="solver_grid_neuron-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="21.3" y="20.22" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="42.9" y="20.22" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="21.3" y="41.82" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-36" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="42.9" y="41.82" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="64.49" y="41.82" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="215.64" y="41.82" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="42.9" y="63.41" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="64.49" y="63.41" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="86.08" y="63.41" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-42" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="150.86" y="63.41" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-43" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-43" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="64.49" y="85" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-44" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-44" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="86.08" y="85" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="107.67" y="85" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="86.08" y="106.59" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-47" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="107.67" y="106.59" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="129.27" y="106.59" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-49" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="107.67" y="128.19" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="129.27" y="128.19" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-51" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="64.49" y="149.78" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-52" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="150.86" y="149.78" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="172.45" y="149.78" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="150.86" y="171.37" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="172.45" y="171.37" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="194.04" y="171.37" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-57" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-57" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="172.45" y="192.96" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="194.04" y="192.96" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="42.9" y="214.56" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="215.64" y="214.56" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="237.23" y="214.56" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-62" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="215.64" y="236.15" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-63" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-63" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="237.23" y="236.15" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-64" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-64" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="258.82" y="236.15" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-65" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-65" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="237.23" y="257.74" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-66" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-66" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="258.82" y="257.74" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-67" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-67" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="280.42" y="257.74" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="258.82" y="279.34" width="21.59" height="21.59" as="geometry" />
         </mxCell>
-        <mxCell id="solver_grid_neuron-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
+        <mxCell id="solver_grid_neuron-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#666666;strokeWidth=0.6;fontFamily=Source Sans 3;" vertex="1" parent="solver_grid_neuron-figure">
           <mxGeometry x="280.42" y="279.34" width="21.59" height="21.59" as="geometry" />
         </mxCell>
         <mxCell id="solver_grid_neuron-70" value="0" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="solver_grid_neuron-figure">
@@ -1866,13 +1866,13 @@
             <mxPoint x="36.17" y="195.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-12" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-12" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="20.77" y="104.9" as="sourcePoint" />
             <mxPoint x="51.57" y="104.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-13" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-13" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="20.77" y="118.9" as="sourcePoint" />
             <mxPoint x="51.57" y="118.9" as="targetPoint" />
@@ -1903,13 +1903,13 @@
             <mxPoint x="127.17" y="139.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-19" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-19" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="110.37" y="139.9" as="sourcePoint" />
             <mxPoint x="143.97" y="139.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-20" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-20" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="118.07" y="151.1" as="sourcePoint" />
             <mxPoint x="136.27" y="151.1" as="targetPoint" />
@@ -1955,13 +1955,13 @@
             <mxPoint x="211.17" y="139.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-29" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-29" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="194.37" y="139.9" as="sourcePoint" />
             <mxPoint x="227.97" y="139.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-30" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-30" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="202.07" y="151.1" as="sourcePoint" />
             <mxPoint x="220.27" y="151.1" as="targetPoint" />
@@ -2007,13 +2007,13 @@
             <mxPoint x="295.17" y="139.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-39" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-39" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="278.37" y="139.9" as="sourcePoint" />
             <mxPoint x="311.97" y="139.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-40" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-40" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="286.07" y="151.1" as="sourcePoint" />
             <mxPoint x="304.27" y="151.1" as="targetPoint" />
@@ -2059,13 +2059,13 @@
             <mxPoint x="400.17" y="139.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-49" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-49" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="383.37" y="139.9" as="sourcePoint" />
             <mxPoint x="416.97" y="139.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="compartment_rc_circuit-50" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.4;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
+        <mxCell id="compartment_rc_circuit-50" value="" style="endArrow=none;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=2.8;fontFamily=Source Sans 3;" edge="1" parent="compartment_rc_circuit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="391.07" y="151.1" as="sourcePoint" />
             <mxPoint x="409.27" y="151.1" as="targetPoint" />

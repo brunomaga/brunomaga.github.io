@@ -21,7 +21,7 @@ There are two main data parallelism approaches:
 **Distributed Data Parallelism** keeps a full copy of the model (weights, optimizer states and gradients) on each processor. All models are initialized equally. Each processor takes a different mini-batch as input and performs a forward pass to compute the loss of that batch. On the backward pass, at every layer of the model, all processes compute the gradients of their batch and perform an [all-reduce](https://en.wikipedia.org/wiki/Collective_operation) to get the mean gradients across all processors. These are then used to update the parameters and the optimizer states. Because parameters are initialized equally, gradients are mean-reduced and all processes perform the same updates, the models across all processors are kept in an identical state throughout the execution.
 
 {: .picture}
-<img width="65.8%" height="65.8%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
+<img width="69.9%" height="69.9%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
 
 {: .caption}
 Distributed data parallelism (DDP) on 4 processes. Each process holds a full copy of a 4-layer model (the parameters, optimizer states and gradients of every layer), initialized identically, and takes its own input. The forward pass (left arrow) computes the activations and the loss of each process. In the backward pass (right arrow), each process computes the local gradients of every layer, and an all-reduce averages them across the processes. The optimizer then applies the same mean gradients on every process, so all copies stay identical.
@@ -37,7 +37,7 @@ The diagram above shows that each processor holds a copy of the model, so the mo
 An important remark is that activations are not sharded, i.e. they are kept in *full shape* on each processor. And in modern models, **a huge chunk of memory is allocated to residual memory (activations, normalization layers, etc.), which is not sharded by FSDP**. With that in mind, the following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
 
 {: .picture}
-<img width="95.3%" height="95.3%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
+<img width="99.4%" height="99.4%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
 
 {: .caption}
 Stage 3 sharding (ZeRO-3) on 4 processes. Process k holds the parameters, optimizer states and gradients of layer k only (solid boxes; the dashed boxes are layers held by other processes), takes its own input and keeps its own activations. Forward pass (left): before layer k is computed, process k broadcasts its parameters, and the other processes discard them after use. Backward pass (right): process k broadcasts the parameters of layer k again, every process computes its local gradients of layer k, and these gradients are summed (reduced) on process k, which updates the parameters of layer k. Inspired by: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054)
@@ -47,7 +47,7 @@ Note that DeepSpeed ZeRO-3 and [PyTorch FSDP](https://arxiv.org/abs/2304.11277) 
 The higher the stage, the less memory is consumed. Stages 1 and 2 communicate as much as regular data parallelism, and stage 3 communicates 1.5x as much, as it gathers the parameters in both the forward and the backward passes. These memory improvements are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
 
 {: .picture}
-<img width="87.5%" height="87.5%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
+<img width="87.6%" height="87.6%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
 
 {: .caption}
 Per-GPU memory of the model states (parameters, gradients and optimizer states) with plain data parallelism (baseline) and with the three ZeRO stages: $$P_{os}$$ partitions the optimizer states across the GPUs, $$P_{os+g}$$ also the gradients, and $$P_{os+g+p}$$ also the parameters. $$\Psi$$ is the number of parameters, $$K$$ the memory multiplier of the optimizer states and $$N_d$$ the data-parallel degree; the example uses $$K=12$$ (mixed-precision Adam), $$\Psi=7.5B$$ and $$N_d=64$$. The last column is the communication volume relative to the baseline. Adapted from: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) and the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
