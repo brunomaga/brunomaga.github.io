@@ -5,21 +5,23 @@ categories: ["Distributed Algorithms"]
 tags: ["MPI", "linear algebra", "sparse matrices", "CSR", "databases", "joins"]
 ---
 
-Scientific computing and data processing rely on two data structures: the matrix and the table. When the data is too large for one machine, we split it across many compute nodes. Each node reads only its own memory, and any other data must arrive as a message, which is slow. This lecture asks one question about two operations, the matrix multiplication and the database join: how do we split the data so that each node works mostly alone?
+Scientific computing and data processing rely on two data structures: the matrix and the table. When the data is too large for one machine, it is split across many compute nodes, where each node reads only its own memory and any other data must arrive as a message, which is slow. This post asks the same question for two operations, the matrix multiplication and the database join: how to split the data so that each node works *mostly alone*?
 
-We use the terms of [MPI][mpi]: we run $$p$$ processes, called **ranks**, usually one per node. In the database part, we call them **servers**.
+The algorithms use the terminology of [MPI][mpi]: they run on $$p$$ processes, called **ranks** (usually one per node), or **servers** in the database part.
 
 [mpi]: https://en.wikipedia.org/wiki/Message_Passing_Interface
 
 ## Part 1: dense matrices
 
-The product $$C = AB$$ of two $$n \times n$$ matrices, with $$C_{ij} = \sum_k A_{ik} B_{kj}$$, costs $$n^3$$ multiply-adds. The matrix-vector product $$y = Ax$$ costs $$n^2$$.
+The product $$C = AB$$ of two $$n \times n$$ matrices, with $$C_{ij} = \sum_k A_{ik} B_{kj}$$, costs $$n^3$$ [multiply-adds][mac], and the matrix-vector product $$y = Ax$$ costs $$n^2$$.
+
+[mac]: https://en.wikipedia.org/wiki/Multiply%E2%80%93accumulate_operation
 
 ### Warm-up: the matrix-vector product
 
-Each rank holds $$n/p$$ consecutive rows of $$A$$, and the matching entries of $$x$$ and $$y$$. To compute $$y_i$$, a rank needs row $$i$$ of $$A$$, which it has, and all of $$x$$, which it does not. Two steps solve this:
-1. **all-gather** (`MPI_Allgather`): every rank sends its entries of $$x$$ to all other ranks;
-2. **local product:** every rank multiplies its rows of $$A$$ by $$x$$.
+Each rank holds $$n/p$$ consecutive rows of $$A$$, and the matching entries of $$x$$ and $$y$$. To compute $$y_i$$, a rank needs row $$i$$ of $$A$$, which it has, and *all* of $$x$$, which it does not. Therefore, the algorithm has two steps, illustrated below on 4 ranks:
+1. an **[all-gather][collective]** (`MPI_Allgather`) sends the entries of $$x$$ held by each rank to all other ranks;
+2. every rank multiplies its rows of $$A$$ by $$x$$.
 
 {: .picture}
 <img width="93.8%" height="93.8%" src="{{ site.assets }}/distributed-matmul-dbs/matvec_row1d.svg">
@@ -29,19 +31,21 @@ Matrix-vector product on 4 ranks, colored by rank. **Left:** the initial layout.
 
 Each rank does $$n^2/p$$ operations, and $$y$$ ends up split like $$x$$, ready for the next product.
 
+[collective]: https://en.wikipedia.org/wiki/Collective_operation
+
 ### The matrix-matrix product: shifting tiles
 
-The same trick fails for $$C = AB$$. Each rank would need all of $$B$$, and an all-gather would store $$n^2$$ elements on every rank. Instead, each rank holds only one piece of each matrix. At every step, it multiplies the pieces it holds, then **shifts** some of them to a neighbor. Shifts wrap around: the first rank sends to the last. Which pieces move? One matrix, or two.
+The same trick fails for $$C = AB$$: each rank would need all of $$B$$, and an all-gather would store $$n^2$$ elements on every rank, which defeats the purpose of splitting the data. Instead, each rank holds only one piece of each matrix. At every step, it multiplies the pieces it holds, and then **shifts** some of them to a neighbor, cyclically (i.e. the first rank sends to the last). The shifted pieces belong to one matrix, or to two.
 
 ### Shifting one matrix: the ring algorithm
 
-The ranks form a ring. Rank $$i$$ holds row block $$i$$ of $$A$$, $$B$$ and $$C$$. We cut its block of $$A$$ into $$p$$ tiles, so that
+The ranks form a ring, and rank $$i$$ holds row block $$i$$ of $$A$$, $$B$$ and $$C$$. Its block of $$A$$ is cut into $$p$$ tiles $$A_{i,k}$$, one for each row block $$B_k$$ of $$B$$, so that
 
 $$
 C_i = \sum_{k=0}^{p-1} A_{i,k} \, B_k.
 $$
 
-$$A$$ and $$C$$ stay in place, and $$B$$ moves. At each step, every rank multiplies the tile of $$A$$ that matches its current block of $$B$$, adds the result to $$C_i$$, and passes the block of $$B$$ to the previous rank. After $$p$$ steps, $$C_i$$ is complete.
+$$A$$ and $$C$$ stay in place, and only $$B$$ moves: at each step, every rank multiplies the tile of $$A$$ that matches its current block of $$B$$, adds the result to $$C_i$$, and passes the block of $$B$$ to the previous rank. After $$p$$ steps, $$C_i$$ is complete, as shown below on 3 ranks:
 
 {: .picture}
 <img width="88.7%" height="88.7%" src="{{ site.assets }}/distributed-matmul-dbs/ring.svg">
@@ -49,22 +53,22 @@ $$A$$ and $$C$$ stay in place, and $$B$$ moves. At each step, every rank multipl
 {: .caption}
 The ring algorithm on 3 ranks. Blocks of $$B$$ shift up, and rank 0 sends to rank 2. At each step, a rank multiplies the tile of $$A$$ that has the color of its block of $$B$$.
 
-The output $$C$$ is split by rows, like $$A$$. In the mirror case, $$B$$ stays and column blocks of $$A$$ move, and $$C$$ is split by columns. Each rank stores $$3n^2/p$$ elements, but it receives $$p-1$$ blocks: almost $$n^2$$ elements, however many ranks we add.
+The output $$C$$ is split by rows, like $$A$$. In the *mirror* case, $$B$$ stays in place, the column blocks of $$A$$ move, and $$C$$ is split by columns. Each rank stores $$3n^2/p$$ elements, but it receives $$p-1$$ blocks, i.e. almost $$n^2$$ elements, however many ranks are added.
 
 ### Shifting two matrices: Cannon's algorithm
 
-To send less, we cut the matrices in both directions. The ranks form a $$q \times q$$ grid, with $$q = \sqrt{p}$$, and each matrix is cut into $$q \times q$$ tiles. Rank $$(i,j)$$ starts with $$A_{i,j}$$ and $$B_{i,j}$$, and computes
+To send less, the matrices are cut in both dimensions. The ranks form a $$q \times q$$ grid (with $$q = \sqrt{p}$$), and each matrix is cut into $$q \times q$$ tiles. Rank $$(i,j)$$ starts with $$A_{i,j}$$ and $$B_{i,j}$$, and computes
 
 $$
 C_{i,j} = \sum_{k=0}^{q-1} A_{i,k} \, B_{k,j}.
 $$
 
-For example, rank $$(1,2)$$ of a $$3 \times 3$$ grid computes $$C_{1,2} = A_{1,0} B_{0,2} + A_{1,1} B_{1,2} + A_{1,2} B_{2,2}$$. It needs the tiles of row 1 of $$A$$ and of column 2 of $$B$$, one matching pair at a time. [Cannon's algorithm][cannon] delivers these pairs:
-1. **align:** shift row $$i$$ of $$A$$ left by $$i$$, and column $$j$$ of $$B$$ up by $$j$$. For $$k = (i+j) \bmod q$$, rank $$(i,j)$$ now holds the matching pair $$A_{i,k}$$ and $$B_{k,j}$$;
-2. **multiply:** add $$A_{i,k} B_{k,j}$$ to $$C_{i,j}$$;
-3. **shift:** shift $$A$$ left by one and $$B$$ up by one. The new pair matches again.
+As an example, rank $$(1,2)$$ of a $$3 \times 3$$ grid computes $$C_{1,2} = A_{1,0} B_{0,2} + A_{1,1} B_{1,2} + A_{1,2} B_{2,2}$$. It needs the tiles of row 1 of $$A$$ and of column 2 of $$B$$, but only *one* matching pair at a time. [Cannon's algorithm][cannon] delivers these pairs in three steps:
+1. row $$i$$ of $$A$$ is shifted left by $$i$$, and column $$j$$ of $$B$$ up by $$j$$ (the **alignment**), so that rank $$(i,j)$$ holds the matching pair $$A_{i,k}$$ and $$B_{k,j}$$, with $$k = (i+j) \bmod q$$;
+2. every rank adds $$A_{i,k} B_{k,j}$$ to $$C_{i,j}$$;
+3. $$A$$ is shifted left by one and $$B$$ up by one, so that rank $$(i,j)$$ holds the next matching pair, $$A_{i,k+1}$$ and $$B_{k+1,j}$$ (indices modulo $$q$$).
 
-Steps 2 and 3 repeat until each rank has done $$q$$ multiplications.
+Steps 2 and 3 are repeated until each rank has done $$q$$ multiplications, as illustrated below:
 
 {: .picture}
 <img width="89.2%" height="89.2%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
@@ -72,13 +76,13 @@ Steps 2 and 3 repeat until each rank has done $$q$$ multiplications.
 {: .caption}
 Cannon's algorithm on a $$3 \times 3$$ grid of ranks. Tiles of $$A$$ (top) shift left, and tiles of $$B$$ (bottom) shift up. The thick frame marks rank $$(1,2)$$, and colors show its three pairs: blue for $$k=0$$, green for $$k=1$$ and red for $$k=2$$.
 
-$$A$$ moves along the grid rows, $$B$$ along the grid columns, and $$C$$ stays. Tile $$C_{i,j}$$ ends on rank $$(i,j)$$, in the same layout as the inputs. On a 2D grid, two of the three matrices must move. Each rank still stores $$3n^2/p$$ elements, but receives only $$2q$$ tiles, or $$2n^2/\sqrt{p}$$ elements. This shrinks as we add ranks, and beats the ring from 9 ranks on.
+In brief, $$A$$ moves along the grid rows, $$B$$ along the grid columns, and $$C$$ stays, so that tile $$C_{i,j}$$ ends on rank $$(i,j)$$, in the same layout as the inputs. Note that, on a 2D grid, two of the three matrices must move. Each rank still stores $$3n^2/p$$ elements, but receives at most $$2q$$ tiles, or $$2n^2/\sqrt{p}$$ elements. This volume shrinks as ranks are added, and it is smaller than in the ring algorithm from 9 ranks on.
 
 [cannon]: https://en.wikipedia.org/wiki/Cannon%27s_algorithm
 
 ### Overlapping computation and communication
 
-The tiles of the next step do not depend on the current product. So a rank can receive them while it multiplies:
+The tiles of the next step do not depend on the current product, so a rank can receive them while it multiplies:
 1. start a non-blocking send of the current tiles, and a non-blocking receive of the next ones into a second buffer (`MPI_Isend`, `MPI_Irecv`);
 2. multiply the current tiles;
 3. wait for both messages (`MPI_Waitall`), and swap the buffers.
@@ -89,18 +93,22 @@ The tiles of the next step do not depend on the current product. So a rank can r
 {: .caption}
 Timeline of one rank in Cannon's algorithm on a $$3 \times 3$$ grid. **Top:** shifts and multiplications take turns. **Bottom:** each shift runs during a multiplication.
 
-This **double buffering** costs one extra pair of tiles, and works for the ring algorithm too. It hides a shift whenever the multiplication takes longer. A multiplication costs $$(n/q)^3$$ operations and a shift moves $$2(n/q)^2$$ elements, so large tiles hide the communication easily.
+This technique, called **[double buffering][buffering]**, costs one extra pair of tiles, and works for the ring algorithm too. A shift is hidden whenever the multiplication takes longer: in practice, a multiplication costs $$(n/q)^3$$ operations and a shift moves $$2(n/q)^2$$ elements, so large tiles hide the communication easily.
+
+[buffering]: https://en.wikipedia.org/wiki/Multiple_buffering
 
 ## Part 2: sparse matrices
 
-Many matrices are mostly zeros. In a simulation on a mesh, for example, each point interacts only with a few neighbors. A **sparse** format stores only the nonzeros.
+Many matrices are mostly zeros (e.g. in a simulation on a mesh, where each point interacts only with a few neighbors). Such matrices are called **[sparse][sparse]**, and a sparse format stores only their nonzeros.
+
+[sparse]: https://en.wikipedia.org/wiki/Sparse_matrix
 
 ### The compressed sparse row format
 
-The **compressed sparse row** (CSR) format uses three arrays:
+The **compressed sparse row** (CSR) format stores the matrix in three arrays:
 - `values`: the nonzeros, row by row;
 - `col_idx`: the column of each nonzero;
-- `row_ptr`: where each row starts. Row $$i$$ is at positions `row_ptr[i]` to `row_ptr[i+1]-1` of the other two arrays.
+- `row_ptr`: where each row starts, i.e. row $$i$$ is at positions `row_ptr[i]` to `row_ptr[i+1]-1` of the other two arrays.
 
 {: .picture}
 <img width="69.7%" height="69.7%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
@@ -108,7 +116,7 @@ The **compressed sparse row** (CSR) format uses three arrays:
 {: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
 
-For $$n$$ rows and $$nnz$$ nonzeros, CSR stores $$2 \, nnz + n + 1$$ numbers. Rows are easy to read. Columns need a search through all rows, which makes the distributed transpose hard. The product $$y = Ax$$ takes $$O(nnz)$$ operations:
+For $$n$$ rows and $$nnz$$ nonzeros, CSR stores $$2 \, nnz + n + 1$$ numbers. Reading a row is easy, but reading a column requires a search through all rows, which makes the distributed transpose hard. The product $$y = Ax$$ visits each row and each nonzero once, in $$O(n + nnz)$$ operations:
 
 ```cpp
 for (int i = 0; i < n; i++) {
@@ -120,10 +128,10 @@ for (int i = 0; i < n; i++) {
 
 ### The sparse matrix-vector product
 
-We split $$A$$ by rows again. An all-gather of $$x$$ would work, but a rank needs $$x_j$$ only if its rows have a nonzero in column $$j$$, which is usually a small set. So we send only those entries:
-1. **setup** (once): each rank tells the owners of $$x$$ which of their entries it needs;
-2. **exchange** (before every product): the owners send these entries (`MPI_Alltoallv`). The received copies are called **ghost** entries;
-3. **local product:** each rank runs the CSR loop over its own and ghost entries.
+As before, $$A$$ is split by rows. An all-gather of $$x$$ would work, but a rank needs $$x_j$$ only for the columns $$j$$ where its rows have a nonzero (usually a small set). So only those entries are sent:
+1. once, in a setup step, each rank tells the owners of $$x$$ which of their entries it needs;
+2. before every product, an exchange (`MPI_Alltoallv`) sends these entries to the ranks that need them. The received copies are called **ghost** entries;
+3. each rank runs the CSR loop over its own and ghost entries.
 
 {: .picture}
 <img width="64.4%" height="64.4%" src="{{ site.assets }}/distributed-matmul-dbs/spmv.svg">
@@ -131,41 +139,47 @@ We split $$A$$ by rows again. An all-gather of $$x$$ would work, but a rank need
 {: .caption}
 Sparse matrix-vector product on 3 ranks. **Left:** nonzeros colored by rank. A dot marks a nonzero whose entry of $$x$$ is on another rank. **Right:** the entries of $$x$$ on each rank after the exchange. Dashed boxes are ghost entries.
 
-The communication now grows with the number of ghost entries, not with $$n$$. For a matrix from a mesh, these are only the entries at the border of each rank's region.
+The communication now grows with the number of ghost entries, and *not* with $$n$$. For a matrix from a mesh, these are only the entries at the border of the region of each rank.
 
 ### The sparse matrix-matrix product
 
-Row $$i$$ of $$C = AB$$ is a weighted sum of rows of $$B$$:
+Row $$i$$ of $$C = AB$$ is given by a weighted sum of rows of $$B$$:
 
 $$
 C_{i,:} = \sum_{k \, : \, A_{ik} \neq 0} A_{ik} \, B_{k,:}.
 $$
 
-So a rank needs row $$k$$ of $$B$$ whenever its rows of $$A$$ have a nonzero in column $$k$$: the same indices as the ghost entries, but whole rows instead of single entries. The steps are:
+So a rank needs row $$k$$ of $$B$$ whenever its rows of $$A$$ have a nonzero in column $$k$$, i.e. the same indices as the ghost entries, but whole rows instead of single entries. This row-by-row formulation ([Gustavson, 1978][gustavson]) suits CSR, which stores both matrices by rows, and leads to the following algorithm:
 1. each rank requests the remote rows of $$B$$ it needs;
 2. the owners send them in CSR, with two `MPI_Alltoallv` calls: first the row sizes, so that the receiver can allocate memory, then the indices and values;
 3. each rank builds its rows of $$C$$ in a dense buffer, and compresses them into CSR.
 
-The size of $$C$$ is not known in advance. So step 3 often runs twice: a **symbolic** pass counts the nonzeros and allocates memory, and a **numeric** pass computes the values. $$C$$ is split by rows, like $$A$$.
+The number of nonzeros of $$C$$ is *not known in advance*, so step 3 often runs twice: a **symbolic** pass counts the nonzeros and allocates memory, and a **numeric** pass computes the values. The output $$C$$ is split by rows, like $$A$$.
+
+[gustavson]: https://doi.org/10.1145/355791.355796
 
 ## Part 3: database joins
 
-A database table holds one record per row. A **key** is a column that identifies a record and links tables. In our example, `Person` has one row per person, with key `id`. `Messages` has one row per message, and its `id` is the key of the author.
+A database table holds one record per row. A **key** is a column that identifies a record, and links tables. In the example below, `Person` has one row per person, with key `id`, and `Messages` has one row per message, whose `id` is the key of its author (a [foreign key][fkey]).
+
+[fkey]: https://en.wikipedia.org/wiki/Foreign_key
 
 ### Inner and outer joins
 
-A **join** pairs the rows of two tables whose keys match:
+A **[join][join]** pairs the rows of two tables whose keys match:
 
 ```sql
 SELECT Person.id, name, age, msg, year
 FROM Person INNER JOIN Messages ON Person.id = Messages.id;
 ```
 
-There are four kinds of join:
-- **inner join:** only the matching pairs. Kim wrote two messages, so Kim appears twice. Mary, Joe and the message with key 9 have no match, and are dropped;
-- **left outer join:** also the unmatched rows of the left table (`Person`), with `NULL` in the other columns;
-- **right outer join:** also the unmatched rows of the right table (`Messages`);
-- **full outer join:** also the unmatched rows of both tables.
+There are four kinds of inner and outer joins:
+- **inner join**: only the matching pairs. Kim wrote two messages, so Kim appears twice, while Mary, Joe and the message with key 9 have no match, and are dropped;
+- **left outer join**: also the unmatched rows of the left table (`Person`), with `NULL` in the other columns;
+- **right outer join**: also the unmatched rows of the right table (`Messages`);
+- **full outer join**: also the unmatched rows of both tables.
+
+[join]: https://en.wikipedia.org/wiki/Join_(SQL)
 
 {: .picture}
 <img width="90.4%" height="90.4%" src="{{ site.assets }}/distributed-matmul-dbs/joins.svg">
@@ -173,23 +187,27 @@ There are four kinds of join:
 {: .caption}
 **Top:** the tables `Person` (blue) and `Messages` (green). **Bottom:** three joins on `id`. Dark gray cells are `NULL`.
 
-On one node, there are three classic join algorithms for tables of $$N$$ and $$M$$ rows:
-- **nested loop:** compare all pairs of rows, in $$O(N \cdot M)$$;
-- **sort-merge:** sort both tables by key and scan them together, in $$O(N \log N + M \log M)$$, or $$O(N + M)$$ if already sorted;
-- **hash join:** hash the keys of one table and look up the rows of the other, in $$O(N + M)$$ on average.
+On one node, there are three classic algorithms to join tables of $$N$$ and $$M$$ rows (their costs exclude the size of the output):
+- **[nested loop][nlj]**: compare all pairs of rows, in $$O(N \cdot M)$$;
+- **[sort-merge][smj]**: sort both tables by key and scan them together, in $$O(N \log N + M \log M)$$, or $$O(N + M)$$ if already sorted;
+- **[hash join][hj]**: hash the keys of one table and look up the rows of the other, in $$O(N + M)$$ on average.
 
-For outer joins, each row also records whether it found a match, and the rows without one are returned with `NULL`. All these algorithms assume that rows with the same key are on the same node. We now see how to ensure this for three layouts.
+[nlj]: https://en.wikipedia.org/wiki/Nested_loop_join
+[smj]: https://en.wikipedia.org/wiki/Sort-merge_join
+[hj]: https://en.wikipedia.org/wiki/Hash_join
+
+For outer joins, each row also records whether it found a match, and the rows without one are returned with `NULL`. However, all these algorithms assume that rows with the same key are on the same node, and the following sections show how to ensure this for three layouts.
 
 ### Layout 1: each table on a different server
 
-**Problem.** `Person` is on server 1, and `Messages` is on server 2.
+Here, `Person` is on server 1, and `Messages` is on server 2.
 
 **Inner join.** Sending a whole table works, but a **semi-join** sends less:
 1. server 1 sends its keys to server 2;
 2. server 2 returns only its rows with one of these keys;
 3. server 1 joins locally.
 
-**Outer joins.** In step 3, server 1 also returns its unmatched persons, with `NULL`: this is the left outer join. Server 2 knows which of its messages had no match, since their keys were not in the list of step 1. In step 4, it returns them, with `NULL`. The inner join plus step 4 is the right outer join, and steps 3 and 4 together are the full outer join.
+**Outer joins.** In step 3, server 1 also returns its unmatched persons, with `NULL` (the left outer join). Server 2 knows which of its messages had no match (their keys were not in the list of step 1), so it returns them in a step 4, with `NULL`. The inner join and step 4 give the right outer join, and steps 3 and 4 the full outer join, as displayed below:
 
 {: .picture}
 <img width="92.4%" height="92.4%" src="{{ site.assets }}/distributed-matmul-dbs/layout_tables.svg">
@@ -197,15 +215,17 @@ For outer joins, each row also records whether it found a match, and the rows wi
 {: .caption}
 A semi-join between two servers: the keys (1), the matching rows (2), the left outer join on server 1 (3), and the unmatched messages of server 2 (4). The first three rows of (3) are the inner join.
 
-For a long list of keys, a [Bloom filter][bloom] is a smaller substitute. It lets a few wrong rows through in step 2, and server 1 treats them as unmatched messages.
+For a long list of keys, a [Bloom filter][bloom] is a smaller substitute. It lets a few wrong rows (*false positives*) through in step 2, and server 1 treats them as unmatched messages.
 
 [bloom]: https://en.wikipedia.org/wiki/Bloom_filter
 
 ### Layout 2: tables split by rows
 
-**Problem.** Each server holds some rows of each table. This is called **horizontal partitioning**, or **sharding**. Matching rows may sit on different servers. Below, John is on server 2, but his message "Bye" is on server 1. A local join misses this pair, and a local left outer join wrongly returns John with `NULL`.
+Each server holds some rows of each table, which is called **horizontal partitioning**, or **[sharding][shard]**. Matching rows may then sit on different servers: below, John is on server 2, but his message "Bye" is on server 1. A local join misses this pair, and a local left outer join is even *wrong* (it returns John with `NULL`).
 
-**Inner join.** We place each row by its key, with the same rule for both tables, such as a hash of the key. Below, even keys go to server 1, and odd keys to server 2. Matching rows then share a server, and every server joins locally. If the tables are not placed this way, a **shuffle** first sends each row to its server with an all-to-all exchange (`MPI_Alltoallv`).
+[shard]: https://en.wikipedia.org/wiki/Shard_(database_architecture)
+
+**Inner join.** Each row is placed by its key, with the same rule for both tables (e.g. a hash of the key). Below, even keys go to server 1, and odd keys to server 2. Matching rows then share a server, and every server joins locally. If the tables are not placed this way, a **shuffle** first sends each row to its server, with an all-to-all exchange (`MPI_Alltoallv`).
 
 {: .picture}
 <img width="87.4%" height="87.4%" src="{{ site.assets }}/distributed-matmul-dbs/layout_rows.svg">
@@ -213,11 +233,11 @@ For a long list of keys, a [Bloom filter][bloom] is a smaller substitute. It let
 {: .caption}
 Two tables split by rows across 2 servers, colored by target server: blue for server 1 (even keys), and orange for server 2 (odd keys). **Left:** before the shuffle. **Right:** after it.
 
-**Outer joins.** After a shuffle, outer joins are local too: a row without a match on its server has no match anywhere. In the figure, server 2 returns Mary and Joe for the left outer join, and "Hey" for the right outer join.
+**Outer joins.** After a shuffle, outer joins are local too, as a row without a match on its server has no match anywhere. Above, server 2 returns Mary and Joe for the left outer join, and "Hey" for the right outer join.
 
-A shuffle has one weakness: a frequent key sends many rows to the same server, which then works more than the others.
+However, a shuffle may cause a load imbalance, as a frequent key sends many rows to the same server.
 
-**Broadcast join.** If `Person` is small, we can copy it to every server instead, and leave `Messages` in place. Each message then sits with all persons, so the inner and right outer joins are local. The left outer join is not: John matches on server 1 but not on server 2, so no server can tell alone that a person has no match. Each server flags its local matches, and a logical-or all-reduce (`MPI_Allreduce` with `MPI_LOR`) combines the flags. Server 1 then returns the persons with a final flag of 0, with `NULL`.
+**Broadcast join.** If `Person` is small, it can be copied to every server instead, while `Messages` stays in place, so that a frequent key does not overload any server. Each message then sits with all persons, so the inner and right outer joins are local. The left outer join is not: John matches on server 1 but not on server 2, so no server can tell alone that a person has no match. Each server flags its local matches, and a logical-or all-reduce (`MPI_Allreduce` with `MPI_LOR`) combines the flags. Server 1 then returns the persons with a final flag of 0, with `NULL`, as presented below:
 
 {: .picture}
 <img width="69.5%" height="69.5%" src="{{ site.assets }}/distributed-matmul-dbs/broadcast.svg">
@@ -227,16 +247,16 @@ A broadcast join, for a left outer join. After the all-reduce of the match flags
 
 ### Layout 3: tables split by columns
 
-**Problem.** Each server holds some columns, for all rows. This is called **vertical partitioning**, as in [column-oriented databases][column-db]. Row $$r$$ on every server belongs to the same record. Here, server 1 holds the keys, server 2 the other columns of `Person`, and server 3 the other columns of `Messages`.
+Each server holds some columns, for all rows. This is called **vertical partitioning**, as in [column-oriented databases][column-db], and the rows are aligned by position, i.e. row $$r$$ on every server belongs to the same record. Below, server 1 holds the keys, server 2 the other columns of `Person`, and server 3 the other columns of `Messages`.
 
-**Inner join.** Only the keys decide what matches, so we match first and move the other columns last:
-1. server 1 matches the keys into a **join index**: a list of pairs of row numbers, one per table;
+**Inner join.** Only the keys decide which rows match, so the keys are matched first, and the other columns move last:
+1. server 1 matches the keys into a **join index**: a list of pairs of row numbers (one per table);
 2. server 1 sends the `Person` row numbers to server 2, and the `Messages` row numbers to server 3;
 3. servers 2 and 3 gather their rows in that order.
 
-Only row numbers cross the network, and the result stays split by columns. Building the output rows at the end, and only for the rows that match, is called **late materialization**.
+In practice, only *row numbers* cross the network, and the result stays split by columns. Building the output rows only at the end (and only for the rows that match) is called **late materialization**.
 
-**Outer joins.** The join index also gets pairs with one side missing, such as Mary (row 1) and Joe (row 3) in the left outer join. Where a row number is missing, the server writes `NULL`.
+**Outer joins.** The join index also holds pairs with one side missing, such as Mary (row 1) and Joe (row 3) in the left outer join, and the servers write `NULL` where a row number is missing, as illustrated below:
 
 {: .picture}
 <img width="99.9%" height="99.9%" src="{{ site.assets }}/distributed-matmul-dbs/layout_columns.svg">
@@ -248,7 +268,7 @@ A left outer join of tables split by columns across 3 servers. Column `#` is the
 
 ## Summary
 
-Both problems follow one rule: keep together the data that is used together. When the layout does not fit the operation, we move the data in a few collective steps, send only what is needed, and overlap the communication with computation.
+To sum up, both problems follow one rule: the data that is used together should be kept *together*. When the layout does not fit the operation, a few communication steps move only the data that is needed, overlapped with the computation where possible. The following tables compare the methods:
 
 | Matrix algorithm | What moves | Output split by | Received per rank |
 |---|---|---|---|
