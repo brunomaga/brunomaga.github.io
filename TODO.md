@@ -1236,13 +1236,21 @@ Content problems that need the author's decision, such as overlap between posts.
   for a given input coupling ..." has no "Second". Proposed fix: add one sentence on what follows in the paper (the
   rectified flow averages the directions of the lines that cross at a point, so its paths do not cross, and reflow
   makes them straighter), or drop "First,".
-- Graph Transformer Networks: one symbol for two quantities.
-  - The notes write a meta-path as $$R = t_1 \circ t_2 \circ \cdots \circ t_l$$ between nodes $$v_1$$ and $$v_{l+1}$$,
-    so $$l$$ is the length of the meta-path (the notation of Sec. 3.1 of the paper).
-  - The caption and the picture use l for the index of the GT layer (𝔸<sup>(l)</sup>, ℚ<sub>1</sub><sup>(l)</sup>). A
-    stack of l GT layers learns meta-paths of length up to l + 1.
-  - Proposed fix: write the meta-path length as $$k$$ in the notes ($$t_k$$ and $$v_{k+1}$$), or keep the paper's
-    notation.
+- DeepSeek-V2 (entry 038): the last sentence of item 2 of DeepSeekMoE, "Finely segmenting the experts into $$mN$$ ones
+  and activating $$mK$$ from them allows for a more flexible combination of activated experts", restates the sentence
+  before it ("far more *combinations* of experts per token"). Proposed fix: remove the sentence (a text pass that
+  removes math must report it as a formula change, so iteration 2 left it).
+- Optional, ZeRO-Offload++ (entry 052): the entry title links the blog on the branch `offloadpp-news` of
+  microsoft/DeepSpeed, and the caption links it on `master`; both copies exist today, and the repository has moved to
+  deepspeedai/DeepSpeed. Proposed fix: link
+  https://github.com/deepspeedai/DeepSpeed/tree/master/blogs/deepspeed-offloadpp in both places, after a check that it
+  opens.
+- RoFormer (entry 076) and LoRA (entry 079): the formulas write the same quantities with Unicode mathematical italic
+  letters ($$𝜃_𝑝$$, $$Δ𝑊$$, $$𝑊$$) and with TeX letters ($$\theta$$, $$ΔW$$, $$W$$). In RoFormer, $$R(x)$$ is the
+  rotated pair while $$R_m$$ is the rotation matrix of position $$m$$, and the angle $$𝜃_𝑝 = p \, w_i$$ depends on the
+  pair $$i$$, which its symbol does not show. Proposed fix: write the letters in TeX ($$\theta$$, $$W$$, $$\Delta
+  W$$), write the angle of the $$i$$-th pair at position $$p$$ as $$\theta_{p,i} = p \, w_i$$, and the rotation of a
+  pair as $$R_p x$$, so that $$R_p$$ is the rotation matrix of position $$p$$ in both formulas.
 
 ## Title issues
 
