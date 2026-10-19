@@ -869,17 +869,6 @@ that is not wrong.
 
 Content problems that need the author's decision, such as overlap between posts.
 
-### Distributed Matrix Multiplication and Database Joins (2014-04-02-distributed-matmul-dbs.md)
-
-- Optional, Cannon's algorithm needs a square grid of $$p = q^2$$ ranks. The first version of the post (fac2c1d) also
-  named SUMMA, which ca5e655 dropped: "SUMMA: Scalable Universal Matrix Multiplication Algorithm" (van de Geijn and
-  Watts, LAWN 96, https://www.netlib.org/lapack/lawnspdf/lawn96.pdf). SUMMA replaces the shifts with broadcasts along
-  the grid rows and columns, and also works on rectangular grids (the paper runs it on a 15 x 31 mesh; the Wikipedia
-  article on Cannon's algorithm says that SUMMA "overcomes the need for a square 2D grid"). Proposed fix: add one
-  sentence at the end of the Cannon section, such as "Cannon's algorithm needs a square grid of ranks; [SUMMA][summa]
-  replaces the shifts with broadcasts along the grid rows and columns, and also works on rectangular grids.", with
-  `[summa]: https://www.netlib.org/lapack/lawnspdf/lawn96.pdf`. The other option is to leave the post as it is.
-
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
 - The formulas number the ranks from 1 ($$M_1 // M_2 // ... // M_R$$, and the row interval $$\big[ \sum^{r-1}_{s=1}
