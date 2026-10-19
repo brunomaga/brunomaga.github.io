@@ -471,9 +471,7 @@ In their evaluation, SLA reduces attention computation by **95%** (≈20×) with
 
 DeepSeek-V3.2-Exp is an incremental update in the DeepSeek V3 family aimed primarily at **serving efficiency**, especially for long-context workloads. It is DeepSeek-V3.1-Terminus with a single architectural change introduced through continued training. Compared to the original DeepSeek-V3 technical report (Dec 2024), the emphasis shifts from “how it was trained” to “how to run it cheaper”, without changing the core MoE transformer recipe.
 
-The headline change is **DeepSeek Sparse Attention (DSA)**. A lightweight “lightning indexer” (a few heads, ReLU scoring, runnable in FP8) scores every preceding token for the current query, and a fine-grained top-k selection (k = 2048 tokens) keeps only those key/value entries for the main MLA attention. This cuts the core attention cost from O(L²) to O(L·k), for both prefill and decode at long context lengths.
-
-Note that the KV cache itself does not shrink (the full latent cache is still stored so that any token can be selected); what drops is the compute and the number of KV entries read per step. DSA is introduced by continued training: a short dense warm-up that trains the indexer to mimic the dense attention distribution (KL loss), followed by sparse training of the whole model.
+The headline change is **DeepSeek Sparse Attention (DSA)**, described in the DeepSeek-V3.2 entry. It cuts the core attention cost for both prefill and decode at long context lengths. Note that the KV cache itself does not shrink (the full latent cache is still stored so that any token can be selected); what drops is the compute and the number of KV entries read per decoding step.
 
 The Hugging Face release notes also call out practical serving details (recommended runtime settings, known issues/fixes, and evaluation notes). For an existing DeepSeek-V3 deployment, V3.2-Exp is a **serving-oriented refresh**: benchmarks stay on par with V3.1-Terminus, while the biggest wins come at large context lengths. The same architecture was kept for the final DeepSeek-V3.2 ([tech report](https://arxiv.org/abs/2512.02556), Dec 2025).
 
@@ -1443,7 +1441,7 @@ Dual form of RetNet: <b>(a)</b> parallel representation and <b>(b)</b> recurrent
 <summary markdown="span"><span class="pub-title">Operator Fusion in XLA: Analysis and Evaluation</span><span class="pub-meta">, UToronto</span><a class="pub-link" href="https://arxiv.org/abs/2301.13062" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
-Kernel fusion is one of the most important optimizations performed by [XLA](https://www.tensorflow.org/xla). This paper (a course-project report) details XLA and key compiler passes of XLA's source code. It also presents the speedup that kernel fusion can deliver, and what low-level effects it has on hardware. Using a JAX CartPole reinforcement-learning environment as a case study, the authors show how XLA makes fusion decisions in practice, and implement fusion strategies that reach up to 10.56× speedup over their baseline implementation.
+Kernel fusion is one of the most important optimizations performed by [XLA](https://openxla.org/xla). This paper (a course-project report) details XLA and key compiler passes of XLA's source code. It also presents the speedup that kernel fusion can deliver, and what low-level effects it has on hardware. Using a JAX CartPole reinforcement-learning environment as a case study, the authors show how XLA makes fusion decisions in practice, and implement fusion strategies that reach up to 10.56× speedup over their baseline implementation.
 
 </div>
 </details>
@@ -1553,7 +1551,7 @@ $$
 v^X(x, t) = \mathbb{E}[X_1 - X_0 \mid X_t = x], \tag{2}
 $$
 
-which is the expectation of the line directions $$X_1 - X_0$$ that pass through $$x$$ at time $$t$$.
+which is the expectation of the line directions $$X_1 - X_0$$ that pass through $$x$$ at time $$t$$. Since $$v^X$$ gives a single, averaged direction where the lines cross, the paths of the rectified flow do not cross. The paper then shows that the flow keeps the marginal distribution of $$X_t$$ at every time $$t$$, does not increase any convex transport cost, and gets straighter with reflow (Theorems 3.3, 3.5 and 3.7).
 
 </div>
 </details>
@@ -1912,7 +1910,7 @@ From the abstract: Performers are "Transformer architectures which **can estimat
 linear (as opposed to quadratic) space and time complexity, without relying on
 any priors such as sparsity or low-rankness. To approximate softmax attention kernels, Performers use a novel Fast Attention Via positive Orthogonal Random features approach (FAVOR+)".
 
-A clearer explanation can be found on this [Google Research post](https://blog.research.google/2020/10/rethinking-attention-with-performers.html):
+A clearer explanation can be found on this [Google Research post](https://research.google/blog/rethinking-attention-with-performers/):
 
 **Bidirectional attention**, where there is no notion of past and future: the matrices $$Q′$$ and $$K′$$ (the [random features](https://en.wikipedia.org/wiki/Random_feature) of the queries and the keys) are used in a [lower rank decomposition](https://en.wikipedia.org/wiki/Low-rank_approximation) of the attention matrix $$A$$. Decoupling them, and conducting the matrix multiplications in the order indicated by the dashed boxes of the following picture, gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation:
 
@@ -2025,9 +2023,9 @@ Summary of results:
 <summary markdown="span"><span class="pub-title">GSPMD: General and Scalable Parallelization for ML Computation Graphs</span><span class="pub-meta">, Google</span><a class="pub-link" href="https://arxiv.org/pdf/2105.04663.pdf" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
-(also covered in a [Google blog post](https://blog.research.google/2021/12/general-and-scalable-parallelization.html))
+(also covered in a [Google blog post](https://research.google/blog/general-and-scalable-parallelization-for-neural-networks/))
 
-GSPMD (General and Scalable Parallelization for ML Computation Graphs) is an open-source, automatic, compiler-based parallelization system based on the [XLA compiler](https://www.tensorflow.org/xla). Different model architectures may be better suited to different parallelization strategies. Therefore, GSPMD is designed to support a large variety of parallelism algorithms appropriate for different use cases (e.g. data parallelism for small models, pipeline parallelism for larger models, or a combination of both).
+GSPMD (General and Scalable Parallelization for ML Computation Graphs) is an open-source, automatic, compiler-based parallelization system based on the [XLA compiler](https://openxla.org/xla). Different model architectures may be better suited to different parallelization strategies. Therefore, GSPMD is designed to support a large variety of parallelism algorithms appropriate for different use cases (e.g. data parallelism for small models, pipeline parallelism for larger models, or a combination of both).
 
 In GSPMD, each tensor is assigned a **sharding property**, either explicitly by the user as initial annotations, or by the sharding completion pass. The sharding property specifies how the data is distributed across devices. GSPMD defines three types of sharding: **replicated** (all devices have the same full data), **tiled** (a tiled sharding of the tensor, without data duplication), and **partially tiled**. The partially tiled sharding is an extension to [GShard](https://arxiv.org/abs/2006.16668), where the devices are divided into subgroups, and the tensor is tiled across subgroups but replicated within each subgroup. 
 
@@ -2199,7 +2197,7 @@ Test loss of language model training runs, for models from 10<sup>3</sup> to 10<
 
 Up until now, substantial gains on many NLP tasks were achieved by pre-training on a large corpus of text followed by fine-tuning on a specific task. This method still requires task-specific fine-tuning datasets of thousands or tens of thousands of examples. This paper shows that scaling up language models greatly improves task-agnostic, few-shot performance, sometimes even reaching competitiveness with prior state-of-the-art finetuning approaches. This paper presents and tests GPT-3 (an autoregressive LLM with 175 billion parameters, 10x more than any previous non-sparse language model) in the few-shot setup. 
 
-**GPT-3 architecture** uses the same model and architecture as [GPT-2](https://insightcivic.s3.us-east-1.amazonaws.com/language-models.pdf), including the modified initialization, pre-normalization, and reversible tokenization described therein. The exception is that it uses alternating dense and locally banded sparse attention patterns in the layers of the transformer, similar to the [Sparse Transformer](https://arxiv.org/abs/1904.10509). 
+**GPT-3 architecture** uses the same model and architecture as [GPT-2](https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf), including the modified initialization, pre-normalization, and reversible tokenization described therein. The exception is that it uses alternating dense and locally banded sparse attention patterns in the layers of the transformer, similar to the [Sparse Transformer](https://arxiv.org/abs/1904.10509). 
 - Table 2.1 includes the 8 GPT-3 models built and their sizes/hyperparameters.
 - Fig. 2.2 shows the total compute used during training. Based on the analysis in [Scaling Laws For Neural Language Models](https://arxiv.org/abs/2001.08361), the authors train much larger models on many fewer tokens than is typical. 
 - Fig. 3.1 shows the pattern of smooth scaling of performance with compute. Performance (cross-entropy loss) follows a power-law trend with the amount of compute used for training. 
@@ -2485,7 +2483,7 @@ A simple 2 hidden layer siamese network for binary classification with logistic 
 <summary markdown="span"><span class="pub-title">Neural Machine Translation by Jointly Learning to Align and Translate (and Attention Mechanism)</span><span class="pub-meta">, D. Bahdanau, K. Cho, Y. Bengio (ICLR 2015)</span><a class="pub-link" href="https://arxiv.org/abs/1409.0473" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
-The paper presents an improvement over the RNN encoder–decoder for translation ([Cho et al., 2014](https://arxiv.org/abs/1406.1078); concurrent with [Sequence to Sequence Learning with Neural Networks (Google, NeurIPS 2014)](https://papers.nips.cc/paper/5346-sequence-to-sequence-learning-with-neural-networks.pdf)), which compresses the whole source sentence into a single fixed-length vector. It introduces the concept of **attention**: at each decoding step, the decoder learns to (soft-)align to and use the latent states of every encoder step (not only the last), which increases the model capabilities. It reaches translation performance comparable to the existing phrase-based system on English-to-French, and degrades much less on long sentences. The following picture illustrates how the decoder combines the states of a [bidirectional RNN](https://en.wikipedia.org/wiki/Bidirectional_recurrent_neural_networks) encoder, weighted by the attention weights, to generate a target word:
+The paper presents an improvement over the RNN encoder–decoder for translation ([Cho et al., 2014](https://arxiv.org/abs/1406.1078); concurrent with [Sequence to Sequence Learning with Neural Networks (Google, NeurIPS 2014)](https://proceedings.neurips.cc/paper_files/paper/2014/file/5a18e133cbf9f257297f410bb7eca942-Paper.pdf)), which compresses the whole source sentence into a single fixed-length vector. It introduces the concept of **attention**: at each decoding step, the decoder learns to (soft-)align to and use the latent states of every encoder step (not only the last), which increases the model capabilities. It reaches translation performance comparable to the existing phrase-based system on English-to-French, and degrades much less on long sentences. The following picture illustrates how the decoder combines the states of a [bidirectional RNN](https://en.wikipedia.org/wiki/Bidirectional_recurrent_neural_networks) encoder, weighted by the attention weights, to generate a target word:
 
 {: .picture}
 <img loading="lazy" width="25.2%" height="25.2%" src="{{ site.assets }}/publications/attention_mech.svg"/>

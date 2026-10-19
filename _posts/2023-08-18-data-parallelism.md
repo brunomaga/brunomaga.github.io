@@ -40,7 +40,7 @@ In DeepSpeed terminology, sharding goes by the name of **ZeRO (Zero Redundancy O
 - **ZeRO stage 2 (ZeRO-2)**: the gradients used to update the model weights are also partitioned, so that each process retains only the gradients corresponding to its portion of the optimizer states. Also relevant only for the backward pass.
 - **ZeRO stage 3 (ZeRO-3)**: the model parameters are also partitioned across the processes. Adds a communication overhead to both the forward and backward passes. 
 
-An important remark is that activations are not sharded, i.e. they are kept in *full shape* on each processor. And in modern models, **a huge chunk of memory is allocated to residual memory (activations, normalization layers, etc.), which is not sharded by FSDP**. With that in mind, the following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
+An important remark is that activations are not sharded, i.e. they are kept in *full shape* on each processor. And in modern models, **a huge chunk of memory is allocated to residual memory (activations, temporary buffers, fragmented memory, buffers of normalization layers, etc.), which is not sharded by FSDP**. With that in mind, the following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
 
 {: .picture}
 <img width="95.3%" height="95.3%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>

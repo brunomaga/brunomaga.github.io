@@ -927,22 +927,10 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
-- Optional: the paragraph on the dense transpose ("Given a dense matrix representation ...") uses the rank $$r$$,
-  $$G^{\star}_{r}$$, $$V_r$$ and $$E^{\star}_{r}$$ one paragraph before the text defines the ranks and $$G_{r} =
-  (V_{r}, E_{r})$$. Fix: move the two sentences "A distributed memory data layout assumes ..." and "Let $$G_{r} =
-  (V_{r}, E_{r})$$ be the subset ..." to the start of that paragraph, or add there "(the subgraph held by rank $$r$$,
-  defined below)".
 - Optional: the definitions of the concatenations index rows and columns from 1 ("if $$j \leq m$$", "if $$i \leq
   n$$"), while the row interval $$\big[ \sum^{r-1}_{s=0} \vert V_s \vert, \,\, \sum^{r}_{s=0} \vert V_s \vert \big)$$
   and the pictures number rows and columns from 0. Fix: say once, after the two definitions, that the formulas index
   the cells of a matrix from 1, or write the conditions as $$j < m$$ and $$i < n$$ with indices from 0.
-
-### Distributed Load Balancing and Spatial Slicing (2015-12-01-slicing.md)
-
-- Optional: the ORB row of the table says "requires one sorting of half of the elements of a slice per iteration",
-  while each level sorts all the objects, in slices that hold half of the objects of the slice they come from (the
-  cost $$n \log_2 \frac{n}{2^{i-1}}$$ of the same row). Fix: "requires, at every iteration, one sorting of each slice,
-  which holds half of the elements of its parent slice".
 
 ### Numerical Simulation of Detailed Neuron Models (2016-08-15-neuron-electrical-activity.md)
 
@@ -968,13 +956,6 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Linear Regression, Matrix Factorization and Loss Functions (2017-08-17-linear-regression-matrix-factorization.md)
 
-- Optional: "dropout" links to a Medium article, in this post and in the deep neural networks post. Proposed fix:
-  link the paper of Srivastava et al. (2014), https://jmlr.org/papers/v15/srivastava14a.html, or, in this post, the
-  dropout section of the deep neural networks post.
-- Optional, typesetting of formulas: $$min_w$$, $$min_{W,Z}$$, $$max(0,m−D)$$ and $$rank(X)$$ render in italics as
-  products of letters, $$R^{D \times K}$$ stands for the real numbers, and $$L_x(θ) = −log p(x | θ)$$ renders as an
-  italic "logp". Proposed fix: $$\min_w$$, $$\min_{W,Z}$$, $$\max(0, m-D)$$, $$\text{rank}(X)$$, $$\mathbb{R}^{D
-  \times K}$$ and $$L_x(\theta) = -\log p(x \mid \theta)$$ (formula changes that the author reviews).
 - Optional, other symbols with two meanings: $$\gamma$$ is the step size of gradient descent and the focusing
   parameter of the focal loss; $$\Omega$$ is the regularization term and the set of observed ratings of matrix
   factorization; $$x$$ is the input everywhere, but the class in the multi-class cross-entropy $$H(q,p) = -\sum_x q(x)
@@ -988,49 +969,8 @@ Content problems that need the author's decision, such as overlap between posts.
   the multi-class formula "The Generalised Dice Loss of Sudre et al. also weights each class by the inverse of the
   square of its number of ground truth pixels, so that small structures count as much as large ones."
 
-### Unsupervised Learning basics and Principal Component Analysis (2017-11-01-unsupervised-learning.md)
-
-- Optional, k-means section: the clusters are $$C_k$$ in the reconstruction error and $$C_i^{(t)}$$, $$C_i$$ in the
-  update step and the convergence paragraph, but $$S = \{ S_1, ..., S_k \}$$ and $$S_i$$ in the objective (Wikipedia's
-  notation). Proposed fix: "the partition of the data points into $$k$$ clusters $$C_1, ..., C_k$$ that minimizes the
-  error above", $$\arg\min_{C_1, ..., C_k} \sum_{i=1}^{k} \sum_{x \in C_i} \| x - w_i \|^2$$, "where $$w_i$$ is the
-  mean of the points in $$C_i$$".
-- Optional: independent sections reuse symbols. $$k$$ is the kernel function $$k(x_i, x_j)$$ of kernel PCA, the
-  kurtosis $$k(y)$$ of ICA, the number of principal components kept, the number of clusters, the winner neuron of the
-  SOM and the number of neighbours of UMAP; $$\Lambda$$ is the matrix of eigenvalues of the whitening and the
-  neighbourhood function $$\Lambda (j,k)$$ of the SOM; $$U$$ and $$V$$ are the singular vectors of the SVD, the
-  rotation and the whitening matrix of ICA, and $$U$$ also the eigenvectors of spectral clustering; $$d$$ is the
-  degree of the polynomial kernel and the distance $$d(a,b)$$. Proposed fix: $$\mathrm{kurt}(y)$$ for the kurtosis
-  (the notation of Hyvärinen and Oja and of Yokota's slides), so that $$k(\cdot, \cdot)$$ is only the kernel; $$h(j,
-  j^*)$$ for the neighbourhood function (Kohonen's notation) with the winner $$j^*$$ (item above); $$H$$ for the
-  eigenvectors of spectral clustering.
-
-### Mathematics for ML (2018-04-20-algebra-for-ml.md)
-
-- Optional: independent sections of the post reuse symbols. $$P$$ is the pseudo-inverse
-  $$(A^{\intercal}A)^{−1}A^{\intercal}$$ in the least squares derivation, a projection matrix in the Analytic Geometry
-  section and the matrix of eigenvectors of the eigendecomposition; $$\sigma^2$$ is the noise variance of the least
-  squares derivation, while $$\sigma_i$$ (and the bare $$\sigma$$ of "fewer singular values $$\sigma$$") are the
-  singular values. Smaller reuses stay within one section ($$d$$ is the metric, the vector of the iterative solvers,
-  an intermediate variable of the autodiff example and the number of variables; $$L$$ is the Cholesky factor and the
-  loss). Proposed fix: $$A^{+}$$, the usual symbol of the Moore-Penrose inverse, for the pseudo-inverse in the
-  derivation (three formulas, one of them a display), $$P_\pi$$ for the projection matrix (as in the MML book), and
-  "fewer singular values $$\sigma_i$$" in the SVD paragraph; or keep the symbols, as each one is defined in its
-  section.
-
 ### Statistics for ML (2018-06-15-statistics-for-ml.md)
 
-- Optional, the table at the end: "Smoothing (KDE)" stands in the column of non-parametric regression models for a
-  Gaussian response, but a KDE estimates a density, not a regression function; and the header $$g(x_i^{\intercal}) =
-  x_i^{\intercal} \beta$$ applies $$g$$ to a transposed vector. Proposed fix: "Smoothing (e.g. [kernel
-  regression](https://en.wikipedia.org/wiki/Kernel_regression))", as pass 2 had, and $$g(x_i) = x_i^{\intercal}
-  \beta$$ (a table change that the author reviews).
-- Optional, overlap with the exponential family post (2019-03-20-exponential-family.md) and the variational inference
-  post (2019-07-01-variational-inference-gmm.md): this post defines the exponential family (canonical form, sufficient
-  statistics, Fisher-Neyman theorem, natural form, why it is used), which the exponential family post covers in full,
-  and states the ELBO inequality, which the variational inference post derives. Both parts are the author's original
-  text, and #69 removed the links between the posts. Proposed fix: keep both parts as a reference sheet, as the author
-  wrote them, or shorten the exponential family section of this post to its definition.
 - `\mathbb{Var}` and `\mathbb{Cov}` render in MathJax 4 as double-struck letters, lowercase included (𝕍𝕒𝕣, ℂ𝕠𝕧): 42
   times in 18 formulas of this post, 6 times in 2 formulas of the algebra post (2018-04-20-algebra-for-ml.md) and 15
   times in 7 formulas of the Bayesian linear regression post (2018-08-20-bayesian-linear-regression.md); the
@@ -1075,18 +1015,6 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Variational Inference (ELBO, CAVI) and Gaussian Mixture Models (2019-07-01-variational-inference-gmm.md)
 
-- Optional, Coordinate Ascent Variational Inference, the Lagrange step: the text says that the derivative uses
-  Lagrange multipliers, but the equation of the derivative, $$\frac{d\,L}{d\,q(z_j)} = \mathbb{E}_{q_{\neq j}}
-  [\ldots] - \log q(z_j) - 1 = 0$$, has no multiplier (as in the CMU 10-708 notes that it follows); the constant is
-  absorbed later by the proportionality of $$q^{\star}(z_j)$$. Proposed fix: add the multiplier $$\lambda$$ of the
-  constraint $$\int q(z_j) \, dz_j = 1$$ to the equation ("$$- \log q(z_j) - 1 + \lambda = 0$$"), and say after it
-  that the factor $$e^{\lambda - 1}$$ is the normalization constant of $$q^{\star}(z_j)$$.
-- Optional, one symbol per quantity: (1) in the argmax derivation, $$j$$ is both the index of the updated factor
-  $$q_j$$ and the summation index of $$\sum_j^m$$; (2) $$m$$ is the number of latent variables ($$z_{1:m}$$) and the
-  vector of variational means ($$ELBO(m, s^2, \varphi)$$, $$m_{\neq k}$$); (3) the MCMC section writes the densities
-  as $$P(\cdot)$$ and the rest of the post as $$p(\cdot)$$. Proposed fix: write the sums of the ELBO derivations as
-  $$\sum_{l=1}^m$$ with $$z_l$$, $$q_l$$; keep $$m$$ (both sources use it in both meanings, Blei et al. and the CMU
-  notes) or call the number of latent variables $$M$$; write $$p$$ in the MCMC section.
 - End of the ELBO section: "There are several options to solve the previous optimization problem: coordinate descent
   in all variables $$z_i$$ (...), Stochastic Variational Inference (faster), Mean-field approximation, etc." lists the
   mean-field approximation, which is a choice of the variational family, next to two optimization methods. Proposed
@@ -1107,30 +1035,25 @@ Content problems that need the author's decision, such as overlap between posts.
   I)$$, as in the paper, and the sigmoid as $$\text{sigmoid}(a)$$ in the three formulas of the saturation section; or
   leave it, since each section defines its symbols.
 
-### Learning from sequences with Encoder-Decoder, Transformers and BERT (2020-02-28-learning-from-sequences.md)
-
-- Optional, "Other components" of the transformer: the list does not describe the "Add & Norm" blocks that the
-  transformer and BERT pictures show. Fix: add one item, e.g. "The *Add & Norm* component adds the input of the
-  previous component to its output (a [residual connection](https://en.wikipedia.org/wiki/Residual_neural_network))
-  and normalizes the result ([layer
-  normalization](https://en.wikipedia.org/wiki/Normalization_(machine_learning)#Layer_normalization)), which keeps the
-  training of the stacked layers stable;" (Vaswani et al., Section 3.1).
-
 ### Data parallelism, sharding and CPU offloading (2023-08-18-data-parallelism.md)
 
-- The post holds a hidden HTML comment, from the mixed precision paragraph to the end of the activation checkpointing
-  section, still in the first and second person. The hidden text sets buckets of `4e5` elements, while the configs use
-  `5e4`, and calls `to_layers()` `lo_layers()`. The front matter has the tag "activation checkpointing", which only
-  the hidden text covers. Proposed fix: delete the comment and the tag, or rewrite the comment in the author's voice
-  and publish it.
-- Optional, the residual memory list "(activations, normalization layers, etc.)": it holds for the buffers of the
-  normalization layers ("FSDP does not shard buffers", `torch/distributed/fsdp/api.py`, v2.0.1), but the LayerNorm
-  weights of GPTlite are parameters, which ZeRO-3 and FSDP shard. The ZeRO paper (Sec. 3.2) defines the residual
-  states as activations, temporary buffers and unusable fragmented memory. Proposed fix: "(activations, temporary
-  buffers, fragmented memory, buffers of normalization layers, etc.)".
-- The precision of the benchmark: the text now says fp32, from the configuration files, where the original said mixed
-  precision. Proposed fix: confirm that the runs used these configurations, then add "in fp32" to the caption of the
-  benchmark (diagram item).
+- Hidden text in the source of the post: about 110 lines inside an HTML comment (`<!--` ... `-->`), between the end of
+  the section DeepSpeed implementation and the detour on measuring the memory of the parameters, which the site does
+  not show. It is an early draft of three sections: mixed precision (with an `fp16` DeepSpeed config), communication
+  quantization with ZeRO++, and activation checkpointing (with its `train.py` and `gptlite.py` code). The draft is in
+  the first and second person ("we will store", "if you need to"), sets buckets of `4e5` elements while the configs of
+  the post use `5e4`, and calls `to_layers()` `lo_layers()`. The front matter has the tag "activation checkpointing",
+  which only this hidden text covers. Proposed fix, for the author to pick in the next iteration: delete the hidden
+  text and the tag (git keeps the text), or rewrite the three sections in the author's voice, check them against the
+  code, and show them on the page.
+- The precision of the benchmark: the post says that all implementations use fp32, as both configuration files of the
+  post set `"fp16": {"enabled": false}`, while the original text said mixed precision. The history of the
+  configuration does not settle it: `fp16` was enabled in the commit of the first results (4ade5d7, 2023-10-08 02:31),
+  disabled at 12:02 (75ac452), and the benchmark pictures were updated again at 17:20 (0beddf7). The author thinks
+  that the runs used fp16, but is not sure (2026-10-19). Proposed fix, in the next iteration: confirm the precision of
+  the runs (from their logs, or by running one configuration again); if they used fp16, write "mixed precision (fp16)"
+  in the text, set `fp16` in the configuration files, and add "in fp16" to the caption of the benchmark (diagram
+  item); otherwise add "in fp32" to the caption.
 
 ### Pipeline parallelism (1F1B, Zero Bubble, DualPipe) (2023-08-30-pipeline-parallelism.md)
 
@@ -1194,6 +1117,9 @@ Content problems that need the author's decision, such as overlap between posts.
   check the numbers in the paper and write, e.g., "the results have the same shape: MegaKernel+INC improves on the
   Baseline by 8.9% to 18.5%, about as much as with All-to-All, and on MegaKernel by up to 10.6%, more than with
   All-to-All".
+- A new version of the paper is in the paper's repository. Proposed fix, in iteration 3, after the merge of iteration
+  2: update the text of the post where the new version of the paper changes it. The new pictures of the paper come
+  with the picture work, which owns the figure files.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 
@@ -1201,11 +1127,6 @@ Content problems that need the author's decision, such as overlap between posts.
   relies on `causal_mask` from the post on attention, which the text no longer links (#69). Fix: in the code pass,
   write the mask in the comment as `torch.ones(S, S, dtype=torch.bool).tril()` (True where a token may attend, as in
   `tree_attention_mask`) and drop "of the post on attention", or keep the mention without a link.
-- Optional: the LayerSkip text ("exits after the first $$E$$ layers") and `layerskip.svg` ("drafts of the first E = 4
-  layers") use E for the number of draft layers, as the LayerSkip paper does, while the shape comments of the code
-  blocks, the LayerSkip block included, use E for the embedding size. Fix: keep it, as the prose uses E only for the
-  draft layers; or drop the symbol in the text ("the first layers") and in the picture ("drafts of the first 4
-  layers") together.
 
 ### Pruning and quantization (_drafts/2026-04-22-inference-pruning-quantization.md)
 
@@ -1218,24 +1139,6 @@ Content problems that need the author's decision, such as overlap between posts.
 
 ### Publications bookmark (publications.md)
 
-- Optional, links that redirect: blog.research.google/2020/10/... (Performers) and blog.research.google/2021/12/...
-  (GSPMD) go to research.google/blog/..., www.tensorflow.org/xla (operator fusion in XLA, and GSPMD) goes to
-  openxla.org/xla, and papers.nips.cc/paper/5346-... (the sequence to sequence paper, in the notes on neural machine
-  translation) goes to proceedings.neurips.cc/.... The GPT-3 notes link GPT-2 to a third-party copy of its paper
-  (insightcivic.s3.us-east-1.amazonaws.com/language-models.pdf), which is the right paper. Proposed fix: use the
-  target URLs, and the PDF of OpenAI for GPT-2 after a check.
-- Optional, DeepSeek-V3.2 and DeepSeek-V3.2-Exp: both entries describe DeepSeek Sparse Attention in nearly the same
-  words:
-  - the lightning indexer with a few heads, ReLU and FP8;
-  - the top-k selection with $$k = 2048$$;
-  - $$O(L^2)$$ to $$O(Lk)$$;
-  - the dense warm-up with a KL loss. Proposed fix: keep the description in the DeepSeek-V3.2 entry. Shorten the
-    second paragraph of the V3.2-Exp entry to what only it says (the KV cache does not shrink, the reads per step
-    drop). Or keep both, as the model card came first.
-- Optional, Rectified flow (entry 064): the transcription of Sec. 2.1 of the paper stops after Eq. (2), so its "First,
-  for a given input coupling ..." has no "Second". Proposed fix: add one sentence on what follows in the paper (the
-  rectified flow averages the directions of the lines that cross at a point, so its paths do not cross, and reflow
-  makes them straighter), or drop "First,".
 - DeepSeek-V2 (entry 038): the last sentence of item 2 of DeepSeekMoE, "Finely segmenting the experts into $$mN$$ ones
   and activating $$mK$$ from them allows for a more flexible combination of activated experts", restates the sentence
   before it ("far more *combinations* of experts per token"). Proposed fix: remove the sentence (a text pass that

@@ -40,13 +40,13 @@ $$
 \mathbb{E}[\hat{x}] = (A^{\intercal}A)^{−1}A^{\intercal} \, \mathbb{E}[b] = (A^{\intercal}A)^{−1}A^{\intercal}(Ax) = x
 $$
 
-Let $$P=(A^{\intercal}A)^{−1}A^{\intercal}$$. Then:
+Let $$A^{+}=(A^{\intercal}A)^{−1}A^{\intercal}$$. Then:
 
 $$
-\mathbb{Var}[\hat{x}] = \mathbb{Var}[Pb] = P\, \mathbb{Var}[b] P^{\intercal} = \sigma^2 P P^{\intercal} = \sigma^2 \, (A^{\intercal}A)^{−1}A^{\intercal} \, A (A^{\intercal}A)^{-1} = \sigma^2 \, (A^{\intercal}A)^{−1}
+\mathbb{Var}[\hat{x}] = \mathbb{Var}[A^{+}b] = A^{+} \, \mathbb{Var}[b] \, (A^{+})^{\intercal} = \sigma^2 A^{+} (A^{+})^{\intercal} = \sigma^2 \, (A^{\intercal}A)^{−1}A^{\intercal} \, A (A^{\intercal}A)^{-1} = \sigma^2 \, (A^{\intercal}A)^{−1}
 $$
 
-The derivation uses $$\mathbb{Var}[Pb] = P \, \mathbb{Var}[b] P^{\intercal}$$ (formula 375 in <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>), $$P^{\intercal} = A (A^{\intercal}A)^{-1}$$ (as $$A^{\intercal}A$$ is symmetric) and $$A^{\intercal} \, A (A^{\intercal}A)^{-1}=I$$, and assumes uncorrelated noise with equal variance, i.e. $$\mathbb{Var}[b] = \sigma^2 I$$.
+The derivation uses $$\mathbb{Var}[A^{+}b] = A^{+} \, \mathbb{Var}[b] \, (A^{+})^{\intercal}$$ (formula 375 in <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>), $$(A^{+})^{\intercal} = A (A^{\intercal}A)^{-1}$$ (as $$A^{\intercal}A$$ is symmetric) and $$A^{\intercal} \, A (A^{\intercal}A)^{-1}=I$$, and assumes uncorrelated noise with equal variance, i.e. $$\mathbb{Var}[b] = \sigma^2 I$$.
 
 With Gaussian Elimination on $$[A \mid b]$$, the forward pass puts the matrix in **[Row-Echelon](https://en.wikipedia.org/wiki/Row_echelon_form)** form, i.e. a staircase structure. A row-echelon matrix is in **reduced row-echelon** form if the leading entry of each row (the **pivot**) is 1 and the pivot is the only nonzero entry in its *column*.
 
@@ -129,7 +129,7 @@ A square matrix $$A$$ is an **orthogonal matrix** iff its columns are orthonorma
 
 The **inner product** of two functions $$u : \mathbb{R} \rightarrow \mathbb{R} $$ and $$v: \mathbb{R} \rightarrow \mathbb{R}$$ is defined as $$ <u,v> = \int_a^b u(x) v(x) dx $$ for lower and upper limits $$a, b < \infty$$.
 
-Let $$V$$ be a vector space and $$U ⊆ V$$ a subspace of $$V$$. A linear mapping $$π : V → U$$ is called a **projection** if $$π^2 = π ◦ π = π$$, i.e. $$\pi$$ is idempotent. In the case of matrices, $$P$$ is a projection iff $$P^2 = P$$.
+Let $$V$$ be a vector space and $$U ⊆ V$$ a subspace of $$V$$. A linear mapping $$π : V → U$$ is called a **projection** if $$π^2 = π ◦ π = π$$, i.e. $$\pi$$ is idempotent. In the case of matrices, $$P_\pi$$ is a projection iff $$P_\pi^2 = P_\pi$$.
 
 ## Matrix Decompositions
 
@@ -205,7 +205,7 @@ It is applicable to all matrices (not only square), and it always exists:
 
 Computing the SVD of $$A \in \mathbb{R}^{m \times n}$$ is equivalent to finding two sets of orthonormal bases $$U = (u_1,... , u_m)$$ and $$V = (v_1,... , v_n)$$ of the codomain $$\mathbb{R}^m$$ and the domain $$\mathbb{R}^n$$, respectively. From these ordered bases, the matrices $$U$$ and $$V$$ are constructed. The eigendecomposition of an s.p.d. matrix ($$S = S^⊤ = PDP^⊤$$) and its SVD ($$S = UΣV^⊤$$) are equivalent, by setting $$U = P = V$$ and $$D = Σ$$.
 
-Matrix approximation/compression is achieved by reconstructing the original matrix using fewer singular values $$\sigma$$. In practice, for a rank-$$k$$ approximation:
+Matrix approximation/compression is achieved by reconstructing the original matrix using fewer singular values $$\sigma_i$$. In practice, for a rank-$$k$$ approximation:
 
 $$
 \hat{A}(k) = \sum_{i=1}^{k} \sigma_i u_i v_i^{\intercal} = \sum_{i=1}^k \sigma_i A_i

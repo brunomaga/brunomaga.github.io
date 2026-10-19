@@ -164,33 +164,33 @@ Independent component analysis of two mixed signals: (a) the sources $$s_1$$, $$
 **Non-Gaussianity is a measure of independence**. [Kurtosis](https://en.wikipedia.org/wiki/Kurtosis) is a measure of non-Gaussianity, defined for a variable $$y$$ of zero mean by:
 
 $$
-k(y) =  E [y^4] - 3 (E[y^2])^2.
+\mathrm{kurt}(y) =  E [y^4] - 3 (E[y^2])^2.
 $$
 
 It is zero for a Gaussian. Assume that $$y$$ is white, i.e. $$E[y]=0$$ and $$E[y^2]=1$$, thus
 
 $$
-k(y) = E[y^4]-3.
+\mathrm{kurt}(y) = E[y^4]-3.
 $$
 
 Each row $$b^T$$ of $$B$$ recovers one source, $$s_i = b^T x$$. The ICA problem is solved with
 
 $$
-\hat{b} = \arg\max_b | k(b^T x(t)) |
+\hat{b} = \arg\max_b | \mathrm{kurt}(b^T x(t)) |
 $$
 
-where $$b^T x(t)$$ is constrained to unit variance. On the whitened data, $$b^T x(t) = w^T z(t)$$, where $$w^T = b^T V^{-1}$$ is a row of $$U$$, and the unit-variance constraint becomes $$w^T w=1$$. The absolute value of the *kurtosis* $$\mid k(w^Tz) \mid$$ is then maximized, subject to $$w^T w=1$$. Its gradient is:
+where $$b^T x(t)$$ is constrained to unit variance. On the whitened data, $$b^T x(t) = w^T z(t)$$, where $$w^T = b^T V^{-1}$$ is a row of $$U$$, and the unit-variance constraint becomes $$w^T w=1$$. The absolute value of the *kurtosis* $$\mid \mathrm{kurt}(w^Tz) \mid$$ is then maximized, subject to $$w^T w=1$$. Its gradient is:
 
 $$
 \begin{align*}
-\frac{\partial \vert k(w^T z) \vert}{\partial w} & = \frac{\partial}{\partial w} \left\vert E[(w^T z)^4] - 3 (E[(w^T z)^2])^2 \right\vert \\
+\frac{\partial \vert \mathrm{kurt}(w^T z) \vert}{\partial w} & = \frac{\partial}{\partial w} \left\vert E[(w^T z)^4] - 3 (E[(w^T z)^2])^2 \right\vert \\
 & = \frac{\partial}{\partial w} \left\vert E[(w^T z)^4] - 3 (\| w \|^2)^2 \right\vert \quad \text{(because } E[z z^T] = I) \\
-& = 4 \, \text{sign}[k(w^T z)] \left( E[z (w^T z)^3] - 3 w \| w \|^2 \right)
+& = 4 \, \text{sign}[\mathrm{kurt}(w^T z)] \left( E[z (w^T z)^3] - 3 w \| w \|^2 \right)
 \end{align*}
 $$
 
 The problem can now be solved by gradient ascent (with $$\| w \| = 1$$):
-- $$\Delta w \propto \text{sign} [ k(w^T z)] \, ( E [ z(w^T z)^3 ] - 3w )$$;
+- $$\Delta w \propto \text{sign} [ \mathrm{kurt}(w^T z)] \, ( E [ z(w^T z)^3 ] - 3w )$$;
 - $$w \leftarrow w + \Delta w$$, followed by the normalization $$w \leftarrow w / \| w \|$$.
 
 Or, because the algorithm converges when $$w \propto \Delta w$$, and $$w$$ and $$-w$$ are equivalent, with the fixed-point iteration of **[FastICA](https://en.wikipedia.org/wiki/FastICA)** ([Hyvärinen and Oja, 1997](https://doi.org/10.1162/neco.1997.9.7.1483)):
@@ -221,19 +221,19 @@ This kind of partitioning underlies problems such as the [Voronoi diagram](https
 The Voronoi diagram of 20 prototypes (black dots) in 2D: each colored cell holds the points closer to its prototype than to any other, in Euclidean distance. Adapted from: [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram)
 
 
-Such methods can be applied to e.g. image compression, where one may reduce every RGB pixel in the range $$[0, 255]^3$$ to the closest color of a smaller set. The reconstruction (squared) error is the sum of the errors of all data points over all clusters $$C_k$$:
+Such methods can be applied to e.g. image compression, where one may reduce every RGB pixel in the range $$[0, 255]^3$$ to the closest color of a smaller set. The reconstruction (squared) error is the sum of the errors of all data points over all clusters $$C_i$$:
 
 $$
-E = \sum_k \sum_{u \in C_k} \| w_k - x_u \|^2
+E = \sum_{i=1}^{k} \sum_{u \in C_i} \| w_i - x_u \|^2
 $$
 
-**[k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)** is an iterative method for prototype clustering. Its objective is to find the partition $$S = \{ S_1, ..., S_k \}$$ of the data points into $$k$$ clusters that minimizes the error above:
+**[k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)** is an iterative method for prototype clustering. Its objective is to find the partition of the data points into $$k$$ clusters $$C_1, ..., C_k$$ that minimizes the error above:
 
 $$
-\arg\min_S \sum_{i=1}^{k} \sum_{x \in S_i} \| x - w_i \|^2
+\arg\min_{C_1, ..., C_k} \sum_{i=1}^{k} \sum_{x \in C_i} \| x - w_i \|^2
 $$
 
-where $$w_i$$ is the mean of the points in $$S_i$$. The algorithm iterates over 2 steps:
+where $$w_i$$ is the mean of the points in $$C_i$$. The algorithm iterates over 2 steps:
 - assignment step: assign each observation to the closest mean, based on e.g. the [Euclidean distance](https://en.wikipedia.org/wiki/Euclidean_distance);
 - update step: compute the new means as the centroids of the observations in each new cluster:
   $$ w_i^{(t+1)} = \frac{1}{\mid C^{(t)}_i \mid} \sum_{x_j \in C_i^{(t)}} x_j $$
@@ -331,8 +331,8 @@ $$
 
 So $$f^T L f$$ is small when $$f$$ takes similar values on strongly connected points, and the eigenvectors of $$L$$ with the smallest eigenvalues vary little within clusters. In particular, the multiplicity of the eigenvalue $$0$$ is the number of connected components of the graph. The algorithm is:
 - compute the eigenvectors $$u_1, ..., u_k$$ of the $$k$$ smallest eigenvalues of $$L$$, or of the normalized Laplacian $$L_{sym} = I - D^{-1/2} W D^{-1/2}$$;
-- stack them as the columns of an $$n \times k$$ matrix $$U$$, and take its $$i$$-th row as the new $$k$$-dimensional representation of point $$x_i$$ (with $$L_{sym}$$, after normalizing each row to unit length);
-- cluster the rows of $$U$$ with k-means.
+- stack them as the columns of an $$n \times k$$ matrix $$H$$, and take its $$i$$-th row as the new $$k$$-dimensional representation of point $$x_i$$ (with $$L_{sym}$$, after normalizing each row to unit length);
+- cluster the rows of $$H$$ with k-means.
 
 This is a relaxation of the NP-hard problem of finding the *ratio cut* (with $$L$$) or the *normalized cut* (with $$L_{sym}$$) of the graph. Spectral clustering separates non-convex clusters (e.g. two concentric rings) that k-means cannot, at the cost of an eigendecomposition of an $$n \times n$$ (sparse) matrix.
 
@@ -362,10 +362,10 @@ $$
 - update the weights of the winner and of its neighbours, by pulling them closer to the input vector:
 
 $$
-\Delta w_j = \eta \, \Lambda (j,j^*) \, (x_u - w_j)
+\Delta w_j = \eta \, h(j, j^*) \, (x_u - w_j)
 $$
 
-where $$\Lambda (j,j^*)$$ is the *neighbourhood function*, which decreases with the distance between neurons $$j$$ and $$j^*$$ in the grid (e.g. a Gaussian). If $$\Lambda$$ is $$1$$ for the winner and $$0$$ for all other neurons, the update above is the online update rule of k-means. It is also common to decrease $$\eta$$ and the width of $$\Lambda$$ as the iterations progress;
+where $$h(j, j^*)$$ is the *neighbourhood function*, which decreases with the distance between neurons $$j$$ and $$j^*$$ in the grid (e.g. a Gaussian). If $$h$$ is $$1$$ for the winner and $$0$$ for all other neurons, the update above is the online update rule of k-means. It is also common to decrease $$\eta$$ and the width of $$h$$ as the iterations progress;
 - repeat until stabilization: either when reaching the maximum number of iterations, or when the change in weights falls below a given threshold.
 
 Very nice videos demonstrating an iterative execution of the Kohonen map can be found [in this link](https://www.youtube.com/watch?v=IixbH1gDhsg) and [this link](https://www.youtube.com/watch?v=zeOtwCAI3Fs).

@@ -114,7 +114,7 @@ It also follows that inference requires less memory than training, as training r
 
 ## Dropout
 
-[Dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5) is a method that drops neurons (in different layers) with a given probability $$p$$ at training time. For each training sample in a minibatch, a new network is sampled.
+[Dropout](https://jmlr.org/papers/v15/srivastava14a.html) is a method that drops neurons (in different layers) with a given probability $$p$$ at training time. For each training sample in a minibatch, a new network is sampled.
 
 The outputs of the kept neurons are scaled by $$1/(1-p)$$, so that their expected value is the same at training and inference time. At inference time, all neurons are used, and no dropout is applied. A simple code snippet to explain this is:
 

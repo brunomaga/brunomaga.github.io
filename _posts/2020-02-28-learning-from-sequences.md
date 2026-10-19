@@ -147,6 +147,7 @@ Attention weights of the masked attention of the decoder for the sentence "Le gr
 
 The other components of the transformer are not unique to it, and have been used previously in other machine learning models:
 - The *Feed Forward* is a regressor (single hidden-layer DNN) that transforms the attention vectors into a form that is valid as input to the decoder or to the next computation phase;
+- The *Add & Norm* component adds the input of the previous component to its output (a [residual connection](https://en.wikipedia.org/wiki/Residual_neural_network)) and normalizes the result ([layer normalization](https://en.wikipedia.org/wiki/Normalization_(machine_learning)#Layer_normalization)), which keeps the training of the stacked layers stable;
 - The *Linear* transformation component on the decoder expands the space into an array of size equal to the target vocabulary (French in the example); 
 - The *Softmax* operation transforms the output of the previous layer into a probability distribution. The word with the highest probability is picked as output;
 

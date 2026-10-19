@@ -351,7 +351,7 @@ The KL divergence is not a metric because it is not symmetric: $$  KL ( q \| p )
 
 ### Testing
 
-The **[quantile](https://en.wikipedia.org/wiki/Quantile_function)** is the inverse of the cdf. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$\alpha \in [0,1]$$. The **[p-value](https://en.wikipedia.org/wiki/P-value)** (or observed significance level) is the smallest value of $$α$$ for which the [null hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis) would be rejected at level $$α$$.
+The **[quantile](https://en.wikipedia.org/wiki/Quantile_function)** is the inverse of the cdf. It gives the point at which the cdf (or the integral of the pdf) equals a given value $$u \in [0,1]$$. The **[p-value](https://en.wikipedia.org/wiki/P-value)** (or observed significance level) is the smallest value of $$α$$ for which the [null hypothesis](https://en.wikipedia.org/wiki/Null_hypothesis) would be rejected at level $$α$$.
 
 The **[confidence interval](https://en.wikipedia.org/wiki/Confidence_interval)** refers to a set of values, computed from the data, that contains the population parameter for a certain proportion of times when the experiment is repeated. For example, for a $$95\%$$ **confidence level**:
 
@@ -496,8 +496,8 @@ Compared to the histogram on the left, the kernel density estimate is smooth and
 The following table summarizes the method used for each use case:
 
 |-|-|-|
-| **Distribution / function $$g$$** | **parametric $$g(x_i^{\intercal}) = x_i^{\intercal} \beta$$** | **non-parametric $$g$$** |
-| Gaussian | Linear Regression | Smoothing (KDE) |
+| **Distribution / function $$g$$** | **parametric $$g(x_i) = x_i^{\intercal} \beta$$** | **non-parametric $$g$$** |
+| Gaussian | Linear Regression | Smoothing (e.g. [kernel regression](https://en.wikipedia.org/wiki/Kernel_regression)) |
 | Exponential Family | [Generalized Linear Models](https://en.wikipedia.org/wiki/Generalized_linear_model) | [Generalized Additive Models](https://en.wikipedia.org/wiki/Generalized_additive_model) |
 
 To find more about the topic, the book [Mathematics for Machine Learning](https://mml-book.github.io/) by Deisenroth, Faisal and Ong covers probability and distributions in chapter 6. The book [Pattern Recognition and Machine Learning](https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf) by Bishop covers information theory (section 1.6), the Gaussian distribution and the exponential family (sections 2.3 and 2.4), kernel density estimators (section 2.5.1) and Bayesian networks (section 8.1).

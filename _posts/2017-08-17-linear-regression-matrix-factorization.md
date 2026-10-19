@@ -44,7 +44,7 @@ This requires computing the $$w$$ that minimizes the loss or, equivalently (as t
   \end{align*}
   $$
 
-Note that the derivation used the trick $$\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$$ (<a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, section 2.4.1, eq. 69) and $$\frac{\partial w^TAw}{\partial w} = (A + A^T)w$$ (section 2.4.2, eq. 81). The result shows that **if $$X^TX$$ is invertible**, this minimization problem has a unique closed-form solution, given by that final form. As a side note, the **[Gram matrix](https://en.wikipedia.org/wiki/Gram_matrix) $$X^TX$$** is invertible if **$$X$$ has full column rank**, i.e. $$rank(X)=D+1$$ (the proof is omitted), as its columns are the $$D$$ inputs and a column of ones for the bias $$w_0$$. The [rank](https://en.wikipedia.org/wiki/Rank_(linear_algebra)) of a matrix is defined as the maximum number of linearly independent column vectors in the matrix, so this assumes that all columns are linearly independent.
+Note that the derivation used the trick $$\frac{\partial w^Ta}{\partial w} = \frac{\partial a^Tw}{\partial w} = a$$ (<a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>, section 2.4.1, eq. 69) and $$\frac{\partial w^TAw}{\partial w} = (A + A^T)w$$ (section 2.4.2, eq. 81). The result shows that **if $$X^TX$$ is invertible**, this minimization problem has a unique closed-form solution, given by that final form. As a side note, the **[Gram matrix](https://en.wikipedia.org/wiki/Gram_matrix) $$X^TX$$** is invertible if **$$X$$ has full column rank**, i.e. $$\text{rank}(X)=D+1$$ (the proof is omitted), as its columns are the $$D$$ inputs and a column of ones for the bias $$w_0$$. The [rank](https://en.wikipedia.org/wiki/Rank_(linear_algebra)) of a matrix is defined as the maximum number of linearly independent column vectors in the matrix, so this assumes that all columns are linearly independent.
 
 For the sake of comparison, the closed-form solution takes $$O(ND^2 + D^3)$$ operations, against $$O(ND)$$ for a step of gradient descent, so it is preferred for a small $$D$$.
 
@@ -54,7 +54,7 @@ For the sake of comparison, the closed-form solution takes $$O(ND^2 + D^3)$$ ope
 It is common practice to add to the loss a **regularization** term $$\Omega$$ that penalizes complex models. The loss minimization problem then becomes:
 
 $$
-min_w L(w) + \Omega (w)
+\min_w L(w) + \Omega (w)
 $$
 
 Common regularization approaches are:
@@ -72,7 +72,7 @@ Common regularization approaches are:
 Note: in statistics, **[shrinkage](https://en.wikipedia.org/wiki/Shrinkage_(statistics))** is the reduction in the effects of sampling variation on the estimated parameters (e.g. a model overfitting the training data and not performing well on unseen data). Regularization attempts to do this by "shrinking" model parameters towards 0 in LASSO, or by making them smaller in Ridge Regression.
 
 Other techniques that do not add a regularization term to the loss function, but help improve model accuracy:
-- [dropout](https://medium.com/@amarbudhiraja/https-medium-com-amarbudhiraja-learning-less-to-learn-better-dropout-in-deep-machine-learning-74334da4bfc5): a method to *drop out* (ignore) neurons in a (deep) neural network at every batch during training, while using all neurons at validation. Dropout was shown to increase generalization by forcing the model to train without relying on specific weights.
+- [dropout](https://jmlr.org/papers/v15/srivastava14a.html): a method to *drop out* (ignore) neurons in a (deep) neural network at every batch during training, while using all neurons at validation. Dropout was shown to increase generalization by forcing the model to train without relying on specific weights.
 - [layer, instance, batch, and group normalization](https://arxiv.org/abs/1803.08494): methods to reduce internal covariate shift by normalizing the output of activation layers to the mean and variance of a standard normal distribution. They can also learn scale and shift parameters, which scale the standard deviation and shift the mean, for improved performance over the standard normal distribution.
 
 ## Matrix Factorization
@@ -82,10 +82,10 @@ Other techniques that do not add a regularization term to the loss function, but
 The aim is to optimize:
 
 $$
-min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2
+\min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2
 $$
 
-where $$ W \in R^{D \times K} $$ and $$ Z \in R^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ collects the indices of the observed ratings of the input matrix $$X$$. The following picture illustrates the factorization:
+where $$ W \in \mathbb{R}^{D \times K} $$ and $$ Z \in \mathbb{R}^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ collects the indices of the observed ratings of the input matrix $$X$$. The following picture illustrates the factorization:
 
 {: .picture}
 <img width="44.1%" height="44.1%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
@@ -96,7 +96,7 @@ Matrix factorization $$X \approx WZ^T$$ of the ratings of $$D = 7$$ movies by $$
 This cost function is neither convex nor [identifiable](https://en.wikipedia.org/wiki/Identifiability): for any invertible $$K \times K$$ matrix $$Q$$, the factors $$WQ$$ and $$Z(Q^{-1})^T$$ give the same product $$WZ^T$$. $$K$$ is the number of **latent features** (e.g. gender, age group, citizenship, etc.). A large $$K$$ facilitates overfitting. A regularizer can be added to the function:
 
 $$
-min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2 + \frac{\lambda_w}{2} \| W \|^2 +  \frac{\lambda_z}{2} \| Z \|^2
+\min_{W,Z} L (W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [ x_{dn} - (WZ^T)_{dn}]^2 + \frac{\lambda_w}{2} \| W \|^2 +  \frac{\lambda_z}{2} \| Z \|^2
 $$ 
 
 where (again) $$\lambda_z$$ and $$\lambda_w$$ are scalars, and the norms are [Frobenius norms](https://en.wikipedia.org/wiki/Matrix_norm#Frobenius_norm).
@@ -135,7 +135,7 @@ Reminder: $$z_{n,k}$$ are user features, $$w_{d,k}$$ are movie features. The gra
 
   $$
   \begin{align*}
-  min_{W,Z} L(W,Z) = & \frac{1}{2} \sum_{d=1}^D \sum_{n=1}^N [x_{dn} - (WZ^T)_{dn}]^2 + \text{ (regularizer) } \\
+  \min_{W,Z} L(W,Z) = & \frac{1}{2} \sum_{d=1}^D \sum_{n=1}^N [x_{dn} - (WZ^T)_{dn}]^2 + \text{ (regularizer) } \\
   = & \frac{1}{2} \| X - WZ^T \| ^2 + \frac{\lambda_w}{2} \| W \|^2 +  \frac{\lambda_z}{2} \| Z \|^2
   \end{align*}
   $$
@@ -144,7 +144,7 @@ Reminder: $$z_{n,k}$$ are user features, $$w_{d,k}$$ are movie features. The gra
 - If there are missing entries, the problem is harder, as only the ratings $$ (d,n) \in \Omega $$ contribute to the cost, i.e.:
 
   $$
-  min_{W,Z} L(W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [x_{dn} - (WZ^T)_{dn}]^2 + ...
+  \min_{W,Z} L(W,Z) = \frac{1}{2} \sum_{(d,n) \in \Omega} [x_{dn} - (WZ^T)_{dn}]^2 + ...
   $$
 
   - each row $$w_d$$ of $$W$$ is then computed from its observed ratings only, as $$w_d = (\sum_{n:(d,n) \in \Omega} z_n z_n^T + \lambda_w I_K)^{-1} \sum_{n:(d,n) \in \Omega} x_{dn} z_n$$, and similarly for each row $$z_n$$ of $$Z$$.
@@ -180,7 +180,7 @@ where the predictor $$\hat{y}_n = f(x_n, \theta^*)$$ represents the output of th
 In the case of a statistical model, [maximum likelihood estimation](https://en.wikipedia.org/wiki/Maximum_likelihood_estimation) finds the parameters for which the model fits the data well, by minimizing the negative log-likelihood:
 
 $$
-L_x(θ) = −log p(x | θ) .
+L_x(\theta) = -\log p(x \mid \theta) .
 $$
 
 For linear regression with Gaussian noise, this minimization is equivalent to the Least Squares problem above.
@@ -220,7 +220,7 @@ where $$x$$ is an anchor input, $$x^{+}$$ is a positive input of the same class 
 The contrastive loss trains siamese networks against pairs of inputs labelled as similar or dissimilar (1 or 0). Contrastive loss is formulated in terms of the similarity label $$y$$ (1 for similar, 0 for dissimilar) and the Euclidean distance $$\delta$$ between the embeddings of two images, as:
 
 $$
-L = \frac{1}{2} ⋅y⋅\delta^2 + \frac{1}{2} ⋅(1−y)⋅max(0,m−\delta)^2
+L = \frac{1}{2} ⋅y⋅\delta^2 + \frac{1}{2} ⋅(1−y)⋅\max(0,m-\delta)^2
 $$
 
 where $$m$$ is a hyper-parameter (the margin). The original paper is [Dimensionality Reduction by Learning an Invariant Mapping](http://yann.lecun.com/exdb/publis/pdf/hadsell-chopra-lecun-06.pdf), summarized in the <a href="{{ site.publications_permalink }}">publications bookmark</a>.

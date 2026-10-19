@@ -33,7 +33,7 @@ For a model of width $$d$$ (the embedding size) and a context of $$T$$ tokens, t
 - a term in the order of $$O(d^2)$$ for the projections and the MLP;
 - a term in the order of $$O(Td)$$ for the attention scores $$QK^T$$ and the weighted sum of the values.
 
-The first term does not depend on the context length; the second grows with every token in the context. So attention becomes the dominant cost as the context length $$T$$ increases.
+The first term does not depend on the context length; the second grows with every token in the context. With an MLP of hidden size $$4d$$, and a multiply-add counted as two FLOPs, a token costs about $$24d^2$$ FLOPs in the linear layers ($$8d^2$$ in the four projections and $$16d^2$$ in the MLP) and $$4Td$$ FLOPs in attention. So attention becomes the dominant cost as the context length $$T$$ grows beyond $$6d$$ tokens, i.e. 24,576 tokens for $$d = 4096$$.
 
 **Memory follows the same pattern as computation**. The model weights are read once per decode step and shared by all the sequences of the batch, while each sequence keeps its own cache of attention keys and values (KV cache) that grows with every token. For long contexts and large batches, reading the KV cache dominates the memory traffic and the runtime of each decode step.
 

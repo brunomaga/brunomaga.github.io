@@ -43,7 +43,7 @@ Before moving on to Variational Inference, it helps to understand the place of V
 
 A [Markov Chain](https://en.wikipedia.org/wiki/Markov_chain) is a stochastic model describing a sequence of events in which the probability of moving to the next state depends *only* on the current state and not on the previous ones. An example is the probability of the next character in a word, for all *27* possible characters, given the current character.
 
-Therefore, MCMC methods are used to approximate the distribution (state) of parameters at the next iteration by random sampling from a probabilistic space defined by the current state. MCMC is based on the assumption that the prior-likelihood product $$ P(x \mid z) \, P(z)$$ can be computed, i.e. is known, for a given $$z$$. However, this can be done without any knowledge of the function of $$z$$. But, from a mathematical perspective (eq. \ref{eq_bayes}), the posterior density is expressed as:
+Therefore, MCMC methods are used to approximate the distribution (state) of parameters at the next iteration by random sampling from a probabilistic space defined by the current state. MCMC is based on the assumption that the prior-likelihood product $$ p(x \mid z) \, p(z)$$ can be computed, i.e. is known, for a given $$z$$. However, this can be done without any knowledge of the function of $$z$$. But, from a mathematical perspective (eq. \ref{eq_bayes}), the posterior density is expressed as:
 
 $$
 \begin{align*}
@@ -56,12 +56,12 @@ $$
 
 where the top term of the division can be computed, but the bottom one is unknown or intractable. Since the bottom term is a *normalizer* (i.e. it guarantees that the posterior sums to 1), it can be discarded, leading to the expression $$ p (z \mid x) \propto p(z) \, p(x \mid z)$$.
 
-Therefore, the rationale is to take several samples of the latent variables (for example, the mean $$\mu$$ or the variance $$\sigma^2$$ of a normal distribution) from the current space. The model is then updated with the values that explain the data better than the values at the current state, i.e. that have a higher posterior probability. A simpler way to express this is to compute the **acceptance ratio** of the proposed over the current posterior (which cancels out the term $$P(x)$$ that could not be computed):
+Therefore, the rationale is to take several samples of the latent variables (for example, the mean $$\mu$$ or the variance $$\sigma^2$$ of a normal distribution) from the current space. The model is then updated with the values that explain the data better than the values at the current state, i.e. that have a higher posterior probability. A simpler way to express this is to compute the **acceptance ratio** of the proposed over the current posterior (which cancels out the term $$p(x)$$ that could not be computed):
 
 $$
-  \frac{ P(z \mid x) }{ P(z_0 \mid x) }
-=  \frac{ \hspace{0.5cm}{ } \frac{P(x \mid z) \, P(z)}{ P(x) } \hspace{0.5cm} } { \,\, \frac{P(x \mid z_0) \, P(z_0)}{ P(x) } \,\, }
-= \frac{ P(x \mid z) \, P(z) }{ P(x \mid z_0) \, P(z_0)}
+  \frac{ p(z \mid x) }{ p(z_0 \mid x) }
+=  \frac{ \hspace{0.5cm}{ } \frac{p(x \mid z) \, p(z)}{ p(x) } \hspace{0.5cm} } { \,\, \frac{p(x \mid z_0) \, p(z_0)}{ p(x) } \,\, }
+= \frac{ p(x \mid z) \, p(z) }{ p(x \mid z_0) \, p(z_0)}
 $$
 
 and accept the proposed state $$z$$ with probability $$\min(1, \text{ratio})$$, otherwise keep the current state $$z_0$$ (the [Metropolis algorithm](https://en.wikipedia.org/wiki/Metropolis%E2%80%93Hastings_algorithm), with a symmetric proposal distribution). 
@@ -175,13 +175,13 @@ Now the chain rule is applied to the joint probability $$p(z_{1:m}, x_{1:n})$$ f
 
 $$
 %source: assets: 10708-scribe-lecture13.pdf
-p(z_{1:m}, x_{1:n}) = p(x_{1:n}) \prod_{j=1}^m p(z_j \mid z_{1: (j-1)}, x_{1:n})
+p(z_{1:m}, x_{1:n}) = p(x_{1:n}) \prod_{l=1}^m p(z_l \mid z_{1: (l-1)}, x_{1:n})
 $$
 
 and the entropy term can be decomposed using the mean-field variational approximation as:
 
 $$
-\mathbb{E}_q [ \log q(z_{1:m})] = \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)]
+\mathbb{E}_q [ \log q(z_{1:m})] = \sum_{l=1}^m \mathbb{E}_{q_l}[\log q(z_l)]
 $$
 
 Inserting the two previous decompositions into the ELBO equation, it can now be expressed for the mean-field variational approximation as:
@@ -190,8 +190,8 @@ $$
 %source: assets: 10708-scribe-lecture13.pdf
 \begin{align*}
 ELBO(q) & = \mathbb{E}_q [\log p(x_{1:n},z_{1:m})] - \mathbb{E}_q[\log q(z_{1:m})] \\
-        & = \mathbb{E}_q \left[ \log \left ( p(x_{1:n}) \prod_{j=1}^m p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \\
-        & = \log p(x_{1:n}) + \sum_j^m \mathbb{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \\
+        & = \mathbb{E}_q \left[ \log \left ( p(x_{1:n}) \prod_{l=1}^m p(z_l \mid z_{1: (l-1)}, x_{1:n}) \right) \right] - \sum_{l=1}^m \mathbb{E}_{q_l}[\log q(z_l)] \\
+        & = \log p(x_{1:n}) + \sum_{l=1}^m \mathbb{E}_q \left[ \log p(z_l \mid z_{1: (l-1)}, x_{1:n}) \right] - \sum_{l=1}^m \mathbb{E}_{q_l}[\log q(z_l)] \\
 \end{align*}
 $$
 
@@ -206,7 +206,7 @@ where $$\neq j$$ means *all indices except the $$j^{th}$$*. Now the goal is to d
 $$
 \begin{align*}
   & arg\,max_{q_j} \, ELBO (q)\\
-= & arg\,max_{q_j} \, \left( \log p(x_{1:n}) + \sum_j^m \mathbb{E}_q \left[ \log p(z_j \mid z_{1: (j-1)}, x_{1:n}) \right] - \sum_j^m \mathbb{E}_{q_j}[\log q(z_j)] \right)\\  
+= & arg\,max_{q_j} \, \left( \log p(x_{1:n}) + \sum_{l=1}^m \mathbb{E}_q \left[ \log p(z_l \mid z_{1: (l-1)}, x_{1:n}) \right] - \sum_{l=1}^m \mathbb{E}_{q_l}[\log q(z_l)] \right)\\  
 = & arg\,max_{q_j} \, \left( \mathbb{E}_q \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \mathbb{E}_{q_j}[\log q(z_j)] \right) \\
   & \qquad \text{(removing vars that do not depend on } q(z_j) \text{)} \\
 = & arg\,max_{q_j} \, \left( \int q(z_j) \, \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] dz_j - \int q(z_j) \log q(z_j) dz_j \right) \\
@@ -217,10 +217,10 @@ $$
 To find this argmax, one takes the derivative of the ELBO, denoted $$L$$, with respect to $$q(z_j)$$, uses [Lagrange multipliers](https://en.wikipedia.org/wiki/Lagrange_multiplier) (as $$q(z_j)$$ must integrate to one), and sets the derivative to zero:
 
 $$
-\frac{d\,L}{d\,q(z_j)} = \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \log q(z_j) -1 = 0
+\frac{d\,L}{d\,q(z_j)} = \mathbb{E}_{q_{\neq j}} \left[ \log p(z_j \mid z_{\neq j}, x) \right] - \log q(z_j) - 1 + \lambda = 0
 $$
  
-This leads to the final coordinate ascent update:
+where $$\lambda$$ is the Lagrange multiplier of the constraint $$\int q(z_j) \, dz_j = 1$$. Solving for $$q(z_j)$$ gives $$q(z_j) = e^{\lambda - 1} \exp \{ \mathbb{E}_{q_{\neq j}} [ \log p(z_j \mid z_{\neq j}, x)] \}$$, in which the factor $$e^{\lambda - 1}$$ is the normalization constant that makes $$q(z_j)$$ integrate to one. This leads to the final coordinate ascent update:
 
 $$
 \begin{align}
