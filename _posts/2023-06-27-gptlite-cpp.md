@@ -29,7 +29,7 @@ The other big announcement of PyTorch 2.x was `torch.compile`, which "makes PyTo
 3. **graph compilation** will convert the kernels into low-level operations that are specific to the device.
 
 {: .picture}
-<img width="80.4%" height="80.4%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
+<img width="80.3%" height="80.3%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
 
 {: .caption}
 A diagram of the three steps of `torch.compile`. Adapted from: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
@@ -51,7 +51,7 @@ It looks at two different testbenches, so readers may pick one based on their le
 2. a Deep Neural Network of arbitrary width and depth, in section [Benchmark Model on LibTorch C++](#benchmark-model). This is a very simple example that will be used to benchmark the metrics on models of varying depths and widths. It is mostly suitable for those who are interested in performance modeling, ML engineering, and the C++/Python/TorchScript comparison.  
 
 {: .picture}
-<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
+<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 <img width="25.8%" height="25.8%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 
@@ -116,7 +116,7 @@ $$
 where $$h$$ is the number of heads, $$d_k$$ is the dimension of the keys of each head and $$W^O$$ is the output projection. Together with the lower-triangular mask (`tril`), this is the underlying structure of each of the N attention blocks in the model:
 
 {: .picture}
-<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
+<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
 
 {: .caption}
 The multi-head attention module in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
@@ -221,7 +221,7 @@ Again, `nn::ModuleList` is used as a container, instead of a standard-library co
 The feed-forward network is a two-layer Deep Neural Network and is pretty straightforward to implement:
 
 {: .picture}
-<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_feedforward.svg"/>
+<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite/gptlite_feedforward.svg"/>
 
 {: .caption}
 The feed forward network in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).

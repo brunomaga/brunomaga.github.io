@@ -207,7 +207,7 @@ This kind of partitioning underlies problems such as the [Voronoi diagram](https
 
 
 {: .picture}
-<img width="36.8%" height="36.8%" src="{{ site.assets }}/unsupervised-learning/voronoi.svg">
+<img width="36.6%" height="36.6%" src="{{ site.assets }}/unsupervised-learning/voronoi.svg">
 
 {: .caption}
 The Voronoi diagram of 20 prototypes (black dots) in 2D: each colored cell holds the points closer to its prototype than to any other, in Euclidean distance. Adapted from: [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram)
@@ -240,7 +240,7 @@ which is the definition of the center of mass of cluster $$i$$. The error decrea
 
 
 {: .picture}
-<img width="78.7%" height="78.7%" src="{{ site.assets }}/unsupervised-learning/k-means.svg">
+<img width="78.6%" height="78.6%" src="{{ site.assets }}/unsupervised-learning/k-means.svg">
 
 {: .caption}
 **1.** $$k = 3$$ initial means (colored circles) are chosen at random within the data domain. **2.** Assignment step: each point joins the cluster of the closest mean; the colored regions are the Voronoi cells of the means. **3.** Update step: each mean moves to the centroid of its cluster (dashed circles: the previous means; lines: the points of each cluster). **4.** Assignment step with the new means and their Voronoi cells: two points move from the green to the red cluster. The two steps repeat until the assignments no longer change. Adapted from: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
@@ -333,7 +333,7 @@ This is a relaxation of the NP-hard problem of finding the *ratio cut* (with $$L
 A self-organizing map (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). Its main purpose is to represent the training data by localized regions (neurons) that represent agglomerates of inputs, with neighbouring neurons of the grid representing nearby regions of the input space:
 
 {: .picture}
-<img width="46%" height="46%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg">
+<img width="45.9%" height="45.9%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg">
 <img width="24.5%" height="24.5%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
 
 {: .caption}

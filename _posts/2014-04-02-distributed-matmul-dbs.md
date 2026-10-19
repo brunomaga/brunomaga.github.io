@@ -57,7 +57,7 @@ $$
 where each tile $$A_{i,k}$$ has $$n/p \times n/p$$ elements, and each block $$B_k$$ has $$n/p \times n$$ elements. $$A$$ and $$C$$ stay in place, and only $$B$$ moves: at each step, every rank multiplies the tile of $$A$$ that matches its current block of $$B$$, adds the result to $$C_i$$, and passes the block of $$B$$ to the previous rank. After $$p$$ steps, $$C_i$$ is complete, as shown below on 3 ranks:
 
 {: .picture}
-<img width="88.5%" height="88.5%" src="{{ site.assets }}/distributed-matmul-dbs/ring.svg">
+<img width="88.7%" height="88.7%" src="{{ site.assets }}/distributed-matmul-dbs/ring.svg">
 
 {: .caption}
 The ring algorithm on 3 ranks. Blocks of $$B$$ shift up, and rank 0 sends to rank 2. At each step, a rank multiplies the tile of $$A$$ that has the color of its block of $$B$$.
@@ -80,7 +80,7 @@ As an example, rank $$(1,2)$$ of a $$3 \times 3$$ grid computes $$C_{1,2} = A_{1
 Steps 2 and 3 are repeated until each rank has done $$q$$ multiplications, as illustrated below:
 
 {: .picture}
-<img width="89.6%" height="89.6%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
+<img width="89.5%" height="89.5%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
 
 {: .caption}
 Cannon's algorithm on a $$3 \times 3$$ grid of ranks. Tiles of $$A$$ (top) shift left, and tiles of $$B$$ (bottom) shift up. The thick frame marks rank $$(1,2)$$, and colors show its three pairs: blue for $$k=0$$, green for $$k=1$$ and red for $$k=2$$.
@@ -103,7 +103,7 @@ The tiles of the next step do not depend on the current product, so a rank can r
 The following picture compares the timelines with and without this overlap:
 
 {: .picture}
-<img width="91.6%" height="91.6%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
+<img width="91.5%" height="91.5%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
 
 {: .caption}
 Timeline of one rank in Cannon's algorithm on a $$3 \times 3$$ grid. **Top:** shifts and multiplications take turns. **Bottom:** each shift runs during a multiplication.
@@ -129,7 +129,7 @@ The **compressed sparse row** format (CSR, also called the Yale format) stores a
 An example is displayed below:
 
 {: .picture}
-<img width="69.6%" height="69.6%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
+<img width="69.7%" height="69.7%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
 
 {: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
@@ -208,7 +208,7 @@ There are four kinds of inner and outer joins:
 The following picture shows the two tables and three of these joins:
 
 {: .picture}
-<img width="90.6%" height="90.6%" src="{{ site.assets }}/distributed-matmul-dbs/joins.svg">
+<img width="90.5%" height="90.5%" src="{{ site.assets }}/distributed-matmul-dbs/joins.svg">
 
 {: .caption}
 **Top:** the tables `Person` (blue) and `Messages` (green). **Bottom:** three joins on `id`. Dark gray cells are `NULL`.
@@ -236,7 +236,7 @@ Here, `Person` is on server 1, and `Messages` is on server 2.
 **Outer joins.** In step 3, server 1 also returns its unmatched persons, with `NULL` (the left outer join). Server 2 knows which of its messages had no match, as their keys were not in the list of step 1, so it returns them with `NULL` in a step 4. The inner join and step 4 give the right outer join, and steps 3 and 4 the full outer join, as displayed below:
 
 {: .picture}
-<img width="92.7%" height="92.7%" src="{{ site.assets }}/distributed-matmul-dbs/layout_tables.svg">
+<img width="92.6%" height="92.6%" src="{{ site.assets }}/distributed-matmul-dbs/layout_tables.svg">
 
 {: .caption}
 A semi-join between two servers: the keys (1), the matching rows (2), the left outer join on server 1 (3), and the unmatched messages of server 2 (4). The first three rows of (3) are the inner join.
@@ -254,7 +254,7 @@ Each server holds some rows of each table, which is called **horizontal partitio
 **Inner join.** Each row is placed by its key, with the same rule for both tables (e.g. a hash of the key). Below, even keys go to server 1, and odd keys to server 2. Matching rows then share a server, and every server joins locally. If the tables are not placed this way, a **shuffle** first sends each row to its server, with an all-to-all exchange (`MPI_Alltoallv`), as illustrated below:
 
 {: .picture}
-<img width="87.6%" height="87.6%" src="{{ site.assets }}/distributed-matmul-dbs/layout_rows.svg">
+<img width="87.4%" height="87.4%" src="{{ site.assets }}/distributed-matmul-dbs/layout_rows.svg">
 
 {: .caption}
 Two tables split by rows across 2 servers, colored by target server: blue for server 1 (even keys), and orange for server 2 (odd keys). **Left:** before the shuffle. **Right:** after it.

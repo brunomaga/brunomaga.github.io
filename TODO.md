@@ -414,16 +414,22 @@ that is not wrong.
   loops (for example in `deep-neural-networks/densenet.svg`, `lif-brunel/diagram_class.svg` and
   `publications/graphconvnets.svg`); 176 filled cells of `distributed-training/imgs/mixture_of_depths.svg`, and a few
   in other figures, have no outline; `learning-from-sequences/transformer_attention.svg` (#97afd2, a heat map shade)
-  and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 8 figures have lines thinner than 0.7 px;
-  `publications/attention_mech.svg` has 8 arrow heads smaller than size 6. Fix: set them to the values of CLAUDE.md,
-  then run the check again.
-- The arrow check of the restyle (CLAUDE.md, Pictures, section 6) still reports 477 findings in 66 draw.io figures:
-  195 arrows with less than 6 px of line before the head, 175 lines through the text box of a label, 55 labels that
-  run into a box, 27 heads on text, 17 heads that touch and 8 overlapping boxes. Most are in dense pictures from
-  papers: `deep-neural-networks/densenet.svg` (50), `matrix-transpose/xcrs_format.svg` (48),
-  `distributed-training/imgs/moe_gshard.svg` (22), `publications/performers.svg` (21) and `publications/helix.svg`
-  (21); some are text boxes larger than their text. Fix: check each picture at its page size, and move the labels
-  and arrows that touch.
+  and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 7 figures have lines thinner than 0.6 px.
+  Fix: set them to the values of CLAUDE.md, then run the check again.
+- The arrow check of the restyle (CLAUDE.md, Pictures, section 6) still reports 572 findings in 74 draw.io figures:
+  285 arrows with less than 6 px of line before the head (90 of them with 4.6 to 5.9 px, as the 6 px heads take more
+  of short arrows, for example in the GPT-lite pictures, `gptlite-cpp/torch_compile.svg` and the three
+  `distributed-training/imgs/dnn_multiproc*.svg`), 175 lines through the text box of a label, 55 labels that run
+  into a box, 29 heads on text, 20 heads that touch and 8 overlapping boxes. Most are in dense pictures from papers:
+  `deep-neural-networks/densenet.svg` (50), `matrix-transpose/xcrs_format.svg` (50),
+  `distributed-training/imgs/moe_gshard.svg` (36), `publications/helix.svg` (22) and `publications/performers.svg`
+  (21); some are text boxes larger than their text. Fix: check each picture at its page size, move the labels and
+  arrows that touch, and lengthen the short arrows (move their bend, or the boxes they join).
+- The charts drawn from data (the plots, benchmarks and histograms without a draw.io source, for example
+  `inference/imgs/tp_results.svg`, `gptlite-cpp/benchmark_*.svg` and the charts of `neuron-variable-timestep` and
+  `bayesian-linear-regression`) keep the line weights of their scripts or of their earlier export (`tp_results.py`
+  draws 1 px axes and 0.8 px bar outlines), not the weights of CLAUDE.md, Pictures, section 6. Fix: axes 1.6 px, bar
+  outlines and plot lines 1.2 px, in each chart's script, or in the SVG of a chart without a script.
 - Pictures to redraw, from the user's review of the four line weights (the next step of the restyle):
   - `inference/imgs/continuous_chunked_batching.svg` differs from its original. Fix: redraw it from the original, and
     add continuous batching with chunked prefill.
@@ -787,8 +793,6 @@ that is not wrong.
   reduce steps, while the text and `tp_block_specialization.svg` apply them to each band, right after the all-reduce
   of that band. The figure of the paper has the same simplification. Fix: a small bias and activation step after
   each reduce step, or keep the picture as a schematic.
-- `inference/imgs/tp_timeline.svg` labels the baseline collective with the name of a vendor's library. The kernel
-  fusion posts call it CCL (Writing rules, "The author's papers"). Fix: "CCL AllReduce".
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 

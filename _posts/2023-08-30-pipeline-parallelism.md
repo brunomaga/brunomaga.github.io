@@ -148,13 +148,13 @@ And that is all: **activations flow forward, gradients flow backward**. The rema
 The pipeline parallelism algorithm implemented in DeepSpeed is the [PipeDream-Flush implementation with default 1F1B scheduling](https://www.microsoft.com/en-us/research/blog/pipedream-a-more-effective-way-to-train-deep-neural-networks-using-pipeline-parallelism/) (1 forward pass followed by 1 backward pass), but it is possible to [extend pipeline parallelism](https://deepspeed.readthedocs.io/en/latest/pipeline.html#module-deepspeed.runtime.pipe.schedule) to other algorithms. The 1F1B algorithm performs a sequence of forward passes, and asynchronously starts the backward pass of each micro-batch whose forward pass has completed. It then waits for all forward and backward passes to complete before starting the next mini-batch. PipeDream-Flush was introduced in [Memory-Efficient Pipeline-Parallel DNN Training (Microsoft, ICML 2021, arXiv)](https://arxiv.org/abs/2006.09503) and, unlike PipeDream, keeps a single version of the parameters. The regular (GPipe) and 1F1B algorithms are compared below:
 
 {: .picture}
-<img width="86.5%" height="86.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_gpipe.svg"/>
+<img width="86.4%" height="86.4%" src="{{ site.assets }}/distributed-training/imgs/pipeline_gpipe.svg"/>
 
 {: .caption}
 GPipe on 4 GPUs with 8 micro-batches: all forward passes, then all backward passes. Each GPU keeps the activations of the 8 micro-batches until their backward passes. Adapted from: [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473)
 
 {: .picture}
-<img width="86.5%" height="86.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_1f1b.svg"/>
+<img width="86.4%" height="86.4%" src="{{ site.assets }}/distributed-training/imgs/pipeline_1f1b.svg"/>
 
 {: .caption}
 1F1B on 4 GPUs with 8 micro-batches: after a warm-up of forward passes, each GPU alternates one forward and one backward pass. The iteration takes as long as with GPipe, but each GPU keeps the activations of at most 4 micro-batches instead of 8. Adapted from: [Efficient Large-Scale Language Model Training on GPU Clusters Using Megatron-LM](https://arxiv.org/abs/2104.04473)
@@ -377,13 +377,13 @@ Interleaved 1F1B with 2 model chunks per GPU. Light and dark cells refer to the 
 There is a catch: the optimizer step usually synchronizes all stages, e.g. to compute the global gradient norm for gradient clipping, or to check for NaN/Inf values in mixed precision training, and this synchronization breaks the parallelogram. The authors replace it with an *optimizer post-validation*: each stage updates its weights right away and, in the rare case where gradient clipping or the NaN/Inf check is triggered, the update is rolled back and redone. They also provide an algorithm that searches for the best schedule, given the measured time of each pass and of the communication, and a memory limit. In their experiments, Zero Bubble outperformed the throughput of 1F1B by up to 23% under a similar memory limit, and by up to 31% with a relaxed memory limit. The implementation is available as a [fork of Megatron-LM](https://github.com/sail-sg/zero-bubble-pipeline-parallelism) and as `ScheduleInterleavedZeroBubble` in PyTorch. The ZB-H1 and ZB-H2 schedules are illustrated below:
 
 {: .picture}
-<img width="71.6%" height="71.6%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h1.svg"/>
+<img width="71.5%" height="71.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h1.svg"/>
 
 {: .caption}
 ZB-H1, with the activation memory of 1F1B. Every backward pass is split into a backward for inputs and a backward for weights, and the latter fill the bubbles. Adapted from: [Zero Bubble Pipeline Parallelism](https://arxiv.org/abs/2401.10241)
 
 {: .picture}
-<img width="71.6%" height="71.6%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h2.svg"/>
+<img width="71.5%" height="71.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h2.svg"/>
 
 {: .caption}
 ZB-H2, with about twice the activation memory of 1F1B. When the optimizer step does not synchronize the stages, the next iteration starts on the first GPUs while the last GPUs finish the current one; in the same way, the previous iteration fills the idle time at the start. Adapted from: [Zero Bubble Pipeline Parallelism](https://arxiv.org/abs/2401.10241)
@@ -393,7 +393,7 @@ ZB-H2, with about twice the activation memory of 1F1B. When the optimizer step d
 The Zero Bubble paper also introduces **ZB-V**, which places two model chunks on each GPU in a *V shape*: the model is split into $$2p$$ chunks and GPU $$i$$ holds chunks $$i$$ and $$2p-1-i$$. A micro-batch goes down the GPUs through the first half of the model and comes back up through the second half. The first and last chunks (embeddings and loss) are both on GPU 0, and no communication is needed at the turn on the last GPU. When the forward, backward for inputs and backward for weights take the same time, ZB-V has zero bubble (again with the optimizer post-validation) with the same peak activation memory as 1F1B, balanced across all GPUs. The price is twice the point-to-point communication of 1F1B. A follow-up paper, [Pipeline Parallelism with Controllable Memory (Sea AI Lab, 2024, arXiv)](https://arxiv.org/abs/2405.15362), generalizes V-shape schedules to a family that trades bubbles for memory, down to half (V-Half) and a third (V-Min) of the activation memory of 1F1B. ZB-V is available as `ScheduleZBVZeroBubble` in PyTorch, and is illustrated below:
 
 {: .picture}
-<img width="67.9%" height="67.9%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_v.svg"/>
+<img width="67.8%" height="67.8%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_v.svg"/>
 
 {: .caption}
 ZB-V with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (chunks 0 to 3, going down) and dark cells to the second chunk (chunks 4 to 7, going back up). As in ZB-H2, the previous iteration fills the idle time at the start when the optimizer step does not synchronize the stages. Adapted from: [Zero Bubble Pipeline Parallelism](https://arxiv.org/abs/2401.10241)
@@ -407,7 +407,7 @@ To have enough of these forward-backward pairs, DualPipe uses a *bidirectional* 
 Note that the diagrams model only computation, so DualPipe's bubble looks comparable to ZB-H1's. Its main advantage is that, within each black-bordered pair, the all-to-all communication of expert parallelism is hidden behind useful computation. DualPipe on 8 GPUs is illustrated in the following picture:
 
 {: .picture}
-<img width="99.1%" height="99.1%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+<img width="99.3%" height="99.3%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
 DualPipe on 8 GPUs: micro-batches 1 to 8 (light) enter at GPU 0, and micro-batches 9 to 16 (dark) enter at GPU 7. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)
@@ -417,7 +417,7 @@ DualPipe on 8 GPUs: micro-batches 1 to 8 (light) enter at GPU 0, and micro-batch
 Sea AI Lab later noticed that DualPipe is made of two mirrored halves, as GPUs $$i$$ and $$p-1-i$$ hold the same stages and run the same schedule ([DualPipe could be better without the Dual (Sea AI Lab, 2025)](https://huggingface.co/blog/ufotalent/cut-in-half)). Keeping only the first half of the GPUs and placing the remaining stages on them in a V shape, as in ZB-V, gives a schedule with the same bubble and activation memory as DualPipe for the same number of stages, but on half the GPUs and without duplicated parameters. As for ZB-V, the price is twice the point-to-point communication of 1F1B. DeepSeek adopted this *cut-in-half* schedule as **DualPipeV** in the DualPipe repository, and recent PyTorch versions provide it as `ScheduleDualPipeV`. As in ZB-V, all micro-batches enter at GPU 0, go down the GPUs and come back up, and the loss is computed on GPU 0, as illustrated below:
 
 {: .picture}
-<img width="71.6%" height="71.6%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipev.svg"/>
+<img width="71.5%" height="71.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipev.svg"/>
 
 {: .caption}
 DualPipeV with 8 model chunks on 4 GPUs. Light cells refer to the first chunk on each GPU (going down) and dark cells to the second chunk (going back up). Cells with a shared black border are overlapped forward and backward passes of two different micro-batches. Adapted from: [DualPipe](https://github.com/deepseek-ai/DualPipe)

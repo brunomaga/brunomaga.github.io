@@ -149,7 +149,7 @@ $$
 The output $$ x^{(1)} $$ at position $$ [n, m] $$ only depends on the values of the input $$ x^{(0)} $$ at positions close to $$ [n, m] $$. So a fully connected network is no longer needed, but only one that represents the local structure, leading to fewer parameters to deal with. This structure implies that the same filter (i.e., not only the same connection pattern but also the same weights) should be used at every position! This is called **weight sharing**, and it reduces the number of parameters even further. The difference between a locally/sparsely connected and a fully connected network is obvious:
 
 {: .picture}
-<img width="41.3%" height="41.3%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
+<img width="41.2%" height="41.2%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
 
 {: .caption}
 Sparse and full connectivity, viewed from below. Top: a locally connected layer with a kernel of width 3, where the input $$x_3$$ affects only the outputs $$s_2$$, $$s_3$$ and $$s_4$$. Bottom: a fully connected layer, where $$x_3$$ affects every output. Adapted from: [Deep Learning, I. Goodfellow, Y. Bengio and A. Courville, Figure 9.2](https://www.deeplearningbook.org/contents/convnets.html)

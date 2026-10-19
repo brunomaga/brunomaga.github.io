@@ -45,7 +45,7 @@ def prune_linear(linear, rows=None, columns=None):
 A weight matrix with 50% zeros scattered at random is still multiplied as a dense matrix by GPUs, so it saves no time, and saves memory only with a [sparse](https://en.wikipedia.org/wiki/Sparse_matrix) storage format. The exception is NVIDIA's *2:4 semi-structured sparsity* ([Mishra et al.](https://arxiv.org/abs/2104.08378)): in every group of 4 consecutive weights, 2 are zero, and the sparse tensor cores of Ampere and newer GPUs skip them, doubling the peak throughput of those matrix multiplications. The end-to-end speedups are smaller, since attention, memory traffic and the other operations are not accelerated. A 2:4 sparse matrix is stored as its non-zero values plus a 2-bit index per value, the position of that value in its group.
 
 {: .picture}
-<img width="77%" height="77%" src="{{ site.assets }}/inference/imgs/sparsity_2_4.svg"/>
+<img width="77.1%" height="77.1%" src="{{ site.assets }}/inference/imgs/sparsity_2_4.svg"/>
 
 {: .caption}
 **Unstructured 50%:** zeros anywhere, which a dense matmul does not skip. **2:4 semi-structured:** 2 zeros in every group of 4 consecutive weights. **Values** and **2-bit indices:** half the values, and the position of each one in its group. Inspired by: [Accelerating Sparse Deep Neural Networks](https://arxiv.org/abs/2104.08378)
@@ -282,7 +282,7 @@ Quantization stores numbers with fewer bits. Weights take less memory, fewer byt
 A [floating point](https://en.wikipedia.org/wiki/Floating-point_arithmetic) number has a sign bit, exponent bits that set its *range*, and mantissa (fraction) bits that set its *precision*. The picture below compares the three most common formats: FP32, FP16 and BF16. BF16 (*brain floating point*) keeps the 8 exponent bits of FP32 and only 7 mantissa bits, so it covers the same range as FP32 with the memory and speed of a 16-bit format. FP16 has more precision but a much smaller range (5 exponent bits), so large values can overflow. This is why BF16 is the default format of LLMs today.
 
 {: .picture}
-<img width="73.1%" height="73.1%" src="{{ site.assets }}/inference/imgs/floating_point_representation.svg"/>
+<img width="73%" height="73%" src="{{ site.assets }}/inference/imgs/floating_point_representation.svg"/>
 
 {: .caption}
 The bits of $$0.15625 = 1.01_2 \times 2^{-3}$$ in FP32, FP16 and BF16. BF16 keeps the 8 exponent bits of FP32, and so its range, with fewer fraction bits. Adapted from: [Bfloat16 floating-point format](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format)
@@ -368,7 +368,7 @@ Storing the weights in 4 or 8 bits while computing in 16 bits (e.g., W4A16: 4-bi
 The picture below shows how INT4 weights are quantized, packed two per byte, and dequantized in the kernel:
 
 {: .picture}
-<img width="64.2%" height="64.2%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
+<img width="64.1%" height="64.1%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
 
 Rounding each weight to the nearest level (*round-to-nearest*) works well at 8 bits, but loses too much accuracy at 4 bits. Two methods, GPTQ and AWQ (below), made 4-bit weights practical. Other common formats are NF4, from [QLoRA](https://arxiv.org/abs/2305.14314), whose levels are placed for normally distributed weights, and the GGUF formats of [llama.cpp](https://en.wikipedia.org/wiki/Llama.cpp), for CPUs and edge devices.
 
@@ -509,7 +509,7 @@ def quantize_gptq(model, data, n_batches, batch_size, seqlen, bits=4, group_size
 [AWQ](https://arxiv.org/abs/2306.00978) (Activation-aware Weight Quantization) observes that a small fraction of the weights (about 1%) matters much more than the rest: those that multiply large activations. Instead of keeping them in high precision, it multiplies the salient input channels of the weights by a factor before quantization (and divides the corresponding activations by the same factor, which keeps the output of the layer and can be folded into the previous operation), so that they are rounded more accurately. The factors are searched on calibration data. Unlike GPTQ, AWQ does not update the weights to fit the calibration data, so it is less likely to overfit the calibration set.
 
 {: .picture}
-<img width="62.7%" height="62.7%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
+<img width="62.8%" height="62.8%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
 
 {: .caption}
 $$s_j = \text{mean}\lvert X_j \rvert^\alpha$$, with $$\alpha$$ searched on calibration data. The weights of the salient channel become larger, so rounding loses less of them. The division by $$s$$ is folded into the operation before. Inspired by: [AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration](https://arxiv.org/abs/2306.00978)
@@ -701,7 +701,7 @@ class FakeQuantLinear(nn.Module):
 The picture below shows the FP4 values and the blocks of both formats:
 
 {: .picture}
-<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
+<img width="99.4%" height="99.4%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
 
 The following code simulates both formats with fake quantization. Used with the `FakeQuantLinear` layer above, it quantizes the weights and activations of GPTlite to FP4:
 
