@@ -249,27 +249,29 @@ sections 6 and 7, and the font section 4.
 
 - Every geometric element with a fill (rectangles, rounded boxes, circles, cubes, cylinders, filled table
   cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000, no stroke
-  opacity. Its width depends on its role, so that boxes stand out and the cells of a matrix stay light:
+  opacity. One weight, 1.6 px, for every outline, arrow and line; only the cells of a block are lighter:
   ```
-  operation, layer, module, kernel                 2 px
-  device, process, group, section (frame)          2 px
-  operator (+, x, concatenation)                   2 px
-  data (tensor, vector, token, buffer)             1.2 px
-  block arrow                                      1.2 px
-  neuron, graph node                               1.2 px
-  matrix or array cell                             1 px, and a 2 px outline around each block of cells
-  isometric cube cell                              0.6 px, and a 2 px outline around each block of cubes
-  pipeline pass                                    1 px (section 8)
+  operation, layer, module, kernel                 1.6 px
+  device, process, group, section (frame)          1.6 px
+  operator (+, x, concatenation)                   1.6 px
+  data (tensor, vector, token, buffer)             1.6 px
+  block arrow                                      1.6 px
+  neuron, graph node                               1.6 px
+  matrix or array cell                             0.8 px, and a 1.6 px outline around each block of cells
+  isometric cube cell                              0.8 px, and a 1.6 px outline around each block of two or
+                                                   more cubes; a single cube (a token, a K or V block) has
+                                                   no outer outline
+  pipeline pass                                    0.8 px (section 8)
   ```
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
     frame around the box (the red #b85450 2 px outlines of the modules in the GPT-lite pictures);
-  - colored frames that highlight a group of parts (the orange KV cache frames, the red frame of process A
-    in all_to_all);
-  - thicker lines that emphasise a part of a drawing (for example DualPipe's "overlapped forward &
-    backward" frames): 2.5 px;
+  - colored frames that highlight a group of parts, at least 2 px (the orange KV cache frames, the red frame
+    of process A in all_to_all);
+  - thicker black lines and outlines that emphasise a part of a drawing, at least 2.5 px (DualPipe's
+    "overlapped forward & backward" frames, the selected experts in moe_switch_transformers);
   - dashed outlines of elements that are not frames: 0.8 px on filled elements, 1 px on lines without fill
-    (a dashed frame is 2 px, as other frames; the dash keeps its pattern);
+    (a dashed frame is 1.6 px, as other frames; the dash keeps its pattern);
   - white masks that hide parts of a drawing, faded elements, curly brackets, red cross marks, and table
     grid lines without fill.
 - Thin arrows: black #000000, 1.6 px, endArrow=block, endFill=1, endSize=5. Dashed arrows use the same
@@ -342,8 +344,8 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
   GPU, so its passes take the full time.
-- Each row is a 1.5 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
-  is idle time. A pass is one cell with a 1 px black outline, in the pipeline colors of section 5; a backward
+- Each row is a 1.6 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
+  is idle time. A pass is one cell with a 0.8 px black outline, in the pipeline colors of section 5; a backward
   pass is one cell of two units, not two cells.
 - Every pass cell holds its micro-batch number, also the single micro-batch 1 of pipeline_8_stages,
   pipeline_4_stages and pipeline_2_stages. Micro-batch numbers are 10 px: black on the base colors, white on

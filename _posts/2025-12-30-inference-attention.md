@@ -74,7 +74,7 @@ Decode reads the whole KV cache at every step. A smaller KV cache therefore mean
 **Multi-Query Attention** ([MQA](https://arxiv.org/abs/1911.02150)) keeps one query per head, but all heads share a single key head and a single value head. This shrinks the KV cache by a factor equal to the number of heads, at some cost in quality.
 
 {: .picture}
-<img width="97.7%" height="97.7%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
+<img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/mqa.svg"/>
 
 **Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)) is the middle ground, and most current models use it. The heads are split into $$G$$ groups, and the heads of a group share one key head and one value head. The cache shrinks by a factor $$n_\text{heads} / G$$. GQA is multi-head attention when $$G = n_\text{heads}$$, and MQA when $$G = 1$$. A trained multi-head model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute.
 

@@ -99,6 +99,12 @@ that is not wrong.
   and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 8 figures have lines thinner than 0.7 px;
   `publications/attention_mech.svg` has 8 arrow heads smaller than size 6. Fix: set them to the values of CLAUDE.md,
   then run the check again.
+- Line weights and arrow layout: only the 44 pictures of the third iteration follow sections 6 and 7 of CLAUDE.md
+  (1.6 px outlines, arrows and lines, 0.8 px cells, round operations, square data, heads of size 5); the other
+  draw.io figures keep the thinner lines of the originals. The arrow check also finds lines through labels and
+  arrowheads that touch in some of them, for example the All-to-All lines of
+  `distributed-training/imgs/moe_gshard.svg` and the arrows of `gptlite/gptlite_embedding.svg`. Fix: apply the style
+  of the sample to every draw.io figure, then run the arrow check again.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 
