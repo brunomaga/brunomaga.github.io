@@ -7318,10 +7318,10 @@
         <mxCell id="csa-figure" connectable="0" parent="1" style="group;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="321.3" width="715.6" x="0" y="3244.3" as="geometry" />
         </mxCell>
-        <mxCell id="csa-59" parent="csa-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+        <mxCell id="csa-59" parent="csa-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2.5;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="31.36" width="25.92" x="209.57" y="130.94" as="geometry" />
         </mxCell>
-        <mxCell id="csa-58" parent="csa-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+        <mxCell id="csa-58" parent="csa-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2.5;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="31.36" width="25.92" x="54.05" y="130.94" as="geometry" />
         </mxCell>
         <mxCell id="csa-40" parent="csa-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#d79b00;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -7528,10 +7528,10 @@
         <mxCell id="hca-figure" connectable="0" parent="1" style="group;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="321.3" width="788.8" x="0" y="3665.6" as="geometry" />
         </mxCell>
-        <mxCell id="hca-68" parent="hca-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+        <mxCell id="hca-68" parent="hca-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2.5;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="31.36" width="25.92" x="222.32" y="130.94" as="geometry" />
         </mxCell>
-        <mxCell id="hca-67" parent="hca-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+        <mxCell id="hca-67" parent="hca-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2.5;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="31.36" width="25.92" x="66.8" y="130.94" as="geometry" />
         </mxCell>
         <mxCell id="hca-55" parent="hca-figure" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#d79b00;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
@@ -11597,7 +11597,7 @@
         <mxCell id="kivi-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="kivi-figure">
           <mxGeometry x="305.67" y="171.39" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-87" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="kivi-figure">
+        <mxCell id="kivi-87" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2.5;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="kivi-figure">
           <mxGeometry x="0" y="99.06" width="98" height="28" as="geometry" />
         </mxCell>
         <mxCell id="kivi-89" value="recent: FP16" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kivi-figure">
@@ -11864,7 +11864,7 @@
         <mxCell id="kivi-177" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;fontColor=#000000;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="kivi-figure">
           <mxGeometry x="749" y="171.39" width="23.33" height="23.33" as="geometry" />
         </mxCell>
-        <mxCell id="kivi-178" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="kivi-figure">
+        <mxCell id="kivi-178" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;strokeWidth=2.5;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="kivi-figure">
           <mxGeometry x="466.67" y="52.39" width="28" height="144.67" as="geometry" />
         </mxCell>
         <mxCell id="kivi-180" value="recent: FP16" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="kivi-figure">
@@ -14103,7 +14103,7 @@
         <mxCell id="spec_sampling-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="1658.32" width="878" height="280.8" as="geometry" />
         </mxCell>
-        <mxCell id="spec_sampling-34" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
+        <mxCell id="spec_sampling-34" value="" style="rounded=1;arcSize=10;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=2.5;absoluteArcSize=1;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">
           <mxGeometry x="87.5" y="51.4" width="70" height="208" as="geometry" />
         </mxCell>
         <mxCell id="spec_sampling-3" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=0.8;fontFamily=Source Sans 3;" vertex="1" parent="spec_sampling-figure">

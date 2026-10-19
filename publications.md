@@ -1773,7 +1773,7 @@ A clearer explanation can be found on this [google research post](https://blog.r
 **Bidirectional attention**, where there's no notion of past and future: by decoupling matrices $$Q′$$ and $$K′$$ used in lower rank decomposition of $$A$$ and conducting matrix multiplications in the order indicated by dashed-boxes, we obtain a linear attention mechanism, never explicitly constructing $$A$$ or its approximation:
 
 {: .picture}
-<img loading="lazy" width="70.6%" height="70.6%" src="{{ site.assets }}/publications/performers.svg"/> 
+<img loading="lazy" width="70.7%" height="70.7%" src="{{ site.assets }}/publications/performers.svg"/> 
 
 {: .caption}
 **Left:** Standard attention module computation, where the final desired result is computed by performing a matrix multiplication with the attention matrix $$A$$ and value tensor $$V$$. **Right:** Decoupling matrices $$Q′$$ and $$K′$$ used in the lower rank decomposition of $$A$$ and conducting the matrix multiplications in the order indicated by the dashed boxes gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation. Adapted from: [Rethinking Attention with Performers](https://research.google/blog/rethinking-attention-with-performers/)

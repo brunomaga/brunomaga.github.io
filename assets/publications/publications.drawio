@@ -2419,10 +2419,10 @@
         <mxCell id="performers-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="5371.21" width="629.97" height="209.17" as="geometry" />
         </mxCell>
-        <mxCell id="performers-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;fontSize=12;absoluteArcSize=1;arcSize=10;dashed=1;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="performers-figure">
+        <mxCell id="performers-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;fontSize=12;absoluteArcSize=1;arcSize=10;dashed=1;strokeWidth=2.5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="performers-figure">
           <mxGeometry x="11.49" y="0" width="262.67" height="209.17" as="geometry" />
         </mxCell>
-        <mxCell id="performers-2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;fontSize=12;absoluteArcSize=1;arcSize=10;dashed=1;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="performers-figure">
+        <mxCell id="performers-2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#b85450;fontSize=12;absoluteArcSize=1;arcSize=10;dashed=1;strokeWidth=2.5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="performers-figure">
           <mxGeometry x="308.67" y="0.43" width="321.3" height="208.74" as="geometry" />
         </mxCell>
         <mxCell id="performers-3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;fontSize=12;absoluteArcSize=1;arcSize=10;dashed=1;strokeWidth=2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="performers-figure">
