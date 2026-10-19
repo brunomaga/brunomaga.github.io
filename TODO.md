@@ -412,12 +412,29 @@ that is not wrong.
   and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 8 figures have lines thinner than 0.7 px;
   `publications/attention_mech.svg` has 8 arrow heads smaller than size 6. Fix: set them to the values of CLAUDE.md,
   then run the check again.
-- Line weights and arrow layout: only the 44 pictures of the third iteration follow sections 6 and 7 of CLAUDE.md
-  (1.6 px outlines, arrows and lines, 0.8 px cells, round operations, square data, heads of size 5); the other
-  draw.io figures keep the thinner lines of the originals. The arrow check also finds lines through labels and
-  arrowheads that touch in some of them, for example the All-to-All lines of
-  `distributed-training/imgs/moe_gshard.svg` and the arrows of `gptlite/gptlite_embedding.svg`. Fix: apply the style
-  of the sample to every draw.io figure, then run the arrow check again.
+- The arrow check of the restyle (CLAUDE.md, Pictures, section 6) still reports 477 findings in 66 draw.io figures:
+  195 arrows with less than 6 px of line before the head, 175 lines through the text box of a label, 55 labels that
+  run into a box, 27 heads on text, 17 heads that touch and 8 overlapping boxes. Most are in dense pictures from
+  papers: `deep-neural-networks/densenet.svg` (50), `matrix-transpose/xcrs_format.svg` (48),
+  `distributed-training/imgs/moe_gshard.svg` (22), `publications/performers.svg` (21) and `publications/helix.svg`
+  (21); some are text boxes larger than their text. Fix: check each picture at its page size, and move the labels
+  and arrows that touch.
+- Pictures to redraw, from the user's review of the four line weights (the next step of the restyle):
+  - `inference/imgs/continuous_chunked_batching.svg` differs from its original. Fix: redraw it from the original, and
+    add continuous batching with chunked prefill.
+  - `distributed-training/imgs/workflow_data_parallelism.svg` and `workflow_sharding.svg` changed too much. Fix: the
+    layout of the originals in this style, with square inputs, outputs and activations, and round layers and
+    parameters.
+  - `neuron-electrical-activity/neuron_model_scales.svg`: the compartmental membrane and the reaction-diffusion parts
+    look poor. Fix: redraw them from the source file.
+  - `distributed-training/imgs/vdnn2.svg` and `vdnn3.svg` are too tall. Fix: a lower layout, with the outlines and
+    arrows of CLAUDE.md.
+  - `inference/imgs/medusa.svg`, `eagle.svg` and the other pictures of the speculative decoding draft show a 4 x 1
+    matrix after the target model, where the originals show a row of 3D cubes. Fix: the row of cubes again.
+  - `neuron-variable-timestep/lvardt_exec_time_comparison.svg`. Fix: thick axes and color-coded lines.
+  - `inference/imgs/prefill_decode.svg`, `publications/helix.svg` and `distributed-training/imgs/moe_megablocks.svg`
+    are crowded. Fix: draw them 880 px wide (100%), with more space between their parts.
+  - `distributed-training/imgs/dnn_model_parallelism.svg` is hard to read at its width. Fix: draw it larger.
 
 ### Distributed Matrix Transpose Algorithms (2015-04-21-matrix-transpose.md)
 

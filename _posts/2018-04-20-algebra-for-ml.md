@@ -181,7 +181,7 @@ which equals $$\det(D)$$, the product of the eigenvalues, and $$A^k = (PDP^{−1
 The **[Singular Value Decomposition](https://en.wikipedia.org/wiki/Singular_value_decomposition)** (SVD) is a decomposition of the form $$A = U \Sigma V^{\intercal}$$:
 
 {: .picture}
-<img width="40.7%" height="40.7%" src="{{ site.assets }}/algebra-for-ml/mml_svd.svg"/>
+<img width="40.6%" height="40.6%" src="{{ site.assets }}/algebra-for-ml/mml_svd.svg"/>
 
 {: .caption}
 The SVD of a matrix $$A \in \mathbb{R}^{m \times n}$$, $$A = U \Sigma V^{\intercal}$$, with the orthogonal matrices $$U \in \mathbb{R}^{m \times m}$$ and $$V \in \mathbb{R}^{n \times n}$$, and $$\Sigma \in \mathbb{R}^{m \times n}$$, whose only non-zero entries are the singular values on its diagonal. Adapted from: [Mathematics for Machine Learning, Section 4.5](https://mml-book.github.io/)
@@ -202,7 +202,7 @@ $$
 where $$A_i = u_i v_i^{\intercal}$$ is a matrix of rank 1, so that $$\hat{A}(k)$$ needs only $$k(m+n+1)$$ values instead of $$mn$$. The SVD and its use for image compression are illustrated below:
 
 {: .picture}
-<img width="39.8%" height="39.8%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="57.9%" height="57.9%" src="{{ site.assets }}/algebra-for-ml/svd_example.svg"/>
+<img width="39.9%" height="39.9%" src="{{ site.assets }}/algebra-for-ml/svd_example_2.svg"/> $$\,\,\,\,$$ <img width="57.9%" height="57.9%" src="{{ site.assets }}/algebra-for-ml/svd_example.svg"/>
 
 {: .caption}
 **Left:** the SVD of a matrix $$A \in \mathbb{R}^{3 \times 2}$$ as a sequence of three transformations. Top-left to bottom-left: $$V^{\intercal}$$ performs a basis change in $$\mathbb{R}^2$$, which maps the right-singular vectors $$v_1$$, $$v_2$$ to the standard basis vectors $$e_1$$, $$e_2$$. Bottom-left to bottom-right: $$\Sigma$$ scales by the singular values $$\sigma_1$$, $$\sigma_2$$ and maps from $$\mathbb{R}^2$$ to $$\mathbb{R}^3$$. The ellipse in the bottom-right lives in $$\mathbb{R}^3$$, and the third dimension is orthogonal to the surface of the elliptical disk. Bottom-right to top-right: $$U$$ performs a basis change within $$\mathbb{R}^3$$, to the left-singular vectors $$u_1$$, $$u_2$$. Top-left to top-right: $$A = U \Sigma V^{\intercal}$$ maps the unit circle directly. **Right:** an application of the SVD to image compression: (a) a $$256 \times 256$$ gray image, and its approximations with its (b) 20, (c) 50 and (d) 85 largest singular values. Adapted from: [Mathematics for Machine Learning, Figure 4.8](https://mml-book.github.io/) (left) and [T. Workalemahu, Singular Value Decomposition in Image Noise Filtering and Reconstruction, Georgia State University, 2008](https://scholarworks.gsu.edu/math_theses/52/) (right)
@@ -348,7 +348,7 @@ f & = d + e \, .
 $$
 
 {: .picture}
-<img width="64.9%" height="64.9%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
+<img width="65.1%" height="65.1%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
 
 {: .caption}
 Computation graph of $$f(x) = \sqrt{x^2 + \exp(x^2)} + \cos(x^2 + \exp(x^2))$$, with the intermediate variables $$a = x^2$$, $$b = \exp(a)$$, $$c = a + b$$, $$d = \sqrt{c}$$ and $$e = \cos(c)$$, and $$f = d + e$$. Adapted from: [Mathematics for Machine Learning, Example 5.14](https://mml-book.github.io/)

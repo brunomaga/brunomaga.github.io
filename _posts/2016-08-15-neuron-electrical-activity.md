@@ -26,7 +26,7 @@ Due to the very sophisticated anatomical structure and behaviour of neurons, num
 Brain simulators also work at different levels of detail, as displayed in the picture below, where each model zooms into a part of the model on its left:
 
 {: .picture}
-<img width="99.2%" height="99.2%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
+<img width="99.1%" height="99.1%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
 
 {: .caption}
 Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
@@ -218,7 +218,7 @@ Most equations that govern brain mechanisms do not have an analytic solution. Th
 Due to the unique morphology of a cable model representation of a discretized neuron, NEURON implements an optimized linear solver for bifurcated trees, called the Hines Algorithm ([Efficient computation of branched nerve equations, Hines, Elsevier][hines1984efficient]). Data is represented as a sparse matrix (tridiagonal, except for the entries of the branching points) where the indices of the parent nodes (the ones immediately above in the tree structure) are provided by an extra vector $$p$$. The coefficient of the membrane potential of each compartment in its own equation is represented by the main diagonal. The contributions from a parent to its children compartments (and vice versa) are represented by all cells on the same row (column) of the upper (lower) triangle of the matrix. As each compartment can have only one parent, this enforces only one cell per row on the lower triangle, and one cell per column on the upper triangle. For completeness, the following pictures present a neuron's dendritic arborization spatially discretized based on the cable model (left) and its sparse matrix representation according to the Hines algorithm (right).
 
 {: .picture}
-<img width="44%" height="44%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.2%" height="34.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
+<img width="44.2%" height="44.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.1%" height="34.1%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
 
 
 The main rationale behind the Hines algorithm is that if the compartments can be numbered sequentially in such a way that each one has an index greater than its parent's, then the computational complexity of the solver can be reduced from the $$O(n^3)$$ of a typical [Gaussian elimination](https://en.wikipedia.org/wiki/Gaussian_elimination) to $$O(n)$$. Given a tridiagonal matrix with vectors $$d$$ (main diagonal), $$b$$ (lower diagonal) and $$a$$ (upper diagonal), representing a single cable without branching, it can be shown that the Hines algorithm is an inverted Gaussian elimination adapted for branched structures:

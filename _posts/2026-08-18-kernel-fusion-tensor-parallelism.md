@@ -38,7 +38,7 @@ $$
 where the sum of the partial outputs $$H^{(g)} W_2^{(g)} \in \mathbb{R}^{M \times P}$$ of all GPUs is an all-reduce. Note that the all-reduce must finish before $$b_2$$ and the second activation are applied: the bias is added once, and the activation is not linear, so it cannot be applied to the partial outputs. Thus, this layout needs only one communication step per pair of layers. The following picture illustrates this execution on 2 GPUs, A and B:
 
 {: .picture}
-<img width="96.7%" height="96.7%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
+<img width="96.8%" height="96.8%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
 
 {: .caption}
 Megatron-LM tensor parallelism of an FFN on 2 GPUs (A in green, B in blue). The bias and activation are omitted.
@@ -74,7 +74,7 @@ $$
 When all tiles of $$H$$ are processed, $$Y$$ holds the full product $$H W_2$$, and $$H$$ was never stored in global memory, as illustrated below:
 
 {: .picture}
-<img width="97.8%" height="97.8%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
+<img width="98%" height="98%" src="{{ site.assets }}/inference/imgs/tp_matmuls.svg"/>
 
 {: .caption}
 **Left:** the regular execution computes all tiles of $$H$$, stores $$H$$ in global memory, and a second kernel computes $$Y$$. **Right:** the fused kernel multiplies each tile of $$H$$ by a row of tiles of $$W_2$$ and accumulates the results in a row of tiles of $$Y$$.
@@ -157,7 +157,7 @@ In a [Mixture-of-Experts]({{ site.baseurl }}{% post_url 2024-01-19-mixture-of-ex
 In 2025, the paper [Accelerating MoE Model Inference with Expert Sharding](https://arxiv.org/abs/2503.08467) proposed **expert sharding**, which splits every expert across all GPUs instead, as Megatron-LM splits the FFN. Each GPU holds a $$1/G$$ share of the columns of $$W_i$$ and the matching rows of $$W_o$$ of every expert, and processes all the tokens of each expert with these slices. The partial outputs of all GPUs are then summed, so each expert is an FFN with Megatron-LM tensor parallelism, and runs with the fused kernel of this post, as pictured below:
 
 {: .picture}
-<img width="59.5%" height="59.5%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
+<img width="59.7%" height="59.7%" src="{{ site.assets }}/inference/imgs/tp_expert_sharding.svg"/>
 
 {: .caption}
 One expert, with $$W_i$$ in green and $$W_o$$ in red. The activation is omitted. **(a)** Without parallelism, one GPU holds the whole expert. **(b)** With expert sharding, GPU A holds the first half of the columns of $$W_i$$ and of the rows of $$W_o$$, and GPU B the second half. The dashed slices are on the other GPU. Both GPUs process all the tokens $$x$$, and a sum-reduce adds their partial outputs $$y_A$$ and $$y_B$$. Inspired by Figure 2 of [Accelerating MoE Model Inference with Expert Sharding](https://arxiv.org/abs/2503.08467).

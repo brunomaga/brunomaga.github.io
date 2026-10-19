@@ -22,7 +22,7 @@ The structure of its Recurrent Neural Network (RNN) is as follows:
 This structure is easily represented by the following picture:
 
 {: .picture}
-<img width="33.9%" height="33.9%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
+<img width="33.8%" height="33.8%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
 
 {: .caption}
 The recurrent neural network trained at each step of the encoder-decoder architecture. Its input layer is the concatenation of the hidden layer of the previous iteration (green) and the embedding of the current input word (blue). The hidden layer (green) holds the states of the GRU or LSTM neurons, and the output layer (red) holds the model output. 
@@ -34,7 +34,7 @@ The training consists of an encoding and a decoding phase:
 This algorithm can be illustrated as:
 
 {: .picture}
-<img width="96%" height="96%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
+<img width="96.5%" height="96.5%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
 
 {: .caption}
 Training workflow of an encoder-decoder architecture that learns the translation of the English sentence "Hello World." into the French sentence "Bonjour le monde.".
@@ -52,7 +52,7 @@ Note that accurate results for long sentences are hard to obtain, as recurrent n
 In 2017, researchers at Google introduced the [Transformer](https://en.wikipedia.org/wiki/Transformer_(deep_learning)) (original paper [Attention is all you need (2017, Google, arXiv)](https://arxiv.org/abs/1706.03762)), overcoming many of the previous issues while demonstrating better results. The transformer architecture is the following:
 
 {: .picture}
-<img width="44.3%" height="44.3%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
+<img width="43.8%" height="43.8%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
 
 {: .caption}
 The transformer architecture. Grey regions represent one encoder layer (left) and one decoder layer (right), each repeated N times. Adapted from: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
@@ -175,7 +175,7 @@ Going back to the previous section, the main rationale of the Transformer's Enco
 So, the encoder is trained efficiently and learns a *context*. The main question is then "Can only the Encoder's context be used to learn complex tasks?". This led to the introduction of the BERT model (original paper [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding, Google AI](https://arxiv.org/abs/1810.04805)). BERT is a stack of Transformer encoders that learns language contexts and performs interpretation tasks. As the encoder has no mask, the context of each word is learnt from the words before and after it (hence *Bidirectional*).
 
 {: .picture}
-<img width="95.3%" height="95.3%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
+<img width="95.2%" height="95.2%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
 
 {: .caption}
 The BERT model, as a stack of Transformer encoders. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
@@ -224,7 +224,7 @@ In the original paper, the authors successfully applied this model to four famil
 The inputs and outputs of the fine-tuning for these tasks are illustrated in the following picture: 
 
 {: .picture}
-<img width="99.7%" height="99.7%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
 
 {: .caption}
 Input and output of the fine-tuning phase of a BERT network, applied to four types of tasks: (a) sentence pair classification (MNLI, QQP, QNLI, STS-B, MRPC, RTE, SWAG), (b) single sentence classification (SST-2, CoLA), (c) question answering (SQuAD v1.1) and (d) single sentence tagging (CoNLL-2003 NER). Adapted from: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)
