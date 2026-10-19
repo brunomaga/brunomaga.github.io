@@ -66,7 +66,7 @@ This post details the C++ implementation of the GPT-3 Small model with N decoder
 
 ## GPTlite on LibTorch C++ {#gptlite-model}
 
-The post starts with the GPT implementation in C++. The subsections that follow match exactly the structure of the post with the GPTlite implementation in Python.
+The post starts with the GPT implementation in C++. It uses LibTorch, the C++ distribution of PyTorch, whose C++ frontend provides an API as close as possible to the Python one. The subsections that follow match exactly the structure of the post with the GPTlite implementation in Python.
 
 ### Hyperparameters
 
@@ -470,7 +470,7 @@ void benchmark_inference(ModelType & model, InputType x) {
 
 ## TorchScript: python for training, C++ for inference
 
-In ideal scenarios, one would want the flexibility and development speed of Python, with the low memory footprint and high efficiency of C++. This is possible with [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html). To do that, the model `model` is trained in Python and output as the binary file `model_jit.pt`, via:
+In ideal scenarios, one would want the flexibility and development speed of Python, with the low memory footprint and high efficiency of C++. This is possible with [TorchScript](https://pytorch.org/tutorials/beginner/Intro_to_TorchScript_tutorial.html), which turns PyTorch code into a serializable and optimizable model that can be loaded and run without any Python dependency. To do that, the model `model` is trained in Python and output as the binary file `model_jit.pt`, via:
 
 ```python
 model_jit = torch.jit.script(model) 
