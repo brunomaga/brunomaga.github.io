@@ -5,13 +5,13 @@ categories: ["Machine Learning"]
 tags: ["probability distributions", "exponential family", "MLE"]
 ---
 
-The [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}) showed that the Maximum Likelihood estimator and the Maximum-a-Posteriori on a normally distributed set of parameters become much easier to compute after applying the log-trick. Since $$\log$$ is a monotonically increasing function, the maximum and minimum of the function to be optimized are attained at the same points as those of the original function inside the $$\log$$ operator. Applying the $$\log$$ function converts a product of exponentials into a sum, which makes the normal distribution simpler and faster to compute.
+The [previous post]({{ site.baseurl }}{% post_url 2018-08-20-bayesian-linear-regression %}) showed that computing the Maximum Likelihood estimator and the Maximum-a-Posteriori on a normally distributed set of parameters becomes much easier once the log-trick is applied. The rationale is that since $$\log$$ is a monotonically increasing function, the maximum and minimum of the function to be optimized are attained at the same points as those of the original function inside the $$\log$$ operator. Thus, by applying the $$\log$$ function, the normal distribution becomes simpler and faster to compute, as a product of exponentials is converted into a sum.
 
-However, this property is not exclusive to the Gaussian distribution. Most common distributions, including the exponential, log-normal, gamma, chi-squared, beta, Dirichlet, Bernoulli, categorical, Poisson, geometric, inverse Gaussian, von Mises and von Mises-Fisher distributions, can be written in a similar form, which makes them equally simple to compute. This set of distributions is called the **Exponential Family of Distributions**, and is the topic of this post.
+However, this is not a property of the Gaussian distribution only. In fact, most common distributions, including the exponential, log-normal, gamma, chi-squared, beta, Dirichlet, Bernoulli, categorical, Poisson, geometric, inverse Gaussian, von Mises and von Mises-Fisher distributions, can be represented with a similar syntax, making them simple to compute as well. The set of such distributions is called the **Exponential Family of Distributions**, and is discussed next.
 
 ### Detour: relationship between common probability distributions
 
-Probability distributions describe the probability of each outcome, and the probabilities of all outcomes add up to 1. Distributions fall into two groups: those described by a probability **mass function**, defined over discrete values, and those described by a probability **density function**, defined over a continuous interval. There are dozens (possibly hundreds) of distributions, but only 15 of them are commonly used. These are related to each other as follows:
+Probability distributions describe the probabilities of each outcome, with the common property that the probabilities of all outcomes add up to 1. They can also be classified into two subsets: the ones described by a probability **mass function**, if specified for discrete values, or by a probability **density function**, if described within some continuous interval. There are dozens (hundreds?) of different distributions, even though only 15 of them are often mentioned and used, and they have some kind of relationship among themselves:
 
 {: .picture}
 <img width="86.4%" height="86.4%" src="{{ site.assets }}/exponential-family/common_distributions.svg"/>
@@ -21,13 +21,13 @@ The 15 most common probability distributions and their relationships. Adapted fr
 
 
 A brief summary of their relationships follows. More details are available in the original [post](https://medium.com/@srowen/common-probability-distributions-347e6b945ce4) by Sean Owen:
-- *Bernoulli and Uniform*: the uniform distribution assigns equal probability to each discrete outcome, e.g. a coin toss or a dice roll. The Bernoulli distribution assigns unequal probabilities $$p$$ and $$1-p$$ to two discrete outcomes, e.g. an unfair coin toss;
-- *Binomial and Hypergeometric*: the binomial is the distribution of the sum of outcomes of a Bernoulli-distributed variable. For example, when rolling a dice 30 times, the number of sixes follows a binomial distribution with parameters $$n$$, the number of trials, and $$p$$, the probability of success (as in the Bernoulli). The binomial assumes independent trials, i.e. draws with replacement. The hypergeometric distribution counts the successes in $$n$$ draws *without* replacement from a finite population that contains a fixed number of successes;
-- *Poisson and Binomial*: like the binomial, the Poisson distribution is a distribution of a count: the number of times an event happens over a fixed time interval, given the rate at which the event occurs. It is parametrized by $$\lambda = np$$ (the $$n$$ and $$p$$ parameters of the binomial);
-- *Geometric and Negative Binomial*: the binomial counts the number of times an event *succeeds* over a number of trials. The geometric distribution instead counts the failed trials until the event succeeds. The negative binomial distribution generalizes the geometric: it counts the failures until $$r$$ successes occur, not just 1;
-- *Exponential and Weibull*: the exponential distribution is the geometric on a continuous interval, parametrized by $$\lambda$$, like the Poisson. It describes "time until event or failure" at a constant rate. In contrast, the Weibull distribution models a failure rate that increases or decreases over time (i.e. it models *time-to-failure*);
-- *Normal, Log-Normal, Student’s t, and Chi-squared*: the sum of a large set of independent values that follow the same (any) distribution with finite variance approximately follows the normal distribution. This holds regardless of the underlying distribution, provided its variance is finite, and is known as the [**Central Limit Theorem**](https://en.wikipedia.org/wiki/Central_limit_theorem). The log-normal distribution describes variables whose logarithm is normally distributed, i.e. the exponential of a normally distributed variable is log-normally distributed. Student's t-distributions are normal-like distributions with *fatter* tails, and approach the normal distribution as their parameter increases. The chi-squared distribution is the distribution of the sum of squares of normally distributed values;
-- *Gamma and Beta*: the gamma distribution generalizes the exponential and the chi-squared distributions. Like the exponential, it models waiting times, e.g. the time until the next $$n$$ events occur. In machine learning, it appears as the conjugate prior of some distributions. The beta distribution is the conjugate prior of the Bernoulli, binomial, negative binomial and geometric distributions.
+- *Bernoulli and Uniform*: the uniform distribution assigns equal probability to each discrete outcome, e.g. a coin toss or a dice roll; the Bernoulli assigns unequal probabilities $$p$$ and $$1-p$$ to two discrete outcomes, e.g. an unfair coin toss;
+- *Binomial and Hypergeometric*: the binomial can be seen as the distribution of the sum of outcomes of something that follows a Bernoulli distribution, e.g. if a dice is rolled 30 times, how many times does a six come up? This count follows the binomial distribution, with parameters $$n$$, the number of trials, and $$p$$, the probability of success (a la Bernoulli). The binomial assumes independent trials, i.e. draws with replacement, while the hypergeometric distribution counts the successes in $$n$$ draws *without* replacement from a finite population that contains a fixed number of successes;
+- *Poisson and Binomial*: like the binomial distribution, the Poisson distribution is a distribution of a count: the number of times some event happened over a fixed interval of time, given a rate for the event to occur. It is parametrized as $$\lambda = np$$ (the $$n$$ and $$p$$ parameters of the binomial, in the limit of a large $$n$$ and a small $$p$$);
+- *Geometric and Negative Binomial*: while the binomial counts the number of times an event *succeeds* after a number of trials, the geometric distribution counts how many failed trials occur until the event succeeds; the negative binomial distribution is a simple generalization of the geometric, measuring the number of failures until $$r$$ successes have occurred, not just 1;
+- *Exponential and Weibull*: the exponential distribution is the geometric on a continuous interval, parametrized by $$\lambda$$, like the Poisson. While it describes "time until event or failure" at a constant rate, the Weibull distribution models increases or decreases of the rate of failures over time (i.e. models *time-to-failure*);
+- *Normal, Log-Normal, Student’s t, and Chi-squared*: if one takes a large set of independent values following the same (any) distribution with a finite variance and sums them, that sum approximately follows the normal distribution; this is true regardless of the underlying distribution, and this phenomenon is called the [**Central Limit Theorem**](https://en.wikipedia.org/wiki/Central_limit_theorem). The log-normal distribution relates to variables whose logarithm is normally distributed. The exponentiation of a normally distributed variable is log-normally distributed. Student's t-distributions are normal-like distributions with a *fatter* tail, although they approach the normal distribution as the parameter (the number of degrees of freedom) increases. The chi-squared distribution is the distribution of the sum of squares of independent, standard normally distributed values;
+- *Gamma and Beta*: the gamma distribution is a generalization of the exponential and the chi-squared distributions. Like the exponential distribution, it is used to model waiting times, e.g. the time until the next $$n$$ events occur. It appears in machine learning as the [conjugate prior](https://en.wikipedia.org/wiki/Conjugate_prior) to some distributions. The beta distribution is the conjugate prior to the Bernoulli, binomial, negative binomial and geometric distributions.
 
 ## Exponential Family of distributions
 
@@ -38,32 +38,32 @@ p(x \mid \theta) = h(x) \exp \left(\eta(\theta)^T T(x) -A(\theta)\right)
 \label{eq_main_theta}
 $$
 
-or, in expanded notation:
+or in a more extensive notation:
 
 $$
 p(x \mid \theta) = h(x) \exp\left(\sum_{i=1}^s \eta_i({\boldsymbol \theta}) T_i(x) - A({\boldsymbol \theta}) \right)
 $$
 
-where $$T(x)$$, $$h(x)$$, $$\eta(\theta)$$, and $$A(\theta)$$ are known functions. An alternative notation to equation \ref{eq_main_theta} writes $$A$$ as a function of $$\eta$$, regardless of the transformation from $$\theta$$ to $$\eta$$. This expression is the **natural form** of the exponential family:
+where $$T(x)$$, $$h(x)$$, $$\eta(\theta)$$, and $$A(\theta)$$ are known functions, and $$s$$ is the number of components of $$T(x)$$. An alternative notation to equation \ref{eq_main_theta} describes $$A$$ as a function of $$\eta$$, regardless of the transformation from $$\theta$$ to $$\eta$$. This new expression is called an exponential family in its **natural form**, and it looks like:
 
 $$
 p(x \mid \eta) = h(x) \exp \left(\eta^T T(x) -A(\eta)\right)
 \label{eq_main_eta}
 $$
 
-The term $$T(x)$$ is a **sufficient statistic** of the distribution: a function of the data that holds all the information the data $$x$$ provides about the unknown parameter values:
-- Intuitively, $$T(X)$$ is sufficient for $$\theta$$ if $$X$$ holds no information about $$\theta$$ beyond that in $$T(X)$$. That is, once $$T(X)$$ is observed, $$X$$ can be discarded for the purposes of inference with respect to $$\theta$$;
-- As a consequence, the likelihood *ratio* is the same for any two datasets $$x$$ and $$y$$ with the same sufficient statistic, i.e. if $$T(x)=T(y)$$, then $$\frac{p(x \mid \theta_1)}{p(x \mid \theta_2)} = \frac{p(y \mid \theta_1)}{p(y \mid \theta_2)}$$;
+The term $$T(x)$$ is a **[sufficient statistic](https://en.wikipedia.org/wiki/Sufficient_statistic)** of the distribution. The sufficient statistic is a function of the data that holds all the information the data $$x$$ provides with regard to the unknown parameter values:
+- The intuitive notion of sufficiency is that $$T(X)$$ is sufficient for $$\theta$$ if there is no information in $$X$$ regarding $$\theta$$ beyond that in $$T(X)$$. That is, once $$T(X)$$ is observed, $$X$$ can be thrown away for the purposes of inference with respect to $$\theta$$;
+- Moreover, this means that the likelihood *ratio* is the same for any two datasets $$x$$ and $$y$$ with the same sufficient statistic, i.e. if $$T(x)=T(y)$$, then $$\frac{p(x \mid \theta_1)}{p(x \mid \theta_2)} = \frac{p(y \mid \theta_1)}{p(y \mid \theta_2)}$$.
 
 The term $$\eta$$ is the **natural parameter**, and the set of values of $$\eta$$ for which $$A(\eta)$$ is finite is called the **natural parameter space**, which is always convex. 
 
-The term $$A(\eta)$$ is the **log-partition function**. It is the logarithm of a normalization factor that ensures that the distribution $$p(x \mid \theta)$$ sums or integrates to one (otherwise, $$p(x \mid \theta)$$ would not be a probability distribution), i.e.:
+The term $$A(\eta)$$ is the **log-partition function**, because it is the logarithm of a normalization factor that ensures that the distribution $$p(x \mid \theta)$$ sums up or integrates to one (without which $$p(x \mid \theta)$$ would not be a probability distribution), i.e.:
 
 $$
 A(\eta) =  \log \int_x h(x) \exp (\eta^T T(x)) \, \mathrm{d}x;
 $$
 
-The mean and variance of $$T(x)$$ are given by the first and second derivatives of $$A(\eta)$$, respectively:
+Another important point is that the mean and variance of $$T(x)$$ can be derived by differentiating $$A(\eta)$$ and computing its first and second derivatives, respectively:
 
 $$
 \begin{align*}
@@ -77,7 +77,7 @@ $$
 \end{align*}
 $$ 
 
-i.e. the first derivative of $$A(\eta)$$ equals the mean of the sufficient statistic. The second derivative is:
+i.e. the first derivative of $$A(\eta)$$ is equal to the mean of the sufficient statistic. Now consider the second derivative:
 
 $$
 \begin{align*}
@@ -88,9 +88,9 @@ $$
 \end{align*}
 $$
 
-and, as expected, the second derivative equals the variance of $$T(X)$$.
+and, as expected, the second derivative is equal to the variance of $$T(X)$$.
 
-A requirement of exponential family distributions is that the density *must* factorize (i.e. be separable into products, each involving only one type of variable, $$x$$ or $$\theta$$), as either the power or the base of an exponentiation. That is, the factors must be one of the following:
+One requirement of exponential family distributions is that the density *must* factorize (i.e. must be separable into products, each of which involves only one type of variable, $$x$$ or $$\theta$$), as either the power or the base of an exponentiation operation. I.e. the factors must be one of the following:
 
 $$
 f(x), g(\theta), c^{f(x)}, c^{g(\theta)}, {[f(x)]}^c, {[g(\theta)]}^c, {[f(x)]}^{g(\theta)}, {[g(\theta)]}^{f(x)}, {[f(x)]}^{h(x)g(\theta)}, \text{ or } {[g(\theta)]}^{h(x)j(\theta)}
@@ -98,7 +98,7 @@ $$
 
 where $$f$$ and $$h$$ are arbitrary functions of $$x$$, $$g$$ and $$j$$ are arbitrary functions of $$\theta$$; and c is an arbitrary constant expression.
 
-Moreover, the product of two exponential-family distributions is also in the exponential family, but unnormalized:
+Another important point is that the product of two exponential-family distributions is also part of the exponential family, but unnormalized:
 
 $$
 \left[ h(x) \exp \left(\eta_1^T T(x) -A(\eta_1)\right) \right] 
@@ -106,8 +106,9 @@ $$
 = \widetilde{h}(x) \exp \left(\left(\eta_1+\eta_2\right)^T T(x) -\widetilde{A}(\eta_1, \eta_2)\right)
 $$
 
+where $$\widetilde{h}(x) = h(x)^2$$ and $$\widetilde{A}(\eta_1, \eta_2) = A(\eta_1) + A(\eta_2)$$.
 
-Finally, *exponential family distributions have conjugate priors* (i.e. priors for which the posterior is in the same family of distributions as the prior), and the *posterior predictive distribution always has a closed-form solution* (provided that the normalizing factor also has a closed form). Both properties are important in Bayesian statistics.
+Finally, *exponential family distributions have conjugate priors* (i.e. priors for which the posterior distribution is in the same family as the prior), and, with such priors, the *posterior predictive distribution always has a closed-form solution* (provided that the normalizing factor can also be stated in closed form), both important properties for Bayesian statistics.
 
 ## Example: Univariate Gaussian distribution
 
@@ -117,7 +118,7 @@ $$
 p(x \mid \mu, \sigma^2 ) = \frac{1}{ \sqrt{2 \pi \sigma^2} } \,\, \exp \left( - \frac{(x - \mu)^2}{2 \sigma^2} \right)
 $$
 
-for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$. Rearranging the terms gives:
+for a distribution with mean $$\mu$$ and standard deviation $$\sigma$$. By moving the terms around, the density can be written as:
 
 $$
 \begin{align*}
@@ -135,7 +136,7 @@ where:
 - $$\eta(\theta) = { \mu/(\sigma^2) \choose -1/(2\sigma^2) }$$, 
 - $$A(\eta) = \frac{\mu^2}{2\sigma^2} + \log \sigma = - \frac{ \eta^2_1}{4 \eta_2} - \frac{1}{2} \log(-2\eta_2)$$.
 
-The first and second derivatives of $$A(\eta)$$ give the mean and the variance of the sufficient statistic $$T(x)$$:
+The first and second derivatives of $$A(\eta)$$ are now used to compute the mean and the variance of the sufficient statistic $$T(x)$$:
 
 $$
 \begin{align*}
@@ -147,18 +148,18 @@ $$
 \end{align*}
 $$
 
-which is the mean of $$x$$, the first component of the sufficient statistic. The second derivative is:
+which is the mean of $$x$$, the first component of the sufficient statistic. Taking the second derivative yields:
 
 $$
 %% source: https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/other-readings/chapter8.pdf
 \frac{d^2A}{d\eta_1^2} = - \frac{1}{2\eta_2} = \sigma^2
 $$
 
-which is, by definition, the variance of the normal distribution.
+which is the variance of the normal distribution, by definition.
 
 ## Example: Bernoulli distribution
 
-The exponential family parameters of the Bernoulli distribution are computed similarly:
+Similarly, the exponential family parameters of the Bernoulli distribution are computed as follows:
 
 $$
 %% source: http://www.cs.columbia.edu/~jebara/4771/tutorials/lecture12.pdf
@@ -177,7 +178,7 @@ where:
 - $$\eta = \log \frac{\alpha}{1-\alpha}$$,
 - $$A(\eta) = \log ( 1+e^\eta)$$.
 
-The mean of $$T(x)$$ is:
+The mean of $$T(x)$$ is now computed as:
 
 $$
 \begin{align*}
@@ -185,7 +186,7 @@ $$
 \end{align*}
 $$
 
-which is the mean of a Bernoulli variable. The second derivative is:
+which is the mean $$\mu = \alpha$$ of a Bernoulli variable. Taking a second derivative yields:
 
 $$
 %% source: https://people.eecs.berkeley.edu/~jordan/courses/260-spring10/other-readings/chapter8.pdf
@@ -196,7 +197,7 @@ which is the variance of a Bernoulli variable.
 
 ## Parameters for common distributions
 
-The following table summarizes the most common distributions in the exponential family and their exponential-family parameters. A more exhaustive list is available in the [Wikipedia entry for Exponential Family](https://en.wikipedia.org/wiki/Exponential_family).
+The following table provides a summary of the most common distributions in the exponential family and their exponential-family parameters. A more exhaustive list is available in the [Wikipedia entry for Exponential Family](https://en.wikipedia.org/wiki/Exponential_family).
 
 <font size="2">
 <table class="table table-striped table-hover" style="border-spacing: 3px;">
@@ -376,7 +377,7 @@ with known number of trials <em>n</em></td>
 <td>
   <span class="math inline">\(
      f(x_1,\ldots,x_k;n,p_1,\ldots,p_k) = \\
-   = \frac{n!}{x_1!\cdots x_k!} p_1^{x_1} \cdots p_k^{x_k} \\
+   \frac{n!}{x_1!\cdots x_k!} p_1^{x_1} \cdots p_k^{x_k} \\
    \text{(where } \sum_{i=1}^k p_i = 1 \text{)} 
   \)</span></td>
 <td><span class="math inline">\(\begin{bmatrix} \log p_1 \\ \vdots \\ \log p_k \end{bmatrix}\)</span></td>
@@ -394,9 +395,9 @@ where <span class="math inline">\(\textstyle\sum_{i=1}^k e^{\eta_i}=1\)</span></
 
 ## Maximum Likelihood
 
-As shown in this post, the Gaussian, along with many other distributions, belongs to the Exponential Family of Distributions. The Maximum Likelihood Estimator (MLE) of the Gaussian can therefore be generalized to all distributions in the Exponential Family.
+This post has shown that the Gaussian, alongside plenty of other distributions, belongs to the Exponential Family of Distributions. This section shows that the Maximum Likelihood Estimator (MLE) can be generalized across all distributions in the Exponential Family.
 
-As in the Gaussian case, the first step is to apply the log-trick to the general expression of the exponential family, which gives the following log-likelihood:
+As in the Gaussian case, the computation of the MLE starts by applying the log-trick to the general expression of the exponential family, which gives the following log-likelihood for the complete dataset $$X=(x_1, x_2, ..., x_N)$$ of $$N$$ independent samples:
 
 $$
 %% source: http://www.cs.columbia.edu/~jebara/4771/tutorials/lecture12.pdf
@@ -411,7 +412,7 @@ $$
 \end{align*}
 $$ 
 
-The derivative with respect to $$\eta$$ is then set to zero:
+The derivative with respect to $$\eta$$ is then computed and set to zero:
 
 $$
 %% source: http://www.cs.columbia.edu/~jebara/4771/tutorials/lecture12.pdf
@@ -424,5 +425,5 @@ $$
 \end{align*}
 $$
 
-As expected, the result depends on the data only through the sufficient statistic $$\sum_{i=1}^N T(x_i)$$. This gives meaning to the notion of sufficiency: *to estimate the parameters, only the sufficient statistic is retained*. For distributions with $$T(x) = x$$, which include the Bernoulli, Poisson and multinomial distributions, the sample mean is the maximum likelihood estimate of the mean. For the univariate Gaussian distribution, the sample mean is the maximum likelihood estimate of the mean, and the sample variance is the maximum likelihood estimate of the variance.
+Not surprisingly, the result relates to the data only via the sufficient statistic $$\sum_{i=1}^N T(x_i)$$, giving a meaning to the notion of sufficiency: *to estimate parameters, only the sufficient statistic is retained*. For distributions in which $$T(x) = x$$, which include the Bernoulli, Poisson and multinomial distributions, it shows that the sample mean is the maximum likelihood estimate of the mean. For the univariate Gaussian distribution, the sample mean is the maximum likelihood estimate of the mean and the sample variance (with the factor $$1/N$$, not $$1/(N-1)$$) is the maximum likelihood estimate of the variance.
 

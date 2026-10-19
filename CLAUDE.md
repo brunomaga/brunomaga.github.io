@@ -7,40 +7,119 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 
 ### Audience and voice
 
-- The site reads like a college course: a professor teaching undergraduates, who speaks like an engineer. The
-  readers are HPC and ML researchers, engineers and students. They come for clear information, and nobody likes
-  long posts or boring sentences.
-- Factually correct, direct, concise, technical, and relevant to HPC and ML. No business or marketing language,
-  no anecdotes, no opinions, no hype, no motivation speeches, no calls to action. No "in this post we will"
-  opening and no "in conclusion" ending.
+- The posts are written in the author's voice: an HPC and ML engineer who moved from writing a blog to teaching
+  a university course, an enthusiastic young lecturer who wants students to read the posts. The text reads
+  like a college lecture for HPC and ML readers, written as in a textbook: third person, sentences that flow and
+  explain why each step is needed, Wikipedia links for technical terms at first use, and methods compared where
+  they appear.
+- The text reads as the author's own writing, not as an LLM's. Each page keeps the author's explanations,
+  examples, derivations and order of ideas, and as much of the author's wording as the other rules allow: a
+  reader who knows the original post recognizes it paragraph by paragraph.
+- In practice, the rewrite writes in the third person, updates phrases with clearer and simpler synonyms, keeps
+  the flow of the author's text, adds the missing sentences, and removes the redundant sentences and the
+  redundant information.
 - Third person only. Never "I", "we", "our", "us", "you", "your" or "my". The subject of a sentence is the
-  algorithm, the model, the data or the hardware: "Each rank sends its block", not "We send the block". Quotes
-  and paper titles keep their original words.
+  algorithm, the model, the data or the hardware ("Each rank sends its block", not "We send the block"), or the
+  sentence is passive ("the loss is computed as"). The imperatives of mathematics ("consider", "take", "imagine",
+  "let $$x$$ be") and an impersonal "one" are fine. Quotes and paper titles keep their original words. The
+  introduction of the home page (`index.md`) is the author's bio and keeps its first person.
+- Factually correct, technical and relevant to HPC and ML. No business or marketing language, no hype, no calls
+  to action, no "in conclusion" ending. An introduction may say what the post covers, as the author does, in the
+  third person ("This post derives ... and implements ...").
+
+### The author's style
+
+This style was learned from the author's own text of the posts, as they were before any rewrite (commit 9c353c1).
+The pipeline parallelism post was not written by the author alone, and the distributed matmul, faster attention
+and both kernel fusion posts were written by Claude. They are rewritten in this style too, and the four posts
+written by Claude read as if the author had written them from the beginning, not as edits of their earlier text.
+
+- Openings start from the history or the context of the problem ("In 2017, the Transformer model was presented
+  in the paper ...", "Sorting is probably the most common algorithm in computer science."), then say what the
+  post covers.
+- A new concept is named in **bold** where it is defined. *Italics* stress an idea or a word used in a special
+  sense (*exposed*, *log-trick*, *compromise*, *how noisy*).
+- Formulas are introduced with "is given by", "is computed as", "is defined as" or "as:", and followed by
+  "where ..." to define their terms. Equations of a paper are cited inline: "(Eq. 4 in the paper)", "(MML book,
+  section 8.3.1)".
+- Pictures are announced before they appear ("The following picture illustrates ...", "An illustration of the
+  principle is displayed below:"), and called pictures, diagrams or illustrations. The text then walks through
+  what they show.
+- The usual connectors: "In practice," to give the practical meaning of a formula or a claim, "Note that",
+  "i.e." and "e.g." (with dots), "Therefore", "Thus", "However", "So", "Also", "Moreover", "As an example",
+  "Similarly to", "Looking at the diagram above", "For the sake of comparison", "As a side note", "In brief",
+  "To sum up".
+- Parentheses hold short clarifications, abbreviations and alternative names ("(DDP)", "(or, equivalently, of
+  the connectivity matrix of a graph)"). Semicolons join closely related clauses. Colons introduce a formula, a
+  list or a picture.
+- Lists enumerate methods, stages or properties, each item a name and a sentence or two (the sorting algorithms,
+  the ZeRO stages). Explanations are prose.
+- The questions that the author asks at turning points stay ("How to transpose it?", "Where's the caveat?"), and
+  so do the key sentences of a paper, quoted as blockquotes ("The authors made an important observation:").
+- Sentences have 20 to 25 words on average, long explanatory ones next to short ones. Paragraphs have two to
+  four sentences.
+- Implementation sections are hands-on: the code is introduced step by step ("First, ...", "Then, ...", "And
+  that is all: ..."), and each snippet is preceded by what it does.
+- Plain, precise words. The author's mild informal words stay ("trickier", "handy"), slang goes ("lingo"), and
+  contractions are written out ("does not", "it is").
+
+### From the author's first person to the third person
+
+The words that carry the person change, and the rest of the author's sentence stays, unless a clearer or simpler
+word helps:
+- "Bayesian methods allow us to model the relationship ..." becomes "Bayesian methods model the relationship
+  ...".
+- "we compute the point of minimum loss as:" becomes "the point of minimum loss is computed as:".
+- "In this post, we will look at the mathematical background behind diffusion models, and implement ..."
+  becomes "This post looks at the mathematical background behind diffusion models, and implements ...".
+- "We soon realized that the Transformer had much more to offer" becomes "It soon became clear that the
+  Transformer had much more to offer".
+- "Looking at the diagram above, we can see that each processor holds a copy of the model" becomes "The diagram
+  above shows that each processor holds a copy of the model".
+- "Now you can write your training loop normally, and torch will do all the communication" becomes "The training
+  loop is then written as usual, and PyTorch does all the communication".
+- "Imagine we have a model that is too large ..." becomes "Imagine a model that is too large ...".
+
+### What the rewrite may change
+
+- Clearer and simpler synonyms may replace the author's words. Redundant sentences are removed, and missing
+  sentences and paragraphs relevant to the topic may be added. The flow of the author's ideas stays: no
+  reordered ideas, and no merged or split paragraphs and sections without need.
+- Phrases that help a student follow and understand the flow of logic are allowed: "This is where X comes in",
+  "the key idea is", "crucial", a closing sentence that sums up the paragraph, triplets, em-dashes, "the figure
+  shows", sentences that start with "With", "Since" or "Each", "Notice how", "Think of X as", "Note:" callouts.
+- No rhetorical question answered right away ("Why? Because ...").
+- Additions: a clause or a sentence that explains why a step is needed, a missing sentence, a paragraph relevant
+  to the topic, a Wikipedia link, a one-sentence comparison of two methods, a reference to the paper that
+  introduced a method. A comparison table goes at the end of a post only when the post compares three or more
+  methods.
 
 ### Sentences and words
 
-- Short sentences, one idea each. Short paragraphs. Direct and precise.
 - Simple words that a non-native English speaker knows, plus the exact technical term ("redundant copies",
-  "memory footprint", "latency-bound"). No colloquial wording ("wastes memory"), no fancy synonyms, no
-  buzzwords.
-- Few filler words ("very", "really", "basically", "simply", "just", "actually", "of course", "note that",
-  "in order to"): use one only where it helps the sentence.
+  "memory footprint", "latency-bound"). No fancy synonyms, no buzzwords.
+- Few filler words ("really", "basically", "simply", "just", "actually", "of course", "in order to"). The
+  author's "very" and "Note that" stay where they carry meaning.
 - Say each thing once. No repeated definitions, no paragraph that restates the previous one, no summary that
   only repeats the post.
-- Short posts. Cut every sentence that adds no information. Keep every formula, algorithm step, number and
-  result that does.
+- A post is about as long as the author's original, plus the additions above and minus the redundant sentences.
+  The author's explanations, examples, derivations, numbers and results stay, unless they are wrong or
+  redundant.
 - When a post presents several methods, compare them where they appear, or in a table at the end of the post.
   A simple comparison is enough ("A needs less memory than B"). Say when to use each method, and the idea
   behind it.
 
 ### References
 
+- The author's pattern: relevant historical references at the beginning of a section, when needed; then the
+  explanation of the topic; then, at its end, a paragraph such as "To find more about the topic ..." or "More
+  advanced use cases can be found in ..." with further references. When each topic of a post comes from a
+  different paper, each topic cites its paper.
 - Add the references a post needs, and only the important and relevant ones. Keep the existing references.
   Verify each new reference before adding it.
 - Place each reference where it makes sense: a method links to the paper that introduced it, when needed. Always
   name the paper that introduced a recent method.
-- The introduction cites only a background paper that the introduction needs. The end of a post can close with
-  where to find more.
+- The introduction cites only a background paper that the introduction needs.
 - Describe other work in a brief note, not at length.
 
 ### Technical correctness
@@ -50,8 +129,10 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 - Check that the text, the code and the pictures agree.
 - Link a technical term to its English Wikipedia article at its first use in a post, when a reader may not
   know it. Link only articles that exist, and each term once.
-- Code, commands and links stay unchanged unless they are wrong.
-- A text task never adds, removes, changes or reorders pictures, their markup or their captions.
+- Commands and links stay unchanged unless they are wrong. A text task does not change code: bugs in the code
+  go to the code issues of `TODO.md`, with a proposed fix.
+- A text task never adds, removes, changes or reorders pictures, their markup or their captions. Problems in
+  them go to the diagram issues of `TODO.md`.
 - Math is written in `$$...$$`, inline and on its own lines, as in the existing posts. In inline math, write
   `\vert` instead of `|`: kramdown reads a paragraph line that holds a `|` as a table row.
 
@@ -79,7 +160,8 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 - A post title, with the category that the home page puts before it ("Machine Learning: "), fits on one line of
   the home page on a desktop screen. The title column is 815 px wide at 16 px: keep the line under 750 px in the
   site's font, about 90 characters, so that it also fits with wider system fonts.
-- A text task does not change titles: it proposes new ones in the title issues of `TODO.md`.
+- A text task does not change titles: it proposes new ones in the title issues of `TODO.md`. The user approved
+  the titles of seven posts on 2026-10-18; they are applied.
 
 ### TODO list
 
@@ -96,10 +178,25 @@ The user picks the items to fix before the next pass. A fixed item leaves the li
 
 ### Process
 
-- Rewrite one post at a time: read it in full, check its math and pictures, then rewrite it.
+This section is only for the current rewrite: it is removed from this file at the end of its last iteration.
+
+- The rewrite runs in three iterations. Each iteration is a pass over all posts, drafts and the publications
+  page, on top of the previous one, and ends with a pull request that the user reviews and merges before the
+  next iteration starts. The first iteration makes small changes; each later one builds on the approved one.
+- Iteration 1 starts from the post on master and returns to the author's wording. For each paragraph, the
+  author's original text (commit 9c353c1) is the reference for the voice: where master changed only the style,
+  the rewrite goes back to the original words; where master corrected a fact, a formula or a link, or added
+  content that the user asked for, the rewrite keeps it, in the author's voice. Content of the original that
+  master dropped comes back when it is correct and useful.
+- Rewrite one post at a time: read the original and the master version in full, check the math and the
+  pictures, then rewrite the post paragraph by paragraph.
 - Keep the line endings of each file (many posts use CRLF).
 - Build the site with `bundle exec jekyll build --drafts` and check that every formula and picture renders.
-- After each full pass over all posts, push a snapshot branch and show this file to the user.
+- At the end of each iteration, show the user a review page with each changed paragraph before (left) and after
+  (right), and the formula fixes, together with this file. Then stop: the next iteration starts when the user
+  asks for it.
+
+---
 
 ## Pictures
 

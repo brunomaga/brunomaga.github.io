@@ -6,7 +6,7 @@ tags: ["data parallelism", "ZeRO", "FSDP", "CPU offloading", "activation checkpo
 ---
 
 
-Distributed data parallelism (DDP) refers to the parallel execution of different input samples across processors. Consider an input of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size). Data parallelism splits this input along the batch dimension across $$P$$ processes, resulting in a local input of shape $$B/P \times S \times E$$ per process:
+Distributed [data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) (DDP) refers to the parallel execution of different input samples across processors. Consider any data input of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size): data parallelism refers to the use case where the data is split across $$P$$ processes, leading to a local input of shape $$B/P \times S \times E$$:
 
 {: .picture}
 <img width="24.1%" height="24.1%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
@@ -14,11 +14,11 @@ Distributed data parallelism (DDP) refers to the parallel execution of different
 {: .caption}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.
 
-This post applies distributed data parallelism to the training of the [GPTlite model introduced in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), on a network of 8 GPUs, using [PyTorch DDP](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) (Distributed Data Parallel) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
+This post applies distributed data parallelism to the training of the [GPTlite model built in the previous post]({{ site.baseurl }}{% post_url  2023-02-28-gptlite %}), on a network of 8 GPUs, using [PyTorch DDP](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) (Distributed Data Parallel) and [DeepSpeed ZeRO](https://arxiv.org/abs/1910.02054) (Zero Redundancy Optimizer, a lightweight wrapper on PyTorch).
 
 There are two main data parallelism approaches:
 
-**Distributed Data Parallelism** keeps a full copy of the model (weights, optimizer states and gradients) on each processor. All replicas are initialized with the same parameters. Each processor takes a different mini-batch as input and performs a forward pass to compute the loss of that batch. During the backward pass, at every layer, each process computes the gradients of its local batch, and an all-reduce computes the mean gradients across all processors. The optimizer then uses these mean gradients to update the parameters. Since all replicas start from the same parameters and apply the same updates, they remain identical throughout training.
+**Distributed Data Parallelism** keeps a full copy of the model (weights, optimizer states and gradients) on each processor. All models are initialized equally. Each processor takes a different mini-batch as input and performs a forward pass to compute the loss of that batch. On the backward pass, at every layer of the model, all processes compute the gradients of their batch and perform an [all-reduce](https://en.wikipedia.org/wiki/Collective_operation) to get the mean gradients across all processors. These are then used to update the parameters and the optimizer states. Because parameters are initialized equally, gradients are mean-reduced and all processes perform the same updates, the models across all processors are kept in an identical state throughout the execution.
 
 {: .picture}
 <img width="65.8%" height="65.8%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
@@ -26,15 +26,15 @@ There are two main data parallelism approaches:
 {: .caption}
 Distributed data parallelism (DDP) on 4 processes. Each process holds a full copy of a 4-layer model (the parameters, optimizer states and gradients of every layer), initialized identically, and takes its own input. The forward pass (left arrow) computes the activations and the loss of each process. In the backward pass (right arrow), each process computes the local gradients of every layer, and an all-reduce averages them across the processes. The optimizer then applies the same mean gradients on every process, so all copies stay identical.
 
-As shown in the diagram, every processor holds a full replica of the model, so the model states are stored redundantly $$P$$ times. Sharding removes this redundancy.
+The diagram above shows that each processor holds a copy of the model, so the model states are stored $$P$$ times, which leads to superfluous memory usage. That is where sharding comes into play.
 
-**(Fully-)Sharded Data Parallelism (FSDP)**, or simply **sharding**, is a setup where each processor holds only a partition of the model: the parameters, optimizer states and gradients of a subset of layers. As before, each processor takes a different mini-batch as input. In DeepSpeed, sharding is called **ZeRO (Zero Redundancy Optimizer)**. ZeRO provides several execution modes, called **stages**. Each stage defines which variable types are partitioned across processes and which are replicated:
+**(Fully-)Sharded Data Parallelism (FSDP)**, a.k.a. **sharding**, is a distributed setup where processors do not hold a full copy of the model, but only the parameters, optimizer states and gradients of a subset of layers. As before, each processor takes a different mini-batch as input. In DeepSpeed terminology, sharding goes by the name of **ZeRO (Zero Redundancy Optimizer)**. ZeRO has several alternative execution modes (**stages**). Each stage represents a different level of memory redundancy, corresponding to different variable types being distributed or replicated across processes:
 - **ZeRO stage 0**: no sharding of any variables, equivalent to Distributed Data Parallelism.
-- **ZeRO stage 1 (ZeRO-1)**: the optimizer states (e.g., for the Adam optimizer, the weights and the first and second moment estimates) are partitioned across the processes. Affects only the backward pass.
+- **ZeRO stage 1 (ZeRO-1)**: the optimizer states (e.g., for the [Adam](https://en.wikipedia.org/wiki/Stochastic_gradient_descent#Adam) optimizer in [mixed precision](https://en.wikipedia.org/wiki/Mixed-precision_arithmetic), an fp32 copy of the weights and the first and second moment estimates) are partitioned across the processes. Affects only the backward pass.
 - **ZeRO stage 2 (ZeRO-2)**: the gradients used to update the model weights are also partitioned, so that each process retains only the gradients corresponding to its portion of the optimizer states. Also relevant only for the backward pass.
 - **ZeRO stage 3 (ZeRO-3)**: the model parameters are also partitioned across the processes. Adds a communication overhead to both the forward and backward passes. 
 
-Note that activations are not sharded, i.e. each processor keeps them in *full shape*. In modern models, **a large fraction of memory is allocated to residual memory (activations, normalization layers, etc.), which FSDP does not shard**. The following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
+An important remark is that activations are not sharded, i.e. they are kept in *full shape* on each processor. And in modern models, **a huge chunk of memory is allocated to residual memory (activations, normalization layers, etc.), which is not sharded by FSDP**. With that in mind, the following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
 
 {: .picture}
 <img width="95.3%" height="95.3%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
@@ -42,7 +42,9 @@ Note that activations are not sharded, i.e. each processor keeps them in *full s
 {: .caption}
 Stage 3 sharding (ZeRO-3) on 4 processes. Process k holds the parameters, optimizer states and gradients of layer k only (solid boxes; the dashed boxes are layers held by other processes), takes its own input and keeps its own activations. Forward pass (left): before layer k is computed, process k broadcasts its parameters, and the other processes discard them after use. Backward pass (right): process k broadcasts the parameters of layer k again, every process computes its local gradients of layer k, and these gradients are summed (reduced) on process k, which updates the parameters of layer k. Inspired by: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054)
 
-Higher stages lead to a lower memory footprint. Stages 1 and 2 have the same communication volume as regular data parallelism, while stage 3 communicates 1.5x as much. The memory savings of each stage are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
+Note that DeepSpeed ZeRO-3 and [PyTorch FSDP](https://arxiv.org/abs/2304.11277) do not assign whole layers to processes: they split the parameters of every layer into $$P$$ shards, one per process. The broadcasts of the diagram then become all-gathers, and the reductions become reduce-scatters.
+
+The higher the stage, the less memory is consumed. Stages 1 and 2 communicate as much as regular data parallelism, and stage 3 communicates 1.5x as much, as it gathers the parameters in both the forward and the backward passes. These memory improvements are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
 
 {: .picture}
 <img width="87.6%" height="87.6%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
@@ -52,16 +54,16 @@ Per-GPU memory of the model states (parameters, gradients and optimizer states) 
 
 ## CPU Offloading
 
-Some models do not fit in GPU memory, even with sharding. A common technique to overcome this limitation is CPU offloading, also referred to as virtualized Deep Neural Networks by [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shriram et al.)](https://www.cse.iitb.ac.in/~shriramsb/submissions/GPU_mem_ML.pdf). The method keeps on the GPU only the activations and model states required for the current and next computation steps. Layers already processed are moved from GPU to CPU, while upcoming layers are moved from CPU to GPU.
+Sometimes the model is so big that, even with sharding, it will not fit in a single process. A common technique to handle such memory limitations is CPU offloading, also referred to as virtualized Deep Neural Networks by [vDNN (Rhu et al.)](https://arxiv.org/pdf/1602.08124.pdf) and [vDNN+ (Shriram et al.)](https://ieeexplore.ieee.org/document/8820980). The main goal of this method is to iteratively move to the GPU only the portions of activations and model that are required for the current and next computation steps. Previously processed layers are moved from GPU to CPU, while upcoming layers are moved from CPU to GPU. vDNN offloads only the activations (the feature maps), as they take most of the GPU memory of convolutional neural networks.
 
-This is possible because the loss (and its derivative) can be written as a composition of the activation functions of all layers. As an example, for the mean absolute error (MAE):
+This is possible because the loss (and its derivative) can be written as a composition of the functions of the layers, e.g. for the [mean absolute error](https://en.wikipedia.org/wiki/Mean_absolute_error) (MAE):
 
 $$
 \mathcal{L} = \frac{1}{N} \sum_{n=1}^N | y_n - f^{(L+1)} \circ ... \circ f^{(2)} \circ f^{(1)} (x_n^{(0)}) |
 $$
 
-where $$f^{(l)}$$ is the activation function of layer $$l$$, $$L$$ is the number of hidden layers and $$y$$ is the ground truth. 
-The key concept is the **composition** of the functions $$f$$ across layers. To hide the latency of moving layers to and from the GPU, the computation of the current layers is overlapped with the transfer of the upcoming ones. The forward pass is illustrated below:
+where $$f^{(l)}$$ is the function implemented by layer $$l$$, $$L$$ is the number of hidden layers, $$y$$ is the ground truth, $$x_n^{(0)}$$ is the input of sample $$n$$ and $$N$$ is the number of samples.
+The important concept here is the **composition** of the functions $$f$$ across layers: the computation of a layer needs only its weights, its input and its output (and, in the backward pass, the gradient coming from the next layer), so the data of all other layers can be kept in CPU memory. To reduce the time spent waiting to push (pull) a layer to (from) the GPU, the computation of the current layers can be overlapped with the communication of the upcoming ones. The forward pass can be illustrated as:
 
 {: .picture}
 <img width="88.3%" height="88.3%" src="{{ site.assets }}/distributed-training/imgs/vdnn2.svg"/>
@@ -70,7 +72,7 @@ The key concept is the **composition** of the functions $$f$$ across layers. To 
 The forward pass of vDNN on a convolutional neural network, at layer N. Blue arrows are the input and output feature maps $$X$$ and $$Y$$ of the current layer, the purple arrow its weights $$W$$ and the yellow arrow its cuDNN workspace $$WS$$. White arrows are data that the current layer does not use. The input feature maps $$X$$ of the preceding layers, marked with a black cross, are not used by the current layer and can be released from GPU memory. Adapted from: [vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design](https://arxiv.org/abs/1602.08124)
 
 
-The backward pass is more involved, as gradients are also propagated down the model:
+The backward propagation phase is trickier, as it also includes the gradients being propagated down the model:
 
 {: .picture}
 <img width="88.3%" height="88.3%" src="{{ site.assets }}/distributed-training/imgs/vdnn3.svg"/>
@@ -80,7 +82,7 @@ The backward pass of vDNN at layer 2. Blue arrows are the feature maps $$X$$ and
 
 ## Model and dataset setup
 
-The implementation uses the *GPTlite* model from the previous post, with specs matching the *GPT-3 Small* model in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Table 2.1):
+The implementation starts by taking the previous *GPTlite* model, with specs matching the *GPT-3 Small* model in [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165) (Table 2.1):
 
 ```python
 n_layer = 12   # depth of the network as number of decoder blocks.
@@ -90,7 +92,7 @@ block_size = 2048   # block size, i.e. the maximum sequence length, the n_ctx in
 dropout = 0.1   # dropout rate (variable p) for dropout units
 ```
 
-The methods `get_model()` and `get_dataset()` return the model and the [tiny shakespeare](https://github.com/karpathy/char-rnn/blob/master/data/tinyshakespeare/input.txt) dataset:
+It then defines the methods `get_model()` and `get_dataset()` that return the model and the [tiny shakespeare](https://github.com/karpathy/char-rnn/blob/master/data/tinyshakespeare/input.txt) dataset:
 
 ```python
 ## gptlite.py
@@ -127,7 +129,7 @@ def get_model(vocab_size):
 
 ### Detour: using a pre-existing model {#torchvision-model}
 
-This code applies to any model of type `torch.nn.Module` and any dataset of type `torch.utils.data.Dataset`. As an example, multi-class classification with the `ResNet` network on the `CIFAR10` dataset from `torchvision` requires only the following two methods:
+Note that this code is applicable to any model of type `torch.nn.Module` and any dataset of type `torch.utils.data.Dataset`. As an example, to perform multi-class classification using the [`ResNet`](https://en.wikipedia.org/wiki/Residual_neural_network) network on the [`CIFAR10`](https://en.wikipedia.org/wiki/CIFAR-10) dataset available in `torchvision`, the previous 2 methods could be defined as:
 
 ```python
 import torchvision
@@ -149,7 +151,7 @@ def get_model(num_classes):
 
 ## PyTorch implementation
 
-The PyTorch implementation starts by reading the environment variables set by the [`torchrun`](https://pytorch.org/docs/stable/elastic/run.html) launcher (detailed below). These variables uniquely identify each process in the network and each GPU device within a node:
+This section implements data parallelism in PyTorch. First, the code collects the environment variables that are set by the [`torchrun`](https://pytorch.org/docs/stable/elastic/run.html) launcher (detailed below), as they uniquely identify processes in the network and GPU devices within a node:
 
 ```python
 import os
@@ -158,20 +160,20 @@ local_rank = int(os.environ['LOCAL_RANK'])   # the unique id across this node
 world_size = int(os.environ['WORLD_SIZE'])   # the number of processes across all nodes
 ```
 
-The [`DataLoader`](https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader) defines how each process iterates through the data:
+Now the code defines the [`DataLoader`](https://pytorch.org/docs/stable/data.html#torch.utils.data.DataLoader) that tells each process how to iterate through the data:
 
 ```python
 dataloader = torch.utils.data.DataLoader(dataset, batch_size=4, sampler=sampler)
 ```
 
-The `sampler` argument is a `torch.utils.data.distributed.DistributedSampler`, which assigns different samples of the dataset to different processes. Without it, all processes would load the same datapoints in every iteration.
+Note the argument `sampler`, a `torch.utils.data.distributed.DistributedSampler` that assigns different samples of the dataset to different processes. Without it, all processes would load exactly the same datapoints in every iteration.
 
 ```python 
 sampler = torch.utils.data.distributed.DistributedSampler(
   dataset, num_replicas=world_size, rank=rank)
 ```
 
-Each model replica is then placed on its own GPU, with the correct data type:
+Each model is then placed on a different GPU, with the correct data type (here [bfloat16](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format)):
 
 ```python
 device = f"cuda:{local_rank}"
@@ -179,7 +181,7 @@ dtype = torch.bfloat16
 model = model.to(device=device, dtype=dtype)
 ```
 
-and wrapped with [`DistributedDataParallel`](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) for the DDP implementation:
+and finally wrapped with [`DistributedDataParallel`](https://pytorch.org/docs/stable/generated/torch.nn.parallel.DistributedDataParallel.html) for the DDP implementation:
 
 ```python
 model = torch.nn.parallel.DistributedDataParallel(model, device_ids=[local_rank])
@@ -195,7 +197,7 @@ model = torch.distributed.fsdp.FullyShardedDataParallel(
 )
 ```
 
-The training loop is identical to the serial one, as PyTorch performs all communication and synchronization internally:
+And that is all. The training loop is then written as usual, and PyTorch does all the communication and synchronization under the hood:
 
 ```python
 for step, data in enumerate(dataloader):
@@ -208,13 +210,13 @@ for step, data in enumerate(dataloader):
   optimizer.zero_grad(set_to_none=True)
 ```  
 
-Gradients are computed and mean-reduced from the top to the bottom layer of the model. This allows the computation of the gradients of the lower layers to overlap with the communication of the gradients of the upper layers. According to the [PyTorch DDP documentation](https://pytorch.org/docs/master/notes/ddp.html#internal-design):
+Because gradients are computed and mean-reduced from the top to the bottom layer of the model, the computation of the gradients of the lower layers can be overlapped with the communication of the gradients of the upper layers along the backward pass.
 
-> The backward pass iteratively computes gradients (from last to first layer) and collects blocks of gradients to be communicated. These blocks will be mean-reduced asynchronously during the backward pass, while the computation for the backward pass proceeds. Therefore it overlaps backward pass computation with gradients communication. At the end of the backward pass, all GPUs wait for all gradient all-reduces to finish, and then triggers the parameter updates.
+According to the [PyTorch DDP documentation](https://pytorch.org/docs/master/notes/ddp.html#internal-design) and the [PyTorch DDP paper](https://arxiv.org/abs/2006.15704), the backward pass iteratively computes gradients (from last to first layer) and collects blocks of gradients (*buckets*) to be communicated. These blocks are mean-reduced asynchronously during the backward pass, while the computation for the backward pass proceeds. At the end of the backward pass, all GPUs wait for all gradient all-reduces to finish, and then the optimizer updates the parameters.
 
-For additional memory savings, PyTorch can also offload tensors with custom [hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html).
+For extra memory savings, tensors can also be offloaded in PyTorch by using custom [hooks for autograd saved tensors](https://pytorch.org/tutorials/intermediate/autograd_saved_tensors_hooks_tutorial.html).
 
-Finally, the application is launched with [`torchrun`](https://pytorch.org/docs/stable/elastic/run.html). Torchrun is a network bootstrapper that spawns a Python script on all compute nodes and sets the environment variables mentioned above. The usage is:
+Finally, the application is launched by calling [`torchrun`](https://pytorch.org/docs/stable/elastic/run.html). Torchrun is a network bootstrapper that, started on each compute node in a network, spawns one process of a Python script per GPU and sets the environment variables mentioned above, which uniquely identify processes across the network. The usage is simple:
 
 ```shell
 $ torchrun --standalone --nproc_per_node=4 train.py
@@ -225,7 +227,7 @@ where `nproc_per_node` is the number of GPUs on each node.
 ## DeepSpeed implementation
 
 
-Porting existing code to DeepSpeed is simple. DeepSpeed features are activated via the DeepSpeed API or its [Configuration JSON](https://www.deepspeed.ai/docs/config-json/), which covers parallelism, floating-point precision, logging, communication and more. The starting config below sets the DeepSpeed logger to output memory and throughput info every 10 steps (`steps_per_print`), sets the batch size to `256`, and (optionally) defines the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
+Porting existing code to DeepSpeed is pretty simple. To start, DeepSpeed features can be activated via the DeepSpeed API or its [Configuration JSON](https://www.deepspeed.ai/docs/config-json/). The number of possible optimizations is large, as the config can define parallelism, floating-point precision, logging, communication parameters, etc. This implementation starts with a simple config file, which configures the DeepSpeed logger to output memory and throughput info every 10 steps (`steps_per_print`), sets the batch size to `256` and (optionally) defines the settings of the optimizer (`optimizer`) and learning rate scheduler (`scheduler`):
 
 ```json
 {
@@ -242,14 +244,14 @@ Porting existing code to DeepSpeed is simple. DeepSpeed features are activated v
 }
 ```
 
-In DeepSpeed terminology, `train_micro_batch_size_per_gpu` is the batch size loaded per dataloader (i.e. per GPU, per gradient accumulation step), while `train_batch_size` is the batch size across all gradient accumulation steps and processes in the network:
+Note that, in DeepSpeed terminology, `train_micro_batch_size_per_gpu` refers to the batch size loaded per dataloader (i.e. per GPU, per gradient accumulation step), while `train_batch_size` refers to the batch size across all gradient accumulation steps and processes in the network, i.e.:
 
 ```
 train_batch_size = train_micro_batch_size_per_gpu * num_gpus * num_nodes * gradient_accumulation_steps
 ```
 
-Therefore, **gradient accumulation** is enabled simply by setting `train_micro_batch_size_per_gpu`.
-**ZeRO Fully-Sharded Data Parallelism** is activated by specifying the stage in the config file. If the stage is omitted or set to 0, ZeRO is disabled and the execution follows the regular distributed data parallel workflow:
+Therefore, as `train_batch_size` is already set, **gradient accumulation** (a technique that simulates a large mini-batch as an iteration across several micro-batches) can be enabled simply by setting `train_micro_batch_size_per_gpu`.
+**ZeRO Fully-Sharded Data Parallelism** can be activated by specifying the relevant stage in the config file. If omitted, or when passing stage 0, ZeRO is disabled and the execution follows a regular distributed data parallel workflow:
 
 ```json
 {
@@ -257,7 +259,7 @@ Therefore, **gradient accumulation** is enabled simply by setting `train_micro_b
 }
 ```
 
-CPU offloading in DeepSpeed is called [**ZeRO-Offload**](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory. On top of stage 3, DeepSpeed also provides [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine, which extends ZeRO-Offload with support for NVMe memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication". They can be enabled via:
+CPU offloading in DeepSpeed is called [**ZeRO-Offload**](https://www.deepspeed.ai/tutorials/zero-offload/), a system for offloading optimizer and gradient states to CPU memory, introduced in the [ZeRO-Offload paper](https://arxiv.org/abs/2101.06840). On top of stage 3, it is possible to enable [**ZeRO-Infinity**](https://arxiv.org/abs/2104.07857), also an offloading engine, which extends ZeRO-Offload with support for [NVMe](https://en.wikipedia.org/wiki/NVM_Express) memory. According to the [ZeRO-3 documentation](https://deepspeed.readthedocs.io/en/stable/zero3.html#zero), "ZeRO-Infinity has all of the savings of ZeRO-Offload, plus is able to offload more the model weights and has more effective bandwidth utilization and overlapping of computation and communication". They can be enabled via:
 
 ```json
 {
@@ -269,7 +271,7 @@ CPU offloading in DeepSpeed is called [**ZeRO-Offload**](https://www.deepspeed.a
 }
 ```
 
-Once the config file is calibrated, the implementation is straightforward. DeepSpeed manages internally the boilerplate that PyTorch requires for parallelism and data loading, so the setup reduces to:
+Almost everything is ready now. Once the config file is properly calibrated, the implementation is straightforward. All boilerplate that PyTorch requires for parallelism and data loaders is managed internally by DeepSpeed, so the code only needs to set up DeepSpeed as:
 
 ```python
 def main_deepspeed(n_epochs=100, random_seed=42):
@@ -286,7 +288,7 @@ def main_deepspeed(n_epochs=100, random_seed=42):
     config=config, model=model, training_data=train_dataset,) # initialize deepspeed
 ```
 
-The training loop follows the same structure as the PyTorch implementation. The only difference is that gradients are not zeroed explicitly, as DeepSpeed handles this internally. Also, `initialize()` returns a `train_dataloader` that already assigns disjoint subsets of data to each process, so no distributed sampler is required.
+The training loop is then written with a structure very similar to the PyTorch implementation. The only exception is that the gradients are not zeroed, as this is managed internally by DeepSpeed. Also, `initialize()` already returns a `train_dataloader` that assigns disjoint subsets of data to each process, so there is no need to fiddle with distributed dataloaders and samplers.
 
 ```python
   for epoch in range(n_epochs):
@@ -300,7 +302,7 @@ The training loop follows the same structure as the PyTorch implementation. The 
       engine.step()  # update weights, no need for zero-ing
 ```
 
-The run is launched with `torchrun` as before, or with the DeepSpeed launcher:
+Finally, the run is launched with the `torchrun` launcher as before, or with the launcher included in DeepSpeed as:
 
 ```shell
 $ deepspeed --num_gpus=8 train.py --deepspeed --deepspeed_config ds_config.json
@@ -419,7 +421,7 @@ Combining activation checkpointing with sharded model parameters (ZeRO stage-3) 
 
 ### Detour: measuring memory allocated to parameters
 
-The [DeepSpeed API can estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for each ZeRO stage. The estimates are printed by calling the following method at the start of the execution:
+The [DeepSpeed API to estimate the memory requirements of model parameters](https://deepspeed.readthedocs.io/en/latest/memory.html#api-to-estimate-memory-usage) for different ZeRO implementations can be used by calling the following method at the onset of execution:
 
 ```python
 def measure_parameters_memory(model):
@@ -438,19 +440,19 @@ The output shows that:
 - DeepSpeed ZeRO-2 requires 0.161GB and 0.484GB with and without offloading, respectively;
 - DeepSpeed ZeRO-3 requires 0.009GB and 0.190GB with and without offloading, respectively.
 
-This metric is cheap to compute and gives a quick overview of scaling. However, it only measures parameters. It ignores activations, residual buffers (e.g. normalization variables), temporary communication buffers, the batch size, the numerical precision and all other config fields.
+This metric is very useful as it gives a quick overview of scaling and is very fast to compute. However, it has many limitations: it only measures the memory of the parameters, gradients and optimizer states, it does not take activations or other residual buffers (e.g. normalization variables) into account, it does not take the batch size and numerical precision (or any field in the config file) into account, it does not consider temporary (e.g. communication) buffers, etc.
 
 ## Results
 
-Performance is measured with the DeepSpeed logger, which reports three metrics every 10 steps: model throughput (average number of samples per second), average allocated memory, and maximum allocated memory. All runs use `pytorch==2.0.1`, CUDA `11.7` and `deepspeed==0.10.3`.
+To measure performance, the DeepSpeed logger was used to extract the following metrics from different runs every 10 steps: model throughput as the average number of samples per second, the average allocated memory, and the maximum allocated memory. The runs used `pytorch==2.0.1`, CUDA `11.7` and `deepspeed==0.10.3`.
 
-All implementations use the same mixed-precision representation, communication bucket sizes and other config parameters. The benchmark covers the following implementations (and configs):
+All implementations use the same numerical precision (fp32), communication bucket sizes, and other config parameters. The following implementations (and configs) were benchmarked:
 
 1. The distributed data parallel (DDP) implementation, i.e. no DeepSpeed (<a href="{{ site.assets }}/distributed-training/ds_config.json">`ds_config.json`</a> with `'stage': 0`);
 2. The fully-sharded data parallel implementation with ZeRO 1, 2 and 3 (<a href="{{ site.assets }}/distributed-training/ds_config.json">`ds_config.json`</a> with `'stage' :1`, `2` or `3`);
 3. The ZeRO-3 implementation with ZeRO-Infinity for CPU offloading (<a href="{{ site.assets }}/distributed-training/ds_config_offload.json">`ds_config_offload.json`</a>).
 
-The results for the GPTlite model with a micro-batch size of 1 sample per GPU are:
+The GPTlite model was tested with a micro-batch size of 1 sample per GPU, and the results are:
 
 {: .picture}
 <img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/benchmark_gptlite.svg"/>
@@ -459,21 +461,21 @@ The results for the GPTlite model with a micro-batch size of 1 sample per GPU ar
 Maximum and average memory allocated, and throughput, of GPTlite (GPT-3 small) with distributed data parallelism, DeepSpeed ZeRO-1 to ZeRO-3, and ZeRO-3 with CPU offloading, at a micro-batch size of 1 sample per GPU.
 
 
-**Memory overhead from communication buffers.** In theory, high ZeRO stages have a much higher max memory than low stages and DDP, as they communicate more parameters and need more communication buffers. Small communication bucket sizes in the config file remove this effect. With the default bucket size (`5e9`), memory usage roughly doubles in stages 2 and 3, and some runs exceed the available memory.
+**Memory overhead from communication buffers.** Looking at the max vs average memory, note that, in theory, the max memory should be much higher at high ZeRO stages than at low ZeRO stages and DDP. This is because more parameters are communicated, which requires more communication buffers. However, setting the communication bucket sizes (the number of elements communicated at a time) to a low value in the config file overcomes this effect. In fact, several runs were also benchmarked with the default communication bucket sizes (`5e8`), which led to higher memory usage, as expected (approximately double in stages 2 and 3), and became prohibitive for some runs.
 
-**Communication vs computation trade-off across ZeRO stages.** Moving from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity reduces both memory consumption and throughput. This is the expected trade-off: data locality is exchanged for the communication (or offloading) of parameters, at a cost in performance.
+**Communication vs computation trade-off from different stages in ZeRO.** In ideal scenarios, as the execution moves from DDP to ZeRO-1, ZeRO-2, ZeRO-3 and ZeRO-Infinity, the memory consumption and throughput are reduced. As expected, data locality is traded for communication of parameters, and a price in performance is paid for the communication/offloading of parameters. In practice, the fastest choice is therefore the lowest stage that fits the model in memory.
 
-**Offloaded vs in-memory parameters.** Offloading consistently reduces memory usage, with a small reduction in throughput, as expected.
+**Offloaded vs in-memory parameters.** Offloading proved to be a consistent way to reduce memory usage, with the drawback of a small reduction in throughput, as expected.
 
-**Lack of superlinear speedup.** The gain in memory efficiency is small, and far from the results reported by the DeepSpeed team. The likely cause is the network size: 8 GPUs here, against 64 to 800 GPUs in the original benchmarks. Their superlinear speedup also relies on a large network, and is not observed here.
+**Lack of superlinear speedup.** A small improvement in memory efficiency was observed, but still far from the claims of the original DeepSpeed team. One explanation is that a small network of 8 GPUs was used, compared to the 64 to 400 GPUs used by the authors in their benchmarks, so the memory reduction is much smaller. Moreover, most of the memory of a model as small as GPTlite is taken by its activations, which are not sharded. A large network of GPUs also underlies their claim of superlinear speedup, which was not observed here.
 
-Finally, **communication quantization** is not used, as it did not yield any improvement. This is in line with the ZeRO++ paper, which states that the method targets small batch sizes or low-bandwidth networks.
+Finally, **communication quantization**, which reduces the floating-point representation of the communicated tensors, was not used, as it did not result in any improvement. This is in line with the [ZeRO++ paper](https://arxiv.org/abs/2306.10209), which claims this method is applicable to small batch sizes or low-bandwidth networks.
 
 ## Resources and code
 
-This post covers only data parallelism. For further reading on DeepSpeed, see the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
+This post explored only the dimension of data parallelism. More details about DeepSpeed can be found in the [DeepSpeed API documentation](https://deepspeed.readthedocs.io/en/latest), the [training features page](https://www.deepspeed.ai/training/#features), the [tutorials page](https://www.deepspeed.ai/tutorials/), the [HuggingFace page for DeepSpeed](https://huggingface.co/docs/accelerate/usage_guides/deepspeed), and the examples at [DeepSpeedExamples](https://github.com/microsoft/DeepSpeedExamples/).
 
-The code for all experiments is available in the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training).
+There are a lot of results and food for thought here. The code of all experiments is available in the [distributed-training repo](https://github.com/{{ site.repository }}/tree/master/assets/distributed-training).
 
 
 
