@@ -36,7 +36,7 @@ The rationale is the following: the MLP is a sequence of (1) a MatMul $$XA$$, (2
 1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point [*sum-reduce*] before the GeLU function". This approach (pictured below) can be followed for each of the 2 MatMuls, yielding a total of two communication steps.
 
   {: .picture}
-  <img width="84.7%" height="84.7%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.svg">
+  <img width="84.6%" height="84.6%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.svg">
 
   {: .caption}
   Option 1 on two GPUs: $$X$$ is split by columns and $$A$$ by rows. Each GPU computes a partial product of size $$M \times O$$, and a sum-reduce adds them into $$XA$$ on both GPUs before the GeLU, which then gives the same $$Y$$ on both GPUs. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)
@@ -46,7 +46,7 @@ The rationale is the following: the MLP is a sequence of (1) a MatMul $$XA$$, (2
 After the MatMul and GeLU are done, they are followed by another MatMul and a dropout. Note that with this approach (pictured below), the output $$Y$$ of the first MatMul and GeLU (which is the input for the second MatMul) is split column-wise. Therefore, Megatron uses the previous approach for the second MatMul, which requires 1 collective communication step. In total, 1 communication step is performed for 2 MatMuls.
 
   {: .picture}
-  <img width="61.1%" height="61.1%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_2.svg">
+  <img width="61%" height="61%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_2.svg">
 
   {: .caption}
   Option 2 on two GPUs: $$X$$ is replicated and $$A$$ is split by columns, so each GPU computes its own columns of $$XA$$ and applies the GeLU to them without any communication. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)

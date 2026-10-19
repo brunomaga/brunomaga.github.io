@@ -22,7 +22,7 @@ Curriculum learning can also improve efficiency for variable-length data. Mixing
 At a high level, curriculum learning is simple: (1) define a difficulty metric per sample, (2) sort samples by increasing difficulty, and (3) iterate through the sorted dataset. In distributed runs with large datasets, however, this becomes non-trivial. Samples are typically assigned to ranks in an interleaved fashion (e.g., via PyTorch’s `DistributedSampler`; see (a) and (b) below), which can lead to [load imbalance](https://en.wikipedia.org/wiki/Load_balancing_(computing)) if each rank sorts only its local shard. The following picture illustrates this problem and the two approaches detailed next:
 
 {: .picture}
-<img width="80.7%" height="80.7%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
+<img width="80.6%" height="80.6%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
 
 {: .caption}
 The curriculum dataset setup problem, on a network of 4 ranks and a dataset of 16 samples. (a) Original dataset, with an interleaved assignment of the 16 samples (bars) of variable lengths (bar heights) to the 4 ranks (color-coded). (b) Dataset in (a) after distributed data loading. (c) Dataset in (b) after local sorting. (d) Dataset in (b) after distributed sorting. (e) Dataset in (d) with an interleaved assignment of the 16 samples to the 4 ranks (color-coded). (f) Dataset in (e) after distributed data loading.
@@ -265,7 +265,7 @@ Workflow of a single-GPU training iteration with a compiled model. Adapted from:
 Now consider a 2-GPU DDP run. During [backpropagation](https://en.wikipedia.org/wiki/Backpropagation), DDP performs [`all_reduce`](https://en.wikipedia.org/wiki/Collective_operation#All-Reduce) operations to synchronize gradients across ranks. These collectives can overlap with gradient computation because `loss.backward()` accumulates into `w.grad` and `optimizer.step()` applies updates later. Thus, the gradients of the last layers, which are computed first, can be reduced while the gradients of the earlier layers are still being computed, as illustrated below:
 
 {: .picture}
-<img width="61.3%" height="61.3%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
+<img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc.svg"/>
 
 {: .caption}
 DDP execution workflow on 2 GPUs. The optimizer waits for all asynchronous `all_reduce`s of gradients to finish. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
@@ -273,7 +273,7 @@ DDP execution workflow on 2 GPUs. The optimizer waits for all asynchronous `all_
 In a compiled setting, intermediate communication steps can introduce **graph breaks**, i.e., points where the compiler splits the model into several graphs. One naïve option is to compile a large graph and run the `all_reduce`s only at the end, but that reduces overlap and increases the time the optimizer waits:
 
 {: .picture}
-<img width="64.5%" height="64.5%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
+<img width="64.4%" height="64.4%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_compiled.svg"/>
 
 {: .caption}
 DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the end, which increases the waiting time of the optimizer. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
@@ -281,7 +281,7 @@ DDP workflow on 2 GPUs with compiled models. The `all_reduce` runs only at the e
 PyTorch’s `DDPOptimizer` (explained [here](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)) addresses this by compiling around graph breaks into subgraphs and triggering asynchronous synchronization at subgraph boundaries:
 
 {: .picture}
-<img width="61.3%" height="61.3%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
+<img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/dnn_multiproc_optimized.svg"/>
 
 {: .caption}
 DDP workflow on 2 GPUs with compiled subgraphs and `DDPOptimizer`. Synchronization runs asynchronously between subgraphs. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
@@ -295,7 +295,7 @@ PyTorch provides limited support for compiling variable-shaped tensors via `torc
 Static compilation is ideal, but how to make it work with variable shapes? A practical approach is to ensure that each rank executes at least one forward+backward pass for every *shape* it will see later, near the beginning of training, so that the compiler can generate (and cache) a binary per shape. The idea is illustrated below:
 
 {: .picture}
-<img width="61.3%" height="61.3%" src="{{ site.assets }}/distributed-training/imgs/torch_compile_dataset.svg"/>
+<img width="61.2%" height="61.2%" src="{{ site.assets }}/distributed-training/imgs/torch_compile_dataset.svg"/>
 
 {: .caption}
 Dataset setup that allows static compilation for variable-length training on 3 processes. **Top (a):** original dataset of 31 samples (bars) of 4 different lengths (bar heights), with the default interleaved assignment to the processes (color-coded). The green and yellow ranks encounter a new shape later in training (red cross). This triggers a recompilation and, depending on the settings, possibly a runtime failure. **Bottom (b):** after reshuffling, each rank sees one sample of each shape (shapes 1 to 4) early on. One binary is compiled per shape, and no recompilation happens afterwards.

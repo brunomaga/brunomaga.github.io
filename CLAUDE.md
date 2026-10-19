@@ -368,15 +368,15 @@ sections 6 and 7, and the font section 4.
   cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000, no stroke
   opacity. Four weights, the same at page scale in every picture:
   ```
-  thin       0.7 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
+  thin       0.6 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
                       block into cells, the faces of a 3D tensor, pipeline passes
-  regular    1.4 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
-                      nodes, operators, single cubes, arrows, lines, block arrows, curly brackets
-  thick      2.1 px   frames of regions (devices, processes, groups, sections), the outline of each block of
-                      cells (matrix, array, table, stack of objects), the silhouette of each 3D tensor or
-                      block of cubes and the three edges at its front corner, axes of charts and time lines,
-                      pipeline rows, black lines that divide a drawing into regions
-  emphasis   2.8 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
+  regular    1.2 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
+                      nodes, operators, single cubes, block arrows, curly brackets
+  thick      1.6 px   arrows and lines, frames of regions (devices, processes, groups, sections), the outline
+                      of each block of cells (matrix, array, table, stack of objects), the silhouette of each 3D
+                      tensor or block of cubes and the three edges at its front corner, axes of charts and time
+                      lines, pipeline rows, black lines that divide a drawing into regions
+  emphasis   2.4 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
                       (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frame of
                       process A in all_to_all), and black frames that emphasise a part (DualPipe's overlapped
                       forward and backward passes, the selected experts in moe_switch_transformers)
@@ -391,17 +391,17 @@ sections 6 and 7, and the font section 4.
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
     frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
-  - other colored frames that highlight a group of parts: 2.1 px (the orange KV cache frames). Red arrows and
+  - other colored frames that highlight a group of parts: 1.6 px (the orange KV cache frames). Red arrows and
     cross marks are not emphasis lines;
-  - dashed outlines of elements that are not frames: 0.7 px on filled elements, 1.4 px on lines without fill
-    (a dashed frame is 2.1 px, as other frames; the dash keeps its pattern);
+  - dashed outlines of elements that are not frames: 0.6 px on filled elements, 1.6 px on lines without fill
+    (a dashed frame is 1.6 px, as other frames; the dash keeps its pattern);
   - white masks that hide parts of a drawing, faded elements and red cross marks.
-- Thin arrows: black #000000, 1.4 px, endArrow=block, endFill=1, endSize=5. Dashed arrows use the same
+- Thin arrows: black #000000, 1.6 px, endArrow=block, endFill=1, endSize=6. Dashed arrows use the same
   head. Grey #666666 only for faded content. Lines without a head that join two parts of the flow (two boxes,
-  or a box and an arrow): 1.4 px. The axis of a chart or a time line: 2.1 px, with the same head.
+  or a box and an arrow): 1.6 px. The axis of a chart or a time line: 1.6 px, with the same head.
 - The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
   the others; the heads that converge on one node may touch.
-- Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.4 px black line with a
+- Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.6 px black line with a
   flat bar head, endArrow=baseDash;endSize=10.
 - Lines thinner than 0.6 px at page scale (grid lines drawn over a photo or a matrix) keep their weight.
 - Arrow layout:
@@ -429,7 +429,7 @@ sections 6 and 7, and the font section 4.
   decision                                               rhombus
   neuron, graph node                                     circle
   operator (+, x, concatenation)                         circle 20 px wide with the symbol inside
-  span of several parts                                  curly bracket, 1.4 px
+  span of several parts                                  curly bracket, 1.2 px
   transformation of a whole stage (a model into another) block arrow; thin arrows everywhere else
   ```
 - Operations and frames have round corners: 5 px for an operation (rounded=1;absoluteArcSize=1;arcSize=10),
@@ -461,21 +461,21 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
 - One row per GPU, labelled "GPU 0" to "GPU 3" (to "GPU 7" for DualPipe; "Worker 1" to "Worker 4" where the
   post's text says workers, as for the PipeDream pictures), 14 px regular, right-aligned 4 px left of the
   first cell.
-- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (14.10 px for DualPipe, so that its 8 GPUs
+- Rows 20 px tall and 3 px apart. One time unit is 21.86 px wide (15.45 px for DualPipe, so that its 8 GPUs
   and 16 micro-batches fit 880 px): a forward pass takes 1 unit, a backward pass 2 units, or 1 unit each for
   the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
   GPU, so its passes take the full time.
-- Each row is a 2.1 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
-  is idle time. A pass is one cell with a 0.7 px black outline, in the pipeline colors of section 5; a backward
+- Each row is a 1.6 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
+  is idle time. A pass is one cell with a 0.6 px black outline, in the pipeline colors of section 5; a backward
   pass is one cell of two units, not two cells.
 - Every pass cell holds its micro-batch number, also the single micro-batch 1 of pipeline_8_stages,
   pipeline_4_stages and pipeline_2_stages. Micro-batch numbers are 10 px: black on the base colors, white on
   the dark ones.
 - The schedule ends with its last pass: no passes of the next iteration and no "..." after the rows.
 - No time markers over the rows (no "1F1B ends" line).
-- Overlapped forward and backward passes (DualPipe) have a 2.8 px black frame around them.
-- A time axis under the rows is 2.1 px, as the axes of section 6.
+- Overlapped forward and backward passes (DualPipe) have a 2.4 px black frame around them.
+- A time axis under the rows is 1.6 px, as the axes of section 6.
 - The legend is centred under the rows, 12 px below them (or below the time axis): each entry is a 20 x 12 px
   swatch (two 10 x 12 px halves for the two chunks or directions) and its 14 px label 4 px to the right, with
   16 px between entries, on two rows when it is wider than the schedule. The labels are Forward, Backward,

@@ -253,7 +253,7 @@ The report stacks four efficiency techniques:
 The design philosophy is a balance of three layer types: MoE for sparse parameter scaling, a few attention layers for high-fidelity all-to-all information routing between tokens, and Mamba-2 for fixed-cost sequence modeling. Nemotron 3 Nano 30B-A3B achieves 3.3× higher throughput than Qwen3-30B-A3B (8K input / 16K output), while staying competitive on reasoning and long-context (RULER @ 1M) benchmarks.
 
 {: .picture}
-<img loading="lazy" width="69.5%" height="69.5%" src="{{ site.assets }}/publications/nemotron3.svg"/>
+<img loading="lazy" width="69.6%" height="69.6%" src="{{ site.assets }}/publications/nemotron3.svg"/>
 
 {: .caption}
 <b>Nemotron-3-Nano-30B-A3B.</b> Nemotron 3 models (e.g., Nemotron 3 Nano) leverage a hybrid Mamba-Transformer MoE architecture consisting predominantly of interleaved Mamba-2 and MoE layers, with a select few self attention layers. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
@@ -333,7 +333,7 @@ To minimize the exposed communication cost, Helix introduces HOP-B (batch-wise o
 Compared to conventional parallelism approaches, Helix reduces TTL by up to 1.5× at fixed batch sizes and supports up to 32× larger batches under the same latency budget for DeepSeek-R1 on Blackwell. Unlike attention–FFN disaggregation (e.g., MegaScale-Infer), which splits the two phases *spatially* onto different GPUs, Helix splits them *temporally* on the same GPUs.
 
 {: .picture}
-<img loading="lazy" width="88.6%" height="88.6%" src="{{ site.assets }}/publications/helix.svg"/>
+<img loading="lazy" width="88.5%" height="88.5%" src="{{ site.assets }}/publications/helix.svg"/>
 
 {: .caption}
 <b>Helix's layout per-GPU workflow in attention and FFN stages.</b> Helix reuses the same pool of $$N$$ GPUs by configuring $$N = KVP \times TPA \quad (TPA \le K) \quad \longrightarrow \quad N = TPF \times EP$$ on a per-layer basis. <b>(Top)</b> During attention, each of the $$KVP$$ GPUs independently projects the full batch $$[B, H]$$ into QKV, runs FlashAttention on its KV shard to produce partial outputs and log-sum-exp scalars, and then participates in a single All-to-All over the query-head axis; each GPU rescales and sums the received fragments into the exact softmax-normalized tensor, followed by a TP All-Reduce to form the final $$[B, H]$$ attention output. <b>(Bottom)</b> For FFNs, Helix follows two modes depending on model type: for <i>Dense</i> FFNs $$EP = 1$$, it retains all $$N$$ GPUs in tensor-parallel $$TPF = N$$ to compute $$[B, H] \rightarrow [B, F/N] \rightarrow [B, H]$$ followed by a TP All-Reduce; for <i>MoE</i> FFNs $$EP > 1$$, it repartitions the $$N$$ GPUs into a $$TPF \times EP$$ grid, routes tokens to the appropriate experts, applies TP to FC layers within each expert group, performs an intra-expert All-Reduce followed by an inter-expert All-Gather, and concludes with a local reduction to yield $$[B, H]$$. Helix switches between these configurations seamlessly, enabling zero-downtime pipelining and better GPU utilization. Adapted from: [Helix Parallelism: Rethinking Sharding Strategies for Interactive Multi-Million-Token LLM Decoding](https://arxiv.org/abs/2507.07120)
@@ -952,7 +952,7 @@ DualPipe is a bidirectional pipeline-parallelism algorithm introduced in the Dee
 The result is fewer bubbles and full forward/backward computation-communication overlap, at the cost of holding two copies of model parameters (one per direction) and slightly higher activation memory. The parameter duplication is affordable because DeepSeek-V3 uses a large expert-parallel size, so each rank holds relatively few parameters; separately, careful memory savings (recomputation, a CPU-resident [EMA](https://en.wikipedia.org/wiki/Exponential_smoothing) of the parameters, an embedding and an output head shared with the MTP module) allow training without costly tensor parallelism. Unlike PipeFill, which accepts bubbles and fills them with unrelated jobs, DualPipe attacks the bubbles directly by densifying the main job's own schedule, making the two approaches complementary rather than competing.
 
 {: .picture}
-<img loading="lazy" width="99.1%" height="99.1%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+<img loading="lazy" width="99.3%" height="99.3%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
 DualPipe on 8 GPUs: micro-batches 1 to 8 (light) enter at GPU 0, and micro-batches 9 to 16 (dark) enter at GPU 7. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)
@@ -973,8 +973,8 @@ Zero Bubble is the first scheduling strategy to achieve zero pipeline bubbles un
 The two variants trade memory for bubble reduction: ZB-H1 keeps the same peak activation memory as 1F1B but cuts the bubble to about a third of 1F1B's, while ZB-H2 eliminates bubbles entirely at the cost of higher peak memory (roughly 2× activations) and an extra optimizer validation/rollback step (it bypasses optimizer synchronization, then corrects after the step). In experiments, the zero-bubble schedules outperform 1F1B by up to 23% in throughput under a similar memory limit, and by up to 31% when the memory constraint is relaxed. The method is orthogonal to data, tensor, and ZeRO parallelism and can drop in as a replacement for the PP component. Like DualPipe, it attacks bubbles by reshaping the main job's schedule, in contrast with PipeFill, which leaves bubbles in place and fills them with other jobs.
 
 {: .picture}
-<img loading="lazy" width="71.6%" height="71.6%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h1.svg"/>
-<img loading="lazy" width="71.6%" height="71.6%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h2.svg"/>
+<img loading="lazy" width="71.5%" height="71.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h1.svg"/>
+<img loading="lazy" width="71.5%" height="71.5%" src="{{ site.assets }}/distributed-training/imgs/pipeline_zb_h2.svg"/>
 
 {: .caption}
 ZB-H1 (top) and ZB-H2 (bottom). Every backward pass is split into a backward for inputs and a backward for weights, and the latter fill the bubbles. ZB-H1 keeps the activation memory of 1F1B; ZB-H2 uses about twice as much, and when the optimizer step does not synchronize the stages, the next iteration starts on the first GPUs while the last GPUs finish the current one. Adapted from: [Zero Bubble Pipeline Parallelism](https://arxiv.org/abs/2401.10241)
@@ -1086,7 +1086,7 @@ Domino "provides a generic scheme to hide communication behind computation" when
 communication overhead is more pronounced". The paper proposes "Domino, a generic approach that breaks data dependency of transformer model training into pieces, and then pipelines these pieces training to overlap communication with computation …. Domino provides a much wider scope of computation and communication overlapping (e.g., AllReduce not only overlaps with a single GeMM, but also LayerNorm, DropOut, etc). … To hide TP communication behind computation, Domino provides extra and generic tensor partition in two dimensions on every GPU: row-wise split on inputs X and column-wise split on weights B on top of original TP model partitions. At high level, Domino generically breaks TP’s $$X \cdot A \cdot B$$ into smaller compute units without data dependency. Then it pipelines these independent compute units with collective communication to achieve fine-grained computation and communication overlapping … we keep $$A$$ untouched and do not conduct any tensor partitioning on $$A$$. Therefore, we only conduct tensor slicing on input tensor $$X$$ (section 3.2) and the second group of linear weights as $$B$$ (section 3.3). We also provide a hybrid tensor partition strategy of both $$X$$ and $$B$$ (section 3.4). After these tensor slicing, Domino breaks $$X \cdot A \cdot B$$ into pieces and removes data dependency. Then we enable computation-communication overlapping on these independent pieces to reduce communication overhead in TP."
 
 {: .picture}
-<img loading="lazy" width="99.4%" height="99.4%" src="{{ site.assets }}/publications/domino.svg"/>
+<img loading="lazy" width="99.5%" height="99.5%" src="{{ site.assets }}/publications/domino.svg"/>
 
 {: .caption}
 **Left:** Domino row-wise (batch-dim) split on input <i>X</i>. **Right:** Domino col-wise (last-dim) split on weights <i>B</i>. Adapted from: [Domino: Eliminating Communication in LLM Training via Generic Tensor Slicing and Overlapping](https://arxiv.org/abs/2409.15241)
@@ -1105,7 +1105,7 @@ communication overhead is more pronounced". The paper proposes "Domino, a generi
 A simpler transformer block, motivated by signal propagation theory, that removes skip connections, value and projection parameters, sequential sub-blocks (attention and MLP run in parallel) and normalisation layers. It claims to match the per-update training speed and performance of standard autoregressive decoder-only and BERT encoder-only models, with 16% faster training throughput (15% in the abstract of the arXiv page) while using 15% fewer parameters. The experiments are at the 100–300M-parameter scale.
 
 {: .picture}
-<img loading="lazy" width="64.1%" height="64.1%" src="{{ site.assets }}/publications/simplifying_transformer_blocks.svg"/>
+<img loading="lazy" width="64%" height="64%" src="{{ site.assets }}/publications/simplifying_transformer_blocks.svg"/>
 
 {: .caption}
 Comparison between different Transformer blocks. (Left) The standard Pre-LN block. (Top right) The most simplified block of the paper, “SAS-P, no norm”. (Bottom right) The parallel block (Zhao et al., 2019; Wang & Komatsuzaki, 2021). Like the parallel block, the simplified block eschews the need for sequential sub-blocks, but it additionally removes all skip connections and normalisation layers, as well as value and projection parameters. Here, ⊗ denotes a matrix multiplication, and ⊕ denotes a (potentially weighted) sum. Adapted from: [Simplifying Transformer Blocks](https://arxiv.org/abs/2311.01906)
@@ -1140,7 +1140,7 @@ The paper "presents a methodology to select the scalings for FP8 linear layers, 
 - CPUAdam optimization: details not available yet.
 
 {: .picture}
-<img loading="lazy" width="62.3%" height="62.3%" src="{{ site.assets }}/publications/zerooffloadplusplus.svg"/>
+<img loading="lazy" width="62.2%" height="62.2%" src="{{ site.assets }}/publications/zerooffloadplusplus.svg"/>
 
 {: .caption}
 Twin-Flow with an offload ratio of 0.4: CPUAdam updates the first 40% of the parameters (weights, gradients and optimizer states) on the CPU, while FusedAdam updates the other 60% on the GPU. Adapted from: [DeepSpeed ZeRO-Offload++: 6x Higher Training Throughput via Collaborative CPU/GPU Twin-Flow](https://github.com/microsoft/DeepSpeed/tree/master/blogs/deepspeed-offloadpp)
@@ -1213,7 +1213,7 @@ The paper introduces three communication reduction techniques, packed as ZeRO++:
 The results section claims that ZeRO++ yields a communication reduction of 4x compared to ZeRO-3, leading to up to 2.16x higher compute throughput on 384 GPUs.
 
 {: .picture}
-<img loading="lazy" width="65.8%" height="65.8%" src="{{ site.assets }}/publications/zeroplusplus.svg"/>
+<img loading="lazy" width="65.7%" height="65.7%" src="{{ site.assets }}/publications/zeroplusplus.svg"/>
 
 {: .caption}
 Basic quantization (top) and block quantization (bottom) of the same 3×3 weights in qwZ: a scale and a zero point per block (here, per row) keep the dequantized values (right) closer to the input (left); the digits that changed are orange. Adapted from: [ZeRO++: Extremely Efficient Collective Communication for Giant Model Training](https://arxiv.org/abs/2306.10209)
@@ -1260,7 +1260,7 @@ The pretraining setting and model architecture are adopted from Llama 1, i.e. [b
 The finetuning was performed with supervised fine-tuning (Section 3.1), initial and iterative reward modeling (Section 3.2.2) and [RLHF](https://en.wikipedia.org/wiki/Reinforcement_learning_from_human_feedback) (Section 3.2.3). As a drawback of RLHF, "initial RLHF models tended to forget the initial instruction after a few turns of dialogue (Figure 9, below, left). To address these limitations, we propose **Ghost Attention (GAtt)**, a very simple method inspired by Context Distillation (Bai et al., 2022b) that hacks the fine-tuning data to help the attention focus in a multi-stage process". In GAtt, a system instruction (e.g., "act as ...") is synthetically concatenated to all user messages of a multi-turn dialogue and responses are sampled with the latest RLHF model; for fine-tuning, the instruction is then dropped from all but the first turn and the loss is set to zero on the tokens of previous turns, so the model learns to keep following the instruction across turns (Figure 9, below, right).
 
 {: .picture}
-<img loading="lazy" width="77.1%" height="77.1%" src="{{ site.assets }}/publications/llama2_gatt.svg"/>
+<img loading="lazy" width="77%" height="77%" src="{{ site.assets }}/publications/llama2_gatt.svg"/>
 
 {: .caption}
 <b>Issues with multi-turn memory (<i>left</i>) can be improved with GAtt (<i>right</i>).</b> Both dialogues start with the instruction “Always answer with emojis”. Adapted from: [Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288)
@@ -1319,7 +1319,7 @@ two modules: a multi-scale retention (MSR) module, and a feed-forward network (F
 Finally, the model uses $$h = d_{model}/d$$ retention heads in each layer, where $$d$$ is the head dimension. The heads use different parameter matrices $$W_Q, W_K, W_V \in \mathbb{R}^{d_{model} \times d}$$ and scalar $$γ$$ per head. The overall architecture for a given layer $$l$$ of the RetNet is then $$Y_l = MSR(LayerNorm(X_l)) + X_l$$ and $$X_{l+1} = FFN(LN(Y_l)) + Y_l$$, i.e. similar to a regular transformer but replacing the attention by a retention head.
 
 {: .picture}
-<img loading="lazy" width="63%" height="63%" src="{{ site.assets }}/publications/retnet.svg"/>
+<img loading="lazy" width="63.1%" height="63.1%" src="{{ site.assets }}/publications/retnet.svg"/>
 
 {: .caption}
 Dual form of RetNet: <b>(a)</b> parallel representation and <b>(b)</b> recurrent representation. “GN” is short for GroupNorm. Adapted from: [Retentive Network: A Successor to Transformer for Large Language Models](https://arxiv.org/abs/2307.08621)
@@ -1775,7 +1775,7 @@ A clearer explanation can be found on this [Google Research post](https://blog.r
 **Bidirectional attention**, where there is no notion of past and future: decoupling matrices $$Q′$$ and $$K′$$ (the random features of the queries and the keys) used in lower rank decomposition of the attention matrix $$A$$ and conducting matrix multiplications in the order indicated by dashed-boxes gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation:
 
 {: .picture}
-<img loading="lazy" width="70.6%" height="70.6%" src="{{ site.assets }}/publications/performers.svg"/> 
+<img loading="lazy" width="70.7%" height="70.7%" src="{{ site.assets }}/publications/performers.svg"/> 
 
 {: .caption}
 **Left:** Standard attention module computation, where the final desired result is computed by performing a matrix multiplication with the attention matrix $$A$$ and value tensor $$V$$. **Right:** Decoupling matrices $$Q′$$ and $$K′$$ used in the lower rank decomposition of $$A$$ and conducting the matrix multiplications in the order indicated by the dashed boxes gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation. Adapted from: [Rethinking Attention with Performers](https://research.google/blog/rethinking-attention-with-performers/)
@@ -1806,7 +1806,7 @@ LoRA focuses on decomposing parameter updates into low-rank matrices, drasticall
 A small, trainable low-rank matrix $$Δ𝑊$$ is added to the original (frozen) weight matrix $$𝑊$$. The final weight matrix is $$W′=W+ΔW$$. Instead of directly learning $$Δ𝑊$$, it is factorized as $$ΔW=BA$$ where $$A$$ and $$B$$ are thin matrices of rank $$r$$ much smaller than the layer dimensions. One factor is initialized to zero (so training starts from the pretrained model), the update is scaled by $$α/r$$, and the paper applies it to the attention projections (e.g., $$W_q$$, $$W_v$$). Because $$ΔW$$ can be merged into $$W$$ after training, there is no extra inference latency. Compared to full fine-tuning of GPT-3 175B with Adam, LoRA reduces the number of trainable parameters by 10,000× and the GPU memory requirement by 3×, while matching or exceeding fine-tuning quality on RoBERTa, DeBERTa, GPT-2 and GPT-3.
 
 {: .picture}
-<img loading="lazy" width="24.6%" height="24.6%" src="{{ site.assets }}/publications/lora.svg"/>
+<img loading="lazy" width="24.5%" height="24.5%" src="{{ site.assets }}/publications/lora.svg"/>
 
 {: .caption}
 LoRA reparametrization: only <i>A</i> and <i>B</i> are trained. Adapted from: [LoRA: Low-Rank Adaptation of Large Language Models](https://arxiv.org/abs/2106.09685)
@@ -1933,7 +1933,7 @@ $$
 where $$σ$$ is an activation function, $$U$$ and $$V$$ are linear projections along the channel dimension, and $$s(·)$$ is a layer which captures spatial interactions. When $$s$$ is an identity mapping, the above transformation degenerates to a regular FFN, i.e. no cross-token communication. Here, $$s(·)$$ is the Spatial Gating Unit (Section 2.1): $$Z$$ is split along channels into $$(Z_1, Z_2)$$ and $$s(Z) = Z_1 \odot (W Z_2 + b)$$, a linear projection across the token (spatial) dimension, initialized so that the unit starts close to an identity ($$W \approx 0$$, $$b = 1$$). Unlike Transformers, it does not require position embeddings because that is captured in $$s(·)$$.
 
 {: .picture}
-<img loading="lazy" width="93.5%" height="93.5%" src="{{ site.assets }}/publications/pay_attention_to_mlps.svg"/>
+<img loading="lazy" width="93.4%" height="93.4%" src="{{ site.assets }}/publications/pay_attention_to_mlps.svg"/>
 
 {: .caption}
 Overview of the gMLP architecture with Spatial Gating Unit (SGU). The model consists of a stack of <i>L</i> blocks with identical structure and size. All projection operations are linear and “⊙” refers to element-wise multiplication (linear gating). The input and output protocols follow BERT for NLP and ViT for vision. Unlike Transformers, gMLPs do not require positional encodings, nor is it necessary to mask out the paddings during NLP finetuning. Adapted from: [Pay Attention to MLPs](https://arxiv.org/abs/2105.08050)
@@ -1952,7 +1952,7 @@ Overview of the gMLP architecture with Spatial Gating Unit (SGU). The model cons
 The paper introduces Vision Transformers (ViTs), an extension of the transformer architecture to images. It works by passing as input to the transformer a sequence of linear embeddings of image patches (e.g., 16×16 pixels), which also avoids the quadratic cost of letting every pixel attend to every other pixel. When pre-trained on large datasets (ImageNet-21k, JFT-300M), ViT matches or beats state-of-the-art CNNs (ResNets) on image classification while requiring substantially fewer computational resources to train; on mid-sized datasets like ImageNet alone it underperforms comparable ResNets, since it lacks the convolutional [inductive biases](https://en.wikipedia.org/wiki/Inductive_bias) (locality, translation equivariance).
 
 {: .picture}
-<img loading="lazy" width="76.2%" height="76.2%" src="{{ site.assets }}/publications/visual_transformer.svg"/>
+<img loading="lazy" width="76.1%" height="76.1%" src="{{ site.assets }}/publications/visual_transformer.svg"/>
 
 {: .caption}
 Model overview. The image is split into fixed-size patches; each patch is linearly embedded, position embeddings are added, and the resulting sequence of vectors is fed to a standard Transformer encoder. For classification, an extra learnable “classification token” is added to the sequence, the standard approach. The illustration of the Transformer encoder was inspired by Vaswani et al. (2017). Adapted from: [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929)
@@ -2052,7 +2052,7 @@ language description of the task.
 a natural language instruction describing the task.
 
 {: .picture}
-<img loading="lazy" width="86.7%" height="86.7%" src="{{ site.assets }}/publications/gpt3_fig21.svg"/> 
+<img loading="lazy" width="86.6%" height="86.6%" src="{{ site.assets }}/publications/gpt3_fig21.svg"/> 
 
 {: .caption}
 <b>Zero-shot, one-shot and few-shot, contrasted with traditional fine-tuning</b>. The panels above show four methods for performing a task with a language model – fine-tuning is the traditional method, whereas zero-, one-, and few-shot, the settings studied in the paper, require the model to perform the task with only forward passes at test time. In the few-shot setting the model is typically given a few dozen examples. Exact phrasings for all task descriptions, examples and prompts are in Appendix G of the paper. Adapted from: [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
@@ -2094,7 +2094,7 @@ for generating useful multi-hop connections".
 - Without any predefined, domain-specific meta-paths, GTNs achieve state-of-the-art node classification on three heterogeneous graph benchmarks (DBLP, ACM, IMDB).
 
 {: .picture}
-<img loading="lazy" width="92.3%" height="92.3%" src="{{ site.assets }}/publications/graph_transformer_networks.svg"/>
+<img loading="lazy" width="92.2%" height="92.2%" src="{{ site.assets }}/publications/graph_transformer_networks.svg"/>
 
 {: .caption}
 Graph Transformer Networks (GTNs) learn to generate a set of new meta-path adjacency matrices 𝔸<sup>(<i>l</i>)</sup> using GT layers and perform graph convolution as in GCNs on the new graph structures. Multiple node representations from the same GCNs on multiple meta-path graphs are integrated by concatenation and improve the performance of node classification. ℚ<sub>1</sub><sup>(<i>l</i>)</sup> and ℚ<sub>2</sub><sup>(<i>l</i>)</sup> ∈ <b>R</b><sup><i>N</i>×<i>N</i>×<i>C</i></sup> are intermediate adjacency tensors to compute meta-paths at the <i>l</i>th layer. Adapted from: [Graph Transformer Networks](https://arxiv.org/abs/1911.06455)
@@ -2153,7 +2153,7 @@ The paper introduces several **sparse factorizations of the attention matrix** t
 **Factorized self-attention** proposes $$p$$ separate attention heads, where each head handles a subset $$A$$ of the indices. The hard problem here is to find efficient choices for this subset. Section 4.3 details 2D factorization methods via strided attention, or fixed patterns (figure below).
 
 {: .picture}
-<img loading="lazy" width="88.1%" height="88.1%" src="{{ site.assets }}/publications/sparse_transformers.svg"/>
+<img loading="lazy" width="87.9%" height="87.9%" src="{{ site.assets }}/publications/sparse_transformers.svg"/>
 
 {: .caption}
 Two 2D factorized attention schemes of the Sparse Transformer, (b) strided and (c) fixed, compared with the full attention of a standard Transformer (a). The top row indicates, for an example 6x6 image, which positions two attention heads receive as input when computing a given output. The bottom row shows the connectivity matrix (not to scale) between all such outputs (rows) and inputs (columns). Sparsity in the connectivity matrix can lead to significantly faster computation. In (b) and (c), full connectivity between elements is preserved when the two heads are computed sequentially. The paper tests whether such factorizations can match the performance of the rich connectivity patterns learned by full attention (Figure 2 of the paper). Adapted from: [Generating Long Sequences with Sparse Transformers](https://arxiv.org/abs/1904.10509)
@@ -2215,7 +2215,7 @@ reconstruction loss."
 Equation 3 specifies the overall loss: the reconstruction loss, a codebook loss $$\| sg[z_e(x)] - e \|_2^2$$ that moves the embeddings towards the encoder outputs, and a commitment loss $$\beta \| z_e(x) - sg[e] \|_2^2$$ that keeps the encoder committed to an embedding ($$sg$$ is the stop-gradient operator), with the gradient copied straight-through across the non-differentiable mapping from $$z_e(x)$$ to $$z_q(x)$$.
 
 {: .picture}
-<img loading="lazy" width="100%" height="100%" src="{{ site.assets }}/publications/rqvae.svg"/>
+<img loading="lazy" width="99.9%" height="99.9%" src="{{ site.assets }}/publications/rqvae.svg"/>
 
 {: .caption}
 Left: A figure describing the VQ-VAE. Right: Visualisation of the embedding space. The output of the encoder <i>z</i><sub>e</sub>(<i>x</i>) is mapped to the nearest point <i>e</i><sub>2</sub>. The gradient ∇<sub><i>z</i></sub><i>L</i> (in red) will push the encoder to change its output, which could alter the configuration in the next forward pass. Adapted from: [Neural Discrete Representation Learning](https://arxiv.org/abs/1711.00937)
@@ -2252,7 +2252,7 @@ It matches FP32 accuracy across a wide range of tasks (image classification and 
 The paper introduces the Graph Convolutional Network (GCN), based on a simple layer-wise propagation rule, $$H^{(l+1)} = \sigma(\tilde{D}^{-1/2} \tilde{A} \tilde{D}^{-1/2} H^{(l)} W^{(l)})$$, with node features $$H^{(l)}$$, layer weights $$W^{(l)}$$, $$\tilde{A} = A + I$$ (the adjacency matrix with self-loops) and $$\tilde{D}$$ its [degree matrix](https://en.wikipedia.org/wiki/Degree_matrix), derived as a first-order approximation of spectral graph convolutions. Similarly to CNNs, GCNs learn the features by aggregating information from neighboring nodes. The main difference is that CNNs are meant to operate on regular Euclidean structures (e.g. images), while GCNs generalize this to arbitrary graph structures. On semi-supervised node classification in citation networks (Citeseer, Cora, Pubmed) and a knowledge graph (NELL), it outperforms related methods by a significant margin.
 
 {: .picture}
-<img loading="lazy" width="75.5%" height="75.5%" src="{{ site.assets }}/publications/graphconvnets.svg"/>
+<img loading="lazy" width="75.3%" height="75.3%" src="{{ site.assets }}/publications/graphconvnets.svg"/>
 
 {: .caption}
 (a) Schematic depiction of multi-layer Graph Convolutional Network (GCN) for semi-supervised learning with <i>C</i> input channels and <i>F</i> feature maps in the output layer. The graph structure (edges shown as black lines) is shared over layers, labels are denoted by <i>Y<sub>i</sub></i>. (b) t-SNE (Maaten & Hinton, 2008) visualization of hidden layer activations of a two-layer GCN trained on the Cora dataset (Sen et al., 2008) using 5% of labels. Colors denote document class. Adapted from: [Semi-Supervised Classification with Graph Convolutional Networks](https://arxiv.org/abs/1609.02907)

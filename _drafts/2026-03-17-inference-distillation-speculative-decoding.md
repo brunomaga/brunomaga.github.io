@@ -25,7 +25,7 @@ There are several categories of KD methods. The loss can match the soft labels o
 In **offline distillation**, the teacher is trained first and then frozen while the student learns from it; in **online distillation**, both are trained simultaneously. Offline distillation is simple to implement, but requires a large pre-trained teacher; online distillation is used when such a teacher is not available. A single teacher or an [ensemble](https://en.wikipedia.org/wiki/Ensemble_learning) of teachers can be used. The following picture illustrates offline (a) and online (b) distillation:
 
 {: .picture}
-<img width="80.9%" height="80.9%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
+<img width="80.8%" height="80.8%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
 
 {: .caption}
 Illustration of knowledge distillation (a) with a pre-trained teacher model (offline): step 1 trains the teacher, and step 2 distills its knowledge into the student; and (b) while training the teacher model simultaneously (online). Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/)
@@ -258,7 +258,7 @@ def accept_sampling(drafts, p, q):
 In the following example, the last two tokens, *the cat*, also occur at the start of the text, so the four tokens that follow them there become the drafts:
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
+<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
 
 The following code implements prompt lookup decoding. It reuses the verification loop of speculative decoding, with a different source of drafts:
 
@@ -615,7 +615,7 @@ The authors report better results on most benchmarks, and suggest that MTP may m
 Note that an MTP module is very close to an EAGLE draft layer: both combine the features of the target with the embedding of the next token, run one transformer layer, and predict with the target's output head. The difference is that the MTP module is trained together with the model, during pre-training. The following picture illustrates the main model with two MTP modules:
 
 {: .picture}
-<img width="96.9%" height="96.9%" src="{{ site.assets }}/inference/imgs/mtp_sequential.svg"/>
+<img width="96.8%" height="96.8%" src="{{ site.assets }}/inference/imgs/mtp_sequential.svg"/>
 
 {: .caption}
 MTP module $$k$$ combines the hidden state of depth $$k - 1$$ with the embeddings of the input tokens shifted by $$k$$, and predicts the token $$k + 1$$ positions ahead, through the shared output head. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)

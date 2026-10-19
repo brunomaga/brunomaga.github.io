@@ -24,7 +24,7 @@ The structure of its RNN is as follows:
 This structure is easily represented by the following picture:
 
 {: .picture}
-<img width="33.8%" height="33.8%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
+<img width="33.9%" height="33.9%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
 
 {: .caption}
 The recurrent neural network trained at each step of the encoder-decoder architecture. Its input layer is the concatenation of the hidden layer of the previous iteration (green) and the embedding of the current input word (blue). The hidden layer (green) holds the states of the GRU or LSTM neurons, and the output layer (red) holds the model output. 
@@ -36,7 +36,7 @@ The training consists of an encoding and a decoding phase:
 This algorithm can be illustrated as follows, where the thick arrow passes the last hidden state of the encoder to the first iteration of the decoder:
 
 {: .picture}
-<img width="96.5%" height="96.5%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
+<img width="96.4%" height="96.4%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder_2.svg"/>
 
 {: .caption}
 Training workflow of an encoder-decoder architecture that learns the translation of the English sentence "Hello World." into the French sentence "Bonjour le monde.".
@@ -185,7 +185,7 @@ So, the encoder is trained efficiently and learns a *context*. The main question
 BERT is a stack of Transformer encoders that learns language contexts and performs interpretation tasks. As the encoder has no mask, the context of each word is learnt from the words before and after it (hence *Bidirectional*). The following picture illustrates the model, where each block is one encoder layer of the transformer (the grey region on the left of the transformer picture):
 
 {: .picture}
-<img width="95.2%" height="95.2%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
+<img width="95.3%" height="95.3%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
 
 {: .caption}
 The BERT model, as a stack of Transformer encoders. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)

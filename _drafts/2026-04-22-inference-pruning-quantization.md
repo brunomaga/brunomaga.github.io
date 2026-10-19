@@ -49,7 +49,7 @@ A weight matrix with 50% zeros scattered at random is still multiplied as a dens
 A 2:4 sparse matrix is stored as its non-zero values plus a 2-bit index per value, the position of that value in its group. The following picture illustrates both patterns on the same weights, and this compressed format:
 
 {: .picture}
-<img width="77%" height="77%" src="{{ site.assets }}/inference/imgs/sparsity_2_4.svg"/>
+<img width="77.1%" height="77.1%" src="{{ site.assets }}/inference/imgs/sparsity_2_4.svg"/>
 
 {: .caption}
 **Unstructured 50%:** zeros anywhere, which a dense matmul does not skip. **2:4 semi-structured:** 2 zeros in every group of 4 consecutive weights. **Values** and **2-bit indices:** half the values, and the position of each one in its group. Inspired by: [Accelerating Sparse Deep Neural Networks](https://arxiv.org/abs/2104.08378)
@@ -294,7 +294,7 @@ A [floating point](https://en.wikipedia.org/wiki/Floating-point_arithmetic) numb
 FP16 has more precision than BF16 but a much smaller range (5 exponent bits), so large values can overflow. This is why BF16 is the default format of LLMs today. The picture below compares the bits of the three formats:
 
 {: .picture}
-<img width="73.1%" height="73.1%" src="{{ site.assets }}/inference/imgs/floating_point_representation.svg"/>
+<img width="73%" height="73%" src="{{ site.assets }}/inference/imgs/floating_point_representation.svg"/>
 
 {: .caption}
 The bits of $$0.15625 = 1.01_2 \times 2^{-3}$$ in FP32, FP16 and BF16. BF16 keeps the 8 exponent bits of FP32, and so its range, with fewer fraction bits. Adapted from: [Bfloat16 floating-point format](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format)
@@ -384,7 +384,7 @@ Storing the weights in 4 or 8 bits while computing in 16 bits (e.g., W4A16: 4-bi
 The picture below shows how INT4 weights are quantized, packed two per byte, and dequantized in the kernel:
 
 {: .picture}
-<img width="64.2%" height="64.2%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
+<img width="64.1%" height="64.1%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
 
 Rounding each weight to the nearest level (**round-to-nearest**) works well at 8 bits, but loses too much accuracy at 4 bits. Two methods, GPTQ and AWQ (below), made 4-bit weights practical. Other common formats are NF4, from [QLoRA](https://arxiv.org/abs/2305.14314), whose levels are placed for normally distributed weights, and the GGUF formats of [llama.cpp](https://en.wikipedia.org/wiki/Llama.cpp), for CPUs and edge devices.
 
@@ -531,7 +531,7 @@ def quantize_gptq(model, data, n_batches, batch_size, seqlen, bits=4, group_size
 The factors are searched on calibration data. Unlike GPTQ, AWQ does not update the weights to fit the calibration data, so it is less likely to overfit the calibration set. The following picture illustrates the scaling of a salient channel:
 
 {: .picture}
-<img width="62.7%" height="62.7%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
+<img width="62.8%" height="62.8%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
 
 {: .caption}
 $$s_j = \text{mean}\lvert X_j \rvert^\alpha$$, with $$\alpha$$ searched on calibration data. The weights of the salient channel become larger, so rounding loses less of them. The division by $$s$$ is folded into the operation before. Inspired by: [AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration](https://arxiv.org/abs/2306.00978)
@@ -731,7 +731,7 @@ Blackwell tensor cores apply these scales in hardware. OpenAI's gpt-oss models, 
 The picture below shows the FP4 values and the blocks of both formats:
 
 {: .picture}
-<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
+<img width="99.4%" height="99.4%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
 
 The following code simulates both formats with fake quantization. Used with the `FakeQuantLinear` layer above, it quantizes the weights and activations of GPTlite to FP4:
 

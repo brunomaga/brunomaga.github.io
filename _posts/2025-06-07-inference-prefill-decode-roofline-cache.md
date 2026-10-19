@@ -101,7 +101,7 @@ Therefore, the roofline point ❌ of this example is $$\mathbf{(0.083, 10)}$$.
 For the multiplication of two matrices of shapes **$$A \times B$$** and **$$B \times C$$**, which gives an output matrix of shape **$$A \times C$$**, here are the FLOPs and the memory traffic, for a data type of **$$dt$$** bytes per element. Each element of the output is the dot product of a row of matrix 1 and a column of matrix 2, as illustrated in the following picture:
 
 {: .picture}
-<img width="37.2%" height="37.2%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
+<img width="37.1%" height="37.1%" src="{{ site.assets }}/inference/imgs/matmul.svg"/>
 
 {: .caption}
 **FLOPs:** $$AC$$ outputs $$\times$$ $$B$$ multiply-adds $$\times$$ 2 FLOPs $$= 2ABC$$. **Memory traffic, naive:** matrix 1 read $$C$$ times and matrix 2 read $$A$$ times, $$2ABC\text{ }dt$$. **Memory traffic, with cache:** inputs read once and output written once, $$(AB + BC + AC)\text{ }dt$$. **Arithmetic intensity:** $$2ABC / ((AB + BC + AC)\text{ }dt)$$, about $$2N / (3\text{ }dt)$$ for $$A = B = C = N$$.
@@ -482,7 +482,7 @@ Serving many requests at once makes memory management hard, because the final le
 Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. A block can also be shared by several sequences, and copied only when one of them writes to it ([copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)), which is how prefix caching, parallel sampling and [beam search](https://en.wikipedia.org/wiki/Beam_search) share their common prefix. An illustration of the block tables of two sequences, with blocks of 4 tokens, is displayed below:
 
 {: .picture}
-<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+<img width="98.8%" height="98.8%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 {: .caption}
 The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block. Inspired by: [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)

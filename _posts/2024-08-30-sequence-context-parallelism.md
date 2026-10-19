@@ -23,7 +23,7 @@ Before continuing, it is important to emphasize the following:
 To implement sequence parallelism, the data loader first has to be adapted to load data at the token level, in a way that matches the hybrid data- and sequence-parallel setup. All that is needed is to configure a `DataLoader` and a `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader workers. The following picture illustrates this allocation for three combinations of data and sequence parallelism:
 
 {: .picture}
-<img width="97%" height="97%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
+<img width="97.1%" height="97.1%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
 
 {: .caption}
 Data loading for hybrid data parallelism (DP) and sequence parallelism (SP) on 4 color-coded processes/GPUs and a dataset of 8 samples. First row: all 4 processes run distributed data parallelism. Second row: a custom `DistributedSampler` that yields chunks of sequences enables a hybrid data- and sequence-parallel execution with 2 groups of 2 sequence-parallel processes. Third row: no data parallelism; all 4 processes run sequence parallelism on the same sample.
@@ -232,7 +232,7 @@ Overview of the Ring Attention algorithm. **Before Ring Attention:** the initial
 From a process standpoint, after all ring steps, each process has kept its own sequence block of $$q$$ and has iterated over the full $$k$$ and $$v$$ tensors (in chunks). For example, the third (red) process above sees the following data at each step:
 
 {: .picture}
-<img width="39.6%" height="39.6%" src="{{ site.assets }}/distributed-training/imgs/ring_attention_qkv.svg"/>
+<img width="39.3%" height="39.3%" src="{{ site.assets }}/distributed-training/imgs/ring_attention_qkv.svg"/>
 
 An important point is that, while Ulysses communicates synchronously (all-to-all), forcing processes to wait for the communication to complete, ring attention can use asynchronous point-to-point communication. If the computation time of a block exceeds its transmission time, the communication overhead can be hidden behind computation. For the sake of comparison, ring attention sends about $$P/2$$ times more data than Ulysses in the forward pass. Each process sends its key and value blocks at every step, while each of the four all-to-alls of Ulysses sends less than one block per process.
 
@@ -416,7 +416,7 @@ PyTorch does not have a notion of *partial sequences* in the same way that data 
 Moreover, when multi-dimensional parallelism (e.g., data + sequence) is performed, process groups must be defined for the data-parallel processes (the ones that load different samples) and for the sequence-parallel processes (the ones that load different chunks of the same sample). This can be done with PyTorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) or by creating the process groups manually. For the sake of illustration, if $$2 \times 2$$ data and Ulysses sequence parallelism were implemented on 4 GPUs, this would be the memory layout before and during multi-head attention:
 
 {: .picture}
-<img width="65%" height="65%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
+<img width="64.9%" height="64.9%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
 
 {: .caption}
 Allocation of activations on 4 GPUs with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: the blue and green processes form one sequence-parallel group and share one sample; the red and yellow processes form the other group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes then compute attention over full sequences.
