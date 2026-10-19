@@ -54,7 +54,7 @@ $$
 C_i = \sum_{k=0}^{p-1} A_{i,k} \, B_k,
 $$
 
-where each tile $$A_{i,k}$$ has $$n/p \times n/p$$ elements, and each block $$B_k$$ has $$n/p \times n$$ elements. $$A$$ and $$C$$ stay in place, and only $$B$$ moves: at each step, every rank multiplies the tile of $$A$$ that matches its current block of $$B$$, adds the result to $$C_i$$, and passes the block of $$B$$ to the previous rank. After $$p$$ steps, $$C_i$$ is complete, as shown below on 3 ranks:
+where each tile $$A_{i,k}$$ has $$n/p \times n/p$$ elements, and each block $$B_k$$ has $$n/p \times n$$ elements. $$A$$ and $$C$$ stay in place, and only $$B$$ moves. At each step, every rank multiplies the tile of $$A$$ that matches its current block of $$B$$, adds the result to $$C_i$$, and passes the block of $$B$$ to the previous rank. After $$p$$ steps, $$C_i$$ is complete, as shown below on 3 ranks:
 
 {: .picture}
 <img width="88.5%" height="88.5%" src="{{ site.assets }}/distributed-matmul-dbs/ring.svg">
@@ -87,7 +87,7 @@ Cannon's algorithm on a $$3 \times 3$$ grid of ranks. Tiles of $$A$$ (top) shift
 
 In brief, $$A$$ moves along the grid rows, $$B$$ along the grid columns, and $$C$$ stays, so that tile $$C_{i,j}$$ ends on rank $$(i,j)$$, in the same layout as the inputs. Note that, on a 2D grid, two of the three matrices must move. Each rank still stores $$3n^2/p$$ elements, but receives at most $$2q$$ tiles, or $$2n^2/\sqrt{p}$$ elements. Unlike in the ring algorithm, this volume shrinks as ranks are added, and it is the smaller of the two from 9 ranks on.
 
-Cannon's algorithm needs a square grid of ranks. To find more about the topic, [SUMMA][summa] (van de Geijn and Watts, 1995) replaces the shifts with broadcasts along the grid rows and columns, and works on rectangular grids, while the [2.5D algorithm][solomonik] (Solomonik and Demmel, 2011) stores extra copies of the matrices to send even less data.
+Cannon's algorithm needs a square grid of ranks. To find more about the topic, [SUMMA][summa] (van de Geijn and Watts, 1995) replaces the shifts with broadcasts along the grid rows and columns, and works on rectangular grids. The [2.5D algorithm][solomonik] (Solomonik and Demmel, 2011) stores extra copies of the matrices to send even less data.
 
 [cannon]: https://en.wikipedia.org/wiki/Cannon%27s_algorithm
 [summa]: https://www.netlib.org/lapack/lawnspdf/lawn96.pdf
@@ -96,9 +96,9 @@ Cannon's algorithm needs a square grid of ranks. To find more about the topic, [
 ### Overlapping computation and communication
 
 The tiles of the next step do not depend on the current product, so a rank can receive them while it multiplies:
-1. start a non-blocking send of the current tiles, and a non-blocking receive of the next ones into a second buffer (`MPI_Isend`, `MPI_Irecv`);
-2. multiply the current tiles;
-3. wait for both messages (`MPI_Waitall`), and swap the buffers.
+1. the rank starts a non-blocking send of the current tiles, and a non-blocking receive of the next ones into a second buffer (`MPI_Isend`, `MPI_Irecv`);
+2. it multiplies the current tiles;
+3. it waits for both messages (`MPI_Waitall`), and swaps the buffers.
 
 The following picture compares the timelines with and without this overlap:
 
@@ -121,7 +121,7 @@ Many matrices are mostly zeros, e.g. in [finite element][fem] simulations, where
 
 ### The compressed sparse row format
 
-The **compressed sparse row** format (CSR, also called the Yale format) stores a matrix in three arrays:
+The **compressed sparse row** format (CSR, also called the Yale format), in use since the mid-1960s, stores a matrix in three arrays:
 - `values`: the nonzeros, row by row;
 - `col_idx`: the column of each nonzero;
 - `row_ptr`: where each row starts, i.e. row $$i$$ is at positions `row_ptr[i]` to `row_ptr[i+1]-1` of the other two arrays.
@@ -134,7 +134,7 @@ An example is displayed below:
 {: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
 
-For $$n$$ rows and $$nnz$$ nonzeros, CSR stores $$2 \, nnz + n + 1$$ numbers. Reading a row is easy, but reading a column requires a search through all rows, which makes the distributed transpose hard. The product $$y = Ax$$ visits each row and each nonzero once, in $$O(n + nnz)$$ operations:
+For $$n$$ rows and $$nnz$$ nonzeros, CSR stores $$2 \, nnz + n + 1$$ numbers (22 in the example above, instead of 30 for the dense layout). Reading a row is easy, but reading a column requires a search through all rows, which makes the distributed transpose hard. The product $$y = Ax$$ visits each row and each nonzero once, in $$O(n + nnz)$$ operations:
 
 ```cpp
 for (int i = 0; i < n; i++) {
@@ -180,6 +180,12 @@ The number of nonzeros of $$C$$ is *not known in advance*, so step 3 often runs 
 
 [gustavson]: https://doi.org/10.1145/355791.355796
 
+To find more about the topic, [Çatalyürek and Aykanat][hypergraph-spmv] assign the rows of a sparse matrix to the ranks with a [hypergraph][hypergraph] instead of a graph, as the hypergraph counts the ghost entries of the matrix-vector product exactly. [Buluç and Gilbert][sparse-summa] note that the row split of the sparse matrix-matrix product does not scale to thousands of ranks, and split both matrices on a 2D grid of ranks instead, as SUMMA does for dense matrices.
+
+[hypergraph-spmv]: https://doi.org/10.1109/71.780863
+[hypergraph]: https://en.wikipedia.org/wiki/Hypergraph
+[sparse-summa]: https://arxiv.org/abs/1109.3739
+
 ## Part 3: database joins
 
 In 1970, Edgar F. Codd proposed the [relational model][relational], where the data is stored in tables, with one record per row. A **key** is a column that identifies a record, and links tables. In the example below, `Person` has one row per person, with key `id`, and `Messages` has one row per message, whose `id` is the key of its author (a [foreign key][fkey]).
@@ -214,21 +220,21 @@ The following picture shows the two tables and three of these joins:
 **Top:** the tables `Person` (blue) and `Messages` (green). **Bottom:** three joins on `id`. Dark gray cells are `NULL`.
 
 On one node, there are three classic algorithms to join tables of $$N$$ and $$M$$ rows (their costs exclude the size of the output):
-- **[nested loop][nlj]**: compare all pairs of rows, in $$O(N \cdot M)$$;
-- **[sort-merge][smj]**: sort both tables by key and scan them together, in $$O(N \log N + M \log M)$$, or $$O(N + M)$$ if already sorted;
-- **[hash join][hj]**: hash the keys of the smaller table and look up the rows of the other, in $$O(N + M)$$ on average.
+- **[nested loop][nlj]**: compares all pairs of rows, in $$O(N \cdot M)$$;
+- **[sort-merge][smj]**: sorts both tables by key and scans them together, in $$O(N \log N + M \log M)$$, or $$O(N + M)$$ if already sorted;
+- **[hash join][hj]**: hashes the keys of the smaller table and looks up the rows of the other, in $$O(N + M)$$ on average.
 
 [nlj]: https://en.wikipedia.org/wiki/Nested_loop_join
 [smj]: https://en.wikipedia.org/wiki/Sort-merge_join
 [hj]: https://en.wikipedia.org/wiki/Hash_join
 
-For outer joins, each row also records whether it found a match, and the rows without one are returned with `NULL`. However, all these algorithms assume that rows with the same key are on the same node, and the following sections show how to ensure this for three layouts.
+In practice, the hash join is the usual choice for large tables, and the sort-merge join is preferred when both tables are already sorted by key. The nested loop suits small tables, or join conditions other than an equality of keys. For outer joins, each row also records whether it found a match, and the rows without one are returned with `NULL`. However, all these algorithms assume that rows with the same key are on the same node, and the following sections show how to ensure this for three layouts.
 
 ### Layout 1: each table on a different server
 
 Here, `Person` is on server 1, and `Messages` is on server 2.
 
-**Inner join.** Sending a whole table works, but a **semi-join** sends less:
+**Inner join.** Sending a whole table works, but a **semi-join** ([Bernstein and Chiu, 1981][semijoin]) sends less:
 1. server 1 sends its keys to server 2;
 2. server 2 returns only its rows with one of these keys;
 3. server 1 joins them with its table, locally.
@@ -243,6 +249,7 @@ A semi-join between two servers: the keys (1), the matching rows (2), the left o
 
 For a long list of keys, a [Bloom filter][bloom] is a smaller substitute. It lets a few wrong rows (*false positives*) through in step 2, and server 1 treats them as unmatched messages.
 
+[semijoin]: https://doi.org/10.1145/322234.322238
 [bloom]: https://en.wikipedia.org/wiki/Bloom_filter
 
 ### Layout 2: tables split by rows
@@ -259,7 +266,9 @@ Each server holds some rows of each table, which is called **horizontal partitio
 {: .caption}
 Two tables split by rows across 2 servers, colored by target server: blue for server 1 (even keys), and orange for server 2 (odd keys). **Left:** before the shuffle. **Right:** after it.
 
-**Outer joins.** After a shuffle, outer joins are local too, as a row without a match on its server has no match anywhere. Above, server 2 returns Mary and Joe for the left outer join, and "Hey" for the right outer join. However, a shuffle may cause a load imbalance, as all rows with a frequent key go to the same server.
+**Outer joins.** After a shuffle, outer joins are local too, as a row without a match on its server has no match anywhere. Above, server 2 returns Mary and Joe for the left outer join, and "Hey" for the right outer join. However, a shuffle may cause a [load imbalance][balance], as all rows with a frequent key go to the same server.
+
+[balance]: https://en.wikipedia.org/wiki/Load_balancing_(computing)
 
 **Broadcast join.** If `Person` is small, it can be copied to every server instead, while `Messages` stays in place, so that a frequent key does not overload any server. Each message then sits with all persons, so the inner and right outer joins are local.
 
@@ -278,11 +287,13 @@ Each server holds some columns, for all rows. This is called **vertical partitio
 [column-db]: https://en.wikipedia.org/wiki/Column-oriented_DBMS
 
 **Inner join.** Only the keys decide which rows match, so the keys are matched first, and the other columns move last:
-1. server 1 matches the keys into a **join index**: a list of pairs of row numbers, one from each table;
+1. server 1 matches the keys into a **join index** ([Valduriez, 1987][joinindex]): a list of pairs of row numbers, one from each table;
 2. server 1 sends the `Person` row numbers to server 2, and the `Messages` row numbers to server 3;
 3. servers 2 and 3 gather their rows in that order.
 
 In practice, only *row numbers* cross the network, and the result stays split by columns. Building the output rows only at the end, and only for the rows that match, is called **late materialization**.
+
+[joinindex]: https://doi.org/10.1145/22952.22955
 
 **Outer joins.** The join index also holds pairs with one side missing, such as Mary (row 1) and Joe (row 3) in the left outer join, and the servers write `NULL` where a row number is missing, as illustrated below:
 
@@ -291,6 +302,11 @@ In practice, only *row numbers* cross the network, and the result stays split by
 
 {: .caption}
 A left outer join of tables split by columns across 3 servers. Column `#` is the implicit row number. Server 1 builds the join index (1) and sends row numbers (2), and servers 2 and 3 gather their rows (3). The first three rows are the inner join.
+
+To find more about the topic, [Blanas et al.][blanas] compare the shuffle join (called *repartition join* there), the broadcast join and the semi-join on a cluster of 100 nodes running MapReduce, and say when to use each. The survey of [Abadi et al.][column-stores] on column-oriented databases details late materialization (section 4.4) and the joins of column stores (section 4.5).
+
+[blanas]: https://doi.org/10.1145/1807167.1807273
+[column-stores]: https://doi.org/10.1561/1900000024
 
 ## Summary
 

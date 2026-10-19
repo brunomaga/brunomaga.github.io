@@ -475,7 +475,7 @@ The table below compares the schedules in the diagrams above, on 4 GPUs and 8 mi
 
 For ZB-H2 and ZB-V, the value in parentheses is the idle time when the optimizer step synchronizes all stages. DualPipe and DualPipeV also hide the all-to-all communication of expert parallelism behind computation, which is not captured in this table.
 
-In practice, ZB-H1 reduces the bubble of 1F1B without extra activation memory, while ZB-H2 and ZB-V remove it when there is spare memory or bandwidth, and when the optimizer step can be validated after the update.
+In practice, ZB-H1 reduces the bubble of 1F1B without extra activation memory, while ZB-H2 and ZB-V remove it when there is spare memory or bandwidth, and when the optimizer step can be validated after the update. On the same GPUs, DualPipeV runs twice as many stages as DualPipe, each of half the size, and trades a larger bubble for half of the parameter memory.
 
 To find more about the topic, [The Ultra-Scale Playbook](https://huggingface.co/spaces/nanotron/ultrascale-playbook) of Hugging Face describes these schedules, and how to combine pipeline parallelism with data, tensor, context and expert parallelism.
 

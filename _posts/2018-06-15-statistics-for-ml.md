@@ -6,9 +6,9 @@ categories: ["Machine Learning"]
 tags: ["statistics", "probability", "Bayes rule", "Gaussian distribution", "KL divergence"]
 ---
 
-In 1763, two years after the death of Thomas Bayes, his essay [An Essay Towards Solving a Problem in the Doctrine of Chances](https://en.wikipedia.org/wiki/An_Essay_Towards_Solving_a_Problem_in_the_Doctrine_of_Chances) was published by his friend Richard Price. It used conditional probability to compute limits on an unknown parameter from evidence, the idea behind [Bayes rule](https://en.wikipedia.org/wiki/Bayes%27_theorem). In 1933, Andrey Kolmogorov founded modern probability theory on three [axioms](https://en.wikipedia.org/wiki/Probability_axioms).
+In 1763, two years after the death of Thomas Bayes, his essay [An Essay Towards Solving a Problem in the Doctrine of Chances](https://en.wikipedia.org/wiki/An_Essay_Towards_Solving_a_Problem_in_the_Doctrine_of_Chances) was edited and published by his friend Richard Price. It used conditional probability to compute limits on an unknown parameter from evidence, the idea behind [Bayes rule](https://en.wikipedia.org/wiki/Bayes%27_theorem). In 1933, Andrey Kolmogorov founded modern probability theory on three [axioms](https://en.wikipedia.org/wiki/Probability_axioms).
 
-This post is a brief summary of the topics in statistics and probability that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. It covers the rules of probability, moments and independence, the Gaussian and exponential family distributions, limit theorems and inequalities, testing, information theory, combinatorics, sets, Bayesian networks and kernel density estimation.
+This post is a brief summary of the topics in statistics and probability that are relevant to ML engineers on a daily basis, extracted from the books in the <a href="{{ site.resources_permalink }}">resources</a> section. It covers the rules of probability, moments, independence, Gaussian and exponential family distributions, limit theorems, inequalities, testing, information theory, combinatorics, sets, Bayesian networks and kernel density estimation.
 
 ### Basic definitions
 
@@ -491,7 +491,7 @@ where $$K$$ is the kernel, a non-negative function that integrates to 1, and $$h
 {: .caption}
 Histogram with bins of width 2 (left) and Gaussian kernel density estimate with bandwidth $$h = 1.5$$ (right) of the same six data points. The estimate is the sum of six kernels centred at the points, each divided by $$n$$. Adapted from: [Kernel density estimation](https://en.wikipedia.org/wiki/Kernel_density_estimation)
 
-Compared to the histogram on the left, the kernel density estimate is smooth, does not depend on the position of the bins, and converges faster to the true density of a continuous random variable.
+Compared to the histogram on the left, the kernel density estimate is smooth and converges faster to the true density of a continuous random variable.
 
 The following table summarizes the method used for each use case:
 
