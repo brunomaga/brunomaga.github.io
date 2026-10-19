@@ -6,7 +6,7 @@ permalink: /publications/
 
 {::options parse_block_html="true" /}
 
-A summary of some interesting publications I came across. Continuously updated.
+A summary of some interesting publications. Continuously updated.
 
 <table class="label-table pub-table">
 <tr>
@@ -426,7 +426,7 @@ In their evaluation, SLA reduces attention computation by **95%** (≈20×) with
 <td></td>
 <td markdown="block">
 <details>
-<summary markdown="span"><span class="pub-title">DeepSeek‑V3.2‑Exp (model card & notes)</span><span class="pub-meta">, DeepSeek‑AI</span><a class="pub-link" href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
+<summary markdown="span"><span class="pub-title">DeepSeek-V3.2-Exp (model card & notes)</span><span class="pub-meta">, DeepSeek-AI</span><a class="pub-link" href="https://huggingface.co/deepseek-ai/DeepSeek-V3.2-Exp" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
 DeepSeek-V3.2-Exp is an incremental update in the DeepSeek V3 family aimed primarily at **serving efficiency**, especially for long-context workloads. It is DeepSeek-V3.1-Terminus with a single architectural change introduced through continued training; compared to the original DeepSeek-V3 technical report (Dec 2024), the emphasis shifts from “how it was trained” to “how to run it cheaper”, without changing the core MoE transformer recipe.
@@ -2278,7 +2278,7 @@ Batch Normalization (BatchNorm, BN) is a technique used in deep learning to impr
 <td></td>
 <td markdown="block">
 <details>
-<summary markdown="span"><span class="pub-title">Siamese neural networks for one-shot image recognition</span><span class="pub-meta">, University of Toronto (ICML 2015 Deep Learning Workshop)</span><a class="pub-link" href="https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
+<summary markdown="span"><span class="pub-title">Siamese Neural Networks for One-shot Image Recognition</span><span class="pub-meta">, University of Toronto (ICML 2015 Deep Learning Workshop)</span><a class="pub-link" href="https://www.cs.cmu.edu/~rsalakhu/papers/oneshot1.pdf" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
 The paper describes **[siamese neural networks](https://en.wikipedia.org/wiki/Siamese_neural_network)** (see below for details) for efficient **[one-shot learning](https://en.wikipedia.org/wiki/One-shot_learning_(computer_vision))**. The general strategy is to 1) train a model to discriminate between a collection of same/different pairs; and 2) generalize to evaluate new categories based on learned feature mappings for verification. The architecture of each twin of the siamese network is a convolutional neural network, with a flattening and a feed-forward network in the head; the two twins share weights and the prediction is a sigmoid over a weighted L1 distance between their feature vectors. The loss function is a **binary cross-entropy** with a regularizer. On Omniglot 20-way one-shot classification, it reaches 92% accuracy.
@@ -2335,7 +2335,7 @@ The result of using a spatial transformer as the first layer of a fully-connecte
 <td><span class="post-label">2014</span></td>
 <td markdown="block">
 <details>
-<summary markdown="span"><span class="pub-title">Deeply-supervised Nets</span><span class="pub-meta">, UCSD and Microsoft (AISTATS 2015)</span><a class="pub-link" href="https://arxiv.org/abs/1409.5185" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
+<summary markdown="span"><span class="pub-title">Deeply-Supervised Nets</span><span class="pub-meta">, UCSD and Microsoft (AISTATS 2015)</span><a class="pub-link" href="https://arxiv.org/abs/1409.5185" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
 A deeply supervised model in machine learning refers to a model architecture where intermediate layers are explicitly supervised during training, in addition to the supervision applied to the final output layer. This technique encourages better learning throughout the model by enforcing that earlier layers learn features useful for solving the task directly, rather than solely relying on gradients propagated from the final layer.
@@ -2357,7 +2357,7 @@ in faster convergence, especially in presence of small training data". It gave s
 <td></td>
 <td markdown="block">
 <details>
-<summary markdown="span"><span class="pub-title">Dropout: a simple way to prevent neural networks from overfitting</span><span class="pub-meta">, Univ. Toronto (Journal of ML Research 2014)</span><a class="pub-link" href="https://jmlr.org/papers/v15/srivastava14a.html" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
+<summary markdown="span"><span class="pub-title">Dropout: A Simple Way to Prevent Neural Networks from Overfitting</span><span class="pub-meta">, Univ. Toronto (Journal of ML Research 2014)</span><a class="pub-link" href="https://jmlr.org/papers/v15/srivastava14a.html" target="_blank" rel="noopener" title="Open the paper"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a></summary>
 <div class="pub-notes" markdown="block">
 
 Dropout is a method that **randomly drops neurons (in different layers) during train time, each one with probability $$p$$** (the paper itself uses the probability of retaining a neuron instead). For each training minibatch, a new "thinned" network is sampled. Dropout can be improved by adding max-norm regularization, decaying learning rate and high momentum. **At test time, all neurons are used, with outgoing weights multiplied by $$1 - p$$**, which approximates averaging the exponentially many thinned networks. Dropout helps in **reducing overfitting**, as the network learns to never rely on any given activations, so it learns "redundant" ways of solving the task with multiple neurons; as a side effect, hidden activations also become sparser. Dropping 20% of input units and 50% of hidden units (i.e. $$p = 0.2$$ and $$p = 0.5$$) was often found to be optimal in the original publication. It is computationally less expensive than regular model averaging of multiple trained DNNs. However, it takes 2-3 times longer to train than single fully-connected DNNs because it requires many more epochs, as parameter updates are very noisy. Because a fully connected layer occupies most of the parameters, it is prone to overfitting. Therefore, dropout **increases model generalization**. 
