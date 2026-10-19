@@ -25,7 +25,7 @@ Several methods distribute multi-dimensional tensors across compute nodes with t
 This section replicates the partitioning proposed in the paper [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053). The main idea of Megatron-LM is that Transformer-based models have two main components, a feed-forward (MLP) block and an attention block, and that the forward and backward passes of each block can be performed with a single collective communication step.
 
 {: .picture}
-<img width="74.5%" height="74.5%" src="{{ site.assets }}/distributed-training/imgs/megatron-lm.svg"/>
+<img width="76.4%" height="76.4%" src="{{ site.assets }}/distributed-training/imgs/megatron-lm.svg"/>
 
 {: .caption}
 (a) The MLP block and (b) the self-attention block of Megatron-LM, split over two GPUs: the first weight matrix $$A$$ is split by columns ($$Q$$, $$K$$ and $$V$$ by attention heads), and the second one, $$B$$, by rows. $$f$$ and $$g$$ are conjugate operators: $$f$$ is an identity operator in the forward pass and an all-reduce in the backward pass, while $$g$$ is an all-reduce in the forward pass and an identity in the backward pass. Adapted from: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)

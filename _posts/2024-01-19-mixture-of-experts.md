@@ -590,7 +590,7 @@ averages of all tokens (with weights that depend on both tokens and experts), an
 It addresses the main challenges of current sparse MoEs: training instability, token dropping, inability to scale the number of experts, and ineffective finetuning.
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/distributed-training/imgs/soft_moes.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/distributed-training/imgs/soft_moes.svg"/>
 
 {: .caption}
 <b>Sparse and Soft MoE layers.</b> While the router in Sparse MoE layers (left) learns to <i>assign</i> individual input tokens to each of the available slots, in Soft MoE layers (right) each slot is the result of a (different) <i>weighted average</i> of all the input tokens. Learning to make discrete assignments introduces several optimization and implementation issues that Soft MoE sidesteps. Adapted from: [From Sparse to Soft Mixtures of Experts](https://arxiv.org/abs/2308.00951)

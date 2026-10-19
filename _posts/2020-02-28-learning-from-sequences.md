@@ -22,7 +22,7 @@ Its Recurrent Neural Network (RNN) has the following structure:
 This structure is represented in the following picture:
 
 {: .picture}
-<img width="33.8%" height="33.8%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
+<img width="33.9%" height="33.9%" src="{{ site.assets }}/learning-from-sequences/encoder_decoder.svg"/>
 
 {: .caption}
 The recurrent neural network trained at each step of the encoder-decoder architecture. Its input layer is the concatenation of the hidden layer of the previous iteration (green) and the embedding of the current input word (blue). The hidden layer (green) holds the states of the GRU or LSTM neurons, and the output layer (red) holds the model output. 
@@ -52,7 +52,7 @@ Accurate results for long sentences are hard to obtain, because recurrent neural
 In 2017, researchers at Google introduced the Transformer (original paper [Attention is all you need (2017, Google, arXiv)](https://arxiv.org/abs/1706.03762)), which overcomes many of these issues and achieves better results. The transformer architecture is:
 
 {: .picture}
-<img width="43.8%" height="43.8%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
+<img width="44.3%" height="44.3%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
 
 {: .caption}
 The transformer architecture. Grey regions represent one encoder layer (left) and one decoder layer (right), each repeated N times. Adapted from: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>

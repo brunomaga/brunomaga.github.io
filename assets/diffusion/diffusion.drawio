@@ -10,7 +10,7 @@
         <mxCell id="dit-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="723.05" height="1189.12" as="geometry" />
         </mxCell>
-        <mxCell id="dit-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-1" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="67.85" y="49.75" width="111.78" height="90.46" as="geometry" />
         </mxCell>
         <mxCell id="dit-2" value="Noise" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
@@ -19,13 +19,13 @@
         <mxCell id="dit-3" value="32 × 32 × 4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="88.74" y="116.24" width="70" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="dit-4" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-4" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="124.06" y="157.02" as="sourcePoint" />
             <mxPoint x="124.06" y="140.22" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-5" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-5" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="191.26" y="49.75" width="111.78" height="90.46" as="geometry" />
         </mxCell>
         <mxCell id="dit-6" value="Σ" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="dit-figure">
@@ -34,67 +34,67 @@
         <mxCell id="dit-7" value="32 × 32 × 4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="212.15" y="116.24" width="70" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="dit-8" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-8" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="247.48" y="157.02" as="sourcePoint" />
             <mxPoint x="247.48" y="140.22" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-9" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="186.09" y="207.42" as="sourcePoint" />
             <mxPoint x="186.09" y="214.52" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="186.09" y="264.92" as="sourcePoint" />
             <mxPoint x="186.09" y="277.85" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-11" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="129.23" y="359.91" as="sourcePoint" />
             <mxPoint x="129.23" y="372.18" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="253.29" y="359.91" as="sourcePoint" />
             <mxPoint x="253.29" y="372.18" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-13" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-13" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="129.23" y="421.29" as="sourcePoint" />
             <mxPoint x="129.23" y="438.74" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="253.29" y="421.29" as="sourcePoint" />
             <mxPoint x="253.29" y="500.12" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-15" value="Linear and Reshape" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-15" value="Linear and Reshape" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="67.85" y="157.02" width="238.43" height="50.4" as="geometry" />
         </mxCell>
-        <mxCell id="dit-16" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-16" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="69.78" y="214.52" width="233.91" height="50.4" as="geometry" />
         </mxCell>
-        <mxCell id="dit-17" value="DiT Block" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-17" value="DiT Block" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="69.78" y="277.85" width="233.91" height="82.06" as="geometry" />
         </mxCell>
-        <mxCell id="dit-18" value="N×" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-18" value="N×" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="dit-figure">
           <mxGeometry x="19.52" y="306.95" width="25.58" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="dit-19" value="Patchify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=16;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-19" value="Patchify" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=16;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="67.85" y="372.18" width="122.77" height="49.11" as="geometry" />
         </mxCell>
-        <mxCell id="dit-20" value="Embed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-20" value="Embed" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="204.18" y="372.18" width="99.51" height="49.11" as="geometry" />
         </mxCell>
-        <mxCell id="dit-21" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="73.66" y="438.74" width="112.43" height="93.05" as="geometry" />
         </mxCell>
         <mxCell id="dit-22" value="Noised&lt;br&gt;Latent" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
@@ -103,10 +103,10 @@
         <mxCell id="dit-23" value="32 × 32 × 4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="94.87" y="503.94" width="70" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="dit-24" value="Timestep &lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;t&lt;/span&gt;&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-24" value="Timestep &lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;t&lt;/span&gt;&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="204.18" y="457.48" width="99.51" height="32.31" as="geometry" />
         </mxCell>
-        <mxCell id="dit-25" value="Label &lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;y&lt;/span&gt;&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-25" value="Label &lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;y&lt;/span&gt;&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="204.18" y="500.12" width="99.51" height="31.66" as="geometry" />
         </mxCell>
         <mxCell id="dit-26" value="Latent Diffusion Transformer" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
@@ -124,25 +124,25 @@
             <mxPoint x="405.14" y="524.03" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-29" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-29" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;absoluteArcSize=1;arcSize=20;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="405.14" y="0" width="317.91" height="544.71" as="geometry" />
         </mxCell>
         <mxCell id="dit-30" value="DiT Block with adaLN-Zero" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="468.98" y="556.36" width="190.21" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="dit-31" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-31" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="507.23" y="504.65" as="sourcePoint" />
             <mxPoint x="507.23" y="52.34" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-32" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-32" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="507.23" y="23.91" as="sourcePoint" />
             <mxPoint x="507.23" y="4.52" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-33" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-33" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="507.23" y="495.6" as="sourcePoint" />
             <mxPoint x="493.02" y="282.37" as="targetPoint" />
@@ -152,7 +152,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-34" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-34" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="507.23" y="253.94" as="sourcePoint" />
             <mxPoint x="493.02" y="38.12" as="targetPoint" />
@@ -162,13 +162,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-35" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-35" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="637.75" y="504.65" as="sourcePoint" />
             <mxPoint x="637.75" y="491.72" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-36" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-36" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="637.75" y="450.37" as="sourcePoint" />
             <mxPoint x="567.32" y="76.25" as="targetPoint" />
@@ -177,19 +177,19 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-37" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-37" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="637.75" y="185.45" as="sourcePoint" />
             <mxPoint x="567.32" y="185.45" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-38" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-38" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="637.75" y="326.31" as="sourcePoint" />
             <mxPoint x="567.32" y="326.31" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-39" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-39" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="637.75" y="434.22" as="sourcePoint" />
             <mxPoint x="567.32" y="434.22" as="targetPoint" />
@@ -207,64 +207,64 @@
         <mxCell id="dit-43" value="&lt;i&gt;γ&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;, &lt;i&gt;β&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=bottom;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="583.51" y="412.12" width="41.31" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="dit-44" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-44" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="493.02" y="23.91" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-45" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-45" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="493.02" y="268.15" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-46" value="Scale" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-46" value="Scale" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="447.14" y="62.68" width="120.18" height="27.78" as="geometry" />
         </mxCell>
-        <mxCell id="dit-47" value="Pointwise&lt;br&gt;Feedforward" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-47" value="Pointwise&lt;br&gt;Feedforward" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="447.14" y="100.15" width="120.18" height="59.45" as="geometry" />
         </mxCell>
-        <mxCell id="dit-48" value="Scale, Shift" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-48" value="Scale, Shift" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="447.14" y="171.23" width="120.18" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-49" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-49" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="447.14" y="210.65" width="120.18" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-50" value="Scale" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-50" value="Scale" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="447.14" y="312.09" width="120.18" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-51" value="Multi-Head&lt;br&gt;Self-Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-51" value="Multi-Head&lt;br&gt;Self-Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="447.14" y="349.57" width="120.18" height="59.45" as="geometry" />
         </mxCell>
-        <mxCell id="dit-52" value="Scale, Shift" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-52" value="Scale, Shift" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="447.14" y="420" width="120.18" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-53" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-53" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="447.14" y="458.12" width="120.18" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-54" value="Input Tokens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-54" value="Input Tokens" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="447.14" y="504.65" width="120.18" height="34.89" as="geometry" />
         </mxCell>
-        <mxCell id="dit-55" value="Conditioning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-55" value="Conditioning" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="578.31" y="504.65" width="118.25" height="34.89" as="geometry" />
         </mxCell>
-        <mxCell id="dit-56" value="MLP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-56" value="MLP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="589.29" y="450.37" width="95.63" height="41.35" as="geometry" />
         </mxCell>
-        <mxCell id="dit-57" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;absoluteArcSize=1;arcSize=10;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-57" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;absoluteArcSize=1;arcSize=20;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="0" y="609.56" width="317.91" height="544.71" as="geometry" />
         </mxCell>
         <mxCell id="dit-58" value="DiT Block with Cross-Attention" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="52.27" y="1165.92" width="213.37" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="dit-59" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-59" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="104.67" y="1115.5" as="sourcePoint" />
             <mxPoint x="104.67" y="674.18" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-60" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-60" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="104.67" y="645.74" as="sourcePoint" />
             <mxPoint x="104.67" y="614.08" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-61" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-61" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="104.67" y="1098.7" as="sourcePoint" />
             <mxPoint x="90.46" y="975.93" as="targetPoint" />
@@ -274,7 +274,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-62" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-62" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="104.67" y="953.96" as="sourcePoint" />
             <mxPoint x="90.46" y="827.31" as="targetPoint" />
@@ -284,7 +284,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-63" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-63" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="104.67" y="793.71" as="sourcePoint" />
             <mxPoint x="90.46" y="659.96" as="targetPoint" />
@@ -294,7 +294,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-64" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-64" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="233.9" y="1115.5" as="sourcePoint" />
             <mxPoint x="164.77" y="877.71" as="targetPoint" />
@@ -303,91 +303,91 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-65" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-65" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;strokeWidth=1.6;" vertex="1" parent="dit-figure">
           <mxGeometry x="90.46" y="645.74" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-66" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-66" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="90.46" y="645.74" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-67" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-67" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;strokeWidth=1.6;" vertex="1" parent="dit-figure">
           <mxGeometry x="90.46" y="813.1" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-68" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-68" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="90.46" y="813.1" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-69" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-69" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;strokeWidth=1.6;" vertex="1" parent="dit-figure">
           <mxGeometry x="90.46" y="961.71" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-70" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-70" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="90.46" y="961.71" width="28.43" height="28.43" as="geometry" />
         </mxCell>
         <mxCell id="dit-71" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="689.04" width="120.18" height="60.74" as="geometry" />
         </mxCell>
-        <mxCell id="dit-72" value="Pointwise&lt;br&gt;Feedforward" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-72" value="Pointwise&lt;br&gt;Feedforward" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="689.04" width="120.18" height="60.74" as="geometry" />
         </mxCell>
         <mxCell id="dit-73" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="754.94" width="120.18" height="29.08" as="geometry" />
         </mxCell>
-        <mxCell id="dit-74" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-74" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="754.94" width="120.18" height="29.08" as="geometry" />
         </mxCell>
         <mxCell id="dit-75" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="847.99" width="120.18" height="60.74" as="geometry" />
         </mxCell>
-        <mxCell id="dit-76" value="Multi-Head&lt;br&gt;Cross-Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-76" value="Multi-Head&lt;br&gt;Cross-Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="847.99" width="120.18" height="60.74" as="geometry" />
         </mxCell>
         <mxCell id="dit-77" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="913.9" width="120.18" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-78" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-78" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="913.9" width="120.18" height="28.43" as="geometry" />
         </mxCell>
         <mxCell id="dit-79" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="1000.48" width="120.18" height="60.09" as="geometry" />
         </mxCell>
-        <mxCell id="dit-80" value="Multi-Head&lt;br&gt;Self-Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-80" value="Multi-Head&lt;br&gt;Self-Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="1000.48" width="120.18" height="60.09" as="geometry" />
         </mxCell>
         <mxCell id="dit-81" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="1066.39" width="120.18" height="29.08" as="geometry" />
         </mxCell>
-        <mxCell id="dit-82" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-82" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="1066.39" width="120.18" height="29.08" as="geometry" />
         </mxCell>
         <mxCell id="dit-83" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="1115.5" width="120.18" height="33.6" as="geometry" />
         </mxCell>
-        <mxCell id="dit-84" value="Input Tokens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-84" value="Input Tokens" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="44.58" y="1115.5" width="120.18" height="33.6" as="geometry" />
         </mxCell>
         <mxCell id="dit-85" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="174.46" y="1115.5" width="119.54" height="33.6" as="geometry" />
         </mxCell>
-        <mxCell id="dit-86" value="Conditioning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-86" value="Conditioning" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="174.46" y="1115.5" width="119.54" height="33.6" as="geometry" />
         </mxCell>
-        <mxCell id="dit-87" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;absoluteArcSize=1;arcSize=10;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-87" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;absoluteArcSize=1;arcSize=20;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="342.46" y="609.56" width="317.91" height="544.71" as="geometry" />
         </mxCell>
         <mxCell id="dit-88" value="DiT Block with In-Context Conditioning" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="366.95" y="1165.92" width="268.92" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="dit-89" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
+        <mxCell id="dit-89" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="447.14" y="1115.5" as="sourcePoint" />
             <mxPoint x="447.14" y="674.18" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-90" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-90" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="447.14" y="645.74" as="sourcePoint" />
             <mxPoint x="447.14" y="614.08" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-91" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-91" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="447.14" y="998.54" as="sourcePoint" />
             <mxPoint x="432.92" y="833.78" as="targetPoint" />
@@ -397,7 +397,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-92" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-92" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="447.14" y="793.71" as="sourcePoint" />
             <mxPoint x="432.92" y="659.96" as="targetPoint" />
@@ -407,7 +407,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-93" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=6;" edge="1" parent="dit-figure">
+        <mxCell id="dit-93" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=14;opacity=40;textOpacity=50;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="dit-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="576.37" y="1115.5" as="sourcePoint" />
             <mxPoint x="507.23" y="1056.7" as="targetPoint" />
@@ -416,58 +416,58 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit-94" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-94" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;strokeWidth=1.6;" vertex="1" parent="dit-figure">
           <mxGeometry x="432.92" y="645.74" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-95" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-95" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="432.92" y="645.74" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-96" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-96" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;strokeWidth=1.6;" vertex="1" parent="dit-figure">
           <mxGeometry x="432.92" y="819.56" width="28.43" height="28.43" as="geometry" />
         </mxCell>
-        <mxCell id="dit-97" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-97" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="432.92" y="819.56" width="28.43" height="28.43" as="geometry" />
         </mxCell>
         <mxCell id="dit-98" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="689.04" width="120.18" height="60.74" as="geometry" />
         </mxCell>
-        <mxCell id="dit-99" value="Pointwise&lt;br&gt;Feedforward" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-99" value="Pointwise&lt;br&gt;Feedforward" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="689.04" width="120.18" height="60.74" as="geometry" />
         </mxCell>
         <mxCell id="dit-100" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="754.94" width="120.18" height="29.08" as="geometry" />
         </mxCell>
-        <mxCell id="dit-101" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-101" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="754.94" width="120.18" height="29.08" as="geometry" />
         </mxCell>
         <mxCell id="dit-102" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="882.24" width="120.18" height="60.09" as="geometry" />
         </mxCell>
-        <mxCell id="dit-103" value="Multi-Head&lt;br&gt;Self-Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-103" value="Multi-Head&lt;br&gt;Self-Attention" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="882.24" width="120.18" height="60.09" as="geometry" />
         </mxCell>
         <mxCell id="dit-104" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="948.79" width="120.18" height="27.78" as="geometry" />
         </mxCell>
-        <mxCell id="dit-105" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-105" value="Layer Norm" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="948.79" width="120.18" height="27.78" as="geometry" />
         </mxCell>
         <mxCell id="dit-106" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="1021.16" width="120.18" height="69.78" as="geometry" />
         </mxCell>
-        <mxCell id="dit-107" value="Concatenate&lt;br&gt;on Sequence&lt;br&gt;Dimension" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-107" value="Concatenate&lt;br&gt;on Sequence&lt;br&gt;Dimension" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="1021.16" width="120.18" height="69.78" as="geometry" />
         </mxCell>
         <mxCell id="dit-108" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="1115.5" width="120.18" height="33.6" as="geometry" />
         </mxCell>
-        <mxCell id="dit-109" value="Input Tokens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-109" value="Input Tokens" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="387.04" y="1115.5" width="120.18" height="33.6" as="geometry" />
         </mxCell>
         <mxCell id="dit-110" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=none;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
           <mxGeometry x="516.92" y="1115.5" width="119.54" height="33.6" as="geometry" />
         </mxCell>
-        <mxCell id="dit-111" value="Conditioning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=0.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="dit-figure">
+        <mxCell id="dit-111" value="Conditioning" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;opacity=40;textOpacity=50;strokeColor=#000000;strokeWidth=1.6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit-figure">
           <mxGeometry x="516.92" y="1115.5" width="119.54" height="33.6" as="geometry" />
         </mxCell>
         <mxCell id="align_your_latents-label" value="align_your_latents.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">

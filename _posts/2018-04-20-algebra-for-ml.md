@@ -251,7 +251,7 @@ $$
 The initial value $$x_0$$ should be as close as possible to the zero. The line tangent to $$y=f(x)$$ at $$x=x_0$$ crosses the $$x$$ axis at a new, improved guess $$x_1$$. A stationary point of a function (a minimum, maximum or saddle point) can be found by computing the root of its derivative, i.e. $$x_{n+1}=x_{n}-{\frac {f'(x_{n})}{f''(x_{n})}} $$. For multivariate functions, division is not defined, so it is replaced by multiplication by the inverse of the Hessian, i.e. $$x_{n+1}=x_{n}- \left(\triangledown^2 f(x_{n})\right)^{-1} \triangledown f(x_{n})$$.
 
 {: .picture}
-<img width="45%" height="45%" src="{{ site.assets }}/algebra-for-ml/newton_method.gif"/>
+<img width="45%" height="45%" src="https://upload.wikimedia.org/wikipedia/commons/e/e0/NewtonIteration_Ani.gif"/>
 
 {: .caption}
 Newton's method: the tangent of $$f$$ at each guess crosses the $$x$$ axis at the next, improved guess, and the guesses converge to the zero of $$f$$. The animation numbers the initial guess $$x_1$$ (the text's $$x_0$$), and its legend reads \"Funktion\" (the function $$f$$) and \"Tangente\" (the tangent). Source: [Newton's method](https://en.wikipedia.org/wiki/Newton%27s_method)

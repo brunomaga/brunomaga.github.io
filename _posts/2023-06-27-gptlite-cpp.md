@@ -116,7 +116,7 @@ $$
 Together with the lower-triangular mask (`tril`), this is the underlying structure of each of the N attention blocks in the model:
 
 {: .picture}
-<img width="25.2%" height="25.2%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
+<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
 
 {: .caption}
 The multi-head attention module in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
