@@ -194,7 +194,7 @@ sections 6 and 7, and the font section 4.
   with many entries in a small chart may use 10 (llama3_scaling_laws).
 - Numbers: a true minus sign (−), a space between a number and its unit (25 μs), upright units, and commas
   between thousands (48,001).
-- Text color: black #000000. Secondary text (faded, next iteration, notes): grey #666666. Accent text, for
+- Text color: black #000000. Secondary text (faded, notes): grey #666666. Accent text, for
   names the text refers to, uses the dark accent colors in section 5.
 - Free text does not wrap inside a box narrower than the text (whiteSpace=nowrap, explicit <br> for
   line breaks).
@@ -233,12 +233,10 @@ sections 6 and 7, and the font section 4.
   backward             #82b366                                     #4f743a
   backward for inputs  #b85450                                     #74322f
   backward for weights #d79b00                                     #856000
-  next iteration       #dae8fc with grey #666666 outline and text, forward passes only, then "..."
-                       in the vertical centre
   idle                 hatched (section 7)
   ```
   Every pipeline picture uses 4 GPUs, except DualPipe (8) and the 8 workers of pipeline_8_stages,
-  pipeline_4_stages and pipeline_2_stages, and shows no previous iteration. Section 8 gives the layout.
+  pipeline_4_stages and pipeline_2_stages, and shows no previous or next iteration. Section 8 gives the layout.
 - The same thing has the same color within a post (one color per process, GPU, head, expert...), and the
   same meaning keeps its color across posts where possible (blue forward, green backward).
 - New colors are only added when the palette above runs out, and must look like part of it (pastel fill,
@@ -249,42 +247,44 @@ sections 6 and 7, and the font section 4.
 
 - Every geometric element with a fill (rectangles, rounded boxes, circles, cubes, cylinders, filled table
   cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000, no stroke
-  opacity. One weight, 1.6 px, for every outline, arrow and line; only the cells of a block are lighter:
+  opacity. Four weights, the same at page scale in every picture:
   ```
-  operation, layer, module, kernel                 1.6 px
-  device, process, group, section (frame)          1.6 px
-  operator (+, x, concatenation)                   1.6 px
-  data (tensor, vector, token, buffer)             1.6 px
-  block arrow                                      1.6 px
-  neuron, graph node                               1.6 px
-  matrix or array cell                             0.8 px, and a 1.6 px outline around each block of cells
-  isometric cube cell                              0.8 px, and a 1.6 px outline around each block of two or
-                                                   more cubes; a single cube (a token, a K or V block) has
-                                                   no outer outline
-  pipeline pass                                    0.8 px (section 8)
+  thin       0.7 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
+                      block into cells, the faces of a 3D tensor, pipeline passes
+  regular    1.4 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
+                      nodes, operators, single cubes, arrows, lines, block arrows, curly brackets
+  thick      2.1 px   frames of regions (devices, processes, groups, sections), the outline of each block of
+                      cells (matrix, array, table, stack of objects), the silhouette of each 3D tensor or
+                      block of cubes and the three edges at its front corner, axes of charts and time lines,
+                      pipeline rows, black lines that divide a drawing into regions
+  emphasis   2.8 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
+                      (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frame of
+                      process A in all_to_all), and black frames that emphasise a part (DualPipe's overlapped
+                      forward and backward passes, the selected experts in moe_switch_transformers)
   ```
+- A block (a matrix, an array, a table, a stack of objects, a block of cubes) has the thick outline around it
+  and thin lines between its cells. Boxes glued into one matrix (the column and row splits of the Megatron-LM
+  pictures) share a thin line inside one thick outline. A single cell (a token, a K or V block, a single cube)
+  has no block outline.
+- Tables have black text, thin lines between their cells and a thick outline, in black; the tables of the
+  matrix transpose post are grey (#b3b3b3 lines and outline) and keep their blue cells, and the stacks of
+  objects that their pointers point to are black arrays.
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
     frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
-  - red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing: 2.5 px, as thicker
-    black lines (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frame of process
-    A in all_to_all). Red arrows and cross marks are not emphasis lines;
-  - other colored frames that highlight a group of parts: at least 2 px (the orange KV cache frames);
-  - thicker black lines and outlines that emphasise a part of a drawing, at least 2.5 px (DualPipe's
-    "overlapped forward & backward" frames, the selected experts in moe_switch_transformers);
-  - dashed outlines of elements that are not frames: 0.8 px on filled elements, 1 px on lines without fill
-    (a dashed frame is 1.6 px, as other frames; the dash keeps its pattern);
-  - white masks that hide parts of a drawing, faded elements, curly brackets, red cross marks, and table
-    grid lines without fill.
-- Thin arrows: black #000000, 1.6 px, endArrow=block, endFill=1, endSize=5. Dashed arrows use the same
-  head. Grey #666666 only for faded or "next iteration" content. Lines without a head that join two parts of
-  the flow (two boxes, or a box and an arrow): 1.6 px.
+  - other colored frames that highlight a group of parts: 2.1 px (the orange KV cache frames). Red arrows and
+    cross marks are not emphasis lines;
+  - dashed outlines of elements that are not frames: 0.7 px on filled elements, 1.4 px on lines without fill
+    (a dashed frame is 2.1 px, as other frames; the dash keeps its pattern);
+  - white masks that hide parts of a drawing, faded elements and red cross marks.
+- Thin arrows: black #000000, 1.4 px, endArrow=block, endFill=1, endSize=5. Dashed arrows use the same
+  head. Grey #666666 only for faded content. Lines without a head that join two parts of the flow (two boxes,
+  or a box and an arrow): 1.4 px. The axis of a chart or a time line: 2.1 px, with the same head.
 - The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
   the others; the heads that converge on one node may touch.
-- Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.6 px black line with a
+- Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.4 px black line with a
   flat bar head, endArrow=baseDash;endSize=10.
-- Lines without fill (brackets, table grid lines): black, 1 px. Lines thinner than 0.7 px at page scale (grid
-  lines drawn over a photo or a matrix) keep their weight.
+- Lines thinner than 0.6 px at page scale (grid lines drawn over a photo or a matrix) keep their weight.
 - Arrow layout:
   - an arrow has at least 6 px of line before its head, and a bent arrow at least 6 px before its first turn;
   - arrowheads are at least 2 px apart: arrows into one box end at different points of its edge, or one
@@ -310,12 +310,13 @@ sections 6 and 7, and the font section 4.
   decision                                               rhombus
   neuron, graph node                                     circle
   operator (+, x, concatenation)                         circle 20 px wide with the symbol inside
-  span of several parts                                  curly bracket, 1 px
+  span of several parts                                  curly bracket, 1.4 px
   transformation of a whole stage (a model into another) block arrow; thin arrows everywhere else
   ```
 - Operations and frames have round corners: 5 px for an operation (rounded=1;absoluteArcSize=1;arcSize=10),
-  10 px for a frame (arcSize=20). Data, matrix and array cells, plot bars and the cells of a schedule or a
-  time line have square corners (rounded=0). Capsules (fully round ends) keep their shape.
+  10 px for a frame (arcSize=20). Every frame of a region has them, also a dashed or colored one
+  (ring_attention_qkv, moe_gshard, jamba). Data, matrix and array cells, plot bars and the cells of a schedule
+  or a time line have square corners (rounded=0). Capsules (fully round ends) keep their shape.
 - Block arrows: body 10 px wide, head 20 px wide and 10 px long (flexArrow: width=10;endWidth=10;endSize=3.07;
   singleArrow: 20 px tall, arrowWidth=0.5). A block arrow with a label inside keeps a body taller than its
   label, with the same proportions. A block arrow thinner than 6 px is a thin arrow (section 6).
@@ -346,20 +347,20 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
   GPU, so its passes take the full time.
-- Each row is a 1.6 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
-  is idle time. A pass is one cell with a 0.8 px black outline, in the pipeline colors of section 5; a backward
+- Each row is a 2.1 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
+  is idle time. A pass is one cell with a 0.7 px black outline, in the pipeline colors of section 5; a backward
   pass is one cell of two units, not two cells.
 - Every pass cell holds its micro-batch number, also the single micro-batch 1 of pipeline_8_stages,
   pipeline_4_stages and pipeline_2_stages. Micro-batch numbers are 10 px: black on the base colors, white on
-  the dark ones, grey #666666 in the next-iteration cells.
-- The schedule ends with the forward passes of the next iteration on every GPU, then "..." (16 px, grey),
-  vertically centred to the right of the rows.
+  the dark ones.
+- The schedule ends with its last pass: no passes of the next iteration and no "..." after the rows.
 - No time markers over the rows (no "1F1B ends" line).
-- Overlapped forward and backward passes (DualPipe) have a 2.5 px black frame around them.
+- Overlapped forward and backward passes (DualPipe) have a 2.8 px black frame around them.
+- A time axis under the rows is 2.1 px, as the axes of section 6.
 - The legend is centred under the rows, 12 px below them (or below the time axis): each entry is a 20 x 12 px
   swatch (two 10 x 12 px halves for the two chunks or directions) and its 14 px label 4 px to the right, with
   16 px between entries, on two rows when it is wider than the schedule. The labels are Forward, Backward,
-  Backward for inputs, Backward for weights, Overlapped forward & backward, Idle, Next iteration.
+  Backward for inputs, Backward for weights, Overlapped forward & backward, Idle.
 - Schedules redrawn from a paper's grid of outlined cells over a hatched block (PipeDream) follow this layout
   too; their annotations ("Pipeline flush", "Startup State", the time axis) keep their place relative to
   the rows.
@@ -407,11 +408,11 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   ```
   DRAWIO="xvfb-run -a drawio --no-sandbox" python3 _tools/export_figures.py assets/<folder>/<folder>.drawio [name ...]
   ```
-  It renders each "<name>-figure" group (or the names given) to a cropped PDF, which turns the text into
-  glyph outlines, converts it to SVG with pdftocairo, removes the white page background, crops the SVG to its
-  drawn content (its non-white pixels plus 0.5 px), writes it over the SVG of the same name in the folder,
-  and prints the width P to use in the Markdown. Outlined text looks the same on every device, whatever
-  fonts it has, as in the kernel paper figures.
+  It copies each "<name>-figure" group (or the names given) to a draw.io file of its own, renders it to a
+  cropped PDF, which turns the text into glyph outlines, converts it to SVG with pdftocairo, removes the white
+  page background, crops the SVG to its drawn content (its non-white pixels plus 0.5 px), writes it over the
+  SVG of the same name in the folder, and prints the width P to use in the Markdown. Outlined text looks the
+  same on every device, whatever fonts it has, as in the kernel paper figures.
 - Source Sans 3 (Google Fonts) and New Computer Modern Sans Math (NewCMSansMath-Regular.otf, from the
   newcomputermodern package on CTAN) must be installed where the export runs: without them draw.io draws
   other fonts, with other widths.

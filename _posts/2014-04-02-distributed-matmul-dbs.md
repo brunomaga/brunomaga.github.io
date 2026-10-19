@@ -44,7 +44,7 @@ $$
 $$A$$ and $$C$$ stay in place, and $$B$$ moves. At each step, every rank multiplies the tile of $$A$$ that matches its current block of $$B$$, adds the result to $$C_i$$, and passes the block of $$B$$ to the previous rank. After $$p$$ steps, $$C_i$$ is complete.
 
 {: .picture}
-<img width="88.7%" height="88.7%" src="{{ site.assets }}/distributed-matmul-dbs/ring.svg">
+<img width="88.5%" height="88.5%" src="{{ site.assets }}/distributed-matmul-dbs/ring.svg">
 
 {: .caption}
 The ring algorithm on 3 ranks. Blocks of $$B$$ shift up, and rank 0 sends to rank 2. At each step, a rank multiplies the tile of $$A$$ that has the color of its block of $$B$$.
@@ -67,7 +67,7 @@ For example, rank $$(1,2)$$ of a $$3 \times 3$$ grid computes $$C_{1,2} = A_{1,0
 Steps 2 and 3 repeat until each rank has done $$q$$ multiplications.
 
 {: .picture}
-<img width="89.2%" height="89.2%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
+<img width="89.6%" height="89.6%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
 
 {: .caption}
 Cannon's algorithm on a $$3 \times 3$$ grid of ranks. Tiles of $$A$$ (top) shift left, and tiles of $$B$$ (bottom) shift up. The thick frame marks rank $$(1,2)$$, and colors show its three pairs: blue for $$k=0$$, green for $$k=1$$ and red for $$k=2$$.
@@ -103,7 +103,7 @@ The **compressed sparse row** (CSR) format uses three arrays:
 - `row_ptr`: where each row starts. Row $$i$$ is at positions `row_ptr[i]` to `row_ptr[i+1]-1` of the other two arrays.
 
 {: .picture}
-<img width="69.7%" height="69.7%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
+<img width="69.6%" height="69.6%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
 
 {: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
@@ -168,7 +168,7 @@ There are four kinds of join:
 - **full outer join:** also the unmatched rows of both tables.
 
 {: .picture}
-<img width="90.4%" height="90.4%" src="{{ site.assets }}/distributed-matmul-dbs/joins.svg">
+<img width="90.6%" height="90.6%" src="{{ site.assets }}/distributed-matmul-dbs/joins.svg">
 
 {: .caption}
 **Top:** the tables `Person` (blue) and `Messages` (green). **Bottom:** three joins on `id`. Dark gray cells are `NULL`.
@@ -192,7 +192,7 @@ For outer joins, each row also records whether it found a match, and the rows wi
 **Outer joins.** In step 3, server 1 also returns its unmatched persons, with `NULL`: this is the left outer join. Server 2 knows which of its messages had no match, since their keys were not in the list of step 1. In step 4, it returns them, with `NULL`. The inner join plus step 4 is the right outer join, and steps 3 and 4 together are the full outer join.
 
 {: .picture}
-<img width="92.4%" height="92.4%" src="{{ site.assets }}/distributed-matmul-dbs/layout_tables.svg">
+<img width="92.7%" height="92.7%" src="{{ site.assets }}/distributed-matmul-dbs/layout_tables.svg">
 
 {: .caption}
 A semi-join between two servers: the keys (1), the matching rows (2), the left outer join on server 1 (3), and the unmatched messages of server 2 (4). The first three rows of (3) are the inner join.
@@ -208,7 +208,7 @@ For a long list of keys, a [Bloom filter][bloom] is a smaller substitute. It let
 **Inner join.** We place each row by its key, with the same rule for both tables, such as a hash of the key. Below, even keys go to server 1, and odd keys to server 2. Matching rows then share a server, and every server joins locally. If the tables are not placed this way, a **shuffle** first sends each row to its server with an all-to-all exchange (`MPI_Alltoallv`).
 
 {: .picture}
-<img width="87.4%" height="87.4%" src="{{ site.assets }}/distributed-matmul-dbs/layout_rows.svg">
+<img width="87.6%" height="87.6%" src="{{ site.assets }}/distributed-matmul-dbs/layout_rows.svg">
 
 {: .caption}
 Two tables split by rows across 2 servers, colored by target server: blue for server 1 (even keys), and orange for server 2 (odd keys). **Left:** before the shuffle. **Right:** after it.
@@ -220,7 +220,7 @@ A shuffle has one weakness: a frequent key sends many rows to the same server, w
 **Broadcast join.** If `Person` is small, we can copy it to every server instead, and leave `Messages` in place. Each message then sits with all persons, so the inner and right outer joins are local. The left outer join is not: John matches on server 1 but not on server 2, so no server can tell alone that a person has no match. Each server flags its local matches, and a logical-or all-reduce (`MPI_Allreduce` with `MPI_LOR`) combines the flags. Server 1 then returns the persons with a final flag of 0, with `NULL`.
 
 {: .picture}
-<img width="69.5%" height="69.5%" src="{{ site.assets }}/distributed-matmul-dbs/broadcast.svg">
+<img width="69.6%" height="69.6%" src="{{ site.assets }}/distributed-matmul-dbs/broadcast.svg">
 
 {: .caption}
 A broadcast join, for a left outer join. After the all-reduce of the match flags, only Mary and Joe have no match.
@@ -239,7 +239,7 @@ Only row numbers cross the network, and the result stays split by columns. Build
 **Outer joins.** The join index also gets pairs with one side missing, such as Mary (row 1) and Joe (row 3) in the left outer join. Where a row number is missing, the server writes `NULL`.
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/distributed-matmul-dbs/layout_columns.svg">
+<img width="100%" height="100%" src="{{ site.assets }}/distributed-matmul-dbs/layout_columns.svg">
 
 {: .caption}
 A left outer join of tables split by columns across 3 servers. Column `#` is the implicit row number. Server 1 builds the join index (1) and sends row numbers (2), and servers 2 and 3 gather their rows (3). The first three rows are the inner join.

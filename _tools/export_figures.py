@@ -3,12 +3,14 @@
 usage: python3 _tools/export_figures.py assets/<folder>/<folder>.drawio [NAME ...]
 
 Each picture is a group with id "<name>-figure" (CLAUDE.md, Pictures). Each one, or only the NAMEs given, is
-copied to its own page of a temporary draw.io file, at x=0, y=0 and without the tab's background color.
-draw.io renders all pages to one PDF, cropped to each picture, which turns the text into glyph outlines, and
-pdftocairo converts each page to SVG. The SVG loses the white page background that draw.io paints, and is
-cropped to its drawn content (draw.io's crop leaves room around arrowheads and text boxes): its viewBox becomes
-the box of the page's non-white pixels, rendered at 288 dpi, plus 0.5 px. The SVG is written over the file of
-the same name in the draw.io file's folder (or its subfolders), or to the folder itself for a new picture.
+copied to a temporary draw.io file of its own, at x=0, y=0 and without the tab's background color. draw.io
+renders each file to a PDF cropped to the picture, which turns the text into glyph outlines (one PDF per
+picture: in a PDF of several pages, draw.io can print parts of one page on the next), and pdftocairo converts
+the PDF to SVG; JOBS pictures (default 4) are rendered at the same time. The SVG loses the white page background
+that draw.io paints, and is cropped to its drawn content (draw.io's crop leaves room around arrowheads and text
+boxes): its viewBox becomes the box of the page's non-white pixels, rendered at 288 dpi, plus 0.5 px. The SVG
+is written over the file of the same name in the draw.io file's folder (or its subfolders), or to the folder
+itself for a new picture.
 
 draw.io's PDF has 0.72 pt per draw.io px, so the SVG's width and height are set back to px; its viewBox keeps
 the PDF's units. The script prints each picture's width and height in px and the width P = W / 880 * 100 to use
@@ -18,7 +20,7 @@ Requires the draw.io desktop app (DRAWIO, default "drawio"; on a headless Linux 
 DRAWIO="xvfb-run -a drawio --no-sandbox"), pdftocairo and pdftoppm (poppler-utils), and the fonts Source Sans 3
 and New Computer Modern Sans Math (CLAUDE.md, Pictures, section 11).
 """
-import copy, os, re, shlex, shutil, subprocess, sys, tempfile
+import concurrent.futures, copy, os, re, shlex, shutil, subprocess, sys, tempfile
 import xml.etree.ElementTree as ET
 
 PAGE = 880           # content width of a post, in px
@@ -98,12 +100,22 @@ def crop(svg, box):
     return w, h
 
 
+def export(drawio, page, pdf):
+    """Render a one-page draw.io file to a PDF cropped to its picture."""
+    os.makedirs(os.path.dirname(pdf))
+    src = os.path.join(os.path.dirname(pdf), 'page.drawio')
+    doc = ET.Element('mxfile')
+    doc.append(page)
+    ET.ElementTree(doc).write(src, encoding='utf-8')
+    subprocess.run(drawio + ['--export', '--format', 'pdf', '--crop', '--output', pdf, src],
+                   check=True, stdout=subprocess.DEVNULL)
+
+
 def main():
     if len(sys.argv) < 2:
         sys.exit(__doc__)
     src, only = sys.argv[1], set(sys.argv[2:])
-    doc = ET.Element('mxfile')
-    names = []
+    pages = {}
     for diagram in ET.parse(src).getroot().iter('diagram'):
         model = diagram.find('mxGraphModel')
         if model is None:
@@ -113,7 +125,7 @@ def main():
             name = fig.get('id')[:-len('-figure')]
             if only and name not in only:
                 continue
-            page = ET.SubElement(doc, 'diagram', {'id': 'p%d' % len(names), 'name': name})
+            page = ET.Element('diagram', {'id': 'p0', 'name': name})
             m = ET.SubElement(page, 'mxGraphModel', {k: v for k, v in model.attrib.items() if k != 'background'})
             r = ET.SubElement(m, 'root')
             ET.SubElement(r, 'mxCell', {'id': '0'})
@@ -124,21 +136,21 @@ def main():
             geo.set('x', '0'); geo.set('y', '0')
             r.append(g)
             r.extend(copy.deepcopy(e) for e in parts(root, fig.get('id')))
-            names.append(name)
-    missing = only - set(names)
+            pages[name] = page
+    missing = only - set(pages)
     if missing:
         sys.exit('no such picture: ' + ', '.join(sorted(missing)))
     tmp = tempfile.mkdtemp()
     try:
-        pages, pdf = os.path.join(tmp, 'pages.drawio'), os.path.join(tmp, 'pages.pdf')
-        ET.ElementTree(doc).write(pages, encoding='utf-8')
         drawio = shlex.split(os.environ.get('DRAWIO', 'drawio'))
-        subprocess.run(drawio + ['--export', '--format', 'pdf', '--crop', '--all-pages', '--output', pdf, pages],
-                       check=True, stdout=subprocess.DEVNULL)
-        for i, name in enumerate(names, 1):
+        pdfs = {name: os.path.join(tmp, str(i), 'page.pdf') for i, name in enumerate(pages)}
+        with concurrent.futures.ThreadPoolExecutor(int(os.environ.get('JOBS', '4'))) as pool:
+            for job in [pool.submit(export, drawio, pages[name], pdfs[name]) for name in pages]:
+                job.result()
+        for name, pdf in pdfs.items():
             out = svg_path(src, name)
-            subprocess.run(['pdftocairo', '-svg', '-f', str(i), '-l', str(i), pdf, out], check=True)
-            w, h = crop(out, ink_box(pdf, i))
+            subprocess.run(['pdftocairo', '-svg', pdf, out], check=True)
+            w, h = crop(out, ink_box(pdf, 1))
             print('%-40s %6.1f x %6.1f px   P = %.1f' % (os.path.relpath(out), w, h, min(100.0, w / PAGE * 100)))
     finally:
         shutil.rmtree(tmp)

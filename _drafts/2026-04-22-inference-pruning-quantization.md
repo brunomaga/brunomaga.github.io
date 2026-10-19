@@ -204,7 +204,7 @@ NVIDIA's [Minitron](https://arxiv.org/abs/2407.14679) combines structured prunin
 4. repeat for smaller sizes.
 
 {: .picture}
-<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/minitron.svg"/>
+<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/minitron.svg"/>
 
 {: .caption}
 The importance of each head, neuron, embedding channel and layer is estimated on a small calibration set, the model is pruned to the target size, and the pruned model is retrained by distillation from the trained one. The steps repeat for each smaller size. Adapted from: [Compact Language Models via Pruning and Knowledge Distillation](https://arxiv.org/abs/2407.14679)
@@ -282,7 +282,7 @@ Quantization stores numbers with fewer bits. Weights take less memory, fewer byt
 A floating point number has a sign bit, exponent bits that set its *range*, and mantissa (fraction) bits that set its *precision*. The picture below compares the three most common formats: FP32, FP16 and BF16. BF16 (*brain floating point*) keeps the 8 exponent bits of FP32 and only 7 mantissa bits, so it covers the same range as FP32 with the memory and speed of a 16-bit format. FP16 has more precision but a much smaller range (5 exponent bits), so large values can overflow. This is why BF16 is the default format of LLMs today.
 
 {: .picture}
-<img width="73%" height="73%" src="{{ site.assets }}/inference/imgs/floating_point_representation.svg"/>
+<img width="73.1%" height="73.1%" src="{{ site.assets }}/inference/imgs/floating_point_representation.svg"/>
 
 {: .caption}
 The bits of $$0.15625 = 1.01_2 \times 2^{-3}$$ in FP32, FP16 and BF16. BF16 keeps the 8 exponent bits of FP32, and so its range, with fewer fraction bits. Adapted from: [Bfloat16 floating-point format](https://en.wikipedia.org/wiki/Bfloat16_floating-point_format)
@@ -352,7 +352,7 @@ def fake_quantize_groups(W, bits, group_size):
 The **granularity** of the scales matters as much as the number of bits. A single scale per tensor is cheap but fragile. One scale per output channel (a row of the weight matrix), per *group* of, e.g., 128 consecutive weights, or per token for the activations, follows the data much more closely, at the cost of storing more scales. Group-wise scales are the standard for 4-bit weights.
 
 {: .picture}
-<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/quantization_granularity.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/quantization_granularity.svg"/>
 
 {: .caption}
 **One scale per tensor:** 1 scale, and the outlier stretches the scale of 47 other weights. **One scale per output channel (row):** 4 scales, and the outlier stretches the scale of 11 other weights. **One scale per group of 4 weights:** 12 scales, and the outlier stretches the scale of 3 other weights.
@@ -366,7 +366,7 @@ Quantization can be applied after training, often with a small calibration datas
 Storing the weights in 4 or 8 bits while computing in 16 bits (e.g., W4A16: 4-bit weights, 16-bit activations) speeds up decode almost in proportion to the bytes saved, because decode is memory-bound: 4-bit weights are read four times faster than BF16 ones. The kernel must dequantize the weights on the fly, in registers, right before the multiplication; dequantizing the whole matrix to memory first would cancel the gain. Prefill, which is compute-bound, barely benefits.
 
 {: .picture}
-<img width="64.1%" height="64.1%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
+<img width="64.2%" height="64.2%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
 
 Rounding each weight to the nearest level (*round-to-nearest*) works well at 8 bits, but loses too much accuracy at 4 bits. GPTQ and AWQ, below, made 4-bit weights practical. Other common formats are NF4, from [QLoRA](https://arxiv.org/abs/2305.14314), whose levels are placed for normally distributed weights, and the GGUF formats of llama.cpp, for CPUs and edge devices.
 
@@ -439,7 +439,7 @@ def quantize(model, bits, group_size=64):
 [GPTQ](https://arxiv.org/abs/2210.17323) quantizes a weight matrix one column at a time. After each column, it updates the columns not yet quantized to compensate for the error just introduced. The update uses second-order information: the inverse of the Hessian $$H = 2XX^T$$ of the layer's reconstruction error $$\lVert WX - \hat{W}X \rVert^2$$, computed from calibration inputs $$X$$. Column $$i$$ is rounded to $$q$$, and every later column $$j$$ moves by $$-(W_{:,i} - q) \, U_{ij} / U_{ii}$$, with $$U$$ the upper Cholesky factor of $$H^{-1}$$, the change that minimizes the increase of the reconstruction error. GPTQ quantizes 175B-parameter models to 3-4 bits in about four GPU hours.
 
 {: .picture}
-<img width="58.8%" height="58.8%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
+<img width="58.9%" height="58.9%" src="{{ site.assets }}/inference/imgs/gptq.svg"/>
 
 {: .caption}
 GPTQ quantizes the columns of $$W$$ one at a time, and spreads the rounding error of each column over the columns not yet quantized. Inspired by: [GPTQ: Accurate Post-Training Quantization for Generative Pre-trained Transformers](https://arxiv.org/abs/2210.17323)
@@ -589,7 +589,7 @@ class W8A8Linear(nn.Module):
 **LLM.int8()** keeps the few outlier feature dimensions in 16 bits and runs everything else in INT8. A feature is an outlier when any of its values is larger in magnitude than a threshold, 6 in the paper. The outliers are rare, so more than 99.9% of the multiplications still run in INT8:
 
 {: .picture}
-<img width="77.7%" height="77.7%" src="{{ site.assets }}/inference/imgs/llm_int8.svg"/>
+<img width="77.8%" height="77.8%" src="{{ site.assets }}/inference/imgs/llm_int8.svg"/>
 
 {: .caption}
 The feature columns of $$X$$ with outliers and the matching rows of $$W^T$$ are multiplied in FP16, the other features in INT8, and the two results are added. Adapted from: [LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale](https://arxiv.org/abs/2208.07339)
@@ -649,7 +649,7 @@ def smoothquant(model, data, n_batches, batch_size, seqlen, alpha=0.5):
 [QuaRot](https://arxiv.org/abs/2404.00456) and [SpinQuant](https://arxiv.org/abs/2405.16406) multiply the weights and activations by orthogonal matrices, such as Hadamard matrices. Since $$R^TR = I$$, the output does not change, but the rotation spreads each outlier across all channels. This makes 4-bit weights, activations and KV cache possible (W4A4KV4). QuaRot uses random Hadamard matrices; SpinQuant learns the rotations.
 
 {: .picture}
-<img width="80.5%" height="80.5%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
+<img width="80.6%" height="80.6%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
 
 {: .caption}
 Rotating the weights the other way, $$W R^T$$, keeps the output: $$(W R^T)(R x) = W x$$. After the rotation, the INT4 levels are closer together (5.7 instead of 12.6 apart), so the small values lose much less precision.
@@ -695,7 +695,7 @@ class FakeQuantLinear(nn.Module):
 Four bits represent only 16 values, so FP4 needs fine-grained scales. In the **micro-scaling** ([MX](https://arxiv.org/abs/2310.10537)) formats, every block of 32 consecutive values shares an 8-bit power-of-two scale (MXFP8, MXFP6 and MXFP4). NVIDIA's **NVFP4** uses blocks of 16 values with an FP8 scale, plus one FP32 scale per tensor. Its smaller blocks and finer scales follow the data more closely, at the cost of a quarter of a bit more per value. Blackwell tensor cores apply these scales in hardware. OpenAI's gpt-oss models, for example, ship their mixture-of-experts weights in MXFP4.
 
 {: .picture}
-<img width="99.3%" height="99.3%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
+<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/microscaling.svg"/>
 
 The following code simulates both formats with fake quantization. Used with the `FakeQuantLinear` layer above, it quantizes the weights and activations of GPTlite to FP4:
 
@@ -735,7 +735,7 @@ def fake_quantize_nvfp4(x):
 At long contexts and large batches, the KV cache can be larger than the model weights. Storing it in FP8 or INT8 halves its size and the bytes read at each decode step, with almost no loss of quality; most serving engines enable it with a single configuration flag. More aggressive methods go down to 2 bits: [KIVI](https://arxiv.org/abs/2402.02750) quantizes the keys per channel, since their outliers live in fixed channels, and the values per token, and keeps the most recent tokens in full precision. Quantized attention kernels, such as [SageAttention](https://github.com/thu-ml/SageAttention), apply the same ideas to the attention computation itself.
 
 {: .picture}
-<img width="88%" height="88%" src="{{ site.assets }}/inference/imgs/kivi.svg"/>
+<img width="88.1%" height="88.1%" src="{{ site.assets }}/inference/imgs/kivi.svg"/>
 
 {: .caption}
 The outliers of the keys live in a few fixed channels, so each channel gets its own scale. The outlined cells share one scale and zero-point. Inspired by: [KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache](https://arxiv.org/abs/2402.02750)

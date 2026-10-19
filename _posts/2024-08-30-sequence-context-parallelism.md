@@ -19,7 +19,7 @@ Two remarks before continuing:
 Sequence parallelism first requires a data loader that loads data at the token level, matching the hybrid data- and sequence-parallel setup. This is done by configuring a `DataLoader` and a `DistributedSampler` that assign chunks of sequences (instead of full sequences) to the data loader workers.
 
 {: .picture}
-<img width="97.1%" height="97.1%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
+<img width="97%" height="97%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
 
 {: .caption}
 Data loading for hybrid data parallelism (DP) and sequence parallelism (SP) on 4 color-coded processes/GPUs and a dataset of 8 samples. First row: all 4 processes run distributed data parallelism. Second row: a custom `DistributedSampler` that yields chunks of sequences enables a hybrid data- and sequence-parallel execution with 2 groups of 2 sequence-parallel processes. Third row: no data parallelism; all 4 processes run sequence parallelism on the same sample.
@@ -45,7 +45,7 @@ A feed-forward network applied to a tensor of this shape achieves parallelism of
 [(DeepSpeed) Ulysses parallelism](https://arxiv.org/abs/2309.14509) solves this by swapping the distributed view from sequence-split to head-split before the MHA module, and back after it, as in the following illustration:
 
 {: .picture}
-<img width="82.6%" height="82.6%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
+<img width="82.5%" height="82.5%" src="{{ site.assets }}/distributed-training/imgs/ulysses_sequence_parallelism.svg"/>
 
 {: .caption}
 Overview of Ulysses sequence parallelism. **Left:** the initial view of the input tensor, distributed across 4 color-coded GPUs and split along the sequence (`S`) dimension. **Center:** the *first all-to-all* changes the distributed view from sequence-split to head-split. Each process now holds full sequences for a subset of heads and computes attention locally. **Right:** the *second all-to-all* changes the view back from head-split to sequence-split. Inspired by: [DeepSpeed Ulysses: System Optimizations for Enabling Training of Extreme Long Sequence Transformer Models](https://arxiv.org/abs/2309.14509)
@@ -407,7 +407,7 @@ PyTorch has no notion of *partial sequences*, in the way data parallelism has a 
 Multi-dimensional parallelism (e.g., data + sequence) also requires process groups for the data-parallel processes (which load different samples) and for the sequence-parallel processes (which load different chunks of the same sample). These groups are created with PyTorch's [`DeviceMesh`](https://pytorch.org/tutorials/recipes/distributed_device_mesh.html) or manually. As an example, $$2 \times 2$$ data and Ulysses sequence parallelism on 4 GPUs gives the following memory layout before and during multi-head attention:
 
 {: .picture}
-<img width="64.8%" height="64.8%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
+<img width="65%" height="65%" src="{{ site.assets }}/distributed-training/imgs/sequence_and_data_parallelism.svg"/>
 
 {: .caption}
 Allocation of activations on 4 GPUs with 2-GPU data parallelism and 2-GPU Ulysses sequence parallelism. Left: the blue and green processes form one sequence-parallel group and share one sample; the red and yellow processes form the other group and share the other sample. Right: the first all-to-all in Ulysses parallelism converts token-level distributed storage into head-level distributed storage. All four processes then compute attention over full sequences.

@@ -485,7 +485,7 @@ The training script trains an unconditional model. A class-conditional model can
 Running diffusion directly on pixels is already expensive for high-resolution images. This led to the **[latent diffusion model](https://arxiv.org/abs/2112.10752)**, which applies diffusion in the latent space of a pretrained autoencoder (e.g. a VAE) instead of on the image directly. Working on the compressed representation reduces the cost of training on high-resolution images. As diffusion moved to video, the large amount of data per sample made this compression even more important. Video models now compress their input in both the spatial and temporal dimensions:
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
+<img width="99.8%" height="99.8%" src="{{ site.assets }}/diffusion/sora_vae.svg"/> 
 
 {: .caption}
 An overview of the latent space compression in Sora. The pre-processing step "turns videos into [visual] patches by first compressing videos into a lower-dimensional latent space and subsequently decomposing the representation into spacetime patches". Adapted from: [Video generation models as world simulators (OpenAI)](https://openai.com/index/video-generation-models-as-world-simulators/)
@@ -495,7 +495,7 @@ The other challenge with video data is attention: how to correlate image patches
 - a full 3D attention, which collects all patches of all frames and uses them as the sequence dimension in the attention, i.e. converts an input of shape $$B \times T \times H \times W \times C$$ into $$B \times (T * H * W) \times C$$. This leads to a very large sequence dimension, which is a problem because the computation in the attention mechanism grows quadratically with the sequence length. However, [Masked Autoencoders Are Scalable Vision Learners](https://arxiv.org/abs/2111.06377) showed that masked autoencoders (MAE) are scalable self-supervised learners for computer vision that only need to encode a random subset of the patches (25% on images). [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113) extended this to videos, where only 10% of the $$T * H * W$$ spacetime patches are needed. [Patch n' Pack: NaViT, a Vision Transformer for any Aspect Ratio and Resolution](https://arxiv.org/abs/2307.06304) also uses random token dropping, together with sequence packing, to speed up training.
 
 {: .picture}
-<img width="90.6%" height="90.6%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
+<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
 
 {: .caption}
 An illustration of a masked autoencoder that randomly picks 10% of the spacetime patches of a video. These patches retain enough representative power to reconstruct the original video. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113)
@@ -604,7 +604,7 @@ CogVideoX is a large-scale DiT model for text-to-video generation. The model inp
 Latte is a DiT-based text-to-image and text-to-video diffusion model. Latte first extracts spatio-temporal tokens from input videos, then uses a series of Transformer blocks to model the video distribution in the latent space. The paper tests several options for the clip patch embedding, model variants, timestep-class information injection, temporal positional embedding and learning strategies, and reports its findings. For example, it tests four variants of the 3D transformer block: (1) one with spatial Transformer blocks and temporal Transformer blocks, (2) a "late fusion" approach to combine spatio-temporal information, with the same number of Transformer blocks as Variant 1, (3) one that "initially computes self-attention only on the spatial dimension, followed by the temporal dimension, and as a result, each Transformer block captures both spatial and temporal information", and (4) one that uses different attention heads to handle tokens separately in the spatial and temporal dimensions.
 
 {: .picture}
-<img width="77.9%" height="77.9%" src="{{ site.assets }}/diffusion/latte.svg"/> 
+<img width="78%" height="78%" src="{{ site.assets }}/diffusion/latte.svg"/> 
 
 {: .caption}
 <b>The pipeline of Latte for video generation</b>. Four model variants of Latte are proposed to efficiently capture spatio-temporal information in videos. Each block depicted in light orange represents a Transformer block. The standard Transformer blocks are used in (a) and (b), while (c) and (d) use Latte's own block variants. For the sake of simplicity, encoding and decoding processes for VAE are not shown in the diagram. Adapted from: [Latte: Latent Diffusion Transformer for Video Generation](https://arxiv.org/abs/2401.03048).
@@ -650,7 +650,7 @@ data. A high masking ratio leads to a large speedup, e.g., > 4× in wall-clock t
 or even more.
 
 {: .picture}
-<img width="90.6%" height="90.6%" src="{{ site.assets }}/diffusion/masked_autoencoders.svg"/> 
+<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders.svg"/> 
 
 {: .caption}
 <b>Masked Autoencoders as spatiotemporal learners</b>. A large subset (<i>e.g.</i>, 90%) of random patches in spacetime is masked. An encoder operates on the set of visible patches. A small decoder then processes the full set of encoded patches and mask tokens to reconstruct the input. Except for patch and positional embeddings, <i>neither the encoder, the decoder, nor the masking strategy, has any spatiotemporal inductive bias</i>. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113).
@@ -667,7 +667,7 @@ The following works address multi-dimensional parallelism for large-scale models
 Presents DiT-MoE, a sparse Mixture of Experts (MoE) version of DiT, with good scaling properties, performance comparable to dense DiTs, and highly optimized inference.
 
 {: .picture}
-<img width="96.6%" height="96.6%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
+<img width="96.7%" height="96.7%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
 
 {: .caption}
 <b>Overview of the DiT-MoE architecture.</b> DiT-MoE is built upon the DiT and composed of MoE-inserted Transformer blocks. In each block, the MLP is replaced by a sparsely activated mixture of MLPs. The right subfigure shows the MoE layer with the shared expert strategy. Adapted from: [Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633).
