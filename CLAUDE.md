@@ -29,9 +29,10 @@ Read this section before any task that writes or edits text in `_posts`, `_draft
 
 ### The author's style
 
-This style was learned from the author's own text of 26 posts, as they were before any rewrite (commit
-9c353c1). The pipeline parallelism, distributed matmul and both kernel fusion posts were left out, because their
-text was not written by the author alone; they are rewritten in this style too.
+This style was learned from the author's own text of the posts, as they were before any rewrite (commit 9c353c1).
+The pipeline parallelism post was not written by the author alone, and the distributed matmul, faster attention
+and both kernel fusion posts were written by Claude. They are rewritten in this style too, and the four posts
+written by Claude read as if the author had written them from the beginning, not as edits of their earlier text.
 
 - Openings start from the history or the context of the problem ("In 2017, the Transformer model was presented
   in the paper ...", "Sorting is probably the most common algorithm in computer science."), then say what the
