@@ -252,7 +252,7 @@ struct FeedForward : nn::Module {
 A GPT *block* is the sequence of a multi-head attention and a feed-forward module. As in the Python implementation, it includes skip connections, and normalization before the attention and the feed-forward network.
 
 {: .picture}
-<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_blocks.svg"/>
+<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite/gptlite_blocks.svg"/>
 
 {: .caption}
 The GPT block(s) in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).

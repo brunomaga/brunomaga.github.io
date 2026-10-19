@@ -735,7 +735,7 @@ def fake_quantize_nvfp4(x):
 At long contexts and large batches, the KV cache can be larger than the model weights. Storing it in FP8 or INT8 halves its size and the bytes read at each decode step, with almost no loss of quality; most serving engines enable it with a single configuration flag. More aggressive methods go down to 2 bits: [KIVI](https://arxiv.org/abs/2402.02750) quantizes the keys per channel, since their outliers live in fixed channels, and the values per token, and keeps the most recent tokens in full precision. Quantized attention kernels, such as [SageAttention](https://github.com/thu-ml/SageAttention), apply the same ideas to the attention computation itself.
 
 {: .picture}
-<img width="88.1%" height="88.1%" src="{{ site.assets }}/inference/imgs/kivi.svg"/>
+<img width="88%" height="88%" src="{{ site.assets }}/inference/imgs/kivi.svg"/>
 
 {: .caption}
 The outliers of the keys live in a few fixed channels, so each channel gets its own scale. The outlined cells share one scale and zero-point. Inspired by: [KIVI: A Tuning-Free Asymmetric 2bit Quantization for KV Cache](https://arxiv.org/abs/2402.02750)

@@ -347,9 +347,11 @@ sections 6 and 7, and the font section 4.
   ```
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
-    frame around the box (the red #b85450 2 px outlines of the modules in the GPT-lite pictures);
-  - colored frames that highlight a group of parts, at least 2 px (the orange KV cache frames, the red frame
-    of process A in all_to_all);
+    frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
+  - red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing: 2.5 px, as thicker
+    black lines (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frame of process
+    A in all_to_all). Red arrows and cross marks are not emphasis lines;
+  - other colored frames that highlight a group of parts: at least 2 px (the orange KV cache frames);
   - thicker black lines and outlines that emphasise a part of a drawing, at least 2.5 px (DualPipe's
     "overlapped forward & backward" frames, the selected experts in moe_switch_transformers);
   - dashed outlines of elements that are not frames: 0.8 px on filled elements, 1 px on lines without fill
