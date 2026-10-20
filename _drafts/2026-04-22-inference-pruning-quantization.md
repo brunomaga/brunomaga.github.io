@@ -531,7 +531,7 @@ def quantize_gptq(model, data, n_batches, batch_size, seqlen, bits=4, group_size
 The factors are searched on calibration data. Unlike GPTQ, AWQ does not update the weights to fit the calibration data, so it is less likely to overfit the calibration set. The following picture illustrates the scaling of a salient channel:
 
 {: .picture}
-<img width="62.8%" height="62.8%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
+<img width="62.7%" height="62.7%" src="{{ site.assets }}/inference/imgs/awq.svg"/>
 
 {: .caption}
 $$s_j = \text{mean}\lvert X_j \rvert^\alpha$$, with $$\alpha$$ searched on calibration data. The weights of the salient channel become larger, so rounding loses less of them. The division by $$s$$ is folded into the operation before. Inspired by: [AWQ: Activation-aware Weight Quantization for LLM Compression and Acceleration](https://arxiv.org/abs/2306.00978)

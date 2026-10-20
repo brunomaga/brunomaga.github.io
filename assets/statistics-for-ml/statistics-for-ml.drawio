@@ -10,25 +10,25 @@
         <mxCell id="directed_graph-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="90.5" height="90.5" as="geometry" />
         </mxCell>
-        <mxCell id="directed_graph-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="directed_graph-figure">
+        <mxCell id="directed_graph-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="directed_graph-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="28.79" y="14.39" as="sourcePoint" />
             <mxPoint x="57.96" y="14.39" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="directed_graph-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="directed_graph-figure">
+        <mxCell id="directed_graph-12" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="directed_graph-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="14.39" y="28.79" as="sourcePoint" />
             <mxPoint x="14.39" y="57.96" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="directed_graph-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="directed_graph-figure">
+        <mxCell id="directed_graph-14" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="directed_graph-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="28.79" y="76.11" as="sourcePoint" />
             <mxPoint x="57.96" y="76.11" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="directed_graph-16" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="directed_graph-figure">
+        <mxCell id="directed_graph-16" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="directed_graph-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.57" y="24.57" as="sourcePoint" />
             <mxPoint x="63.28" y="63.28" as="targetPoint" />

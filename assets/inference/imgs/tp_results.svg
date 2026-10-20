@@ -1147,12 +1147,12 @@ L 441.369125 203.096
      </g>
      <g id="line2d_9">
       <defs>
-       <path id="m49797e22ac" d="M 0 0 
+       <path id="m0abe881bbb" d="M 0 0 
 L -4 0 
-" style="stroke: #000000; stroke-width: 1.6"/>
+" style="stroke: #000000; stroke-width: 1.4"/>
       </defs>
       <g>
-       <use xlink:href="#m49797e22ac" x="50.769125" y="203.096" style="stroke: #000000; stroke-width: 1.6"/>
+       <use xlink:href="#m0abe881bbb" x="50.769125" y="203.096" style="stroke: #000000; stroke-width: 1.4"/>
       </g>
      </g>
      <g id="text_8">
@@ -1170,7 +1170,7 @@ L 441.369125 154.887304
      </g>
      <g id="line2d_11">
       <g>
-       <use xlink:href="#m49797e22ac" x="50.769125" y="154.887304" style="stroke: #000000; stroke-width: 1.6"/>
+       <use xlink:href="#m0abe881bbb" x="50.769125" y="154.887304" style="stroke: #000000; stroke-width: 1.4"/>
       </g>
      </g>
      <g id="text_9">
@@ -1207,7 +1207,7 @@ L 441.369125 106.678609
      </g>
      <g id="line2d_13">
       <g>
-       <use xlink:href="#m49797e22ac" x="50.769125" y="106.678609" style="stroke: #000000; stroke-width: 1.6"/>
+       <use xlink:href="#m0abe881bbb" x="50.769125" y="106.678609" style="stroke: #000000; stroke-width: 1.4"/>
       </g>
      </g>
      <g id="text_10">
@@ -1227,7 +1227,7 @@ L 441.369125 58.469913
      </g>
      <g id="line2d_15">
       <g>
-       <use xlink:href="#m49797e22ac" x="50.769125" y="58.469913" style="stroke: #000000; stroke-width: 1.6"/>
+       <use xlink:href="#m0abe881bbb" x="50.769125" y="58.469913" style="stroke: #000000; stroke-width: 1.4"/>
       </g>
      </g>
      <g id="text_11">
@@ -1520,17 +1520,17 @@ L 418.584125 194.15859
    <g id="patch_17">
     <path d="M 50.769125 203.096 
 L 50.769125 36.776 
-" style="fill: none; stroke: #000000; stroke-width: 1.6; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #000000; stroke-width: 1.4; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="patch_18">
     <path d="M 441.369125 203.096 
 L 441.369125 36.776 
-" style="fill: none; stroke: #000000; stroke-width: 1.6; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #000000; stroke-width: 1.4; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="patch_19">
     <path d="M 50.769125 203.096 
 L 441.369125 203.096 
-" style="fill: none; stroke: #000000; stroke-width: 1.6; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #000000; stroke-width: 1.4; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="legend_1">
     <g id="patch_20">
@@ -1591,7 +1591,7 @@ z
      <path d="M 269.324437 16.161 
 L 279.124437 16.161 
 L 288.924437 16.161 
-" style="fill: none; stroke: #000000; stroke-width: 1.6; stroke-linecap: square"/>
+" style="fill: none; stroke: #000000; stroke-width: 1.4; stroke-linecap: square"/>
      <defs>
       <path id="mb5258676d3" d="M 0 3 
 C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
@@ -1711,12 +1711,12 @@ z
     <g id="ytick_5">
      <g id="line2d_21">
       <defs>
-       <path id="m84e8f06a35" d="M 0 0 
+       <path id="m38bb21c21a" d="M 0 0 
 L 4 0 
-" style="stroke: #000000; stroke-width: 1.6"/>
+" style="stroke: #000000; stroke-width: 1.4"/>
       </defs>
       <g>
-       <use xlink:href="#m84e8f06a35" x="441.369125" y="182.813073" style="stroke: #000000; stroke-width: 1.6"/>
+       <use xlink:href="#m38bb21c21a" x="441.369125" y="182.813073" style="stroke: #000000; stroke-width: 1.4"/>
       </g>
      </g>
      <g id="text_16">
@@ -1730,7 +1730,7 @@ L 4 0
     <g id="ytick_6">
      <g id="line2d_22">
       <g>
-       <use xlink:href="#m84e8f06a35" x="441.369125" y="142.24722" style="stroke: #000000; stroke-width: 1.6"/>
+       <use xlink:href="#m38bb21c21a" x="441.369125" y="142.24722" style="stroke: #000000; stroke-width: 1.4"/>
       </g>
      </g>
      <g id="text_17">
@@ -1764,7 +1764,7 @@ z
     <g id="ytick_7">
      <g id="line2d_23">
       <g>
-       <use xlink:href="#m84e8f06a35" x="441.369125" y="101.681366" style="stroke: #000000; stroke-width: 1.6"/>
+       <use xlink:href="#m38bb21c21a" x="441.369125" y="101.681366" style="stroke: #000000; stroke-width: 1.4"/>
       </g>
      </g>
      <g id="text_18">
@@ -1810,7 +1810,7 @@ z
     <g id="ytick_8">
      <g id="line2d_24">
       <g>
-       <use xlink:href="#m84e8f06a35" x="441.369125" y="61.115512" style="stroke: #000000; stroke-width: 1.6"/>
+       <use xlink:href="#m38bb21c21a" x="441.369125" y="61.115512" style="stroke: #000000; stroke-width: 1.4"/>
       </g>
      </g>
      <g id="text_19">
@@ -1891,7 +1891,7 @@ L 246.069125 120.845793
 L 300.319125 148.728672 
 L 354.569125 156.204518 
 L 408.819125 186.942457 
-" clip-path="url(#pc106543e18)" style="fill: none; stroke: #000000; stroke-width: 1.6; stroke-linecap: square"/>
+" clip-path="url(#pc106543e18)" style="fill: none; stroke: #000000; stroke-width: 1.4; stroke-linecap: square"/>
     <g clip-path="url(#pc106543e18)">
      <use xlink:href="#mb5258676d3" x="83.319125" y="53.619963" style="fill: #f8cecc; stroke: #000000"/>
      <use xlink:href="#mb5258676d3" x="137.569125" y="80.454909" style="fill: #f8cecc; stroke: #000000"/>
@@ -1905,17 +1905,17 @@ L 408.819125 186.942457
    <g id="patch_22">
     <path d="M 50.769125 203.096 
 L 50.769125 36.776 
-" style="fill: none; stroke: #000000; stroke-width: 1.6; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #000000; stroke-width: 1.4; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="patch_23">
     <path d="M 441.369125 203.096 
 L 441.369125 36.776 
-" style="fill: none; stroke: #000000; stroke-width: 1.6; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #000000; stroke-width: 1.4; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="patch_24">
     <path d="M 50.769125 203.096 
 L 441.369125 203.096 
-" style="fill: none; stroke: #000000; stroke-width: 1.6; stroke-linejoin: miter; stroke-linecap: square"/>
+" style="fill: none; stroke: #000000; stroke-width: 1.4; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
    <g id="text_21">
     <g id="patch_25">

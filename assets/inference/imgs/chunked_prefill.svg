@@ -140,7 +140,7 @@
 <path clip-rule="nonzero" d="M 1.128906 0 L 634.867188 0 L 634.867188 268.082031 L 1.128906 268.082031 Z M 1.128906 0 "/>
 </clipPath>
 <clipPath id="clip-1">
-<path clip-rule="nonzero" d="M 586 241 L 624 241 L 624 268.082031 L 586 268.082031 Z M 586 241 "/>
+<path clip-rule="nonzero" d="M 589 243 L 623 243 L 623 268.082031 L 589 268.082031 Z M 589 243 "/>
 </clipPath>
 </defs>
 <g clip-path="url(#clip-0)">
@@ -926,10 +926,10 @@
 <g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
 <use xlink:href="#glyph-1-9" x="370.990296" y="233.058705"/>
 </g>
-<path fill="none" stroke-width="1.6" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 178.622484 362.23731 L 840.491751 362.23731 " transform="matrix(0.717104, 0, 0, 0.717104, 1.143529, 0)"/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 607.410156 259.761719 L 602.679688 262.128906 L 603.863281 259.761719 L 602.679688 257.398438 Z M 607.410156 259.761719 "/>
+<path fill="none" stroke-width="1.4" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 178.618185 362.238458 L 840.857866 362.238458 " transform="matrix(0.717104, 0, 0, 0.717104, 1.502081, 0.358552)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" d="M 607.929688 260.121094 L 603.339844 262.417969 L 604.484375 260.121094 L 603.339844 257.828125 Z M 607.929688 260.121094 "/>
 <g clip-path="url(#clip-1)">
-<path fill="none" stroke-width="1.6" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 845.437863 362.23731 L 838.841232 365.53835 L 840.491751 362.23731 L 838.841232 358.941718 Z M 845.437863 362.23731 " transform="matrix(0.717104, 0, 0, 0.717104, 1.143529, 0)"/>
+<path fill="none" stroke-width="1.4" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 845.662349 362.238458 L 839.261819 365.441447 L 840.857866 362.238458 L 839.261819 359.040917 Z M 845.662349 362.238458 " transform="matrix(0.717104, 0, 0, 0.717104, 1.502081, 0.358552)"/>
 </g>
 <g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
 <use xlink:href="#glyph-1-4" x="612.115889" y="262.459957"/>
