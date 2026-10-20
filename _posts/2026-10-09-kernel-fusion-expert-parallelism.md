@@ -33,9 +33,9 @@ Therefore, AllGather-ReduceScatter suits a few ranks and many experts per token,
 The following picture illustrates the all-to-all on a small example of $$W=3$$ ranks, each holding one token and one expert, with top-$$k=2$$. The router produces a routing table, which maps each token to its experts and to the ranks that hold them, and the all-to-all moves the tokens to the experts and their outputs back:
 
 {: .picture}
-<img width="20.0%" height="20.0%" src="{{ site.assets }}/inference/imgs/ep_routing_table.svg"/>
+<img width="14.6%" height="14.6%" src="{{ site.assets }}/inference/imgs/ep_routing_table.svg"/>
 <br/>
-<img width="53.9%" height="53.9%" src="{{ site.assets }}/inference/imgs/ep_all_to_all.svg"/>
+<img width="71.6%" height="71.6%" src="{{ site.assets }}/inference/imgs/ep_all_to_all.svg"/>
 
 {: .caption}
 **Top:** the routing table of the tokens A, B and C, owned by the ranks $$P_0$$, $$P_1$$ and $$P_2$$, which hold the experts $$E_0$$, $$E_1$$ and $$E_2$$, for top-$$k=2$$. **Bottom:** the all-to-all dispatch and combine, through a switch that relays each packet. $$A_0$$ is token A sent to the expert rank $$P_0$$, $$E_0$$(AC) the expert $$E_0$$ processing tokens A and C, $$\sigma^y_t$$ the partial sum of the expert outputs of $$P_y$$ for token $$t$$, $$\Sigma_t = \sigma^0_t + \sigma^1_t + \sigma^2_t$$ their sum across all ranks, and $$\emptyset$$ a header-only packet.
@@ -139,10 +139,10 @@ The transfer and the sum are fused into **All-to-All-Reduce**, a many-to-one col
 The combine needs no metadata of its own, as it reuses the counts per sender of the dispatch, transposed, and the compute ranks run no cross-rank arithmetic. The following picture shows both collectives on the example above:
 
 {: .picture}
-<img width="49.6%" height="49.6%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
+<img width="69.2%" height="69.2%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
 
 {: .caption}
-The dispatch and combine of the example above through the INC switch, with $$W$$ transfers in and $$W$$ out per collective. **Left:** All-to-All-Unique. **Right:** All-to-All-Reduce. $$A_{02}$$ is token A for the expert ranks $$P_0$$ and $$P_2$$, $$AC_0$$ the tokens A and C for $$P_0$$, $$\sigma^y_{AC}$$ the partial sums of $$P_y$$ for tokens A and C, and $$r^y_{AC}$$ the signal that they are ready (dashed). The INC switch pulls the partial sums of each rank once the rank signals them ready, and adds them into $$\Sigma_t$$.
+The dispatch and combine of the example above through the INC switch, with $$W$$ transfers in and $$W$$ out per collective. **Left:** All-to-All-Unique. **Right:** All-to-All-Reduce. $$A_{02}$$ is token A for the expert ranks $$P_0$$ and $$P_2$$, $$AC_0$$ the tokens A and C for $$P_0$$, $$\sigma^y_{AC}$$ the partial sums of $$P_y$$ for tokens A and C, and $$r^y_{AC}$$ the signal that they are ready (dotted). The INC switch pulls the partial sums of each rank once the rank signals them ready, and adds them into $$\Sigma_t$$.
 
 ## Bandwidth and packet count
 
@@ -172,18 +172,20 @@ All-to-All-Unique and All-to-All-Reduce are collectives: they are asynchronous o
 The two $$s$$ steps carry the identity of the owner to its expert ranks, so that their results are relayed back to it. All-to-All-Reduce needs neither, as its collective call carries this information in its arguments. The following picture shows the two operations on the example above:
 
 {: .picture}
-<img width="75.3%" height="75.3%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
+<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
 
 {: .caption}
-The partial collective operations, One-to-Many-Unique (left) and Many-to-One-Reduce (right), with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. The INC element relays the tokens of each sender as they land. $$P_0$$ and $$P_1$$ signal $$P_2$$ that their outputs are ready (dashed), $$P_2$$ signals the element $$s^{01}_C$$, naming them, and the element multicasts it to each, pulls $$\sigma^0_C$$ and $$\sigma^1_C$$, and returns their sum $$\Sigma_C$$ to $$P_2$$ alone. The element holds the data of one token rank at a time, and no transfer waits for another token rank.
+The partial collective operations, One-to-Many-Unique (left) and Many-to-One-Reduce (right), with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. The INC element relays the tokens of each sender as they land. $$P_0$$ and $$P_1$$ signal $$P_2$$ that their outputs are ready (dotted), $$P_2$$ signals the element $$s^{01}_C$$, naming them, and the element multicasts it to each, pulls $$\sigma^0_C$$ and $$\sigma^1_C$$, and returns their sum $$\Sigma_C$$ to $$P_2$$ alone. The element holds the data of one token rank at a time, and no transfer waits for another token rank.
 
 The timelines below follow token C through both forms, with the operations of each device:
 
 {: .picture}
-<img width="42.6%" height="42.6%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/><span style="display:inline-block; width:5%"></span><img width="42.7%" height="42.7%" src="{{ site.assets }}/inference/imgs/ep_timeline_noncollective.svg"/>
+<img width="55.9%" height="55.9%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
+<br/>
+<img width="60.4%" height="60.4%" src="{{ site.assets }}/inference/imgs/ep_timeline_noncollective.svg"/>
 
 {: .caption}
-The dispatch and combine of token C, owned by $$P_2$$. **Left:** All-to-All-Unique and All-to-All-Reduce. **Right:** One-to-Many-Unique and Many-to-One-Reduce. $$P_2$$ sends $$C_{01}$$, i.e. token C for the expert ranks $$P_0$$ and $$P_1$$, which the INC element sends on as $$C_0$$ to $$P_0$$ and $$C_1$$ to $$P_1$$ once all ranks have arrived (left), or as soon as it lands (right). The element pulls the partial sums $$\sigma^0_C$$ and $$\sigma^1_C$$ as each rank signals it $$r^0_C$$ or $$r^1_C$$ (left), or once $$P_2$$, signalled $$r^0_C$$ and $$r^1_C$$, has signalled it $$s^{01}_C$$, which it relays as $$s^0_C$$ and $$s^1_C$$ (right), and sends their sum $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls, and dotted arrows are flags raised with `signal`.
+The dispatch and combine of token C, owned by $$P_2$$. **Top:** All-to-All-Unique and All-to-All-Reduce. **Bottom:** One-to-Many-Unique and Many-to-One-Reduce. $$P_2$$ sends $$C_{01}$$, i.e. token C for the expert ranks $$P_0$$ and $$P_1$$, which the INC element sends on as $$C_0$$ to $$P_0$$ and $$C_1$$ to $$P_1$$ once all ranks have arrived (top), or as soon as it lands (bottom). The element pulls the partial sums $$\sigma^0_C$$ and $$\sigma^1_C$$ as each rank signals it $$r^0_C$$ or $$r^1_C$$ (top), or once $$P_2$$, signalled $$r^0_C$$ and $$r^1_C$$, has signalled it $$s^{01}_C$$, which it relays as $$s^0_C$$ and $$s^1_C$$ (bottom), and sends their sum $$\Sigma_C$$ to $$P_2$$. The asterisk marks nonblocking calls, and dotted arrows are flags raised with `signal`.
 
 The collective form takes fewer steps and relays: its combine takes three steps where the partial collective one takes five, and one relay per link and direction where the partial collective one takes up to $$W$$, plus $$\mathcal{O}(W^2)$$ signals. However, it pays in memory and latency: until the last rank arrives, the element holds the data of every rank, $$W$$ times what the partial collective form holds. It also waits for the slowest rank, which the partial collective form never does.
 
@@ -209,10 +211,10 @@ The choice of backend (AllGather-ReduceScatter or All-to-All) and the choice of 
 The following picture illustrates the four models, the partial collective form of the last one, and the routing table of the example:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_communication_models.svg"/>
+<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/ep_communication_models.svg"/>
 
 {: .caption}
-The four communication models, with AllGather-ReduceScatter in the upper row and All-to-All in the middle row, without INC on the left and with INC on the right. **Bottom right:** the partial collective form of INC All-to-All-Unique → All-to-All-Reduce, with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. **Bottom left:** the routing table of the example, as in the first picture of this post. $$W=3$$ ranks $$P_0$$ to $$P_2$$ hold $$T=1$$ token and one expert each, and each rank is the token rank of its token and the expert rank of its expert. A to C are the input tokens, $$A_{02}$$ token A for the expert ranks $$P_0$$ and $$P_2$$, $$E_y$$(AB) the expert of $$P_y$$ processing tokens A and B, $$\emptyset$$ a header-only packet or a token without output, and $$\Sigma_t$$ the final output of token $$t$$. Below each model, the picture lists its steps in order, as pushes or pulls per link, where a signal-pull is a pull after the ready signal of the rank, or as signals.
+The four communication models, one per row with its dispatch on the left and its combine on the right: AllGather-ReduceScatter and All-to-All, each without INC and then with INC. **Top:** the routing table of the example, as in the first picture of this post. **Bottom:** the partial collective form of INC All-to-All-Unique → All-to-All-Reduce, with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. $$W=3$$ ranks $$P_0$$ to $$P_2$$ hold $$T=1$$ token and one expert each, and each rank is the token rank of its token and the expert rank of its expert. A to C are the input tokens, $$A_{02}$$ token A for the expert ranks $$P_0$$ and $$P_2$$, $$E_y$$(AB) the expert of $$P_y$$ processing tokens A and B, $$\emptyset$$ a header-only packet or a token without output, and $$\Sigma_t$$ the final output of token $$t$$. Below each model, the picture lists its steps in order, as pushes or pulls per link, where a signal-pull is a pull after the ready signal of the rank, or as signals.
 
 ## One-sided operations of the dispatch and combine
 

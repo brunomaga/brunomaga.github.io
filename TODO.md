@@ -843,23 +843,16 @@ that is not wrong.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
-- The eleven `inference/imgs/ep_*.svg` pictures are copies of the figures of the paper (its
-  repository's `imgs/`, commit 7d15d86), not yet redrawn. The TikZ exports (`ep_pipeline.svg`, `ep_stages.svg`, `ep_results.svg`,
-  `ep_data_movement.svg`) have 4 to 6 pt text at their natural size, and the post shows them at 75% to 100% of the
-  page, with text of 8 to 13 px. `ep_communication_models.svg` is 1019 px wide, wider than a post, and is shown at
-  100%, i.e. at 86% of its size. Fix: redraw all eleven in a "kernel-fusion-expert-parallelism" tab of
-  `assets/inference/inference.drawio`, from the paper's `imgs/moe_dispatch_and_combine.drawio` and TikZ sources,
-  with the sizes and fonts of CLAUDE.md (Pictures, sections 3 and 4); the four models of
-  `ep_communication_models.svg` fit 880 px in one column.
+- The four TikZ pictures (`ep_pipeline.svg`, `ep_stages.svg`, `ep_results.svg`, `ep_data_movement.svg`) are copies of
+  the figures of the paper (its repository's `imgs/`, commit 7d15d86), not yet redrawn. They have 4 to 6 pt text at
+  their natural size, and the post shows them at 75% to 100% of the page, with text of 8 to 13 px. Fix: redraw them
+  in the "kernel-fusion-expert-parallelism" tab of `assets/inference/inference.drawio`, from the TikZ sources of the
+  paper's latest version, with the sizes and fonts of CLAUDE.md (Pictures, sections 3 and 4).
 - `inference/imgs/ep_stages.svg` draws the eight stages on the time axis of the decode step, whose costs are
   placeholders, not measurements, as the caption says. Fix: remove the time axis until the decode step is measured,
   or redraw it with the measured costs.
 - `inference/imgs/ep_results.svg`: the right panel plots decode times that are placeholders, not measurements, as the
   caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
-- Signals are dashed arrows in `ep_all_to_all_inc.svg`, `ep_one_to_many_inc.svg` and `ep_communication_models.svg`,
-  and dotted arrows in `ep_timeline.svg` and `ep_timeline_noncollective.svg`. The paper calls them dotted in all its
-  captions; the captions of the post follow each picture. Fix at the redraw: dotted signals (dashPattern=1 2) in every
-  picture, and "dotted" in every caption.
 - The captions have no credit to the post's paper, whose figures the pictures copy. The paper is the author's own and
   not public yet. Fix: "Source: [MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and
   In-Network Compute](link)" once the paper has a public link, and "Adapted from:" after the redraw; the user
