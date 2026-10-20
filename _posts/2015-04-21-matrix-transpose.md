@@ -25,7 +25,7 @@ Given a dense matrix representation of a graph connectivity $$E$$, the algorithm
 The implementation of the distributed transpose is well known for a **dense** connectivity matrix, and is available via the `MPI_Alltoall` [collective](https://en.wikipedia.org/wiki/Collective_operation) call. This call takes as input (output) an array of elements, the number of elements per rank, and the datatype of the elements to be sent (received). In practice, if each rank holds one row of the matrix, the all-to-all is the transpose itself; if it holds several rows, each block is also transposed locally. The following picture illustrates the all-to-all, with the buffer of each process in a row, before (left) and after (right) the exchange:
 
 {: .picture}
-<img width="70.9%" height="70.9%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg">
+<img width="71.1%" height="71.1%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg">
 
 {: .caption}
 `MPI_Alltoall` on 6 processes: block $$j$$ of process $$i$$ goes to process $$j$$, as its block $$i$$. The blocks of process A (red frame) become the first block of every process. Adapted from: [MPI Tutorial, Shao-Ching Huang, IDRE High Performance Computing Workshop, 2013](https://www.slideshare.net/slideshow/mpi-49244468/49244468)
@@ -37,7 +37,7 @@ Each rank holds a disjoint subset of rows of the initial graph $$G$$, such that 
 A common format for the distributed storage of a sparse matrix is the **Compressed Sparse Row** (CSR) format. Each submatrix stored on a compute node is represented (serialized) as three arrays, holding (1) the number of populated columns per row, (2) the id of each populated column, and (3) their respective values. Note that the standard CSR stores the offset of each row instead of its number of populated columns. For clarity, the following picture illustrates a sample graph with vertices 0-5 and 12 edges labeled A-T, its representative sparse matrix, and the CSR data structure on 3 ranks:
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/matrix-transpose/crs_format.svg">
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/matrix-transpose/crs_format.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -47,7 +47,7 @@ Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs An
 A small mental trick to understand this is to notice that a sparse matrix transpose is nothing more than a composition of two operations: a local matrix transpose and a view swap. So these two operations can be used to describe a distributed sparse matrix in four different data layouts, illustrated below:
 
 {: .picture}
-<img width="96.3%" height="96.3%" src="{{ site.assets }}/matrix-transpose/layouts.svg">
+<img width="96.4%" height="96.4%" src="{{ site.assets }}/matrix-transpose/layouts.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -109,7 +109,7 @@ This information is required to match each column/row id to its target rank in t
 The first step performs a dense matrix transpose (`MPI_Alltoall`) to send/receive the number of elements to/from other ranks. The second step performs a selective scatter-gather (`MPI_Alltoallv`) that delivers the elements to the final rank. The following picture illustrates both steps on the sample matrix above: the transpose of the element counts (left), and the exchange of the elements with their row and column ids (right):
 
 {: .picture}
-<img width="98%" height="98%" src="{{ site.assets }}/matrix-transpose/matrix-transposition-crs.svg">
+<img width="98.1%" height="98.1%" src="{{ site.assets }}/matrix-transpose/matrix-transposition-crs.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -147,7 +147,7 @@ Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs An
 The transpose algorithm then follows in three steps. First, each compute node (rank) collects the metadata of its own sub-matrix, composed of the set of triplets of the form [ row id, column id, number of elements], indicating the row, column and dimensionality of each cell. Then the ranks perform a **local transpose** of their own data, by reordering their triplets by column and row id. This sequence illustrates the first step:
  
 {: .picture}
-<img width="99.1%" height="99.1%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_1.svg">
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_1.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)
@@ -157,7 +157,7 @@ The second step starts the **view swap** method. All ranks pack their triplets a
 More importantly, the matrix composed of all triplets across all ranks is a distributed matrix with a fixed element size per cell (a tuple of fixed size). Therefore, this exchange is performed by the same distributed transpose presented above in the section *How to transpose it?*. After the exchange, all ranks will hold the triplets of the metadata (*but not the data yet*) of the final matrix structure:   
 
 {: .picture}
-<img width="97.7%" height="97.7%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_2.svg">
+<img width="97.9%" height="97.9%" src="{{ site.assets }}/matrix-transpose/xcrs_transpose_2.svg">
 
 {: .caption}
 Adapted from: [Efficient Distributed Transposition Of Large-Scale Multigraphs And High-Cardinality Sparse Matrices](https://arxiv.org/abs/2012.06012)

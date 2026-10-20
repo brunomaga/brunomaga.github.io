@@ -28,7 +28,7 @@ Due to the very sophisticated anatomical structure and behaviour of neurons, num
 Brain simulators also work at different levels of detail, as displayed in the picture below, where each model zooms into a part of the model on its left:
 
 {: .picture}
-<img width="99.1%" height="99.1%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
+<img width="99.3%" height="99.3%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
 
 {: .caption}
 Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
@@ -234,7 +234,7 @@ Due to the unique morphology of a cable model representation of a discretized ne
 The coefficient of the membrane potential of each compartment in its own equation is represented by the main diagonal. The contributions from a parent to its children compartments (and vice versa) are represented by all cells on the same row (column) of the upper (lower) triangle of the matrix. As each compartment can have only one parent, this enforces only one cell per row on the lower triangle, and one cell per column on the upper triangle. For completeness, the following pictures present a neuron's dendritic arborization spatially discretized based on the cable model (left) and its sparse matrix representation according to the Hines algorithm (right).
 
 {: .picture}
-<img width="44.1%" height="44.1%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.1%" height="34.1%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
+<img width="44.2%" height="44.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.2%" height="34.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
 
 
 In the pictures above, compartments 6 and 9 start new branches, so the entries that link them to their parents, 2 and 1, lie outside the three diagonals of the matrix (joined to the diagonal by dashed lines).

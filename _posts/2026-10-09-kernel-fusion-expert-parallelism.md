@@ -160,7 +160,7 @@ The transfer and the sum are fused into **All-to-All-Reduce**, a many-to-one col
 The combine needs no metadata of its own, as it reuses the counts per sender of the dispatch, transposed, and the compute ranks run no cross-rank arithmetic. The following picture shows both collectives on the example above:
 
 {: .picture}
-<img width="69.3%" height="69.3%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
+<img width="69.4%" height="69.4%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
 
 {: .caption}
 The dispatch and combine of the example above through the INC switch, with $$W$$ transfers in and $$W$$ out per collective. **Left:** All-to-All-Unique. **Right:** All-to-All-Reduce. $$A_{02}$$ is token A for the expert ranks $$P_0$$ and $$P_2$$, $$AC_0$$ the tokens A and C for $$P_0$$, $$\sigma^y_{AC}$$ the partial sums of $$P_y$$ for tokens A and C, and $$r^y_{AC}$$ the signal that they are ready (dotted). The INC switch pulls the partial sums of each rank once the rank signals them ready, and adds them into $$\Sigma_t$$.
@@ -193,7 +193,7 @@ The weak point of the INC collectives is the memory of the element. All-to-All-U
 The two $$s$$ steps carry the identity of the owner to its expert ranks, so that their results are relayed back to it. All-to-All-Reduce needs neither, as its collective call carries this information in its arguments. The following picture shows the two operations on the example above:
 
 {: .picture}
-<img width="99.6%" height="99.6%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
+<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/ep_one_to_many_inc.svg"/>
 
 {: .caption}
 The partial collective operations, One-to-Many-Unique (left) and Many-to-One-Reduce (right), with token C of $$P_2$$ and every rank and expert on its path in black, and the others in grey. The INC element relays the tokens of each sender as they land. $$P_0$$ and $$P_1$$ signal $$P_2$$ that their outputs are ready (dotted), $$P_2$$ signals the element $$s^{01}_C$$, naming them, and the element multicasts it to each, pulls $$\sigma^0_C$$ and $$\sigma^1_C$$, and returns their sum $$\Sigma_C$$ to $$P_2$$ alone. No transfer waits for another token rank.

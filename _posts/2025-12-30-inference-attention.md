@@ -16,7 +16,7 @@ $$
 where $$Q$$, $$K$$ and $$V$$ are the queries, keys and values of the head, $$h$$ is the head size, and the [softmax](https://en.wikipedia.org/wiki/Softmax_function) turns each row of scores into weights that sum to one. The following picture illustrates this computation for $$S_q$$ queries and $$S_k$$ keys, with the names used in the code below:
 
 {: .picture}
-<img width="68.6%" height="68.6%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
+<img width="68.8%" height="68.8%" src="{{ site.assets }}/inference/imgs/sdpa.svg"/>
 
 The following code implements this attention. The function `scaled_dot_product_attention` takes an optional mask of the keys that each query can see, and `causal_mask` builds the mask of a decoder, where each token sees only itself and the previous tokens. Most modules of this post reuse both functions:
 
@@ -85,7 +85,7 @@ In 2019, Noam Shazeer proposed **Multi-Query Attention** ([MQA](https://arxiv.or
 **Grouped-Query Attention** ([GQA](https://arxiv.org/abs/2305.13245)), proposed in 2023, is the middle ground, with a quality close to MHA and a speed close to MQA, and most current models use it. The $$H$$ heads are split into $$G$$ groups, and the heads of a group share one key head and one value head, so the cache shrinks by a factor $$H / G$$. Thus, GQA becomes MHA when $$G = H$$, and MQA when $$G = 1$$. The following picture illustrates GQA with $$H = 4$$ heads in $$G = 2$$ groups, one color per group:
 
 {: .picture}
-<img width="97.5%" height="97.5%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
+<img width="97.6%" height="97.6%" src="{{ site.assets }}/inference/imgs/gqa.svg"/>
 
 A trained MHA model can be converted to GQA by averaging (mean pooling) the key and value heads of each group, followed by a short *uptraining* with about 5% of the original pre-training compute. Note that the savings of MQA and GQA appear only when there is a KV cache to read during decode: without a cache, GQA only saves a little compute in the key and value projections.
 
@@ -249,7 +249,7 @@ Per token and layer, DeepSeek-V2 caches 576 values (a latent vector of 512 value
 MLA mainly accelerates decode, which is limited by memory bandwidth: as MQA and GQA, it shrinks the KV cache that every decoding step reads. Prefill is limited by compute instead, and absorbed attention costs more FLOPs per score, as it works in the latent dimension (512 in DeepSeek-V2) instead of the head dimension (128). Therefore, implementations usually up-project the latent vectors into keys and values during prefill, and use absorption during decode. The following picture illustrates both ways:
 
 {: .picture}
-<img width="89.4%" height="89.4%" src="{{ site.assets }}/inference/imgs/mla.svg"/>
+<img width="89.5%" height="89.5%" src="{{ site.assets }}/inference/imgs/mla.svg"/>
 
 {: .caption}
 Multi-head latent attention, with S = 4 tokens, a latent dimension C = 3, H = 4 heads and a head dimension h = 2. With absorb = False (usually prefill), the keys and values of every head are recomputed from the cached latent vectors c. With absorb = True (usually decode), the queries are multiplied by W_uk, the attention runs directly over the cached latent vectors, and W_uv is applied to its output. Both panels show a whole sequence; in decode, the single new token attends to all the cached latent vectors, with no masked cells.
@@ -325,7 +325,7 @@ DSA was added to an already trained model, in two stages. First, during a short 
 With a KV cache, the indexer key of every token is cached too. Index scores are often tied, since the ReLU outputs many zeros, so the selection uses a [stable sort](https://en.wikipedia.org/wiki/Sorting_algorithm#Stability), which breaks ties the same way whether the tokens are processed together or one at a time. Decoding with a KV cache then gives the same result as processing the whole sequence at once. The following picture illustrates DSA with $$H = 4$$ heads, where each query attends only to the 3 tokens with the highest index scores:
 
 {: .picture}
-<img width="97.3%" height="97.3%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
+<img width="97.4%" height="97.4%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
 
 The following code adds DSA to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained MHA module, and adds the indexer. First, `lightning_index_scores` computes the index scores of the formula above, `top_k_indices` selects the highest ones with a stable sort, and `indexer_loss` computes the loss of the warm-up.
 

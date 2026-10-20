@@ -88,7 +88,7 @@ $$
 where $$ W \in \mathbb{R}^{D \times K} $$ and $$ Z \in \mathbb{R}^{N \times K} $$ are tall matrices, and $$ \Omega \subseteq [D] \times [N] $$ collects the indices of the observed ratings of the input matrix $$X$$. The following picture illustrates the factorization:
 
 {: .picture}
-<img width="44.1%" height="44.1%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
+<img width="44.2%" height="44.2%"  src="{{ site.assets }}/linear-regression-matrix-factorization/matrix-factorization.svg">
 
 {: .caption}
 Matrix factorization $$X \approx WZ^T$$ of the ratings of $$D = 7$$ movies by $$N = 7$$ users, with 11 observed ratings and $$K = 3$$ latent features. The rating $$x_{dn}$$ of movie $$d$$ by user $$n$$ is approximated by the dot product of row $$d$$ of $$W$$, the features of movie $$d$$, and column $$n$$ of $$Z^T$$, the features of user $$n$$.

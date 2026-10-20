@@ -168,7 +168,7 @@ It is common to not only compute the output of a single filter but to use multip
 With several channels, the result is not a 2D output in the next level, but in fact a 3D output. Layer after layer, there are increasingly more channels but a smaller “footprint”. In brief, applying local connectivity to a 2D input dataset on a *deep* neural network leads to the following final structure, a **[convolutional neural network](https://en.wikipedia.org/wiki/Convolutional_neural_network)** (CNN):
 
 {: .picture}
-<img width="99.6%" height="99.6%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
+<img width="99.8%" height="99.8%" src="{{ site.assets }}/deep-neural-networks/cnn.svg">
 
 {: .caption}
 A CNN that classifies $$16 \times 16$$ RGB patches of a satellite image as road or non-road: two stages of convolution and pooling, two fully connected layers, and the output probabilities of the two classes. Each label gives the shape of the data after a layer for $$N$$ input images, with the number of channels or units in brackets.
@@ -195,7 +195,7 @@ A better way to improve this is to provide layers of the network with the output
 With an addition, as in ResNet, the skipped layers only need to learn a correction (a *residual*) to their input, which is easier to optimize than the whole mapping. With a concatenation, as in DenseNet, each layer receives the feature maps of all the layers before it, so the number of channels grows with every layer. The following picture illustrates a dense block of DenseNet:
 
 {: .picture}
-<img width="82%" height="82%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
+<img width="82.1%" height="82.1%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
 
 {: .caption}
 A 5-layer dense block of DenseNet with a growth rate of $$k = 4$$: each layer $$H_i$$ (BN-ReLU-Conv) takes the feature maps $$x_0, \ldots, x_{i-1}$$ of all preceding layers as input and produces $$k$$ new feature maps $$x_i$$. The transition layer takes all of them. Adapted from: [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)

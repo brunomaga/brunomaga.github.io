@@ -46,7 +46,7 @@ The [roofline model](https://en.wikipedia.org/wiki/Roofline_model), presented in
 An example of a roofline chart with three applications is displayed below:
 
 {: .picture}
-<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
+<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/roofline.svg"/>
 
 {: .caption}
 A roofline plot, on a log-log scale. Below the ridge point, the roof rises with the arithmetic intensity at the peak memory bandwidth; beyond it, the roof is flat at the peak performance. App<sub>1</sub> is memory-bound. App<sub>2</sub> is compute-bound and runs below the peak performance. The arrows show how an application at ❌ moves right (more FLOPs per byte), moves up (closer to the roof), or gains from a higher roof. Adapted from: [Roofline model, Wikipedia](https://en.wikipedia.org/wiki/Roofline_model)
@@ -253,7 +253,7 @@ In the attention layer, the query of the new token attends to the keys and value
 Without a cache, each decode step recomputes the keys and values of the whole sequence, so generating $$n$$ tokens costs $$O(n^2)$$ work in the projections and MLPs and $$O(n^3)$$ in attention. With a cache, each step only computes the query, key and value of the new token, appends the new key and value to the cache, and attends over all cached ones: $$O(n)$$ and $$O(n^2)$$ in total. Queries do not need to be cached, because the query of a past token was only needed to compute the output at that past position. The following picture illustrates the attention of one head in a decode step, without and with the KV cache:
 
 {: .picture}
-<img width="81.8%" height="81.8%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
+<img width="81.9%" height="81.9%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
 
 {: .caption}
 **Without KV cache:** generating $$n$$ tokens costs $$O(n^2)$$ in the projections and the MLP, and $$O(n^3)$$ in attention. **With KV cache:** generating $$n$$ tokens costs $$O(n)$$ in the projections and the MLP, and $$O(n^2)$$ in attention.
@@ -392,7 +392,7 @@ def generate_kvcache(model, prompt, n_tokens, seqlen, kv_cache=None):
 The code above uses a dynamic cache. The following picture compares it with a static cache, for one new token:
 
 {: .picture}
-<img width="59.3%" height="59.3%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
+<img width="59.4%" height="59.4%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
 
 The following code implements a static cache of one layer, where the keys and values of the new tokens are written in place:
 
@@ -482,7 +482,7 @@ Serving many requests at once makes memory management hard, because the final le
 Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. A block can also be shared by several sequences, and copied only when one of them writes to it ([copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)), which is how prefix caching, parallel sampling and [beam search](https://en.wikipedia.org/wiki/Beam_search) share their common prefix. An illustration of the block tables of two sequences, with blocks of 4 tokens, is displayed below:
 
 {: .picture}
-<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 {: .caption}
 The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block. Inspired by: [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)
@@ -616,7 +616,7 @@ A semantic cache sits in front of the model, in the application. For every incom
 The diagram below illustrates these four steps:
 
 {: .picture}
-<img width="93.8%" height="93.8%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
+<img width="94%" height="94%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
 
 {: .caption}
 A semantic cache. The vector index finds the past query whose embedding is closest to that of the new query. If their similarity reaches the threshold, as it may for a paraphrase such as "What is the price of corn in Rome?", the cache returns the stored answer of that query. Otherwise, the LLM answers, and the embedding and the answer are stored.
@@ -745,7 +745,7 @@ With continuous batching, a waiting request takes a free slot as soon as one is 
 **Chunked prefill**, introduced by [SARATHI](https://arxiv.org/abs/2308.16369), solves this by processing a long prompt in several smaller pieces (chunks), one per step, instead of in one forward pass. Every step then takes about the same time, and the other requests keep generating one token per step. The following picture compares chunked prefill with the batching schemes of the previous section:
 
 {: .picture}
-<img width="99.4%" height="99.4%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
+<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
 
 {: .caption}
 The same 6 requests (R1 to R6) on 3 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R4 takes three. Static batching runs the requests in groups of 3 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R4 stalls R1 and R3. With chunked prefill, R4 processes its prompt in 3 chunks of one time unit each, while R1 and R3 continue decoding.
@@ -759,7 +759,7 @@ Each chunk attends to the KV cache of the earlier chunks. Suppose an 8,000-token
 The example of the 8,000-token prompt is illustrated below, without and with chunked prefill:
 
 {: .picture}
-<img width="99.6%" height="99.6%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
+<img width="99.7%" height="99.7%" src="{{ site.assets }}/inference/imgs/chunked_prefill.svg"/>
 
 The following code implements chunked prefill:
 
@@ -785,7 +785,7 @@ Instead, the sequences are concatenated, and **each step is one forward pass ove
 The following picture illustrates three sequences in a padded batch and in a ragged batch, with the block-diagonal causal mask of the ragged batch:
 
 {: .picture}
-<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/ragged_batching.svg"/>
 
 The following code packs sequences of different lengths into one flat sequence, with the position of every token, the block-diagonal causal mask, and the indices of the last tokens:
 

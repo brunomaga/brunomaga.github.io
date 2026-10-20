@@ -14,7 +14,7 @@ So this post discusses the development of MoEs since the early days, and provide
 In 1991, the papers [Adaptive Mixtures of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf) and [Task Decomposition Through Competition in a Modular Connectionist Architecture](https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog1502_2) introduced some of the earliest architectures similar to what is now called an MoE. The following picture illustrates such an MoE (left), next to the deep MoE of the next section (right):
 
 {: .picture}
-<img width="88.6%" height="88.6%" src="{{ site.assets }}/distributed-training/imgs/moe_2014_ilya.svg" alt="MoE paper 2014"/>
+<img width="88.7%" height="88.7%" src="{{ site.assets }}/distributed-training/imgs/moe_2014_ilya.svg" alt="MoE paper 2014"/>
 
 {: .caption}
 **Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). <br/>Adapted from: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
@@ -272,7 +272,7 @@ To achieve scaling, the sparsely activated layers split *unique weights* across 
 The claim is that this simplification preserves model quality while reducing routing computation and performing better, although the 2017 paper conjectured that routing to more than one expert was necessary. Compared to the top-2 routing of GShard, the capacity of each expert can also be at least halved, and the communication costs are reduced. The following picture illustrates a Switch Transformer encoder block:
 
 {: .picture}
-<img width="96.3%" height="96.3%" src="{{ site.assets }}/distributed-training/imgs/moe_switch_transformers.svg"/>
+<img width="96.2%" height="96.2%" src="{{ site.assets }}/distributed-training/imgs/moe_switch_transformers.svg"/>
 
 {: .caption}
 Illustration of a Switch Transformer encoder block. The dense feed forward network (FFN) layer of the Transformer is replaced by a sparse Switch FFN layer (light blue). The layer operates independently on the tokens in the sequence. Two tokens (<i>x</i><sub>1</sub> = “More” and <i>x</i><sub>2</sub> = “Parameters” below) are routed (solid lines) across four FFN experts; the router routes each token independently. The switch FFN layer returns the output of the selected FFN multiplied by the router gate value (dotted-line). Adapted from: [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
@@ -282,7 +282,7 @@ Illustration of a Switch Transformer encoder block. The dense feed forward netwo
 They introduce the **expert capacity factor**: the number of tokens that each expert computes (its expert capacity) is the average number of tokens per expert times this capacity factor. If the capacity is exceeded (i.e. if the router sends too many inputs to a given expert), the extra tokens skip the computation and are instead passed to the next layer via a residual connection. The routing of six tokens to three experts, one per device, with capacity factors of 1.0 and 1.5, is displayed below:
 
 {: .picture}
-<img width="96.9%" height="96.9%" src="{{ site.assets }}/distributed-training/imgs/moe_switch_transformers_2.svg"/>
+<img width="97%" height="97%" src="{{ site.assets }}/distributed-training/imgs/moe_switch_transformers_2.svg"/>
 
 {: .caption}
 Illustration of token routing dynamics. Each expert processes a fixed batch-size of tokens modulated by the <i>capacity factor</i>. Each token is routed to the expert with the highest router probability, but each expert has a fixed batch size of (total\_tokens / num\_experts) × capacity\_factor. If the tokens are unevenly dispatched then certain experts will overflow (denoted by dotted red lines), resulting in these tokens not being processed by this layer. A larger capacity factor alleviates this overflow issue, but also increases computation and communication costs (depicted by the empty grey slots). Adapted from: [Switch Transformers: Scaling to Trillion Parameter Models with Simple and Efficient Sparsity](https://arxiv.org/abs/2101.03961)
@@ -330,7 +330,7 @@ In practice, softmax gating over all experts suits only a few experts, since its
 The MoE workflow is a four-step algorithm, best illustrated in the [MegaBlocks paper](https://arxiv.org/abs/2211.15841) (detailed later): 
 
 {: .picture}
-<img width="94.6%" height="94.6%" src="{{ site.assets }}/distributed-training/imgs/moe_megablocks.svg"/>
+<img width="94.7%" height="94.7%" src="{{ site.assets }}/distributed-training/imgs/moe_megablocks.svg"/>
 
 {: .caption}
 <b>A Mixture-of-Experts Layer.</b> Shown for <i>num\_experts=3</i>, <i>top\_k=1</i> and <i>capacity\_factor=1</i> with the prevalent, token dropping formulation. <b>First (1)</b>, tokens are mapped to experts by the router. Along with expert assignments, the router produces probabilities that reflect the confidence of the assignments. <b>Second (2)</b>, the feature vectors are permuted to group tokens by expert assignment. If the number of tokens assigned to an expert exceeds its capacity, extra tokens are dropped. <b>Third (3)</b>, the expert layers are computed for the set of tokens they were assigned as well as any padding needed for unused capacity. <b>Lastly (4)</b>, the results of the expert computation are un-permuted and weighted by the router probabilities. The outputs for dropped tokens are shown here set to zero. Adapted from: [MegaBlocks: Efficient Sparse Training with Mixture-of-Experts](https://arxiv.org/abs/2211.15841)
@@ -417,7 +417,7 @@ The following **permutation step** selectively sends the tokens to each expert's
 The all-to-all collective is illustrated in the following diagram:
 
 {: .picture}
-<img width="70.9%" height="70.9%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg"/>
+<img width="71.1%" height="71.1%" src="{{ site.assets }}/matrix-transpose/all_to_all.svg"/>
 
 {: .caption}
 An illustration of the MPI all-to-all collective operation. When each process sends one element to each process, the operation is equivalent to a distributed matrix transpose: the row framed in red before the all-to-all (left), the data of process A, becomes the first column after the all-to-all (right). A single-element all-to-all exchanges the number of items to be sent and received among processes. These counts are then used by two all-to-alls with variable-sized elements in the permutation step, one for the token metadata and one for the tokens. In the un-permutation step, another all-to-all performs the reverse communication by swapping the send and receive counts and buffers. Adapted from: [MPI Tutorial, Shao-Ching Huang, IDRE High Performance Computing Workshop, 2013](https://www.slideshare.net/slideshow/mpi-49244468/49244468)

@@ -38,7 +38,7 @@ $$
 where the sum of the partial outputs $$H^{(g)} W_2^{(g)} \in \mathbb{R}^{M \times P}$$ of all GPUs is an all-reduce. Note that the all-reduce must finish before $$b_2$$ and the second activation are applied: the bias is added once, and the activation is not linear, so it cannot be applied to the partial outputs. Thus, this layout needs only one communication step per pair of layers. The following picture illustrates this execution on 2 GPUs, A and B:
 
 {: .picture}
-<img width="96.8%" height="96.8%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
+<img width="96.9%" height="96.9%" src="{{ site.assets }}/inference/imgs/tp_megatron_lm.svg"/>
 
 {: .caption}
 Megatron-LM tensor parallelism of an FFN on 2 GPUs (A in green, B in blue). The bias and activation are omitted.
@@ -46,7 +46,7 @@ Megatron-LM tensor parallelism of an FFN on 2 GPUs (A in green, B in blue). The 
 A regular implementation of this FFN launches 7 kernels: a matrix multiplication, a bias addition and an activation for each layer, plus the all-reduce. Each kernel loads its inputs from global memory and stores its outputs there, as displayed at the top of the timeline below. The kernel of this post runs the whole FFN as one kernel, with a single load and a single store to global memory (bottom), and with many small all-reduce steps that overlap the computation:
 
 {: .picture}
-<img width="95.4%" height="95.4%" src="{{ site.assets }}/inference/imgs/tp_timeline.svg"/>
+<img width="95.5%" height="95.5%" src="{{ site.assets }}/inference/imgs/tp_timeline.svg"/>
 
 {: .caption}
 Execution timeline of an FFN with Megatron-LM tensor parallelism. **Top:** the regular execution, with 7 kernels that load from (arrow up) and store to (arrow down) global memory. **Bottom:** the fused kernel, with several small, overlapping all-reduce steps performed in the network switch.
@@ -105,7 +105,7 @@ How to communicate the ready tiles? In a regular kernel, all blocks do the same 
 Thus, compute blocks never wait for communication, and communication blocks never run matrix multiplications. The price is that the matrix multiplications run on fewer SMs, which makes them slower, although only marginally on a GPU with many SMs. In return, the idle time disappears, as the following example on a GPU with 6 SMs shows:
 
 {: .picture}
-<img width="64.4%" height="64.4%" src="{{ site.assets }}/inference/imgs/tp_block_specialization.svg"/>
+<img width="64.6%" height="64.6%" src="{{ site.assets }}/inference/imgs/tp_block_specialization.svg"/>
 
 {: .caption}
 An example on a GPU with 6 SMs. **(a)** Without block specialization, all SMs compute and then spin-wait before each band is all-reduced. **(b)** With block specialization, SM1 and SM2 all-reduce each band as soon as SM3 to SM6 have computed it.

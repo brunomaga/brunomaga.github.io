@@ -44,7 +44,7 @@ The first one is the **[Odd-Even sort](https://en.wikipedia.org/wiki/Odd%E2%80%9
 The algorithm is illustrated with a sample dataset in the following workflow: 
 
 {: .picture}
-<img width="65.7%" height="65.7%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
+<img width="65.8%" height="65.8%" src="{{ site.assets }}/distributed-sort/odd_even_sort.svg">
 
 {: .caption}
 Odd-even sort of 20 elements on $$p = 5$$ ranks, colored by rank. Every rank holds 4 elements, so the list is sorted after $$p$$ phases. Step 2.2 shows the compare-split of ranks 0 and 1 in phase 0.

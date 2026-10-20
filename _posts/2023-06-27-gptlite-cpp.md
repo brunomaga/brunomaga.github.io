@@ -31,7 +31,7 @@ The other big announcement of PyTorch 2.x was `torch.compile`, which "makes PyTo
 The following diagram illustrates the three steps on a function that applies a convolution, a batch normalization and a ReLU:
 
 {: .picture}
-<img width="80.3%" height="80.3%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
+<img width="80.4%" height="80.4%" src="{{ site.assets }}/gptlite-cpp/torch_compile.svg"/>
 
 {: .caption}
 A diagram of the three steps of `torch.compile`. Adapted from: [PyTorch 2.0 technology overview](https://pytorch.org/get-started/pytorch-2.0/#technology-overview)
@@ -57,9 +57,9 @@ It looks at two different testbenches, so readers may pick one based on their le
 The two models are illustrated below:
 
 {: .picture}
-<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
+<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="25.7%" height="25.7%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
+<img width="25.8%" height="25.8%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 
 {: .caption}
 This post details the C++ implementation of the GPT-3 Small model with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W, each followed by a ReLU (right). The C++, PyTorch, TorchScript and `torch.compile` implementations of both models are then benchmarked. Left diagram adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
@@ -122,7 +122,7 @@ $$
 where $$h$$ is the number of heads, $$d_k$$ is the dimension of the keys of each head and $$W^O$$ is the output projection. Together with the lower-triangular mask (`tril`), this is the underlying structure of each of the N attention blocks in the model:
 
 {: .picture}
-<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
+<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
 
 {: .caption}
 The multi-head attention module in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
@@ -230,7 +230,7 @@ Again, `nn::ModuleList` is used as a container, instead of a standard-library co
 The feed-forward network is a two-layer Deep Neural Network that follows the attention in each block, as illustrated below:
 
 {: .picture}
-<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite/gptlite_feedforward.svg"/>
+<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_feedforward.svg"/>
 
 {: .caption}
 The feed forward network in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
@@ -263,7 +263,7 @@ struct FeedForward : nn::Module {
 The sequence of a multi-head attention and a feedforward module is called a GPT **block**. Similarly to the Python implementation, the block adds [skip connections](https://en.wikipedia.org/wiki/Residual_neural_network), and normalization before the attention and the feed-forward network, as illustrated below:
 
 {: .picture}
-<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_blocks.svg"/>
+<img width="25.5%" height="25.5%" src="{{ site.assets }}/gptlite/gptlite_blocks.svg"/>
 
 {: .caption}
 The GPT block(s) in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).

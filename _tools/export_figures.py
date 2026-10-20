@@ -12,15 +12,18 @@ boxes): its viewBox becomes the box of the page's non-white pixels, rendered at 
 is written over the file of the same name in the draw.io file's folder (or its subfolders), or to the folder
 itself for a new picture.
 
-draw.io's PDF has 0.72 pt per draw.io px, so the SVG's width and height are set back to px; its viewBox keeps
-the PDF's units. The script prints each picture's width and height in px and the width P = W / 880 * 100 to use
-in the Markdown: <img width="P%" height="P%" ...>.
+draw.io prints 100 px per inch, so its PDF has 0.72 pt per draw.io px, and the SVG's width and height are set back
+to px; its viewBox keeps the PDF's units. Chrome, which prints the PDF, fits the picture into a page that draw.io
+sizes in hundredths of an inch, which can scale the picture by a few tenths of a percent: the scale is read from the
+PDF and the width and height take it into account, so that 1 draw.io px is always 1 px on the page. The script
+prints each picture's width and height in px and the width P = W / 880 * 100 to use in the Markdown:
+<img width="P%" height="P%" ...>.
 
 Requires the draw.io desktop app (DRAWIO, default "drawio"; on a headless Linux machine for example
 DRAWIO="xvfb-run -a drawio --no-sandbox"), pdftocairo and pdftoppm (poppler-utils), and the fonts Source Sans 3
 and New Computer Modern Sans Math (CLAUDE.md, Pictures, section 11).
 """
-import concurrent.futures, copy, os, re, shlex, shutil, subprocess, sys, tempfile
+import collections, concurrent.futures, copy, os, re, shlex, shutil, subprocess, sys, tempfile, zlib
 import xml.etree.ElementTree as ET
 
 PAGE = 880           # content width of a post, in px
@@ -75,8 +78,26 @@ def ink_box(pdf, page):
     return x0 * k, y0 * k, (x1 + 1) * k, (y1 + 1) * k
 
 
-def crop(svg, box):
-    """Drop the white page background, crop to the box (pt) plus 0.5 px, set width and height in px."""
+def pdf_scale(pdf):
+    """The scale of the picture in a draw.io PDF, 1 when 1 draw.io px is 0.72 pt. Chrome draws each vector element of
+    the picture with a transform of 3 dots of 300 dpi per draw.io px times this scale; the page itself has a transform
+    of 3.125 (300 dpi over 96 dpi), and images have their own."""
+    data = open(pdf, 'rb').read()
+    count = collections.Counter()
+    for m in re.finditer(rb'stream\r?\n', data):
+        try:
+            z = zlib.decompress(data[m.end():data.find(b'endstream', m.end())])
+        except zlib.error:
+            continue
+        for a, d in re.findall(rb'(?<![-\d.])([\d.]+) 0 0 ([\d.]+) -?[\d.]+ -?[\d.]+ cm', z):
+            if a == d and 2.9 < float(a) < 3.1:
+                count[float(a)] += 1
+    return count.most_common(1)[0][0] / 3 if count else 1.0
+
+
+def crop(svg, box, scale=1.0):
+    """Drop the white page background, crop to the box (pt) plus 0.5 px, set width and height in px for a picture
+    drawn at scale times 0.72 pt per px."""
     s = open(svg).read()
     vb = [float(v) for v in re.search(r'viewBox="([^"]+)"', s).group(1).split()]
 
@@ -86,12 +107,12 @@ def crop(svg, box):
         return '' if max(xs) - min(xs) >= 0.98 * vb[2] and max(ys) - min(ys) >= 0.95 * vb[3] else m.group(0)
     s = re.sub(r'<path fill-rule="nonzero" fill="rgb\(100%, 100%, 100%\)" fill-opacity="1" d="(M [^"]*)"/>',
                page_background, s)
+    pt = PT_PER_PX * scale
     if box:
-        pad = 0.5 * PT_PER_PX
-        x0, y0, x1, y1 = box[0] - pad, box[1] - pad, box[2] + pad, box[3] + pad
+        x0, y0, x1, y1 = box[0] - 0.5 * pt, box[1] - 0.5 * pt, box[2] + 0.5 * pt, box[3] + 0.5 * pt
     else:
         x0, y0, x1, y1 = vb[0], vb[1], vb[0] + vb[2], vb[1] + vb[3]
-    w, h = (x1 - x0) / PT_PER_PX, (y1 - y0) / PT_PER_PX
+    w, h = (x1 - x0) / pt, (y1 - y0) / pt
     head = re.search(r'<svg[^>]*>', s).group(0)
     new = re.sub(r'\swidth="[^"]*"', ' width="%.1f"' % w, head, count=1)
     new = re.sub(r'\sheight="[^"]*"', ' height="%.1f"' % h, new, count=1)
@@ -150,7 +171,7 @@ def main():
         for name, pdf in pdfs.items():
             out = svg_path(src, name)
             subprocess.run(['pdftocairo', '-svg', pdf, out], check=True)
-            w, h = crop(out, ink_box(pdf, 1))
+            w, h = crop(out, ink_box(pdf, 1), pdf_scale(pdf))
             print('%-40s %6.1f x %6.1f px   P = %.1f' % (os.path.relpath(out), w, h, min(100.0, w / PAGE * 100)))
     finally:
         shutil.rmtree(tmp)
