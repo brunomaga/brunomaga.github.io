@@ -818,7 +818,7 @@
         <mxCell id="network-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="434.27" width="291.65" height="243.36" as="geometry" />
         </mxCell>
-        <mxCell id="network-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=2.0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="network-figure">
+        <mxCell id="network-1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="network-figure">
           <mxGeometry x="116.25" y="22.8" width="28" height="70" as="geometry" />
         </mxCell>
         <mxCell id="network-2" value="PG" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;fontSize=12;verticalAlign=middle;align=center;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
@@ -827,7 +827,7 @@
         <mxCell id="network-5" value="PG" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;fontSize=12;verticalAlign=middle;align=center;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="118.25" y="71.8" width="24" height="16" as="geometry" />
         </mxCell>
-        <mxCell id="network-8" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=2.0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="network-figure">
+        <mxCell id="network-8" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="network-figure">
           <mxGeometry x="164.25" y="22.8" width="28" height="70" as="geometry" />
         </mxCell>
         <mxCell id="network-9" value="PG" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;fontSize=12;verticalAlign=middle;align=center;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">

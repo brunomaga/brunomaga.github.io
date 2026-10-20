@@ -1364,7 +1364,7 @@ The finetuning was performed with supervised fine-tuning (Section 3.1), initial 
 In GAtt, a system instruction (e.g., "act as ...") is synthetically concatenated to all user messages of a multi-turn dialogue, and responses are sampled with the latest RLHF model. For fine-tuning, the instruction is dropped from all but the first turn and the loss is set to zero on the tokens of previous turns, so the model learns to keep following the instruction across turns (Figure 9, below, right).
 
 {: .picture}
-<img loading="lazy" width="77.2%" height="77.2%" src="{{ site.assets }}/publications/llama2_gatt.svg"/>
+<img loading="lazy" width="77.1%" height="77.1%" src="{{ site.assets }}/publications/llama2_gatt.svg"/>
 
 {: .caption}
 <b>Issues with multi-turn memory (<i>left</i>) can be improved with GAtt (<i>right</i>).</b> Both dialogues start with the instruction “Always answer with emojis”. Adapted from: [Llama 2: Open Foundation and Fine-Tuned Chat Models](https://arxiv.org/abs/2307.09288)
@@ -1676,7 +1676,7 @@ However, it "removes an axis otherwise used for parallelism, so the KV cache and
 Instead, the paper proposes "a partitioning strategy for the multiquery attention where the Q, K, and V matrices are partitioned over the batch $$B$$ dimension into $$n_{chips}$$ partitions". This reduces the cost of loading the KV cache per chip by a factor of $$n_{chips}$$, but incurs additional communication cost of resharding the input activation tensors. With this layout, "multiquery attention enables using larger batch sizes and sequence lengths, thereby increasing throughput in addition to the latency reduction from reduced memory time". The following picture compares the three partitioning layouts of the attention, on two devices:
 
 {: .picture}
-<img loading="lazy" width="65.1%" height="65.1%" src="{{ site.assets }}/publications/efficiently_scaling_transformer_inference_multiquery.svg"/>
+<img loading="lazy" width="65.2%" height="65.2%" src="{{ site.assets }}/publications/efficiently_scaling_transformer_inference_multiquery.svg"/>
 
 {: .caption}
 Multiquery attention has lower memory cost to load the KV cache when sharded over batch. Top: the shapes of Q and K/V in multi-head and multi-query attention. <b>(a)</b> Multi-head attention, sharded over heads: it can be sharded across heads without replication. <b>(b)</b> Multi-query attention, sharded over heads: it requires full replication of the single head for K, increasing memory access cost. <b>(c)</b> Multi-query attention, sharded over batch: only a slice of K is needed for einsum, reducing memory access cost. Adapted from: [Efficiently Scaling Transformer Inference](https://arxiv.org/abs/2211.05102)
@@ -2108,7 +2108,7 @@ The paper introduces Vision Transformers (ViTs), an extension of the transformer
 When pre-trained on large datasets (ImageNet-21k, JFT-300M), ViT matches or beats state-of-the-art CNNs (ResNets) on image classification while requiring substantially fewer computational resources to train. However, on mid-sized datasets like ImageNet alone, it underperforms comparable ResNets, since it lacks the convolutional [inductive biases](https://en.wikipedia.org/wiki/Inductive_bias) (locality, translation equivariance). The following picture illustrates the model (left) and its Transformer encoder (right):
 
 {: .picture}
-<img loading="lazy" width="76.3%" height="76.3%" src="{{ site.assets }}/publications/visual_transformer.svg"/>
+<img loading="lazy" width="76.2%" height="76.2%" src="{{ site.assets }}/publications/visual_transformer.svg"/>
 
 {: .caption}
 Model overview. The image is split into fixed-size patches; each patch is linearly embedded, position embeddings are added, and the resulting sequence of vectors is fed to a standard Transformer encoder. For classification, an extra learnable “classification token” is added to the sequence, the standard approach. The illustration of the Transformer encoder was inspired by Vaswani et al. (2017). Adapted from: [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929)

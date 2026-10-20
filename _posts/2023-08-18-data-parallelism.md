@@ -45,7 +45,7 @@ In DeepSpeed terminology, sharding goes by the name of **ZeRO (Zero Redundancy O
 An important remark is that activations are not sharded, i.e. they are kept in *full shape* on each processor. And in modern models, **a huge chunk of memory is allocated to residual memory (activations, temporary buffers, fragmented memory, buffers of normalization layers, etc.), which is not sharded by FSDP**. With that in mind, the following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
 
 {: .picture}
-<img width="96.9%" height="96.9%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
+<img width="97%" height="97%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
 
 {: .caption}
 Stage 3 sharding (ZeRO-3) on 4 processes. Process k holds the parameters, optimizer states and gradients of layer k only (solid boxes; the dashed boxes are layers held by other processes), takes its own input and keeps its own activations. Forward pass (left): before layer k is computed, process k broadcasts its parameters, and the other processes discard them after use. Backward pass (right): process k broadcasts the parameters of layer k again, every process computes its local gradients of layer k, and these gradients are summed (reduced) on process k, which updates the parameters of layer k. Each pass overlaps the computation of a layer with the communication of its neighbours: the all-gather of the parameters of the next layer to compute and, in the backward pass, the reduce-scatter of the gradients of the layer computed before. Inspired by: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054)

@@ -393,7 +393,7 @@ sections 6 and 7, and the font section 4.
   line       1.4 px   arrows and lines, axes of charts and time lines, the frames of plots of a 2D domain or of
                       an image (k-means, voronoi, the slicing layouts, svd_example), markers, brackets and
                       number lines drawn as lines
-  frame      2.0 px   frames of regions (devices, processes, groups, sections), pipeline rows, lines that
+  frame      1.8 px   frames of regions (devices, processes, groups, sections), pipeline rows, lines that
                       divide a drawing into regions (the dashed lines between the panels of a picture)
   emphasis   3.6 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
                       (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frames of
@@ -418,10 +418,10 @@ sections 6 and 7, and the font section 4.
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
     frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
-  - other colored frames that highlight a group of parts: 2.0 px, as other frames (the orange KV cache
+  - other colored frames that highlight a group of parts: 1.8 px, as other frames (the orange KV cache
     frames). Red arrows and cross marks are not emphasis lines;
   - dashed outlines of elements that are not frames: 0.4 px on filled elements, 1.4 px on lines without fill
-    (a dashed frame is 2.0 px, as other frames; the dash keeps its pattern);
+    (a dashed frame is 1.8 px, as other frames; the dash keeps its pattern);
   - white masks that hide parts of a drawing, faded elements and red cross marks;
   - the memory bars of deepspeed_stages and their legend swatches: thin black outlines, as their strips are
     4 px tall.
@@ -500,7 +500,7 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
   GPU, so its passes take the full time.
-- Each row is a 2.0 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
+- Each row is a 1.8 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
   is idle time. A pass is one cell with a 0.4 px black outline, in the pipeline colors of section 5; a backward
   pass is one cell of two units, not two cells.
 - Every pass cell holds its micro-batch number, also the single micro-batch 1 of pipeline_8_stages,

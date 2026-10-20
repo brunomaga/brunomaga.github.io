@@ -25,7 +25,7 @@ There are several categories of KD methods. The loss can match the soft labels o
 In **offline distillation**, the teacher is trained first and then frozen while the student learns from it; in **online distillation**, both are trained simultaneously. Offline distillation is simple to implement, but requires a large pre-trained teacher; online distillation is used when such a teacher is not available. A single teacher or an [ensemble](https://en.wikipedia.org/wiki/Ensemble_learning) of teachers can be used. The following picture illustrates offline (a) and online (b) distillation:
 
 {: .picture}
-<img width="80.9%" height="80.9%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
+<img width="80.8%" height="80.8%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
 
 {: .caption}
 Illustration of knowledge distillation (a) with a pre-trained teacher model (offline): step 1 trains the teacher, and step 2 distills its knowledge into the student; and (b) while training the teacher model simultaneously (online). Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/)

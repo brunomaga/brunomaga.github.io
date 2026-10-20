@@ -275,7 +275,7 @@ Two tables split by rows across 2 servers, colored by target server: blue for se
 The left outer join is not: John matches on server 1 but not on server 2, so no server can tell alone that a person has no match. Therefore, each server flags its local matches, and a logical-or all-reduce (`MPI_Allreduce` with `MPI_LOR`) combines the flags. Server 1 then returns the persons with a final flag of 0, with `NULL`, as presented below:
 
 {: .picture}
-<img width="69.7%" height="69.7%" src="{{ site.assets }}/distributed-matmul-dbs/broadcast.svg">
+<img width="69.6%" height="69.6%" src="{{ site.assets }}/distributed-matmul-dbs/broadcast.svg">
 
 {: .caption}
 A broadcast join, for a left outer join. After the all-reduce of the match flags, only Mary and Joe have no match.

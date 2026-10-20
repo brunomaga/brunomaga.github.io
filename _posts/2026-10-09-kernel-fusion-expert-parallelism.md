@@ -112,7 +112,7 @@ Note that the INC element puts the final result into the symmetric heap rather t
 The following picture follows one microbatch through the memories that an MoE layer touches (the local memory of a rank, its global memory, and the far side of the network), without fusion, and with fusion and INC:
 
 {: .picture}
-<img width="82.5%" height="82.5%" src="{{ site.assets }}/inference/imgs/ep_data_movement.svg"/>
+<img width="82.4%" height="82.4%" src="{{ site.assets }}/inference/imgs/ep_data_movement.svg"/>
 
 {: .caption}
 Data movement for one microbatch. **Left:** Baseline, one kernel per stage. **Right:** MegaKernel+INC, one fused kernel with the INC transfers. Each row is a stage (colored box) and the tensor it stores in global memory (white box), and $$\star$$ marks the symmetric heap. The blue frame holds the experts, dashed lines mark kernel boundaries, and the brace one kernel launch. Each INC stage runs as the collective or the partial collective operation.

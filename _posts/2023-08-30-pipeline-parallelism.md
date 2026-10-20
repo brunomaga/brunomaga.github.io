@@ -14,7 +14,7 @@ Imagine a model that is too large to fit in the local memory of a single process
 Each process is responsible for a subset of layers and is called a **stage**, as in the stages of a [pipeline](https://en.wikipedia.org/wiki/Pipeline_(computing)). This type of parallelism is called **pipeline parallelism**. The following picture gives a simple illustration of the process:
 
 {: .picture}
-<img width="36.5%" height="36.5%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.svg"/>
+<img width="36.4%" height="36.4%" src="{{ site.assets }}/distributed-training/imgs/pipedream_dnn_pipeline.svg"/>
 
 {: .caption}
 Training of a model split into 4 stages on 4 workers, without pipelining: the forward pass of a mini-batch goes from worker 1 to worker 4, and its backward pass, which takes twice as long, comes back, so only one worker computes at a time. The number in each cell is the mini-batch index. Adapted from: [PipeDream: Generalized Pipeline Parallelism for DNN Training](https://www.microsoft.com/en-us/research/publication/pipedream-generalized-pipeline-parallelism-for-dnn-training/)
