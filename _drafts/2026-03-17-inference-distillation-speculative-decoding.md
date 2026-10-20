@@ -399,7 +399,7 @@ def medusa_step(model, heads, tokens, kv_cache, next_token, head_logits, top_k=2
 EAGLE-3 reaches speedups of up to 6.5 times, about 1.4 times more than EAGLE-2, and 1.38 times higher throughput at a batch size of 64 in SGLang. EAGLE-style drafting is supported by vLLM, SGLang and TensorRT-LLM. The following picture illustrates an EAGLE draft step, which combines the features of the target with the embeddings of the tokens one position ahead:
 
 {: .picture}
-<img width="99.1%" height="99.1%" src="{{ site.assets }}/inference/imgs/eagle.svg"/>
+<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/eagle.svg"/>
 
 {: .caption}
 For the next draft, the predicted feature of $$t_5$$ and the draft $$t_6$$ are appended to the inputs. EAGLE-3 predicts tokens directly, from the fused low-, mid- and high-level features of the target. Inspired by: [EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty](https://arxiv.org/abs/2401.15077)

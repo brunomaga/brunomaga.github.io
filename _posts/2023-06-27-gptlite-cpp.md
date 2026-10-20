@@ -59,7 +59,7 @@ The two models are illustrated below:
 {: .picture}
 <img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
-<img width="25.8%" height="25.8%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
+<img width="25.7%" height="25.7%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 
 {: .caption}
 This post details the C++ implementation of the GPT-3 Small model with N decoder blocks (left), and of a simple Deep Neural Network with L layers of dimensionality W, each followed by a ReLU (right). The C++, PyTorch, TorchScript and `torch.compile` implementations of both models are then benchmarked. Left diagram adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).

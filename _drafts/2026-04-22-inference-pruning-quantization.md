@@ -384,7 +384,7 @@ Storing the weights in 4 or 8 bits while computing in 16 bits (e.g., W4A16: 4-bi
 The picture below shows how INT4 weights are quantized, packed two per byte, and dequantized in the kernel:
 
 {: .picture}
-<img width="64.1%" height="64.1%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
+<img width="64.2%" height="64.2%" src="{{ site.assets }}/inference/imgs/int4_packing.svg"/>
 
 Rounding each weight to the nearest level (**round-to-nearest**) works well at 8 bits, but loses too much accuracy at 4 bits. Two methods, GPTQ and AWQ (below), made 4-bit weights practical. Other common formats are NF4, from [QLoRA](https://arxiv.org/abs/2305.14314), whose levels are placed for normally distributed weights, and the GGUF formats of [llama.cpp](https://en.wikipedia.org/wiki/Llama.cpp), for CPUs and edge devices.
 

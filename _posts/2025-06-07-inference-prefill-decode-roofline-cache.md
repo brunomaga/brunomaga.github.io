@@ -482,7 +482,7 @@ Serving many requests at once makes memory management hard, because the final le
 Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. A block can also be shared by several sequences, and copied only when one of them writes to it ([copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)), which is how prefix caching, parallel sampling and [beam search](https://en.wikipedia.org/wiki/Beam_search) share their common prefix. An illustration of the block tables of two sequences, with blocks of 4 tokens, is displayed below:
 
 {: .picture}
-<img width="98.8%" height="98.8%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+<img width="98.9%" height="98.9%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 {: .caption}
 The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block. Inspired by: [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)
@@ -616,7 +616,7 @@ A semantic cache sits in front of the model, in the application. For every incom
 The diagram below illustrates these four steps:
 
 {: .picture}
-<img width="94.1%" height="94.1%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
+<img width="93.8%" height="93.8%" src="{{ site.assets }}/inference/imgs/semantic_caching.svg"/>
 
 {: .caption}
 A semantic cache. The vector index finds the past query whose embedding is closest to that of the new query. If their similarity reaches the threshold, as it may for a paraphrase such as "What is the price of corn in Rome?", the cache returns the stored answer of that query. Otherwise, the LLM answers, and the embedding and the answer are stored.

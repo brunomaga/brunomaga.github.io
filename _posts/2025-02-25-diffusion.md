@@ -594,7 +594,7 @@ The framework of OmniGen. Texts are tokenized into tokens, while input images ar
 A text-to-image diffusion model that replaces the commonly used T5 and CLIP text encoders with the latents of a decoder-only LLM (Llama3-8B), as illustrated in the following picture:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/diffusion/playground_v3.svg"/> 
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/diffusion/playground_v3.svg"/> 
 
 {: .caption}
 Simplified structure of Playground v3 (PGv3). Text conditioning comes only from Llama3-8B, with no T5 or CLIP encoder: each PGv3 block attends jointly to the image tokens and to the keys and values of the matching Llama3 block. Adapted from: [Playground v3: Improving Text-to-Image Alignment with Deep-Fusion Large Language Models](https://arxiv.org/abs/2409.10695).
@@ -704,7 +704,7 @@ And here is some work on multi-dimensional parallelism for large-scale models su
 Presents DiT-MoE, a sparse [Mixture of Experts](https://en.wikipedia.org/wiki/Mixture_of_experts) (MoE) version of DiT, delivering good scaling properties, performance comparable to dense DiTs, and highly optimized inference. Its architecture is illustrated in the following picture:
 
 {: .picture}
-<img width="96.7%" height="96.7%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
+<img width="97.3%" height="97.3%" src="{{ site.assets }}/diffusion/dit_moe.svg"/> 
 
 {: .caption}
 <b>Overview of the DiT-MoE architecture.</b> DiT-MoE is built upon the DiT and composed of MoE-inserted Transformer blocks. In each block, the MLP is replaced by a sparsely activated mixture of MLPs. The right subfigure shows the MoE layer with the shared expert strategy. Adapted from: [Scaling Diffusion Transformers to 16 Billion Parameters](https://arxiv.org/abs/2407.11633).
@@ -735,7 +735,7 @@ Workflow of Multi-Modal Sequence Parallelism (MM-SP) with a Batch Size (bs) of 4
 PipeFusion splits images into patches and distributes the network layers across multiple devices, orchestrating communication and computation in a pipeline-parallel manner. xDiT is a parallel **inference** engine for DiTs that uses [Unified Sequence Parallelism](https://arxiv.org/abs/2405.07719) (including Ulysses attention and Ring attention), PipeFusion, and hybrid parallelism. xDiT is applied to and benchmarked on the following DiT implementations: CogVideoX, Flux, Latte, HunyuanDiT, Stable Diffusion 3, PixArt-Sigma, PixArt-alpha. The following picture compares PipeFusion with DistriFusion:
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/diffusion/pipefusion.svg"/> 
+<img width="100%" height="100%" src="{{ site.assets }}/diffusion/pipefusion.svg"/> 
 
 {: .caption}
 (a) DistriFusion replicates DiT parameters on two devices. It splits an image into 2 patches and employs asynchronous allgather for activations of every layer. (b) PipeFusion shards DiT parameters on two devices. It splits an image into 4 patches and employs asynchronous P2P for activations across two devices. In both panels, the orange and blue blocks run on the two devices. Adapted from: [PipeFusion: Displaced Patch Pipeline Parallelism for Inference of Diffusion Transformer Models](https://arxiv.org/abs/2405.14430).

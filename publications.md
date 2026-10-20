@@ -1017,7 +1017,7 @@ The result is fewer bubbles and full forward/backward computation-communication 
 Unlike PipeFill, which accepts bubbles and fills them with unrelated jobs, DualPipe attacks the bubbles directly by densifying the main job's own schedule, making the two approaches complementary rather than competing. The following picture illustrates the DualPipe schedule, with the overlapped forward and backward pairs in the middle of each row:
 
 {: .picture}
-<img loading="lazy" width="99.1%" height="99.1%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
+<img loading="lazy" width="99.2%" height="99.2%" src="{{ site.assets }}/distributed-training/imgs/pipeline_dualpipe.svg"/>
 
 {: .caption}
 DualPipe on 8 GPUs: micro-batches 1 to 8 (light) enter at GPU 0, and micro-batches 9 to 16 (dark) enter at GPU 7. Each GPU holds two pipeline stages. Cells with a shared black border are the forward and backward passes of two different micro-batches executed together, so that the communication of one overlaps with the computation of the other. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)
@@ -1756,7 +1756,7 @@ Transformers are slow and memory-hungry on long sequences, since the time and me
 In practice, it tiles the square attention matrix into partial computations that can be computed in the on-chip SRAM (shared memory) instead of the GPU's global memory (HBM). It also trains Transformers faster than existing baselines (15% end-to-end on BERT-large vs. the MLPerf 1.1 record, 3× on GPT-2 and 2.4× on long-range arena). The following picture illustrates the memory hierarchy of a GPU and the loops of FlashAttention over the blocks of Q, K and V (left), and its speedup over the attention of PyTorch on GPT-2 (right):
 
 {: .picture}
-<img loading="lazy" width="99.5%" height="99.5%" src="{{ site.assets }}/publications/flashattention.svg"/>
+<img loading="lazy" width="99.9%" height="99.9%" src="{{ site.assets }}/publications/flashattention.svg"/>
 
 {: .caption}
 <b>Left:</b> FlashAttention uses tiling to prevent materialization of the large <i>N</i> × <i>N</i> attention matrix (dotted box) on (relatively) slow GPU HBM. In the outer loop (red arrows), FlashAttention loops through blocks of the <b>K</b> and <b>V</b> matrices and loads them to fast on-chip SRAM. In each block, FlashAttention loops over blocks of <b>Q</b> matrix (blue arrows), loading them to SRAM, and writing the output of the attention computation back to HBM. <b>Right:</b> Speedup over the PyTorch implementation of attention on GPT-2. FlashAttention does not read and write the large <i>N</i> × <i>N</i> attention matrix to HBM, resulting in a 7.6× speedup on the attention computation. Adapted from: [FlashAttention: Fast and Memory-Efficient Exact Attention with IO-Awareness](https://arxiv.org/abs/2205.14135)
@@ -1915,7 +1915,7 @@ A clearer explanation can be found on this [Google Research post](https://resear
 **Bidirectional attention**, where there is no notion of past and future: the matrices $$Q′$$ and $$K′$$ (the [random features](https://en.wikipedia.org/wiki/Random_feature) of the queries and the keys) are used in a [lower rank decomposition](https://en.wikipedia.org/wiki/Low-rank_approximation) of the attention matrix $$A$$. Decoupling them, and conducting the matrix multiplications in the order indicated by the dashed boxes of the following picture, gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation:
 
 {: .picture}
-<img loading="lazy" width="70.6%" height="70.6%" src="{{ site.assets }}/publications/performers.svg"/> 
+<img loading="lazy" width="70.8%" height="70.8%" src="{{ site.assets }}/publications/performers.svg"/> 
 
 {: .caption}
 **Left:** Standard attention module computation, where the final desired result is computed by performing a matrix multiplication with the attention matrix $$A$$ and value tensor $$V$$. **Right:** Decoupling matrices $$Q′$$ and $$K′$$ used in the lower rank decomposition of $$A$$ and conducting the matrix multiplications in the order indicated by the dashed boxes gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation. Adapted from: [Rethinking Attention with Performers](https://research.google/blog/rethinking-attention-with-performers/)
@@ -2108,7 +2108,7 @@ The paper introduces Vision Transformers (ViTs), an extension of the transformer
 When pre-trained on large datasets (ImageNet-21k, JFT-300M), ViT matches or beats state-of-the-art CNNs (ResNets) on image classification while requiring substantially fewer computational resources to train. However, on mid-sized datasets like ImageNet alone, it underperforms comparable ResNets, since it lacks the convolutional [inductive biases](https://en.wikipedia.org/wiki/Inductive_bias) (locality, translation equivariance). The following picture illustrates the model (left) and its Transformer encoder (right):
 
 {: .picture}
-<img loading="lazy" width="76.1%" height="76.1%" src="{{ site.assets }}/publications/visual_transformer.svg"/>
+<img loading="lazy" width="76.2%" height="76.2%" src="{{ site.assets }}/publications/visual_transformer.svg"/>
 
 {: .caption}
 Model overview. The image is split into fixed-size patches; each patch is linearly embedded, position embeddings are added, and the resulting sequence of vectors is fed to a standard Transformer encoder. For classification, an extra learnable “classification token” is added to the sequence, the standard approach. The illustration of the Transformer encoder was inspired by Vaswani et al. (2017). Adapted from: [An Image is Worth 16x16 Words: Transformers for Image Recognition at Scale](https://arxiv.org/abs/2010.11929)
@@ -2130,7 +2130,7 @@ The intuition is that NLP tasks can be described via natural language instructio
 For each dataset, the authors manually compose ten unique templates that use natural language instructions to describe the task for that dataset. The resulting 137B model (FLAN) surpasses zero-shot 175B GPT-3 on 20 of the 25 datasets evaluated, and even beats few-shot GPT-3 by a large margin on ANLI, RTE, BoolQ, AI2-ARC, OpenbookQA, and StoryCloze. The following picture illustrates how one example (a premise, a hypothesis and the target options) is written with different instruction templates:
 
 {: .picture}
-<img loading="lazy" width="88.2%" height="88.2%" src="{{ site.assets }}/publications/finetune_language_models.svg"/>
+<img loading="lazy" width="88.3%" height="88.3%" src="{{ site.assets }}/publications/finetune_language_models.svg"/>
 
 {: .caption}
 Multiple instruction templates describing a natural language inference task. Adapted from: [Finetuned Language Models Are Zero-Shot Learners](https://arxiv.org/abs/2109.01652)
@@ -2215,7 +2215,7 @@ a natural language instruction describing the task.
 The following pictures illustrate the four settings on an English to French translation task, and the outer and inner loops of the meta-learning of a language model:
 
 {: .picture}
-<img loading="lazy" width="86.6%" height="86.6%" src="{{ site.assets }}/publications/gpt3_fig21.svg"/> 
+<img loading="lazy" width="87.1%" height="87.1%" src="{{ site.assets }}/publications/gpt3_fig21.svg"/> 
 
 {: .caption}
 <b>Zero-shot, one-shot and few-shot, contrasted with traditional fine-tuning</b>. The panels above show four methods for performing a task with a language model – fine-tuning is the traditional method, whereas zero-, one-, and few-shot, the settings studied in the paper, require the model to perform the task with only forward passes at test time. In the few-shot setting the model is typically given a few dozen examples. Exact phrasings for all task descriptions, examples and prompts are in Appendix G of the paper. Adapted from: [Language Models are Few-Shot Learners](https://arxiv.org/abs/2005.14165)
@@ -2324,7 +2324,7 @@ The authors claim that sparsity in attention is a natural pattern, and show (by 
 Strided attention is convenient when the data has a structure that aligns with the stride, like images or some types of music. For data without a periodic structure, like text, the strided pattern can fail to route information properly, and a fixed pattern is used instead. Both patterns are compared with the full attention in the following picture:
 
 {: .picture}
-<img loading="lazy" width="87.9%" height="87.9%" src="{{ site.assets }}/publications/sparse_transformers.svg"/>
+<img loading="lazy" width="88%" height="88%" src="{{ site.assets }}/publications/sparse_transformers.svg"/>
 
 {: .caption}
 Two 2D factorized attention schemes of the Sparse Transformer, (b) strided and (c) fixed, compared with the full attention of a standard Transformer (a). The top row indicates, for an example 6x6 image, which positions two attention heads receive as input when computing a given output. The bottom row shows the connectivity matrix (not to scale) between all such outputs (rows) and inputs (columns). Sparsity in the connectivity matrix can lead to significantly faster computation. In (b) and (c), full connectivity between elements is preserved when the two heads are computed sequentially. The paper tests whether such factorizations can match the performance of the rich connectivity patterns learned by full attention (Figure 2 of the paper). Adapted from: [Generating Long Sequences with Sparse Transformers](https://arxiv.org/abs/1904.10509)
@@ -2486,7 +2486,7 @@ A simple 2 hidden layer siamese network for binary classification with logistic 
 The paper presents an improvement over the RNN encoder–decoder for translation ([Cho et al., 2014](https://arxiv.org/abs/1406.1078); concurrent with [Sequence to Sequence Learning with Neural Networks (Google, NeurIPS 2014)](https://proceedings.neurips.cc/paper_files/paper/2014/file/5a18e133cbf9f257297f410bb7eca942-Paper.pdf)), which compresses the whole source sentence into a single fixed-length vector. It introduces the concept of **attention**: at each decoding step, the decoder learns to (soft-)align to and use the latent states of every encoder step (not only the last), which increases the model capabilities. It reaches translation performance comparable to the existing phrase-based system on English-to-French, and degrades much less on long sentences. The following picture illustrates how the decoder combines the states of a [bidirectional RNN](https://en.wikipedia.org/wiki/Bidirectional_recurrent_neural_networks) encoder, weighted by the attention weights, to generate a target word:
 
 {: .picture}
-<img loading="lazy" width="25.2%" height="25.2%" src="{{ site.assets }}/publications/attention_mech.svg"/>
+<img loading="lazy" width="25.1%" height="25.1%" src="{{ site.assets }}/publications/attention_mech.svg"/>
 
 {: .caption}
 The graphical illustration of the proposed model trying to generate the <i>t</i>-th target word <i>y<sub>t</sub></i> given a source sentence (<i>x</i><sub>1</sub>, <i>x</i><sub>2</sub>, . . . , <i>x<sub>T</sub></i>). Adapted from: [Neural Machine Translation by Jointly Learning to Align and Translate](https://arxiv.org/abs/1409.0473)
@@ -2550,7 +2550,7 @@ Dropout helps in **reducing overfitting**, as the network learns to never rely o
 Because a fully connected layer occupies most of the parameters, it is prone to overfitting. Therefore, dropout **increases model generalization**. The following picture illustrates a standard network (left) and one of the thinned networks that dropout samples from it (right):
 
 {: .picture}
-<img loading="lazy" width="54.8%" height="54.8%" src="{{ site.assets }}/deep-neural-networks/dropout.svg"/>
+<img loading="lazy" width="68.5%" height="68.5%" src="{{ site.assets }}/deep-neural-networks/dropout.svg"/>
 
 {: .caption}
 Dropout. Left: a standard network with two hidden layers ($$p = 0$$). Right: a thinned network produced by dropout with $$p = 0.5$$, where $$p$$ is the probability of dropping a unit: the crossed units are dropped, with their connections. Adapted from: [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](https://jmlr.org/papers/v15/srivastava14a.html)

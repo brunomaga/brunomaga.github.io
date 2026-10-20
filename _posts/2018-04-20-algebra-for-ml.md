@@ -370,7 +370,7 @@ $$
 The following picture illustrates the resulting computation graph, where each variable is computed from the variables on its incoming arrows:
 
 {: .picture}
-<img width="65.1%" height="65.1%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
+<img width="65%" height="65%" src="{{ site.assets }}/algebra-for-ml/autodiff.svg"/>
 
 {: .caption}
 Computation graph of $$f(x) = \sqrt{x^2 + \exp(x^2)} + \cos(x^2 + \exp(x^2))$$, with the intermediate variables $$a = x^2$$, $$b = \exp(a)$$, $$c = a + b$$, $$d = \sqrt{c}$$ and $$e = \cos(c)$$, and $$f = d + e$$. Adapted from: [Mathematics for Machine Learning, Example 5.14](https://mml-book.github.io/)

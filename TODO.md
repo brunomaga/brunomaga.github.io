@@ -413,12 +413,6 @@ that is not wrong.
 
 ### All pictures
 
-- The kernel fusion post on expert parallelism (2026-10-09-kernel-fusion-expert-parallelism.md): its 11 pictures,
-  `inference/imgs/ep_*.svg`, are copies of the figures of the paper repository and keep the Times New Roman font of
-  the paper figures. They show at widths set by hand (40% to 100%), so their text sizes differ from the other
-  pictures. Fix: redraw them at page scale and in the fonts of CLAUDE.md, in a tab `kernel-fusion-expert-parallelism`
-  of `inference/inference.drawio`, from the draw.io or TikZ sources of the paper repository (CLAUDE.md, Pictures,
-  sections 2 to 4), as the tensor parallelism post's pictures are, and check their captions.
 - Style details that the restyle left, from an automated check of the 230 draw.io figures: 178 boxes in 15 figures
   keep the rounded corners of the original with a corner radius of 2 to 4.5 px instead of 5 px (for example the
   GPT-lite pictures, `diffusion/playground_v3.svg` and `publications/visual_transformer.svg`), and the 12 chat
@@ -426,22 +420,22 @@ that is not wrong.
   loops (for example in `deep-neural-networks/densenet.svg`, `lif-brunel/diagram_class.svg` and
   `publications/graphconvnets.svg`); 176 filled cells of `distributed-training/imgs/mixture_of_depths.svg`, and a few
   in other figures, have no outline; `learning-from-sequences/transformer_attention.svg` (#97afd2, a heat map shade)
-  and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 7 figures have lines thinner than 0.6 px.
+  and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 3 figures have lines thinner than 0.4 px.
   Fix: set them to the values of CLAUDE.md, then run the check again.
-- The arrow check of the restyle (CLAUDE.md, Pictures, section 6) still reports 572 findings in 74 draw.io figures:
-  285 arrows with less than 6 px of line before the head (90 of them with 4.6 to 5.9 px, as the 6 px heads take more
-  of short arrows, for example in the GPT-lite pictures, `gptlite-cpp/torch_compile.svg` and the three
-  `distributed-training/imgs/dnn_multiproc*.svg`), 175 lines through the text box of a label, 55 labels that run
-  into a box, 29 heads on text, 20 heads that touch and 8 overlapping boxes. Most are in dense pictures from papers:
-  `deep-neural-networks/densenet.svg` (50), `matrix-transpose/xcrs_format.svg` (50),
-  `distributed-training/imgs/moe_gshard.svg` (36), `publications/helix.svg` (22) and `publications/performers.svg`
-  (21); some are text boxes larger than their text. Fix: check each picture at its page size, move the labels and
-  arrows that touch, and lengthen the short arrows (move their bend, or the boxes they join).
+- The arrow check of the restyle (CLAUDE.md, Pictures, section 6) still reports 487 findings in 71 draw.io figures:
+  199 arrows with less than 6 px of line before the head (48 of them with 4.6 to 5.9 px, as the 6 px heads take more
+  of short arrows, for example in `gptlite-cpp/torch_compile.svg`, `diffusion/omnigen.svg` and the three
+  `distributed-training/imgs/dnn_multiproc*.svg`), 197 lines through the text box of a label, 55 labels that run
+  into a box, 28 heads on text and 8 overlapping boxes. Most are in dense pictures from papers:
+  `matrix-transpose/xcrs_format.svg` (48), `deep-neural-networks/densenet.svg` (42), `publications/helix.svg` (21)
+  and `publications/performers.svg` (21); some are text boxes larger than their text. Fix: check each picture at its
+  page size, move the labels and arrows that touch, and lengthen the short arrows (move their bend, or the boxes they
+  join).
 - The charts drawn from data (the plots, benchmarks and histograms without a draw.io source, for example
   `inference/imgs/tp_results.svg`, `gptlite-cpp/benchmark_*.svg` and the charts of `neuron-variable-timestep` and
   `bayesian-linear-regression`) keep the line weights of their scripts or of their earlier export (`tp_results.py`
   draws 1 px axes and 0.8 px bar outlines), not the weights of CLAUDE.md, Pictures, section 6. Fix: axes 1.6 px, bar
-  outlines and plot lines 1.2 px, in each chart's script, or in the SVG of a chart without a script.
+  outlines and plot lines 1.0 px, in each chart's script, or in the SVG of a chart without a script.
 - Pictures to redraw, from the user's review of the four line weights (the next step of the restyle):
   - `inference/imgs/continuous_chunked_batching.svg` differs from its original. Fix: redraw it from the original, and
     add continuous batching with chunked prefill.
@@ -843,23 +837,16 @@ that is not wrong.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
-- The eleven `inference/imgs/ep_*.svg` pictures are copies of the figures of the paper (its
-  repository's `imgs/`, commit 7d15d86), not yet redrawn. The TikZ exports (`ep_pipeline.svg`, `ep_stages.svg`, `ep_results.svg`,
-  `ep_data_movement.svg`) have 4 to 6 pt text at their natural size, and the post shows them at 75% to 100% of the
-  page, with text of 8 to 13 px. `ep_communication_models.svg` is 1019 px wide, wider than a post, and is shown at
-  100%, i.e. at 86% of its size. Fix: redraw all eleven in a "kernel-fusion-expert-parallelism" tab of
-  `assets/inference/inference.drawio`, from the paper's `imgs/moe_dispatch_and_combine.drawio` and TikZ sources,
-  with the sizes and fonts of CLAUDE.md (Pictures, sections 3 and 4); the four models of
-  `ep_communication_models.svg` fit 880 px in one column.
+- The four TikZ pictures (`ep_pipeline.svg`, `ep_stages.svg`, `ep_results.svg`, `ep_data_movement.svg`) are copies of
+  the figures of the paper (its repository's `imgs/`, commit 7d15d86), not yet redrawn. They have 4 to 6 pt text at
+  their natural size, and the post shows them at 75% to 100% of the page, with text of 8 to 13 px. Fix: redraw them
+  in the "kernel-fusion-expert-parallelism" tab of `assets/inference/inference.drawio`, from the TikZ sources of the
+  paper's latest version, with the sizes and fonts of CLAUDE.md (Pictures, sections 3 and 4).
 - `inference/imgs/ep_stages.svg` draws the eight stages on the time axis of the decode step, whose costs are
   placeholders, not measurements, as the caption says. Fix: remove the time axis until the decode step is measured,
   or redraw it with the measured costs.
 - `inference/imgs/ep_results.svg`: the right panel plots decode times that are placeholders, not measurements, as the
   caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
-- Signals are dashed arrows in `ep_all_to_all_inc.svg`, `ep_one_to_many_inc.svg` and `ep_communication_models.svg`,
-  and dotted arrows in `ep_timeline.svg` and `ep_timeline_noncollective.svg`. The paper calls them dotted in all its
-  captions; the captions of the post follow each picture. Fix at the redraw: dotted signals (dashPattern=1 2) in every
-  picture, and "dotted" in every caption.
 - The captions have no credit to the post's paper, whose figures the pictures copy. The paper is the author's own and
   not public yet. Fix: "Source: [MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and
   In-Network Compute](link)" once the paper has a public link, and "Adapted from:" after the redraw; the user

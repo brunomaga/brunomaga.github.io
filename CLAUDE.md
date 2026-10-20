@@ -154,6 +154,11 @@ word helps:
   company where it was developed.
 - Only these two posts have these limits: the other posts, the drafts and the publications page name hardware,
   vendors and libraries as usual.
+- The expert parallelism post shows each communication model once, in one picture each, in the order of its
+  argument: AllGather-ReduceScatter; its INC form, with fewer relays and less bandwidth; All-to-All, which avoids
+  the worst case of AllGather (every token sent to every rank); its INC form, All-to-All-Unique and
+  All-to-All-Reduce; and the partial collectives (One-to-Many and Many-to-One), which lower the memory that INC
+  All-to-All needs in the switch.
 
 ### Titles
 
@@ -226,6 +231,8 @@ sections 6 and 7, and the font section 4.
   When they do not, the picture is fixed with facts from the sources.
 - Worked examples (data, steps, results) are computed by running the algorithm, not by hand, and the picture
   shows the computed values.
+- Shapes that stand for sizes are drawn to scale: in the product of an M x N matrix and an N x O matrix, the
+  three rectangles are M x N, N x O and M x O, with their splits (the Megatron-LM pictures).
 - Third person, as the post text: no "I", "we", "our", "ours", "us", "you" or "your" in a picture. A paper's
   "Ours" becomes the method's name. Quoted inputs (prompts, chat turns, example sentences) keep their words.
 - The pictures of the two kernel fusion posts follow "The author's papers" in the writing rules: no hardware
@@ -369,28 +376,31 @@ sections 6 and 7, and the font section 4.
   opacity. The cells of a block are the exception: their outlines are grey (see the blocks below). Four
   weights, the same at page scale in every picture:
   ```
-  thin       0.6 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
-                      block into cells, the faces of a 3D tensor, pipeline passes and the other cells of a
-                      schedule or a time line
-  regular    1.2 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
-                      nodes, operators, single cubes, block arrows, curly brackets
+  thin       0.4 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
+                      block into cells, the faces of a 3D tensor, pipeline passes
+  regular    1.0 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
+                      nodes, operators, single cubes, block arrows, curly brackets, the blocks of a time line
   thick      1.6 px   arrows and lines, frames of regions (devices, processes, groups, sections), the outline
                       of each block of cells (matrix, array, table, stack of objects), the silhouette of each 3D
                       tensor or block of cubes and the three edges at its front corner, axes of charts and time
                       lines, pipeline rows, black lines that divide a drawing into regions
-  emphasis   2.8 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
-                      (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frame of
-                      process A in all_to_all), and black frames that emphasise a part (DualPipe's overlapped
-                      forward and backward passes, the selected experts in moe_switch_transformers)
+  emphasis   3.6 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
+                      (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frames of
+                      the first row and the first column in all_to_all), and black frames that emphasise a part
+                      (DualPipe's overlapped forward and backward passes, the selected experts in
+                      moe_switch_transformers)
   ```
 - A block (a matrix, an array, a table, a stack of objects, a block of cubes) has the thick black outline
   around it and thin grey #666666 lines between its cells: the cells, the lines that divide the block and the
   faces of a 3D tensor are grey. Boxes glued into one matrix (the column and row splits of the Megatron-LM
   pictures) share a thin grey line inside one thick black outline. A single cell (a token, a K or V block, a
   single cube) has no block outline and keeps its black outline.
-- The cells of a schedule or a time line are intervals of time, not the cells of a block: their thin outlines
-  stay black (pipeline passes, tp_timeline, tp_block_specialization, continuous_chunked_batching,
-  local_variable_timestep_six_cell_example, the time row of prefill_decode).
+- A time line (tp_timeline, tp_block_specialization, continuous_chunked_batching,
+  local_variable_timestep_six_cell_example, the time row of prefill_decode) is made of intervals of time, not of
+  the cells of a block: its blocks have square corners and regular black outlines, dashed ones too, and blocks
+  stacked in one interval have no outline around them, as there is no block or region inside a time line. A
+  curly bracket over a time line points to its text. Pipeline schedules follow section 8: their passes keep thin
+  black outlines.
 - Tables have black text, thin grey lines between their cells and a thick black outline; the tables of the
   matrix transpose post keep their blue cells, and the stacks of objects that their pointers point to are
   black arrays.
@@ -399,13 +409,13 @@ sections 6 and 7, and the font section 4.
     frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
   - other colored frames that highlight a group of parts: 1.6 px (the orange KV cache frames). Red arrows and
     cross marks are not emphasis lines;
-  - dashed outlines of elements that are not frames: 0.6 px on filled elements, 1.6 px on lines without fill
+  - dashed outlines of elements that are not frames: 0.4 px on filled elements, 1.6 px on lines without fill
     (a dashed frame is 1.6 px, as other frames; the dash keeps its pattern);
   - white masks that hide parts of a drawing, faded elements and red cross marks;
   - the memory bars of deepspeed_stages and their legend swatches: thin black outlines, as their strips are
     4 px tall.
 - Thin arrows: black #000000, 1.6 px, endArrow=block, endFill=1, endSize=6. Dashed arrows use the same
-  head. An arrow at the emphasis weight has endSize=4.8, so that its head, whose length is endSize plus the
+  head. An arrow at the emphasis weight has endSize=4, so that its head, whose length is endSize plus the
   line weight, has the size of the others. Grey #666666 only for faded content. Lines without a head that
   join two parts of the flow (two boxes, or a box and an arrow): 1.6 px. The axis of a chart or a time line:
   1.6 px, with the same head.
@@ -413,9 +423,12 @@ sections 6 and 7, and the font section 4.
   the others; the heads that converge on one node may touch.
 - Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.6 px black line with a
   flat bar head, endArrow=baseDash;endSize=10.
-- Lines thinner than 0.6 px at page scale (grid lines drawn over a photo or a matrix) keep their weight.
+- Lines thinner than 0.4 px at page scale (grid lines drawn over a photo or a matrix) keep their weight.
 - Arrow layout:
   - an arrow has at least 6 px of line before its head, and a bent arrow at least 6 px before its first turn;
+    after its last turn, or after the line it leaves from (a fan-out), an arrow shows at least 10 px of line
+    before its head. To get it, the turn or the fan-out point moves first; space inserted across a picture never
+    cuts a block, an array or a shape, and keeps a row of equal parts evenly spaced;
   - arrowheads are at least 2 px apart: arrows into one box end at different points of its edge, or one
     joins the line of the other before the head;
   - two arrows share a segment only when they leave the same point (fan-out) or end at the same point
@@ -439,7 +452,7 @@ sections 6 and 7, and the font section 4.
   decision                                               rhombus
   neuron, graph node                                     circle
   operator (+, x, concatenation)                         circle 20 px wide with the symbol inside
-  span of several parts                                  curly bracket, 1.2 px
+  span of several parts                                  curly bracket, 1.0 px, its tip toward its text
   transformation of a whole stage (a model into another) block arrow; thin arrows everywhere else
   ```
 - Operations and frames have round corners: 5 px for an operation (rounded=1;absoluteArcSize=1;arcSize=10),
@@ -477,14 +490,14 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
   GPU, so its passes take the full time.
 - Each row is a 1.6 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
-  is idle time. A pass is one cell with a 0.6 px black outline, in the pipeline colors of section 5; a backward
+  is idle time. A pass is one cell with a 0.4 px black outline, in the pipeline colors of section 5; a backward
   pass is one cell of two units, not two cells.
 - Every pass cell holds its micro-batch number, also the single micro-batch 1 of pipeline_8_stages,
   pipeline_4_stages and pipeline_2_stages. Micro-batch numbers are 10 px: black on the base colors, white on
   the dark ones.
 - The schedule ends with its last pass: no passes of the next iteration and no "..." after the rows.
 - No time markers over the rows (no "1F1B ends" line).
-- Overlapped forward and backward passes (DualPipe) have a 2.8 px black frame around them.
+- Overlapped forward and backward passes (DualPipe) have a 3.6 px black frame around them.
 - A time axis under the rows is 1.6 px, as the axes of section 6.
 - The legend is centred under the rows, 12 px below them (or below the time axis): each entry is a 20 x 12 px
   swatch (two 10 x 12 px halves for the two chunks or directions) and its 14 px label 4 px to the right, with
