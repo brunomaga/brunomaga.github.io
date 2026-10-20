@@ -25,7 +25,7 @@ There are two main data parallelism approaches:
 On the backward pass, at every layer of the model, all processes compute the gradients of their batch and perform an [all-reduce](https://en.wikipedia.org/wiki/Collective_operation) to get the mean gradients across all processors. These are then used to update the parameters and the optimizer states. Because parameters are initialized equally, gradients are mean-reduced and all processes perform the same updates, the models across all processors are kept in an identical state throughout the execution. The following diagram illustrates this workflow:
 
 {: .picture}
-<img width="91.3%" height="91.3%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
+<img width="89.5%" height="89.5%" src="{{ site.assets }}/distributed-training/imgs/workflow_data_parallelism.svg"/>
 
 {: .caption}
 Distributed data parallelism (DDP) on 4 processes. Each process holds a full copy of a 4-layer model (the parameters, optimizer states and gradients of every layer), initialized identically, and takes its own input. The forward pass (left arrow) computes the activations and the loss of each process. In the backward pass (right arrow), each process computes the local gradients of every layer, and an all-reduce averages them across the processes. The optimizer then applies the same mean gradients on every process, so all copies stay identical.
@@ -45,7 +45,7 @@ In DeepSpeed terminology, sharding goes by the name of **ZeRO (Zero Redundancy O
 An important remark is that activations are not sharded, i.e. they are kept in *full shape* on each processor. And in modern models, **a huge chunk of memory is allocated to residual memory (activations, temporary buffers, fragmented memory, buffers of normalization layers, etc.), which is not sharded by FSDP**. With that in mind, the following diagram illustrates the workflow of stage 3 sharding (of parameters, gradients and optimizer states):
 
 {: .picture}
-<img width="99.3%" height="99.3%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
+<img width="97%" height="97%" src="{{ site.assets }}/distributed-training/imgs/workflow_sharding.svg"/>
 
 {: .caption}
 Stage 3 sharding (ZeRO-3) on 4 processes. Process k holds the parameters, optimizer states and gradients of layer k only (solid boxes; the dashed boxes are layers held by other processes), takes its own input and keeps its own activations. Forward pass (left): before layer k is computed, process k broadcasts its parameters, and the other processes discard them after use. Backward pass (right): process k broadcasts the parameters of layer k again, every process computes its local gradients of layer k, and these gradients are summed (reduced) on process k, which updates the parameters of layer k. Each pass overlaps the computation of a layer with the communication of its neighbours: the all-gather of the parameters of the next layer to compute and, in the backward pass, the reduce-scatter of the gradients of the layer computed before. Inspired by: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054)

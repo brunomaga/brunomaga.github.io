@@ -102,10 +102,10 @@ The MoE layer is split into eight stages, chosen so that each stage runs entirel
 Only two of the eight stages are collectives, and both run on the INC element. The following picture shows the stages in dependency order:
 
 {: .picture}
-<img width="97.8%" height="97.8%" src="{{ site.assets }}/inference/imgs/ep_stages.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_stages.svg"/>
 
 {: .caption}
-The eight stages of the fused MoE layer, in dependency order, each on the class of unit that runs it: matrix multiplications on the matrix units (purple), all other computation on the vector units (green), and both collectives on the in-network element (orange). The bracket marks the experts. The time axis is the decode step, whose batch is too small to be split into microbatches, with placeholder costs that are not measured yet.
+The eight stages of the fused MoE layer, in dependency order, each on the class of unit that runs it: matrix multiplications on the matrix units (purple), all other computation on the vector units (green), and both collectives on the in-network element (orange). The blue frame holds the experts. The time axis is the decode step, whose batch is too small to be split into microbatches, with placeholder costs that are not measured yet.
 
 Note that the INC element puts the final result into the symmetric heap rather than into the output tensor of the layer, so one local copy to global memory remains. This copy is left out of the stages: it crosses no link of the network, its measured cost is close to zero, and it fuses into the next `route`, which reads those rows anyway.
 
@@ -128,7 +128,7 @@ Three implementations are compared in this post, from no fusion to fusion with I
 A single microbatch uses one class of unit at a time, as its chain of stages is strictly sequential. However, the chain crosses from one class of unit to another seven times, and every crossing frees the unit it leaves for another microbatch. Therefore, the kernel runs $$M$$ microbatches through the chain at the same time, each one stage behind the previous one, so that at any instant the matrix units, the vector units and both INC elements work on different microbatches. The following picture shows the resulting schedule during the prefill step:
 
 {: .picture}
-<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/ep_pipeline.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_pipeline.svg"/>
 
 {: .caption}
 Pipelined execution of four microbatches (mb 0 to 3) during prefill, with time to scale from the cost of each stage. Each microbatch has three rows, one per class of unit, colored as in the stages above. A kernel uses all matrix and all vector units, so no two purple and no two green boxes overlap; the two INC elements are independent, so a dispatch may overlap a combine.

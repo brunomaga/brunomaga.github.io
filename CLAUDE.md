@@ -253,7 +253,9 @@ sections 6 and 7, and the font section 4.
 - The kernel fusion posts show copies of the paper repositories' imgs/*.svg (the repositories are private,
   so the posts need copies). A copy that does not follow the sizing in section 3 or the font in section 4
   is redrawn in this repo, in a tab of assets/inference/inference.drawio named after the post, from the
-  paper repository's draw.io or TikZ source. The paper repositories stay unchanged.
+  paper repository's draw.io or TikZ source. The paper repositories stay unchanged. Two pictures are the
+  exception: ep_stages.svg and ep_pipeline.svg of the expert parallelism post stay the paper's own figures,
+  copied unchanged and shown at 100% width.
 - A picture or an animation shown unchanged from Wikimedia Commons (the Newton's method and k-means GIFs)
   links to its original file on upload.wikimedia.org, with no copy in assets.
 - A picture used by a post and by the publications page is stored once, in the post's asset folder, and
@@ -304,11 +306,17 @@ sections 6 and 7, and the font section 4.
   ```
   title          16           the picture's title, and labels drawn larger than the regular text
   subtitle       14  bold     panel titles, headers, group names
-  regular        14  normal   box labels, arrow labels, legends: the most common text of a picture
-  small          12  normal   dimensions, axis ticks, annotations, subscripts in labels
+  regular        14  normal   box labels, legends: the most common text of a picture
+  arrow          13  normal   the text of an arrow, 1 px under the regular text
+  small          12  normal   dimensions, axis ticks, annotations, subscripts in labels (11 in arrow text)
   tiny           10  normal   only for dense labels inside small cells (pipeline micro-batch numbers,
                               matrix weights), where 12 does not fit
   ```
+  Arrow text is written on, above, below or beside one arrow, or a line that carries a flow, and names what
+  it carries or does (wq, sum-reduce, the packets of the communication pictures, the weights of a network).
+  The names at the start or the end of an arrow (Inputs, Output Probabilities), axis titles, and the labels
+  of boxes, operators, brackets and legends are not arrow text. An arrow label that is a dimension stays
+  small, and one drawn larger than the regular text stays 16.
   A picture redrawn from an older one keeps the order of its text sizes: its most common size becomes 14,
   sizes at least 1.1 times larger become 16, sizes under 0.9 times smaller become 12.
   Italic is allowed for variables and for emphasis, bold only for titles, subtitles and names the post's
@@ -417,11 +425,11 @@ sections 6 and 7, and the font section 4.
   - white masks that hide parts of a drawing, faded elements and red cross marks;
   - the memory bars of deepspeed_stages and their legend swatches: thin black outlines, as their strips are
     4 px tall.
-- Thin arrows: black #000000, 1.6 px, endArrow=block, endFill=1, endSize=6. Dashed arrows use the same
-  head. An arrow at the emphasis weight has endSize=4, so that its head, whose length is endSize plus the
-  line weight, has the size of the others. Grey #666666 only for faded content. Lines without a head that
-  join two parts of the flow (two boxes, or a box and an arrow): 1.6 px. The axis of a chart or a time line:
-  1.6 px, with the same head.
+- Thin arrows: black #000000, 1.6 px, endArrow=classic, endFill=1, endSize=5: a head 6.6 px long and wide,
+  endSize plus the line weight, with its notch at 3/4 of its length. Dashed arrows use the same head. An
+  arrow at the emphasis weight has endSize=3, so that its head has the size of the others. Grey #666666 only
+  for faded content. Lines without a head that join two parts of the flow (two boxes, or a box and an
+  arrow): 1.6 px. The axis of a chart or a time line: 1.6 px, with the same head.
 - The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
   the others; the heads that converge on one node may touch.
 - Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.6 px black line with a

@@ -337,7 +337,7 @@
             <mxPoint x="157.13" y="52.7" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-52" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=6;endFill=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-52" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;endFill=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="54.47" y="112.01" as="sourcePoint" />
             <mxPoint x="40.73" y="105.9" as="targetPoint" />
@@ -355,7 +355,7 @@
             <mxPoint x="38.69" y="79.69" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-56" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;curved=1;endSize=6;endFill=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-56" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;curved=1;endSize=5;endFill=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="kohonen2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="38.69" y="79.69" as="sourcePoint" />
             <mxPoint x="147.38" y="43.54" as="targetPoint" />
@@ -368,7 +368,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="kohonen2-57" value="&lt;i&gt;ϕ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;spacing=0;" vertex="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-57" value="&lt;i&gt;ϕ&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;spacing=0;" vertex="1" parent="kohonen2-figure">
           <mxGeometry x="66.46" y="25.34" width="8.37" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="kohonen2-58" value="&lt;i&gt;j&lt;/i&gt;*" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;spacing=0;" vertex="1" parent="kohonen2-figure">
@@ -380,7 +380,7 @@
         <mxCell id="kohonen2-60" value="&lt;i&gt;w&lt;/i&gt;&lt;sub&gt;&lt;i&gt;j&lt;/i&gt;*&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;spacing=0;" vertex="1" parent="kohonen2-figure">
           <mxGeometry x="67.23" y="106.8" width="22" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="kohonen2-61" value="Δ&lt;i&gt;w&lt;/i&gt;&lt;sub&gt;&lt;i&gt;j&lt;/i&gt;*&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;spacing=0;" vertex="1" parent="kohonen2-figure">
+        <mxCell id="kohonen2-61" value="Δ&lt;i&gt;w&lt;/i&gt;&lt;sub&gt;&lt;i&gt;j&lt;/i&gt;*&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;spacing=0;" vertex="1" parent="kohonen2-figure">
           <mxGeometry x="16.83" y="118.24" width="31.2" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="kohonen2-62" value="A" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="kohonen2-figure">
