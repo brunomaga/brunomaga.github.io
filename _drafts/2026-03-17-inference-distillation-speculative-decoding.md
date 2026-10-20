@@ -25,7 +25,7 @@ There are several categories of KD methods. The loss can match the soft labels o
 In **offline distillation**, the teacher is trained first and then frozen while the student learns from it; in **online distillation**, both are trained simultaneously. Offline distillation is simple to implement, but requires a large pre-trained teacher; online distillation is used when such a teacher is not available. A single teacher or an [ensemble](https://en.wikipedia.org/wiki/Ensemble_learning) of teachers can be used. The following picture illustrates offline (a) and online (b) distillation:
 
 {: .picture}
-<img width="80.8%" height="80.8%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
+<img width="80.9%" height="80.9%" src="{{ site.assets }}/inference/imgs/model_distillation_offline_online.svg"/>
 
 {: .caption}
 Illustration of knowledge distillation (a) with a pre-trained teacher model (offline): step 1 trains the teacher, and step 2 distills its knowledge into the student; and (b) while training the teacher model simultaneously (online). Adapted from: [Knowledge distillation in deep learning and its applications](https://peerj.com/articles/cs-474/)
@@ -142,14 +142,14 @@ With **greedy decoding**, draft tokens are accepted while they are equal to the 
 The following picture illustrates an iteration with four drafts, where the target accepts the first two and discards the last two, replacing the third with its own token:
 
 {: .picture}
-<img width="94.6%" height="94.6%" src="{{ site.assets }}/inference/imgs/spec_decoding.svg"/>
+<img width="94.7%" height="94.7%" src="{{ site.assets }}/inference/imgs/spec_decoding.svg"/>
 
 With **sampling** (*speculative sampling*), the draft model samples each token $$x$$ from its distribution $$p$$, and the target accepts it with probability $$\min\left(1, q(x) / p(x)\right)$$, where $$q$$ is the target's distribution. On rejection, a replacement token is sampled from the normalized residual distribution $$\max(0, q - p)$$, and the remaining drafts are discarded. This modified [rejection sampling](https://en.wikipedia.org/wiki/Rejection_sampling) produces tokens distributed exactly as $$q$$, and if all $$K$$ drafts are accepted, a bonus token is sampled from the target's distribution after the last draft.
 
 The rule holds for any $$p$$, as long as it is the distribution the drafts were sampled from. Greedy drafts are the special case of a one-hot $$p$$: the target accepts the draft $$x$$ with probability $$q(x)$$, and on rejection samples from $$q$$ without $$x$$, which still yields tokens distributed as $$q$$. What breaks the guarantee is drafting greedily while using the draft model's softmax probabilities as $$p$$. An example of the rule on a vocabulary of five tokens is displayed below, with the distributions of the draft model and of the target (left), and the normalized residual (right):
 
 {: .picture}
-<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/spec_sampling.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/spec_sampling.svg"/>
 
 {: .caption}
 The draft b is accepted with probability $$\min(1, q(b) / p(b)) = 0.3 / 0.5 = 0.6$$; otherwise, it is replaced by a or c, sampled from the residual.
@@ -258,7 +258,7 @@ def accept_sampling(drafts, p, q):
 In the following example, the last two tokens, *the cat*, also occur at the start of the text, so the four tokens that follow them there become the drafts:
 
 {: .picture}
-<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
+<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/prompt_lookup.svg"/>
 
 The following code implements prompt lookup decoding. It reuses the verification loop of speculative decoding, with a different source of drafts:
 
@@ -291,7 +291,7 @@ def prompt_lookup(tokens, n_drafts, max_ngram=3):
 Training only the heads, with the model frozen (Medusa-1), gives speedups above 2.2 times; training the heads together with the model (Medusa-2) reaches 2.3 to 3.6 times. Medusa needs no separate draft model, but each head guesses its token independently, without seeing the tokens guessed by the other heads, so the accuracy drops quickly for later positions. For sampling, Medusa also proposes a faster *typical acceptance* rule, which is not exactly lossless. The following diagram illustrates Medusa with two extra heads, each proposing its top two tokens:
 
 {: .picture}
-<img width="94.6%" height="94.6%" src="{{ site.assets }}/inference/imgs/medusa.svg"/>
+<img width="94.7%" height="94.7%" src="{{ site.assets }}/inference/imgs/medusa.svg"/>
 
 {: .caption}
 The output head and the Medusa heads read the last hidden state $$h$$. Their top candidates combine into a tree, which the target verifies in one forward pass with a tree attention mask, in which each node sees its ancestors. Inspired by: [Medusa: Simple LLM Inference Acceleration Framework with Multiple Decoding Heads](https://arxiv.org/abs/2401.10774)
@@ -399,7 +399,7 @@ def medusa_step(model, heads, tokens, kv_cache, next_token, head_logits, top_k=2
 EAGLE-3 reaches speedups of up to 6.5 times, about 1.4 times more than EAGLE-2, and 1.38 times higher throughput at a batch size of 64 in SGLang. EAGLE-style drafting is supported by vLLM, SGLang and TensorRT-LLM. The following picture illustrates an EAGLE draft step, which combines the features of the target with the embeddings of the tokens one position ahead:
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/eagle.svg"/>
+<img width="99.1%" height="99.1%" src="{{ site.assets }}/inference/imgs/eagle.svg"/>
 
 {: .caption}
 For the next draft, the predicted feature of $$t_5$$ and the draft $$t_6$$ are appended to the inputs. EAGLE-3 predicts tokens directly, from the fused low-, mid- and high-level features of the target. Inspired by: [EAGLE: Speculative Sampling Requires Rethinking Feature Uncertainty](https://arxiv.org/abs/2401.15077)
@@ -460,7 +460,7 @@ The drafter reuses the target's frozen embedding and output head, and only its t
 Verification is unchanged, so the output stays lossless. Each round verifies a single drafted block, not a tree: [DDTree](https://arxiv.org/abs/2604.12989) builds a draft tree from the per-position predictions of the DFlash drafter, and verifies it with tree attention. The following picture illustrates the drafter on a block of 8 tokens, the last verified token followed by 7 mask tokens:
 
 {: .picture}
-<img width="95.2%" height="95.2%" src="{{ site.assets }}/inference/imgs/dflash.svg"/>
+<img width="95.3%" height="95.3%" src="{{ site.assets }}/inference/imgs/dflash.svg"/>
 
 {: .caption}
 The hidden states of 5 layers of the frozen target, spread from shallow to deep, are concatenated, projected, and injected into the keys and values of every draft layer. The drafter fills all the mask positions of the block in one forward pass. Inspired by: [DFlash: Block Diffusion for Flash Speculative Decoding](https://arxiv.org/abs/2602.06036)
@@ -615,7 +615,7 @@ The authors report better results on most benchmarks, and suggest that MTP may m
 Note that an MTP module is very close to an EAGLE draft layer: both combine the features of the target with the embedding of the next token, run one transformer layer, and predict with the target's output head. The difference is that the MTP module is trained together with the model, during pre-training. The following picture illustrates the main model with two MTP modules:
 
 {: .picture}
-<img width="96.8%" height="96.8%" src="{{ site.assets }}/inference/imgs/mtp_sequential.svg"/>
+<img width="96.9%" height="96.9%" src="{{ site.assets }}/inference/imgs/mtp_sequential.svg"/>
 
 {: .caption}
 MTP module $$k$$ combines the hidden state of depth $$k - 1$$ with the embeddings of the input tokens shifted by $$k$$, and predicts the token $$k + 1$$ positions ahead, through the shared output head. Adapted from: [DeepSeek-V3 Technical Report](https://arxiv.org/abs/2412.19437)

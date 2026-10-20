@@ -54,7 +54,7 @@ Note that accurate results for long sentences are hard to obtain, as recurrent n
 In 2017, researchers at Google introduced the [Transformer](https://en.wikipedia.org/wiki/Transformer_(deep_learning)) (original paper [Attention is all you need (2017, Google, arXiv)](https://arxiv.org/abs/1706.03762)), overcoming many of the previous issues while demonstrating better results. The transformer architecture is the following:
 
 {: .picture}
-<img width="43.8%" height="43.8%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
+<img width="43.9%" height="43.9%" src="{{ site.assets }}/learning-from-sequences/transformer.svg"/>
 
 {: .caption}
 The transformer architecture. Grey regions represent one encoder layer (left) and one decoder layer (right), each repeated N times. Adapted from: <a href="https://arxiv.org/abs/1706.03762">Attention is all you need (2017, Google, arXiv)</a>
@@ -88,7 +88,7 @@ The main component of the transformer is the attention mechanism, which determin
 Consider a single attention head for now. Take a sentence of $$n$$ words: how is each word related to every other word in that sentence? A single attention mechanism then computes the $$n \times n$$ matrix storing these inter-word importance metrics. Here is an example:
 
 {: .picture}
-<img width="33.3%" height="33.3%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
+<img width="33.4%" height="33.4%" src="{{ site.assets }}/learning-from-sequences/transformer_attention.svg"/>
 
 {: .caption}
 Attention weights of one attention head for the sentence "The big red dog", of length $$N=4$$. Each row holds the softmax-normalized relevance of that word to every word of the sentence, itself included, and sums to 1.
@@ -114,7 +114,7 @@ $$
 The term $$ \frac{1}{\sqrt{D^{QK}}} $$ helps keep the range of values roughly unchanged even for large $$D^{QK}$$; without it, large dot products would push the softmax into regions where it has extremely small gradients (Section 3.2.1 in the paper). For each query, the final value is computed as the sum of the input values weighted by the attention scores: $$Y_q = \sum_k A_{q,k} \, V_k $$. Both steps, the attention scores and the weighted sum, are illustrated in the following picture:
 
 {: .picture}
-<img width="33.6%" height="33.6%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_lbdl.svg"/>
+<img width="33.7%" height="33.7%" src="{{ site.assets }}/learning-from-sequences/transformer_attention_lbdl.svg"/>
 
 {: .caption}
 The attention operator matches every query $$Q_q$$ with all keys $$K_1, ..., K_{N^{KV}}$$ to obtain normalized attention scores $$A_{q,1},...,A_{q,N^{KV}}$$ (left), and then averages the values $$V_1,...,V_{N^{KV}}$$ with these scores to compute $$Y_q$$ (right). Adapted from: [The Little Book of Deep Learning](https://fleuret.org/public/lbdl.pdf).
@@ -186,7 +186,7 @@ So, the encoder is trained efficiently and learns a *context*. The main question
 BERT is a stack of Transformer encoders that learns language contexts and performs interpretation tasks. As the encoder has no mask, the context of each word is learnt from the words before and after it (hence *Bidirectional*). The following picture illustrates the model, where each block is one encoder layer of the transformer (the grey region on the left of the transformer picture):
 
 {: .picture}
-<img width="95.3%" height="95.3%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
+<img width="95.4%" height="95.4%" src="{{ site.assets }}/learning-from-sequences/bert.svg"/>
 
 {: .caption}
 The BERT model, as a stack of Transformer encoders. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762)
@@ -235,7 +235,7 @@ In the original paper, the authors successfully applied this model to four famil
 The inputs and outputs of the fine-tuning for these tasks are illustrated in the following picture: 
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/learning-from-sequences/bert_tasks.svg"/>
 
 {: .caption}
 Input and output of the fine-tuning phase of a BERT network, applied to four types of tasks: (a) sentence pair classification (MNLI, QQP, QNLI, STS-B, MRPC, RTE, SWAG), (b) single sentence classification (SST-2, CoLA), (c) question answering (SQuAD v1.1) and (d) single sentence tagging (CoNLL-2003 NER). Adapted from: [BERT: Pre-training of Deep Bidirectional Transformers for Language Understanding](https://arxiv.org/abs/1810.04805)

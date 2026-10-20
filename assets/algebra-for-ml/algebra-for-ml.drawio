@@ -10,7 +10,7 @@
         <mxCell id="mml_svd-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="358.49" height="114.77" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-1" value="&lt;i&gt;A&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;fontStyle=1;strokeColor=#000000;strokeWidth=1.6;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
+        <mxCell id="mml_svd-1" value="&lt;i&gt;A&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;fontStyle=1;strokeColor=#000000;strokeWidth=1.2;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="14.85" y="19.32" width="41.36" height="95.45" as="geometry" />
         </mxCell>
         <mxCell id="mml_svd-2" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
@@ -19,7 +19,7 @@
         <mxCell id="mml_svd-3" value="m" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=NewComputerModernSansMath;fontColor=#000000;spacing=0;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="-0.1" y="58.65" width="12.1" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-4" value="&lt;i&gt;U&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;fontStyle=1;strokeColor=#000000;strokeWidth=1.6;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
+        <mxCell id="mml_svd-4" value="&lt;i&gt;U&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=16;fontStyle=1;strokeColor=#000000;strokeWidth=1.2;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="131.31" y="19.32" width="92.27" height="95.45" as="geometry" />
         </mxCell>
         <mxCell id="mml_svd-5" value="m" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
@@ -28,7 +28,7 @@
         <mxCell id="mml_svd-6" value="m" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=NewComputerModernSansMath;fontColor=#000000;spacing=0;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="116.34" y="58.65" width="12.1" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-7" value="Σ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=16;fontStyle=1;strokeColor=#000000;strokeWidth=1.6;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
+        <mxCell id="mml_svd-7" value="Σ" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=16;fontStyle=1;strokeColor=#000000;strokeWidth=1.2;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="248.4" y="19.32" width="42" height="95.45" as="geometry" />
         </mxCell>
         <mxCell id="mml_svd-8" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
@@ -37,7 +37,7 @@
         <mxCell id="mml_svd-9" value="m" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=NewComputerModernSansMath;fontColor=#000000;spacing=0;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="233.45" y="58.65" width="12.1" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="mml_svd-10" value="&lt;i&gt;V&lt;/i&gt;&lt;sup&gt;⊤&lt;/sup&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=16;fontStyle=1;strokeColor=#000000;strokeWidth=1.6;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
+        <mxCell id="mml_svd-10" value="&lt;i&gt;V&lt;/i&gt;&lt;sup&gt;⊤&lt;/sup&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=16;fontStyle=1;strokeColor=#000000;strokeWidth=1.2;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">
           <mxGeometry x="317.13" y="44.77" width="41.36" height="42.64" as="geometry" />
         </mxCell>
         <mxCell id="mml_svd-11" value="n" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=2;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="mml_svd-figure">

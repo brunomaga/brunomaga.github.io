@@ -215,7 +215,7 @@ This kind of partitioning underlies problems such as the [Voronoi diagram](https
 
 
 {: .picture}
-<img width="36.6%" height="36.6%" src="{{ site.assets }}/unsupervised-learning/voronoi.svg">
+<img width="36.7%" height="36.7%" src="{{ site.assets }}/unsupervised-learning/voronoi.svg">
 
 {: .caption}
 The Voronoi diagram of 20 prototypes (black dots) in 2D: each colored cell holds the points closer to its prototype than to any other, in Euclidean distance. Adapted from: [Voronoi diagram](https://en.wikipedia.org/wiki/Voronoi_diagram)
@@ -248,7 +248,7 @@ which is the definition of the center of mass of cluster $$i$$. The error decrea
 
 
 {: .picture}
-<img width="78.6%" height="78.6%" src="{{ site.assets }}/unsupervised-learning/k-means.svg">
+<img width="78.7%" height="78.7%" src="{{ site.assets }}/unsupervised-learning/k-means.svg">
 
 {: .caption}
 **1.** $$k = 3$$ initial means (colored circles) are chosen at random within the data domain. **2.** Assignment step: each point joins the cluster of the closest mean; the colored regions are the Voronoi cells of the means. **3.** Update step: each mean moves to the centroid of its cluster (dashed circles: the previous means; lines: the points of each cluster). **4.** Assignment step with the new means and their Voronoi cells: two points move from the green to the red cluster. The two steps repeat until the assignments no longer change. Adapted from: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
@@ -384,7 +384,7 @@ The input dataset and the `python` implementation are available in <a href="{{ s
 {: .picture}
 <img width="29.5%" height="29.5%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.svg">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="29.8%" height="29.8%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
+<img width="29.7%" height="29.7%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
 <span style="display:inline-block; width:1cm;"></span>
 <img width="29.3%" height="29.3%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.svg">
  

@@ -373,44 +373,47 @@ sections 6 and 7, and the font section 4.
 
 - Every geometric element with a fill (rectangles, rounded boxes, circles, cubes, cylinders, filled table
   cells, block arrows, grey background panels and frames) has a black outline: strokeColor=#000000, no stroke
-  opacity. The cells of a block are the exception: their outlines are grey (see the blocks below). Four
+  opacity. The cells of a block are the exception: their outlines are grey (see the blocks below). Six
   weights, the same at page scale in every picture:
   ```
   thin       0.4 px   the cells of a matrix, an array, a table or a block of cubes, the lines that divide a
                       block into cells, the faces of a 3D tensor, pipeline passes
   regular    1.0 px   operations, layers, modules, data boxes (tensors, vectors, tokens), neurons and graph
                       nodes, operators, single cubes, block arrows, curly brackets, the blocks of a time line
-  thick      1.6 px   arrows and lines, frames of regions (devices, processes, groups, sections), the outline
-                      of each block of cells (matrix, array, table, stack of objects), the silhouette of each 3D
-                      tensor or block of cubes and the three edges at its front corner, axes of charts and time
-                      lines, pipeline rows, black lines that divide a drawing into regions
+  block      1.2 px   the outline of each block of cells (matrix, array, table, stack of objects), the
+                      silhouette of each 3D tensor or block of cubes and the three edges at its front corner
+  line       1.6 px   arrows and lines, axes of charts and time lines, the frames of plots of a 2D domain or of
+                      an image (k-means, voronoi, the slicing layouts, svd_example), markers, brackets and
+                      number lines drawn as lines
+  frame      2.0 px   frames of regions (devices, processes, groups, sections), pipeline rows, lines that
+                      divide a drawing into regions (the dashed lines between the panels of a picture)
   emphasis   3.6 px   red #b85450 outlines and frames, solid or dashed, that emphasise a part of a drawing
                       (the modules of the GPT-lite pictures, the MoE layers of moe_gshard, the red frames of
                       the first row and the first column in all_to_all), and black frames that emphasise a part
                       (DualPipe's overlapped forward and backward passes, the selected experts in
                       moe_switch_transformers)
   ```
-- A block (a matrix, an array, a table, a stack of objects, a block of cubes) has the thick black outline
-  around it and thin grey #666666 lines between its cells: the cells, the lines that divide the block and the
-  faces of a 3D tensor are grey. Boxes glued into one matrix (the column and row splits of the Megatron-LM
-  pictures) share a thin grey line inside one thick black outline. A single cell (a token, a K or V block, a
-  single cube) has no block outline and keeps its black outline.
+- A block (a matrix, an array, a table, a stack of objects, a block of cubes) has a black outline at the block
+  weight around it and thin grey #666666 lines between its cells: the cells, the lines that divide the block
+  and the faces of a 3D tensor are grey. Boxes glued into one matrix (the column and row splits of the
+  Megatron-LM pictures) share a thin grey line inside one black block outline. A single cell (a token, a K or
+  V block, a single cube) has no block outline and keeps its black outline.
 - A time line (tp_timeline, tp_block_specialization, continuous_chunked_batching,
   local_variable_timestep_six_cell_example, the time row of prefill_decode) is made of intervals of time, not of
   the cells of a block: its blocks have square corners and regular black outlines, dashed ones too, and blocks
   stacked in one interval have no outline around them, as there is no block or region inside a time line. A
   curly bracket over a time line points to its text. Pipeline schedules follow section 8: their passes keep thin
   black outlines.
-- Tables have black text, thin grey lines between their cells and a thick black outline; the tables of the
+- Tables have black text, thin grey lines between their cells and a black block outline; the tables of the
   matrix transpose post keep their blue cells, and the stacks of objects that their pointers point to are
   black arrays.
 - Exceptions that keep their own look:
   - a box highlighted by a colored outline: the colored outline replaces its black one, with no second
     frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
-  - other colored frames that highlight a group of parts: 1.6 px (the orange KV cache frames). Red arrows and
-    cross marks are not emphasis lines;
+  - other colored frames that highlight a group of parts: 2.0 px, as other frames (the orange KV cache
+    frames). Red arrows and cross marks are not emphasis lines;
   - dashed outlines of elements that are not frames: 0.4 px on filled elements, 1.6 px on lines without fill
-    (a dashed frame is 1.6 px, as other frames; the dash keeps its pattern);
+    (a dashed frame is 2.0 px, as other frames; the dash keeps its pattern);
   - white masks that hide parts of a drawing, faded elements and red cross marks;
   - the memory bars of deepspeed_stages and their legend swatches: thin black outlines, as their strips are
     4 px tall.
@@ -489,7 +492,7 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
   the backward for inputs (B) and the backward for weights (W). With two chunks per GPU (interleaved 1F1B,
   ZB-V, DualPipeV), each pass of a chunk takes half as long. DualPipe runs one stage per direction on each
   GPU, so its passes take the full time.
-- Each row is a 1.6 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
+- Each row is a 2.0 px black frame as long as the schedule, hatched (section 7) behind the passes: the hatch
   is idle time. A pass is one cell with a 0.4 px black outline, in the pipeline colors of section 5; a backward
   pass is one cell of two units, not two cells.
 - Every pass cell holds its micro-batch number, also the single micro-batch 1 of pipeline_8_stages,

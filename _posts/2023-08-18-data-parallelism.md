@@ -11,7 +11,7 @@ In 2012, the paper [Large Scale Distributed Deep Networks](https://papers.nips.c
 Distributed [data parallelism](https://en.wikipedia.org/wiki/Data_parallelism) (DDP) refers to the parallel execution of different input samples across processors. Consider any data input of shape $$B \times S \times E$$ (batch size, sequence/temporal size and embedding/feature size): data parallelism refers to the use case where the data is split across $$P$$ processes, leading to a local input of shape $$B/P \times S \times E$$:
 
 {: .picture}
-<img width="24%" height="24%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
+<img width="24.1%" height="24.1%" src="{{ site.assets }}/distributed-training/imgs/data_parallelism.svg"/>
 
 {: .caption}
 An illustration of the DDP data layout, split across 4 processes color-coded as blue, yellow, red and green.
@@ -55,7 +55,7 @@ Instead of a single all-reduce of the gradients, sharding uses two collective op
 The higher the stage, the less memory is consumed. Stages 1 and 2 communicate as much as regular data parallelism, and stage 3 communicates 1.5x as much, as it gathers the parameters in both the forward and the backward passes. These memory improvements are summarized in the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/) as:
 
 {: .picture}
-<img width="87.6%" height="87.6%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
+<img width="87.7%" height="87.7%" src="{{ site.assets }}/distributed-training/imgs/deepspeed_stages.svg"/>
 
 {: .caption}
 Per-GPU memory of the model states (parameters, gradients and optimizer states) with plain data parallelism (baseline) and with the three ZeRO stages: $$P_{os}$$ partitions the optimizer states across the GPUs, $$P_{os+g}$$ also the gradients, and $$P_{os+g+p}$$ also the parameters. $$\Psi$$ is the number of parameters, $$K$$ the memory multiplier of the optimizer states and $$N_d$$ the data-parallel degree; the example uses $$K=12$$ (mixed-precision Adam), $$\Psi=7.5B$$ and $$N_d=64$$. The last column is the communication volume relative to the baseline. Adapted from: [ZeRO: Memory Optimizations Toward Training Trillion Parameter Models](https://arxiv.org/abs/1910.02054) and the [Microsoft Research blog](https://www.microsoft.com/en-us/research/blog/zero-deepspeed-new-system-optimizations-enable-training-models-with-over-100-billion-parameters/)
@@ -77,7 +77,7 @@ where $$f^{(l)}$$ is the function implemented by layer $$l$$, $$L$$ is the numbe
 The important concept here is the **composition** of the functions $$f$$ across layers. The computation of a layer needs only its weights, its input and its output (and, in the backward pass, the gradient coming from the next layer), so the data of all other layers can be kept in CPU memory. To reduce the time spent waiting to push (pull) a layer to (from) the GPU, the computation of the current layers can be overlapped with the communication of the upcoming ones. The forward pass can be illustrated as:
 
 {: .picture}
-<img width="88.3%" height="88.3%" src="{{ site.assets }}/distributed-training/imgs/vdnn2.svg"/>
+<img width="88.4%" height="88.4%" src="{{ site.assets }}/distributed-training/imgs/vdnn2.svg"/>
 
 {: .caption}
 The forward pass of vDNN on a convolutional neural network, at layer N. Blue arrows are the input and output feature maps $$X$$ and $$Y$$ of the current layer, the purple arrow its weights $$W$$ and the yellow arrow its cuDNN workspace $$WS$$. White arrows are data that the current layer does not use. The input feature maps $$X$$ of the preceding layers, marked with a black cross, are not used by the current layer and can be released from GPU memory. Adapted from: [vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design](https://arxiv.org/abs/1602.08124)
@@ -86,7 +86,7 @@ The forward pass of vDNN on a convolutional neural network, at layer N. Blue arr
 The backward propagation phase is trickier, as it also includes the gradients being propagated down the model:
 
 {: .picture}
-<img width="88.3%" height="88.3%" src="{{ site.assets }}/distributed-training/imgs/vdnn3.svg"/>
+<img width="88.4%" height="88.4%" src="{{ site.assets }}/distributed-training/imgs/vdnn3.svg"/>
 
 {: .caption}
 The backward pass of vDNN at layer 2. Blue arrows are the feature maps $$X$$ and $$Y$$ of the current layer, green arrows its gradients $$dX$$ and $$dY$$, the purple arrow its weights $$W$$ and the yellow arrow its cuDNN workspace $$WS$$. White arrows are data that the current layer does not use. The data used only by the layers whose backward pass is complete (the layers after layer 2 and the loss function), marked with a black cross, is not reused for this batch and can be released from GPU memory. Adapted from: [vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design](https://arxiv.org/abs/1602.08124)

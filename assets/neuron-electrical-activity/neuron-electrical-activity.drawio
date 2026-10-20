@@ -1782,16 +1782,16 @@
             <mxPoint x="777.79" y="156.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="neuron_model_scales-86" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=1.6;dashed=1;fontFamily=Source Sans 3;" vertex="1" parent="neuron_model_scales-figure">
+        <mxCell id="neuron_model_scales-86" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=2.0;dashed=1;fontFamily=Source Sans 3;" vertex="1" parent="neuron_model_scales-figure">
           <mxGeometry x="23.21" y="26.13" width="59.73" height="59.73" as="geometry" />
         </mxCell>
-        <mxCell id="neuron_model_scales-87" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=1.6;dashed=1;fontFamily=Source Sans 3;" vertex="1" parent="neuron_model_scales-figure">
+        <mxCell id="neuron_model_scales-87" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=2.0;dashed=1;fontFamily=Source Sans 3;" vertex="1" parent="neuron_model_scales-figure">
           <mxGeometry x="217.48" y="83.06" width="26.13" height="26.13" as="geometry" />
         </mxCell>
-        <mxCell id="neuron_model_scales-88" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=1.6;dashed=1;fontFamily=Source Sans 3;" vertex="1" parent="neuron_model_scales-figure">
+        <mxCell id="neuron_model_scales-88" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=2.0;dashed=1;fontFamily=Source Sans 3;" vertex="1" parent="neuron_model_scales-figure">
           <mxGeometry x="418.08" y="42" width="26.13" height="26.13" as="geometry" />
         </mxCell>
-        <mxCell id="neuron_model_scales-89" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=1.6;dashed=1;fontFamily=Source Sans 3;" vertex="1" parent="neuron_model_scales-figure">
+        <mxCell id="neuron_model_scales-89" value="" style="ellipse;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;strokeWidth=2.0;dashed=1;fontFamily=Source Sans 3;" vertex="1" parent="neuron_model_scales-figure">
           <mxGeometry x="645.54" y="25.2" width="24.27" height="24.27" as="geometry" />
         </mxCell>
         <mxCell id="neuron_model_scales-90" value="Population model" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontFamily=Source Sans 3;fontSize=14;fontStyle=0;fontColor=#000000;" vertex="1" parent="neuron_model_scales-figure">

@@ -80,7 +80,7 @@ As an example, rank $$(1,2)$$ of a $$3 \times 3$$ grid computes $$C_{1,2} = A_{1
 Steps 2 and 3 are repeated until each rank has done $$q$$ multiplications, as illustrated below:
 
 {: .picture}
-<img width="89.6%" height="89.6%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
+<img width="89.5%" height="89.5%" src="{{ site.assets }}/distributed-matmul-dbs/cannon.svg">
 
 {: .caption}
 Cannon's algorithm on a $$3 \times 3$$ grid of ranks. Tiles of $$A$$ (top) shift left, and tiles of $$B$$ (bottom) shift up. The thick frame marks rank $$(1,2)$$, and colors show its three pairs: blue for $$k=0$$, green for $$k=1$$ and red for $$k=2$$.
@@ -103,7 +103,7 @@ The tiles of the next step do not depend on the current product, so a rank can r
 The following picture compares the timelines with and without this overlap:
 
 {: .picture}
-<img width="91.5%" height="91.5%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
+<img width="91.6%" height="91.6%" src="{{ site.assets }}/distributed-matmul-dbs/overlap.svg">
 
 {: .caption}
 Timeline of one rank in Cannon's algorithm on a $$3 \times 3$$ grid. **Top:** shifts and multiplications take turns. **Bottom:** each shift runs during a multiplication.
@@ -129,7 +129,7 @@ The **compressed sparse row** format (CSR, also called the Yale format), in use 
 An example is displayed below:
 
 {: .picture}
-<img width="69.7%" height="69.7%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
+<img width="69.8%" height="69.8%" src="{{ site.assets }}/distributed-matmul-dbs/csr_format.svg">
 
 {: .caption}
 A sparse matrix (left) and its CSR arrays (right), colored by row. Row 3 is empty, so `row_ptr[3]` and `row_ptr[4]` are both 6.
@@ -261,7 +261,7 @@ Each server holds some rows of each table, which is called **horizontal partitio
 **Inner join.** Each row is placed by its key, with the same rule for both tables (e.g. a hash of the key). Below, even keys go to server 1, and odd keys to server 2. Matching rows then share a server, and every server joins locally. If the tables are not placed this way, a **shuffle** first sends each row to its server, with an all-to-all exchange (`MPI_Alltoallv`), as illustrated below:
 
 {: .picture}
-<img width="87.4%" height="87.4%" src="{{ site.assets }}/distributed-matmul-dbs/layout_rows.svg">
+<img width="87.5%" height="87.5%" src="{{ site.assets }}/distributed-matmul-dbs/layout_rows.svg">
 
 {: .caption}
 Two tables split by rows across 2 servers, colored by target server: blue for server 1 (even keys), and orange for server 2 (odd keys). **Left:** before the shuffle. **Right:** after it.
@@ -275,7 +275,7 @@ Two tables split by rows across 2 servers, colored by target server: blue for se
 The left outer join is not: John matches on server 1 but not on server 2, so no server can tell alone that a person has no match. Therefore, each server flags its local matches, and a logical-or all-reduce (`MPI_Allreduce` with `MPI_LOR`) combines the flags. Server 1 then returns the persons with a final flag of 0, with `NULL`, as presented below:
 
 {: .picture}
-<img width="69.6%" height="69.6%" src="{{ site.assets }}/distributed-matmul-dbs/broadcast.svg">
+<img width="69.7%" height="69.7%" src="{{ site.assets }}/distributed-matmul-dbs/broadcast.svg">
 
 {: .caption}
 A broadcast join, for a left outer join. After the all-reduce of the match flags, only Mary and Joe have no match.

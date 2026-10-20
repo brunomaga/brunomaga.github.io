@@ -22,7 +22,7 @@ Curriculum learning can also improve efficiency for variable-length data. Mixing
 At a high level, curriculum learning is simple: (1) define a difficulty metric per sample, (2) sort samples by increasing difficulty, and (3) iterate through the sorted dataset. In distributed runs with large datasets, however, this becomes non-trivial. Samples are typically assigned to ranks in an interleaved fashion (e.g., via PyTorch’s `DistributedSampler`; see (a) and (b) below), which can lead to [load imbalance](https://en.wikipedia.org/wiki/Load_balancing_(computing)) if each rank sorts only its local shard. The following picture illustrates this problem and the two approaches detailed next:
 
 {: .picture}
-<img width="80.6%" height="80.6%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
+<img width="80.7%" height="80.7%" src="{{ site.assets }}/distributed-training/imgs/curriculum_datasets.svg"/>
 
 {: .caption}
 The curriculum dataset setup problem, on a network of 4 ranks and a dataset of 16 samples. (a) Original dataset, with an interleaved assignment of the 16 samples (bars) of variable lengths (bar heights) to the 4 ranks (color-coded). (b) Dataset in (a) after distributed data loading. (c) Dataset in (b) after local sorting. (d) Dataset in (b) after distributed sorting. (e) Dataset in (d) with an interleaved assignment of the 16 samples to the 4 ranks (color-coded). (f) Dataset in (e) after distributed data loading.
@@ -118,7 +118,7 @@ In brief, the works above favor linear scaling for SGD, and square-root scaling 
 Assume a limit of $$30$$ tokens per batch, a reference LR of $$10^{-3}$$, and a reference batch size of $$2$$. Early in curriculum learning (short sequences), batches will contain more samples than later (long sequences), as shown below:
 
 {: .picture}
-<img width="74.6%" height="74.6%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
+<img width="74.7%" height="74.7%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
 
 {: .caption}
 Batches of at most 30 tokens, of shape BxSxE (batch size x sequence length x embedding size), with a reference batch size of 2 and a reference learning rate (LR) of 1e-3. Short sentences (left) give a larger batch, and thus a larger LR, than long sentences (right). Grey cells are padding tokens.
@@ -130,7 +130,7 @@ Here, samples are collected until the batch reaches (at most) 30 tokens. The bat
 Pipeline parallelism requires the same batch size and sequence length across all micro-batches within a batch, because activation shapes must stay fixed during gradient accumulation. Enforcing a consistent `B x S x E` across micro-batches can lead to smaller micro-batches and additional padding. Since version 0.15, DeepSpeed lifts this constraint with the option `PipelineModule(dynamic_shape=True)`, at a possible cost in performance. The figure below contrasts standard Distributed Data Parallel (DDP, left) with pipeline parallelism (right) for 2 processes and 2 gradient accumulation steps (4 micro-batches total):
 
 {: .picture}
-<img width="94.9%" height="94.9%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
+<img width="95%" height="95%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr_pipeline.svg"/>
 
 In the pipeline case (right), all micro-batches in the batch have the same `B x S x E` shape. To satisfy this constraint, fewer samples are packed per micro-batch compared to the non-pipeline case (left), and padding is used when needed.
 
@@ -257,7 +257,7 @@ Workflow of a single-GPU training iteration. Adapted from: [TorchDynamo Update 9
 In this example, the GPU executes many separate kernels in the forward and backward passes. If captured as a CUDA graph, those kernels can be replayed with fewer launches, which often improves throughput. The following picture illustrates the same iteration with a compiled model, where the forward and the backward passes each run as one compiled graph:
 
 {: .picture}
-<img width="59.3%" height="59.3%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
+<img width="59.6%" height="59.6%" src="{{ site.assets }}/distributed-training/imgs/dnn_serial_compiled.svg"/>
 
 {: .caption}
 Workflow of a single-GPU training iteration with a compiled model. Adapted from: [TorchDynamo Update 9: Making DDP Work with TorchDynamo](https://dev-discuss.pytorch.org/t/torchdynamo-update-9-making-ddp-work-with-torchdynamo/860)
