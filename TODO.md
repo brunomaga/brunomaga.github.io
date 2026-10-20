@@ -432,10 +432,10 @@ that is not wrong.
   page size, move the labels and arrows that touch, and lengthen the short arrows (move their bend, or the boxes they
   join).
 - The charts drawn from data (the plots, benchmarks and histograms without a draw.io source, for example
-  `inference/imgs/tp_results.svg`, `gptlite-cpp/benchmark_*.svg` and the charts of `neuron-variable-timestep` and
-  `bayesian-linear-regression`) keep the line weights of their scripts or of their earlier export (`tp_results.py`
-  draws 1 px axes and 0.8 px bar outlines), not the weights of CLAUDE.md, Pictures, section 6. Fix: axes 1.6 px, bar
-  outlines and plot lines 1.0 px, in each chart's script, or in the SVG of a chart without a script.
+  `gptlite-cpp/benchmark_*.svg` and the charts of `neuron-variable-timestep` and `bayesian-linear-regression`) keep
+  the line weights of their scripts or of their earlier export, not the weights of CLAUDE.md, Pictures, section 6.
+  Fix: axes and plot lines 1.4 px, bar outlines 1.0 px, as in `inference/imgs/tp_results.py` and `ep_results.py`, in
+  each chart's script, or in the SVG of a chart without a script.
 - Pictures to redraw, from the user's review of the four line weights (the next step of the restyle):
   - `inference/imgs/continuous_chunked_batching.svg` differs from its original. Fix: redraw it from the original, and
     add continuous batching with chunked prefill.

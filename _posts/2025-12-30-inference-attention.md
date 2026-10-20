@@ -325,7 +325,7 @@ DSA was added to an already trained model, in two stages. First, during a short 
 With a KV cache, the indexer key of every token is cached too. Index scores are often tied, since the ReLU outputs many zeros, so the selection uses a [stable sort](https://en.wikipedia.org/wiki/Sorting_algorithm#Stability), which breaks ties the same way whether the tokens are processed together or one at a time. Decoding with a KV cache then gives the same result as processing the whole sequence at once. The following picture illustrates DSA with $$H = 4$$ heads, where each query attends only to the 3 tokens with the highest index scores:
 
 {: .picture}
-<img width="97.4%" height="97.4%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
+<img width="97.3%" height="97.3%" src="{{ site.assets }}/inference/imgs/dsa.svg"/>
 
 The following code adds DSA to multi-head attention. It keeps the projections of `GQA` with `num_groups = num_heads`, so it can load the weights of a trained MHA module, and adds the indexer. First, `lightning_index_scores` computes the index scores of the formula above, `top_k_indices` selects the highest ones with a stable sort, and `indexer_loss` computes the loss of the warm-up.
 

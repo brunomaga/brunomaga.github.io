@@ -57,7 +57,7 @@ It looks at two different testbenches, so readers may pick one based on their le
 The two models are illustrated below:
 
 {: .picture}
-<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
+<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite-cpp/gptlite_compact.svg"/>
 &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
 <img width="25.8%" height="25.8%" src="{{ site.assets }}/gptlite-cpp/benchmark_model.svg"/>
 
@@ -122,7 +122,7 @@ $$
 where $$h$$ is the number of heads, $$d_k$$ is the dimension of the keys of each head and $$W^O$$ is the output projection. Together with the lower-triangular mask (`tril`), this is the underlying structure of each of the N attention blocks in the model:
 
 {: .picture}
-<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
+<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite/gptlite_attention.svg"/>
 
 {: .caption}
 The multi-head attention module in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
@@ -230,7 +230,7 @@ Again, `nn::ModuleList` is used as a container, instead of a standard-library co
 The feed-forward network is a two-layer Deep Neural Network that follows the attention in each block, as illustrated below:
 
 {: .picture}
-<img width="25.4%" height="25.4%" src="{{ site.assets }}/gptlite/gptlite_feedforward.svg"/>
+<img width="25.3%" height="25.3%" src="{{ site.assets }}/gptlite/gptlite_feedforward.svg"/>
 
 {: .caption}
 The feed forward network in the GPTlite model, emphasized in red. Adapted from: [Attention Is All You Need](https://arxiv.org/abs/1706.03762).
