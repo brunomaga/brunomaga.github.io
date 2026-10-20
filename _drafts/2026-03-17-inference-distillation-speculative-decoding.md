@@ -149,7 +149,7 @@ With **sampling** (*speculative sampling*), the draft model samples each token $
 The rule holds for any $$p$$, as long as it is the distribution the drafts were sampled from. Greedy drafts are the special case of a one-hot $$p$$: the target accepts the draft $$x$$ with probability $$q(x)$$, and on rejection samples from $$q$$ without $$x$$, which still yields tokens distributed as $$q$$. What breaks the guarantee is drafting greedily while using the draft model's softmax probabilities as $$p$$. An example of the rule on a vocabulary of five tokens is displayed below, with the distributions of the draft model and of the target (left), and the normalized residual (right):
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/inference/imgs/spec_sampling.svg"/>
+<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/spec_sampling.svg"/>
 
 {: .caption}
 The draft b is accepted with probability $$\min(1, q(b) / p(b)) = 0.3 / 0.5 = 0.6$$; otherwise, it is replaced by a or c, sampled from the residual.

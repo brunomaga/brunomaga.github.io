@@ -21,9 +21,9 @@ IMPROVEMENT = [100 * (1 - f / b) for (b, _), (f, _) in zip(BASELINE, FUSED)]   #
 
 plt.rcParams.update({
     'font.family': 'Source Sans 3', 'font.size': 12, 'svg.fonttype': 'path',
-    'axes.linewidth': 1.6, 'axes.edgecolor': '#000000', 'axes.labelsize': 14, 'axes.labelcolor': '#000000',
+    'axes.linewidth': 1.4, 'axes.edgecolor': '#000000', 'axes.labelsize': 14, 'axes.labelcolor': '#000000',
     'xtick.labelsize': 12, 'ytick.labelsize': 12, 'xtick.color': '#000000', 'ytick.color': '#000000',
-    'xtick.major.width': 1.6, 'ytick.major.width': 1.6, 'xtick.major.size': 0, 'ytick.major.size': 4,
+    'xtick.major.width': 1.4, 'ytick.major.width': 1.4, 'xtick.major.size': 0, 'ytick.major.size': 4,
     'legend.fontsize': 14, 'svg.hashsalt': 'tp_results',   # the same ids on every run
 })
 
@@ -44,7 +44,7 @@ ax.yaxis.grid(True, color='#b3b3b3', linewidth=0.4)
 ax.set_axisbelow(True)
 
 ax2 = ax.twinx()
-ax2.plot(list(x), IMPROVEMENT, color='#000000', linewidth=1.6, marker='o', markersize=6, markerfacecolor='#f8cecc',
+ax2.plot(list(x), IMPROVEMENT, color='#000000', linewidth=1.4, marker='o', markersize=6, markerfacecolor='#f8cecc',
          markeredgecolor='#000000', markeredgewidth=1.0, label='Improvement (%)')
 for i, v in enumerate(IMPROVEMENT):
     ax2.annotate('%.1f' % v, (i, v), xytext=(4, 3), textcoords='offset points', ha='left', va='bottom', fontsize=12,

@@ -36,10 +36,10 @@ LABELS = [dict(xytext=(0, 5), ha='center', va='bottom'),  # Baseline above its p
 
 plt.rcParams.update({
     'font.family': 'Source Sans 3', 'font.size': 12, 'svg.fonttype': 'path',
-    'axes.linewidth': 1.6, 'axes.edgecolor': BLACK, 'axes.labelsize': 14, 'axes.labelcolor': BLACK,
+    'axes.linewidth': 1.4, 'axes.edgecolor': BLACK, 'axes.labelsize': 14, 'axes.labelcolor': BLACK,
     'axes.titlesize': 14, 'axes.titleweight': 'bold',
     'xtick.labelsize': 12, 'ytick.labelsize': 12, 'xtick.color': BLACK, 'ytick.color': BLACK,
-    'xtick.major.width': 1.6, 'ytick.major.width': 1.6, 'xtick.major.size': 4, 'ytick.major.size': 4,
+    'xtick.major.width': 1.4, 'ytick.major.width': 1.4, 'xtick.major.size': 4, 'ytick.major.size': 4,
     'legend.fontsize': 14, 'svg.hashsalt': 'ep_results',   # the same ids on every run
 })
 
@@ -47,7 +47,7 @@ plt.rcParams.update({
 def panel(ax, title, xs, series, labels, xticks, xlabels, yticks, xlim, ylim, xlabel, ylabel, colors, styles, color):
     """One log2 panel: a line per implementation, each point labelled with its value."""
     for k, (ys, texts, c, ls) in enumerate(zip(series, labels, colors, styles)):
-        ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.6, marker=MARKERS[k], markersize=7, markerfacecolor=c,
+        ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.4, marker=MARKERS[k], markersize=7, markerfacecolor=c,
                 markeredgecolor=BLACK, markeredgewidth=1.0, label=NAMES[k], zorder=3)
         for x, y, t in zip(xs, ys, texts):
             ax.annotate(t, (x, y), textcoords='offset points', fontsize=12, color=color, **LABELS[k])

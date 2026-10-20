@@ -390,7 +390,7 @@ sections 6 and 7, and the font section 4.
                       nodes, operators, single cubes, block arrows, curly brackets, the blocks of a time line
   block      1.2 px   the outline of each block of cells (matrix, array, table, stack of objects), the
                       silhouette of each 3D tensor or block of cubes and the three edges at its front corner
-  line       1.6 px   arrows and lines, axes of charts and time lines, the frames of plots of a 2D domain or of
+  line       1.4 px   arrows and lines, axes of charts and time lines, the frames of plots of a 2D domain or of
                       an image (k-means, voronoi, the slicing layouts, svd_example), markers, brackets and
                       number lines drawn as lines
   frame      2.0 px   frames of regions (devices, processes, groups, sections), pipeline rows, lines that
@@ -420,19 +420,19 @@ sections 6 and 7, and the font section 4.
     frame around the box (the red #b85450 outlines of the modules in the GPT-lite pictures);
   - other colored frames that highlight a group of parts: 2.0 px, as other frames (the orange KV cache
     frames). Red arrows and cross marks are not emphasis lines;
-  - dashed outlines of elements that are not frames: 0.4 px on filled elements, 1.6 px on lines without fill
+  - dashed outlines of elements that are not frames: 0.4 px on filled elements, 1.4 px on lines without fill
     (a dashed frame is 2.0 px, as other frames; the dash keeps its pattern);
   - white masks that hide parts of a drawing, faded elements and red cross marks;
   - the memory bars of deepspeed_stages and their legend swatches: thin black outlines, as their strips are
     4 px tall.
-- Thin arrows: black #000000, 1.6 px, endArrow=classic, endFill=1, endSize=5: a head 6.6 px long and wide,
+- Thin arrows: black #000000, 1.4 px, endArrow=classic, endFill=1, endSize=5: a head 6.4 px long and wide,
   endSize plus the line weight, with its notch at 3/4 of its length. Dashed arrows use the same head. An
-  arrow at the emphasis weight has endSize=3, so that its head has the size of the others. Grey #666666 only
+  arrow at the emphasis weight has endSize=2.8, so that its head has the size of the others. Grey #666666 only
   for faded content. Lines without a head that join two parts of the flow (two boxes, or a box and an
-  arrow): 1.6 px. The axis of a chart or a time line: 1.6 px, with the same head.
+  arrow): 1.4 px. The axis of a chart or a time line: 1.4 px, with the same head.
 - The links of a dense network (each neuron to each neuron of the next layer) are thin arrows with heads, as
   the others; the heads that converge on one node may touch.
-- Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.6 px black line with a
+- Inhibition (one part blocks or breaks down another, as in a signalling pathway): 1.4 px black line with a
   flat bar head, endArrow=baseDash;endSize=10.
 - Lines thinner than 0.4 px at page scale (grid lines drawn over a photo or a matrix) keep their weight.
 - Arrow layout:
@@ -509,7 +509,7 @@ All pipeline schedules (the pipeline parallelism post and the publications page)
 - The schedule ends with its last pass: no passes of the next iteration and no "..." after the rows.
 - No time markers over the rows (no "1F1B ends" line).
 - Overlapped forward and backward passes (DualPipe) have a 3.6 px black frame around them.
-- A time axis under the rows is 1.6 px, as the axes of section 6.
+- A time axis under the rows is 1.4 px, as the axes of section 6.
 - The legend is centred under the rows, 12 px below them (or below the time axis): each entry is a 20 x 12 px
   swatch (two 10 x 12 px halves for the two chunks or directions) and its 14 px label 4 px to the right, with
   16 px between entries, on two rows when it is wider than the schedule. The labels are Forward, Backward,
