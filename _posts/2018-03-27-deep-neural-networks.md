@@ -12,7 +12,7 @@ Deep Neural Networks (also known as [Multi-Layer Perceptrons](https://en.wikiped
 The structure of a basic NN is the following: one input layer of size $$D$$, $$L$$ hidden layers of size $$K$$, and one output layer. It is a **[feedforward network](https://en.wikipedia.org/wiki/Feedforward_neural_network)**: the computation performed by the network starts with the input from the left and flows to the right, with no feedback loop. It can be used for regression (when the output is a real value) and for classification (when the output is the class). The following picture illustrates a network with one hidden layer, where each node is connected to every node of the next layer, i.e. a **fully connected** network:
 
 {: .picture}
-<img width="36.5%" height="36.5%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
+<img width="41%" height="41%" src="{{ site.assets }}/deep-neural-networks/dnn.svg">
 
 {: .caption}
 A fully connected feedforward network with an input layer of size $$D = 4$$, one hidden layer of size $$K = 5$$ and one output $$\hat{y}$$. Adapted from: [Machine Learning course CS-433 lecture notes, M. Jaggi, EPFL](https://github.com/epfml/ML_course)
@@ -133,7 +133,7 @@ Dropout can be improved by adding max-norm regularization, a decaying learning r
 Because a fully connected layer holds most of the parameters, it is prone to overfitting. Therefore, dropout increases model generalization. The following picture illustrates a standard network (left) and one of the thinned networks that dropout samples from it (right):
 
 {: .picture}
-<img width="54.8%" height="54.8%" src="{{ site.assets }}/deep-neural-networks/dropout.svg">
+<img width="68.5%" height="68.5%" src="{{ site.assets }}/deep-neural-networks/dropout.svg">
 
 {: .caption}
 Dropout. Left: a standard network with two hidden layers ($$p = 0$$). Right: a thinned network produced by dropout with $$p = 0.5$$, where $$p$$ is the probability of dropping a unit: the crossed units are dropped, with their connections. Adapted from: [Dropout: A Simple Way to Prevent Neural Networks from Overfitting](https://jmlr.org/papers/v15/srivastava14a.html)
@@ -158,7 +158,7 @@ The output $$ x^{(1)} $$ at position $$ [n, m] $$ only depends on the values of 
 This structure implies that the same filter (i.e., not only the same connection pattern but also the same weights) should be used at every position! This is called **weight sharing**, and it reduces the number of parameters even further. The difference between a locally/sparsely connected and a fully connected network is obvious:
 
 {: .picture}
-<img width="41.2%" height="41.2%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
+<img width="48.2%" height="48.2%" src="{{ site.assets }}/deep-neural-networks/fully_sparse_connectivity.svg">
 
 {: .caption}
 Sparse and full connectivity, viewed from below. Top: a locally connected layer with a kernel of width 3, where the input $$x_3$$ affects only the outputs $$s_2$$, $$s_3$$ and $$s_4$$. Bottom: a fully connected layer, where $$x_3$$ affects every output. Adapted from: [Deep Learning, I. Goodfellow, Y. Bengio and A. Courville, Figure 9.2](https://www.deeplearningbook.org/contents/convnets.html)
@@ -195,7 +195,7 @@ A better way to improve this is to provide layers of the network with the output
 With an addition, as in ResNet, the skipped layers only need to learn a correction (a *residual*) to their input, which is easier to optimize than the whole mapping. With a concatenation, as in DenseNet, each layer receives the feature maps of all the layers before it, so the number of channels grows with every layer. The following picture illustrates a dense block of DenseNet:
 
 {: .picture}
-<img width="82.1%" height="82.1%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
+<img width="82%" height="82%" src="{{ site.assets }}/deep-neural-networks/densenet.svg">
 
 {: .caption}
 A 5-layer dense block of DenseNet with a growth rate of $$k = 4$$: each layer $$H_i$$ (BN-ReLU-Conv) takes the feature maps $$x_0, \ldots, x_{i-1}$$ of all preceding layers as input and produces $$k$$ new feature maps $$x_i$$. The transition layer takes all of them. Adapted from: [Densely Connected Convolutional Networks](https://arxiv.org/abs/1608.06993)

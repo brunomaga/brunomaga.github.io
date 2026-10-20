@@ -36,7 +36,7 @@ The rationale is the following: the MLP is a sequence of (1) a MatMul $$XA$$, (2
 1. "One option to parallelize the GEMM is to split the weight matrix $$A$$ along its rows and input $$X$$ along its columns. [...] This partitioning will result in $$Y = GeLU(X_1 A_1 + X_2 A_2)$$. Since GeLU is a nonlinear function, $$GeLU (X_1 A_1 + X_2 A_2) \neq  GeLU( X_1 A_1 ) + GeLU (X_2 A_2)$$ and this approach will require a synchronization point [*sum-reduce*] before the GeLU function". This approach (pictured below) can be followed for each of the 2 MatMuls, yielding a total of two communication steps.
 
   {: .picture}
-  <img width="84.6%" height="84.6%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.svg">
+  <img width="85.3%" height="85.3%" src="{{ site.assets }}/distributed-training/imgs/megatron_model_parallel_1.svg">
 
   {: .caption}
   Option 1 on two GPUs: $$X$$ is split by columns and $$A$$ by rows. Each GPU computes a partial product of size $$M \times O$$, and a sum-reduce adds them into $$XA$$ on both GPUs before the GeLU, which then gives the same $$Y$$ on both GPUs. Inspired by: [Megatron-LM: Training Multi-Billion Parameter Language Models Using Model Parallelism](https://arxiv.org/abs/1909.08053)

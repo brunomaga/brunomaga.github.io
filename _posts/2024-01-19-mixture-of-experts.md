@@ -14,7 +14,7 @@ So this post discusses the development of MoEs since the early days, and provide
 In 1991, the papers [Adaptive Mixtures of Local Experts](https://www.cs.toronto.edu/~hinton/absps/jjnh91.pdf) and [Task Decomposition Through Competition in a Modular Connectionist Architecture](https://onlinelibrary.wiley.com/doi/abs/10.1207/s15516709cog1502_2) introduced some of the earliest architectures similar to what is now called an MoE. The following picture illustrates such an MoE (left), next to the deep MoE of the next section (right):
 
 {: .picture}
-<img width="88.7%" height="88.7%" src="{{ site.assets }}/distributed-training/imgs/moe_2014_ilya.svg" alt="MoE paper 2014"/>
+<img width="88.6%" height="88.6%" src="{{ site.assets }}/distributed-training/imgs/moe_2014_ilya.svg" alt="MoE paper 2014"/>
 
 {: .caption}
 **Left:** a Mixture of Experts. **Right:** a Deep Mixture of Experts (with 2 layers). <br/>Adapted from: [Learning Factored Representations in a Deep Mixture of Experts](https://arxiv.org/abs/1312.4314)
@@ -237,7 +237,7 @@ should be distributed across devices".
 The model tested was a Transformer-based stack of encoder and decoder layers. The Transformer blocks (self-attention, feed-forward and, in the decoder's case, cross-attention) were converted into conditional computation modules by **replacing the feed-forward layer in every second block with an MoE layer (with top-2 gating)**, in both the encoder and the decoder. The resulting encoder, and its placement on several devices, are illustrated below:
 
 {: .picture}
-<img width="97.1%" height="97.1%" src="{{ site.assets }}/distributed-training/imgs/moe_gshard.svg"/>
+<img width="98.1%" height="98.1%" src="{{ site.assets }}/distributed-training/imgs/moe_gshard.svg"/>
 
 {: .caption}
 Illustration of scaling of Transformer Encoder with MoE Layers. The MoE layer replaces every other Transformer feed-forward layer. Decoder modification is similar. (a) The encoder of a standard Transformer model is a stack of self-attention and feed forward layers interleaved with residual connections and layer normalization. (b) Replacing every other feed-forward layer with an MoE layer gives the MoE Transformer Encoder. (c) When scaling to multiple devices, the MoE layer is sharded across devices, while all other layers are replicated. Adapted from: [GShard: Scaling Giant Models with Conditional Computation and Automatic Sharding](https://arxiv.org/abs/2006.16668)

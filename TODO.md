@@ -413,12 +413,6 @@ that is not wrong.
 
 ### All pictures
 
-- The kernel fusion post on expert parallelism (2026-10-09-kernel-fusion-expert-parallelism.md): its 11 pictures,
-  `inference/imgs/ep_*.svg`, are copies of the figures of the paper repository and keep the Times New Roman font of
-  the paper figures. They show at widths set by hand (40% to 100%), so their text sizes differ from the other
-  pictures. Fix: redraw them at page scale and in the fonts of CLAUDE.md, in a tab `kernel-fusion-expert-parallelism`
-  of `inference/inference.drawio`, from the draw.io or TikZ sources of the paper repository (CLAUDE.md, Pictures,
-  sections 2 to 4), as the tensor parallelism post's pictures are, and check their captions.
 - Style details that the restyle left, from an automated check of the 230 draw.io figures: 178 boxes in 15 figures
   keep the rounded corners of the original with a corner radius of 2 to 4.5 px instead of 5 px (for example the
   GPT-lite pictures, `diffusion/playground_v3.svg` and `publications/visual_transformer.svg`), and the 12 chat
@@ -426,22 +420,22 @@ that is not wrong.
   loops (for example in `deep-neural-networks/densenet.svg`, `lif-brunel/diagram_class.svg` and
   `publications/graphconvnets.svg`); 176 filled cells of `distributed-training/imgs/mixture_of_depths.svg`, and a few
   in other figures, have no outline; `learning-from-sequences/transformer_attention.svg` (#97afd2, a heat map shade)
-  and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 7 figures have lines thinner than 0.6 px.
+  and `diffusion/sora_vae.svg` (#333333) use colors outside the palette; 3 figures have lines thinner than 0.4 px.
   Fix: set them to the values of CLAUDE.md, then run the check again.
-- The arrow check of the restyle (CLAUDE.md, Pictures, section 6) still reports 572 findings in 74 draw.io figures:
-  285 arrows with less than 6 px of line before the head (90 of them with 4.6 to 5.9 px, as the 6 px heads take more
-  of short arrows, for example in the GPT-lite pictures, `gptlite-cpp/torch_compile.svg` and the three
-  `distributed-training/imgs/dnn_multiproc*.svg`), 175 lines through the text box of a label, 55 labels that run
-  into a box, 29 heads on text, 20 heads that touch and 8 overlapping boxes. Most are in dense pictures from papers:
-  `deep-neural-networks/densenet.svg` (50), `matrix-transpose/xcrs_format.svg` (50),
-  `distributed-training/imgs/moe_gshard.svg` (36), `publications/helix.svg` (22) and `publications/performers.svg`
-  (21); some are text boxes larger than their text. Fix: check each picture at its page size, move the labels and
-  arrows that touch, and lengthen the short arrows (move their bend, or the boxes they join).
+- The arrow check of the restyle (CLAUDE.md, Pictures, section 6) still reports 487 findings in 71 draw.io figures:
+  199 arrows with less than 6 px of line before the head (48 of them with 4.6 to 5.9 px, as the 6 px heads take more
+  of short arrows, for example in `gptlite-cpp/torch_compile.svg`, `diffusion/omnigen.svg` and the three
+  `distributed-training/imgs/dnn_multiproc*.svg`), 197 lines through the text box of a label, 55 labels that run
+  into a box, 28 heads on text and 8 overlapping boxes. Most are in dense pictures from papers:
+  `matrix-transpose/xcrs_format.svg` (48), `deep-neural-networks/densenet.svg` (42), `publications/helix.svg` (21)
+  and `publications/performers.svg` (21); some are text boxes larger than their text. Fix: check each picture at its
+  page size, move the labels and arrows that touch, and lengthen the short arrows (move their bend, or the boxes they
+  join).
 - The charts drawn from data (the plots, benchmarks and histograms without a draw.io source, for example
   `inference/imgs/tp_results.svg`, `gptlite-cpp/benchmark_*.svg` and the charts of `neuron-variable-timestep` and
   `bayesian-linear-regression`) keep the line weights of their scripts or of their earlier export (`tp_results.py`
   draws 1 px axes and 0.8 px bar outlines), not the weights of CLAUDE.md, Pictures, section 6. Fix: axes 1.6 px, bar
-  outlines and plot lines 1.2 px, in each chart's script, or in the SVG of a chart without a script.
+  outlines and plot lines 1.0 px, in each chart's script, or in the SVG of a chart without a script.
 - Pictures to redraw, from the user's review of the four line weights (the next step of the restyle):
   - `inference/imgs/continuous_chunked_batching.svg` differs from its original. Fix: redraw it from the original, and
     add continuous batching with chunked prefill.
