@@ -21,16 +21,16 @@ IMPROVEMENT = [100 * (1 - f / b) for (b, _), (f, _) in zip(BASELINE, FUSED)]   #
 
 plt.rcParams.update({
     'font.family': 'Source Sans 3', 'font.size': 12, 'svg.fonttype': 'path',
-    'axes.linewidth': 1, 'axes.edgecolor': '#000000', 'axes.labelsize': 14, 'axes.labelcolor': '#000000',
+    'axes.linewidth': 1.6, 'axes.edgecolor': '#000000', 'axes.labelsize': 14, 'axes.labelcolor': '#000000',
     'xtick.labelsize': 12, 'ytick.labelsize': 12, 'xtick.color': '#000000', 'ytick.color': '#000000',
-    'xtick.major.width': 1, 'ytick.major.width': 1, 'xtick.major.size': 0, 'ytick.major.size': 3,
+    'xtick.major.width': 1.6, 'ytick.major.width': 1.6, 'xtick.major.size': 0, 'ytick.major.size': 4,
     'legend.fontsize': 14, 'svg.hashsalt': 'tp_results',   # the same ids on every run
 })
 
 fig, ax = plt.subplots(figsize=(7.0, 3.0), dpi=72)     # 1 inch = 72 units = 72 px
 x = range(len(MODELS))
-bar = dict(width=0.36, edgecolor='#000000', linewidth=0.8,
-           error_kw=dict(ecolor='#000000', elinewidth=0.8, capsize=2, capthick=0.8))
+bar = dict(width=0.36, edgecolor='#000000', linewidth=1.0,
+           error_kw=dict(ecolor='#000000', elinewidth=1.0, capsize=2, capthick=1.0))
 ax.bar([i - 0.18 for i in x], [m for m, _ in BASELINE], yerr=[s for _, s in BASELINE], color='#ffe6cc',
        label='Baseline', **bar)
 ax.bar([i + 0.18 for i in x], [m for m, _ in FUSED], yerr=[s for _, s in FUSED], color='#dae8fc', label='Fused', **bar)
@@ -40,12 +40,12 @@ ax.set_yticks([0, 100, 200, 300])
 ax.set_ylabel('Latency (ms)')
 ax.set_xticks(list(x))
 ax.set_xticklabels(MODELS, rotation=40, ha='right', ma='right', rotation_mode='anchor', linespacing=1.0)
-ax.yaxis.grid(True, color='#b3b3b3', linewidth=0.5)
+ax.yaxis.grid(True, color='#b3b3b3', linewidth=0.4)
 ax.set_axisbelow(True)
 
 ax2 = ax.twinx()
-ax2.plot(list(x), IMPROVEMENT, color='#000000', linewidth=1, marker='o', markersize=5, markerfacecolor='#f8cecc',
-         markeredgecolor='#000000', markeredgewidth=0.8, label='Improvement (%)')
+ax2.plot(list(x), IMPROVEMENT, color='#000000', linewidth=1.6, marker='o', markersize=6, markerfacecolor='#f8cecc',
+         markeredgecolor='#000000', markeredgewidth=1.0, label='Improvement (%)')
 for i, v in enumerate(IMPROVEMENT):
     ax2.annotate('%.1f' % v, (i, v), xytext=(4, 3), textcoords='offset points', ha='left', va='bottom', fontsize=12,
                  bbox=dict(boxstyle='square,pad=0.1', facecolor='#ffffff', edgecolor='none'))

@@ -364,7 +364,7 @@
         <mxCell id="local_variable_timestep_six_cell_example-130" value="time" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="local_variable_timestep_six_cell_example-figure">
           <mxGeometry x="273.95" y="98.7" width="31.88" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="local_variable_timestep_six_cell_example-131" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="local_variable_timestep_six_cell_example-figure">
+        <mxCell id="local_variable_timestep_six_cell_example-131" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="local_variable_timestep_six_cell_example-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="314.39" y="110.5" as="sourcePoint" />
             <mxPoint x="328.39" y="110.5" as="targetPoint" />

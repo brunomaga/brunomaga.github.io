@@ -438,6 +438,6 @@
 <g fill="rgb(0%, 0%, 0%)" fill-opacity="1">
 <use xlink:href="#glyph-4-1" x="277.807273" y="159.319247"/>
 </g>
-<path fill="none" stroke-width="1.6" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 297.002093 212.799677 L 261.388096 212.799677 " transform="matrix(0.718972, 0, 0, 0.718972, 0.00676565, 0.100637)"/>
-<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1.6" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 253.792616 212.799677 L 261.388096 209.001937 L 261.388096 216.597417 Z M 253.792616 212.799677 " transform="matrix(0.718972, 0, 0, 0.718972, 0.00676565, 0.100637)"/>
+<path fill="none" stroke-width="1.6" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 297.002093 212.799677 L 258.742174 212.799677 " transform="matrix(0.718972, 0, 0, 0.718972, 0.00676565, 0.100637)"/>
+<path fill-rule="nonzero" fill="rgb(0%, 0%, 0%)" fill-opacity="1" stroke-width="1.6" stroke-linecap="butt" stroke-linejoin="miter" stroke="rgb(0%, 0%, 0%)" stroke-opacity="1" stroke-miterlimit="10" d="M 253.792616 212.799677 L 260.388405 209.501783 L 258.742174 212.799677 L 260.388405 216.097571 Z M 253.792616 212.799677 " transform="matrix(0.718972, 0, 0, 0.718972, 0.00676565, 0.100637)"/>
 </svg>

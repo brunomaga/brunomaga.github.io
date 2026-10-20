@@ -10,109 +10,109 @@
         <mxCell id="common_distributions-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="40" width="758.4" height="522.38" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-151" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=block;startFill=1;startSize=6;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-151" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=classic;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="223.65" y="31.5" as="sourcePoint" />
             <mxPoint x="312" y="31.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-152" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-152" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="336.15" y="63" as="sourcePoint" />
             <mxPoint x="303.6" y="84.52" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-153" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-153" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="428.55" y="62.48" as="sourcePoint" />
             <mxPoint x="459" y="84.52" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-154" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=block;startFill=1;startSize=6;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-154" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=classic;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="143.85" y="116.55" as="sourcePoint" />
             <mxPoint x="181.8" y="116.55" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-155" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=block;startFill=1;startSize=6;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-155" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=classic;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="327.22" y="116.55" as="sourcePoint" />
             <mxPoint x="431.18" y="116.55" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-156" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=block;startFill=1;startSize=6;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-156" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=classic;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="575.55" y="139.12" as="sourcePoint" />
             <mxPoint x="615.07" y="139.12" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-157" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-157" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="254.25" y="148.58" as="sourcePoint" />
             <mxPoint x="254.25" y="169.58" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-158" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-158" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="504.15" y="148.58" as="sourcePoint" />
             <mxPoint x="504.15" y="169.58" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-159" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=block;startFill=1;startSize=6;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-159" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=classic;startFill=1;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="327.22" y="202.12" as="sourcePoint" />
             <mxPoint x="431.18" y="202.12" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-160" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-160" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="96.08" y="148.58" as="sourcePoint" />
             <mxPoint x="228.53" y="294" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-161" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-161" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="254.25" y="233.62" as="sourcePoint" />
             <mxPoint x="254.25" y="294" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-162" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-162" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="537.75" y="233.62" as="sourcePoint" />
             <mxPoint x="560.32" y="254.1" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-163" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-163" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="504.15" y="233.62" as="sourcePoint" />
             <mxPoint x="504.15" y="379.05" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-164" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-164" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="182.85" y="309.22" as="sourcePoint" />
             <mxPoint x="143.85" y="305.03" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-165" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-165" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="182.85" y="346.5" as="sourcePoint" />
             <mxPoint x="143.85" y="351.22" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-166" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-166" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="326.18" y="326.55" as="sourcePoint" />
             <mxPoint x="346.65" y="326.55" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-167" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-167" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="450.6" y="358.57" as="sourcePoint" />
             <mxPoint x="471.6" y="379.05" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="common_distributions-168" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=block;endFill=1;endSize=6;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
+        <mxCell id="common_distributions-168" value="" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endArrow=classic;endFill=1;endSize=5;startArrow=none;fontFamily=Source Sans 3;" edge="1" parent="common_distributions-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="504.15" y="443.62" as="sourcePoint" />
             <mxPoint x="504.15" y="458.85" as="targetPoint" />

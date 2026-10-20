@@ -837,20 +837,16 @@ that is not wrong.
 
 ### Kernel Fusion for MoE Expert Parallelism (2026-10-09-kernel-fusion-expert-parallelism.md)
 
-- The four TikZ pictures (`ep_pipeline.svg`, `ep_stages.svg`, `ep_results.svg`, `ep_data_movement.svg`) are copies of
-  the figures of the paper (its repository's `imgs/`, commit 7d15d86), not yet redrawn. They have 4 to 6 pt text at
-  their natural size, and the post shows them at 75% to 100% of the page, with text of 8 to 13 px. Fix: redraw them
-  in the "kernel-fusion-expert-parallelism" tab of `assets/inference/inference.drawio`, from the TikZ sources of the
-  paper's latest version, with the sizes and fonts of CLAUDE.md (Pictures, sections 3 and 4).
 - `inference/imgs/ep_stages.svg` draws the eight stages on the time axis of the decode step, whose costs are
   placeholders, not measurements, as the caption says. Fix: remove the time axis until the decode step is measured,
   or redraw it with the measured costs.
 - `inference/imgs/ep_results.svg`: the right panel plots decode times that are placeholders, not measurements, as the
   caption says. Fix: remove the right panel and its sentence in the caption until the decode step is measured.
-- The captions have no credit to the post's paper, whose figures the pictures copy. The paper is the author's own and
-  not public yet. Fix: "Source: [MoeInc: an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and
-  In-Network Compute](link)" once the paper has a public link, and "Adapted from:" after the redraw; the user
-  decides.
+- The captions have no credit to the post's paper. `ep_stages.svg` and `ep_pipeline.svg` are the paper's own figures,
+  and the other pictures redraw its figures. The paper is the author's own and not public yet. Fix: "Source: [MoeInc:
+  an Expert Parallelism MegaKernel with Overlap of Matrix, Vector and In-Network Compute](link)" under `ep_stages.svg`
+  and `ep_pipeline.svg`, and "Adapted from:" with the same link under the others, once the paper has a public link;
+  the user decides.
 
 ### Knowledge distillation, speculative decoding and multi-token prediction (_drafts/2026-03-17-inference-distillation-speculative-decoding.md)
 

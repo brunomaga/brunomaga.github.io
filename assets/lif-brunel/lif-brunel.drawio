@@ -393,7 +393,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="rc-9" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="rc-figure">
+        <mxCell id="rc-9" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="rc-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="146.36" y="15.56" as="sourcePoint" />
             <mxPoint x="116.15" y="49.16" as="targetPoint" />
@@ -779,7 +779,7 @@
             <mxPoint x="125.25" y="241.96" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rc-86" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="rc-figure">
+        <mxCell id="rc-86" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="rc-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="97.85" y="190.06" as="sourcePoint" />
             <mxPoint x="97.85" y="205.46" as="targetPoint" />
@@ -890,40 +890,40 @@
         <mxCell id="network-32" value="I" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="222.59" y="187.95" width="12.33" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="network-33" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
+        <mxCell id="network-33" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="135.75" y="98.8" as="sourcePoint" />
             <mxPoint x="91.05" y="161.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="network-34" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
+        <mxCell id="network-34" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="175.95" y="100.3" as="sourcePoint" />
             <mxPoint x="225.45" y="168.87" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="network-35" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-35" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="104.31" y="91.06" width="24.89" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-36" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-36" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="183.31" y="92.06" width="24.89" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-37" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-37" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="74.25" y="139.56" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-38" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-38" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="226.25" y="144.56" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-39" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
+        <mxCell id="network-39" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="112.15" y="183.8" as="sourcePoint" />
             <mxPoint x="206.05" y="183.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="network-40" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-40" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="113.97" y="162.06" width="24.89" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-41" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-41" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="186.59" y="162.56" width="14" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="network-42" value="" style="endArrow=oval;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=0;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
@@ -932,10 +932,10 @@
             <mxPoint x="119.3" y="217.55" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="network-43" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-43" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="110.75" y="222.56" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-44" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;I&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-44" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;I&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="190.75" y="219.06" width="21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="network-45" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
@@ -1001,16 +1001,16 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="network-46" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
+        <mxCell id="network-46" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="19.39" y="179.79" as="sourcePoint" />
             <mxPoint x="37.6" y="185.37" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="network-47" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-47" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="27.25" y="156.56" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-48" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-48" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;E&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="9.3" y="218.06" width="24.89" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="network-49" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endFill=1;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="network-figure">
@@ -1083,10 +1083,10 @@
             <mxPoint x="262.5" y="184.55" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="network-51" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-51" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="257.25" y="157.56" width="14" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="network-52" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;I&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
+        <mxCell id="network-52" value="&lt;i&gt;C&lt;/i&gt;&lt;sub style=&quot;line-height:0;&quot;&gt;I&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="network-figure">
           <mxGeometry x="247.75" y="217.06" width="21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="diagram_class-label" value="diagram_class.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -1095,25 +1095,25 @@
         <mxCell id="diagram_class-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="777.63" width="623" height="436.1" as="geometry" />
         </mxCell>
-        <mxCell id="diagram_class-1" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-1" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="71.75" y="28" as="sourcePoint" />
             <mxPoint x="71.75" y="81.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-2" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-2" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="102.2" y="109.9" as="sourcePoint" />
             <mxPoint x="237.3" y="163.8" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-3" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-3" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="72.1" y="109.9" as="sourcePoint" />
             <mxPoint x="72.1" y="245" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-4" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-4" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="63" y="109.9" as="sourcePoint" />
             <mxPoint x="218.4" y="422.1" as="targetPoint" />
@@ -1128,19 +1128,19 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-5" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-5" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="236.6" y="191.1" as="sourcePoint" />
             <mxPoint x="102.2" y="245" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-6" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-6" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="254.1" y="191.1" as="sourcePoint" />
             <mxPoint x="200.9" y="245" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-7" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-7" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="266.7" y="191.1" as="sourcePoint" />
             <mxPoint x="112" y="326.9" as="targetPoint" />
@@ -1152,19 +1152,19 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-8" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-8" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="282.1" y="191.1" as="sourcePoint" />
             <mxPoint x="344.4" y="245" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-9" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-9" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="319.9" y="187.6" as="sourcePoint" />
             <mxPoint x="559.3" y="250.6" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-10" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-10" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="319.9" y="189" as="sourcePoint" />
             <mxPoint x="322.7" y="422.1" as="targetPoint" />
@@ -1179,7 +1179,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-11" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-11" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="389.2" y="245" as="sourcePoint" />
             <mxPoint x="394.8" y="274.4" as="targetPoint" />
@@ -1190,25 +1190,25 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-12" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-12" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="310.8" y="273" as="sourcePoint" />
             <mxPoint x="112" y="338.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-13" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-13" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="330.4" y="273" as="sourcePoint" />
             <mxPoint x="210.7" y="326.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-14" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-14" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="346.5" y="273" as="sourcePoint" />
             <mxPoint x="296.1" y="326.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-15" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-15" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;curved=1;rounded=1;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="357" y="273" as="sourcePoint" />
             <mxPoint x="285.6" y="408.8" as="targetPoint" />
@@ -1218,13 +1218,13 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-16" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-16" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="371.7" y="273" as="sourcePoint" />
             <mxPoint x="424.9" y="326.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="diagram_class-17" value="" style="html=1;endArrow=block;endFill=1;endSize=6;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
+        <mxCell id="diagram_class-17" value="" style="html=1;endArrow=classic;endFill=1;endSize=5;startArrow=none;strokeColor=#000000;strokeWidth=1.6;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="diagram_class-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="196.7" y="354.9" as="sourcePoint" />
             <mxPoint x="254.1" y="408.8" as="targetPoint" />
@@ -1310,7 +1310,7 @@
         <mxCell id="action_potential-in18" value="−" style="text;html=1;align=center;verticalAlign=middle;spacing=0;whiteSpace=nowrap;fontSize=16;fontFamily=Source Sans 3;fontColor=#1e3a5f;" vertex="1" parent="action_potential-figure"><mxGeometry x="319.70" y="127.31" width="12.00" height="16.00" as="geometry" /></mxCell>
         <mxCell id="action_potential-out19" value="+" style="text;html=1;align=center;verticalAlign=middle;spacing=0;whiteSpace=nowrap;fontSize=16;fontFamily=Source Sans 3;fontColor=#885e10;" vertex="1" parent="action_potential-figure"><mxGeometry x="332.94" y="112.31" width="12.00" height="16.00" as="geometry" /></mxCell>
         <mxCell id="action_potential-in19" value="−" style="text;html=1;align=center;verticalAlign=middle;spacing=0;whiteSpace=nowrap;fontSize=16;fontFamily=Source Sans 3;fontColor=#1e3a5f;" vertex="1" parent="action_potential-figure"><mxGeometry x="332.94" y="127.31" width="12.00" height="16.00" as="geometry" /></mxCell>
-        <mxCell id="action_potential-arrow" value="" style="endArrow=block;endFill=1;endSize=6;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="action_potential-figure"><mxGeometry relative="1" as="geometry"><mxPoint x="201.53" y="106.31" as="sourcePoint" /><mxPoint x="263.01" y="106.31" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="action_potential-arrow" value="" style="endArrow=classic;endFill=1;endSize=5;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="action_potential-figure"><mxGeometry relative="1" as="geometry"><mxPoint x="201.53" y="106.31" as="sourcePoint" /><mxPoint x="263.01" y="106.31" as="targetPoint" /></mxGeometry></mxCell>
       </root>
     </mxGraphModel>
   </diagram>

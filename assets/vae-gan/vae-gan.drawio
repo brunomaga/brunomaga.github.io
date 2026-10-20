@@ -34,13 +34,13 @@
         <mxCell id="vae2-8" value="&lt;b&gt;x&lt;/b&gt;" style="shape=rhombus;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;perimeter=rhombusPerimeter;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="vae2-figure">
           <mxGeometry x="120.21" y="176.4" width="35.28" height="35.28" as="geometry" />
         </mxCell>
-        <mxCell id="vae2-9" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-7" target="vae2-6">
+        <mxCell id="vae2-9" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-7" target="vae2-6">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vae2-10" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-8" target="vae2-6">
+        <mxCell id="vae2-10" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-8" target="vae2-6">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vae2-11" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-6" target="vae2-5">
+        <mxCell id="vae2-11" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-6" target="vae2-5">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vae2-12" value="~ q&lt;sub&gt;&lt;i&gt;ϕ&lt;/i&gt;&lt;/sub&gt;(&lt;b&gt;z&lt;/b&gt;|&lt;b&gt;x&lt;/b&gt;)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="vae2-figure">
@@ -61,16 +61,16 @@
         <mxCell id="vae2-17" value="&lt;b&gt;&lt;i&gt;ε&lt;/i&gt;&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="vae2-figure">
           <mxGeometry x="482.16" y="178.36" width="31.36" height="31.36" as="geometry" />
         </mxCell>
-        <mxCell id="vae2-18" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-15" target="vae2-14">
+        <mxCell id="vae2-18" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-15" target="vae2-14">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vae2-19" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-16" target="vae2-14">
+        <mxCell id="vae2-19" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-16" target="vae2-14">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vae2-20" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-17" target="vae2-14">
+        <mxCell id="vae2-20" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-17" target="vae2-14">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="vae2-21" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-14" target="vae2-13">
+        <mxCell id="vae2-21" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure" source="vae2-14" target="vae2-13">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="vae2-22" value="= &lt;b&gt;g&lt;/b&gt;(&lt;b&gt;&lt;i&gt;ϕ&lt;/i&gt;&lt;/b&gt;,&lt;b&gt;x&lt;/b&gt;,&lt;b&gt;&lt;i&gt;ε&lt;/i&gt;&lt;/b&gt;)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="vae2-figure">
@@ -103,7 +103,7 @@
         <mxCell id="vae2-33" value=": Random node" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae2-figure">
           <mxGeometry x="132.43" y="325.41" width="92.54" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vae2-34" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=6;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure">
+        <mxCell id="vae2-34" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;fontSize=12;endSize=5;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="vae2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="295.96" y="294" as="sourcePoint" />
             <mxPoint x="334.51" y="294" as="targetPoint" />
@@ -115,19 +115,19 @@
         <mxCell id="vae2-37" value=": Differentiation of &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;f&lt;/span&gt;" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vae2-figure">
           <mxGeometry x="342.81" y="325.41" width="120.65" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vae2-1039" value="" style="endArrow=block;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="vae2-figure">
+        <mxCell id="vae2-1039" value="" style="endArrow=classic;endFill=1;endSize=5;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="vae2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="404.41" y="81.01" as="sourcePoint" />
             <mxPoint x="404.41" y="126.09" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="vae2-1040" value="" style="endArrow=block;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="vae2-figure">
+        <mxCell id="vae2-1040" value="" style="endArrow=classic;endFill=1;endSize=5;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="vae2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="380.23" y="152.21" as="sourcePoint" />
             <mxPoint x="348.89" y="181.64" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="vae2-1041" value="" style="endArrow=block;endFill=1;endSize=6;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="vae2-figure">
+        <mxCell id="vae2-1041" value="" style="endArrow=classic;endFill=1;endSize=5;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.6;fontFamily=Source Sans 3;" edge="1" parent="vae2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="295.96" y="335.81" as="sourcePoint" />
             <mxPoint x="335.81" y="335.81" as="targetPoint" />
@@ -184,43 +184,43 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="gan-35" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
+        <mxCell id="gan-35" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="91.33" y="54.21" as="sourcePoint" />
             <mxPoint x="193.56" y="62.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gan-36" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
+        <mxCell id="gan-36" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="228.73" y="62.35" as="sourcePoint" />
             <mxPoint x="259.49" y="73.74" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gan-37" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
+        <mxCell id="gan-37" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="45.26" y="133.65" as="sourcePoint" />
             <mxPoint x="87.59" y="130.72" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gan-38" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
+        <mxCell id="gan-38" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="176.14" y="130.72" as="sourcePoint" />
             <mxPoint x="196.82" y="130.72" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gan-39" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
+        <mxCell id="gan-39" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="231.33" y="130.4" as="sourcePoint" />
             <mxPoint x="259.49" y="124.53" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gan-40" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
+        <mxCell id="gan-40" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="382.24" y="77.65" as="sourcePoint" />
             <mxPoint x="406.33" y="77.65" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="gan-41" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
+        <mxCell id="gan-41" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=4;fontFamily=Source Sans 3;" edge="1" parent="gan-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="382.24" y="102.07" as="sourcePoint" />
             <mxPoint x="406.33" y="102.07" as="targetPoint" />
@@ -304,31 +304,31 @@
         <mxCell id="vae-15" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;strokeColor=#000000;strokeWidth=2.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=20;" vertex="1" parent="vae-figure">
           <mxGeometry x="303.8" y="117.5" width="130.27" height="96.6" as="geometry" />
         </mxCell>
-        <mxCell id="vae-22" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=9;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-22" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=9;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="154.93" y="71.29" as="sourcePoint" />
             <mxPoint x="207.2" y="71.29" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="vae-23" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=9;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-23" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=9;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="260.87" y="71.29" as="sourcePoint" />
             <mxPoint x="342.97" y="71.29" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="vae-24" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=9;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-24" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=9;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="384.27" y="71.29" as="sourcePoint" />
             <mxPoint x="472.1" y="71.29" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="vae-25" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=9;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-25" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=9;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="525.3" y="71.29" as="sourcePoint" />
             <mxPoint x="578.27" y="71.29" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="vae-26" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=9;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-26" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=9;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="271.6" y="71.29" as="sourcePoint" />
             <mxPoint x="318.27" y="155.53" as="targetPoint" />
@@ -337,31 +337,31 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="vae-27" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=9;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-27" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=9;dashed=1;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="426.07" y="155.5" as="sourcePoint" />
             <mxPoint x="444.5" y="71.8" as="targetPoint" />
             <Array as="points"><mxPoint x="444.5" y="155.5" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="vae-28" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-28" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="319.4" y="155.5" as="sourcePoint" />
             <mxPoint x="339.2" y="136.45" as="targetPoint" />
             <Array as="points"><mxPoint x="319.4" y="136.45" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="vae-29" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-29" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="319.4" y="155.5" as="sourcePoint" />
             <mxPoint x="339.2" y="174.55" as="targetPoint" />
             <Array as="points"><mxPoint x="319.4" y="174.55" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="vae-30" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-30" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="365.1" y="136.45" as="sourcePoint" />
             <mxPoint x="400.4" y="149.7" as="targetPoint" />
             <Array as="points"><mxPoint x="380.7" y="136.45" /><mxPoint x="380.7" y="149.7" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="vae-31" value="" style="endArrow=block;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=6;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
+        <mxCell id="vae-31" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.6;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="vae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="364.17" y="174.55" as="sourcePoint" />
             <mxPoint x="400.4" y="161.3" as="targetPoint" />
