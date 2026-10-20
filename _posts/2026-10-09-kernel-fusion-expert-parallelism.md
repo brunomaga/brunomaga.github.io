@@ -36,17 +36,17 @@ Two implementations of these collectives, or *backends*, are common: AllGather-R
 **AllGather-ReduceScatter** (AGRS) broadcasts all tokens to all ranks, and reduce-scatters the results. On the dispatch, every rank pushes its whole microbatch to every rank through the switch, and each rank sums the outputs of its experts per token, with zero outputs ($$\emptyset$$) for the tokens not routed to them. On the combine, every rank pushes its outputs for the tokens of each owner to that owner, $$\emptyset$$ where it holds none, and the owner computes the final sum. The following picture illustrates both collectives on the example:
 
 {: .picture}
-<img width="71.7%" height="71.7%" src="{{ site.assets }}/inference/imgs/ep_all_gather_reduce_scatter.svg"/>
+<img width="71.8%" height="71.8%" src="{{ site.assets }}/inference/imgs/ep_all_gather_reduce_scatter.svg"/>
 
 {: .caption}
-AllGather-ReduceScatter through a switch that relays each packet, with the dispatch (All-Gather) on the left and the combine (Reduce-Scatter) on the right. Each rank holds $$T=1$$ token and one expert, and is the token rank of its token and the expert rank of its expert. $$A_0$$ is token A sent to the expert rank $$P_0$$, $$E_0$$(AC) the expert $$E_0$$ processing tokens A and C, $$\sigma^y_t$$ the partial sum of the expert outputs of $$P_y$$ for token $$t$$, $$\Sigma_t = \sigma^0_t + \sigma^1_t + \sigma^2_t$$ their sum across all ranks, and $$\emptyset$$ a header-only packet or a token without output. Below each collective, the picture lists its steps in order, as the pushes or pulls of $$T$$ tokens or outputs that cross each link, with $$T=m_b$$ in a microbatch.
+AllGather-ReduceScatter through a switch that relays each packet, with the dispatch (All-Gather) on the left and the combine (Reduce-Scatter) on the right. Each rank holds $$T=1$$ token and one expert, and is the token rank of its token and the expert rank of its expert. $$A_0$$ is token A sent to the expert rank $$P_0$$, $$E_0$$(AC) the expert $$E_0$$ processing tokens A and C, $$\sigma^y_t$$ the partial sum of the expert outputs of $$P_y$$ for token $$t$$, $$\Sigma_t = \sigma^0_t + \sigma^1_t + \sigma^2_t$$ their sum across all ranks, and $$\emptyset$$ a header-only packet or a token without output. Below each collective, the picture counts its steps per node, i.e. per rank $$P$$: the pushes or pulls of $$T$$ tokens or outputs between a rank and the switch, with $$T=m_b$$ in a microbatch.
 
 AllGather-ReduceScatter does not depend on the routing, which makes it simple, but it moves up to $$W$$ times more data than needed: each rank pushes its tokens $$W$$ times on the dispatch, once per destination, and its outputs $$W$$ times on the combine.
 
 An INC element improves it with fewer relays and less bandwidth. On the dispatch, each rank pushes a single copy of its tokens to the INC switch, which broadcasts their concatenation to all ranks once every rank has arrived. On the combine, the INC switch pulls the outputs of each rank once the rank signals them ready, sums them as they arrive, and returns to each owner the outputs of its tokens:
 
 {: .picture}
-<img width="70%" height="70%" src="{{ site.assets }}/inference/imgs/ep_all_gather_reduce_scatter_inc.svg"/>
+<img width="71.7%" height="71.7%" src="{{ site.assets }}/inference/imgs/ep_all_gather_reduce_scatter_inc.svg"/>
 
 {: .caption}
 INC AllGather-ReduceScatter, with INC All-Gather on the left and INC Reduce-Scatter on the right. $$A_{012}$$ is token A for the expert ranks $$P_0$$, $$P_1$$ and $$P_2$$, $$ABC_0$$ the tokens A, B and C for $$P_0$$, $$\sigma^0_{A\emptyset C}$$ the partial sums of $$P_0$$ for the tokens A and C, with no output for B, and $$r^0_{A\emptyset C}$$ the signal that they are ready (dotted). A signal-pull is a pull after the ready signal of the rank.
@@ -57,7 +57,7 @@ INC AllGather-ReduceScatter, with INC All-Gather on the left and INC Reduce-Scat
 <img width="71.7%" height="71.7%" src="{{ site.assets }}/inference/imgs/ep_all_to_all.svg"/>
 
 {: .caption}
-All-to-All through a switch that relays each packet, with the dispatch on the left and the combine on the right, in the notation of AllGather-ReduceScatter.
+All-to-All through a switch that relays each packet, with the dispatch on the left and the combine on the right, in the notation of AllGather-ReduceScatter. $$T_E \le T$$ is the number of tokens and $$W_E \le W$$ the number of ranks that the routing table picks for the data of a node.
 
 The diagram above shows that each rank sends a packet to every rank on each collective, a header-only packet ($$\emptyset$$) where it has nothing to send, so that no receiver waits forever. Thus, each collective sends $$W^2$$ packets into the switch and $$W^2$$ packets out of it, and the owner of each token sums the partial results that it receives. Therefore, AllGather-ReduceScatter suits a few ranks and many experts per token, as each token is then needed on most ranks anyway, and All-to-All suits larger groups of ranks.
 
@@ -102,20 +102,20 @@ The MoE layer is split into eight stages, chosen so that each stage runs entirel
 Only two of the eight stages are collectives, and both run on the INC element. The following picture shows the stages in dependency order:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_stages.svg"/>
+<img width="97.8%" height="97.8%" src="{{ site.assets }}/inference/imgs/ep_stages.svg"/>
 
 {: .caption}
-The eight stages of the fused MoE layer, in dependency order, each on the class of unit that runs it: matrix multiplications on the matrix units (purple), all other computation on the vector units (green), and both collectives on the in-network element (orange). The blue frame holds the experts. The time axis is the decode step, whose batch is too small to be split into microbatches, with placeholder costs that are not measured yet.
+The eight stages of the fused MoE layer, in dependency order, each on the class of unit that runs it: matrix multiplications on the matrix units (purple), all other computation on the vector units (green), and both collectives on the in-network element (orange). The bracket marks the experts. The time axis is the decode step, whose batch is too small to be split into microbatches, with placeholder costs that are not measured yet.
 
 Note that the INC element puts the final result into the symmetric heap rather than into the output tensor of the layer, so one local copy to global memory remains. This copy is left out of the stages: it crosses no link of the network, its measured cost is close to zero, and it fuses into the next `route`, which reads those rows anyway.
 
 The following picture follows one microbatch through the memories that an MoE layer touches (the local memory of a rank, its global memory, and the far side of the network), without fusion, and with fusion and INC:
 
 {: .picture}
-<img width="75%" height="75%" src="{{ site.assets }}/inference/imgs/ep_data_movement.svg"/>
+<img width="82.5%" height="82.5%" src="{{ site.assets }}/inference/imgs/ep_data_movement.svg"/>
 
 {: .caption}
-Data movement for one microbatch. **Left:** Baseline, one kernel per stage. **Right:** MegaKernel+INC, one fused kernel with the INC transfers. Each row is a stage (colored box) and the tensor it stores in global memory (white box), and $$\star$$ marks the symmetric heap. Dashed lines mark kernel boundaries, and the brace one kernel launch. Each INC stage runs as the collective or the partial collective operation.
+Data movement for one microbatch. **Left:** Baseline, one kernel per stage. **Right:** MegaKernel+INC, one fused kernel with the INC transfers. Each row is a stage (colored box) and the tensor it stores in global memory (white box), and $$\star$$ marks the symmetric heap. The blue frame holds the experts, dashed lines mark kernel boundaries, and the brace one kernel launch. Each INC stage runs as the collective or the partial collective operation.
 
 Three implementations are compared in this post, from no fusion to fusion with INC:
 
@@ -128,7 +128,7 @@ Three implementations are compared in this post, from no fusion to fusion with I
 A single microbatch uses one class of unit at a time, as its chain of stages is strictly sequential. However, the chain crosses from one class of unit to another seven times, and every crossing frees the unit it leaves for another microbatch. Therefore, the kernel runs $$M$$ microbatches through the chain at the same time, each one stage behind the previous one, so that at any instant the matrix units, the vector units and both INC elements work on different microbatches. The following picture shows the resulting schedule during the prefill step:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_pipeline.svg"/>
+<img width="99.8%" height="99.8%" src="{{ site.assets }}/inference/imgs/ep_pipeline.svg"/>
 
 {: .caption}
 Pipelined execution of four microbatches (mb 0 to 3) during prefill, with time to scale from the cost of each stage. Each microbatch has three rows, one per class of unit, colored as in the stages above. A kernel uses all matrix and all vector units, so no two purple and no two green boxes overlap; the two INC elements are independent, so a dispatch may overlap a combine.
@@ -160,7 +160,7 @@ The transfer and the sum are fused into **All-to-All-Reduce**, a many-to-one col
 The combine needs no metadata of its own, as it reuses the counts per sender of the dispatch, transposed, and the compute ranks run no cross-rank arithmetic. The following picture shows both collectives on the example above:
 
 {: .picture}
-<img width="69.4%" height="69.4%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
+<img width="73.4%" height="73.4%" src="{{ site.assets }}/inference/imgs/ep_all_to_all_inc.svg"/>
 
 {: .caption}
 The dispatch and combine of the example above through the INC switch, with $$W$$ transfers in and $$W$$ out per collective. **Left:** All-to-All-Unique. **Right:** All-to-All-Reduce. $$A_{02}$$ is token A for the expert ranks $$P_0$$ and $$P_2$$, $$AC_0$$ the tokens A and C for $$P_0$$, $$\sigma^y_{AC}$$ the partial sums of $$P_y$$ for tokens A and C, and $$r^y_{AC}$$ the signal that they are ready (dotted). The INC switch pulls the partial sums of each rank once the rank signals them ready, and adds them into $$\Sigma_t$$.
@@ -261,7 +261,7 @@ The kernel was evaluated on [OLMoE-1B-7B](https://arxiv.org/abs/2409.02060), an 
 A forward pass was timed at 4,096 to 65,536 tokens per compute rank, which covers the chunks of chunked prefill and large prefill batches, and the time reported is the mean of five iterations after warm-up. Each iteration is a single forward pass over the whole batch that emits one token, i.e. the prefill step. Here, the MoE layer takes 87% to 96% of the time of an iteration, and this is the regime where the all-to-all of expert parallelism is the known bottleneck. The runtime per iteration of the three implementations is displayed below:
 
 {: .picture}
-<img width="100%" height="100%" src="{{ site.assets }}/inference/imgs/ep_results.svg"/>
+<img width="93.8%" height="93.8%" src="{{ site.assets }}/inference/imgs/ep_results.svg"/>
 
 {: .caption}
 Runtime with the all-to-all backend, on $$\log_2$$ axes. **Left:** prefill time per iteration against the batch size. **Right:** decode time per output token against the number of concurrent sequences, with placeholder values that are not measured yet.
