@@ -3,19 +3,16 @@
 // The home page (index.md): the name, field and links, with the photo on the right, then the text and the
 // label tables
 
+// the header and its spacing as in the post pages: the name keeps the size, line height and margin of a post
+// title, and the text starts as far below the header as below a post's labels
 .home-header {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 20px;
-  margin-bottom: 1.5em;
+  margin-bottom: $spacing-unit;
 }
 
 .home-header-text { flex: 1; }
-
-.home-header h1 {
-  margin-bottom: 0.35em;
-  line-height: 1.1;
-}
 
 // the field, in the small grey capitals of the labels, its two parts separated by a small
 // square; on phones each part on its own line
@@ -78,11 +75,6 @@
   transform: scale(1.2);
   transform-origin: 50% 38%;
 }
-
-.home-intro,
-.home-text { line-height: 1.6; }
-
-.home-intro { margin-bottom: 1.8em; }
 
 .home-text { margin-bottom: 0; }  // the line that introduces a table, or ends the page
 
