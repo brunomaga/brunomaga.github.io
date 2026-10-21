@@ -1,15 +1,19 @@
 // Labels: the back link, date, category and tags of a post (_layouts/post.html), the back link at its end and on
-// the 404 page, the links of the home page, and the years and resource types of the label tables. Plain text,
-// as minima's post date, set apart by space alone
+// the 404 page, the links of the home page, and the years and resource types of the label tables. Plain text in
+// small grey capitals, set apart by space alone
 
 .post-labels {
   display: flex;
   flex-wrap: wrap;
+  align-items: baseline;
   gap: 6px 18px;
 }
 
 .post-label {
   font-size: $label-font-size;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: $grey-color;
   white-space: nowrap;
 }
@@ -22,18 +26,23 @@
 
 // links (the back link, and the links of the home page): in the link colour, visited or not
 a.post-label--link,
-a.post-label--link:visited {
+a.post-label--link:visited { color: $brand-color; }
+
+// the links of the home page, in regular text
+.home-header a.post-label--link {
   font-size: $base-font-size;
-  color: $brand-color;
+  font-weight: normal;
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 // Label tables: the blog posts and resources on the home page, and the publications. No borders or stripes, and
-// rows spaced like a list
+// rows spaced like a list. The child selectors leave out the tables inside the notes of the publications
 .label-table { border: none; }
 
 .label-table > tbody > tr { background-color: transparent; }
 
-.label-table td {
+.label-table > tbody > tr > td {
   padding-top: 0.4em;
   padding-bottom: 0.4em;
   border: none;
@@ -41,23 +50,22 @@ a.post-label--link:visited {
   vertical-align: top;
 }
 
-// the first column is as wide as its labels, with the space between them and the text on their right
-.label-table td:first-child {
+// the first column is as wide as its labels, right-aligned against the text on their right
+.label-table > tbody > tr > td:first-child {
   width: 1%;  // shrinks the column to its labels
   padding-left: 0;
   padding-right: 0.9em;
+  text-align: right;
 }
 
-.label-table td + td { padding-left: 0; }
-
-// the home page tables (posts and resources): a grey line on the left of the text of each group of rows, from
-// its first row (the one with a label) to the row before the next label, with a break between groups
-.home-table td + td {
+// a grey line on the left of the text of each group of rows, from its first row (the one with a label) to the row
+// before the next label, with a break between groups
+.label-table > tbody > tr > td + td {
   position: relative;
   padding-left: 0.9em;
 }
 
-.home-table td + td::before {
+.label-table > tbody > tr > td + td::before {
   content: "";
   position: absolute;
   top: 0;
@@ -66,23 +74,24 @@ a.post-label--link:visited {
   border-left: $side-line;
 }
 
-.home-table tr:has(> td:first-child:not(:empty)) > td + td::before { top: 0.35em; }
+.label-table > tbody > tr:has(> td:first-child:not(:empty)) > td + td::before { top: 0.35em; }
 
-.home-table tr:has(+ tr > td:first-child:not(:empty)) > td + td::before,
-.home-table tr:last-child > td + td::before { bottom: 0.35em; }
+.label-table > tbody > tr:has(+ tr > td:first-child:not(:empty)) > td + td::before,
+.label-table > tbody > tr:last-child > td + td::before { bottom: 0.35em; }
 
 // on phones the first column gives its width to the text: each label sits on its own line above the first
 // row of its group, and the empty first cells of the other rows are hidden
 @include media-query($on-palm) {
   .label-table,
-  .label-table tbody,
-  .label-table tr,
-  .label-table td { display: block; }
+  .label-table > tbody,
+  .label-table > tbody > tr,
+  .label-table > tbody > tr > td { display: block; }
 
-  .label-table td:first-child {
+  .label-table > tbody > tr > td:first-child {
     width: auto;
     padding-bottom: 0;
+    text-align: left;
   }
 
-  .label-table td:first-child:empty { display: none; }
+  .label-table > tbody > tr > td:first-child:empty { display: none; }
 }
