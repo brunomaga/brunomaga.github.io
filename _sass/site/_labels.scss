@@ -1,6 +1,6 @@
-// Labels: the back link, date and category of a post (_layouts/post.html), the back link at its end and on the
-// 404 page, and the years and resource types of the label tables. Plain text in small grey capitals, set apart by
-// space alone
+// Labels: the back link, date, "updated" note and category of a post (_layouts/post.html), the back link at its
+// end and on the 404 page, and the years and resource types of the label tables. Plain text in small grey capitals,
+// set apart by space alone
 
 .post-labels {
   display: flex;
@@ -18,7 +18,8 @@
   white-space: nowrap;
 }
 
-// the icons: the arrow of the back link, the calendar of the date and the folder of the category
+// the icons: the arrow of the back link, the calendar of the date, the arrows of the "updated" label and the folder
+// of the category
 .post-label i { font-size: 0.9em; }
 
 // the back link: in the link colour, visited or not
