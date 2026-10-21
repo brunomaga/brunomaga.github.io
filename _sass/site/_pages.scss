@@ -12,34 +12,9 @@
 
 .home-header-text { flex: 1; }
 
-// the name, with the links as grey icons on its right (below it when they do not fit)
-.home-name {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 6px 22px;
-  margin-bottom: 0.35em;
-}
-
 .home-header h1 {
-  margin-bottom: 0;
+  margin-bottom: 0.35em;
   line-height: 1.1;
-}
-
-.home-links {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  font-size: 17px;
-}
-
-.home-links a,
-.home-links a:visited { color: $grey-color; }
-
-.home-links a:hover,
-.home-links a:focus-visible {
-  color: $brand-color;
-  text-decoration: none;
 }
 
 // the field, in the small grey capitals of the labels, its two parts separated by a small
@@ -69,6 +44,21 @@
   .home-field-sep { margin-right: 0; }
   .home-field-break { display: inline; }
 }
+
+// the links, as icons in the link color below the field
+.home-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 0.6em;
+  font-size: 17px;
+}
+
+.home-links a,
+.home-links a:visited { color: $brand-color; }
+
+.home-links a:hover,
+.home-links a:focus-visible { text-decoration: none; }
 
 // the photo, cropped in a circle and zoomed in on the face
 .home-photo {
