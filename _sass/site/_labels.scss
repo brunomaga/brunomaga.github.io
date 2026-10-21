@@ -1,75 +1,37 @@
 // Labels: the back link, date, category and tags of a post (_layouts/post.html), the back link at its end and on
-// the 404 page, the links of the home page, and the years and resource types of the label tables
+// the 404 page, the links of the home page, and the years and resource types of the label tables. Plain text,
+// as minima's post date, set apart by space alone
 
 .post-labels {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 6px 18px;
 }
 
-// the space above and below a label's capitals, --label-padding, sets its height. Where text-box trims the line
-// box to the capitals (below), it is the padding; elsewhere the line box is about 4px taller than the capitals,
-// mostly below them (uppercase has no descenders), so the padding is 1px less above and 3px less below.
-// --label-padding-x is the space left and right of the text
 .post-label {
-  @extend %box;
-  --label-padding: 6.5px;  // 22px tall
-  --label-padding-x: 9px;
-  display: inline-block;
-  padding: calc(var(--label-padding) - 1px) var(--label-padding-x) calc(var(--label-padding) - 3px);
-  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  font-size: 0.7rem;
-  line-height: 1;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  border-color: $label-border-color;
-  color: $label-color;
+  font-size: $label-font-size;
+  color: $grey-color;
   white-space: nowrap;
 }
 
-// where supported, trim the line box to the capitals and centre them exactly
-@supports (text-box: trim-both cap alphabetic) {
-  .post-label {
-    padding: var(--label-padding) var(--label-padding-x);
-    text-box: trim-both cap alphabetic;
-  }
-}
-
-// left to right: back link in the link colour (below), date in charcoal with a calendar, category in charcoal with
-// a mid grey border and a folder, tags in a lighter grey (default above)
-.post-label--date { border-color: $label-date-color; color: $label-date-color; }
-
-.post-label--category,
-.label-table .post-label {  // the years and resource types too
-  border-color: $label-category-border-color;
-  color: $label-category-color;
-}
+.post-label--tag::before { content: "#"; }
 
 // the icons: the arrow of the back link, the logos of the home page links, the calendar of the date and the folder
 // of the category
-.post-label i {
-  font-size: 0.9em;  // as tall as the capitals (the logos, the calendar and the folder a little taller)
-  line-height: 0;    // so that it doesn't make the label taller where text-box isn't supported
-}
+.post-label i { font-size: 0.9em; }
 
-// links (the back link, and the links of the home page): labels in the link colour, visited or not, that fill on
-// hover
-a.post-label--link {
-  border-color: $brand-color;
+// links (the back link, and the links of the home page): in the link colour, visited or not
+a.post-label--link,
+a.post-label--link:visited {
+  font-size: $base-font-size;
   color: $brand-color;
-  transition: background-color 0.15s, color 0.15s;
 }
 
-a.post-label--link:hover,
-a.post-label--link:focus-visible {
-  background-color: $brand-color;
-  color: #fff;
-  text-decoration: none;
-}
-
-// Label tables: the blog posts and resources on the home page, and the publications. No borders, and rows
-// spaced like a list
+// Label tables: the blog posts and resources on the home page, and the publications. No borders or stripes, and
+// rows spaced like a list
 .label-table { border: none; }
+
+.label-table > tbody > tr { background-color: transparent; }
 
 .label-table td {
   padding-top: 0.4em;
@@ -79,20 +41,14 @@ a.post-label--link:focus-visible {
   vertical-align: top;
 }
 
-// the first column is as wide as its labels, with the same space on both sides of them; every label has four
-// characters (a year, or BOOK, BLOG, UNIV or MISC), so the first columns of all tables match
+// the first column is as wide as its labels, with the space between them and the text on their right
 .label-table td:first-child {
   width: 1%;  // shrinks the column to its labels
-  padding-left: 0.5em;
-  padding-right: 0.5em;
+  padding-left: 0;
+  padding-right: 0.9em;
 }
 
 .label-table td + td { padding-left: 0; }
-
-.label-table .post-label {
-  --label-padding: 4px;  // 17px tall, so that a row with a label is no taller than one without
-  vertical-align: middle;
-}
 
 // on phones the first column gives its width to the text: each label sits on its own line above the first
 // row of its group, and the empty first cells of the other rows are hidden
@@ -108,6 +64,4 @@ a.post-label--link:focus-visible {
   }
 
   .label-table td:first-child:empty { display: none; }
-
-  .label-table td + td { padding-left: 0.5em; }
 }
