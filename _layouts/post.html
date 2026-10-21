@@ -4,8 +4,8 @@ layout: default
 {%- comment -%}
   adapted from https://github.com/jekyll/minima/blob/2.5-stable/_layouts/post.html: the title, the back link, date and
   category as labels, the content, and the back link again, after the article so that an element the
-  content leaves unclosed cannot contain it. Also the layout of the publications page (a category, and the month of
-  the last build as its date) and of the pages that set none (no date or category)
+  content leaves unclosed cannot contain it. Also the layout of the publications page (a category, and a text in
+  place of the date) and of the pages that set none (no date or category)
 {%- endcomment -%}
 <article class="post">
 
@@ -13,11 +13,10 @@ layout: default
     <h1 class="post-title">{{ page.title | escape }}</h1>
     <div class="post-labels">
       {% include back-link.html %}
-      {%- comment -%} a page that sets build_date shows the month of the last build of the site {%- endcomment -%}
-      {%- assign date = page.date %}
-      {%- if page.build_date %}{% assign date = site.time %}{% endif %}
-      {%- if date %}
-      <time class="post-label post-label--date" datetime="{{ date | date_to_xmlschema }}"><i class="far fa-calendar" aria-hidden="true"></i> {{ date | date: "%b %Y" }}</time>
+      {%- if page.date %}
+      <time class="post-label post-label--date" datetime="{{ page.date | date_to_xmlschema }}"><i class="far fa-calendar" aria-hidden="true"></i> {{ page.date | date: "%b %Y" }}</time>
+      {%- elsif page.date_text %}
+      <span class="post-label post-label--date"><i class="far fa-calendar" aria-hidden="true"></i> {{ page.date_text }}</span>
       {%- endif %}
       {%- for category in page.categories %}
       <span class="post-label post-label--category"><i class="far fa-folder" aria-hidden="true"></i> {{ category }}</span>

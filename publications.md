@@ -2,8 +2,8 @@
 layout: post
 title: Publications bookmark
 permalink: /publications/
-categories: ["Personal Notes"]
-build_date: true
+categories: ["Notes"]
+date_text: continuously updated
 ---
 
 {::options parse_block_html="true" /}
