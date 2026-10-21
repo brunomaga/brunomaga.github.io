@@ -2,8 +2,7 @@
 layout: post
 title: Publications bookmark
 permalink: /publications/
-categories: ["Notes"]
-build_date: true
+date_text: updated %b %Y
 ---
 
 {::options parse_block_html="true" /}
