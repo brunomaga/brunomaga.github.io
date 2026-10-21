@@ -10,7 +10,8 @@
   margin-bottom: 1.5em;
 }
 
-// the name with the links on its right, and the field below them; on phones, the links below the field
+// the name with the links on its right, and the field below them; on phones, the field on two lines and the
+// links on the right of its second line, or below it when they do not fit
 .home-header-text {
   flex: 1;
   display: grid;
@@ -19,7 +20,12 @@
   align-items: center;
   column-gap: 22px;
 
-  @include media-query($on-palm) { grid-template-areas: "name name" "field field" "links links"; }
+  @include media-query($on-palm) {
+    display: flex;
+    flex-wrap: wrap;
+    min-width: 0;
+    row-gap: 4px;
+  }
 }
 
 .home-header h1 {
@@ -28,8 +34,8 @@
   line-height: 1.1;
 }
 
-// the field, in the small grey capitals of the labels, its two parts separated by a small
-// square; on phones each part on its own line
+// the field, in the small grey capitals of the labels, its two parts separated by a small square; on phones
+// each part is an item of the row above, on a line of its own, with no square
 .home-field {
   grid-area: field;
   margin: 0;
@@ -50,11 +56,11 @@
   background-color: $grey-color;
 }
 
-.home-field-break { display: none; }
-
 @include media-query($on-palm) {
-  .home-field-sep { margin-right: 0; }
-  .home-field-break { display: inline; }
+  .home-field { display: contents; }
+  .home-header h1,
+  .home-field-hpc { flex-basis: 100%; }
+  .home-field-sep { display: none; }
 }
 
 // the links, as icons in the link color
@@ -64,8 +70,6 @@
   align-items: center;
   gap: 14px;
   font-size: 17px;
-
-  @include media-query($on-palm) { margin-top: 0.6em; }
 }
 
 .home-links a,
