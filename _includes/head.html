@@ -81,24 +81,4 @@
     };
   </script>
   <script id="MathJax-script" defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
-
-  {%- comment -%}
-    The publications: the notes of an open paper also span the first column, from the left edge of the years.
-    --pub-year-width is the distance from the years to the titles, 0 on phones, where the years sit above the
-    titles (see _sass/site/_pages.scss).
-  {%- endcomment %}
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const tables = document.querySelectorAll('.pub-table');
-      if (!tables.length) return;
-      const measure = () => tables.forEach((table) => {
-        const year = table.querySelector('.post-label').getBoundingClientRect();
-        const title = table.querySelector('td + td').getBoundingClientRect();
-        table.style.setProperty('--pub-year-width', `${Math.max(0, title.left - year.left)}px`);
-      });
-      measure();
-      document.fonts.ready.then(measure);
-      window.addEventListener('resize', measure);
-    });
-  </script>
 </head>
