@@ -101,9 +101,11 @@
 
 .pub-link .fa-solid { font-size: 0.8em; }
 
-// the notes, under the title
+// the notes, under the title, with a grey line on their left
 .pub-notes {
   margin: 0.6em 0 0.2em;
+  padding-left: 1em;
+  border-left: 2px solid $notes-line-color;
   line-height: 1.5;
 }
 
