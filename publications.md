@@ -7,7 +7,7 @@ categories: ["Personal Notes"]
 
 {::options parse_block_html="true" /}
 
-Continuously updated. Click on a title to expand.
+Continuously updated. Click to expand.
 
 <table class="label-table pub-table">
 <tr>
