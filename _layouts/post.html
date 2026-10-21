@@ -17,8 +17,10 @@ layout: default
       <time class="post-label post-label--date" datetime="{{ page.date | date_to_xmlschema }}"><i class="far fa-calendar" aria-hidden="true"></i> {{ page.date | date: "%b %Y" }}</time>
       {%- elsif page.date_text %}
       {%- comment -%} a page without a date may set a text in its place, where %b and %Y give the month and year of
-        the last build of the site {%- endcomment %}
-      <span class="post-label post-label--date"><i class="far fa-calendar" aria-hidden="true"></i> {{ site.time | date: page.date_text }}</span>
+        the last commit of the page (_data/last_update.yml, written by the deploy workflow; the time of the build when
+        the file is missing, as in a local build) {%- endcomment %}
+      {%- assign last_update = site.data.last_update[page.path] | default: site.time %}
+      <span class="post-label post-label--date"><i class="far fa-calendar" aria-hidden="true"></i> {{ last_update | date: page.date_text }}</span>
       {%- endif %}
       {%- for category in page.categories %}
       <span class="post-label post-label--category"><i class="far fa-folder" aria-hidden="true"></i> {{ category }}</span>
