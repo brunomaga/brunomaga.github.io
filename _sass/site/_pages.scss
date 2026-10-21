@@ -10,9 +10,20 @@
   margin-bottom: 1.5em;
 }
 
-.home-header-text { flex: 1; }
+// the name with the links on its right, and the field below them; on phones, the links below the field
+.home-header-text {
+  flex: 1;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "name links" "field field";
+  align-items: center;
+  column-gap: 22px;
+
+  @include media-query($on-palm) { grid-template-areas: "name name" "field field" "links links"; }
+}
 
 .home-header h1 {
+  grid-area: name;
   margin-bottom: 0.35em;
   line-height: 1.1;
 }
@@ -20,6 +31,7 @@
 // the field, in the small grey capitals of the labels, its two parts separated by a small
 // square; on phones each part on its own line
 .home-field {
+  grid-area: field;
   margin: 0;
   font-size: $label-font-size;
   font-weight: 600;
@@ -45,13 +57,15 @@
   .home-field-break { display: inline; }
 }
 
-// the links, as icons in the link color below the field
+// the links, as icons in the link color
 .home-links {
+  grid-area: links;
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-top: 0.6em;
   font-size: 17px;
+
+  @include media-query($on-palm) { margin-top: 0.6em; }
 }
 
 .home-links a,
