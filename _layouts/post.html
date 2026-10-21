@@ -2,10 +2,10 @@
 layout: default
 ---
 {%- comment -%}
-  adapted from https://github.com/jekyll/minima/blob/2.5-stable/_layouts/post.html: the title, the back link, date,
-  category and tags as labels, the content, and the back link again, after the article so that an element the
+  adapted from https://github.com/jekyll/minima/blob/2.5-stable/_layouts/post.html: the title, the back link, date and
+  category as labels, the content, and the back link again, after the article so that an element the
   content leaves unclosed cannot contain it. Also the layout of the publications page and of the pages that set
-  none, which have no date, category or tags
+  none, which have no date or category
 {%- endcomment -%}
 <article class="post">
 
@@ -18,9 +18,6 @@ layout: default
       {%- endif %}
       {%- for category in page.categories %}
       <span class="post-label post-label--category"><i class="far fa-folder" aria-hidden="true"></i> {{ category }}</span>
-      {%- endfor %}
-      {%- for tag in page.tags %}
-      <span class="post-label post-label--tag">{{ tag }}</span>
       {%- endfor %}
     </div>
   </header>

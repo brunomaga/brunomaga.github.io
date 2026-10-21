@@ -1,4 +1,4 @@
-// Labels: the back link, date, category and tags of a post (_layouts/post.html), the back link at its end and on
+// Labels: the back link, date and category of a post (_layouts/post.html), the back link at its end and on
 // the 404 page, the links of the home page, and the years and resource types of the label tables. Plain text in
 // small grey capitals, set apart by space alone
 
@@ -17,8 +17,6 @@
   color: $grey-color;
   white-space: nowrap;
 }
-
-.post-label--tag::before { content: "#"; }
 
 // the icons: the arrow of the back link, the logos of the home page links, the calendar of the date and the folder
 // of the category
