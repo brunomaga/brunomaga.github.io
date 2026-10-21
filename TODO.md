@@ -397,15 +397,6 @@ Bugs in the code and data files of the posts (under `assets/`), and in the style
   `main.py` (the parameters of `get_gptlite_model_parameters()` and the path `GPTLITE_CKPT_PATH`), and one sentence in
   the inference posts that says to run it first.
 
-### Publications bookmark (publications.md)
-
-- `_sass/site/_labels.scss`: the rules `.label-table td`, `td:first-child` (`width: 1%`), `td + td` and the phone
-  rule (`.label-table tbody, tr, td { display: block }`) also match the table inside the notes of DeepSeek-V2, the
-  only table in the notes. Its first column shrinks, so $$2\,n_h\,d_h$$ wraps over two lines, its cells lose their
-  padding and borders, and on phones the table breaks into blocks (also on master). Fix: child selectors for the
-  label table only, `.label-table > tbody > tr > td` (and the same for `:first-child`, `+ td` and `:empty`), and in
-  the `$on-palm` rule `.label-table > tbody`, `.label-table > tbody > tr` and `.label-table > tbody > tr > td`.
-
 ## Diagram issues
 
 Pictures that are wrong or disagree with the post text (under `assets/`). Items marked "Optional" improve a picture
