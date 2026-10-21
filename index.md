@@ -2,17 +2,19 @@
 layout: default
 ---
 
-<!-- name, field and links, with the photo on the right -->
+<!-- name, then field and links, with the photo on the right -->
 <div class="home-header">
   <div class="home-header-text">
     <h1 class="post-title">{{ site.author.name }}</h1>
-    <h2 class="home-field">Machine Learning<span class="home-field-sep" aria-hidden="true"></span><br class="home-field-break">High-Performance Computing</h2>
-    <div class="home-links">
-      <a href="https://linkedin.com/in/brunomaga" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
-      <a href="https://github.com/brunomaga" aria-label="GitHub" title="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
-      <a href="{{ site.google_scholar }}" aria-label="Google Scholar" title="Google Scholar"><i class="ai ai-google-scholar" aria-hidden="true"></i></a>
-      <!-- <a href="{{ '/resume.pdf' | relative_url }}" aria-label="Resume" title="Resume"><i class="far fa-file-lines" aria-hidden="true"></i></a> -->
-      <a href="mailto:{{ site.author.email }}?subject=Hello" aria-label="Email" title="Email"><i class="far fa-envelope" aria-hidden="true"></i></a>
+    <div class="home-sub">
+      <h2 class="home-field">Machine Learning<span class="home-field-sep" aria-hidden="true"></span><br class="home-field-break">High-Performance Computing</h2>
+      <div class="home-links">
+        <a href="https://linkedin.com/in/brunomaga" aria-label="LinkedIn" title="LinkedIn"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+        <a href="https://github.com/brunomaga" aria-label="GitHub" title="GitHub"><i class="fab fa-github" aria-hidden="true"></i></a>
+        <a href="{{ site.google_scholar }}" aria-label="Google Scholar" title="Google Scholar"><i class="ai ai-google-scholar" aria-hidden="true"></i></a>
+        <!-- <a href="{{ '/resume.pdf' | relative_url }}" aria-label="Resume" title="Resume"><i class="far fa-file-lines" aria-hidden="true"></i></a> -->
+        <a href="mailto:{{ site.author.email }}?subject=Hello" aria-label="Email" title="Email"><i class="far fa-envelope" aria-hidden="true"></i></a>
+      </div>
     </div>
   </div>
 

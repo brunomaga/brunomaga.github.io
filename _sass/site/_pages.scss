@@ -45,12 +45,19 @@
   .home-field-break { display: inline; }
 }
 
-// the links, as icons in the link color below the field
+// the field and the links in one row, the links below the field when the row does not fit
+.home-sub {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6em 22px;
+}
+
+// the links, as icons in the link color
 .home-links {
   display: flex;
   align-items: center;
   gap: 14px;
-  margin-top: 0.6em;
   font-size: 17px;
 }
 
