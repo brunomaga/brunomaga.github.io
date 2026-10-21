@@ -8,7 +8,7 @@ build_date: true
 
 {::options parse_block_html="true" /}
 
-Continuously updated. Click to expand.
+Click to expand.
 
 <table class="label-table pub-table">
 <tr>
