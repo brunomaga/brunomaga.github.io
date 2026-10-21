@@ -22,6 +22,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # the whole history, for the date of the last commit of the publications page
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -31,6 +33,10 @@ jobs:
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
+      - name: Date of the last commit of the publications page
+        run: |
+          mkdir -p _data
+          echo "publications.md: $(git log -1 --format=%cI -- publications.md)" > _data/last_update.yml
       - name: Build with Jekyll
         run: bundle exec jekyll build --baseurl "${{ steps.pages.outputs.base_path }}"
         env:

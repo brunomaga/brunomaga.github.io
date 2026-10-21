@@ -2,12 +2,10 @@
 layout: post
 title: Publications bookmark
 permalink: /publications/
-categories: ["Personal Notes"]
+date_text: updated %b %Y
 ---
 
 {::options parse_block_html="true" /}
-
-Continuously updated. Click to expand.
 
 <table class="label-table pub-table">
 <tr>
