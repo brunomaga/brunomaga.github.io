@@ -2,7 +2,7 @@
 layout: post
 title: Publications bookmark
 permalink: /publications/
-date_text: "last update: %b %Y"
+date_text: updated %b %Y
 ---
 
 {::options parse_block_html="true" /}
