@@ -2,11 +2,12 @@
 layout: post
 title: Publications bookmark
 permalink: /publications/
+categories: ["Personal Notes"]
 ---
 
 {::options parse_block_html="true" /}
 
-A summary of some interesting publications. Continuously updated.
+Continuously updated. Click on a title to expand.
 
 <table class="label-table pub-table">
 <tr>
