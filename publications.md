@@ -3,12 +3,12 @@ layout: post
 title: Publications bookmark
 permalink: /publications/
 categories: ["Personal Notes"]
-updated: continuously updated
+build_date: true
 ---
 
 {::options parse_block_html="true" /}
 
-Click to expand.
+Continuously updated. Click to expand.
 
 <table class="label-table pub-table">
 <tr>
