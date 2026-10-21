@@ -28,14 +28,6 @@
 a.post-label--link,
 a.post-label--link:visited { color: $brand-color; }
 
-// the links of the home page, in regular text
-.home-header a.post-label--link {
-  font-size: $base-font-size;
-  font-weight: normal;
-  letter-spacing: normal;
-  text-transform: none;
-}
-
 // Label tables: the blog posts and resources on the home page, and the publications. No borders or stripes, and
 // rows spaced like a list. The child selectors leave out the tables inside the notes of the publications
 .label-table { border: none; }
