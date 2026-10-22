@@ -45,7 +45,7 @@ In this space, I write about my projects and topics related to my fields of inte
 
 <!-- resources -->
 <p class="home-text">
-I also keep a curated list of <a href="{{ site.publications_permalink }}">publications</a>, books and other resources in the field:
+I also keep a curated list of publications, books and other resources in the field:
 </p>
 
 <table id="resources-table" class="label-table home-table">
@@ -148,5 +148,5 @@ I also keep a curated list of <a href="{{ site.publications_permalink }}">public
 </table>
 
 <p class="home-text">
-Enjoy, and feel free to <a href="mailto:{{ site.author.email }}?subject=Hello">reach out</a> with feedback, fixes, and questions 🚀!
+Enjoy, and feel free to reach out with feedback, fixes, and questions 🚀!
 </p>
