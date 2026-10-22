@@ -2296,7 +2296,7 @@ The authors claim that sparsity in attention is a natural pattern, and show (by 
 Strided attention is convenient when the data has a structure that aligns with the stride, like images or some types of music. For data without a periodic structure, like text, the strided pattern can fail to route information properly, and a fixed pattern is used instead. Both patterns are compared with the full attention in the following picture:
 
 {: .picture}
-<img loading="lazy" width="88%" height="88%" src="{{ site.assets }}/publications/sparse_transformers.svg"/>
+<img loading="lazy" width="87.9%" height="87.9%" src="{{ site.assets }}/publications/sparse_transformers.svg"/>
 
 {: .caption}
 Two 2D factorized attention schemes of the Sparse Transformer, (b) strided and (c) fixed, compared with the full attention of a standard Transformer (a). The top row indicates, for an example 6x6 image, which positions two attention heads receive as input when computing a given output. The bottom row shows the connectivity matrix (not to scale) between all such outputs (rows) and inputs (columns). Sparsity in the connectivity matrix can lead to significantly faster computation. In (b) and (c), full connectivity between elements is preserved when the two heads are computed sequentially. The paper tests whether such factorizations can match the performance of the rich connectivity patterns learned by full attention (Figure 2 of the paper). Adapted from: [Generating Long Sequences with Sparse Transformers](https://arxiv.org/abs/1904.10509)
