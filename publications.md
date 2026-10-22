@@ -1095,7 +1095,7 @@ The authors used scaling laws ([Hoffmann et al., 2022](https://arxiv.org/abs/220
 The compute-optimal models are the minima of the IsoFLOPs curves (the validation loss against the number of training tokens, for a fixed compute budget), and their number of training tokens follows a power law of the compute budget. Extrapolated to the budget of the flagship model, this law suggests a 402B-parameter model trained on 16.55T tokens. The following picture illustrates the IsoFLOPs curves and the power law (figures 2 and 3 of the paper):
 
 {: .picture}
-<img loading="lazy" width="74.9%" height="74.9%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
+<img loading="lazy" width="99.7%" height="99.7%" src="{{ site.assets }}/publications/llama3_scaling_laws.svg"/>
 
 {: .caption}
 <b>Left:</b> <b>Scaling law IsoFLOPs curves</b> between $$6 \times 10^{18}$$ and $$10^{22}$$ FLOPs. The loss is the negative log-likelihood on a held-out validation set. Measurements at each compute scale are approximated by a second-degree polynomial. <b>Right:</b> <b>Number of training tokens in identified compute-optimal models as a function of pre-training compute budget.</b> The line is the fitted scaling-law prediction. The compute-optimal models correspond to the parabola minima of the left plot. Adapted from: [The Llama 3 Herd of Models](https://arxiv.org/abs/2407.21783)
