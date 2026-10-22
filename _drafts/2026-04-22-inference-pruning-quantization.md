@@ -615,7 +615,7 @@ class W8A8Linear(nn.Module):
 **LLM.int8()** keeps the few outlier feature dimensions in 16 bits and runs everything else in INT8. A feature is an outlier when any of its values is larger in magnitude than a threshold, 6 in the paper. The outliers are rare, so more than 99.9% of the multiplications still run in INT8. The following diagram illustrates this *mixed-precision decomposition*, as the paper calls it:
 
 {: .picture}
-<img width="77.7%" height="77.7%" src="{{ site.assets }}/inference/imgs/llm_int8.svg"/>
+<img width="77.2%" height="77.2%" src="{{ site.assets }}/inference/imgs/llm_int8.svg"/>
 
 {: .caption}
 The feature columns of $$X$$ with outliers and the matching rows of $$W^T$$ are multiplied in FP16, the other features in INT8, and the two results are added. Adapted from: [LLM.int8(): 8-bit Matrix Multiplication for Transformers at Scale](https://arxiv.org/abs/2208.07339)
