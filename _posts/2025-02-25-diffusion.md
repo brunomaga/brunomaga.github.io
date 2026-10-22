@@ -720,7 +720,7 @@ LongVILA details a 5-stage pipeline for training long-context visual-language mo
 In Stage 5, the model is fine-tuned for long video understanding with Multi-Modal Sequence Parallelism (MM-SP) based on [LoongTrain: Efficient Training of Long-Sequence LLMs with Head-Context Parallelism](https://arxiv.org/abs/2406.18485). The workflow of MM-SP is illustrated in the following picture:
 
 {: .picture}
-<img width="99.2%" height="99.2%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
+<img width="100%" height="100%" src="{{ site.assets }}/diffusion/longvilla.svg"/> 
 
 {: .caption}
 Workflow of Multi-Modal Sequence Parallelism (MM-SP) with a Batch Size (bs) of 4 and a Sequence Parallel Size (SP\_Size) of 3. To support sequence parallelism for multi-modal inputs, MM-SP uses a custom sharding strategy that balances the workload and is compatible with SP communication. Adapted from: [LongVILA: Scaling Long-Context Visual Language Models for Long Videos](https://arxiv.org/abs/2408.10188).

@@ -10386,28 +10386,28 @@
         <mxCell id="longvilla-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
           <mxGeometry x="0" y="6076.29" width="875.99" height="441.17" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-55" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+        <mxCell id="longvilla-55" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="7.33" y="160.5" as="sourcePoint" />
+            <mxPoint x="5.43" y="160.5" as="sourcePoint" />
             <mxPoint x="303.72" y="160.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="longvilla-56" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+        <mxCell id="longvilla-56" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="5.43" y="280.11" as="sourcePoint" />
             <mxPoint x="303.72" y="280.11" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="longvilla-57" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+        <mxCell id="longvilla-57" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="655.37" y="163.36" as="sourcePoint" />
-            <mxPoint x="870.75" y="163.36" as="targetPoint" />
+            <mxPoint x="880.45" y="163.36" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="longvilla-58" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+        <mxCell id="longvilla-58" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="655.37" y="282.49" as="sourcePoint" />
-            <mxPoint x="870.75" y="282.49" as="targetPoint" />
+            <mxPoint x="880.45" y="282.49" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="longvilla-34" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;startFill=1;endSize=5;startSize=5;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
@@ -10418,8 +10418,8 @@
         </mxCell>
         <mxCell id="longvilla-52" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="277.03" y="396.37" as="sourcePoint" />
-            <mxPoint x="277.03" y="377.31" as="targetPoint" />
+            <mxPoint x="277.03" y="398.28" as="sourcePoint" />
+            <mxPoint x="277.03" y="375.88" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="longvilla-8" value="" style="shape=image;imageAspect=0;image=data:image/jpeg,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCAAzADsDASIAAhEBAxEB/8QAHAAAAQUBAQEAAAAAAAAAAAAABwAEBQYIAwEJ/8QAPBAAAQMCBAQDBQYCCwAAAAAAAQIDBAURAAYSIQcTMUEIIlEUYXGBkRUXIzJCoRYkJkNicoKSk7PB0eH/xAAZAQADAQEBAAAAAAAAAAAAAAAEBQYDAQL/xAAqEQACAgAEBAQHAAAAAAAAAAABAgADBBEhMQUSE0EycYHBFBUjM9Hh8P/aAAwDAQACEQMRAD8A+ZqmnGY7bzjZu8DyyTvYW3xyQ2XANCSVbAWHUk4mUMqMCCjkPLfdUbOK2CEjppB67X72xeOGnBqqcSFTUUxk3jLbU4jUm6Sb2IJUBb53/wCNCQozMIStnPKsFrfMZaWEkgHrYftfDuBTn5CVLQguBpOsgJJAHc7X2HfGjszcB2KblhSYRmt12MzqIXJbMdbqdlICL97G1vUX74FsnKlVRTUojBbz7t1Kjx2QpbZKbLTrvY7dvhjJLFfw9prZh2pA5+8rMfLTc2lJlpnR1PA7xm97b239OnXHGq0qbS9DbPMXHUkK1IBAso7XPp8cNYfOpzK3HXSwlVxygBrURcf4d+5xJVriDOqMNMQfy7AZSwEIP6BYjfbuManSDggDKQxeTT1usLZWHVDSLncA+/EgzWYcVpLS4Dy1pG6vaQLn4BJwylcqlFsgiTKWgL5ih5W7joAep95+nfDLWX/xFuJ1K66jvjnedDMNoVMo8KM3cTK8xRaO9GVyVFbkl9atEWx/UQCe4FgDf02weuH2Wl8C66rKFTkonzqs2iQJzKwplxRUoBCULRdJ6je99umL3zfupydTqRQ4onz5iUpVUXj5HHD1ccUBfSLiwHb54B0/iNUcy8bKOxVmmEO0gLjAxVhSHHkpUSsKBt+boR6DC42tZmO0fClKWDjxH3lyq+R83VXiFEprDsCNOmq+1PZJjzjSEtKSpadSghVj5SnSE9Qd9t30vhjXYrEKm0DLGXaXIaaLbsiJWJrxlPE/n0rYISAABpSB3JJxNNZuiVeq5BTAh8itw481iouKQE8yyQGze++wUe26j78FfK0x9GioKfabLZOhrQDq69Re4wZh61K5xTj7rOqUJ2/Ex/I8I2da3UX2nJlBhyFK8wdkPpCSVXOxa23P74j674RMyZXltsSqjQJsgC6gxKfKR8bsj6Y1pxCz9l3KrsWfXJ7sZyW8GkNxGCta1f3Qe3qT/wBYsDWXqHmOlx5lNqa181OtClosTf1Fr7dLYY1pVzDqHSKmezLNZhlrw35sdl89x+iSbC2grd0geluVhwfDNmxwlZTl+6jewccTb3W5eNkv5UU3r0h1QGwUB+9rY5/wyT/VSP8AL/5hmMNhjrA/iLhvA5QOJ7Gb2KnliZFTTIcRKWUS4TmhTLhNkFIIFhc/K2KvJ4H1LJ+ena7PrsWp6SVpVdZdcdWCPPcbepNyenrfHjdEbyxn2ny3I6Ql5hX84pouKfeKx5bJJuoAgA4c8Scz5oqNEcnRsvyKbTor/sztRlDV5ikEKT0sbC+/y6G0g1ZUgJsZcLajoXs0yOkl+HNWpuZeKzcZAcWqChxpakOWC1lC9twbAae3XfBJzDVlU55SWFOBCCbgL6e734B/hLQGuJC01FOryLWdaieZdp3v8jv7zg6UKu0xfFODEd5UOC677OELF0kk7Akja5AF+3yw1w6ha8hJfiDlriSd4DOOFYfkKgSWmFy3Y4KWkKSVWUvva2/5P2xMeGfOMviLmqTRazmidS1yXgInKWnTqcUEhPY/nUm1jbc+gxout5ApX30UmfDZNPh0JTkyS7LHl1epUf0pSFq+afXGe8tZWyJmaBNrEfLtMcgzKjPfjLcgNFQYMp0tixTfZGkAdrWwBisUMKOoRuZ4YhKwrazXNV8KvEOni1IzMqU9cHW/y1II23uRqHwsemEPC5xjAH9M6APS972/0MYfynlLKDnEHMTj2VkfY0ppn2QzaYEtNOJBDgSlaQU3JFrC2x6WGFU+CNEcnOqh5ip8SMSNDDlAhuKQLdCrQL/T69cYfNlU8rabb/rODEVk65j1M58Uc3VbK1By7FpMoQWQyUpDTSLpAJsAoi4+RwPqLmysz3pcSTVJUiNIQiQ6266VBTiLFKt+4wsLBNYGUpsWTp6S6cBJz4z1JAcICEK0gAAJ/Dc6Dti7V51bVYkOIUUrS+CFA7jzDCwsMqdjJfiPjHkIQONeZapO4JSZL011T8qnBL7gOkuDmlO9v7IA+Atih8EGknhbRduz3++5hYWJ3jX2h5+xntj9If3aXYIBCTbr1+mElhspF20nbuMLCxHwWf/Z;fontFamily=Source Sans 3;" vertex="1" parent="longvilla-figure">
@@ -10495,15 +10495,15 @@
           <mxGeometry x="105.02" y="349.2" width="54.8" height="50.51" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-37" value="Vision&lt;br&gt;Tower" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="181.26" y="77.12" width="68.14" height="44.31" as="geometry" />
+          <mxGeometry x="181.26" y="95.12" width="68.14" height="44.31" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-40" value="Vision&lt;br&gt;Tower" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="181.26" y="197.19" width="68.14" height="44.31" as="geometry" />
+          <mxGeometry x="181.26" y="215.19" width="68.14" height="44.31" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-43" value="Vision&lt;br&gt;Tower" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="181.26" y="317.27" width="68.14" height="44.31" as="geometry" />
+          <mxGeometry x="181.26" y="335.27" width="68.14" height="44.31" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
+        <mxCell id="longvilla-45" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="266.07" y="63.3" width="20.97" height="312.58" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-48" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
@@ -10515,7 +10515,7 @@
         <mxCell id="longvilla-50" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="219.85" y="409.09" width="90.06" height="26.68" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-51" value="Captions" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
+        <mxCell id="longvilla-51" value="Captions" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="227" y="414.49" width="90.06" height="26.68" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
@@ -11170,229 +11170,229 @@
           <mxGeometry x="349.94" y="403.52" width="18.11" height="19.06" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-291" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="672.53" y="80.93" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="80.93" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-292" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="690.84" y="80.93" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="80.93" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-293" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="709.16" y="80.93" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="80.93" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-294" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="727.48" y="80.93" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="80.93" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-295" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="745.79" y="80.93" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="80.93" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-296" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="764.11" y="80.93" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="80.93" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-297" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="672.53" y="99.04" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="99.04" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-298" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="690.84" y="99.04" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="99.04" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-299" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="709.16" y="99.04" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="99.04" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-300" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="727.48" y="99.04" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="99.04" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-301" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="745.79" y="99.04" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="99.04" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-302" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="764.11" y="99.04" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="99.04" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-303" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="672.53" y="117.14" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="117.14" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-304" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="690.84" y="117.14" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="117.14" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-305" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="709.16" y="117.14" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="117.14" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-306" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="727.48" y="117.14" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="117.14" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-307" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="745.79" y="117.14" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="117.14" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-308" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="764.11" y="117.14" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="117.14" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-309" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="672.53" y="135.25" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="135.25" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-310" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="690.84" y="135.25" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="135.25" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-311" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="709.16" y="135.25" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="135.25" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-312" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="727.48" y="135.25" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="135.25" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-313" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="745.79" y="135.25" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="135.25" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-314" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="764.11" y="135.25" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="135.25" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-316" value="LLM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="804.99" y="95.22" width="68.14" height="43.84" as="geometry" />
+          <mxGeometry x="814.69" y="95.22" width="68.14" height="43.84" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-318" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="672.53" y="182.9" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="182.9" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-319" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="690.84" y="182.9" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="182.9" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-320" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="709.16" y="182.9" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="182.9" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-321" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="727.48" y="182.9" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="182.9" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-322" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="745.79" y="182.9" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="182.9" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-323" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="764.11" y="182.9" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="182.9" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-324" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="672.53" y="201.01" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="201.01" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-325" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="690.84" y="201.01" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="201.01" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-326" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="709.16" y="201.01" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="201.01" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-327" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="727.48" y="201.01" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="201.01" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-328" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="745.79" y="201.01" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="201.01" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-329" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="764.11" y="201.01" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="201.01" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-330" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="672.53" y="219.11" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="219.11" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-331" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="690.84" y="219.11" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="219.11" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-332" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="709.16" y="219.11" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="219.11" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-333" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="727.48" y="219.11" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="219.11" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-334" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="745.79" y="219.11" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="219.11" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-335" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="764.11" y="219.11" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="219.11" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-336" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="672.53" y="237.22" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="237.22" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-337" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="690.84" y="237.22" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="237.22" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-338" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="709.16" y="237.22" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="237.22" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-339" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="727.48" y="237.22" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="237.22" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-340" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="745.79" y="237.22" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="237.22" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-341" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="764.11" y="237.22" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="237.22" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-343" value="LLM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="805.47" y="197.19" width="67.66" height="44.31" as="geometry" />
+          <mxGeometry x="814.69" y="197.19" width="68.14" height="44.31" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-345" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="675.39" y="296.31" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="302.31" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-346" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="693.7" y="296.31" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="302.31" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-347" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="712.02" y="296.31" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="302.31" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-348" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="730.34" y="296.31" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="302.31" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-349" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="748.65" y="296.31" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="302.31" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-350" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="766.97" y="296.31" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="302.31" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-351" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="675.39" y="314.41" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="320.41" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-352" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="693.7" y="314.41" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="320.41" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-353" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="712.02" y="314.41" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="320.41" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-354" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="730.34" y="314.41" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="320.41" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-355" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="748.65" y="314.41" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="320.41" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-356" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="766.97" y="314.41" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="320.41" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-357" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="675.39" y="332.52" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="338.52" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-358" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="693.7" y="332.52" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="338.52" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-359" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="712.02" y="332.52" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="338.52" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-360" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="730.34" y="332.52" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="338.52" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-361" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="748.65" y="332.52" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="338.52" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-362" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="766.97" y="332.52" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="338.52" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-363" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="675.39" y="350.63" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="682.23" y="356.63" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-364" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="693.7" y="350.63" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="700.54" y="356.63" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-365" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="712.02" y="350.63" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="718.86" y="356.63" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-366" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="730.34" y="350.63" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="737.18" y="356.63" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-367" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="748.65" y="350.63" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="755.49" y="356.63" width="18.32" height="18.11" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-368" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="766.97" y="350.63" width="18.32" height="18.11" as="geometry" />
+          <mxGeometry x="773.81" y="356.63" width="18.32" height="18.11" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-outline-1" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="320.87" y="62.82" as="sourcePoint" /><mxPoint x="650.57" y="62.82" as="targetPoint" /><Array as="points"><mxPoint x="650.57" y="62.82" /><mxPoint x="650.57" y="135.25" /><mxPoint x="320.87" y="135.25" /><mxPoint x="320.87" y="62.82" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-2" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="320.87" y="182.9" as="sourcePoint" /><mxPoint x="650.57" y="182.9" as="targetPoint" /><Array as="points"><mxPoint x="650.57" y="182.9" /><mxPoint x="650.57" y="255.33" /><mxPoint x="320.87" y="255.33" /><mxPoint x="320.87" y="182.9" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-3" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="320.87" y="302.98" as="sourcePoint" /><mxPoint x="650.57" y="302.98" as="targetPoint" /><Array as="points"><mxPoint x="650.57" y="302.98" /><mxPoint x="650.57" y="375.41" /><mxPoint x="320.87" y="375.41" /><mxPoint x="320.87" y="302.98" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-4" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="672.53" y="80.93" as="sourcePoint" /><mxPoint x="782.43" y="80.93" as="targetPoint" /><Array as="points"><mxPoint x="782.43" y="80.93" /><mxPoint x="782.43" y="153.36" /><mxPoint x="672.53" y="153.36" /><mxPoint x="672.53" y="80.93" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-5" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="672.53" y="182.9" as="sourcePoint" /><mxPoint x="782.43" y="182.9" as="targetPoint" /><Array as="points"><mxPoint x="782.43" y="182.9" /><mxPoint x="782.43" y="255.33" /><mxPoint x="672.53" y="255.33" /><mxPoint x="672.53" y="182.9" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-6" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="675.39" y="296.31" as="sourcePoint" /><mxPoint x="785.29" y="296.31" as="targetPoint" /><Array as="points"><mxPoint x="785.29" y="296.31" /><mxPoint x="785.29" y="368.74" /><mxPoint x="675.39" y="368.74" /><mxPoint x="675.39" y="296.31" /></Array></mxGeometry></mxCell><mxCell id="longvilla-370" value="LLM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="807.85" y="310.6" width="68.14" height="44.31" as="geometry" />
+        <mxCell id="longvilla-outline-1" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="320.87" y="62.82" as="sourcePoint" /><mxPoint x="650.57" y="62.82" as="targetPoint" /><Array as="points"><mxPoint x="650.57" y="62.82" /><mxPoint x="650.57" y="135.25" /><mxPoint x="320.87" y="135.25" /><mxPoint x="320.87" y="62.82" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-2" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="320.87" y="182.9" as="sourcePoint" /><mxPoint x="650.57" y="182.9" as="targetPoint" /><Array as="points"><mxPoint x="650.57" y="182.9" /><mxPoint x="650.57" y="255.33" /><mxPoint x="320.87" y="255.33" /><mxPoint x="320.87" y="182.9" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-3" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="320.87" y="302.98" as="sourcePoint" /><mxPoint x="650.57" y="302.98" as="targetPoint" /><Array as="points"><mxPoint x="650.57" y="302.98" /><mxPoint x="650.57" y="375.41" /><mxPoint x="320.87" y="375.41" /><mxPoint x="320.87" y="302.98" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-4" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="682.23" y="80.93" as="sourcePoint" /><mxPoint x="792.13" y="80.93" as="targetPoint" /><Array as="points"><mxPoint x="792.13" y="80.93" /><mxPoint x="792.13" y="153.36" /><mxPoint x="682.23" y="153.36" /><mxPoint x="682.23" y="80.93" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-5" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="682.23" y="182.9" as="sourcePoint" /><mxPoint x="792.13" y="182.9" as="targetPoint" /><Array as="points"><mxPoint x="792.13" y="182.9" /><mxPoint x="792.13" y="255.33" /><mxPoint x="682.23" y="255.33" /><mxPoint x="682.23" y="182.9" /></Array></mxGeometry></mxCell><mxCell id="longvilla-outline-6" value="" edge="1" parent="longvilla-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="682.23" y="302.31" as="sourcePoint" /><mxPoint x="792.13" y="302.31" as="targetPoint" /><Array as="points"><mxPoint x="792.13" y="302.31" /><mxPoint x="792.13" y="374.74" /><mxPoint x="682.23" y="374.74" /><mxPoint x="682.23" y="302.31" /></Array></mxGeometry></mxCell><mxCell id="longvilla-370" value="LLM" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;absoluteArcSize=1;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
+          <mxGeometry x="814.69" y="316.6" width="68.14" height="44.31" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-1" value="Stage 1: Shard Images" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="94.47" y="0" width="141.17" height="20.8" as="geometry" />
@@ -11407,10 +11407,10 @@
           <mxGeometry x="395.95" y="16.68" width="129.07" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-5" value="Stage 3: LLM Execution" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="698.65" y="0" width="153.6" height="20.8" as="geometry" />
+          <mxGeometry x="708.35" y="0" width="153.6" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-6" value="Training/Serving with MM-SP" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="685.86" y="16.68" width="179.18" height="20.8" as="geometry" />
+          <mxGeometry x="695.56" y="16.68" width="179.18" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-7" value="GPU 1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="0" y="88.63" width="47.05" height="20.8" as="geometry" />
@@ -11424,29 +11424,50 @@
         <mxCell id="longvilla-35" value="&lt;i&gt;bs&lt;/i&gt;=4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="131.21" y="54.33" width="34.34" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-36" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="166.49" y="94.27" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-36" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160.29" y="117.28" as="sourcePoint" />
+            <mxPoint x="181.26" y="117.28" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="longvilla-38" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="253.21" y="94.27" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-38" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="249.4" y="117.28" as="sourcePoint" />
+            <mxPoint x="266.07" y="117.28" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="longvilla-39" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="166.49" y="214.35" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-39" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="160.29" y="237.35" as="sourcePoint" />
+            <mxPoint x="181.26" y="237.35" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="longvilla-41" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="253.21" y="214.35" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-41" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="249.4" y="237.35" as="sourcePoint" />
+            <mxPoint x="266.07" y="237.35" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="longvilla-42" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="166.49" y="334.43" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-42" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="159.82" y="357.43" as="sourcePoint" />
+            <mxPoint x="181.26" y="357.43" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
-        <mxCell id="longvilla-44" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="253.21" y="334.43" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-44" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="249.4" y="357.43" as="sourcePoint" />
+            <mxPoint x="266.07" y="357.43" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="longvilla-47" value="Allgather" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;rotation=90;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="246.63" y="209.18" width="59.87" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-53" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="290.37" y="215.3" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-53" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="287.04" y="219.35" as="sourcePoint" />
+            <mxPoint x="305.15" y="219.35" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="longvilla-54" value="Video Frames" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="63.91" y="403.12" width="85.09" height="20.8" as="geometry" />
@@ -11454,11 +11475,11 @@
         <mxCell id="longvilla-59" value="" style="rounded=1;absoluteArcSize=1;arcSize=20;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="305.15" y="40.9" width="351.18" height="345.94" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-60" value="(1) Gathering Global Input Embedding" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
+        <mxCell id="longvilla-60" value="(1) Gathering Global Input Embedding" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="318.42" y="43.37" width="225.5" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-133" value="&lt;i&gt;bs&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="304.88" y="89.83" width="17.67" height="18.4" as="geometry" />
+        <mxCell id="longvilla-133" value="&lt;i&gt;bs&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;rotation=90;" vertex="1" parent="longvilla-figure">
+          <mxGeometry x="304.63" y="89.84" width="17.67" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-134" value="&lt;i&gt;sequence&lt;/i&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
           <mxGeometry x="458.34" y="137.96" width="50.98" height="18.4" as="geometry" />
@@ -11488,31 +11509,43 @@
           <mxGeometry x="598.96" y="283.05" width="47.05" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="longvilla-288" value="Pad Token to Enable P2P Communication" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="370.83" y="403.13" width="243.9" height="20.8" as="geometry" />
+          <mxGeometry x="370.05" y="403.13" width="243.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-289" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="660.14" y="215.3" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-289" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="656.33" y="219.35" as="sourcePoint" />
+            <mxPoint x="682.23" y="219.35" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="longvilla-290" value="GPU 1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="702.84" y="60.13" width="47.05" height="20.8" as="geometry" />
+          <mxGeometry x="713.66" y="60.13" width="47.05" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-315" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="788.79" y="112.38" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-315" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="792.13" y="117.14" as="sourcePoint" />
+            <mxPoint x="814.69" y="117.14" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="longvilla-317" value="GPU 2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#456e36;fontFamily=Source Sans 3;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="703.32" y="162.1" width="47.05" height="20.8" as="geometry" />
+          <mxGeometry x="713.66" y="162.1" width="47.05" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-342" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="789.27" y="214.59" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-342" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="792.13" y="219.35" as="sourcePoint" />
+            <mxPoint x="814.69" y="219.35" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="longvilla-344" value="GPU 3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#1e3a5f;fontFamily=Source Sans 3;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="703.32" y="275.51" width="47.05" height="20.8" as="geometry" />
+          <mxGeometry x="713.66" y="281.51" width="47.05" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="longvilla-369" value="" style="triangle;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="791.65" y="327.99" width="9.53" height="9.53" as="geometry" />
+        <mxCell id="longvilla-369" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="longvilla-figure">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="792.13" y="338.76" as="sourcePoint" />
+            <mxPoint x="814.69" y="338.76" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="longvilla-371" value="Local Inputs" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="longvilla-figure">
-          <mxGeometry x="687.69" y="403.12" width="77.37" height="20.8" as="geometry" />
+          <mxGeometry x="697.39" y="403.12" width="77.37" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="pipefusion-label" value="pipefusion.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="6577.46" width="600" height="30" as="geometry" />
