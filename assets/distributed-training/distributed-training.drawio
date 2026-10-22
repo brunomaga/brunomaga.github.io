@@ -6699,11 +6699,11 @@
         <mxCell id="moe_switch_transformers-95" value="Parameters" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="moe_switch_transformers-figure">
           <mxGeometry x="638.63" y="537.89" width="78.08" height="23.2" as="geometry" />
         </mxCell>
-        <mxCell id="moe_switch_transformers-1097" value="" style="endArrow=none;startArrow=none;html=1;rounded=1;arcSize=7.2;strokeColor=#000000;strokeWidth=3.6;fontFamily=Source Sans 3;" edge="1" parent="moe_switch_transformers-figure">
+        <mxCell id="moe_switch_transformers-1097" value="" style="endArrow=none;startArrow=none;html=1;rounded=1;arcSize=10;strokeColor=#000000;strokeWidth=3.6;fontFamily=Source Sans 3;" edge="1" parent="moe_switch_transformers-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="378.68" y="150.69" as="sourcePoint" /><mxPoint x="378.68" y="150.69" as="targetPoint" /><Array as="points"><mxPoint x="403.52" y="150.69" /><mxPoint x="403.52" y="178.69" /><mxPoint x="353.84" y="178.69" /><mxPoint x="353.84" y="150.69" /></Array></mxGeometry>
         </mxCell>
-        <mxCell id="moe_switch_transformers-1098" value="" style="endArrow=none;startArrow=none;html=1;rounded=1;arcSize=7.2;strokeColor=#000000;strokeWidth=3.6;fontFamily=Source Sans 3;" edge="1" parent="moe_switch_transformers-figure">
+        <mxCell id="moe_switch_transformers-1098" value="" style="endArrow=none;startArrow=none;html=1;rounded=1;arcSize=10;strokeColor=#000000;strokeWidth=3.6;fontFamily=Source Sans 3;" edge="1" parent="moe_switch_transformers-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="591.8" y="150.69" as="sourcePoint" /><mxPoint x="591.8" y="150.69" as="targetPoint" /><Array as="points"><mxPoint x="616.64" y="150.69" /><mxPoint x="616.64" y="178.69" /><mxPoint x="566.96" y="178.69" /><mxPoint x="566.96" y="150.69" /></Array></mxGeometry>
         </mxCell>
