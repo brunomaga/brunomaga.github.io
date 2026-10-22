@@ -356,7 +356,7 @@ The **[quantile](https://en.wikipedia.org/wiki/Quantile_function)** is the inver
 The **[confidence interval](https://en.wikipedia.org/wiki/Confidence_interval)** refers to a set of values, computed from the data, that contains the population parameter for a certain proportion of times when the experiment is repeated. For example, for a $$95\%$$ **confidence level**:
 
 {: .picture}
-<img width="29.6%" height="29.6%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
+<img width="29.7%" height="29.7%" src="{{ site.assets }}/statistics-for-ml/confidence_interval.svg"/>
 
 {: .caption}
 A 95% confidence interval for a normally distributed estimate centred at $$\bar{X}$$: the lower and upper limits lie 1.96 standard errors either side of $$\bar{X}$$, so the interval holds a probability of 0.95, and each tail 0.025.
