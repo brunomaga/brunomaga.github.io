@@ -15049,7 +15049,7 @@
             <mxPoint x="82" y="114" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_data_movement-13" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
+        <mxCell id="ep_data_movement-13" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.8;dashed=1;" parent="ep_data_movement-figure" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6" y="104" as="sourcePoint" />
             <mxPoint x="326" y="104" as="targetPoint" />
@@ -15073,7 +15073,7 @@
             <mxPoint x="82" y="164" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_data_movement-18" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
+        <mxCell id="ep_data_movement-18" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.8;dashed=1;" parent="ep_data_movement-figure" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6" y="154" as="sourcePoint" />
             <mxPoint x="326" y="154" as="targetPoint" />
@@ -15097,7 +15097,7 @@
             <mxPoint x="82" y="214" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_data_movement-23" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
+        <mxCell id="ep_data_movement-23" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.8;dashed=1;" parent="ep_data_movement-figure" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6" y="204" as="sourcePoint" />
             <mxPoint x="326" y="204" as="targetPoint" />
@@ -15121,7 +15121,7 @@
             <mxPoint x="82" y="264" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_data_movement-28" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
+        <mxCell id="ep_data_movement-28" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.8;dashed=1;" parent="ep_data_movement-figure" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6" y="254" as="sourcePoint" />
             <mxPoint x="326" y="254" as="targetPoint" />
@@ -15145,7 +15145,7 @@
             <mxPoint x="82" y="314" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_data_movement-33" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
+        <mxCell id="ep_data_movement-33" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.8;dashed=1;" parent="ep_data_movement-figure" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6" y="304" as="sourcePoint" />
             <mxPoint x="326" y="304" as="targetPoint" />
@@ -15169,7 +15169,7 @@
             <mxPoint x="82" y="364" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_data_movement-38" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
+        <mxCell id="ep_data_movement-38" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.8;dashed=1;" parent="ep_data_movement-figure" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6" y="354" as="sourcePoint" />
             <mxPoint x="326" y="354" as="targetPoint" />
@@ -15193,7 +15193,7 @@
             <mxPoint x="82" y="414" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_data_movement-43" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
+        <mxCell id="ep_data_movement-43" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.8;dashed=1;" parent="ep_data_movement-figure" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6" y="404" as="sourcePoint" />
             <mxPoint x="326" y="404" as="targetPoint" />
@@ -15217,7 +15217,7 @@
             <mxPoint x="82" y="464" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_data_movement-48" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
+        <mxCell id="ep_data_movement-48" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.8;dashed=1;" parent="ep_data_movement-figure" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6" y="454" as="sourcePoint" />
             <mxPoint x="326" y="454" as="targetPoint" />
@@ -15241,7 +15241,7 @@
             <mxPoint x="82" y="514" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_data_movement-53" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
+        <mxCell id="ep_data_movement-53" value="" style="endArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.8;dashed=1;" parent="ep_data_movement-figure" edge="1">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="6" y="504" as="sourcePoint" />
             <mxPoint x="326" y="504" as="targetPoint" />
@@ -15313,7 +15313,7 @@
         <mxCell id="ep_data_movement-70" value="MatMul" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=nowrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;spacing=0;" parent="ep_data_movement-figure" vertex="1">
           <mxGeometry x="402.4" y="226" width="140" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ep_data_movement-71" value="— stays in LM —" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;fontFamily=Source Sans 3;fontSize=12;fontColor=#666666;fontStyle=0;spacing=0;dashed=1;" parent="ep_data_movement-figure" vertex="1">
+        <mxCell id="ep_data_movement-71" value="— stays in LM —" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontSize=12;fontColor=#666666;fontStyle=0;spacing=0;dashed=1;" parent="ep_data_movement-figure" vertex="1">
           <mxGeometry x="586.4" y="226" width="124" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ep_data_movement-72" value="" style="endArrow=classic;endFill=1;endSize=5;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
@@ -15334,7 +15334,7 @@
         <mxCell id="ep_data_movement-75" value="SwiGLU" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;spacing=0;" parent="ep_data_movement-figure" vertex="1">
           <mxGeometry x="402.4" y="276" width="140" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ep_data_movement-76" value="— stays in LM —" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;fontFamily=Source Sans 3;fontSize=12;fontColor=#666666;fontStyle=0;spacing=0;dashed=1;" parent="ep_data_movement-figure" vertex="1">
+        <mxCell id="ep_data_movement-76" value="— stays in LM —" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontSize=12;fontColor=#666666;fontStyle=0;spacing=0;dashed=1;" parent="ep_data_movement-figure" vertex="1">
           <mxGeometry x="586.4" y="276" width="124" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ep_data_movement-77" value="" style="endArrow=classic;endFill=1;endSize=5;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
@@ -15355,7 +15355,7 @@
         <mxCell id="ep_data_movement-80" value="MatMul" style="rounded=1;absoluteArcSize=1;arcSize=10;whiteSpace=nowrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;spacing=0;" parent="ep_data_movement-figure" vertex="1">
           <mxGeometry x="402.4" y="326" width="140" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="ep_data_movement-81" value="— stays in LM —" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;fontFamily=Source Sans 3;fontSize=12;fontColor=#666666;fontStyle=0;spacing=0;dashed=1;" parent="ep_data_movement-figure" vertex="1">
+        <mxCell id="ep_data_movement-81" value="— stays in LM —" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;fontSize=12;fontColor=#666666;fontStyle=0;spacing=0;dashed=1;" parent="ep_data_movement-figure" vertex="1">
           <mxGeometry x="586.4" y="326" width="124" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ep_data_movement-82" value="" style="endArrow=classic;endFill=1;endSize=5;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;dashed=1;" parent="ep_data_movement-figure" edge="1">
@@ -15499,13 +15499,13 @@
         <mxCell id="ep_all_gather_reduce_scatter-26" parent="ep_all_gather_reduce_scatter-figure" style="text;html=1;align=center;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;verticalAlign=bottom;spacingBottom=5;labelBackgroundColor=none;" value="Token rank" vertex="1">
           <mxGeometry x="551.00" y="30.87" width="30" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter-27" parent="ep_all_gather_reduce_scatter-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+        <mxCell id="ep_all_gather_reduce_scatter-27" parent="ep_all_gather_reduce_scatter-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;points=[[0,0.5]];rounded=0;" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
           <mxGeometry x="605.00" y="83.54" width="27" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter-28" parent="ep_all_gather_reduce_scatter-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+        <mxCell id="ep_all_gather_reduce_scatter-28" parent="ep_all_gather_reduce_scatter-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;points=[[0,0.5]];rounded=0;" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
           <mxGeometry x="605.00" y="165.20" width="27" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter-29" parent="ep_all_gather_reduce_scatter-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+        <mxCell id="ep_all_gather_reduce_scatter-29" parent="ep_all_gather_reduce_scatter-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;points=[[0,0.5]];rounded=0;" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
           <mxGeometry x="605.00" y="246.87" width="27" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter-30" edge="1" parent="ep_all_gather_reduce_scatter-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.1000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.1000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter-5" target="ep_all_gather_reduce_scatter-10">
@@ -15835,13 +15835,13 @@
         <mxCell id="ep_all_to_all-26" parent="ep_all_to_all-figure" style="text;html=1;align=center;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;verticalAlign=bottom;spacingBottom=5;labelBackgroundColor=none;" value="Token rank" vertex="1">
           <mxGeometry x="551.00" y="30.86" width="30" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all-27" parent="ep_all_to_all-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+        <mxCell id="ep_all_to_all-27" parent="ep_all_to_all-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;points=[[0,0.5]];rounded=0;" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
           <mxGeometry x="605.00" y="83.53" width="27" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all-28" parent="ep_all_to_all-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+        <mxCell id="ep_all_to_all-28" parent="ep_all_to_all-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;points=[[0,0.5]];rounded=0;" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
           <mxGeometry x="605.00" y="165.20" width="27" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all-29" parent="ep_all_to_all-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+        <mxCell id="ep_all_to_all-29" parent="ep_all_to_all-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontSize=14;fontColor=#000000;points=[[0,0.5]];rounded=0;" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
           <mxGeometry x="605.00" y="246.86" width="27" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all-30" edge="1" parent="ep_all_to_all-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.1000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.1000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all-5" target="ep_all_to_all-10">
@@ -16100,10 +16100,10 @@
           <mxGeometry height="22" width="155.402" x="53.30" y="324.75" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-3" parent="ep_all_gather_reduce_scatter_inc-figure" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.5;rotation=-90;strokeColor=#000000;strokeWidth=1.0;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;" value="" vertex="1">
-          <mxGeometry height="470" width="12" x="545.00" y="81.20" as="geometry" />
+          <mxGeometry height="480" width="12" x="550" y="76.2" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-4" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;labelBackgroundColor=none;" value="collective INC pull-reduce" vertex="1">
-          <mxGeometry height="22" width="184.24" x="458.88" y="324.75" as="geometry" />
+          <mxGeometry height="22" width="184.24" x="463.88" y="324.75" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-5" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[1,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;0&lt;/sub&gt;" vertex="1">
           <mxGeometry x="0.00" y="59.54" width="30" height="70.00" as="geometry" />
@@ -16157,63 +16157,63 @@
           <mxGeometry x="340.00" y="30.87" width="30" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-22" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=12;fontStyle=0;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;fontColor=#000000;align=center;spacing=0;rounded=1;absoluteArcSize=1;arcSize=20;verticalLabelPosition=top;verticalAlign=bottom;spacingBottom=5;" value="INC switch" vertex="1">
-          <mxGeometry x="414.00" y="52.54" width="90" height="247.33" as="geometry" />
+          <mxGeometry x="414.00" y="52.54" width="100" height="247.33" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-23" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;0&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="548.00" y="59.54" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="558" y="59.54" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-24" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="548.00" y="141.20" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="558" y="141.20" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-25" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="548.00" y="222.87" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="558" y="222.87" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-26" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;verticalAlign=bottom;spacingBottom=5;labelBackgroundColor=none;" value="Expert rank" vertex="1">
-          <mxGeometry x="548.00" y="30.87" width="30" height="20" as="geometry" />
+          <mxGeometry x="558" y="30.87" width="30" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-27" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=12;fontStyle=0;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;fontColor=#000000;align=center;spacing=0;rounded=1;absoluteArcSize=1;arcSize=20;verticalLabelPosition=top;verticalAlign=bottom;spacingBottom=5;" value="INC switch" vertex="1">
-          <mxGeometry x="622.00" y="52.54" width="90" height="247.33" as="geometry" />
+          <mxGeometry x="632" y="52.54" width="90" height="247.33" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-28" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;0&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="756.00" y="59.54" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="766" y="59.54" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-29" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="756.00" y="141.20" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="766" y="141.20" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-30" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="756.00" y="222.87" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="766" y="222.87" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-31" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=right;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;verticalAlign=bottom;spacingBottom=5;labelBackgroundColor=none;" value="Token rank" vertex="1">
-          <mxGeometry x="756.00" y="30.87" width="30" height="20" as="geometry" />
+          <mxGeometry x="766" y="30.87" width="30" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-32" parent="ep_all_gather_reduce_scatter_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.1667],[0,0.5],[0,0.8333],[1,0.5]];" value="" vertex="1">
+        <mxCell id="ep_all_gather_reduce_scatter_inc-32" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.2;fontColor=#000000;rounded=0;points=[[0,0.1667],[0,0.5],[0,0.8333],[1,0.5]];" value="" vertex="1">
           <mxGeometry x="105.00" y="146.20" width="28" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-33" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="endArrow=none;html=1;rounded=0;strokeWidth=0.4;strokeColor=#666666;lineCap=flat;" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="105.00" y="164.54" as="sourcePoint" />
-            <mxPoint x="133.00" y="164.54" as="targetPoint" />
+            <mxPoint x="105" y="166.2" as="sourcePoint" />
+            <mxPoint x="133" y="166.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-34" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="endArrow=none;html=1;rounded=0;strokeWidth=0.4;strokeColor=#666666;lineCap=flat;" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="105.00" y="187.87" as="sourcePoint" />
-            <mxPoint x="133.00" y="187.87" as="targetPoint" />
+            <mxPoint x="105" y="186.2" as="sourcePoint" />
+            <mxPoint x="133" y="186.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-35" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="A" vertex="1">
-          <mxGeometry x="105.00" y="142.87" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-35" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="A" vertex="1">
+          <mxGeometry x="105.00" y="146.2" width="28" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-36" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="B" vertex="1">
-          <mxGeometry x="105.00" y="166.20" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-36" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="B" vertex="1">
+          <mxGeometry x="105.00" y="166.2" width="28" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-37" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="C" vertex="1">
-          <mxGeometry x="105.00" y="189.54" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-37" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="C" vertex="1">
+          <mxGeometry x="105.00" y="186.2" width="28" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-38" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.1667;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-5" target="ep_all_gather_reduce_scatter_inc-32">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="76.00" y="94.54" />
+              <mxPoint x="76" y="94.54" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -16229,7 +16229,7 @@
         <mxCell id="ep_all_gather_reduce_scatter_inc-42" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.8333;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-7" target="ep_all_gather_reduce_scatter_inc-32">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="76.00" y="257.87" />
+              <mxPoint x="76" y="257.87" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -16239,7 +16239,7 @@
         <mxCell id="ep_all_gather_reduce_scatter_inc-44" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-32" target="ep_all_gather_reduce_scatter_inc-10">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="162.00" y="94.54" />
+              <mxPoint x="162" y="94.54" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -16255,7 +16255,7 @@
         <mxCell id="ep_all_gather_reduce_scatter_inc-48" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-32" target="ep_all_gather_reduce_scatter_inc-12">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="162.00" y="257.87" />
+              <mxPoint x="162" y="257.87" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -16280,8 +16280,8 @@
         <mxCell id="ep_all_gather_reduce_scatter_inc-55" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-16" target="ep_all_gather_reduce_scatter_inc-20">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-56" parent="ep_all_gather_reduce_scatter_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="423.00" y="83.54" width="80.72" height="22" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-56" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="419" y="83.54" width="90" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-57" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-18" target="ep_all_gather_reduce_scatter_inc-56">
           <mxGeometry relative="1" as="geometry" />
@@ -16292,8 +16292,8 @@
         <mxCell id="ep_all_gather_reduce_scatter_inc-59" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-56" target="ep_all_gather_reduce_scatter_inc-23">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-60" parent="ep_all_gather_reduce_scatter_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="423.00" y="165.20" width="80.72" height="22" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-60" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="419" y="165.20" width="90" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-61" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-19" target="ep_all_gather_reduce_scatter_inc-60">
           <mxGeometry relative="1" as="geometry" />
@@ -16304,8 +16304,8 @@
         <mxCell id="ep_all_gather_reduce_scatter_inc-63" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-60" target="ep_all_gather_reduce_scatter_inc-24">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-64" parent="ep_all_gather_reduce_scatter_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AB&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AB&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="423.00" y="246.87" width="80.72" height="22" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-64" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AB&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AB&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="419" y="246.87" width="90" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-65" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-20" target="ep_all_gather_reduce_scatter_inc-64">
           <mxGeometry relative="1" as="geometry" />
@@ -16317,60 +16317,60 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-68" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=12;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;&lt;/sub&gt; =&lt;br&gt;&lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;0&lt;br&gt;&lt;i&gt;t&lt;/i&gt;&lt;/span&gt; + &lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;1&lt;br&gt;&lt;i&gt;t&lt;/i&gt;&lt;/span&gt; + &lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;2&lt;br&gt;&lt;i&gt;t&lt;/i&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="622.00" y="55.54" width="90" height="36" as="geometry" />
+          <mxGeometry x="632" y="55.54" width="90" height="36" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-69" parent="ep_all_gather_reduce_scatter_inc-figure" style="shape=orEllipse;perimeter=ellipsePerimeter;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.0;points=[[0,0.5],[1,0.5]];" value="" vertex="1">
-          <mxGeometry x="637.00" y="170.20" width="12" height="12" as="geometry" />
+          <mxGeometry x="643" y="166.2" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-70" parent="ep_all_gather_reduce_scatter_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.1667],[1,0.5],[1,0.8333]];" value="" vertex="1">
-          <mxGeometry x="669.00" y="146.20" width="28" height="60" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-70" parent="ep_all_gather_reduce_scatter_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.2;fontColor=#000000;rounded=0;points=[[0,0.5],[1,0.1667],[1,0.5],[1,0.8333]];" value="" vertex="1">
+          <mxGeometry x="679" y="146.20" width="28" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-71" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="endArrow=none;html=1;rounded=0;strokeWidth=0.4;strokeColor=#666666;lineCap=flat;" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="669.00" y="164.54" as="sourcePoint" />
-            <mxPoint x="697.00" y="164.54" as="targetPoint" />
+            <mxPoint x="679" y="166.2" as="sourcePoint" />
+            <mxPoint x="707" y="166.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-72" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="endArrow=none;html=1;rounded=0;strokeWidth=0.4;strokeColor=#666666;lineCap=flat;" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="669.00" y="187.87" as="sourcePoint" />
-            <mxPoint x="697.00" y="187.87" as="targetPoint" />
+            <mxPoint x="679" y="186.2" as="sourcePoint" />
+            <mxPoint x="707" y="186.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-73" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="669.00" y="142.87" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-73" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=12;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="679" y="146.2" width="28" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-74" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="669.00" y="166.20" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-74" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=12;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="679" y="166.2" width="28" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_gather_reduce_scatter_inc-75" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="669.00" y="189.54" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_gather_reduce_scatter_inc-75" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=12;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="679" y="186.2" width="28" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-76" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=none;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-23" target="ep_all_gather_reduce_scatter_inc-69">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="624.00" y="94.54" />
+              <mxPoint x="634" y="94.54" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-77" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;0&lt;br&gt;&lt;i&gt;A&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;C&lt;/i&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="582.00" y="68.86" width="40" height="20" as="geometry" />
+          <mxGeometry x="592" y="68.86" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-78" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=none;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-24" target="ep_all_gather_reduce_scatter_inc-69">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-79" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;1&lt;br&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="582.00" y="150.52" width="40" height="20" as="geometry" />
+          <mxGeometry x="592" y="150.52" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-80" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=none;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-25" target="ep_all_gather_reduce_scatter_inc-69">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="624.00" y="257.87" />
+              <mxPoint x="634" y="257.87" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-81" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;2&lt;br&gt;&lt;i&gt;AB&lt;/i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="582.00" y="232.19" width="40" height="20" as="geometry" />
+          <mxGeometry x="592" y="232.19" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-82" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-69" target="ep_all_gather_reduce_scatter_inc-70">
           <mxGeometry relative="1" as="geometry" />
@@ -16378,34 +16378,34 @@
         <mxCell id="ep_all_gather_reduce_scatter_inc-83" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.1667;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-70" target="ep_all_gather_reduce_scatter_inc-28">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="710.00" y="94.54" />
+              <mxPoint x="720" y="94.54" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-84" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="716.00" y="69.32" width="40" height="20" as="geometry" />
+          <mxGeometry x="726" y="69.32" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-85" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-70" target="ep_all_gather_reduce_scatter_inc-29">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-86" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="716.00" y="150.99" width="40" height="20" as="geometry" />
+          <mxGeometry x="726" y="150.99" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-87" edge="1" parent="ep_all_gather_reduce_scatter_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.8333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_gather_reduce_scatter_inc-70" target="ep_all_gather_reduce_scatter_inc-30">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="710.00" y="257.87" />
+              <mxPoint x="720" y="257.87" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-88" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="716.00" y="232.66" width="40" height="20" as="geometry" />
+          <mxGeometry x="726" y="232.66" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-89" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=16;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;labelBackgroundColor=none;" value="INC All-Gather" vertex="1">
           <mxGeometry x="73.84" y="0.00" width="114.31" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-90" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=16;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;labelBackgroundColor=none;" value="INC Reduce-Scatter" vertex="1">
-          <mxGeometry x="473.96" y="0.00" width="154.08" height="30.4" as="geometry" />
+          <mxGeometry x="478.96" y="0.00" width="154.08" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-91" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="1 &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;→INC push&lt;br&gt;of &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;T&lt;/i&gt;&lt;/span&gt; tokens per node &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;" vertex="1">
           <mxGeometry x="0.00" y="349.25" width="108.08" height="30.4" as="geometry" />
@@ -16423,34 +16423,34 @@
           <mxGeometry x="194.80" y="349.25" width="116.72" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-96" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=30;spacing=0;labelBackgroundColor=none;" value="(" vertex="1">
-          <mxGeometry x="345.87" y="349.25" width="15.09" height="30.4" as="geometry" />
+          <mxGeometry x="350.87" y="349.25" width="15.09" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-97" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="1 &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;→INC&lt;br&gt;signal" vertex="1">
-          <mxGeometry x="363.96" y="349.25" width="43" height="30.4" as="geometry" />
+          <mxGeometry x="368.96" y="349.25" width="43" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-98" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=16;spacing=0;labelBackgroundColor=none;" value="+" vertex="1">
-          <mxGeometry x="406.96" y="349.25" width="20.91" height="30.4" as="geometry" />
+          <mxGeometry x="411.96" y="349.25" width="20.91" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-99" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="1 &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;→INC pull&lt;br&gt;of &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;WT&lt;/i&gt;&lt;/span&gt; outputs" vertex="1">
-          <mxGeometry x="427.87" y="349.25" width="66.09" height="30.4" as="geometry" />
+          <mxGeometry x="432.87" y="349.25" width="66.09" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-100" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=16;spacing=0;labelBackgroundColor=none;" value="+" vertex="1">
-          <mxGeometry x="493.96" y="349.25" width="20.91" height="30.4" as="geometry" />
+          <mxGeometry x="498.96" y="349.25" width="20.91" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-101" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="INC&lt;br&gt;reduce" vertex="1">
-          <mxGeometry x="514.87" y="349.25" width="33.48" height="30.4" as="geometry" />
+          <mxGeometry x="519.87" y="349.25" width="33.48" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-102" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=30;spacing=0;labelBackgroundColor=none;" value=")" vertex="1">
-          <mxGeometry x="551.35" y="349.25" width="15.09" height="30.4" as="geometry" />
+          <mxGeometry x="556.35" y="349.25" width="15.09" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-103" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="per node &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="563.45" y="349.25" width="55.56" height="30.4" as="geometry" />
+          <mxGeometry x="568.45" y="349.25" width="55.56" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-104" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=16;spacing=0;labelBackgroundColor=none;" value="+" vertex="1">
-          <mxGeometry x="619.01" y="349.25" width="20.91" height="30.4" as="geometry" />
+          <mxGeometry x="624.01" y="349.25" width="20.91" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_gather_reduce_scatter_inc-105" parent="ep_all_gather_reduce_scatter_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="1 INC→&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt; push&lt;br&gt;of &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;T&lt;/i&gt;&lt;/span&gt; outputs per node &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="639.91" y="349.25" width="113.22" height="30.4" as="geometry" />
+          <mxGeometry x="644.91" y="349.25" width="113.22" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-label" value="ep_all_to_all_inc.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0.0" y="1897.49" width="300" height="20" as="geometry" />
@@ -16465,10 +16465,10 @@
           <mxGeometry height="22" width="196.537" x="32.73" y="324.74" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-3" parent="ep_all_to_all_inc-figure" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;labelPosition=left;verticalLabelPosition=middle;align=right;verticalAlign=middle;size=0.5;rotation=-90;strokeColor=#000000;strokeWidth=1.0;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;" value="" vertex="1">
-          <mxGeometry height="470" width="12" x="545.00" y="81.20" as="geometry" />
+          <mxGeometry height="480" width="12" x="550" y="76.2" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-4" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=16;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;labelBackgroundColor=none;" value="collective INC pull-reduce" vertex="1">
-          <mxGeometry height="22" width="195.367" x="453.32" y="324.74" as="geometry" />
+          <mxGeometry height="22" width="195.367" x="458.32" y="324.74" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-5" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[1,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;0&lt;/sub&gt;" vertex="1">
           <mxGeometry x="0.00" y="59.53" width="30" height="70.00" as="geometry" />
@@ -16522,63 +16522,63 @@
           <mxGeometry x="340.00" y="30.86" width="30" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-22" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=12;fontStyle=0;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;fontColor=#000000;align=center;spacing=0;rounded=1;absoluteArcSize=1;arcSize=20;verticalLabelPosition=top;verticalAlign=bottom;spacingBottom=5;" value="INC switch" vertex="1">
-          <mxGeometry x="414.00" y="52.53" width="90" height="247.33" as="geometry" />
+          <mxGeometry x="414.00" y="52.53" width="100" height="247.33" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-23" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;0&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="548.00" y="59.53" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="558" y="59.53" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-24" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="548.00" y="141.20" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="558" y="141.20" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-25" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="548.00" y="222.86" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="558" y="222.86" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-26" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;verticalAlign=bottom;spacingBottom=5;labelBackgroundColor=none;" value="Expert rank" vertex="1">
-          <mxGeometry x="548.00" y="30.86" width="30" height="20" as="geometry" />
+          <mxGeometry x="558" y="30.86" width="30" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-27" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=12;fontStyle=0;fillColor=#ffe6cc;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;fontColor=#000000;align=center;spacing=0;rounded=1;absoluteArcSize=1;arcSize=20;verticalLabelPosition=top;verticalAlign=bottom;spacingBottom=5;" value="INC switch" vertex="1">
-          <mxGeometry x="622.00" y="52.53" width="90" height="247.33" as="geometry" />
+          <mxGeometry x="632" y="52.53" width="90" height="247.33" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-28" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;0&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="756.00" y="59.53" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="766" y="59.53" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-29" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="756.00" y="141.20" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="766" y="141.20" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-30" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fontSize=16;fontStyle=0;fillColor=#d5e8d4;strokeColor=#000000;container=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5]];" value="&lt;i&gt;&lt;i&gt;P&lt;/i&gt;&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="756.00" y="222.86" width="30" height="70.00" as="geometry" />
+          <mxGeometry x="766" y="222.86" width="30" height="70.00" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-31" parent="ep_all_to_all_inc-figure" style="text;html=1;align=right;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;verticalAlign=bottom;spacingBottom=5;labelBackgroundColor=none;" value="Token rank" vertex="1">
-          <mxGeometry x="756.00" y="30.86" width="30" height="20" as="geometry" />
+          <mxGeometry x="766" y="30.86" width="30" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-32" parent="ep_all_to_all_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.1667],[0,0.5],[0,0.8333],[1,0.5]];" value="" vertex="1">
+        <mxCell id="ep_all_to_all_inc-32" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.2;fontColor=#000000;rounded=0;points=[[0,0.1667],[0,0.5],[0,0.8333],[1,0.5]];" value="" vertex="1">
           <mxGeometry x="105.00" y="146.20" width="28" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-33" edge="1" parent="ep_all_to_all_inc-figure" style="endArrow=none;html=1;rounded=0;strokeWidth=0.4;strokeColor=#666666;lineCap=flat;" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="105.00" y="164.53" as="sourcePoint" />
-            <mxPoint x="133.00" y="164.53" as="targetPoint" />
+            <mxPoint x="105" y="166.2" as="sourcePoint" />
+            <mxPoint x="133" y="166.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_to_all_inc-34" edge="1" parent="ep_all_to_all_inc-figure" style="endArrow=none;html=1;rounded=0;strokeWidth=0.4;strokeColor=#666666;lineCap=flat;" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="105.00" y="187.86" as="sourcePoint" />
-            <mxPoint x="133.00" y="187.86" as="targetPoint" />
+            <mxPoint x="105" y="186.2" as="sourcePoint" />
+            <mxPoint x="133" y="186.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-35" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="A" vertex="1">
-          <mxGeometry x="105.00" y="142.86" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-35" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="A" vertex="1">
+          <mxGeometry x="105.00" y="146.2" width="28" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-36" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="B" vertex="1">
-          <mxGeometry x="105.00" y="166.20" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-36" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="B" vertex="1">
+          <mxGeometry x="105.00" y="166.2" width="28" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-37" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="C" vertex="1">
-          <mxGeometry x="105.00" y="189.53" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-37" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="C" vertex="1">
+          <mxGeometry x="105.00" y="186.2" width="28" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-38" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.1667;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-5" target="ep_all_to_all_inc-32">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="76.00" y="94.53" />
+              <mxPoint x="76" y="94.53" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -16594,7 +16594,7 @@
         <mxCell id="ep_all_to_all_inc-42" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.8333;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-7" target="ep_all_to_all_inc-32">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="76.00" y="257.86" />
+              <mxPoint x="76" y="257.86" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -16604,7 +16604,7 @@
         <mxCell id="ep_all_to_all_inc-44" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-32" target="ep_all_to_all_inc-10">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="162.00" y="94.53" />
+              <mxPoint x="162" y="94.53" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -16620,7 +16620,7 @@
         <mxCell id="ep_all_to_all_inc-48" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-32" target="ep_all_to_all_inc-12">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="162.00" y="257.86" />
+              <mxPoint x="162" y="257.86" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -16645,8 +16645,8 @@
         <mxCell id="ep_all_to_all_inc-55" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-16" target="ep_all_to_all_inc-20">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-56" parent="ep_all_to_all_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AC&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AC&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="425.83" y="83.53" width="66.34" height="22" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-56" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AC&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AC&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="419" y="83.53" width="90" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-57" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-18" target="ep_all_to_all_inc-56">
           <mxGeometry relative="1" as="geometry" />
@@ -16657,8 +16657,8 @@
         <mxCell id="ep_all_to_all_inc-59" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-56" target="ep_all_to_all_inc-23">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-60" parent="ep_all_to_all_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="425.83" y="165.20" width="66.34" height="22" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-60" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="419" y="165.20" width="90" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-61" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-19" target="ep_all_to_all_inc-60">
           <mxGeometry relative="1" as="geometry" />
@@ -16669,8 +16669,8 @@
         <mxCell id="ep_all_to_all_inc-63" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-60" target="ep_all_to_all_inc-24">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-64" parent="ep_all_to_all_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AB&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AB&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="425.83" y="246.86" width="66.34" height="22" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-64" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AB&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;AB&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="419" y="246.86" width="90" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-65" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-20" target="ep_all_to_all_inc-64">
           <mxGeometry relative="1" as="geometry" />
@@ -16682,60 +16682,60 @@
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-68" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=12;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;t&lt;/i&gt;&lt;/sub&gt; =&lt;br&gt;&lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;0&lt;br&gt;&lt;i&gt;t&lt;/i&gt;&lt;/span&gt; + &lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;1&lt;br&gt;&lt;i&gt;t&lt;/i&gt;&lt;/span&gt; + &lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;2&lt;br&gt;&lt;i&gt;t&lt;/i&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="622.00" y="55.53" width="90" height="36" as="geometry" />
+          <mxGeometry x="632" y="55.53" width="90" height="36" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-69" parent="ep_all_to_all_inc-figure" style="shape=orEllipse;perimeter=ellipsePerimeter;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.0;points=[[0,0.5],[1,0.5]];" value="" vertex="1">
-          <mxGeometry x="637.00" y="170.20" width="12" height="12" as="geometry" />
+          <mxGeometry x="643" y="166.2" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-70" parent="ep_all_to_all_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.1667],[1,0.5],[1,0.8333]];" value="" vertex="1">
-          <mxGeometry x="669.00" y="146.20" width="28" height="60" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-70" parent="ep_all_to_all_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.2;fontColor=#000000;rounded=0;points=[[0,0.5],[1,0.1667],[1,0.5],[1,0.8333]];" value="" vertex="1">
+          <mxGeometry x="679" y="146.20" width="28" height="60" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-71" edge="1" parent="ep_all_to_all_inc-figure" style="endArrow=none;html=1;rounded=0;strokeWidth=0.4;strokeColor=#666666;lineCap=flat;" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="669.00" y="164.53" as="sourcePoint" />
-            <mxPoint x="697.00" y="164.53" as="targetPoint" />
+            <mxPoint x="679" y="166.2" as="sourcePoint" />
+            <mxPoint x="707" y="166.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_to_all_inc-72" edge="1" parent="ep_all_to_all_inc-figure" style="endArrow=none;html=1;rounded=0;strokeWidth=0.4;strokeColor=#666666;lineCap=flat;" value="">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="669.00" y="187.86" as="sourcePoint" />
-            <mxPoint x="697.00" y="187.86" as="targetPoint" />
+            <mxPoint x="679" y="186.2" as="sourcePoint" />
+            <mxPoint x="707" y="186.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-73" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="669.00" y="142.86" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-73" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=12;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="679" y="146.2" width="28" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-74" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="669.00" y="166.20" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-74" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=12;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="679" y="166.2" width="28" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_all_to_all_inc-75" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="669.00" y="189.53" width="28" height="20" as="geometry" />
+        <mxCell id="ep_all_to_all_inc-75" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=12;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="679" y="186.2" width="28" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-76" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=none;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;" value="" source="ep_all_to_all_inc-23" target="ep_all_to_all_inc-69">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="624.00" y="94.53" />
+              <mxPoint x="634" y="94.53" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_to_all_inc-77" parent="ep_all_to_all_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;0&lt;br&gt;&lt;i&gt;AC&lt;/i&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="582.00" y="68.85" width="40" height="20" as="geometry" />
+          <mxGeometry x="592" y="68.85" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-78" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=none;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-24" target="ep_all_to_all_inc-69">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-79" parent="ep_all_to_all_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;1&lt;br&gt;&lt;i&gt;BC&lt;/i&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="582.00" y="150.52" width="40" height="20" as="geometry" />
+          <mxGeometry x="592" y="150.52" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-80" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=none;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;" value="" source="ep_all_to_all_inc-25" target="ep_all_to_all_inc-69">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="624.00" y="257.86" />
+              <mxPoint x="634" y="257.86" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_to_all_inc-81" parent="ep_all_to_all_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;σ&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;2&lt;br&gt;&lt;i&gt;AB&lt;/i&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="582.00" y="232.18" width="40" height="20" as="geometry" />
+          <mxGeometry x="592" y="232.18" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-82" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-69" target="ep_all_to_all_inc-70">
           <mxGeometry relative="1" as="geometry" />
@@ -16743,34 +16743,34 @@
         <mxCell id="ep_all_to_all_inc-83" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.1667;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-70" target="ep_all_to_all_inc-28">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="710.00" y="94.53" />
+              <mxPoint x="720" y="94.53" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_to_all_inc-84" parent="ep_all_to_all_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="716.00" y="69.32" width="40" height="20" as="geometry" />
+          <mxGeometry x="726" y="69.32" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-85" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-70" target="ep_all_to_all_inc-29">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-86" parent="ep_all_to_all_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="716.00" y="150.98" width="40" height="20" as="geometry" />
+          <mxGeometry x="726" y="150.98" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-87" edge="1" parent="ep_all_to_all_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.8333;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_all_to_all_inc-70" target="ep_all_to_all_inc-30">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
-              <mxPoint x="710.00" y="257.86" />
+              <mxPoint x="720" y="257.86" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="ep_all_to_all_inc-88" parent="ep_all_to_all_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="716.00" y="232.65" width="40" height="20" as="geometry" />
+          <mxGeometry x="726" y="232.65" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-89" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=16;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;labelBackgroundColor=none;" value="INC All-to-All-Unique" vertex="1">
           <mxGeometry x="48.09" y="0.00" width="165.83" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-90" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontSize=16;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;labelBackgroundColor=none;" value="INC All-to-All-Reduce" vertex="1">
-          <mxGeometry x="467.66" y="0.00" width="166.69" height="30.4" as="geometry" />
+          <mxGeometry x="472.66" y="0.00" width="166.69" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-91" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="1 &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;→INC push&lt;br&gt;of &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;T&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt; tokens per node &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;" vertex="1">
           <mxGeometry x="0.00" y="349.24" width="112.09" height="30.4" as="geometry" />
@@ -16788,34 +16788,34 @@
           <mxGeometry x="198.81" y="349.24" width="120.73" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-96" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=30;spacing=0;labelBackgroundColor=none;" value="(" vertex="1">
-          <mxGeometry x="341.85" y="349.24" width="15.09" height="30.4" as="geometry" />
+          <mxGeometry x="346.85" y="349.24" width="15.09" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-97" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="1 &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;→INC&lt;br&gt;signal" vertex="1">
-          <mxGeometry x="359.95" y="349.24" width="43" height="30.4" as="geometry" />
+          <mxGeometry x="364.95" y="349.24" width="43" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-98" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=16;spacing=0;labelBackgroundColor=none;" value="+" vertex="1">
-          <mxGeometry x="402.95" y="349.24" width="20.91" height="30.4" as="geometry" />
+          <mxGeometry x="407.95" y="349.24" width="20.91" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-99" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="1 &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;→INC pull&lt;br&gt;of &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;WT&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt; outputs" vertex="1">
-          <mxGeometry x="423.85" y="349.24" width="70.11" height="30.4" as="geometry" />
+          <mxGeometry x="428.85" y="349.24" width="70.11" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-100" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=16;spacing=0;labelBackgroundColor=none;" value="+" vertex="1">
-          <mxGeometry x="493.96" y="349.24" width="20.91" height="30.4" as="geometry" />
+          <mxGeometry x="498.96" y="349.24" width="20.91" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-101" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="INC&lt;br&gt;reduce" vertex="1">
-          <mxGeometry x="514.87" y="349.24" width="33.48" height="30.4" as="geometry" />
+          <mxGeometry x="519.87" y="349.24" width="33.48" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-102" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=30;spacing=0;labelBackgroundColor=none;" value=")" vertex="1">
-          <mxGeometry x="551.35" y="349.24" width="15.09" height="30.4" as="geometry" />
+          <mxGeometry x="556.35" y="349.24" width="15.09" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-103" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="per node &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="563.45" y="349.24" width="55.56" height="30.4" as="geometry" />
+          <mxGeometry x="568.45" y="349.24" width="55.56" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-104" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=16;spacing=0;labelBackgroundColor=none;" value="+" vertex="1">
-          <mxGeometry x="619.01" y="349.24" width="20.91" height="30.4" as="geometry" />
+          <mxGeometry x="624.01" y="349.24" width="20.91" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_all_to_all_inc-105" parent="ep_all_to_all_inc-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;labelBackgroundColor=none;" value="1 INC→&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt; push&lt;br&gt;of &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;T&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt; outputs per node &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;P&lt;/i&gt;&lt;sub&gt;&lt;i&gt;x&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;" vertex="1">
-          <mxGeometry x="639.91" y="349.24" width="117.23" height="30.4" as="geometry" />
+          <mxGeometry x="644.91" y="349.24" width="117.23" height="30.4" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-label" value="ep_one_to_many_inc.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0.0" y="2414.52" width="300" height="20" as="geometry" />
@@ -16916,7 +16916,7 @@
         <mxCell id="ep_one_to_many_inc-31" parent="ep_one_to_many_inc-figure" style="text;html=1;align=right;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=12;spacing=0;verticalAlign=bottom;spacingBottom=5;labelBackgroundColor=none;" value="Token rank" vertex="1">
           <mxGeometry x="832.30" y="30.86" width="30" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_one_to_many_inc-32" parent="ep_one_to_many_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#666666;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="A" vertex="1">
+        <mxCell id="ep_one_to_many_inc-32" parent="ep_one_to_many_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#666666;points=[[0,0.5],[1,0.5]];rounded=0;" value="A" vertex="1">
           <mxGeometry x="89.55" y="83.53" width="24" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-33" edge="1" parent="ep_one_to_many_inc-figure" style="html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_one_to_many_inc-1" target="ep_one_to_many_inc-32">
@@ -16925,7 +16925,7 @@
         <mxCell id="ep_one_to_many_inc-34" parent="ep_one_to_many_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#666666;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;A&lt;/i&gt;&lt;sub&gt;02&lt;/sub&gt;" vertex="1">
           <mxGeometry x="37.85" y="69.32" width="40" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_one_to_many_inc-35" parent="ep_one_to_many_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#666666;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="B" vertex="1">
+        <mxCell id="ep_one_to_many_inc-35" parent="ep_one_to_many_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#666666;points=[[0,0.5],[1,0.5]];rounded=0;" value="B" vertex="1">
           <mxGeometry x="89.55" y="165.20" width="24" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-36" edge="1" parent="ep_one_to_many_inc-figure" style="html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_one_to_many_inc-2" target="ep_one_to_many_inc-35">
@@ -16934,7 +16934,7 @@
         <mxCell id="ep_one_to_many_inc-37" parent="ep_one_to_many_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#666666;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;B&lt;/i&gt;&lt;sub&gt;12&lt;/sub&gt;" vertex="1">
           <mxGeometry x="37.85" y="150.98" width="40" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_one_to_many_inc-38" parent="ep_one_to_many_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="C" vertex="1">
+        <mxCell id="ep_one_to_many_inc-38" parent="ep_one_to_many_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#000000;points=[[0,0.5],[1,0.5]];rounded=0;" value="C" vertex="1">
           <mxGeometry x="89.55" y="246.86" width="24" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-39" edge="1" parent="ep_one_to_many_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_one_to_many_inc-3" target="ep_one_to_many_inc-38">
@@ -17073,8 +17073,8 @@
         <mxCell id="ep_one_to_many_inc-70" parent="ep_one_to_many_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;r&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;1&lt;br&gt;&lt;i&gt;C&lt;/i&gt;&lt;/span&gt;" vertex="1">
           <mxGeometry x="360.85" y="164.52" width="40" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_one_to_many_inc-71" parent="ep_one_to_many_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#666666;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="496.36" y="83.53" width="53.78" height="22" as="geometry" />
+        <mxCell id="ep_one_to_many_inc-71" parent="ep_one_to_many_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#666666;dashed=1;points=[[0,0.5],[1,0.5]];rounded=1;absoluteArcSize=1;arcSize=10;" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="492.25" y="83.53" width="62" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-72" edge="1" parent="ep_one_to_many_inc-figure" style="html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_one_to_many_inc-18" target="ep_one_to_many_inc-71">
           <mxGeometry relative="1" as="geometry" />
@@ -17083,9 +17083,9 @@
           <mxGeometry x="450.15" y="68.85" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-74" parent="ep_one_to_many_inc-figure" style="shape=orEllipse;perimeter=ellipsePerimeter;html=1;fillColor=#FFFFFF;strokeColor=#666666;strokeWidth=1.0;points=[[1,0.5]];" value="" vertex="1">
-          <mxGeometry x="709.25" y="88.53" width="12" height="12" as="geometry" />
+          <mxGeometry x="705.25" y="84.53" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_one_to_many_inc-75" parent="ep_one_to_many_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#666666;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+        <mxCell id="ep_one_to_many_inc-75" parent="ep_one_to_many_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#666666;points=[[0,0.5],[1,0.5]];rounded=0;" value="Σ&lt;sub&gt;&lt;i&gt;A&lt;/i&gt;&lt;/sub&gt;" vertex="1">
           <mxGeometry x="739.35" y="83.53" width="24" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-76" edge="1" parent="ep_one_to_many_inc-figure" style="html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_one_to_many_inc-74" target="ep_one_to_many_inc-75">
@@ -17147,8 +17147,8 @@
         <mxCell id="ep_one_to_many_inc-88" parent="ep_one_to_many_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#666666;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;s&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;2&lt;br&gt;&lt;i&gt;A&lt;/i&gt;&lt;/span&gt;" vertex="1">
           <mxGeometry x="794.05" y="204.18" width="40" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_one_to_many_inc-89" parent="ep_one_to_many_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#666666;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="496.36" y="165.20" width="53.78" height="22" as="geometry" />
+        <mxCell id="ep_one_to_many_inc-89" parent="ep_one_to_many_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#666666;dashed=1;points=[[0,0.5],[1,0.5]];rounded=1;absoluteArcSize=1;arcSize=10;" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="492.25" y="165.20" width="62" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-90" edge="1" parent="ep_one_to_many_inc-figure" style="html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_one_to_many_inc-19" target="ep_one_to_many_inc-89">
           <mxGeometry relative="1" as="geometry" />
@@ -17157,9 +17157,9 @@
           <mxGeometry x="450.15" y="150.52" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-92" parent="ep_one_to_many_inc-figure" style="shape=orEllipse;perimeter=ellipsePerimeter;html=1;fillColor=#FFFFFF;strokeColor=#666666;strokeWidth=1.0;points=[[1,0.5]];" value="" vertex="1">
-          <mxGeometry x="709.25" y="170.20" width="12" height="12" as="geometry" />
+          <mxGeometry x="705.25" y="166.2" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_one_to_many_inc-93" parent="ep_one_to_many_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#666666;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+        <mxCell id="ep_one_to_many_inc-93" parent="ep_one_to_many_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#666666;points=[[0,0.5],[1,0.5]];rounded=0;" value="Σ&lt;sub&gt;&lt;i&gt;B&lt;/i&gt;&lt;/sub&gt;" vertex="1">
           <mxGeometry x="739.35" y="165.20" width="24" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-94" edge="1" parent="ep_one_to_many_inc-figure" style="html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_one_to_many_inc-92" target="ep_one_to_many_inc-93">
@@ -17221,8 +17221,8 @@
         <mxCell id="ep_one_to_many_inc-106" parent="ep_one_to_many_inc-figure" style="text;html=1;align=left;verticalAlign=top;whiteSpace=nowrap;rounded=0;fontColor=#666666;fontFamily=NewComputerModernSansMath;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;i&gt;s&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;2&lt;br&gt;&lt;i&gt;B&lt;/i&gt;&lt;/span&gt;" vertex="1">
           <mxGeometry x="794.05" y="260.18" width="40" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_one_to_many_inc-107" parent="ep_one_to_many_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;dashed=1;points=[[0,0.5],[1,0.5]];" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
-          <mxGeometry x="496.36" y="246.86" width="53.78" height="22" as="geometry" />
+        <mxCell id="ep_one_to_many_inc-107" parent="ep_one_to_many_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=0.4;fontColor=#000000;dashed=1;points=[[0,0.5],[1,0.5]];rounded=1;absoluteArcSize=1;arcSize=10;" value="&lt;i&gt;r&lt;/i&gt;&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt; → &lt;i&gt;σ&lt;/i&gt;&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+          <mxGeometry x="492.25" y="246.86" width="62" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-108" edge="1" parent="ep_one_to_many_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;dashed=1;dashPattern=1 2;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_one_to_many_inc-20" target="ep_one_to_many_inc-107">
           <mxGeometry relative="1" as="geometry" />
@@ -17231,9 +17231,9 @@
           <mxGeometry x="450.15" y="232.18" width="40" height="20" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-110" parent="ep_one_to_many_inc-figure" style="shape=orEllipse;perimeter=ellipsePerimeter;html=1;fillColor=#FFFFFF;strokeColor=#000000;strokeWidth=1.0;points=[[1,0.5]];" value="" vertex="1">
-          <mxGeometry x="709.25" y="251.86" width="12" height="12" as="geometry" />
+          <mxGeometry x="705.25" y="247.86" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_one_to_many_inc-111" parent="ep_one_to_many_inc-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;points=[[0,0.5],[1,0.5]];" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
+        <mxCell id="ep_one_to_many_inc-111" parent="ep_one_to_many_inc-figure" style="whiteSpace=nowrap;html=1;fillColor=#FFFFFF;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=NewComputerModernSansMath;strokeWidth=1.0;fontColor=#000000;points=[[0,0.5],[1,0.5]];rounded=0;" value="Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;" vertex="1">
           <mxGeometry x="739.35" y="246.86" width="24" height="22" as="geometry" />
         </mxCell>
         <mxCell id="ep_one_to_many_inc-112" edge="1" parent="ep_one_to_many_inc-figure" style="html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;lineCap=flat;endArrow=classic;endFill=1;endSize=5;exitX=1;exitY=0.5000;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5000;entryDx=0;entryDy=0;entryPerimeter=0;" value="" source="ep_one_to_many_inc-110" target="ep_one_to_many_inc-111">
@@ -17458,10 +17458,10 @@
         <mxCell id="ep_timeline-1" parent="ep_timeline-figure" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontStyle=0;fontColor=#456E36;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="route" vertex="1">
           <mxGeometry height="19.6" width="30.7109" x="29.63" y="59.09" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline-2" parent="ep_timeline-figure" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;" value="" vertex="1">
+        <mxCell id="ep_timeline-2" parent="ep_timeline-figure" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.8;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=20;" value="" vertex="1">
           <mxGeometry height="69.43" width="102.64" x="194.09" y="239.80" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline-3" parent="ep_timeline-figure" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;" value="" vertex="1">
+        <mxCell id="ep_timeline-3" parent="ep_timeline-figure" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.8;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=20;" value="" vertex="1">
           <mxGeometry height="69.43" width="45.71" x="318.73" y="220.66" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline-4" edge="1" parent="ep_timeline-figure" target="ep_timeline-21" style="endArrow=none;html=1;rounded=0;strokeWidth=1.4;entryX=0.5;entryY=1;entryDx=0;entryDy=0;entryPerimeter=0;strokeColor=#000000;lineCap=flat;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;" value="">
@@ -17659,28 +17659,28 @@
         <mxCell id="ep_timeline-54" parent="ep_timeline-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;rotation=10;labelBackgroundColor=none;" value="&lt;font color=&quot;#885E10&quot;&gt;&lt;b&gt;put_signal*&lt;/b&gt; &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;∅&lt;/span&gt;&lt;/font&gt;" vertex="1">
           <mxGeometry x="190.49" y="131.38" width="94" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline-55" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline-55" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="369.73" y="176.32" width="8" height="8" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline-56" parent="ep_timeline-figure" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#456E36;fontFamily=Source Sans 3;fontSize=13;spacing=0;rotation=90;labelBackgroundColor=none;" value="&lt;b&gt;wait_until_some&lt;/b&gt;" vertex="1">
           <mxGeometry x="340.02" y="226.40" width="96.4" height="19.6" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline-57" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#885E10;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline-57" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#d79b00;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="181.73" y="104.34" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline-58" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline-58" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="325.73" y="195.86" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline-59" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline-59" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="281.73" y="215.39" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline-60" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#885E10;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline-60" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#d79b00;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="181.73" y="357.83" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline-61" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#885E10;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline-61" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#d79b00;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="181.73" y="385.83" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline-62" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline-62" parent="ep_timeline-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="67.33" y="477.57" width="8" height="8" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline_noncollective-label" value="ep_timeline_noncollective.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
@@ -17785,7 +17785,7 @@
             <mxPoint x="285.68" y="38.00" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-24" parent="ep_timeline_noncollective-figure" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-24" parent="ep_timeline_noncollective-figure" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.8;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=20;" value="" vertex="1">
           <mxGeometry x="194.07" y="187.80" width="102.64" height="69.43" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline_noncollective-25" parent="ep_timeline_noncollective-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontStyle=0;fontColor=#1E3A5F;rotation=-90;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;b&gt;Expert &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;E&lt;/i&gt;&lt;sub&gt;0&lt;/sub&gt;&lt;/span&gt;&lt;/b&gt;" vertex="1">
@@ -17821,7 +17821,7 @@
         <mxCell id="ep_timeline_noncollective-35" parent="ep_timeline_noncollective-figure" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontStyle=0;fontColor=#456E36;rotation=0;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="reduce" vertex="1">
           <mxGeometry x="238.90" y="254.98" width="38.64" height="19.6" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-36" parent="ep_timeline_noncollective-figure" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=10;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-36" parent="ep_timeline_noncollective-figure" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.8;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;rounded=1;absoluteArcSize=1;arcSize=20;" value="" vertex="1">
           <mxGeometry x="318.71" y="168.66" width="45.71" height="69.43" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline_noncollective-37" parent="ep_timeline_noncollective-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontStyle=0;fontColor=#1E3A5F;rotation=-90;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;b&gt;Expert &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;E&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;&lt;/span&gt;&lt;/b&gt;" vertex="1">
@@ -17842,19 +17842,19 @@
         <mxCell id="ep_timeline_noncollective-42" parent="ep_timeline_noncollective-figure" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;" value="" vertex="1">
           <mxGeometry x="324.71" y="240.03" width="10" height="15.31" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-43" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#885E10;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-43" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#d79b00;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="181.71" y="104.34" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-44" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-44" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="325.71" y="143.86" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-45" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-45" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="281.71" y="163.39" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-46" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-46" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="67.31" y="333.76" width="8" height="8" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-47" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-47" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="67.31" y="361.76" width="8" height="8" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline_noncollective-48" parent="ep_timeline_noncollective-figure" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#456E36;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;b&gt;wait_until&lt;/b&gt;" vertex="1">
@@ -17896,7 +17896,7 @@
         <mxCell id="ep_timeline_noncollective-56" parent="ep_timeline_noncollective-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;rotation=10;labelBackgroundColor=none;" value="&lt;font color=&quot;#885E10&quot;&gt;&lt;b&gt;signal&lt;/b&gt; &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;s&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;0&lt;br&gt;&lt;i&gt;C&lt;/i&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" vertex="1">
           <mxGeometry x="221.29" y="460.54" width="50" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-57" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-57" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="281.71" y="486.44" width="8" height="8" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline_noncollective-58" edge="1" parent="ep_timeline_noncollective-figure" style="html=1;rounded=0;strokeWidth=1.4;strokeColor=#000000;lineCap=flat;endArrow=classic;startArrow=none;endFill=1;endSize=5;dashed=1;dashPattern=1 2;" value="">
@@ -17908,7 +17908,7 @@
         <mxCell id="ep_timeline_noncollective-59" parent="ep_timeline_noncollective-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;rotation=10;labelBackgroundColor=none;" value="&lt;font color=&quot;#885E10&quot;&gt;&lt;b&gt;signal&lt;/b&gt; &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;&lt;i&gt;s&lt;/i&gt;&lt;span style=&quot;display:inline-block;vertical-align:-4.5px;line-height:8.9px;font-size:11px;&quot;&gt;1&lt;br&gt;&lt;i&gt;C&lt;/i&gt;&lt;/span&gt;&lt;/span&gt;&lt;/font&gt;" vertex="1">
           <mxGeometry x="221.29" y="488.54" width="50" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-60" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-60" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="325.71" y="522.90" width="8" height="8" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline_noncollective-61" parent="ep_timeline_noncollective-figure" style="text;html=1;align=left;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#456E36;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;b&gt;wait_until_some&lt;/b&gt;" vertex="1">
@@ -17917,7 +17917,7 @@
         <mxCell id="ep_timeline_noncollective-62" parent="ep_timeline_noncollective-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffe6cc;strokeColor=#000000;fontStyle=0;fontSize=14;fontFamily=Source Sans 3;strokeWidth=1.0;fontColor=#000000;" value="" vertex="1">
           <mxGeometry x="180.71" y="407.48" width="10" height="102.96" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-63" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#885E10;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-63" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#d79b00;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="181.71" y="399.48" width="8" height="8" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline_noncollective-64" parent="ep_timeline_noncollective-figure" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#885E10;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;b&gt;wait_until_some&lt;/b&gt;&lt;br&gt;+ acc. few&lt;br&gt;experts, notify" vertex="1">
@@ -17932,7 +17932,7 @@
         <mxCell id="ep_timeline_noncollective-66" parent="ep_timeline_noncollective-figure" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#000000;fontFamily=Source Sans 3;fontSize=13;spacing=0;rotation=-10;labelBackgroundColor=none;" value="&lt;font color=&quot;#885E10&quot;&gt;&lt;b&gt;put_signal*&lt;/b&gt; &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Σ&lt;sub&gt;&lt;i&gt;C&lt;/i&gt;&lt;/sub&gt;&lt;/span&gt;&lt;/font&gt;" vertex="1">
           <mxGeometry x="85.48" y="492.36" width="86" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="ep_timeline_noncollective-67" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#456E36;strokeColor=none;" value="" vertex="1">
+        <mxCell id="ep_timeline_noncollective-67" parent="ep_timeline_noncollective-figure" style="ellipse;html=1;aspect=fixed;fillColor=#82b366;strokeColor=none;" value="" vertex="1">
           <mxGeometry x="67.31" y="522.79" width="8" height="8" as="geometry" />
         </mxCell>
         <mxCell id="ep_timeline_noncollective-68" parent="ep_timeline_noncollective-figure" style="text;html=1;align=right;verticalAlign=middle;whiteSpace=nowrap;rounded=0;fontColor=#456E36;fontFamily=Source Sans 3;fontSize=13;spacing=0;labelBackgroundColor=none;" value="&lt;b&gt;wait_until&lt;/b&gt;" vertex="1">
