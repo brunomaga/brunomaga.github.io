@@ -482,7 +482,7 @@ Serving many requests at once makes memory management hard, because the final le
 Almost no memory is wasted, so more sequences fit in a batch: vLLM reported 2-4 times higher throughput than previous systems. A block can also be shared by several sequences, and copied only when one of them writes to it ([copy-on-write](https://en.wikipedia.org/wiki/Copy-on-write)), which is how prefix caching, parallel sampling and [beam search](https://en.wikipedia.org/wiki/Beam_search) share their common prefix. An illustration of the block tables of two sequences, with blocks of 4 tokens, is displayed below:
 
 {: .picture}
-<img width="99%" height="99%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
+<img width="98.8%" height="98.8%" src="{{ site.assets }}/inference/imgs/paged_attention.svg"/>
 
 {: .caption}
 The attention kernel reads the blocks of each sequence through its block table, and a sequence wastes at most 3 slots, in its last block. Inspired by: [Efficient Memory Management for Large Language Model Serving with PagedAttention](https://arxiv.org/abs/2309.06180)

@@ -1108,10 +1108,10 @@
         <mxCell id="paged_attention-13" value="mat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="207.01" y="73.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="261.01" y="73.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-15" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="315.01" y="73.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-16" value="block 1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
@@ -1120,8 +1120,8 @@
         <mxCell id="paged_attention-17" value="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="434.65" y="73.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-18" value="sequence A" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
-          <mxGeometry x="0" y="56" width="71.14" height="20.8" as="geometry" />
+        <mxCell id="paged_attention-18" value="sequence A" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
+          <mxGeometry x="0" y="56" width="73.8" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-19" value="Once" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="153.01" y="143.4" width="50" height="30" as="geometry" />
@@ -1129,7 +1129,7 @@
         <mxCell id="paged_attention-20" value="upon" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="207.01" y="143.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-21" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-21" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="261.01" y="143.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-22" value="time" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
@@ -1147,7 +1147,7 @@
         <mxCell id="paged_attention-26" value="lived" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="207.01" y="183.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-27" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-27" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="261.01" y="183.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-28" value="king" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
@@ -1162,13 +1162,13 @@
         <mxCell id="paged_attention-31" value="," style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="153.01" y="223.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-32" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="207.01" y="223.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-33" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="261.01" y="223.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-34" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="315.01" y="223.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-35" value="block 2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
@@ -1177,19 +1177,19 @@
         <mxCell id="paged_attention-36" value="4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="434.65" y="223.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-37" value="sequence B" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
-          <mxGeometry x="0" y="186" width="71.14" height="20.8" as="geometry" />
+        <mxCell id="paged_attention-37" value="sequence B" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
+          <mxGeometry x="0" y="186" width="73.8" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-38" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="579.75" y="33.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-39" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="633.75" y="33.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-40" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="687.75" y="33.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="741.75" y="33.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-42" value="block 0: free" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
@@ -1201,10 +1201,10 @@
         <mxCell id="paged_attention-44" value="mat" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="633.75" y="73.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-45" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="687.75" y="73.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-46" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="741.75" y="73.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-47" value="block 1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
@@ -1216,7 +1216,7 @@
         <mxCell id="paged_attention-49" value="upon" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="633.75" y="113.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-50" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-50" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="687.75" y="113.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-51" value="time" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
@@ -1225,16 +1225,16 @@
         <mxCell id="paged_attention-52" value="block 2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="800.25" y="118" width="48.6" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-53" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="579.75" y="153.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-54" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="633.75" y="153.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-55" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="687.75" y="153.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="741.75" y="153.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-57" value="block 3: free" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
@@ -1243,13 +1243,13 @@
         <mxCell id="paged_attention-58" value="," style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="579.75" y="193.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-59" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="633.75" y="193.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-60" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="687.75" y="193.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-61" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="741.75" y="193.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-62" value="block 4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
@@ -1270,16 +1270,16 @@
         <mxCell id="paged_attention-67" value="block 5" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="800.25" y="238" width="48.6" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-68" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="579.75" y="273.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="633.75" y="273.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-70" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-70" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="687.75" y="273.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#b3b3b3;fontSize=14;fontStyle=0;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="741.75" y="273.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-72" value="block 6: free" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="paged_attention-figure">
@@ -1291,7 +1291,7 @@
         <mxCell id="paged_attention-74" value="lived" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="633.75" y="313.4" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="paged_attention-75" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
+        <mxCell id="paged_attention-75" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
           <mxGeometry x="687.75" y="313.4" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="paged_attention-76" value="king" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="paged_attention-figure">
