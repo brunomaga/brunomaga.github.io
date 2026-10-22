@@ -55,10 +55,10 @@ The neuron's potential is considered to rise steeply when there is an input curr
 To simulate the [Action Potential](https://en.wikipedia.org/wiki/Action_potential) (or *spike*) of biological neurons, the model assumes that each neuron has a certain *fixed* firing threshold. When the potential reaches the firing threshold, the neuron *spikes* (or *fires*), and its potential immediately drops to a reset potential. Axonal branches of neurons are simulated by a **synaptic delay** that regulates the time a spike signal takes to reach the connected post-synaptic neurons. This propagation of spike and current, which dictates the synaptic delay, is illustrated in the following picture:
 
 {: .picture}
-<img width="45.2%" height="45.2%" src="{{ site.assets }}/lif-brunel/action_potential.svg">
+<img width="40%" height="40%" src="https://upload.wikimedia.org/wikipedia/commons/9/95/Action_Potential.gif">
 
 {: .caption}
-An action potential travelling along an axon, in the direction of the arrow. The membrane is positive outside and negative inside, except at the action potential, where the polarity is reversed. Adapted from: [Action Potential.gif, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Action_Potential.gif)
+An action potential travelling along an axon, in the direction of the arrows. The membrane is positive outside and negative inside, except at the action potential, where the polarity is reversed. Source: [Action Potential.gif, Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Action_Potential.gif)
 
 Afterwards, for a given **refractory period**, the neuron potential stays constant at the reset value, to simulate the [refraction](https://en.wikipedia.org/wiki/Refractory_period_(physiology)) of biological neurons. This may not be a very detailed simulation of neuron activity, but it is a good starting point for a simple neuron model, before moving on to more complex models in future posts.
 
@@ -123,7 +123,7 @@ The model proposes a network of 10000 simulated LIF neurons (80% excitatory, 20%
 <img width="33.4%" height="33.4%" src="{{ site.assets }}/lif-brunel/network.svg">
 
 {: .caption}
-The Brunel network: $$N_E$$ excitatory neurons (E) and $$N_I$$ inhibitory neurons (I). Each neuron receives $$C_E$$ connections from excitatory neurons, $$C_I$$ from inhibitory neurons, and $$C_E$$ from Poisson generators (PG). Arrows are excitatory connections, and open circles inhibitory ones. Adapted from: [NEST by Example, Fig. 2](https://www.nest-simulator.org/wp-content/uploads/2015/02/NEST_by_Example.pdf)
+The Brunel network: $$N_E$$ excitatory neurons (E) and $$N_I$$ inhibitory neurons (I). Each neuron receives $$C_E$$ connections from excitatory neurons, $$C_I$$ from inhibitory neurons, and $$C_E$$ from Poisson generators (PG). Arrows are excitatory connections, and flat bars inhibitory ones. Adapted from: [NEST by Example, Fig. 2](https://www.nest-simulator.org/wp-content/uploads/2015/02/NEST_by_Example.pdf)
 
 The tricky part here is to define the parameters of the network in terms of connectivity, synaptic weights, firing threshold, etc. The original [paper][brunel-paper] describes them in detail, but for simplicity, they are summarized in the tables below: 
 

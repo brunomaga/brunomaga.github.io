@@ -145,7 +145,7 @@ All cells are kept in an ordered queue (a [splay tree](https://en.wikipedia.org/
 
 To solve that issue, every cell holds the information for all states between its current time instant and the previous time step. This allows for backward interpolation when required. The integration coordinator also ensures that the interpolation intervals of the connected cells overlap, so that no event between two cells is missed. The critical point of this approach is that the time step is tentative, and an event received by the cell in the interim may reinitialize the cell to a time prior to the tentatively calculated threshold time.
 
-The following picture illustrates a timeline (from A to D) of six cells running the *lvardt* algorithm. The intervals of possible interpolation are displayed as rectangles, and the right end of a cell's rectangle, $$t_b$$, is the time up to which that cell has integrated. The system's earliest $$t_b$$ or event time is shown by the vertical line traversing all neurons. Triggers of discrete events on a particular neuron are displayed as short thick vertical bars.
+The following picture illustrates a timeline (from A to D) of six cells running the *lvardt* algorithm. The intervals of possible interpolation are displayed as rectangles, and the right end of a cell's rectangle, $$t_b$$, is the time up to which that cell has integrated. The system's earliest $$t_b$$ or event time is shown by the dashed vertical line traversing all neurons. Triggers of discrete events on a particular neuron are displayed as short red vertical bars.
 
 The four steps of the timeline are:
 - (A) the cell with the smallest $$t_b$$ (cell 0) advances by the length of the hashed rectangle, and crosses the spike threshold during that step, creating a tentative trigger event;
@@ -154,7 +154,7 @@ The four steps of the timeline are:
 - (D) the new earliest event forces cell 3 to back-interpolate, the event is handled, and cell 3 reinitializes. Cell 3 will be the next cell to integrate forward:
 
 {: .picture}
-<img width="40.4%" height="40.4%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.svg">
+<img width="40.2%" height="40.2%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.svg">
 
 {: .caption}
 Adapted from: [Lytton and Hines (2005), Independent variable time-step integration of individual neurons for network simulations, Fig. 1](https://pmc.ncbi.nlm.nih.gov/articles/PMC2712447/)

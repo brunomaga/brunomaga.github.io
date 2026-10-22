@@ -871,8 +871,8 @@
         <mxCell id="common_distributions-138" value="Chi-Squared" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="382.09" y="297.05" width="73.5" height="16.8" as="geometry" />
         </mxCell>
-        <mxCell id="common_distributions-142" value="Student’s &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;t&lt;/span&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
-          <mxGeometry x="39.2" y="342.2" width="64.4" height="16.8" as="geometry" />
+        <mxCell id="common_distributions-142" value="Student’s t" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
+          <mxGeometry x="37.25" y="342.2" width="68.31" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="common_distributions-146" value="Gamma" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" vertex="1" parent="common_distributions-figure">
           <mxGeometry x="480.65" y="382.1" width="47" height="16.8" as="geometry" />

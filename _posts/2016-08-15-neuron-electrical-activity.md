@@ -28,10 +28,10 @@ Due to the very sophisticated anatomical structure and behaviour of neurons, num
 Brain simulators also work at different levels of detail, as displayed in the picture below, where each model zooms into a part of the model on its left:
 
 {: .picture}
-<img width="99.3%" height="99.3%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
+<img width="98.6%" height="98.6%" src="{{ site.assets }}/neuron-electrical-activity/neuron_model_scales.svg">
 
 {: .caption}
-Levels of detail in brain simulation. Each dashed circle marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
+Levels of detail in brain simulation. Each red outline marks the part that the next model describes in more detail. This post covers the compartmental neuron model (in bold). In the reaction-diffusion model, the line with a flat head marks the breakdown of cAMP by PDE. Adapted from: J. M. Eppler, Introduction to NEST, First community workshop on NESTML, 2015
 
 - **Population models** describe the average activity of large groups of neurons. A simple example is one excitatory population ($$E$$) and one inhibitory population ($$I$$) that drive each other, as in the [Wilson–Cowan model](https://en.wikipedia.org/wiki/Wilson%E2%80%93Cowan_model).
 - **Point neuron networks** model each neuron as a single point, with no shape. The simplest example is the [Leaky Integrate-and-Fire (LIF) model][lif-post] (1907), which has no ion channels: it treats the membrane as an [RC circuit](https://en.wikipedia.org/wiki/RC_circuit), and the neuron spikes when its voltage reaches a threshold.
@@ -91,7 +91,7 @@ where $$i_a$$ is the axial current [mA] flowing through the compartment's region
 <img width="22.7%" height="22.7%" src="{{ site.assets }}/neuron-electrical-activity/net_current_conservation.svg">
 
 {: .caption}
-The net current entering a region is zero: the axial currents $$i_a$$ balance the membrane current $$i_m$$. Adapted from: [Hines and Carnevale (1997), The NEURON simulation environment, Fig. 3.1](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p1.htm)
+The net current entering a region, bounded by the membrane (blue) and the thin black lines, is zero: the axial currents $$i_a$$ balance the membrane current $$i_m$$. Adapted from: [Hines and Carnevale (1997), The NEURON simulation environment, Fig. 3.1](https://neuron.yale.edu/neuron/static/papers/nc97/nc3p1.htm)
 
 A common assumption is that a neuron is spatially divided into small compartments, at most $$40 \, \mu m$$ long in the cell models of the [Blue Brain Project](https://en.wikipedia.org/wiki/Blue_Brain_Project). The spatially varying $$i_m$$ in any compartment $$j$$ is then well approximated by its value at the center, therefore
 
@@ -234,7 +234,7 @@ Due to the unique morphology of a cable model representation of a discretized ne
 The coefficient of the membrane potential of each compartment in its own equation is represented by the main diagonal. The contributions from a parent to its children compartments (and vice versa) are represented by all cells on the same row (column) of the upper (lower) triangle of the matrix. As each compartment can have only one parent, this enforces only one cell per row on the lower triangle, and one cell per column on the upper triangle. For completeness, the following pictures present a neuron's dendritic arborization spatially discretized based on the cable model (left) and its sparse matrix representation according to the Hines algorithm (right).
 
 {: .picture}
-<img width="44.2%" height="44.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.2%" height="34.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
+<img width="44.1%" height="44.1%" src="{{ site.assets }}/neuron-electrical-activity/solver_compartment_neuron.svg"> <img width="34.2%" height="34.2%" src="{{ site.assets }}/neuron-electrical-activity/solver_grid_neuron.svg">
 
 
 In the pictures above, compartments 6 and 9 start new branches, so the entries that link them to their parents, 2 and 1, lie outside the three diagonals of the matrix (joined to the diagonal by dashed lines).

@@ -248,7 +248,7 @@ which is the definition of the center of mass of cluster $$i$$. The error decrea
 
 
 {: .picture}
-<img width="78.6%" height="78.6%" src="{{ site.assets }}/unsupervised-learning/k-means.svg">
+<img width="78.7%" height="78.7%" src="{{ site.assets }}/unsupervised-learning/k-means.svg">
 
 {: .caption}
 **1.** $$k = 3$$ initial means (colored circles) are chosen at random within the data domain. **2.** Assignment step: each point joins the cluster of the closest mean; the colored regions are the Voronoi cells of the means. **3.** Update step: each mean moves to the centroid of its cluster (dashed circles: the previous means; lines: the points of each cluster). **4.** Assignment step with the new means and their Voronoi cells: two points move from the green to the red cluster. The two steps repeat until the assignments no longer change. Adapted from: [k-means clustering](https://en.wikipedia.org/wiki/K-means_clustering)
@@ -340,14 +340,14 @@ For more details, [A Tutorial on Spectral Clustering](https://arxiv.org/abs/0711
 
 ## Self-Organizing Maps and Kohonen Maps
 
-A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by localized regions (neurons) that represent agglomerates of inputs, with neighbouring neurons of the grid representing nearby regions of the input space. The following picture illustrates Kohonen's model (left) and one step of its learning algorithm (right):
+A **self-organizing map** (SOM) is an unsupervised artificial neural network, typically a 2D grid of neurons, that represents a discretization of the input space (or of the training set). It was introduced by Teuvo Kohonen in the paper [Self-organized formation of topologically correct feature maps](https://link.springer.com/article/10.1007/BF00337288) (1982), hence its other name, the Kohonen map. Its main purpose is to represent the training data by localized regions (neurons) that represent agglomerates of inputs, with neighbouring neurons of the grid representing nearby regions of the input space. The following picture illustrates Kohonen's model (top) and one step of its learning algorithm (bottom):
 
 {: .picture}
 <img width="46%" height="46%" src="{{ site.assets }}/unsupervised-learning/kohonen.svg">
-<img width="24.5%" height="24.5%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
+<img width="60%" height="60%" src="{{ site.assets }}/unsupervised-learning/kohonen2.svg">
 
 {: .caption}
-**Left:** the neuron layer of Kohonen's model. The input fibres running horizontally carry the input signal (the stimulus) and excite the neurons of the layer through synaptic connections. Lateral interactions between the neurons confine the response to a spatially bounded local excitation zone. The layer acts as a topographic feature map if the position $$j^*$$ of the excitation zone varies continuously with the stimulus features of interest. **Right:** the adaptation step. The input $$x_i$$ in the input space $$V$$ selects the winner neuron $$j^*$$ in the lattice of neurons $$A$$ ($$\phi$$ is the map from $$V$$ to $$A$$). The winner and its neighbours shift their weight vectors towards $$x_i$$, by an amount that decreases with the distance from $$j^*$$, shown by the sizes and gray levels of the neurons. Only the shift $$\Delta w_{j^*}$$ of the winner's weights $$w_{j^*}$$ is drawn. Adapted from: [Neural Computation and Self-Organizing Maps, H. Ritter, T. Martinetz and K. Schulten, 1992, Figures 4.1 and 4.2](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf)
+**Top:** the neuron layer of Kohonen's model. The input fibres running horizontally carry the input signal (the stimulus) and excite the neurons of the layer through synaptic connections. Lateral interactions between the neurons confine the response to a spatially bounded local excitation zone. The layer acts as a topographic feature map if the position $$s$$ of the excitation zone varies continuously with the stimulus features of interest. **Bottom:** the adaptation step. The input $$v$$ in the input space $$V$$ selects the winner neuron $$s$$ in the lattice of neurons $$A$$ ($$\phi$$ is the map from $$V$$ to $$A$$). The winner and its neighbours shift their weight vectors towards $$v$$, by an amount that decreases with the distance from $$s$$, shown by the sizes and gray levels of the neurons. Only the shift $$\Delta w_s$$ of the winner's weights $$w_s$$ is drawn. In the algorithm below, $$v$$ is the input $$x_u$$ and $$s$$ is the winner $$j^*$$. Adapted from: [Neural Computation and Self-Organizing Maps, H. Ritter, T. Martinetz and K. Schulten, 1992, Figures 4.1 and 4.2](https://tcbg.illinois.edu/Services/Class/PHYS498TBP/spring2002/neuro_4.pdf)
 
 
 The algorithm is the following:
@@ -382,11 +382,11 @@ The input dataset and the `python` implementation are available in <a href="{{ s
 
 
 {: .picture}
-<img width="29.5%" height="29.5%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.svg">
+<img width="29.6%" height="29.6%" src="{{ site.assets }}/unsupervised-learning/kohonen_1.svg">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="29.7%" height="29.7%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
+<img width="29.8%" height="29.8%" src="{{ site.assets }}/unsupervised-learning/kohonen_2.svg">
 <span style="display:inline-block; width:1cm;"></span>
-<img width="29.3%" height="29.3%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.svg">
+<img width="29.4%" height="29.4%" src="{{ site.assets }}/unsupervised-learning/kohonen_3.svg">
  
  
 More examples can be found in the [Wikipedia entry for self-organizing maps](https://en.wikipedia.org/wiki/Self-organizing_map#Examples).
