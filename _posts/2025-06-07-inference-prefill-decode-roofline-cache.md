@@ -253,7 +253,7 @@ In the attention layer, the query of the new token attends to the keys and value
 Without a cache, each decode step recomputes the keys and values of the whole sequence, so generating $$n$$ tokens costs $$O(n^2)$$ work in the projections and MLPs and $$O(n^3)$$ in attention. With a cache, each step only computes the query, key and value of the new token, appends the new key and value to the cache, and attends over all cached ones: $$O(n)$$ and $$O(n^2)$$ in total. Queries do not need to be cached, because the query of a past token was only needed to compute the output at that past position. The following picture illustrates the attention of one head in a decode step, without and with the KV cache:
 
 {: .picture}
-<img width="81.9%" height="81.9%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
+<img width="96%" height="96%" src="{{ site.assets }}/inference/imgs/kv_cache.svg"/>
 
 {: .caption}
 **Without KV cache:** generating $$n$$ tokens costs $$O(n^2)$$ in the projections and the MLP, and $$O(n^3)$$ in attention. **With KV cache:** generating $$n$$ tokens costs $$O(n)$$ in the projections and the MLP, and $$O(n^2)$$ in attention.
