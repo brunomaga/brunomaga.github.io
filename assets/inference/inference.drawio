@@ -10541,7 +10541,7 @@
         <mxCell id="hadamard_rotation-9" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="hadamard_rotation-figure">
           <mxGeometry x="207.5" y="138.4" width="22" height="2.2" as="geometry" />
         </mxCell>
-        <mxCell id="hadamard_rotation-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="hadamard_rotation-figure">
+        <mxCell id="hadamard_rotation-10" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="5.5" y="138.4" as="sourcePoint" />
             <mxPoint x="235.5" y="138.4" as="targetPoint" />
@@ -10638,9 +10638,9 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-26" value="INT4 levels" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;fontFamily=Source Sans 3;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="254" y="129.2" width="63.98" height="18.4" as="geometry" />
+          <mxGeometry x="257" y="129.2" width="63.98" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="hadamard_rotation-27" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;R x&lt;/span&gt;: the outlier is spread over all channels" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="hadamard_rotation-figure">
+        <mxCell id="hadamard_rotation-27" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;Rx&lt;/span&gt;: the outlier is spread over all channels" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="hadamard_rotation-figure">
           <mxGeometry x="400" y="0" width="260" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-28" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="hadamard_rotation-figure">
@@ -10667,7 +10667,7 @@
         <mxCell id="hadamard_rotation-35" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="hadamard_rotation-figure">
           <mxGeometry x="607.5" y="98.73" width="22" height="39.67" as="geometry" />
         </mxCell>
-        <mxCell id="hadamard_rotation-36" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="hadamard_rotation-figure">
+        <mxCell id="hadamard_rotation-36" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.8;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="hadamard_rotation-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="405.5" y="138.4" as="sourcePoint" />
             <mxPoint x="635.5" y="138.4" as="targetPoint" />
@@ -10764,12 +10764,12 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="hadamard_rotation-52" value="INT4 levels" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;fontFamily=Source Sans 3;" vertex="1" parent="hadamard_rotation-figure">
-          <mxGeometry x="654" y="129.2" width="63.98" height="18.4" as="geometry" />
+          <mxGeometry x="657" y="129.2" width="63.98" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="hadamard_rotation-53" value="" style="shape=singleArrow;direction=east;whiteSpace=wrap;html=1;arrowWidth=0.5;arrowSize=0.143;fillColor=#f5f5f5;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="hadamard_rotation-figure">
           <mxGeometry x="327.74" y="113.4" width="70" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="hadamard_rotation-54" value="R x, R&lt;sup&gt;T&lt;/sup&gt; R = I" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="hadamard_rotation-figure">
+        <mxCell id="hadamard_rotation-54" value="Rx, R&lt;sup&gt;T&lt;/sup&gt;R = I" style="text;html=1;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="hadamard_rotation-figure">
           <mxGeometry x="319.5" y="88.6" width="86.5" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="microscaling-label" value="microscaling.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">

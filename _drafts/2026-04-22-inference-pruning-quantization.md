@@ -679,7 +679,7 @@ def smoothquant(model, data, n_batches, batch_size, seqlen, alpha=0.5):
 QuaRot uses random Hadamard matrices, while SpinQuant learns the rotations, which gives a higher accuracy, as some rotations quantize much better than others. The picture below rotates a vector with one outlier channel:
 
 {: .picture}
-<img width="80.7%" height="80.7%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
+<img width="81.0%" height="81.0%" src="{{ site.assets }}/inference/imgs/hadamard_rotation.svg"/>
 
 {: .caption}
 Rotating the weights the other way, $$W R^T$$, keeps the output: $$(W R^T)(R x) = W x$$. After the rotation, the INT4 levels are closer together (5.7 instead of 12.6 apart), so the small values lose much less precision.
