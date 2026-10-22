@@ -33,7 +33,7 @@ During training/inference, the model runtime can scale well with the sequence pa
 In practice, to compute attention, each process uses its own subset/chunk of queries, but **needs the keys and values for the full sequence**. The rationale is the following: take the attention head computation $$softmax \left(QK^T \right)V$$ (without the scaling of the scores, for simplicity), where all tensors are shaped `(B, S, E)`. If each process holds a subset of rows of $$Q$$ as $$Q_p$$ with shape `(B, S/P, E)`, it needs to access all elements of $$K^T$$ and $$V$$ to perform the dot-product $$Q_p K^T$$, the row-wise $$softmax$$, and the dot-product with $$V$$. The result is an attention output of shape `(B, S/P, E)` per process, as illustrated in the following picture, where the blue elements are the ones that one process uses or computes:
 
 {: .picture}
-<img width="77.3%" height="77.3%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.svg"/>
+<img width="87.7%" height="87.7%" src="{{ site.assets }}/distributed-training/imgs/context_parallelism.svg"/>
 
 Therefore, sequence parallelism requires some communication to make the relevant KV elements accessible across all GPUs. With that in mind, the following sections look into two alternative algorithms for sequence/context-parallel attention.
 
