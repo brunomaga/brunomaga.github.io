@@ -687,7 +687,7 @@ or even more.
 The following picture illustrates the method:
 
 {: .picture}
-<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders.svg"/> 
+<img width="90.7%" height="90.7%" src="{{ site.assets }}/diffusion/masked_autoencoders_cropped.svg"/> 
 
 {: .caption}
 <b>Masked Autoencoders as spatiotemporal learners</b>. A large subset (<i>e.g.</i>, 90%) of random patches in spacetime is masked. An encoder operates on the set of visible patches. A small decoder then processes the full set of encoded patches and mask tokens to reconstruct the input. Except for patch and positional embeddings, <i>neither the encoder, the decoder, nor the masking strategy, has any spatiotemporal inductive bias</i>. Adapted from: [Masked Autoencoders As Spatiotemporal Learners](https://arxiv.org/abs/2205.09113).
