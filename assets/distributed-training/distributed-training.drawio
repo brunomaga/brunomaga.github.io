@@ -8101,37 +8101,37 @@
         <mxCell id="mixture_of_depths_2-24" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="24.75" y="230.9" as="sourcePoint" />
-            <mxPoint x="24.75" y="182.3" as="targetPoint" />
+            <mxPoint x="24.75" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-25" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="107.46" y="318.2" as="sourcePoint" />
-            <mxPoint x="54" y="182.3" as="targetPoint" />
+            <mxPoint x="51.52" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-26" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="71.28" y="318.2" as="sourcePoint" />
-            <mxPoint x="130.95" y="182.3" as="targetPoint" />
+            <mxPoint x="133.72" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-27" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="179.82" y="318.2" as="sourcePoint" />
-            <mxPoint x="211.95" y="182.3" as="targetPoint" />
+            <mxPoint x="213.44" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-28" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="216" y="318.2" as="sourcePoint" />
-            <mxPoint x="236.7" y="182.3" as="targetPoint" />
+            <mxPoint x="237.66" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-29" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="143.64" y="318.2" as="sourcePoint" />
-            <mxPoint x="76.05" y="181.4" as="targetPoint" />
+            <mxPoint x="73.38" y="176" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-53" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
@@ -8143,37 +8143,37 @@
         <mxCell id="mixture_of_depths_2-54" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="365.62" y="176.9" as="sourcePoint" />
-            <mxPoint x="354.55" y="225.5" as="targetPoint" />
+            <mxPoint x="349.12" y="230.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-55" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="365.62" y="176.9" as="sourcePoint" />
-            <mxPoint x="538.42" y="308.75" as="targetPoint" />
+            <mxPoint x="535" y="318.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-56" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="459.22" y="176.9" as="sourcePoint" />
-            <mxPoint x="403.42" y="311.9" as="targetPoint" />
+            <mxPoint x="400.82" y="318.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-57" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="459.22" y="176.9" as="sourcePoint" />
-            <mxPoint x="467.77" y="311.9" as="targetPoint" />
+            <mxPoint x="468.17" y="318.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-58" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="552.82" y="176.9" as="sourcePoint" />
-            <mxPoint x="506.02" y="310.1" as="targetPoint" />
+            <mxPoint x="503.17" y="318.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-59" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="552.82" y="176.9" as="sourcePoint" />
-            <mxPoint x="548.77" y="310.1" as="targetPoint" />
+            <mxPoint x="546.5" y="318.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-77" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
@@ -8185,25 +8185,25 @@
         <mxCell id="mixture_of_depths_2-78" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="775.21" y="176.9" as="sourcePoint" />
-            <mxPoint x="665.68" y="222.53" as="targetPoint" />
+            <mxPoint x="668.71" y="230.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-79" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="775.21" y="176.9" as="sourcePoint" />
-            <mxPoint x="854.68" y="311" as="targetPoint" />
+            <mxPoint x="858.95" y="318.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-82" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="285.22" y="457.97" as="sourcePoint" />
-            <mxPoint x="315.13" y="457.97" as="targetPoint" />
+            <mxPoint x="295.35" y="457.97" as="sourcePoint" />
+            <mxPoint x="325.26" y="457.97" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-84" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;dashed=1;dashPattern=1 2;fontFamily=Source Sans 3;" edge="1" parent="mixture_of_depths_2-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="489.55" y="441.5" as="sourcePoint" />
-            <mxPoint x="528.52" y="441.5" as="targetPoint" />
+            <mxPoint x="445.51" y="441.5" as="sourcePoint" />
+            <mxPoint x="484.48" y="441.5" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="mixture_of_depths_2-2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;absoluteArcSize=1;arcSize=20;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
@@ -8357,7 +8357,7 @@
           <mxGeometry x="685.09" y="242.6" width="8.04" height="21.6" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths_2-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;dashed=1;dashPattern=1 2;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
-          <mxGeometry x="487.12" y="466.07" width="45" height="11.43" as="geometry" />
+          <mxGeometry x="443.08" y="466.07" width="45" height="11.43" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths_2-1" value="Token-choice routing" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
           <mxGeometry x="67.85" y="0" width="133.4" height="20.8" as="geometry" />
@@ -8383,11 +8383,8 @@
         <mxCell id="mixture_of_depths_2-40" value="Expert 3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
           <mxGeometry x="525.41" y="44.1" width="54.82" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="mixture_of_depths_2-60" value="top-2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
-          <mxGeometry x="567.39" y="210.6" width="36.55" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="mixture_of_depths_2-61" value="choices" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
-          <mxGeometry x="561.18" y="234" width="48.98" height="20.8" as="geometry" />
+        <mxCell id="mixture_of_depths_2-60" value="top-2&lt;br&gt;choices" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
+          <mxGeometry x="561.18" y="217.1" width="48.98" height="31.2" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths_2-62" value="Expert-choice MoD" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
           <mxGeometry x="712.3" y="0" width="124.02" height="20.8" as="geometry" />
@@ -8395,20 +8392,17 @@
         <mxCell id="mixture_of_depths_2-63" value="Self-attention &amp;amp; MLP" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
           <mxGeometry x="713.87" y="41.4" width="129.87" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="mixture_of_depths_2-80" value="top-2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
-          <mxGeometry x="835.23" y="204.3" width="36.55" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="mixture_of_depths_2-81" value="choices" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
-          <mxGeometry x="829.02" y="227.7" width="48.98" height="20.8" as="geometry" />
+        <mxCell id="mixture_of_depths_2-80" value="top-2&lt;br&gt;choices" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
+          <mxGeometry x="829.02" y="210.8" width="48.98" height="31.2" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths_2-83" value="Routing decision" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
-          <mxGeometry x="318.62" y="447.57" width="100.27" height="20.8" as="geometry" />
+          <mxGeometry x="327.26" y="447.57" width="100.27" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths_2-85" value="or" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
-          <mxGeometry x="500.39" y="444.15" width="16.66" height="20.8" as="geometry" />
+          <mxGeometry x="456.35" y="444.15" width="16.66" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="mixture_of_depths_2-87" value="Dropped token" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="mixture_of_depths_2-figure">
-          <mxGeometry x="537.05" y="443.97" width="90.4" height="20.8" as="geometry" />
+          <mxGeometry x="490.08" y="443.97" width="90.4" height="20.8" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
