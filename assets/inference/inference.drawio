@@ -9956,9 +9956,6 @@
         <mxCell id="quantization_granularity-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
           <mxGeometry x="110" y="54.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="quantization_granularity-20" value="!" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
-          <mxGeometry x="132" y="54.4" width="22" height="22" as="geometry" />
-        </mxCell>
         <mxCell id="quantization_granularity-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
           <mxGeometry x="154" y="54.4" width="22" height="22" as="geometry" />
         </mxCell>
@@ -10102,9 +10099,6 @@
         </mxCell>
         <mxCell id="quantization_granularity-69" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
           <mxGeometry x="417" y="54.4" width="22" height="22" as="geometry" />
-        </mxCell>
-        <mxCell id="quantization_granularity-70" value="!" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
-          <mxGeometry x="439" y="54.4" width="22" height="22" as="geometry" />
         </mxCell>
         <mxCell id="quantization_granularity-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
           <mxGeometry x="461" y="54.4" width="22" height="22" as="geometry" />
@@ -10250,9 +10244,6 @@
         <mxCell id="quantization_granularity-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
           <mxGeometry x="724" y="54.4" width="22" height="22" as="geometry" />
         </mxCell>
-        <mxCell id="quantization_granularity-120" value="!" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
-          <mxGeometry x="746" y="54.4" width="22" height="22" as="geometry" />
-        </mxCell>
         <mxCell id="quantization_granularity-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
           <mxGeometry x="768" y="54.4" width="22" height="22" as="geometry" />
         </mxCell>
@@ -10340,10 +10331,19 @@
         <mxCell id="quantization_granularity-149" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=12;fontColor=#000000;fontStyle=1;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
           <mxGeometry x="856" y="98.4" width="22" height="22" as="geometry" />
         </mxCell>
+        <mxCell id="quantization_granularity-20" value="!" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontColor=#000000;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
+          <mxGeometry x="132" y="54.4" width="22" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="quantization_granularity-70" value="!" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontColor=#000000;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
+          <mxGeometry x="439" y="54.4" width="22" height="22" as="geometry" />
+        </mxCell>
+        <mxCell id="quantization_granularity-120" value="!" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=12;fontColor=#000000;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
+          <mxGeometry x="746" y="54.4" width="22" height="22" as="geometry" />
+        </mxCell>
         <mxCell id="quantization_granularity-outline-1" value="" edge="1" parent="quantization_granularity-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="0" y="32.4" as="sourcePoint" /><mxPoint x="264" y="32.4" as="targetPoint" /><Array as="points"><mxPoint x="264" y="32.4" /><mxPoint x="264" y="120.4" /><mxPoint x="0" y="120.4" /><mxPoint x="0" y="32.4" /></Array></mxGeometry></mxCell><mxCell id="quantization_granularity-outline-2" value="" edge="1" parent="quantization_granularity-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="307" y="32.4" as="sourcePoint" /><mxPoint x="571" y="32.4" as="targetPoint" /><Array as="points"><mxPoint x="571" y="32.4" /><mxPoint x="571" y="120.4" /><mxPoint x="307" y="120.4" /><mxPoint x="307" y="32.4" /></Array></mxGeometry></mxCell><mxCell id="quantization_granularity-outline-3" value="" edge="1" parent="quantization_granularity-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="614" y="32.4" as="sourcePoint" /><mxPoint x="878" y="32.4" as="targetPoint" /><Array as="points"><mxPoint x="878" y="32.4" /><mxPoint x="878" y="120.4" /><mxPoint x="614" y="120.4" /><mxPoint x="614" y="32.4" /></Array></mxGeometry></mxCell><mxCell id="quantization_granularity-151" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
           <mxGeometry x="0" y="140.4" width="20" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="quantization_granularity-152" value="outlier weight" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="quantization_granularity-figure">
+        <mxCell id="quantization_granularity-152" value="outlier weight" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;whiteSpace=nowrap;spacing=0;" vertex="1" parent="quantization_granularity-figure">
           <mxGeometry x="24" y="136" width="83.15" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="int4_packing-label" value="int4_packing.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
