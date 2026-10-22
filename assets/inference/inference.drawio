@@ -7318,11 +7318,11 @@
         <mxCell id="csa-figure" connectable="0" parent="1" style="group;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="321.3" width="715.6" x="0" y="3244.3" as="geometry" />
         </mxCell>
-        <mxCell id="csa-59" parent="csa-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=3.6;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
-          <mxGeometry height="31.36" width="25.92" x="209.57" y="130.94" as="geometry" />
+        <mxCell id="csa-59" parent="csa-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=1.8;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+          <mxGeometry height="40.88" width="35.44" x="204.81" y="126.18" as="geometry" />
         </mxCell>
-        <mxCell id="csa-58" parent="csa-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=3.6;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
-          <mxGeometry height="31.36" width="25.92" x="54.05" y="130.94" as="geometry" />
+        <mxCell id="csa-58" parent="csa-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=1.8;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+          <mxGeometry height="40.88" width="35.44" x="49.29" y="126.18" as="geometry" />
         </mxCell>
         <mxCell id="csa-40" parent="csa-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#d79b00;strokeWidth=1.8;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="44.32" width="81.76" x="259.41" y="21.42" as="geometry" />
@@ -7472,7 +7472,7 @@
           <mxGeometry height="18.4" width="19" x="39.09" as="geometry" y="-4.02" />
         </mxCell>
         <mxCell id="csa-29" parent="csa-21" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="11" vertex="1">
-          <mxGeometry height="18.4" width="18.55" x="58.77" as="geometry" y="-4.02" />
+          <mxGeometry height="18.4" width="18.55" x="56.27" as="geometry" y="-4.02" />
         </mxCell>
         <mxCell id="csa-13" parent="csa-12" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#fff2cc;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="24.88" width="19.44" y="11.66" as="geometry" />
@@ -7528,11 +7528,11 @@
         <mxCell id="hca-figure" connectable="0" parent="1" style="group;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="321.3" width="788.8" x="0" y="3665.6" as="geometry" />
         </mxCell>
-        <mxCell id="hca-68" parent="hca-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=3.6;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
-          <mxGeometry height="31.36" width="25.92" x="222.32" y="130.94" as="geometry" />
+        <mxCell id="hca-68" parent="hca-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=1.8;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+          <mxGeometry height="40.88" width="35.44" x="217.56" y="126.18" as="geometry" />
         </mxCell>
-        <mxCell id="hca-67" parent="hca-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=3.6;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
-          <mxGeometry height="31.36" width="25.92" x="66.8" y="130.94" as="geometry" />
+        <mxCell id="hca-67" parent="hca-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#b85450;strokeWidth=1.8;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
+          <mxGeometry height="40.88" width="35.44" x="62.04" y="126.18" as="geometry" />
         </mxCell>
         <mxCell id="hca-55" parent="hca-figure" style="rounded=1;arcSize=20;whiteSpace=wrap;html=1;dashed=1;fillColor=none;strokeColor=#d79b00;strokeWidth=1.8;absoluteArcSize=1;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="44.32" width="159.52" x="311.04" y="21.42" as="geometry" />
@@ -7709,7 +7709,7 @@
           <mxGeometry height="18.4" width="19" x="116.86" as="geometry" y="-4.02" />
         </mxCell>
         <mxCell id="hca-36" parent="hca-20" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" value="15" vertex="1">
-          <mxGeometry height="18.4" width="19" x="136.29" as="geometry" y="-4.02" />
+          <mxGeometry height="18.4" width="19" x="133.79" as="geometry" y="-4.02" />
         </mxCell>
         <mxCell id="hca-4" parent="hca-3" style="shape=isoCube2;whiteSpace=wrap;html=1;isoAngle=15;fillColor=#dae8fc;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="24.88" width="19.44" y="11.66" as="geometry" />
