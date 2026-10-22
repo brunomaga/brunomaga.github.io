@@ -1915,7 +1915,7 @@ A clearer explanation can be found on this [Google Research post](https://resear
 **Bidirectional attention**, where there is no notion of past and future: the matrices $$Q′$$ and $$K′$$ (the [random features](https://en.wikipedia.org/wiki/Random_feature) of the queries and the keys) are used in a [lower rank decomposition](https://en.wikipedia.org/wiki/Low-rank_approximation) of the attention matrix $$A$$. Decoupling them, and conducting the matrix multiplications in the order indicated by the dashed boxes of the following picture, gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation:
 
 {: .picture}
-<img loading="lazy" width="70.9%" height="70.9%" src="{{ site.assets }}/publications/performers.svg"/> 
+<img loading="lazy" width="70.6%" height="70.6%" src="{{ site.assets }}/publications/performers.svg"/> 
 
 {: .caption}
 **Left:** Standard attention module computation, where the final desired result is computed by performing a matrix multiplication with the attention matrix $$A$$ and value tensor $$V$$. **Right:** Decoupling matrices $$Q′$$ and $$K′$$ used in the lower rank decomposition of $$A$$ and conducting the matrix multiplications in the order indicated by the dashed boxes gives a linear attention mechanism, which never explicitly constructs $$A$$ or its approximation. Adapted from: [Rethinking Attention with Performers](https://research.google/blog/rethinking-attention-with-performers/)
