@@ -154,7 +154,7 @@ As before, $$A$$ is split by rows. An all-gather of $$x$$ would work, but a rank
 The following picture illustrates the exchange on 3 ranks:
 
 {: .picture}
-<img width="64.4%" height="64.4%" src="{{ site.assets }}/distributed-matmul-dbs/spmv.svg">
+<img width="63.6%" height="63.6%" src="{{ site.assets }}/distributed-matmul-dbs/spmv.svg">
 
 {: .caption}
 Sparse matrix-vector product on 3 ranks. **Left:** nonzeros colored by rank. A dot marks a nonzero whose entry of $$x$$ is on another rank. **Right:** the entries of $$x$$ on each rank after the exchange. Dashed boxes are ghost entries.
