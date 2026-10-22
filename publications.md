@@ -1836,7 +1836,7 @@ To be compute optimal (i.e., lowest loss for a given compute budget), [Kaplan et
 <b>Overlaid predictions.</b> Predictions of the paper's three approaches, overlaid with the projections of Kaplan et al. (2020). All three approaches predict that current large models should be substantially smaller and therefore trained much longer than is currently done. <b><i>Chinchilla</i> outperforms <i>Gopher</i> and the other large models (Section 4.2 of the paper).</b> Adapted from: [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)
 
 {: .picture}
-<img loading="lazy" width="77.4%" height="77.4%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models_2.svg"/>
+<img loading="lazy" width="80.1%" height="80.1%" src="{{ site.assets }}/publications/training_compute_optimal_large_language_models_2.svg"/>
 
 {: .caption}
 <b>Training curve envelope.</b> The <b>left</b> panel shows all the training runs: model sizes from 70M to 10B parameters, each trained with four different cosine cycle lengths. The envelope of minimal loss per FLOP, taken from these curves, gives the optimal model size (<b>center</b>) and the optimal number of training tokens (<b>right</b>) for a given compute budget. Green: the projected optimal model size and number of training tokens for the FLOPs used to train <i>Gopher</i> ($$5.76 \times 10^{23}$$). Adapted from: [Training Compute-Optimal Large Language Models](https://arxiv.org/abs/2203.15556)
