@@ -20,13 +20,9 @@ Before continuing, it is important to emphasize the following:
 
 ## Data loader setup for sequence parallelism
 
-To implement sequence parallelism, the data loader first has to be adapted to load data at the token level, in a way that matches the hybrid data- and sequence-parallel setup. All that is needed is to configure a `DataLoader` and a `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader workers. The following picture illustrates this allocation for three combinations of data and sequence parallelism:
+To implement sequence parallelism, the data loader first has to be adapted to load data at the token level, in a way that matches the hybrid data- and sequence-parallel setup. All that is needed is to configure a `DataLoader` and a `DistributedSampler` that allocate chunks of sequences (instead of full sequences) to the data loader workers.
 
-{: .picture}
-<img width="97.2%" height="97.2%" src="{{ site.assets }}/distributed-training/imgs/spdistributedsampler.svg"/>
-
-{: .caption}
-Data loading for hybrid data parallelism (DP) and sequence parallelism (SP) on 4 color-coded processes/GPUs and a dataset of 8 samples. First row: all 4 processes run distributed data parallelism. Second row: a custom `DistributedSampler` that yields chunks of sequences enables a hybrid data- and sequence-parallel execution with 2 groups of 2 sequence-parallel processes. Third row: no data parallelism; all 4 processes run sequence parallelism on the same sample.
+As an example, take 4 processes and a dataset of 8 samples. With data parallelism only, the sampler gives whole samples to the processes in turn: process 1 gets samples 1 and 5, process 2 gets samples 2 and 6, and so on. With 2 data-parallel groups of 2 sequence-parallel processes, a custom `DistributedSampler` gives the odd samples to the first group and the even samples to the second, and each process of a group gets one half of the tokens of each of its samples. With sequence parallelism only, all 4 processes read the same samples, and each process gets one quarter of the tokens of each sample.
 
 Once this is in place, most layers (like the feed-forward network) operate on the last (embedding) dimension of the input, and can therefore run sequence-parallel training/prefill without changes. The attention layer is an exception, and is covered next.
 
