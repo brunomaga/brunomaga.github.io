@@ -745,7 +745,7 @@ The headline win is the cache: at 256K context Jamba needs ~4GB of KV cache vs 3
 Jamba is a template that Nemotron-3 follows, with Mamba-2 layers, and adding LatentMoE, MTP and NVFP4. The following picture illustrates a Jamba block of eight layers (a), and the four types of layers of the architecture (b):
 
 {: .picture}
-<img loading="lazy" width="75.8%" height="75.8%" src="{{ site.assets }}/publications/jamba.svg"/>
+<img loading="lazy" width="58.8%" height="58.8%" src="{{ site.assets }}/publications/jamba.svg"/>
 
 {: .caption}
 <b>(a)</b> A single Jamba block. <b>(b)</b> Different types of layers. The implementation shown here is with $$l = 8$$, $$a : m = 1 : 7$$ ratio of attention-to-Mamba layers, and MoE applied every $$e = 2$$ layers. Adapted from: [Jamba: A Hybrid Transformer-Mamba Language Model](https://arxiv.org/abs/2403.19887)

@@ -15848,19 +15848,19 @@
           <mxGeometry x="0" y="18928.8" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="jamba-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="18968.8" width="665" height="728.98" as="geometry" />
+          <mxGeometry x="0" y="18968.8" width="515" height="728.98" as="geometry" />
         </mxCell>
         <mxCell id="jamba-19" value="" style="whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="338.33" y="29" width="140" height="274.33" as="geometry" />
+          <mxGeometry x="188.33" y="29" width="140" height="274.33" as="geometry" />
         </mxCell>
         <mxCell id="jamba-36" value="" style="whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="525" y="29" width="140" height="274.33" as="geometry" />
+          <mxGeometry x="375" y="29" width="140" height="274.33" as="geometry" />
         </mxCell>
         <mxCell id="jamba-53" value="" style="whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="338.33" y="379" width="140" height="274.33" as="geometry" />
+          <mxGeometry x="188.33" y="379" width="140" height="274.33" as="geometry" />
         </mxCell>
         <mxCell id="jamba-70" value="" style="whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="525" y="379" width="140" height="274.33" as="geometry" />
+          <mxGeometry x="375" y="379" width="140" height="274.33" as="geometry" />
         </mxCell>
         <mxCell id="jamba-9" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
@@ -15918,249 +15918,249 @@
         </mxCell>
         <mxCell id="jamba-26" value="" style="endArrow=classic;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="303.33" as="sourcePoint" />
-            <mxPoint x="408.33" y="280" as="targetPoint" />
+            <mxPoint x="258.33" y="303.33" as="sourcePoint" />
+            <mxPoint x="258.33" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-27" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="245" as="sourcePoint" />
-            <mxPoint x="408.33" y="229.83" as="targetPoint" />
+            <mxPoint x="258.33" y="245" as="sourcePoint" />
+            <mxPoint x="258.33" y="229.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-28" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="194.83" as="sourcePoint" />
-            <mxPoint x="408.33" y="185" as="targetPoint" />
+            <mxPoint x="258.33" y="194.83" as="sourcePoint" />
+            <mxPoint x="258.33" y="185" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-29" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="165.01" as="sourcePoint" />
-            <mxPoint x="408.33" y="147" as="targetPoint" />
+            <mxPoint x="258.33" y="165.01" as="sourcePoint" />
+            <mxPoint x="258.33" y="147" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-30" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="112" as="sourcePoint" />
-            <mxPoint x="408.33" y="100.33" as="targetPoint" />
+            <mxPoint x="258.33" y="112" as="sourcePoint" />
+            <mxPoint x="258.33" y="100.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-31" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="65.33" as="sourcePoint" />
-            <mxPoint x="408.33" y="56.66" as="targetPoint" />
+            <mxPoint x="258.33" y="65.33" as="sourcePoint" />
+            <mxPoint x="258.33" y="56.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-32" value="" style="endArrow=classic;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="36.67" as="sourcePoint" />
-            <mxPoint x="408.33" y="0" as="targetPoint" />
+            <mxPoint x="258.33" y="36.67" as="sourcePoint" />
+            <mxPoint x="258.33" y="0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-33" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="291.67" as="sourcePoint" />
-            <mxPoint x="398.34" y="175" as="targetPoint" />
+            <mxPoint x="258.33" y="291.67" as="sourcePoint" />
+            <mxPoint x="248.34" y="175" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="350" y="291.67" />
-              <mxPoint x="350" y="175" />
+              <mxPoint x="200" y="291.67" />
+              <mxPoint x="200" y="175" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-34" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="163.33" as="sourcePoint" />
-            <mxPoint x="398.34" y="46.67" as="targetPoint" />
+            <mxPoint x="258.33" y="163.33" as="sourcePoint" />
+            <mxPoint x="248.34" y="46.67" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="350" y="163.33" />
-              <mxPoint x="350" y="46.67" />
+              <mxPoint x="200" y="163.33" />
+              <mxPoint x="200" y="46.67" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-43" value="" style="endArrow=classic;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="303.33" as="sourcePoint" />
-            <mxPoint x="595" y="280" as="targetPoint" />
+            <mxPoint x="445" y="303.33" as="sourcePoint" />
+            <mxPoint x="445" y="280" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-44" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="245" as="sourcePoint" />
-            <mxPoint x="595" y="229.83" as="targetPoint" />
+            <mxPoint x="445" y="245" as="sourcePoint" />
+            <mxPoint x="445" y="229.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-45" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="194.83" as="sourcePoint" />
-            <mxPoint x="595" y="185" as="targetPoint" />
+            <mxPoint x="445" y="194.83" as="sourcePoint" />
+            <mxPoint x="445" y="185" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-46" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="165.01" as="sourcePoint" />
-            <mxPoint x="595" y="147" as="targetPoint" />
+            <mxPoint x="445" y="165.01" as="sourcePoint" />
+            <mxPoint x="445" y="147" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-47" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="112" as="sourcePoint" />
-            <mxPoint x="595" y="100.33" as="targetPoint" />
+            <mxPoint x="445" y="112" as="sourcePoint" />
+            <mxPoint x="445" y="100.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-48" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="65.33" as="sourcePoint" />
-            <mxPoint x="595" y="56.66" as="targetPoint" />
+            <mxPoint x="445" y="65.33" as="sourcePoint" />
+            <mxPoint x="445" y="56.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-49" value="" style="endArrow=classic;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="36.67" as="sourcePoint" />
-            <mxPoint x="595" y="0" as="targetPoint" />
+            <mxPoint x="445" y="36.67" as="sourcePoint" />
+            <mxPoint x="445" y="0" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-50" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="291.67" as="sourcePoint" />
-            <mxPoint x="585.01" y="175" as="targetPoint" />
+            <mxPoint x="445" y="291.67" as="sourcePoint" />
+            <mxPoint x="435.01" y="175" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="536.67" y="291.67" />
-              <mxPoint x="536.67" y="175" />
+              <mxPoint x="386.67" y="291.67" />
+              <mxPoint x="386.67" y="175" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-51" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="163.33" as="sourcePoint" />
-            <mxPoint x="585.01" y="46.67" as="targetPoint" />
+            <mxPoint x="445" y="163.33" as="sourcePoint" />
+            <mxPoint x="435.01" y="46.67" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="536.67" y="163.33" />
-              <mxPoint x="536.67" y="46.67" />
+              <mxPoint x="386.67" y="163.33" />
+              <mxPoint x="386.67" y="46.67" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-60" value="" style="endArrow=classic;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="653.33" as="sourcePoint" />
-            <mxPoint x="408.33" y="630" as="targetPoint" />
+            <mxPoint x="258.33" y="653.33" as="sourcePoint" />
+            <mxPoint x="258.33" y="630" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-61" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="595" as="sourcePoint" />
-            <mxPoint x="408.33" y="579.83" as="targetPoint" />
+            <mxPoint x="258.33" y="595" as="sourcePoint" />
+            <mxPoint x="258.33" y="579.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-62" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="544.83" as="sourcePoint" />
-            <mxPoint x="408.33" y="535" as="targetPoint" />
+            <mxPoint x="258.33" y="544.83" as="sourcePoint" />
+            <mxPoint x="258.33" y="535" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-63" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="515.01" as="sourcePoint" />
-            <mxPoint x="408.33" y="497" as="targetPoint" />
+            <mxPoint x="258.33" y="515.01" as="sourcePoint" />
+            <mxPoint x="258.33" y="497" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-64" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="462" as="sourcePoint" />
-            <mxPoint x="408.33" y="450.33" as="targetPoint" />
+            <mxPoint x="258.33" y="462" as="sourcePoint" />
+            <mxPoint x="258.33" y="450.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-65" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="415.33" as="sourcePoint" />
-            <mxPoint x="408.33" y="406.66" as="targetPoint" />
+            <mxPoint x="258.33" y="415.33" as="sourcePoint" />
+            <mxPoint x="258.33" y="406.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-66" value="" style="endArrow=classic;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="386.67" as="sourcePoint" />
-            <mxPoint x="408.33" y="350" as="targetPoint" />
+            <mxPoint x="258.33" y="386.67" as="sourcePoint" />
+            <mxPoint x="258.33" y="350" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-67" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="641.67" as="sourcePoint" />
-            <mxPoint x="398.34" y="525" as="targetPoint" />
+            <mxPoint x="258.33" y="641.67" as="sourcePoint" />
+            <mxPoint x="248.34" y="525" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="350" y="641.67" />
-              <mxPoint x="350" y="525" />
+              <mxPoint x="200" y="641.67" />
+              <mxPoint x="200" y="525" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-68" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="408.33" y="513.33" as="sourcePoint" />
-            <mxPoint x="398.34" y="396.67" as="targetPoint" />
+            <mxPoint x="258.33" y="513.33" as="sourcePoint" />
+            <mxPoint x="248.34" y="396.67" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="350" y="513.33" />
-              <mxPoint x="350" y="396.67" />
+              <mxPoint x="200" y="513.33" />
+              <mxPoint x="200" y="396.67" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-77" value="" style="endArrow=classic;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="653.33" as="sourcePoint" />
-            <mxPoint x="595" y="630" as="targetPoint" />
+            <mxPoint x="445" y="653.33" as="sourcePoint" />
+            <mxPoint x="445" y="630" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-78" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="595" as="sourcePoint" />
-            <mxPoint x="595" y="579.83" as="targetPoint" />
+            <mxPoint x="445" y="595" as="sourcePoint" />
+            <mxPoint x="445" y="579.83" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-79" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="544.83" as="sourcePoint" />
-            <mxPoint x="595" y="535" as="targetPoint" />
+            <mxPoint x="445" y="544.83" as="sourcePoint" />
+            <mxPoint x="445" y="535" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-80" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="515.01" as="sourcePoint" />
-            <mxPoint x="595" y="497" as="targetPoint" />
+            <mxPoint x="445" y="515.01" as="sourcePoint" />
+            <mxPoint x="445" y="497" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-81" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="462" as="sourcePoint" />
-            <mxPoint x="595" y="450.33" as="targetPoint" />
+            <mxPoint x="445" y="462" as="sourcePoint" />
+            <mxPoint x="445" y="450.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-82" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="415.33" as="sourcePoint" />
-            <mxPoint x="595" y="406.66" as="targetPoint" />
+            <mxPoint x="445" y="415.33" as="sourcePoint" />
+            <mxPoint x="445" y="406.66" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-83" value="" style="endArrow=classic;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;endFill=1;endSize=5;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="386.67" as="sourcePoint" />
-            <mxPoint x="595" y="350" as="targetPoint" />
+            <mxPoint x="445" y="386.67" as="sourcePoint" />
+            <mxPoint x="445" y="350" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-84" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="641.67" as="sourcePoint" />
-            <mxPoint x="585.01" y="525" as="targetPoint" />
+            <mxPoint x="445" y="641.67" as="sourcePoint" />
+            <mxPoint x="435.01" y="525" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="536.67" y="641.67" />
-              <mxPoint x="536.67" y="525" />
+              <mxPoint x="386.67" y="641.67" />
+              <mxPoint x="386.67" y="525" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="jamba-85" value="" style="endArrow=none;startArrow=none;html=1;strokeColor=#000000;strokeWidth=1.4;rounded=0;fontFamily=Source Sans 3;" edge="1" parent="jamba-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="595" y="513.33" as="sourcePoint" />
-            <mxPoint x="585.01" y="396.67" as="targetPoint" />
+            <mxPoint x="445" y="513.33" as="sourcePoint" />
+            <mxPoint x="435.01" y="396.67" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="536.67" y="513.33" />
-              <mxPoint x="536.67" y="396.67" />
+              <mxPoint x="386.67" y="513.33" />
+              <mxPoint x="386.67" y="396.67" />
             </Array>
           </mxGeometry>
         </mxCell>
@@ -16189,94 +16189,94 @@
           <mxGeometry x="0" y="621.43" width="140" height="52.5" as="geometry" />
         </mxCell>
         <mxCell id="jamba-20" value="MLP" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="361.67" y="65.33" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="211.67" y="65.33" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-21" value="RMSNorm" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="361.67" y="112" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="211.67" y="112" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-22" value="Attention" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="361.67" y="194.83" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="211.67" y="194.83" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-23" value="RMSNorm" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="361.67" y="245" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="211.67" y="245" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-24" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="398.33" y="36.66" width="20" height="20" as="geometry" />
+          <mxGeometry x="248.33" y="36.66" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="jamba-25" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="398.33" y="165" width="20" height="20" as="geometry" />
+          <mxGeometry x="248.33" y="165" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="jamba-37" value="MoE" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="548.33" y="65.33" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="398.33" y="65.33" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-38" value="RMSNorm" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="548.33" y="112" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="398.33" y="112" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-39" value="Attention" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="548.33" y="194.83" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="398.33" y="194.83" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-40" value="RMSNorm" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="548.33" y="245" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="398.33" y="245" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-41" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="585" y="36.66" width="20" height="20" as="geometry" />
+          <mxGeometry x="435" y="36.66" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="jamba-42" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="585" y="165" width="20" height="20" as="geometry" />
+          <mxGeometry x="435" y="165" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="jamba-54" value="MLP" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="361.67" y="415.33" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="211.67" y="415.33" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-55" value="RMSNorm" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="361.67" y="462" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="211.67" y="462" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-56" value="Mamba" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="361.67" y="544.83" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="211.67" y="544.83" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-57" value="RMSNorm" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="361.67" y="595" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="211.67" y="595" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-58" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="398.33" y="386.66" width="20" height="20" as="geometry" />
+          <mxGeometry x="248.33" y="386.66" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="jamba-59" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="398.33" y="515" width="20" height="20" as="geometry" />
+          <mxGeometry x="248.33" y="515" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="jamba-71" value="MoE" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="548.33" y="415.33" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="398.33" y="415.33" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-72" value="RMSNorm" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="548.33" y="462" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="398.33" y="462" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-73" value="Mamba" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="548.33" y="544.83" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="398.33" y="544.83" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-74" value="RMSNorm" style="whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=14;fontColor=#000000;rounded=1;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="548.33" y="595" width="93.33" height="35" as="geometry" />
+          <mxGeometry x="398.33" y="595" width="93.33" height="35" as="geometry" />
         </mxCell>
         <mxCell id="jamba-75" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="585" y="386.66" width="20" height="20" as="geometry" />
+          <mxGeometry x="435" y="386.66" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="jamba-76" value="" style="shape=orEllipse;perimeter=ellipsePerimeter;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="585" y="515" width="20" height="20" as="geometry" />
+          <mxGeometry x="435" y="515" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="jamba-18" value="(a)" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
           <mxGeometry x="61.74" y="712.18" width="16.54" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="jamba-35" value="Transformer layer" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;spacing=0;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="356.08" y="315.75" width="104.5" height="16.8" as="geometry" />
+          <mxGeometry x="206.08" y="315.75" width="104.5" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="jamba-52" value="Attention MoE layer" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;spacing=0;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="536.57" y="315.75" width="116.86" height="16.8" as="geometry" />
+          <mxGeometry x="386.57" y="315.75" width="116.86" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="jamba-69" value="Mamba layer" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;spacing=0;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="370.71" y="665.75" width="75.25" height="16.8" as="geometry" />
+          <mxGeometry x="220.71" y="665.75" width="75.25" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="jamba-86" value="Mamba MoE layer" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;spacing=0;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="541.63" y="665.75" width="106.75" height="16.8" as="geometry" />
+          <mxGeometry x="391.63" y="665.75" width="106.75" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="jamba-87" value="(b)" style="text;html=1;align=center;verticalAlign=middle;spacing=0;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="jamba-figure">
-          <mxGeometry x="497.91" y="712.18" width="17.33" height="16.8" as="geometry" />
+          <mxGeometry x="343" y="712.18" width="17.33" height="16.8" as="geometry" />
         </mxCell>
         <mxCell id="nemotron3-label" value="nemotron3.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="19757.8" width="600" height="30" as="geometry" />
