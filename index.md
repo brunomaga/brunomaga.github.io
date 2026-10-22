@@ -45,10 +45,16 @@ In this space, I write about my projects and topics related to my fields of inte
 
 <!-- resources -->
 <p class="home-text">
-I also keep <a href="{{ site.publications_permalink }}">summaries of relevant publications</a>, and a list of books and other resources in the field:
+I also keep a curated list of <a href="{{ site.publications_permalink }}">publications</a>, books and other resources in the field:
 </p>
 
 <table id="resources-table" class="label-table home-table">
+<tr>
+<td><span class="post-label">pubs</span></td>
+<td>
+  <a href="{{ site.publications_permalink }}">Summaries of Relevant Publications</a> <span class="pub-meta">(continuously updated)</span>
+</td>
+</tr>
 <tr>
 <td><span class="post-label">book</span></td>
 <td>
