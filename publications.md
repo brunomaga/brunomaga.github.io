@@ -291,7 +291,7 @@ The design philosophy is a balance of three layer types: MoE for sparse paramete
 <b>Nemotron-3-Nano-30B-A3B.</b> Nemotron 3 models (e.g., Nemotron 3 Nano) leverage a hybrid Mamba-Transformer MoE architecture consisting predominantly of interleaved Mamba-2 and MoE layers, with a select few self attention layers. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
 
 {: .picture}
-<img loading="lazy" width="98.7%" height="98.7%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
+<img loading="lazy" width="99.3%" height="99.3%" src="{{ site.assets }}/publications/nemotron3_2.svg"/>
 
 {: .caption}
 Relative difference in train loss (left) and validation loss (right) between models trained with NVFP4 and BF16 (higher is better), shown at two model scales: Nemotron 3 Nano (A3B) and the larger MoE model (A8B). Loss gaps decrease as model size increases (A3B → A8B). Recipe ablation on Nemotron 3 Nano started from Nemotron 3 NVFP4 checkpoint at 500B tokens, then quantizes sensitive layers (Mamba Output, QKV, and Attention projections) to NVFP4, highlighting the importance of keeping these layers in high precision. Adapted from: [NVIDIA Nemotron 3: Efficient and Open Intelligence](https://arxiv.org/abs/2512.20856)
