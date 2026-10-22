@@ -2478,7 +2478,7 @@
         <mxCell id="sdpa-99" parent="sdpa-figure" style="group;fontFamily=Source Sans 3;" value="" vertex="1">
           <mxGeometry height="82.95" width="63.73" x="544.5" y="150.26" as="geometry" />
         </mxCell>
-        <mxCell id="sdpa-111" edge="1" parent="sdpa-figure" source="sdpa-3" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=13;labelBackgroundColor=none;exitX=0.9919;exitY=0.73;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0287;entryY=0.66;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.4;endFill=1;endSize=5;" target="sdpa-15" value="q @ k&lt;sup&gt;T&lt;/sup&gt; · scale">
+        <mxCell id="sdpa-111" edge="1" parent="sdpa-figure" source="sdpa-3" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=13;labelBackgroundColor=none;exitX=0.9919;exitY=0.73;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0287;entryY=0.66;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=NewComputerModernSansMath;strokeWidth=1.4;endFill=1;endSize=5;" target="sdpa-15" value="q @ k&lt;sup&gt;T&lt;/sup&gt;·scale">
           <mxGeometry relative="1" as="geometry"><mxPoint as="offset" x="0" y="-12.2" /></mxGeometry>
         </mxCell>
         <mxCell id="sdpa-112" edge="1" parent="sdpa-figure" source="sdpa-67" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=14;labelBackgroundColor=#ffffff;exitX=0.3869;exitY=0.13;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5144;entryY=0.95;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=Source Sans 3;strokeWidth=1.4;endFill=1;endSize=5;" target="sdpa-15" value="">
