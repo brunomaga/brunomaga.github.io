@@ -310,7 +310,9 @@ sections 6 and 7, and the font section 4.
   on the formulas only, as <span style="font-family: NewComputerModernSansMath;">. Words, numbers, units,
   tensor dimensions (S x H·h), tick labels and names with an index (TRM1, FFN2) keep the text font. The
   math font has no bold or italic face: the browser slants and emboldens it. Formulas take the math font in
-  every picture, also in one redrawn from a paper, whether or not the paper sets them in a math font.
+  every picture, also in one redrawn from a paper, whether or not the paper sets them in a math font. A
+  product in a math-font formula is the dot operator ⋅ (U+22C5) with no spaces around it: the middle dot ·
+  with spaces leaves gaps of about 10 px in this font.
 - Text sizes, in page px (draw.io fontSize at page scale):
   ```
   title          16           the picture's title, and labels drawn larger than the regular text
@@ -325,8 +327,7 @@ sections 6 and 7, and the font section 4.
   it carries or does (wq, sum-reduce, the packets of the communication pictures, the weights of a network).
   The label inside a block arrow is arrow text too. The names at the start or the end of an arrow (Inputs,
   Output Probabilities), axis titles, and the labels of boxes, operators, brackets and legends are not arrow
-  text. An arrow label that is a dimension stays
-  small, and one drawn larger than the regular text stays 16.
+  text. An arrow label that is a dimension stays small.
   Exception, at the user's request: the operators of an equation of matrices drawn to scale are sized to the
   matrices they join, larger than 16 (the "=" of mml_svd; softmax, the parentheses and "=" of
   context_parallelism).
