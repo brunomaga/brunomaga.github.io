@@ -392,7 +392,7 @@ def generate_kvcache(model, prompt, n_tokens, seqlen, kv_cache=None):
 The code above uses a dynamic cache. The following picture compares it with a static cache, for one new token:
 
 {: .picture}
-<img width="59.4%" height="59.4%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
+<img width="60.5%" height="60.5%" src="{{ site.assets }}/inference/imgs/static_cache.svg"/>
 
 The following code implements a static cache of one layer, where the keys and values of the new tokens are written in place:
 
