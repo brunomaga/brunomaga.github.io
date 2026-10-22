@@ -154,7 +154,7 @@ The four steps of the timeline are:
 - (D) the new earliest event forces cell 3 to back-interpolate, the event is handled, and cell 3 reinitializes. Cell 3 will be the next cell to integrate forward:
 
 {: .picture}
-<img width="40.4%" height="40.4%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.svg">
+<img width="40.2%" height="40.2%" src="{{ site.assets }}/neuron-variable-timestep/local_variable_timestep_six_cell_example.svg">
 
 {: .caption}
 Adapted from: [Lytton and Hines (2005), Independent variable time-step integration of individual neurons for network simulations, Fig. 1](https://pmc.ncbi.nlm.nih.gov/articles/PMC2712447/)
