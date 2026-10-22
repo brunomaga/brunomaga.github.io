@@ -1235,10 +1235,10 @@
         <mxCell id="dit_moe-24" value="32 × 32 × 4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="32.63" y="299.91" width="62.53" height="18.4" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-25" value="Timestep &lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;t&lt;/span&gt;&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-25" value="Timestep &lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;t&lt;/span&gt;&lt;/i&gt;" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="116.28" y="258.97" width="67.36" height="26.94" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-26" value="Label &lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;y&lt;/span&gt;&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-26" value="Label &lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;y&lt;/span&gt;&lt;/i&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="116.28" y="294.14" width="67.36" height="26.94" as="geometry" />
         </mxCell>
         <mxCell id="dit_moe-27" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;fontSize=16;absoluteArcSize=1;arcSize=20;strokeColor=#000000;strokeWidth=1.8;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit_moe-figure">
@@ -1270,7 +1270,7 @@
         </mxCell>
         <mxCell id="dit_moe-32" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="273.45" y="64.36" as="sourcePoint" />
+            <mxPoint x="273.45" y="70.36" as="sourcePoint" />
             <mxPoint x="273.45" y="56.88" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -1280,7 +1280,7 @@
             <mxPoint x="273.45" y="7.48" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit_moe-34" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;fontSize=12;dashed=1;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-34" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;dashed=1;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="273.45" y="238.01" as="sourcePoint" />
             <mxPoint x="271.95" y="127.99" as="targetPoint" />
@@ -1290,7 +1290,7 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit_moe-35" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=1.4;fontSize=12;dashed=1;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-35" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;dashed=1;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="273.45" y="112.28" as="sourcePoint" />
             <mxPoint x="271.95" y="21.7" as="targetPoint" />
@@ -1327,7 +1327,7 @@
             <mxPoint x="316.62" y="261.21" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="dit_moe-40" value="Input Tokens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-40" value="Input Tokens" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=12;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="230.29" y="282.92" width="86.33" height="25.45" as="geometry" />
         </mxCell>
         <mxCell id="dit_moe-41" value="AdaLN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
@@ -1345,7 +1345,7 @@
         <mxCell id="dit_moe-45" value="AdaLN" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="230.29" y="30.68" width="86.33" height="26.19" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-46" value="Conditioning" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-46" value="Conditioning" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=12;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="328.83" y="282.17" width="71.1" height="26.19" as="geometry" />
         </mxCell>
         <mxCell id="dit_moe-47" value="MLP" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
@@ -1366,7 +1366,7 @@
         <mxCell id="dit_moe-50" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;fontSize=12;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="622.25" y="193.11" as="sourcePoint" />
-            <mxPoint x="595.27" y="105.54" as="targetPoint" />
+            <mxPoint x="598.54" y="105.54" as="targetPoint" />
             <Array as="points">
               <mxPoint x="622.25" y="105.54" />
             </Array>
@@ -1375,7 +1375,7 @@
         <mxCell id="dit_moe-51" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;fontSize=12;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="689.65" y="193.11" as="sourcePoint" />
-            <mxPoint x="662.63" y="105.54" as="targetPoint" />
+            <mxPoint x="665.9" y="105.54" as="targetPoint" />
             <Array as="points">
               <mxPoint x="689.65" y="105.54" />
             </Array>
@@ -1384,7 +1384,7 @@
         <mxCell id="dit_moe-52" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#d79b00;strokeWidth=1.4;fontSize=12;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="860.25" y="193.11" as="sourcePoint" />
-            <mxPoint x="833.27" y="105.54" as="targetPoint" />
+            <mxPoint x="836.54" y="105.54" as="targetPoint" />
             <Array as="points">
               <mxPoint x="860.25" y="105.54" />
             </Array>
@@ -1450,45 +1450,45 @@
         <mxCell id="dit_moe-62" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="453.82" y="127.99" as="sourcePoint" />
-            <mxPoint x="613.23" y="59.87" as="targetPoint" />
+            <mxPoint x="609.97" y="62.12" as="targetPoint" />
             <Array as="points">
-              <mxPoint x="453.82" y="59.87" />
+              <mxPoint x="453.82" y="62.12" />
             </Array>
           </mxGeometry>
         </mxCell>
         <mxCell id="dit_moe-63" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="588.54" y="127.99" as="sourcePoint" />
-            <mxPoint x="588.54" y="112.28" as="targetPoint" />
+            <mxPoint x="588.54" y="115.54" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dit_moe-64" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="588.54" y="98.8" as="sourcePoint" />
+            <mxPoint x="588.54" y="95.54" as="sourcePoint" />
             <mxPoint x="588.54" y="86.08" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dit_moe-65" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="655.9" y="127.99" as="sourcePoint" />
-            <mxPoint x="655.9" y="112.28" as="targetPoint" />
+            <mxPoint x="655.9" y="115.54" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dit_moe-66" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="655.9" y="98.8" as="sourcePoint" />
+            <mxPoint x="655.9" y="95.54" as="sourcePoint" />
             <mxPoint x="655.9" y="86.08" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dit_moe-67" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="826.54" y="127.99" as="sourcePoint" />
-            <mxPoint x="826.54" y="112.28" as="targetPoint" />
+            <mxPoint x="826.54" y="115.54" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dit_moe-68" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="826.54" y="98.8" as="sourcePoint" />
+            <mxPoint x="826.54" y="95.54" as="sourcePoint" />
             <mxPoint x="826.54" y="86.08" as="targetPoint" />
           </mxGeometry>
         </mxCell>
@@ -1501,46 +1501,46 @@
         <mxCell id="dit_moe-70" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="619.97" y="86.08" as="sourcePoint" />
-            <mxPoint x="619.97" y="66.61" as="targetPoint" />
+            <mxPoint x="619.97" y="72.12" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dit_moe-71" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;endSize=5;startSize=4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;" edge="1" parent="dit_moe-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="619.97" y="53.14" as="sourcePoint" />
+            <mxPoint x="619.97" y="52.12" as="sourcePoint" />
             <mxPoint x="619.97" y="38.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
         <mxCell id="dit_moe-72" value="" style="shape=orEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit_moe-figure">
-          <mxGeometry x="613.23" y="53.14" width="13.47" height="13.47" as="geometry" />
+          <mxGeometry x="609.97" y="52.12" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="dit_moe-73" value="" style="shape=sumEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit_moe-figure">
-          <mxGeometry x="581.8" y="98.8" width="13.47" height="13.47" as="geometry" />
+          <mxGeometry x="578.54" y="95.54" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="dit_moe-74" value="" style="shape=sumEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit_moe-figure">
-          <mxGeometry x="649.16" y="98.8" width="13.47" height="13.47" as="geometry" />
+          <mxGeometry x="645.9" y="95.54" width="20" height="20" as="geometry" />
         </mxCell>
         <mxCell id="dit_moe-75" value="" style="shape=sumEllipse;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit_moe-figure">
-          <mxGeometry x="819.8" y="98.8" width="13.47" height="13.47" as="geometry" />
+          <mxGeometry x="816.54" y="95.54" width="20" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-76" value="Output Hidden" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-76" value="Output Hidden" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="509.95" y="9.73" width="220.04" height="28.44" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-77" value="Shared&lt;br&gt;Expert" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#b85450;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-77" value="Shared&lt;br&gt;Expert" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="426.88" y="127.99" width="53.89" height="38.17" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-78" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;1&lt;/b&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-78" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;1&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="494.23" y="127.99" width="53.89" height="38.17" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-79" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;2&lt;/b&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-79" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;2&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="561.59" y="127.99" width="53.89" height="38.17" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-80" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;3&lt;/b&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-80" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;3&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="628.95" y="127.99" width="53.89" height="38.17" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-81" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;&lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;&lt;/i&gt; &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;− 1&lt;/span&gt;&lt;/b&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-81" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;&lt;/i&gt; &lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;− 1&lt;/span&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="732.23" y="127.99" width="53.89" height="38.17" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-82" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&lt;b&gt;&lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;&lt;/i&gt;&lt;/b&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-82" value="Expert&lt;br&gt;&lt;span style=&quot;font-size: 14px&quot;&gt;&lt;i&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;K&lt;/span&gt;&lt;/i&gt;&lt;/span&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="799.59" y="127.99" width="53.89" height="38.17" as="geometry" />
         </mxCell>
         <mxCell id="dit_moe-83" value="⋯" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=16;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="dit_moe-figure">
@@ -1549,7 +1549,7 @@
         <mxCell id="dit_moe-84" value="Router" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="534.65" y="221.55" width="157.17" height="32.18" as="geometry" />
         </mxCell>
-        <mxCell id="dit_moe-85" value="Input Hidden" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
+        <mxCell id="dit_moe-85" value="Input Hidden" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=14;arcSize=10;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;" vertex="1" parent="dit_moe-figure">
           <mxGeometry x="503.22" y="279.92" width="220.04" height="32.18" as="geometry" />
         </mxCell>
         <mxCell id="dit_moe-86" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="dit_moe-figure">
