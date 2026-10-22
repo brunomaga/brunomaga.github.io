@@ -57,7 +57,7 @@
   .home-field-break { display: inline; }
 }
 
-// the links, as icons in the link color
+// the links, as grey icons that turn the link colour on hover
 .home-links {
   grid-area: links;
   display: flex;
@@ -69,7 +69,7 @@
 }
 
 .home-links a,
-.home-links a:visited { color: $brand-color; }
+.home-links a:visited { color: $grey-color; }
 
 // a padding that the negative margin cancels: a tap area of about 32px around each icon, with no change in the layout
 .home-links a {
@@ -78,7 +78,10 @@
 }
 
 .home-links a:hover,
-.home-links a:focus-visible { text-decoration: none; }
+.home-links a:focus-visible {
+  color: $brand-color;
+  text-decoration: none;
+}
 
 // the photo, cropped in a circle and zoomed in on the face
 .home-photo {
@@ -157,7 +160,7 @@
 .pub-link,
 .pub-link:visited {
   margin-left: 0.4em;
-  color: #aaa;
+  color: $grey-color;
 }
 
 .pub-link:hover,
