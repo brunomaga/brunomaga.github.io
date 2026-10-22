@@ -121,7 +121,7 @@ Assume a limit of $$30$$ tokens per batch, a reference LR of $$10^{-3}$$, and a 
 <img width="89.7%" height="89.7%" src="{{ site.assets }}/distributed-training/imgs/variable_batch_lr.svg"/>
 
 {: .caption}
-Batches of at most 30 tokens, of shape BxSxE (batch size x sequence length x embedding size), with a reference batch size of 2 and a reference learning rate (LR) of 1e-3. Short sentences (left) give a larger batch, and thus a larger LR, than long sentences (right). Grey cells are padding tokens.
+Batches of at most 30 tokens, of shape BxSxE (batch size x sequence length x embedding size), with a reference batch size of 2 and a reference learning rate (LR) of 1e-3. Short sentences (left) give a larger batch, and thus a larger LR, than long sentences (right). White cells are padding tokens.
 
 Here, samples are collected until the batch reaches (at most) 30 tokens. The batch sizes (number of samples) become $$10$$ and $$4$$ in the left and right examples, respectively. Using linear scaling, the corresponding LRs are $$5 \times 10^{-3}$$ and $$2 \times 10^{-3}$$.
 
