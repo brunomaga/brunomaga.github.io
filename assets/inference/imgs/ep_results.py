@@ -4,7 +4,8 @@ Left, prefill: the time per iteration, in s, against the batch size, in tokens p
 per output token, in ms, against the number of concurrent sequences; these values are placeholders, not measured yet,
 and are drawn in grey, with the same markers. The data comes from the paper of the expert parallelism kernel fusion post.
 The picture follows CLAUDE.md (Pictures): Source Sans 3 text at page size (1 unit = 1 px), drawn as glyph outlines,
-1.8 px axes, 1.0 px data lines, and one legend in one column right of the plots.
+1.8 px axes and data lines (the weight of the measured results), the data drawn behind the axes, and one legend in one
+column right of the plots.
 
 usage: python3 ep_results.py   (needs matplotlib and the Source Sans 3 font)
 """
@@ -48,8 +49,9 @@ plt.rcParams.update({
 def panel(ax, title, xs, series, labels, xticks, xlabels, yticks, xlim, ylim, xlabel, ylabel, colors, styles, color):
     """One log2 panel: a line per implementation, each point labelled with its value."""
     for k, (ys, texts, c, ls) in enumerate(zip(series, labels, colors, styles)):
-        ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.0, marker=MARKERS[k], markersize=7, markerfacecolor=c,
-                markeredgecolor=BLACK, markeredgewidth=1.0, label=NAMES[k], zorder=3)
+        # zorder 2, under the spines and the ticks (2.5) and the value labels (3)
+        ax.plot(xs, ys, color=c, linestyle=ls, linewidth=1.8, marker=MARKERS[k], markersize=7, markerfacecolor=c,
+                markeredgecolor=BLACK, markeredgewidth=1.0, label=NAMES[k], zorder=2)
         for x, y, t in zip(xs, ys, texts):
             ax.annotate(t, (x, y), textcoords='offset points', fontsize=12, color=color, **LABELS[k])
     ax.set_xscale('log', base=2)

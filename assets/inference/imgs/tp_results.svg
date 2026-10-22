@@ -1591,7 +1591,7 @@ z
      <path d="M 500.733875 67.677037 
 L 510.533875 67.677037 
 L 520.333875 67.677037 
-" style="fill: none; stroke: #000000; stroke-linecap: square"/>
+" style="fill: none; stroke: #000000; stroke-width: 1.8; stroke-linecap: square"/>
      <defs>
       <path id="mb5258676d3" d="M 0 3 
 C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
@@ -1891,7 +1891,7 @@ L 246.069125 88.75383
 L 300.319125 116.636709 
 L 354.569125 124.112555 
 L 408.819125 154.850494 
-" clip-path="url(#p0a881c9ba8)" style="fill: none; stroke: #000000; stroke-linecap: square"/>
+" clip-path="url(#p0a881c9ba8)" style="fill: none; stroke: #000000; stroke-width: 1.8; stroke-linecap: square"/>
     <g clip-path="url(#p0a881c9ba8)">
      <use xlink:href="#mb5258676d3" x="83.319125" y="21.528" style="fill: #f8cecc; stroke: #000000"/>
      <use xlink:href="#mb5258676d3" x="137.569125" y="48.362946" style="fill: #f8cecc; stroke: #000000"/>
