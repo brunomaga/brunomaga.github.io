@@ -217,7 +217,7 @@ The following picture shows the two tables and three of these joins:
 <img width="90.5%" height="90.5%" src="{{ site.assets }}/distributed-matmul-dbs/joins.svg">
 
 {: .caption}
-**Top:** the tables `Person` (blue) and `Messages` (green). **Bottom:** three joins on `id`. Dark gray cells are `NULL`.
+**Top:** the tables `Person` (blue) and `Messages` (green). **Bottom:** three joins on `id`. Dark grey cells are `NULL`.
 
 On one node, there are three classic algorithms to join tables of $$N$$ and $$M$$ rows (their costs exclude the size of the output):
 - **[nested loop][nlj]**: compares all pairs of rows, in $$O(N \cdot M)$$;
