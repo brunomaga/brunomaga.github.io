@@ -107,7 +107,7 @@ The variable step method is an **event-driven** algorithm: it is the most accura
 For the sake of comparison, the picture below illustrates the potential over time of a given neuron in a network, for the aforementioned methods, on a $$100ms$$ simulation of a (Brunel) network of $$10000$$ neurons with default neuron parameters. Results are given for the Implicit and Explicit Euler methods with $$\Delta t = 0.1ms$$, and for the analytical solution with fixed ($$\Delta t=0.1ms$$) and variable timestepping:
 
 {: .picture}
-<img width="99.9%" height="99.9%" src="{{ site.assets }}/lif-brunel/neuron_plot_equations.svg">
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/lif-brunel/neuron_plot_equations.svg">
 
 Note the vertical straight lines, which refer to the voltage reset after a spike, and the horizontal straight lines, which refer to the refractory period after firing. The four solutions diverge after the first spikes of the network, at around 14 ms, as a small difference in a spike time changes the input of all post-synaptic neurons.
 
