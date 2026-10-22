@@ -176,7 +176,7 @@ Note the difference in interpolation instants: placed at equidistant intervals i
 The picture above shows that Backward Euler performs the same number of steps for every current, while the step count of CVODE is much lower and grows with the spiking rate. The slow dynamics of the fixed step method, which account for the events at discrete intervals instead of at the event delivery times of its variable step counterpart, lead to a shift in the voltage trajectory that propagates over time. This shift is displayed below over 100 ms of simulation, for Backward Euler with three step sizes (top) and CVODE with four tolerances (bottom). Backward Euler with $$\Delta t=1 \mu s$$ and CVODE with $$\text{atol}=10^{-4}$$ are taken as reference solutions:
 
 {: .picture}
-<img width="93.6%" height="93.6%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg">
+<img width="98.6%" height="98.6%" src="{{ site.assets }}/neuron-variable-timestep/l5_neuron_pulse1_3ma_100ms_cvode_vs_backward_euler.svg">
 
 After a second of simulation, the spike time phase-shifting is substantial (about 2 ms for $$\Delta t = 5 \mu s$$ and 6.5 ms for $$\Delta t = 25 \mu s$$), demonstrating the gain in using variable step methods for this use case. The voltage trajectories over one second are displayed below, with a zoom on the last spike:
 
