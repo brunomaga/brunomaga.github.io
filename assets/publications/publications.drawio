@@ -14266,8 +14266,8 @@
         </mxCell>
         <mxCell id="rqvae-54" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#b85450;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;curved=1;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="418.7" y="165.08" as="sourcePoint" />
-            <mxPoint x="250.59" y="164.58" as="targetPoint" />
+            <mxPoint x="420.01" y="166.03" as="sourcePoint" />
+            <mxPoint x="248.29" y="166.4" as="targetPoint" />
             <Array as="points">
               <mxPoint x="407.62" y="157.03" />
               <mxPoint x="395.54" y="152" />
@@ -14338,133 +14338,133 @@
         <mxCell id="rqvae-14" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;fontSize=16;strokeColor=#666666;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="422.72" y="15.6" width="10.57" height="63.92" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-15" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#9673a6;fontSize=16;opacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-15" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="329.19" y="43.37" width="10.9" height="10.9" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-16" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#9673a6;fontSize=16;opacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-16" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="343.28" y="43.37" width="10.9" height="10.9" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-17" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#9673a6;fontSize=16;opacity=50;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-17" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="357.38" y="43.37" width="10.9" height="10.9" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-28" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.2;darkOpacity2=-0.18;size=28.94;direction=south;fillColor=#d5e8d4;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-28" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0;darkOpacity2=0;size=28.94;direction=south;fillColor=#d5e8d4;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="128.34" y="115.76" width="85.56" height="90.59" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-29" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-29" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="132.47" y="144.7" as="sourcePoint" />
             <mxPoint x="132.47" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-30" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-30" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="132.47" y="144.7" as="sourcePoint" />
             <mxPoint x="161.41" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-31" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-31" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="144.35" y="144.7" as="sourcePoint" />
             <mxPoint x="144.35" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-32" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-32" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="144.35" y="144.7" as="sourcePoint" />
             <mxPoint x="173.29" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-33" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-33" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="156.43" y="144.7" as="sourcePoint" />
             <mxPoint x="156.43" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-34" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-34" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="156.43" y="144.7" as="sourcePoint" />
             <mxPoint x="185.37" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-35" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-35" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="167.7" y="144.7" as="sourcePoint" />
             <mxPoint x="167.7" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-36" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-36" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="167.7" y="144.7" as="sourcePoint" />
             <mxPoint x="196.64" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-37" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-37" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="179.58" y="144.7" as="sourcePoint" />
             <mxPoint x="179.58" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-38" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-38" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="179.58" y="144.7" as="sourcePoint" />
             <mxPoint x="208.52" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-39" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-39" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="128.34" y="151.9" as="sourcePoint" />
             <mxPoint x="184.96" y="151.9" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-40" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-40" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="184.96" y="151.9" as="sourcePoint" />
             <mxPoint x="213.9" y="122.96" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-41" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-41" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="128.34" y="163.57" as="sourcePoint" />
             <mxPoint x="184.96" y="163.57" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-42" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-42" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="184.96" y="163.57" as="sourcePoint" />
             <mxPoint x="213.9" y="134.63" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-43" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-43" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="128.34" y="175.55" as="sourcePoint" />
             <mxPoint x="184.96" y="175.55" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-44" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-44" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="184.96" y="175.55" as="sourcePoint" />
             <mxPoint x="213.9" y="146.61" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-45" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-45" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="128.34" y="187.33" as="sourcePoint" />
             <mxPoint x="184.96" y="187.33" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-46" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-46" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="184.96" y="187.33" as="sourcePoint" />
             <mxPoint x="213.9" y="158.39" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-47" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-47" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="128.34" y="199.41" as="sourcePoint" />
             <mxPoint x="184.96" y="199.41" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-48" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#82b366;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-48" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="184.96" y="199.41" as="sourcePoint" />
             <mxPoint x="213.9" y="170.47" as="targetPoint" />
@@ -14476,187 +14476,187 @@
         <mxCell id="rqvae-53" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#6c8ebf;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="415.59" y="164.5" width="19.29" height="19.29" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-58" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=16;strokeColor=#000000;strokeWidth=1.2;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="302.43" y="177.16" width="59.39" height="60.4" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-59" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-59" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="306.96" y="177.16" as="sourcePoint" />
             <mxPoint x="306.96" y="237.56" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-60" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-60" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="319.44" y="177.16" as="sourcePoint" />
             <mxPoint x="319.44" y="237.56" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-61" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-61" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="331.12" y="177.16" as="sourcePoint" />
             <mxPoint x="331.12" y="237.56" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-62" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-62" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="343.8" y="177.16" as="sourcePoint" />
             <mxPoint x="343.8" y="237.56" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-63" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-63" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="355.68" y="177.16" as="sourcePoint" />
             <mxPoint x="355.68" y="237.56" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-64" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-64" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="302.43" y="182.19" as="sourcePoint" />
             <mxPoint x="361.82" y="182.19" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-65" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-65" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="302.43" y="194.78" as="sourcePoint" />
             <mxPoint x="361.82" y="194.78" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-66" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-66" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="302.43" y="207.26" as="sourcePoint" />
             <mxPoint x="361.82" y="207.26" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-67" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-67" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="302.43" y="219.94" as="sourcePoint" />
             <mxPoint x="361.82" y="219.94" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-68" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#6c8ebf;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-68" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="302.43" y="232.22" as="sourcePoint" />
             <mxPoint x="361.82" y="232.22" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-76" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0.2;darkOpacity2=-0.18;size=28.94;direction=south;fillColor=#e1d5e7;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-76" value="" style="shape=cube;whiteSpace=wrap;html=1;boundedLbl=1;backgroundOutline=1;darkOpacity=0;darkOpacity2=0;size=28.94;direction=south;fillColor=#e1d5e7;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;rounded=0;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="479.09" y="115.76" width="86.06" height="90.59" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-outline-1" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="233.48" y="15.6" as="sourcePoint" /><mxPoint x="318.54" y="15.6" as="targetPoint" /><Array as="points"><mxPoint x="318.54" y="15.6" /><mxPoint x="318.54" y="79.52" /><mxPoint x="233.48" y="79.52" /><mxPoint x="233.48" y="15.6" /></Array></mxGeometry></mxCell><mxCell id="rqvae-outline-2" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="380.44" y="15.6" as="sourcePoint" /><mxPoint x="433.29" y="15.6" as="targetPoint" /><Array as="points"><mxPoint x="433.29" y="15.6" /><mxPoint x="433.29" y="79.52" /><mxPoint x="380.44" y="79.52" /><mxPoint x="380.44" y="15.6" /></Array></mxGeometry></mxCell><mxCell id="rqvae-outline-3" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="128.35" y="144.71" as="sourcePoint" /><mxPoint x="157.28" y="115.77" as="targetPoint" /><Array as="points"><mxPoint x="157.28" y="115.77" /><mxPoint x="213.91" y="115.77" /><mxPoint x="213.91" y="177.42" /><mxPoint x="184.96" y="206.36" /><mxPoint x="128.35" y="206.36" /><mxPoint x="128.35" y="144.71" /></Array></mxGeometry></mxCell><mxCell id="rqvae-outline-4" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="128.35" y="144.71" as="sourcePoint" /><mxPoint x="184.96" y="144.71" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-5" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="184.96" y="206.36" as="sourcePoint" /><mxPoint x="184.96" y="144.71" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-6" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="184.96" y="144.71" as="sourcePoint" /><mxPoint x="213.89" y="115.77" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-7" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="479.1" y="144.7" as="sourcePoint" /><mxPoint x="508.03" y="115.76" as="targetPoint" /><Array as="points"><mxPoint x="508.03" y="115.76" /><mxPoint x="565.16" y="115.76" /><mxPoint x="565.16" y="177.42" /><mxPoint x="536.21" y="206.35" /><mxPoint x="479.1" y="206.35" /><mxPoint x="479.1" y="144.7" /></Array></mxGeometry></mxCell><mxCell id="rqvae-outline-8" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="479.1" y="144.7" as="sourcePoint" /><mxPoint x="536.21" y="144.7" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-9" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="536.21" y="206.35" as="sourcePoint" /><mxPoint x="536.21" y="144.7" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-10" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="536.21" y="144.7" as="sourcePoint" /><mxPoint x="565.14" y="115.76" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-77" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-outline-1" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="233.48" y="15.6" as="sourcePoint" /><mxPoint x="318.54" y="15.6" as="targetPoint" /><Array as="points"><mxPoint x="318.54" y="15.6" /><mxPoint x="318.54" y="79.52" /><mxPoint x="233.48" y="79.52" /><mxPoint x="233.48" y="15.6" /></Array></mxGeometry></mxCell><mxCell id="rqvae-outline-2" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="380.44" y="15.6" as="sourcePoint" /><mxPoint x="433.29" y="15.6" as="targetPoint" /><Array as="points"><mxPoint x="433.29" y="15.6" /><mxPoint x="433.29" y="79.52" /><mxPoint x="380.44" y="79.52" /><mxPoint x="380.44" y="15.6" /></Array></mxGeometry></mxCell><mxCell id="rqvae-outline-3" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="128.35" y="144.71" as="sourcePoint" /><mxPoint x="157.28" y="115.77" as="targetPoint" /><Array as="points"><mxPoint x="157.28" y="115.77" /><mxPoint x="213.91" y="115.77" /><mxPoint x="213.91" y="177.42" /><mxPoint x="184.96" y="206.36" /><mxPoint x="128.35" y="206.36" /><mxPoint x="128.35" y="144.71" /></Array></mxGeometry></mxCell><mxCell id="rqvae-outline-4" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="128.35" y="144.71" as="sourcePoint" /><mxPoint x="184.96" y="144.71" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-5" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="184.96" y="206.36" as="sourcePoint" /><mxPoint x="184.96" y="144.71" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-6" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="184.96" y="144.71" as="sourcePoint" /><mxPoint x="213.89" y="115.77" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-7" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="479.1" y="144.7" as="sourcePoint" /><mxPoint x="508.03" y="115.76" as="targetPoint" /><Array as="points"><mxPoint x="508.03" y="115.76" /><mxPoint x="565.16" y="115.76" /><mxPoint x="565.16" y="177.42" /><mxPoint x="536.21" y="206.35" /><mxPoint x="479.1" y="206.35" /><mxPoint x="479.1" y="144.7" /></Array></mxGeometry></mxCell><mxCell id="rqvae-outline-8" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="479.1" y="144.7" as="sourcePoint" /><mxPoint x="536.21" y="144.7" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-9" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="536.21" y="206.35" as="sourcePoint" /><mxPoint x="536.21" y="144.7" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-outline-10" value="" edge="1" parent="rqvae-figure" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.2;"><mxGeometry relative="1" as="geometry"><mxPoint x="536.21" y="144.7" as="sourcePoint" /><mxPoint x="565.14" y="115.76" as="targetPoint" /></mxGeometry></mxCell><mxCell id="rqvae-77" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="484.43" y="144.7" as="sourcePoint" />
             <mxPoint x="484.43" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-78" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-78" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="484.43" y="144.7" as="sourcePoint" />
             <mxPoint x="513.37" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-79" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-79" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="496.3" y="144.7" as="sourcePoint" />
             <mxPoint x="496.3" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-80" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-80" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="496.3" y="144.7" as="sourcePoint" />
             <mxPoint x="525.24" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-81" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-81" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="507.38" y="144.7" as="sourcePoint" />
             <mxPoint x="507.38" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-82" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-82" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="507.38" y="144.7" as="sourcePoint" />
             <mxPoint x="536.32" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-83" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-83" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="519.25" y="144.7" as="sourcePoint" />
             <mxPoint x="519.25" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-84" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-84" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="519.25" y="144.7" as="sourcePoint" />
             <mxPoint x="548.19" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-85" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-85" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="531.03" y="144.7" as="sourcePoint" />
             <mxPoint x="531.03" y="206.35" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-86" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-86" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="531.03" y="144.7" as="sourcePoint" />
             <mxPoint x="559.97" y="115.76" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-87" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-87" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="479.09" y="150.89" as="sourcePoint" />
             <mxPoint x="536.22" y="150.89" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-88" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-88" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="536.22" y="150.89" as="sourcePoint" />
             <mxPoint x="565.16" y="121.95" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-89" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-89" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="479.09" y="163.17" as="sourcePoint" />
             <mxPoint x="536.22" y="163.17" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-90" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-90" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="536.22" y="163.17" as="sourcePoint" />
             <mxPoint x="565.16" y="134.23" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-91" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-91" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="479.09" y="175.05" as="sourcePoint" />
             <mxPoint x="536.22" y="175.05" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-92" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-92" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="536.22" y="175.05" as="sourcePoint" />
             <mxPoint x="565.16" y="146.11" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-93" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-93" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="479.09" y="187.13" as="sourcePoint" />
             <mxPoint x="536.22" y="187.13" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-94" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-94" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="536.22" y="187.13" as="sourcePoint" />
             <mxPoint x="565.16" y="158.19" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-95" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-95" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="479.09" y="199.21" as="sourcePoint" />
             <mxPoint x="536.22" y="199.21" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-96" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#9673a6;opacity=70;strokeWidth=1.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
+        <mxCell id="rqvae-96" value="" style="endArrow=none;startArrow=none;html=1;rounded=0;strokeColor=#666666;strokeWidth=0.4;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
             <mxPoint x="536.22" y="199.21" as="sourcePoint" />
             <mxPoint x="565.16" y="170.27" as="targetPoint" />
@@ -14695,35 +14695,35 @@
         <mxCell id="rqvae-119" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="790.73" y="166.99" width="20.13" height="20.13" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-120" value="e&lt;sub&gt;2&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-120" value="&lt;i&gt;e&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#e1d5e7;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="766.77" y="94.12" width="20.13" height="20.13" as="geometry" />
         </mxCell>
         <mxCell id="rqvae-121" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#d5e8d4;fontSize=16;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="790.61" y="108.39" width="10.9" height="10.9" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-18" value="e&lt;sub&gt;1&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-18" value="&lt;i&gt;e&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="232.29" y="2.56" width="12.44" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-19" value="e&lt;sub&gt;2&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-19" value="&lt;i&gt;e&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="243.36" y="2.56" width="12.44" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-20" value="e&lt;sub&gt;3&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-20" value="&lt;i&gt;e&lt;/i&gt;&lt;sub&gt;3&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="254.43" y="2.56" width="12.44" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-21" value="e&lt;sub&gt;K&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-21" value="&lt;i&gt;e&lt;/i&gt;&lt;sub&gt;&lt;i&gt;K&lt;/i&gt;&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="420.43" y="2.56" width="14.66" height="12" as="geometry" />
         </mxCell>
         <mxCell id="rqvae-22" value="Embedding&lt;br&gt;Space" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="447.34" y="25.5" width="71.54" height="37.6" as="geometry" />
         </mxCell>
         <mxCell id="rqvae-27" value="CNN" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
-          <mxGeometry x="83.13" y="158.66" width="36.56" height="20.8" as="geometry" />
+          <mxGeometry x="83.13" y="137.8" width="36.56" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-49" value="D" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-49" value="&lt;i&gt;D&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="125.32" y="116.44" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-50" value="z&lt;sub&gt;e&lt;/sub&gt;(x)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
-          <mxGeometry x="137.64" y="204.51" width="35.75" height="20.8" as="geometry" />
+        <mxCell id="rqvae-50" value="&lt;i&gt;z&lt;/i&gt;&lt;sub&gt;&lt;i&gt;e&lt;/i&gt;&lt;/sub&gt;(&lt;i&gt;x&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+          <mxGeometry x="137.64" y="207.51" width="35.75" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="rqvae-51" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;endFill=1;endSize=5;startSize=7;fontFamily=Source Sans 3;" edge="1" parent="rqvae-figure">
           <mxGeometry relative="1" as="geometry">
@@ -14731,10 +14731,10 @@
             <mxPoint x="232.47" y="174.14" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="rqvae-55" value="&lt;b&gt;∇&lt;/b&gt;&lt;sub&gt;z&lt;/sub&gt;L" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-55" value="∇&lt;sub&gt;&lt;i&gt;z&lt;/i&gt;&lt;/sub&gt;&lt;i&gt;L&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="314.79" y="122.47" width="32.65" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-57" value="z" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-57" value="&lt;i&gt;z&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="265.88" y="185.56" width="13.21" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="rqvae-69" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
@@ -14749,28 +14749,28 @@
         <mxCell id="rqvae-72" value="53" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="320.6" y="220.99" width="13" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-73" value="q(z|x)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-73" value="&lt;i&gt;q&lt;/i&gt;(&lt;i&gt;z&lt;/i&gt;|&lt;i&gt;x&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="312.46" y="155.36" width="39.34" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-97" value="e&lt;sub&gt;1&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-97" value="&lt;i&gt;e&lt;/i&gt;&lt;sub&gt;1&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="522.2" y="151.03" width="12.44" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-98" value="e&lt;sub&gt;3&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-98" value="&lt;i&gt;e&lt;/i&gt;&lt;sub&gt;3&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="497.03" y="163.12" width="12.44" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-99" value="e&lt;sub&gt;2&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-99" value="&lt;i&gt;e&lt;/i&gt;&lt;sub&gt;2&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="509.61" y="174.18" width="12.44" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-100" value="e&lt;sub&gt;53&lt;/sub&gt;" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-100" value="&lt;i&gt;e&lt;/i&gt;&lt;sub&gt;53&lt;/sub&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=10;spacing=0;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="497.04" y="187.28" width="17.44" height="12" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-101" value="z&lt;sub&gt;q&lt;/sub&gt;(x)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
-          <mxGeometry x="486.49" y="203.5" width="36.54" height="20.8" as="geometry" />
+        <mxCell id="rqvae-101" value="&lt;i&gt;z&lt;/i&gt;&lt;sub&gt;&lt;i&gt;q&lt;/i&gt;&lt;/sub&gt;(&lt;i&gt;x&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+          <mxGeometry x="486.49" y="206.5" width="36.54" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="rqvae-103" value="CNN" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
-          <mxGeometry x="568.77" y="158.66" width="36.56" height="20.8" as="geometry" />
+          <mxGeometry x="568.77" y="137.8" width="36.56" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-105" value="p(x|z&lt;sub&gt;q&lt;/sub&gt;)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-105" value="&lt;i&gt;p&lt;/i&gt;(&lt;i&gt;x&lt;/i&gt;|&lt;i&gt;z&lt;/i&gt;&lt;sub&gt;&lt;i&gt;q&lt;/i&gt;&lt;/sub&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="622" y="172.8" width="46.34" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="rqvae-107" value="Encoder" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
@@ -14779,16 +14779,16 @@
         <mxCell id="rqvae-109" value="Decoder" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="556.58" y="247.29" width="54.42" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-123" value="z&lt;sub&gt;q&lt;/sub&gt;(x)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-123" value="&lt;i&gt;z&lt;/i&gt;&lt;sub&gt;&lt;i&gt;q&lt;/i&gt;&lt;/sub&gt;(&lt;i&gt;x&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="728.73" y="97.31" width="36.54" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-124" value="&lt;b&gt;∇&lt;/b&gt;&lt;sub&gt;z&lt;/sub&gt;L" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-124" value="∇&lt;sub&gt;&lt;i&gt;z&lt;/i&gt;&lt;/sub&gt;&lt;i&gt;L&lt;/i&gt;" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=13;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="797.44" y="94.29" width="32.65" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-125" value="z&lt;sub&gt;e&lt;/sub&gt;(x)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-125" value="&lt;i&gt;z&lt;/i&gt;&lt;sub&gt;&lt;i&gt;e&lt;/i&gt;&lt;/sub&gt;(&lt;i&gt;x&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="778.79" y="125.49" width="35.75" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="rqvae-126" value="z&lt;sub&gt;q&lt;/sub&gt;(x) ~ q(z|x)" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
+        <mxCell id="rqvae-126" value="&lt;i&gt;z&lt;/i&gt;&lt;sub&gt;&lt;i&gt;q&lt;/i&gt;&lt;/sub&gt;(&lt;i&gt;x&lt;/i&gt;) ∼ &lt;i&gt;q&lt;/i&gt;(&lt;i&gt;z&lt;/i&gt;|&lt;i&gt;x&lt;/i&gt;)" style="text;html=1;whiteSpace=nowrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="rqvae-figure">
           <mxGeometry x="743.37" y="195.95" width="83.46" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="rqvae-25" value="" style="shape=image;imageAspect=0;strokeColor=none;html=1;image=data:image/jpeg,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;fontFamily=Source Sans 3;" vertex="1" parent="rqvae-figure">
