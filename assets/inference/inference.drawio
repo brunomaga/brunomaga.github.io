@@ -9389,15 +9389,15 @@
           <mxGeometry x="0" y="1763.49" width="293.2" height="377.6" as="geometry" />
         </mxCell>
         <mxCell id="shortgpt-1" value="Embeddings" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="shortgpt-figure">
-          <mxGeometry x="31.5" y="2.8" width="76.99" height="20.8" as="geometry" />
+          <mxGeometry x="31.5" y="-5.2" width="76.99" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="shortgpt-2" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=14;labelBackgroundColor=#ffffff;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="shortgpt-figure">
           <mxGeometry relative="1" as="geometry">
-            <mxPoint x="65" y="25.2" as="sourcePoint" />
+            <mxPoint x="65" y="17.2" as="sourcePoint" />
             <mxPoint x="65" y="31.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="shortgpt-3" value="&lt;b&gt;cos&lt;/b&gt;(input, output)" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;fontFamily=NewComputerModernSansMath;" vertex="1" parent="shortgpt-figure">
+        <mxCell id="shortgpt-3" value="cos(input, output)" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#666666;fontFamily=NewComputerModernSansMath;" vertex="1" parent="shortgpt-figure">
           <mxGeometry x="198.5" y="0" width="94.7" height="18.4" as="geometry" />
         </mxCell>
         <mxCell id="shortgpt-4" value="Block 1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="shortgpt-figure">
@@ -9454,7 +9454,7 @@
             <mxPoint x="65" y="193.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="shortgpt-16" value="Block 4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="shortgpt-figure">
+        <mxCell id="shortgpt-16" value="Block 4" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="shortgpt-figure">
           <mxGeometry x="0" y="193.2" width="130" height="32" as="geometry" />
         </mxCell>
         <mxCell id="shortgpt-17" value="0.95" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="shortgpt-figure">
@@ -9472,7 +9472,7 @@
             <mxPoint x="65" y="247.2" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="shortgpt-20" value="Block 5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="shortgpt-figure">
+        <mxCell id="shortgpt-20" value="Block 5" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;fontSize=14;fontColor=#000000;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontStyle=0;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=10;" vertex="1" parent="shortgpt-figure">
           <mxGeometry x="0" y="247.2" width="130" height="32" as="geometry" />
         </mxCell>
         <mxCell id="shortgpt-21" value="0.97" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#b85450;fontFamily=Source Sans 3;" vertex="1" parent="shortgpt-figure">
