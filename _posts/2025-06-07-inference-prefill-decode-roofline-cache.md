@@ -553,7 +553,7 @@ Many requests start with the same tokens: a system prompt, tool definitions, a l
 The following picture illustrates the lookup for three requests whose prompts start with the same tokens:
 
 {: .picture}
-<img width="93%" height="93%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
+<img width="99.2%" height="99.2%" src="{{ site.assets }}/inference/imgs/prefix_caching.svg"/>
 
 {: .caption}
 Automatic prefix caching, with blocks of 4 tokens (16 in vLLM). The hash of each block chains the hash of the previous block with the tokens of the block. Request 2 reuses the first two blocks of request 1 and prefills 4 tokens. Request 3 reuses only the first block: its last block holds the same tokens as that of request 1, but its hash differs because its second block differs, so request 3 prefills 8 tokens.

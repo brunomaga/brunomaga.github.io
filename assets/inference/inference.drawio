@@ -1319,168 +1319,168 @@
           <mxGeometry x="0" y="2617.2" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="2657.2" width="824.53" height="310.9" as="geometry" />
+          <mxGeometry x="0" y="2657.2" width="880.03" height="316.9" as="geometry" />
         </mxCell>
-        <mxCell id="prefix_caching-3" value="request 1" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="0" y="4.6" width="57.93" height="20.8" as="geometry" />
+        <mxCell id="prefix_caching-3" value="request 1" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
+          <mxGeometry x="0" y="4.6" width="62" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-4" value="You" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="72.13" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="72.13" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-5" value="are" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="122.37" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="126.84" y="0" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="prefix_caching-6" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="172.61" y="0" width="45.53" height="30" as="geometry" />
+        <mxCell id="prefix_caching-6" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
+          <mxGeometry x="181.55" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-7" value="helpful" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="222.85" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="236.26" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-8" value="h&lt;sub&gt;1&lt;/sub&gt; = hash(∅, block 1)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="72.13" y="40" width="196.25" height="30" as="geometry" />
+          <mxGeometry x="72.13" y="40" width="214.13" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-9" value="agent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="291.93" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="309.81" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-10" value="." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="342.17" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="364.52" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-11" value="Read" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="392.41" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="419.23" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-12" value="the" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="442.65" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="473.94" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-13" value="h&lt;sub&gt;2&lt;/sub&gt; = hash(h&lt;sub&gt;1&lt;/sub&gt;, block 2)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="291.93" y="40" width="196.25" height="30" as="geometry" />
+          <mxGeometry x="309.81" y="40" width="214.13" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-14" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=14;labelBackgroundColor=#ffffff;strokeWidth=1.4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=Source Sans 3;endFill=1;endSize=5;" edge="1" parent="prefix_caching-figure" source="prefix_caching-8" target="prefix_caching-13">
           <mxGeometry x="0" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-15" value="report" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="509.87" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="547.49" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-16" value="and" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="560.11" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="602.2" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-17" value="list" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="610.35" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="656.91" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-18" value="risks" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="660.59" y="0" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="711.62" y="0" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-19" value="h&lt;sub&gt;3&lt;/sub&gt; = hash(h&lt;sub&gt;2&lt;/sub&gt;, block 3)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="509.87" y="40" width="196.25" height="30" as="geometry" />
+          <mxGeometry x="547.49" y="40" width="214.13" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-20" value="" style="endArrow=classic;html=1;rounded=0;strokeColor=#000000;fontColor=#000000;fontSize=14;labelBackgroundColor=#ffffff;strokeWidth=1.4;exitX=1;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;fontStyle=0;fontFamily=Source Sans 3;endFill=1;endSize=5;" edge="1" parent="prefix_caching-figure" source="prefix_caching-13" target="prefix_caching-19">
           <mxGeometry x="0" relative="1" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-21" value="prefills 12 tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="720.32" y="4.6" width="104.21" height="20.8" as="geometry" />
+          <mxGeometry x="775.82" y="4.6" width="104.21" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="prefix_caching-22" value="request 2" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="0" y="106.65" width="57.93" height="20.8" as="geometry" />
+        <mxCell id="prefix_caching-22" value="request 2" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
+          <mxGeometry x="0" y="106.65" width="62" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-23" value="You" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="72.13" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="72.13" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-24" value="are" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="122.37" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="126.84" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="prefix_caching-25" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="172.61" y="102.05" width="45.53" height="30" as="geometry" />
+        <mxCell id="prefix_caching-25" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
+          <mxGeometry x="181.55" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-26" value="helpful" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="222.85" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="236.26" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-27" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h&lt;/span&gt;&lt;sub&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;1&lt;/span&gt;&lt;/sub&gt;: hit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;fontColor=#456e36;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="72.13" y="142.05" width="196.25" height="30" as="geometry" />
+          <mxGeometry x="72.13" y="142.05" width="214.13" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-28" value="agent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="291.93" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="309.81" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-29" value="." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="342.17" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="364.52" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-30" value="Read" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="392.41" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="419.23" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-31" value="the" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="442.65" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="473.94" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-32" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h&lt;/span&gt;&lt;sub&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;2&lt;/span&gt;&lt;/sub&gt;: hit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;fontColor=#456e36;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="291.93" y="142.05" width="196.25" height="30" as="geometry" />
+          <mxGeometry x="309.81" y="142.05" width="214.13" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-33" value="email" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="509.87" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="547.49" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-34" value="and" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="560.11" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="602.2" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-35" value="list" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="610.35" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="656.91" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-36" value="risks" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="660.59" y="102.05" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="711.62" y="102.05" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-37" value="new hash: miss" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;fontColor=#b85450;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="509.87" y="142.05" width="196.25" height="30" as="geometry" />
+          <mxGeometry x="547.49" y="142.05" width="214.13" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-38" value="prefills 4 tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="720.32" y="106.65" width="97.21" height="20.8" as="geometry" />
+          <mxGeometry x="775.82" y="106.65" width="97.21" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="prefix_caching-39" value="request 3" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="0" y="208.7" width="57.93" height="20.8" as="geometry" />
+        <mxCell id="prefix_caching-39" value="request 3" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;align=right;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
+          <mxGeometry x="0" y="208.7" width="62" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-40" value="You" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="72.13" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="72.13" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-41" value="are" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="122.37" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="126.84" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="prefix_caching-42" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=NewComputerModernSansMath;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="172.61" y="204.1" width="45.53" height="30" as="geometry" />
+        <mxCell id="prefix_caching-42" value="a" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
+          <mxGeometry x="181.55" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-43" value="helpful" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="222.85" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="236.26" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-44" value="&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;h&lt;/span&gt;&lt;sub&gt;&lt;span style=&quot;font-family: NewComputerModernSansMath;&quot;&gt;1&lt;/span&gt;&lt;/sub&gt;: hit" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;fontColor=#456e36;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="72.13" y="244.1" width="196.25" height="30" as="geometry" />
+          <mxGeometry x="72.13" y="244.1" width="214.13" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-45" value="agent" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="291.93" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="309.81" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-46" value="." style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="342.17" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="364.52" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-47" value="Fix" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="392.41" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="419.23" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-48" value="the" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="442.65" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="473.94" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-49" value="new hash: miss" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;fontColor=#b85450;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="291.93" y="244.1" width="196.25" height="30" as="geometry" />
+          <mxGeometry x="309.81" y="244.1" width="214.13" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-50" value="report" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="509.87" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="547.49" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-51" value="and" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="560.11" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="602.2" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-52" value="list" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="610.35" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="656.91" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-53" value="risks" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;fontStyle=0;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="660.59" y="204.1" width="45.53" height="30" as="geometry" />
+          <mxGeometry x="711.62" y="204.1" width="50" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-54" value="same tokens, new hash: miss" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=14;fontStyle=0;fontColor=#b85450;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="509.87" y="244.1" width="196.25" height="30" as="geometry" />
+          <mxGeometry x="547.49" y="244.1" width="214.13" height="30" as="geometry" />
         </mxCell>
         <mxCell id="prefix_caching-55" value="prefills 8 tokens" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="prefix_caching-figure">
-          <mxGeometry x="720.32" y="208.7" width="97.21" height="20.8" as="geometry" />
+          <mxGeometry x="775.82" y="208.7" width="97.21" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="prefix_caching-x2705" parent="prefix_caching-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#ffe6cc;" vertex="1"><mxGeometry x="199.92" y="296.5" width="20" height="12" as="geometry" /></mxCell><mxCell id="prefix_caching-x2706" parent="prefix_caching-figure" value="cached by request 1" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="223.92" y="294.1" width="116.9" height="16.8" as="geometry" /></mxCell><mxCell id="prefix_caching-x2707" parent="prefix_caching-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#d5e8d4;" vertex="1"><mxGeometry x="350.71" y="296.5" width="20" height="12" as="geometry" /></mxCell><mxCell id="prefix_caching-x2708" parent="prefix_caching-figure" value="cache hit: reused" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="374.71" y="294.1" width="100.2" height="16.8" as="geometry" /></mxCell><mxCell id="prefix_caching-x2709" parent="prefix_caching-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#dae8fc;" vertex="1"><mxGeometry x="484.77" y="296.5" width="20" height="12" as="geometry" /></mxCell><mxCell id="prefix_caching-x2710" parent="prefix_caching-figure" value="cache miss: prefilled" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="508.77" y="294.1" width="119.9" height="16.8" as="geometry" /></mxCell><mxCell id="semantic_caching-label" value="semantic_caching.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
+        <mxCell id="prefix_caching-x2705" parent="prefix_caching-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#ffe6cc;" vertex="1"><mxGeometry x="211.09" y="302.5" width="20" height="12" as="geometry" /></mxCell><mxCell id="prefix_caching-x2706" parent="prefix_caching-figure" value="cached by request 1" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="235.09" y="300.1" width="116.92" height="16.8" as="geometry" /></mxCell><mxCell id="prefix_caching-x2707" parent="prefix_caching-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#d5e8d4;" vertex="1"><mxGeometry x="375.61" y="302.5" width="20" height="12" as="geometry" /></mxCell><mxCell id="prefix_caching-x2708" parent="prefix_caching-figure" value="cache hit: reused" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="399.61" y="300.1" width="99.66" height="16.8" as="geometry" /></mxCell><mxCell id="prefix_caching-x2709" parent="prefix_caching-figure" value="" style="rounded=0;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#dae8fc;" vertex="1"><mxGeometry x="522.87" y="302.5" width="20" height="12" as="geometry" /></mxCell><mxCell id="prefix_caching-x2710" parent="prefix_caching-figure" value="cache miss: prefilled" style="text;html=1;whiteSpace=nowrap;align=left;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;fontStyle=0;" vertex="1"><mxGeometry x="546.87" y="300.1" width="119.61" height="16.8" as="geometry" /></mxCell><mxCell id="semantic_caching-label" value="semantic_caching.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="3254.93" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="semantic_caching-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
