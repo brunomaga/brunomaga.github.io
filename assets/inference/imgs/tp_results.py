@@ -2,7 +2,8 @@
 
 The data is the mean and standard deviation of the latency, in ms, on 8 GPUs, from the paper "Towards Efficient LLM
 Inference via Full-Stack Fusion of Computation, Communication, and In-Network Computing". The picture follows
-CLAUDE.md (Pictures): Source Sans 3 text at page size (1 unit = 1 px), drawn as glyph outlines.
+CLAUDE.md (Pictures): Source Sans 3 text at page size (1 unit = 1 px), drawn as glyph outlines, 1.8 px axes, a 1.0 px
+data line, and the legend in one column right of the plot.
 
 usage: python3 tp_results.py   (needs matplotlib and the Source Sans 3 font)
 """
@@ -21,9 +22,9 @@ IMPROVEMENT = [100 * (1 - f / b) for (b, _), (f, _) in zip(BASELINE, FUSED)]   #
 
 plt.rcParams.update({
     'font.family': 'Source Sans 3', 'font.size': 12, 'svg.fonttype': 'path',
-    'axes.linewidth': 1.4, 'axes.edgecolor': '#000000', 'axes.labelsize': 14, 'axes.labelcolor': '#000000',
+    'axes.linewidth': 1.8, 'axes.edgecolor': '#000000', 'axes.labelsize': 14, 'axes.labelcolor': '#000000',
     'xtick.labelsize': 12, 'ytick.labelsize': 12, 'xtick.color': '#000000', 'ytick.color': '#000000',
-    'xtick.major.width': 1.4, 'ytick.major.width': 1.4, 'xtick.major.size': 0, 'ytick.major.size': 4,
+    'xtick.major.width': 1.8, 'ytick.major.width': 1.8, 'xtick.major.size': 0, 'ytick.major.size': 4,
     'legend.fontsize': 14, 'svg.hashsalt': 'tp_results',   # the same ids on every run
 })
 
@@ -44,7 +45,7 @@ ax.yaxis.grid(True, color='#b3b3b3', linewidth=0.4)
 ax.set_axisbelow(True)
 
 ax2 = ax.twinx()
-ax2.plot(list(x), IMPROVEMENT, color='#000000', linewidth=1.4, marker='o', markersize=6, markerfacecolor='#f8cecc',
+ax2.plot(list(x), IMPROVEMENT, color='#000000', linewidth=1.0, marker='o', markersize=6, markerfacecolor='#f8cecc',
          markeredgecolor='#000000', markeredgewidth=1.0, label='Improvement (%)')
 for i, v in enumerate(IMPROVEMENT):
     ax2.annotate('%.1f' % v, (i, v), xytext=(4, 3), textcoords='offset points', ha='left', va='bottom', fontsize=12,
@@ -56,8 +57,11 @@ for a in (ax, ax2):
     a.spines['top'].set_visible(False)
 
 handles = ax.get_legend_handles_labels()[0] + ax2.get_legend_handles_labels()[0]
-ax.legend(handles, ['Baseline', 'Fused', 'Improvement (%)'], ncol=3, loc='lower center', bbox_to_anchor=(0.5, 1.0),
-          frameon=False, handlelength=1.4, handleheight=0.85, columnspacing=1.2, borderaxespad=0.3)
+fig.draw_without_rendering()                          # the legend goes 16 px right of the label of the right axis
+right = ax2.yaxis.label.get_window_extent().x1 + 16
+ax.legend(handles, ['Baseline', 'Fused', 'Improvement (%)'], ncol=1, loc='upper left',
+          bbox_to_anchor=(ax.transAxes.inverted().transform((right, 0))[0], 1.0), frameon=False, handlelength=1.4,
+          handleheight=0.85, borderaxespad=0.0, borderpad=0.0)
 
 out = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tp_results.svg')
 fig.savefig(out, bbox_inches='tight', pad_inches=0.02, transparent=True, metadata={'Date': None})

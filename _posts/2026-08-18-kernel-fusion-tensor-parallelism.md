@@ -129,7 +129,7 @@ The fused kernel was compared to a baseline, a tuned implementation of the same 
 The fused kernel reduces the latency by 22% to 62%, roughly halves the memory of the activations, and shrinks the communication buffer from gigabytes to 32 KiB. Seven of these FFNs are compared below:
 
 {: .picture}
-<img width="55.2%" height="55.2%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
+<img width="72.2%" height="72.2%" src="{{ site.assets }}/inference/imgs/tp_results.svg"/>
 
 {: .caption}
 Latency of the regular (baseline) and fused FFNs, sorted by improvement.
