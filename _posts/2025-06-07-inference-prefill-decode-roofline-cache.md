@@ -745,10 +745,10 @@ With continuous batching, a waiting request takes a free slot as soon as one is 
 **Chunked prefill**, introduced by [SARATHI](https://arxiv.org/abs/2308.16369), solves this by processing a long prompt in several smaller pieces (chunks), one per step, instead of in one forward pass. Every step then takes about the same time, and the other requests keep generating one token per step. The following picture compares chunked prefill with the batching schemes of the previous section:
 
 {: .picture}
-<img width="99.5%" height="99.5%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
+<img width="91.3%" height="91.3%" src="{{ site.assets }}/inference/imgs/continuous_chunked_batching.svg"/>
 
 {: .caption}
-The same 6 requests (R1 to R6) on 3 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R4 takes three. Static batching runs the requests in groups of 3 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R4 stalls R1 and R3. With chunked prefill, R4 processes its prompt in 3 chunks of one time unit each, while R1 and R3 continue decoding.
+The same 7 requests (R1 to R7) on 4 slots, with static batching, continuous batching, and continuous batching with chunked prefill. The width of a step is its duration: a decode step and the prefill of a short prompt take one time unit, and the prefill of the long prompt of R5 takes three. Static batching runs the requests in groups of 4 until the longest request of each group finishes, and pads the prompts of a group to the longest one. Continuous batching gives a free slot to the next request at the next step, but the prefill of R5 stalls R1, R3 and R4. With chunked prefill, R5 processes its prompt in 3 chunks of one time unit each, while R1, R3 and R4 continue decoding.
 
 Each chunk attends to the KV cache of the earlier chunks. Suppose an 8,000-token prompt arrives while 50 other sequences are decoding:
 - Without chunking: one step must process all 8,000 prompt tokens plus the 50 decode tokens. That step takes far longer than a normal decode step, so all 50 users see their text pause.

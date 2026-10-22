@@ -1490,373 +1490,372 @@
           <mxGeometry x="0" y="3650.93" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="continuous_chunked_batching-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="3690.93" width="879.52" height="597.92" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-1" value="static batching" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="0" y="0" width="94.5" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-2" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="121.84" y="24.76" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-3" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="110.22" y="47.55" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-4" value="R2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="110.22" y="81.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-5" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="110.22" y="116.4" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-6" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="161.7" y="24.76" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-7" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="150.08" y="47.55" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-8" value="R2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="150.08" y="81.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-9" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="150.08" y="116.4" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-10" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="201.57" y="24.76" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-11" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="189.95" y="47.55" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-12" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="189.95" y="81.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-13" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="189.95" y="116.4" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-14" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="241.43" y="24.76" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-15" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="229.81" y="47.55" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-16" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="229.81" y="81.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-17" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="229.81" y="116.4" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-18" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="281.3" y="24.76" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-19" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="269.68" y="47.55" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-20" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="269.68" y="81.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-21" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="269.68" y="116.4" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-22" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="321.16" y="24.76" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-23" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="309.54" y="47.55" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-24" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="309.54" y="81.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-25" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="309.54" y="116.4" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-26" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="400.88" y="24.76" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-27" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="349.4" y="47.55" width="115.97" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-28" value="R5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="349.4" y="81.98" width="115.97" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-29" value="R6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="349.4" y="116.4" width="115.97" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-30" value="8" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="480.62" y="24.76" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-31" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="469" y="47.55" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-32" value="R5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="469" y="81.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-33" value="R6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="469" y="116.4" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-34" value="9" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="520.48" y="24.76" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-35" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="508.86" y="47.55" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-36" value="R5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="508.86" y="81.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-37" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="508.86" y="116.4" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-38" value="slot 1" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="64.93" y="50.74" width="37.73" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-39" value="slot 2" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="64.93" y="85.17" width="37.73" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-40" value="slot 3" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="64.93" y="119.6" width="37.73" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-42" value="the prompts are padded to the longest one" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="281.54" y="167.46" width="251.7" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-43" value="continuous batching" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="0" y="194.79" width="127.98" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-44" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="121.84" y="219.55" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-45" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="110.22" y="242.34" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-46" value="R2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="110.22" y="276.77" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-47" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="110.22" y="311.19" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-48" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="161.7" y="219.55" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-49" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="150.08" y="242.34" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-50" value="R2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="150.08" y="276.77" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-51" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="150.08" y="311.19" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-52" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="241.44" y="219.55" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-53" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="189.95" y="242.34" width="115.97" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-54" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="189.95" y="276.77" width="115.97" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-55" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="189.95" y="311.19" width="115.97" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-56" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="321.16" y="219.55" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-57" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="309.54" y="242.34" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-58" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="309.54" y="276.77" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-59" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="309.54" y="311.19" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-60" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="361.02" y="219.55" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-61" value="R5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="349.4" y="242.34" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-62" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="349.4" y="276.77" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-63" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="349.4" y="311.19" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-64" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="400.89" y="219.55" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-65" value="R5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="389.27" y="242.34" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-66" value="R6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="389.27" y="276.77" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-67" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="389.27" y="311.19" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-68" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="440.75" y="219.55" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-69" value="R5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="429.13" y="242.34" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-70" value="R6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="429.13" y="276.77" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-71" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="429.13" y="311.19" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-72" value="slot 1" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="64.93" y="245.53" width="37.73" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-73" value="slot 2" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="64.93" y="279.96" width="37.73" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-74" value="slot 3" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="64.93" y="314.39" width="37.73" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-76" value="the long prefill of R4 stalls R1 and R3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="137.5" y="362.25" width="220.87" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-77" value="continuous batching with chunked prefill" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="0" y="389.58" width="255.7" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-78" value="1" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="121.84" y="414.34" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-79" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="110.22" y="437.13" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-80" value="R2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="110.22" y="471.56" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-81" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="110.22" y="505.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-82" value="2" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="161.7" y="414.34" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-83" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="150.08" y="437.13" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-84" value="R2" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="150.08" y="471.56" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-85" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="150.08" y="505.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-86" value="3" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="201.57" y="414.34" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-87" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="189.95" y="437.13" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-88" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="189.95" y="471.56" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-89" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="189.95" y="505.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-90" value="4" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="241.43" y="414.34" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-91" value="R1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="229.81" y="437.13" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-92" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="229.81" y="471.56" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-93" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="229.81" y="505.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-94" value="5" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="281.3" y="414.34" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-95" value="R5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="269.68" y="437.13" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-96" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="269.68" y="471.56" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-97" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="269.68" y="505.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-98" value="6" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="321.16" y="414.34" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-99" value="R5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="309.54" y="437.13" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-100" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="309.54" y="471.56" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-101" value="R3" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="309.54" y="505.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-102" value="7" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="361.02" y="414.34" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-103" value="R5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="349.4" y="437.13" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-104" value="R4" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="349.4" y="471.56" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-105" value="R6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="349.4" y="505.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-106" value="8" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontColor=#666666;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="400.89" y="414.34" width="13" height="18.4" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-107" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="389.27" y="437.13" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-108" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="389.27" y="471.56" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-109" value="R6" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="389.27" y="505.98" width="36.24" height="27.18" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-110" value="slot 1" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="64.93" y="440.32" width="37.73" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-111" value="slot 2" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="64.93" y="474.75" width="37.73" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-112" value="slot 3" style="text;html=1;whiteSpace=wrap;align=right;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="64.93" y="509.18" width="37.73" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-114" value="R4 prefills in 3 chunks, while R1 and R3 keep decoding" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="87.55" y="557.04" width="320.78" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-115" value="" style="endArrow=classic;startArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;fontSize=12;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;endFill=1;endSize=5;" edge="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="110.22" y="587.52" as="sourcePoint" />
-            <mxPoint x="560.04" y="587.52" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-116" value="time" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontColor=#000000;fontStyle=0;fontFamily=Source Sans 3;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="566.12" y="577.12" width="31.88" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-117" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="594.42" y="52.42" width="20" height="12" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-118" value="prefill: the whole prompt (or one chunk of it)" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="618.42" y="48.02" width="261.1" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-119" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="594.42" y="75.98" width="20" height="12" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-120" value="decode: one more token" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="618.42" y="71.58" width="144.5" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-121" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#000000;fontSize=14;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;fillStyle=hachure;sketch=1;jiggle=0;hachureAngle=45;hachureGap=4;fillWeight=0.6;disableMultiStroke=1;disableMultiStrokeFill=1;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="594.42" y="99.53" width="20" height="12" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-122" value="idle or wasted slot" style="text;html=1;align=left;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="continuous_chunked_batching-figure">
-          <mxGeometry x="617.92" y="95.13" width="108.9" height="20.8" as="geometry" />
-        </mxCell>
-        <mxCell id="continuous_chunked_batching-x2735" parent="continuous_chunked_batching-figure" value="" vertex="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;size=0.5;fillColor=none;strokeColor=#000000;strokeWidth=1.0;direction=north;fontFamily=Source Sans 3;"><mxGeometry x="349.4" y="154.46" width="115.97" height="10" as="geometry" /></mxCell><mxCell id="continuous_chunked_batching-x2736" parent="continuous_chunked_batching-figure" value="" vertex="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;size=0.5;fillColor=none;strokeColor=#000000;strokeWidth=1.0;direction=north;fontFamily=Source Sans 3;"><mxGeometry x="189.95" y="349.25" width="115.97" height="10" as="geometry" /></mxCell><mxCell id="continuous_chunked_batching-x2737" parent="continuous_chunked_batching-figure" value="" vertex="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;size=0.5;fillColor=none;strokeColor=#000000;strokeWidth=1.0;direction=north;fontFamily=Source Sans 3;"><mxGeometry x="189.95" y="544.04" width="115.97" height="10" as="geometry" /></mxCell><mxCell id="chunked_prefill-label" value="chunked_prefill.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
-          <mxGeometry x="0" y="4348.85" width="600" height="30" as="geometry" />
+          <mxGeometry x="0" y="3690.93" width="804.65" height="662.8" as="geometry" />
+        </mxCell>
+        <mxCell id="continuous_chunked_batching-n1" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;fontStyle=1;" value="static batching: 14 steps" vertex="1"><mxGeometry x="0" y="0" width="150.2" height="20.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n2" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="1" vertex="1"><mxGeometry x="56" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n3" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="2" vertex="1"><mxGeometry x="92" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n4" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="3" vertex="1"><mxGeometry x="128" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n5" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="4" vertex="1"><mxGeometry x="164" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n6" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="5" vertex="1"><mxGeometry x="200" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n7" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="6" vertex="1"><mxGeometry x="236" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n8" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="7" vertex="1"><mxGeometry x="272" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n9" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="8" vertex="1"><mxGeometry x="308" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n10" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="9" vertex="1"><mxGeometry x="380" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n11" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="10" vertex="1"><mxGeometry x="452" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n12" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="11" vertex="1"><mxGeometry x="488" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n13" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="12" vertex="1"><mxGeometry x="524" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n14" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="13" vertex="1"><mxGeometry x="560" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n15" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="14" vertex="1"><mxGeometry x="596" y="24.8" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n16" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 1" vertex="1"><mxGeometry x="2" y="49.8" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n17" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R1" vertex="1"><mxGeometry x="50" y="43.2" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n18" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R1" vertex="1"><mxGeometry x="84" y="43.2" width="142" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n19" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="idle" vertex="1"><mxGeometry x="230" y="43.2" width="104" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n20" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R5" vertex="1"><mxGeometry x="338" y="43.2" width="106" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n21" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R5" vertex="1"><mxGeometry x="444" y="43.2" width="178" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n22" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 2" vertex="1"><mxGeometry x="2" y="85.8" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n23" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R2" vertex="1"><mxGeometry x="50" y="79.2" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n24" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R2" vertex="1"><mxGeometry x="84" y="79.2" width="70" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n25" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="idle" vertex="1"><mxGeometry x="158" y="79.2" width="176" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n26" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R6" vertex="1"><mxGeometry x="338" y="79.2" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n27" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="padding" vertex="1"><mxGeometry x="372" y="79.2" width="72" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n28" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R6" vertex="1"><mxGeometry x="444" y="79.2" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n29" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="idle" vertex="1"><mxGeometry x="482" y="79.2" width="140" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n30" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 3" vertex="1"><mxGeometry x="2" y="121.8" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n31" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R3" vertex="1"><mxGeometry x="50" y="115.2" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n32" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R3" vertex="1"><mxGeometry x="84" y="115.2" width="250" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n33" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R7" vertex="1"><mxGeometry x="338" y="115.2" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n34" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="padding" vertex="1"><mxGeometry x="372" y="115.2" width="72" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n35" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R7" vertex="1"><mxGeometry x="444" y="115.2" width="142" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n36" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="" vertex="1"><mxGeometry x="590" y="115.2" width="32" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n37" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 4" vertex="1"><mxGeometry x="2" y="157.8" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n38" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R4" vertex="1"><mxGeometry x="50" y="151.2" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n39" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R4" vertex="1"><mxGeometry x="84" y="151.2" width="106" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n40" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="idle" vertex="1"><mxGeometry x="194" y="151.2" width="140" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n41" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="idle" vertex="1"><mxGeometry x="338" y="151.2" width="284" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n42" edge="1" parent="continuous_chunked_batching-figure" style="endArrow=none;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;dashed=1;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="336" y="24.8" as="sourcePoint" /><mxPoint x="336" y="185.2" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="continuous_chunked_batching-n43" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;" value="R5, R6 and R7 wait until R3,&lt;br&gt;the longest request, finishes" vertex="1"><mxGeometry x="640" y="95.4" width="164.65" height="33.6" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n44" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;fontStyle=1;" value="continuous batching: 10 steps" vertex="1"><mxGeometry x="0" y="209.2" width="184.92" height="20.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n45" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="1" vertex="1"><mxGeometry x="56" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n46" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="2" vertex="1"><mxGeometry x="92" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n47" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="3" vertex="1"><mxGeometry x="128" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n48" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="4" vertex="1"><mxGeometry x="200" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n49" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="5" vertex="1"><mxGeometry x="272" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n50" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="6" vertex="1"><mxGeometry x="308" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n51" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="7" vertex="1"><mxGeometry x="344" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n52" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="8" vertex="1"><mxGeometry x="380" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n53" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="9" vertex="1"><mxGeometry x="416" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n54" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="10" vertex="1"><mxGeometry x="452" y="234" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n55" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 1" vertex="1"><mxGeometry x="2" y="259" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n56" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R1" vertex="1"><mxGeometry x="50" y="252.4" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n57" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R1" vertex="1"><mxGeometry x="84" y="252.4" width="214" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n58" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R7" vertex="1"><mxGeometry x="302" y="252.4" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n59" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R7" vertex="1"><mxGeometry x="336" y="252.4" width="142" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n60" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 2" vertex="1"><mxGeometry x="2" y="295" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n61" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R2" vertex="1"><mxGeometry x="50" y="288.4" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n62" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R2" vertex="1"><mxGeometry x="84" y="288.4" width="70" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n63" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R5" vertex="1"><mxGeometry x="158" y="288.4" width="106" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n64" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R5" vertex="1"><mxGeometry x="264" y="288.4" width="178" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n65" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="" vertex="1"><mxGeometry x="446" y="288.4" width="32" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n66" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 3" vertex="1"><mxGeometry x="2" y="331" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n67" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R3" vertex="1"><mxGeometry x="50" y="324.4" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n68" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R3" vertex="1"><mxGeometry x="84" y="324.4" width="322" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n69" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="idle" vertex="1"><mxGeometry x="410" y="324.4" width="68" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n70" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 4" vertex="1"><mxGeometry x="2" y="367" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n71" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R4" vertex="1"><mxGeometry x="50" y="360.4" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n72" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R4" vertex="1"><mxGeometry x="84" y="360.4" width="178" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n73" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R6" vertex="1"><mxGeometry x="266" y="360.4" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n74" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R6" vertex="1"><mxGeometry x="300" y="360.4" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n75" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="idle" vertex="1"><mxGeometry x="338" y="360.4" width="140" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n76" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;" value="a request takes the slot of a&lt;br&gt;finished request at the next step&lt;br&gt;&lt;br&gt;the long prefill of R5 stalls&lt;br&gt;R1, R3 and R4" vertex="1"><mxGeometry x="496" y="279.4" width="187.93" height="84" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n77" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;fontStyle=1;" value="continuous batching with chunked prefill: 11 steps" vertex="1"><mxGeometry x="0" y="418.4" width="312.35" height="20.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n78" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="1" vertex="1"><mxGeometry x="56" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n79" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="2" vertex="1"><mxGeometry x="92" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n80" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="3" vertex="1"><mxGeometry x="128" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n81" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="4" vertex="1"><mxGeometry x="164" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n82" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="5" vertex="1"><mxGeometry x="200" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n83" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="6" vertex="1"><mxGeometry x="236" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n84" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="7" vertex="1"><mxGeometry x="272" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n85" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="8" vertex="1"><mxGeometry x="308" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n86" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="9" vertex="1"><mxGeometry x="344" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n87" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="10" vertex="1"><mxGeometry x="380" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n88" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=center;fontSize=12;" value="11" vertex="1"><mxGeometry x="416" y="443.2" width="20" height="14.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n89" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 1" vertex="1"><mxGeometry x="2" y="468.2" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n90" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R1" vertex="1"><mxGeometry x="50" y="461.6" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n91" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R1" vertex="1"><mxGeometry x="84" y="461.6" width="142" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n92" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R7" vertex="1"><mxGeometry x="230" y="461.6" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n93" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R7" vertex="1"><mxGeometry x="264" y="461.6" width="142" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n94" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="" vertex="1"><mxGeometry x="410" y="461.6" width="32" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n95" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 2" vertex="1"><mxGeometry x="2" y="504.2" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n96" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R2" vertex="1"><mxGeometry x="50" y="497.6" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n97" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R2" vertex="1"><mxGeometry x="84" y="497.6" width="70" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n98" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R5" vertex="1"><mxGeometry x="158" y="497.6" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n99" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R5" vertex="1"><mxGeometry x="192" y="497.6" width="36" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n100" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R5" vertex="1"><mxGeometry x="228" y="497.6" width="36" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n101" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R5" vertex="1"><mxGeometry x="264" y="497.6" width="178" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n102" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 3" vertex="1"><mxGeometry x="2" y="540.2" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n103" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R3" vertex="1"><mxGeometry x="50" y="533.6" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n104" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R3" vertex="1"><mxGeometry x="84" y="533.6" width="250" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n105" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="idle" vertex="1"><mxGeometry x="338" y="533.6" width="104" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n106" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=right;fontSize=14;" value="slot 4" vertex="1"><mxGeometry x="2" y="576.2" width="40" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n107" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R4" vertex="1"><mxGeometry x="50" y="569.6" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n108" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R4" vertex="1"><mxGeometry x="84" y="569.6" width="106" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n109" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R6" vertex="1"><mxGeometry x="194" y="569.6" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n110" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="R6" vertex="1"><mxGeometry x="228" y="569.6" width="34" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n111" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="idle" vertex="1"><mxGeometry x="266" y="569.6" width="176" height="30" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n112" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;" value="R5 prefills its long prompt in&lt;br&gt;3 chunks, one per step, while&lt;br&gt;R1, R3 and R4 keep decoding" vertex="1"><mxGeometry x="460" y="505.4" width="169.11" height="50.4" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n113" edge="1" parent="continuous_chunked_batching-figure" style="endArrow=classic;endFill=1;endSize=5;html=1;rounded=0;strokeColor=#000000;strokeWidth=1.4;" value=""><mxGeometry relative="1" as="geometry"><mxPoint x="48" y="613.6" as="sourcePoint" /><mxPoint x="634" y="613.6" as="targetPoint" /></mxGeometry></mxCell>
+        <mxCell id="continuous_chunked_batching-n114" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;" value="time" vertex="1"><mxGeometry x="638" y="605.2" width="27.13" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n115" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="" vertex="1"><mxGeometry x="97.66" y="648.4" width="20" height="12" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n116" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;" value="prefill: the whole prompt (or one chunk of it)" vertex="1"><mxGeometry x="121.66" y="646" width="259.11" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n117" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1;fontSize=14;fontFamily=Source Sans 3;fontColor=#000000;spacing=0;" value="" vertex="1"><mxGeometry x="404.37" y="648.4" width="20" height="12" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n118" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;" value="decode: one more token" vertex="1"><mxGeometry x="428.37" y="646" width="142.72" height="16.8" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n119" parent="continuous_chunked_batching-figure" style="rounded=0;whiteSpace=nowrap;html=1;fillColor=#ffffff;strokeColor=#666666;strokeWidth=1;dashed=1;fontSize=12;fontFamily=Source Sans 3;fontColor=#666666;spacing=0;" value="" vertex="1"><mxGeometry x="594.69" y="648.4" width="20" height="12" as="geometry" /></mxCell>
+        <mxCell id="continuous_chunked_batching-n120" parent="continuous_chunked_batching-figure" style="text;html=1;whiteSpace=nowrap;strokeColor=none;fillColor=none;verticalAlign=middle;spacing=0;fontFamily=Source Sans 3;fontColor=#000000;fontStyle=0;align=left;fontSize=14;" value="idle or padding" vertex="1"><mxGeometry x="618.69" y="646" width="88.7" height="16.8" as="geometry" /></mxCell>
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        <mxCell id="chunked_prefill-label" value="chunked_prefill.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
+          <mxGeometry x="0" y="4413.73" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="chunked_prefill-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="4388.85" width="882" height="372.65" as="geometry" />
+          <mxGeometry x="0" y="4453.73" width="882" height="372.65" as="geometry" />
         </mxCell>
         <mxCell id="chunked_prefill-3" value="without chunked prefill" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="chunked_prefill-figure">
           <mxGeometry x="0" y="0" width="147.55" height="20.8" as="geometry" />
@@ -1949,10 +1948,10 @@
           <mxGeometry x="850.12" y="351.85" width="31.88" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="chunked_prefill-x2738" parent="chunked_prefill-figure" value="" vertex="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;size=0.5;fillColor=none;strokeColor=#000000;strokeWidth=1.0;direction=north;fontFamily=Source Sans 3;"><mxGeometry x="277.02" y="111.75" width="452.64" height="10" as="geometry" /></mxCell><mxCell id="chunked_prefill-x2739" parent="chunked_prefill-figure" value="" vertex="1" style="shape=curlyBracket;whiteSpace=wrap;html=1;rounded=0;size=0.5;fillColor=none;strokeColor=#000000;strokeWidth=1.0;direction=north;fontFamily=Source Sans 3;"><mxGeometry x="277.02" y="297.3" width="314.88" height="10" as="geometry" /></mxCell><mxCell id="ragged_batching-label" value="ragged_batching.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
-          <mxGeometry x="0" y="4821.5" width="600" height="30" as="geometry" />
+          <mxGeometry x="0" y="4886.38" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="4861.5" width="878" height="470.8" as="geometry" />
+          <mxGeometry x="0" y="4926.38" width="878" height="470.8" as="geometry" />
         </mxCell>
         <mxCell id="ragged_batching-3" value="padded batch: 3 x 4" style="text;html=1;whiteSpace=wrap;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;fontSize=14;fontStyle=1;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="ragged_batching-figure">
           <mxGeometry x="0" y="0" width="124.47" height="20.8" as="geometry" />
@@ -2321,10 +2320,10 @@
           <mxGeometry x="511.66" y="450" width="226.68" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="disaggregation-label" value="disaggregation.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
-          <mxGeometry x="0" y="5392.3" width="600" height="30" as="geometry" />
+          <mxGeometry x="0" y="5457.18" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="disaggregation-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
-          <mxGeometry x="0" y="5432.3" width="879.11" height="363.77" as="geometry" />
+          <mxGeometry x="0" y="5497.18" width="879.11" height="363.77" as="geometry" />
         </mxCell>
         <mxCell id="disaggregation-11" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#000000;strokeWidth=1.8;fontFamily=Source Sans 3;absoluteArcSize=1;arcSize=20;" vertex="1" parent="disaggregation-figure">
           <mxGeometry x="583.89" y="0" width="173.14" height="185.39" as="geometry" />
