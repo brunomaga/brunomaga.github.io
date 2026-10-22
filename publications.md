@@ -1,8 +1,7 @@
 ---
 layout: post
-title: Publications bookmark
+title: Publications Bookmark
 permalink: /publications/
-categories: ["Notes"]
 date_text: updated %b %Y
 ---
 

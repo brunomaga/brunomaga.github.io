@@ -39,9 +39,9 @@ a.post-label--link:visited { color: $brand-color; }
   vertical-align: top;
 }
 
-// the first column is as wide as its labels, right-aligned against the text on their right
+// the first column has the same width in every label table, right-aligned against the text on its right
 .label-table > tbody > tr > td:first-child {
-  width: 1%;  // shrinks the column to its labels
+  width: $label-column-width;
   padding-left: 0;
   padding-right: 0.9em;
   text-align: right;

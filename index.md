@@ -45,102 +45,108 @@ In this space, I write about my projects and topics related to my fields of inte
 
 <!-- resources -->
 <p class="home-text">
-I also keep a curated list of related books and other resources available online:
+I also keep a curated list of publications, books and other resources in the field:
 </p>
 
 <table id="resources-table" class="label-table home-table">
 <tr>
+<td><span class="post-label">pubs</span></td>
+<td>
+  <a href="{{ site.publications_permalink }}">Publications Bookmark</a> <span class="pub-meta">(continuously updated)</span>
+</td>
+</tr>
+<tr>
 <td><span class="post-label">book</span></td>
 <td>
-  <a href="https://www.bishopbook.com/">Deep Learning - Foundations and Concepts, Christopher M. Bishop, Hugh Bishop</a> (<a href="https://github.com/luzmontserrat/deep-learning/blob/main/Christopher%20M.%20Bishop%2C%20Hugh%20Bishop%20-%20Deep%20Learning_%20Foundations%20and%20Concepts-Springer%20(2024).pdf">pdf</a>)
+  <a href="https://www.bishopbook.com/">Deep Learning - Foundations and Concepts, Christopher M. Bishop, Hugh Bishop</a><a class="pub-link" href="https://www.bishopbook.com/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="https://github.com/luzmontserrat/deep-learning/blob/main/Christopher%20M.%20Bishop%2C%20Hugh%20Bishop%20-%20Deep%20Learning_%20Foundations%20and%20Concepts-Springer%20(2024).pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="https://www.springer.com/gp/book/9780387310732">Pattern Recognition and Machine Learning, Christopher M. Bishop</a> (<a href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf">pdf</a>)
+  <a href="https://www.springer.com/gp/book/9780387310732">Pattern Recognition and Machine Learning, Christopher M. Bishop</a><a class="pub-link" href="https://www.springer.com/gp/book/9780387310732" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="https://www.microsoft.com/en-us/research/uploads/prod/2006/01/Bishop-Pattern-Recognition-and-Machine-Learning-2006.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="http://mbmlbook.com/">Model-Based Machine Learning, John Winn et al.</a> (<a href="http://mbmlbook.com/MBMLbook.pdf">pdf</a>)
+  <a href="http://mbmlbook.com/">Model-Based Machine Learning, John Winn et al.</a><a class="pub-link" href="http://mbmlbook.com/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="http://mbmlbook.com/MBMLbook.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="https://mml-book.github.io/">Mathematics for Machine Learning, Marc Peter Deisenroth, A. Aldo Faisal, Cheng Soon Ong</a> (<a href="https://mml-book.github.io/book/mml-book.pdf">pdf</a>)
+  <a href="https://mml-book.github.io/">Mathematics for Machine Learning, Marc Peter Deisenroth, A. Aldo Faisal, Cheng Soon Ong</a><a class="pub-link" href="https://mml-book.github.io/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="https://mml-book.github.io/book/mml-book.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a> (<a href="https://neuronaldynamics.epfl.ch/online/index.html">online</a>)
+  <a href="https://neuronaldynamics.epfl.ch/">Neuronal Dynamics, Wulfram Gerstner et al.</a><a class="pub-link" href="https://neuronaldynamics.epfl.ch/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="https://fleuret.org/public/lbdl.pdf">The Little Book of Deep Learning, François Fleuret</a> (<a href="{{ site.assets }}/resources/lbdl.pdf">pdf</a>)
+  <a href="https://fleuret.org/public/lbdl.pdf">The Little Book of Deep Learning, François Fleuret</a><a class="pub-link" href="{{ site.assets }}/resources/lbdl.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz, Shai Ben-David</a> (<a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf">pdf</a>)
+  <a href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html">Understanding Machine Learning: From Theory to Algorithms, Shai Shalev-Shwartz, Shai Ben-David</a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/copy.html" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="https://www.cs.huji.ac.il/~shais/UnderstandingMachineLearning/understanding-machine-learning-theory-algorithms.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="http://www.inference.org.uk/mackay/itila/book.html">Information Theory, Inference, and Learning Algorithms, David MacKay</a> (<a href="http://www.inference.org.uk/itprnn/book.pdf">pdf</a>)
+  <a href="http://www.inference.org.uk/mackay/itila/book.html">Information Theory, Inference, and Learning Algorithms, David MacKay</a><a class="pub-link" href="http://www.inference.org.uk/mackay/itila/book.html" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="http://www.inference.org.uk/itprnn/book.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td><span class="post-label">blog</span></td>
 <td>
-  <a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html">The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism (AMD)</a>
+  <a href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html">The vLLM MoE Playbook: A Practical Guide to TP, DP, PP and Expert Parallelism (AMD)</a><a class="pub-link" href="https://rocm.blogs.amd.com/software-tools-optimization/vllm-moe-guide/README.html" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="https://jax-ml.github.io/scaling-book">How to scale your model (JAX ML)</a>
+  <a href="https://jax-ml.github.io/scaling-book">How to scale your model (JAX ML)</a><a class="pub-link" href="https://jax-ml.github.io/scaling-book" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)</a>
+  <a href="https://huggingface.co/spaces/nanotron/ultrascale-playbook">The Ultra-Scale Playbook: Training LLMs on GPU Clusters (Hugging Face)</a><a class="pub-link" href="https://huggingface.co/spaces/nanotron/ultrascale-playbook" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td><span class="post-label">univ</span></td>
 <td>
-  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/files/backprop.pdf">Computing Gradients with Backpropagation - Automatic Differentiation (Princeton course COS-324)</a> (<a href="{{ site.assets }}/resources/princeton_course_autodiff.pdf">pdf</a>)
+  <a href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/">Introduction to Machine Learning - Automatic Differentiation (Princeton COS 324)</a><a class="pub-link" href="https://www.cs.princeton.edu/courses/archive/fall18/cos324/" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a><a class="pub-link" href="{{ site.assets }}/resources/princeton_course_autodiff.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="{{ site.epfl_statistics }}/README.md">Statistics for Data Science (EPFL course MATH-413)</a>
+  <a href="{{ site.epfl_statistics }}/README.md">Statistics for Data Science (EPFL MATH-413)</a><a class="pub-link" href="{{ site.epfl_statistics }}/README.md" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td></td>
 <td>
-  <a href="{{ site.epfl_machine_learning }}/README.md">Machine Learning (EPFL course CS-433)</a>
+  <a href="{{ site.epfl_machine_learning }}/README.md">Machine Learning (EPFL CS-433)</a><a class="pub-link" href="{{ site.epfl_machine_learning }}/README.md" target="_blank" rel="noopener" title="Open the page"><i class="fa-solid fa-arrow-up-right-from-square" aria-hidden="true"></i></a>
 </td>
 </tr>
 <tr>
 <td><span class="post-label">misc</span></td>
 <td>
-  <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a>
+  <a href="{{ site.assets }}/resources/the_matrix_cookbook.pdf">The Matrix Cookbook</a><a class="pub-link" href="{{ site.assets }}/resources/the_matrix_cookbook.pdf" target="_blank" rel="noopener" title="Download the PDF"><i class="fa-solid fa-download" aria-hidden="true"></i></a>
 </td>
 </tr>
 </table>
 
 <p class="home-text">
-And finally, I maintain a list of <a href="{{ site.publications_permalink }}">relevant publications</a>. Enjoy, and feel free to reach out with feedback, fixes, and questions 🚀!
+Enjoy, and feel free to reach out with feedback, fixes, and questions 🚀!
 </p>

@@ -221,6 +221,7 @@ The timelines below follow token C through both forms, with the operations of ea
 
 {: .picture}
 <img width="44.6%" height="44.6%" src="{{ site.assets }}/inference/imgs/ep_timeline.svg"/>
+<span style="display:inline-block; width:4%;"></span>
 <img width="49.0%" height="49.0%" src="{{ site.assets }}/inference/imgs/ep_timeline_noncollective.svg"/>
 
 {: .caption}

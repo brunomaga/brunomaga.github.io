@@ -950,7 +950,7 @@ that is not wrong.
   the inputs, the text writes the rounded column as Ŵ[:, i], and `int4_packing.svg` uses q for the integers. Fix: "err
   = W[:, i] − Ŵ[:, i]" and "H = 2XᵀX".
 
-### Publications bookmark (publications.md)
+### Publications Bookmark (publications.md)
 
 - Optional, `publications/llama_3_multi_modal.svg`: the connectors "Every 4th layer" and "Every ~3rd layer" have arrow
   heads at both ends, as in Fig. 28 of the paper, while the forward pass sends data one way. Fix: one arrow head,
@@ -1228,7 +1228,7 @@ Content problems that need the author's decision, such as overlap between posts.
 - Optional: once both drafts are published, "knowledge distillation" in the introduction could link to the
   distillation post instead of Wikipedia.
 
-### Publications bookmark (publications.md)
+### Publications Bookmark (publications.md)
 
 - DeepSeek-V2 (entry 038): the last sentence of item 2 of DeepSeekMoE, "Finely segmenting the experts into $$mN$$ ones
   and activating $$mK$$ from them allows for a more flexible combination of activated experts", restates the sentence
