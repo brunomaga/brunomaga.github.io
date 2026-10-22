@@ -348,10 +348,10 @@ As Transformers became a key building block of sequence-based ML, the 2022 paper
 ViTs have also been shown to have better scaling properties and accuracy than [convolutional neural networks](https://en.wikipedia.org/wiki/Convolutional_neural_network) when trained on large datasets. Moreover, regarding DiT scaling, it was shown that (1) DiT Gflops are strongly correlated with FID (more Gflops, lower FID), (2) DiT Gflops are critical to improving performance, and (3) larger DiT models use large compute more efficiently. The DiT architecture is illustrated in the following picture:
 
 {: .picture}
-<img width="82.5%" height="82.5%" src="{{ site.assets }}/diffusion/dit.svg"/> 
+<img width="79.7%" height="79.7%" src="{{ site.assets }}/diffusion/dit.svg"/> 
 
 {: .caption}
-<b>The Diffusion Transformer (DiT) architecture.</b> <i>Top left:</i> a conditional latent DiT; the input latent is decomposed into patches and processed by several DiT blocks. <i>Top right and bottom:</i> variants of the DiT block that add the conditioning by adaptive layer norm (adaLN-Zero), cross-attention or extra input tokens (in-context conditioning); adaptive layer norm works best. Adapted from: [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748).
+<b>The Diffusion Transformer (DiT) architecture.</b> <i>Left:</i> a conditional latent DiT; the input latent is decomposed into patches and processed by several DiT blocks. <i>Right:</i> the DiT block that adds the conditioning by adaptive layer norm (adaLN-Zero). The paper also tested in-context conditioning, cross-attention and adaLN blocks, and adaLN-Zero worked best. Adapted from: [Scalable Diffusion Models with Transformers](https://arxiv.org/abs/2212.09748).
 
 In the adaLN-Zero architecture shown in the diagram, **adaptive layer normalization** conditions the model dynamically. Instead of learning the scale $$\gamma$$ and shift $$\beta$$ parameters of each layer norm directly, these are regressed by an MLP from the sum of the embeddings of the timestep $$t$$ and the class label $$y$$ (the conditioning inputs). adaLN-Zero additionally regresses dimension-wise scaling parameters $$\alpha$$ that are applied right before each residual connection, and initializes them to zero, so that each DiT block starts as the identity function. Note that these $$\alpha$$ and $$\beta$$ are unrelated to the $$\alpha_t$$ and $$\beta_t$$ of the noise schedule.
 
