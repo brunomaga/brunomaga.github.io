@@ -77,19 +77,19 @@ where $$f^{(l)}$$ is the function implemented by layer $$l$$, $$L$$ is the numbe
 The important concept here is the **composition** of the functions $$f$$ across layers. The computation of a layer needs only its weights, its input and its output (and, in the backward pass, the gradient coming from the next layer), so the data of all other layers can be kept in CPU memory. To reduce the time spent waiting to push (pull) a layer to (from) the GPU, the computation of the current layers can be overlapped with the communication of the upcoming ones. The forward pass can be illustrated as:
 
 {: .picture}
-<img width="88.4%" height="88.4%" src="{{ site.assets }}/distributed-training/imgs/vdnn2.svg"/>
+<img width="88.9%" height="88.9%" src="{{ site.assets }}/distributed-training/imgs/vdnn2.svg"/>
 
 {: .caption}
-The forward pass of vDNN on a convolutional neural network, at layer N. Blue arrows are the input and output feature maps $$X$$ and $$Y$$ of the current layer, the purple arrow its weights $$W$$ and the yellow arrow its cuDNN workspace $$WS$$. White arrows are data that the current layer does not use. The input feature maps $$X$$ of the preceding layers, marked with a black cross, are not used by the current layer and can be released from GPU memory. Adapted from: [vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design](https://arxiv.org/abs/1602.08124)
+The forward pass of vDNN on a convolutional neural network, at layer N. Blue arrows are the input and output feature maps $$X$$ and $$Y$$ of the current layer, the purple arrow its weights $$W$$ and the yellow arrow its cuDNN workspace $$WS$$. White arrows are data that the current layer does not use. The input feature maps $$X$$ of the preceding layers, marked with a red cross, are not used by the current layer and can be released from GPU memory. Adapted from: [vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design](https://arxiv.org/abs/1602.08124)
 
 
 The backward propagation phase is trickier, as it also includes the gradients being propagated down the model:
 
 {: .picture}
-<img width="88.4%" height="88.4%" src="{{ site.assets }}/distributed-training/imgs/vdnn3.svg"/>
+<img width="88.9%" height="88.9%" src="{{ site.assets }}/distributed-training/imgs/vdnn3.svg"/>
 
 {: .caption}
-The backward pass of vDNN at layer 2. Blue arrows are the feature maps $$X$$ and $$Y$$ of the current layer, green arrows its gradients $$dX$$ and $$dY$$, the purple arrow its weights $$W$$ and the yellow arrow its cuDNN workspace $$WS$$. White arrows are data that the current layer does not use. The data used only by the layers whose backward pass is complete (the layers after layer 2 and the loss function), marked with a black cross, is not reused for this batch and can be released from GPU memory. Adapted from: [vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design](https://arxiv.org/abs/1602.08124)
+The backward pass of vDNN at layer 2. Blue arrows are the feature maps $$X$$ and $$Y$$ of the current layer, green arrows its gradients $$dX$$ and $$dY$$, the purple arrow its weights $$W$$ and the yellow arrow its cuDNN workspace $$WS$$. White arrows are data that the current layer does not use. The data used only by the layers whose backward pass is complete (the layers after layer 2 and the loss function), marked with a red cross, is not reused for this batch and can be released from GPU memory. Adapted from: [vDNN: Virtualized Deep Neural Networks for Scalable, Memory-Efficient Neural Network Design](https://arxiv.org/abs/1602.08124)
 
 ## Model and dataset setup
 

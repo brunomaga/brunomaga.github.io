@@ -337,64 +337,64 @@
         <mxCell id="vdnn2-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="1.2" y="106.02" width="58.31" height="64.2" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-11" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="138.88" y="80.2" width="84.63" height="187.39" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-19" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="166.03" y="50.9" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn2-19" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.3968;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="171.19" y="50.9" width="20" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-20" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="166.03" y="275.81" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn2-20" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.3968;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="171.19" y="271.69" width="20" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-21" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="278.3" y="80.2" width="84.63" height="187.39" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-29" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="305.45" y="50.9" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn2-29" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.3968;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="310.62" y="50.9" width="20" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-30" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="305.45" y="275.81" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn2-30" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.3968;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="310.62" y="271.69" width="20" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-31" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="417.72" y="80.2" width="84.63" height="187.39" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-39" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="444.88" y="50.9" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn2-39" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.3968;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="450.04" y="50.9" width="20" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-40" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="444.88" y="275.81" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn2-40" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.3968;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="450.04" y="271.69" width="20" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-41" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="557.14" y="80.2" width="84.63" height="187.39" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-49" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="584.3" y="50.9" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn2-49" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.3968;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="589.45" y="50.9" width="20" height="25.2" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-50" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="584.3" y="275.81" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn2-50" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.3968;whiteSpace=wrap;html=1;fillColor=#d6b656;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="589.45" y="271.69" width="20" height="25.2" as="geometry" />
         </mxCell>
         <mxCell id="vdnn2-51" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="88.57" y="113.65" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-52" value="" style="shape=cross;size=0.36;rotation=45;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="96.68" y="108.65" width="30" height="30" as="geometry" />
+        <mxCell id="vdnn2-52" value="" style="shape=cross;size=0.18;rotation=45;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="104.67" y="97.1" width="14" height="14" as="geometry" />
         </mxCell>
         <mxCell id="vdnn2-53" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="227.97" y="113.65" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-54" value="" style="shape=cross;size=0.36;rotation=45;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="236.07" y="108.65" width="30" height="30" as="geometry" />
+        <mxCell id="vdnn2-54" value="" style="shape=cross;size=0.18;rotation=45;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="244.07" y="97.1" width="14" height="14" as="geometry" />
         </mxCell>
         <mxCell id="vdnn2-55" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="367.39" y="113.65" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-56" value="" style="shape=cross;size=0.36;rotation=45;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn2-figure">
-          <mxGeometry x="375.5" y="108.65" width="30" height="30" as="geometry" />
+        <mxCell id="vdnn2-56" value="" style="shape=cross;size=0.18;rotation=45;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn2-figure">
+          <mxGeometry x="383.5" y="97.1" width="14" height="14" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-57" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-57" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="506.81" y="113.65" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-58" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-58" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="646.23" y="113.65" width="46.21" height="20" as="geometry" />
         </mxCell>
         <mxCell id="vdnn2-63" value="" style="shape=curlyBracket;direction=south;size=0.459;rounded=0;arcSize=8;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
@@ -412,13 +412,13 @@
         <mxCell id="vdnn2-14" value="Y" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="200.82" y="115.31" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-15" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-15" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="146.07" y="213.24" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-16" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-16" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="191.59" y="213.24" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-17" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-17" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="166.11" y="240.87" width="28.79" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vdnn2-18" value="Layer&lt;sub style=&quot;line-height:0;&quot;&gt;(1)&lt;/sub&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn2-figure">
@@ -433,13 +433,13 @@
         <mxCell id="vdnn2-24" value="Y" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="340.24" y="115.31" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-25" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-25" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="285.5" y="213.24" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-26" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-26" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="331.01" y="213.24" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-27" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-27" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="305.53" y="240.87" width="28.79" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vdnn2-28" value="Layer&lt;sub style=&quot;line-height:0;&quot;&gt;(2)&lt;/sub&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn2-figure">
@@ -454,13 +454,13 @@
         <mxCell id="vdnn2-34" value="Y" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="479.67" y="115.31" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-35" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-35" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="424.92" y="213.24" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-36" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-36" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="470.44" y="213.24" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-37" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-37" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="444.95" y="240.87" width="28.79" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vdnn2-38" value="..." style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn2-figure">
@@ -475,13 +475,13 @@
         <mxCell id="vdnn2-44" value="Y" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="619.09" y="115.31" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-45" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-45" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="564.34" y="213.24" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-46" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-46" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="609.86" y="213.24" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-47" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn2-figure">
+        <mxCell id="vdnn2-47" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="584.37" y="240.87" width="28.79" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vdnn2-48" value="Layer&lt;sub style=&quot;line-height:0;&quot;&gt;(N)&lt;/sub&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn2-figure">
@@ -490,7 +490,7 @@
         <mxCell id="vdnn2-62" value="&lt;div style=&quot;line-height:0.85;&quot;&gt;Current layer&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn2-figure">
           <mxGeometry x="559.97" y="0" width="79.25" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn2-x423" parent="vdnn2-figure" value="Loss&lt;br&gt;function" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#ffffff;absoluteArcSize=1;arcSize=10;" vertex="1"><mxGeometry x="692.44" y="80.2" width="84.63" height="187.39" as="geometry" /></mxCell><mxCell id="vdnn3-label" value="vdnn3.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
+        <mxCell id="vdnn2-x423" parent="vdnn2-figure" value="Loss&lt;br&gt;Function" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#ffffff;absoluteArcSize=1;arcSize=10;" vertex="1"><mxGeometry x="696.56" y="80.2" width="84.63" height="187.39" as="geometry" /></mxCell><mxCell id="vdnn3-label" value="vdnn3.svg" style="text;html=1;align=left;verticalAlign=middle;fontStyle=1;fontSize=16;fontFamily=Source Sans 3;" vertex="1" parent="1">
           <mxGeometry x="0" y="2288.03" width="600" height="30" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-figure" value="" style="group;fontFamily=Source Sans 3;" vertex="1" connectable="0" parent="1">
@@ -517,80 +517,80 @@
         <mxCell id="vdnn3-7" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="0.57" y="105.78" width="58.31" height="64.29" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-11" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-11" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="138.25" y="79.91" width="84.63" height="187.5" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-19" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="165.4" y="50.71" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn3-19" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.3984;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="170.56" y="50.71" width="20" height="25.1" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-20" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="165.4" y="275.64" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn3-20" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.3984;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="170.56" y="271.51" width="20" height="25.1" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-21" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-21" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffe6cc;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="277.67" y="79.91" width="84.63" height="187.5" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-29" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="304.83" y="50.71" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn3-29" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.3984;whiteSpace=wrap;html=1;fillColor=#9673a6;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="309.99" y="50.71" width="20" height="25.1" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-30" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="304.83" y="275.64" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn3-30" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.3984;whiteSpace=wrap;html=1;fillColor=#d6b656;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="309.99" y="271.51" width="20" height="25.1" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-31" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-31" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="417.09" y="79.91" width="84.63" height="187.5" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-39" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="444.25" y="50.71" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn3-39" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.3984;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="449.4" y="50.71" width="20" height="25.1" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-40" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="444.25" y="275.64" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn3-40" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.3984;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="449.4" y="271.51" width="20" height="25.1" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-41" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-41" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;fontSize=12;strokeColor=#000000;strokeWidth=1.0;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;absoluteArcSize=1;arcSize=10;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="556.52" y="79.91" width="84.63" height="187.5" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-49" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="583.67" y="50.71" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn3-49" value="" style="shape=singleArrow;direction=south;arrowWidth=0.5;arrowSize=0.3984;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="588.84" y="50.71" width="20" height="25.1" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-50" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.33;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="583.67" y="275.64" width="30.32" height="20" as="geometry" />
+        <mxCell id="vdnn3-50" value="" style="shape=singleArrow;direction=north;arrowWidth=0.5;arrowSize=0.3984;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="588.84" y="271.51" width="20" height="25.1" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-51" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="87.94" y="113.34" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-52" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-52" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="227.34" y="113.34" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-53" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-53" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#6c8ebf;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="366.76" y="113.34" width="46.21" height="20" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-54" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="506.18" y="113.34" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-55" value="" style="shape=cross;size=0.36;rotation=45;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="514.3" y="108.34" width="30" height="30" as="geometry" />
+        <mxCell id="vdnn3-55" value="" style="shape=cross;size=0.18;rotation=45;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="522.28" y="96.79" width="14" height="14" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-56" value="" style="shape=singleArrow;direction=east;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="645.61" y="113.34" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-57" value="" style="shape=cross;size=0.36;rotation=45;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="653.72" y="108.34" width="30" height="30" as="geometry" />
+        <mxCell id="vdnn3-57" value="" style="shape=cross;size=0.18;rotation=45;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="661.72" y="96.79" width="14" height="14" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-58" value="" style="shape=singleArrow;direction=west;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-58" value="" style="shape=singleArrow;direction=west;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="227.34" y="214" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-59" value="" style="shape=singleArrow;direction=west;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-59" value="" style="shape=singleArrow;direction=west;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#82b366;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="366.76" y="214" width="46.21" height="20" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-60" value="" style="shape=singleArrow;direction=west;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="506.18" y="214" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-61" value="" style="shape=cross;size=0.36;rotation=45;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="514.3" y="209.1" width="30" height="30" as="geometry" />
+        <mxCell id="vdnn3-61" value="" style="shape=cross;size=0.18;rotation=45;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="522.28" y="197.45" width="14" height="14" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-62" value="" style="shape=singleArrow;direction=west;arrowWidth=0.5;arrowSize=0.216;whiteSpace=wrap;html=1;fillColor=#ffffff;dashed=1;strokeColor=#000000;strokeWidth=0.4;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="645.61" y="214" width="46.21" height="20" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-63" value="" style="shape=cross;size=0.36;rotation=45;whiteSpace=wrap;html=1;fillColor=#000000;strokeColor=#000000;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn3-figure">
-          <mxGeometry x="653.72" y="209.1" width="30" height="30" as="geometry" />
+        <mxCell id="vdnn3-63" value="" style="shape=cross;size=0.18;rotation=45;whiteSpace=wrap;html=1;fillColor=#b85450;strokeColor=#b85450;fontFamily=Source Sans 3;strokeWidth=1.0;" vertex="1" parent="vdnn3-figure">
+          <mxGeometry x="661.72" y="197.45" width="14" height="14" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-68" value="" style="shape=curlyBracket;direction=south;size=0.459;rounded=0;arcSize=8;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#000000;strokeWidth=1.0;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="277.93" y="22.58" width="84.13" height="23.23" as="geometry" />
@@ -607,13 +607,13 @@
         <mxCell id="vdnn3-14" value="Y" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="200.19" y="115.31" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-15" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-15" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="145.45" y="212.62" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-16" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-16" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="190.96" y="212.62" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-17" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-17" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="165.48" y="240.87" width="28.79" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-18" value="Layer&lt;sub style=&quot;line-height:0;&quot;&gt;(1)&lt;/sub&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn3-figure">
@@ -628,13 +628,13 @@
         <mxCell id="vdnn3-24" value="Y" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="339.62" y="115.31" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-25" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-25" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="284.87" y="212.62" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-26" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-26" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="330.39" y="212.62" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-27" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-27" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="304.9" y="240.87" width="28.79" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-28" value="Layer&lt;sub style=&quot;line-height:0;&quot;&gt;(2)&lt;/sub&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn3-figure">
@@ -649,13 +649,13 @@
         <mxCell id="vdnn3-34" value="Y" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="479.04" y="115.31" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-35" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-35" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="424.29" y="212.62" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-36" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-36" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="469.81" y="212.62" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-37" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-37" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="444.32" y="240.87" width="28.79" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-38" value="..." style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn3-figure">
@@ -670,13 +670,13 @@
         <mxCell id="vdnn3-44" value="Y" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="618.46" y="115.31" width="17.11" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-45" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-45" value="dX" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="563.71" y="212.62" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-46" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-46" value="dY" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="609.23" y="212.62" width="24.9" height="20.8" as="geometry" />
         </mxCell>
-        <mxCell id="vdnn3-47" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=Source Sans 3;" vertex="1" parent="vdnn3-figure">
+        <mxCell id="vdnn3-47" value="WS" style="text;html=1;whiteSpace=wrap;align=center;verticalAlign=middle;fontSize=12;fontStyle=0;fontColor=#000000;fontFamily=NewComputerModernSansMath;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="583.75" y="240.87" width="28.79" height="20.8" as="geometry" />
         </mxCell>
         <mxCell id="vdnn3-48" value="Layer&lt;sub style=&quot;line-height:0;&quot;&gt;(N)&lt;/sub&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn3-figure">
@@ -685,7 +685,7 @@
         <mxCell id="vdnn3-67" value="&lt;div style=&quot;line-height:0.85;&quot;&gt;Current layer&lt;/div&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;fontStyle=0;fontFamily=Source Sans 3;fontColor=#000000;whiteSpace=nowrap;" vertex="1" parent="vdnn3-figure">
           <mxGeometry x="280.5" y="0" width="79.25" height="20.8" as="geometry" />
         </mxCell>
-      <mxCell id="vdnn3-x424" parent="vdnn3-figure" value="Loss&lt;br&gt;function" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#ffffff;absoluteArcSize=1;arcSize=10;" vertex="1"><mxGeometry x="691.82" y="79.91" width="84.63" height="187.5" as="geometry" /></mxCell></root>
+      <mxCell id="vdnn3-x424" parent="vdnn3-figure" value="Loss&lt;br&gt;Function" style="rounded=1;whiteSpace=nowrap;html=1;fontFamily=Source Sans 3;fontSize=14;fontColor=#000000;strokeColor=#000000;strokeWidth=1.0;fillColor=#ffffff;absoluteArcSize=1;arcSize=10;" vertex="1"><mxGeometry x="695.94" y="79.91" width="84.63" height="187.5" as="geometry" /></mxCell></root>
     </mxGraphModel>
   </diagram>
   <diagram name="pipeline-parallelism" id="pipeline-parallelism">
