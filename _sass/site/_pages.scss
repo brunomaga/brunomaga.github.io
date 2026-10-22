@@ -62,14 +62,20 @@
   grid-area: links;
   display: flex;
   align-items: center;
-  gap: 14px;
-  font-size: 17px;
+  gap: 20px;
+  font-size: 22px;
 
   @include media-query($on-palm) { margin-top: 0.6em; }
 }
 
 .home-links a,
 .home-links a:visited { color: $brand-color; }
+
+// a padding that the negative margin cancels: a tap area of about 40px around each icon, with no change in the layout
+.home-links a {
+  padding: 9px;
+  margin: -9px;
+}
 
 .home-links a:hover,
 .home-links a:focus-visible { text-decoration: none; }
