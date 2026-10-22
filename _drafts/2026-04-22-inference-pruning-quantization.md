@@ -102,7 +102,7 @@ Magnitude pruning ignores the inputs. A small weight that multiplies a large inp
 In the picture below, magnitude pruning removes the weights $$-0.2$$ and $$0.1$$, which multiply the largest inputs. Wanda keeps them, and removes $$0.5$$ and $$-0.6$$ instead:
 
 {: .picture}
-<img width="44.6%" height="44.6%" src="{{ site.assets }}/inference/imgs/wanda.svg"/>
+<img width="44.7%" height="44.7%" src="{{ site.assets }}/inference/imgs/wanda.svg"/>
 
 {: .caption}
 Each output row keeps its 3 highest scores (50%). The magnitude alone removes the weights of the two input features with the largest norms (6 and 8); the Wanda score keeps them. Inspired by: [A Simple and Effective Pruning Approach for Large Language Models](https://arxiv.org/abs/2306.11695)
